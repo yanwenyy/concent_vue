@@ -45,11 +45,27 @@
         >
 
         </el-table-column>
-
+        <el-table-column
+          :width="0"
+          label="项目ID"
+          prop="TopInfoOrg.uuid"
+          show-overflow-tooltip
+        >
+                  <template slot="header" slot-scope="scope">
+            <span>项目ID</span>
+            <div>
+              <el-input
+                style="float: left; width: 100%"
+                v-model="sousuo"
+                size="mini"
+              />
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column
           :width="300"
           label="项目名称"
-          prop="name"
+          prop="TopInfoOrg.inforName"
           show-overflow-tooltip
         >
                   <template slot="header" slot-scope="scope">
@@ -67,7 +83,7 @@
           :width="150"
           align="center"
           label="工程类别"
-          prop="ptypename"
+          prop="TopInfoOrg.enginTypeFirstName"
           show-overflow-tooltip
         >
                   <template slot="header" slot-scope="scope">
@@ -85,7 +101,7 @@
           :width="150"
           align="center"
           label="建设单位"
-          prop="unitname"
+          prop="TopInfoOrg.constructionOrg"
           show-overflow-tooltip
         >
                   <template slot="header" slot-scope="scope">
@@ -103,7 +119,7 @@
           :width="150"
           align="center"
           label="公告类型"
-          prop="exetime"
+          prop="TopInfoOrg.noticeTypeName"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -120,15 +136,15 @@
         <el-table-column
           :width="150"
           align="center"
-          label="截止日期"
-          prop="state"
+          label="资审文件发售截止日期"
+          prop="Verify.saleTime"
           show-overflow-tooltip
         >
           <!-- <template slot-scope="scope">{{
             scope.row.state === '0' ? '草稿' : '已上报'
           }}</template> -->
                     <template slot="header" slot-scope="scope">
-            <span>截止日期</span>
+            <span>资审文件发售截止日期</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
@@ -142,7 +158,7 @@
           :width="150"
           align="center"
           label="状态"
-          prop="orgname"
+          prop="Verify.uuid"
           show-overflow-tooltip
         >
                   <template slot="header" slot-scope="scope">
@@ -285,7 +301,8 @@ export default {
     getData() {
       this.$http
         .post(
-          '/api' + this.$route.path.substr(0, this.$route.path.length - 1),
+          '/api/topInfo/Verify/list/loadPageData',
+          //'/api' + this.$route.path.substr(0, this.$route.path.length - 1),
           this.searchform
         )
         .then(res => {
