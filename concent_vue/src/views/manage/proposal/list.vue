@@ -2,10 +2,10 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary">新增</el-button>
-        <el-button @click="totop" plain type="primary">修改</el-button>
-        <el-button type="primary" plain>删除</el-button>
-        <el-button type="primary" plain>刷新</el-button>
+        <el-button @click="add" plain type="primary" style="border:1px solid #0e4a88;color:#0e4a88">新增</el-button>
+        <el-button @click="totop" plain type="primary" style="border:1px solid #0e4a88;color:#0e4a88">修改</el-button>
+        <el-button type="primary" plain style="border:1px solid #0e4a88;color:#0e4a88">删除</el-button>
+        <el-button type="primary" plain style="border:1px solid #0e4a88;color:#0e4a88">刷新</el-button>
       </el-button-group>
       <div style="float: right">
         <el-button @click="reset" type="primary" plain>重置</el-button>
