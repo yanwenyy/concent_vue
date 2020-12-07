@@ -1,0 +1,119 @@
+{
+  "code": 0,
+  "msg": null,
+  "data": {
+    "totalcount": 40,
+    "result": [
+      {
+        "id": "1",
+        "no": "2019jtjz001",
+        "matters": "货币资金审计",
+        "auditedorg": "东风启辰汽车公司",
+        "auditedorgid": "1",
+        "state": "草稿",
+        "signstate": "",
+        "category": "八项规定、五项费用-费用管控-费用支出超预算",
+        "money": "5000000"
+      },
+      {
+        "id": "2",
+        "no": "2019jtjz002",
+        "matters": "应收账款及预付账款",
+        "auditedorg": "东风启辰汽车公司",
+        "auditedorgid": "2",
+        "state": "主审审核",
+        "signstate": "",
+        "category": "八项规定、五项费用-费用管控-费用支出超预算",
+        "money": "5000000"
+      },
+      {
+        "id": "3",
+        "no": "2019jtjz003",
+        "matters": "应收票据",
+        "auditedorg": "东风启辰汽车公司",
+        "auditedorgid": "3",
+        "state": "退回",
+        "signstate": "",
+        "category": "八项规定、五项费用-费用管控-费用支出超预算",
+        "money": "5000000"
+      },
+      {
+        "id": "4",
+        "no": "2019jtjz004",
+        "matters": "金融资产和金融负债",
+        "auditedorg": "东风启辰汽车公司",
+        "auditedorgid": "4",
+        "state": "审核通过",
+        "signstate": "已签认",
+        "category": "八项规定、五项费用-费用管控-费用支出超预算",
+        "money": "5000000"
+      },
+      {
+        "id": "4",
+        "no": "2019jtjz004",
+        "matters": "金融资产和金融负债",
+        "auditedorg": "东风启辰汽车公司",
+        "auditedorgid": "4",
+        "state": "审核通过",
+        "signstate": "已签认",
+        "category": "八项规定、五项费用-费用管控-费用支出超预算",
+        "money": "5000000"
+      },
+      {
+        "id": "4",
+        "no": "2019jtjz004",
+        "matters": "金融资产和金融负债",
+        "auditedorg": "东风启辰汽车公司",
+        "auditedorgid": "4",
+        "state": "审核通过",
+        "signstate": "已签认",
+        "category": "八项规定、五项费用-费用管控-费用支出超预算",
+        "money": "5000000"
+      },
+      {
+        "id": "4",
+        "no": "2019jtjz004",
+        "matters": "金融资产和金融负债",
+        "auditedorg": "东风启辰汽车公司",
+        "auditedorgid": "4",
+        "state": "审核通过",
+        "signstate": "已签认",
+        "category": "八项规定、五项费用-费用管控-费用支出超预算",
+        "money": "5000000"
+      },
+      {
+        "id": "4",
+        "no": "2019jtjz004",
+        "matters": "金融资产和金融负债",
+        "auditedorg": "东风启辰汽车公司",
+        "auditedorgid": "4",
+        "state": "审核通过",
+        "signstate": "已签认",
+        "category": "八项规定、五项费用-费用管控-费用支出超预算",
+        "money": "5000000"
+      },
+      {
+        "id": "4",
+        "no": "2019jtjz004",
+        "matters": "金融资产和金融负债",
+        "auditedorg": "东风启辰汽车公司",
+        "auditedorgid": "4",
+        "state": "审核通过",
+        "signstate": "已签认",
+        "category": "八项规定、五项费用-费用管控-费用支出超预算",
+        "money": "5000000"
+      },
+      {
+        "id": "4",
+        "no": "2019jtjz004",
+        "matters": "金融资产和金融负债",
+        "auditedorg": "东风启辰汽车公司",
+        "auditedorgid": "4",
+        "state": "审核通过",
+        "signstate": "已签认",
+        "category": "八项规定、五项费用-费用管控-费用支出超预算",
+        "money": "5000000"
+      }
+    ]
+  }
+}

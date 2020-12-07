@@ -1,0 +1,65 @@
+{
+  "code": 0,
+  "msg": null,
+  "data": [
+    {
+      "label": "八项规定、五项费用",
+      "value": "1",
+      "children": [
+        {
+          "label": "费用管控",
+          "value": "2",
+          "children": [{ "label": "费用支出超预算", "value": "3" }]
+        },
+        {
+          "label": "制度执行",
+          "value": "4",
+          "children": [
+            { "label": "办公费违规", "value": "5" },
+            { "label": "会议费违规", "value": "6" },
+            { "label": "差旅费违规", "value": "7" },
+            { "label": "出国经费违规", "value": "8" },
+            { "label": "业务招待费违规", "value": "9" },
+            { "label": "公务车购买、使用违规", "value": "10" }
+          ]
+        },
+        {
+          "label": "制度制定",
+          "value": "11",
+          "children": [
+            { "label": "办公用品制度不完善", "value": "12" },
+            { "label": "会议费制度不完善", "value": "13" },
+            { "label": "差旅费制度不完善", "value": "14" },
+            { "label": "出国经费制度不完善", "value": "15" },
+            { "label": "业务招待费制度不完善", "value": "16" },
+            { "label": "公务车管理制度不完善", "value": "17" }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "贯彻落实国家及公司政策、制度方面",
+      "value": "18"
+    },
+    {
+      "label": "会计信息质量",
+      "value": "19"
+    },
+    {
+      "label": "内部管理",
+      "value": "20"
+    },
+    {
+      "label": "企业运营中的风险",
+      "value": "21"
+    },
+    {
+      "label": "三重一大",
+      "value": "22"
+    },
+    {
+      "label": "审计整改",
+      "value": "23"
+    }
+  ]
+}

@@ -1,0 +1,229 @@
+[
+  {
+    "name": "准备阶段",
+    "path": "/task/ready",
+    "stage": "ready",
+    "iconCls": "el-icon-s-cooperation",
+    "leaf": false,
+    "component": "/router",
+    "children": [
+      {
+        "name": "项目信息维护",
+        "path": "/task/ready/prjinfo/detail/",
+        "iconCls": "el-icon-reading",
+        "leaf": true,
+        "finishstate":"",
+        "component": "/task/ready/prjinfo/detail"
+      },
+      {
+        "name": "审前调查通知",
+        "path": "/task/ready/prenotice/detail/",
+        "iconCls": "el-icon-reading",
+        "leaf": true,
+        "component": "/task/ready/prenotice/detail"
+      },
+      {
+        "name": "审计方案",
+        "path": "/task/ready/scheme/detail/",
+        "iconCls": "el-icon-notebook-2",
+        "leaf": true,
+        "component": "/task/ready/scheme/detail",
+        "children": [
+          {
+            "name": "审计方案专家审核",
+            "path": "/task/ready/auditplan/verify/",
+            "iconCls": "el-icon-reading",
+            "component": "/task/ready/auditplan/verify"
+          }
+        ]
+      },
+      {
+        "name": "所需资料上报查看",
+        "path": "/task/ready/data/",
+        "iconCls": "el-icon-document",
+        "leaf": true,
+        "component": "/task/ready/data/list"
+      },
+      {
+        "name": "审计通知书",
+        "path": "/task/ready/notice/detail/",
+        "iconCls": "el-icon-document",
+        "leaf": true,
+        "component": "/task/ready/notice/detail"
+      },
+      {
+        "name": "审前公示",
+        "path": "/task/ready/publicity/detail/",
+        "iconCls": "el-icon-tickets",
+        "leaf": true,
+        "component": "/task/ready/publicity/detail"
+      }
+    ]
+  },
+  {
+    "name": "实施阶段",
+    "path": "/task/do",
+    "iconCls": "el-icon-s-custom",
+    "leaf": false,
+    "stage": "do",
+    "component": "/router",
+    "children": [
+      {
+        "name": "进点会",
+        "path": "/task/do/meeting/detail/",
+        "iconCls": "el-icon-document",
+        "leaf": true,
+        "component": "/task/do/meeting/detail"
+      },
+      {
+        "name": "审计底稿",
+        "path": "/task/do/draft",
+        "iconCls": "el-icon-document",
+        "leaf": true,
+        "component": "/router",
+        "children": [
+          {
+            "name": "审计底稿列表",
+            "path": "/task/do/draft/list/",
+            "iconCls": "el-icon-document",
+            "component": "/task/do/draft/list",
+            "defaultpage": true
+          },
+          {
+            "name": "审计底稿明细",
+            "path": "/task/do/draft/detail/",
+            "iconCls": "el-icon-document",
+            "component": "/task/do/draft/detail"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "报告阶段",
+    "path": "/task/report",
+    "leaf": false,
+    "stage": "report",
+    "iconCls": "el-icon-s-management",
+    "component": "/router",
+    "children": [
+      {
+        "name": "审计报告初稿",
+        "path": "/task/report/rough/detail/",
+        "iconCls": "el-icon-document",
+        "leaf": true,
+        "component": "/task/report/rough/detail"
+      },
+      {
+        "name": "征求意见稿",
+        "path": "/task/report/seekopinion/detail/",
+        "iconCls": "el-icon-chat-dot-round",
+        "leaf": true,
+        "component": "/task/report/seekopinion/detail"
+      },
+      {
+        "name": "审计报告正式稿",
+        "path": "/task/report/official/detail/",
+        "iconCls": "el-icon-document",
+        "leaf": true,
+        "component": "/task/report/official/detail"
+      },
+      {
+        "name": "统计台账",
+        "path": "/task/report/problemlist/list/",
+        "iconCls": "el-icon-edit-outline",
+        "leaf": true,
+        "component": "/router",
+        "children": [
+          {
+            "name": "统计台账列表",
+            "path": "/task/report/problemlist/list/",
+            "iconCls": "el-icon-edit-outline",
+            "component": "/task/report/problemlist/list",
+            "defaultpage": true
+          },
+          {
+            "name": "统计台账信编辑",
+            "path": "/task/report/problemlist/detail/",
+            "component": "/task/report/problemlist/edit"
+          }
+        ]
+      },
+      {
+        "name": "审计意见书",
+        "path": "/task/report/auditopinion/detail/",
+        "iconCls": "el-icon-reading",
+        "leaf": true,
+        "component": "/task/report/auditopinion/detail"
+      }
+    ]
+  },
+  {
+    "name": "整改阶段",
+    "path": "/task/rectify",
+    "iconCls": "el-icon-s-claim",
+    "leaf": false,
+    "stage": "rectify",
+    "component": "/router",
+    "children": [
+      {
+        "name": "整改计划签收",
+        "path": "/task/rectify/plan/detail/",
+        "iconCls": "el-icon-notebook-2",
+        "leaf": true,
+        "component": "/task/rectify/plan/detail"
+      },
+      {
+        "name": "整改报告签收",
+        "path": "/task/rectify/report/detail/",
+        "iconCls": "el-icon-document",
+        "leaf": true,
+        "component": "/task/rectify/report/detail"
+      },
+      {
+        "name": "整改问题跟踪",
+        "path": "/task/rectify/tail",
+        "iconCls": "el-icon-chat-dot-round",
+        "leaf": true,
+        "component": "/router",
+        "children": [
+          {
+            "name": "整改问题跟踪列表",
+            "path": "/task/rectify/tail/list/",
+            "iconCls": "el-icon-document",
+            "defaultpage": true,
+            "component": "/task/rectify/tail/list"
+          },
+          {
+            "name": "整改问题跟踪明细",
+            "path": "/task/rectify/tail/detail/",
+            "iconCls": "el-icon-document",
+            "component": "/task/rectify/tail/detail"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "归档阶段",
+    "path": "/task/archives",
+    "iconCls": "el-icon-s-order",
+    "leaf": false,
+    "stage": "archives",
+    "component": "/router",
+    "children": [
+      {
+        "name": "项目归档",
+        "path": "/task/archives/archives/detail/",
+        "iconCls": "el-icon-document-copy",
+        "defaultpage": true,
+        "leaf": true,
+        "component": "/task/archives/archives/detail"
+      },
+      {
+        "name": "项目关闭",
+        "path": ""
+      }
+    ]
+  }
+]

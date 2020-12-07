@@ -1,0 +1,18 @@
+{
+  "code": 0,
+  "msg": null,
+  "data": [
+    {
+      "label": "张三",
+      "value": "1"
+    },
+    {
+      "label": "李四",
+      "value": "2"
+    },
+    {
+      "label": "王五",
+      "value": "3"
+    }
+  ]
+}

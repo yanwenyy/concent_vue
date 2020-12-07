@@ -1,0 +1,397 @@
+/* 框架样式 */
+
+.el-header,
+.el-footer {
+  color: #333;
+  text-align: center;
+  line-height: 60px;
+}
+.gcform .el-form-item {
+  margin-bottom: 10px;
+}
+.el-checkbox-button__inner {
+  white-space: normal;
+}
+.is-process {
+  cursor: pointer;
+}
+.timeline {
+  padding-bottom: 8px;
+}
+.el-step__title {
+  font-size: 16px;
+  line-height: 16px;
+}
+.importbox {
+  float: left;
+  margin-top: -10px;
+}
+/* 开始 */
+.mainFramediv1 {
+  box-sizing: border-box;
+  padding: 0 10px;
+  margin-top: 2px;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border: 1px solid #000;
+  margin-bottom: 2px;
+}
+.uploadForm .el-row {
+  display: inline-block;
+  width: 85%;
+}
+.uploadForm .el-form {
+  display: inline-block;
+  width: 85%;
+}
+
+.main-div {
+  height: 65vh;
+  padding-left: 10px;
+}
+.main-div .timeline {
+  position: relative;
+  left: -30px;
+}
+.baseinfoForm .el-col-border {
+  border-right: 1px solid #aaa;
+  border-top: 1px solid #aaa;
+}
+.baseinfoForm .el-form-item {
+  margin-bottom: 0;
+}
+.baseinfoForm .sortLineHeight .el-form-item__label {
+  line-height: 20px;
+}
+.baseinfoForm .sortLineHeight4 .el-form-item__label {
+  line-height: 14px;
+}
+.baseinfoForm .sortLineHeight8 .el-form-item__label {
+  line-height: 50px;
+}
+.baseinfoForm .sortLineHeight3 {
+  border: 1px;
+  height: 88px;
+}
+.baseinfoForm .sortLineHeight3 .el-form-item__label {
+  line-height: 20px;
+  height: 88px;
+}
+.baseinfoForm .sortLineHeight3 .el-form-item {
+  height: 88px;
+}
+.baseinfoForm .sortLineHeight3 .el-input__inner {
+  height: 88px;
+}
+.baseinfoForm .sortLineHeight2 {
+  height: 100px;
+}
+.baseinfoForm .sortLineHeight2 .el-form-item {
+  height: 100px;
+}
+
+.baseinfoForm .sortLineHeight2 .el-input__inner {
+  height: 100px;
+}
+.baseinfoForm .sortLineHeight2 .el-form-item__label {
+  line-height: 22px;
+  height: 100px;
+}
+
+.baseinfoForm .sortLineHeightAreaShort .el-form-item__label {
+  height: 200px;
+}
+.baseinfoForm .needborder {
+  border-left: 1px solid #aaa;
+}
+.baseinfoForm .sortLineHeightArea .el-form-item__label {
+  height: 200px;
+}
+.baseinfoForm .el-form-item__label {
+  padding-left: 8px;
+  border-right: 1px solid #aaa;
+}
+.none-border-input,
+.none-border-input .el-input__inner,
+.none-border-input .el-textarea__inner {
+  outline: none;
+  border: 0 none;
+  /* border-bottom: 1px solid #ccc; */
+  border-radius: 0px;
+}
+
+.baseinfoForm .el-form-item {
+  height: 43px;
+  width: 100%;
+}
+.baseinfoForm .el-input {
+  width: 100%;
+}
+.baseinfoForm .el-form-item__content {
+  width: calc(100% - 100px);
+  position: absolute;
+  margin-left: 200px;
+}
+.baseinfoForm .textareaWidth .el-form-item {
+  box-sizing: border-box;
+  height: 200px;
+}
+.baseinfoForm .textareaWidth .el-form-item__content {
+  width: calc(100% - 200px);
+}
+
+.avatar-uploader .el-upload {
+  margin-left: 30px;
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 130px;
+  height: 130px;
+  line-height: 130px;
+  text-align: center;
+}
+.avatar {
+  margin-left: 45px;
+  width: 16vh;
+  height: 16vh;
+  display: block;
+}
+/* 结束 */
+.el-tlm-main {
+  color: #333;
+  text-align: left;
+}
+.el-cascader__tags .el-tag > span {
+  flex: auto;
+}
+.el-tm-main {
+  color: #333;
+  padding: 0;
+}
+
+.el-container {
+  padding: 0px;
+  margin: 0px;
+  height: 100%;
+}
+
+/* elm滚动条样式 */
+
+.el-scrollbar__wrap.default-scrollbar__wrap {
+  overflow-x: hidden;
+  display: block;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* detail页面通用样式 */
+
+.icon-cursor {
+  cursor: pointer;
+  /* margin-left: 10px; */
+}
+
+.formstyle {
+  background: whitesmoke;
+}
+
+.eee {
+  color: #eee;
+}
+
+.icon-cursor:hover {
+  animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.3);
+    color: red;
+  }
+}
+
+.content-style {
+  border: 1px solid #ffffff;
+  padding-bottom: 20px;
+}
+
+.content-style:hover {
+  border: 1px solid whitesmoke;
+  background-color: whitesmoke;
+}
+
+p {
+  cursor: pointer;
+}
+
+.content-style .content-style-i {
+  display: none;
+}
+
+.content-style:hover .content-style-i {
+  display: inline;
+}
+
+.file-style {
+  border-bottom: 1px solid #e5e9f2;
+
+  line-height: 40px;
+  margin: 6px auto;
+}
+
+.file-style:last-child {
+  border-bottom: 1px solid #ffffff;
+}
+
+.file-style:last-child:hover {
+  border-bottom: 1px solid #e5e9f2;
+}
+
+.label-style {
+  width: 65px;
+  line-height: 0px;
+  display: inline-block;
+  text-align: left;
+}
+.zi6 {
+  width: 96px;
+}
+
+.label-style:after {
+  content: " ";
+  display: inline-block;
+  width: 100%;
+  line-height: 0px;
+}
+
+/* el-form-item-label自动对齐样式 */
+
+.el-form-item__label {
+  text-align: left;
+  height: 30px;
+  position: relative;
+  line-height: 38px;
+  overflow: hidden;
+}
+
+.el-form-item__label:before {
+  position: absolute;
+  left: -10px;
+}
+
+.el-form-item__label:after {
+  content: " ";
+  display: inline-block;
+  width: 100%;
+  line-height: 0px;
+}
+
+/* 查询分割线 */
+
+.searchform .el-divider--horizontal {
+  margin: 1px 0 20px 0;
+}
+
+.el-select,
+.el-cascader {
+  width: 100%;
+}
+.label-span-style {
+  display: inline-block;
+  width: calc(100% - 145px);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  position: relative;
+  top: 4px;
+}
+
+.el-col-21 .el-button span {
+  line-height: 16px;
+
+}
+.el-cascader-node__postfix {
+  top: 8px;
+}
+pre {
+  white-space: pre-wrap;
+  line-height: 26px;
+  font-size: 16px;
+  font-family: "";
+}
+.btspan:after {
+  content: "*";
+  color: red;
+}
+.flexcenter {
+  display: flex;
+  display: -webkit-flex; /* Safari */
+  justify-content: center;
+}
+/* @font-face {
+  font-family: 'fanti';
+  src: url('./PingFang-Jian-ChangGuiTi-2.ttf');
+  font-weight: normal;
+  font-style: normal;
+} */
+/* *{
+  font-family: 'Courier New', Courier, monospace;
+} */
+.el-menu--horizontal > .el-menu-item {
+  height: 59px;
+  line-height: 59px;
+}
+
+/* 新加的 */
+.gcform .el-form-item{
+    width:390px;
+    margin: 20px;
+  }
+  .el-form-item__label{
+    width:390px;
+  }
+  .gcform .el-input{
+    width:100% !important;
+  }
+  .col2{
+    width:820px !important;
+    margin: 20px !important;
+  }
+  .col2 .el-form-item__label{
+   width:820px !important;
+  }
+  .col3{
+    width:1250px !important;
+    margin: 20px !important;
+  }
+  .col3 .el-form-item__label{
+    width:1250px !important;
+  }
+.el-table-column{
+  width: 20%;
+}

@@ -1,0 +1,48 @@
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "name": "tm",
+
+      "data": [
+        {
+          "name": "组织及人员",
+          "path": "/data/users",
+          "component": "/data/users",
+          "iconCls": null,
+          "menushow": true,
+          "leaf": true,
+          "defaultpage": false
+        },
+        {
+          "name": "岗位授权",
+          "path": "/data/workempower",
+          "component": "/data/workempower",
+          "iconCls": null,
+          "menushow": true,
+          "leaf": true,
+          "defaultpage": false
+        },
+        {
+          "name": "人员授权",
+          "path": "/data/departempower",
+          "component": "/data/departempower",
+          "iconCls": null,
+          "menushow": true,
+          "leaf": true,
+          "defaultpage": false
+        },
+        {
+          "name": "当前登录人所有权",
+          "path": "/data/havedpower",
+          "component": "/data/havedpower",
+          "iconCls": null,
+          "menushow": true,
+          "leaf": true,
+          "defaultpage": false
+        }
+      ]
+    }
+  ]
+}

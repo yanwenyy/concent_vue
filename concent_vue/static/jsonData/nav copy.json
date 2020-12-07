@@ -1,0 +1,720 @@
+{
+  "code": 0,
+  "msg": "",
+  "data": [
+    {
+      "name": "tm",
+      "data": [
+        {
+          "name": "首页",
+          "path": "/welcome",
+          "component": "/welcome",
+          "iconCls": null,
+          "menushow": true,
+          "leaf": true,
+          "defaultpage": false
+        },
+        {
+          "name": "职称申报",
+          "path": "/crmanage/reporting",
+          "component": "/router",
+          "iconCls": null,
+          "menushow": true,
+          "leaf": true,
+          "defaultpage": false,
+          "children": [
+            {
+              "name": "职称申报列表",
+              "path": "/crmanage/reporting/list",
+              "component": "/crmanage/reporting/list",
+              "iconCls": "el-icon-document",
+              "menushow": true,
+              "leaf": true,
+              "defaultpage": true
+            },
+            {
+              "name": "职称申报详情",
+              "path": "/crmanage/reporting/detail",
+              "component": "/crmanage/reporting/detail",
+              "iconCls": "el-icon-document",
+              "menushow": true,
+              "leaf": true,
+              "defaultpage": false,
+              "meta": {
+                "requireAuth": true,
+                "keepAlive": true
+              },
+              "children": [
+                {
+                  "name": "职称类别",
+                  "path": "/crmanage/reporting/postCategory",
+                  "component": "/crmanage/reporting/postCategory",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": true
+                },
+                {
+                  "name": "基本信息",
+                  "path": "/crmanage/reporting/detail/primaryEngineer/baseInfo",
+                  "component": "/crmanage/reporting/detail/primaryEngineer/baseInfo",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "学习培训经历",
+                  "path": "/crmanage/reporting/detail/primaryEngineer/studyTrain",
+                  "component": "/crmanage/reporting/detail/primaryEngineer/studyTrain",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "工作经历",
+                  "path": "/crmanage/reporting/detail/primaryEngineer/workExperience",
+                  "component": "/crmanage/reporting/detail/primaryEngineer/workExperience",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "教育教学工作经历",
+                  "path": "/crmanage/reporting/detail/primaryEngineer/education",
+                  "component": "/crmanage/reporting/detail/primaryEngineer/education",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "主要专业工作和业绩",
+                  "path": "/crmanage/reporting/detail/primaryEngineer/performance",
+                  "component": "/crmanage/reporting/detail/primaryEngineer/performance",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "主要专业工作和业绩",
+                  "path": "/crmanage/reporting/detail/primaryEngineer/result",
+                  "component": "/crmanage/reporting/detail/primaryEngineer/result",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "学术报告",
+                  "path": "/crmanage/reporting/detail/primaryEngineer/report",
+                  "component": "/crmanage/reporting/detail/primaryEngineer/report",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "个人专业工作总结",
+                  "path": "/crmanage/reporting/detail/primaryEngineer/workSummary",
+                  "component": "/crmanage/reporting/detail/primaryEngineer/workSummary",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "上传资料",
+                  "path": "/crmanage/reporting/detail/primaryEngineer/uploadFiles",
+                  "component": "/crmanage/reporting/detail/primaryEngineer/uploadFiles",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "基本信息",
+                  "path": "/crmanage/reporting/detail/seniorEngineer/baseInfo",
+                  "component": "/crmanage/reporting/detail/seniorEngineer/baseInfo",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "学习培训经历",
+                  "path": "/crmanage/reporting/detail/seniorEngineer/studyTrain",
+                  "component": "/crmanage/reporting/detail/seniorEngineer/studyTrain",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "工作经历",
+                  "path": "/crmanage/reporting/detail/seniorEngineer/workExperience",
+                  "component": "/crmanage/reporting/detail/seniorEngineer/workExperience",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "教育教学工作经历",
+                  "path": "/crmanage/reporting/detail/seniorEngineer/education",
+                  "component": "/crmanage/reporting/detail/seniorEngineer/education",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "主要专业工作和业绩",
+                  "path": "/crmanage/reporting/detail/seniorEngineer/performance",
+                  "component": "/crmanage/reporting/detail/seniorEngineer/performance",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "学术报告",
+                  "path": "/crmanage/reporting/detail/seniorEngineer/report",
+                  "component": "/crmanage/reporting/detail/seniorEngineer/report",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "个人专业工作总结",
+                  "path": "/crmanage/reporting/detail/seniorEngineer/workSummary",
+                  "component": "/crmanage/reporting/detail/seniorEngineer/workSummary",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "上传资料",
+                  "path": "/crmanage/reporting/detail/seniorEngineer/uploadFiles",
+                  "component": "/crmanage/reporting/detail/seniorEngineer/uploadFiles",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "基本信息",
+                  "path": "/crmanage/reporting/detail/professorEngineer/baseInfo",
+                  "component": "/crmanage/reporting/detail/professorEngineer/baseInfo",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "学习培训经历",
+                  "path": "/crmanage/reporting/detail/professorEngineer/studyTrain",
+                  "component": "/crmanage/reporting/detail/professorEngineer/studyTrain",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "工作经历",
+                  "path": "/crmanage/reporting/detail/professorEngineer/workExperience",
+                  "component": "/crmanage/reporting/detail/professorEngineer/workExperience",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "教育教学工作经历",
+                  "path": "/crmanage/reporting/detail/professorEngineer/education",
+                  "component": "/crmanage/reporting/detail/professorEngineer/education",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "主要专业工作和业绩",
+                  "path": "/crmanage/reporting/detail/professorEngineer/performance",
+                  "component": "/crmanage/reporting/detail/professorEngineer/performance",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "自我评价",
+                  "path": "/crmanage/reporting/detail/professorEngineer/showself",
+                  "component": "/crmanage/reporting/detail/professorEngineer/showself",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "申报人员有关文章和专著",
+                  "path": "/crmanage/reporting/detail/professorEngineer/report",
+                  "component": "/crmanage/reporting/detail/professorEngineer/report",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "个人专业工作总结",
+                  "path": "/crmanage/reporting/detail/professorEngineer/workSummary",
+                  "component": "/crmanage/reporting/detail/professorEngineer/workSummary",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "申报人员自我评价",
+                  "path": "/crmanage/reporting/detail/professorEngineer/evaluateSelf",
+                  "component": "/crmanage/reporting/detail/professorEngineer/evaluateSelf",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "上传资料",
+                  "path": "/crmanage/reporting/detail/professorEngineer/uploadFiles",
+                  "component": "/crmanage/reporting/detail/professorEngineer/uploadFiles",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "基本信息",
+                  "path": "/crmanage/reporting/detail/technology/baseInfo",
+                  "component": "/crmanage/reporting/detail/technology/baseInfo",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "学习培训经历",
+                  "path": "/crmanage/reporting/detail/technology/studyTrain",
+                  "component": "/crmanage/reporting/detail/technology/studyTrain",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "工作经历",
+                  "path": "/crmanage/reporting/detail/technology/workExperience",
+                  "component": "/crmanage/reporting/detail/technology/workExperience",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+
+                {
+                  "name": "主要专业工作和业绩",
+                  "path": "/crmanage/reporting/detail/technology/performance",
+                  "component": "/crmanage/reporting/detail/technology/performance",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "主要专业技术成果登记",
+                  "path": "/crmanage/reporting/detail/technology/performance",
+                  "component": "/crmanage/reporting/detail/technology/performance",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "学术报告",
+                  "path": "/crmanage/reporting/detail/technology/report",
+                  "component": "/crmanage/reporting/detail/technology/report",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "学术报告",
+                  "path": "/crmanage/reporting/detail/technology/result",
+                  "component": "/crmanage/reporting/detail/technology/result",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                },
+                {
+                  "name": "上传资料",
+                  "path": "/crmanage/reporting/detail/technology/uploadFiles",
+                  "component": "/crmanage/reporting/detail/technology/uploadFiles",
+                  "iconCls": "el-icon-document",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                  "meta": {
+                    "requireAuth": true,
+                    "keepAlive": true
+                  }
+                }
+              ]
+            }
+          ]
+        },
+
+        {
+          "name": "评审专家库",
+          "path": "/expert/list",
+          "component": "/router",
+          "iconCls": null,
+          "menushow": false,
+          "leaf": true,
+          "defaultpage": false,
+          "children": [
+            {
+              "name": "专家列表",
+              "path": "/expert/children/expertlist",
+              "component": "/expert/children/expertlist",
+              "iconCls": "el-icon-document",
+              "menushow": true,
+              "leaf": true,
+              "defaultpage": true
+            },
+            {
+              "name": "专家分组列表",
+              "path": "/expert/children/grouplist",
+              "component": "/expert/children/grouplist",
+              "iconCls": "el-icon-document",
+              "menushow": true,
+              "leaf": true,
+              "defaultpage": false,
+              "children": []
+            },
+            {
+              "name": "专家分组新增",
+              "path": "/expert/children/addgroup",
+              "component": "/expert/children/addgroup",
+              "iconCls": "el-icon-document",
+              "menushow": true,
+              "leaf": true,
+              "defaultpage": false
+            },
+            {
+              "name": "专家分组设置组长",
+              "path": "/expert/children/setleader",
+              "component": "/expert/children/setleader",
+              "iconCls": "el-icon-document",
+              "menushow": true,
+              "leaf": true,
+              "defaultpage": false
+            }
+          ]
+        },
+        {
+          "name": "专家评分",
+          "path": "/rating",
+          "component": "/rating",
+          "iconCls": null,
+          "menushow": false,
+          "leaf": true,
+          "defaultpage": false
+        },
+        {
+          "name": "评审结果",
+          "path": "/result",
+          "component": "/result",
+          "iconCls": null,
+          "menushow": false,
+          "leaf": true,
+          "defaultpage": false
+        },
+        {
+          "name": "评审费用收缴",
+          "path": "/expend",
+          "component": "/expend",
+          "iconCls": null,
+          "menushow": false,
+          "leaf": true,
+          "defaultpage": false
+        },
+        {
+          "name": "申报参评人员",
+          "path": "/participants",
+          "component": "/participants",
+          "iconCls": null,
+          "menushow": false,
+          "leaf": true,
+          "defaultpage": false
+        },
+        {
+          "name": "其他",
+          "path": "/others",
+          "component": "/others",
+          "iconCls": null,
+          "menushow": false,
+          "leaf": true,
+          "defaultpage": false
+        }
+      ]
+    },
+    {
+      "name": "tlm",
+      "data": [
+        {
+          "name": "资格评审",
+          "path": "/assessmanage",
+          "component": "/router",
+          "iconCls": null,
+          "menushow": true,
+          "leaf": true,
+
+          "defaultpage": false,
+          "children": [
+            {
+              "name": "资格评审",
+              "path": "/assessmanage/assessprimary",
+              "component": "/router",
+              "iconCls": "el-icon-document",
+              "menushow": true,
+              "leaf": true,
+              "defaultpage": true,
+              "children": [
+                {
+                  "name": "资格评审列表",
+                  "path": "/assessmanage/assessprimary/list",
+                  "component": "/assessmanage/assessprimary/list",
+                  "iconCls": "el-icon-switch-button",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "系统管理",
+          "path": "/system",
+          "component": "/router",
+          "iconCls": "el-icon-setting",
+          "menushow": true,
+          "leaf": true,
+          "defaultpage": false,
+          "children": [
+            {
+              "name": "外部人员管理",
+              "path": "/system/userinfo",
+              "component": "/router",
+              "iconCls": "el-icon-switch-button",
+              "menushow": false,
+              "leaf": true,
+              "defaultpage": false,
+              "children": [
+                {
+                  "name": "外部人员信息管理列表",
+                  "path": "/system/userinfo/list",
+                  "component": "/system/userinfo/list",
+                  "iconCls": "el-icon-switch-button",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": true
+                },
+                {
+                  "name": "外部人员信息管理列表",
+                  "path": "/system/userinfo/detail",
+                  "component": "/system/userinfo/detail",
+                  "iconCls": "el-icon-switch-button",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false
+                }
+              ]
+            },
+            {
+              "name": "内部人员授权",
+              "path": "/system/insider",
+              "component": "/router",
+              "iconCls": "el-icon-switch-button",
+              "menushow": true,
+              "leaf": true,
+              "defaultpage": true,
+              "children": [
+                {
+                  "name": "内部人员信息管理列表",
+                  "path": "/system/insider/list",
+                  "component": "/system/insider/list",
+                  "iconCls": "el-icon-switch-button",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": true
+                },
+                {
+                  "name": "内部人员信息管理列表",
+                  "path": "/system/insider/detail",
+                  "component": "/system/insider/detail",
+                  "iconCls": "el-icon-switch-button",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
