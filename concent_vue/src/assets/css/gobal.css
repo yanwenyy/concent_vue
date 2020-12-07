@@ -395,3 +395,12 @@ pre {
 .el-table-column{
   width: 20%;
 }
+.el-button{
+  background: #EBF0F9 !important;
+  color:#0A469D !important;
+  border: 1px solid #08459C !important;
+}
+.el-button :hover{
+  background-color:#0A469D !important;
+  color: #EBF0F9 !important;
+}
