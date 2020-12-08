@@ -14,20 +14,21 @@
         style="float: left;"
       >
         <!-- 上下布局 -->
-        <template v-for="route in this.$store.state.route[0].children">
+        <template v-for="(route) in this.$store.state.route[0].children">
           <el-menu-item
             :index="route.path"
-            style="font-size:13px;padding:0 6px;"
+            style="font-size:15px;padding:0 6px;font-weight: 1000;"
             v-bind:key="route.name"
-            v-if="route.menushow&&route.name!=='消息中心'"
+            v-if="route.menushow"
           >{{route.name}}</el-menu-item>
         </template>
 
         <!-- 上左右布局 -->
        <template v-for="(route) in this.$store.state.route[1].children">
           <el-menu-item
+            class="biaoqian"
             :index="route.path"
-            style="font-size:13px;padding:0 6px;"
+            style="font-size:20px;padding:0 6px;font-weight: 1000; width: 177px;height: 60px;text-align: center;"
             v-bind:key="route.name"
             v-if="route.menushow"
           >{{route.name}}</el-menu-item>

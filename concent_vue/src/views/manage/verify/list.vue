@@ -47,7 +47,7 @@
         </el-table-column>
 
         <el-table-column
-          :width="300"
+          :width="500"
           label="项目名称"
           prop="name"
           show-overflow-tooltip
@@ -143,9 +143,10 @@
           align="center"
           label="状态"
           prop="orgname"
+          fixed="right"
           show-overflow-tooltip
         >
-                  <template slot="header" slot-scope="scope">
+          <template slot="header" slot-scope="scope">
             <span>状态</span>
             <div>
               <el-input

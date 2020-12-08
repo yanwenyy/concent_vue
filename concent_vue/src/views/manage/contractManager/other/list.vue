@@ -45,7 +45,7 @@
         ></el-table-column>
 
         <el-table-column
-          :width="150"
+          :width="500"
           label="合同名称"
           prop="name"
           show-overflow-tooltip
