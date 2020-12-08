@@ -403,6 +403,7 @@ pre {
 /* .el-button--primary.is-plain:hover{
   background: #0A469D !important;
   color: #EBF0F9 !important;
+<<<<<<< HEAD
 } */
 .el-button--primary:hover{
    background: #0A469D !important;
@@ -432,4 +433,5 @@ pre {
     color: #032d86 !important;
     background: #EBF0F9 !important;
   }
+
 
