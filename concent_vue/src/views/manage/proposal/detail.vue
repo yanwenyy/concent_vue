@@ -380,7 +380,7 @@
             class="neirong"
               label="项目内容(最多1000字):"
               prop="clothSize.bcPlateTypeId"
-              style="width: 33%"
+              style="width: 33% "
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -393,6 +393,7 @@
                 placeholder="请输入"
                 size="mini"
                 v-model="detailform.clothSize.bcPlateTypeId"
+
               />
             </el-form-item>
           </el-row>

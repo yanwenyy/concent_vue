@@ -44,7 +44,7 @@
           type="index"
         ></el-table-column>
         <el-table-column
-          :width="200"
+          :width="500"
           align="center"
           label="项目名称"
           prop="year"

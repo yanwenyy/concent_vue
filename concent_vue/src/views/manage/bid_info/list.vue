@@ -47,7 +47,7 @@
         ></el-table-column>
 
         <el-table-column
-          :width="200"
+          :width="500"
           label="项目名称"
           prop="name"
           show-overflow-tooltip

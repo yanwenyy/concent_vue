@@ -395,12 +395,42 @@ pre {
 .el-table-column{
   width: 20%;
 }
-.el-button{
-  background: #EBF0F9 !important;
+.el-button--primary.is-plain{
+   background: #EBF0F9 !important;
   color:#0A469D !important;
   border: 1px solid #08459C !important;
 }
-.el-button :hover{
-  background-color:#0A469D !important;
+/* .el-button--primary.is-plain:hover{
+  background: #0A469D !important;
+  color: #EBF0F9 !important;
+<<<<<<< HEAD
+} */
+.el-button--primary:hover{
+   background: #0A469D !important;
   color: #EBF0F9 !important;
 }
+.gcform .el-form-item{
+  width: 100%;
+}
+.el-menu.el-menu--horizontal{
+  margin-left: 75px;
+}
+/* .el-menu.el-menu--horizontal li{
+    font-size: 13px;
+    padding: 0px 6px;
+    width: 100px;
+    border-bottom: 3px solid #032d86;
+    text-align: center;
+  } */
+  /* .el-menu-item.is-active {
+    border-bottom: 3px solid #032d86 !important;
+    color: #032d86 !important;
+    background: #EBF0F9 !important;
+  } */
+  .el-menu-item.is-active  {
+    border-bottom: 3px solid #032d86 !important;
+    color: #032d86 !important;
+    background: #EBF0F9 !important;
+  }
+
+
