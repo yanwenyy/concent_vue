@@ -37,12 +37,12 @@
       </div>
       <div  style="position:relatve;width:100%;height:100%;background:#F7F9FA;;box-sizing:border-box;padding:20px 0 100px;">
 
-        <p style="width: 372px;
+        <p style="width: auto;
         position:absolute;
         bottom:0;
-        left:40%;
-height: 21px;
-font-size: 12px;
+        left:33%;
+height: 10px;
+font-size: 15px;
 font-family: PingFangSC-Regular, PingFang SC;
 font-weight: 400;
 color: #C0C4CC;
@@ -63,8 +63,25 @@ line-height: 10px;">中国铁建股份有限公司 版权所有 建设监管：�
     height: calc(100% - 60px);">
         <el-main class="el-tlm-main" style="width: 100%; height: 100%;">
           <router-view></router-view>
+
+
+
         </el-main>
- <breadcrumb v-if="breadcrumb" style="flex:none;"></breadcrumb>
+  <div class="block">
+    <!-- <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage4"
+      :page-sizes="[100, 200, 300, 400]"
+      :page-size="100"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="15"
+      style="flex:none;">
+    </el-pagination> -->
+
+<breadcrumb v-if="breadcrumb" style="flex:none;">
+ </breadcrumb>
+</div>
       </el-scrollbar>
 
       </div>
@@ -170,7 +187,19 @@ height: calc(100% - 18px);
   height: calc(100%);
 }
 .el-breadcrumb{
-  margin: 0px 0 70px 30px;
+  margin: 5px 0 0px 30px;
   position: fixed;
+}
+.block{
+  float: left;
+  position: fixed;
+  width: 75%;
+}
+.el-pagination{
+  float: right;
+  margin: 25px 0px 0 0px;
+}
+.el-pagination .el-select .el-input .el-input__inner{
+  height: auto;
 }
 </style>

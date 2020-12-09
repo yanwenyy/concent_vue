@@ -463,7 +463,10 @@
             </template>
           </el-table-column>
         </el-table>
-
+          <el-row style="text-align: center">
+            <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
+            <el-button  @click="submit">提交</el-button>
+          </el-row>
 
     </el-form>
     </div>
@@ -476,7 +479,7 @@ export default {
   name: '详情',
   data() {
     return {
-      options1:[{label:"值",value:'111'}],
+
       detailform: {
         'clothSize': {
           'id': '',
@@ -503,9 +506,36 @@ export default {
     }
   },
   computed: {
-
+     options1 () {
+      return this.$store.state.optiondata
+    },
   },
   methods: {
+        saveInfo(formName){
+       this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.$http
+            .post(
+              "/api/topInfo/TopInfor/detail/save",
+              JSON.stringify(this.detailform),
+              { useJson: true }
+            )
+            .then((res) => {
+              if (res.data.code === 0) {
+                this.$message({
+                  message: "保存成功",
+                  type: "success",
+                });
+                this.$refs[formName].resetFields();
+              }
+
+            });
+        } else {
+          this.$message.error("请添加必填项");
+          return false;
+        }
+      });
+    },
     pageGo() {
       this.searchParam.current = this.current
       this.getuserlist()
@@ -671,6 +701,7 @@ export default {
 
   },
   mounted() {
+    this.$store.dispatch('getConfig', { })
     // eslint-disable-next-line no-unde
       this.getDetail()
   }

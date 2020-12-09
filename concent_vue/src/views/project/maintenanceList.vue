@@ -13,7 +13,7 @@
       </el-button-group>
     </div>
     <div style="float: right; margin: -40px 0 0 0">
-      <el-button @click="reset" type="primary" plain>重置</el-button>
+      <el-button @click="reset" type="info" plain style="color:black;background:none">重置</el-button>
       <el-button @click="search" type="primary" plain>查询</el-button>
       <el-button @click="exportdata" type="primary" plain>导出</el-button>
     </div>

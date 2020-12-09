@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="width: 100%; overflow: hidden">
+    <div style="width: 100%;overflow: hidden;">
       <el-button-group style="float: left">
         <el-button @click="add" plain type="primary">新增</el-button>
         <el-button @click="totop" plain type="primary">修改</el-button>
@@ -10,7 +10,7 @@
         /></el-button>
       </el-button-group>
       <div style="float: right">
-        <el-button @click="reset" type="primary" plain>重置</el-button>
+        <el-button @click="reset" type="info" plain style="color:black;background:none">重置</el-button>
         <el-button @click="search" type="primary" plain>查询</el-button>
         <el-button @click="exportdata" type="primary" plain>导出</el-button>
       </div>
@@ -201,7 +201,10 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination
+
+    </div>
+
+          <el-pagination
         :current-page="page.current"
         :page-size="page.size"
         :page-sizes="[10, 50, 100]"
@@ -209,9 +212,8 @@
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
         layout="total, sizes, prev, pager, next, jumper"
-        style="margin-top: 5px"
+        style="margin: 20px;position: fixed;right:200px;bottom:40px"
       ></el-pagination>
-    </div>
   </div>
 </template>
 
@@ -325,8 +327,8 @@ export default {
     // list通用方法结束
   },
   created() {
-    this.getMenus();
-    this.getOrgTree();
+    // this.getMenus();
+    // this.getOrgTree();
     this.getData();
   },
 };

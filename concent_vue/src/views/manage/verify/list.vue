@@ -3,13 +3,21 @@
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
         <el-button @click="add" plain type="primary">新增</el-button>
-        <el-button @click="totop" plain type="primary" >修改</el-button>
-        <el-button type="primary" plain>删除</el-button>
-        <el-button type="primary" plain>刷新</el-button>
+        <el-button @click="totop" plain type="primary">修改</el-button>
+        <el-button @click="remove" type="primary" plain>删除</el-button>
+        <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
       </el-button-group>
       <div style="float: right">
-        <el-button @click="reset" type="primary" plain>重置</el-button>
-        <el-button @click="search" type="primary" plain>查询</el-button>
+        <el-button
+          @click="searchformReset"
+          type="info"
+          plain
+          style="color: black; background: none"
+          >重置</el-button
+        >
+        <el-button @click="searchformSubmit" type="primary" plain
+          >查询</el-button
+        >
         <el-button @click="exportdata" type="primary" plain>导出</el-button>
       </div>
     </div>
@@ -31,19 +39,18 @@
         tooltip-effect="dark"
       >
         <el-table-column
-          :width="40"
+          :width="50"
           align="center"
           show-overflow-tooltip
           type="selection"
         ></el-table-column>
         <el-table-column
-          :width="80"
+          :width="70"
           align="center"
           label="序号"
           show-overflow-tooltip
           type="index"
         >
-
         </el-table-column>
 
         <el-table-column
@@ -52,16 +59,19 @@
           prop="name"
           show-overflow-tooltip
         >
-                  <template slot="header" slot-scope="scope">
+          <template slot="header" slot-scope="scope">
             <span>项目名称</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchform.projectname"
                 size="mini"
               />
             </div>
           </template>
+           <template slot-scope="scope">
+     {{scope.row.xmmc}}
+      </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -70,16 +80,19 @@
           prop="ptypename"
           show-overflow-tooltip
         >
-                  <template slot="header" slot-scope="scope">
+          <template slot="header" slot-scope="scope">
             <span>工程类别</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchform.gclb"
                 size="mini"
               />
             </div>
           </template>
+           <template slot-scope="scope">
+     {{scope.row.gclb}}
+      </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -88,16 +101,19 @@
           prop="unitname"
           show-overflow-tooltip
         >
-                  <template slot="header" slot-scope="scope">
+          <template slot="header" slot-scope="scope">
             <span>建设单位</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchform.jsdw"
                 size="mini"
               />
             </div>
           </template>
+                     <template slot-scope="scope">
+     {{scope.row.jsdw}}
+      </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -111,11 +127,15 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchform.gglb"
                 size="mini"
               />
             </div>
           </template>
+
+                   <template slot-scope="scope">
+     {{scope.row.gglb}}
+      </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -127,16 +147,19 @@
           <!-- <template slot-scope="scope">{{
             scope.row.state === '0' ? '草稿' : '已上报'
           }}</template> -->
-                    <template slot="header" slot-scope="scope">
+          <template slot="header" slot-scope="scope">
             <span>截止日期</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchform.jzrq"
                 size="mini"
               />
             </div>
           </template>
+                     <template slot-scope="scope">
+     {{scope.row.jzrq}}
+      </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -151,11 +174,14 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchform.zt"
                 size="mini"
               />
             </div>
           </template>
+                     <template slot-scope="scope">
+     {{scope.row.zt}}
+      </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -164,16 +190,19 @@
           prop="username"
           show-overflow-tooltip
         >
-                  <template slot="header" slot-scope="scope">
+          <template slot="header" slot-scope="scope">
             <span>填报人</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchform.tbr"
                 size="mini"
               />
             </div>
           </template>
+                     <template slot-scope="tbr">
+     {{scope.row.gclb}}
+      </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -185,16 +214,19 @@
           <!-- <template slot-scope="scope">{{
             scope.row.createtime | dateformat
           }}</template> -->
-                    <template slot="header" slot-scope="scope">
+          <template slot="header" slot-scope="scope">
             <span>填报时间</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchform.tbsj"
                 size="mini"
               />
             </div>
           </template>
+                     <template slot-scope="scope">
+     {{scope.row.tbsj}}
+      </template>
         </el-table-column>
       </el-table>
       <el-pagination
@@ -205,8 +237,7 @@
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
         layout="total, sizes, prev, pager, next, jumper"
-        style="margin-top: 5px"
-
+        style="margin: 20px; position: fixed; right: 200px; bottom: 40px"
       ></el-pagination>
     </div>
   </div>
@@ -214,119 +245,131 @@
 
 <script>
 export default {
-  name: 'proposal-list-look',
+  name: "proposal-list-look",
   data() {
     return {
       page: { current: 1, size: 10, total: 0, records: [] },
-      showinput:false,
-      sousuo:'',
+      showinput: false,
+      sousuo: "",
       searchform: {
         current: 1,
         size: 10,
-        year: '',
-        name: '',
-        ptype: '',
-        orgid: '',
-        orgname: ''
+        projectname: "",
+        gclb: "",
+        jsdw: "",
+        gglb: "",
+        jzrq: "",
+        zt: "",
+        tbr: "",
+        tbsj: "",
       },
       menus: [],
       multipleSelection: [],
-      orgTree: []
-    }
+      orgTree: [],
+    };
   },
   methods: {
-    search(){
-      this.showinput = false
+    search() {
+      this.showinput = false;
     },
-    add(){
-       let p = { actpoint: 'add'}
-       this.$router.push({
-        path: './detail/',
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-      })
+    add() {
+      let p = { actpoint: "add" };
+      this.$router.push({
+        path: "./detail/",
+        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
+      });
     },
     // 查看
     rowshow(row) {
-      let p = { actpoint: 'look', instid: row.uuid }
+      let p = { actpoint: "look", instid: row.uuid };
       this.$router.push({
-        path: './detail/',
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-      })
+        path: "./detail/",
+        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
+      });
     },
     show() {
       if (this.multipleSelection.length !== 1) {
-        this.$message.info('请选择一条记录进行查看操作！')
-        return false
+        this.$message.info("请选择一条记录进行查看操作！");
+        return false;
       }
-      let p = { actpoint: 'look', instid: this.multipleSelection[0].uuid }
+      let p = { actpoint: "look", instid: this.multipleSelection[0].uuid };
       this.$router.push({
-        path: '../detail/',
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-      })
+        path: "../detail/",
+        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
+      });
     }, // list通用方法开始
     handleSizeChange(val) {
-      this.searchform.size = val
-      this.getData()
+      this.searchform.size = 10;
+      this.getData();
     },
     handleCurrentChange(val) {
-      this.searchform.current = val
-      this.getData()
+      this.searchform.current = 1;
+      this.getData();
     },
     searchformSubmit() {
-      this.searchform.current = 1
-      this.getData()
+      this.searchform.current = 1;
+      this.getData();
     },
     searchformReset() {
-      this.$refs['searchform'].resetFields()
+      // this.$refs['searchform'].resetFields()
+      this.searchform.projectname = "";
+      this.searchform.gclb = "";
+      this.searchform.jsdw = "";
+      this.searchform.gglb = "";
+      this.searchform.jzrq = "";
+      this.searchform.zt = "";
+      this.searchform.tbr = "";
+      this.searchform.tbsj = "";
+        this.getData();
     },
     // 列表选项数据
     handleSelectionChange(val) {
-      this.multipleSelection = val
+      this.multipleSelection = val;
     },
     getData() {
       this.$http
         .post(
-          '/api' + this.$route.path.substr(0, this.$route.path.length - 1),
+          "/api" + this.$route.path.substr(0, this.$route.path.length - 1),
           this.searchform
         )
-        .then(res => {
-          this.page = res.data.data
-        })
+        .then((res) => {
+          this.page = res.data.data;
+        });
     },
     getMenus() {
       this.$http
-        .post('api/base/loadcascader', { typecode: 'XMLX' })
-        .then(res => {
+        .post("api/base/loadcascader", { typecode: "XMLX" })
+        .then((res) => {
           if (res.data.code === 0) {
-            this.menus = res.data.data
+            this.menus = res.data.data;
           }
-        })
+        });
     },
     currentMenu(selVal) {
-      let selMenuObj = this.menus.filter(item => item.value === selVal)
-      this.searchform.menu = selMenuObj[0].label
+      let selMenuObj = this.menus.filter((item) => item.value === selVal);
+      this.searchform.menu = selMenuObj[0].label;
     },
     // 获取上级单位树信息
     getOrgTree() {
-      this.$http.get('/api/base/loadorglist').then(res => {
-        this.orgTree = res.data.data
-      })
+      this.$http.get("/api/base/loadorglist").then((res) => {
+        this.orgTree = res.data.data;
+      });
     },
     // 确定单位
     orgChange() {
-      let selectLabelArr = this.$refs['porgCascader'].getCheckedNodes()[0]
-        .pathLabels
-      this.searchform.orgname = selectLabelArr[selectLabelArr.length - 1]
-    }
+      let selectLabelArr = this.$refs["porgCascader"].getCheckedNodes()[0]
+        .pathLabels;
+      this.searchform.orgname = selectLabelArr[selectLabelArr.length - 1];
+    },
 
     // list通用方法结束
   },
   created() {
-    this.getMenus()
-    this.getOrgTree()
-    this.getData()
-  }
-}
+    this.getMenus();
+    this.getOrgTree();
+    this.getData();
+  },
+};
 </script>
 <style scoped>
 .el-table__row {

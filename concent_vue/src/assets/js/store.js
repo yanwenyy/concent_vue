@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { _const } from './const.js'
+import { _const } from './axios.js'
+import axios from 'vuex'
 Vue.use(Vuex)
 
 const state = {
+  optiondata:[],
   dialogState: 'edit',
   num: 0,
   postGrade: '',
@@ -19,22 +21,32 @@ const state = {
   messageCount: []
 }
 
-const mutations = {
-  reduceCount(state, index) {
-    let newVal = state.messageCount[index] - 1
-    newVal = newVal < 0 ? 0 : newVal
-    state.messageCount.splice(index, 1, newVal)
-  },
-  // 设置行政工作，待阅，消息的未读数量
-  setMessageCount(state, data) {
-    state.messageCount.splice(0, 1, Number(data.todonum))
-    state.messageCount.splice(1, 1, Number(data.xztznum))
-    state.messageCount.splice(2, 1, Number(data.readnum))
-    state.messageCount.splice(3, 1, Number(data.sysmnum))
+const getters = {
+  getToolData(state) {
+    return state.toolBarData
   }
+
+}
+const mutations = {
+  setToolData(state, data) {
+    // 添加标签按钮，如果当前路由已经打开，则不再重复添加
+    Vue.prototype.$http.post('http://36.112.155.134:9901/System/system/category/v1.0/wholetreeNew').then(res => {
+      state.optiondata = res.data.data
+        })
+  },
+
 }
 
+
+const actions = {
+  getConfig({ commit }, data) {
+    commit('setToolData', data)
+
+  }
+}
 export default new Vuex.Store({
   state,
-  mutations
+  getters,
+  mutations,
+  actions
 })

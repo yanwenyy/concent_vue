@@ -3,7 +3,7 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span style="color: #2a2a7d"><b>投标管理详情</b></span>
-        <el-button style="float: right; padding: 10px 20px ;border:1px solid #ddd;color: black" type="text">返回</el-button>
+        <el-button @click="back" style="float: right; padding: 10px 20px ;border:1px solid #ddd;color: black" type="text">返回</el-button>
       </div>
 </el-card>
       <el-card class="box-card">
@@ -722,7 +722,10 @@
             </template>
           </el-table-column>
         </el-table>
-
+          <el-row style="text-align: center">
+            <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
+            <el-button  @click="submit">提交</el-button>
+          </el-row>
 
     </el-form>
     </div>
@@ -802,6 +805,11 @@ export default {
       if (this.detailform.clothSize.bcTypeId === '') {
         this.$message.error('请先选择样衣类型！')
       }
+    },
+    back(){
+        this.$router.push({
+        path: "/manage/proposal/list"
+      });
     },
     chg2() {
       this.errorMsg = Math.random()
@@ -930,6 +938,7 @@ export default {
 
   },
   mounted() {
+    this.$store.dispatch('getConfig', { })
     // eslint-disable-next-line no-unde
       this.getDetail()
   }

@@ -19,8 +19,7 @@
           <el-row>
             <el-form-item
               label="项目板块:"
-              prop="clothSize.bcTypeId"
-              required
+              prop="topInfor.moduleId"
               style="width: 33%"
             >
               <el-select
@@ -30,7 +29,7 @@
                 style="width: 100%"
                 placeholder="请选择"
                 size="mini"
-                v-model="detailform.clothSize.bcTypeId"
+                v-model="detailform.topInfor.moduleId"
               >
                 <el-option
                   :key="index"
@@ -42,8 +41,7 @@
             </el-form-item>
             <el-form-item
               label="工程类别:"
-              prop="clothSize.bcTypeId"
-              required
+              prop="topInfor.enginTypeFirstId"
               style="width: 33%"
             >
               <el-select
@@ -52,7 +50,7 @@
                 filterable
                 placeholder="请选择"
                 size="mini"
-                v-model="detailform.clothSize.bcTypeId"
+                v-model="detailform.topInfor.enginTypeFirstId"
               >
                 <el-option
                   :key="index"
@@ -64,7 +62,7 @@
             </el-form-item>
             <el-form-item
               label="项目名称:"
-              prop="clothSize.bcPlateTypeId"
+              prop="topInfor.inforName"
               style="width: 33%"
               :rules="{
                 required: true,
@@ -75,14 +73,14 @@
               <el-input
                 clearable
                 size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
+                v-model="detailform.topInfor.inforName"
               />
             </el-form-item>
           </el-row>
           <el-row>
             <el-form-item
               label="建设单位:"
-              prop="clothSize.bcPlateTypeId"
+              prop="topInfor.constructionOrg"
               style="width: 33%"
               :rules="{
                 required: true,
@@ -93,13 +91,13 @@
               <el-input
                 clearable
                 size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
+                v-model="detailform.topInfor.constructionOrg"
               />
             </el-form-item>
             <el-form-item
               label="公告类型:"
-              prop="clothSize.bcTypeId"
-              required
+              prop="topInfor.noticeTypeId"
+
               style="width: 33%"
             >
               <el-select
@@ -108,7 +106,7 @@
                 filterable
                 placeholder="请选择"
                 size="mini"
-                v-model="detailform.clothSize.bcTypeId"
+                v-model="detailform.topInfor.noticeTypeId"
               >
                 <el-option
                   :key="index"
@@ -123,7 +121,7 @@
 
             <el-form-item
               label="预计招标时间:"
-              prop="clothSize.bcStyleId"
+              prop="topInfor.planBidTime"
               style="width: 33%"
             >
               <el-select
@@ -132,7 +130,7 @@
                 clearable
                 placeholder="请选择"
                 size="mini"
-                v-model="detailform.clothSize.bcStyleId"
+                v-model="detailform.topInfor.planBidTime"
               >
                 <el-option
                   :key="index"
@@ -147,7 +145,7 @@
           <el-row>
             <el-form-item
               label="所属线路:"
-              prop="clothSize.bcStyleId"
+              prop="topInfor.belongLineId"
               style="width: 33%"
             >
               <el-select
@@ -156,7 +154,7 @@
                 clearable
                 placeholder="请选择或直接填写所属现路"
                 size="mini"
-                v-model="detailform.clothSize.bcStyleId"
+                v-model="detailform.topInfor.belongLineId"
               >
                 <el-option
                   :key="index"
@@ -169,7 +167,7 @@
             <!-- --------------------------------------------------------------- -->
             <el-form-item
               label="招标人:"
-              prop="clothSize.bcPlateTypeId"
+              prop="topInfor.bidPerson"
               style="width: 33%"
               :rules="{
                 required: true,
@@ -180,12 +178,12 @@
               <el-input
                 clearable
                 size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
+                v-model="detailform.topInfor.bidPerson"
               />
             </el-form-item>
             <el-form-item
               label="设计单位:"
-              prop="clothSize.bcPlateTypeId"
+              prop="topInfor.designOrg"
               style="width: 33%"
               :rules="{
                 message: '此项不能为空',
@@ -195,14 +193,14 @@
               <el-input
                 clearable
                 size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
+                v-model="detailform.topInfor.designOrg"
               />
             </el-form-item>
           </el-row>
           <el-row>
             <el-form-item
               label="招标代理公司:"
-              prop="clothSize.bcPlateTypeId"
+              prop="topInfor.bidAgentCompany"
               style="width: 33%"
               :rules="{
                 message: '此项不能为空',
@@ -211,12 +209,12 @@
             >
               <el-input
                 size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
+                v-model="detailform.topInfor.bidAgentCompany"
               />
             </el-form-item>
             <el-form-item
               label="项目模式:"
-              prop="clothSize.bcTypeId"
+              prop="topInfor.projectModelId"
               style="width: 33%"
             >
               <el-select
@@ -225,7 +223,7 @@
                 filterable
                 placeholder="请选择"
                 size="mini"
-                v-model="detailform.clothSize.bcTypeId"
+                v-model="detailform.topInfor.projectModelId"
               >
                 <el-option
                   :key="index"
@@ -237,7 +235,7 @@
             </el-form-item>
             <el-form-item
               label="资审方式:"
-              prop="clothSize.bcPlateTypeId"
+              prop="topInfor.verifyTypeId"
               style="width: 33%"
               :rules="{
                 message: '此项不能为空',
@@ -248,15 +246,14 @@
                 clearable
                 placeholder=""
                 size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
+                v-model="detailform.topInfor.verifyTypeId"
               />
             </el-form-item>
           </el-row>
           <el-row>
             <el-form-item
               label="资金来源:"
-              required
-              prop="clothSize.bcStyleId"
+              prop="topInfor.investment"
               style="width: 33%"
             >
               <el-select
@@ -265,7 +262,7 @@
                 clearable
                 placeholder="请选择"
                 size="mini"
-                v-model="detailform.clothSize.bcStyleId"
+                v-model="detailform.topInfor.investment"
               >
                 <el-option
                   :key="index"
@@ -277,7 +274,7 @@
             </el-form-item>
             <el-form-item
               label="项目跟踪负责人:"
-              prop="clothSize.bcPlateTypeId"
+              prop="topInfoOrg.projectTrackResponPerson"
               style="width: 33%"
               :rules="{
                 required: true,
@@ -289,12 +286,12 @@
                 clearable
                 placeholder=""
                 size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
+                v-model="detailform.topInfoOrg.projectTrackResponPerson"
               />
             </el-form-item>
             <el-form-item
               label="联系电话:"
-              prop="clothSize.bcPlateTypeId"
+              prop="topInfoOrg.contactMode"
               style="width: 33%"
               :rules="{
                 required: true,
@@ -306,14 +303,14 @@
                 clearable
                 placeholder=""
                 size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
+                v-model="detailform.topInfoOrg.contactMode"
               />
             </el-form-item>
           </el-row>
           <el-row>
             <el-form-item
               label="投资额（万元）:"
-              prop="clothSize.bcPlateTypeId"
+              prop="topInfor.investment"
               style="width: 33%"
               :rules="{
                 required: true,
@@ -325,14 +322,13 @@
                 clearable
                 placeholder=""
                 size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
+                v-model="detailform.topInfor.investment"
               />
             </el-form-item>
 
             <el-form-item
               label="项目地点:"
-              prop="clothSize.bcStyleId"
-              required
+              prop="topInfor.bidPerson"
               style="width: 33%"
             >
               <el-select
@@ -341,7 +337,7 @@
                 clearable
                 placeholder="请选择"
                 size="mini"
-                v-model="detailform.clothSize.bcStyleId"
+                v-model="detailform.topInfor.bidPerson"
               >
                 <el-option
                   :key="index"
@@ -354,8 +350,7 @@
 
             <el-form-item
               label="是否为重大项目:"
-              prop="clothSize.bcStyleId"
-              required
+              prop="topInfor.isMajorProject"
               style="width: 33%"
             >
               <el-select
@@ -364,7 +359,7 @@
                 clearable
                 placeholder="请选择"
                 size="mini"
-                v-model="detailform.clothSize.bcStyleId"
+                v-model="detailform.topInfor.isMajorProject"
               >
                 <el-option
                   :key="index"
@@ -379,7 +374,7 @@
             <el-form-item
             class="neirong"
               label="项目内容(最多1000字):"
-              prop="clothSize.bcPlateTypeId"
+              prop="topInfor.inforContent"
               style="width: 33% "
               :rules="{
                 required: true,
@@ -392,7 +387,7 @@
                 clearable
                 placeholder="请输入"
                 size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
+                v-model="detailform.topInfor.inforContent"
 
               />
             </el-form-item>
@@ -416,7 +411,7 @@
           </p>
 
           <el-table
-            :data="detailform.clothSizePartList"
+            :data="detailform.topInfoSectionList"
             :header-cell-style="{
               'text-align': 'center',
               'background-color': 'rgba(246,248,252,1)',
@@ -439,17 +434,12 @@
             <el-table-column
               :resizable="false"
               label="项目名称"
-              prop="part"
+              prop="topInfor.inforName"
               show-overflow-tooltip
             >
               <template slot-scope="scope">
                 <el-form-item
-                  :prop="'clothSizePartList.' + scope.$index + '.part'"
-                  :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
+
                   label-width="0"
                 >
                   <el-input
@@ -457,7 +447,7 @@
                     clearable
                     :disabled="p.actpoint === 'look'"
                     size="mini"
-                    v-model="scope.row.part"
+                    v-model="detailform.topInfor.inforName"
                   ></el-input>
                 </el-form-item>
                 <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
@@ -467,17 +457,12 @@
             <el-table-column
               :resizable="false"
               label="标段名"
-              prop="part"
+              prop="topInfoSectionList.sectionName"
               show-overflow-tooltip
             >
               <template slot-scope="scope">
                 <el-form-item
-                  :prop="'clothSizePartList.' + scope.$index + '.part'"
-                  :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
+
                   label-width="0"
                 >
                   <el-input
@@ -485,7 +470,7 @@
                     clearable
                     :disabled="p.actpoint === 'look'"
                     size="mini"
-                    v-model="scope.row.part"
+                    v-model="detailform.topInfoSectionList.sectionName"
                   ></el-input>
                 </el-form-item>
                 <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
@@ -511,8 +496,8 @@
           </el-table>
 
           <el-row style="text-align: center">
-            <el-button type="primary">保存</el-button>
-            <el-button>提交</el-button>
+            <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
+            <el-button  @click="submit">提交</el-button>
           </el-row>
           </el-row>
         </el-form>
@@ -529,29 +514,52 @@ export default {
     return {
       options1: [{ label: "值", value: "111" }],
       detailform: {
-        clothSize: {
-          id: "",
-          bcTypeId: "",
-          bcStyleId: "",
-          bcPlateTypeId: "",
-          bcTypeName: "",
-          bcStyleName: "",
-          bcPlateTypeName: "",
-          isDelete: 0,
-          createTime: "",
-          createUserId: 0,
-          createUserName: "",
-          createOrgId: 0,
-          createOrgName: "",
+        topInfor:{
+
         },
-        clothSizePartList: [],
+        topInfoOrg:{
+
+        },
+        topInfoSectionList:[]
+        // topInfoSiteList:{
+
+        // },
+
+
+
       },
 
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
+      sizeform:{projectScale:'',sectionName:''}
     };
   },
   computed: {},
   methods: {
+    saveInfo(formName){
+       this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.$http
+            .post(
+              "/api/topInfo/TopInfor/detail/save",
+              JSON.stringify(this.detailform),
+              { useJson: true }
+            )
+            .then((res) => {
+              if (res.data.code === 0) {
+                this.$message({
+                  message: "保存成功",
+                  type: "success",
+                });
+                this.$refs[formName].resetFields();
+              }
+
+            });
+        } else {
+          this.$message.error("请添加必填项");
+          return false;
+        }
+      });
+    },
     pageGo() {
       this.searchParam.current = this.current;
       this.getuserlist();
@@ -615,8 +623,8 @@ export default {
       this.type = type;
       if (type === "add") {
         this.resetinfo();
-        this.title = "新增";
-        this.detailform.clothSizePartList.push(this.sizeform);
+
+        this.detailform.topInfoSectionList.push(this.sizeform);
         // this.dialogVisibleAdd = true
       }
     },

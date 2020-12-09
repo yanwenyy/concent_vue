@@ -18,6 +18,7 @@
         <!-- 注意：这里就是topNavState状态作用之处，当该值与router的home路由的path相等时加载相应菜单组 -->
         <template v-if="route.path === $store.state.topNavState">
           <template v-for="(item,index) in route.children">
+
             <!-- 非叶子节点 -->
             <el-submenu :index="index+''" v-bind:key="index" v-if="!item.leaf&&item.menushow">
               <template slot="title">

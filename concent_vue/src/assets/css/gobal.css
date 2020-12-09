@@ -333,7 +333,6 @@ p {
 
 .el-col-21 .el-button span {
   line-height: 16px;
-
 }
 .el-cascader-node__postfix {
   top: 8px;
@@ -368,70 +367,53 @@ pre {
 }
 
 /* 新加的 */
-.gcform .el-form-item{
-    width:390px;
-    margin: 20px;
-  }
-  .el-form-item__label{
-    width:390px;
-  }
-  .gcform .el-input{
-    width:100% !important;
-  }
-  .col2{
-    width:820px !important;
-    margin: 20px !important;
-  }
-  .col2 .el-form-item__label{
-   width:820px !important;
-  }
-  .col3{
-    width:1250px !important;
-    margin: 20px !important;
-  }
-  .col3 .el-form-item__label{
-    width:1250px !important;
-  }
-.el-table-column{
+.gcform .el-form-item {
+  width: 390px;
+  margin: 20px;
+}
+.el-form-item__label {
+  width: 390px;
+}
+.gcform .el-input {
+  width: 100% !important;
+}
+.col2 {
+  width: 820px !important;
+  margin: 20px !important;
+}
+.col2 .el-form-item__label {
+  width: 820px !important;
+}
+.col3 {
+  width: 1250px !important;
+  margin: 20px !important;
+}
+.col3 .el-form-item__label {
+  width: 1250px !important;
+}
+.el-table-column {
   width: 20%;
 }
-.el-button--primary.is-plain{
-   background: #EBF0F9 !important;
-  color:#0A469D !important;
-  border: 1px solid #08459C !important;
+.el-button--primary.is-plain {
+  background: #ebf0f9 !important;
+  color: #0a469d !important;
+  border: 1px solid #08459c !important;
+  width: auto;
+  height: auto;
 }
-/* .el-button--primary.is-plain:hover{
-  background: #0A469D !important;
-  color: #EBF0F9 !important;
-<<<<<<< HEAD
-} */
-.el-button--primary:hover{
-   background: #0A469D !important;
-  color: #EBF0F9 !important;
+.el-button--primary:hover {
+  background: #0a469d !important;
+  color: #ebf0f9 !important;
 }
-.gcform .el-form-item{
+.gcform .el-form-item {
   width: 100%;
 }
-.el-menu.el-menu--horizontal{
+.el-menu.el-menu--horizontal {
   margin-left: 75px;
 }
-/* .el-menu.el-menu--horizontal li{
-    font-size: 13px;
-    padding: 0px 6px;
-    width: 100px;
-    border-bottom: 3px solid #032d86;
-    text-align: center;
-  } */
-  /* .el-menu-item.is-active {
-    border-bottom: 3px solid #032d86 !important;
-    color: #032d86 !important;
-    background: #EBF0F9 !important;
-  } */
-  .el-menu-item.is-active  {
-    border-bottom: 3px solid #032d86 !important;
-    color: #032d86 !important;
-    background: #EBF0F9 !important;
-  }
 
-
-
+.el-menu-item.biaoqian.is-active {
+  border-bottom: 3px solid #032d86 !important;
+  color: #032d86 !important;
+  background: #ebf0f9 !important;
+}
