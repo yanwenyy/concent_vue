@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div >
         <el-card class="box-card">
-      <div slot="header" class="clearfix">
+      <div slot="header" class="clearfix" >
         <span style="color: #2a2a7d"><b>资审管理详情</b></span>
         <el-button style="float: right; padding: 10px 20px ;border:1px solid #ddd;color: black" type="text">返回</el-button>
       </div>
 
-      <div style="height:900px">
+      <div style="overflow: auto;max-height: 440px;padding-bottom: 20px">
     <el-form
       :inline="false"
       :model="detailform"
@@ -365,20 +365,9 @@
                 v-model="detailform.clothSize.bcPlateTypeId"
               />
             </el-form-item>
-
-
-
-
-
-
-
-
-
-
-
      </el-row>
 
-     <p style="overflow:hidden;"><span style="float:left;">标段信息: </span>   <el-button
+     <p style="overflow:hidden;margin-right: 30px"><span style="float:left;">标段信息: </span>   <el-button
             @click="show('add')"
             size="mini"
             style="float:right;width: 70px;height: 32px;background: #5C8BFA;font-size: 16px;"
@@ -394,7 +383,7 @@
           border
           class="clothSizeTable"
           ref="table"
-          style="width: 100%;min-height: calc(100vh - 370px);"
+          style="width: 98%;"
         >
          <el-table-column
           :width="150"
@@ -463,9 +452,13 @@
             </template>
           </el-table-column>
         </el-table>
-
+      <el-row style="text-align: center;margin-top: 10px">
+        <el-button type="primary">保存</el-button>
+        <el-button>提交</el-button>
+      </el-row>
 
     </el-form>
+
     </div>
 </el-card>
   </div>
