@@ -1,3 +1,4 @@
+<!--标段信息列表-->
 <template>
   <div>
     <div style="width: 100%; overflow: hidden">
@@ -10,7 +11,6 @@
       <div style="float: right">
         <el-button @click="reset" type="primary" plain>重置</el-button>
         <el-button @click="search" type="primary" plain>查询</el-button>
-        <el-button @click="exportdata" type="primary" plain>导出</el-button>
       </div>
     </div>
 
