@@ -64,11 +64,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-<<<<<<< HEAD
                 v-model="searchform.projectname"
-=======
-                v-model="searchform.projectName"
->>>>>>> 8cbc7c318980e8fe506138caa9c266befb48aaa6
                 size="mini"
               />
             </div>
@@ -89,11 +85,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-<<<<<<< HEAD
-                v-model="searchform.gclb"
-=======
                 v-model="searchform.enginTypeFirstName"
->>>>>>> 8cbc7c318980e8fe506138caa9c266befb48aaa6
                 size="mini"
               />
             </div>
@@ -114,11 +106,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-<<<<<<< HEAD
-                v-model="searchform.jsdw"
-=======
                 v-model="searchform.constructionOrg"
->>>>>>> 8cbc7c318980e8fe506138caa9c266befb48aaa6
                 size="mini"
               />
             </div>
@@ -139,11 +127,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-<<<<<<< HEAD
-                v-model="searchform.gglb"
-=======
                 v-model="searchform.noticeTypeName"
->>>>>>> 8cbc7c318980e8fe506138caa9c266befb48aaa6
                 size="mini"
               />
             </div>
@@ -163,16 +147,6 @@
           <!-- <template slot-scope="scope">{{
             scope.row.state === '0' ? '草稿' : '已上报'
           }}</template> -->
-<<<<<<< HEAD
-          <template slot="header" slot-scope="scope">
-            <span>截止日期</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.jzrq"
-                size="mini"
-              />
-=======
                     <template slot="header" slot-scope="scope">
             <span>资审文件发售截止日期</span>
             <div>
@@ -181,7 +155,6 @@
                 type="date"
                 placeholder="选择日期">
               </el-date-picker>
->>>>>>> 8cbc7c318980e8fe506138caa9c266befb48aaa6
             </div>
           </template>
                      <template slot-scope="scope">
@@ -198,15 +171,6 @@
         >
                   <template slot="header" slot-scope="scope">
             <span>状态</span>
-<<<<<<< HEAD
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.zt"
-                size="mini"
-              />
-            </div>
-=======
                     <el-select v-model="searchform.status" placeholder="请选择">
                       <el-option
                         key="0"
@@ -219,7 +183,6 @@
                         value="1">
                       </el-option>
                     </el-select>
->>>>>>> 8cbc7c318980e8fe506138caa9c266befb48aaa6
           </template>
                      <template slot-scope="scope">
      {{scope.row.zt}}
@@ -237,11 +200,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-<<<<<<< HEAD
-                v-model="searchform.tbr"
-=======
                 v-model="searchform.username"
->>>>>>> 8cbc7c318980e8fe506138caa9c266befb48aaa6
                 size="mini"
               />
             </div>
@@ -263,13 +222,6 @@
           <template slot="header" slot-scope="scope">
             <span>填报时间</span>
             <div>
-<<<<<<< HEAD
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.tbsj"
-                size="mini"
-              />
-=======
               <div>
                 <el-date-picker
                   v-model="searchform.createtime"
@@ -277,7 +229,6 @@
                   placeholder="选择日期">
                 </el-date-picker>
               </div>
->>>>>>> 8cbc7c318980e8fe506138caa9c266befb48aaa6
             </div>
           </template>
                      <template slot-scope="scope">
@@ -310,16 +261,6 @@ export default {
       searchform: {
         current: 1,
         size: 10,
-<<<<<<< HEAD
-        projectname: "",
-        gclb: "",
-        jsdw: "",
-        gglb: "",
-        jzrq: "",
-        zt: "",
-        tbr: "",
-        tbsj: "",
-=======
         projectName: '',
         enginTypeFirstName: '',
         constructionOrg: '',
@@ -327,7 +268,6 @@ export default {
         status: '',
         username: '',
         saleTime: ''
->>>>>>> 8cbc7c318980e8fe506138caa9c266befb48aaa6
       },
       menus: [],
       multipleSelection: [],
@@ -335,10 +275,6 @@ export default {
     };
   },
   methods: {
-<<<<<<< HEAD
-    search() {
-      this.showinput = false;
-=======
     statusFormat(row,column){
       console.log(row.verify.uuid);
       var statusW;
@@ -354,7 +290,6 @@ export default {
     },
     search(){
       this.showinput = false
->>>>>>> 8cbc7c318980e8fe506138caa9c266befb48aaa6
     },
     add() {
       let p = { actpoint: "add" };
@@ -413,12 +348,8 @@ export default {
     getData() {
       this.$http
         .post(
-<<<<<<< HEAD
-          "/api" + this.$route.path.substr(0, this.$route.path.length - 1),
-=======
           '/api/topInfo/Verify/list/loadPageData',
           // '/api' + this.$route.path.substr(0, this.$route.path.length - 1),
->>>>>>> 8cbc7c318980e8fe506138caa9c266befb48aaa6
           this.searchform
         )
         .then((res) => {

@@ -10,21 +10,21 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/': {
-        // target: 'http://aa.dev.com:8080/',
-        // target: 'http://  119.3.172.122:8080/',
-
-        target: 'http://0.0.0.0:8080/',
-        // target: 'http://124.127.137.229:8180/',
-        // target: 'http://192.9.145.12:8081/',
-        // target: "http://192.9.145.21:8081/",
-        // target: "http://10.3.120.23:8081/",
-        // target: "http://192.168.1.10:8081/",
+      '/api': {
+        target: 'http://192.168.70.155:8090/',
         changeOrigin: true,
         pathRewrite: {
-          '^/': '/'
+          '^/api': ''
         }
-      }
+      },
+      '/jsonapi': {
+        target: 'http://36.112.155.134:9901/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/jsonapi': '/'
+        }
+      // http://36.112.155.134:9901
+    }
     },
 
     // Various Dev Server settings

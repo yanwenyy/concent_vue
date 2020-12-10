@@ -16,7 +16,7 @@
           ref="detailform"
           style="background: white;height:ceil(100%-300px)"
         >
-          <el-row>
+<el-row>
             <el-form-item
               label="项目板块:"
               prop="topInfor.moduleId"
@@ -40,7 +40,7 @@
               </el-select>
             </el-form-item>
             <el-form-item
-              label="工程类别:"
+              label="工程类别(一级):"
               prop="topInfor.enginTypeFirstId"
               style="width: 33%"
             >
@@ -60,6 +60,30 @@
                 ></el-option>
               </el-select>
             </el-form-item>
+
+                        <el-form-item
+              label="工程类别(二级):"
+              prop="topInfor.enginTypeSecondId"
+              style="width: 33%"
+            >
+              <el-select
+                :disabled="p.actpoint === 'look'"
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="detailform.topInfor.enginTypeSecondId"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.label"
+                  :value="item.value"
+                  v-for="(item, index) in options1"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+</el-row>
+<el-row>
             <el-form-item
               label="项目名称:"
               prop="topInfor.inforName"
@@ -76,8 +100,8 @@
                 v-model="detailform.topInfor.inforName"
               />
             </el-form-item>
-          </el-row>
-          <el-row>
+
+
             <el-form-item
               label="建设单位:"
               prop="topInfor.constructionOrg"
@@ -116,9 +140,9 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-
+</el-row>
             <!-- 下拉 -->
-
+<el-row>
             <el-form-item
               label="预计招标时间:"
               prop="topInfor.planBidTime"
@@ -140,9 +164,9 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-          </el-row>
+
           <!-- 下拉 -->
-          <el-row>
+
             <el-form-item
               label="所属线路:"
               prop="topInfor.belongLineId"
@@ -181,6 +205,8 @@
                 v-model="detailform.topInfor.bidPerson"
               />
             </el-form-item>
+            </el-row>
+
             <el-form-item
               label="设计单位:"
               prop="topInfor.designOrg"
@@ -196,8 +222,8 @@
                 v-model="detailform.topInfor.designOrg"
               />
             </el-form-item>
-          </el-row>
-          <el-row>
+
+
             <el-form-item
               label="招标代理公司:"
               prop="topInfor.bidAgentCompany"
@@ -249,8 +275,8 @@
                 v-model="detailform.topInfor.verifyTypeId"
               />
             </el-form-item>
-          </el-row>
-          <el-row>
+
+
             <el-form-item
               label="资金来源:"
               prop="topInfor.investment"
@@ -260,6 +286,7 @@
                 :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
+                multiple
                 placeholder="请选择"
                 size="mini"
                 v-model="detailform.topInfor.investment"
@@ -306,8 +333,8 @@
                 v-model="detailform.topInfoOrg.contactMode"
               />
             </el-form-item>
-          </el-row>
-          <el-row>
+
+
             <el-form-item
               label="投资额（万元）:"
               prop="topInfor.investment"
@@ -369,7 +396,7 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-          </el-row>
+
           <el-row>
             <el-form-item
             class="neirong"
@@ -512,7 +539,8 @@ export default {
   name: "详情",
   data() {
     return {
-      options1: [{ label: "值", value: "111" }],
+      options1: [{ label: "工程承包", value: "1" },{ label: "勘察设计", value: "2" }],
+      options2: [{ label: "勘察设计", value: "2" }],
       detailform: {
         topInfor:{
 

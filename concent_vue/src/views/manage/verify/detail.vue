@@ -426,17 +426,10 @@
             </template>
           </el-table-column>
         </el-table>
-<<<<<<< HEAD
           <el-row style="text-align: center">
             <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
             <el-button  @click="submit">提交</el-button>
           </el-row>
-=======
-      <el-row style="text-align: center;margin-top: 10px">
-        <el-button type="primary">保存</el-button>
-        <el-button>提交</el-button>
-      </el-row>
->>>>>>> 8cbc7c318980e8fe506138caa9c266befb48aaa6
 
     </el-form>
 
@@ -450,11 +443,6 @@ export default {
   name: '详情',
   data() {
     return {
-<<<<<<< HEAD
-
-=======
-      options1: [{label: '值', value: '111'}],
->>>>>>> 8cbc7c318980e8fe506138caa9c266befb48aaa6
       detailform: {
         'Verify': {
 
