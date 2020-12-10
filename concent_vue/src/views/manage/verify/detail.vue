@@ -450,11 +450,7 @@ export default {
   name: '详情',
   data() {
     return {
-<<<<<<< HEAD
-
-=======
       options1: [{label: '值', value: '111'}],
->>>>>>> 8cbc7c318980e8fe506138caa9c266befb48aaa6
       detailform: {
         'Verify': {
 
