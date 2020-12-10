@@ -30,7 +30,7 @@
       </el-form-item>
         <el-form-item
         label="工程类别（一级）:"
-        prop="clothSize.enginTypeFirstName"
+        prop="Verify.bcTypeId"
         required
         style="width: 33%"
       >
