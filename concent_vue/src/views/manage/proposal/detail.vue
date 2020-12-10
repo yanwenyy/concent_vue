@@ -34,8 +34,8 @@
               >
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
+                  :label="item.categoryName"
+                  :value="item.categoryCode"
                   v-for="(item, index) in options1"
                 ></el-option>
               </el-select>
@@ -611,19 +611,16 @@ export default {
       });
     },
     chg(val) {
-      this.errorMsg = Math.random();
-      this.errorMsg0 = Math.random();
-      this.$nextTick(() => {
-        this.errorMsg = "";
-        this.errorMsg0 = "";
-      });
-      this.detailform.clothSize.bcStyleId = "";
-      this.detailform.clothSize.bcPlateTypeId = "";
+        var name = ''
       this.options1.forEach((item) => {
-        if (val === item.value) {
-          this.options2 = item.children;
+        if (val === item.categoryCode) {
+          name = item.categoryName
+          this.options2 = item.sysCategoryDetailList
         }
-      });
+      })
+      console.log(val)
+      console.log(name)
+
     },
     chg1() {
       this.errorMsg = Math.random();
