@@ -32,38 +32,48 @@
         label="工程类别（一级）:"
         prop="clothSize.enginTypeFirstName"
         required
-        style="width: 33%
-              "
+        style="width: 33%"
       >
-<!--        <el-select-->
-<!--          :disabled="p.actpoint==='look'"-->
-<!--          @change="chg"-->
-<!--          clearable-->
-<!--          filterable-->
-<!--          placeholder="请选择"-->
-<!--          size="mini"-->
-<!--          v-model="detailform.clothSize.bcTypeId"-->
-<!--        >-->
-<!--          <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options1"></el-option>-->
-<!--        </el-select>-->
-          <el-input
+       <el-select
+         :disabled="p.actpoint==='look'"
+         @change="chg"
+         clearable
+         filterable
+         placeholder="请选择"
+         size="mini"
+         v-model="detailform.Verify.bcTypeId"
+       >
+         <el-option
+         :key="index"
+         :label="item.categoryName"
+         :value="item.categoryCode"
+         v-for="(item,index) in options1">
+         </el-option>
+       </el-select>
+          <!-- <el-input
             clearable
             size="mini"
             v-model="detailform.Verify.enginTypeFirstName"
-          />
+          /> -->
       </el-form-item>
       <el-form-item
-        label="工程类别（一级）:"
+        label="工程类别（二级）:"
         prop="clothSize.enginTypeSecondName"
         required
         style="width: 33%
               "
       >
-        <el-input
-          clearable
-          size="mini"
-          v-model="detailform.Verify.enginTypeSecondName"
-        />
+       <el-select
+         :disabled="p.actpoint==='look'"
+         @change="chg"
+         clearable
+         filterable
+         placeholder="请选择"
+         size="mini"
+         v-model="detailform.Verify.bcTypeId"
+       >
+         <el-option :key="index" :label="item.categoryName" :value="item.categoryCode" v-for="(item,index) in options2"></el-option>
+       </el-select>
       </el-form-item>
 
 </el-row>
@@ -426,17 +436,10 @@
             </template>
           </el-table-column>
         </el-table>
-<<<<<<< HEAD
           <el-row style="text-align: center">
             <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
             <el-button  @click="submit">提交</el-button>
           </el-row>
-=======
-      <el-row style="text-align: center;margin-top: 10px">
-        <el-button type="primary">保存</el-button>
-        <el-button>提交</el-button>
-      </el-row>
->>>>>>> 8cbc7c318980e8fe506138caa9c266befb48aaa6
 
     </el-form>
 
@@ -450,7 +453,7 @@ export default {
   name: '详情',
   data() {
     return {
-      options1: [{label: '值', value: '111'}],
+      options2:[],
       detailform: {
         'Verify': {
 
@@ -514,19 +517,16 @@ export default {
     },
 
     chg(val) {
-      this.errorMsg = Math.random()
-      this.errorMsg0 = Math.random()
-      this.$nextTick(() => {
-        this.errorMsg = ''
-        this.errorMsg0 = ''
-      })
-      this.detailform.clothSize.bcStyleId = ''
-      this.detailform.clothSize.bcPlateTypeId = ''
+        var name = ''
       this.options1.forEach((item) => {
-        if (val === item.value) {
-          this.options2 = item.children
+        if (val === item.categoryCode) {
+          name = item.categoryName
+          this.options2 = item.sysCategoryDetailList
         }
       })
+      console.log(val)
+      console.log(name)
+
     },
     chg1() {
       this.errorMsg = Math.random()

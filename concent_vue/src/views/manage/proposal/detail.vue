@@ -3,7 +3,7 @@
     <el-card>
           <div slot="header" class="clearfix">
         <span style="color: #2a2a7d"><b>信息管理详情</b></span>
-        <el-button style="float: right; padding: 10px 20px ;border:1px solid #ddd;color: black;position:fixe" type="text">返回</el-button>
+        <el-button @click="back" style="float: right; padding: 10px 20px ;border:1px solid #ddd;color: black;position:fixe" type="text">返回</el-button>
       </div>
       </el-card>
     <el-card class="box-card">
@@ -16,7 +16,7 @@
           ref="detailform"
           style="background: white;height:ceil(100%-300px)"
         >
-          <el-row>
+<el-row>
             <el-form-item
               label="项目板块:"
               prop="topInfor.moduleId"
@@ -24,6 +24,7 @@
             >
               <el-select
                 :disabled="p.actpoint === 'look'"
+                @change="chg"
                 clearable
                 filterable
                 style="width: 100%"
@@ -33,14 +34,14 @@
               >
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
+                  :label="item.categoryName"
+                  :value="item.categoryCode"
                   v-for="(item, index) in options1"
                 ></el-option>
               </el-select>
             </el-form-item>
             <el-form-item
-              label="工程类别:"
+              label="工程类别(一级):"
               prop="topInfor.enginTypeFirstId"
               style="width: 33%"
             >
@@ -60,6 +61,30 @@
                 ></el-option>
               </el-select>
             </el-form-item>
+
+                        <el-form-item
+              label="工程类别(二级):"
+              prop="topInfor.enginTypeSecondId"
+              style="width: 33%"
+            >
+              <el-select
+                :disabled="p.actpoint === 'look'"
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="detailform.topInfor.enginTypeSecondId"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.label"
+                  :value="item.value"
+                  v-for="(item, index) in options1"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+</el-row>
+<el-row>
             <el-form-item
               label="项目名称:"
               prop="topInfor.inforName"
@@ -76,8 +101,8 @@
                 v-model="detailform.topInfor.inforName"
               />
             </el-form-item>
-          </el-row>
-          <el-row>
+
+
             <el-form-item
               label="建设单位:"
               prop="topInfor.constructionOrg"
@@ -116,9 +141,9 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-
+</el-row>
             <!-- 下拉 -->
-
+<el-row>
             <el-form-item
               label="预计招标时间:"
               prop="topInfor.planBidTime"
@@ -140,9 +165,9 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-          </el-row>
+
           <!-- 下拉 -->
-          <el-row>
+
             <el-form-item
               label="所属线路:"
               prop="topInfor.belongLineId"
@@ -181,6 +206,8 @@
                 v-model="detailform.topInfor.bidPerson"
               />
             </el-form-item>
+            </el-row>
+<el-row>
             <el-form-item
               label="设计单位:"
               prop="topInfor.designOrg"
@@ -196,8 +223,8 @@
                 v-model="detailform.topInfor.designOrg"
               />
             </el-form-item>
-          </el-row>
-          <el-row>
+
+
             <el-form-item
               label="招标代理公司:"
               prop="topInfor.bidAgentCompany"
@@ -233,6 +260,8 @@
                 ></el-option>
               </el-select>
             </el-form-item>
+            </el-row>
+            <el-row>
             <el-form-item
               label="资审方式:"
               prop="topInfor.verifyTypeId"
@@ -249,8 +278,8 @@
                 v-model="detailform.topInfor.verifyTypeId"
               />
             </el-form-item>
-          </el-row>
-          <el-row>
+
+
             <el-form-item
               label="资金来源:"
               prop="topInfor.investment"
@@ -260,6 +289,7 @@
                 :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
+                multiple
                 placeholder="请选择"
                 size="mini"
                 v-model="detailform.topInfor.investment"
@@ -289,6 +319,8 @@
                 v-model="detailform.topInfoOrg.projectTrackResponPerson"
               />
             </el-form-item>
+            </el-row>
+            <el-row>
             <el-form-item
               label="联系电话:"
               prop="topInfoOrg.contactMode"
@@ -306,8 +338,8 @@
                 v-model="detailform.topInfoOrg.contactMode"
               />
             </el-form-item>
-          </el-row>
-          <el-row>
+
+
             <el-form-item
               label="投资额（万元）:"
               prop="topInfor.investment"
@@ -347,7 +379,8 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-
+</el-row>
+<el-row>
             <el-form-item
               label="是否为重大项目:"
               prop="topInfor.isMajorProject"
@@ -369,7 +402,7 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-          </el-row>
+</el-row>
           <el-row>
             <el-form-item
             class="neirong"
@@ -512,7 +545,7 @@ export default {
   name: "详情",
   data() {
     return {
-      options1: [{ label: "值", value: "111" }],
+      options2: [],
       detailform: {
         topInfor:{
 
@@ -533,7 +566,11 @@ export default {
       sizeform:{projectScale:'',sectionName:''}
     };
   },
-  computed: {},
+  computed: {
+    options1 () {
+      return this.$store.state.optiondata
+    },
+  },
   methods: {
     saveInfo(formName){
        this.$refs[formName].validate((valid) => {
@@ -568,21 +605,22 @@ export default {
     partchg(row) {
       row.showinput = false;
     },
-
+    back(){
+        this.$router.push({
+        path: "/manage/proposal/list"
+      });
+    },
     chg(val) {
-      this.errorMsg = Math.random();
-      this.errorMsg0 = Math.random();
-      this.$nextTick(() => {
-        this.errorMsg = "";
-        this.errorMsg0 = "";
-      });
-      this.detailform.clothSize.bcStyleId = "";
-      this.detailform.clothSize.bcPlateTypeId = "";
+        var name = ''
       this.options1.forEach((item) => {
-        if (val === item.value) {
-          this.options2 = item.children;
+        if (val === item.categoryCode) {
+          name = item.categoryName
+          this.options2 = item.sysCategoryDetailList
         }
-      });
+      })
+      console.log(val)
+      console.log(name)
+
     },
     chg1() {
       this.errorMsg = Math.random();
@@ -615,7 +653,7 @@ export default {
       console.log(index);
       var _self = this;
       // this.$utils.isdel(function() {
-      _self.detailform.clothSizePartList.splice(index, 1);
+      _self.detailform.topInfoSectionList.splice(index, 1);
       // })
     },
 
