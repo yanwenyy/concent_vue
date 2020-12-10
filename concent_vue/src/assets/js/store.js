@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const state = {
+  wholetreeNew:[],
+  categorys:[],
   optiondata:[],
   dialogState: 'edit',
   num: 0,
@@ -30,6 +32,10 @@ const mutations = {
     Vue.prototype.$http.get('/jsonapi/System/system/category/v1.0/wholetreeNew').then(res => {
       state.optiondata = res.data.data
         })
+    //http://36.112.155.134:9901/System/system/category/v1.0/categorys
+    // Vue.prototype.$http.get('/jsonapi/System/system/category/v1.0/categorys').then(res => {
+    //   state.categorys = res.data.data
+    // })
   },
 
 }
