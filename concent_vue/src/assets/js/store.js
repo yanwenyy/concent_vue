@@ -27,7 +27,7 @@ const getters = {
 const mutations = {
   setToolData(state, data) {
     // 添加标签按钮，如果当前路由已经打开，则不再重复添加
-    Vue.prototype.$http.post('/jsonpapi/System/system/category/v1.0/wholetreeNew').then(res => {
+    Vue.prototype.$http.get('/jsonapi/System/system/category/v1.0/wholetreeNew').then(res => {
       state.optiondata = res.data.data
         })
   },

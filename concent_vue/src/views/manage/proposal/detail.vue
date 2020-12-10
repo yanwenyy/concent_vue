@@ -3,7 +3,7 @@
     <el-card>
           <div slot="header" class="clearfix">
         <span style="color: #2a2a7d"><b>信息管理详情</b></span>
-        <el-button style="float: right; padding: 10px 20px ;border:1px solid #ddd;color: black;position:fixe" type="text">返回</el-button>
+        <el-button @click="back" style="float: right; padding: 10px 20px ;border:1px solid #ddd;color: black;position:fixe" type="text">返回</el-button>
       </div>
       </el-card>
     <el-card class="box-card">
@@ -24,6 +24,7 @@
             >
               <el-select
                 :disabled="p.actpoint === 'look'"
+                @change="chg"
                 clearable
                 filterable
                 style="width: 100%"
@@ -206,7 +207,7 @@
               />
             </el-form-item>
             </el-row>
-
+<el-row>
             <el-form-item
               label="设计单位:"
               prop="topInfor.designOrg"
@@ -259,6 +260,8 @@
                 ></el-option>
               </el-select>
             </el-form-item>
+            </el-row>
+            <el-row>
             <el-form-item
               label="资审方式:"
               prop="topInfor.verifyTypeId"
@@ -316,6 +319,8 @@
                 v-model="detailform.topInfoOrg.projectTrackResponPerson"
               />
             </el-form-item>
+            </el-row>
+            <el-row>
             <el-form-item
               label="联系电话:"
               prop="topInfoOrg.contactMode"
@@ -374,7 +379,8 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-
+</el-row>
+<el-row>
             <el-form-item
               label="是否为重大项目:"
               prop="topInfor.isMajorProject"
@@ -396,7 +402,7 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-
+</el-row>
           <el-row>
             <el-form-item
             class="neirong"
@@ -539,8 +545,7 @@ export default {
   name: "详情",
   data() {
     return {
-      options1: [{ label: "工程承包", value: "1" },{ label: "勘察设计", value: "2" }],
-      options2: [{ label: "勘察设计", value: "2" }],
+      options2: [],
       detailform: {
         topInfor:{
 
@@ -561,7 +566,11 @@ export default {
       sizeform:{projectScale:'',sectionName:''}
     };
   },
-  computed: {},
+  computed: {
+    options1 () {
+      return this.$store.state.optiondata
+    },
+  },
   methods: {
     saveInfo(formName){
        this.$refs[formName].validate((valid) => {
@@ -596,7 +605,11 @@ export default {
     partchg(row) {
       row.showinput = false;
     },
-
+    back(){
+        this.$router.push({
+        path: "/manage/proposal/list"
+      });
+    },
     chg(val) {
       this.errorMsg = Math.random();
       this.errorMsg0 = Math.random();
@@ -643,7 +656,7 @@ export default {
       console.log(index);
       var _self = this;
       // this.$utils.isdel(function() {
-      _self.detailform.clothSizePartList.splice(index, 1);
+      _self.detailform.topInfoSectionList.splice(index, 1);
       // })
     },
 

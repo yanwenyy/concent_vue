@@ -18,10 +18,10 @@ module.exports = {
         }
       },
       '/jsonapi': {
-        target: 'http://36.112.155.134:9901/',
+        target: 'http://36.112.155.134:9901',
         changeOrigin: true,
         pathRewrite: {
-          '^/jsonapi': '/'
+          '^/jsonapi': '/jsonapi'
         }
       // http://36.112.155.134:9901
     }

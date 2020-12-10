@@ -348,7 +348,7 @@ export default {
     getData() {
       this.$http
         .post(
-          '/api/topInfo/Verify/list/loadPageData',
+          '/api/api/topInfo/Verify/list/loadPageData',
           // '/api' + this.$route.path.substr(0, this.$route.path.length - 1),
           this.searchform
         )
@@ -385,8 +385,8 @@ export default {
     // list通用方法结束
   },
   created() {
-    this.getMenus();
-    this.getOrgTree();
+    // this.getMenus();
+    // this.getOrgTree();
     this.getData();
   },
 };
