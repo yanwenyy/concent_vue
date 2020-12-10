@@ -64,11 +64,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-<<<<<<< HEAD
-                v-model="searchform.projectName"
-=======
                 v-model="searchform.projectname"
->>>>>>> 46214a37d45350250cb4f529704817c31502fbc5
                 size="mini"
               />
             </div>
@@ -352,11 +348,7 @@ export default {
     getData() {
       this.$http
         .post(
-<<<<<<< HEAD
-          '/api/topInfo/Verify/list/loadPageData',
-=======
           '/api/api/topInfo/Verify/list/loadPageData',
->>>>>>> 46214a37d45350250cb4f529704817c31502fbc5
           // '/api' + this.$route.path.substr(0, this.$route.path.length - 1),
           this.searchform
         )
