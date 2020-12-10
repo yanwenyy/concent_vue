@@ -51,6 +51,7 @@
           show-overflow-tooltip
           type="index"
         >
+
         </el-table-column>
 
         <el-table-column
@@ -59,19 +60,19 @@
           prop="topInfor.inforName"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
+                  <template slot="header" slot-scope="scope">
             <span>项目名称</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="searchform.projectname"
+                v-model="searchform.projectName"
                 size="mini"
               />
             </div>
           </template>
-           <template slot-scope="scope">
-     {{scope.row.xmmc}}
-      </template>
+          <template slot-scope="scope">
+            {{scope.row.inforName}}
+          </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -80,7 +81,7 @@
           prop="topInfor.enginTypeFirstName"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
+                  <template slot="header" slot-scope="scope">
             <span>工程类别</span>
             <div>
               <el-input
@@ -90,9 +91,9 @@
               />
             </div>
           </template>
-           <template slot-scope="scope">
-     {{scope.row.gclb}}
-      </template>
+          <template slot-scope="scope">
+            {{scope.row.enginTypeFirstName}}
+          </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -111,9 +112,9 @@
               />
             </div>
           </template>
-                     <template slot-scope="scope">
-     {{scope.row.jsdw}}
-      </template>
+          <template slot-scope="scope">
+            {{scope.row.constructionOrg}}
+          </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -132,10 +133,9 @@
               />
             </div>
           </template>
-
-                   <template slot-scope="scope">
-     {{scope.row.gglb}}
-      </template>
+          <template slot-scope="scope">
+            {{scope.row.noticeTypeName}}
+          </template>
         </el-table-column>
         <el-table-column
           :width="180"
@@ -157,9 +157,9 @@
               </el-date-picker>
             </div>
           </template>
-                     <template slot-scope="scope">
-     {{scope.row.jzrq}}
-      </template>
+          <template slot-scope="scope">
+            {{scope.row.saleTime}}
+          </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -184,9 +184,9 @@
                       </el-option>
                     </el-select>
           </template>
-                     <template slot-scope="scope">
-     {{scope.row.zt}}
-      </template>
+          <template slot-scope="scope">
+            {{scope.row.uuid}}
+          </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -205,9 +205,9 @@
               />
             </div>
           </template>
-                     <template slot-scope="tbr">
-     {{scope.row.gclb}}
-      </template>
+          <template slot-scope="scope">
+            {{scope.row.username}}
+          </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -231,9 +231,9 @@
               </div>
             </div>
           </template>
-                     <template slot-scope="scope">
-     {{scope.row.tbsj}}
-      </template>
+          <template slot-scope="scope">
+            {{scope.row.createtime}}
+          </template>
         </el-table-column>
       </el-table>
       <el-pagination
@@ -271,8 +271,8 @@ export default {
       },
       menus: [],
       multipleSelection: [],
-      orgTree: [],
-    };
+      orgTree: []
+    }
   },
   methods: {
     statusFormat(row,column){
@@ -291,105 +291,106 @@ export default {
     search(){
       this.showinput = false
     },
-    add() {
-      let p = { actpoint: "add" };
-      this.$router.push({
-        path: "./detail/",
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
-      });
+    add(){
+
+       let p = { actpoint: 'add',selectrow:this.multipleSelection[0]}
+      alert(JSON.stringify(p));
+       this.$router.push({
+        path: './detail/',
+        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+      })
     },
     // 查看
     rowshow(row) {
-      let p = { actpoint: "look", instid: row.uuid };
+      let p = { actpoint: 'look', instid: row.uuid }
       this.$router.push({
-        path: "./detail/",
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
-      });
+        path: './detail/',
+        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+      })
     },
     show() {
       if (this.multipleSelection.length !== 1) {
-        this.$message.info("请选择一条记录进行查看操作！");
-        return false;
+        this.$message.info('请选择一条记录进行查看操作！')
+        return false
       }
-      let p = { actpoint: "look", instid: this.multipleSelection[0].uuid };
+      let p = { actpoint: 'look', instid: this.multipleSelection[0].uuid }
       this.$router.push({
-        path: "../detail/",
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
-      });
+        path: '../detail/',
+        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+      })
     }, // list通用方法开始
     handleSizeChange(val) {
-      this.searchform.size = 10;
-      this.getData();
+      this.searchform.size = val
+      this.getData()
     },
     handleCurrentChange(val) {
-      this.searchform.current = 1;
-      this.getData();
+      this.searchform.current = val
+      this.getData()
     },
     searchformSubmit() {
-      this.searchform.current = 1;
-      this.getData();
+      this.searchform.current = 1
+      this.getData()
     },
     searchformReset() {
       // this.$refs['searchform'].resetFields()
-      this.searchform.projectname = "";
-      this.searchform.gclb = "";
-      this.searchform.jsdw = "";
-      this.searchform.gglb = "";
-      this.searchform.jzrq = "";
-      this.searchform.zt = "";
-      this.searchform.tbr = "";
-      this.searchform.tbsj = "";
+      this.searchform.projectName = "";
+      this.searchform.enginTypeFirstName = "";
+      this.searchform.constructionOrg = "";
+      this.searchform.noticeTypeName = "";
+      this.searchform.status = "";
+      this.searchform.username = "";
+      this.searchform.saleTime = "";
         this.getData();
     },
     // 列表选项数据
     handleSelectionChange(val) {
-      this.multipleSelection = val;
+      this.multipleSelection = val
     },
     getData() {
       this.$http
         .post(
-          '/api/api/topInfo/Verify/list/loadPageData',
+          '/api/topInfo/Verify/list/loadPageData',
           // '/api' + this.$route.path.substr(0, this.$route.path.length - 1),
           this.searchform
         )
-        .then((res) => {
-          this.page = res.data.data;
-        });
+        .then(res => {
+          this.page = res.data.data
+        })
     },
     getMenus() {
       this.$http
-        .post("api/base/loadcascader", { typecode: "XMLX" })
-        .then((res) => {
+        .post('api/base/loadcascader', { typecode: 'XMLX' })
+        .then(res => {
           if (res.data.code === 0) {
-            this.menus = res.data.data;
+            this.menus = res.data.data
           }
-        });
+        })
     },
     currentMenu(selVal) {
-      let selMenuObj = this.menus.filter((item) => item.value === selVal);
-      this.searchform.menu = selMenuObj[0].label;
+      let selMenuObj = this.menus.filter(item => item.value === selVal)
+      this.searchform.menu = selMenuObj[0].label
     },
     // 获取上级单位树信息
     getOrgTree() {
-      this.$http.get("/api/base/loadorglist").then((res) => {
-        this.orgTree = res.data.data;
-      });
+      this.$http.get('/api/base/loadorglist').then(res => {
+        this.orgTree = res.data.data
+      })
     },
     // 确定单位
     orgChange() {
-      let selectLabelArr = this.$refs["porgCascader"].getCheckedNodes()[0]
-        .pathLabels;
-      this.searchform.orgname = selectLabelArr[selectLabelArr.length - 1];
-    },
+      let selectLabelArr = this.$refs['porgCascader'].getCheckedNodes()[0]
+        .pathLabels
+      this.searchform.orgname = selectLabelArr[selectLabelArr.length - 1]
+    }
 
     // list通用方法结束
   },
   created() {
-    // this.getMenus();
-    // this.getOrgTree();
-    this.getData();
-  },
-};
+    //this.getMenus()
+    //this.getOrgTree()
+    this.getData()
+  }
+}
 </script>
 <style scoped>
 .el-table__row {

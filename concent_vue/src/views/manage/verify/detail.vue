@@ -18,92 +18,70 @@
     <el-row>
       <el-form-item
         label="项目名称:"
-        prop="Verify.inforName"
-        required
+        prop="TopInfor.inforName"
         style="width: 33%"
       >
+
         <el-input
-          clearable
+          :disabled="true"
           size="mini"
-          v-model="detailform.Verify.inforName"
+          v-model="detailform.TopInfor.inforName"
         />
       </el-form-item>
         <el-form-item
         label="工程类别（一级）:"
-        prop="clothSize.enginTypeFirstName"
-        required
-        style="width: 33%"
-      >
-       <el-select
-         :disabled="p.actpoint==='look'"
-         @change="chg"
-         clearable
-         filterable
-         placeholder="请选择"
-         size="mini"
-         v-model="detailform.Verify.bcTypeId"
-       >
-         <el-option
-         :key="index"
-         :label="item.categoryName"
-         :value="item.categoryCode"
-         v-for="(item,index) in options1">
-         </el-option>
-       </el-select>
-          <!-- <el-input
-            clearable
-            size="mini"
-            v-model="detailform.Verify.enginTypeFirstName"
-          /> -->
-      </el-form-item>
-      <el-form-item
-        label="工程类别（二级）:"
-        prop="clothSize.enginTypeSecondName"
-        required
+        prop="TopInfor.enginTypeFirstName"
         style="width: 33%
               "
       >
-       <el-select
-         :disabled="p.actpoint==='look'"
-         @change="chg"
-         clearable
-         filterable
-         placeholder="请选择"
-         size="mini"
-         v-model="detailform.Verify.bcTypeId"
-       >
-         <el-option :key="index" :label="item.categoryName" :value="item.categoryCode" v-for="(item,index) in options2"></el-option>
-       </el-select>
+<!--        <el-select-->
+<!--          :disabled="p.actpoint==='look'"-->
+<!--          @change="chg"-->
+<!--          clearable-->
+<!--          filterable-->
+<!--          placeholder="请选择"-->
+<!--          size="mini"-->
+<!--          v-model="detailform.clothSize.bcTypeId"-->
+<!--        >-->
+<!--          <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options1"></el-option>-->
+<!--        </el-select>-->
+          <el-input
+            size="mini"
+            v-model="detailform.TopInfor.enginTypeFirstName"
+          />
+      </el-form-item>
+      <el-form-item
+        label="工程类别（二级）:"
+        prop="TopInfor.enginTypeSecondName"
+        style="width: 33%
+              "
+      >
+        <el-input
+          size="mini"
+          v-model="detailform.TopInfor.enginTypeSecondName"
+        />
       </el-form-item>
 
 </el-row>
 <el-row>
       <el-form-item
         label="公告类型:"
-        prop="Verify.noticeTypeName"
+        prop="TopInfor.noticeTypeName"
         style="width: 33%"
-          :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
       >
         <el-input
-          clearable
-
           size="mini"
-          v-model="detailform.Verify.noticeTypeName"
+          v-model="detailform.TopInfor.noticeTypeName"
          />
 
       </el-form-item>
         <el-form-item
         label="招标方式:"
         prop="Verify.bidModeName"
-        required
         style="width: 33%
         "
       >
           <el-input
-            clearable
-
             size="mini"
             v-model="detailform.Verify.bidModeName"
           />
@@ -116,10 +94,12 @@
         prop="Verify.isCoalitionBid"
         style="width: 33%
         "
+        :rules="{
+          required: true, message: '此项不能为空', trigger: 'blur'
+        }"
       >
         <el-input
           clearable
-
           size="mini"
           v-model="detailform.Verify.isCoalitionBid"
         />
@@ -135,7 +115,6 @@
       >
         <el-input
           clearable
-
           size="mini"
           v-model="detailform.Verify.saleTime"
         />
@@ -146,13 +125,8 @@
         prop="Verify.designOrg"
         style="width: 33%
         "
-          :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
       >
         <el-input
-          clearable
-
           size="mini"
           v-model="detailform.Verify.designOrg"
          />
@@ -163,9 +137,9 @@
         prop="Verify.subTime"
         style="width: 33%
         "
-          :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
+        :rules="{
+          required: true, message: '此项不能为空', trigger: 'blur'
+        }"
       >
         <el-input
           clearable
@@ -180,11 +154,12 @@
         label="资格预审公告发布日期:"
         prop="Verify.publishTime"
         style="width: 33%"
-          :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
+        :rules="{
+          required: true, message: '此项不能为空', trigger: 'blur'
+        }"
       >
         <el-input
+          clearable
           size="mini"
           v-model="detailform.Verify.publishTime"
          />
@@ -192,35 +167,27 @@
       </el-form-item>
       <el-form-item
         label="招标代理公司:"
-        prop="Verify.bidAgentCompany"
+        prop="TopInfor.bidAgentCompany"
         style="width: 33%
         "
-          :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
       >
         <el-input
-          clearable
           placeholder=""
           size="mini"
-          v-model="detailform.Verify.bidAgentCompany"
+          v-model="detailform.TopInfor.bidAgentCompany"
          />
 
       </el-form-item>
       <el-form-item
         label="项目模式:"
-        prop="Verify.projectModelName"
+        prop="TopInfor.projectModelName"
         style="width: 33%
         "
-          :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
       >
         <el-input
-          clearable
           placeholder=""
           size="mini"
-          v-model="detailform.Verify.projectModelName"
+          v-model="detailform.TopInfor.projectModelName"
          />
 
       </el-form-item>
@@ -230,12 +197,8 @@
         label="资审方式:"
         prop="Verify.verifyTypeName"
         style="width: 33%"
-          :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
       >
         <el-input
-          clearable
           placeholder=""
           size="mini"
           v-model="detailform.Verify.verifyTypeName"
@@ -287,12 +250,10 @@
           label="建设单位:"
           style="width: 33%
         "
-
         >
           <el-input
-            clearable
             size="mini"
-            v-model="detailform.TopInfo.constructionOrg"
+            v-model="detailform.TopInfor.constructionOrg"
           />
 
         </el-form-item>
@@ -308,7 +269,7 @@
                 clearable
                 placeholder="请输入"
                 size="mini"
-                v-model="detailform.TopInfo.inforContent"
+                v-model="detailform.TopInfor.inforContent"
               />
             </el-form-item>
 </el-row>
@@ -453,13 +414,13 @@ export default {
   name: '详情',
   data() {
     return {
-      options2:[],
+      options1: [{label: '值', value: '111'}],
+      p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
       detailform: {
         'Verify': {
-
         },
-        'TopInfo': {
-
+        'TopInfor': {
+          inforName :"11111"
         },
         'section': [
 
@@ -470,24 +431,30 @@ export default {
         'verifyOrg': [
 
         ]
-      },
+      }
 
-      p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
+
+
 
     }
   },
   computed: {
+
      options1 () {
       return this.$store.state.optiondata
     },
+
   },
   methods: {
-        saveInfo(formName){
+    saveInfo(formName){
+        //alert(this.$refs.formName.validate())
        this.$refs[formName].validate((valid) => {
+         alert(valid);
         if (valid) {
+          alert(JSON.stringify(this.detailform));
           this.$http
             .post(
-              "/api/topInfo/TopInfor/detail/save",
+              "/api/topInfo/Verify/detail/save",
               JSON.stringify(this.detailform),
               { useJson: true }
             )
@@ -517,16 +484,19 @@ export default {
     },
 
     chg(val) {
-        var name = ''
+      this.errorMsg = Math.random()
+      this.errorMsg0 = Math.random()
+      this.$nextTick(() => {
+        this.errorMsg = ''
+        this.errorMsg0 = ''
+      })
+      this.detailform.clothSize.bcStyleId = ''
+      this.detailform.clothSize.bcPlateTypeId = ''
       this.options1.forEach((item) => {
-        if (val === item.categoryCode) {
-          name = item.categoryName
-          this.options2 = item.sysCategoryDetailList
+        if (val === item.value) {
+          this.options2 = item.children
         }
       })
-      console.log(val)
-      console.log(name)
-
     },
     chg1() {
       this.errorMsg = Math.random()
@@ -596,7 +566,7 @@ export default {
         if (valid) {
           this.$http
             .post(
-              '/api/basicConfig/ClothSize/detail/save',
+              '/api/topInfo/Verify/detail/save',
               JSON.stringify(this.detailform), {useJson: true}
             )
             .then(res => {
@@ -659,7 +629,15 @@ export default {
 
     // 加载列表
     getDetail() {
-
+         alert(JSON.stringify(this.p))
+      this.detailform.Verify.contactMode = this.p.selectrow.contactMode;
+      this.detailform.TopInfor.inforName = this.p.selectrow.inforName;
+      this.detailform.TopInfor.enginTypeFirstName = this.p.selectrow.enginTypeFirstName;
+      this.detailform.TopInfor.enginTypeSecondName = this.p.selectrow.enginTypeSecondName;
+      this.detailform.TopInfor.noticeTypeName = this.p.selectrow.noticeTypeName;
+      this.detailform.TopInfor.constructionOrg = this.p.selectrow.constructionOrg;
+      this.detailform.TopInfor.inforContent = this.p.selectrow.inforContent;
+      this.detailform.TopInfor.bidAgentCompany = this.p.selectrow.bidAgentCompany;
     },
 
     handleSelectionChange(val) {
@@ -668,6 +646,7 @@ export default {
 
   },
   mounted() {
+    //alert(2);
     this.$store.dispatch('getConfig', { })
     // eslint-disable-next-line no-unde
     this.getDetail()

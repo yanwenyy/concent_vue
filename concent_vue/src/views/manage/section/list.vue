@@ -57,7 +57,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="searchform.projectName"
+                v-model="searchform.inforName"
                 size="mini"
               />
             </div>
@@ -66,143 +66,22 @@
         <el-table-column
           :width="150"
           align="center"
-          label="工程类别"
+          label="标段名称"
           prop="topInfor.enginTypeFirstName"
           show-overflow-tooltip
         >
                   <template slot="header" slot-scope="scope">
-            <span>工程类别</span>
+            <span>标段名称</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="searchform.enginTypeFirstName"
+                v-model="searchform.sectionId"
                 size="mini"
               />
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="建设单位"
-          prop="topInfor.constructionOrg"
-          show-overflow-tooltip
-        >
-                  <template slot="header" slot-scope="scope">
-            <span>建设单位</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.constructionOrg"
-                size="mini"
-              />
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="公告类型"
-          prop="topInfor.noticeTypeName"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>公告类型</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.noticeTypeName"
-                size="mini"
-              />
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="180"
-          align="center"
-          label="资审文件发售截止日期"
-          prop="verify.saleTime"
-          show-overflow-tooltip
-        >
-          <!-- <template slot-scope="scope">{{
-            scope.row.state === '0' ? '草稿' : '已上报'
-          }}</template> -->
-                    <template slot="header" slot-scope="scope">
-            <span>资审文件发售截止日期</span>
-            <div>
-              <el-date-picker
-                v-model="searchform.saleTime"
-                type="date"
-                placeholder="选择日期">
-              </el-date-picker>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="状态"
-          prop="verify.uuid"
-          :formatter="statusFormat"
-          show-overflow-tooltip
-        >
-                  <template slot="header" slot-scope="scope">
-            <span>状态</span>
-                    <el-select v-model="searchform.status" placeholder="请选择">
-                      <el-option
-                        key="0"
-                        label="未进行资审申请"
-                        value="0">
-                      </el-option>
-                      <el-option
-                        key="1"
-                        label="已进行资审申请"
-                        value="1">
-                      </el-option>
-                    </el-select>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="填报人"
-          prop="verify.username"
-          show-overflow-tooltip
-        >
-                  <template slot="header" slot-scope="scope">
-            <span>填报人</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.username"
-                size="mini"
-              />
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="填报时间"
-          prop="verify.createtime"
-          show-overflow-tooltip
-        >
-          <!-- <template slot-scope="scope">{{
-            scope.row.createtime | dateformat
-          }}</template> -->
-                    <template slot="header" slot-scope="scope">
-            <span>填报时间</span>
-            <div>
-              <div>
-                <el-date-picker
-                  v-model="searchform.createtime"
-                  type="date"
-                  placeholder="选择日期">
-                </el-date-picker>
-              </div>
-            </div>
-          </template>
-        </el-table-column>
+
       </el-table>
       <el-pagination
         :current-page="page.current"
@@ -231,12 +110,7 @@ export default {
         current: 1,
         size: 10,
         projectName: '',
-        enginTypeFirstName: '',
-        constructionOrg: '',
-        noticeTypeName: '',
-        status: '',
-        username: '',
-        saleTime: ''
+        sectionId: ''
       },
       menus: [],
       multipleSelection: [],
@@ -244,19 +118,7 @@ export default {
     }
   },
   methods: {
-    statusFormat(row,column){
-      console.log(row.verify.uuid);
-      var statusW;
-      if(row.verify.uuid!="")
-      {
-        statusW= "已进行资审申请"
-      }else
-      {
-        statusW= "未进行资审申请"
-      }
 
-      return statusW
-    },
     search(){
       this.showinput = false
     },
@@ -308,7 +170,7 @@ export default {
     getData() {
       this.$http
         .post(
-          '/api/topInfo/Verify/list/loadPageData',
+          '/api/topInfo/Section/list/loadPageData',
           // '/api' + this.$route.path.substr(0, this.$route.path.length - 1),
           this.searchform
         )
