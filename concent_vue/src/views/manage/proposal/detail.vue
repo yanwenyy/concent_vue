@@ -34,8 +34,8 @@
               >
                 <el-option
                   :key="index"
-                  :label="item.categoryName"
-                  :value="item.categoryCode"
+                  :label="item.label"
+                  :value="item.value"
                   v-for="(item, index) in options1"
                 ></el-option>
               </el-select>
