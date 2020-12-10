@@ -294,7 +294,7 @@ export default {
     add(){
 
        let p = { actpoint: 'add',selectrow:this.multipleSelection[0]}
-      alert(JSON.stringify(p));
+      //alert(JSON.stringify(p));
        this.$router.push({
         path: './detail/',
         query: { p: this.$utils.encrypt(JSON.stringify(p)) }

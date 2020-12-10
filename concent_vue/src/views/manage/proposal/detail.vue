@@ -23,7 +23,7 @@
             >
               <el-select
                 :disabled="p.actpoint === 'look'"
-                @change="chg"
+                @change="chg('bulletinType')"
                 clearable
                 filterable
                 style="width: 100%"
@@ -54,9 +54,9 @@
               >
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options1"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in bizCode"
                 ></el-option>
               </el-select>
             </el-form-item>
@@ -76,9 +76,9 @@
               >
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options1"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in xqprojectType"
                 ></el-option>
               </el-select>
             </el-form-item>
@@ -562,8 +562,13 @@ export default {
     };
   },
   computed: {
-    options1 () {
-      return this.$store.state.optiondata
+    bizCode () {
+
+      return this.$store.state.bizCode;
+    },
+    xqprojectType () {
+
+      return this.$store.state.xqprojectType;
     },
   },
   methods: {

@@ -628,7 +628,7 @@ export default {
 
     // 加载列表
     getDetail() {
-         alert(JSON.stringify(this.p))
+         //alert(JSON.stringify(this.p))
       this.detailform.Verify.contactMode = this.p.selectrow.contactMode;
       this.detailform.TopInfor.inforName = this.p.selectrow.inforName;
       this.detailform.TopInfor.enginTypeFirstName = this.p.selectrow.enginTypeFirstName;
