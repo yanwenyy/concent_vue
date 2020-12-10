@@ -1,13 +1,12 @@
 <template>
   <div>
-    <el-card>
+    <el-card class="box-card">
           <div slot="header" class="clearfix">
         <span style="color: #2a2a7d"><b>信息管理详情</b></span>
         <el-button @click="back" style="float: right; padding: 10px 20px ;border:1px solid #ddd;color: black;position:fixe" type="text">返回</el-button>
       </div>
-      </el-card>
-    <el-card class="box-card">
-      <div style="height:900px">
+
+      <div style="overflow: auto;max-height: 480px;padding-bottom: 10px">
         <el-form
           :inline="false"
           :model="detailform"
@@ -34,8 +33,8 @@
               >
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
+                  :label="item.categoryName"
+                  :value="item.id"
                   v-for="(item, index) in options1"
                 ></el-option>
               </el-select>
@@ -426,7 +425,7 @@
             </el-form-item>
           </el-row>
       <el-row class="detail_bottom">
-          <p style="overflow: hidden">
+          <p style="overflow: hidden；margin-right: 30px">
             <span style="float: left">标段信息: </span>
             <el-button
               @click="show('add')"
@@ -436,29 +435,25 @@
                 width: 70px;
                 height: 32px;
                 background: #5c8bfa;
-                font-size: 16px;
-              "
-              type="primary"
-              >新增</el-button
-            >
-          </p>
-
+                font-size: 16px;"
+                type="primary"
+              >新增</el-button ></p>
           <el-table
             :data="detailform.topInfoSectionList"
             :header-cell-style="{
               'text-align': 'center',
               'background-color': 'rgba(246,248,252,1)',
-              color: 'rgba(0,0,0,1)',
-            }"
+              'color': 'rgba(0,0,0,1)'}"
+
             @selection-change="handleSelectionChange"
             align="center"
             border
             class="clothSizeTable"
             ref="table"
-            style="width: 100%; min-height: calc(100vh - 370px)"
+            style="width: 98%; min-height: calc(100vh - 370px)"
           >
             <el-table-column
-              :width="55"
+              :width="150"
               align="center"
               label="序号"
               show-overflow-tooltip
@@ -661,15 +656,15 @@ export default {
       this.type = type;
       if (type === "add") {
         this.resetinfo();
-
+        this.title = '新增'
         this.detailform.topInfoSectionList.push(this.sizeform);
         // this.dialogVisibleAdd = true
       }
     },
     resetinfo() {
       this.sizeform = {
-        id: "",
-        part: "",
+        'id': "",
+        'part': "",
         showinput: true,
       };
     },
@@ -763,6 +758,7 @@ export default {
     },
   },
   mounted() {
+    this.$store.dispatch('getConfig', { })
     // eslint-disable-next-line no-unde
     this.getDetail();
   },

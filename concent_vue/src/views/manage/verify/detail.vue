@@ -30,15 +30,8 @@
       </el-form-item>
         <el-form-item
         label="工程类别（一级）:"
-<<<<<<< HEAD
-        prop="Verify.bcTypeId"
-        required
-        style="width: 33%"
-=======
         prop="TopInfor.enginTypeFirstName"
-        style="width: 33%
-              "
->>>>>>> 508324d4399ce3664eaf699444e7e837d0c2df55
+        style="width: 33%"
       >
 <!--        <el-select-->
 <!--          :disabled="p.actpoint==='look'"-->
