@@ -431,10 +431,6 @@ export default {
 
         ]
       }
-
-
-
-
     }
   },
   computed: {

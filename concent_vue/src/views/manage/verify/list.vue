@@ -185,7 +185,7 @@
                     </el-select>
           </template>
           <template slot-scope="scope">
-            {{scope.row.uuid}}
+            <el-sl-panel prop="verify.uuid" :formatter="statusFormat">{{scope.row.uuid}}</el-sl-panel>
           </template>
         </el-table-column>
         <el-table-column
