@@ -907,4 +907,7 @@ height: 100px;
 .el-table--border{
   min-height: auto !important;
 }
+
+
+
 </style>
