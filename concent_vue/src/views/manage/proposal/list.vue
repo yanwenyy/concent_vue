@@ -8,8 +8,8 @@
         <el-button @click="searchformReset" type="primary" plain >刷新</el-button>
       </el-button-group>
       <div style="float: right">
-        <el-button @click="reset" type="info" plain style="color:black;background:none">重置</el-button>
-        <el-button @click="search" type="primary" plain>查询</el-button>
+        <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
+        <el-button @click="getData" type="primary" plain>查询</el-button>
         <el-button @click="exportdata" type="primary" plain>导出</el-button>
       </div>
     </div>
@@ -230,7 +230,7 @@ totop(){
       }
       let p = { actpoint: "edit", uuid: this.multipleSelection[0].uuid };
       this.$router.push({
-        path: "../detail/",
+        path: "./detail/",
         query: { p: this.$utils.encrypt(JSON.stringify(p)) },
       });
 
@@ -293,16 +293,17 @@ totop(){
       this.searchform.enginTypeFirstId = "";
       this.searchform.constructionOrg = "";
       this.searchform.noticeTypeId = "";
-        this.getData();
+      this.getData();
     },
     // 列表选项数据
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
+    // 查询
     getData() {
       this.$http
         .post(
-          "/api/topInfo/TopInfor/list/loadPageData",
+          "/api/topInfo/TopInfor/list/loadPageDataForReg",
           this.searchform
         )
         .then((res) => {

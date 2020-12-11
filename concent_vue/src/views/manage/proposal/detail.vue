@@ -153,7 +153,6 @@
                 filterable
                 clearable
                  type="date"
-                placeholder="选择日期"
                 size="mini"
                 v-model="detailform.topInfor.planBidTime"
               >
@@ -282,7 +281,7 @@
 
             <el-form-item
               label="资金来源:"
-              prop="topInfor.investment"
+              prop="capitalId"
               style="width: 33%"
             >
               <el-select
@@ -292,7 +291,7 @@
                 multiple
                 placeholder="请选择"
                 size="mini"
-                v-model="detailform.topInfor.investment"
+                v-model="detailform.capitalId"
               >
                 <el-option
                   :key="index"
@@ -303,6 +302,9 @@
               </el-select>
             </el-form-item>
 
+
+
+
             <el-form-item
               label="投资额（万元）:"
               prop="topInfor.investment"
@@ -320,32 +322,12 @@
                 v-model="detailform.topInfor.investment"
               />
             </el-form-item>
+>
             </el-row>
             <el-row>
-
-
-
-            <el-form-item
-              label="投资额（万元）:"
-              prop="topInfor.investment"
-              style="width: 33%"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                clearable
-                placeholder=""
-                size="mini"
-                v-model="detailform.topInfor.investment"
-              />
-            </el-form-item>
-
             <el-form-item
               label="项目地点:"
-              prop="topInfor.bidPerson"
+              prop="topInfoSiteList.path"
               style="width: 33%"
             >
               <el-select
@@ -354,7 +336,7 @@
                 clearable
                 placeholder="请选择"
                 size="mini"
-                v-model="detailform.topInfor.bidPerson"
+                v-model="detailform.topInfoSiteList.path"
               >
                 <el-option
                   :key="index"
@@ -386,8 +368,7 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-</el-row>
-<el-row>
+
             <el-form-item
               label="项目跟踪负责人:"
               prop="topInfoOrg.projectTrackResponPerson"
@@ -405,7 +386,8 @@
                 v-model="detailform.topInfoOrg.projectTrackResponPerson"
               />
             </el-form-item>
-
+</el-row>
+<el-row>
             <el-form-item
               label="联系电话:"
               prop="topInfoOrg.contactMode"
@@ -573,10 +555,11 @@ export default {
         topInfoOrg:{
 
         },
-        topInfoSectionList:[]
-        // topInfoSiteList:{
+        topInfoSiteList:{
 
-        // },
+        },
+        topInfoSectionList:[]
+
 
 
 
