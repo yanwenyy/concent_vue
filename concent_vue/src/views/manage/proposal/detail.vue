@@ -33,9 +33,9 @@
               >
                 <el-option
                   :key="index"
-                  :label="item.categoryName"
+                  :label="item.detailName"
                   :value="item.id"
-                  v-for="(item, index) in options1"
+                  v-for="(item, index) in bizCode"
                 ></el-option>
               </el-select>
             </el-form-item>
@@ -56,7 +56,7 @@
                   :key="index"
                   :label="item.detailName"
                   :value="item.id"
-                  v-for="(item, index) in bizCode"
+                  v-for="(item, index) in projectDomainType"
                 ></el-option>
               </el-select>
             </el-form-item>
@@ -134,9 +134,9 @@
               >
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options1"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in bulletinType"
                 ></el-option>
               </el-select>
             </el-form-item>
@@ -148,11 +148,12 @@
               prop="topInfor.planBidTime"
               style="width: 33%"
             >
-              <el-select
+              <el-date-picker
                 :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
-                placeholder="请选择"
+                 type="date"
+                placeholder="选择日期"
                 size="mini"
                 v-model="detailform.topInfor.planBidTime"
               >
@@ -162,7 +163,7 @@
                   :value="item.value"
                   v-for="(item, index) in options2"
                 ></el-option>
-              </el-select>
+            </el-date-picker>
             </el-form-item>
 
           <!-- 下拉 -->
@@ -253,9 +254,9 @@
               >
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options1"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectModel"
                 ></el-option>
               </el-select>
             </el-form-item>
@@ -295,15 +296,16 @@
               >
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options2"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in amountSource"
                 ></el-option>
               </el-select>
             </el-form-item>
+
             <el-form-item
-              label="项目跟踪负责人:"
-              prop="topInfoOrg.projectTrackResponPerson"
+              label="投资额（万元）:"
+              prop="topInfor.investment"
               style="width: 33%"
               :rules="{
                 required: true,
@@ -315,28 +317,12 @@
                 clearable
                 placeholder=""
                 size="mini"
-                v-model="detailform.topInfoOrg.projectTrackResponPerson"
+                v-model="detailform.topInfor.investment"
               />
             </el-form-item>
             </el-row>
             <el-row>
-            <el-form-item
-              label="联系电话:"
-              prop="topInfoOrg.contactMode"
-              style="width: 33%"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                clearable
-                placeholder=""
-                size="mini"
-                v-model="detailform.topInfoOrg.contactMode"
-              />
-            </el-form-item>
+
 
 
             <el-form-item
@@ -372,14 +358,13 @@
               >
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options2"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in position"
                 ></el-option>
               </el-select>
             </el-form-item>
-</el-row>
-<el-row>
+
             <el-form-item
               label="是否为重大项目:"
               prop="topInfor.isMajorProject"
@@ -395,19 +380,57 @@
               >
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options2"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in yesOrNo"
                 ></el-option>
               </el-select>
             </el-form-item>
+</el-row>
+<el-row>
+            <el-form-item
+              label="项目跟踪负责人:"
+              prop="topInfoOrg.projectTrackResponPerson"
+              style="width: 33%"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
+              <el-input
+                clearable
+                placeholder=""
+                size="mini"
+                v-model="detailform.topInfoOrg.projectTrackResponPerson"
+              />
+            </el-form-item>
+
+            <el-form-item
+              label="联系电话:"
+              prop="topInfoOrg.contactMode"
+              style="width: 33%"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
+              <el-input
+                clearable
+                placeholder=""
+                size="mini"
+                v-model="detailform.topInfoOrg.contactMode"
+              />
+            </el-form-item>
+
 </el-row>
           <el-row>
             <el-form-item
             class="neirong"
               label="项目内容(最多1000字):"
               prop="topInfor.inforContent"
-              style="width: 33% "
+              style="width: 100% "
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -416,12 +439,13 @@
             >
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-input
+                type="textarea"
                 clearable
                 placeholder="请输入"
                 size="mini"
                 v-model="detailform.topInfor.inforContent"
-
               />
+
             </el-form-item>
           </el-row>
       <el-row class="detail_bottom">
@@ -537,6 +561,7 @@
 
 <script>
 export default {
+
   name: "详情",
   data() {
     return {
@@ -562,14 +587,14 @@ export default {
     };
   },
   computed: {
-    bizCode () {
-
-      return this.$store.state.bizCode;
-    },
-    xqprojectType () {
-
-      return this.$store.state.xqprojectType;
-    },
+    bizCode () {return this.$store.state.bizCode;},
+    xqprojectType () {return this.$store.state.xqprojectType;},
+    projectDomainType () {return this.$store.state.projectDomainType;},
+    bulletinType () {return this.$store.state.bulletinType;},
+    projectModel() {return this.$store.state.projectModel;},
+    amountSource() {return this.$store.state.amountSource;},
+    yesOrNo() {return this.$store.state.yesOrNo;},
+    position() {return this.$store.state.position;},
   },
   methods: {
     saveInfo(formName){
@@ -577,7 +602,7 @@ export default {
         if (valid) {
           this.$http
             .post(
-              "/api/topInfo/TopInfor/detail/save",
+              "/api/topInfo/TopInfor/detail/saveOrUpdate",
               JSON.stringify(this.detailform),
               { useJson: true }
             )
@@ -725,7 +750,7 @@ export default {
           this.$http
             .post(
               "/api/basicConfig/ClothSize/detail/save",
-              JSON.stringify(this.detailform),
+             this.detailform,
               { useJson: true }
             )
             .then((res) => {
@@ -756,16 +781,21 @@ export default {
     },
 
     // 加载列表
-    getDetail() {},
+    getDetail() {
+      console.log(this.p.uuid)
+    },
 
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
   },
   mounted() {
+    if(this.p.actpoint==='edit'){
+ this.getDetail();
+    }
     this.$store.dispatch('getConfig', { })
     // eslint-disable-next-line no-unde
-    this.getDetail();
+
   },
 };
 </script>
@@ -875,8 +905,8 @@ export default {
 height: 100px;
 }
 .detail_bottom{
-  margin: 50px 0 0 0;
-  border: 1px solid #ddd;
+  margin: 20px 0 0 0;
+  // border: 1px solid #ddd;
 }
 .el-card, .el-message{
   overflow: hidden;
@@ -887,5 +917,11 @@ height: 100px;
 .el-card.is-always-shadow, .el-card.is-hover-shadow:focus, .el-card.is-hover-shadow:hover{
   overflow: auto ;
   // height: 500px ;
+}
+.el-button--mini, .el-button--mini.is-round{
+  margin: 0 27px 5px 0;
+}
+.el-table--border{
+  min-height: auto !important;
 }
 </style>

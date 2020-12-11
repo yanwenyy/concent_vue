@@ -4,8 +4,8 @@
       <el-button-group style="float: left">
         <el-button @click="add" plain type="primary" >新增</el-button>
         <el-button @click="totop" plain type="primary" >修改</el-button>
-        <el-button type="primary" plain >删除</el-button>
-        <el-button type="primary" plain >刷新</el-button>
+        <el-button @click="remove" type="primary" plain >删除</el-button>
+        <el-button @click="searchformReset" type="primary" plain >刷新</el-button>
       </el-button-group>
       <div style="float: right">
         <el-button @click="reset" type="info" plain style="color:black;background:none">重置</el-button>
@@ -55,7 +55,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchform.inforName"
                 size="mini"
               />
             </div>
@@ -74,7 +74,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchform.enginTypeFirstId"
                 size="mini"
               />
             </div>
@@ -92,7 +92,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchform.constructionOrg"
                 size="mini"
               />
             </div>
@@ -110,7 +110,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchform.noticeTypeId"
                 size="mini"
               />
             </div>
@@ -189,6 +189,7 @@
 
 <script>
 export default {
+  inject:['reload'],
   name: "proposal-list-look",
   data() {
     return {
@@ -196,13 +197,13 @@ export default {
       showinput: false,
       sousuo: "",
       searchform: {
-        current: 1,
-        size: 10,
-        year: "",
-        name: "",
-        ptype: "",
+
         orgid: "",
         orgname: "",
+        inforName: "",
+        enginTypeFirstId: "",
+        constructionOrg: "",
+        noticeTypeId: "",
       },
       menus: [],
       multipleSelection: [],
@@ -213,6 +214,7 @@ export default {
     search() {
       this.showinput = false;
     },
+    // 增加
     add() {
       let p = { actpoint: "add" };
       this.$router.push({
@@ -220,6 +222,19 @@ export default {
         query: { p: this.$utils.encrypt(JSON.stringify(p)) },
       });
     },
+    // 修改
+totop(){
+    if (this.multipleSelection.length !== 1) {
+        this.$message.info("请选择一条记录进行查看操作！");
+        return false;
+      }
+      let p = { actpoint: "edit", uuid: this.multipleSelection[0].uuid };
+      this.$router.push({
+        path: "../detail/",
+        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
+      });
+
+},
     // 查看
     rowshow(row) {
       let p = { actpoint: "look", instid: row.uuid };
@@ -228,6 +243,27 @@ export default {
         query: { p: this.$utils.encrypt(JSON.stringify(p)) },
       });
     },
+    // 删除
+    remove(){
+        if (this.multipleSelection.length < 1) {
+        this.$message.info("请选择一条记录进行查看操作！");
+        return false;
+      }
+      let uuids = []
+      this.multipleSelection.forEach((item)=>{
+        uuids.push(item.uuid)
+      })
+      // uuids.join(',')
+       this.$http
+        .post(
+          "/api/topInfo/TopInfor/list/delete",
+         {ids:uuids}
+        )
+        .then((res) => {
+          this.getData()
+        });
+    },
+    // 展示
     show() {
       if (this.multipleSelection.length !== 1) {
         this.$message.info("请选择一条记录进行查看操作！");
@@ -252,7 +288,12 @@ export default {
       this.getData();
     },
     searchformReset() {
-      this.$refs["searchform"].resetFields();
+      // this.$refs["searchform"].resetFields();
+      this.searchform.inforName = "";
+      this.searchform.enginTypeFirstId = "";
+      this.searchform.constructionOrg = "";
+      this.searchform.noticeTypeId = "";
+        this.getData();
     },
     // 列表选项数据
     handleSelectionChange(val) {
@@ -297,7 +338,6 @@ export default {
     // list通用方法结束
   },
   created() {
-
     this.getData();
   },
 };
@@ -306,7 +346,4 @@ export default {
 .el-table__row {
   cursor: pointer;
 }
-/* .el-input__inner{
-  margin: 10px 0 0 0;
-} */
 </style>

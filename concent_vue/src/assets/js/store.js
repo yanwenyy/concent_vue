@@ -234,16 +234,17 @@ const mutations = {
       //   state.bizCode=setCategory('bizCode');
       //   state.measureUnit=setCategory('measureUnit');
       //   state.xqprojectType=setCategory('xqprojectType');
-        state.railwayBureau=setCategory('railwayBureau');
-        state.statistics=setCategory('statistics');
-        state.wumoveType=setCategory('wumoveType');
-        state.eacode=setCategory('eacode');
-        state.projectNature=setCategory('projectNature');
-        state.bizTypeCode=setCategory('bizTypeCode');
-        state.taxType=setCategory('taxType');
-        state.authCode=setCategory('authCode');
-        state.supLevel=setCategory('supLevel');
-        state.businessType=setCategory('businessType');
+        // state.railwayBureau=setCategory('railwayBureau');
+        // state.statistics=setCategory('statistics');
+        // state.wumoveType=setCategory('wumoveType');
+        // state.eacode=setCategory('eacode');
+        // state.projectNature=setCategory('projectNature');
+        // state.bizTypeCode=setCategory('bizTypeCode');
+        // state.taxType=setCategory('taxType');
+        // state.authCode=setCategory('authCode');
+        // state.supLevel=setCategory('supLevel');
+        // state.businessType=setCategory('businessType');
+        // state.projectDomainType=setCategory('projectDomainType');
         //state.optiondata=setCategory('optiondata');
         })
     //http://36.112.155.134:9901/System/system/category/v1.0/categorys
