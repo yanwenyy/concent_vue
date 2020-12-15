@@ -6,7 +6,7 @@
         <el-button @click="back" style="float: right; padding: 10px 20px ;border:1px solid #ddd;color: black;position:fixe" type="text">返回</el-button>
       </div>
 
-      <div style="overflow: auto;max-height: 480px;padding-bottom: 10px">
+      <div style="overflow: auto;max-height: 55%;padding-bottom: 10px">
         <el-form
           :inline="false"
           :model="detailform"
@@ -527,7 +527,7 @@
                 type="primary"
               >新增</el-button ></p>
           <el-table
-            :data="detailform.topInfoSectionList"
+            :data="detailform.topInfoSiteList"
             :header-cell-style="{
               'text-align': 'center',
               'background-color': 'rgba(246,248,252,1)',
@@ -550,7 +550,7 @@
             <el-table-column
               :resizable="false"
               label="项目地点"
-              prop="topInfor.inforName"
+              prop="inforName"
               show-overflow-tooltip
             >
               <template slot-scope="scope">
@@ -563,7 +563,7 @@
                     clearable
                     :disabled="p.actpoint === 'look'"
                     size="mini"
-                    v-model="detailform.topInfor.inforName"
+                    v-model="scope.row.inforName"
                   ></el-input>
                 </el-form-item>
                 <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
@@ -573,7 +573,7 @@
             <el-table-column
               :resizable="false"
               label="份额"
-              prop="topInfoSectionList.sectionName"
+              prop="sectionName"
               show-overflow-tooltip
             >
               <template slot-scope="scope">
@@ -586,7 +586,7 @@
                     clearable
                     :disabled="p.actpoint === 'look'"
                     size="mini"
-                    v-model="detailform.topInfoSectionList.sectionName"
+                    v-model="scope.row.sectionName"
                   ></el-input>
                 </el-form-item>
                 <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
@@ -596,7 +596,7 @@
             <el-table-column
               :resizable="false"
               label="是否为主地点"
-              prop="topInfoSectionList.contractAmount"
+              prop="contractAmount"
               show-overflow-tooltip
             >
               <template slot-scope="scope">
@@ -609,7 +609,7 @@
                     clearable
                     :disabled="p.actpoint === 'look'"
                     size="mini"
-                    v-model="detailform.topInfoSectionList.contractAmount"
+                    v-model="scope.row.contractAmount"
                   ></el-input>
                 </el-form-item>
                 <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
@@ -765,9 +765,7 @@ export default {
         topInfoOrg:{
 
         },
-        topInfoSiteList:{
-
-        },
+        topInfoSiteList:[],
         topInfoSectionList:[]
 
 
