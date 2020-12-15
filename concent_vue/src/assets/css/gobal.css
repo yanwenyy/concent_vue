@@ -424,3 +424,6 @@ pre {
   height: 100px;
   width: 98%;
 }
+.gcform .el-form-item__error{
+  top:11% !important;
+}
