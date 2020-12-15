@@ -150,14 +150,14 @@ export default {
         })
     },
     getNum() {
-      this.$http
-        .post('/api/resource/getMsgNum', {}, { isLoading: false })
-        .then(res => {
-          if (res.data.code === 0) {
-            // console.log(res.data)
-            this.$store.state.num = res.data.data
-          }
-        })
+      // this.$http
+      //   .post('/api/resource/getMsgNum', {}, { isLoading: false })
+      //   .then(res => {
+      //     if (res.data.code === 0) {
+      //       // console.log(res.data)
+      //       this.$store.state.num = res.data.data
+      //     }
+      //   })
     },
     msg() {
       this.$router.push({ path: '/msgtm/message' })
@@ -182,22 +182,22 @@ export default {
     }
   },
   mounted() {
-    this.$http.post('/api/resource/getConfig').then(res => {
-      if (res.data.code === 0) {
-        this.outurl = res.data.data.logoutUrl;
-        localStorage.setItem("outUrl",this.outurl);
-        this.timerOne = window.setInterval(() => {
-          // this.getAlert()
-        }, 2000)
-      }
-    })
-    this.$http.post('/api/resource/getUsersBaseInfo').then(res => {
-      if (res.data.code === 0) {
-        this.username = res.data.data.userName
-        this.userdata = res.data.data
-        localStorage.setItem('username',this.username)
-      }
-    })
+    // this.$http.post('/api/resource/getConfig').then(res => {
+    //   if (res.data.code === 0) {
+    //     this.outurl = res.data.data.logoutUrl;
+    //     localStorage.setItem("outUrl",this.outurl);
+    //     this.timerOne = window.setInterval(() => {
+    //       // this.getAlert()
+    //     }, 2000)
+    //   }
+    // })
+    // this.$http.post('/api/resource/getUsersBaseInfo').then(res => {
+    //   if (res.data.code === 0) {
+    //     this.username = res.data.data.userName
+    //     this.userdata = res.data.data
+    //     localStorage.setItem('username',this.username)
+    //   }
+    // })
     this.getNum()
   },
   beforeDestroy() {

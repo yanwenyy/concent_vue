@@ -192,7 +192,7 @@
 
 <script>
 export default {
-  inject:['reload'],
+  // inject:['reload'],
   name: "proposal-list-look",
   data() {
     return {
@@ -214,6 +214,7 @@ export default {
     };
   },
   methods: {
+    exportdata(){},
     search() {
       this.showinput = false;
     },

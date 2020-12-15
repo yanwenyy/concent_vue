@@ -106,7 +106,8 @@ export default {
     return {
       el_container_style: 'el_container_style_' + this.$store.state.collapsed,
       tlm_height: 'tlm_height',
-      breadcrumb: false
+      breadcrumb: false,
+      defaultActiveIndex:'0'
     }
   },
   mounted() {
@@ -115,6 +116,7 @@ export default {
     }
   },
   methods: {
+    handleSelect(){},
     collapse() {
       if (this.el_container_style === 'el_container_style_true') {
         this.el_container_style = 'el_container_style_false'

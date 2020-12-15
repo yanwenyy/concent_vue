@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-show="!ifDetail">
     <div>
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <template v-for="(c,index) in this.breadcrumbs">
@@ -16,7 +16,8 @@
 export default {
   data() {
     return {
-      breadcrumbs: []
+      breadcrumbs: [],
+      ifDetail:false
     }
   },
   methods: {
@@ -38,9 +39,11 @@ export default {
   watch: {
     $route: {
       handler: function(val, oldVal) {
+        this.ifDetail=val.path.indexOf("detail")!=-1
         this.breadcrumbs = []
-        this.getbreadcrumb(this.$store.state.route[1].children)
-      }
+        this.getbreadcrumb(this.$store.state.route[1].children);
+      },
+      deep: true
     }
   }
 }

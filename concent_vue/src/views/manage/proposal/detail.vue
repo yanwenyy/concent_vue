@@ -572,10 +572,13 @@ export default {
     };
   },
   computed: {
-    projectDomainType(){console.log(this.$store.state.category);return this.$store.state.category;},
+    projectDomainType(){
+      // console.log(this.$store.state.category["projectDomainType"])
+      return this.$store.state.category.projectDomainType
+    },
     bizCode () {return this.$store.state.bizCode;},
     xqprojectType () {return this.$store.state.xqprojectType;},
-    // projectDomainType () {return this.$store.state.projectDomainType;},
+    // projectDomainType () {return this.$store.state.projectDomainType_new;},
     bulletinType () {return this.$store.state.bulletinType;},
     projectModel() {return this.$store.state.projectModel;},
     amountSource() {return this.$store.state.amountSource;},
@@ -583,14 +586,12 @@ export default {
     position() {return this.$store.state.position;},
   },
   mounted() {
-
-    this.$http.get('/jsonapi/System/system/category/detail/v1.0/tree/238a917eb2b111e9a1746778b5c1167e').then(res => {
-      // console.log(res.data.data)
-    })
+    // this.$store.commit("setCategory", 'projectDomainType');
     if(this.p.actpoint==='edit'){
       this.getDetail();
     }
-    this.$store.dispatch('getConfig', { })
+    this.$store.dispatch('getConfig', { });
+    this.$store.dispatch('getCategory', 'projectDomainType');
     // eslint-disable-next-line no-unde
 
   },
@@ -608,7 +609,7 @@ export default {
       }
     },
     saveInfo(formName){
-      console.log(this.value1)
+      // console.log(this.value1)
        this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$http

@@ -65,7 +65,7 @@ const state = {
   // curProjectId: '1d8283451c7b8b4e56fc62744e74f7ba'
   curProjectId: '11484beb7ca57f78b1773381547ec24d ',
   messageCount: [],
-  category:[],//一级大类
+  category:{},//一级大类
 }
 
 const getters = {
@@ -229,64 +229,38 @@ const mutations = {
         }
 
       })
-      // state.bulletinType =setCategory('bulletinType');
-      // state.certificationType =setCategory('certificationType');
-      //
-      // state.amountSource=setCategory('amountSource');
-      //   state.purchaseNature=setCategory('purchaseNature');
-      //   state.orgType=setCategory('orgType');
-      //   state.bizCode=setCategory('bizCode');
-      //   state.measureUnit=setCategory('measureUnit');
-      //   state.xqprojectType=setCategory('xqprojectType');
-        // state.railwayBureau=setCategory('railwayBureau');
-        // state.statistics=setCategory('statistics');
-        // state.wumoveType=setCategory('wumoveType');
-        // state.eacode=setCategory('eacode');
-        // state.projectNature=setCategory('projectNature');
-        // state.bizTypeCode=setCategory('bizTypeCode');
-        // state.taxType=setCategory('taxType');
-        // state.authCode=setCategory('authCode');
-        // state.supLevel=setCategory('supLevel');
-        // state.businessType=setCategory('businessType');
-        // state.projectDomainType=setCategory('projectDomainType');
-        //state.optiondata=setCategory('optiondata');
-        })
-    //http://36.112.155.134:9901/System/system/category/v1.0/categorys
-    // Vue.prototype.$http.get('/jsonapi/System/system/category/v1.0/categorys').then(res => {
-    //   state.categorys = res.data.data
-    // })
+    })
+
   },
   setCategory(state, data) {
-    Vue.prototype.$http.get('/jsonapi/System/system/detail/v1.0/details/bycode/bulletinType').then(res => {
-      console.log(res.data.data)
-      state.category = res.data.data
+    var list=[],c_list=[];
+    Vue.prototype.$http.get('/jsonapi/System/system/category/detail/v1.0/details/bycode/' + data).then(res => {
+      list = res.data.data
+      list.forEach((item) => {
+          if(item.isLeaf == 0 && item.categoryCode == data){
+              c_list.push(item)
+          }
+      });
+      // state[data] = c_list;
+      state.category[data] = c_list;
+      // console.log(state.category[data])
     })
-      var B=new Array();
-    alert(JSON.stringify(this.state.optiondata))
-    this.state.optiondata.forEach((item) => {
-        if (data === item.categoryCode) {
-          //name = item.categoryName
-          //this.options2 = item.sysCategoryDetailList
-          B= item.sysCategoryDetailList;
-        }
-    })
-      return B;
   }
-
 }
 
 
 const actions = {
   getConfig({ commit }, data) {
-    commit('setToolData', data),
-    commit('setCategory', data)
+    commit('setToolData', data)
 
   },
   getOptiondataByType({ commit }, data)
   {
-    commit('setToolData1', data);
-    commit('setCategory', data)
+    commit('setToolData1', data)
 
+  },
+  getCategory({ commit }, data){
+    commit('setCategory', data)
   }
 }
 export default new Vuex.Store({
