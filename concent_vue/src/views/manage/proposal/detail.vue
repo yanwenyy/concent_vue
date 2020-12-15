@@ -21,14 +21,15 @@
               prop="topInfor.moduleId"
               style="width: 33%"
             >
+              <!--@change="chg('bulletinType')"-->
               <el-select
                 :disabled="p.actpoint === 'look'"
-                @change="chg('bulletinType')"
                 clearable
                 filterable
                 style="width: 100%"
                 placeholder="请选择"
                 size="mini"
+                @change="getName(detailform.topInfor.moduleId,bizCode,'moduleName')"
                 v-model="detailform.topInfor.moduleId"
               >
                 <el-option
@@ -51,7 +52,7 @@
                 placeholder="请选择"
                 @change='getTwo'
                 size="mini"
-                v-model="detailform.topInfor.class1"
+                v-model="detailform.topInfor.enginTypeFirstId"
               >
                 <el-option
                   :key="index"
@@ -73,7 +74,8 @@
                 filterable
                 placeholder="请选择"
                 size="mini"
-                v-model="detailform.topInfor.class2"
+                @change="getName(detailform.topInfor.enginTypeSecondId,xqprojectType,'enginTypeSecondName')"
+                v-model="detailform.topInfor.enginTypeSecondId"
               >
                 <el-option
                   :key="index"
@@ -122,7 +124,6 @@
             <el-form-item
               label="公告类型:"
               prop="topInfor.noticeTypeId"
-
               style="width: 33%"
             >
               <el-select
@@ -132,6 +133,7 @@
                 placeholder="请选择"
                 size="mini"
                 v-model="detailform.topInfor.noticeTypeId"
+                @change="getName(detailform.topInfor.noticeTypeId,bulletinType,'noticeTypeName')"
               >
                 <el-option
                   :key="index"
@@ -250,6 +252,7 @@
                 filterable
                 placeholder="请选择"
                 size="mini"
+                @change="getName(detailform.topInfor.projectModelId,projectModel,'projectModelName')"
                 v-model="detailform.topInfor.projectModelId"
               >
                 <el-option
@@ -567,6 +570,7 @@ export default {
 
       },
       detailformrules:{},
+      xqprojectType:[],
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
       sizeform:{projectScale:'',sectionName:''}
     };
@@ -577,8 +581,6 @@ export default {
       return this.$store.state.category.projectDomainType
     },
     bizCode () {return this.$store.state.bizCode;},
-    xqprojectType () {return this.$store.state.xqprojectType;},
-    // projectDomainType () {return this.$store.state.projectDomainType_new;},
     bulletinType () {return this.$store.state.bulletinType;},
     projectModel() {return this.$store.state.projectModel;},
     amountSource() {return this.$store.state.amountSource;},
@@ -593,23 +595,36 @@ export default {
     this.$store.dispatch('getConfig', { });
     this.$store.dispatch('getCategory', 'projectDomainType');
     // eslint-disable-next-line no-unde
-
   },
   methods: {
     submit(){},
-    getTwo(){
-      if(this.detailform.class1!=null){
-        // this.xqprojectType
-        var i=0;list=this.projectDomainType,len=list.length;
-        for(;i<len;i++){
-          if(this.detailform.class1.id==list[i].id){
-            this.xqprojectType=list[i];
-          }
+    getTwo(id){
+      // console.log(this.projectDomainType)
+      this.detailform.topInfor.enginTypeFirstName= this.projectDomainType.find(item => item.id == id).detailName;
+      var twoList=[];
+      this.$store.state.projectDomainType.forEach((item)=>{
+        if(item.parentDetailId==id){
+        twoList.push(item);
         }
-      }
+      });
+      this.xqprojectType=twoList;
+    },
+    getName(id,list,name){
+      this.detailform.topInfor[name]=list.find(item => item.id == id).detailName;
+      console.log(this.detailform.topInfor[name])
     },
     saveInfo(formName){
-      // console.log(this.value1)
+        console.log(this.value1)
+      var topInforCapitalList=[];
+      this.amountSource.forEach((item)=>{
+        if(this.value1.indexOf(item.id)!=-1){
+          var v={
+            capitalId:item.id,
+            capitalName:item.detailName,
+          };
+          topInforCapitalList.push(v)
+        }
+      });
        this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$http
