@@ -64,13 +64,17 @@ const state = {
   projectroute: '',
   // curProjectId: '1d8283451c7b8b4e56fc62744e74f7ba'
   curProjectId: '11484beb7ca57f78b1773381547ec24d ',
-  messageCount: []
+  messageCount: [],
+  category:[],//一级大类
 }
 
 const getters = {
   getToolData(state) {
     return state.toolBarData
-  }
+  },
+  // getCategory(state){
+  //   return state.category
+  // }
 
 }
 const mutations = {
@@ -252,7 +256,11 @@ const mutations = {
     //   state.categorys = res.data.data
     // })
   },
-  setCategory(data) {
+  setCategory(state, data) {
+    Vue.prototype.$http.get('/jsonapi/System/system/detail/v1.0/details/bycode/bulletinType').then(res => {
+      console.log(res.data.data)
+      state.category = res.data.data
+    })
       var B=new Array();
     alert(JSON.stringify(this.state.optiondata))
     this.state.optiondata.forEach((item) => {
@@ -270,12 +278,14 @@ const mutations = {
 
 const actions = {
   getConfig({ commit }, data) {
-    commit('setToolData', data)
+    commit('setToolData', data),
+    commit('setCategory', data)
 
   },
   getOptiondataByType({ commit }, data)
   {
     commit('setToolData1', data);
+    commit('setCategory', data)
 
   }
 }

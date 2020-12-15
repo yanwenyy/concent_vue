@@ -47,7 +47,7 @@
           :width="500"
           align="center"
           label="项目名称"
-          prop="year"
+          prop="inforName"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -66,7 +66,7 @@
           :width="150"
           align="center"
           label="工程类别"
-          prop="ptypename"
+          prop="enginTypeSecondName"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -84,7 +84,7 @@
           :width="150"
           align="center"
           label="建设单位"
-          prop="unitname"
+          prop="constructionOrg"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -102,7 +102,7 @@
           :width="150"
           align="center"
           label="公告类型"
-          prop="exetime"
+          prop="noticeTypeName"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -138,10 +138,13 @@
           :width="150"
           align="center"
           label="状态"
-          prop="orgname"
+          prop="flowStatus"
           fixed="right"
           show-overflow-tooltip
         >
+         <template slot-scope="scope">
+           {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':'审核通过'}}
+          </template>
           <template slot="header" slot-scope="scope">
             <span>状态</span>
             <div>

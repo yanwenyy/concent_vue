@@ -49,8 +49,9 @@
                 clearable
                 filterable
                 placeholder="请选择"
+                @change='getTwo'
                 size="mini"
-                v-model="detailform.topInfor.enginTypeFirstId"
+                v-model="detailform.topInfor.class1"
               >
                 <el-option
                   :key="index"
@@ -72,7 +73,7 @@
                 filterable
                 placeholder="请选择"
                 size="mini"
-                v-model="detailform.topInfor.enginTypeSecondId"
+                v-model="detailform.topInfor.class2"
               >
                 <el-option
                   :key="index"
@@ -291,7 +292,7 @@
                 multiple
                 placeholder="请选择"
                 size="mini"
-                v-model="detailform.capitalId"
+                v-model="value1"
               >
                 <el-option
                   :key="index"
@@ -322,7 +323,6 @@
                 v-model="detailform.topInfor.investment"
               />
             </el-form-item>
->
             </el-row>
             <el-row>
             <el-form-item
@@ -532,6 +532,7 @@
           <el-row style="text-align: center">
             <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
             <el-button  @click="submit">提交</el-button>
+
           </el-row>
           </el-row>
         </el-form>
@@ -544,9 +545,10 @@
 <script>
 export default {
 
-  name: "详情",
+  // name: "详情",
   data() {
     return {
+      value1:[],
       options2: [],
       detailform: {
         topInfor:{
@@ -564,23 +566,49 @@ export default {
 
 
       },
-
+      detailformrules:{},
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
       sizeform:{projectScale:'',sectionName:''}
     };
   },
   computed: {
+    projectDomainType(){console.log(this.$store.state.category);return this.$store.state.category;},
     bizCode () {return this.$store.state.bizCode;},
     xqprojectType () {return this.$store.state.xqprojectType;},
-    projectDomainType () {return this.$store.state.projectDomainType;},
+    // projectDomainType () {return this.$store.state.projectDomainType;},
     bulletinType () {return this.$store.state.bulletinType;},
     projectModel() {return this.$store.state.projectModel;},
     amountSource() {return this.$store.state.amountSource;},
     yesOrNo() {return this.$store.state.yesOrNo;},
     position() {return this.$store.state.position;},
   },
+  mounted() {
+
+    this.$http.get('/jsonapi/System/system/category/detail/v1.0/tree/238a917eb2b111e9a1746778b5c1167e').then(res => {
+      // console.log(res.data.data)
+    })
+    if(this.p.actpoint==='edit'){
+      this.getDetail();
+    }
+    this.$store.dispatch('getConfig', { })
+    // eslint-disable-next-line no-unde
+
+  },
   methods: {
+    submit(){},
+    getTwo(){
+      if(this.detailform.class1!=null){
+        // this.xqprojectType
+        var i=0;list=this.projectDomainType,len=list.length;
+        for(;i<len;i++){
+          if(this.detailform.class1.id==list[i].id){
+            this.xqprojectType=list[i];
+          }
+        }
+      }
+    },
     saveInfo(formName){
+      console.log(this.value1)
        this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$http
@@ -772,14 +800,7 @@ export default {
       this.multipleSelection = val;
     },
   },
-  mounted() {
-    if(this.p.actpoint==='edit'){
- this.getDetail();
-    }
-    this.$store.dispatch('getConfig', { })
-    // eslint-disable-next-line no-unde
 
-  },
 };
 </script>
 <style lang="scss">
