@@ -675,7 +675,7 @@
             <el-table-column
               :resizable="false"
               label="标段名"
-              prop="topInfoSectionList.sectionName"
+              prop="sectionName"
               show-overflow-tooltip
             >
               <template slot-scope="scope">
@@ -688,7 +688,7 @@
                     clearable
                     :disabled="p.actpoint === 'look'"
                     size="mini"
-                    v-model="detailform.topInfoSectionList.sectionName"
+                    v-model="scope.row.sectionName"
                   ></el-input>
                 </el-form-item>
                 <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
@@ -698,7 +698,7 @@
             <el-table-column
               :resizable="false"
               label="项目份额"
-              prop="topInfoSectionList.contractAmount"
+              prop="contractAmount"
               show-overflow-tooltip
             >
               <template slot-scope="scope">
@@ -711,7 +711,7 @@
                     clearable
                     :disabled="p.actpoint === 'look'"
                     size="mini"
-                    v-model="detailform.topInfoSectionList.contractAmount"
+                    v-model="scope.row.contractAmount"
                   ></el-input>
                 </el-form-item>
                 <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
@@ -817,7 +817,7 @@ export default {
       console.log(this.detailform.topInfor[name])
     },
     saveInfo(formName){
-        console.log(this.value1)
+      //资金来源
       var topInforCapitalList=[];
       this.amountSource.forEach((item)=>{
         if(this.value1.indexOf(item.id)!=-1){
@@ -828,7 +828,8 @@ export default {
           topInforCapitalList.push(v)
         }
       });
-       this.$refs[formName].validate((valid) => {
+      console.log(this.detailform.topInfoSectionList);
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$http
             .post(
