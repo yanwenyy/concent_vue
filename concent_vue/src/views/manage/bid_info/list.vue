@@ -2,7 +2,7 @@
   <div>
     <div style="width: 100%;overflow: hidden;">
       <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary">新增</el-button>
+        <el-button @click="add" plain type="primary">登记</el-button>
         <el-button @click="totop" plain type="primary">修改</el-button>
         <el-button type="primary" plain>删除</el-button>
         <el-button type="primary" style="height: 40px" plain>

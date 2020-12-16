@@ -460,7 +460,7 @@
             style="width: 100%; min-height: calc(100vh - 370px)"
           >
             <el-table-column
-              :width="100"
+              :width="80"
               align="center"
               label="序号"
               show-overflow-tooltip
