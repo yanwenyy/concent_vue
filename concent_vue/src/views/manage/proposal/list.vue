@@ -2,10 +2,10 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary" >新增</el-button>
-        <el-button @click="totop" plain type="primary" >修改</el-button>
-        <el-button @click="remove" type="primary" plain >删除</el-button>
-        <el-button @click="searchformReset" type="primary" plain >刷新</el-button>
+        <el-button @click="add" plain type="primary">新增</el-button>
+        <el-button @click="totop" plain type="primary">修改</el-button>
+        <el-button @click="remove" type="primary" plain>删除</el-button>
+        <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
       </el-button-group>
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
@@ -142,8 +142,8 @@
           fixed="right"
           show-overflow-tooltip
         >
-         <template slot-scope="scope">
-           {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':'审核通过'}}
+          <template slot-scope="scope">
+            {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':'审核通过'}}
           </template>
           <template slot="header" slot-scope="scope">
             <span>状态</span>
@@ -176,179 +176,180 @@
           }}</template>
         </el-table-column> -->
       </el-table>
-      </div>
-          <el-pagination
-        :current-page="page.current"
-        :page-size="page.size"
-        :page-sizes="[10, 50, 100]"
-        :total="page.total"
-        @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"
-        layout="total, sizes, prev, pager, next, jumper"
-        style="margin: 20px;position: fixed;right:200px;bottom:40px"
-      ></el-pagination>
+    </div>
+    <el-pagination
+      :current-page="page.current"
+      :page-size="page.size"
+      :page-sizes="[10, 50, 100]"
+      :total="page.total"
+      @current-change="handleCurrentChange"
+      @size-change="handleSizeChange"
+      layout="total, sizes, prev, pager, next, jumper"
+      style="margin: 20px;position: fixed;right:200px;bottom:40px"
+    ></el-pagination>
   </div>
 </template>
 
 <script>
-export default {
-  // inject:['reload'],
-  name: "proposal-list-look",
-  data() {
-    return {
-      page: { current: 1, size: 10, total: 0, records: [] },
-      showinput: false,
-      sousuo: "",
-      searchform: {
+  export default {
+    // inject:['reload'],
+    name: "proposal-list-look",
+    data() {
+      return {
+        page: {current: 1, size: 10, total: 0, records: []},
+        showinput: false,
+        sousuo: "",
+        searchform: {
 
-        orgid: "",
-        orgname: "",
-        inforName: "",
-        enginTypeFirstId: "",
-        constructionOrg: "",
-        noticeTypeId: "",
+          orgid: "",
+          orgname: "",
+          inforName: "",
+          enginTypeFirstId: "",
+          constructionOrg: "",
+          noticeTypeId: "",
+        },
+        menus: [],
+        multipleSelection: [],
+        orgTree: [],
+      };
+    },
+    methods: {
+      exportdata() {
       },
-      menus: [],
-      multipleSelection: [],
-      orgTree: [],
-    };
-  },
-  methods: {
-    exportdata(){},
-    search() {
-      this.showinput = false;
-    },
-    // 增加
-    add() {
-      let p = { actpoint: "add" };
-      this.$router.push({
-        path: "./detail/",
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
-      });
-    },
-    // 修改
-totop(){
-    if (this.multipleSelection.length !== 1) {
-        this.$message.info("请选择一条记录进行查看操作！");
-        return false;
-      }
-      let p = { actpoint: "edit", uuid: this.multipleSelection[0].uuid };
-      this.$router.push({
-        path: "./detail/",
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
-      });
+      search() {
+        this.showinput = false;
+      },
+      // 增加
+      add() {
+        let p = {actpoint: "add"};
+        this.$router.push({
+          path: "./detail/",
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        });
+      },
+      // 修改
+      totop() {
+        if (this.multipleSelection.length !== 1) {
+          this.$message.info("请选择一条记录进行查看操作！");
+          return false;
+        }
+        let p = {actpoint: "edit", instid: this.multipleSelection[0].topOrgId};
+        this.$router.push({
+          path: "./detail/",
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        });
 
-},
-    // 查看
-    rowshow(row) {
-      let p = { actpoint: "look", instid: row.uuid };
-      this.$router.push({
-        path: "./detail/",
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
-      });
-    },
-    // 删除
-    remove(){
+      },
+      // 查看
+      rowshow(row) {
+        let p = {actpoint: "look", instid: row.topOrgId};
+        this.$router.push({
+          path: "./detail/",
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        });
+      },
+      // 删除
+      remove() {
         if (this.multipleSelection.length < 1) {
-        this.$message.info("请选择一条记录进行查看操作！");
-        return false;
-      }
-      let uuids = []
-      this.multipleSelection.forEach((item)=>{
-        uuids.push(item.topOrgId)
-      })
-      // uuids.join(',')
-       this.$http
-        .post(
-          "/api/topInfo/TopInfor/list/delete",
-         {ids:uuids}
-        )
-        .then((res) => {
-          this.getData()
+          this.$message.info("请选择一条记录进行查看操作！");
+          return false;
+        }
+        let uuids = []
+        this.multipleSelection.forEach((item) => {
+          uuids.push(item.topOrgId)
+        })
+        // uuids.join(',')
+        this.$http
+          .post(
+            "/api/topInfo/TopInfor/list/delete",
+            {ids: uuids}
+          )
+          .then((res) => {
+            this.getData()
+          });
+      },
+      // 展示
+      show() {
+        if (this.multipleSelection.length !== 1) {
+          this.$message.info("请选择一条记录进行查看操作！");
+          return false;
+        }
+        let p = {actpoint: "look", instid: this.multipleSelection[0].uuid};
+        this.$router.push({
+          path: "../detail/",
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
-    },
-    // 展示
-    show() {
-      if (this.multipleSelection.length !== 1) {
-        this.$message.info("请选择一条记录进行查看操作！");
-        return false;
-      }
-      let p = { actpoint: "look", instid: this.multipleSelection[0].uuid };
-      this.$router.push({
-        path: "../detail/",
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
-      });
-    }, // list通用方法开始
-    handleSizeChange(val) {
-      this.searchform.size = val;
-      this.getData();
-    },
-    handleCurrentChange(val) {
-      this.searchform.current = val;
-      this.getData();
-    },
-    searchformSubmit() {
-      this.searchform.current = 1;
-      this.getData();
-    },
-    searchformReset() {
-      // this.$refs["searchform"].resetFields();
-      this.searchform.inforName = "";
-      this.searchform.enginTypeFirstId = "";
-      this.searchform.constructionOrg = "";
-      this.searchform.noticeTypeId = "";
-      this.getData();
-    },
-    // 列表选项数据
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
-    },
-    // 查询
-    getData() {
-      this.$http
-        .post(
-          "/api/topInfo/TopInfor/list/loadPageDataForReg",
-          this.searchform
-        )
-        .then((res) => {
-          this.page = res.data.data;
+      }, // list通用方法开始
+      handleSizeChange(val) {
+        this.searchform.size = val;
+        this.getData();
+      },
+      handleCurrentChange(val) {
+        this.searchform.current = val;
+        this.getData();
+      },
+      searchformSubmit() {
+        this.searchform.current = 1;
+        this.getData();
+      },
+      searchformReset() {
+        // this.$refs["searchform"].resetFields();
+        this.searchform.inforName = "";
+        this.searchform.enginTypeFirstId = "";
+        this.searchform.constructionOrg = "";
+        this.searchform.noticeTypeId = "";
+        this.getData();
+      },
+      // 列表选项数据
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
+      // 查询
+      getData() {
+        this.$http
+          .post(
+            "/api/topInfo/TopInfor/list/loadPageDataForReg",
+            this.searchform
+          )
+          .then((res) => {
+            this.page = res.data.data;
+          });
+      },
+      getMenus() {
+        this.$http
+          .post("api/base/loadcascader", {typecode: "XMLX"})
+          .then((res) => {
+            if (res.data.code === 0) {
+              this.menus = res.data.data;
+            }
+          });
+      },
+      currentMenu(selVal) {
+        let selMenuObj = this.menus.filter((item) => item.value === selVal);
+        this.searchform.menu = selMenuObj[0].label;
+      },
+      // 获取上级单位树信息
+      getOrgTree() {
+        this.$http.get("/api/base/loadorglist").then((res) => {
+          this.orgTree = res.data.data;
         });
-    },
-    getMenus() {
-      this.$http
-        .post("api/base/loadcascader", { typecode: "XMLX" })
-        .then((res) => {
-          if (res.data.code === 0) {
-            this.menus = res.data.data;
-          }
-        });
-    },
-    currentMenu(selVal) {
-      let selMenuObj = this.menus.filter((item) => item.value === selVal);
-      this.searchform.menu = selMenuObj[0].label;
-    },
-    // 获取上级单位树信息
-    getOrgTree() {
-      this.$http.get("/api/base/loadorglist").then((res) => {
-        this.orgTree = res.data.data;
-      });
-    },
-    // 确定单位
-    orgChange() {
-      let selectLabelArr = this.$refs["porgCascader"].getCheckedNodes()[0]
-        .pathLabels;
-      this.searchform.orgname = selectLabelArr[selectLabelArr.length - 1];
-    },
+      },
+      // 确定单位
+      orgChange() {
+        let selectLabelArr = this.$refs["porgCascader"].getCheckedNodes()[0]
+          .pathLabels;
+        this.searchform.orgname = selectLabelArr[selectLabelArr.length - 1];
+      },
 
-    // list通用方法结束
-  },
-  created() {
-    this.getData();
-  },
-};
+      // list通用方法结束
+    },
+    created() {
+      this.getData();
+    },
+  };
 </script>
 <style scoped>
-.el-table__row {
-  cursor: pointer;
-}
+  .el-table__row {
+    cursor: pointer;
+  }
 </style>
