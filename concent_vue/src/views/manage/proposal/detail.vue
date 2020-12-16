@@ -173,7 +173,7 @@
             <el-form-item
               label="预计招标时间:"
               prop="planBidTime"
-              style="width: 33%"
+              style="max-width: 33%;box-sizing: border-box"
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -545,7 +545,7 @@
             <p style="overflow: hidden；margin-right: 30px">
               <span style="float: left">地点信息: </span>
               <el-button
-                @click="show('add')"
+                @click="add('dd')"
                 size="mini"
                 style="
                   float: right;
