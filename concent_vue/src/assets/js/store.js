@@ -50,7 +50,7 @@ const state = {
   companyType:[],//客户类别
   probability:[],//预计中标概率
   projectDomainType:[],//工程行业类别
-
+  railwayLine:[],//所属线路
 
   optiondata:[],
   dialogState: 'edit',
@@ -85,6 +85,9 @@ const mutations = {
       state.optiondata = res.data.data
       this.state.optiondata.forEach((item) => {
         switch (item.categoryCode){
+          case 'railwayLine':
+            state.railwayLine=item.sysCategoryDetailList;
+            break;
           case 'bulletinType':
             state.bulletinType=item.sysCategoryDetailList;
             break;

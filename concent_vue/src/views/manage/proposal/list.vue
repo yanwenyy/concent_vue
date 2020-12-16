@@ -21,7 +21,7 @@
           'text-align': 'center',
           'background-color': 'whitesmoke',
         }"
-        @row-click="rowshow"
+        @row-dblclick="rowshow"
         @selection-change="handleSelectionChange"
         border
         highlight-current-row

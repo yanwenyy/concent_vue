@@ -18,7 +18,7 @@
         >
       </div>
 
-      <div style="overflow: auto; max-height: 55%; padding-bottom: 10px">
+      <div style="overflow: scroll; max-height: 31vh;padding-bottom: 10px">
         <el-form
           :inline="false"
           :model="detailform"
@@ -195,13 +195,20 @@
                 clearable
                 placeholder="请选择或直接填写所属现路"
                 size="mini"
+                @change="
+                  getName(
+                    detailform.topInfor.belongLineId,
+                    railwayLine,
+                    'belongLineName'
+                  )
+                "
                 v-model="detailform.topInfor.belongLineId"
               >
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options2"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in railwayLine"
                 ></el-option>
               </el-select>
             </el-form-item>
@@ -414,7 +421,7 @@
             </el-form-item>
             <el-form-item
               label="预计中标概率:"
-              prop="topInfor.probability"
+              prop="topInfor.bidProbId"
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -427,7 +434,14 @@
                 clearable
                 placeholder="请选择"
                 size="mini"
-                v-model="detailform.topInfor.probability"
+                @change="
+                  getName(
+                    detailform.topInfor.bidProbId,
+                    probability,
+                    'bidProbName'
+                  )
+                "
+                v-model="detailform.topInfor.bidProbId"
               >
                 <el-option
                   :key="index"
@@ -544,6 +558,7 @@
               style="width: 98%; min-height: calc(100vh - 370px)"
             >
               <el-table-column
+                :width="80"
                 align="center"
                 label="序号"
                 show-overflow-tooltip
@@ -648,7 +663,7 @@
               style="width: 98%; min-height: calc(100vh - 370px)"
             >
               <el-table-column
-                :width="150"
+                :width="80"
                 align="center"
                 label="序号"
                 show-overflow-tooltip
@@ -708,13 +723,15 @@
                 </template>
               </el-table-column>
             </el-table>
-              <div class="btn-group" v-show="p.actpoint != 'look'">
-                <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
-                <el-button @click="submit">提交</el-button>
-              </div>
+
         </el-form>
       </div>
+
     </el-card>
+    <div class="btn-group" v-show="p.actpoint != 'look'">
+      <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
+      <el-button @click="submit">提交</el-button>
+    </div>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
   </div>
 </template>
@@ -778,6 +795,9 @@
       },
       probability() {
         return this.$store.state.probability;
+      },
+      railwayLine() {
+        return this.$store.state.railwayLine;
       },
     },
     mounted() {
@@ -923,8 +943,9 @@
                 {ids: [item.uuid]}
               )
               .then((res) => {
-                if (data && data.code === 200) {
+                if (res.data && res.data.code === 200) {
                   list.splice(index, 1);
+                  console.log(list)
                 } else {
                   this.$message.error(data.msg)
                 }
@@ -1071,7 +1092,6 @@
   .item {
     margin-bottom: 18px;
   }
-
   .clearfix:before,
   .clearfix:after {
     display: table;
@@ -1138,6 +1158,7 @@
   .el-card.is-hover-shadow:hover {
     overflow: auto;
     // height: 500px ;
+    /*height: 44vh;*/
   }
 
   .el-button--mini,
