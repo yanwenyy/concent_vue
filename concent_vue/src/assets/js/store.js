@@ -233,11 +233,12 @@ const mutations = {
 
   },
   setCategory(state, data) {
+    console.log(data)
     var list=[],c_list=[];
     Vue.prototype.$http.get('/jsonapi/System/system/category/detail/v1.0/details/bycode/' + data).then(res => {
       list = res.data.data
       list.forEach((item) => {
-          if(item.isLeaf == 0 && item.categoryCode == data){
+          if(item.isLeaf == 0 ){
               c_list.push(item)
           }
       });

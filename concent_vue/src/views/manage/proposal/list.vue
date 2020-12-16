@@ -255,7 +255,7 @@ totop(){
       }
       let uuids = []
       this.multipleSelection.forEach((item)=>{
-        uuids.push(item.uuid)
+        uuids.push(item.topOrgId)
       })
       // uuids.join(',')
        this.$http
