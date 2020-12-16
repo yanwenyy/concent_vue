@@ -234,15 +234,17 @@ const mutations = {
   },
   setCategory(state, data) {
     var list=[],c_list=[];
-    Vue.prototype.$http.get('/jsonapi/System/system/category/detail/v1.0/details/bycode/' + data).then(res => {
-      list = res.data.data
-      list.forEach((item) => {
-          if(item.isLeaf == 0 && item.categoryCode == data){
-              c_list.push(item)
-          }
-      });
-      // state[data] = c_list;
-      state.category[data] = c_list;
+    Vue.prototype.$http.get('/jsonapi/System/system/category/detail/v1.0/details/bycode/' + data.id).then(res => {
+      // list = res.data.data
+      // list.forEach((item) => {
+      //     if(item.isLeaf == 0 && item.categoryCode == data){
+      //         c_list.push(item)
+      //     }
+      // });
+      state.category[data.name] = res.data.data;
+
+
+      // state.category[data] = c_list;
       // console.log(state.category[data])
     })
   }

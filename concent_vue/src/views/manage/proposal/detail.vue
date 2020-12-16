@@ -412,7 +412,7 @@
             <el-form-item
               label="预计中标概率:"
               prop="topInfor.isMajorProject"
-              style="width: 33%"
+              style="max-width: 33%;box-sizing: border-box"
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -516,7 +516,7 @@
           <p style="overflow: hidden；margin-right: 30px">
             <span style="float: left">地点信息: </span>
             <el-button
-              @click="show('add')"
+              @click="add('dd')"
               size="mini"
               style="
                 float: right;
@@ -528,6 +528,7 @@
               >新增</el-button ></p>
           <el-table
             :data="detailform.topInfoSiteList"
+            :key="key"
             :header-cell-style="{
               'text-align': 'center',
               'background-color': 'rgba(246,248,252,1)',
@@ -551,6 +552,7 @@
               :resizable="false"
               label="项目地点"
               prop="inforName"
+              align="center"
               show-overflow-tooltip
             >
               <template slot-scope="scope">
@@ -558,13 +560,8 @@
 
                   label-width="0"
                 >
-                  <el-input
-                    max-length="50"
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    size="mini"
-                    v-model="scope.row.inforName"
-                  ></el-input>
+                  {{scope.row.detailName}}
+                  <el-button @click="selectPosition(),positionIndex=scope.$index">选择</el-button>
                 </el-form-item>
                 <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
               </template>
@@ -573,6 +570,7 @@
             <el-table-column
               :resizable="false"
               label="份额"
+              align="center"
               prop="sectionName"
               show-overflow-tooltip
             >
@@ -597,6 +595,7 @@
               :resizable="false"
               label="是否为主地点"
               prop="contractAmount"
+              align="center"
               show-overflow-tooltip
             >
               <template slot-scope="scope">
@@ -623,6 +622,7 @@
               show-overflow-tooltip
               v-if="p.actpoint !== 'look'"
               width="200"
+              align="center"
             >
               <template slot-scope="scope">
                 <el-link
@@ -640,7 +640,7 @@
           <p style="overflow: hidden；margin-right: 30px">
             <span style="float: left">标段信息: </span>
             <el-button
-              @click="show('add')"
+              @click="add('bd')"
               size="mini"
               style="
                 float: right;
@@ -673,9 +673,11 @@
             ></el-table-column>
 
             <el-table-column
+              class="listTabel"
               :resizable="false"
               label="标段名"
               prop="sectionName"
+              align="center"
               show-overflow-tooltip
             >
               <template slot-scope="scope">
@@ -699,6 +701,7 @@
               :resizable="false"
               label="项目份额"
               prop="contractAmount"
+              align="center"
               show-overflow-tooltip
             >
               <template slot-scope="scope">
@@ -711,7 +714,7 @@
                     clearable
                     :disabled="p.actpoint === 'look'"
                     size="mini"
-                    v-model="scope.row.contractAmount"
+                    v-model="scope.row.projectScale"
                   ></el-input>
                 </el-form-item>
                 <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
@@ -722,6 +725,7 @@
               :resizable="false"
               fixed="right"
               label="操作"
+              align="center"
               show-overflow-tooltip
               v-if="p.actpoint !== 'look'"
               width="200"
@@ -747,17 +751,23 @@
       </div>
 
     </el-card>
+    <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
   </div>
 </template>
 
 <script>
+  import Tree from '@/components/tree'
 export default {
 
   // name: "详情",
   data() {
     return {
+      key:0,
+      treeStatas:false,
+      positionIndex:'',//缓存当前的选中的项目地点的index
       value1:[],
       options2: [],
+      options:[],
       detailform: {
         topInfor:{
 
@@ -773,8 +783,11 @@ export default {
       detailformrules:{},
       xqprojectType:[],
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
-      sizeform:{projectScale:'',sectionName:''}
+      sizeform:{projectScale:'',sectionName:''},
     };
+  },
+  components: {
+    Tree,
   },
   computed: {
     projectDomainType(){
@@ -795,9 +808,39 @@ export default {
     }
     this.$store.dispatch('getConfig', { });
     this.$store.dispatch('getCategory', 'projectDomainType');
+
     // eslint-disable-next-line no-unde
+
   },
   methods: {
+    //获取项目地点的值
+    getPositionTree(data){
+      console.log(data)
+      this.treeStatas=false;
+      var country='',_data=data;
+      if(_data.fullDetailName.indexOf("境内")!=-1){
+        country='01';
+      }else if(_data.fullDetailName.indexOf("境外")!=-1){
+        country='02';
+      }
+      this.detailform.topInfoSiteList.forEach((item,index)=>{
+        if(index==this.positionIndex){
+          item.detailName=_data.detailName;
+          item.country=country;
+          item.ffid=_data.fullDetailCode;
+          item.path=_data.fullDetailName;
+        }
+      });
+      this.key=this.key+1;
+    },
+    //选择项目地点
+    selectPosition(){
+      this.treeStatas = true;
+      console.log(this.positionIndex);
+      this.$nextTick(() => {
+        this.$refs.addOrUpdate.init()
+      })
+    },
     submit(){},
     getTwo(id){
       // console.log(this.projectDomainType)
@@ -826,7 +869,7 @@ export default {
           topInforCapitalList.push(v)
         }
       });
-      console.log(this.detailform.topInfoSectionList);
+      console.log(this.detailform.topInfoSiteList);
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$http
@@ -910,7 +953,26 @@ export default {
       _self.detailform.topInfoSectionList.splice(index, 1);
       // })
     },
-
+    //新增标段和地点
+    add(type){
+      var v={};
+      if(type=='dd'){
+        v={
+          country:'',
+          ffid:'',
+          path:'',
+          contractAmount:'',
+          isMain:''
+        }
+        this.detailform.topInfoSiteList.push(v);
+      }else{
+        v={
+          sectionName:'',
+          projectScale:'',
+        }
+        this.detailform.topInfoSectionList.push(v);
+      }
+    },
     show(type) {
       this.type = type;
       if (type === "add") {
@@ -1082,6 +1144,7 @@ export default {
   }
   .el-form-item__content {
     height: 60px;
+    line-height: 60px;
     .el-form-item__error {
       top: 42px;
     }
@@ -1113,6 +1176,7 @@ export default {
   height: 40px;
   width: 100%;;
   padding: 0;
+  box-sizing:border-box;
 }
 .gcform .el-input{
   width: 95%;
