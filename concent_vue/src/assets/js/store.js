@@ -235,17 +235,6 @@ const mutations = {
   setCategory(state, data) {
     console.log(data)
     var list=[],c_list=[];
-<<<<<<< HEAD
-    Vue.prototype.$http.get('/jsonapi/System/system/category/detail/v1.0/details/bycode/' + data).then(res => {
-      list = res.data.data
-      list.forEach((item) => {
-          if(item.isLeaf == 0 ){
-              c_list.push(item)
-          }
-      });
-      // state[data] = c_list;
-      state.category[data] = c_list;
-=======
     Vue.prototype.$http.get('/jsonapi/System/system/category/detail/v1.0/details/bycode/' + data.id).then(res => {
       // list = res.data.data
       // list.forEach((item) => {
@@ -257,7 +246,6 @@ const mutations = {
 
 
       // state.category[data] = c_list;
->>>>>>> fe872d03a1b6c42efae03e9a11515aca836a4f1e
       // console.log(state.category[data])
     })
   }
