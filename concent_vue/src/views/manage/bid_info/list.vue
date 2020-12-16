@@ -5,9 +5,9 @@
         <el-button @click="add" plain type="primary">新增</el-button>
         <el-button @click="totop" plain type="primary">修改</el-button>
         <el-button type="primary" plain>删除</el-button>
-        <el-button type="primary" style="height: 40px" plain
-          ><input placeholder="请输入项目名称"
-        /></el-button>
+        <el-button type="primary" style="height: 40px" plain>
+          <input placeholder="请输入项目名称"/>
+          </el-button>
       </el-button-group>
       <div style="float: right">
         <el-button @click="reset" type="info" plain style="color:black;background:none">重置</el-button>
@@ -36,30 +36,28 @@
           :width="50"
           align="center"
           show-overflow-tooltip
-          type="selection"
-        ></el-table-column>
+          type="selection">
+        </el-table-column>
         <el-table-column
           :width="70"
           align="center"
           label="序号"
           show-overflow-tooltip
-          type="index"
-        ></el-table-column>
+          type="index">
+        </el-table-column>
 
         <el-table-column
           :width="500"
           label="项目名称"
           prop="name"
-          show-overflow-tooltip
-        >
+          show-overflow-tooltip>
           <template slot="header" slot-scope="scope">
             <span>项目名称</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
                 v-model="sousuo"
-                size="mini"
-              />
+                size="mini"/>
             </div>
           </template>
         </el-table-column>
@@ -68,16 +66,14 @@
           align="center"
           label="工程类别"
           prop="ptypename"
-          show-overflow-tooltip
-        >
+          show-overflow-tooltip>
           <template slot="header" slot-scope="scope">
             <span>工程类别</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
                 v-model="sousuo"
-                size="mini"
-              />
+                size="mini"/>
             </div>
           </template>
         </el-table-column>
@@ -86,16 +82,14 @@
           align="center"
           label="建设单位"
           prop="unitname"
-          show-overflow-tooltip
-        >
+          show-overflow-tooltip>
           <template slot="header" slot-scope="scope">
             <span>建设单位</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
                 v-model="sousuo"
-                size="mini"
-              />
+                size="mini"/>
             </div>
           </template>
         </el-table-column>
@@ -104,8 +98,7 @@
           align="center"
           label="公告类型"
           prop="exetime"
-          show-overflow-tooltip
-        >
+          show-overflow-tooltip>
           <!-- <template slot-scope="scope">{{
             scope.row.exetime | datetoMonth
           }}</template> -->
@@ -115,8 +108,7 @@
               <el-input
                 style="float: left; width: 100%"
                 v-model="sousuo"
-                size="mini"
-              />
+                size="mini"/>
             </div>
           </template>
         </el-table-column>
@@ -126,16 +118,14 @@
           label="状态"
           prop="orgname"
           fixed="right"
-          show-overflow-tooltip
-        >
+          show-overflow-tooltip>
           <template slot="header" slot-scope="scope">
             <span>状态</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
                 v-model="sousuo"
-                size="mini"
-              />
+                size="mini"/>
             </div>
           </template>
         </el-table-column>
@@ -144,8 +134,7 @@
           align="center"
           label="投标截止日期"
           prop="state"
-          show-overflow-tooltip
-        >
+          show-overflow-tooltip>
           <!-- <template slot-scope="scope">{{
             scope.row.state === '0' ? '草稿' : '已上报'
           }}</template> -->
@@ -155,27 +144,23 @@
               <el-input
                 style="float: left; width: 100%"
                 v-model="sousuo"
-                size="mini"
-              />
+                size="mini"/>
             </div>
           </template>
         </el-table-column>
-
         <el-table-column
           :width="150"
           align="center"
           label="填报人"
           prop="username"
-          show-overflow-tooltip
-        >
+          show-overflow-tooltip>
           <template slot="header" slot-scope="scope">
             <span>填报人</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
                 v-model="sousuo"
-                size="mini"
-              />
+                size="mini"/>
             </div>
           </template>
         </el-table-column>
@@ -184,8 +169,7 @@
           align="center"
           label="登记时间"
           prop="createtime"
-          show-overflow-tooltip
-        >
+          show-overflow-tooltip>
           <!-- <template slot-scope="scope">{{
             scope.row.createtime | dateformat
           }}</template> -->
@@ -195,15 +179,12 @@
               <el-input
                 style="float: left; width: 100%"
                 v-model="sousuo"
-                size="mini"
-              />
+                size="mini"/>
             </div>
           </template>
         </el-table-column>
       </el-table>
-
     </div>
-
           <el-pagination
         :current-page="page.current"
         :page-size="page.size"
@@ -212,8 +193,8 @@
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
         layout="total, sizes, prev, pager, next, jumper"
-        style="margin: 20px;position: fixed;right:200px;bottom:40px"
-      ></el-pagination>
+        style="margin: 20px;position: fixed;right:200px;bottom:40px">
+      </el-pagination>
   </div>
 </template>
 
