@@ -54,6 +54,24 @@ export default {
                       "menushow": false,
                       "leaf": true,
                       "defaultpage": false
+                    },
+                    {
+                      "name": "项目信息变更",
+                      "path": "/manage/proposal/infoChangeList",
+                      "component": "/manage/proposal/infoChangeList",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": true
+                    },
+                    {
+                      "name": "项目信息变更",
+                      "path": "/manage/proposal/infoChangeDetail",
+                      "component": "/manage/proposal/infoChangeDetail",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": false,
+                      "leaf": true,
+                      "defaultpage": false
                     }
                   ]
                 },
