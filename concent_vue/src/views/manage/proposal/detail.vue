@@ -18,7 +18,7 @@
         >
       </div>
 
-      <div style="overflow: scroll; max-height: 31vh;padding-bottom: 10px">
+      <div style="overflow: scroll; max-height: 55vh;padding-bottom: 10px">
         <el-form
           :inline="false"
           :model="detailform"

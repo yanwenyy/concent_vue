@@ -9,28 +9,50 @@
             float: right;
             padding: 10px 20px;
             border: 1px solid #ddd;
-            color: black;"
-          type="text"
-          >返回</el-button
-        >
+            color: black;
+            position: fixe;
+            "
+          type="text">返回
+          </el-button>
       </div>
-    </el-card>
-    <el-card class="box-card">
-      <div style="height: 900px">
+
+      <div style="overflow: scroll; max-height: 55vh;padding-bottom: 10px">
         <el-form
           :inline="false"
           :model="detailform"
           :rules="detailformrules"
           class="gcform"
           ref="detailform"
-          style="background: white"
+          style="background: white； height: ceil(100%-300px)"
         >
-          <el-row>
             <el-form-item
               label="项目名称:"
               prop="clothSize.bcTypeId"
+            >
+              <el-select
+                :disabled="p.actpoint === 'look'"
+
+                clearable
+                filterable
+                style="width: 100%"
+                placeholder="请选择"
+                size="mini"
+                @change="chg"
+                v-model="detailform.clothSize.bcTypeId"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.label"
+                  :value="item.value"
+                  v-for="(item, index) in options1"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="工程类别（一级）:"
+              prop="clothSize.bcTypeId"
               required
-              style="width: 33%"
+
             >
               <el-select
                 :disabled="p.actpoint === 'look'"
@@ -50,10 +72,10 @@
               </el-select>
             </el-form-item>
             <el-form-item
-              label="工程类别:"
+              label="工程类别（二级）:"
               prop="clothSize.bcTypeId"
               required
-              style="width: 33%"
+
             >
               <el-select
                 :disabled="p.actpoint === 'look'"
@@ -75,7 +97,7 @@
             <el-form-item
               label="建设单位:"
               prop="clothSize.bcPlateTypeId"
-              style="width: 33%"
+
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -88,12 +110,11 @@
                 v-model="detailform.clothSize.bcPlateTypeId"
               />
             </el-form-item>
-          </el-row>
-          <el-row>
+
             <el-form-item
               label="公告类型:"
               prop="clothSize.bcPlateTypeId"
-              style="width: 33%"
+
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -110,7 +131,7 @@
               label="投标截止日期:"
               prop="clothSize.bcTypeId"
               required
-              style="width: 33%"
+
             >
               <el-select
                 :disabled="p.actpoint === 'look'"
@@ -135,7 +156,7 @@
             <el-form-item
               label="招标公告发布日期:"
               prop="clothSize.bcStyleId"
-              style="width: 33%"
+
             >
               <el-select
                 :disabled="p.actpoint === 'look'"
@@ -154,13 +175,11 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-          </el-row>
           <!-- 不下拉 -->
-          <el-row>
             <el-form-item
               label="招标方式:"
               prop="clothSize.bcStyleId"
-              style="width: 33%"
+
             >
               <el-select
                 :disabled="p.actpoint === 'look'"
@@ -183,7 +202,7 @@
             <el-form-item
               label="是否联合体投标:"
               prop="clothSize.bcPlateTypeId"
-              style="width: 33%"
+
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -199,7 +218,7 @@
             <el-form-item
               label="设计单位:"
               prop="clothSize.bcPlateTypeId"
-              style="width: 33%"
+
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -212,12 +231,10 @@
                 v-model="detailform.clothSize.bcPlateTypeId"
               />
             </el-form-item>
-          </el-row>
-          <el-row>
             <el-form-item
               label="招标代理公司:"
               prop="clothSize.bcPlateTypeId"
-              style="width: 33%"
+
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -232,7 +249,7 @@
             <el-form-item
               label="项目模式:"
               prop="clothSize.bcPlateTypeId"
-              style="width: 33%"
+
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -249,7 +266,7 @@
             <el-form-item
               label="资审方式:"
               prop="clothSize.bcPlateTypeId"
-              style="width: 33%"
+
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -263,12 +280,11 @@
                 v-model="detailform.clothSize.bcPlateTypeId"
               />
             </el-form-item>
-          </el-row>
-          <el-row>
+
             <el-form-item
               label="资金来源:"
               prop="clothSize.bcPlateTypeId"
-              style="width: 33%"
+
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -285,7 +301,7 @@
             <el-form-item
               label="是否为费率招标:"
               prop="clothSize.bcPlateTypeId"
-              style="width: 33%"
+
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -303,7 +319,7 @@
             <el-form-item
               label="招标文件发售截止日期"
               prop="clothSize.bcStyleId"
-              style="width: 33%"
+
             >
               <el-select
                 :disabled="p.actpoint === 'look'"
@@ -322,12 +338,12 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-          </el-row>
-          <el-row>
+
+          <div>
             <el-form-item
               label="项目跟踪负责人:"
               prop="clothSize.bcPlateTypeId"
-              style="width: 33%"
+
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -345,7 +361,7 @@
             <el-form-item
               label="联系电话:"
               prop="clothSize.bcPlateTypeId"
-              style="width: 33%"
+
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -359,9 +375,7 @@
                 v-model="detailform.clothSize.bcPlateTypeId"
               />
             </el-form-item>
-
-
-          </el-row>
+          </div>
           <el-row>
             <el-form-item
               class="neirong"
@@ -389,7 +403,7 @@
               class="neirong"
               label="投标说明(最多1000字):"
               prop="clothSize.bcPlateTypeId"
-              style="width: 33%"
+
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -410,7 +424,7 @@
               class="neirong"
               label="附件（最大10MB）:"
               prop="clothSize.bcPlateTypeId"
-              style="width: 33%"
+
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -1236,121 +1250,164 @@ export default {
 };
 </script>
 <style lang="scss">
-.gcform {
-  margin-top: 10px;
-  .el-form-item__label:before {
-    position: initial;
-    left: -10px;
+  .btn-group{
+    text-align: center;
+    margin-top: 20px;
   }
-  .el-form-item__error {
-    padding-top: 0px;
-    width: 95%;
-    text-align: left;
-    margin-left: 0;
-    margin: right;
-    text-align: right;
-    top: 0%;
-  }
-  .el-form-item {
-    float: left;
-  }
-  .detailformfooter1 {
-    margin-top: 5px;
-    width: 100%;
-    .el-button {
-      margin: 0 30px;
-      width: 140px;
-      height: 42px;
-      font-size: 18px;
-      font-family: Microsoft YaHei;
+  .gcform {
+    margin-top: 10px;
+    .el-form-item__label:before {
+      position: initial;
+      left: -10px;
     }
-    .el-button--primary {
-      background: #5c8bfa;
+    .el-form-item__error {
+      padding-top: 0px;
+      width: 95%;
+      margin-left: 0;
+      text-align: right;
+      top: 0%;
     }
-    .el-button--default {
-      border: 1px solid #5c8bfa;
-      color: #5c8bfa;
+    .el-form-item {
+      // float: left;
+      display: inline-block;
+      width: 32.5%;
+    }
+    .detailformfooter1 {
+      margin-top: 5px;
+      width: 100%;
+      .el-button {
+        margin: 0 30px;
+        width: 140px;
+        height: 42px;
+        font-size: 18px;
+        font-family: Microsoft YaHei;
+      }
+      .el-button--primary {
+        background: #5c8bfa;
+      }
+      .el-button--default {
+        border: 1px solid #5c8bfa;
+        color: #5c8bfa;
+      }
+    }
+    .errorMsg .el-form-item__label {
+      color: red;
+    }
+    .el-input {
+      width: 300px;
+    }
+    .el-input .el-input_inner {
+      width: 300px;
+      height: 500px;
     }
   }
-  .errorMsg .el-form-item__label {
-    color: red;
-  }
-  .el-input {
-    width: 300px;
-  }
+
   .el-input .el-input_inner {
     width: 300px;
     height: 500px;
   }
-}
-.el-input .el-input_inner {
-  width: 300px;
-  height: 500px;
-}
-.el-table thead.is-group th {
-  background: #fff;
-}
-.clothSizeTable {
-  td {
-    padding: 0;
+
+  .el-table thead.is-group th {
+    background: #fff;
   }
-  .el-form-item__content {
-    height: 60px;
-    .el-form-item__error {
-      top: 42px;
+
+  .clothSizeTable {
+    /*td {*/
+      /*padding: 0;*/
+    /*}*/
+    .el-form-item__content {
+      height: 60px;
+      line-height: 60px;
+      .el-form-item__error {
+        top: 42px;
+      }
     }
   }
-}
-.text {
-  font-size: 14px;
-}
 
-.item {
-  margin-bottom: 18px;
-}
+  .text {
+    font-size: 14px;
+  }
 
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-.clearfix:after {
-  clear: both;
-}
-.el-card__body {
-  padding: 0 100px;
-}
-.el-input--mini .el-input__inner {
-  height: 40px;
-  width: 100%;
-}
-.gcform .el-input {
-  width: 95%;
-}
-.neirong {
-  width: 100% !important;
-}
-.gcform .el-form-item {
-  margin-bottom: 0px;
-}
-.neirong .el-input--mini .el-input__inner {
-  height: 100px;
-}
-.detail_bottom {
-  margin: 50px 0 0 0;
-  border: 1px solid #ddd;
-}
-.el-card,
-.el-message {
-  overflow: hidden;
-}
-.el-scrollbar__wrap.default-scrollbar__wrap {
-  overflow: hidden;
-}
-.el-card.is-always-shadow,
-.el-card.is-hover-shadow:focus,
-.el-card.is-hover-shadow:hover {
-  overflow: auto;
-  // height: 500px ;
-}
+  .item {
+    margin-bottom: 18px;
+  }
+  .clearfix:before,
+  .clearfix:after {
+    display: table;
+    content: "";
+  }
+
+  .clearfix:after {
+    clear: both;
+  }
+
+  .el-card__body {
+    padding: 0 100px;
+    // height: 400px;
+    // border: 1px solid black;
+    // height: 200px;
+  }
+
+  .el-input--mini .el-input__inner {
+    height: 40px;
+    width: 100%;
+    box-sizing: border-box;
+    // margin: 10px 0 0 10px;
+  }
+
+  .gcform .el-input {
+    width: 95%;
+  }
+  .listInput{
+    width: auto!important;
+  }
+  .gcform .listInput input{
+    width: 100px!important;
+    padding:10px!important;
+    box-sizing: border-box;
+  }
+  .neirong {
+    width: 100% !important;
+  }
+
+  .gcform .el-form-item {
+    margin-bottom: 0px;
+  }
+
+  .neirong .el-input--mini .el-input__inner {
+    height: 100px;
+  }
+
+  .detail_bottom {
+    margin: 20px 0 0 0;
+    // border: 1px solid #ddd;
+  }
+
+  .el-card,
+  .el-message {
+    overflow: hidden;
+  }
+
+  .el-scrollbar__wrap.default-scrollbar__wrap {
+    overflow: hidden;
+  }
+
+  .el-card.is-always-shadow,
+  .el-card.is-hover-shadow:focus,
+  .el-card.is-hover-shadow:hover {
+    overflow: auto;
+    // height: 500px ;
+    /*height: 44vh;*/
+  }
+
+  .el-button--mini,
+  .el-button--mini.is-round {
+    margin: 0 27px 5px 0;
+  }
+
+  .el-table--border {
+    min-height: auto !important;
+  }
+
 </style>
+
