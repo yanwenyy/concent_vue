@@ -16,18 +16,17 @@
 
     <div style="margin-top: 20px">
       <el-table
+        :max-height="$tableHeight"
+        :height="$tableHeight"
         :data="page.records"
-        :header-cell-style="{
-          'text-align': 'center',
-          'background-color': 'whitesmoke',
-        }"
+        :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
         @row-dblclick="rowshow"
         @selection-change="handleSelectionChange"
         border
         highlight-current-row
         ref="table"
         stripe
-        style="width: 100%"
+        style="width: 100%;min-height: calc(100vh - 342px);"
         tooltip-effect="dark"
       >
         <el-table-column
@@ -156,7 +155,6 @@
             </div>
           </template>
         </el-table-column>
-
         <!-- <el-table-column
           :width="80"
           align="center"
@@ -185,7 +183,6 @@
       @current-change="handleCurrentChange"
       @size-change="handleSizeChange"
       layout="total, sizes, prev, pager, next, jumper"
-      style="margin: 20px;position: fixed;right:200px;bottom:40px"
     ></el-pagination>
   </div>
 </template>

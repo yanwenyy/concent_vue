@@ -36,20 +36,23 @@
       </el-menu>
       </div>
       <div  style="position:relatve;width:100%;height:100%;background:#F7F9FA;;box-sizing:border-box;padding:20px 0 100px;">
-
-        <p style="width: auto;
+        <p style="width: 100%;
         position:absolute;
         bottom:0;
-        left:33%;
-height: 10px;
-font-size: 15px;
-font-family: PingFangSC-Regular, PingFang SC;
-font-weight: 400;
-color: #C0C4CC;
-line-height: 10px;">中国铁建股份有限公司 版权所有 建设监管：中国铁建股份有限公司 技术维护：中铁建网络信息科技有限公司</p>
-        <div style="width:90%;height: 100%;margin:0px auto;background:white;display:flex;">
+        height: 30px;
+        font-size: 15px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #C0C4CC;
+        text-align: center;
+        line-height: 20px;
+        margin:10px 0px 20px 0px;">
+         <span>中国铁建股份有限公司 版权所有 建设监管：中国铁建股份有限公司 </span><br>
+         <span>技术维护：中铁建网络信息科技有限公司</span>
+         </p>
+        <div style="height:calc(100% - 20px);margin-right:50px;margin-left:50px;background:white;display:flex;">
 
-<el-scrollbar
+      <el-scrollbar
         :class="tlm_height"
         id="el-leftnav-scrollbar"
         style="border-right: 1px solid #e6e6e6;"
@@ -59,29 +62,15 @@ line-height: 10px;">中国铁建股份有限公司 版权所有 建设监管：�
           <sidebar></sidebar>
         </el-aside>
       </el-scrollbar>
-      <el-scrollbar :class="tlm_height" id="el-main" wrap-class="default-scrollbar__wrap" style="
-    height: calc(100% - 60px);">
+      <el-scrollbar :class="tlm_height" id="el-main" wrap-class="default-scrollbar__wrap" style=" height: 100%;">
         <el-main class="el-tlm-main" style="width: 100%; height: 100%;">
           <router-view></router-view>
-
-
-
+          <div class="block">
+          <breadcrumb v-if="breadcrumb" style="flex:none;">
+          </breadcrumb>
+      </div>
         </el-main>
-  <div class="block">
-    <!-- <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage4"
-      :page-sizes="[100, 200, 300, 400]"
-      :page-size="100"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="15"
-      style="flex:none;">
-    </el-pagination> -->
 
-<breadcrumb v-if="breadcrumb" style="flex:none;">
- </breadcrumb>
-</div>
       </el-scrollbar>
 
       </div>
@@ -164,9 +153,7 @@ export default {
   -webkit-transition: width 0.5s;
   -o-transition: width 0.5s;
 }
-.el_container_style_true #el-main .el-scrollbar__view{
-height: calc(100% - 18px);
-}
+
 .el_container_style_false #el-leftnav-scrollbar,
 .el_container_style_false #el-leftnav {
   width: 64px;
@@ -189,19 +176,19 @@ height: calc(100% - 18px);
   height: calc(100%);
 }
 .el-breadcrumb{
-  margin: 5px 0 0px 30px;
+  margin: 15px 0 0px 0px;
   position: fixed;
 }
 .block{
   float: left;
   position: fixed;
-  width: 75%;
 }
 .el-pagination{
   float: right;
-  margin: 25px 0px 0 0px;
+  margin: 10px 0px 0 0px;
 }
 .el-pagination .el-select .el-input .el-input__inner{
   height: auto;
+  margin: 1px;
 }
 </style>
