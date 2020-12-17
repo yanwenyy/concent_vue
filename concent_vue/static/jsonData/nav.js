@@ -54,6 +54,24 @@ export default {
                       "menushow": false,
                       "leaf": true,
                       "defaultpage": false
+                    },
+                    {
+                      "name": "项目信息变更",
+                      "path": "/manage/proposal/infoChangeList",
+                      "component": "/manage/proposal/infoChangeList",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": true
+                    },
+                    {
+                      "name": "项目信息变更",
+                      "path": "/manage/proposal/infoChangeDetail",
+                      "component": "/manage/proposal/infoChangeDetail",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": false,
+                      "leaf": true,
+                      "defaultpage": false
                     }
                   ]
                 },
@@ -75,6 +93,42 @@ export default {
                       "menushow": true,
                       "leaf": true,
                       "defaultpage": true
+                    },
+                    {
+                      "name": "资格预审通过登记",
+                      "path": "/manage/verify/list_VerifyResult",
+                      "component": "/manage/verify/list_VerifyResult",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "资格预审登记审核",
+                      "path": "/manage/verify/list_WorkFlow",
+                      "component": "/manage/verify/list_WorkFlow",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "资格预审登记变更",
+                      "path": "/manage/verify/list_Change",
+                      "component": "/manage/verify/list_Change",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "资格预审标段列表",
+                      "path": "/manage/verify/list_Section",
+                      "component": "/manage/verify/list_Section",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": false,
+                      "leaf": true,
+                      "defaultpage": false
                     },
                     {
                       "name": "资审登记新增",

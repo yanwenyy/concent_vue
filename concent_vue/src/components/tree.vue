@@ -15,6 +15,7 @@
 </template>
 
 <script>
+  import datas from '@/utils/position'
     export default {
       data() {
         return {
@@ -27,10 +28,14 @@
         };
       },
       mounted(){
-        this.$http.get('/static/position.json', { isLoading: false }).then(res =>{
-          // console.log(res.data.data);
-          this.datas=res.data.data
-        })
+        //json方法引入数据
+        // this.$http.get('/static/position.json', { isLoading: false }).then(res =>{
+        //   // console.log(res.data.data);
+        //   this.datas=res.data.data
+        // });
+
+        //js方法引入数据
+        this.datas=datas;
       },
       methods: {
         init(){
