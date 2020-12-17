@@ -77,6 +77,42 @@ export default {
                       "defaultpage": true
                     },
                     {
+                      "name": "资格预审通过登记",
+                      "path": "/manage/verify/list_VerifyResult",
+                      "component": "/manage/verify/list_VerifyResult",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "资格预审登记审核",
+                      "path": "/manage/verify/list_WorkFlow",
+                      "component": "/manage/verify/list_WorkFlow",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "资格预审登记变更",
+                      "path": "/manage/verify/list_Change",
+                      "component": "/manage/verify/list_Change",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "资格预审标段列表",
+                      "path": "/manage/verify/list_Section",
+                      "component": "/manage/verify/list_Section",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": false,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
                       "name": "资审登记新增",
                       "path": "/manage/verify/detail",
                       "component": "/manage/verify/detail",
