@@ -25,145 +25,392 @@
           ref="detailform"
           style="background: white； height: ceil(100%-300px)"
         >
-            <el-form-item
-              label="项目名称:"
-              prop="clothSize.bcTypeId"
-            >
-              <el-select
-                :disabled="p.actpoint === 'look'"
 
+
+            <el-form-item label="项目板块:">
+              <el-input
+                disabled
                 clearable
                 filterable
                 style="width: 100%"
-                placeholder="请选择"
                 size="mini"
-                @change="chg"
-                v-model="detailform.clothSize.bcTypeId"
+                v-model="detailform"
               >
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options1"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in bizCode"
                 ></el-option>
-              </el-select>
+              </el-input>
             </el-form-item>
-            <el-form-item
-              label="工程类别（一级）:"
-              prop="clothSize.bcTypeId"
-              required
 
-            >
-              <el-select
-                :disabled="p.actpoint === 'look'"
-                @change="chg"
+            <el-form-item label="工程类别(一级):">
+              <el-input
+                 disabled
+                clearable
+                filterable
+                placeholder="请选择"
+                @change="getTwo"
+                size="mini"
+                v-model="detailform"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectDomainType"
+                ></el-option>
+              </el-input>
+            </el-form-item>
+
+            <el-form-item
+              label="工程类别(二级):"
+            ><!-- :disabled="p.actpoint === 'look'" -->
+              <el-input
+                disabled
                 clearable
                 filterable
                 placeholder="请选择"
                 size="mini"
-                v-model="detailform.clothSize.bcTypeId"
+                @change="
+                  getName(
+                    detailform.topInfor.enginTypeSecondId,
+                    xqprojectType,
+                    'enginTypeSecondName'
+                  )
+                "
+                v-model="detailform"
               >
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options1"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in xqprojectType"
                 ></el-option>
-              </el-select>
+              </el-input>
             </el-form-item>
-            <el-form-item
-              label="工程类别（二级）:"
-              prop="clothSize.bcTypeId"
-              required
-
-            >
-              <el-select
-                :disabled="p.actpoint === 'look'"
-                @change="chg"
+            <el-form-item  label="项目名称:">
+              <el-input
+                disabled
                 clearable
-                filterable
-                placeholder="请选择"
                 size="mini"
-                v-model="detailform.clothSize.bcTypeId"
-              >
-                <el-option
-                  :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options1"
-                ></el-option>
-              </el-select>
+                v-model="detailform"/>
             </el-form-item>
+
             <el-form-item
               label="建设单位:"
-              prop="clothSize.bcPlateTypeId"
-
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
             >
               <el-input
+                 disabled
                 clearable
                 size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
+                v-model="detailform"
               />
             </el-form-item>
-
             <el-form-item
               label="公告类型:"
-              prop="clothSize.bcPlateTypeId"
-
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
             >
               <el-input
-                clearable
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
-              />
-            </el-form-item>
-            <el-form-item
-              label="投标截止日期:"
-              prop="clothSize.bcTypeId"
-              required
-
-            >
-              <el-select
-                :disabled="p.actpoint === 'look'"
-                @change="chg"
+                 disabled
                 clearable
                 filterable
                 placeholder="请选择"
                 size="mini"
-                v-model="detailform.clothSize.bcTypeId"
+                v-model="detailform"
+                @change="
+                  getName(
+                    detailform.topInfor.noticeTypeId,
+                    bulletinType,
+                    'noticeTypeName'
+                  )
+                "
               >
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options1"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in bulletinType"
                 ></el-option>
-              </el-select>
+              </el-input>
+            </el-form-item>
+          <!-- 下拉 -->
+            <el-form-item
+              label="预计招标时间:"
+
+            >
+              <el-date-picker
+                 disabled
+                filterable
+                clearable
+                type="date"
+                value-format="timestamp"
+                v-model="detailform"
+
+              >
+              </el-date-picker>
             </el-form-item>
 
             <!-- 下拉 -->
+
+            <el-form-item
+              label="所属线路:"
+            >
+              <el-input
+                 disabled
+                filterable
+                clearable
+                placeholder="请选择或直接填写所属现路"
+                size="mini"
+                @change="
+                  getName(
+                    detailform.topInfor.belongLineId,
+                    railwayLine,
+                    'belongLineName'
+                  )
+                "
+                v-model="detailform"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in railwayLine"
+                ></el-option>
+              </el-input>
+            </el-form-item>
+            <!-- --------------------------------------------------------------- -->
+            <el-form-item
+              label="招标人:"
+            >
+              <el-input
+                 disabled
+                clearable
+                size="mini"
+                v-model="detailform"
+              />
+            </el-form-item>
+            <el-form-item
+              label="设计单位:"
+            >
+              <el-input
+                clearable
+                 disabled
+                size="mini"
+                v-model="detailform"
+              />
+            </el-form-item>
+
+            <el-form-item
+              label="招标代理公司:"
+            >
+              <el-input
+                 disabled
+                size="mini"
+                v-model="detailform"
+              />
+            </el-form-item>
+            <el-form-item
+              label="项目模式:"
+            >
+              <el-input
+                 disabled
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                @change="
+                  getName(
+                    detailform.topInfor.projectModelId,
+                    projectModel,
+                    'projectModelName'
+                  )
+                "
+                v-model="detailform"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectModel"
+                ></el-option>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+              label="资审方式:"
+            >
+              <el-input
+                 disabled
+                clearable
+                placeholder=""
+                size="mini"
+                v-model="detailform"
+              />
+            </el-form-item>
+
+            <el-form-item label="资金来源:" prop="capitalId">
+              <el-input
+                 disabled
+                filterable
+                clearable
+                multiple
+                placeholder="请选择"
+                size="mini"
+                v-model="value1"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in amountSource"
+                ></el-option>
+              </el-input>
+            </el-form-item>
+
+            <el-form-item
+              label="投资额（万元）:"
+            >
+              <el-input
+                 disabled
+                clearable
+                placeholder=""
+                size="mini"
+                v-model="detailform"
+              />
+            </el-form-item>
+            <el-form-item
+              label="新兴市场(一级):"
+            >
+              <el-input
+                 disabled
+                filterable
+                clearable
+                placeholder="请选择"
+                @change="getTwoSC"
+                size="mini"
+                v-model="detailform"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in emergingMarket"
+                ></el-option>
+              </el-input>
+            </el-form-item>
+
+            <el-form-item
+              label="新兴市场(二级):"
+            >
+              <el-input
+                 disabled
+                filterable
+                clearable
+                placeholder="请选择"
+                size="mini"
+                @change="
+                  getName(
+                    detailform.topInfor.marketSecondId,
+                    emergingMarketTwo,
+                    'marketSecondName'
+                  )
+                "
+                v-model="detailform"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in emergingMarketTwo"
+                ></el-option>
+              </el-input>
+            </el-form-item>
+
+            <el-form-item
+              label="是否为重大项目:"
+              prop="topInfor.isMajorProject"
+            >
+              <el-input
+                 disabled
+                filterable
+                clearable
+                placeholder="请选择"
+                size="mini"
+                v-model="detailform"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in yesOrNo"
+                ></el-option>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+              label="预计中标概率:"
+            >
+              <el-input
+                 disabled
+                filterable
+                clearable
+                placeholder="请选择"
+                size="mini"
+                @change="
+                  getName(
+                    detailform.topInfor.bidProbId,
+                    probability,
+                    'bidProbName'
+                  )
+                "
+                v-model="detailform"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in probability"
+                ></el-option>
+              </el-input>
+            </el-form-item>
+
+
+            <el-form-item
+              label="投标截止日期:"
+              prop="clothSize.bcTypeId"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
+              <el-date-picker
+                :disabled="p.actpoint === 'look'"
+                @change="chg"
+                clearable
+                filterable
+                size="mini"
+                v-model="detailform.clothSize.bcTypeId"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.label"
+                  :value="item.value"
+                  v-for="(item, index) in options1"
+                ></el-option>
+              </el-date-picker>
+            </el-form-item>
+
 
             <el-form-item
               label="招标公告发布日期:"
               prop="clothSize.bcStyleId"
 
             >
-              <el-select
+              <el-date-picker
                 :disabled="p.actpoint === 'look'"
                 @change="chg1"
                 filterable
                 clearable
-                placeholder="请选择"
                 size="mini"
                 v-model="detailform.clothSize.bcStyleId"
               >
@@ -173,9 +420,31 @@
                   :value="item.value"
                   v-for="(item, index) in options2"
                 ></el-option>
-              </el-select>
+              </el-date-picker>
             </el-form-item>
-          <!-- 不下拉 -->
+
+            <el-form-item
+              label="招标文件发售截止日期"
+              prop="clothSize.bcStyleId"
+
+            >
+              <el-date-picker
+                :disabled="p.actpoint === 'look'"
+                @change="chg1"
+                filterable
+                clearable
+                size="mini"
+                v-model="detailform.clothSize.bcStyleId"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.label"
+                  :value="item.value"
+                  v-for="(item, index) in options2"
+                ></el-option>
+              </el-date-picker>
+            </el-form-item>
+
             <el-form-item
               label="招标方式:"
               prop="clothSize.bcStyleId"
@@ -198,7 +467,7 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-            <!-- --------------------------------------------------------------- -->
+
             <el-form-item
               label="是否联合体投标:"
               prop="clothSize.bcPlateTypeId"
@@ -209,95 +478,15 @@
                 trigger: 'blur',
               }"
             >
-              <el-input
+              <el-select
+              :disabled="p.actpoint === 'look'"
                 clearable
                 size="mini"
                 v-model="detailform.clothSize.bcPlateTypeId"
               />
             </el-form-item>
-            <el-form-item
-              label="设计单位:"
-              prop="clothSize.bcPlateTypeId"
 
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                clearable
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
-              />
-            </el-form-item>
-            <el-form-item
-              label="招标代理公司:"
-              prop="clothSize.bcPlateTypeId"
 
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
-              />
-            </el-form-item>
-            <el-form-item
-              label="项目模式:"
-              prop="clothSize.bcPlateTypeId"
-
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                clearable
-                placeholder=""
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
-              />
-            </el-form-item>
-            <el-form-item
-              label="资审方式:"
-              prop="clothSize.bcPlateTypeId"
-
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                clearable
-                placeholder=""
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
-              />
-            </el-form-item>
-
-            <el-form-item
-              label="资金来源:"
-              prop="clothSize.bcPlateTypeId"
-
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                clearable
-                placeholder=""
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
-              />
-            </el-form-item>
             <el-form-item
               label="是否为费率招标:"
               prop="clothSize.bcPlateTypeId"
@@ -308,74 +497,60 @@
                 trigger: 'blur',
               }"
             >
-              <el-input
-                clearable
-                placeholder=""
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
-              />
-            </el-form-item>
-
-            <el-form-item
-              label="招标文件发售截止日期"
-              prop="clothSize.bcStyleId"
-
-            >
               <el-select
-                :disabled="p.actpoint === 'look'"
-                @change="chg1"
-                filterable
+              :disabled="p.actpoint === 'look'"
                 clearable
-                placeholder="请选择"
+                placeholder=""
                 size="mini"
-                v-model="detailform.clothSize.bcStyleId"
+                v-model="detailform.clothSize.bcPlateTypeId"
+              />
+            </el-form-item>
+
+
+            <div>
+              <el-form-item
+                label="项目跟踪负责人:"
               >
-                <el-option
-                  :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options2"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-
-          <div>
+                <el-input
+                   disabled
+                  clearable
+                  placeholder=""
+                  size="mini"
+                  v-model="detailform"
+                />
+              </el-form-item>
+              <el-form-item
+                label="联系电话:"
+              >
+                <el-input
+                   disabled
+                  clearable
+                  placeholder=""
+                  size="mini"
+                  v-model="detailform"
+                />
+              </el-form-item>
+            </div>
             <el-form-item
-              label="项目跟踪负责人:"
-              prop="clothSize.bcPlateTypeId"
-
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
+              class="neirong"
+              label="项目内容:"
+              prop="topInfor.inforContent"
+              style="width: 100%"
             >
+              <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-input
+                 disabled
+                type="textarea"
                 clearable
-                placeholder=""
+                placeholder="请输入"
                 size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
+                v-model="detailform"
               />
             </el-form-item>
 
-            <el-form-item
-              label="联系电话:"
-              prop="clothSize.bcPlateTypeId"
 
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                clearable
-                placeholder=""
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
-              />
-            </el-form-item>
-          </div>
+
+
           <el-row>
             <el-form-item
               class="neirong"
@@ -466,7 +641,7 @@
               'background-color': 'rgba(246,248,252,1)',
               color: 'rgba(0,0,0,1)',
             }"
-            @selection-change="handleSelectionChange"
+            @inpution-change="handleinputionChange"
             align="center"
             border
             class="clothSizeTable"
@@ -501,7 +676,7 @@
                   <el-input
                     max-length="100"
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                     disabled
                     size="mini"
                     v-model="scope.row.part"
                     width="100"
@@ -530,7 +705,7 @@
                   <el-input
                     max-length="50"
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                     disabled
                     size="mini"
                     v-model="scope.row.part"
                   ></el-input>
@@ -558,7 +733,7 @@
                   <el-input
                     max-length="50"
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                     disabled
                     size="mini"
                     v-model="scope.row.part"
                   ></el-input>
@@ -586,7 +761,7 @@
                   <el-input
                     max-length="50"
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                     disabled
                     size="mini"
                     v-model="scope.row.part"
                   ></el-input>
@@ -614,7 +789,7 @@
                   <el-input
                     max-length="50"
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                     disabled
                     size="mini"
                     v-model="scope.row.part"
                   ></el-input>
@@ -642,7 +817,7 @@
                   <el-input
                     max-length="50"
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                     disabled
                     size="mini"
                     v-model="scope.row.part"
                   ></el-input>
@@ -670,7 +845,7 @@
                   <el-input
                     max-length="50"
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                     disabled
                     size="mini"
                     v-model="scope.row.part"
                   ></el-input>
@@ -698,7 +873,7 @@
                   <el-input
                     max-length="50"
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                     disabled
                     size="mini"
                     v-model="scope.row.part"
                   ></el-input>
@@ -726,7 +901,7 @@
                   <el-input
                     max-length="50"
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                     disabled
                     size="mini"
                     v-model="scope.row.part"
                   ></el-input>
@@ -754,7 +929,7 @@
                   <el-input
                     max-length="50"
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                     disabled
                     size="mini"
                     v-model="scope.row.part"
                   ></el-input>
@@ -782,7 +957,7 @@
                   <el-input
                     max-length="50"
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                     disabled
                     size="mini"
                     v-model="scope.row.part"
                   ></el-input>
@@ -810,7 +985,7 @@
                   <el-input
                     max-length="50"
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                     disabled
                     size="mini"
                     v-model="scope.row.part"
                   ></el-input>
@@ -838,7 +1013,7 @@
                   <el-input
                     max-length="50"
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                     disabled
                     size="mini"
                     v-model="scope.row.part"
                   ></el-input>
@@ -866,7 +1041,7 @@
                   <el-input
                     max-length="50"
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                     disabled
                     size="mini"
                     v-model="scope.row.part"
                   ></el-input>
@@ -894,7 +1069,7 @@
                   <el-input
                     max-length="50"
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                     disabled
                     size="mini"
                     v-model="scope.row.part"
                   ></el-input>
@@ -922,7 +1097,7 @@
                   <el-input
                     max-length="50"
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                     disabled
                     size="mini"
                     v-model="scope.row.part"
                   ></el-input>
@@ -950,7 +1125,7 @@
                   <el-input
                     max-length="50"
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                     disabled
                     size="mini"
                     v-model="scope.row.part"
                   ></el-input>
@@ -978,7 +1153,7 @@
                   <el-input
                     max-length="50"
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                     disabled
                     size="mini"
                     v-model="scope.row.part"
                   ></el-input>
@@ -1006,7 +1181,7 @@
                   <el-input
                     max-length="50"
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                     disabled
                     size="mini"
                     v-model="scope.row.part"
                   ></el-input>
@@ -1031,16 +1206,16 @@
               </template>
             </el-table-column>
           </el-table>
-          <el-row style="text-align: center">
-            <el-button type="primary" @click="saveInfo('detailform')"
-              >保存</el-button
-            >
-            <el-button @click="submit">提交</el-button>
-          </el-row>
         </el-form>
       </div>
     </el-card>
+        <div class="btn-group" v-show="p.actpoint != 'look'">
+      <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
+      <el-button @click="submit">提交</el-button>
+    </div>
+    <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
   </div>
+
 </template>
 
 <script>
@@ -1238,8 +1413,8 @@ export default {
     // 加载列表
     getDetail() {},
 
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
+    handleinputionChange(val) {
+      this.multipleinpution = val;
     },
   },
   mounted() {
