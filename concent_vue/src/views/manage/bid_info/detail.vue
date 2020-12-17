@@ -34,14 +34,12 @@
                 filterable
                 style="width: 100%"
                 size="mini"
-                v-model="detailform"
+                v-model="detailform.moduleId"
+                 @change="
+                  getName(detailform.topInfor.moduleId, bizCode, 'moduleName')
+                "
               >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in bizCode"
-                ></el-option>
+
               </el-input>
             </el-form-item>
 
@@ -447,7 +445,7 @@
 
             <el-form-item
               label="招标方式:"
-              prop="clothSize.bcStyleId"
+              prop="bidInfor.marketFirstNameId"
 
             >
               <el-select
@@ -457,13 +455,13 @@
                 clearable
                 placeholder="请选择"
                 size="mini"
-                v-model="detailform.clothSize.bcStyleId"
+                v-model="detailform"
               >
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options2"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in bidType"
                 ></el-option>
               </el-select>
             </el-form-item>
@@ -484,6 +482,12 @@
                 size="mini"
                 v-model="detailform.clothSize.bcPlateTypeId"
               />
+              <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in yesOrNo"
+                ></el-option>
             </el-form-item>
 
 
@@ -504,6 +508,12 @@
                 size="mini"
                 v-model="detailform.clothSize.bcPlateTypeId"
               />
+              <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in yesOrNo"
+                ></el-option>
             </el-form-item>
 
 
@@ -1199,7 +1209,7 @@
               <template slot-scope="scope">
                 <el-link
                   :underline="false"
-                  @click="del(scope.$index)"
+                  @click="del(scope.$index,scope.row,detailform.topInfoSiteList)"
                   type="warning"
                   >删除</el-link
                 >
@@ -1213,12 +1223,12 @@
       <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
       <el-button @click="submit">提交</el-button>
     </div>
-    <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
   </div>
 
 </template>
 
 <script>
+
 export default {
   name: "详情",
   data() {
@@ -1246,8 +1256,60 @@ export default {
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
     };
   },
-  computed: {},
+  computed: {
+
+
+  },
   methods: {
+      //获取下拉框id和name的公共方法
+    getName(id, list, name) {
+        if(id){
+          this.$forceUpdate()
+          this.detailform.topInfor[name] = list.find(
+            (item) => item.id == id
+          ).detailName;
+          console.log(this.detailform.topInfor[name]);
+        }
+      },
+      saveInfo(formName) {
+        var topInforCapitalList = [];
+        this.amountSource.forEach((item) => {
+          if (this.value1.indexOf(item.id) != -1) {
+            var v = {
+              capitalId: item.id,
+              capitalName: item.detailName,
+            };
+            topInforCapitalList.push(v);
+          }
+        });
+        this.detailform.topInforCapitalList=topInforCapitalList;
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.$http
+              .post(
+                "/api/topInfo/BidInfo/detail/saveOrUpdate",
+                JSON.stringify(this.detailform),
+                {useJson: true}
+              )
+              .then((res) => {
+                if (res.data.code === 200) {
+                  this.$message({
+                    message: "保存成功",
+                    type: "success",
+                  });
+                  this.$refs[formName].resetFields();
+                  this.$router.push({
+                    path: "/manage/bid_info/list",
+                  });
+                }
+              });
+          } else {
+            this.$message.error("请添加必填项");
+            return false;
+          }
+        });
+      },
+
     pageGo() {
       this.searchParam.current = this.current;
       this.getuserlist();
@@ -1257,6 +1319,35 @@ export default {
       row.showinput = false;
     },
 
+    // 删除
+      del(index,item,list,type) {
+        console.log(index);
+        if(item.uuid&&type=='bd'){
+          this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$http
+              .post(
+                "/api/topInfo/TopInfoSection/list/delete",
+                {ids: [item.uuid]}
+              )
+              .then((res) => {
+                if (res.data && res.data.code === 200) {
+                  list.splice(index, 1);
+                  console.log(list)
+                } else {
+                  this.$message.error(data.msg)
+                }
+              });
+          }).catch(() => {})
+        }else{
+          list.splice(index, 1);
+        }
+        // var _self = this;
+        // _self.detailform.topInfoSectionList.splice(index, 1);
+      },
     chg(val) {
       this.errorMsg = Math.random();
       this.errorMsg0 = Math.random();
@@ -1288,7 +1379,7 @@ export default {
     },
     back() {
       this.$router.push({
-        path: "/manage/proposal/list",
+        path: "/manage/bid_info/list",
       });
     },
     chg2() {
@@ -1411,16 +1502,35 @@ export default {
     },
 
     // 加载列表
-    getDetail() {},
+    getDetail() {
+this.$http
+          .post("/api/topInfo/BidInfo/detail/entityInfo", {id:this.id})
+          .then((res) => {
+            var datas=res.data.data;
+            this.getTwo(datas.topInfor.enginTypeFirstId);
+            this.getTwoSC(datas.topInfor.marketFirstNameId);
+            datas.topInforCapitalList.forEach((item)=>{
+              this.value1.push(item.capitalId)
+            });
+            this.detailform={
+              topInfor: datas.topInfor,
+              topInfoOrg: datas.topInfoOrg,
+              topInfoSiteList: datas.topInfoSiteList,
+              topInfoSectionList: datas.topInfoSectionList,
+            }
+          });
+
+    },
 
     handleinputionChange(val) {
       this.multipleinpution = val;
     },
   },
   mounted() {
-    this.$store.dispatch("getConfig", {});
-    // eslint-disable-next-line no-unde
-    this.getDetail();
+    this.id=this.p.instid;
+      if (this.p.actpoint === "edit"||this.id) {
+        this.getDetail();
+      }
   },
 };
 </script>
