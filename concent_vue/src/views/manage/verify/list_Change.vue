@@ -228,16 +228,6 @@ export default {
   methods: {
     handleChange(){},
     statusFormat(row,column){
-      //alert(row.verify.uuid)
-      // console.log(row.verify.uuid);
-      // var statusW;
-      // if(row.verify.uuid!="")
-      // {
-      //   statusW= "已进行资审申请"
-      // }else
-      // {
-      //   statusW= "未进行资审申请"
-      // }
       return row.verify.uuid != "" ? "已进行资审申请" : row.verify.uuid == "" ? "未进行资审申请" : "未进行资审申请";
       // return statusW
     },
@@ -258,63 +248,6 @@ export default {
         path: './detail_Chang/',
         query: { p: this.$utils.encrypt(JSON.stringify(p)) }
       })
-    },
-    editItem(){
-      console.log(JSON.stringify(this.multipleSelection[0].uuid));
-      //是否有资审信息判断
-      if(this.multipleSelection[0].uuid=="" || this.multipleSelection[0].uuid==null)
-      {
-        this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
-        return;
-      }
-      //是否在审核流程中判断
-      //是否在变更流程中判断
-      let p = { actpoint: 'editItem',instid: this.multipleSelection[0].uuid, topinfoid:this.multipleSelection[0].tiouuid}
-      //alert(JSON.stringify(p));
-      this.$router.push({
-        path: './detail/',
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-      })
-    },
-    remove(){
-      console.log(JSON.stringify(this.multipleSelection[0].uuid));
-      if(this.multipleSelection[0].uuid=="" || this.multipleSelection[0].uuid==null)
-      {
-        this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
-        return;
-      }
-      let uuids = []
-      this.multipleSelection.forEach((item) => {
-        if(item.uuid!=null)
-        {
-          uuids.push(item.uuid);
-        }
-
-      })
-      this.$confirm('此操作将永久删除该资审信息, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        // this.$message({
-        //   type: 'success',
-        //   message: '删除成功!'
-        // });
-        this.$http
-          .post(
-            '/api/topInfo/Verify/list/delete',
-            {ids: uuids}
-          )
-          .then(res => {
-            this.getData();
-          })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });
-      });
-
     },
     // 查看
     rowshow(row) {

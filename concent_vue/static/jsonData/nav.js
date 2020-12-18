@@ -131,6 +131,15 @@ export default {
                       "defaultpage": false
                     },
                     {
+                      "name": "资格预审变更详细",
+                      "path": "/manage/verify/detail_Chang",
+                      "component": "/manage/verify/detail_Chang",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": false,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
                       "name": "资格预审标段列表",
                       "path": "/manage/verify/list_Section",
                       "component": "/manage/verify/list_Section",
