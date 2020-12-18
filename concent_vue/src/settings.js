@@ -1,5 +1,5 @@
 module.exports = {
-  title: "北江服装设计管理系统",
+  title: "新签合同",
 
   /**
    * @type {boolean} true | false

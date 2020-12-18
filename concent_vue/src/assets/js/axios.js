@@ -26,7 +26,7 @@ function endLoading() {
 
 function showFullScreenLoading() {
   if (needLoadingRequestCount === 0) {
-    startLoading();
+    //startLoading();
   }
   needLoadingRequestCount++;
 }

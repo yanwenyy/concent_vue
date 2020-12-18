@@ -2,7 +2,7 @@
   <div>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span style="color: #2a2a7d"><b>信息管理详情</b></span>
+        <span style="color: #2a2a7d;line-height: 37px;"><b>信息管理详情</b></span>
         <el-button
           @click="back"
           style="
@@ -18,14 +18,14 @@
         >
       </div>
 
-      <div style="overflow: scroll; max-height: 55vh;padding-bottom: 10px">
+      <div style="overflow: scroll;max-height:calc(100vh - 380px);">
         <el-form
           :inline="false"
           :model="detailform"
           :rules="detailformrules"
           class="gcform"
           ref="detailform"
-          style="background: white; height: ceil(100%-300px)"
+          style="background: white;width:calc(100% - 4px);"
         >
             <el-form-item
               label="项目板块:"

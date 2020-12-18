@@ -20,6 +20,7 @@ import './assets/icon/iconfont.css'
 Vue.config.productionTip = false
 Vue.prototype.$utils = utils
 Vue.prototype.$moment = moment
+Vue.prototype.$tableHeight = document.body.clientHeight - 342
 Vue.prototype.$getPermission = getPermission
 Vue.prototype.$getOrgPermission = getOrgPermission
     // var timerOne = window.setInterval(() => {

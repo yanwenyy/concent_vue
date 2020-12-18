@@ -47,13 +47,13 @@ export default {
                       "defaultpage": true
                     },
                     {
-                      "name": "项信登记新增项目",
+                      "name": "项目信息登记维护",
                       "path": "/manage/proposal/detail",
                       "component": "/manage/proposal/detail",
                       "iconCls": "el-icon-switch-button",
                       "menushow": false,
                       "leaf": true,
-                      "defaultpage": false
+                      "defaultpage": true
                     },
                     {
                       "name": "项目信息变更",
@@ -99,7 +99,7 @@ export default {
                       "path": "/manage/verify/list_VerifyResult",
                       "component": "/manage/verify/list_VerifyResult",
                       "iconCls": "el-icon-switch-button",
-                      "menushow": true,
+                      "menushow": false,
                       "leaf": true,
                       "defaultpage": false
                     },
@@ -108,12 +108,12 @@ export default {
                       "path": "/manage/verify/list_WorkFlow",
                       "component": "/manage/verify/list_WorkFlow",
                       "iconCls": "el-icon-switch-button",
-                      "menushow": true,
+                      "menushow": false,
                       "leaf": true,
                       "defaultpage": false
                     },
                     {
-                      "name": "资格预审登记变更",
+                      "name": "资格预审变更",
                       "path": "/manage/verify/list_Change",
                       "component": "/manage/verify/list_Change",
                       "iconCls": "el-icon-switch-button",
@@ -329,8 +329,17 @@ export default {
               ]
             },
             {
+              "name": "计划统计",
+              "path": "/statistics",
+              "component": "/router",
+              "iconCls": "el-icon-printer",
+              "menushow": true,
+              "leaf": false,
+              "defaultpage": false,
+              "children": [
+              {
               "name": "项目管理",
-              "path": "/project",
+              "path": "/statistics/project",
               "component": "/router",
               "iconCls": "el-icon-printer",
               "menushow": true,
@@ -339,16 +348,16 @@ export default {
               "children": [
                 {
                   "name": "工程承包项目管理",
-                  "path": "/project/engineList",
-                  "component": "/project/engineList",
+                  "path": "/statistics/project/engineList",
+                  "component": "/statistics/project/engineList",
                   "iconCls": "el-icon-switch-button",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": true
                 }, {
                   "name": "工程承包项目添加",
-                  "path": "/project/engineAdd",
-                  "component": "/project/engineAdd",
+                  "path": "/statistics/project/engineAdd",
+                  "component": "/statistics/project/engineAdd",
                   "iconCls": "el-icon-switch-button",
                   "menushow": false,
                   "leaf": true,
@@ -356,8 +365,8 @@ export default {
                 },
                 {
                   "name": "勘察设计项目管理",
-                  "path": "/project/designList",
-                  "component": "/project/designList",
+                  "path": "/statistics/project/designList",
+                  "component": "/statistics/project/designList",
                   "iconCls": "el-icon-switch-button",
                   "menushow": true,
                   "leaf": true,
@@ -365,8 +374,8 @@ export default {
                 },
                 {
                   "name": "勘察设计项目新增",
-                  "path": "/project/designDetail",
-                  "component": "/project/designDetail",
+                  "path": "/statistics/project/designDetail",
+                  "component": "/statistics/project/designDetail",
                   "iconCls": "el-icon-switch-button",
                   "menushow": false,
                   "leaf": true,
@@ -374,8 +383,8 @@ export default {
                 },
                 {
                   "name": "房地产项目管理",
-                  "path": "/project/estateList",
-                  "component": "/project/estateList",
+                  "path": "/statistics/project/estateList",
+                  "component": "/statistics/project/estateList",
                   "iconCls": "el-icon-switch-button",
                   "menushow": true,
                   "leaf": true,
@@ -383,8 +392,8 @@ export default {
                 },
                 {
                   "name": "房地产项目登记",
-                  "path": "/project/estateAdd",
-                  "component": "/project/estateAdd",
+                  "path": "/statistics/project/estateAdd",
+                  "component": "/statistics/project/estateAdd",
                   "iconCls": "el-icon-switch-button",
                   "menushow": false,
                   "leaf": true,
@@ -392,8 +401,8 @@ export default {
                 },
                 {
                   "name": "物资贸易项目管理",
-                  "path": "/project/tradeList",
-                  "component": "/project/tradeList",
+                  "path": "/statistics/project/tradeList",
+                  "component": "/statistics/project/tradeList",
                   "iconCls": "el-icon-switch-button",
                   "menushow": true,
                   "leaf": true,
@@ -401,8 +410,8 @@ export default {
                 },
                 {
                   "name": "物资贸易项目登记",
-                  "path": "/project/tradeAdd",
-                  "component": "/project/tradeAdd",
+                  "path": "/statistics/project/tradeAdd",
+                  "component": "/statistics/project/tradeAdd",
                   "iconCls": "el-icon-switch-button",
                   "menushow": false,
                   "leaf": true,
@@ -410,8 +419,8 @@ export default {
                 },
                 {
                   "name": "工业制造项目管理",
-                  "path": "/project/manufactureList",
-                  "component": "/project/manufactureList",
+                  "path": "/statistics/project/manufactureList",
+                  "component": "/statistics/project/manufactureList",
                   "iconCls": "el-icon-switch-button",
                   "menushow": true,
                   "leaf": true,
@@ -420,8 +429,8 @@ export default {
                 ,
                 {
                   "name": "工业制造项目登记",
-                  "path": "/project/manufactureAdd",
-                  "component": "/project/manufactureAdd",
+                  "path": "/statistics/project/manufactureAdd",
+                  "component": "/statistics/project/manufactureAdd",
                   "iconCls": "el-icon-switch-button",
                   "menushow": false,
                   "leaf": true,
@@ -429,8 +438,8 @@ export default {
                 },
                 {
                   "name": "金融保险项目管理",
-                  "path": "/project/financeList",
-                  "component": "/project/financeList",
+                  "path": "/statistics/project/financeList",
+                  "component": "/statistics/project/financeList",
                   "iconCls": "el-icon-switch-button",
                   "menushow": true,
                   "leaf": true,
@@ -438,8 +447,8 @@ export default {
                 },
                 {
                   "name": "金融保险项目登记",
-                  "path": "/project/financeAdd",
-                  "component": "/project/financeAdd",
+                  "path": "/statistics/project/financeAdd",
+                  "component": "/statistics/project/financeAdd",
                   "iconCls": "el-icon-switch-button",
                   "menushow": false,
                   "leaf": true,
@@ -447,8 +456,8 @@ export default {
                 },
                 {
                   "name": "运营维管项目管理",
-                  "path": "/project/maintenanceList",
-                  "component": "/project/maintenanceList",
+                  "path": "/statistics/project/maintenanceList",
+                  "component": "/statistics/project/maintenanceList",
                   "iconCls": "el-icon-switch-button",
                   "menushow": true,
                   "leaf": true,
@@ -456,8 +465,8 @@ export default {
                 },
                 {
                   "name": "运营维管项目登记",
-                  "path": "/project/maintenanceAdd",
-                  "component": "/project/maintenanceAdd",
+                  "path": "/statistics/project/maintenanceAdd",
+                  "component": "/statistics/project/maintenanceAdd",
                   "iconCls": "el-icon-switch-button",
                   "menushow": false,
                   "leaf": true,
@@ -465,8 +474,8 @@ export default {
                 },
                 {
                   "name": "其他目管理",
-                  "path": "/project/otherList",
-                  "component": "/project/otherList",
+                  "path": "/statistics/project/otherList",
+                  "component": "/statistics/project/otherList",
                   "iconCls": "el-icon-switch-button",
                   "menushow": true,
                   "leaf": true,
@@ -474,19 +483,21 @@ export default {
                 },
                 {
                   "name": "其他目登记",
-                  "path": "/project/otherAdd",
-                  "component": "/project/otherAdd",
+                  "path": "/statistics/project/otherAdd",
+                  "component": "/statistics/project/otherAdd",
                   "iconCls": "el-icon-switch-button",
                   "menushow": false,
                   "leaf": true,
                   "defaultpage": false
                 }
 
-      ]
-    }
+                ]
+              }
 
               ]
             }
+           ]
+          }
   ]
 }
 
