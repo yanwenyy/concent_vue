@@ -3,9 +3,6 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary">新增</el-button>
-        <el-button @click="totop" plain type="primary">修改</el-button>
-        <el-button @click="remove" type="primary" plain>删除</el-button>
         <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
       </el-button-group>
       <div style="float: right">
@@ -159,7 +156,7 @@
             </div>
           </template>
           <template slot-scope="scope" :value-format="timestamp">
-            {{scope.row.saleTime}}
+            {{scope.row.saleTime | dateformat}}
           </template>
         </el-table-column>
         <el-table-column

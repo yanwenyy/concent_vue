@@ -6,13 +6,13 @@
         <el-button style="float: right; padding: 10px 20px ;border:1px solid #ddd;color: black" type="text">返回</el-button>
       </div>
 
-      <div style="overflow: auto;max-height: 480px;padding-bottom: 10px">
+      <div style="overflow: scroll;max-height:calc(100vh - 380px);">
     <el-form
       :inline="false"
       :model="detailform"
       class="gcform"
       ref="detailform"
-      style="background: white;"
+      style="background: white;width:calc(100% - 4px);"
     >
     <el-row>
       <el-form-item
@@ -351,85 +351,7 @@
             style="float:right;width: 70px;height: 32px;background: #5C8BFA;font-size: 16px;"
             type="primary"
           >新增</el-button> </p>
-      <!--           -->
-<!--        <el-table-->
-<!--          :data="detailform.verifySectionOrg"-->
-<!--          :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"-->
 
-<!--          @selection-change="handleSelectionChange"-->
-<!--          align="center"-->
-<!--          border-->
-<!--          class="clothSizeTable"-->
-<!--          ref="table"-->
-<!--          style="width: 98%;"-->
-<!--        >-->
-<!--         <el-table-column-->
-<!--          :width="150"-->
-<!--          align="center"-->
-<!--          label="序号"-->
-<!--          show-overflow-tooltip-->
-<!--          type="index"-->
-<!--        ></el-table-column>-->
-
-<!--          <el-table-column :resizable="false" label="标段名称" prop="part" show-overflow-tooltip>-->
-<!--            <template slot-scope="scope">-->
-<!--              <el-form-item-->
-<!--                :prop="'verifySectionOrg.'+scope.$index+'.part'"-->
-<!--                :rules="{-->
-<!--      required: true, message: '此项不能为空', trigger: 'blur'-->
-<!--    }"-->
-<!--                label-width="0"-->
-
-<!--              >-->
-<!--                <el-input max-length=50 clearable :disabled="p.actpoint==='look'" size="mini" v-model="scope.row.part"></el-input>-->
-<!--              </el-form-item>-->
-<!--              &lt;!&ndash; <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> &ndash;&gt;-->
-<!--            </template>-->
-<!--          </el-table-column>-->
-<!--          <el-table-column :resizable="false" label="参与投标单位" prop="part" show-overflow-tooltip>-->
-<!--            <template slot-scope="scope">-->
-<!--              <el-form-item-->
-<!--                :prop="'verifySectionOrg.'+scope.$index+'.part'"-->
-<!--                :rules="{-->
-<!--      required: true, message: '此项不能为空', trigger: 'blur'-->
-<!--    }"-->
-<!--                label-width="0"-->
-
-<!--              >-->
-<!--                <el-input max-length=50 clearable :disabled="p.actpoint==='look'" size="mini" v-model="scope.row.part"></el-input>-->
-<!--              </el-form-item>-->
-<!--              &lt;!&ndash; <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> &ndash;&gt;-->
-<!--            </template>-->
-<!--          </el-table-column>-->
-<!--          <el-table-column :resizable="false" label="标段状态" prop="part" show-overflow-tooltip>-->
-<!--            <template slot-scope="scope">-->
-<!--              <el-form-item-->
-<!--                :prop="'verifySectionOrg.'+scope.$index+'.part'"-->
-<!--                :rules="{-->
-<!--      required: true, message: '此项不能为空', trigger: 'blur'-->
-<!--    }"-->
-<!--                label-width="0"-->
-
-<!--              >-->
-<!--                <el-input max-length=50 clearable :disabled="p.actpoint==='look'" size="mini" v-model="scope.row.part"></el-input>-->
-<!--              </el-form-item>-->
-<!--              &lt;!&ndash; <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> &ndash;&gt;-->
-<!--            </template>-->
-<!--          </el-table-column>-->
-
-<!--          <el-table-column-->
-<!--            :resizable="false"-->
-<!--            fixed="right"-->
-<!--            label="状态"-->
-<!--            show-overflow-tooltip-->
-<!--            v-if="p.actpoint!=='look'"-->
-<!--            width="200"-->
-<!--          >-->
-<!--            <template slot-scope="scope">-->
-<!--              <el-link :underline="false" @click="del(scope.$index)" type="warning">删除</el-link>-->
-<!--            </template>-->
-<!--          </el-table-column>-->
-<!--        </el-table>-->
       <el-table
         :data="detailform.verifySectionList"
         :header-cell-style="{
@@ -437,7 +359,6 @@
                 'background-color': 'rgba(246,248,252,1)',
                 color: 'rgba(0,0,0,1)',
               }"
-        @selection-change="handleSelectionChange"
         align="center"
         border
         class="clothSizeTable"
@@ -460,33 +381,8 @@
           align="center"
           show-overflow-tooltip
         >
-          <template slot-scope="scope">
-            <el-input
-              clearable
-              :disabled="p.actpoint === 'look'"
-              v-model="scope.row.sectionName"
-            ></el-input>
-            <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-          </template>
-        </el-table-column>
 
-        <el-table-column
-          :resizable="false"
-          label="项目份额"
-          align="center"
-          prop="contractAmount"
-          show-overflow-tooltip
-        >
-          <template slot-scope="scope">
-            <el-input
-              clearable
-              :disabled="p.actpoint === 'look'"
-              v-model="scope.row.projectScale"
-            ></el-input>
-            <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-          </template>
         </el-table-column>
-
         <el-table-column
           v-show="!p.actpoint === 'look'"
           :resizable="false"
@@ -505,15 +401,16 @@
           </template>
         </el-table-column>
       </el-table>
-          <el-row style="text-align: center">
-            <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
-            <el-button  @click="submitForm('detailform')">提交</el-button>
-          </el-row>
+
 
     </el-form>
 
     </div>
 </el-card>
+    <div class="btn-group" v-show="p.actpoint != 'look'">
+      <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
+      <el-button  @click="submitForm('detailform')">提交</el-button>
+    </div>
     <el-dialog title="前期项目标段列表" :visible.sync="dialogTopInfoSection">
     <el-table
       :data="detailform1.topInfoSectionList"
@@ -529,6 +426,12 @@
       ref="table"
       style="width: 98%;"
     >
+      <el-table-column
+        :width="50"
+        align="center"
+        show-overflow-tooltip
+        type="selection"
+      ></el-table-column>
       <el-table-column
         :width="80"
         align="center"
@@ -549,24 +452,28 @@
       </el-table-column>
 
 
-      <el-table-column
-        v-show="!p.actpoint === 'look'"
-        :resizable="false"
-        fixed="right"
-        label="操作"
-        align="center"
-        show-overflow-tooltip
-        v-if="p.actpoint !== 'look'"
-        width="200">
-        <template slot-scope="scope">
-          <el-link
-            :underline="false"
-            @click="del(scope.$index,scope.row,detailform1.topInfoSectionList,'bd')"
-            type="warning">删除
-          </el-link>
-        </template>
-      </el-table-column>
+<!--      <el-table-column-->
+<!--        v-show="!p.actpoint === 'look'"-->
+<!--        :resizable="false"-->
+<!--        fixed="right"-->
+<!--        label="操作"-->
+<!--        align="center"-->
+<!--        show-overflow-tooltip-->
+<!--        v-if="p.actpoint !== 'look'"-->
+<!--        width="200">-->
+<!--        <template slot-scope="scope">-->
+<!--          <el-link-->
+<!--            :underline="false"-->
+<!--            @click="addSection(scope.$index,scope.row,detailform1.topInfoSectionList,'bd')"-->
+<!--            type="warning">选择-->
+<!--          </el-link>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
     </el-table>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogTopInfoSection = false">取 消</el-button>
+    <el-button type="primary" @click="addSection()">确 定</el-button>
+  </span>
     </el-dialog>
   </div>
 </template>
@@ -707,12 +614,77 @@ export default {
       }
     },
 
-    del(index) {
+    del1(index) {
       console.log(index)
       var _self = this
       // this.$utils.isdel(function() {
       _self.detailform.clothSizePartList.splice(index, 1)
       // })
+    },
+    del(index,item,list,type) {
+      console.log(index);
+      list.splice(index, 1);
+      // if(item.uuid&&type=='bd'){
+      //   this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+      //     confirmButtonText: '确定',
+      //     cancelButtonText: '取消',
+      //     type: 'warning'
+      //   }).then(() => {
+      //
+          // this.$http
+          //   .post(
+          //     "/api/topInfo/TopInfoSection/list/delete",
+          //     {ids: [item.uuid]}
+          //   )
+          //   .then((res) => {
+          //     if (res.data && res.data.code === 200) {
+          //
+          //       console.log(list)
+          //     } else {
+          //       this.$message.error(data.msg)
+          //     }
+          //   });
+      //   }).catch(() => {})
+      // }else{
+      //   list.splice(index, 1);
+      // }
+      // var _self = this;
+      // _self.detailform.topInfoSectionList.splice(index, 1);
+    },
+    addSection()
+    {
+      this.dialogTopInfoSection = false;
+      this.multipleSelection.forEach((item, index) => {
+        console.log(item.uuid)
+        console.log(index)
+
+        var vsl={
+          uuid:item.uuid,
+          sectionName:item.sectionName
+        }
+        var isadd = true;
+        this.detailform.verifySectionList.forEach((item1, index1) => {
+          if(item.uuid==item1.uuid)
+          {
+            isadd = false;
+          }
+        })
+        if(isadd)
+        {
+          this.detailform.verifySectionList.push(vsl);
+        }else
+        {
+          this.$message.error('请不要重复添加')
+        }
+
+          // item.detailName = _data.detailName;
+          // item.uuid
+          // item.sectionName
+          // item.country = country;
+          // item.ffid = _data.fullDetailCode;
+          // item.path = _data.fullDetailName;
+
+      });
     },
 
     show(type) {
@@ -860,7 +832,7 @@ export default {
           topInfoSiteList: datas.topInfoSiteList,
           topInfoSectionList: datas.topInfoSectionList,
         }
-        alert( JSON.stringify(this.detailform1.topInfoSiteList))
+        //alert( JSON.stringify(this.detailform1.topInfoSiteList))
       });
   },
 

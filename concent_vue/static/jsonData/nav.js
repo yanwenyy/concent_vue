@@ -104,11 +104,11 @@ export default {
                       "defaultpage": true
                     },
                     {
-                      "name": "资格预审通过登记",
-                      "path": "/manage/verify/list_VerifyResult",
-                      "component": "/manage/verify/list_VerifyResult",
+                      "name": "资格预审查看",
+                      "path": "/manage/verify/list_VerifySearch",
+                      "component": "/manage/verify/list_VerifySearch",
                       "iconCls": "el-icon-switch-button",
-                      "menushow": false,
+                      "menushow": true,
                       "leaf": true,
                       "defaultpage": false
                     },
