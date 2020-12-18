@@ -210,7 +210,7 @@
             >
               <el-date-picker
                 :disabled="p.actpoint === 'look'"
-                @change="chg"
+
                 clearable
                 filterable
                 size="mini"
@@ -243,7 +243,7 @@
             >
               <el-date-picker
                 :disabled="p.actpoint === 'look'"
-                @change="chg1"
+
                 filterable
                 clearable
                 size="mini"
@@ -793,7 +793,7 @@
     </el-card>
         <div class="btn-group" v-show="p.actpoint != 'look'">
       <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
-      <el-button @click="">提交</el-button>
+      <el-button @click="saveInfo('detailform')">提交</el-button>
     </div>
   </div>
 
@@ -945,52 +945,13 @@ export default {
         // var _self = this;
         // _self.detailform.topInfoSectionList.splice(index, 1);
       },
-    chg(val) {
-      this.errorMsg = Math.random();
-      this.errorMsg0 = Math.random();
-      this.$nextTick(() => {
-        this.errorMsg = "";
-        this.errorMsg0 = "";
-      });
-      this.detailform.clothSize.bcStyleId = "";
-      this.detailform.clothSize.bcPlateTypeId = "";
-      this.options1.forEach((item) => {
-        if (val === item.value) {
-          this.options2 = item.children;
-        }
-      });
-    },
-    chg1() {
-      this.errorMsg = Math.random();
-      this.errorMsg0 = Math.random();
-      this.$nextTick(() => {
-        this.errorMsg = "";
-        this.errorMsg0 = "";
-      });
-      if (this.detailform.clothSize.bcStyleId === "") {
-        this.detailform.clothSize.bcPlateTypeId = "";
-      }
-      if (this.detailform.clothSize.bcTypeId === "") {
-        this.$message.error("请先选择样衣类型！");
-      }
-    },
+
     back() {
       this.$router.push({
         path: "/manage/bid_info/list",
       });
     },
-    chg2() {
-      this.errorMsg = Math.random();
-      this.errorMsg0 = Math.random();
-      this.$nextTick(() => {
-        this.errorMsg = "";
-        this.errorMsg0 = "";
-      });
-      if (this.detailform.clothSize.bcStyleId === "") {
-        this.detailform.clothSize.bcPlateTypeId = "";
-        this.$message.error("请先选择款式类型！");
-      }
-    },
+
 
     del(index) {
       console.log(index);
@@ -1100,7 +1061,7 @@ export default {
 
     // 加载列表
     getDetail() {
-this.$http
+        this.$http
           .post("/api/topInfo/BidInfo/detail/entityInfo", {topInfoOrgId:this.id})
           .then((res) => {
             var datas=res.data.data;
