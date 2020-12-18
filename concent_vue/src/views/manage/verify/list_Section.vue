@@ -3,238 +3,83 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary">新增</el-button>
-        <el-button @click="totop" plain type="primary">修改</el-button>
-        <el-button @click="remove" type="primary" plain>删除</el-button>
-        <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
       </el-button-group>
-      <div style="float: right">
-        <el-button
-          @click="searchformReset"
-          type="info"
-          plain
-          style="color: black; background: none"
-          >重置</el-button
-        >
-        <el-button @click="searchformSubmit" type="primary" plain
-          >查询</el-button
-        >
-        <el-button @click="exportdata" type="primary" plain>导出</el-button>
-      </div>
+
     </div>
 
     <div style="margin-top: 20px">
       <el-table
-        :data="page.records"
+        :data="detailform.topInfoSectionList"
         :header-cell-style="{
-          'text-align': 'center',
-          'background-color': 'whitesmoke',
-        }"
-        @row-click="rowshow"
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
         @selection-change="handleSelectionChange"
+        align="center"
         border
-        highlight-current-row
+        class="clothSizeTable"
         ref="table"
-        stripe
-        style="width: 100%"
-        tooltip-effect="dark"
+        style="width: 98%; min-height: calc(100vh - 370px)"
       >
         <el-table-column
-          :width="50"
-          align="center"
-          show-overflow-tooltip
-          type="selection"
-        ></el-table-column>
-        <el-table-column
-          :width="70"
+          :width="80"
           align="center"
           label="序号"
           show-overflow-tooltip
           type="index"
-        >
-
-        </el-table-column>
+        ></el-table-column>
 
         <el-table-column
-          :width="300"
-          label="项目名称"
-          prop="inforName"
+          class="listTabel"
+          :resizable="false"
+          label="标段名"
+          prop="sectionName"
+          align="center"
           show-overflow-tooltip
         >
-                  <template slot="header" slot-scope="scope">
-            <span>项目名称</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.inforName"
-                size="mini"
-              />
-            </div>
-          </template>
           <template slot-scope="scope">
-            {{scope.row.inforName}}
+            <el-input
+              clearable
+              :disabled="p.actpoint === 'look'"
+              v-model="scope.row.sectionName"
+            ></el-input>
+            <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
           </template>
         </el-table-column>
+
         <el-table-column
-          :width="150"
+          :resizable="false"
+          label="项目份额"
           align="center"
-          label="工程类别"
-          prop="topInfor.enginTypeFirstName"
+          prop="contractAmount"
           show-overflow-tooltip
         >
-                  <template slot="header" slot-scope="scope">
-            <span>工程类别</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.enginTypeFirstName"
-                size="mini"
-              />
-            </div>
-          </template>
           <template slot-scope="scope">
-            {{scope.row.enginTypeFirstName}}
+            <el-input
+              clearable
+              :disabled="p.actpoint === 'look'"
+              v-model="scope.row.projectScale"
+            ></el-input>
+            <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
           </template>
         </el-table-column>
+
         <el-table-column
-          :width="150"
+          v-show="!p.actpoint === 'look'"
+          :resizable="false"
+          fixed="right"
+          label="操作"
           align="center"
-          label="建设单位"
-          prop="topInfor.constructionOrg"
           show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>建设单位</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.constructionOrg"
-                size="mini"
-              />
-            </div>
-          </template>
+          v-if="p.actpoint !== 'look'"
+          width="200">
           <template slot-scope="scope">
-            {{scope.row.constructionOrg}}
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="公告类型"
-          prop="topInfor.noticeTypeName"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>公告类型</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.noticeTypeName"
-                size="mini"
-              />
-            </div>
-          </template>
-          <template slot-scope="scope">
-            {{scope.row.noticeTypeName}}
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="180"
-          align="center"
-          label="资审文件发售截止日期"
-          prop="verify.saleTime"
-          show-overflow-tooltip
-        >
-          <!-- <template slot-scope="scope">{{
-            scope.row.state === '0' ? '草稿' : '已上报'
-          }}</template> -->
-                    <template slot="header" slot-scope="scope">
-            <span>资审文件发售截止日期</span>
-            <div>
-              <el-date-picker
-                v-model="searchform.saleTime"
-                type="date"
-                placeholder="选择日期">
-              </el-date-picker>
-            </div>
-          </template>
-          <template slot-scope="scope" :value-format="timestamp">
-            {{scope.row.saleTime}}
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="状态"
-          prop="verify.uuid"
-          filter-multiple="true"
-          show-overflow-tooltip
-        >
-                  <template slot="header" slot-scope="scope">
-            <span>状态</span>
-                    <el-select v-model="searchform.status" placeholder="请选择">
-                      <el-option
-                        key="0"
-                        label="未进行资审申请"
-                        value="0">
-                      </el-option>
-                      <el-option
-                        key="1"
-                        label="已进行资审申请"
-                        value="1">
-                      </el-option>
-                    </el-select>
-          </template>
-          <template slot-scope="scope">
-            <el-tag  v-if="scope.row.uuid===null" type="warning">未进行资审申请</el-tag>
-            <el-tag  v-else type="success">已进行资审申请</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="填报人"
-          prop="verify.username"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>填报人</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.username"
-                size="mini"
-              />
-            </div>
-          </template>
-          <template slot-scope="scope">
-            {{scope.row.username}}
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="填报时间"
-          prop="verify.createtime"
-          show-overflow-tooltip
-        >
-          <!-- <template slot-scope="scope">{{
-            scope.row.createtime | dateformat
-          }}</template> -->
-          <template slot="header" slot-scope="scope">
-            <span>填报时间</span>
-            <div>
-              <div>
-                <el-date-picker
-                  v-model="searchform.createtime"
-                  type="date"
-                  placeholder="选择日期">
-                </el-date-picker>
-              </div>
-            </div>
-          </template>
-          <template slot-scope="scope">
-            {{scope.row.createtime}}
+            <el-link
+              :underline="false"
+              @click="del(scope.$index,scope.row,detailform.topInfoSectionList,'bd')"
+              type="warning">删除
+            </el-link>
           </template>
         </el-table-column>
       </el-table>
@@ -257,23 +102,20 @@ export default {
   name: "proposal-list-look",
   data() {
     return {
+      p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
       page: { current: 1, size: 10, total: 0, records: [] },
       showinput: false,
       sousuo: "",
-      searchform: {
-        current: 1,
-        size: 10,
-        inforName: '',
-        enginTypeFirstName: '',
-        constructionOrg: '',
-        noticeTypeName: '',
-        status: '',
-        username: '',
-        saleTime: ''
+      detailform: {
+        topInfor: {},
+        topInfoOrg: {},
+        topInfoSiteList: [],
+        topInfoSectionList: [],
       },
       menus: [],
       multipleSelection: [],
       orgTree: []
+
     }
   },
   methods: {
@@ -294,34 +136,9 @@ export default {
     search(){
       this.showinput = false
     },
-    add(){
-      //alert(JSON.stringify(this.multipleSelection[0]));
-       let p = { actpoint: 'add',instid: this.multipleSelection[0].uuid, topinfoid:this.multipleSelection[0].tiouuid}
-      //alert(JSON.stringify(p));
-       this.$router.push({
-        path: './detail/',
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-      })
-    },
-    // 查看
-    rowshow(row) {
-      let p = { actpoint: 'look', instid: row.uuid }
-      this.$router.push({
-        path: './detail/',
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-      })
-    },
-    show() {
-      if (this.multipleSelection.length !== 1) {
-        this.$message.info('请选择一条记录进行查看操作！')
-        return false
-      }
-      let p = { actpoint: 'look', instid: this.multipleSelection[0].uuid }
-      this.$router.push({
-        path: '../detail/',
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-      })
-    }, // list通用方法开始
+
+
+
     handleSizeChange(val) {
       this.searchform.size = val
       this.getData()
@@ -330,35 +147,26 @@ export default {
       this.searchform.current = val
       this.getData()
     },
-    searchformSubmit() {
-      this.searchform.current = 1
-      this.getData()
-    },
-    searchformReset() {
-      // this.$refs['searchform'].resetFields()
-      this.searchform.inforName = "";
-      this.searchform.enginTypeFirstName = "";
-      this.searchform.constructionOrg = "";
-      this.searchform.noticeTypeName = "";
-      this.searchform.status = "";
-      this.searchform.username = "";
-      this.searchform.saleTime = "";
-        this.getData();
-    },
-    // 列表选项数据
-    handleSelectionChange(val) {
-      this.multipleSelection = val
-    },
+
+
     getData() {
+      alert(this.id)
       this.$http
-        .post(
-          '/api/topInfo/Verify/list/loadPageDataForReg',
-          // '/api' + this.$route.path.substr(0, this.$route.path.length - 1),
-          this.searchform
-        )
-        .then(res => {
-          this.page = res.data.data
-        })
+        .post("/api/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.id})
+        .then((res) => {
+          var datas=res.data.data;
+          this.getTwo(datas.topInfor.enginTypeFirstId);
+          this.getTwoSC(datas.topInfor.marketFirstNameId);
+          datas.topInforCapitalList.forEach((item)=>{
+            this.value1.push(item.capitalId)
+          });
+          this.detailform={
+            topInfor: datas.topInfor,
+            topInfoOrg: datas.topInfoOrg,
+            topInfoSiteList: datas.topInfoSiteList,
+            topInfoSectionList: datas.topInfoSectionList,
+          }
+        });
     },
     getMenus() {
       this.$http
@@ -388,10 +196,13 @@ export default {
 
     // list通用方法结束
   },
-  created() {
-    //this.getMenus()
-    //this.getOrgTree()
+  mounted() {
+    this.id = this.p.instid;
+    //alert(2);
+    //this.$store.dispatch('getConfig', { })
+    // eslint-disable-next-line no-unde
     this.getData()
+
   }
 }
 </script>
