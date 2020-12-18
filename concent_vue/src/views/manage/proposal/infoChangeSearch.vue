@@ -3,12 +3,46 @@
     :visible.sync="visible"
     :append-to-body="true">
     <div>
-      <el-form :inline="true" :model="dataForm" @keyup.enter.native="init()">
-        <el-form-item  label="项目名称:">
-          <el-input v-model="dataForm.carNum" placeholder="项目名称" clearable></el-input>
+      <el-form :inline="true" :model="searchform" @keyup.enter.native="init()">
+        <el-form-item label="项目名称:">
+          <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
         </el-form-item>
-        <el-form-item  label="工程行业类别:">
-          <el-input v-model="dataForm.carNum" placeholder="工程行业类别" clearable></el-input>
+        <el-form-item
+          label="工程类别(一级):"
+        >
+          <el-select
+            clearable
+            filterable
+            placeholder="请选择"
+            @change="getTwo"
+            size="mini"
+            v-model="searchform.enginTypeFirstId"
+          >
+            <el-option
+              :key="index"
+              :label="item.detailName"
+              :value="item.id"
+              v-for="(item, index) in projectDomainType"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          label="工程类别(二级):"
+        >
+          <el-select
+            clearable
+            filterable
+            placeholder="请选择"
+            size="mini"
+            v-model="searchform.enginTypeSecondId"
+          >
+            <el-option
+              :key="index"
+              :label="item.detailName"
+              :value="item.id"
+              v-for="(item, index) in xqprojectType"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item>
           <el-button @click="init()">查询</el-button>
@@ -92,58 +126,80 @@
 
 <script>
   export default {
-    data () {
+    data() {
       return {
         visible: false,
-        dataForm:{
-          password: '',
-          newPassword: '',
-          confirmPassword: ''
+        searchform: {
+          inforName: '',
+          enginTypeFirstId: '',
+          enginTypeSecondId: ''
         },
+        xqprojectType:[],
         dataList: [],
         pageIndex: 1,
         pageSize: 10,
         totalPage: 0,
         dataListLoading: false,
         dataListSelections: [],
-        currentRow:''
+        currentRow: ''
       }
     },
+    computed: {
+      projectDomainType() {
+        return this.$store.state.category.projectDomainType;
+      },
+    },
+    mounted() {
+      this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
+    },
     methods: {
+      //工程类别二级
+      getTwo(id) {
+        if(id!=''){
+          this.searchform.enginTypeSecondId='';
+          this.projectDomainType.find(
+            (item) => {
+            if (item.id == id) {
+            this.xqprojectType = item.children;
+          }
+        }
+        )
+        }
+      },
       //选中数据
-      sub(){
+      sub() {
         this.visible = false;
-        this.$emit('refreshDataList',this.currentRow)
+        this.$emit('refreshDataList', this.currentRow)
       },
       // 初始化
-      init () {
+      init() {
         this.visible = true;
         this.$http
           .post(
             "/api/topInfo/TopInfor/list/loadPageDataForReg",
             this.searchform,
-            { isLoading: false }
+            {isLoading: false}
           )
           .then((res) => {
-            var datas=res.data.data;
+              var datas = res.data.data;
             if (res.data && res.data.code === 200) {
-              this.dataList =datas.records;
+              this.dataList = datas.records;
               this.totalPage = datas.total
             } else {
               this.dataList = []
               this.totalPage = 0
             }
             this.dataListLoading = false
-        });
+      });
       },
       // 每页数
-      sizeChangeHandle (val) {
+      sizeChangeHandle(val) {
         this.pageSize = val
         this.pageIndex = 1
         this.init()
       },
       // 当前页
-      currentChangeHandle (val) {
+      currentChangeHandle(val) {
         this.pageIndex = val
         this.init()
       },
@@ -155,33 +211,40 @@
   }
 </script>
 <style>
-  .dialog-footer{
+  .dialog-footer {
     margin-top: 50px;
     text-align: center;
   }
-  .el-dialog{
+
+  .el-dialog {
     width: 80%;
   }
+
   .el-form-item__label {
     width: auto;
   }
-  .inline-block{
+
+  .inline-block {
     display: inline-block;
   }
-  .dr-notice-warn{
+
+  .dr-notice-warn {
     width: 100%;
     box-sizing: border-box;
-    padding:10px;
+    padding: 10px;
     background: #FFE5E0;
     color: red;
   }
-  .dr-notice-body{
-    padding:10px;
+
+  .dr-notice-body {
+    padding: 10px;
   }
-  .dr-notice-body>div{
+
+  .dr-notice-body > div {
     margin-bottom: 20px;
   }
-  .sumWeigh{
+
+  .sumWeigh {
     font-size: 18px;
     margin-bottom: 10px;
     font-weight: bold;

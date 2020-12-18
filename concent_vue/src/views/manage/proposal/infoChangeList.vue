@@ -219,7 +219,6 @@
         showinput: false,
         sousuo: "",
         searchform: {
-
           orgid: "",
           orgname: "",
           inforName: "",
@@ -238,8 +237,8 @@
     methods: {
       //去新增详情页面
       goAddDetail(data){
-        console.log(data);
-        let p = {actpoint: "add"};
+        // console.log(data);
+        let p = {actpoint: "add",instid:data.topOrgId};
         this.$router.push({
           path: "./infoChangeDetail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
@@ -263,7 +262,7 @@
           this.$message.info("请选择一条记录进行修改操作！");
           return false;
         }
-        let p = {actpoint: "edit", instid: this.multipleSelection[0].topOrgId};
+        let p = {actpoint: "edit", instid: this.multipleSelection[0].beforeId,afterId:this.multipleSelection[0].afterId};
         this.$router.push({
           path: "./infoChangeDetail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
@@ -338,7 +337,7 @@
       getData() {
         this.$http
           .post(
-            "/api/topInfo/TopInfor/list/loadPageDataForReg",
+            "/api/topInfo/TopInfor/list/loadPageDataForChangeRecord",
             this.searchform
           )
           .then((res) => {

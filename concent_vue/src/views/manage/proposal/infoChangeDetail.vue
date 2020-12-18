@@ -22,155 +22,45 @@
           <div style="overflow: scroll; max-height: 55vh;padding-bottom: 10px">
             <el-form
               :inline="false"
-              :model="detailform"
-              :rules="detailformrules"
+              :model="detailFormBefore"
               class="gcform"
-              ref="detailform"
               style="background: white; height: ceil(100%-300px)"
             >
               <el-form-item
                 label="项目板块:"
-                prop="topInfor.moduleId"
               >
-                <!--@change="chg('bulletinType')"-->
-                <el-select
-                  :disabled="true"
-                  clearable
-                  filterable
-                  style="width: 100%"
-                  placeholder="请选择"
-                  size="mini"
-                  @change="
-                  getName(detailform.topInfor.moduleId, bizCode, 'moduleName')
-                "
-                  v-model="detailform.topInfor.moduleId"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in bizCode"
-                  ></el-option>
-                </el-select>
+                <el-input v-model="detailFormBefore.topInfor.moduleName" disabled></el-input>
               </el-form-item>
               <el-form-item
                 label="工程类别(一级):"
-                prop="topInfor.enginTypeFirstId"
               >
-                <el-select
-                  :disabled="true"
-                  clearable
-                  filterable
-                  placeholder="请选择"
-                  @change="getTwo"
-                  size="mini"
-                  v-model="detailform.topInfor.enginTypeFirstId"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in projectDomainType"
-                  ></el-option>
-                </el-select>
+                <el-input v-model="detailFormBefore.topInfor.enginTypeFirstName" disabled></el-input>
               </el-form-item>
 
               <el-form-item
                 label="工程类别(二级):"
-                prop="topInfor.enginTypeSecondId"
               >
-                <el-select
-                  :disabled="true"
-                  clearable
-                  filterable
-                  placeholder="请选择"
-                  size="mini"
-                  @change="
-                  getName(
-                    detailform.topInfor.enginTypeSecondId,
-                    xqprojectType,
-                    'enginTypeSecondName'
-                  )
-                "
-                  v-model="detailform.topInfor.enginTypeSecondId"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in xqprojectType"
-                  ></el-option>
-                </el-select>
+                <el-input v-model="detailFormBefore.topInfor.enginTypeSecondName" disabled></el-input>
               </el-form-item>
               <el-form-item
                 label="项目名称:"
-                prop="topInfor.inforName"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
               >
-                <el-input
-                  :disabled="true"
-                  clearable
-                  size="mini"
-                  v-model="detailform.topInfor.inforName"/>
+                <el-input v-model="detailFormBefore.topInfor.inforName" disabled></el-input>
               </el-form-item>
 
               <el-form-item
                 label="建设单位:"
-                prop="topInfor.constructionOrg"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
               >
-                <el-input
-                  :disabled="true"
-                  clearable
-                  size="mini"
-                  v-model="detailform.topInfor.constructionOrg"
-                />
+                <el-input v-model="detailFormBefore.topInfor.constructionOrg" disabled></el-input>
               </el-form-item>
               <el-form-item
                 label="公告类型:"
-                prop="topInfor.noticeTypeId"
               >
-                <el-select
-                  :disabled="true"
-                  clearable
-                  filterable
-                  placeholder="请选择"
-                  size="mini"
-                  v-model="detailform.topInfor.noticeTypeId"
-                  @change="
-                  getName(
-                    detailform.topInfor.noticeTypeId,
-                    bulletinType,
-                    'noticeTypeName'
-                  )
-                "
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in bulletinType"
-                  ></el-option>
-                </el-select>
+                <el-input v-model="detailFormBefore.topInfor.noticeTypeName" disabled></el-input>
               </el-form-item>
               <!-- 下拉 -->
               <el-form-item
                 label="预计招标时间:"
-                prop="topInfor.planBidTime"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-
               >
                 <el-date-picker
                   :disabled="true"
@@ -178,7 +68,7 @@
                   clearable
                   type="date"
                   value-format="timestamp"
-                  v-model="detailform.topInfor.planBidTime"
+                  v-model="detailFormBefore.topInfor.planBidTime"
 
                 >
                 </el-date-picker>
@@ -188,139 +78,39 @@
 
               <el-form-item
                 label="所属线路:"
-                prop="topInfor.belongLineId"
               >
-                <el-select
-                  :disabled="true"
-                  filterable
-                  clearable
-                  placeholder="请选择或直接填写所属现路"
-                  size="mini"
-                  @change="
-                  getName(
-                    detailform.topInfor.belongLineId,
-                    railwayLine,
-                    'belongLineName'
-                  )
-                "
-                  v-model="detailform.topInfor.belongLineId"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in railwayLine"
-                  ></el-option>
-                </el-select>
+                <el-input v-model="detailFormBefore.topInfor.belongLineName" disabled></el-input>
               </el-form-item>
               <!-- --------------------------------------------------------------- -->
               <el-form-item
                 label="招标人:"
-                prop="topInfor.bidPerson"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
               >
-                <el-input
-                  :disabled="true"
-                  clearable
-                  size="mini"
-                  v-model="detailform.topInfor.bidPerson"
-                />
+                <el-input v-model="detailFormBefore.topInfor.bidPerson" disabled></el-input>
               </el-form-item>
               <el-form-item
                 label="设计单位:"
-                prop="topInfor.designOrg"
-                :rules="{
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
               >
-                <el-input
-                  clearable
-                  :disabled="true"
-                  size="mini"
-                  v-model="detailform.topInfor.designOrg"
-                />
+                <el-input v-model="detailFormBefore.topInfor.designOrg	" disabled></el-input>
               </el-form-item>
 
               <el-form-item
                 label="招标代理公司:"
-                prop="topInfor.bidAgentCompany"
-                :rules="{
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
               >
-                <el-input
-                  :disabled="true"
-                  size="mini"
-                  v-model="detailform.topInfor.bidAgentCompany"
-                />
+                <el-input v-model="detailFormBefore.topInfor.bidAgentCompany	" disabled></el-input>
               </el-form-item>
               <el-form-item
                 label="项目模式:"
-                prop="topInfor.projectModelId"
               >
-                <el-select
-                  :disabled="true"
-                  clearable
-                  filterable
-                  placeholder="请选择"
-                  size="mini"
-                  @change="
-                  getName(
-                    detailform.topInfor.projectModelId,
-                    projectModel,
-                    'projectModelName'
-                  )
-                "
-                  v-model="detailform.topInfor.projectModelId"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in projectModel"
-                  ></el-option>
-                </el-select>
+                <el-input v-model="detailFormBefore.topInfor.projectModelName" disabled></el-input>
               </el-form-item>
               <el-form-item
                 label="资审方式:"
-                prop="topInfor.verifyTypeId"
-                :rules="{
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
               >
-                <el-input
-                  :disabled="true"
-                  clearable
-                  placeholder=""
-                  size="mini"
-                  v-model="detailform.topInfor.verifyTypeId"
-                />
+                <el-input v-model="detailFormBefore.topInfor.verifyTypeId" disabled></el-input>
               </el-form-item>
 
               <el-form-item label="资金来源:" prop="capitalId">
-                <el-select
-                  :disabled="true"
-                  filterable
-                  clearable
-                  multiple
-                  placeholder="请选择"
-                  size="mini"
-                  v-model="value1"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in amountSource"
-                  ></el-option>
-                </el-select>
+                <el-input v-model="detailFormBefore.capitalName" disabled></el-input>
               </el-form-item>
 
               <el-form-item
@@ -332,77 +122,22 @@
                 trigger: 'blur',
               }"
               >
-                <el-input
-                  :disabled="true"
-                  clearable
-                  placeholder=""
-                  size="mini"
-                  v-model="detailform.topInfor.investment"
-                />
+                <el-input v-model="detailFormBefore.topInfor.investment" disabled></el-input>
               </el-form-item>
               <el-form-item
                 label="新兴市场(一级):"
-                prop="topInfor.marketFirstNameId"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
               >
-                <el-select
-                  :disabled="true"
-                  filterable
-                  clearable
-                  placeholder="请选择"
-                  @change="getTwoSC"
-                  size="mini"
-                  v-model="detailform.topInfor.marketFirstNameId"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in emergingMarket"
-                  ></el-option>
-                </el-select>
+                <el-input v-model="detailFormBefore.topInfor.marketFirstName" disabled></el-input>
               </el-form-item>
 
               <el-form-item
                 label="新兴市场(二级):"
-                prop="topInfor.marketSecondId"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
               >
-                <el-select
-                  :disabled="true"
-                  filterable
-                  clearable
-                  placeholder="请选择"
-                  size="mini"
-                  @change="
-                  getName(
-                    detailform.topInfor.marketSecondId,
-                    emergingMarketTwo,
-                    'marketSecondName'
-                  )
-                "
-                  v-model="detailform.topInfor.marketSecondId"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in emergingMarketTwo"
-                  ></el-option>
-                </el-select>
+                <el-input v-model="detailFormBefore.topInfor.marketSecondName" disabled></el-input>
               </el-form-item>
 
               <el-form-item
                 label="是否为重大项目:"
-                prop="topInfor.isMajorProject"
               >
                 <el-select
                   :disabled="true"
@@ -410,10 +145,10 @@
                   clearable
                   placeholder="请选择"
                   size="mini"
-                  v-model="detailform.topInfor.isMajorProject"
+                  v-model="detailFormBefore.topInfor.isMajorProject"
                 >
                   <el-option
-                    :key="index"
+                    :key="index+'__'"
                     :label="item.detailName"
                     :value="item.id"
                     v-for="(item, index) in yesOrNo"
@@ -422,35 +157,8 @@
               </el-form-item>
               <el-form-item
                 label="预计中标概率:"
-                prop="topInfor.bidProbId"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
               >
-                <el-select
-                  :disabled="true"
-                  filterable
-                  clearable
-                  placeholder="请选择"
-                  size="mini"
-                  @change="
-                  getName(
-                    detailform.topInfor.bidProbId,
-                    probability,
-                    'bidProbName'
-                  )
-                "
-                  v-model="detailform.topInfor.bidProbId"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in probability"
-                  ></el-option>
-                </el-select>
+                <el-input v-model="detailFormBefore.topInfor.bidProbName" disabled></el-input>
               </el-form-item>
               <!-- <el-form-item
                 label="投资额（万元）:"
@@ -471,49 +179,18 @@
               <div>
                 <el-form-item
                   label="项目跟踪负责人:"
-                  prop="topInfoOrg.projectTrackResponPerson"
-                  :rules="{
-                  required: true,
-                  message: '此项不能为空',
-                  trigger: 'blur',
-                }"
                 >
-                  <el-input
-                    :disabled="true"
-                    clearable
-                    placeholder=""
-                    size="mini"
-                    v-model="detailform.topInfoOrg.projectTrackResponPerson"
-                  />
+                  <el-input v-model="detailFormBefore.topInfoOrg.projectTrackResponPerson" disabled></el-input>
                 </el-form-item>
                 <el-form-item
                   label="联系电话:"
-                  prop="topInfoOrg.contactMode"
-                  :rules="{
-                  required: true,
-                  message: '此项不能为空',
-                  trigger: 'blur',
-                }"
                 >
-                  <el-input
-                    :disabled="true"
-                    clearable
-                    placeholder=""
-                    size="mini"
-                    v-model="detailform.topInfoOrg.contactMode"
-                  />
+                  <el-input v-model="detailFormBefore.topInfoOrg.contactMode" disabled></el-input>
                 </el-form-item>
               </div>
               <el-form-item
                 class="neirong"
                 label="项目内容:"
-                prop="topInfor.inforContent"
-                style="width: 100%"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
               >
                 <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                 <el-input
@@ -522,15 +199,15 @@
                   clearable
                   placeholder="请输入"
                   size="mini"
-                  v-model="detailform.topInfor.inforContent"
+                  v-model="detailFormBefore.topInfor.inforContent"
                 />
               </el-form-item>
               <p style="overflow: hidden；margin-right: 30px">
                 <span style="float: left">地点信息: </span>
               </p>
               <el-table
+                :data="detailFormBefore.topInfoSiteList"
                 :disabled="true"
-                :key="key"
                 :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -555,10 +232,9 @@
                   label="项目地点"
                   align="center"
                   prop="inforName"
-                  show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <div>{{scope.row.path}}</div>
+                    <div class="positon-path">{{scope.row.path}}</div>
                     <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                   </template>
                 </el-table-column>
@@ -599,7 +275,7 @@
                 <span style="float: left">标段信息: </span>
               </p>
               <el-table
-                :data="detailform.topInfoSectionList"
+                :data="detailFormBefore.topInfoSectionList"
                 :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -708,7 +384,7 @@
                 v-model="detailform.topInfor.moduleId"
               >
                 <el-option
-                  :key="index"
+                  :key="index+ '-only'"
                   :label="item.detailName"
                   :value="item.id"
                   v-for="(item, index) in bizCode"
@@ -729,7 +405,7 @@
                 v-model="detailform.topInfor.enginTypeFirstId"
               >
                 <el-option
-                  :key="index"
+                  :key="index+ '-only'"
                   :label="item.detailName"
                   :value="item.id"
                   v-for="(item, index) in projectDomainType"
@@ -757,7 +433,7 @@
                 v-model="detailform.topInfor.enginTypeSecondId"
               >
                 <el-option
-                  :key="index"
+                  :key="index+ '-only'"
                   :label="item.detailName"
                   :value="item.id"
                   v-for="(item, index) in xqprojectType"
@@ -816,7 +492,7 @@
                 "
               >
                 <el-option
-                  :key="index"
+                  :key="index+ '-only'"
                   :label="item.detailName"
                   :value="item.id"
                   v-for="(item, index) in bulletinType"
@@ -868,7 +544,7 @@
                 v-model="detailform.topInfor.belongLineId"
               >
                 <el-option
-                  :key="index"
+                  :key="index+ '-only'"
                   :label="item.detailName"
                   :value="item.id"
                   v-for="(item, index) in railwayLine"
@@ -942,7 +618,7 @@
                 v-model="detailform.topInfor.projectModelId"
               >
                 <el-option
-                  :key="index"
+                  :key="index+ '-only'"
                   :label="item.detailName"
                   :value="item.id"
                   v-for="(item, index) in projectModel"
@@ -977,7 +653,7 @@
                 v-model="value1"
               >
                 <el-option
-                  :key="index"
+                  :key="index+ '-only'"
                   :label="item.detailName"
                   :value="item.id"
                   v-for="(item, index) in amountSource"
@@ -1021,7 +697,7 @@
                 v-model="detailform.topInfor.marketFirstNameId"
               >
                 <el-option
-                  :key="index"
+                  :key="index+ '-only'"
                   :label="item.detailName"
                   :value="item.id"
                   v-for="(item, index) in emergingMarket"
@@ -1054,7 +730,7 @@
                 v-model="detailform.topInfor.marketSecondId"
               >
                 <el-option
-                  :key="index"
+                  :key="index+ '-only'"
                   :label="item.detailName"
                   :value="item.id"
                   v-for="(item, index) in emergingMarketTwo"
@@ -1075,7 +751,7 @@
                 v-model="detailform.topInfor.isMajorProject"
               >
                 <el-option
-                  :key="index"
+                  :key="index+ '-only'"
                   :label="item.detailName"
                   :value="item.id"
                   v-for="(item, index) in yesOrNo"
@@ -1107,7 +783,7 @@
                 v-model="detailform.topInfor.bidProbId"
               >
                 <el-option
-                  :key="index"
+                  :key="index+ '-only'"
                   :label="item.detailName"
                   :value="item.id"
                   v-for="(item, index) in probability"
@@ -1232,10 +908,9 @@
                 label="项目地点"
                 align="center"
                 prop="inforName"
-                show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  <div>{{scope.row.path}}</div>
+                  <div class="positon-path">{{scope.row.path}}</div>
                   <el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>
                   <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                 </template>
@@ -1409,6 +1084,7 @@
     data() {
       return {
         id:'',
+        afterId:'',
         key: 0,
         treeStatas: false,
         positionIndex: '',//缓存当前的选中的项目地点的index
@@ -1416,6 +1092,12 @@
         options2: [],
         options: [],
         detailform: {
+          topInfor: {},
+          topInfoOrg: {},
+          topInfoSiteList: [],
+          topInfoSectionList: [],
+        },
+        detailFormBefore:{
           topInfor: {},
           topInfoOrg: {},
           topInfoSiteList: [],
@@ -1467,9 +1149,12 @@
     },
     mounted() {
       // this.$store.commit("setCategory", 'projectDomainType');
-      this.id=this.p.instid;
-      if (this.p.actpoint === "edit"||this.id) {
+      this.id=this.p.instid,this.afterId=this.p.afterId;
+      if (this.p.actpoint === "edit") {
         this.getDetail();
+      }
+      if(this.p.actpoint === "add"||this.id){
+        this.getAddDetail()
       }
       this.$store.dispatch("getConfig", {});
       this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
@@ -1509,9 +1194,9 @@
       },
       //工程类别二级
       getTwo(id) {
-
         if(id!=''){
           this.detailform.topInfor.enginTypeSecondId='';
+          // console.log(this.projectDomainType)
           this.projectDomainType.find(
             (item) => {
             if (item.id == id) {
@@ -1559,11 +1244,12 @@
         }
       });
         this.detailform.topInforCapitalList=topInforCapitalList;
+        this.detailform.srcId=this.id;
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
               .post(
-                "/api/topInfo/TopInfor/detail/saveOrUpdate",
+                `/api/topInfo/TopInfor/detail/${this.p.actpoint === "add"?'saveChangeRecord':'updateChangeRecord'}`,
                 JSON.stringify(this.detailform),
                 {useJson: true}
               )
@@ -1649,26 +1335,72 @@
           showinput: true,
         };
       },
-      // 加载列表
+      // 修改的时候详情
       getDetail() {
         this.$http
-          .post("/api/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.id})
+          .post("/api/topInfo/TopInfor/detail/entityInfoByBeforeAndAfterId", {beforeId:this.id,afterId:this.afterId})
           .then((res) => {
           var datas=res.data.data;
-        this.getTwo(datas.topInfor.enginTypeFirstId);
-        this.getTwoSC(datas.topInfor.marketFirstNameId);
-        datas.topInforCapitalList.forEach((item)=>{
-          this.value1.push(item.capitalId)
-      });
-        this.detailform={
-          topInfor: datas.topInfor,
-          topInfoOrg: datas.topInfoOrg,
-          topInfoSiteList: datas.topInfoSiteList,
-          topInfoSectionList: datas.topInfoSectionList,
+          var beforData=[],afterData=[];
+        if(datas[0].topInfoOrg.changeStatus==1){
+          beforData=datas[0];
+          afterData=datas[1];
+        }else{
+          beforData=datas[1];
+          afterData=datas[0];
         }
+        this.getTwo(afterData.topInfor.enginTypeFirstId);
+        this.getTwoSC(afterData.topInfor.marketFirstNameId);
+        // afterData.topInforCapitalList.forEach((item)=>{
+        //   this.value1.push(item.capitalId);
+        // });
+        console.log(afterData)
+        this.detailform={
+          topInfor: afterData.topInfor,
+          topInfoOrg: afterData.topInfoOrg,
+          topInfoSiteList: afterData.topInfoSiteList,
+          topInfoSectionList: afterData.topInfoSectionList
+        };
+          this.detailFormBefore={
+            capitalName: beforData.capitalName,
+            topInfor: beforData.topInfor,
+            topInfoOrg: beforData.topInfoOrg,
+            topInfoSiteList: beforData.topInfoSiteList,
+            topInfoSectionList: beforData.topInfoSectionList
+          }
       });
       },
-
+      //新增的时候详情
+      getAddDetail(){
+        console.log(111)
+          this.$http
+            .post("/api/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.id})
+            .then((res) => {
+            var datas=res.data.data;
+          this.getTwo(datas.topInfor.enginTypeFirstId);
+          this.getTwoSC(datas.topInfor.marketFirstNameId);
+          datas.topInforCapitalList.forEach((item)=>{
+            this.value1.push(item.capitalId);
+          });
+          this.detailform={
+            topInfor: datas.topInfor,
+            topInfoOrg: datas.topInfoOrg,
+            topInfoSiteList: datas.topInfoSiteList,
+            topInfoSectionList: datas.topInfoSectionList,
+          };
+          for(var i in this.detailform){
+            this.detailFormBefore[i]=JSON.parse(JSON.stringify(this.detailform[i]));
+          }
+          this.detailFormBefore.capitalName=datas.capitalName;
+          // this.detailFormBefore={
+          //   capitalName:datas.capitalName,
+          //   topInfor: datas.topInfor,
+          //   topInfoOrg: datas.topInfoOrg,
+          //   topInfoSiteList: datas.topInfoSiteList,
+          //   topInfoSectionList: datas.topInfoSectionList,
+          // }
+        });
+      },
       handleSelectionChange(val) {
         this.multipleSelection = val;
       },
@@ -1676,6 +1408,11 @@
   };
 </script>
 <style lang="scss">
+  .positon-path{
+    word-wrap: break-word;
+    word-break: break-all;
+    width: 90%;
+  }
   .btn-group{
     text-align: center;
     margin-top: 20px;

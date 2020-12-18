@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 // import { getPermission, getOrgPermission } from '@/assets/js/permission.js'
-const App = resolve => require(['../App.vue'], resolve)
+const App = resolve => require(['../App.vue'], resolve);
 Vue.use(Router)
 const routerPush = Router.prototype.push
 Router.prototype.push = function push(location) {

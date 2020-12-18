@@ -569,7 +569,6 @@
                 label="项目地点"
                 align="center"
                 prop="inforName"
-                show-overflow-tooltip
               >
                 <template slot-scope="scope">
                   <div>{{scope.row.path}}</div>
