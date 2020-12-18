@@ -12,9 +12,11 @@
         <el-button @click="exportdata" type="primary" plain>导出</el-button>
       </div>
     </div>
-
     <div style="margin-top: 20px">
       <el-table
+        class="tableStyle"
+        :max-height="$tableHeight"
+        :height="$tableHeight"
         :data="page.records"
         :header-cell-style="{
           'text-align': 'center',
@@ -26,7 +28,6 @@
         highlight-current-row
         ref="table"
         stripe
-        style="width: 100%"
         tooltip-effect="dark"
       >
         <el-table-column
@@ -173,25 +174,6 @@
             </div>
           </template>
         </el-table-column>
-
-        <!-- <el-table-column
-          :width="80"
-          align="center"
-          label="编制人"
-          prop="username"
-          show-overflow-tooltip
-        ></el-table-column> -->
-        <!-- <el-table-column
-          :width="120"
-          align="center"
-          label="编制时间"
-          prop="createtime"
-          show-overflow-tooltip
-        >
-          <template slot-scope="scope">{{
-            scope.row.createtime | dateformat
-          }}</template>
-        </el-table-column> -->
       </el-table>
     </div>
     <el-pagination
@@ -202,7 +184,6 @@
       @current-change="handleCurrentChange"
       @size-change="handleSizeChange"
       layout="total, sizes, prev, pager, next, jumper"
-      style="margin: 20px;position: fixed;right:200px;bottom:40px"
     ></el-pagination>
     <info-change-search v-if="infoCSVisible" ref="infoCS" @refreshDataList="goAddDetail"></info-change-search>
   </div>
@@ -271,7 +252,7 @@
       },
       // 查看
       rowshow(row) {
-        let p = {actpoint: "look", instid: row.topOrgId};
+        let p = {actpoint: "look", instid: row.beforeId,afterId:row.afterId};
         this.$router.push({
           path: "./infoChangeDetail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},

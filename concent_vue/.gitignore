@@ -7,9 +7,11 @@ yarn-error.log*
 
 # Editor directories and files
 .idea
+../idea
 .vscode
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
+/config/index.js
 src/views/manage/workpoint/edit/list.vue

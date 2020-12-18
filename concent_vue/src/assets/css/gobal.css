@@ -427,3 +427,23 @@ pre {
 .gcform .el-form-item__error{
   top:11% !important;
 }
+
+
+/*yw*/
+.search-btn{
+  text-align: right;
+  margin-bottom: 20px;
+}
+.tableStyle{
+  width: 100%;
+  min-height: calc(100vh - 342px)!important;
+}
+.detailBox{
+  overflow: scroll;
+  max-height:calc(100vh - 380px)!important;
+}
+.gcform{
+  background: white;
+  width:calc(100% - 4px)!important;
+}
+/**/

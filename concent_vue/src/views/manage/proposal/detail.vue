@@ -18,14 +18,13 @@
         >
       </div>
 
-      <div style="overflow: scroll;max-height:calc(100vh - 380px);">
+      <div class="detailBox">
         <el-form
           :inline="false"
           :model="detailform"
           :rules="detailformrules"
           class="gcform"
           ref="detailform"
-          style="background: white;width:calc(100% - 4px);"
         >
             <el-form-item
               label="项目板块:"
@@ -861,7 +860,7 @@
         if(id!=''){
           this.detailform.topInfor.marketSecondId='';
           this.emergingMarket.find(
-            (item) => {
+            (item)=>{
               if (item.id == id) {
                 this.detailform.topInfor.marketFirstName = item.detailName;
                 this.emergingMarketTwo = item.children;
@@ -924,9 +923,10 @@
         this.getuserlist();
       },
       back() {
-        this.$router.push({
-          path: "/manage/proposal/list",
-        });
+        this.$router.back()
+        // this.$router.push({
+        //   path: "/manage/proposal/list",
+        // });
       },
       del(index,item,list,type) {
         console.log(index);

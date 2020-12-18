@@ -72,7 +72,16 @@ export default {
                       "menushow": false,
                       "leaf": true,
                       "defaultpage": false
-                    }
+                    },
+                    {
+                      "name": "项目信息查询",
+                      "path": "/manage/proposal/searchList",
+                      "component": "/manage/proposal/searchList",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": true
+                    },
                   ]
                 },
 

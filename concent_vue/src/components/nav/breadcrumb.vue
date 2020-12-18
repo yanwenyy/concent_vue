@@ -38,7 +38,7 @@ export default {
   watch: {
     $route: {
       handler: function(val, oldVal) {
-        this.ifDetail=val.path.indexOf("detail")!=-1
+        this.ifDetail=val.path.indexOf("detail")!=-1||val.path.indexOf("Detail")!=-1
         this.breadcrumbs = []
         this.getbreadcrumb(this.$store.state.route[1].children);
       },

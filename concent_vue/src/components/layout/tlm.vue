@@ -62,16 +62,23 @@
           <sidebar></sidebar>
         </el-aside>
       </el-scrollbar>
-      <el-scrollbar :class="tlm_height" id="el-main" wrap-class="default-scrollbar__wrap" style=" height: 100%;">
-        <el-main class="el-tlm-main" style="width: 100%; height: 100%;">
-          <router-view></router-view>
-          <div class="block">
-          <breadcrumb v-if="breadcrumb" style="flex:none;">
-          </breadcrumb>
-      </div>
-        </el-main>
+          <el-main class="el-tlm-main" style="width: 100%; height: 100%;">
+            <router-view></router-view>
+            <div class="block">
+              <breadcrumb v-if="breadcrumb" style="flex:none;">
+              </breadcrumb>
+            </div>
+          </el-main>
+      <!--<el-scrollbar :class="tlm_height" id="el-main" wrap-class="default-scrollbar__wrap" style=" height: 100%;">-->
+        <!--<el-main class="el-tlm-main" style="width: 100%; height: 100%;">-->
+          <!--<router-view></router-view>-->
+          <!--<div class="block">-->
+            <!--<breadcrumb v-if="breadcrumb" style="flex:none;">-->
+            <!--</breadcrumb>-->
+          <!--</div>-->
+        <!--</el-main>-->
 
-      </el-scrollbar>
+      <!--</el-scrollbar>-->
 
       </div>
       </div>

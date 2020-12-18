@@ -16,6 +16,7 @@
 
     <div style="margin-top: 20px">
       <el-table
+        class="tableStyle"
         :max-height="$tableHeight"
         :height="$tableHeight"
         :data="page.records"
@@ -26,7 +27,6 @@
         highlight-current-row
         ref="table"
         stripe
-        style="width: 100%;min-height: calc(100vh - 342px);"
         tooltip-effect="dark"
       >
         <el-table-column

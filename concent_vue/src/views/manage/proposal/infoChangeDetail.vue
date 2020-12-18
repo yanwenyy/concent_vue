@@ -1,345 +1,6 @@
 <template>
   <el-tabs type="border-card">
     <el-tab-pane label="项目原信息">
-      <div>
-        <el-card class="box-card">
-          <div slot="header" class="clearfix">
-            <el-button
-              @click="back"
-              style="
-            float: right;
-            padding: 10px 20px;
-            border: 1px solid #ddd;
-            color: black;
-            position: fixe;
-          "
-              type="text"
-            >返回
-            </el-button
-            >
-          </div>
-
-          <div style="overflow: scroll; max-height: 55vh;padding-bottom: 10px">
-            <el-form
-              :inline="false"
-              :model="detailFormBefore"
-              class="gcform"
-              style="background: white; height: ceil(100%-300px)"
-            >
-              <el-form-item
-                label="项目板块:"
-              >
-                <el-input v-model="detailFormBefore.topInfor.moduleName" disabled></el-input>
-              </el-form-item>
-              <el-form-item
-                label="工程类别(一级):"
-              >
-                <el-input v-model="detailFormBefore.topInfor.enginTypeFirstName" disabled></el-input>
-              </el-form-item>
-
-              <el-form-item
-                label="工程类别(二级):"
-              >
-                <el-input v-model="detailFormBefore.topInfor.enginTypeSecondName" disabled></el-input>
-              </el-form-item>
-              <el-form-item
-                label="项目名称:"
-              >
-                <el-input v-model="detailFormBefore.topInfor.inforName" disabled></el-input>
-              </el-form-item>
-
-              <el-form-item
-                label="建设单位:"
-              >
-                <el-input v-model="detailFormBefore.topInfor.constructionOrg" disabled></el-input>
-              </el-form-item>
-              <el-form-item
-                label="公告类型:"
-              >
-                <el-input v-model="detailFormBefore.topInfor.noticeTypeName" disabled></el-input>
-              </el-form-item>
-              <!-- 下拉 -->
-              <el-form-item
-                label="预计招标时间:"
-              >
-                <el-date-picker
-                  :disabled="true"
-                  filterable
-                  clearable
-                  type="date"
-                  value-format="timestamp"
-                  v-model="detailFormBefore.topInfor.planBidTime"
-
-                >
-                </el-date-picker>
-              </el-form-item>
-
-              <!-- 下拉 -->
-
-              <el-form-item
-                label="所属线路:"
-              >
-                <el-input v-model="detailFormBefore.topInfor.belongLineName" disabled></el-input>
-              </el-form-item>
-              <!-- --------------------------------------------------------------- -->
-              <el-form-item
-                label="招标人:"
-              >
-                <el-input v-model="detailFormBefore.topInfor.bidPerson" disabled></el-input>
-              </el-form-item>
-              <el-form-item
-                label="设计单位:"
-              >
-                <el-input v-model="detailFormBefore.topInfor.designOrg	" disabled></el-input>
-              </el-form-item>
-
-              <el-form-item
-                label="招标代理公司:"
-              >
-                <el-input v-model="detailFormBefore.topInfor.bidAgentCompany	" disabled></el-input>
-              </el-form-item>
-              <el-form-item
-                label="项目模式:"
-              >
-                <el-input v-model="detailFormBefore.topInfor.projectModelName" disabled></el-input>
-              </el-form-item>
-              <el-form-item
-                label="资审方式:"
-              >
-                <el-input v-model="detailFormBefore.topInfor.verifyTypeId" disabled></el-input>
-              </el-form-item>
-
-              <el-form-item label="资金来源:" prop="capitalId">
-                <el-input v-model="detailFormBefore.capitalName" disabled></el-input>
-              </el-form-item>
-
-              <el-form-item
-                label="投资额（万元）:"
-                prop="topInfor.investment"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              >
-                <el-input v-model="detailFormBefore.topInfor.investment" disabled></el-input>
-              </el-form-item>
-              <el-form-item
-                label="新兴市场(一级):"
-              >
-                <el-input v-model="detailFormBefore.topInfor.marketFirstName" disabled></el-input>
-              </el-form-item>
-
-              <el-form-item
-                label="新兴市场(二级):"
-              >
-                <el-input v-model="detailFormBefore.topInfor.marketSecondName" disabled></el-input>
-              </el-form-item>
-
-              <el-form-item
-                label="是否为重大项目:"
-              >
-                <el-select
-                  :disabled="true"
-                  filterable
-                  clearable
-                  placeholder="请选择"
-                  size="mini"
-                  v-model="detailFormBefore.topInfor.isMajorProject"
-                >
-                  <el-option
-                    :key="index+'__'"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in yesOrNo"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item
-                label="预计中标概率:"
-              >
-                <el-input v-model="detailFormBefore.topInfor.bidProbName" disabled></el-input>
-              </el-form-item>
-              <!-- <el-form-item
-                label="投资额（万元）:"
-                prop="topInfor.investment"
-                :rules="{
-                  required: true,
-                  message: '此项不能为空',
-                  trigger: 'blur',
-                }"
-              >
-                <el-input
-                  clearable
-                  placeholder=""
-                  size="mini"
-                  v-model="detailform.topInfor.investment"
-                />
-              </el-form-item> -->
-              <div>
-                <el-form-item
-                  label="项目跟踪负责人:"
-                >
-                  <el-input v-model="detailFormBefore.topInfoOrg.projectTrackResponPerson" disabled></el-input>
-                </el-form-item>
-                <el-form-item
-                  label="联系电话:"
-                >
-                  <el-input v-model="detailFormBefore.topInfoOrg.contactMode" disabled></el-input>
-                </el-form-item>
-              </div>
-              <el-form-item
-                class="neirong"
-                label="项目内容:"
-              >
-                <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
-                <el-input
-                  :disabled="true"
-                  type="textarea"
-                  clearable
-                  placeholder="请输入"
-                  size="mini"
-                  v-model="detailFormBefore.topInfor.inforContent"
-                />
-              </el-form-item>
-              <p style="overflow: hidden；margin-right: 30px">
-                <span style="float: left">地点信息: </span>
-              </p>
-              <el-table
-                :data="detailFormBefore.topInfoSiteList"
-                :disabled="true"
-                :header-cell-style="{
-                'text-align': 'center',
-                'background-color': 'rgba(246,248,252,1)',
-                color: 'rgba(0,0,0,1)',
-              }"
-                @selection-change="handleSelectionChange"
-                align="center"
-                border
-                class="clothSizeTable"
-                ref="table"
-                style="width: 98%; min-height: calc(100vh - 370px)"
-              >
-                <el-table-column
-                  :width="80"
-                  align="center"
-                  label="序号"
-                  show-overflow-tooltip
-                  type="index"
-                ></el-table-column>
-                <el-table-column
-                  :resizable="false"
-                  label="项目地点"
-                  align="center"
-                  prop="inforName"
-                >
-                  <template slot-scope="scope">
-                    <div class="positon-path">{{scope.row.path}}</div>
-                    <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                  </template>
-                </el-table-column>
-
-                <el-table-column
-                  :resizable="false"
-                  label="份额"
-                  prop="contractAmount"
-                  show-overflow-tooltip
-                  align="center"
-                >
-                  <template slot-scope="scope">
-                    <el-input
-                      class="listInput"
-                      clearable
-                      :disabled="true"
-                      v-model="scope.row.contractAmount"
-                    ></el-input>
-                    <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                  </template>
-                </el-table-column>
-
-                <el-table-column
-                  :resizable="false"
-                  label="是否为主地点"
-                  prop="contractAmount"
-                  align="center"
-                  show-overflow-tooltip
-                >
-                  <template slot-scope="scope">
-                    <el-radio v-model="scope.row.isMain" label="1">是</el-radio>
-                    <el-radio v-model="scope.row.isMain" label="0">否</el-radio>
-                    <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                  </template>
-                </el-table-column>
-              </el-table>
-              <p style="overflow: hidden；margin-right: 30px">
-                <span style="float: left">标段信息: </span>
-              </p>
-              <el-table
-                :data="detailFormBefore.topInfoSectionList"
-                :header-cell-style="{
-                'text-align': 'center',
-                'background-color': 'rgba(246,248,252,1)',
-                color: 'rgba(0,0,0,1)',
-              }"
-                @selection-change="handleSelectionChange"
-                align="center"
-                border
-                class="clothSizeTable"
-                ref="table"
-                style="width: 98%; min-height: calc(100vh - 370px)"
-              >
-                <el-table-column
-                  :width="80"
-                  align="center"
-                  label="序号"
-                  show-overflow-tooltip
-                  type="index"
-                ></el-table-column>
-
-                <el-table-column
-                  class="listTabel"
-                  :resizable="false"
-                  label="标段名"
-                  prop="sectionName"
-                  align="center"
-                  show-overflow-tooltip
-                >
-                  <template slot-scope="scope">
-                    <el-input
-                      clearable
-                      :disabled="true"
-                      v-model="scope.row.sectionName"
-                    ></el-input>
-                    <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                  </template>
-                </el-table-column>
-
-                <el-table-column
-                  :resizable="false"
-                  label="项目份额"
-                  align="center"
-                  prop="contractAmount"
-                  show-overflow-tooltip
-                >
-                  <template slot-scope="scope">
-                    <el-input
-                      clearable
-                      :disabled="true"
-                      v-model="scope.row.projectScale"
-                    ></el-input>
-                    <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                  </template>
-                </el-table-column>
-              </el-table>
-
-            </el-form>
-          </div>
-
-        </el-card>
-      </div>
-    </el-tab-pane>
-    <el-tab-pane label="项目变更信息">
-      <div>
       <el-card class="box-card">
         <div slot="header" class="clearfix">
           <el-button
@@ -357,14 +18,348 @@
           >
         </div>
 
-        <div style="overflow: scroll; max-height: 55vh;padding-bottom: 10px">
+        <div class="detailBox">
+          <el-form
+            :inline="false"
+            :model="detailFormBefore"
+            class="gcform"
+          >
+            <el-form-item
+              label="项目板块:"
+            >
+              <el-input v-model="detailFormBefore.topInfor.moduleName" disabled></el-input>
+            </el-form-item>
+            <el-form-item
+              label="工程类别(一级):"
+            >
+              <el-input v-model="detailFormBefore.topInfor.enginTypeFirstName" disabled></el-input>
+            </el-form-item>
+
+            <el-form-item
+              label="工程类别(二级):"
+            >
+              <el-input v-model="detailFormBefore.topInfor.enginTypeSecondName" disabled></el-input>
+            </el-form-item>
+            <el-form-item
+              label="项目名称:"
+            >
+              <el-input v-model="detailFormBefore.topInfor.inforName" disabled></el-input>
+            </el-form-item>
+
+            <el-form-item
+              label="建设单位:"
+            >
+              <el-input v-model="detailFormBefore.topInfor.constructionOrg" disabled></el-input>
+            </el-form-item>
+            <el-form-item
+              label="公告类型:"
+            >
+              <el-input v-model="detailFormBefore.topInfor.noticeTypeName" disabled></el-input>
+            </el-form-item>
+            <!-- 下拉 -->
+            <el-form-item
+              label="预计招标时间:"
+            >
+              <el-date-picker
+                :disabled="true"
+                filterable
+                clearable
+                type="date"
+                value-format="timestamp"
+                v-model="detailFormBefore.topInfor.planBidTime"
+
+              >
+              </el-date-picker>
+            </el-form-item>
+
+            <!-- 下拉 -->
+
+            <el-form-item
+              label="所属线路:"
+            >
+              <el-input v-model="detailFormBefore.topInfor.belongLineName" disabled></el-input>
+            </el-form-item>
+            <!-- --------------------------------------------------------------- -->
+            <el-form-item
+              label="招标人:"
+            >
+              <el-input v-model="detailFormBefore.topInfor.bidPerson" disabled></el-input>
+            </el-form-item>
+            <el-form-item
+              label="设计单位:"
+            >
+              <el-input v-model="detailFormBefore.topInfor.designOrg	" disabled></el-input>
+            </el-form-item>
+
+            <el-form-item
+              label="招标代理公司:"
+            >
+              <el-input v-model="detailFormBefore.topInfor.bidAgentCompany	" disabled></el-input>
+            </el-form-item>
+            <el-form-item
+              label="项目模式:"
+            >
+              <el-input v-model="detailFormBefore.topInfor.projectModelName" disabled></el-input>
+            </el-form-item>
+            <el-form-item
+              label="资审方式:"
+            >
+              <el-input v-model="detailFormBefore.topInfor.verifyTypeId" disabled></el-input>
+            </el-form-item>
+
+            <el-form-item label="资金来源:" prop="capitalId">
+              <el-input v-model="detailFormBefore.capitalName" disabled></el-input>
+            </el-form-item>
+
+            <el-form-item
+              label="投资额（万元）:"
+              prop="topInfor.investment"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
+              <el-input v-model="detailFormBefore.topInfor.investment" disabled></el-input>
+            </el-form-item>
+            <el-form-item
+              label="新兴市场(一级):"
+            >
+              <el-input v-model="detailFormBefore.topInfor.marketFirstName" disabled></el-input>
+            </el-form-item>
+
+            <el-form-item
+              label="新兴市场(二级):"
+            >
+              <el-input v-model="detailFormBefore.topInfor.marketSecondName" disabled></el-input>
+            </el-form-item>
+
+            <el-form-item
+              label="是否为重大项目:"
+            >
+              <el-select
+                :disabled="true"
+                filterable
+                clearable
+                placeholder="请选择"
+                size="mini"
+                v-model="detailFormBefore.topInfor.isMajorProject"
+              >
+                <el-option
+                  :key="index+'__'"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in yesOrNo"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="预计中标概率:"
+            >
+              <el-input v-model="detailFormBefore.topInfor.bidProbName" disabled></el-input>
+            </el-form-item>
+            <!-- <el-form-item
+              label="投资额（万元）:"
+              prop="topInfor.investment"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
+              <el-input
+                clearable
+                placeholder=""
+                size="mini"
+                v-model="detailform.topInfor.investment"
+              />
+            </el-form-item> -->
+            <div>
+              <el-form-item
+                label="项目跟踪负责人:"
+              >
+                <el-input v-model="detailFormBefore.topInfoOrg.projectTrackResponPerson" disabled></el-input>
+              </el-form-item>
+              <el-form-item
+                label="联系电话:"
+              >
+                <el-input v-model="detailFormBefore.topInfoOrg.contactMode" disabled></el-input>
+              </el-form-item>
+            </div>
+            <el-form-item
+              class="neirong"
+              label="项目内容:"
+            >
+              <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
+              <el-input
+                :disabled="true"
+                type="textarea"
+                clearable
+                placeholder="请输入"
+                size="mini"
+                v-model="detailFormBefore.topInfor.inforContent"
+              />
+            </el-form-item>
+            <p style="overflow: hidden；margin-right: 30px">
+              <span style="float: left">地点信息: </span>
+            </p>
+            <el-table
+              :data="detailFormBefore.topInfoSiteList"
+              :disabled="true"
+              :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+              @selection-change="handleSelectionChange"
+              align="center"
+              border
+              class="clothSizeTable"
+              ref="table"
+              style="width: 98%; min-height: calc(100vh - 370px)"
+            >
+              <el-table-column
+                :width="80"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+              <el-table-column
+                :resizable="false"
+                label="项目地点"
+                align="center"
+                prop="inforName"
+              >
+                <template slot-scope="scope">
+                  <div class="positon-path">{{scope.row.path}}</div>
+                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                </template>
+              </el-table-column>
+
+              <el-table-column
+                :resizable="false"
+                label="份额"
+                prop="contractAmount"
+                show-overflow-tooltip
+                align="center"
+              >
+                <template slot-scope="scope">
+                  <el-input
+                    class="listInput"
+                    clearable
+                    :disabled="true"
+                    v-model="scope.row.contractAmount"
+                  ></el-input>
+                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                </template>
+              </el-table-column>
+
+              <el-table-column
+                :resizable="false"
+                label="是否为主地点"
+                prop="contractAmount"
+                align="center"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-radio v-model="scope.row.isMain" label="1">是</el-radio>
+                  <el-radio v-model="scope.row.isMain" label="0">否</el-radio>
+                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                </template>
+              </el-table-column>
+            </el-table>
+            <p style="overflow: hidden；margin-right: 30px">
+              <span style="float: left">标段信息: </span>
+            </p>
+            <el-table
+              :data="detailFormBefore.topInfoSectionList"
+              :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+              @selection-change="handleSelectionChange"
+              align="center"
+              border
+              class="clothSizeTable"
+              ref="table"
+              style="width: 98%; min-height: calc(100vh - 370px)"
+            >
+              <el-table-column
+                :width="80"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="标段名"
+                prop="sectionName"
+                align="center"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="true"
+                    v-model="scope.row.sectionName"
+                  ></el-input>
+                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                </template>
+              </el-table-column>
+
+              <el-table-column
+                :resizable="false"
+                label="项目份额"
+                align="center"
+                prop="contractAmount"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="true"
+                    v-model="scope.row.projectScale"
+                  ></el-input>
+                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                </template>
+              </el-table-column>
+            </el-table>
+
+          </el-form>
+        </div>
+
+      </el-card>
+    </el-tab-pane>
+    <el-tab-pane label="项目变更信息">
+      <el-card class="box-card">
+        <div slot="header" class="clearfix">
+          <el-button
+            @click="back"
+            style="
+            float: right;
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            color: black;
+            position: fixe;
+          "
+            type="text"
+          >返回
+          </el-button
+          >
+        </div>
+
+        <div style=" overflow: scroll;max-height:calc(100vh - 420px)">
           <el-form
             :inline="false"
             :model="detailform"
             :rules="detailformrules"
             class="gcform"
             ref="detailform"
-            style="background: white; height: ceil(100%-300px)"
           >
             <el-form-item
               label="项目板块:"
@@ -1071,7 +1066,6 @@
         <el-button @click="submit">提交</el-button>
       </div>
       <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
-    </div>
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -1150,7 +1144,7 @@
     mounted() {
       // this.$store.commit("setCategory", 'projectDomainType');
       this.id=this.p.instid,this.afterId=this.p.afterId;
-      if (this.p.actpoint === "edit") {
+      if (this.p.actpoint === "edit"||this.p.actpoint === "look") {
         this.getDetail();
       }
       if(this.p.actpoint === "add"||this.id){
