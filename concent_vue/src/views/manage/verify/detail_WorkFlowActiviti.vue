@@ -340,13 +340,13 @@
                 action="https://jsonplaceholder.typicode.com/posts/"
                 :on-change="handleChange">
                 <el-button size="small" type="primary">点击上传</el-button>
-                <div slot="tip" class="el-upload__tip">最大上传文件不超过500kb</div>
+                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
               </el-upload>
             </el-form-item>
      </el-row>
 
      <p style="overflow:hidden;margin-right: 30px"><span style="float:left;">标段信息: </span>   <el-button
-       @click="dialogTopInfoSection = true"
+          @click="show('add')"
             size="mini"
             style="float:right;width: 70px;height: 32px;background: #5C8BFA;font-size: 16px;"
             type="primary"
@@ -430,81 +430,6 @@
 <!--            </template>-->
 <!--          </el-table-column>-->
 <!--        </el-table>-->
-      <el-table
-        :data="detailform.verifySectionList"
-        :header-cell-style="{
-                'text-align': 'center',
-                'background-color': 'rgba(246,248,252,1)',
-                color: 'rgba(0,0,0,1)',
-              }"
-        @selection-change="handleSelectionChange"
-        align="center"
-        border
-        class="clothSizeTable"
-        ref="table"
-        style="width: 98%;margin-bottom: 20px "
-      >
-        <el-table-column
-          :width="80"
-          align="center"
-          label="序号"
-          show-overflow-tooltip
-          type="index"
-        ></el-table-column>
-
-        <el-table-column
-          class="listTabel"
-          :resizable="false"
-          label="标段名"
-          prop="sectionName"
-          align="center"
-          show-overflow-tooltip
-        >
-          <template slot-scope="scope">
-            <el-input
-              clearable
-              :disabled="p.actpoint === 'look'"
-              v-model="scope.row.sectionName"
-            ></el-input>
-            <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-          </template>
-        </el-table-column>
-
-        <el-table-column
-          :resizable="false"
-          label="项目份额"
-          align="center"
-          prop="contractAmount"
-          show-overflow-tooltip
-        >
-          <template slot-scope="scope">
-            <el-input
-              clearable
-              :disabled="p.actpoint === 'look'"
-              v-model="scope.row.projectScale"
-            ></el-input>
-            <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-          </template>
-        </el-table-column>
-
-        <el-table-column
-          v-show="!p.actpoint === 'look'"
-          :resizable="false"
-          fixed="right"
-          label="操作"
-          align="center"
-          show-overflow-tooltip
-          v-if="p.actpoint !== 'look'"
-          width="200">
-          <template slot-scope="scope">
-            <el-link
-              :underline="false"
-              @click="del(scope.$index,scope.row,detailform.verifySectionList,'bd')"
-              type="warning">删除
-            </el-link>
-          </template>
-        </el-table-column>
-      </el-table>
           <el-row style="text-align: center">
             <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
             <el-button  @click="submitForm('detailform')">提交</el-button>
@@ -514,65 +439,10 @@
 
     </div>
 </el-card>
-    <el-dialog title="前期项目标段列表" :visible.sync="dialogTopInfoSection">
-    <el-table
-      :data="detailform1.topInfoSectionList"
-      :header-cell-style="{
-                'text-align': 'center',
-                'background-color': 'rgba(246,248,252,1)',
-                color: 'rgba(0,0,0,1)',
-              }"
-      @selection-change="handleSelectionChange"
-      align="center"
-      border
-      class="clothSizeTable"
-      ref="table"
-      style="width: 98%;"
-    >
-      <el-table-column
-        :width="80"
-        align="center"
-        label="序号"
-        show-overflow-tooltip
-        type="index"
-      ></el-table-column>
-
-      <el-table-column
-        class="listTabel"
-        :resizable="false"
-        label="标段名"
-        prop="sectionName"
-        align="center"
-        show-overflow-tooltip
-      >
-
-      </el-table-column>
-
-
-      <el-table-column
-        v-show="!p.actpoint === 'look'"
-        :resizable="false"
-        fixed="right"
-        label="操作"
-        align="center"
-        show-overflow-tooltip
-        v-if="p.actpoint !== 'look'"
-        width="200">
-        <template slot-scope="scope">
-          <el-link
-            :underline="false"
-            @click="del(scope.$index,scope.row,detailform1.topInfoSectionList,'bd')"
-            type="warning">删除
-          </el-link>
-        </template>
-      </el-table-column>
-    </el-table>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-
 export default {
   name: '详情',
   data() {
@@ -587,10 +457,9 @@ export default {
           saleTime:'',
           subTime:'',
           designOrg:'',
-          publishTime:'',
-          flowStatus:'0'
+          publishTime:''
         },
-        'topInfor': {
+        'topInforBO': {
         },
         'sectionStr': [
         ],
@@ -598,15 +467,9 @@ export default {
 
         ],
         'verifyOrgList': [
+
         ]
-      },
-      detailform1: {
-        topInfor: {},
-        topInfoOrg: {},
-        topInfoSiteList: [],
-        topInfoSectionList: [],
-      },
-      dialogTopInfoSection:false
+      }
 
     }
   },
@@ -630,7 +493,7 @@ export default {
         if (valid) {
           //alert(JSON.stringify(this.detailform));
           console.log(JSON.stringify(this.detailform));
-          this.detailform.verify.flowStatus="0";
+          detailform.verify.flowStatus="0";
           this.$http
             .post(
               "/api/topInfo/Verify/detail/saveOrUpdate",
@@ -644,9 +507,6 @@ export default {
                   type: "success",
                 });
                 this.$refs[formName].resetFields();
-                this.$router.push({
-                  path: "/manage/proposal/list",
-                });
               }
 
             });
@@ -716,11 +576,13 @@ export default {
     },
 
     show(type) {
-      let p1 = { actpoint: 'add',instid: this.p.topinfoid}
-      this.$router.push({
-        path: '../list_Section/',
-        query: { p: this.$utils.encrypt(JSON.stringify(p1)) }
-      })
+      this.type = type
+      if (type === 'add') {
+        this.resetinfo()
+        this.title = '新增'
+        this.detailform.clothSizePartList.push(this.sizeform)
+      // this.dialogVisibleAdd = true
+      }
     },
     resetinfo() {
       this.sizeform = {
@@ -778,7 +640,7 @@ export default {
         if (valid) {
           //alert(JSON.stringify(this.detailform));
           console.log(JSON.stringify(this.detailform));
-          this.detailform.verify.flowStatus="1";
+          detailform.verify.flowStatus="1";
           this.$http
             .post(
               "/api/topInfo/Verify/detail/saveOrUpdate",
@@ -816,11 +678,8 @@ export default {
     },
     //加载本页面数据
 
-
     // 加载列表
     getDetail() {
-
-
       //alert(this.p.topinfoid);
       this.$http
         .post(
@@ -843,26 +702,6 @@ export default {
       // this.detailform.TopInfor.inforContent = this.p.selectrow.inforContent;
       // this.detailform.TopInfor.bidAgentCompany = this.p.selectrow.bidAgentCompany;
     },
-   getTopInforDetail() {
-
-    this.$http
-      .post("/api/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.p.topinfoid})
-      .then((res1) => {
-        var datas=res1.data.data;
-        // this.getTwo(datas.topInfor.enginTypeFirstId);
-        // this.getTwoSC(datas.topInfor.marketFirstNameId);
-        // datas.topInforCapitalList.forEach((item)=>{
-        //   this.value1.push(item.capitalId)
-        // });
-        this.detailform1={
-          topInfor: datas.topInfor,
-          topInfoOrg: datas.topInfoOrg,
-          topInfoSiteList: datas.topInfoSiteList,
-          topInfoSectionList: datas.topInfoSectionList,
-        }
-        alert( JSON.stringify(this.detailform1.topInfoSiteList))
-      });
-  },
 
     handleSelectionChange(val) {
       this.multipleSelection = val
@@ -874,7 +713,6 @@ export default {
     //this.$store.dispatch('getConfig', { })
     // eslint-disable-next-line no-unde
     this.getDetail()
-    this.getTopInforDetail();
 
   }
 }

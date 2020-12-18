@@ -267,7 +267,7 @@ export default {
         enginTypeFirstName: '',
         constructionOrg: '',
         noticeTypeName: '',
-        status: '',
+        flowStatus: '1',
         username: '',
         saleTime: ''
       },
@@ -340,7 +340,7 @@ export default {
       this.searchform.enginTypeFirstName = "";
       this.searchform.constructionOrg = "";
       this.searchform.noticeTypeName = "";
-      this.searchform.status = "";
+      this.searchform.flowStatus = "1";
       this.searchform.username = "";
       this.searchform.saleTime = "";
         this.getData();
@@ -352,7 +352,7 @@ export default {
     getData() {
       this.$http
         .post(
-          '/api/topInfo/Verify/list/loadPageDataForReg',
+          '/api/topInfo/Verify/list/loadPageDataForFlowStatus',
           // '/api' + this.$route.path.substr(0, this.$route.path.length - 1),
           this.searchform
         )

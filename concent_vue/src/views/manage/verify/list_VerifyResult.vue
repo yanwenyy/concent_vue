@@ -352,7 +352,7 @@ export default {
     getData() {
       this.$http
         .post(
-          '/api/topInfo/Verify/list/loadPageDataForReg',
+          '/api/topInfo/Verify/list/loadPageDataForFlowStatus',
           // '/api' + this.$route.path.substr(0, this.$route.path.length - 1),
           this.searchform
         )

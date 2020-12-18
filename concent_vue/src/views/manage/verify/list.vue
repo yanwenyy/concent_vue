@@ -3,7 +3,8 @@
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
         <el-button @click="add" plain type="primary">新增</el-button>
-        <el-button @click="totop" plain type="primary">修改</el-button>
+        <el-button @click="editItem" plain type="primary">修改</el-button>
+        <el-button @click="dialogResult=true" plain type="primary">资审结果登记</el-button>
         <el-button @click="remove" type="primary" plain>删除</el-button>
         <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
       </el-button-group>
@@ -60,16 +61,7 @@
           prop="inforName"
           show-overflow-tooltip
         >
-                  <template slot="header" slot-scope="scope">
-            <span>项目名称</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.inforName"
-                size="mini"
-              />
-            </div>
-          </template>
+
           <template slot-scope="scope">
             {{scope.row.inforName}}
           </template>
@@ -81,16 +73,7 @@
           prop="topInfor.enginTypeFirstName"
           show-overflow-tooltip
         >
-                  <template slot="header" slot-scope="scope">
-            <span>工程类别</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.enginTypeFirstName"
-                size="mini"
-              />
-            </div>
-          </template>
+
           <template slot-scope="scope">
             {{scope.row.enginTypeFirstName}}
           </template>
@@ -102,16 +85,7 @@
           prop="topInfor.constructionOrg"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>建设单位</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.constructionOrg"
-                size="mini"
-              />
-            </div>
-          </template>
+
           <template slot-scope="scope">
             {{scope.row.constructionOrg}}
           </template>
@@ -123,16 +97,7 @@
           prop="topInfor.noticeTypeName"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>公告类型</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.noticeTypeName"
-                size="mini"
-              />
-            </div>
-          </template>
+
           <template slot-scope="scope">
             {{scope.row.noticeTypeName}}
           </template>
@@ -144,21 +109,9 @@
           prop="verify.saleTime"
           show-overflow-tooltip
         >
-          <!-- <template slot-scope="scope">{{
-            scope.row.state === '0' ? '草稿' : '已上报'
-          }}</template> -->
-                    <template slot="header" slot-scope="scope">
-            <span>资审文件发售截止日期</span>
-            <div>
-              <el-date-picker
-                v-model="searchform.saleTime"
-                type="date"
-                placeholder="选择日期">
-              </el-date-picker>
-            </div>
-          </template>
-          <template slot-scope="scope" :value-format="timestamp">
-            {{scope.row.saleTime}}
+
+          <template slot-scope="scope" >
+            {{scope.row.saleTime | dateformat}}
           </template>
         </el-table-column>
         <el-table-column
@@ -169,21 +122,7 @@
           filter-multiple="true"
           show-overflow-tooltip
         >
-                  <template slot="header" slot-scope="scope">
-            <span>状态</span>
-                    <el-select v-model="searchform.status" placeholder="请选择">
-                      <el-option
-                        key="0"
-                        label="未进行资审申请"
-                        value="0">
-                      </el-option>
-                      <el-option
-                        key="1"
-                        label="已进行资审申请"
-                        value="1">
-                      </el-option>
-                    </el-select>
-          </template>
+
           <template slot-scope="scope">
             <el-tag  v-if="scope.row.uuid===null" type="warning">未进行资审申请</el-tag>
             <el-tag  v-else type="success">已进行资审申请</el-tag>
@@ -196,16 +135,7 @@
           prop="verify.username"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>填报人</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.username"
-                size="mini"
-              />
-            </div>
-          </template>
+
           <template slot-scope="scope">
             {{scope.row.username}}
           </template>
@@ -220,20 +150,9 @@
           <!-- <template slot-scope="scope">{{
             scope.row.createtime | dateformat
           }}</template> -->
-          <template slot="header" slot-scope="scope">
-            <span>填报时间</span>
-            <div>
-              <div>
-                <el-date-picker
-                  v-model="searchform.createtime"
-                  type="date"
-                  placeholder="选择日期">
-                </el-date-picker>
-              </div>
-            </div>
-          </template>
+
           <template slot-scope="scope">
-            {{scope.row.createtime}}
+            {{scope.row.createtime | dateformat}}
           </template>
         </el-table-column>
       </el-table>
@@ -248,7 +167,40 @@
         style="margin: 20px; position: fixed; right: 200px; bottom: 40px"
       ></el-pagination>
     </div>
+    <el-dialog title="资审结果登记" :visible.sync="dialogResult">
+      <el-form :model="resultform">
+        <el-form-item label="资格预审结果" :label-width="formLabelWidth">
+          <el-radio v-model="radio" label="1" border>通过</el-radio>
+          <el-radio v-model="radio" label="0" border>不通过</el-radio>
+        </el-form-item>
+        <el-form-item label="通过时间" :label-width="formLabelWidth">
+          <el-date-picker
+            type="date"
+            placeholder="选择日期">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item
+          class="neirong"
+          label="附件（最大10MB）:"
+          style="width: 33%"
+        >
+          <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
+          <el-upload
+            class="upload-demo"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :on-change="handleChange">
+            <el-button size="small" type="primary">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">最大上传文件不超过500kb</div>
+          </el-upload>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogResult = false">取 消</el-button>
+        <el-button type="primary" @click="dialogResult = false">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
+
 </template>
 
 <script>
@@ -256,6 +208,7 @@ export default {
   name: "proposal-list-look",
   data() {
     return {
+      radio:'0',
       page: { current: 1, size: 10, total: 0, records: [] },
       showinput: false,
       sousuo: "",
@@ -272,12 +225,26 @@ export default {
       },
       menus: [],
       multipleSelection: [],
-      orgTree: []
+      orgTree: [],
+      dialogResult:false,
+      resultform: {
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
+      },
+      formLabelWidth: '120px'
+
     }
   },
   methods: {
+    handleChange(){},
     statusFormat(row,column){
-      alert(row.verify.uuid)
+      //alert(row.verify.uuid)
       // console.log(row.verify.uuid);
       // var statusW;
       // if(row.verify.uuid!="")
@@ -294,13 +261,76 @@ export default {
       this.showinput = false
     },
     add(){
+      console.log(JSON.stringify(this.multipleSelection[0].uuid));
+      if(this.multipleSelection[0].uuid!=null)
+      {
+        this.$message.info("当前登记的项目信息已经添加的资审信息！");
+        return;
+      }
       //alert(JSON.stringify(this.multipleSelection[0]));
-       let p = { actpoint: 'add',instid: this.multipleSelection[0].uuid, topinfoid:this.multipleSelection[0].tiouuid}
+       let p = { actpoint: 'add',instid: this.multipleSelection[0].inforid, topinfoid:this.multipleSelection[0].tiouuid}
       //alert(JSON.stringify(p));
        this.$router.push({
         path: './detail/',
         query: { p: this.$utils.encrypt(JSON.stringify(p)) }
       })
+    },
+    editItem(){
+      console.log(JSON.stringify(this.multipleSelection[0].uuid));
+      //是否有资审信息判断
+      if(this.multipleSelection[0].uuid=="" || this.multipleSelection[0].uuid==null)
+      {
+        this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
+        return;
+      }
+      //是否在审核流程中判断
+      //是否在变更流程中判断
+      let p = { actpoint: 'editItem',instid: this.multipleSelection[0].uuid, topinfoid:this.multipleSelection[0].tiouuid}
+      //alert(JSON.stringify(p));
+      this.$router.push({
+        path: './detail/',
+        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+      })
+    },
+    remove(){
+      console.log(JSON.stringify(this.multipleSelection[0].uuid));
+      if(this.multipleSelection[0].uuid=="" || this.multipleSelection[0].uuid==null)
+      {
+        this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
+        return;
+      }
+      let uuids = []
+      this.multipleSelection.forEach((item) => {
+        if(item.uuid!=null)
+        {
+          uuids.push(item.uuid);
+        }
+
+      })
+      this.$confirm('此操作将永久删除该资审信息, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // this.$message({
+        //   type: 'success',
+        //   message: '删除成功!'
+        // });
+        this.$http
+          .post(
+            '/api/topInfo/Verify/list/delete',
+            {ids: uuids}
+          )
+          .then(res => {
+            this.getData();
+          })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+
     },
     // 查看
     rowshow(row) {
@@ -349,10 +379,18 @@ export default {
       this.multipleSelection = val
     },
     getData() {
+      console.log(JSON.stringify(this.searchform));
+      if(this.searchform.saleTime!="")
+      {
+        var date = new Date(this.searchform.saleTime);
+        var time1 = Date.parse(date);
+        this.searchform.saleTime=time1;
+      }
+
+      console.log(JSON.stringify(this.searchform));
       this.$http
         .post(
           '/api/topInfo/Verify/list/loadPageDataForReg',
-          // '/api' + this.$route.path.substr(0, this.$route.path.length - 1),
           this.searchform
         )
         .then(res => {
