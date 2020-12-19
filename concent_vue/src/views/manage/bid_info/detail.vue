@@ -210,7 +210,7 @@
             >
               <el-date-picker
                 :disabled="p.actpoint === 'look'"
-
+                value-format="timestamp"
                 clearable
                 filterable
                 size="mini"
@@ -233,6 +233,7 @@
                 filterable
                 clearable
                 size="mini"
+                value-format="timestamp"
                 v-model="detailform.bidInfo.publishTime"
               >
               </el-date-picker>
@@ -243,7 +244,7 @@
             >
               <el-date-picker
                 :disabled="p.actpoint === 'look'"
-
+                value-format="timestamp"
                 filterable
                 clearable
                 size="mini"
@@ -407,13 +408,17 @@
                 trigger: 'blur',
               }"
             >
-              <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
-              <el-input
-                type="textarea"
-                clearable
-                placeholder="请输入"
-                size="mini"
-              />
+            <el-upload
+                class="upload-demo"
+                ref="upload"
+                action="https://jsonplaceholder.typicode.com/posts/"
+                :auto-upload="false">
+
+            <div>
+          <el-button display="block" slot="trigger" size="small" type="primary">选取文件</el-button>
+          </div>
+          </el-upload>
+
             </el-form-item>
           </el-row>
 
@@ -455,13 +460,6 @@
               show-overflow-tooltip
               type="index"
             >
-               <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoId"
-                  ></el-input>
-                </template>
             </el-table-column>
 
             <el-table-column
@@ -476,7 +474,7 @@
                   <el-input
                     clearable
                     disabled
-                    v-model="scope.row.part"
+                    v-model="scope.row.bidInfoSection.sectionName"
                   ></el-input>
               </template>
             </el-table-column>
@@ -493,7 +491,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.riskFee"
+                    v-model="scope.row.bidInfoSection.riskFee"
                   ></el-input>
               </template>
             </el-table-column>
@@ -510,7 +508,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.safetyFee"
+                    v-model="scope.row.bidInfoSection.safetyFee"
                   ></el-input>
               </template>
             </el-table-column>
@@ -527,7 +525,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidPriceLimit"
+                    v-model="scope.row.bidInfoSection.bidPriceLimit"
                   ></el-input>
               </template>
             </el-table-column>
@@ -544,7 +542,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidEarnestMoney"
+                    v-model="scope.row.bidInfoSection.bidEarnestMoney"
                   ></el-input>
               </template>
             </el-table-column>
@@ -561,7 +559,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidMoney"
+                    v-model="scope.row.bidInfoSection.bidMoney"
                   ></el-input>
               </template>
             </el-table-column>
@@ -578,7 +576,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.openBidAddress"
+                    v-model="scope.row.bidInfoSection.openBidAddress"
                   ></el-input>
               </template>
             </el-table-column>
@@ -595,7 +593,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.evaluationBidId"
+                    v-model="scope.row.bidInfoSection.evaluationBidId"
                   ></el-input>
               </template>
             </el-table-column>
@@ -610,9 +608,10 @@
             >
               <template slot-scope="scope">
                   <el-input
+                    value-format="timestamp"
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.openBidTime"
+                    v-model="scope.row.bidInfoSection.openBidTime"
                   ></el-input>
               </template>
             </el-table-column>
@@ -629,7 +628,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.openBidTime"
+                    v-model="scope.row.bidInfoSection.openBidTime"
                   ></el-input>
               </template>
             </el-table-column>
@@ -646,7 +645,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.openBidTime"
+                    v-model="scope.row.bidInfoSection.openBidTime"
                   ></el-input>
               </template>
             </el-table-column>
@@ -663,7 +662,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.openBidTime"
+                    v-model="scope.row.bidInfoSection.openBidTime"
                   ></el-input>
               </template>
             </el-table-column>
@@ -680,7 +679,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.openBidTime"
+                    v-model="scope.row.bidInfoSection.openBidTime"
                   ></el-input>
               </template>
             </el-table-column>
@@ -697,7 +696,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.projectManager"
+                    v-model="scope.row.bidInfoSection.projectManager"
                   ></el-input>
               </template>
             </el-table-column>
@@ -714,7 +713,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.projectDeputyManager"
+                    v-model="scope.row.bidInfoSection.projectDeputyManager"
                   ></el-input>
               </template>
             </el-table-column>
@@ -731,7 +730,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.technicalDirector"
+                    v-model="scope.row.bidInfoSection.technicalDirector"
                   ></el-input>
               </template>
             </el-table-column>
@@ -748,7 +747,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.securityDirector"
+                    v-model="scope.row.bidInfoSection.securityDirector"
                   ></el-input>
               </template>
             </el-table-column>
@@ -765,7 +764,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.financeDirectorr"
+                    v-model="scope.row.bidInfoSection.financeDirectorr"
                   ></el-input>
               </template>
             </el-table-column>
@@ -782,10 +781,29 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.costDirector"
+                    v-model="scope.row.bidInfoSection.costDirector"
                   ></el-input>
               </template>
             </el-table-column>
+
+              <el-table-column
+
+                v-show="!p.actpoint === 'look'"
+                :resizable="false"
+                fixed="right"
+                label="操作"
+                align="center"
+                show-overflow-tooltip
+                v-if="p.actpoint !== 'look'"
+                width="200">
+                <template slot-scope="scope">
+                  <el-link
+                    :underline="false"
+                    @click="del(scope.$index,scope.row,detailform.bidInfoSectionList,'bd')"
+                    type="warning">删除
+                  </el-link>
+                </template>
+              </el-table-column>
 
           </el-table>
         </el-form>
@@ -852,8 +870,8 @@ export default {
     add(type) {
       var v = {};
       v = {
-            bidInfoId: '',
-            projectScale: '',
+            bidInfoSection:{},
+            bidInfoSectionOrgList:{},
           }
           this.detailform.bidInfoSectionList.push(v);
           console.log(v)
@@ -869,17 +887,6 @@ export default {
         }
       },
       saveInfo(formName) {
-        var topInforCapitalList = [];
-        this.amountSource.forEach((item) => {
-          if (this.value1.indexOf(item.id) != -1) {
-            var v = {
-              capitalId: item.id,
-              capitalName: item.detailName,
-            };
-            topInforCapitalList.push(v);
-          }
-        });
-        this.detailform.topInforCapitalList=topInforCapitalList;
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
@@ -927,7 +934,7 @@ export default {
           }).then(() => {
             this.$http
               .post(
-                "/api/topInfo/TopInfoSection/list/delete",
+                "/api/topInfo/BidInfo/list/delete",
                 {ids: [item.uuid]}
               )
               .then((res) => {
@@ -952,14 +959,6 @@ export default {
       });
     },
 
-
-    del(index) {
-      console.log(index);
-      var _self = this;
-      // this.$utils.isdel(function() {
-      _self.detailform.clothSizePartList.splice(index, 1);
-      // })
-    },
 
     show(type) {
       this.type = type;
@@ -996,7 +995,7 @@ export default {
         if (valid) {
           this.$http
             .post(
-              "/api/basicConfig/ClothSize/detail/save",
+              "/api/topInfo/BidInfo/detail/saveOrUpdate",
               JSON.stringify(this.detailform),
               { useJson: true }
             )
@@ -1059,10 +1058,12 @@ export default {
       });
     },
 
-    // 加载列表
+    // 详情信息
     getDetail() {
+        var q=this.p.actpoint === "edit"?{id:this.id}:{topInfoOrgId:this.id};
+        console.log(q)
         this.$http
-          .post("/api/topInfo/BidInfo/detail/entityInfo", {topInfoOrgId:this.id})
+          .post("/api/topInfo/BidInfo/detail/entityInfo", q)
           .then((res) => {
             var datas=res.data.data;
             datas.bidInfo=this.nullToStr(datas.bidInfo);
@@ -1085,7 +1086,7 @@ export default {
   },
   mounted() {
     // this.id=this.p.instid;
-    this.id="f13af1f076ade9f16ca83d21fcc252d4";
+    this.id=this.p.instid;
     this.$store.dispatch("getConfig", {});
       if (this.p.actpoint === "edit"||this.id) {
         this.getDetail();
