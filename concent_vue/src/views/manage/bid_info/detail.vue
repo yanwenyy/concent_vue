@@ -20,26 +20,16 @@
         <el-form
           :inline="false"
           :model="detailform"
-          :rules="detailformrules"
           class="gcform"
           ref="detailform"
           style="background: white； height: ceil(100%-300px)"
         >
-
-
             <el-form-item label="项目板块:">
               <el-input
                 disabled
-                clearable
                 filterable
-                style="width: 100%"
                 size="mini"
-                v-model="detailform.moduleId"
-                 @change="
-                  getName(detailform.topInfor.moduleId, bizCode, 'moduleName')
-                "
-              >
-
+                v-model="detailform.topInforBO.topInfor.moduleName">
               </el-input>
             </el-form-item>
 
@@ -49,16 +39,9 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                @change="getTwo"
                 size="mini"
-                v-model="detailform"
+                v-model="detailform.topInforBO.topInfor.enginTypeFirstName"
               >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in projectDomainType"
-                ></el-option>
               </el-input>
             </el-form-item>
 
@@ -67,25 +50,9 @@
             ><!-- :disabled="p.actpoint === 'look'" -->
               <el-input
                 disabled
-                clearable
-                filterable
-                placeholder="请选择"
-                size="mini"
-                @change="
-                  getName(
-                    detailform.topInfor.enginTypeSecondId,
-                    xqprojectType,
-                    'enginTypeSecondName'
-                  )
-                "
-                v-model="detailform"
+                placeholder="工程类别(二级)"
+                v-model="detailform.topInforBO.topInfor.enginTypeSecondName"
               >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in xqprojectType"
-                ></el-option>
               </el-input>
             </el-form-item>
             <el-form-item  label="项目名称:">
@@ -93,119 +60,66 @@
                 disabled
                 clearable
                 size="mini"
-                v-model="detailform"/>
+                v-model="detailform.topInforBO.topInfor.inforName"/>
             </el-form-item>
 
-            <el-form-item
-              label="建设单位:"
-            >
+            <el-form-item  label="建设单位:">
               <el-input
-                 disabled
-                clearable
-                size="mini"
-                v-model="detailform"
+                disabled
+                v-model="detailform.topInforBO.topInfor.constructionOrg"
               />
             </el-form-item>
-            <el-form-item
-              label="公告类型:"
-            >
+            <el-form-item label="公告类型:">
               <el-input
-                 disabled
-                clearable
-                filterable
-                placeholder="请选择"
-                size="mini"
-                v-model="detailform"
-                @change="
-                  getName(
-                    detailform.topInfor.noticeTypeId,
-                    bulletinType,
-                    'noticeTypeName'
-                  )
-                "
+                disabled
+                placeholder="公告类型"
+                v-model="detailform.topInforBO.topInfor.noticeTypeName"
               >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in bulletinType"
-                ></el-option>
+
               </el-input>
             </el-form-item>
           <!-- 下拉 -->
-            <el-form-item
-              label="预计招标时间:"
-
-            >
+            <el-form-item label="预计招标时间:">
               <el-date-picker
-                 disabled
+                disabled
                 filterable
                 clearable
                 type="date"
                 value-format="timestamp"
-                v-model="detailform"
-
+                v-model="detailform.topInforBO.topInfor.planBidTime"
               >
               </el-date-picker>
             </el-form-item>
 
-            <!-- 下拉 -->
-
-            <el-form-item
-              label="所属线路:"
-            >
+            <el-form-item label="所属线路:">
               <el-input
-                 disabled
-                filterable
-                clearable
-                placeholder="请选择或直接填写所属现路"
-                size="mini"
-                @change="
-                  getName(
-                    detailform.topInfor.belongLineId,
-                    railwayLine,
-                    'belongLineName'
-                  )
-                "
-                v-model="detailform"
+                disabled
+                v-model="detailform.topInforBO.topInfor.belongLineName"
               >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in railwayLine"
-                ></el-option>
+
               </el-input>
             </el-form-item>
             <!-- --------------------------------------------------------------- -->
-            <el-form-item
-              label="招标人:"
-            >
+            <el-form-item label="招标人:">
               <el-input
-                 disabled
-                clearable
+                disabled
                 size="mini"
-                v-model="detailform"
+                v-model="detailform.topInforBO.topInfor.bidPerson"
               />
             </el-form-item>
-            <el-form-item
-              label="设计单位:"
-            >
+            <el-form-item label="设计单位:">
               <el-input
-                clearable
-                 disabled
+                disabled
                 size="mini"
-                v-model="detailform"
+                v-model="detailform.topInforBO.topInfor.designOrg"
               />
             </el-form-item>
 
-            <el-form-item
-              label="招标代理公司:"
-            >
+            <el-form-item label="招标代理公司:">
               <el-input
-                 disabled
+                disabled
                 size="mini"
-                v-model="detailform"
+                v-model="detailform.topInforBO.topInfor.bidAgentCompany"
               />
             </el-form-item>
             <el-form-item
@@ -217,164 +131,77 @@
                 filterable
                 placeholder="请选择"
                 size="mini"
-                @change="
-                  getName(
-                    detailform.topInfor.projectModelId,
-                    projectModel,
-                    'projectModelName'
-                  )
-                "
-                v-model="detailform"
+                v-model="detailform.topInforBO.topInfor.projectModelName"
               >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in projectModel"
-                ></el-option>
               </el-input>
             </el-form-item>
-            <el-form-item
-              label="资审方式:"
-            >
+
+            <el-form-item label="资审方式:">
               <el-input
-                 disabled
+                disabled
                 clearable
-                placeholder=""
+                placeholder="资审方式"
                 size="mini"
-                v-model="detailform"
+                v-model="detailform.topInforBO.topInfor.verifyTypeName"
               />
             </el-form-item>
 
-            <el-form-item label="资金来源:" prop="capitalId">
+            <el-form-item label="资金来源:">
               <el-input
-                 disabled
-                filterable
-                clearable
-                multiple
+                disabled
                 placeholder="请选择"
-                size="mini"
-                v-model="value1"
+                v-model="detailform.topInforBO.capitalName.capitalName"
               >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in amountSource"
-                ></el-option>
               </el-input>
             </el-form-item>
 
-            <el-form-item
-              label="投资额（万元）:"
-            >
+            <el-form-item label="投资额（万元）:">
               <el-input
-                 disabled
+                disabled
                 clearable
-                placeholder=""
-                size="mini"
-                v-model="detailform"
+                placeholder="投资额（万元）:"
+                v-model="detailform.topInforBO.topInfor.investment"
               />
             </el-form-item>
-            <el-form-item
-              label="新兴市场(一级):"
-            >
+            <el-form-item  label="新兴市场(一级):">
               <el-input
-                 disabled
-                filterable
-                clearable
+                disabled
                 placeholder="请选择"
-                @change="getTwoSC"
-                size="mini"
-                v-model="detailform"
+                v-model="detailform.topInforBO.topInfor.marketFirstName"
               >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in emergingMarket"
-                ></el-option>
               </el-input>
             </el-form-item>
 
-            <el-form-item
-              label="新兴市场(二级):"
-            >
+            <el-form-item  label="新兴市场(二级):">
               <el-input
-                 disabled
-                filterable
-                clearable
+                disabled
                 placeholder="请选择"
-                size="mini"
-                @change="
-                  getName(
-                    detailform.topInfor.marketSecondId,
-                    emergingMarketTwo,
-                    'marketSecondName'
-                  )
-                "
-                v-model="detailform"
+                v-model="detailform.topInforBO.topInfor.marketSecondName"
               >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in emergingMarketTwo"
-                ></el-option>
               </el-input>
             </el-form-item>
 
-            <el-form-item
-              label="是否为重大项目:"
-              prop="topInfor.isMajorProject"
-            >
+            <el-form-item  label="是否为重大项目:">
               <el-input
-                 disabled
-                filterable
-                clearable
+                disabled
                 placeholder="请选择"
                 size="mini"
-                v-model="detailform"
+                v-model="detailform.topInforBO.topInfor.bidProbName"
               >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in yesOrNo"
-                ></el-option>
-              </el-input>
-            </el-form-item>
-            <el-form-item
-              label="预计中标概率:"
-            >
-              <el-input
-                 disabled
-                filterable
-                clearable
-                placeholder="请选择"
-                size="mini"
-                @change="
-                  getName(
-                    detailform.topInfor.bidProbId,
-                    probability,
-                    'bidProbName'
-                  )
-                "
-                v-model="detailform"
-              >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in probability"
-                ></el-option>
               </el-input>
             </el-form-item>
 
+            <el-form-item  label="预计中标概率:">
+              <el-input
+                disabled
+                placeholder="请选择"
+                v-model="detailform.topInforBO.topInfor.bidProbName"
+              >
+              </el-input>
+            </el-form-item>
 
             <el-form-item
               label="投标截止日期:"
-              prop="clothSize.bcTypeId"
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -383,79 +210,58 @@
             >
               <el-date-picker
                 :disabled="p.actpoint === 'look'"
-                @change="chg"
+
                 clearable
                 filterable
                 size="mini"
-                v-model="detailform.clothSize.bcTypeId"
+                v-model="detailform.bidInfo.endTime"
               >
-                <el-option
-                  :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options1"
-                ></el-option>
               </el-date-picker>
             </el-form-item>
 
 
             <el-form-item
               label="招标公告发布日期:"
-              prop="clothSize.bcStyleId"
-
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
             >
               <el-date-picker
                 :disabled="p.actpoint === 'look'"
-                @change="chg1"
                 filterable
                 clearable
                 size="mini"
-                v-model="detailform.clothSize.bcStyleId"
+                v-model="detailform.bidInfo.publishTime"
               >
-                <el-option
-                  :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options2"
-                ></el-option>
               </el-date-picker>
             </el-form-item>
 
             <el-form-item
               label="招标文件发售截止日期"
-              prop="clothSize.bcStyleId"
-
             >
               <el-date-picker
                 :disabled="p.actpoint === 'look'"
-                @change="chg1"
+
                 filterable
                 clearable
                 size="mini"
-                v-model="detailform.clothSize.bcStyleId"
+                v-model="detailform.bidInfo.saleTime"
               >
-                <el-option
-                  :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options2"
-                ></el-option>
               </el-date-picker>
             </el-form-item>
 
             <el-form-item
               label="招标方式:"
-              prop="bidInfor.marketFirstNameId"
-
             >
               <el-select
                 :disabled="p.actpoint === 'look'"
-                @change="chg1"
                 filterable
                 clearable
                 placeholder="请选择"
                 size="mini"
-                v-model="detailform"
+                v-model="detailform. bidInfo.bidModeName"
               >
                 <el-option
                   :key="index"
@@ -468,8 +274,6 @@
 
             <el-form-item
               label="是否联合体投标:"
-              prop="clothSize.bcPlateTypeId"
-
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -480,20 +284,20 @@
               :disabled="p.actpoint === 'look'"
                 clearable
                 size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
-              />
+                v-model="detailform. bidInfo.isCoalitionBid"
+              >
               <el-option
                   :key="index"
                   :label="item.detailName"
                   :value="item.id"
                   v-for="(item, index) in yesOrNo"
                 ></el-option>
+                </el-select>
             </el-form-item>
 
 
             <el-form-item
               label="是否为费率招标:"
-              prop="clothSize.bcPlateTypeId"
 
               :rules="{
                 required: true,
@@ -506,63 +310,54 @@
                 clearable
                 placeholder=""
                 size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
-              />
+                v-model="detailform.bidInfo.isBidRates">
               <el-option
                   :key="index"
                   :label="item.detailName"
                   :value="item.id"
                   v-for="(item, index) in yesOrNo"
                 ></el-option>
+                </el-select>
             </el-form-item>
 
-
-            <div>
-              <el-form-item
-                label="项目跟踪负责人:"
-              >
+            <!-- <div>
+              <el-form-item  label="项目跟踪负责人:" >
                 <el-input
                    disabled
                   clearable
                   placeholder=""
                   size="mini"
-                  v-model="detailform"
+                  v-if="detailform.topInforBO"
+                  v-model="detailform.topInforBO.topInfoOrg.projectTrackResponPerson"
                 />
               </el-form-item>
-              <el-form-item
-                label="联系电话:"
-              >
+              <el-form-item label="联系电话:">
                 <el-input
                    disabled
                   clearable
                   placeholder=""
                   size="mini"
-                  v-model="detailform"
+                  v-model="detailform.topInforBO.topInfoOrg.contactMode"
                 />
               </el-form-item>
-            </div>
+            </div> -->
             <el-form-item
               class="neirong"
               label="项目内容:"
-              prop="topInfor.inforContent"
               style="width: 100%"
             >
-              <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-input
-                 disabled
+                disabled
                 type="textarea"
                 clearable
                 placeholder="请输入"
                 size="mini"
-                v-model="detailform"
+                v-model="detailform.topInforBO.topInfor.inforContent"
               />
             </el-form-item>
 
-
-
-
           <el-row>
-            <el-form-item
+            <!-- <el-form-item
               class="neirong"
               label="工程概况(最多1000字):"
               prop="clothSize.bcPlateTypeId"
@@ -573,7 +368,6 @@
                 trigger: 'blur',
               }"
             >
-              <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-input
                 type="textarea"
                 clearable
@@ -581,13 +375,12 @@
                 size="mini"
                 v-model="detailform.clothSize.bcPlateTypeId"
               />
-            </el-form-item>
+            </el-form-item> -->
           </el-row>
           <el-row>
             <el-form-item
               class="neirong"
               label="投标说明(最多1000字):"
-              prop="clothSize.bcPlateTypeId"
 
               :rules="{
                 required: true,
@@ -600,7 +393,7 @@
                 clearable
                 placeholder="请输入"
                 size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
+                v-model="detailform. bidInfo.bidExplain"
               />
             </el-form-item>
           </el-row>
@@ -608,8 +401,6 @@
             <el-form-item
               class="neirong"
               label="附件（最大10MB）:"
-              prop="clothSize.bcPlateTypeId"
-
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -622,7 +413,6 @@
                 clearable
                 placeholder="请输入"
                 size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
               />
             </el-form-item>
           </el-row>
@@ -630,7 +420,7 @@
           <p style="overflow: hidden">
             <span style="float: left">标段信息: </span>
             <el-button
-              @click="show('add')"
+              @click="add('bd')"
               size="mini"
               style="
                 float: right;
@@ -645,14 +435,14 @@
           </p>
 
           <el-table
-            :data="detailform.clothSizePartList"
+            :data="detailform.bidInfoSectionList"
             :header-cell-style="{
               'text-align': 'center',
               'background-color': 'rgba(246,248,252,1)',
               color: 'rgba(0,0,0,1)',
             }"
-            @inpution-change="handleinputionChange"
-            align="center"
+            @selection-change="handleinputionChange"
+           align="center"
             border
             class="clothSizeTable"
             ref="table"
@@ -660,568 +450,350 @@
           >
             <el-table-column
               :width="80"
-              align="center"
+             align="center"
               label="序号"
               show-overflow-tooltip
               type="index"
-            ></el-table-column>
+            >
+               <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidInfoId"
+                  ></el-input>
+                </template>
+            </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="标段名称"
               prop="part"
               show-overflow-tooltip
-              :width="215"
+              align="center"
+              :width="180"
             >
               <template slot-scope="scope">
-                <el-form-item
-                  :prop="'clothSizePartList.' + scope.$index + '.part'"
-                  :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
-                  label-width="0"
-                >
                   <el-input
-                    max-length="100"
                     clearable
-                     disabled
-                    size="mini"
+                    disabled
                     v-model="scope.row.part"
-                    width="100"
                   ></el-input>
-                </el-form-item>
+              </template>
+            </el-table-column>
+<!-- prop在table时回显 ,在from里面判断-->
+            <el-table-column
+              :resizable="false"
+              label="风险费(万元)"
+              prop="riskFee"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+              <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.riskFee"
+                  ></el-input>
               </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
-              label="风险费（万元）"
-              prop="part"
+              label="安全费(万元)"
+              prop="safetyFee"
               show-overflow-tooltip
-              :width="215"
+              align="center"
+              :width="180"
             >
               <template slot-scope="scope">
-                <el-form-item
-                  :prop="'clothSizePartList.' + scope.$index + '.part'"
-                  :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
-                  label-width="0"
-                >
                   <el-input
-                    max-length="50"
                     clearable
-                     disabled
-                    size="mini"
-                    v-model="scope.row.part"
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.safetyFee"
                   ></el-input>
-                </el-form-item>
               </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
-              label="安全费（万元）"
-              prop="part"
+              label="投标限价(万元)"
+              prop="bidPriceLimit"
               show-overflow-tooltip
-              :width="215"
+              align="center"
+              :width="180"
             >
               <template slot-scope="scope">
-                <el-form-item
-                  :prop="'clothSizePartList.' + scope.$index + '.part'"
-                  :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
-                  label-width="0"
-                >
                   <el-input
-                    max-length="50"
                     clearable
-                     disabled
-                    size="mini"
-                    v-model="scope.row.part"
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidPriceLimit"
                   ></el-input>
-                </el-form-item>
               </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
-              label="投标限价（万元）"
-              prop="part"
+              label="投标保证金(万元)"
+              prop="bidEarnestMoney"
               show-overflow-tooltip
-              :width="215"
+              align="center"
+              :width="180"
             >
               <template slot-scope="scope">
-                <el-form-item
-                  :prop="'clothSizePartList.' + scope.$index + '.part'"
-                  :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
-                  label-width="0"
-                >
                   <el-input
-                    max-length="50"
                     clearable
-                     disabled
-                    size="mini"
-                    v-model="scope.row.part"
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidEarnestMoney"
                   ></el-input>
-                </el-form-item>
               </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
-              label="投标保证金（万元）"
-              prop="part"
+              label="投标价(万元)"
+              prop="bidMoney"
               show-overflow-tooltip
-              :width="215"
+              align="center"
+              :width="180"
             >
               <template slot-scope="scope">
-                <el-form-item
-                  :prop="'clothSizePartList.' + scope.$index + '.part'"
-                  :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
-                  label-width="0"
-                >
                   <el-input
-                    max-length="50"
                     clearable
-                     disabled
-                    size="mini"
-                    v-model="scope.row.part"
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidMoney"
                   ></el-input>
-                </el-form-item>
               </template>
             </el-table-column>
 
-            <el-table-column
-              :resizable="false"
-              label="投标价（万元）"
-              prop="part"
-              show-overflow-tooltip
-              :width="215"
-            >
-              <template slot-scope="scope">
-                <el-form-item
-                  :prop="'clothSizePartList.' + scope.$index + '.part'"
-                  :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
-                  label-width="0"
-                >
-                  <el-input
-                    max-length="50"
-                    clearable
-                     disabled
-                    size="mini"
-                    v-model="scope.row.part"
-                  ></el-input>
-                </el-form-item>
-              </template>
-            </el-table-column>
-
-            <el-table-column
+              <el-table-column
               :resizable="false"
               label="开标地点"
-              prop="part"
+              prop="openBidAddress"
               show-overflow-tooltip
-              :width="215"
+              align="center"
+              :width="180"
             >
               <template slot-scope="scope">
-                <el-form-item
-                  :prop="'clothSizePartList.' + scope.$index + '.part'"
-                  :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
-                  label-width="0"
-                >
                   <el-input
-                    max-length="50"
                     clearable
-                     disabled
-                    size="mini"
-                    v-model="scope.row.part"
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.openBidAddress"
                   ></el-input>
-                </el-form-item>
               </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
-              label="评价办法"
-              prop="part"
+              label="评标办法"
+              prop="evaluationBidId"
               show-overflow-tooltip
-              :width="215"
+              align="center"
+              :width="180"
             >
               <template slot-scope="scope">
-                <el-form-item
-                  :prop="'clothSizePartList.' + scope.$index + '.part'"
-                  :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
-                  label-width="0"
-                >
                   <el-input
-                    max-length="50"
                     clearable
-                     disabled
-                    size="mini"
-                    v-model="scope.row.part"
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.evaluationBidId"
                   ></el-input>
-                </el-form-item>
               </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="开标日期"
-              prop="part"
+              prop="openBidTime"
               show-overflow-tooltip
-              :width="215"
+              align="center"
+              :width="180"
             >
               <template slot-scope="scope">
-                <el-form-item
-                  :prop="'clothSizePartList.' + scope.$index + '.part'"
-                  :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
-                  label-width="0"
-                >
                   <el-input
-                    max-length="50"
                     clearable
-                     disabled
-                    size="mini"
-                    v-model="scope.row.part"
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.openBidTime"
                   ></el-input>
-                </el-form-item>
               </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="参与投标单位"
-              prop="part"
+              prop="openBidTime"
               show-overflow-tooltip
-              :width="215"
+              align="center"
+              :width="180"
             >
               <template slot-scope="scope">
-                <el-form-item
-                  :prop="'clothSizePartList.' + scope.$index + '.part'"
-                  :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
-                  label-width="0"
-                >
                   <el-input
-                    max-length="50"
                     clearable
-                     disabled
-                    size="mini"
-                    v-model="scope.row.part"
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.openBidTime"
                   ></el-input>
-                </el-form-item>
               </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
-              label="其他投标单位（系统内）"
-              prop="part"
+              label="其他投标单位(系统内)"
+              prop="openBidTime"
               show-overflow-tooltip
-              :width="215"
+              align="center"
+              :width="180"
             >
               <template slot-scope="scope">
-                <el-form-item
-                  :prop="'clothSizePartList.' + scope.$index + '.part'"
-                  :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
-                  label-width="0"
-                >
                   <el-input
-                    max-length="50"
                     clearable
-                     disabled
-                    size="mini"
-                    v-model="scope.row.part"
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.openBidTime"
                   ></el-input>
-                </el-form-item>
               </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
-              label="其他投标单位（系统外）"
-              prop="part"
+              label="其他投标单位(系统外)"
+              prop="openBidTime"
               show-overflow-tooltip
-              :width="215"
+              align="center"
+              :width="180"
             >
               <template slot-scope="scope">
-                <el-form-item
-                  :prop="'clothSizePartList.' + scope.$index + '.part'"
-                  :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
-                  label-width="0"
-                >
                   <el-input
-                    max-length="50"
                     clearable
-                     disabled
-                    size="mini"
-                    v-model="scope.row.part"
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.openBidTime"
                   ></el-input>
-                </el-form-item>
               </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="其他未列出单位"
-              prop="part"
+              prop="openBidTime"
               show-overflow-tooltip
-              :width="215"
+              align="center"
+              :width="180"
             >
               <template slot-scope="scope">
-                <el-form-item
-                  :prop="'clothSizePartList.' + scope.$index + '.part'"
-                  :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
-                  label-width="0"
-                >
                   <el-input
-                    max-length="50"
                     clearable
-                     disabled
-                    size="mini"
-                    v-model="scope.row.part"
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.openBidTime"
                   ></el-input>
-                </el-form-item>
               </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="项目经理"
-              prop="part"
+              prop="projectManager"
               show-overflow-tooltip
-              :width="215"
+              align="center"
+              :width="180"
             >
               <template slot-scope="scope">
-                <el-form-item
-                  :prop="'clothSizePartList.' + scope.$index + '.part'"
-                  :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
-                  label-width="0"
-                >
                   <el-input
-                    max-length="50"
                     clearable
-                     disabled
-                    size="mini"
-                    v-model="scope.row.part"
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.projectManager"
                   ></el-input>
-                </el-form-item>
               </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="项目副经理"
-              prop="part"
+              prop="projectDeputyManager"
               show-overflow-tooltip
-              :width="215"
+              align="center"
+              :width="180"
             >
               <template slot-scope="scope">
-                <el-form-item
-                  :prop="'clothSizePartList.' + scope.$index + '.part'"
-                  :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
-                  label-width="0"
-                >
                   <el-input
-                    max-length="50"
                     clearable
-                     disabled
-                    size="mini"
-                    v-model="scope.row.part"
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.projectDeputyManager"
                   ></el-input>
-                </el-form-item>
               </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="技术负责人"
-              prop="part"
+              prop="technicalDirector"
               show-overflow-tooltip
-              :width="215"
+              align="center"
+              :width="180"
             >
               <template slot-scope="scope">
-                <el-form-item
-                  :prop="'clothSizePartList.' + scope.$index + '.part'"
-                  :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
-                  label-width="0"
-                >
                   <el-input
-                    max-length="50"
                     clearable
-                     disabled
-                    size="mini"
-                    v-model="scope.row.part"
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.technicalDirector"
                   ></el-input>
-                </el-form-item>
               </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="安全负责人"
-              prop="part"
+              prop="securityDirector"
               show-overflow-tooltip
-              :width="215"
+              align="center"
+              :width="180"
             >
               <template slot-scope="scope">
-                <el-form-item
-                  :prop="'clothSizePartList.' + scope.$index + '.part'"
-                  :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
-                  label-width="0"
-                >
                   <el-input
-                    max-length="50"
                     clearable
-                     disabled
-                    size="mini"
-                    v-model="scope.row.part"
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.securityDirector"
                   ></el-input>
-                </el-form-item>
               </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="财务负责人"
-              prop="part"
+              prop="financeDirector"
               show-overflow-tooltip
-              :width="215"
+              align="center"
+              :width="180"
             >
               <template slot-scope="scope">
-                <el-form-item
-                  :prop="'clothSizePartList.' + scope.$index + '.part'"
-                  :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
-                  label-width="0"
-                >
                   <el-input
-                    max-length="50"
                     clearable
-                     disabled
-                    size="mini"
-                    v-model="scope.row.part"
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.financeDirectorr"
                   ></el-input>
-                </el-form-item>
               </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="成本负责人"
-              prop="part"
+              prop="costDirector"
               show-overflow-tooltip
-              :width="215"
+              align="center"
+              :width="180"
             >
               <template slot-scope="scope">
-                <el-form-item
-                  :prop="'clothSizePartList.' + scope.$index + '.part'"
-                  :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
-                  label-width="0"
-                >
                   <el-input
-                    max-length="50"
                     clearable
-                     disabled
-                    size="mini"
-                    v-model="scope.row.part"
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.costDirector"
                   ></el-input>
-                </el-form-item>
               </template>
             </el-table-column>
-            <el-table-column
-              :resizable="false"
-              fixed="right"
-              label="状态"
-              show-overflow-tooltip
-              v-if="p.actpoint !== 'look'"
-              width="200"
-            >
-              <template slot-scope="scope">
-                <el-link
-                  :underline="false"
-                  @click="del(scope.$index,scope.row,detailform.topInfoSiteList)"
-                  type="warning"
-                  >删除</el-link
-                >
-              </template>
-            </el-table-column>
+
           </el-table>
         </el-form>
       </div>
     </el-card>
         <div class="btn-group" v-show="p.actpoint != 'look'">
       <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
-      <el-button @click="submit">提交</el-button>
+      <el-button @click="saveInfo('detailform')">提交</el-button>
     </div>
   </div>
 
@@ -1230,37 +802,62 @@
 <script>
 
 export default {
-  name: "详情",
   data() {
     return {
       options1: [{ label: "值", value: "111" }],
       detailform: {
-        clothSize: {
-          id: "",
-          bcTypeId: "",
-          bcStyleId: "",
-          bcPlateTypeId: "",
-          bcTypeName: "",
-          bcStyleName: "",
-          bcPlateTypeName: "",
-          isDelete: 0,
-          createTime: "",
-          createUserId: 0,
-          createUserName: "",
-          createOrgId: 0,
-          createOrgName: "",
-        },
-        clothSizePartList: [],
+        bidInfo: {},
+        bidInfoInnerOrgList: [],
+        bidInfoSectionList:[],
+        topInforBO:{
+          capitalName:'',
+          topInfor:{}
+        }
       },
-
+      bidInfoSection:[],
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
     };
   },
   computed: {
-
+      bidType() {
+        return this.$store.state.bidType;
+      },
+      yesOrNo(){
+        return this.$store.state.yesOrNo;
+      }
 
   },
   methods: {
+    //null转空字符串
+    nullToStr(data){
+      // console.log('1111111',data)
+        for (let x in data) {
+        if (data[x] === null) { // 如果是null 把直接内容转为 ''
+          data[x] = '';
+        } else {
+          if (Array.isArray(data[x])) { // 是数组遍历数组 递归继续处理
+            data[x] = data[x].map(z => {
+              return this.nullToStr(z);
+            });
+          }
+          if(typeof(data[x]) === 'object'){ // 是json 递归继续处理
+            data[x] = this.nullToStr(data[x])
+          }
+        }
+      }
+      //  console.log('2222222',data)
+      return data;
+    },
+    //新增标段
+    add(type) {
+      var v = {};
+      v = {
+            bidInfoId: '',
+            projectScale: '',
+          }
+          this.detailform.bidInfoSectionList.push(v);
+          console.log(v)
+      },
       //获取下拉框id和name的公共方法
     getName(id, list, name) {
         if(id){
@@ -1348,52 +945,13 @@ export default {
         // var _self = this;
         // _self.detailform.topInfoSectionList.splice(index, 1);
       },
-    chg(val) {
-      this.errorMsg = Math.random();
-      this.errorMsg0 = Math.random();
-      this.$nextTick(() => {
-        this.errorMsg = "";
-        this.errorMsg0 = "";
-      });
-      this.detailform.clothSize.bcStyleId = "";
-      this.detailform.clothSize.bcPlateTypeId = "";
-      this.options1.forEach((item) => {
-        if (val === item.value) {
-          this.options2 = item.children;
-        }
-      });
-    },
-    chg1() {
-      this.errorMsg = Math.random();
-      this.errorMsg0 = Math.random();
-      this.$nextTick(() => {
-        this.errorMsg = "";
-        this.errorMsg0 = "";
-      });
-      if (this.detailform.clothSize.bcStyleId === "") {
-        this.detailform.clothSize.bcPlateTypeId = "";
-      }
-      if (this.detailform.clothSize.bcTypeId === "") {
-        this.$message.error("请先选择样衣类型！");
-      }
-    },
+
     back() {
       this.$router.push({
         path: "/manage/bid_info/list",
       });
     },
-    chg2() {
-      this.errorMsg = Math.random();
-      this.errorMsg0 = Math.random();
-      this.$nextTick(() => {
-        this.errorMsg = "";
-        this.errorMsg0 = "";
-      });
-      if (this.detailform.clothSize.bcStyleId === "") {
-        this.detailform.clothSize.bcPlateTypeId = "";
-        this.$message.error("请先选择款式类型！");
-      }
-    },
+
 
     del(index) {
       console.log(index);
@@ -1503,22 +1061,21 @@ export default {
 
     // 加载列表
     getDetail() {
-this.$http
-          .post("/api/topInfo/BidInfo/detail/entityInfo", {id:this.id})
+        this.$http
+          .post("/api/topInfo/BidInfo/detail/entityInfo", {topInfoOrgId:this.id})
           .then((res) => {
             var datas=res.data.data;
-            this.getTwo(datas.topInfor.enginTypeFirstId);
-            this.getTwoSC(datas.topInfor.marketFirstNameId);
-            datas.topInforCapitalList.forEach((item)=>{
-              this.value1.push(item.capitalId)
-            });
+            datas.bidInfo=this.nullToStr(datas.bidInfo);
+            // cons ole.log(datas.bidInfo)
             this.detailform={
-              topInfor: datas.topInfor,
-              topInfoOrg: datas.topInfoOrg,
-              topInfoSiteList: datas.topInfoSiteList,
-              topInfoSectionList: datas.topInfoSectionList,
+              bidInfo:datas.bidInfo,
+              bidInfoInnerOrgList: datas.bidInfoInnerOrgList,
+              bidInfoSectionList: datas.bidInfoSectionList,
+              topInforBO: this.nullToStr(datas.topInforBO),
             }
+            console.log(this.detailform.topInforBO)
           });
+
 
     },
 
@@ -1527,7 +1084,9 @@ this.$http
     },
   },
   mounted() {
-    this.id=this.p.instid;
+    // this.id=this.p.instid;
+    this.id="f13af1f076ade9f16ca83d21fcc252d4";
+    this.$store.dispatch("getConfig", {});
       if (this.p.actpoint === "edit"||this.id) {
         this.getDetail();
       }
@@ -1641,7 +1200,7 @@ this.$http
   }
 
   .gcform .el-input {
-    width: 95%;
+    width: 95% ;
   }
   .listInput{
     width: auto!important;

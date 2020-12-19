@@ -14,7 +14,7 @@
       </el-button-group>
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-        <el-button @click="" type="primary" plain>查询</el-button>
+        <el-button @click="getData" type="primary" plain>查询</el-button>
         <el-button @click="" type="primary" plain>导出</el-button>
       </div>
     </div>
@@ -52,46 +52,66 @@
         <el-table-column
           :width="500"
           label="项目名称"
-          prop="name"
+          prop="inforName"
           show-overflow-tooltip>
           <template slot="header" slot-scope="scope">
             <span>项目名称</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="form.name"
+                v-model="searchform.inforName"
                 size="mini"/>
             </div>
           </template>
         </el-table-column>
+
         <el-table-column
           :width="150"
           align="center"
           label="工程类别"
-          prop="ptypename"
+          prop="enginTypeFirstName"
           show-overflow-tooltip>
           <template slot="header" slot-scope="scope">
-            <span>工程类别</span>
+            <span>工程类别(一级)</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchform.enginTypeFirstName"
                 size="mini"/>
             </div>
           </template>
         </el-table-column>
+
+
+        <el-table-column
+          :width="150"
+          align="center"
+          label="工程类别"
+          prop="enginTypeSecondName"
+          show-overflow-tooltip>
+          <template slot="header" slot-scope="scope">
+            <span>工程类别(二级)</span>
+            <div>
+              <el-input
+                style="float: left; width: 100%"
+                v-model="searchform.enginTypeSecondName"
+                size="mini"/>
+            </div>
+          </template>
+        </el-table-column>
+
         <el-table-column
           :width="150"
           align="center"
           label="建设单位"
-          prop="unitname"
+          prop="constructionOrg"
           show-overflow-tooltip>
           <template slot="header" slot-scope="scope">
             <span>建设单位</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchform.constructionOrg"
                 size="mini"/>
             </div>
           </template>
@@ -100,7 +120,7 @@
           :width="150"
           align="center"
           label="公告类型"
-          prop="exetime"
+          prop="noticeTypeName"
           show-overflow-tooltip>
           <!-- <template slot-scope="scope">{{
             scope.row.exetime | datetoMonth
@@ -110,7 +130,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchform.noticeTypeName"
                 size="mini"/>
             </div>
           </template>
@@ -136,7 +156,7 @@
           :width="150"
           align="center"
           label="投标截止日期"
-          prop="state"
+          prop="endTime"
           show-overflow-tooltip>
           <!-- <template slot-scope="scope">{{
             scope.row.state === '0' ? '草稿' : '已上报'
@@ -146,7 +166,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchform.endTime"
                 size="mini"/>
             </div>
           </template>
@@ -302,6 +322,18 @@ export default {
 
       },
     // 查看
+        getData() {
+        this.$http
+          .post(
+            "/api/topInfo/BidInfo/detail/loadPageDataForReg",
+            this.searchform
+          )
+          .then((res) => {
+            this.page = res.data.data;
+          });
+      },
+
+
     rowshow(row) {
       let p = { actpoint: "look", instid: row.uuid };
       this.$router.push({
@@ -353,7 +385,7 @@ export default {
     getData() {
       this.$http
         .post(
-          "/api" + this.$route.path.substr(0, this.$route.path.length - 1),
+         "/api/topInfo/BidInfo/detail/loadPageDataForReg",
           this.searchform
         )
         .then((res) => {
