@@ -18,7 +18,6 @@
         @selection-change="handleSelectionChange"
         align="center"
         border
-        class="clothSizeTable"
         ref="table"
         style="width: 98%; min-height: calc(100vh - 370px)"
       >

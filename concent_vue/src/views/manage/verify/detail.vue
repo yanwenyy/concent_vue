@@ -372,7 +372,6 @@
               }"
         align="center"
         border
-        class="clothSizeTable"
         ref="table"
         style="width: 98%;margin-bottom: 20px "
       >
@@ -389,10 +388,28 @@
           class="listTabel"
           :resizable="false"
           label="标段名"
-          prop="sectionName"
+          prop="verifySection.sectionName"
           align="center"
           show-overflow-tooltip
         >
+        </el-table-column>
+        <el-table-column
+          v-show="!p.actpoint === 'look'"
+          :resizable="false"
+          fixed="right"
+          label="参与投标单位"
+          align="center"
+          prop="verifySectionOrgName"
+          show-overflow-tooltip
+          v-if="p.actpoint !== 'look'"
+          width="200">
+          <template slot-scope="scope">
+            <el-link
+              :underline="false"
+              @click="selectOrg()"
+              type="warning">选择
+            </el-link>
+          </template>
         </el-table-column>
         <el-table-column
           v-show="!p.actpoint === 'look'"
@@ -433,7 +450,6 @@
       @selection-change="handleSelectionChange"
       align="center"
       border
-      class="clothSizeTable"
       ref="table"
       style="width: 98%;"
     >
@@ -668,6 +684,10 @@ export default {
       // var _self = this;
       // _self.detailform.topInfoSectionList.splice(index, 1);
     },
+    selectOrg(){
+      alert("建设中")
+    },
+
     addSection()
     {
       this.dialogTopInfoSection = false;
@@ -686,7 +706,7 @@ export default {
         }
         var isadd = true;
         this.detailform.verifySectionList.forEach((item1, index1) => {
-          if (item.uuid == item1.sectionId) {
+          if (item.uuid == item1.verifySection.sectionId) {
             isadd = false;
           }
         })

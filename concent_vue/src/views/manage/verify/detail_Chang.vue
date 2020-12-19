@@ -317,7 +317,6 @@
               }"
                 align="center"
                 border
-                class="clothSizeTable"
                 ref="table"
                 style="width: 98%;margin-bottom: 20px "
               >
@@ -742,7 +741,6 @@
             @selection-change="handleSelectionChange"
             align="center"
             border
-            class="clothSizeTable"
             ref="table"
             style="width: 98%;"
           >

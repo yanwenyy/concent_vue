@@ -1,24 +1,132 @@
 <!--资审结果操作列表-->
 <template>
   <div>
-    <div style="width: 100%; overflow: hidden">
-      <el-button-group style="float: left">
-        <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
-      </el-button-group>
-      <div style="float: right">
-        <el-button
-          @click="searchformReset"
-          type="info"
-          plain
-          style="color: black; background: none"
-          >重置</el-button
+    <el-form :inline="true" :model="searchform" @keyup.enter.native="getData()" class="gcform">
+      <el-row>
+      <el-form-item label="项目名称:" style="width: 33%">
+        <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
+      </el-form-item>
+      <el-form-item label="建设单位:" style="width: 33%">
+        <el-input v-model="searchform.constructionOrg" placeholder="建设单位" clearable></el-input>
+      </el-form-item>
+
+      <el-form-item label="资审截止日期:" style="width: 33%">
+        <el-date-picker
+          v-model="searchform.createTime"
+          type="daterange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期">
+        </el-date-picker>
+      </el-form-item>
+
+      </el-row>
+      <el-row>
+      <el-form-item style="width: 33%"
+        label="工程类别(一级):"
+      >
+        <el-select
+          clearable
+          filterable
+          placeholder="请选择"
+          @change="getTwo"
+          size="mini"
+          v-model="searchform.enginTypeFirstId"
         >
-        <el-button @click="searchformSubmit" type="primary" plain
-          >查询</el-button
+          <el-option
+            :key="index"
+            :label="item.detailName"
+            :value="item.id"
+            v-for="(item, index) in projectDomainType"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item style="width: 33%"
+        label="工程类别(二级):"
+      >
+        <el-select
+          clearable
+          filterable
+          placeholder="请选择"
+          size="mini"
+          v-model="searchform.enginTypeSecondId"
         >
-        <el-button @click="exportdata" type="primary" plain>导出</el-button>
-      </div>
-    </div>
+          <el-option
+            :key="index"
+            :label="item.detailName"
+            :value="item.id"
+            v-for="(item, index) in xqprojectType"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item
+        label="招标代理机构:"
+      >
+        <el-input v-model="searchform.inforName" placeholder="招标代理机构" clearable></el-input>
+      </el-form-item>
+      </el-row>
+      <el-row>
+      <el-form-item
+        label="标段名称:"
+      >
+        <el-input v-model="searchform.inforName" placeholder="标段名称" clearable></el-input>
+      </el-form-item>
+      <el-form-item
+        label="资审状态:"
+      >
+        <el-select
+          clearable
+          filterable
+          placeholder="请选择"
+          size="mini"
+          v-model="searchform.flowStatus"
+        >
+          <el-option
+            :key="index"
+            :label="item.detailName"
+            :value="item.id"
+            v-for="(item, index) in projectStatus"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="项目地点:">
+        <el-input v-model="searchform.path" placeholder="项目地点">
+          <el-button slot="append" icon="el-icon-search"  @click="selectPosition()"></el-button>
+        </el-input>
+      </el-form-item>
+        <el-form-item label="登记时间:" style="width: 33%">
+          <el-date-picker
+            v-model="searchform.createTime"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item
+          label="录入单位:"
+        >
+          <el-select
+            clearable
+            filterable
+            placeholder="请选择"
+            size="mini"
+            v-model="searchform.flowStatus"
+          >
+            <el-option
+              :key="index"
+              :label="item.detailName"
+              :value="item.id"
+              v-for="(item, index) in projectStatus"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+      <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
+      <el-button @click="getData" type="primary" plain>查询</el-button>
+      <el-button @click="exportdata" type="primary" plain>导出</el-button>
+      </el-row>
+
+    </el-form>
 
     <div style="margin-top: 20px">
       <el-table
@@ -272,7 +380,56 @@ export default {
       orgTree: []
     }
   },
+  mounted() {
+    this.$store.dispatch("getConfig", {});
+    this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
+  },
+  computed: {
+    projectDomainType() {
+      // console.log(this.$store.state.category["projectDomainType"])
+      return this.$store.state.category.projectDomainType;
+    },
+    bulletinType() {
+      return this.$store.state.bulletinType;
+    },
+    probability() {
+      return this.$store.state.probability;
+    },
+    railwayLine(){
+      return this.$store.state.railwayLine;
+    }
+  },
   methods: {
+    //获取项目地点的值
+    getPositionTree(data) {
+      console.log(data)
+      this.treeStatas = false;
+      this.searchform.ffid=data.fullDetailCode;
+      this.searchform.path=data.fullDetailName;
+      this.key = this.key + 1;
+    },
+    //选择项目地点
+    selectPosition() {
+      this.treeStatas = true;
+      console.log(this.positionIndex);
+      this.$nextTick(() => {
+        this.$refs.addOrUpdate.init()
+      })
+    },
+    //工程类别二级
+    getTwo(id) {
+
+      if(id!=''){
+        this.searchform.enginTypeSecondId='';
+        this.projectDomainType.find(
+          (item) => {
+            if (item.id == id) {
+              this.xqprojectType = item.children;
+            }
+          }
+        )
+      }
+    },
     statusFormat(row,column){
       alert(row.verify.uuid)
       // console.log(row.verify.uuid);
