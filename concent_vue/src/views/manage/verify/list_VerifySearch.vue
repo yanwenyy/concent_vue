@@ -243,7 +243,6 @@
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
         layout="total, sizes, prev, pager, next, jumper"
-        style="margin: 20px; position: fixed; right: 200px; bottom: 40px"
       ></el-pagination>
     </div>
   </div>

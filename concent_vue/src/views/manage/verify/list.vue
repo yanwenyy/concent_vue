@@ -4,7 +4,7 @@
       <el-button-group style="float: left">
         <el-button @click="add" plain type="primary">新增</el-button>
         <el-button @click="editItem" plain type="primary">修改</el-button>
-        <el-button @click="dialogResult=true" plain type="primary">资审结果登记</el-button>
+        <el-button @click="verifyResultEdit" plain type="primary">资审结果登记</el-button>
         <el-button @click="remove" type="primary" plain>删除</el-button>
         <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
       </el-button-group>
@@ -50,7 +50,7 @@
         >
 
           <template slot-scope="scope">
-            {{scope.row.inforName}}
+            {{ scope.row.inforName }}
           </template>
         </el-table-column>
         <el-table-column
@@ -62,7 +62,7 @@
         >
 
           <template slot-scope="scope">
-            {{scope.row.enginTypeFirstName}}
+            {{ scope.row.enginTypeFirstName }}
           </template>
         </el-table-column>
         <el-table-column
@@ -74,7 +74,7 @@
         >
 
           <template slot-scope="scope">
-            {{scope.row.constructionOrg}}
+            {{ scope.row.constructionOrg }}
           </template>
         </el-table-column>
         <el-table-column
@@ -86,7 +86,7 @@
         >
 
           <template slot-scope="scope">
-            {{scope.row.noticeTypeName}}
+            {{ scope.row.noticeTypeName }}
           </template>
         </el-table-column>
         <el-table-column
@@ -97,8 +97,8 @@
           show-overflow-tooltip
         >
 
-          <template slot-scope="scope" >
-            {{scope.row.saleTime | dateformat}}
+          <template slot-scope="scope">
+            {{ scope.row.saleTime | dateformat }}
           </template>
         </el-table-column>
         <el-table-column
@@ -111,8 +111,8 @@
         >
 
           <template slot-scope="scope">
-            <el-tag  v-if="scope.row.uuid===null" type="warning">未进行资审申请</el-tag>
-            <el-tag  v-else type="success">已进行资审申请</el-tag>
+            <el-tag v-if="scope.row.uuid===null" type="warning">未进行资审申请</el-tag>
+            <el-tag v-else type="success">已进行资审申请</el-tag>
           </template>
         </el-table-column>
         <el-table-column
@@ -124,7 +124,7 @@
         >
 
           <template slot-scope="scope">
-            {{scope.row.username}}
+            {{ scope.row.username }}
           </template>
         </el-table-column>
         <el-table-column
@@ -139,7 +139,7 @@
           }}</template> -->
 
           <template slot-scope="scope">
-            {{scope.row.createtime | dateformat}}
+            {{ scope.row.createtime | dateformat }}
           </template>
         </el-table-column>
       </el-table>
@@ -151,17 +151,17 @@
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
         layout="total, sizes, prev, pager, next, jumper"
-        style="margin: 20px; position: fixed; right: 200px; bottom: 40px"
       ></el-pagination>
     </div>
     <el-dialog title="资审结果登记" :visible.sync="dialogResult">
       <el-form :model="resultform">
-        <el-form-item label="资格预审结果" :label-width="formLabelWidth">
-          <el-radio v-model="radio" label="1" border>通过</el-radio>
-          <el-radio v-model="radio" label="0" border>不通过</el-radio>
+        <el-form-item label="资格预审结果" :label-width="formLabelWidth" prop="verifyResult">
+          <el-radio v-model="resultform.verifyResult" label="1" border>通过</el-radio>
+          <el-radio v-model="resultform.verifyResult" label="0" border>不通过</el-radio>
         </el-form-item>
-        <el-form-item label="通过时间" :label-width="formLabelWidth">
+        <el-form-item label="通过时间" :label-width="formLabelWidth" prop="verifyResultTime">
           <el-date-picker
+            v-model="resultform.verifyResultTime"
             type="date"
             placeholder="选择日期">
           </el-date-picker>
@@ -183,7 +183,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogResult = false">取 消</el-button>
-        <el-button type="primary" @click="dialogResult = false">确 定</el-button>
+        <el-button type="primary" @click="saveVerifyResult">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -195,8 +195,8 @@ export default {
   name: "proposal-list-look",
   data() {
     return {
-      radio:'0',
-      page: { current: 1, size: 10, total: 0, records: [] },
+      radio: '0',
+      page: {current: 1, size: 10, total: 0, records: []},
       showinput: false,
       sousuo: "",
       searchform: {
@@ -213,24 +213,55 @@ export default {
       menus: [],
       multipleSelection: [],
       orgTree: [],
-      dialogResult:false,
+      dialogResult: false,
       resultform: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+        verifyResult: '1',
+        verifyResultTime: '2020-12-18',
+        verifyResultfile: ''
       },
       formLabelWidth: '120px'
 
     }
   },
   methods: {
-    handleChange(){},
-    statusFormat(row,column){
+    verifyResultEdit() {
+      if (this.multipleSelection.length > 0) {
+        this.dialogResult = true;
+        //alert(JSON.stringify(this.multipleSelection[0]));
+        this.resultform.verifyResult = this.multipleSelection[0].verifyResult;
+        this.resultform.verifyResultTime = this.multipleSelection[0].verifyResultTime;
+      } else {
+        this.$message.info("请选择列表中的项目！");
+      }
+    },
+    saveVerifyResult() {
+      this.dialogResult = false
+      this.multipleSelection[0].verifyResult = this.resultform.verifyResult;
+      var date = new Date(this.resultform.verifyResultTime);
+      var time1 = date.getTime();
+      this.multipleSelection[0].verifyResultTime = time1;
+      // alert(JSON.stringify(this.multipleSelection[0]))
+      this.$http
+        .post(
+          '/api/topInfo/Verify/detail/saveVerifyResult',
+          JSON.stringify(this.multipleSelection[0]), {useJson: true}
+        )
+        .then(res => {
+          if (res.data.code === 0) {
+            if (res.data.code === 0) {
+              this.$message({
+                message: "保存成功",
+                type: "success",
+              });
+
+            }
+          }
+          this.getData();
+        })
+    },
+    handleChange() {
+    },
+    statusFormat(row, column) {
       //alert(row.verify.uuid)
       // console.log(row.verify.uuid);
       // var statusW;
@@ -244,52 +275,52 @@ export default {
       return row.verify.uuid != "" ? "已进行资审申请" : row.verify.uuid == "" ? "未进行资审申请" : "未进行资审申请";
       // return statusW
     },
-    search(){
+    search() {
       this.showinput = false
     },
-    add(){
+    add() {
       console.log(JSON.stringify(this.multipleSelection[0].uuid));
-      if(this.multipleSelection[0].uuid!=null)
-      {
+      if (this.multipleSelection[0].uuid != null) {
         this.$message.info("当前登记的项目信息已经添加的资审信息！");
         return;
       }
       //alert(JSON.stringify(this.multipleSelection[0]));
-       let p = { actpoint: 'add',instid: this.multipleSelection[0].inforid, topinfoid:this.multipleSelection[0].tiouuid}
+      let p = {actpoint: 'add', instid: this.multipleSelection[0].inforid, topinfoid: this.multipleSelection[0].tiouuid}
       //alert(JSON.stringify(p));
-       this.$router.push({
+      this.$router.push({
         path: './detail/',
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+        query: {p: this.$utils.encrypt(JSON.stringify(p))}
       })
     },
-    editItem(){
+    editItem() {
       console.log(JSON.stringify(this.multipleSelection[0].uuid));
       //是否有资审信息判断
-      if(this.multipleSelection[0].uuid=="" || this.multipleSelection[0].uuid==null)
-      {
+      if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
         this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
         return;
       }
       //是否在审核流程中判断
       //是否在变更流程中判断
-      let p = { actpoint: 'editItem',instid: this.multipleSelection[0].uuid, topinfoid:this.multipleSelection[0].tiouuid}
+      let p = {
+        actpoint: 'editItem',
+        instid: this.multipleSelection[0].uuid,
+        topinfoid: this.multipleSelection[0].tiouuid
+      }
       //alert(JSON.stringify(p));
       this.$router.push({
         path: './detail/',
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+        query: {p: this.$utils.encrypt(JSON.stringify(p))}
       })
     },
-    remove(){
+    remove() {
       console.log(JSON.stringify(this.multipleSelection[0].uuid));
-      if(this.multipleSelection[0].uuid=="" || this.multipleSelection[0].uuid==null)
-      {
+      if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
         this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
         return;
       }
       let uuids = []
       this.multipleSelection.forEach((item) => {
-        if(item.uuid!=null)
-        {
+        if (item.uuid != null) {
           uuids.push(item.uuid);
         }
 
@@ -321,10 +352,10 @@ export default {
     },
     // 查看
     rowshow(row) {
-      let p = { actpoint: 'look', instid: row.uuid }
+      let p = {actpoint: 'look', instid: row.uuid}
       this.$router.push({
         path: './detail/',
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+        query: {p: this.$utils.encrypt(JSON.stringify(p))}
       })
     },
     show() {
@@ -332,10 +363,10 @@ export default {
         this.$message.info('请选择一条记录进行查看操作！')
         return false
       }
-      let p = { actpoint: 'look', instid: this.multipleSelection[0].uuid }
+      let p = {actpoint: 'look', instid: this.multipleSelection[0].uuid}
       this.$router.push({
         path: '../detail/',
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+        query: {p: this.$utils.encrypt(JSON.stringify(p))}
       })
     }, // list通用方法开始
     handleSizeChange(val) {
@@ -359,7 +390,7 @@ export default {
       this.searchform.status = "";
       this.searchform.username = "";
       this.searchform.saleTime = "";
-        this.getData();
+      this.getData();
     },
     // 列表选项数据
     handleSelectionChange(val) {
@@ -367,11 +398,10 @@ export default {
     },
     getData() {
       console.log(JSON.stringify(this.searchform));
-      if(this.searchform.saleTime!="")
-      {
+      if (this.searchform.saleTime != "") {
         var date = new Date(this.searchform.saleTime);
         var time1 = Date.parse(date);
-        this.searchform.saleTime=time1;
+        this.searchform.saleTime = time1;
       }
 
       console.log(JSON.stringify(this.searchform));
@@ -386,7 +416,7 @@ export default {
     },
     getMenus() {
       this.$http
-        .post('api/base/loadcascader', { typecode: 'XMLX' })
+        .post('api/base/loadcascader', {typecode: 'XMLX'})
         .then(res => {
           if (res.data.code === 0) {
             this.menus = res.data.data

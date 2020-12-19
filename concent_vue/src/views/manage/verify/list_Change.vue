@@ -2,7 +2,8 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary">变更</el-button>
+        <el-button @click="add" plain type="primary">新增变更</el-button>
+        <el-button @click="editItem" plain type="primary">修改</el-button>
         <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
       </el-button-group>
     </div>
@@ -148,7 +149,6 @@
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
         layout="total, sizes, prev, pager, next, jumper"
-        style="margin: 20px; position: fixed; right: 200px; bottom: 40px"
       ></el-pagination>
     </div>
     <el-dialog title="资审结果登记" :visible.sync="dialogResult">
@@ -247,6 +247,26 @@ export default {
       this.$router.push({
         path: './detail_Chang/',
         query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+      })
+    },
+    editItem() {
+      console.log(JSON.stringify(this.multipleSelection[0].uuid));
+      //是否有资审信息判断
+      if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
+        this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
+        return;
+      }
+      //是否在审核流程中判断
+      //是否在变更流程中判断
+      let p = {
+        actpoint: 'editItem',
+        instid: this.multipleSelection[0].uuid,
+        topinfoid: this.multipleSelection[0].tiouuid
+      }
+      //alert(JSON.stringify(p));
+      this.$router.push({
+        path: './detail_Chang/',
+        query: {p: this.$utils.encrypt(JSON.stringify(p))}
       })
     },
     // 查看

@@ -3,16 +3,27 @@
         <el-card class="box-card">
       <div slot="header" class="clearfix" >
         <span style="color: #2a2a7d"><b>资审管理详情</b></span>
-        <el-button style="float: right; padding: 10px 20px ;border:1px solid #ddd;color: black" type="text">返回</el-button>
+        <el-button
+          @click="back"
+          style="
+            float: right;
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            color: black;
+            position: fixe;
+          "
+          type="text"
+        >返回
+        </el-button
+        >
       </div>
 
-      <div style="overflow: scroll;max-height:calc(100vh - 380px);">
+      <div class="detailBox">
     <el-form
       :inline="false"
       :model="detailform"
       class="gcform"
       ref="detailform"
-      style="background: white;width:calc(100% - 4px);"
     >
     <el-row>
       <el-form-item
@@ -367,6 +378,7 @@
       >
         <el-table-column
           :width="80"
+
           align="center"
           label="序号"
           show-overflow-tooltip
@@ -381,7 +393,6 @@
           align="center"
           show-overflow-tooltip
         >
-
         </el-table-column>
         <el-table-column
           v-show="!p.actpoint === 'look'"
@@ -528,6 +539,12 @@ export default {
 
   },
   methods: {
+    back() {
+      this.$router.back()
+      // this.$router.push({
+      //   path: "/manage/proposal/list",
+      // });
+    },
     saveInfo(formName){
       //alert(formName);
         //alert(this.$refs.formName.validate())
@@ -552,7 +569,7 @@ export default {
                 });
                 this.$refs[formName].resetFields();
                 this.$router.push({
-                  path: "/manage/proposal/list",
+                  path: "/manage/verify/list",
                 });
               }
 
@@ -658,32 +675,27 @@ export default {
         console.log(item.uuid)
         console.log(index)
 
-        var vsl={
-          uuid:item.uuid,
-          sectionName:item.sectionName
+        var vsl = {
+          sectionId: item.uuid,
+          verifyId:this.detailform.verify.uuid,
+          sectionName: item.sectionName
+        }
+        var vsBo={
+          verifySection:{},
+          verifySectionOrgList:[]
         }
         var isadd = true;
         this.detailform.verifySectionList.forEach((item1, index1) => {
-          if(item.uuid==item1.uuid)
-          {
+          if (item.uuid == item1.sectionId) {
             isadd = false;
           }
         })
-        if(isadd)
-        {
-          this.detailform.verifySectionList.push(vsl);
-        }else
-        {
+        if (isadd) {
+          vsBo.verifySection=vsl;
+          this.detailform.verifySectionList.push(vsBo);
+        } else {
           this.$message.error('请不要重复添加')
         }
-
-          // item.detailName = _data.detailName;
-          // item.uuid
-          // item.sectionName
-          // item.country = country;
-          // item.ffid = _data.fullDetailCode;
-          // item.path = _data.fullDetailName;
-
       });
     },
 
@@ -803,7 +815,7 @@ export default {
         .then(res => {
           this.detailform = res.data.data
 
-          //alert( JSON.stringify(this.detailform))
+          //alert( JSON.stringify(this.detailform.verifySectionList))
         })
          //alert(JSON.stringify(this.p))
       // this.detailform.Verify.contactMode = this.p.selectrow.contactMode;

@@ -1,7 +1,7 @@
 <!--资审变更列表-->
 <template>
   <el-tabs type="border-card">
-    <el-tab-pane label="项目原信息">
+    <el-tab-pane label="资审原信息">
       <div>
         <el-card class="box-card">
 
@@ -290,7 +290,24 @@
                   />
                 </el-form-item>
               </el-row>
-
+              <el-row>
+                <el-form-item
+                  class="neirong"
+                  label="附件（最大10MB）:"
+                  style="width: 33%"
+                >
+                  <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
+                  <el-upload
+                    disabled
+                    class="upload-demo"
+                    action="https://jsonplaceholder.typicode.com/posts/"
+                    >
+                    <div slot="tip" class="el-upload__tip">最大上传文件不超过500kb</div>
+                  </el-upload>
+                </el-form-item>
+              </el-row>
+              <p style="overflow:hidden;margin-right: 30px"><span style="float:left;">标段信息: </span>
+              </p>
               <el-table
                 :data="detailformBefore.verifySectionList"
                 :header-cell-style="{
@@ -331,8 +348,8 @@
         </el-card>
       </div>
     </el-tab-pane>
-    <el-tab-pane label="项目变更信息">
-      <div>
+    <el-tab-pane label="资审变更信息">
+
         <el-card class="box-card">
 
           <div style="overflow: scroll;max-height:calc(100vh - 380px);">
@@ -646,12 +663,15 @@
                 </el-form-item>
               </el-row>
 
-              <p style="overflow:hidden;margin-right: 30px"><span style="float:left;">标段信息: </span>   <el-button
-                @click="dialogTopInfoSection = true"
-                size="mini"
-                style="float:right;width: 70px;height: 32px;background: #5C8BFA;font-size: 16px;"
-                type="primary"
-              >新增</el-button> </p>
+              <p style="overflow:hidden;margin-right: 30px"><span style="float:left;">标段信息: </span>
+                <el-button
+                  @click="dialogTopInfoSection = true"
+                  size="mini"
+                  style="float:right;width: 70px;height: 32px;background: #5C8BFA;font-size: 16px;"
+                  type="primary"
+                >新增
+                </el-button>
+              </p>
 
               <el-table
                 :data="detailformAfter.verifySectionList"
@@ -756,10 +776,11 @@
     <el-button type="primary" @click="addSection()">确 定</el-button>
   </span>
         </el-dialog>
-      </div>
+
 
     </el-tab-pane>
   </el-tabs>
+
 </template>
 
 <script>
@@ -771,15 +792,15 @@ export default {
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
       detailformBefore: {
         'verify': {
-          bidModeName:'',
-          isCoalitionBid:'',
-          verifyTypeName:'',
-          verifyExplain:'',
-          saleTime:'',
-          subTime:'',
-          designOrg:'',
-          publishTime:'',
-          flowStatus:'0'
+          bidModeName: '',
+          isCoalitionBid: '',
+          verifyTypeName: '',
+          verifyExplain: '',
+          saleTime: '',
+          subTime: '',
+          designOrg: '',
+          publishTime: '',
+          flowStatus: '0'
         },
         'topInfor': {},
         'sectionStr': [],
@@ -788,15 +809,15 @@ export default {
       },
       detailformAfter: {
         'verify': {
-          bidModeName:'',
-          isCoalitionBid:'',
-          verifyTypeName:'',
-          verifyExplain:'',
-          saleTime:'',
-          subTime:'',
-          designOrg:'',
-          publishTime:'',
-          flowStatus:'0'
+          bidModeName: '',
+          isCoalitionBid: '',
+          verifyTypeName: '',
+          verifyExplain: '',
+          saleTime: '',
+          subTime: '',
+          designOrg: '',
+          publishTime: '',
+          flowStatus: '0'
         },
         'topInfor': {},
         'sectionStr': [],
@@ -810,22 +831,28 @@ export default {
         topInfoSectionList: [],
       },
 
-      dialogTopInfoSection:false
+      dialogTopInfoSection: false
 
     }
   },
   computed: {
 
-    bidType () {
+    bidType() {
       return this.$store.state.bidType
     },
-    yesOrNo () {
+    yesOrNo() {
       return this.$store.state.yesOrNo
     },
 
   },
   methods: {
-    saveInfo(formName){
+    back() {
+      this.$router.back()
+      // this.$router.push({
+      //   path: "/manage/proposal/list",
+      // });
+    },
+    saveInfo(formName) {
       //alert(formName);
       //alert(this.$refs.formName.validate())
 
@@ -834,12 +861,12 @@ export default {
         if (valid) {
           //alert(JSON.stringify(this.detailform));
           console.log(JSON.stringify(this.detailformAfter));
-          this.detailformAfter.verify.flowStatus="0";
+          this.detailformAfter.verify.flowStatus = "0";
           this.$http
             .post(
-              "/api/topInfo/Verify/detail/saveOrUpdate",
+              "/api/topInfo/Verify/detail/saveChange",
               JSON.stringify(this.detailformAfter),
-              { useJson: true }
+              {useJson: true}
             )
             .then((res) => {
               if (res.data.code === 0) {
@@ -849,7 +876,7 @@ export default {
                 });
                 this.$refs[formName].resetFields();
                 this.$router.push({
-                  path: "/manage/proposal/list",
+                  path: "/manage/verify/list_Change",
                 });
               }
 
@@ -864,13 +891,14 @@ export default {
       this.searchParam.current = this.current
       this.getuserlist()
     },
-    showinputchg() {},
+    showinputchg() {
+    },
     partchg(row) {
       row.showinput = false
     },
 
 
-    del(index,item,list,type) {
+    del(index, item, list, type) {
       console.log(index);
       list.splice(index, 1);
       // if(item.uuid&&type=='bd'){
@@ -907,32 +935,35 @@ export default {
         console.log(item.uuid)
         console.log(index)
 
-        var vsl={
-          uuid:item.uuid,
-          sectionName:item.sectionName
+        var vsl = {
+          sectionId: item.uuid,
+          verifyId:this.detailformAfter.verify.uuid,
+          sectionName: item.sectionName
+        }
+        var vsBo={
+          verifySection:{},
+          verifySectionOrgList:[]
         }
         var isadd = true;
         this.detailformAfter.verifySectionList.forEach((item1, index1) => {
-          if(item.uuid==item1.uuid)
-          {
+          if (item.uuid == item1.sectionId) {
             isadd = false;
           }
         })
-        if(isadd)
-        {
-          this.detailformAfter.verifySectionList.push(vsl);
-        }else
-        {
+        if (isadd) {
+          vsBo.verifySection=vsl;
+          this.detailformAfter.verifySectionList.push(vsBo);
+        } else {
           this.$message.error('请不要重复添加')
         }
       });
     },
 
     show(type) {
-      let p1 = { actpoint: 'add',instid: this.p.topinfoid}
+      let p1 = {actpoint: 'add', instid: this.p.topinfoid}
       this.$router.push({
         path: '../list_Section/',
-        query: { p: this.$utils.encrypt(JSON.stringify(p1)) }
+        query: {p: this.$utils.encrypt(JSON.stringify(p1))}
       })
     },
     resetinfo() {
@@ -950,7 +981,8 @@ export default {
     resetform(formName) {
       this.$refs[formName].resetFields()
     },
-    handleChange(){},
+    handleChange() {
+    },
     sure() {
       console.log(this.sizeform)
       this.$refs['sizeform'].validate(valid => {
@@ -969,19 +1001,49 @@ export default {
     // 加载列表
     getDetail() {
 
+      if(this.p.actpoint=="add") {
 
-      //alert(this.p.topinfoid);
-      this.$http
-        .post(
-          '/api/topInfo/Verify/detail/entityInfo',
-          // '/api' + this.$route.path.substr(0, this.$route.path.length - 1),
-          {"id":this.p.topinfoid}
-        )
-        .then(res => {
-          this.detailform = res.data.data
 
-          //alert( JSON.stringify(this.detailform))
-        })
+        //alert(this.p.topinfoid);
+        this.$http
+          .post(
+            '/api/topInfo/Verify/detail/entityInfo',
+            // '/api' + this.$route.path.substr(0, this.$route.path.length - 1),
+            {"id": this.p.topinfoid}
+          )
+          .then(res => {
+            this.detailformBefore = res.data.data;
+            this.detailformAfter = res.data.data
+
+            alert( JSON.stringify(this.detailformAfter.verifySectionList))
+          })
+      }else
+      {
+
+        this.$http
+          .post(
+            '/api/topInfo/Verify/detail/entityInfoChange',
+            // '/api' + this.$route.path.substr(0, this.$route.path.length - 1),
+            {"id": this.p.topinfoid}
+          )
+          .then(res => {
+            var data = res.data.data;
+            data.forEach((item, index) => {
+              alert(item.verify.isChange)
+              if(item.verify.isChange==1)
+              {
+                this.detailformBefore =item;
+              }else if(item.verify.isChange==2)
+              {
+                this.detailformAfter =item
+              }
+            })
+
+
+
+            //alert( JSON.stringify(this.detailform))
+          })
+      }
       //alert(JSON.stringify(this.p))
       // this.detailform.Verify.contactMode = this.p.selectrow.contactMode;
       // this.detailform.TopInfor.inforName = this.p.selectrow.inforName;
@@ -995,15 +1057,15 @@ export default {
     getTopInforDetail() {
 
       this.$http
-        .post("/api/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.p.topinfoid})
+        .post("/api/topInfo/TopInfor/detail/entityInfo", {topOrgId: this.p.topinfoid})
         .then((res1) => {
-          var datas=res1.data.data;
+          var datas = res1.data.data;
           // this.getTwo(datas.topInfor.enginTypeFirstId);
           // this.getTwoSC(datas.topInfor.marketFirstNameId);
           // datas.topInforCapitalList.forEach((item)=>{
           //   this.value1.push(item.capitalId)
           // });
-          this.detailform1={
+          this.detailform1 = {
             topInfor: datas.topInfor,
             topInfoOrg: datas.topInfoOrg,
             topInfoSiteList: datas.topInfoSiteList,
@@ -1087,24 +1149,29 @@ export default {
 // }
 .gcform {
   margin-top: 10px;
+
   .el-form-item__label:before {
     position: initial;
     left: -10px;
   }
+
   .el-form-item__error {
     padding-top: 0px;
     width: 95%;
     text-align: left;
     margin-left: 0;
     text-align: right;
-    top:0%
+    top: 0%
   }
+
   .el-form-item {
     float: left;
   }
+
   .detailformfooter1 {
     margin-top: 5px;
     width: 100%;
+
     .el-button {
       margin: 0 30px;
       width: 140px;
@@ -1112,43 +1179,54 @@ export default {
       font-size: 18px;
       font-family: Microsoft YaHei;
     }
+
     .el-button--primary {
       background: #5c8bfa;
     }
+
     .el-button--default {
       border: 1px solid #5c8bfa;
       color: #5c8bfa;
     }
   }
+
   .errorMsg .el-form-item__label {
     color: red;
   }
+
   .el-input {
     width: 300px;
   }
+
   .el-input .el-input_inner {
     width: 300px;
     height: 500px;
   }
 }
+
 .el-input .el-input_inner {
   width: 300px;
   height: 500px;
 }
+
 .el-table thead.is-group th {
   background: #fff;
 }
+
 .clothSizeTable {
   td {
     padding: 0;
   }
+
   .el-form-item__content {
     height: 60px;
+
     .el-form-item__error {
       top: 42px;
     }
   }
 }
+
 .text {
   font-size: 14px;
 }
@@ -1162,40 +1240,51 @@ export default {
   display: table;
   content: "";
 }
+
 .clearfix:after {
   clear: both;
 }
+
 .el-card__body {
   padding: 0 100px;
 }
-.el-input--mini .el-input__inner{
+
+.el-input--mini .el-input__inner {
   height: 40px;
   width: 100%;;
 }
-.gcform .el-input{
+
+.gcform .el-input {
   width: 95%;
 }
-.neirong{
+
+.neirong {
   width: 100% !important;
 }
-.gcform .el-form-item{
+
+.gcform .el-form-item {
   margin-bottom: 0px;
 }
-.neirong .el-input--mini .el-input__inner{
+
+.neirong .el-input--mini .el-input__inner {
   height: 100px;
 }
-.detail_bottom{
+
+.detail_bottom {
   margin: 50px 0 0 0;
   border: 1px solid #ddd;
 }
-.el-card, .el-message{
+
+.el-card, .el-message {
   overflow: hidden;
 }
-.el-scrollbar__wrap.default-scrollbar__wrap{
+
+.el-scrollbar__wrap.default-scrollbar__wrap {
   overflow: hidden;
 }
-.el-card.is-always-shadow, .el-card.is-hover-shadow:focus, .el-card.is-hover-shadow:hover{
-  overflow: auto ;
+
+.el-card.is-always-shadow, .el-card.is-hover-shadow:focus, .el-card.is-hover-shadow:hover {
+  overflow: auto;
 }
 </style>
 
