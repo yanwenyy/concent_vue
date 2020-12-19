@@ -23,6 +23,7 @@
         :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
         @row-dblclick="rowshow"
         @selection-change="handleSelectionChange"
+
         border
         highlight-current-row
         ref="table"
@@ -44,7 +45,6 @@
         ></el-table-column>
         <el-table-column
           :width="500"
-          align="center"
           label="项目名称"
           prop="inforName"
           show-overflow-tooltip

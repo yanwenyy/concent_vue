@@ -76,7 +76,6 @@ Vue.filter('stateTranslate', function(code) {
 Vue.filter('datetoMonth', function(date) {
     return utils.datetoMonth(date)
 })
-
 Vue.use(ElementUI)
 
 new Vue({
