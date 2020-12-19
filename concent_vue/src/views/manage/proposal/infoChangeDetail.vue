@@ -321,6 +321,7 @@
               >
                 <template slot-scope="scope">
                   <el-input
+                    @input="scope.row.projectScale=getMoney(scope.row.projectScale)"
                     clearable
                     :disabled="true"
                     v-model="scope.row.projectScale"
@@ -666,6 +667,7 @@
               }"
             >
               <el-input
+                @input="detailform.topInfor.investment=getMoney(detailform.topInfor.investment)"
                 :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder=""
@@ -905,9 +907,7 @@
                 prop="inforName"
               >
                 <template slot-scope="scope">
-                  <div class="positon-path">{{scope.row.path}}</div>
-                  <el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>
-                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                  <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
                 </template>
               </el-table-column>
 
@@ -920,6 +920,7 @@
               >
                 <template slot-scope="scope">
                   <el-input
+                    @input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"
                     class="listInput"
                     clearable
                     :disabled="p.actpoint === 'look'"
@@ -1072,7 +1073,7 @@
 
 <script>
   import Tree from '@/components/tree'
-
+  import { isMoney } from '@/utils/validate'
   export default {
     // name: "详情",
     data() {
@@ -1102,6 +1103,16 @@
         emergingMarketTwo:[],//新兴市场二级
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         sizeform: {projectScale: "", sectionName: ""},
+        yesOrNo:[
+          {
+            id:'0',
+            detailName:'是'
+          },
+          {
+            id:'1',
+            detailName:'否'
+          }
+        ]
       };
     },
     components: {
@@ -1128,9 +1139,9 @@
       amountSource() {
         return this.$store.state.amountSource;
       },
-      yesOrNo() {
-        return this.$store.state.yesOrNo;
-      },
+      // yesOrNo() {
+      //   return this.$store.state.yesOrNo;
+      // },
       position() {
         return this.$store.state.position;
       },
@@ -1156,6 +1167,10 @@
       // eslint-disable-next-line no-unde
     },
     methods: {
+      //金额过滤
+      getMoney(value){
+        return isMoney(value);
+      },
       //获取项目地点的值
       getPositionTree(data) {
         console.log(data)

@@ -441,6 +441,7 @@ pre {
 .detailBox{
   overflow: scroll;
   max-height:calc(100vh - 380px)!important;
+  padding:0 100px;
 }
 .gcform{
   background: white;
