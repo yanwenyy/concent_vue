@@ -67,8 +67,9 @@
           label="ID">
         </el-table-column>
         <el-table-column
+          :width="500"
           prop="inforName"
-          align="center"
+          show-overflow-tooltip
           label="项目名称">
         </el-table-column>
         <el-table-column

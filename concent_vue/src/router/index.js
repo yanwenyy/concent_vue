@@ -9,7 +9,7 @@ Router.prototype.push = function push(location) {
 }
 
 let Route = new Router({
-  mode: 'history',
+  base: 'history',
   routes: [{
     path: '/',
     component: App,

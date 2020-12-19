@@ -35,7 +35,7 @@
         </template>
       </el-menu>
       </div>
-      <div  style="position:relatve;width:100%;height:100%;background:#F7F9FA;;box-sizing:border-box;padding:20px 0 100px;">
+      <div  style="position:relatve;width:100%;height:100%;background:#F7F9FA;;box-sizing:border-box;padding:1px 0 100px;">
         <p style="width: 100%;
         position:absolute;
         bottom:0;
@@ -50,7 +50,7 @@
          <span>中国铁建股份有限公司 版权所有 建设监管：中国铁建股份有限公司 </span><br>
          <span>技术维护：中铁建网络信息科技有限公司</span>
          </p>
-        <div style="height:calc(100% - 20px);margin-right:50px;margin-left:50px;background:white;display:flex;">
+        <div style="height:calc(100% - 20px);background:white;display:flex;">
 
       <el-scrollbar
         :class="tlm_height"
@@ -62,7 +62,7 @@
           <sidebar></sidebar>
         </el-aside>
       </el-scrollbar>
-          <el-main class="el-tlm-main" style="width: 100%; height: 100%;">
+          <el-main class="el-tlm-main" style="width: 80%; height: 100%;">
             <router-view></router-view>
             <div class="block">
               <breadcrumb v-if="breadcrumb" style="flex:none;">
@@ -103,7 +103,7 @@ export default {
       el_container_style: 'el_container_style_' + this.$store.state.collapsed,
       tlm_height: 'tlm_height',
       breadcrumb: false,
-      defaultActiveIndex:'0'
+      defaultActiveIndex:'/manage'
     }
   },
   mounted() {
