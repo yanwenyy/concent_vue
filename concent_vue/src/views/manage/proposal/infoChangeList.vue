@@ -2,7 +2,7 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary">新增</el-button>
+        <el-button :disabled="btnStatus" @click="add" plain type="primary">新增</el-button>
         <el-button @click="totop" plain type="primary">修改</el-button>
         <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
       </el-button-group>
@@ -24,6 +24,7 @@
         }"
         @row-dblclick="rowshow"
         @selection-change="handleSelectionChange"
+        @select="rowSelect"
         border
         highlight-current-row
         ref="table"
@@ -40,13 +41,14 @@
           :width="70"
           align="center"
           label="序号"
+          fixed="left"
           show-overflow-tooltip
           type="index"
         ></el-table-column>
         <el-table-column
           :width="500"
-          align="center"
           label="项目名称"
+          fixed="left"
           prop="inforName"
           show-overflow-tooltip
         >
@@ -151,6 +153,9 @@
               />
             </div>
           </template>
+          <template slot-scope="scope">{{
+            scope.row.planBidTime | dateformat
+            }}</template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -195,6 +200,7 @@
     // inject:['reload'],
     data() {
       return {
+        btnStatus:false,
         infoCSVisible:false,
         page: {current: 1, size: 10, total: 0, records: []},
         showinput: false,
@@ -313,6 +319,14 @@
       // 列表选项数据
       handleSelectionChange(val) {
         this.multipleSelection = val;
+      },
+      //行选择的时候
+      rowSelect(selection,row){
+        if(selection.indexOf(row)!=-1&&row.flowStatus==null){
+          // this.btnStatus=true;
+        }else{
+          // this.btnStatus=false;
+        }
       },
       // 查询
       getData() {

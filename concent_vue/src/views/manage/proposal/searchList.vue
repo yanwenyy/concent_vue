@@ -4,6 +4,29 @@
       <el-form-item label="项目名称:">
         <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
       </el-form-item>
+      <el-form-item label="建设单位:">
+        <el-input v-model="searchform.constructionOrg" placeholder="建设单位" clearable></el-input>
+      </el-form-item>
+      <el-form-item label="设计单位:">
+        <el-input v-model="searchform.designOrg" placeholder="设计单位" clearable></el-input>
+      </el-form-item>
+      <el-form-item label="创建日期:">
+        <el-date-picker
+          v-model="searchform.createTime"
+          type="daterange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期">
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="预计招标日期:">
+        <el-date-picker
+          v-model="searchform.planBidTime"
+          type="date"
+          value-format="yyyy-MM-dd HH:mm:ss"
+          placeholder="选择日期">
+        </el-date-picker>
+      </el-form-item>
       <el-form-item
         label="工程类别(一级):"
       >
@@ -41,9 +64,6 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="建设单位:">
-        <el-input v-model="searchform.constructionOrg" placeholder="建设单位" clearable></el-input>
-      </el-form-item>
       <el-form-item
         label="公告类型:"
       >
@@ -80,14 +100,6 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="设计单位:">
-        <el-input v-model="searchform.designOrg" placeholder="设计单位" clearable></el-input>
-      </el-form-item>
-      <el-form-item label="项目地点:">
-        <el-input v-model="searchform.path" placeholder="项目地点">
-          <el-button slot="append" icon="el-icon-search"  @click="selectPosition()"></el-button>
-        </el-input>
-      </el-form-item>
       <el-form-item
         label="项目状态:"
       >
@@ -106,28 +118,15 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="创建日期:">
-        <el-date-picker
-          v-model="searchform.createTime"
-          type="datetime"
-          value-format="yyyy-MM-dd HH:mm:ss"
-          placeholder="选择日期">
-        </el-date-picker>
+      <el-form-item label="项目地点:">
+        <el-input v-model="searchform.path" placeholder="项目地点">
+          <el-button slot="append" icon="el-icon-search"  @click="selectPosition()"></el-button>
+        </el-input>
       </el-form-item>
-      <el-form-item label="预计招标时间:">
-        <el-date-picker
-          v-model="searchform.planBidTime"
-          type="datetime"
-          value-format="yyyy-MM-dd HH:mm:ss"
-          placeholder="选择日期">
-        </el-date-picker>
-      </el-form-item>
-    </el-form>
-    <div class="search-btn">
       <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
       <el-button @click="getData" type="primary" plain>查询</el-button>
       <el-button @click="exportdata" type="primary" plain>导出</el-button>
-    </div>
+    </el-form>
     <div style="margin-top: 20px">
       <el-table
         class="tableStyle"
@@ -158,7 +157,6 @@
         ></el-table-column>
         <el-table-column
           :width="500"
-          align="center"
           label="项目名称"
           prop="inforName"
           show-overflow-tooltip

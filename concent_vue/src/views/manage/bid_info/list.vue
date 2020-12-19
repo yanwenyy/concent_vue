@@ -3,11 +3,11 @@
     <div style="width: 100%;overflow: hidden;">
       <el-button-group style="float: left">
         <el-button @click="add" plain type="primary">登记</el-button>
-        <el-button @click="totop" plain type="primary">修改</el-button>
-        <el-button type="primary" @click="dialogFormVisible = true" plain >开标结果登记</el-button>
+        <el-button @click="totop" :disabled="flowStatus!=1&&flowStatus!=4" plain type="primary">修改</el-button>
+        <el-button type="primary" @click=" " plain >开标结果登记</el-button>
 
-        <el-button @click="" plain type="primary">中标结果登记</el-button>
-        <el-button type="primary" plain>删除</el-button>
+        <el-button @click="dialogFormVisible= true" plain type="primary">中标结果登记</el-button>
+        <el-button @click="remove" type="primary" plain>删除</el-button>
         <!-- <el-button type="primary" style="height: 40px" plain>
           <input placeholder="请输入项目名称"/>
           </el-button> -->
@@ -26,8 +26,9 @@
           'text-align': 'center',
           'background-color': 'whitesmoke',
         }"
-        @row-click="rowshow"
+        @row-dblclick="rowshow"
         @selection-change="handleSelectionChange"
+        @select="rowSelect"
         border
         highlight-current-row
         ref="table"
@@ -135,6 +136,9 @@
             </div>
           </template>
         </el-table-column>
+
+
+
         <el-table-column
           :width="150"
           align="center"
@@ -142,6 +146,9 @@
           prop="orgname"
           fixed="right"
           show-overflow-tooltip>
+          <template slot-scope="scope">
+              {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
+          </template>
           <template slot="header" slot-scope="scope">
             <span>状态</span>
             <div>
@@ -170,6 +177,9 @@
                 size="mini"/>
             </div>
           </template>
+           <template slot-scope="scope">{{
+            scope.row.endTime | dateformat
+          }}</template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -205,6 +215,9 @@
                 size="mini"/>
             </div>
           </template>
+            <template slot-scope="scope">{{
+            scope.row.createtime | dateformat
+          }}</template>
         </el-table-column>
       </el-table>
     </div>
@@ -250,6 +263,7 @@ export default {
   data() {
 
     return {
+      flowStatus:'',
       dialogFormVisible: false,
       infoCSVisible:false,
       form: {
@@ -274,6 +288,7 @@ export default {
         orgid: "",
         orgname: "",
       },
+      zbForm:{},
       menus: [],
       multipleSelection: [],
       orgTree: [],
@@ -284,6 +299,14 @@ export default {
       InfoChangeSearch
     },
   methods: {
+      //行选择的时候
+      rowSelect(selection, row){
+        if(selection.indexOf(row)!=-1){
+          this.flowStatus=row.flowStatus;
+        }else{
+          this.flowStatus='';
+        }
+      },
       //去新增详情页面
       goAddDetail(data){
         console.log(data);
@@ -296,31 +319,73 @@ export default {
     search() {
       this.showinput = false;
     },
+    //登记
     add() {
-      // let p = { actpoint: "add" };
-      // this.$router.push({
-      //   path: "./detail/",
-      //   query: { p: this.$utils.encrypt(JSON.stringify(p)) },
-      // });
+        if (this.multipleSelection.length !== 1||this.multipleSelection.length>1) {
+          this.$message.info("请选择一条记录进行登记操作！");
+          return false;
+        }
+        let p = {actpoint: "add", instid: this.multipleSelection[0].topInfoOrgId};
+        this.$router.push({
+          path: "./detail/",
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        });
 
-        this.infoCSVisible = true;
-        this.$nextTick(() => {
-          this.$refs.infoCS.init();
-        })
+        // this.infoCSVisible = true;
+        // this.$nextTick(() => {
+        //   this.$refs.infoCS.init();
+        // })
     },
     // 修改
       totop() {
-        if (this.multipleSelection.length !== 1) {
-          this.$message.info("请选择一条记录进行查看操作！");
+        if (this.multipleSelection.length !== 1||this.multipleSelection.length>1) {
+          this.$message.info("请选择一条记录进行修改操作！");uuid
           return false;
         }
-        let p = {actpoint: "edit", instid: this.multipleSelection[0].topOrgId};
+        let p = {actpoint: "edit", instid: this.multipleSelection[0].uuid};
         this.$router.push({
           path: "./detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
 
       },
+      // 删除
+      remove() {
+        if (this.multipleSelection.length < 1) {
+          this.$message.info("请选择一条记录进行查看操作！");
+          return false;
+        }
+        let uuids = []
+        this.multipleSelection.forEach((item) => {
+          if(item.flowStatus==1||item.flowStatus==4){
+            uuids.push(item.uuid);
+          }else{
+            this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
+            return false;
+          }
+
+
+        })
+        // uuids.join(',')
+        // console.log(uuids)
+
+         this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+              this.$http
+          .post(
+            "/api/topInfo/BidInfo/list/delete",{ids: uuids}
+
+          )
+          .then((res) => {
+            this.getData()
+          });
+          }).catch(() => {})
+      },
+
+
     // 查看
         getData() {
         this.$http
@@ -341,6 +406,7 @@ export default {
         query: { p: this.$utils.encrypt(JSON.stringify(p)) },
       });
     },
+    // 展示
     show() {
       if (this.multipleSelection.length !== 1) {
         this.$message.info("请选择一条记录进行查看操作！");

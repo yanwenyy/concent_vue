@@ -2,10 +2,11 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary">新增</el-button>
+       <!-- <el-button @click="add" plain type="primary">新增</el-button>-->
+        <el-button @click="dialogResult=true" plain type="primary">新增</el-button>
         <el-button @click="totop" plain type="primary">修改</el-button>
         <el-button @click="remove" type="primary" plain>删除</el-button>
-        <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
+       <!-- <el-button @click="searchformReset" type="primary" plain>刷新</el-button>-->
       </el-button-group>
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
@@ -23,7 +24,6 @@
         :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
         @row-dblclick="rowshow"
         @selection-change="handleSelectionChange"
-
         border
         highlight-current-row
         ref="table"
@@ -43,10 +43,31 @@
           show-overflow-tooltip
           type="index"
         ></el-table-column>
+
         <el-table-column
           :width="500"
+          align="center"
+          label="项目编号"
+          prop="importCode"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>项目编号</span>
+            <div>
+              <el-input
+                style="float: left; width: 100%"
+                v-model="searchform.importCode"
+                size="mini"
+              />
+            </div>
+          </template>
+        </el-table-column>
+
+        <el-table-column
+          :width="500"
+          align="center"
           label="项目名称"
-          prop="inforName"
+          prop="name"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -54,7 +75,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="searchform.inforName"
+                v-model="searchform.name"
                 size="mini"
               />
             </div>
@@ -64,16 +85,16 @@
         <el-table-column
           :width="150"
           align="center"
-          label="工程类别"
-          prop="enginTypeSecondName"
+          label="单位"
+          prop="unit"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>工程类别</span>
+            <span>单位</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="searchform.enginTypeFirstId"
+                v-model="searchform.unit"
                 size="mini"
               />
             </div>
@@ -82,16 +103,16 @@
         <el-table-column
           :width="150"
           align="center"
-          label="建设单位"
-          prop="constructionOrg"
+          label="标准库项目特征"
+          prop="feature"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>建设单位</span>
+            <span>标准库项目特征</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="searchform.constructionOrg"
+                v-model="searchform.feature"
                 size="mini"
               />
             </div>
@@ -100,79 +121,22 @@
         <el-table-column
           :width="150"
           align="center"
-          label="公告类型"
-          prop="noticeTypeName"
+          label="国标表中上级节点id"
+          prop="parentCode"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>公告类型</span>
+            <span>国标表中上级节点id</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="searchform.noticeTypeId"
+                v-model="searchform.parentCode"
                 size="mini"
               />
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="截止日期"
-          prop="state"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>截止日期</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="sousuo"
-                size="mini"
-              />
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="状态"
-          prop="flowStatus"
-          fixed="right"
-          show-overflow-tooltip
-        >
-          <template slot-scope="scope">
-            {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':'审核通过'}}
-          </template>
-          <template slot="header" slot-scope="scope">
-            <span>状态</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="sousuo"
-                size="mini"
-              />
-            </div>
-          </template>
-        </el-table-column>
-        <!-- <el-table-column
-          :width="80"
-          align="center"
-          label="编制人"
-          prop="username"
-          show-overflow-tooltip
-        ></el-table-column> -->
-        <!-- <el-table-column
-          :width="120"
-          align="center"
-          label="编制时间"
-          prop="createtime"
-          show-overflow-tooltip
-        >
-          <template slot-scope="scope">{{
-            scope.row.createtime | dateformat
-          }}</template>
-        </el-table-column> -->
+
       </el-table>
     </div>
     <el-pagination
@@ -184,6 +148,55 @@
       @size-change="handleSizeChange"
       layout="total, sizes, prev, pager, next, jumper"
     ></el-pagination>
+
+    <el-dialog  title="标准库维护" :visible.sync="dialogResult">
+      <el-form :model="resultform">
+        <el-form-item label="项目编号:" :label-width="formLabelWidth">
+          <el-input
+            style="float: left; width: 60%"
+            v-model="searchform.importCode"
+            size="mini"
+          />
+        </el-form-item>
+
+        <el-form-item label="项目名称:" :label-width="formLabelWidth">
+          <el-input
+            style="float: left; width: 60%"
+            v-model="searchform.name"
+            size="mini"
+          />
+        </el-form-item>
+
+        <el-form-item label="单位:" :label-width="formLabelWidth">
+          <el-input
+            style="float: left; width: 60%"
+            v-model="searchform.unit"
+            size="mini"
+          />
+        </el-form-item>
+
+        <el-form-item label="标准库项目特征:" :label-width="formLabelWidth">
+          <!--<el-input
+            style="float: left; width: 100%"
+            v-model="searchform.feature"
+            size="mini"
+          />-->
+          <el-input
+            type="textarea"
+            style="float: left; width: 60%"
+            :rows="4"
+            placeholder="请输入内容"
+            v-model="searchform.feature">
+          </el-input>
+
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogResult = false">保 存</el-button>
+        <el-button @click="dialogResult = false">关 闭</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -193,22 +206,36 @@
     name: "proposal-list-look",
     data() {
       return {
-        page: {current: 1, size: 10, total: 0, records: []},
-        showinput: false,
-        sousuo: "",
-        searchform: {
+          page: {current: 1, size: 10, total: 0, records: []},
+          showinput: false,
+          sousuo: "",
+          searchform: {
 
-          orgid: "",
-          orgname: "",
-          inforName: "",
-          enginTypeFirstId: "",
-          constructionOrg: "",
-          noticeTypeId: "",
-        },
-        menus: [],
-        multipleSelection: [],
-        orgTree: [],
-      };
+              importCode: "",
+              parentCode: "",
+              name: "",
+              unit: "",
+              feature: "",
+              code: "",
+              projectType: "",
+              uuid: "",
+          },
+          menus: [],
+          multipleSelection: [],
+          orgTree: [],
+          dialogResult: false,
+          resultform: {
+              name: '',
+              region: '',
+              date1: '',
+              date2: '',
+              delivery: false,
+              type: [],
+              resource: '',
+              desc: ''
+          },
+          formLabelWidth: '120px'
+      }
     },
     methods: {
       exportdata() {
@@ -253,12 +280,12 @@
         }
         let uuids = []
         this.multipleSelection.forEach((item) => {
-          uuids.push(item.topOrgId)
+          uuids.push(item.uuid)
         })
         // uuids.join(',')
         this.$http
           .post(
-            "/api/topInfo/TopInfor/list/delete",
+            "/api/ boq/BoqOrdinaryStandard/list/delete",
             {ids: uuids}
           )
           .then((res) => {
@@ -291,10 +318,11 @@
       },
       searchformReset() {
         // this.$refs["searchform"].resetFields();
-        this.searchform.inforName = "";
-        this.searchform.enginTypeFirstId = "";
-        this.searchform.constructionOrg = "";
-        this.searchform.noticeTypeId = "";
+        this.searchform.importCode = "";
+        this.searchform.parentCode = "";
+        this.searchform.name = "";
+        this.searchform.unit = "";
+        this.searchform.feature = "";
         this.getData();
       },
       // 列表选项数据
@@ -305,7 +333,7 @@
       getData() {
         this.$http
           .post(
-            "/api/topInfo/TopInfor/list/loadPageDataForReg",
+            "/api/ boq/BoqOrdinaryStandard/list/loadPageDataByCondition",
             this.searchform
           )
           .then((res) => {

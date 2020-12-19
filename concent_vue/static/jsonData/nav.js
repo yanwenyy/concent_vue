@@ -513,6 +513,64 @@ export default {
               }
 
               ]
+            },
+            {
+            "name": "工程量清单库",
+            "path": "/boq",
+            "component": "/router",
+            "iconCls": "el-icon-printer",
+            "menushow": true,
+            "leaf": false,
+            "defaultpage": false,
+            "children": [
+              {
+                "name": "数据标准",
+                "path": "/boq/dataStandards",
+                "component": "/router",
+                "iconCls": "el-icon-printer",
+                "menushow": true,
+                "leaf": false,
+                "defaultpage": false,
+                "children":[
+                  {
+                    "name": "标准库",
+                    "path": "/boq/dataStandards/ordinaryStandard/list",
+                    "component": "/boq/dataStandards/ordinaryStandard/list",
+                    "iconCls": "el-icon-switch-button",
+                    "menushow": true,
+                    "leaf": true,
+                    "defaultpage": true
+                  },
+                  {
+                    "name": "标准库新增",
+                    "path": "/boq/dataStandards/ordinaryStandard/detail",
+                    "component": "/boq/dataStandards/ordinaryStandard/detail",
+                    "iconCls": "el-icon-switch-button",
+                    "menushow": false,
+                    "leaf": true,
+                    "defaultpage": true
+                  },
+                  {
+                    "name": "知识库",
+                    "path": "/boq/dataStandards/nationalStandard",
+                    "component": "",
+                    "iconCls": "el-icon-switch-button",
+                    "menushow": true,
+                    "leaf": true,
+                    "defaultpage": true
+                  }, {
+                    "name": "近义词库",
+                    "path": "/boq/dataStandards/standardSynonym",
+                    "component": "",
+                    "iconCls": "el-icon-switch-button",
+                    "menushow": true,
+                    "leaf": true,
+                    "defaultpage": true
+                  }
+                ]
+              }
+
+            ]
             }
            ]
           }
