@@ -156,8 +156,10 @@
     methods: {
       //工程类别二级
       getTwo(id) {
+        this.searchform.enginTypeSecondId='';
+        this.xqprojectType =[];
         if(id!=''){
-          this.searchform.enginTypeSecondId='';
+
           this.projectDomainType.find(
             (item) => {
             if (item.id == id) {

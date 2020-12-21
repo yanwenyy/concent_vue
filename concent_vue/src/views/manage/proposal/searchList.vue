@@ -22,9 +22,10 @@
       <el-form-item label="预计招标日期:">
         <el-date-picker
           v-model="searchform.planBidTime"
-          type="date"
-          value-format="yyyy-MM-dd HH:mm:ss"
-          placeholder="选择日期">
+          type="daterange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期">
         </el-date-picker>
       </el-form-item>
       <el-form-item
@@ -161,6 +162,9 @@
           prop="inforName"
           show-overflow-tooltip
         >
+          <template slot-scope="scope">
+            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
+          </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -323,9 +327,9 @@
       },
       //工程类别二级
       getTwo(id) {
-
+        this.searchform.enginTypeSecondId='';
+        this.xqprojectType =[];
         if(id!=''){
-          this.searchform.enginTypeSecondId='';
           this.projectDomainType.find(
             (item) => {
             if (item.id == id) {
