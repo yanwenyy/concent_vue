@@ -213,13 +213,13 @@
     }
   }
 </script>
-<style>
+<style scoped>
   .dialog-footer {
     margin-top: 50px;
     text-align: center;
   }
 
-  .el-dialog {
+  >>>.el-dialog {
     width: 80%;
   }
 

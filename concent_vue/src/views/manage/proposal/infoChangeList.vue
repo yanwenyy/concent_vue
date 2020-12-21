@@ -68,21 +68,54 @@
         </el-table-column>
 
         <el-table-column
-          :width="150"
+          :width="200"
           align="center"
-          label="工程类别"
+          label="工程类别(一级)"
+          prop="enginTypeFirstName"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>工程类别(一级)</span>
+            <el-select
+              clearable
+              filterable
+              placeholder="请选择"
+              @change="getTwo"
+              size="mini"
+              v-model="searchform.enginTypeFirstId"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.id"
+                v-for="(item, index) in projectDomainType"
+              ></el-option>
+            </el-select>
+          </template>
+        </el-table-column>
+        <el-table-column
+          :width="200"
+          align="center"
+          label="工程类别(二级)"
           prop="enginTypeSecondName"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>工程类别</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.enginTypeFirstId"
-                size="mini"
-              />
-            </div>
+            <span>工程类别(二级)</span>
+            <el-select
+              clearable
+              filterable
+              placeholder="请选择工程类别(一级)"
+              size="mini"
+              v-model="searchform.enginTypeSecondId"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.id"
+                v-for="(item, index) in xqprojectType"
+              ></el-option>
+            </el-select>
           </template>
         </el-table-column>
         <el-table-column
@@ -169,7 +202,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':'审核通过'}}
+             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
           </template>
           <template slot="header" slot-scope="scope">
             <span>状态</span>
@@ -213,18 +246,40 @@
           orgname: "",
           inforName: "",
           enginTypeFirstId: "",
+          enginTypeSecondId:'',
           constructionOrg: "",
           noticeTypeId: "",
         },
         menus: [],
         multipleSelection: [],
         orgTree: [],
+        xqprojectType:[],//工程二级列表
       };
     },
     components: {
       InfoChangeSearch
     },
+    computed: {
+      projectDomainType() {
+        // console.log(this.$store.state.category["projectDomainType"])
+        return this.$store.state.category.projectDomainType;
+      }
+    },
     methods: {
+      //工程类别二级
+      getTwo(id) {
+        this.searchform.enginTypeSecondId='';
+        this.xqprojectType =[];
+        if(id!=''){
+          this.projectDomainType.find(
+            (item) => {
+            if (item.id == id) {
+            this.xqprojectType = item.children;
+          }
+        }
+        )
+        }
+      },
       //去新增详情页面
       goAddDetail(data){
         // console.log(data);
