@@ -11,6 +11,7 @@
     <el-menu
       :collapse="!this.$store.state.collapsed"
       :default-active="this.$route.path"
+      :unique-opened="true"
       :router="useroute"
       ref="leftNavigation"
     >

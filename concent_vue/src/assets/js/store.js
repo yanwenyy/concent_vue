@@ -239,7 +239,7 @@ const mutations = {
   setCategory(state, data) {
 
     state.category=JSON.parse(sessionStorage.getItem('category'))||{};
-    console.log(state.category[data.name])
+    // console.log(state.category[data.name])
     if(state.category[data.name]== undefined){
       Vue.prototype.$http.get('/jsonapi/System/system/category/detail//v1.0/tree/' + data.id).then(res => {
         state.category[data.name] = res.data.data;

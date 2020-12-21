@@ -14,6 +14,8 @@
         <el-date-picker
           v-model="searchform.createTime"
           type="daterange"
+          @change="searchform.selectTimeType='01',searchform.planBidTime=''"
+          value-format="timestamp"
           range-separator="至"
           start-placeholder="开始日期"
           end-placeholder="结束日期">
@@ -23,6 +25,8 @@
         <el-date-picker
           v-model="searchform.planBidTime"
           type="daterange"
+          @change="searchform.selectTimeType='02',searchform.createTime=''"
+          value-format="timestamp"
           range-separator="至"
           start-placeholder="开始日期"
           end-placeholder="结束日期">
@@ -53,7 +57,7 @@
         <el-select
           clearable
           filterable
-          placeholder="请选择"
+          placeholder="请选择工程类别(一级)"
           size="mini"
           v-model="searchform.enginTypeSecondId"
         >
@@ -217,7 +221,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            <span>{{scope.row.flowStatus=='1'?'草稿':scope.row.flowStatus=='2'?'审核中':'审核通过'}}</span>
+             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
           </template>
         </el-table-column>
         <el-table-column
@@ -269,7 +273,10 @@
           flowStatus:'',
           createTime:'',
           planBidTime:'',
-          path:''
+          path:'',
+          selectTimeType:'',
+          beginTime:"",
+          endTime:'',
         },
         multipleSelection: [],
         xqprojectType:[],//工程二级列表
@@ -386,7 +393,7 @@
             ffid:'',
             flowStatus:'',
             createTime:'',
-            planBidTime:''
+            planBidTime:'',
         }
         this.getData();
       },
@@ -396,6 +403,15 @@
       },
       // 查询
       getData() {
+        if(this.searchform.selectTimeType=='01'){
+          this.searchform.beginTime=this.searchform.createTime[0];
+          this.searchform.endTime=this.searchform.createTime[1];
+        }else{
+          this.searchform.beginTime=this.searchform.planBidTime[0];
+          this.searchform.endTime=this.searchform.planBidTime[1];
+        }
+        this.searchform.createTime=null;
+        this.searchform.planBidTime=null;
         this.$http
           .post(
             "/api/topInfo/TopInfor/list/loadPageDataForSelect",
@@ -403,7 +419,7 @@
           )
           .then((res)=>{
           this.page = res.data.data;
-          console.log(this.page)
+          // console.log(this.page)
       });
       },
 
