@@ -1108,7 +1108,7 @@ export default {
   },
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
   .btn-group{
     text-align: center;
     margin-top: 20px;
@@ -1207,14 +1207,14 @@ export default {
     // height: 200px;
   }
 
-  .el-input--mini .el-input__inner {
+  >>>.el-input--mini .el-input__inner {
     height: 40px;
     width: 100%;
     box-sizing: border-box;
     // margin: 10px 0 0 10px;
   }
 
-  .gcform .el-input {
+  .gcform >>>.el-input {
     width: 95% ;
   }
   .listInput{
