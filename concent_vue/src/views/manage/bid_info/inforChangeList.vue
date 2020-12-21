@@ -303,7 +303,7 @@
         // uuids.join(',')
         this.$http
           .post(
-            "/api/topInfo/TopInfor/list/delete",
+            // "/api/topInfo/TopInfor/list/delete",
             {ids: uuids}
           )
           .then((res) => {
@@ -358,7 +358,7 @@
       getData() {
         this.$http
           .post(
-            "/api/topInfo/TopInfor/list/loadPageDataForChangeRecord",
+            // "/api/topInfo/TopInfor/list/loadPageDataForChangeRecord",
             this.searchform
           )
           .then((res) => {

@@ -3,14 +3,14 @@
   <div>
     <el-form :inline="true" :model="searchform" @keyup.enter.native="getData()" class="gcform">
       <el-row>
-      <el-form-item label="项目名称:" style="width: 33%">
+      <el-form-item label="项目名称:">
         <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
       </el-form-item>
-      <el-form-item label="建设单位:" style="width: 33%">
+      <el-form-item label="建设单位:">
         <el-input v-model="searchform.constructionOrg" placeholder="建设单位" clearable></el-input>
       </el-form-item>
 
-      <el-form-item label="资审截止日期:" style="width: 33%">
+      <el-form-item label="资审截止日期:">
         <el-date-picker
           v-model="searchform.createTime"
           type="daterange"
@@ -22,7 +22,7 @@
 
       </el-row>
       <el-row>
-      <el-form-item style="width: 33%"
+      <el-form-item
         label="工程类别(一级):"
       >
         <el-select
@@ -41,7 +41,7 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item style="width: 33%"
+      <el-form-item
         label="工程类别(二级):"
       >
         <el-select
@@ -94,7 +94,7 @@
           <el-button slot="append" icon="el-icon-search"  @click="selectPosition()"></el-button>
         </el-input>
       </el-form-item>
-        <el-form-item label="登记时间:" style="width: 33%">
+        <el-form-item label="登记时间:">
           <el-date-picker
             v-model="searchform.createTime"
             type="daterange"
@@ -166,18 +166,9 @@
           prop="inforName"
           show-overflow-tooltip
         >
-                  <template slot="header" slot-scope="scope">
-            <span>项目名称</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.inforName"
-                size="mini"
-              />
-            </div>
-          </template>
+
           <template slot-scope="scope">
-            {{scope.row.inforName}}
+            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -187,16 +178,6 @@
           prop="topInfor.enginTypeFirstName"
           show-overflow-tooltip
         >
-                  <template slot="header" slot-scope="scope">
-            <span>工程类别</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.enginTypeFirstName"
-                size="mini"
-              />
-            </div>
-          </template>
           <template slot-scope="scope">
             {{scope.row.enginTypeFirstName}}
           </template>
@@ -208,16 +189,6 @@
           prop="topInfor.constructionOrg"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>建设单位</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.constructionOrg"
-                size="mini"
-              />
-            </div>
-          </template>
           <template slot-scope="scope">
             {{scope.row.constructionOrg}}
           </template>
@@ -229,16 +200,6 @@
           prop="topInfor.noticeTypeName"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>公告类型</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.noticeTypeName"
-                size="mini"
-              />
-            </div>
-          </template>
           <template slot-scope="scope">
             {{scope.row.noticeTypeName}}
           </template>
@@ -250,19 +211,7 @@
           prop="verify.saleTime"
           show-overflow-tooltip
         >
-          <!-- <template slot-scope="scope">{{
-            scope.row.state === '0' ? '草稿' : '已上报'
-          }}</template> -->
-                    <template slot="header" slot-scope="scope">
-            <span>资审文件发售截止日期</span>
-            <div>
-              <el-date-picker
-                v-model="searchform.saleTime"
-                type="date"
-                placeholder="选择日期">
-              </el-date-picker>
-            </div>
-          </template>
+
           <template slot-scope="scope" :value-format="timestamp">
             {{scope.row.saleTime | dateformat}}
           </template>
@@ -275,21 +224,6 @@
           filter-multiple="true"
           show-overflow-tooltip
         >
-                  <template slot="header" slot-scope="scope">
-            <span>状态</span>
-                    <el-select v-model="searchform.status" placeholder="请选择">
-                      <el-option
-                        key="0"
-                        label="未进行资审申请"
-                        value="0">
-                      </el-option>
-                      <el-option
-                        key="1"
-                        label="已进行资审申请"
-                        value="1">
-                      </el-option>
-                    </el-select>
-          </template>
           <template slot-scope="scope">
             <el-tag  v-if="scope.row.uuid===null" type="warning">未进行资审申请</el-tag>
             <el-tag  v-else type="success">已进行资审申请</el-tag>
@@ -302,16 +236,6 @@
           prop="verify.username"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>填报人</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.username"
-                size="mini"
-              />
-            </div>
-          </template>
           <template slot-scope="scope">
             {{scope.row.username}}
           </template>
@@ -323,21 +247,6 @@
           prop="verify.createtime"
           show-overflow-tooltip
         >
-          <!-- <template slot-scope="scope">{{
-            scope.row.createtime | dateformat
-          }}</template> -->
-          <template slot="header" slot-scope="scope">
-            <span>填报时间</span>
-            <div>
-              <div>
-                <el-date-picker
-                  v-model="searchform.createtime"
-                  type="date"
-                  placeholder="选择日期">
-                </el-date-picker>
-              </div>
-            </div>
-          </template>
           <template slot-scope="scope">
             {{scope.row.createtime}}
           </template>
@@ -362,22 +271,36 @@ export default {
   data() {
     return {
       page: { current: 1, size: 10, total: 0, records: [] },
-      showinput: false,
-      sousuo: "",
       searchform: {
-        current: 1,
-        size: 10,
-        inforName: '',
-        enginTypeFirstName: '',
-        constructionOrg: '',
-        noticeTypeName: '',
-        status: '',
-        username: '',
-        saleTime: ''
+        inforName: "",
+        enginTypeFirstId: "",
+        enginTypeSecondId: "",
+        constructionOrg: "",
+        noticeTypeId: "",
+        belongLineId: "",
+        designOrg:"",
+        ffid:'',
+        flowStatus:'',
+        createTime:'',
+        planBidTime:'',
+        path:''
       },
-      menus: [],
       multipleSelection: [],
-      orgTree: []
+      xqprojectType:[],//工程二级列表
+      projectStatus:[
+        {
+          id:'1',
+          detailName:'草稿'
+        },
+        {
+          id:'2',
+          detailName:'审核中'
+        },
+        {
+          id:'3',
+          detailName:'审核通过'
+        }
+      ],//项目状态列表
     }
   },
   mounted() {
@@ -418,9 +341,9 @@ export default {
     },
     //工程类别二级
     getTwo(id) {
-
+      this.searchform.enginTypeSecondId='';
+      this.xqprojectType =[];
       if(id!=''){
-        this.searchform.enginTypeSecondId='';
         this.projectDomainType.find(
           (item) => {
             if (item.id == id) {
@@ -430,125 +353,97 @@ export default {
         )
       }
     },
-    statusFormat(row,column){
-      alert(row.verify.uuid)
-      // console.log(row.verify.uuid);
-      // var statusW;
-      // if(row.verify.uuid!="")
-      // {
-      //   statusW= "已进行资审申请"
-      // }else
-      // {
-      //   statusW= "未进行资审申请"
-      // }
-      return row.verify.uuid != "" ? "已进行资审申请" : row.verify.uuid == "" ? "未进行资审申请" : "未进行资审申请";
-      // return statusW
-    },
-    search(){
-      this.showinput = false
-    },
-    add(){
-      //alert(JSON.stringify(this.multipleSelection[0]));
-       let p = { actpoint: 'add',instid: this.multipleSelection[0].uuid, topinfoid:this.multipleSelection[0].tiouuid}
-      //alert(JSON.stringify(p));
-       this.$router.push({
-        path: './detail/',
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-      })
+    exportdata() {
     },
     // 查看
     rowshow(row) {
-      let p = { actpoint: 'look', instid: row.uuid }
+
+      console.log(JSON.stringify(row));
+      // if (row.uuid != null) {
+      //   this.$message.info("当前登记的项目信息已经添加的资审信息！");
+      //   return;
+      // }
+      let p = {actpoint: "look", instid: row.inforid, topinfoid: row.tiouuid};
       this.$router.push({
-        path: './detail/',
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-      })
+        path: "./detail/",
+        query: {p: this.$utils.encrypt(JSON.stringify(p))},
+      });
     },
+    // 展示
     show() {
       if (this.multipleSelection.length !== 1) {
-        this.$message.info('请选择一条记录进行查看操作！')
-        return false
+        this.$message.info("请选择一条记录进行查看操作！");
+        return false;
       }
-      let p = { actpoint: 'look', instid: this.multipleSelection[0].uuid }
+      let p = {actpoint: "look", instid: this.multipleSelection[0].uuid};
       this.$router.push({
-        path: '../detail/',
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-      })
+        path: "../detail/",
+        query: {p: this.$utils.encrypt(JSON.stringify(p))},
+      });
     }, // list通用方法开始
     handleSizeChange(val) {
-      this.searchform.size = val
-      this.getData()
+      this.searchform.size = val;
+      this.getData();
     },
     handleCurrentChange(val) {
-      this.searchform.current = val
-      this.getData()
+      this.searchform.current = val;
+      this.getData();
     },
     searchformSubmit() {
-      this.searchform.current = 1
-      this.getData()
+      this.searchform.current = 1;
+      this.getData();
     },
     searchformReset() {
-      // this.$refs['searchform'].resetFields()
-      this.searchform.inforName = "";
-      this.searchform.enginTypeFirstName = "";
-      this.searchform.constructionOrg = "";
-      this.searchform.noticeTypeName = "";
-      this.searchform.status = "";
-      this.searchform.username = "";
-      this.searchform.saleTime = "";
-        this.getData();
+      // this.$refs["searchform"].resetFields();
+      this.searchform={
+        inforName: "",
+        enginTypeFirstId: "",
+        enginTypeSecondId: "",
+        constructionOrg: "",
+        noticeTypeId: "",
+        belongLineId: "",
+        designOrg:"",
+        ffid:'',
+        flowStatus:'',
+        createTime:'',
+        planBidTime:''
+      }
+      this.getData();
     },
     // 列表选项数据
     handleSelectionChange(val) {
-      this.multipleSelection = val
+      this.multipleSelection = val;
     },
+    // 查询
     getData() {
       this.$http
         .post(
-          '/api/topInfo/Verify/list/loadPageDataForFlowStatus',
-          // '/api' + this.$route.path.substr(0, this.$route.path.length - 1),
+          "/api/topInfo/Verify/list/loadPageDataForFlowStatus",
           this.searchform
         )
-        .then(res => {
-          this.page = res.data.data
-        })
-    },
-    getMenus() {
-      this.$http
-        .post('api/base/loadcascader', { typecode: 'XMLX' })
-        .then(res => {
-          if (res.data.code === 0) {
-            this.menus = res.data.data
-          }
-        })
-    },
-    currentMenu(selVal) {
-      let selMenuObj = this.menus.filter(item => item.value === selVal)
-      this.searchform.menu = selMenuObj[0].label
-    },
-    // 获取上级单位树信息
-    getOrgTree() {
-      this.$http.get('/api/base/loadorglist').then(res => {
-        this.orgTree = res.data.data
-      })
-    },
-    // 确定单位
-    orgChange() {
-      let selectLabelArr = this.$refs['porgCascader'].getCheckedNodes()[0]
-        .pathLabels
-      this.searchform.orgname = selectLabelArr[selectLabelArr.length - 1]
+        .then((res)=>{
+          this.page = res.data.data;
+          console.log(this.page)
+        });
     }
 
-    // list通用方法结束
   },
   created() {
-    //this.getMenus()
-    //this.getOrgTree()
-    this.getData()
+    this.getData();
   }
-}
+};
 </script>
 <style scoped>
+.gcform .el-form-item{
+  width: auto;
+}
+>>>.el-form-item__label{
+  width: auto;
+}
+>>>.el-input--mini .el-input__inner{
+  height: auto;
+  line-height: inherit;
+}
 .el-table__row {
   cursor: pointer;
 }
