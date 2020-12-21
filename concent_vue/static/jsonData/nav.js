@@ -215,6 +215,15 @@ export default {
                       "leaf": true,
                       "defaultpage": true
                     },
+                    {
+                      "name": "开标结果登记",
+                      "path": "/manage/bid_info/Winning_bid",
+                      "component": "/manage/bid_info/Winning_bid",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": false,
+                      "leaf": true,
+                      "defaultpage":  true
+                  },
                   ]
                 },
                 {

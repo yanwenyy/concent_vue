@@ -4,7 +4,7 @@
       <el-button-group style="float: left">
         <el-button @click="add" plain type="primary">登记</el-button>
         <el-button @click="totop" :disabled="flowStatus!=1&&flowStatus!=4" plain type="primary">修改</el-button>
-        <el-button type="primary" @click=" " plain >开标结果登记</el-button>
+        <el-button type="primary" @click="addk" plain >开标结果登记</el-button>
 
         <el-button @click="dialogFormVisible= true" plain type="primary">中标结果登记</el-button>
         <el-button @click="remove" type="primary" plain>删除</el-button>
@@ -236,7 +236,7 @@
       </el-pagination>
       <info-change-search v-if="infoCSVisible" ref="infoCS" @refreshDataList="goAddDetail"></info-change-search>
 
-  <el-dialog title="开标登记结果" :visible.sync="dialogFormVisible" margin="0 auto">
+  <el-dialog title="中标登记结果" :visible.sync="dialogFormVisible" margin="0 auto">
     <el-form>
         <el-form-item label="是否中标" :label-width="formLabelWidth">
       <el-select v-model="form.region" placeholder="请选择">
@@ -331,6 +331,24 @@ export default {
         let p = {actpoint: "add", instid: this.multipleSelection[0].topInfoOrgId};
         this.$router.push({
           path: "./detail/",
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        });
+
+        // this.infoCSVisible = true;
+        // this.$nextTick(() => {
+        //   this.$refs.infoCS.init();
+        // })
+    },
+
+    //开标结果登记界面
+        addk() {
+        if (this.multipleSelection.length !== 1||this.multipleSelection.length>1) {
+          this.$message.info("请选择一条记录进行登记操作！");
+          return false;
+        }
+        let p = {actpoint: "addk", instid: this.multipleSelection[0].topInfoOrgId};
+        this.$router.push({
+          path: "./Winning_bid/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
 
@@ -503,4 +521,7 @@ export default {
 .el-table__row {
   cursor: pointer;
 }
+/* .el-table__body-wrapper{
+  height: 475px !important;
+} */
 </style>
