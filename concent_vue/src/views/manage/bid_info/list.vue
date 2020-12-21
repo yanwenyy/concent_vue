@@ -64,6 +64,9 @@
                 size="mini"/>
             </div>
           </template>
+          <template slot-scope="scope">
+            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
+        </template>
         </el-table-column>
 
         <el-table-column
