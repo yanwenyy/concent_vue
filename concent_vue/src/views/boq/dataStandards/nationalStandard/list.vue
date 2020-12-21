@@ -2,8 +2,8 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary">新增</el-button>
-       <!-- <el-button @click="dialogResult=true" plain type="primary">新增</el-button>-->
+       <!-- <el-button @click="add" plain type="primary">新增</el-button>-->
+        <el-button @click="dialogResult=true" plain type="primary">新增</el-button>
         <el-button @click="totop" plain type="primary">修改</el-button>
         <el-button @click="remove" type="primary" plain>删除</el-button>
        <!-- <el-button @click="searchformReset" type="primary" plain>刷新</el-button>-->
@@ -47,16 +47,16 @@
         <el-table-column
           :width="500"
           align="center"
-          label="项目编号"
-          prop="importCode"
+          label="编码"
+          prop="code"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>项目编号</span>
+            <span>编码</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="searchform.importCode"
+                v-model="searchform.code"
                 size="mini"
               />
             </div>
@@ -65,6 +65,25 @@
 
         <el-table-column
           :width="500"
+          align="center"
+          label="父编码"
+          prop="parentId"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>父编码</span>
+            <div>
+              <el-input
+                style="float: left; width: 100%"
+                v-model="searchform.parentId"
+                size="mini"
+              />
+            </div>
+          </template>
+        </el-table-column>
+
+        <el-table-column
+          :width="150"
           align="center"
           label="项目名称"
           prop="name"
@@ -81,7 +100,24 @@
             </div>
           </template>
         </el-table-column>
-
+        <el-table-column
+          :width="150"
+          align="center"
+          label="特征描述"
+          prop="feature"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>特征描述</span>
+            <div>
+              <el-input
+                style="float: left; width: 100%"
+                v-model="searchform.feature"
+                size="mini"
+              />
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column
           :width="150"
           align="center"
@@ -100,37 +136,20 @@
             </div>
           </template>
         </el-table-column>
+
         <el-table-column
           :width="150"
           align="center"
-          label="标准库项目特征"
-          prop="feature"
+          label="排序"
+          prop="sortNo"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>标准库项目特征</span>
+            <span>排序</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="searchform.feature"
-                size="mini"
-              />
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="国标表中上级节点id"
-          prop="parentCode"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>国标表中上级节点id</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.parentCode"
+                v-model="searchform.sortNo"
                 size="mini"
               />
             </div>
@@ -149,12 +168,20 @@
       layout="total, sizes, prev, pager, next, jumper"
     ></el-pagination>
 
-   <!-- <el-dialog  title="标准库维护" :visible.sync="dialogResult">
+    <el-dialog  title="国标库维护" :visible.sync="dialogResult">
       <el-form :model="resultform">
-        <el-form-item label="项目编号:" :label-width="formLabelWidth">
+        <el-form-item label="编码:" :label-width="formLabelWidth">
           <el-input
             style="float: left; width: 60%"
-            v-model="searchform.importCode"
+            v-model="form.code"
+            size="mini"
+          />
+        </el-form-item>
+
+        <el-form-item label="父编码:" :label-width="formLabelWidth">
+          <el-input
+            style="float: left; width: 60%"
+            v-model="form.parentId"
             size="mini"
           />
         </el-form-item>
@@ -162,7 +189,16 @@
         <el-form-item label="项目名称:" :label-width="formLabelWidth">
           <el-input
             style="float: left; width: 60%"
-            v-model="searchform.name"
+            v-model="form.name"
+            size="mini"
+          />
+        </el-form-item>
+
+
+        <el-form-item label="项目特征:" :label-width="formLabelWidth">
+          <el-input
+            style="float: left; width: 60%"
+            v-model="form.feature"
             size="mini"
           />
         </el-form-item>
@@ -170,32 +206,24 @@
         <el-form-item label="单位:" :label-width="formLabelWidth">
           <el-input
             style="float: left; width: 60%"
-            v-model="searchform.unit"
+            v-model="form.unit"
             size="mini"
           />
         </el-form-item>
 
-        <el-form-item label="标准库项目特征:" :label-width="formLabelWidth">
-          &lt;!&ndash;<el-input
-            style="float: left; width: 100%"
-            v-model="searchform.feature"
-            size="mini"
-          />&ndash;&gt;
+        <el-form-item label="排序:" :label-width="formLabelWidth">
           <el-input
-            type="textarea"
             style="float: left; width: 60%"
-            :rows="4"
-            placeholder="请输入内容"
-            v-model="searchform.feature">
-          </el-input>
-
+            v-model="form.sortNo"
+            size="mini"
+          />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="saveOrUpdate()">保 存</el-button>
+        <el-button type="primary" @click="save()">保 存</el-button>
         <el-button @click="dialogResult = false">关 闭</el-button>
       </div>
-    </el-dialog>-->
+    </el-dialog>
 
   </div>
 </template>
@@ -203,7 +231,7 @@
 <script>
   export default {
     // inject:['reload'],
-    name: "proposal-list-look",
+   // name: "proposal-list-look",
     data() {
       return {
           page: {current: 1, size: 10, total: 0, records: []},
@@ -211,14 +239,21 @@
           sousuo: "",
           searchform: {
 
-              importCode: "",
-              parentCode: "",
+              code: "",
+              parentId: "",
               name: "",
               unit: "",
               feature: "",
-              code: "",
-              projectType: "",
+              sortNo: "",
               uuid: "",
+          },
+          form:{
+              code: "",
+              parentId: "",
+              feature:"",
+              name: "",
+              unit: "",
+              sortNo: "",
           },
           menus: [],
           multipleSelection: [],
@@ -239,14 +274,36 @@
     },
     methods: {
       exportdata() {
+
       },
+        //Dialog保存按钮方法
+        save(){
+            this.$http
+                .post(
+                    "/api/ boq/BoqNationalStandard/detail/save",
+                    JSON.stringify(this.form),
+                    {useJson: true}
+                )
+                .then((res) => {
+                    if (res.data.code === 200) {
+                        this.$message({
+                            message: "保存成功",
+                            type: "success",
+                        });
+                        //关闭dialog对话框
+                        this.dialogResult = false;
+                        //查询列表数据
+                        this.getData();
+                    }
+                    else {
+                        this.$message.error("请添加必填项");
+                        return false;
+                    }
+                });
+        },
       search() {
         this.showinput = false;
       },
-        //Dialog保存按钮方法
-      /*  saveOrUpdate(){
-
-        },*/
       // 增加
       add() {
         let p = {actpoint: "add"};
@@ -282,18 +339,35 @@
           this.$message.info("请选择一条记录进行查看操作！");
           return false;
         }
-        let uuids = []
-        this.multipleSelection.forEach((item) => {
-          uuids.push(item.uuid)
-        })
-        // uuids.join(',')
-        this.$http
-          .post(
-            "/api/ boq/BoqOrdinaryStandard/list/delete",
-            {ids: uuids}
-          )
-          .then((res) => {
-            this.getData()
+          let uuids = []
+          this.multipleSelection.forEach((item) => {
+              if (item.uuid != null) {
+                  uuids.push(item.uuid);
+              }
+
+          })
+          this.$confirm('此操作将永久删除该信息, 是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+          }).then(() => {
+              // this.$message({
+              //   type: 'success',
+              //   message: '删除成功!'
+              // });
+              this.$http
+                  .post(
+                      '/api/ boq/BoqNationalStandard/list/delete',
+                      {ids: uuids}
+                  )
+                  .then(res => {
+                      this.getData();
+                  })
+          }).catch(() => {
+              this.$message({
+                  type: 'info',
+                  message: '已取消删除'
+              });
           });
       },
       // 展示
@@ -322,14 +396,15 @@
       },
       searchformReset() {
         // this.$refs["searchform"].resetFields();
-        this.searchform.importCode = "";
-        this.searchform.parentCode = "";
+        this.searchform.code = "";
+        this.searchform.parentId = "";
         this.searchform.name = "";
         this.searchform.unit = "";
         this.searchform.feature = "";
+          this.searchform.sortNo = "";
         this.getData();
       },
-      // 列表选项数据
+        // 列表选项数据
       handleSelectionChange(val) {
         this.multipleSelection = val;
       },
@@ -337,7 +412,7 @@
       getData() {
         this.$http
           .post(
-            "/api/ boq/BoqOrdinaryStandard/list/loadPageDataByCondition",
+            "/api/ boq/BoqNationalStandard/list/loadPageData",
             this.searchform
           )
           .then((res) => {
@@ -369,7 +444,6 @@
           .pathLabels;
         this.searchform.orgname = selectLabelArr[selectLabelArr.length - 1];
       },
-
       // list通用方法结束
     },
     created() {
