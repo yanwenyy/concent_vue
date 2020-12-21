@@ -41,7 +41,7 @@ export default {
                       "name": "项目信息登记",
                       "path": "/manage/proposal/list",
                       "component": "/manage/proposal/list",
-                      "iconCls": "el-icon-switch-button",
+                      "iconCls": "el-icon-notebook-2",
                       "menushow": true,
                       "leaf": true,
                       "defaultpage": true
@@ -50,7 +50,7 @@ export default {
                       "name": "项目信息登记维护",
                       "path": "/manage/proposal/detail",
                       "component": "/manage/proposal/detail",
-                      "iconCls": "el-icon-switch-button",
+                      "iconCls": "el-icon-notebook-2",
                       "menushow": false,
                       "leaf": true,
                       "defaultpage": true
@@ -59,7 +59,7 @@ export default {
                       "name": "项目信息变更",
                       "path": "/manage/proposal/infoChangeList",
                       "component": "/manage/proposal/infoChangeList",
-                      "iconCls": "el-icon-switch-button",
+                      "iconCls": "el-icon-edit-outline",
                       "menushow": true,
                       "leaf": true,
                       "defaultpage": true
@@ -68,7 +68,7 @@ export default {
                       "name": "项目信息变更",
                       "path": "/manage/proposal/infoChangeDetail",
                       "component": "/manage/proposal/infoChangeDetail",
-                      "iconCls": "el-icon-switch-button",
+                      "iconCls": "el-icon-edit-outline",
                       "menushow": false,
                       "leaf": true,
                       "defaultpage": false
@@ -77,7 +77,7 @@ export default {
                       "name": "项目信息查询",
                       "path": "/manage/proposal/searchList",
                       "component": "/manage/proposal/searchList",
-                      "iconCls": "el-icon-switch-button",
+                      "iconCls": "el-icon-search",
                       "menushow": true,
                       "leaf": true,
                       "defaultpage": true
@@ -98,7 +98,7 @@ export default {
                       "name": "资格预审登记",
                       "path": "/manage/verify/list",
                       "component": "/manage/verify/list",
-                      "iconCls": "el-icon-switch-button",
+                      "iconCls": "el-icon-notebook-2",
                       "menushow": true,
                       "leaf": true,
                       "defaultpage": true
@@ -116,7 +116,7 @@ export default {
                       "name": "资格预审登记审核",
                       "path": "/manage/verify/list_WorkFlow",
                       "component": "/manage/verify/list_WorkFlow",
-                      "iconCls": "el-icon-switch-button",
+                      "iconCls": "el-icon-notebook-2",
                       "menushow": false,
                       "leaf": true,
                       "defaultpage": false
@@ -125,7 +125,7 @@ export default {
                       "name": "资格预审变更",
                       "path": "/manage/verify/list_Change",
                       "component": "/manage/verify/list_Change",
-                      "iconCls": "el-icon-switch-button",
+                      "iconCls": "el-icon-edit-outline",
                       "menushow": true,
                       "leaf": true,
                       "defaultpage": false
@@ -134,7 +134,7 @@ export default {
                       "name": "资格预审变更详细",
                       "path": "/manage/verify/detail_Chang",
                       "component": "/manage/verify/detail_Chang",
-                      "iconCls": "el-icon-switch-button",
+                      "iconCls": "el-icon-edit-outline",
                       "menushow": false,
                       "leaf": true,
                       "defaultpage": false
@@ -152,7 +152,7 @@ export default {
                       "name": "资审登记新增",
                       "path": "/manage/verify/detail",
                       "component": "/manage/verify/detail",
-                      "iconCls": "el-icon-switch-button",
+                      "iconCls": "el-icon-notebook-2",
                       "menushow": false,
                       "leaf": true,
                       "defaultpage": false
@@ -173,7 +173,7 @@ export default {
                       "name": "投标登记",
                       "path": "/manage/bid_info/list",
                       "component": "/manage/bid_info/list",
-                      "iconCls": "el-icon-switch-button",
+                      "iconCls": "el-icon-notebook-2",
                       "menushow": true,
                       "leaf": true,
                       "defaultpage": true
@@ -182,7 +182,7 @@ export default {
                       "name": "投标登记新增",
                       "path": "/manage/bid_info/detail",
                       "component": "/manage/bid_info/detail",
-                      "iconCls": "el-icon-switch-button",
+                      "iconCls": "el-icon-notebook-2",
                       "menushow": false,
                       "leaf": true,
                       "defaultpage": false
@@ -412,7 +412,7 @@ export default {
                   "name": "房地产项目登记",
                   "path": "/statistics/project/estateAdd",
                   "component": "/statistics/project/estateAdd",
-                  "iconCls": "el-icon-switch-button",
+                  "iconCls": "el-icon-notebook-2",
                   "menushow": false,
                   "leaf": true,
                   "defaultpage": false
@@ -430,7 +430,7 @@ export default {
                   "name": "物资贸易项目登记",
                   "path": "/statistics/project/tradeAdd",
                   "component": "/statistics/project/tradeAdd",
-                  "iconCls": "el-icon-switch-button",
+                  "iconCls": "el-icon-notebook-2",
                   "menushow": false,
                   "leaf": true,
                   "defaultpage": false
@@ -449,7 +449,7 @@ export default {
                   "name": "工业制造项目登记",
                   "path": "/statistics/project/manufactureAdd",
                   "component": "/statistics/project/manufactureAdd",
-                  "iconCls": "el-icon-switch-button",
+                  "iconCls": "el-icon-notebook-2",
                   "menushow": false,
                   "leaf": true,
                   "defaultpage": false
@@ -467,7 +467,7 @@ export default {
                   "name": "金融保险项目登记",
                   "path": "/statistics/project/financeAdd",
                   "component": "/statistics/project/financeAdd",
-                  "iconCls": "el-icon-switch-button",
+                  "iconCls": "el-icon-notebook-2",
                   "menushow": false,
                   "leaf": true,
                   "defaultpage": false
@@ -485,7 +485,7 @@ export default {
                   "name": "运营维管项目登记",
                   "path": "/statistics/project/maintenanceAdd",
                   "component": "/statistics/project/maintenanceAdd",
-                  "iconCls": "el-icon-switch-button",
+                  "iconCls": "el-icon-notebook-2",
                   "menushow": false,
                   "leaf": true,
                   "defaultpage": false
@@ -503,7 +503,7 @@ export default {
                   "name": "其他目登记",
                   "path": "/statistics/project/otherAdd",
                   "component": "/statistics/project/otherAdd",
-                  "iconCls": "el-icon-switch-button",
+                  "iconCls": "el-icon-notebook-2",
                   "menushow": false,
                   "leaf": true,
                   "defaultpage": false
