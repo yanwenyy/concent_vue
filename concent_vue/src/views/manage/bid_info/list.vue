@@ -231,8 +231,7 @@
         :total="page.total"
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
-        layout="total, sizes, prev, pager, next, jumper"
-        style="margin: 20px;position: fixed;right:200px;bottom:40px">
+        layout="total, sizes, prev, pager, next, jumper">
       </el-pagination>
       <info-change-search v-if="infoCSVisible" ref="infoCS" @refreshDataList="goAddDetail"></info-change-search>
 
@@ -521,7 +520,8 @@ export default {
 .el-table__row {
   cursor: pointer;
 }
-/* .el-table__body-wrapper{
-  height: 475px !important;
-} */
+>>>.el-table__body-wrapper{
+  height: 549px !important;
+}
+
 </style>

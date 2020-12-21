@@ -17,6 +17,7 @@
       </div>
 
       <div style="overflow: scroll; max-height: 55vh;padding-bottom: 10px">
+  <h4 style="margin:0 0 0 0 ">项目前期信息</h4>
         <el-form
           :inline="false"
           :model="detailform"
@@ -24,6 +25,7 @@
           ref="detailform"
           style="background: white； height: ceil(100%-300px)"
         >
+
             <el-form-item label="项目板块:">
               <el-input
                 disabled
@@ -200,6 +202,24 @@
               </el-input>
             </el-form-item>
 
+            <el-row>
+            <el-form-item
+              class="neirong"
+              label="项目内容:"
+              style="width: 100%"
+            >
+              <el-input
+                disabled
+                type="textarea"
+                clearable
+                placeholder="请输入"
+                size="mini"
+                v-model="detailform.topInforBO.topInfor.inforContent"
+              />
+            </el-form-item>
+            </el-row>
+<div>
+  <h4 style="margin:10px 0 0 0 ">投标管理信息</h4>
             <el-form-item
               label="投标截止日期:"
               prop="bidInfo.endTime"
@@ -323,64 +343,9 @@
                 ></el-option>
                 </el-select>
             </el-form-item>
+</div>
 
-            <!-- <div>
-              <el-form-item  label="项目跟踪负责人:" >
-                <el-input
-                   disabled
-                  clearable
-                  placeholder=""
-                  size="mini"
-                  v-if="detailform.topInforBO"
-                  v-model="detailform.topInforBO.topInfoOrg.projectTrackResponPerson"
-                />
-              </el-form-item>
-              <el-form-item label="联系电话:">
-                <el-input
-                   disabled
-                  clearable
-                  placeholder=""
-                  size="mini"
-                  v-model="detailform.topInforBO.topInfoOrg.contactMode"
-                />
-              </el-form-item>
-            </div> -->
-            <el-form-item
-              class="neirong"
-              label="项目内容:"
-              style="width: 100%"
-            >
-              <el-input
-                disabled
-                type="textarea"
-                clearable
-                placeholder="请输入"
-                size="mini"
-                v-model="detailform.topInforBO.topInfor.inforContent"
-              />
-            </el-form-item>
 
-          <el-row>
-            <!-- <el-form-item
-              class="neirong"
-              label="工程概况(最多1000字):"
-              prop="clothSize.bcPlateTypeId"
-              style="width: 100%"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                type="textarea"
-                clearable
-                placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
-              />
-            </el-form-item> -->
-          </el-row>
           <el-row>
             <el-form-item
               class="neirong"
@@ -401,6 +366,7 @@
               />
             </el-form-item>
           </el-row>
+
           <el-row>
             <el-form-item
               class="neirong"
@@ -475,11 +441,19 @@
               :width="180"
             >
               <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    disabled
-                    v-model="scope.row.bidInfoSection.sectionName"
-                  ></el-input>
+                 <el-select
+              :disabled="p.actpoint === 'look'"
+                clearable
+                placeholder=""
+                size="mini"
+                v-model="scope.row.bidInfoSection.sectionId">
+              <el-option
+                  :key="index"
+                  :label="item.sectionName"
+                  :value="item.uuid"
+                  v-for="(item, index) in detailform.topInforBO.topInfoSectionList"
+                ></el-option>
+                </el-select>
               </template>
             </el-table-column>
 <!-- prop在table时回显 ,在from里面判断-->
