@@ -186,7 +186,25 @@ export default {
                       "menushow": false,
                       "leaf": true,
                       "defaultpage": false
-                    }
+                    },
+                    {
+                      "name": "投标登记变更",
+                      "path": "/manage/bid_info/inforChangeList",
+                      "component": "/manage/bid_info/inforChangeList",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": true
+                    },
+                    {
+                      "name": "项目信息变更详情",
+                      "path": "/manage/bid_info/InfoChangeDetail",
+                      "component": "/manage/bid_info/InfoChangeDetail",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": false,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
                   ]
                 },
                 {

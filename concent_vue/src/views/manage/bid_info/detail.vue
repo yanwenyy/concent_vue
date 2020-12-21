@@ -202,6 +202,7 @@
 
             <el-form-item
               label="投标截止日期:"
+              prop="bidInfo.endTime"
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -222,6 +223,7 @@
 
             <el-form-item
               label="招标公告发布日期:"
+              prop="bidInfo.publishTime"
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -275,6 +277,7 @@
 
             <el-form-item
               label="是否联合体投标:"
+              prop="bidInfo.isCoalitionBid"
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -299,7 +302,7 @@
 
             <el-form-item
               label="是否为费率招标:"
-
+              prop="bidInfo.isBidRates"
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -382,7 +385,7 @@
             <el-form-item
               class="neirong"
               label="投标说明(最多1000字):"
-
+              prop="bidInfo.bidExplain"
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -402,6 +405,7 @@
             <el-form-item
               class="neirong"
               label="附件（最大10MB）:"
+              prop=""
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -834,15 +838,25 @@ export default {
       },
       bidInfoSection:[],
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
+      yesOrNo:[
+          {
+            id:'0',
+            detailName:'是'
+          },
+          {
+            id:'1',
+            detailName:'否'
+          }
+        ]
     };
   },
   computed: {
       bidType() {
         return this.$store.state.bidType;
       },
-      yesOrNo(){
-        return this.$store.state.yesOrNo;
-      }
+      // yesOrNo(){
+      //   return this.$store.state.yesOrNo;
+      // }
 
   },
   methods: {
