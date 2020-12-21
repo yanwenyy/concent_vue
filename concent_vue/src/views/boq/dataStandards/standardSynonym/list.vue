@@ -2,8 +2,8 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary">新增</el-button>
-       <!-- <el-button @click="dialogResult=true" plain type="primary">新增</el-button>-->
+       <!-- <el-button @click="add" plain type="primary">新增</el-button>-->
+        <el-button @click="dialogResult=true" plain type="primary">新增</el-button>
         <el-button @click="totop" plain type="primary">修改</el-button>
         <el-button @click="remove" type="primary" plain>删除</el-button>
        <!-- <el-button @click="searchformReset" type="primary" plain>刷新</el-button>-->
@@ -47,16 +47,16 @@
         <el-table-column
           :width="500"
           align="center"
-          label="项目编号"
-          prop="importCode"
+          label="清单名称"
+          prop="standardName"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>项目编号</span>
+            <span>清单名称</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="searchform.importCode"
+                v-model="searchform.standardName"
                 size="mini"
               />
             </div>
@@ -66,16 +66,16 @@
         <el-table-column
           :width="500"
           align="center"
-          label="项目名称"
-          prop="name"
+          label="近义词"
+          prop="nearName"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>项目名称</span>
+            <span>近义词</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="searchform.name"
+                v-model="searchform.nearName"
                 size="mini"
               />
             </div>
@@ -85,58 +85,21 @@
         <el-table-column
           :width="150"
           align="center"
-          label="单位"
-          prop="unit"
+          label="排序号"
+          prop="sortNo"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>单位</span>
+            <span>排序号</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="searchform.unit"
+                v-model="searchform.sortNo"
                 size="mini"
               />
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="标准库项目特征"
-          prop="feature"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>标准库项目特征</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.feature"
-                size="mini"
-              />
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="国标表中上级节点id"
-          prop="parentCode"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>国标表中上级节点id</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.parentCode"
-                size="mini"
-              />
-            </div>
-          </template>
-        </el-table-column>
-
       </el-table>
     </div>
     <el-pagination
@@ -149,20 +112,28 @@
       layout="total, sizes, prev, pager, next, jumper"
     ></el-pagination>
 
-   <!-- <el-dialog  title="标准库维护" :visible.sync="dialogResult">
+    <el-dialog  title="近义词库维护" :visible.sync="dialogResult">
       <el-form :model="resultform">
-        <el-form-item label="项目编号:" :label-width="formLabelWidth">
+        <el-form-item label="清单名称:" :label-width="formLabelWidth">
           <el-input
             style="float: left; width: 60%"
-            v-model="searchform.importCode"
+            v-model="searchform.standardName"
             size="mini"
           />
         </el-form-item>
 
-        <el-form-item label="项目名称:" :label-width="formLabelWidth">
+        <el-form-item label="近义词:" :label-width="formLabelWidth">
           <el-input
             style="float: left; width: 60%"
-            v-model="searchform.name"
+            v-model="searchform.nearName"
+            size="mini"
+          />
+        </el-form-item>
+
+        <el-form-item label="排序号:" :label-width="formLabelWidth">
+          <el-input
+            style="float: left; width: 60%"
+            v-model="searchform.sortNo"
             size="mini"
           />
         </el-form-item>
@@ -175,27 +146,19 @@
           />
         </el-form-item>
 
-        <el-form-item label="标准库项目特征:" :label-width="formLabelWidth">
-          &lt;!&ndash;<el-input
-            style="float: left; width: 100%"
-            v-model="searchform.feature"
-            size="mini"
-          />&ndash;&gt;
+        <el-form-item label="排序:" :label-width="formLabelWidth">
           <el-input
-            type="textarea"
             style="float: left; width: 60%"
-            :rows="4"
-            placeholder="请输入内容"
-            v-model="searchform.feature">
-          </el-input>
-
+            v-model="searchform.sortNo"
+            size="mini"
+          />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="saveOrUpdate()">保 存</el-button>
         <el-button @click="dialogResult = false">关 闭</el-button>
       </div>
-    </el-dialog>-->
+    </el-dialog>
 
   </div>
 </template>
@@ -211,13 +174,9 @@
           sousuo: "",
           searchform: {
 
-              importCode: "",
-              parentCode: "",
-              name: "",
-              unit: "",
-              feature: "",
-              code: "",
-              projectType: "",
+              standardName: "",
+              nearName: "",
+              sortNo: "",
               uuid: "",
           },
           menus: [],
@@ -243,10 +202,6 @@
       search() {
         this.showinput = false;
       },
-        //Dialog保存按钮方法
-      /*  saveOrUpdate(){
-
-        },*/
       // 增加
       add() {
         let p = {actpoint: "add"};
@@ -289,7 +244,8 @@
         // uuids.join(',')
         this.$http
           .post(
-            "/api/ boq/BoqOrdinaryStandard/list/delete",
+            "\n" +
+              "/api/boq/BoqStandardSynonym/list/delete",
             {ids: uuids}
           )
           .then((res) => {
@@ -322,11 +278,9 @@
       },
       searchformReset() {
         // this.$refs["searchform"].resetFields();
-        this.searchform.importCode = "";
-        this.searchform.parentCode = "";
-        this.searchform.name = "";
-        this.searchform.unit = "";
-        this.searchform.feature = "";
+        this.searchform.standardName = "";
+        this.searchform.nearName = "";
+        this.searchform.sortNo = "";
         this.getData();
       },
       // 列表选项数据
@@ -337,7 +291,7 @@
       getData() {
         this.$http
           .post(
-            "/api/ boq/BoqOrdinaryStandard/list/loadPageDataByCondition",
+            "/api/boq/BoqStandardSynonym/list/loadPageData",
             this.searchform
           )
           .then((res) => {
@@ -369,7 +323,6 @@
           .pathLabels;
         this.searchform.orgname = selectLabelArr[selectLabelArr.length - 1];
       },
-
       // list通用方法结束
     },
     created() {
