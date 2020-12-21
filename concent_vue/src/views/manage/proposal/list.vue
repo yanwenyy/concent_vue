@@ -59,8 +59,10 @@
               />
             </div>
           </template>
+          <template slot-scope="scope">
+              <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
+          </template>
         </el-table-column>
-
         <el-table-column
           :width="150"
           align="center"
@@ -254,16 +256,23 @@
         let uuids = []
         this.multipleSelection.forEach((item) => {
           uuids.push(item.topOrgId)
-        })
-        // uuids.join(',')
-        this.$http
+        });
+        this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$http
           .post(
             "/api/topInfo/TopInfor/list/delete",
             {ids: uuids}
           )
           .then((res) => {
-            this.getData()
-          });
+          this.getData()
+         });
+      }).catch(() => {})
+        // uuids.join(',')
+
       },
       // 展示
       show() {

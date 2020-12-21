@@ -39,9 +39,16 @@ export function isInteger(s) {
  * @param {*} s
  */
 
-export function isMoney(s) {
-  s=s.replace(/[^\d.]/g,'');
-  s=s.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3');
-  return s;
-  // return /^(([1-9][0-9])|(([0].\d{0,2}|[1-9][0-9].\d{0,2})))$/.test(s)
+// export function isMoney(s) {
+//   s=s.replace(/[^\d.]/g,'');
+//   s=s.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3');
+//   return s;
+//   // return /^(([1-9][0-9])|(([0].\d{0,2}|[1-9][0-9].\d{0,2})))$/.test(s)
+// }
+
+export  function isMoney(s) {
+  // s=s.replace(/[^\d.]/g,'');
+  // s=s.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3');
+  // return s;
+  return /^\d+(\.\d{0,2})?$/.test(s)
 }

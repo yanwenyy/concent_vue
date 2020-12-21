@@ -447,4 +447,19 @@ pre {
   background: white;
   width:calc(100% - 4px)!important;
 }
+.tabelForm{
+  width: 100%!important;
+  padding: 10px 0;
+}
+.tabelForm .el-form-item__error{
+  top:-10px!important;
+}
+.blue{
+  color: blue!important;
+  text-decoration: underline;
+}
+.pointer{
+  cursor: pointer;
+}
 /**/
+

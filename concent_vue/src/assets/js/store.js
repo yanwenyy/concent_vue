@@ -65,6 +65,7 @@ const state = {
   // curProjectId: '1d8283451c7b8b4e56fc62744e74f7ba'
   curProjectId: '11484beb7ca57f78b1773381547ec24d ',
   messageCount: [],
+  categoryHc:[],
   category:{},//一级大类
 }
 
@@ -72,9 +73,9 @@ const getters = {
   getToolData(state) {
     return state.toolBarData
   },
-  // getCategory(state){
-  //   return state.category
-  // }
+  getCategory(state){
+    return state.category
+  }
 
 }
 const mutations = {
@@ -236,21 +237,18 @@ const mutations = {
 
   },
   setCategory(state, data) {
-    // console.log(data)
-    var list=[],c_list=[];
-    Vue.prototype.$http.get('/jsonapi/System/system/category/detail//v1.0/tree/' + data.id).then(res => {
-      // list = res.data.data
-      // list.forEach((item) => {
-      //     if(item.isLeaf == 0 && item.categoryCode == data){
-      //         c_list.push(item)
-      //     }
-      // });
-      state.category[data.name] = res.data.data;
 
-
-      // state.category[data] = c_list;
-      // console.log(state.category[data])
-    })
+    state.category=JSON.parse(sessionStorage.getItem('category'))||{};
+    console.log(state.category[data.name])
+    if(state.category[data.name]== undefined){
+      Vue.prototype.$http.get('/jsonapi/System/system/category/detail//v1.0/tree/' + data.id).then(res => {
+        state.category[data.name] = res.data.data;
+        sessionStorage.setItem('category',JSON.stringify(state.category));
+        state.category=JSON.parse(sessionStorage.getItem('category'));
+      })
+    }else{
+      state.category=JSON.parse(sessionStorage.getItem('category'));
+    }
   }
 }
 
