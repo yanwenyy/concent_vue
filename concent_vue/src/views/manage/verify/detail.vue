@@ -32,7 +32,7 @@
       >
 
         <el-input
-          readonly
+          disabled
           size="mini"
           v-model="detailform.topInfor.inforName"
         />
@@ -87,6 +87,7 @@
         <el-form-item
         label="招标方式:"
         style="width: 33%"
+        :disabled="p.actpoint === 'look'"
       >
           <el-select
             :disabled="p.actpoint === 'look'"
@@ -114,6 +115,7 @@
         label="是否联合体投标:"
         prop="verify.isCoalitionBid"
         style="width: 33%"
+
         :rules="{
           required: true, message: '此项不能为空', trigger: 'blur'
         }"
@@ -134,6 +136,7 @@
 <!--        </el-select>-->
         <el-input
           clearable
+          :readonly="p.actpoint === 'look'"
           size="mini"
           v-model="detailform.verify.isCoalitionBid"
         />
@@ -145,12 +148,14 @@
         label="资审文件发售截止日期:"
         prop="verify.saleTime"
         style="width: 33%"
+
         :rules="{
           required: true, message: '此项不能为空', trigger: 'blur'
         }"
       >
         <el-date-picker
           clearable
+          :disabled="p.actpoint === 'look'"
           value-format="timestamp"
           v-model="detailform.verify.saleTime"
           align="right"
@@ -173,8 +178,8 @@
       <el-form-item
         label="递交资格预审申请文件日期:"
         prop="verify.subTime"
-        style="width: 33%
-        "
+        style="width: 33%"
+
         :rules="{
           required: true, message: '此项不能为空', trigger: 'blur'
         }"
@@ -182,6 +187,7 @@
 
         <el-date-picker
           clearable
+          :disabled="p.actpoint === 'look'"
           value-format="timestamp"
           v-model="detailform.verify.subTime"
           align="right"
@@ -195,6 +201,7 @@
       <el-form-item
         label="资格预审公告发布日期:"
         prop="verify.publishTime"
+
         style="width: 33%"
         :rules="{
           required: true, message: '此项不能为空', trigger: 'blur'
@@ -202,6 +209,7 @@
       >
         <el-date-picker
           clearable
+          :disabled="p.actpoint === 'look'"
           value-format="timestamp"
           v-model="detailform.verify.publishTime"
           align="right"
@@ -322,6 +330,7 @@
             <el-form-item
             class="neirong"
               label="资审说明(最多1000字):"
+
               prop="verify.verifyExplain"
               style="width: 33%"
               :rules="{
@@ -332,6 +341,7 @@
             >
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-input
+                :readonly="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
                 size="mini"
@@ -350,14 +360,15 @@
                 class="upload-demo"
                 action="https://jsonplaceholder.typicode.com/posts/"
                 :on-change="handleChange">
-                <el-button size="small" type="primary">点击上传</el-button>
-                <div slot="tip" class="el-upload__tip">最大上传文件不超过500kb</div>
+                <el-button size="small" type="primary"  v-show="!p.actpoint === 'look'">点击上传</el-button>
+                <div slot="tip" class="el-upload__tip"></div>
               </el-upload>
             </el-form-item>
      </el-row>
 
      <p style="overflow:hidden;margin-right: 30px"><span style="float:left;">标段信息: </span>   <el-button
        @click="dialogTopInfoSection = true"
+       v-show="!p.actpoint === 'look'"
             size="mini"
             style="float:right;width: 70px;height: 32px;background: #5C8BFA;font-size: 16px;"
             type="primary"
@@ -578,7 +589,8 @@ export default {
               { useJson: true }
             )
             .then((res) => {
-              if (res.data.code === 0) {
+
+              if (res.data.msg === "SUCCESS") {
                 this.$message({
                   message: "保存成功",
                   type: "success",
@@ -884,62 +896,10 @@ export default {
 }
 </script>
 <style lang="scss">
-// .gcform {
-
-//   margin-top: 10px;
-//   .el-form-item__label:before {
-//     position: initial;
-//     left: -10px;
-//   }
-//   .el-form-item__error {
-//     padding-top: 0px;
-//       width: 100%;
-//     text-align: left;
-//     margin-left: 0;
-//   }
-//   .el-form-item  {
-//    float:left;
-//   }
-//   .detailformfooter1 {
-//     margin-top: 5px;
-//     width: 100%;
-//     .el-button {
-//       margin: 0 30px;
-//       width: 140px;
-//       height: 42px;
-//       font-size: 18px;
-//       font-family: Microsoft YaHei;
-//     }
-//     .el-button--primary {
-//       background: #5c8bfa;
-//     }
-//     .el-button--default {
-//       border: 1px solid #5c8bfa;
-//       color: #5c8bfa;
-//     }
-//   }
-//   .errorMsg .el-form-item__label {
-//     color: red;
-//   }
-//   .el-input {
-//     width: 200px;
-//   }
-// }
-
-// .el-table thead.is-group th {
-//   background: #fff;
-// }
-// .clothSizeTable {
-//   td {
-//     padding: 0;
-//   }
-//   .el-form-item__content {
-//     height: 50px;
-//     .el-form-item__error {
-//       top: 42px;
-//     }
-//   }
-// }
+.btn-group{
+  text-align: center;
+  margin-top: 20px;
+}
 .gcform {
   margin-top: 10px;
   .el-form-item__label:before {
@@ -949,13 +909,14 @@ export default {
   .el-form-item__error {
     padding-top: 0px;
     width: 95%;
-    text-align: left;
     margin-left: 0;
     text-align: right;
-    top:0%
+    top: 0%;
   }
   .el-form-item {
-    float: left;
+    /*float: left;*/
+    display: inline-block;
+    width: 32.5%;
   }
   .detailformfooter1 {
     margin-top: 5px;
@@ -986,24 +947,29 @@ export default {
     height: 500px;
   }
 }
+
 .el-input .el-input_inner {
   width: 300px;
   height: 500px;
 }
+
 .el-table thead.is-group th {
   background: #fff;
 }
+
 .clothSizeTable {
-  td {
-    padding: 0;
-  }
+  /*td {*/
+  /*padding: 0;*/
+  /*}*/
   .el-form-item__content {
     height: 60px;
+    line-height: 60px;
     .el-form-item__error {
       top: 42px;
     }
   }
 }
+
 .text {
   font-size: 14px;
 }
@@ -1011,45 +977,81 @@ export default {
 .item {
   margin-bottom: 18px;
 }
-
 .clearfix:before,
 .clearfix:after {
   display: table;
   content: "";
 }
+
 .clearfix:after {
   clear: both;
 }
+
 .el-card__body {
-  padding: 0 100px;
+  /*padding: 0 100px;*/
+  // height: 400px;
+  // border: 1px solid black;
+  // height: 200px;
 }
-.el-input--mini .el-input__inner{
+
+.el-input--mini .el-input__inner {
   height: 40px;
-  width: 100%;;
+  width: 100%;
+  box-sizing: border-box;
+  // margin: 10px 0 0 10px;
 }
-.gcform .el-input{
+
+.gcform .el-input {
   width: 95%;
 }
-.neirong{
+.listInput{
+  width: auto!important;
+}
+.gcform .listInput input{
+  width: 100px!important;
+  padding:10px!important;
+  box-sizing: border-box;
+}
+.neirong {
   width: 100% !important;
 }
-.gcform .el-form-item{
+
+.gcform .el-form-item {
   margin-bottom: 0px;
 }
-.neirong .el-input--mini .el-input__inner{
-height: 100px;
+
+.neirong .el-input--mini .el-input__inner {
+  height: 100px;
 }
-.detail_bottom{
-  margin: 50px 0 0 0;
-  border: 1px solid #ddd;
+
+.detail_bottom {
+  margin: 20px 0 0 0;
+  // border: 1px solid #ddd;
 }
-.el-card, .el-message{
+
+.el-card,
+.el-message {
   overflow: hidden;
 }
-.el-scrollbar__wrap.default-scrollbar__wrap{
+
+.el-scrollbar__wrap.default-scrollbar__wrap {
   overflow: hidden;
 }
-.el-card.is-always-shadow, .el-card.is-hover-shadow:focus, .el-card.is-hover-shadow:hover{
-  overflow: auto ;
+
+.el-card.is-always-shadow,
+.el-card.is-hover-shadow:focus,
+.el-card.is-hover-shadow:hover {
+  overflow: auto;
+  // height: 500px ;
+  /*height: 44vh;*/
+}
+
+.el-button--mini,
+.el-button--mini.is-round {
+  margin: 0 27px 5px 0;
+}
+
+.el-table--border {
+  min-height: auto !important;
 }
 </style>

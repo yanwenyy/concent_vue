@@ -50,7 +50,7 @@
         >
 
           <template slot-scope="scope">
-            {{ scope.row.inforName }}
+            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -153,7 +153,8 @@
         layout="total, sizes, prev, pager, next, jumper"
       ></el-pagination>
     </div>
-    <el-dialog title="资审结果登记" :visible.sync="dialogResult">
+    <el-dialog title="资审结果登记" :visible.sync="dialogResult"
+    width="30%">
       <el-form :model="resultform">
         <el-form-item label="资格预审结果" :label-width="formLabelWidth" prop="verifyResult">
           <el-radio v-model="resultform.verifyResult" label="1" border>通过</el-radio>
@@ -177,7 +178,7 @@
             action="https://jsonplaceholder.typicode.com/posts/"
             :on-change="handleChange">
             <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">最大上传文件不超过500kb</div>
+            <div slot="tip" class="el-upload__tip"></div>
           </el-upload>
         </el-form-item>
       </el-form>
@@ -352,7 +353,19 @@ export default {
     },
     // 查看
     rowshow(row) {
-      let p = {actpoint: 'look', instid: row.uuid}
+      // let p = {actpoint: 'look', instid: row.uuid}
+      // this.$router.push({
+      //   path: './detail/',
+      //   query: {p: this.$utils.encrypt(JSON.stringify(p))}
+      // })
+      console.log(JSON.stringify(row));
+      if (row.uuid != null) {
+        this.$message.info("当前登记的项目信息已经添加的资审信息！");
+        return;
+      }
+      //alert(JSON.stringify(this.multipleSelection[0]));
+      let p = {actpoint: 'add', instid: row.inforid, topinfoid: row.tiouuid}
+      //alert(JSON.stringify(p));
       this.$router.push({
         path: './detail/',
         query: {p: this.$utils.encrypt(JSON.stringify(p))}
