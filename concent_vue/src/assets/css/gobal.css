@@ -464,5 +464,8 @@ pre {
 .detail-title{
   margin: 20px 0;
 }
+.el-loading-spinner {
+  color:red!important;
+}
 /**/
 

@@ -115,7 +115,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          :width="150"
+          :width="300"
           align="center"
           label="建设单位"
           prop="constructionOrg"

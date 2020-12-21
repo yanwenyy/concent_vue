@@ -223,7 +223,7 @@
     width: 80%;
   }
 
-  .el-form-item__label {
+  >>>.el-form-item__label {
     width: auto;
   }
 
@@ -251,5 +251,10 @@
     font-size: 18px;
     margin-bottom: 10px;
     font-weight: bold;
+  }
+  >>>.el-input--mini .el-input__inner {
+    height: 40px;
+    width: 100%;
+    box-sizing: border-box;
   }
 </style>

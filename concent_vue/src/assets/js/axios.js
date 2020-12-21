@@ -14,8 +14,9 @@ let needLoadingRequestCount = 0; // 声明一个对象用于存储请求个数
 function startLoading() {
   loading = Vue.prototype.$loading({
     lock: true,
-    text: "努力加载中...",
+    // text: "努力加载中...",
     background: 'rgba(0,0,0,0.3)',
+    customClass: 'loadingIcon',
     target: document.querySelector(".loading-area") // 设置加载动画区域
   });
 }

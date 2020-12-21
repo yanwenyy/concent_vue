@@ -1552,18 +1552,18 @@
   }
   .gcform {
     margin-top: 10px;
-    .el-form-item__label:before {
+    >>>.el-form-item__label:before {
       position: initial;
       left: -10px;
     }
-    .el-form-item__error {
+    >>>.el-form-item__error {
       padding-top: 0px;
       width: 95%;
       margin-left: 0;
       text-align: right;
       top: 0%;
     }
-    .el-form-item {
+    >>>.el-form-item {
       /*float: left;*/
       display: inline-block;
       width: 32.5%;
@@ -1586,19 +1586,19 @@
         color: #5c8bfa;
       }
     }
-    .errorMsg .el-form-item__label {
+    .errorMsg >>>.el-form-item__label {
       color: red;
     }
-    .el-input {
+    >>>.el-input {
       width: 300px;
     }
-    .el-input .el-input_inner {
+    >>>.el-input >>>.el-input_inner {
       width: 300px;
       height: 500px;
     }
   }
 
-  .el-input .el-input_inner {
+  .el-input >>>.el-input_inner {
     width: 300px;
     height: 500px;
   }
@@ -1637,14 +1637,14 @@
     clear: both;
   }
 
-  .el-input--mini .el-input__inner {
+  >>>.el-input--mini .el-input__inner {
     height: 40px;
     width: 100%;
     box-sizing: border-box;
     // margin: 10px 0 0 10px;
   }
 
-  .gcform .el-input {
+  .gcform >>>.el-input {
     width: 95%;
   }
   .listInput{
@@ -1663,7 +1663,7 @@
     margin-bottom: 0px;
   }
 
-  .neirong .el-input--mini .el-input__inner {
+  .neirong  >>>.el-input--mini >>>.el-input__inner {
     height: 100px;
   }
 

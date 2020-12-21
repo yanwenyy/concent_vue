@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!--<FileUpload></FileUpload>-->
+    <!--<FileUpload :businessCode='"01"' :businessType='"bidInfo"' ></FileUpload>-->
     <el-card class="box-card">
 
       <div slot="header" class="clearfix">
@@ -12,7 +12,7 @@
             padding: 10px 20px;
             border: 1px solid #ddd;
             color: black;
-            position: fixe;
+            position: fixed;
           "
           type="text"
         >返回
@@ -1168,7 +1168,7 @@
       position: initial;
       left: -10px;
     }
-    .el-form-item__error {
+    >>>.el-form-item__error {
       padding-top: 0px;
       width: 95%;
       margin-left: 0;
