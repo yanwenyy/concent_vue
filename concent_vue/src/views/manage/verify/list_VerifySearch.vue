@@ -12,7 +12,7 @@
 
       <el-form-item label="资审截止日期:">
         <el-date-picker
-          v-model="searchform.createTime"
+          v-model="searchform.saleTime"
           type="daterange"
           range-separator="至"
           start-placeholder="开始日期"
@@ -62,14 +62,14 @@
       <el-form-item
         label="招标代理机构:"
       >
-        <el-input v-model="searchform.inforName" placeholder="招标代理机构" clearable></el-input>
+        <el-input v-model="searchform.bidAgentCompany" placeholder="招标代理机构" clearable></el-input>
       </el-form-item>
       </el-row>
       <el-row>
       <el-form-item
         label="标段名称:"
       >
-        <el-input v-model="searchform.inforName" placeholder="标段名称" clearable></el-input>
+        <el-input v-model="searchform.sectionNames" placeholder="标段名称" clearable></el-input>
       </el-form-item>
       <el-form-item
         label="资审状态:"
@@ -103,24 +103,24 @@
             end-placeholder="结束日期">
           </el-date-picker>
         </el-form-item>
-        <el-form-item
-          label="录入单位:"
-        >
-          <el-select
-            clearable
-            filterable
-            placeholder="请选择"
-            size="mini"
-            v-model="searchform.flowStatus"
-          >
-            <el-option
-              :key="index"
-              :label="item.detailName"
-              :value="item.id"
-              v-for="(item, index) in projectStatus"
-            ></el-option>
-          </el-select>
-        </el-form-item>
+<!--        <el-form-item-->
+<!--          label="录入单位:"-->
+<!--        >-->
+<!--          <el-select-->
+<!--            clearable-->
+<!--            filterable-->
+<!--            placeholder="请选择"-->
+<!--            size="mini"-->
+<!--            v-model="searchform.flowStatus"-->
+<!--          >-->
+<!--            <el-option-->
+<!--              :key="index"-->
+<!--              :label="item.detailName"-->
+<!--              :value="item.id"-->
+<!--              v-for="(item, index) in projectStatus"-->
+<!--            ></el-option>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
       <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
       <el-button @click="getData" type="primary" plain>查询</el-button>
       <el-button @click="exportdata" type="primary" plain>导出</el-button>
@@ -261,15 +261,22 @@
         @size-change="handleSizeChange"
         layout="total, sizes, prev, pager, next, jumper"
       ></el-pagination>
+
     </div>
+    <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
   </div>
 </template>
 
 <script>
-export default {
+  import Tree from '@/components/tree'
+  export default {
   name: "proposal-list-look",
+    components: {
+      Tree
+    },
   data() {
     return {
+      treeStatas: false,
       page: { current: 1, size: 10, total: 0, records: [] },
       searchform: {
         inforName: "",
@@ -281,8 +288,11 @@ export default {
         designOrg:"",
         ffid:'',
         flowStatus:'',
+        saleTime:'',
         createTime:'',
         planBidTime:'',
+        bidAgentCompany:'',
+        sectionNames:'',
         path:''
       },
       multipleSelection: [],
@@ -325,6 +335,7 @@ export default {
   methods: {
     //获取项目地点的值
     getPositionTree(data) {
+      alert(1);
       console.log(data)
       this.treeStatas = false;
       this.searchform.ffid=data.fullDetailCode;
@@ -405,7 +416,10 @@ export default {
         designOrg:"",
         ffid:'',
         flowStatus:'',
+        saleTime:'',
         createTime:'',
+        bidAgentCompany:'',
+        sectionNames:'',
         planBidTime:''
       }
       this.getData();
@@ -436,6 +450,7 @@ export default {
 <style scoped>
 .gcform .el-form-item{
   width: auto;
+  margin-bottom:22px;
 }
 >>>.el-form-item__label{
   width: auto;
