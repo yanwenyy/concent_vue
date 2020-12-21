@@ -441,7 +441,7 @@
       getData() {
         this.$http
           .post(
-            "/api/topInfo/TopInfor/list/loadPageDataForSelect",
+            // "/api/topInfo/TopInfor/list/loadPageDataForSelect",
             this.searchform
           )
           .then((res)=>{

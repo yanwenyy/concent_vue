@@ -219,7 +219,7 @@
             </el-form-item>
             </el-row>
 <div>
-  <h4 style="margin:10px 0 0 0 ">投标管理信息</h4>
+  <h4 style="margin:10px 0 0 0 ">投标信息</h4>
             <el-form-item
               label="投标截止日期:"
             >
@@ -251,84 +251,58 @@
             <el-form-item
               label="招标文件发售截止日期"
             >
-              <el-date-picker
-                :disabled="p.actpoint === 'look'"
+              <el-input
+                disabled
                 value-format="timestamp"
                 filterable
                 clearable
                 size="mini"
                 v-model="detailform.bidInfo.saleTime"
               >
-              </el-date-picker>
+              </el-input>
             </el-form-item>
 
             <el-form-item
               label="招标方式:"
             >
-              <el-select
-                :disabled="p.actpoint === 'look'"
+              <el-input
+                disabled
+                value-format="timestamp"
                 filterable
                 clearable
-                placeholder="请选择"
                 size="mini"
                 v-model="detailform. bidInfo.bidModeName"
               >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in bidType"
-                ></el-option>
-              </el-select>
+              </el-input>
             </el-form-item>
 
             <el-form-item
               label="是否联合体投标:"
-              prop="bidInfo.isCoalitionBid"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
             >
-              <el-select
-              :disabled="p.actpoint === 'look'"
+              <el-input
+                disabled
+                value-format="timestamp"
+                filterable
                 clearable
                 size="mini"
                 v-model="detailform. bidInfo.isCoalitionBid"
               >
-              <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in yesOrNo"
-                ></el-option>
-                </el-select>
+              </el-input>
             </el-form-item>
 
 
             <el-form-item
               label="是否为费率招标:"
-              prop="bidInfo.isBidRates"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
             >
-              <el-select
-              :disabled="p.actpoint === 'look'"
+              <el-input
+                disabled
+                value-format="timestamp"
+                filterable
                 clearable
-                placeholder=""
                 size="mini"
-                v-model="detailform.bidInfo.isBidRates">
-              <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in yesOrNo"
-                ></el-option>
-                </el-select>
+                v-model="detailform.bidInfo.isBidRates"
+              >
+              </el-input>
             </el-form-item>
 </div>
 
@@ -345,6 +319,7 @@
               }"
             >
               <el-input
+                disabled
                 type="textarea"
                 clearable
                 placeholder="请输入"
@@ -357,7 +332,7 @@
           <el-row>
             <el-form-item
               class="neirong"
-              label="附件（最大10MB）:"
+              label="开标记录（最大10MB）:"
               prop=""
               :rules="{
                 required: true,
@@ -446,7 +421,7 @@
 <!-- prop在table时回显 ,在from里面判断-->
             <el-table-column
               :resizable="false"
-              label="风险费(万元)"
+              label="评标办法"
               prop="riskFee"
               show-overflow-tooltip
               align="center"
@@ -463,6 +438,23 @@
 
             <el-table-column
               :resizable="false"
+              label="风险费(万元)"
+              prop="riskFee"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+              <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    disabled
+                    v-model="scope.row.bidInfoSection.riskFee"
+                  ></el-input>
+              </template>
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
               label="安全费(万元)"
               prop="safetyFee"
               show-overflow-tooltip
@@ -472,7 +464,7 @@
               <template slot-scope="scope">
                   <el-input
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                    disabled
                     v-model="scope.row.bidInfoSection.safetyFee"
                   ></el-input>
               </template>
@@ -489,7 +481,7 @@
               <template slot-scope="scope">
                   <el-input
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                    disabled
                     v-model="scope.row.bidInfoSection.bidPriceLimit"
                   ></el-input>
               </template>
@@ -506,7 +498,7 @@
               <template slot-scope="scope">
                   <el-input
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                    disabled
                     v-model="scope.row.bidInfoSection.bidEarnestMoney"
                   ></el-input>
               </template>
@@ -523,7 +515,7 @@
               <template slot-scope="scope">
                   <el-input
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                    disabled
                     v-model="scope.row.bidInfoSection.bidMoney"
                   ></el-input>
               </template>
@@ -540,7 +532,7 @@
               <template slot-scope="scope">
                   <el-input
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                    disabled
                     v-model="scope.row.bidInfoSection.openBidAddress"
                   ></el-input>
               </template>
@@ -557,7 +549,7 @@
               <template slot-scope="scope">
                   <el-input
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                    disabled
                     v-model="scope.row.bidInfoSection.evaluationBidId"
                   ></el-input>
               </template>
@@ -575,7 +567,7 @@
                   <el-input
                     value-format="timestamp"
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                    disabled
                     v-model="scope.row.bidInfoSection.openBidTime"
                   ></el-input>
               </template>
@@ -592,7 +584,7 @@
               <template slot-scope="scope">
                   <el-input
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                    disabled
                     v-model="scope.row.bidInfoSection.openBidTime"
                   ></el-input>
               </template>
@@ -609,7 +601,7 @@
               <template slot-scope="scope">
                   <el-input
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                    disabled
                     v-model="scope.row.bidInfoSection.openBidTime"
                   ></el-input>
               </template>
@@ -626,7 +618,7 @@
               <template slot-scope="scope">
                   <el-input
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                    disabled
                     v-model="scope.row.bidInfoSection.openBidTime"
                   ></el-input>
               </template>
@@ -643,7 +635,7 @@
               <template slot-scope="scope">
                   <el-input
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                    disabled
                     v-model="scope.row.bidInfoSection.openBidTime"
                   ></el-input>
               </template>
@@ -660,7 +652,7 @@
               <template slot-scope="scope">
                   <el-input
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                    disabled
                     v-model="scope.row.bidInfoSection.projectManager"
                   ></el-input>
               </template>
@@ -677,7 +669,7 @@
               <template slot-scope="scope">
                   <el-input
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                    disabled
                     v-model="scope.row.bidInfoSection.projectDeputyManager"
                   ></el-input>
               </template>
@@ -694,7 +686,7 @@
               <template slot-scope="scope">
                   <el-input
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                    disabled
                     v-model="scope.row.bidInfoSection.technicalDirector"
                   ></el-input>
               </template>
@@ -711,7 +703,7 @@
               <template slot-scope="scope">
                   <el-input
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                    disabled
                     v-model="scope.row.bidInfoSection.securityDirector"
                   ></el-input>
               </template>
@@ -728,7 +720,7 @@
               <template slot-scope="scope">
                   <el-input
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                    disabled
                     v-model="scope.row.bidInfoSection.financeDirectorr"
                   ></el-input>
               </template>
@@ -745,7 +737,7 @@
               <template slot-scope="scope">
                   <el-input
                     clearable
-                    :disabled="p.actpoint === 'look'"
+                    disabled
                     v-model="scope.row.bidInfoSection.costDirector"
                   ></el-input>
               </template>

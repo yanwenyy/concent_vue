@@ -219,7 +219,7 @@
             </el-form-item>
             </el-row>
 <div>
-  <h4 style="margin:10px 0 0 0 ">投标管理信息</h4>
+  <h4 style="margin:10px 0 0 0 ">投标信息</h4>
             <el-form-item
               label="投标截止日期:"
               prop="bidInfo.endTime"
