@@ -251,88 +251,21 @@
               class="neirong"
               label="附件:"
             >
-              <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
-            <!-- <el-upload
+            <el-upload
                 class="upload-demo"
                 ref="upload"
+                disabled
                 action="https://jsonplaceholder.typicode.com/posts/"
-                :auto-upload="false"
-                disabled> -->
+                :auto-upload="false">
+
+            <div>
+          <el-button display="block" slot="trigger" size="small" type="primary">选取文件</el-button>
+          </div>
+          </el-upload>
 
             </el-form-item>
 
 
-
-
-            <p style="overflow: hidden；margin-right: 30px">
-              <span style="float: left">地点信息: </span>
-            </p>
-            <el-table
-              :data="detailFormBefore.topInfoSiteList"
-              :disabled="true"
-              :header-cell-style="{
-                'text-align': 'center',
-                'background-color': 'rgba(246,248,252,1)',
-                color: 'rgba(0,0,0,1)',
-              }"
-              @selection-change="handleSelectionChange"
-              align="center"
-              border
-              class="clothSizeTable"
-              ref="table"
-              style="width: 98%; min-height: calc(100vh - 370px)"
-            >
-              <el-table-column
-                :width="80"
-                align="center"
-                label="序号"
-                show-overflow-tooltip
-                type="index"
-              ></el-table-column>
-              <el-table-column
-                :resizable="false"
-                label="项目地点"
-                align="center"
-                prop="inforName"
-              >
-                <template slot-scope="scope">
-                  <div class="positon-path">{{scope.row.path}}</div>
-                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                </template>
-              </el-table-column>
-
-              <el-table-column
-                :resizable="false"
-                label="份额"
-                prop="contractAmount"
-                show-overflow-tooltip
-                align="center"
-              >
-                <template slot-scope="scope">
-                  <el-input
-                    class="listInput"
-                    clearable
-                    :disabled="true"
-                    v-model="scope.row.contractAmount"
-                  ></el-input>
-                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                </template>
-              </el-table-column>
-
-              <el-table-column
-                :resizable="false"
-                label="是否为主地点"
-                prop="contractAmount"
-                align="center"
-                show-overflow-tooltip
-              >
-                <template slot-scope="scope">
-                  <el-radio v-model="scope.row.isMain" label="1">是</el-radio>
-                  <el-radio v-model="scope.row.isMain" label="0">否</el-radio>
-                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                </template>
-              </el-table-column>
-            </el-table>
             <p style="overflow: hidden；margin-right: 30px">
               <span style="float: left">标段信息: </span>
             </p>
@@ -375,6 +308,315 @@
                   <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                 </template>
               </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="风险费(万元)"
+              prop="riskFee"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+              <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidInfoSection.riskFee"
+                  ></el-input>
+              </template>
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="安全费(万元)"
+              prop="safetyFee"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+              <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidInfoSection.safetyFee"
+                  ></el-input>
+              </template>
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="投标限价(万元)"
+              prop="bidPriceLimit"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+              <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidInfoSection.bidPriceLimit"
+                  ></el-input>
+              </template>
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="投标保证金(万元)"
+              prop="bidEarnestMoney"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+              <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidInfoSection.bidEarnestMoney"
+                  ></el-input>
+              </template>
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="投标价(万元)"
+              prop="bidMoney"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+              <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidInfoSection.bidMoney"
+                  ></el-input>
+              </template>
+            </el-table-column>
+
+              <el-table-column
+              :resizable="false"
+              label="开标地点"
+              prop="openBidAddress"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+              <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidInfoSection.openBidAddress"
+                  ></el-input>
+              </template>
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="评标办法"
+              prop="evaluationBidId"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+              <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidInfoSection.evaluationBidId"
+                  ></el-input>
+              </template>
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="开标日期"
+              prop="openBidTime"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+              <template slot-scope="scope">
+                  <el-input
+                    value-format="timestamp"
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidInfoSection.openBidTime"
+                  ></el-input>
+              </template>
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="参与投标单位"
+              prop="openBidTime"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+              <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidInfoSection.openBidTime"
+                  ></el-input>
+              </template>
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="其他投标单位(系统内)"
+              prop="openBidTime"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+              <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidInfoSection.openBidTime"
+                  ></el-input>
+              </template>
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="其他投标单位(系统外)"
+              prop="openBidTime"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+              <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidInfoSection.openBidTime"
+                  ></el-input>
+              </template>
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="其他未列出单位"
+              prop="openBidTime"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+              <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidInfoSection.openBidTime"
+                  ></el-input>
+              </template>
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="项目经理"
+              prop="projectManager"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+              <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidInfoSection.projectManager"
+                  ></el-input>
+              </template>
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="项目副经理"
+              prop="projectDeputyManager"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+              <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidInfoSection.projectDeputyManager"
+                  ></el-input>
+              </template>
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="技术负责人"
+              prop="technicalDirector"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+              <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidInfoSection.technicalDirector"
+                  ></el-input>
+              </template>
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="安全负责人"
+              prop="securityDirector"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+              <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidInfoSection.securityDirector"
+                  ></el-input>
+              </template>
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="财务负责人"
+              prop="financeDirector"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+              <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidInfoSection.financeDirectorr"
+                  ></el-input>
+              </template>
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="成本负责人"
+              prop="costDirector"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+              <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidInfoSection.costDirector"
+                  ></el-input>
+              </template>
+            </el-table-column>
+
+
 
               <el-table-column
                 :resizable="false"
@@ -926,110 +1168,6 @@
             </el-form-item>
 
 
-            <p style="overflow: hidden；margin-right: 30px">
-              <span style="float: left">地点信息: </span>
-              <el-button
-                v-show="p.actpoint != 'look'"
-                @click="add('dd')"
-                size="mini"
-                style="
-                  float: right;
-                  width: 70px;
-                  height: 32px;
-                  background: #5c8bfa;
-                  font-size: 16px;
-                "
-                type="primary"
-              >新增
-              </el-button
-              >
-            </p>
-            <el-table
-              :data="detailform.topInfoSiteList"
-              :key="key"
-              :header-cell-style="{
-                'text-align': 'center',
-                'background-color': 'rgba(246,248,252,1)',
-                color: 'rgba(0,0,0,1)',
-              }"
-              @selection-change="handleSelectionChange"
-              align="center"
-              border
-              class="clothSizeTable"
-              ref="table"
-              style="width: 98%; min-height: calc(100vh - 370px)"
-            >
-              <el-table-column
-                :width="80"
-                align="center"
-                label="序号"
-                show-overflow-tooltip
-                type="index"
-              ></el-table-column>
-              <el-table-column
-                :resizable="false"
-                label="项目地点"
-                align="center"
-                prop="inforName"
-              >
-                <template slot-scope="scope">
-                  <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
-                </template>
-              </el-table-column>
-
-              <el-table-column
-                :resizable="false"
-                label="份额"
-                prop="contractAmount"
-                show-overflow-tooltip
-                align="center"
-              >
-                <template slot-scope="scope">
-                  <el-input
-                    @input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"
-                    class="listInput"
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.contractAmount"
-                  ></el-input>
-                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                </template>
-              </el-table-column>
-
-              <el-table-column
-                :resizable="false"
-                label="是否为主地点"
-                prop="contractAmount"
-                align="center"
-                show-overflow-tooltip
-              >
-                <template slot-scope="scope">
-                  <el-radio v-model="scope.row.isMain" label="1">是</el-radio>
-                  <el-radio v-model="scope.row.isMain" label="0">否</el-radio>
-                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                </template>
-              </el-table-column>
-
-              <el-table-column
-                v-show="!p.actpoint === 'look'"
-                :resizable="false"
-                fixed="right"
-                label="操作"
-                align="center"
-                show-overflow-tooltip
-                v-if="p.actpoint !== 'look'"
-              >
-                <template slot-scope="scope">
-                  <el-link
-                    :underline="false"
-                    @click="del(scope.$index,scope.row,detailform.topInfoSiteList)"
-                    type="warning"
-                  >删除
-                  </el-link
-                  >
-                </template>
-              </el-table-column>
-            </el-table>
             <p style="overflow: hidden；margin-right: 30px">
               <span style="float: left">标段信息: </span>
               <el-button
