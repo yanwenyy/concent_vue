@@ -662,6 +662,7 @@
           >
             <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
             <el-input
+              type="textarea"
               clearable
               placeholder="请输入"
               size="mini"
@@ -683,6 +684,7 @@
           >
             <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
             <el-input
+            type="textarea"
               clearable
               placeholder="请输入"
               size="mini"

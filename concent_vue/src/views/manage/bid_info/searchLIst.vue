@@ -117,8 +117,12 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="项目模式:">
-        <el-input v-model="searchform.designOrg" placeholder="项目模式" clearable></el-input>
+      <el-form-item label="项目性质(一级):">
+        <el-input v-model="searchform.designOrg" placeholder="项目性质(一级)" clearable></el-input>
+      </el-form-item>
+
+            <el-form-item label="项目性质(二级):">
+        <el-input v-model="searchform.designOrg" placeholder="项目性质(二级)" clearable></el-input>
       </el-form-item>
 
       <el-form-item label="资审方式:">

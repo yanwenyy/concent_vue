@@ -245,8 +245,27 @@
         <el-option label="未中标" value="beijing"></el-option>
       </el-select>
     </el-form-item>
-    <el-form-item label="活动名称" :label-width="formLabelWidth">
+    <el-form-item label="中标价" :label-width="formLabelWidth">
       <el-input v-model="form.name" autocomplete="off"></el-input>
+    </el-form-item>
+        <el-form-item label="中标时间" :label-width="formLabelWidth">
+      <el-date-picker
+      v-model="value1"
+      type="date"
+      placeholder="选择日期">
+    </el-date-picker>
+    </el-form-item>
+    <el-form-item label="文件公示" :label-width="formLabelWidth">
+    <el-upload
+      class="upload-demo detailUpload"
+      :action="'/api/topInfo/CommonFiles/bidInfo/01/uploadFile'"
+      :on-success="handleChange"
+      :on-error="handleChange"
+      :on-remove="handleRemove"
+      multiple
+    >
+      <el-button size="small" type="primary">点击上传</el-button>
+    </el-upload>
     </el-form-item>
     </el-form>
 
