@@ -467,5 +467,10 @@ pre {
 .el-loading-spinner {
   color:red!important;
 }
+.detailUpload .el-upload-list__item{
+  width:60%;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
 /**/
 

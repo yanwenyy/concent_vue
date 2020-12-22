@@ -202,6 +202,28 @@
               </el-input>
             </el-form-item>
 
+
+            <div>
+              <el-form-item  label="项目跟踪负责人:">
+              <el-input
+                disabled
+                placeholder="请选择"
+                v-model="detailform.topInforBO.topInfoOrg.projectTrackResponPerson"
+              >
+              </el-input>
+              </el-form-item>
+
+              <el-form-item  label="联系电话:">
+              <el-input
+                disabled
+                placeholder="请选择"
+                v-model="detailform.topInforBO.topInfoOrg.contactMode"
+              >
+              </el-input>
+              </el-form-item>
+
+            </div>
+
             <el-row>
             <el-form-item
               class="neirong"

@@ -21,6 +21,8 @@
 
     <div style="margin-top: 20px">
       <el-table
+        :max-height="$tableHeight"
+        :height="$tableHeight"
         :data="page.records"
         :header-cell-style="{
           'text-align': 'center',
@@ -520,8 +522,4 @@ export default {
 .el-table__row {
   cursor: pointer;
 }
->>>.el-table__body-wrapper{
-  height: 549px !important;
-}
-
 </style>

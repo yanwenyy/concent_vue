@@ -10,7 +10,6 @@
             padding: 10px 20px;
             border: 1px solid #ddd;
             color: black;
-            position: fixe;
             "
           type="text">返回
           </el-button>
@@ -202,6 +201,27 @@
               </el-input>
             </el-form-item>
 
+            <div>
+              <el-form-item  label="项目跟踪负责人:">
+              <el-input
+                disabled
+                placeholder="请选择"
+                v-model="detailform.topInforBO.topInfoOrg.projectTrackResponPerson"
+              >
+              </el-input>
+              </el-form-item>
+
+              <el-form-item  label="联系电话:">
+              <el-input
+                disabled
+                placeholder="请选择"
+                v-model="detailform.topInforBO.topInfoOrg.contactMode"
+              >
+              </el-input>
+              </el-form-item>
+
+            </div>
+
             <el-row>
             <el-form-item
               class="neirong"
@@ -378,17 +398,16 @@
                 trigger: 'blur',
               }"
             >
-            <el-upload
-                class="upload-demo"
-                ref="upload"
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :auto-upload="false">
-
-            <div>
-          <el-button display="block" slot="trigger" size="small" type="primary">选取文件</el-button>
-          </div>
-          </el-upload>
-
+           <el-upload
+              class="upload-demo detailUpload"
+              :action="'/api/topInfo/CommonFiles/bidInfo/01/uploadFile'"
+              :on-success="handleChange"
+              :on-error="handleChange"
+              :on-remove="handleRemove"
+                multiple
+              >
+              <el-button size="small" type="primary">点击上传</el-button>
+            </el-upload>
             </el-form-item>
           </el-row>
 
@@ -810,6 +829,7 @@ export default {
           topInfor:{}
         }
       },
+      fileList:[],
       bidInfoSection:[],
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
       yesOrNo:[
@@ -834,6 +854,35 @@ export default {
 
   },
   methods: {
+    handleRemove(file, fileList) {
+         this.$http
+          .post(
+            "/api/topInfo/CommonFiles/list/delete",
+            {ids:[file.response.data.uuid]},
+          )
+          .then((res) => {
+            if (res.data.code === 200) {
+               this.fileList=fileList;
+            }
+          });
+        console.log(this.fileList)
+      },
+    //上传图片
+    handleChange(response, file, fileList){
+      if (response && response.code === 200) {
+        this.$message({
+          message: '上传成功',
+          type: 'success',
+          duration: 1500,
+          onClose: () => {
+          this.fileList.push(response.data.fileName);
+          console.log(fileList)
+        }
+      })
+      } else {
+        this.$message.error(response.msg)
+      }
+    },
     //null转空字符串
     nullToStr(data){
       // console.log('1111111',data)
@@ -1093,7 +1142,7 @@ export default {
       position: initial;
       left: -10px;
     }
-    .el-form-item__error {
+    >>>.el-form-item__error {
       padding-top: 0px;
       width: 95%;
       margin-left: 0;
