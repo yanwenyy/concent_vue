@@ -169,8 +169,17 @@
     ></el-pagination>
 
     <el-dialog  title="国标库维护" :visible.sync="dialogResult">
-      <el-form :model="resultform">
-        <el-form-item label="编码:" :label-width="formLabelWidth">
+      <el-form :model="form" :rules="rules">
+        <el-form-item
+          label="编码:"
+          :label-width="formLabelWidth"
+          prop="code"
+          :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+        >
           <el-input
             style="float: left; width: 60%"
             v-model="form.code"
@@ -186,7 +195,17 @@
           />
         </el-form-item>
 
-        <el-form-item label="项目名称:" :label-width="formLabelWidth">
+        <el-form-item
+          label="项目名称:"
+          :label-width="formLabelWidth"
+
+          prop="name"
+          :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+        >
           <el-input
             style="float: left; width: 60%"
             v-model="form.name"
@@ -238,7 +257,6 @@
           showinput: false,
           sousuo: "",
           searchform: {
-
               code: "",
               parentId: "",
               name: "",
@@ -254,6 +272,7 @@
               name: "",
               unit: "",
               sortNo: "",
+              uuid:''
           },
           menus: [],
           multipleSelection: [],
@@ -269,8 +288,9 @@
               resource: '',
               desc: ''
           },
-          formLabelWidth: '120px'
+          formLabelWidth: '120px',
       }
+
     },
     methods: {
       exportdata() {
@@ -290,6 +310,16 @@
                             message: "保存成功",
                             type: "success",
                         });
+                        //清空输入框
+                        this.form={
+                            code: "",
+                            parentId: "",
+                            feature:"",
+                            name: "",
+                            unit: "",
+                            sortNo: "",
+                            uuid:''
+                        };
                         //关闭dialog对话框
                         this.dialogResult = false;
                         //查询列表数据
@@ -306,32 +336,45 @@
       },
       // 增加
       add() {
-        let p = {actpoint: "add"};
-        this.$router.push({
-          path: "./detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
+
       },
       // 修改
       totop() {
-        if (this.multipleSelection.length !== 1) {
-          this.$message.info("请选择一条记录进行查看操作！");
+        if (this.multipleSelection.length !== 1||this.multipleSelection.length>1) {
+          this.$message.info("请选择一条记录进行修改操作！");
           return false;
         }
-        let p = {actpoint: "edit", instid: this.multipleSelection[0].topOrgId};
-        this.$router.push({
-          path: "./detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
-
+        var list=this.multipleSelection[0];
+          this.form={
+              code: list.code,
+              parentId: list.parentId,
+              feature:list.feature,
+              name: list.name,
+              unit: list.unit,
+              sortNo:list.sortNo,
+              uuid:list.uuid
+          };
+          this.dialogResult = true;
       },
       // 查看
       rowshow(row) {
-        let p = {actpoint: "look", instid: row.topOrgId};
-        this.$router.push({
+        let p = {actpoint: "look", instid: row.uuid};
+          var list=this.multipleSelection[0];
+          this.form={
+              code: list.code,
+              parentId: list.parentId,
+              feature:list.feature,
+              name: list.name,
+              unit: list.unit,
+              sortNo:list.sortNo,
+              uuid:list.uuid
+          };
+          this.dialogResult = true;
+          query: {p: this.$utils.encrypt(JSON.stringify(p))}
+       /* this.$router.push({
           path: "./detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
+        });*/
       },
       // 删除
       remove() {
@@ -351,10 +394,6 @@
               cancelButtonText: '取消',
               type: 'warning'
           }).then(() => {
-              // this.$message({
-              //   type: 'success',
-              //   message: '删除成功!'
-              // });
               this.$http
                   .post(
                       '/api/ boq/BoqNationalStandard/list/delete',
