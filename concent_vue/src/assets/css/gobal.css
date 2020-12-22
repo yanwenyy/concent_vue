@@ -472,5 +472,14 @@ pre {
   white-space: pre-wrap;
   word-break: break-all;
 }
+.detail-back{
+  float: right;
+  padding: 10px 20px ;
+  border:1px solid #ddd;
+  color: black
+}
+.detail-card-title{
+  color: #2a2a7d
+}
 /**/
 

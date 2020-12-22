@@ -17,7 +17,6 @@
         </el-button
         >
       </div>
-
       <div class="detailBox">
         <el-form
           :inline="false"
@@ -842,7 +841,6 @@
           topInfoSectionList: [],
           value1: [],
         },
-        detailformrules: {},
         xqprojectType: [],//工程类别二级
         emergingMarketTwo:[],//新兴市场二级
         projectNatureTwo:[],//项目性质二级
