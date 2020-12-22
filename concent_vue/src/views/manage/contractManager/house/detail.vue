@@ -588,7 +588,7 @@ export default {
   }
   .gcform {
     margin-top: 10px;
-    .el-form-item__label:before {
+    >>>.el-form-item__label:before {
       position: initial;
       left: -10px;
     }
