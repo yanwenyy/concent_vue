@@ -1013,7 +1013,7 @@ export default {
             this.detailformBefore = res.data.data;
             this.detailformAfter = res.data.data
 
-            alert( JSON.stringify(this.detailformAfter.verifySectionList))
+           // alert( JSON.stringify(this.detailformAfter.verifySectionList))
           })
       }else
       {

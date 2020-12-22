@@ -359,7 +359,7 @@
                 class="upload-demo"
                 action="https://jsonplaceholder.typicode.com/posts/"
                 :on-change="handleChange">
-                <el-button size="small" type="primary"  v-show="!p.actpoint === 'look'">点击上传</el-button>
+                <el-button size="small" type="primary"  v-show="p.actpoint != 'look'">点击上传</el-button>
                 <div slot="tip" class="el-upload__tip"></div>
               </el-upload>
             </el-form-item>
@@ -367,7 +367,7 @@
 
      <p style="overflow:hidden;margin-right: 30px"><span style="float:left;">标段信息: </span>   <el-button
        @click="dialogTopInfoSection = true"
-       v-show="!p.actpoint === 'look'"
+       v-show="p.actpoint != 'look'"
             size="mini"
             style="float:right;width: 70px;height: 32px;background: #5C8BFA;font-size: 16px;"
             type="primary"
