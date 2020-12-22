@@ -1186,15 +1186,15 @@ export default {
       text-align: right;
       top: 0%;
     }
-    .el-form-item {
+    .el-form-item,>>>.formItem {
       // float: left;
       display: inline-block;
-      width: 32.5%;
+      width: 32.5% !important;
     }
     .detailformfooter1 {
       margin-top: 5px;
       width: 100%;
-      .el-button {
+    .el-button {
         margin: 0 30px;
         width: 140px;
         height: 42px;
