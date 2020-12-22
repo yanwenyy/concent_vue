@@ -2,7 +2,6 @@
   <div>
     <!--<FileUpload :businessCode='"01"' :businessType='"bidInfo"' ></FileUpload>-->
     <el-card class="box-card">
-
       <div slot="header" class="clearfix">
         <span style="color: #2a2a7d;line-height: 37px;"><b>信息管理详情</b></span>
         <el-button
@@ -12,7 +11,6 @@
             padding: 10px 20px;
             border: 1px solid #ddd;
             color: black;
-            position: fixed;
           "
           type="text"
         >返回
@@ -1316,6 +1314,8 @@
   .el-table--border {
     min-height: auto !important;
   }
-
+  .detailBox{
+    max-height:calc(100vh - 410px)!important;
+  }
 </style>
 
