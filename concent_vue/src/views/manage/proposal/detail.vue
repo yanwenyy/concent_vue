@@ -1160,7 +1160,7 @@
   }
   .gcform {
     margin-top: 10px;
-    .el-form-item__label:before {
+    >>>.el-form-item__label:before {
       position: initial;
       left: -10px;
     }
@@ -1194,7 +1194,7 @@
         color: #5c8bfa;
       }
     }
-    .errorMsg .el-form-item__label {
+    .errorMsg >>>.el-form-item__label {
       color: red;
     }
     .el-input {
