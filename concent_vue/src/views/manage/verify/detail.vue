@@ -53,7 +53,7 @@
 <!--          <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options1"></el-option>-->
 <!--        </el-select>-->
           <el-input
-            readonly
+            disabled
             size="mini"
             v-model="detailform.topInfor.enginTypeFirstName"
           />
@@ -64,7 +64,7 @@
               "
       >
         <el-input
-          readonly
+          disabled
           size="mini"
           v-model="detailform.topInfor.enginTypeSecondName"
         />
@@ -73,12 +73,11 @@
 </el-row>
 <el-row>
       <el-form-item
-        readonly
         label="公告类型:"
         style="width: 33%"
       >
         <el-input
-          readonly
+          disabled
           size="mini"
           v-model="detailform.topInfor.noticeTypeName"
          />
@@ -155,7 +154,7 @@
       >
         <el-date-picker
           clearable
-          :disabled="p.actpoint === 'look'"
+          :readonly="p.actpoint === 'look'"
           value-format="timestamp"
           v-model="detailform.verify.saleTime"
           align="right"
@@ -169,7 +168,7 @@
         label="设计单位:"
         style="width: 33%">
         <el-input
-          readonly
+          disabled
           size="mini"
           v-model="detailform.topInfor.designOrg"
          />
@@ -187,7 +186,7 @@
 
         <el-date-picker
           clearable
-          :disabled="p.actpoint === 'look'"
+          :readonly="p.actpoint === 'look'"
           value-format="timestamp"
           v-model="detailform.verify.subTime"
           align="right"
@@ -209,7 +208,7 @@
       >
         <el-date-picker
           clearable
-          :disabled="p.actpoint === 'look'"
+          :readonly="p.actpoint === 'look'"
           value-format="timestamp"
           v-model="detailform.verify.publishTime"
           align="right"
@@ -223,7 +222,7 @@
         "
       >
         <el-input
-          readonly
+          disabled
           placeholder=""
           size="mini"
           v-model="detailform.topInfor.bidAgentCompany"
@@ -236,7 +235,7 @@
         "
       >
         <el-input
-          readonly
+          disabled
           placeholder=""
           size="mini"
           v-model="detailform.topInfor.projectModelName"
@@ -250,7 +249,7 @@
         style="width: 33%"
       >
         <el-input
-          readonly
+          disabled
           placeholder=""
           size="mini"
           v-model="detailform.topInfor.verifyTypeName"
@@ -264,7 +263,7 @@
         "
       >
         <el-input
-          readonly
+          disabled
           placeholder=""
           size="mini"
           v-model="detailform.capitalName"
@@ -277,7 +276,7 @@
         "
       >
         <el-input
-          readonly
+          disabled
           size="mini"
           v-model="detailform.verify.projectTrackResponPerson"
          />
@@ -290,7 +289,7 @@
         style="width: 33%"
       >
         <el-input
-          readonly
+          disabled
           placeholder=""
           size="mini"
           v-model="detailform.verify.contactMode"
@@ -304,7 +303,7 @@
         "
         >
           <el-input
-            readonly
+            disabled
             size="mini"
             v-model="detailform.topInfor.constructionOrg"
           />
@@ -319,7 +318,7 @@
             >
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-input
-                readonly
+                disabled
                 placeholder="请输入"
                 size="mini"
                 v-model="detailform.topInfor.inforContent"
