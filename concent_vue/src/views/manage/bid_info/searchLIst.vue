@@ -4,16 +4,19 @@
       <el-form-item label="项目名称:">
         <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
       </el-form-item>
-      <el-form-item label="工程类别:">
-        <el-input v-model="searchform.constructionOrg" placeholder="工程类别" clearable></el-input>
+      <el-form-item label="工程类别(一级):">
+        <el-input v-model="searchform.enginTypeFirstName" placeholder="工程类别(一级)" clearable></el-input>
+      </el-form-item>
+        <el-form-item label="工程类别(二级):">
+        <el-input v-model="searchform.enginTypeSecondName" placeholder="工程类别(二级)" clearable></el-input>
+      </el-form-item>
+        <el-form-item label="标段名称:">
+        <el-input v-model="searchform.enginTypeSecondName" placeholder="标段名称" clearable></el-input>
       </el-form-item>
       <el-form-item label="建设单位:">
         <el-input v-model="searchform.constructionOrg" placeholder="建设单位" clearable></el-input>
       </el-form-item>
-      <el-form-item label="公告类型:">
-        <el-input v-model="searchform.designOrg" placeholder="公告类型" clearable></el-input>
-      </el-form-item>
-      <!-- <el-form-item label="创建日期:">
+      <el-form-item label="开标日期:">
         <el-date-picker
           v-model="searchform.createTime"
           type="daterange"
@@ -21,35 +24,36 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期">
         </el-date-picker>
-      </el-form-item> -->
+      </el-form-item>
 
-      <el-form-item label="投标截止日期:">
+      <el-form-item label="公告类型:">
+        <el-input v-model="searchform.noticeTypeName" placeholder="公告类型" clearable></el-input>
+      </el-form-item>
+
+      <el-form-item label="录入单位:">
+        <el-input v-model="searchform.noticeTypeName" placeholder="录入单位" clearable></el-input>
+      </el-form-item>
+
+      <el-form-item label="资审截止日期:">
         <el-date-picker
-          v-model="searchform.planBidTime"
-          type="date"
-          value-format="yyyy-MM-dd HH:mm:ss"
-          placeholder="选择日期">
+          v-model="searchform.createTime"
+          type="daterange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期">
         </el-date-picker>
       </el-form-item>
 
-            <el-form-item label="招标公告发布日期:">
-        <el-date-picker
-          v-model="searchform.planBidTime"
-          type="date"
-          value-format="yyyy-MM-dd HH:mm:ss"
-          placeholder="选择日期">
-        </el-date-picker>
-      </el-form-item>
 
       <el-form-item
-        label="招标方式:"
+        label="是否中标:"
       >
         <el-select
           clearable
           filterable
           placeholder="请选择"
           size="mini"
-          v-model="searchform.noticeTypeId"
+          v-model="searchform.isWinBid"
         >
           <el-option
             :key="index"
@@ -60,118 +64,9 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item
-        label="是否联合体投标:"
-      >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          size="mini"
-          v-model="searchform.noticeTypeId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in bulletinType"
-          ></el-option>
-        </el-select>
+      <el-form-item label="项目地点:">
+        <el-input v-model="searchform.noticeTypeName" placeholder="项目地点" clearable></el-input>
       </el-form-item>
-
-      <el-form-item
-        label="设计单位:"
-      >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          size="mini"
-          v-model="searchform.noticeTypeId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in bulletinType"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-
-      <el-form-item
-        label="招标代理公司:"
-      >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          size="mini"
-          v-model="searchform.noticeTypeId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in bulletinType"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-
-      <el-form-item label="项目性质(一级):">
-        <el-input v-model="searchform.designOrg" placeholder="项目性质(一级)" clearable></el-input>
-      </el-form-item>
-
-            <el-form-item label="项目性质(二级):">
-        <el-input v-model="searchform.designOrg" placeholder="项目性质(二级)" clearable></el-input>
-      </el-form-item>
-
-      <el-form-item label="资审方式:">
-        <el-input v-model="searchform.designOrg" placeholder="资审方式" clearable></el-input>
-      </el-form-item>
-
-      <el-form-item label="资金来源:">
-        <el-input v-model="searchform.designOrg" placeholder="资审方式" clearable></el-input>
-      </el-form-item>
-
-      <el-form-item
-        label="是否为费率招标:"
-      >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          size="mini"
-          v-model="searchform.noticeTypeId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in bulletinType"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-
-        <el-form-item label="招标文件发售截止日期:">
-        <el-date-picker
-          v-model="searchform.planBidTime"
-          type="date"
-          value-format="yyyy-MM-dd HH:mm:ss"
-          placeholder="选择日期">
-        </el-date-picker>
-      </el-form-item>
-
-<div>
-      <el-form-item label="跟踪项目负责人:">
-        <el-input v-model="searchform.designOrg" placeholder="跟踪项目负责人" clearable></el-input>
-      </el-form-item>
-
-      <el-form-item label="联系电话:">
-        <el-input v-model="searchform.designOrg" placeholder="联系电话" clearable></el-input>
-      </el-form-item>
-</div>
-
-
 
 
       <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
@@ -445,7 +340,7 @@
       getData() {
         this.$http
           .post(
-            // "/api/topInfo/TopInfor/list/loadPageDataForSelect",
+            "/api/topInfo/BidInfo/list/loadPageDataForSelect",
             this.searchform
           )
           .then((res)=>{
