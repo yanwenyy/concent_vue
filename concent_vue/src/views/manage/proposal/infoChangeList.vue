@@ -283,11 +283,13 @@
       //去新增详情页面
       goAddDetail(data){
         // console.log(data);
-        let p = {actpoint: "add",instid:data.topOrgId};
-        this.$router.push({
-          path: "./infoChangeDetail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
+        if(data.topOrgId){
+          let p = {actpoint: "add",instid:data.topOrgId};
+          this.$router.push({
+            path: "./infoChangeDetail/",
+            query: {p: this.$utils.encrypt(JSON.stringify(p))},
+          });
+        }
       },
       exportdata() {
       },
