@@ -11,14 +11,14 @@
         <el-input v-model="searchform.enginTypeSecondName" placeholder="工程类别(二级)" clearable></el-input>
       </el-form-item>
         <el-form-item label="标段名称:">
-        <el-input v-model="searchform.enginTypeSecondName" placeholder="标段名称" clearable></el-input>
+        <el-input v-model="searchform.sectionName" placeholder="标段名称" clearable></el-input>
       </el-form-item>
       <el-form-item label="建设单位:">
         <el-input v-model="searchform.constructionOrg" placeholder="建设单位" clearable></el-input>
       </el-form-item>
       <el-form-item label="开标日期:">
         <el-date-picker
-          v-model="searchform.createTime"
+          v-model="searchform.openBidTime"
           type="daterange"
           range-separator="至"
           start-placeholder="开始日期"
@@ -31,12 +31,12 @@
       </el-form-item>
 
       <el-form-item label="录入单位:">
-        <el-input v-model="searchform.noticeTypeName" placeholder="录入单位" clearable></el-input>
+        <el-input v-model="searchform.ticCreateName" placeholder="录入单位" clearable></el-input>
       </el-form-item>
 
       <el-form-item label="资审截止日期:">
         <el-date-picker
-          v-model="searchform.createTime"
+          v-model="searchform.vifSaleTime"
           type="daterange"
           range-separator="至"
           start-placeholder="开始日期"
@@ -65,7 +65,9 @@
       </el-form-item>
 
       <el-form-item label="项目地点:">
-        <el-input v-model="searchform.noticeTypeName" placeholder="项目地点" clearable></el-input>
+        <el-input v-model="searchform.path" placeholder="项目地点">
+          <el-button slot="append" icon="el-icon-search"  @click="selectPosition()"></el-button>
+        </el-input>
       </el-form-item>
 
 
@@ -101,6 +103,23 @@
           show-overflow-tooltip
           type="index"
         ></el-table-column>
+
+        <el-table-column
+          :width="150"
+          label="是否中标"
+          prop="isWinBid"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+
+        <el-table-column
+          :width="500"
+          label="标段名称"
+          prop="sectionName"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+
         <el-table-column
           :width="500"
           label="项目名称"
@@ -111,7 +130,15 @@
         <el-table-column
           :width="150"
           align="center"
-          label="工程类别"
+          label="工程类别(一级)"
+          prop="enginTypeFirstName"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+                <el-table-column
+          :width="150"
+          align="center"
+          label="工程类别(二级)"
           prop="enginTypeSecondName"
           show-overflow-tooltip
         >
@@ -124,6 +151,37 @@
           show-overflow-tooltip
         >
         </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="项目地点"
+              align="center"
+              prop="inforName"
+            >
+              <template slot-scope="scope">
+                <i class="el-icon-circle-plus"  @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
+                <!-- <el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button> -->
+              </template>
+            </el-table-column>
+
+        <el-table-column
+          :width="300"
+          align="center"
+          label="参与投标单位"
+          prop="noticeTypeName"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+
+        <el-table-column
+          :width="300"
+          align="center"
+          label="录入单位"
+          prop="ticCreateName"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+
         <el-table-column
           :width="150"
           align="center"
@@ -132,26 +190,35 @@
           show-overflow-tooltip
         >
         </el-table-column>
+
         <el-table-column
           :width="150"
           align="center"
-          label="预计招标时间"
-          prop="planBidTime"
+          label="资审截止日期"
+          prop="vifSaleTime"
           show-overflow-tooltip
         >
-          <template slot-scope="scope">{{
-            scope.row.planBidTime | dateformat
-            }}</template>
         </el-table-column>
+
         <el-table-column
           :width="150"
           align="center"
-          label="项目地点"
-          prop="placeName"
+          label="开标日期"
+          prop="openBidTime"
           show-overflow-tooltip
         >
         </el-table-column>
+<!-- ??? -->
         <el-table-column
+          :width="150"
+          align="center"
+          label="审核通过日期"
+          prop="openBidTime"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+
+        <!-- <el-table-column
           :width="150"
           align="center"
           label="项目状态"
@@ -161,7 +228,7 @@
           <template slot-scope="scope">
             <span>{{scope.row.flowStatus=='1'?'草稿':scope.row.flowStatus=='2'?'审核中':'审核通过'}}</span>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column
           :width="150"
           align="center"
@@ -232,6 +299,7 @@
       };
     },
     mounted() {
+       this.getData();
       this.$store.dispatch("getConfig", {});
       this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
     },
@@ -265,7 +333,9 @@
         console.log(this.positionIndex);
         this.$nextTick(() => {
           this.$refs.addOrUpdate.init()
-      })
+        })
+      },
+      submit() {
       },
       //工程类别二级
       getTwo(id) {

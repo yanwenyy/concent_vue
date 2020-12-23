@@ -1982,7 +1982,7 @@ export default {
     },
     back() {
       this.$router.push({
-        path: "/manage/bid_info/infoChangeList",
+        path: "/manage/bid_info/inforChangeList",
       });
     },
     del(index, item, list, type) {
