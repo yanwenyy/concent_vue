@@ -1027,11 +1027,11 @@ export default {
           .then(res => {
             var data = res.data.data;
             data.forEach((item, index) => {
-              alert(item.verify.isChange)
-              if(item.verify.isChange==1)
+              //alert(item.verify.changeStatus)
+              if(item.verify.changeStatus==1)
               {
                 this.detailformBefore =item;
-              }else if(item.verify.isChange==2)
+              }else if(item.verify.changeStatus==2)
               {
                 this.detailformAfter =item
               }

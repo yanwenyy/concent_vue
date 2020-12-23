@@ -117,19 +117,19 @@
           :width="150"
           align="center"
           label="填报人"
-          prop="verify.username"
+          prop="verify.createUserName"
           show-overflow-tooltip
         >
 
           <template slot-scope="scope">
-            {{scope.row.username}}
+            {{scope.row.createUserName}}
           </template>
         </el-table-column>
         <el-table-column
           :width="150"
           align="center"
           label="填报时间"
-          prop="verify.createtime"
+          prop="verify.createTime"
           show-overflow-tooltip
         >
           <!-- <template slot-scope="scope">{{
@@ -137,7 +137,7 @@
           }}</template> -->
 
           <template slot-scope="scope">
-            {{scope.row.createtime | dateformat}}
+            {{scope.row.createTime | dateformat}}
           </template>
         </el-table-column>
       </el-table>

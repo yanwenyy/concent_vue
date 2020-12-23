@@ -119,28 +119,51 @@
           required: true, message: '此项不能为空', trigger: 'blur'
         }"
       >
-<!--        <el-select-->
-<!--          :disabled="p.actpoint === 'look'"-->
-<!--          filterable-->
-<!--          placeholder="请选择"-->
-<!--          size="mini"-->
-<!--          v-model="detailform.verify.isCoalitionBid"-->
-<!--        >-->
-<!--          <el-option-->
-<!--            :key="index"-->
-<!--            :label="item.detailName"-->
-<!--            :value="item.id"-->
-<!--            v-for="(item, index) in yesOrNo"-->
-<!--          ></el-option>-->
-<!--        </el-select>-->
-        <el-input
+        <el-select
           clearable
-          :readonly="p.actpoint === 'look'"
+          filterable
+          placeholder="请选择"
           size="mini"
           v-model="detailform.verify.isCoalitionBid"
-        />
+        >
+          <el-option
+            :key="index"
+            :label="item.detailName"
+            :value="item.id"
+            v-for="(item, index) in coalitionBid"
+          ></el-option>
+        </el-select>
+<!--        <el-input-->
+<!--          clearable-->
+<!--          :readonly="p.actpoint === 'look'"-->
+<!--          size="mini"-->
+<!--          v-model="detailform.verify.isCoalitionBid"-->
+<!--        />-->
       </el-form-item>
 </el-row>
+      <el-row v-show='detailform.verify.isCoalitionBid=="是"'>
+        <el-form-item
+          label="内部联合体单位:"
+          style="width: 33%"
+          :disabled="p.actpoint === 'look'"
+        >
+
+          <el-input v-model="detailform.verifyOrgLists" placeholder="内部联合体单位">
+            <el-button slot="append" icon="el-icon-search"  @click="selectOrg()"></el-button>
+          </el-input>
+        </el-form-item>
+        <el-form-item
+          label="外部联合体单位:"
+          style="width: 33%"
+        >
+          <el-input
+            placeholder=""
+            size="mini"
+            v-model="detailform.verify.outOrg"
+          />
+
+        </el-form-item>
+      </el-row>
 <!-- 不下拉 -->
 <el-row>
       <el-form-item
@@ -314,7 +337,6 @@
             <el-form-item
             class="neirong"
               label="项目内容(最多1000字):"
-              style="width: 33%"
             >
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-input
@@ -331,7 +353,6 @@
               label="资审说明(最多1000字):"
 
               prop="verify.verifyExplain"
-              style="width: 33%"
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -381,6 +402,8 @@
                 color: 'rgba(0,0,0,1)',
               }"
         align="center"
+        @row-click="selectOrg1"
+        :row-class-name="tableRowClassName"
         border
         ref="table"
         style="width: 98%;margin-bottom: 20px "
@@ -404,25 +427,24 @@
         >
         </el-table-column>
         <el-table-column
-          v-show="!p.actpoint === 'look'"
+
           :resizable="false"
           fixed="right"
           label="参与投标单位"
           align="center"
           prop="verifySectionOrgName"
           show-overflow-tooltip
-          v-if="p.actpoint !== 'look'"
+          v-show="p.actpoint != 'look'"
+
           width="200">
-          <template slot-scope="scope">
-            <el-link
-              :underline="false"
-              @click="selectOrg()"
-              type="warning">选择
-            </el-link>
+          <template slot-scope="scope" v-show="p.actpoint != 'look'">
+            <span  >
+              {{scope.row.verifySectionOrgName}}
+            </span>
           </template>
         </el-table-column>
         <el-table-column
-          v-show="!p.actpoint === 'look'"
+          v-show="p.actpoint != 'look'"
           :resizable="false"
           fixed="right"
           label="操作"
@@ -512,15 +534,23 @@
     <el-button type="primary" @click="addSection()">确 定</el-button>
   </span>
     </el-dialog>
+    <TreeOrg v-if="treeOrgStatas" ref="addOrUpdate" @getPosition="getTreeOrg"></TreeOrg>
+    <TreeOrg v-if="treeOrgStatas1" ref="addOrUpdate1" @getPosition="getTreeOrg1"></TreeOrg>
   </div>
 </template>
 
 <script>
-
+import TreeOrg from '@/components/treeOrg'
 export default {
+
   name: '详情',
+  components: {
+    TreeOrg
+  },
   data() {
     return {
+      treeOrgStatas: false,
+      treeOrgStatas1: false,
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
       detailform: {
         'verify': {
@@ -542,7 +572,8 @@ export default {
 
         ],
         'verifyOrgList': [
-        ]
+        ],
+        verifyOrgLists:"111"
       },
       detailform1: {
         topInfor: {},
@@ -550,8 +581,18 @@ export default {
         topInfoSiteList: [],
         topInfoSectionList: [],
       },
-      dialogTopInfoSection:false
-
+      dialogTopInfoSection:false,
+      coalitionBid:[
+        {
+          id:'是',
+          detailName:'是'
+        },
+        {
+          id:'否',
+          detailName:'否'
+        }
+      ],//联合投标选择
+      myVerifySection:{}
     }
   },
   computed: {
@@ -565,6 +606,7 @@ export default {
 
   },
   methods: {
+
     back() {
       this.$router.back()
       // this.$router.push({
@@ -668,37 +710,66 @@ export default {
     del(index,item,list,type) {
       console.log(index);
       list.splice(index, 1);
-      // if(item.uuid&&type=='bd'){
-      //   this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
-      //     confirmButtonText: '确定',
-      //     cancelButtonText: '取消',
-      //     type: 'warning'
-      //   }).then(() => {
-      //
-          // this.$http
-          //   .post(
-          //     "/api/topInfo/TopInfoSection/list/delete",
-          //     {ids: [item.uuid]}
-          //   )
-          //   .then((res) => {
-          //     if (res.data && res.data.code === 200) {
-          //
-          //       console.log(list)
-          //     } else {
-          //       this.$message.error(data.msg)
-          //     }
-          //   });
-      //   }).catch(() => {})
-      // }else{
-      //   list.splice(index, 1);
-      // }
-      // var _self = this;
-      // _self.detailform.topInfoSectionList.splice(index, 1);
+
     },
     selectOrg(){
-      alert("建设中")
+      this.treeOrgStatas = true;
+      console.log(this.positionIndex);
+      this.$nextTick(() => {
+        this.$refs.addOrUpdate.init()
+      })
     },
+    getTreeOrg(data) {
 
+      console.log(data)
+      this.treeStatas = false;
+
+      var resultStr = "";
+      data.forEach((item, index) => {
+
+        var verifyOrg={ orgId:item.name,orgName:item.name};
+        this.detailform.verifyOrgList.push(verifyOrg)
+        resultStr+=item.name+",";
+      });
+      this.detailform.verifyOrgLists =resultStr.substring(0,resultStr.length-1);
+      // this.detailform.verifyOrgLists=resultStr;
+      // alert(this.detailform.verifyOrgLists);
+      console.log(this.detailform.verifyOrgLists)
+      // this.key = this.key + 1;
+    },
+    getTreeOrg1(data) {
+
+      console.log(data)
+      this.treeStatas1 = false;
+
+      var resultStr = "";
+      this.myVerifySection.verifySectionOrgList= [];
+      data.forEach((item, index) => {
+
+        var VerifySectionOrg={ orgId:item.name,orgName:item.name,orgType:"01"};
+        this.myVerifySection.verifySectionOrgList.push(VerifySectionOrg)
+        resultStr+=item.name+",";
+      });
+       this.detailform.verifySectionList[this.myVerifySection.index].verifySectionOrgName =resultStr.substring(0,resultStr.length-1);
+       this.detailform.verifySectionList[this.myVerifySection.index].verifySectionOrgList=this.myVerifySection.verifySectionOrgList;
+      // this.detailform.verifyOrgLists=resultStr;
+      // alert(this.detailform.verifyOrgLists);
+      console.log(this.detailform.verifySectionList)
+      // this.key = this.key + 1;
+    },
+    selectOrg1(row, event, column){
+      // alert(JSON.stringify(row));
+      this.myVerifySection=row;
+      this.treeOrgStatas1 = true;
+      console.log(this.positionIndex);
+      this.$nextTick(() => {
+        this.$refs.addOrUpdate1.init()
+      })
+    },
+    tableRowClassName({ row, rowIndex }) {
+      //把每一行的索引放进row
+      row.index = rowIndex;
+    },
     addSection()
     {
       this.dialogTopInfoSection = false;
