@@ -2,7 +2,7 @@
   <div>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span style="color: #2a2a7d"><b>投标管理详情</b></span>
+        <span style="color: #2a2a7d"><b>开标结果登记</b></span>
         <el-button
           @click="back"
           style="
@@ -17,7 +17,7 @@
       </div>
 
       <div style="overflow: scroll; max-height: 55vh;padding-bottom: 10px">
-  <h4 style="margin:0 0 0 0">项目前期信息</h4>
+    <div class="detail-class-tltle">项目前期信息:</div>
         <el-form
           :inline="false"
           :model="detailform"
@@ -241,7 +241,7 @@
             </el-form-item>
             </el-row>
 <div>
-  <h4 style="margin:10px 0 0 0 ">投标信息</h4>
+  <div class="detail-class-tltle">投标信息:</div>
             <el-form-item
               label="投标截止日期:"
             >
@@ -444,6 +444,23 @@
             <el-table-column
               :resizable="false"
               label="评标办法"
+              prop="riskFee"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+              <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidInfoSection.riskFee"
+                  ></el-input>
+              </template>
+            </el-table-column>
+
+                        <el-table-column
+              :resizable="false"
+              label="开标金额"
               prop="riskFee"
               show-overflow-tooltip
               align="center"
@@ -1090,7 +1107,7 @@ export default {
   }
   .gcform {
     margin-top: 10px;
-    .el-form-item__label:before {
+    >>>.el-form-item__label:before {
       position: initial;
       left: -10px;
     }

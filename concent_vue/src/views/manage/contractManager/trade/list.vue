@@ -9,13 +9,16 @@
       </el-button-group>
     </div>
     <div style="float: right; margin: -40px 0 0 0">
-      <el-button @click="reset" type="info" plain style="color:black;background:none">重置</el-button>
-      <el-button @click="search" type="primary" plain>查询</el-button>
-      <el-button @click="exportdata" type="primary" plain>导出</el-button>
+      <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
+      <el-button @click="getData" type="primary" plain>查询</el-button>
+      <el-button type="primary" plain>导出</el-button>
     </div>
 
     <div style="margin-top: 20px">
       <el-table
+        class="tableStyle"
+        :max-height="$tableHeight"
+        :height="$tableHeight"
         :data="page.records"
         :header-cell-style="{
           'text-align': 'center',
@@ -55,7 +58,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchFrom.id"
                 size="mini"
               />
             </div>
@@ -73,7 +76,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchFrom.id"
                 size="mini"
               />
             </div>
@@ -91,7 +94,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchFrom.id"
                 size="mini"
               />
             </div>
@@ -109,7 +112,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchFrom.id"
                 size="mini"
               />
             </div>
@@ -129,7 +132,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchFrom.id"
                 size="mini"
               />
             </div>
@@ -150,7 +153,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchFrom.id"
                 size="mini"
               />
             </div>
@@ -172,7 +175,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchFrom.id"
                 size="mini"
               />
             </div>
@@ -208,7 +211,7 @@ export default {
   data() {
     return {
       page: { current: 1, size: 10, total: 0, records: [] },
-      searchform: {
+      searchFrom: {
         current: 1,
         size: 10,
         year: "",

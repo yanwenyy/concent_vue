@@ -366,6 +366,8 @@ pre {
   line-height: 59px;
 }
 
+
+
 /* 新加的 */
 .gcform .el-form-item {
   width: 390px;
@@ -429,6 +431,8 @@ pre {
 }
 
 
+
+
 /*yw*/
 .search-btn{
   text-align: right;
@@ -471,6 +475,15 @@ pre {
   width:60%;
   white-space: pre-wrap;
   word-break: break-all;
+}
+.detail-back{
+  float: right;
+  padding: 10px 20px ;
+  border:1px solid #ddd;
+  color: black
+}
+.detail-card-title{
+  color: #2a2a7d
 }
 /**/
 

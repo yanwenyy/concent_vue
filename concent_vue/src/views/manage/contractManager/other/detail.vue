@@ -1,33 +1,26 @@
 <template>
   <div>
-    <el-card>
-          <div slot="header" class="clearfix">
-        <span style="color: #2a2a7d"><b>其他合同新增</b></span>
-        <el-button style="float: right; padding: 10px 20px ;border:1px solid #ddd;color: black;position:fixe" type="text">返回</el-button>
-      </div>
-      </el-card>
     <el-card class="box-card">
+          <div slot="header" class="clearfix">
+        <span class="detail-card-title"><b>其他合同新增</b></span>
+        <el-button  class="detail-back" type="text">返回</el-button>
+      </div>
 
-
-      <div style="height:900px">
+      <div class="detailBox">
     <el-form
       :inline="false"
       :model="detailform"
       :rules="detailformrules"
       class="gcform"
       ref="detailform"
-      style="background: white;"
     >
-    <el-row>
       <el-form-item
         label="合同名称:"
         prop="clothSize.bcTypeId"
         required
-          style="width:270px;"
       >
         <el-select
           :disabled="p.actpoint==='look'"
-          @change="chg"
           clearable
           filterable
           placeholder="请选择"
@@ -40,11 +33,9 @@
       <el-form-item
         label="合同编号:"
         prop="clothSize.bcStyleId"
-          style="width:270px;"
       >
         <el-select
           :disabled="p.actpoint==='look'"
-          @change="chg1"
           filterable
           clearable
           placeholder="请选择"
@@ -58,31 +49,23 @@
         label="合同总金额(万元):"
         prop="clothSize.bcPlateTypeId"
         required
-          style="width:270px;"
       >
         <el-input
-
           clearable
-
           placeholder="请输入"
           size="mini"
           v-model="detailform.clothSize.bcPlateTypeId"
-
          />
 
       </el-form-item>
-     </el-row>
 
-     <el-row>
  <el-form-item
         label="我方份额(万元):"
         prop="clothSize.bcTypeId"
         required
-          style="width:270px;"
       >
         <el-select
           :disabled="p.actpoint==='look'"
-          @change="chg"
           clearable
           filterable
           placeholder="请选择"
@@ -96,25 +79,22 @@
       <el-form-item
         label="合同签订日期:"
         prop="clothSize.bcStyleId"
-
-          style="width:270px;"
       >
-        <el-date-picker
-       v-model="value1"
+      <el-date-picker
+      v-model="value1"
       type="date"
       placeholder="选择日期"
       size="mini">
     </el-date-picker>
       </el-form-item>
+
        <el-form-item
         label="项目地点:"
         prop="clothSize.bcPlateTypeId"
          required
-        style="width:270px;"
       >
        <el-select
           :disabled="p.actpoint==='look'"
-          @change="chg"
           clearable
           filterable
           placeholder="请选择"
@@ -125,17 +105,14 @@
         </el-select>
 
       </el-form-item>
-     </el-row>
-     <el-row>
+
       <el-form-item
         label="使用资质单位:"
         prop="clothSize.bcTypeId"
-         required
-          style="width:270px;"
+        required
       >
       <el-select
           :disabled="p.actpoint==='look'"
-          @change="chg"
           clearable
           filterable
           placeholder="请选择"
@@ -149,8 +126,7 @@
        <el-form-item
         label="增值税(万元):"
         prop="clothSize.bcTypeId"
-         required
-          style="width:270px;"
+        required
       >
         <el-input
           clearable
@@ -164,11 +140,9 @@
         label="新兴市场类别(一级):"
         prop="clothSize.bcPlateTypeId"
         required
-          style="width:270px;"
       >
        <el-select
           :disabled="p.actpoint==='look'"
-          @change="chg1"
           filterable
           clearable
           placeholder="请选择"
@@ -180,18 +154,13 @@
 
       </el-form-item>
 
-     </el-row>
-
-     <el-row>
        <el-form-item
         label="新兴市场类别(二级):"
         prop="clothSize.bcStyleId"
         required
-          style="width:270px;"
       >
         <el-select
           :disabled="p.actpoint==='look'"
-          @change="chg1"
           filterable
           clearable
           placeholder="请选择"
@@ -206,11 +175,9 @@
         label="业务类别:"
         prop="clothSize.bcStyleId"
         required
-          style="width:270px;"
       >
         <el-select
           :disabled="p.actpoint==='look'"
-          @change="chg1"
           filterable
           clearable
           placeholder="请选择"
@@ -224,7 +191,6 @@
         label="甲方单位:"
         prop="clothSize.bcPlateTypeId"
         required
-          style="width:270px;"
       >
         <el-input
           clearable
@@ -233,14 +199,11 @@
           v-model="detailform.clothSize.bcPlateTypeId"
          />
       </el-form-item>
-     </el-row>
 
-     <el-row>
       <el-form-item
         label="乙方单位:"
         prop="clothSize.bcPlateTypeId"
         required
-          style="width:270px;"
       >
         <el-input
           clearable
@@ -249,15 +212,11 @@
           v-model="detailform.clothSize.bcPlateTypeId"
          />
       </el-form-item>
-
-
-
 
        <el-form-item
         label="录入单位:"
         prop="clothSize.bcTypeId"
         required
-          style="width:270px;"
       >
         <el-input
           clearable
@@ -269,7 +228,6 @@
       <el-form-item
         label="录入时间:"
         prop="clothSize.bcStyleId"
-          style="width:270px;"
       >
       <el-input
           clearable
@@ -279,13 +237,10 @@
          />
 
       </el-form-item>
-       </el-row>
 
-       <el-row>
       <el-form-item
         label="合同类型:"
         prop="clothSize.bcStyleId"
-          style="width:270px;"
       >
      <el-select
           :disabled="p.actpoint==='look'"
@@ -304,7 +259,6 @@
         label="是否年度合同:"
         prop="clothSize.bcPlateTypeId"
         required
-          style="width:270px;"
       >
        <el-select
           :disabled="p.actpoint==='look'"
@@ -318,7 +272,7 @@
           <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options2"></el-option>
         </el-select>
       </el-form-item>
-       </el-row>
+
 <el-row>
        <el-form-item
         label="证明文件(最大10MB):"
@@ -444,9 +398,6 @@
           </el-table-column>
            </el-table>
     </el-row>
-
-
-
 
     </el-form>
 </div>
@@ -682,122 +633,169 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.gcform {
-  margin-top: 10px;
-  .el-form-item__label:before {
-    position: initial;
-    left: -10px;
+  .detatil-flie-btn{
+    margin-left: 30px;
   }
-  .el-form-item__error {
-    padding-top: 0px;
-    width: 95%;
-    text-align: left;
-    margin-left: 0;
-    margin: right;
-    text-align: right;
-    top:0%
+  .btn-group{
+    text-align: center;
+    margin-top: 20px;
   }
-  .el-form-item {
-    float: left;
-  }
-  .detailformfooter1 {
-    margin-top: 5px;
-    width: 100%;
-    .el-button {
-      margin: 0 30px;
-      width: 140px;
-      height: 42px;
-      font-size: 18px;
-      font-family: Microsoft YaHei;
+  .gcform {
+    margin-top: 10px;
+    .el-form-item__label:before {
+      position: initial;
+      left: -10px;
     }
-    .el-button--primary {
-      background: #5c8bfa;
+    >>>.el-form-item__error {
+      padding-top: 0px;
+      width: 95%;
+      margin-left: 0;
+      text-align: right;
+      top: 0%;
     }
-    .el-button--default {
-      border: 1px solid #5c8bfa;
-      color: #5c8bfa;
+    >.el-form-item,>>>.formItem{
+      /*float: left;*/
+      display: inline-block;
+      width: 32.5%!important;
+    }
+    .detailformfooter1 {
+      margin-top: 5px;
+      width: 100%;
+      .el-button {
+        margin: 0 30px;
+        width: 140px;
+        height: 42px;
+        font-size: 18px;
+        font-family: Microsoft YaHei;
+      }
+      .el-button--primary {
+        background: #5c8bfa;
+      }
+      .el-button--default {
+        border: 1px solid #5c8bfa;
+        color: #5c8bfa;
+      }
+    }
+    .errorMsg .el-form-item__label {
+      color: red;
+    }
+    .el-input {
+      width: 300px;
+    }
+    .el-input .el-input_inner {
+      width: 300px;
+      height: 500px;
     }
   }
-  .errorMsg .el-form-item__label {
-    color: red;
-  }
-  .el-input {
-    width: 300px;
-  }
+
   .el-input .el-input_inner {
     width: 300px;
     height: 500px;
   }
-}
-.el-input .el-input_inner {
-  width: 300px;
-  height: 500px;
-}
-.el-table thead.is-group th {
-  background: #fff;
-}
-.clothSizeTable {
-  td {
-    padding: 0;
+
+  .el-table thead.is-group th {
+    background: #fff;
   }
-  .el-form-item__content {
-    height: 60px;
-    .el-form-item__error {
-      top: 42px;
+
+  .topInforTable {
+    /*td {*/
+    /*padding: 0;*/
+    /*}*/
+    .el-form-item__content {
+      height: 60px;
+      line-height: 60px;
+      .el-form-item__error {
+        top: 42px;
+      }
     }
   }
-}
-.text {
-  font-size: 14px;
-}
 
-.item {
-  margin-bottom: 18px;
-}
+  .text {
+    font-size: 14px;
+  }
 
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-.clearfix:after {
-  clear: both;
-}
-.el-card__body {
-  padding: 0 100px;
-  // height: 400px;
-// border: 1px solid black;
-// height: 200px;
-}
-.el-input--mini .el-input__inner{
-  height: 40px;
-  width: 100%;;
-  padding: 0;
-}
-.gcform .el-input{
-  width: 95%;
-}
-.neirong{
-  width: 100% !important;
-}
-.gcform .el-form-item{
-  margin-bottom: 0px;
-}
-.neirong .el-input--mini .el-input__inner{
-height: 100px;
-}
-.detail_bottom{
-  margin: 50px 0 0 0;
-  border: 1px solid #ddd;
-}
-.el-card, .el-message{
-  overflow: hidden;
-}
-.el-scrollbar__wrap.default-scrollbar__wrap{
-  overflow: hidden;
-}
-.el-card.is-always-shadow, .el-card.is-hover-shadow:focus, .el-card.is-hover-shadow:hover{
-  overflow: auto ;
-  // height: 500px ;
-}
+  .item {
+    margin-bottom: 18px;
+  }
+  .clearfix:before,
+  .clearfix:after {
+    display: table;
+    content: "";
+  }
+
+  .clearfix:after {
+    clear: both;
+  }
+
+  .el-card__body {
+    /*padding: 0 100px;*/
+    // height: 400px;
+    // border: 1px solid black;
+    // height: 200px;
+  }
+
+  >>>.el-input--mini .el-input__inner {
+    height: 40px;
+    width: 100%;
+    box-sizing: border-box;
+    // margin: 10px 0 0 10px;
+  }
+
+  .gcform >>>.el-input {
+    width: 95%;
+  }
+  .listInput{
+    width: auto!important;
+  }
+  .gcform .listInput input{
+    width: 100px!important;
+    padding:10px!important;
+    box-sizing: border-box;
+  }
+  .neirong {
+    width: 100% !important;
+  }
+
+  .gcform >>>.el-form-item {
+    margin-bottom: 0px;
+  }
+
+  .neirong >>>.el-input--mini .el-input__inner {
+    height: 100px;
+  }
+
+  .detail_bottom {
+    margin: 20px 0 0 0;
+    // border: 1px solid #ddd;
+  }
+
+  .el-card,
+  .el-message {
+    overflow: hidden;
+  }
+
+  .el-scrollbar__wrap.default-scrollbar__wrap {
+    overflow: hidden;
+  }
+
+  .el-card.is-always-shadow,
+  .el-card.is-hover-shadow:focus,
+  .el-card.is-hover-shadow:hover {
+    overflow: auto;
+    // height: 500px ;
+    /*height: 44vh;*/
+  }
+
+  .el-button--mini,
+  .el-button--mini.is-round {
+    margin: 0 27px 5px 0;
+  }
+
+  .el-table--border {
+    min-height: auto !important;
+  }
+  .detailBox{
+    max-height:calc(100vh - 410px)!important;
+  }
 </style>
+

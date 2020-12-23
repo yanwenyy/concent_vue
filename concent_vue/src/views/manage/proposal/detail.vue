@@ -17,7 +17,6 @@
         </el-button
         >
       </div>
-
       <div class="detailBox">
         <el-form
           :inline="false"
@@ -842,7 +841,6 @@
           topInfoSectionList: [],
           value1: [],
         },
-        detailformrules: {},
         xqprojectType: [],//工程类别二级
         emergingMarketTwo:[],//新兴市场二级
         projectNatureTwo:[],//项目性质二级
@@ -1162,7 +1160,7 @@
   }
   .gcform {
     margin-top: 10px;
-    .el-form-item__label:before {
+    >>>.el-form-item__label:before {
       position: initial;
       left: -10px;
     }
@@ -1196,7 +1194,7 @@
         color: #5c8bfa;
       }
     }
-    .errorMsg .el-form-item__label {
+    .errorMsg >>>.el-form-item__label {
       color: red;
     }
     .el-input {

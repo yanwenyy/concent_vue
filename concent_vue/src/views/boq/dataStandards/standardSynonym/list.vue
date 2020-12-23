@@ -113,11 +113,11 @@
     ></el-pagination>
 
     <el-dialog  title="近义词库维护" :visible.sync="dialogResult">
-      <el-form :model="resultform">
+      <el-form :model="form">
         <el-form-item label="清单名称:" :label-width="formLabelWidth">
           <el-input
             style="float: left; width: 60%"
-            v-model="searchform.standardName"
+            v-model="form.standardName"
             size="mini"
           />
         </el-form-item>
@@ -125,7 +125,7 @@
         <el-form-item label="近义词:" :label-width="formLabelWidth">
           <el-input
             style="float: left; width: 60%"
-            v-model="searchform.nearName"
+            v-model="form.nearName"
             size="mini"
           />
         </el-form-item>
@@ -133,29 +133,13 @@
         <el-form-item label="排序号:" :label-width="formLabelWidth">
           <el-input
             style="float: left; width: 60%"
-            v-model="searchform.sortNo"
-            size="mini"
-          />
-        </el-form-item>
-
-        <el-form-item label="单位:" :label-width="formLabelWidth">
-          <el-input
-            style="float: left; width: 60%"
-            v-model="searchform.unit"
-            size="mini"
-          />
-        </el-form-item>
-
-        <el-form-item label="排序:" :label-width="formLabelWidth">
-          <el-input
-            style="float: left; width: 60%"
-            v-model="searchform.sortNo"
+            v-model="form.sortNo"
             size="mini"
           />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="saveOrUpdate()">保 存</el-button>
+        <el-button type="primary" @click="save()">保 存</el-button>
         <el-button @click="dialogResult = false">关 闭</el-button>
       </div>
     </el-dialog>
@@ -173,11 +157,15 @@
           showinput: false,
           sousuo: "",
           searchform: {
-
               standardName: "",
               nearName: "",
               sortNo: "",
               uuid: "",
+          },
+          form:{
+              standardName: "",
+              nearName: "",
+              sortNo: "",
           },
           menus: [],
           multipleSelection: [],
@@ -202,6 +190,41 @@
       search() {
         this.showinput = false;
       },
+        //Dialog保存按钮方法
+        save(){
+            this.$http
+                .post(
+                    "/api/boq/BoqStandardSynonym/detail/save",
+                    JSON.stringify(this.form),
+                    {useJson: true}
+                )
+                .then((res) => {
+                    if (res.data.code === 200) {
+                        this.$message({
+                            message: "保存成功",
+                            type: "success",
+                        });
+                        //清空输入框
+                        this.form={
+                            standardName: "",
+                            nearName: "",
+                            sortNo: "",
+                            uuid:''
+                        };
+                        //关闭dialog对话框
+                        this.dialogResult = false;
+                        //查询列表数据
+                        this.getData();
+                    }
+                    else {
+                        this.$message.error("请添加必填项");
+                        return false;
+                    }
+                });
+        },
+        search() {
+            this.showinput = false;
+        },
       // 增加
       add() {
         let p = {actpoint: "add"};
@@ -212,15 +235,18 @@
       },
       // 修改
       totop() {
-        if (this.multipleSelection.length !== 1) {
+        if (this.multipleSelection.length !== 1 ||this.multipleSelection.length>1) {
           this.$message.info("请选择一条记录进行查看操作！");
           return false;
         }
-        let p = {actpoint: "edit", instid: this.multipleSelection[0].topOrgId};
-        this.$router.push({
-          path: "./detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
+        var list= this.multipleSelection[0];
+          this.form={
+              standardName: list.standardName,
+              nearName: list.nearName,
+              sortNo:list.sortNo,
+              uuid:list.uuid
+          };
+          this.dialogResult = true;
 
       },
       // 查看
@@ -237,19 +263,31 @@
           this.$message.info("请选择一条记录进行查看操作！");
           return false;
         }
-        let uuids = []
-        this.multipleSelection.forEach((item) => {
-          uuids.push(item.uuid)
-        })
-        // uuids.join(',')
-        this.$http
-          .post(
-            "\n" +
-              "/api/boq/BoqStandardSynonym/list/delete",
-            {ids: uuids}
-          )
-          .then((res) => {
-            this.getData()
+          let uuids = []
+          this.multipleSelection.forEach((item) => {
+              if (item.uuid != null) {
+                  uuids.push(item.uuid);
+              }
+
+          })
+          this.$confirm('此操作将永久删除该信息, 是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+          }).then(() => {
+              this.$http
+                  .post(
+                      '/api/boq/BoqStandardSynonym/list/delete',
+                      {ids: uuids}
+                  )
+                  .then(res => {
+                      this.getData();
+                  })
+          }).catch(() => {
+              this.$message({
+                  type: 'info',
+                  message: '已取消删除'
+              });
           });
       },
       // 展示

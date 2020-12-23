@@ -282,18 +282,31 @@
           this.$message.info("请选择一条记录进行查看操作！");
           return false;
         }
-        let uuids = []
-        this.multipleSelection.forEach((item) => {
-          uuids.push(item.uuid)
-        })
-        // uuids.join(',')
-        this.$http
-          .post(
-            "/api/ boq/BoqOrdinaryStandard/list/delete",
-            {ids: uuids}
-          )
-          .then((res) => {
-            this.getData()
+          let uuids = []
+          this.multipleSelection.forEach((item) => {
+              if (item.uuid != null) {
+                  uuids.push(item.uuid);
+              }
+
+          })
+          this.$confirm('此操作将永久删除该信息, 是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+          }).then(() => {
+              this.$http
+                  .post(
+                      '/api/ boq/BoqOrdinaryStandard/list/delete',
+                      {ids: uuids}
+                  )
+                  .then(res => {
+                      this.getData();
+                  })
+          }).catch(() => {
+              this.$message({
+                  type: 'info',
+                  message: '已取消删除'
+              });
           });
       },
       // 展示
