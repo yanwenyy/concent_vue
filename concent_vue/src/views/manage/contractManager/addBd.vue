@@ -1,0 +1,329 @@
+<template>
+  <el-dialog
+    :visible.sync="visible"
+    :append-to-body="true">
+    <div>
+      <el-form :inline="true" :model="detailForm" @keyup.enter.native="init()">
+        <el-form-item label="标段名称:" class="list-item">
+          <el-input v-model="detailForm.sectionId" placeholder="标段名称" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="风险费(万元):" class="list-item">
+          <el-input v-model="detailForm.riskFee" placeholder="风险费(万元)" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="安全费(万元):" class="list-item">
+          <el-input v-model="detailForm.safetyCost" placeholder="安全费(万元)" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="投标限价(万元):" class="list-item">
+          <el-input v-model="detailForm.biddingPriceLimit" placeholder="投标限价(万元)" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="投标保证金(万元):" class="list-item">
+          <el-input v-model="detailForm.tenderSecurity" placeholder="投标保证金(万元)" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="投标价(万元):" class="list-item">
+          <el-input v-model="detailForm.bidPrice" placeholder="投标价(万元)" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="投标费率(百分比):" class="list-item">
+          <el-input v-model="detailForm.tenderRate" placeholder="投标费率(百分比)" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="开标地点:" class="list-item">
+          <el-input v-model="detailForm.openBidPlaceName" placeholder="开标地点" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="评标办法:" class="list-item">
+          <el-input v-model="detailForm.bidEvaluationMethodName" placeholder="评标办法" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="开标日期:" class="list-item">
+          <el-date-picker
+            filterable
+            clearable
+            type="date"
+            value-format="timestamp"
+            v-model="detailForm.dateOfBidOpeningName"
+          >
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="参与投标单位:" class="list-item">
+          <el-input v-model="detailForm.participatingUnitsName" placeholder="评标办法" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="项目经理:" class="list-item">
+          <el-input v-model="detailForm.projectManager" placeholder="项目经理" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="项目副经理:" class="list-item">
+          <el-input v-model="detailForm.deputyProjectManager	" placeholder="项目副经理" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="技术负责人:" class="list-item">
+          <el-input v-model="detailForm.technicalDirector" placeholder="技术负责人" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="安全负责人:" class="list-item">
+          <el-input v-model="detailForm.personInChargeOfSafety" placeholder="安全负责人" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="财务负责人:" class="list-item">
+          <el-input v-model="detailForm.personInChargeOfFinance" placeholder="财务负责人" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="成本负责人:" class="list-item">
+          <el-input v-model="detailForm.costOwner" placeholder="成本负责人" clearable></el-input>
+        </el-form-item>
+        <div class="list-title">
+          其他投标单位(系统内):
+          <el-button
+            @click="add('inside')"
+            class="detatil-flie-btn"
+            size="mini"
+            type="primary"
+          >新增</el-button >
+        </div>
+        <el-table
+          :data="detailForm.dataList"
+          border
+          v-loading="dataListLoading"
+          :header-cell-style="{
+          'text-align': 'center',
+          'background-color': 'whitesmoke',
+        }"
+          style="width: 100%;">
+          <el-table-column
+            type="index"
+            header-align="center"
+            align="center"
+            width="80"
+            label="ID">
+          </el-table-column>
+          <el-table-column
+            :width="500"
+            prop="inforName"
+            show-overflow-tooltip
+            label="其他投标单位(系统内)">
+            <template slot-scope="scope">
+              <el-select
+                clearable
+                filterable
+                placeholder="请选择"
+                v-model="scope.row.name"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in nameList"
+                ></el-option>
+              </el-select>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="enginTypeSecondName"
+            header-align="center"
+            align="center"
+            label="投标价">
+            <template slot-scope="scope">
+              <el-input type="text" v-model="scope.row.price"></el-input>
+            </template>
+          </el-table-column>
+          <el-table-column
+            :resizable="false"
+            fixed="right"
+            label="操作"
+            show-overflow-tooltip
+            align="center"
+          >
+            <template slot-scope="scope">
+              <el-link :underline="false" @click="del(scope.$index,'inside')" type="warning">删除</el-link>
+            </template>
+          </el-table-column>
+        </el-table>
+        <div class="list-title">
+          其他投标单位(系统外):
+          <el-button
+            @click="add('outside')"
+            class="detatil-flie-btn"
+            size="mini"
+            type="primary"
+          >新增</el-button >
+        </div>
+        <el-table
+          :data="detailForm.dataList2"
+          border
+          v-loading="dataListLoading"
+          :header-cell-style="{
+          'text-align': 'center',
+          'background-color': 'whitesmoke',
+        }"
+          style="width: 100%;">
+          <el-table-column
+            type="index"
+            header-align="center"
+            align="center"
+            width="80"
+            label="ID">
+          </el-table-column>
+          <el-table-column
+            :width="500"
+            prop="inforName"
+            show-overflow-tooltip
+            label="其他投标单位(系统外)">
+            <template slot-scope="scope">
+              <el-select
+                clearable
+                filterable
+                placeholder="请选择"
+                v-model="scope.row.name"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in nameList"
+                ></el-option>
+              </el-select>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="enginTypeSecondName"
+            header-align="center"
+            align="center"
+            label="投标价">
+            <template slot-scope="scope">
+              <el-input type="text" v-model="scope.row.price"></el-input>
+            </template>
+          </el-table-column>
+          <el-table-column
+            :resizable="false"
+            fixed="right"
+            label="操作"
+            show-overflow-tooltip
+            align="center"
+          >
+            <template slot-scope="scope">
+              <el-link :underline="false" @click="del(scope.$index,'outside')" type="warning">删除</el-link>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-form>
+    </div>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="visible = false">取消</el-button>
+      <el-button type="primary" @click="sub()">确定</el-button>
+    </div>
+  </el-dialog>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        visible: false,
+        detailForm: {
+          dataList: [],
+          dataList2: []
+        },
+        pageIndex: 1,
+        pageSize: 10,
+        totalPage: 0,
+        dataListLoading: false,
+        dataListSelections: [],
+        currentRow: '',
+        nameList:[
+          {
+          id:'0',
+          detailName:'测试设施上'
+          },
+          {
+            id:'1',
+            detailName:'啦啦啦啦啦'
+          },
+        ],
+      }
+    },
+    mounted() {
+
+    },
+    methods: {
+      //选中数据
+      sub() {
+        var contractInfoSectionOrgList=this.detailForm.dataList.concat(this.detailForm.dataList2);
+        this.detailForm.contractInfoSectionOrgList=contractInfoSectionOrgList;
+        this.visible = false;
+        this.$emit('refreshBD', this.detailForm)
+      },
+      // 初始化
+      init() {
+        this.visible = true;
+        // this.detailForm={
+        //   dataList: [],
+        //     dataList2: []
+        // };
+      },
+      //新增列表
+      add(type){
+        var v={
+          name:'',
+          price:''
+        };
+        if(type=='inside'){
+          this.detailForm.dataList.push(v)
+        }else{
+          this.detailForm.dataList2.push(v)
+        }
+      },
+      del(index,type){
+        if(type=='inside'){
+          this.detailForm.dataList.splice(index, 1);
+        }else{
+          this.detailForm.dataList2.splice(index, 1);
+        }
+      }
+    }
+  }
+</script>
+<style scoped>
+  .list-title{
+    margin: 20px 0;
+  }
+  .detatil-flie-btn{
+    float: right;
+  }
+  .list-item{
+    width: 40%;
+  }
+  .dialog-footer {
+    margin-top: 50px;
+    text-align: center;
+  }
+
+  >>>.el-dialog {
+    width: 60%;
+  }
+
+  >>>.el-form-item__label {
+    width: auto;
+  }
+
+  .inline-block {
+    display: inline-block;
+  }
+
+  .dr-notice-warn {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    background: #FFE5E0;
+    color: red;
+  }
+
+  .dr-notice-body {
+    padding: 10px;
+  }
+
+  .dr-notice-body > div {
+    margin-bottom: 20px;
+  }
+
+  .sumWeigh {
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  >>>.el-input--mini .el-input__inner {
+    height: 40px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+</style>

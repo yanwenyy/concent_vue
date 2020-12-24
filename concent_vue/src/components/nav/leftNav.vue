@@ -2,10 +2,10 @@
   <!--左侧导航-->
   <aside :class="{showSidebar:!this.$store.state.collapsed}">
     <!--展开折叠开关-->
-    <!-- <div @click.prevent="collapse" class="collapse-bar">
+     <div @click.prevent="collapse" class="collapse-bar">
       <i class="el-icon-d-arrow-left" title="收起" v-show="this.$store.state.collapsed"></i>
       <i class="el-icon-d-arrow-right" title="展开" v-show="!this.$store.state.collapsed"></i>
-    </div> -->
+    </div>
 
     <!--导航菜单-->
     <el-menu
