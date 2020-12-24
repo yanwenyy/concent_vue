@@ -368,9 +368,9 @@
                 action="https://jsonplaceholder.typicode.com/posts/"
                 :auto-upload="false">
 
-            <div>
+            <!-- <div>
           <el-button display="block" slot="trigger" size="small" type="primary">选取文件</el-button>
-          </div>
+          </div> -->
           </el-upload>
 
             </el-form-item>

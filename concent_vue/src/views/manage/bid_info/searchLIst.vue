@@ -2,19 +2,39 @@
   <div>
     <el-form :inline="true" :model="searchform" @keyup.enter.native="getData()">
       <el-form-item label="项目名称:">
-        <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
+        <el-input
+          v-model="searchform.inforName"
+          placeholder="项目名称"
+          clearable
+        ></el-input>
       </el-form-item>
       <el-form-item label="工程类别(一级):">
-        <el-input v-model="searchform.enginTypeFirstName" placeholder="工程类别(一级)" clearable></el-input>
+        <el-input
+          v-model="searchform.enginTypeFirstName"
+          placeholder="工程类别(一级)"
+          clearable
+        ></el-input>
       </el-form-item>
-        <el-form-item label="工程类别(二级):">
-        <el-input v-model="searchform.enginTypeSecondName" placeholder="工程类别(二级)" clearable></el-input>
+      <el-form-item label="工程类别(二级):">
+        <el-input
+          v-model="searchform.enginTypeSecondName"
+          placeholder="工程类别(二级)"
+          clearable
+        ></el-input>
       </el-form-item>
-        <el-form-item label="标段名称:">
-        <el-input v-model="searchform.sectionName" placeholder="标段名称" clearable></el-input>
+      <el-form-item label="标段名称:">
+        <el-input
+          v-model="searchform.sectionName"
+          placeholder="标段名称"
+          clearable
+        ></el-input>
       </el-form-item>
       <el-form-item label="建设单位:">
-        <el-input v-model="searchform.constructionOrg" placeholder="建设单位" clearable></el-input>
+        <el-input
+          v-model="searchform.constructionOrg"
+          placeholder="建设单位"
+          clearable
+        ></el-input>
       </el-form-item>
       <el-form-item label="开标日期:">
         <el-date-picker
@@ -22,16 +42,25 @@
           type="daterange"
           range-separator="至"
           start-placeholder="开始日期"
-          end-placeholder="结束日期">
+          end-placeholder="结束日期"
+        >
         </el-date-picker>
       </el-form-item>
 
       <el-form-item label="公告类型:">
-        <el-input v-model="searchform.noticeTypeName" placeholder="公告类型" clearable></el-input>
+        <el-input
+          v-model="searchform.noticeTypeName"
+          placeholder="公告类型"
+          clearable
+        ></el-input>
       </el-form-item>
 
       <el-form-item label="录入单位:">
-        <el-input v-model="searchform.ticCreateName" placeholder="录入单位" clearable></el-input>
+        <el-input
+          v-model="searchform.ticCreateName"
+          placeholder="录入单位"
+          clearable
+        ></el-input>
       </el-form-item>
 
       <el-form-item label="资审截止日期:">
@@ -40,14 +69,12 @@
           type="daterange"
           range-separator="至"
           start-placeholder="开始日期"
-          end-placeholder="结束日期">
+          end-placeholder="结束日期"
+        >
         </el-date-picker>
       </el-form-item>
 
-
-      <el-form-item
-        label="是否中标:"
-      >
+      <el-form-item label="是否中标:">
         <el-select
           clearable
           filterable
@@ -59,19 +86,28 @@
             :key="index"
             :label="item.detailName"
             :value="item.id"
-            v-for="(item, index) in bulletinType"
+            v-for="(item, index) in yesOrNo"
           ></el-option>
         </el-select>
       </el-form-item>
 
       <el-form-item label="项目地点:">
         <el-input v-model="searchform.path" placeholder="项目地点">
-          <el-button slot="append" icon="el-icon-search"  @click="selectPosition()"></el-button>
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="selectPosition()"
+          ></el-button>
         </el-input>
       </el-form-item>
 
-
-      <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
+      <el-button
+        @click="searchformReset"
+        type="info"
+        plain
+        style="color: black; background: none"
+        >重置</el-button
+      >
       <el-button @click="getData" type="primary" plain>查询</el-button>
       <el-button @click="exportdata" type="primary" plain>导出</el-button>
     </el-form>
@@ -81,7 +117,10 @@
         :max-height="$tableHeight"
         :height="$tableHeight"
         :data="page.records"
-        :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
+        :header-cell-style="{
+          'text-align': 'center',
+          'background-color': 'whitesmoke',
+        }"
         @row-dblclick="rowshow"
         @selection-change="handleSelectionChange"
         border
@@ -106,6 +145,7 @@
 
         <el-table-column
           :width="150"
+          align="center"
           label="是否中标"
           prop="isWinBid"
           show-overflow-tooltip
@@ -118,6 +158,9 @@
           prop="sectionName"
           show-overflow-tooltip
         >
+          <template slot-scope="scope">
+            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
+          </template>
         </el-table-column>
 
         <el-table-column
@@ -126,6 +169,9 @@
           prop="inforName"
           show-overflow-tooltip
         >
+        <template slot-scope="scope">
+            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
+          </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -135,7 +181,7 @@
           show-overflow-tooltip
         >
         </el-table-column>
-                <el-table-column
+        <el-table-column
           :width="150"
           align="center"
           label="工程类别(二级)"
@@ -152,17 +198,14 @@
         >
         </el-table-column>
 
-            <el-table-column
-              :resizable="false"
-              label="项目地点"
-              align="center"
-              prop="inforName"
-            >
-              <template slot-scope="scope">
-                <i class="el-icon-circle-plus"  @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
-                <!-- <el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button> -->
-              </template>
-            </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="项目地点"
+          prop="placeName"
+          show-overflow-tooltip
+        >
+        </el-table-column>
 
         <el-table-column
           :width="300"
@@ -198,6 +241,9 @@
           prop="vifSaleTime"
           show-overflow-tooltip
         >
+         <template slot-scope="scope">{{
+            scope.row.vifSaleTime | dateformat
+            }}</template>
         </el-table-column>
 
         <el-table-column
@@ -207,8 +253,11 @@
           prop="openBidTime"
           show-overflow-tooltip
         >
+        <template slot-scope="scope">{{
+            scope.row.openBidTime | dateformat
+            }}</template>
         </el-table-column>
-<!-- ??? -->
+        <!-- ??? -->
         <el-table-column
           :width="150"
           align="center"
@@ -216,9 +265,12 @@
           prop="openBidTime"
           show-overflow-tooltip
         >
+         <template slot-scope="scope">{{
+            scope.row.openBidTime | dateformat
+            }}</template>
         </el-table-column>
 
-        <!-- <el-table-column
+        <el-table-column
           :width="150"
           align="center"
           label="项目状态"
@@ -226,9 +278,9 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            <span>{{scope.row.flowStatus=='1'?'草稿':scope.row.flowStatus=='2'?'审核中':'审核通过'}}</span>
+            <span> {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}</span>
           </template>
-        </el-table-column> -->
+        </el-table-column>
         <el-table-column
           :width="150"
           align="center"
@@ -238,7 +290,7 @@
         >
           <template slot-scope="scope">{{
             scope.row.createTime | dateformat
-            }}</template>
+          }}</template>
         </el-table-column>
       </el-table>
     </div>
@@ -251,189 +303,204 @@
       @size-change="handleSizeChange"
       layout="total, sizes, prev, pager, next, jumper"
     ></el-pagination>
-    <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
+    <Tree
+      v-if="treeStatas"
+      ref="addOrUpdate"
+      @getPosition="getPositionTree"
+    ></Tree>
   </div>
 </template>
 
 <script>
-  import Tree from '@/components/tree'
-  export default {
-    // inject:['reload'],
-    components: {
-      Tree
-    },
-    data() {
-      return {
-        treeStatas: false,
-        page: {current: 1, size: 10, total: 0, records: []},
-        searchform: {
-          inforName: "",
-          enginTypeFirstId: "",
-          enginTypeSecondId: "",
-          constructionOrg: "",
-          noticeTypeId: "",
-          belongLineId: "",
-          designOrg:"",
-          ffid:'',
-          flowStatus:'',
-          createTime:'',
-          planBidTime:'',
-          path:''
-        },
-        multipleSelection: [],
-        xqprojectType:[],//工程二级列表
-        projectStatus:[
+import Tree from "@/components/tree";
+export default {
+  // inject:['reload'],
+  components: {
+    Tree,
+  },
+  data() {
+    return {
+      treeStatas: false,
+      page: { current: 1, size: 10, total: 0, records: [] },
+      searchform: {
+        inforName: "",
+        enginTypeFirstName: "",
+        enginTypeSecondName: "",
+        sectionName:"",
+        constructionOrg: "",
+        openBidTime:"",
+        noticeTypeId: "",
+        noticeTypeName:"",
+        ticCreateName:"",
+        vifSaleTime:"",
+        isWinBid:"",
+        path: "",
+      },
+      multipleSelection: [],
+      xqprojectType: [], //工程二级列表
+      // projectStatus: [
+      //   {
+      //     id: "1",
+      //     detailName: "草稿",
+      //   },
+      //   {
+      //     id: "2",
+      //     detailName: "审核中",
+      //   },
+      //   {
+      //     id: "3",
+      //     detailName: "审核通过",
+      //   },
+      // ], //项目状态列表
+
+            yesOrNo:[
+          {
+            id:'0',
+            detailName:'是'
+          },
           {
             id:'1',
-            detailName:'草稿'
-          },
-          {
-            id:'2',
-            detailName:'审核中'
-          },
-          {
-            id:'3',
-            detailName:'审核通过'
+            detailName:'否'
           }
-        ],//项目状态列表
-      };
+        ],
+    };
+  },
+  mounted() {
+    this.getData();
+    this.$store.dispatch("getConfig", {});
+    this.$store.dispatch("getCategory", {
+      name: "projectDomainType",
+      id: "238a917eb2b111e9a1746778b5c1167e",
+    });
+  },
+  computed: {
+    projectDomainType() {
+      // console.log(this.$store.state.category["projectDomainType"])
+      return this.$store.state.category.projectDomainType;
     },
-    mounted() {
-       this.getData();
-      this.$store.dispatch("getConfig", {});
-      this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
+    bulletinType() {
+      return this.$store.state.bulletinType;
     },
-    computed: {
-      projectDomainType() {
-        // console.log(this.$store.state.category["projectDomainType"])
-        return this.$store.state.category.projectDomainType;
-      },
-      bulletinType() {
-        return this.$store.state.bulletinType;
-      },
-      probability() {
-        return this.$store.state.probability;
-      },
-      railwayLine(){
-        return this.$store.state.railwayLine;
-      }
+    probability() {
+      return this.$store.state.probability;
     },
-    methods: {
-      //获取项目地点的值
-      getPositionTree(data) {
-        console.log(data)
-        this.treeStatas = false;
-        this.searchform.ffid=data.fullDetailCode;
-        this.searchform.path=data.fullDetailName;
-        this.key = this.key + 1;
-      },
-      //选择项目地点
-      selectPosition() {
-        this.treeStatas = true;
-        console.log(this.positionIndex);
-        this.$nextTick(() => {
-          this.$refs.addOrUpdate.init()
-        })
-      },
-      submit() {
-      },
-      //工程类别二级
-      getTwo(id) {
-
-        if(id!=''){
-          this.searchform.enginTypeSecondId='';
-          this.projectDomainType.find(
-            (item) => {
-            if (item.id == id) {
+    railwayLine() {
+      return this.$store.state.railwayLine;
+    },
+  },
+  methods: {
+    //获取项目地点的值
+    getPositionTree(data) {
+      console.log(data);
+      this.treeStatas = false;
+      this.searchform.ffid = data.fullDetailCode;
+      this.searchform.path = data.fullDetailName;
+      this.key = this.key + 1;
+    },
+    //选择项目地点
+    selectPosition() {
+      this.treeStatas = true;
+      console.log(this.positionIndex);
+      this.$nextTick(() => {
+        this.$refs.addOrUpdate.init();
+      });
+    },
+    submit() {},
+    //工程类别二级
+    getTwo(id) {
+      if (id != "") {
+        this.searchform.enginTypeSecondId = "";
+        this.projectDomainType.find((item) => {
+          if (item.id == id) {
             this.xqprojectType = item.children;
           }
-        }
-        )
-        }
-      },
-      exportdata() {
-      },
-      // 查看
-      rowshow(row) {
-        let p = {actpoint: "look", instid: row.topOrgId};
-        this.$router.push({
-          path: "./detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
-      },
-      // 展示
-      show() {
-        if (this.multipleSelection.length !== 1) {
-          this.$message.info("请选择一条记录进行查看操作！");
-          return false;
-        }
-        let p = {actpoint: "look", instid: this.multipleSelection[0].uuid};
-        this.$router.push({
-          path: "../detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
-      }, // list通用方法开始
-      handleSizeChange(val) {
-        this.searchform.size = val;
-        this.getData();
-      },
-      handleCurrentChange(val) {
-        this.searchform.current = val;
-        this.getData();
-      },
-      searchformSubmit() {
-        this.searchform.current = 1;
-        this.getData();
-      },
-      searchformReset() {
-        // this.$refs["searchform"].resetFields();
-        this.searchform={
-          inforName: "",
-            enginTypeFirstId: "",
-            enginTypeSecondId: "",
-            constructionOrg: "",
-            noticeTypeId: "",
-            belongLineId: "",
-            designOrg:"",
-            ffid:'',
-            flowStatus:'',
-            createTime:'',
-            planBidTime:''
-        }
-        this.getData();
-      },
-      // 列表选项数据
-      handleSelectionChange(val) {
-        this.multipleSelection = val;
-      },
-      // 查询
-      getData() {
-        this.$http
-          .post(
-            "/api/topInfo/BidInfo/list/loadPageDataForSelect",
-            this.searchform
-          )
-          .then((res)=>{
-          this.page = res.data.data;
-          console.log(this.page)
-      });
-      },
-
+      }
     },
-    created() {
+    exportdata() {},
+    // 查看
+    rowshow(row) {
+      var id=row.flowStatus==null?row.topInfoOrgId:row.uuid;
+      let p = { actpoint: "look", instid: id ,flowStatus:row.flowStatus};
+      this.$router.push({
+        path: "./detail/",
+        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
+      });
+    },
+    // 展示
+    show() {
+      if (this.multipleSelection.length !== 1) {
+        this.$message.info("请选择一条记录进行查看操作！");
+        return false;
+      }
+      let p = { actpoint: "look", instid: this.multipleSelection[0].uuid };
+      this.$router.push({
+        path: "../detail/",
+        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
+      });
+    }, // list通用方法开始
+    handleSizeChange(val) {
+      this.searchform.size = val;
       this.getData();
     },
-  };
+    handleCurrentChange(val) {
+      this.searchform.current = val;
+      this.getData();
+    },
+    searchformSubmit() {
+      this.searchform.current = 1;
+      this.getData();
+    },
+    searchformReset() {
+      // this.$refs["searchform"].resetFields();
+      this.searchform = {
+        inforName: "",
+        enginTypeFirstName: "",
+        enginTypeSecondName: "",
+        constructionOrg: "",
+        noticeTypeId: "",
+        noticeTypeName:"",
+        belongLineId: "",
+        designOrg: "",
+        ffid: "",
+        flowStatus: "",
+        createTime: "",
+        planBidTime: "",
+        sectionName:"",
+      };
+      this.getData();
+    },
+    // 列表选项数据
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
+    // 查询
+    getData() {
+      this.$http
+        .post(
+          "/api/topInfo/BidInfo/list/loadPageDataForSelect",
+          this.searchform
+        )
+        .then((res) => {
+          this.page = res.data.data;
+          console.log(this.page);
+        });
+    },
+  },
+  created() {
+    this.getData();
+  },
+};
 </script>
 <style scoped>
-  >>>.el-form-item__label{
-    width: auto;
-  }
-  >>>.el-input--mini .el-input__inner{
-    height: auto;
-    line-height: inherit;
-  }
-  .el-table__row {
-    cursor: pointer;
-  }
+>>> .el-form-item__label {
+  width: auto;
+}
+>>> .el-input--mini .el-input__inner {
+  height: auto;
+  line-height: inherit;
+}
+.el-table__row {
+  cursor: pointer;
+}
 </style>

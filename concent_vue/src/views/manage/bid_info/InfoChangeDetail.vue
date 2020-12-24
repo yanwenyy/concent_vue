@@ -2071,7 +2071,7 @@ export default {
     },
     //新增的时候详情
     getAddDetail() {
-      console.log(111);
+      // console.log(111);
       this.$http
         .post("/api/topInfo/TopInfor/detail/entityInfo", { topOrgId: this.id })
         .then((res) => {

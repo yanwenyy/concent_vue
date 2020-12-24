@@ -23,7 +23,6 @@
         :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
         @row-dblclick="rowshow"
         @selection-change="handleSelectionChange"
-
         border
         highlight-current-row
         ref="table"
