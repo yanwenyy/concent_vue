@@ -1,12 +1,12 @@
 <template>
   <div>
     <div style="width: 100%; overflow: hidden">
+
       <el-button-group style="float: left">
+        <!--<el-button @click="add" plain type="primary">新增</el-button>-->
         <el-button @click="add" plain type="primary">新增</el-button>
-       <!-- <el-button @click="dialogResult=true" plain type="primary">新增</el-button>-->
         <el-button @click="totop" plain type="primary">修改</el-button>
         <el-button @click="remove" type="primary" plain>删除</el-button>
-       <!-- <el-button @click="searchformReset" type="primary" plain>刷新</el-button>-->
       </el-button-group>
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
@@ -149,54 +149,295 @@
       layout="total, sizes, prev, pager, next, jumper"
     ></el-pagination>
 
-   <!-- <el-dialog  title="标准库维护" :visible.sync="dialogResult">
-      <el-form :model="resultform">
-        <el-form-item label="项目编号:" :label-width="formLabelWidth">
-          <el-input
-            style="float: left; width: 60%"
-            v-model="searchform.importCode"
-            size="mini"
-          />
-        </el-form-item>
+    <!--国标库新增对话框-->
+    <el-dialog  title="标准库维护" :visible.sync="dialogResult" class="dialog_gb">
+      <el-form
+        :inline="false"
+        :model="form"
+        class="gcform"
+        ref="detailform"
+      >
+      <div v-if="whStatus">
 
-        <el-form-item label="项目名称:" :label-width="formLabelWidth">
-          <el-input
-            style="float: left; width: 60%"
-            v-model="searchform.name"
-            size="mini"
-          />
-        </el-form-item>
+          <el-form-item
+            label="项目编号:"
+            prop="boqOrdinaryStandard.importCode"
+          >
+            <el-input
+              clearable
+              size="mini"
+              v-model="form.boqOrdinaryStandard.importCode"/>
+          </el-form-item>
 
-        <el-form-item label="单位:" :label-width="formLabelWidth">
-          <el-input
-            style="float: left; width: 60%"
-            v-model="searchform.unit"
-            size="mini"
-          />
-        </el-form-item>
+          <el-form-item
+            label="项目名称:"
+            prop="boqOrdinaryStandard.name"
+            :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+          >
+            <el-input
+              clearable
+              size="mini"
+              v-model="form.boqOrdinaryStandard.name"/>
+          </el-form-item>
 
-        <el-form-item label="标准库项目特征:" :label-width="formLabelWidth">
-          &lt;!&ndash;<el-input
-            style="float: left; width: 100%"
-            v-model="searchform.feature"
-            size="mini"
-          />&ndash;&gt;
-          <el-input
-            type="textarea"
-            style="float: left; width: 60%"
-            :rows="4"
-            placeholder="请输入内容"
-            v-model="searchform.feature">
-          </el-input>
+          <el-form-item
+            label="单位:"
+            prop="boqOrdinaryStandard.unit"
+            :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+          >
+            <el-input
+              clearable
+              size="mini"
+              v-model="form.boqOrdinaryStandard.unit"/>
+          </el-form-item>
 
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="saveOrUpdate()">保 存</el-button>
-        <el-button @click="dialogResult = false">关 闭</el-button>
+          <!-- 下拉 -->
+
+          <el-form-item
+            label="启用状态:"
+            prop="boqOrdinaryStandard.enable"
+            :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+          >
+            <el-select
+              filterable
+              clearable
+              placeholder=""
+              size="mini"
+              v-model="form.boqOrdinaryStandard.enable"
+            >
+              <el-option
+                :key="index"
+                :label="item.name"
+                :value="item.id"
+                v-for="(item, index) in qyzt"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item
+            label="工程类别:"
+
+          >
+            <el-select
+              clearable
+              filterable
+              placeholder="请选择"
+              size="mini"
+              @change="
+                  getName(
+                    form.projectType,
+                    projectType,
+                    'projectType'
+                  )
+                "
+              v-model="form.boqOrdinaryStandard.projectType"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.id"
+                v-for="(item, index) in projectType"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <div>
+            <el-form-item
+              label="标准库项目特征:"
+              prop="boqOrdinaryStandard.feature"
+            >
+              <el-input
+                type="textarea"
+                :rows="2"
+                clearable
+                readonly
+                v-model="form.boqOrdinaryStandard.feature"/>
+            </el-form-item>
+          </div>
+
+        <p style="overflow: hidden; margin-right:30px">
+          <span style="float: left">项目特征修改: </span>
+          <el-button
+            @click="whStatus=false,dialogResult1=true"
+            size="mini"
+            style="
+                  float: right;
+                  width: 60px;
+                  height: 32px;
+                  background: #5c8bfa;
+                  font-size: 12px;
+                "
+            type="primary"
+          >修改</el-button>
+        </p>
+        <el-table
+          :data="form.boqFeatureStandardList"
+          :key="key"
+          :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+          @selection-change="handleSelectionChange"
+          align="center"
+          border
+          class="clothSizeTable"
+          ref="table"
+          style="width: 98%; min-height: calc(100vh - 370px)"
+        >
+          <el-table-column
+            :width="80"
+            align="center"
+            label="序号"
+            show-overflow-tooltip
+            type="index"
+          ></el-table-column>
+          <el-table-column
+            :resizable="false"
+            label="特征描述"
+            prop="feature"
+            show-overflow-tooltip
+            align="center"
+          >
+            <template slot-scope="scope">
+              <el-input
+                class="listInput"
+                clearable
+                v-model="scope.row.feature"
+              ></el-input>
+            </template>
+          </el-table-column>
+
+          <el-table-column
+            :resizable="false"
+            label="启用状态"
+
+            align="center"
+            show-overflow-tooltip
+          >
+            <template slot-scope="scope">
+              <el-form-item class="tabelForm"  :prop="'boqFeatureStandardList.' + scope.$index + '.enable'"
+                            :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }">
+                <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                <el-select
+                  clearable
+                  filterable
+                  placeholder="请选择"
+                  v-model="scope.row.enable"
+                >
+                  <el-option
+                    :key="index"
+                    :label="item.name"
+                    :value="item.id"
+                    v-for="(item, index) in qyzt"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+              <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+            </template>
+
+          </el-table-column>
+        </el-table>
+        <div slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="saveOrUpdate()">保 存</el-button>
+          <el-button @click="dialogResult = false">关 闭</el-button>
+        </div>
       </div>
-    </el-dialog>-->
-
+      <div v-if="dialogResult1">
+        <div style="width: 100%; overflow: hidden">
+          <el-button-group style="float: left">
+            <el-button @click="addtz" plain type="primary">新增</el-button>
+            <el-button @click="totop" plain type="primary">修改</el-button>
+            <el-button @click="remove" type="primary" plain>删除</el-button>
+          </el-button-group>
+          <el-button @click="dialogResult1 = false,whStatus=true" plain  type="primary" class="dialog-footer">返 回</el-button>
+        </div>
+        <div style="margin-top: 20px">
+          <el-table
+            class="tableStyle"
+            :max-height="$tableHeight"
+            :height="$tableHeight"
+            :data="form.boqFeatureStandardList"
+            :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
+            @row-dblclick="rowshow"
+            @selection-change="handleSelectionChange"
+            border
+            highlight-current-row
+            ref="table"
+            stripe
+            tooltip-effect="dark"
+          >
+            <el-table-column
+              :width="50"
+              align="center"
+              show-overflow-tooltip
+              type="selection"
+            ></el-table-column>
+            <el-table-column
+              :width="70"
+              align="center"
+              label="序号"
+              show-overflow-tooltip
+              type="index"
+            ></el-table-column>
+            <el-table-column
+              :width="500"
+              align="center"
+              label="项目特征"
+              prop="feature"
+              show-overflow-tooltip>
+            </el-table-column>
+          </el-table>
+        </div>
+      </div>
+      <div v-if="dialogResult2">
+        <el-form-item
+            label="标准库项目特征:"
+          >
+            <el-input
+              type="textarea"
+              :rows="2"
+              clearable
+              v-model="form.addTzForm.feature"/>
+          </el-form-item>
+        <el-form-item
+          label="启用状态:"
+        >
+          <el-select
+            filterable
+            clearable
+            v-model="form.addTzForm.enable"
+          >
+            <el-option
+              :key="index"
+              :label="item.name"
+              :value="item.id"
+              v-for="(item, index) in qyzt"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <div slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="saveTz()">保 存</el-button>
+          <el-button @click="dialogResult2 = false,dialogResult1=true">返 回</el-button>
+        </div>
+      </div>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -206,6 +447,12 @@
     name: "proposal-list-look",
     data() {
       return {
+          key:0,
+          railwayLine:[],
+          projectType:[],
+          whStatus:true,
+          dialogResult1:false,
+          dialogResult2:false,
           page: {current: 1, size: 10, total: 0, records: []},
           showinput: false,
           sousuo: "",
@@ -220,10 +467,38 @@
               projectType: "",
               uuid: "",
           },
+          form:{
+              boqOrdinaryStandard:{
+                  importCode:"",
+                  name:"",
+                  unit:"",
+                  projectType:"",
+                  enable:"",
+                  feature:"",
+                  uuid:"",
+              },
+              boqFeatureStandardList:[],
+              addTzForm:{
+                  feature:'',
+                  enable:''
+              },
+          },
+
+          qyzt:[
+              {
+                  id:'0',
+                  name:'启用'
+              },
+              {
+                  id:'1',
+                  name:'禁用'
+              }
+          ],
           menus: [],
           multipleSelection: [],
           orgTree: [],
           dialogResult: false,
+          dialogResult1:false,
           resultform: {
               name: '',
               region: '',
@@ -238,8 +513,56 @@
       }
     },
     methods: {
+        //保存特征
+        saveTz(){
+
+        },
+        //新增特征
+        addtz(){
+            this.dialogResult1=false;
+            this.dialogResult2=true;
+            this.form.addTzForm={
+                feature:'',
+                enable:''
+            }
+        },
       exportdata() {
       },
+        //保存按钮
+        saveOrUpdate(){
+            this.$http
+                .post(
+                    "/api/ boq/BoqOrdinaryStandard/detail/save",
+                    JSON.stringify(this.form),
+                    {useJson: true}
+                )
+                .then((res) => {
+                    if (res.data.code === 200) {
+                        this.$message({
+                            message: "保存成功",
+                            type: "success",
+                        });
+                        //清空输入框
+                        this.form={
+                            standardName: "",
+                            nearName: "",
+                            sortNo: "",
+                            uuid:''
+                        };
+                        //关闭dialog对话框
+                        this.dialogResult = false;
+                        //查询列表数据
+                        this.getData();
+                    }
+                    else {
+                        this.$message.error("请添加必填项");
+                        return false;
+                    }
+                });
+        },
+        search() {
+            this.showinput = false;
+        },
       search() {
         this.showinput = false;
       },
@@ -249,11 +572,26 @@
         },*/
       // 增加
       add() {
-        let p = {actpoint: "add"};
-        this.$router.push({
-          path: "./detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
+          this.dialogResult=true;
+          this.whStatus=true;
+          this.dialogResult1=false;
+          this.dialogResult2=false;
+          this.form={
+              boqOrdinaryStandard:{
+                  importCode:"",
+                      name:"",
+                      unit:"",
+                      projectType:"",
+                      enable:"",
+                      feature:"",
+                      uuid:"",
+              },
+              boqFeatureStandardList:[],
+              addTzForm:{
+                  feature:'',
+                  enable:''
+              },
+          }
       },
       // 修改
       totop() {
@@ -391,7 +729,21 @@
   };
 </script>
 <style scoped>
+  >>>.dialog-footer{
+    float: right;
+  }
+
+  >>>.el-form-item__error{
+    right:0;
+  }
   .el-table__row {
     cursor: pointer;
+  }
+  >>>.dialog_gb .el-dialog__body{
+    width: 80%;
+    margin: 0 auto;
+    height: 350px;
+    box-sizing: border-box;
+    overflow: auto;
   }
 </style>

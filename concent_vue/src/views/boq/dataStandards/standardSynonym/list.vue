@@ -3,7 +3,7 @@
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
        <!-- <el-button @click="add" plain type="primary">新增</el-button>-->
-        <el-button @click="dialogResult=true" plain type="primary">新增</el-button>
+        <el-button @click="add" plain type="primary">新增</el-button>
         <el-button @click="totop" plain type="primary">修改</el-button>
         <el-button @click="remove" type="primary" plain>删除</el-button>
        <!-- <el-button @click="searchformReset" type="primary" plain>刷新</el-button>-->
@@ -111,12 +111,10 @@
       @size-change="handleSizeChange"
       layout="total, sizes, prev, pager, next, jumper"
     ></el-pagination>
-
-    <el-dialog  title="近义词库维护" :visible.sync="dialogResult">
-      <el-form :model="form">
+    <el-dialog  title="近义词库维护" :visible.sync="dialogResult" width="30%" >
+      <el-form :model="form" style="height:30%">
         <el-form-item label="清单名称:" :label-width="formLabelWidth">
           <el-input
-            style="float: left; width: 60%"
             v-model="form.standardName"
             size="mini"
           />
@@ -124,7 +122,6 @@
 
         <el-form-item label="近义词:" :label-width="formLabelWidth">
           <el-input
-            style="float: left; width: 60%"
             v-model="form.nearName"
             size="mini"
           />
@@ -132,7 +129,6 @@
 
         <el-form-item label="排序号:" :label-width="formLabelWidth">
           <el-input
-            style="float: left; width: 60%"
             v-model="form.sortNo"
             size="mini"
           />
@@ -143,8 +139,7 @@
         <el-button @click="dialogResult = false">关 闭</el-button>
       </div>
     </el-dialog>
-
-  </div>
+</div>
 </template>
 
 <script>
@@ -227,11 +222,16 @@
         },
       // 增加
       add() {
-        let p = {actpoint: "add"};
-        this.$router.push({
-          path: "./detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
+          this.dialogResult=true;
+          this.form={
+              code: "",
+              parentId: "",
+              feature:"",
+              name: "",
+              unit: "",
+              sortNo: "",
+              uuid:''
+          }
       },
       // 修改
       totop() {
@@ -371,5 +371,9 @@
 <style scoped>
   .el-table__row {
     cursor: pointer;
+  }
+  .el-form-item el-input{
+    float: left;
+    width: 60%;
   }
 </style>
