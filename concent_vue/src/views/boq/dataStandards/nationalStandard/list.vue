@@ -3,7 +3,7 @@
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
        <!-- <el-button @click="add" plain type="primary">新增</el-button>-->
-        <el-button @click="dialogResult=true" plain type="primary">新增</el-button>
+        <el-button @click="add" plain type="primary">新增</el-button>
         <el-button @click="totop" plain type="primary">修改</el-button>
         <el-button @click="remove" type="primary" plain>删除</el-button>
        <!-- <el-button @click="searchformReset" type="primary" plain>刷新</el-button>-->
@@ -45,7 +45,7 @@
         ></el-table-column>
 
         <el-table-column
-          :width="500"
+          :width="150"
           align="center"
           label="编码"
           prop="code"
@@ -64,7 +64,7 @@
         </el-table-column>
 
         <el-table-column
-          :width="500"
+          :width="150"
           align="center"
           label="父编码"
           prop="parentId"
@@ -83,7 +83,7 @@
         </el-table-column>
 
         <el-table-column
-          :width="150"
+          :width="500"
           align="center"
           label="项目名称"
           prop="name"
@@ -101,7 +101,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          :width="150"
+          :width="500"
           align="center"
           label="特征描述"
           prop="feature"
@@ -168,7 +168,7 @@
       layout="total, sizes, prev, pager, next, jumper"
     ></el-pagination>
 
-    <el-dialog  title="国标库维护" :visible.sync="dialogResult">
+    <el-dialog  title="国标库维护" :visible.sync="dialogResult"  class="dialog_gb">
       <el-form :model="form" :rules="rules">
         <el-form-item
           label="编码:"
@@ -181,7 +181,6 @@
               }"
         >
           <el-input
-            style="float: left; width: 60%"
             v-model="form.code"
             size="mini"
           />
@@ -189,7 +188,6 @@
 
         <el-form-item label="父编码:" :label-width="formLabelWidth">
           <el-input
-            style="float: left; width: 60%"
             v-model="form.parentId"
             size="mini"
           />
@@ -207,7 +205,6 @@
               }"
         >
           <el-input
-            style="float: left; width: 60%"
             v-model="form.name"
             size="mini"
           />
@@ -216,7 +213,6 @@
 
         <el-form-item label="项目特征:" :label-width="formLabelWidth">
           <el-input
-            style="float: left; width: 60%"
             v-model="form.feature"
             size="mini"
           />
@@ -224,7 +220,6 @@
 
         <el-form-item label="单位:" :label-width="formLabelWidth">
           <el-input
-            style="float: left; width: 60%"
             v-model="form.unit"
             size="mini"
           />
@@ -232,7 +227,6 @@
 
         <el-form-item label="排序:" :label-width="formLabelWidth">
           <el-input
-            style="float: left; width: 60%"
             v-model="form.sortNo"
             size="mini"
           />
@@ -243,8 +237,7 @@
         <el-button @click="dialogResult = false">关 闭</el-button>
       </div>
     </el-dialog>
-
-  </div>
+    </div>
 </template>
 
 <script>
@@ -336,7 +329,16 @@
       },
       // 增加
       add() {
-
+        this.dialogResult=true;
+        this.form={
+            code: "",
+            parentId: "",
+            feature:"",
+            name: "",
+            unit: "",
+            sortNo: "",
+            uuid:''
+          }
       },
       // 修改
       totop() {
@@ -358,7 +360,11 @@
       },
       // 查看
       rowshow(row) {
-        let p = {actpoint: "look", instid: row.uuid};
+          if (this.multipleSelection.length !== 1||this.multipleSelection.length>1) {
+              this.$message.info("请选择一条记录进行查看操作！");
+              return false;
+          }
+        //let p = {actpoint: "look", instid: row.uuid};
           var list=this.multipleSelection[0];
           this.form={
               code: list.code,
@@ -370,7 +376,7 @@
               uuid:list.uuid
           };
           this.dialogResult = true;
-          query: {p: this.$utils.encrypt(JSON.stringify(p))}
+         // query: {p: this.$utils.encrypt(JSON.stringify(p))}
        /* this.$router.push({
           path: "./detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
@@ -379,7 +385,7 @@
       // 删除
       remove() {
         if (this.multipleSelection.length < 1) {
-          this.$message.info("请选择一条记录进行查看操作！");
+          this.$message.info("请选择至少一条记录进行删除操作！");
           return false;
         }
           let uuids = []
@@ -493,5 +499,12 @@
 <style scoped>
   .el-table__row {
     cursor: pointer;
+  }
+  >>>.dialog_gb .el-dialog__body{
+    width: 80%;
+    margin: 0 auto;
+    height: 300px;
+    box-sizing: border-box;
+    overflow: auto;
   }
 </style>
