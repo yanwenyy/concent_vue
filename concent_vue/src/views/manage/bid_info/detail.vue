@@ -702,12 +702,15 @@
               :width="180"
             >
               <template slot-scope="scope">
-                  <el-input
-                    value-format="timestamp"
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.openBidTime"
-                  ></el-input>
+                <el-date-picker
+                :disabled="p.actpoint === 'look'"
+                value-format="timestamp"
+                filterable
+                clearable
+                size="mini"
+                v-model="scope.row.openBidTime"
+              >
+              </el-date-picker>
               </template>
             </el-table-column>
 
@@ -1210,7 +1213,7 @@ export default {
     getDetail() {
 
         console.log(this.p.actpoint)
-        var q=this.p.actpoint === "edit"||this.p.actpoint === "look"?{id:this.id}:{topInfoOrgId:this.id};
+        var q=this.p.actpoint === "edit"||(this.p.actpoint === "look"&&this.p.flowStatus!=null)?{id:this.id}:{topInfoOrgId:this.id};
         console.log(q)
         this.$http
           .post("/api/topInfo/BidInfo/detail/entityInfo", q)

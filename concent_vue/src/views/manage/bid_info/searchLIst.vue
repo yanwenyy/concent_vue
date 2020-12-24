@@ -241,6 +241,9 @@
           prop="vifSaleTime"
           show-overflow-tooltip
         >
+         <template slot-scope="scope">{{
+            scope.row.vifSaleTime | dateformat
+            }}</template>
         </el-table-column>
 
         <el-table-column
@@ -250,6 +253,9 @@
           prop="openBidTime"
           show-overflow-tooltip
         >
+        <template slot-scope="scope">{{
+            scope.row.openBidTime | dateformat
+            }}</template>
         </el-table-column>
         <!-- ??? -->
         <el-table-column
@@ -259,6 +265,9 @@
           prop="openBidTime"
           show-overflow-tooltip
         >
+         <template slot-scope="scope">{{
+            scope.row.openBidTime | dateformat
+            }}</template>
         </el-table-column>
 
         <el-table-column
@@ -411,7 +420,8 @@ export default {
     exportdata() {},
     // 查看
     rowshow(row) {
-      let p = { actpoint: "look", instid: row.uuid };
+      var id=row.flowStatus==null?row.topInfoOrgId:row.uuid;
+      let p = { actpoint: "look", instid: id ,flowStatus:row.flowStatus};
       this.$router.push({
         path: "./detail/",
         query: { p: this.$utils.encrypt(JSON.stringify(p)) },

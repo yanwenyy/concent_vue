@@ -21,6 +21,7 @@
 
     <div style="margin-top: 20px">
       <el-table
+        class="tableStyle"
         :max-height="$tableHeight"
         :height="$tableHeight"
         :data="page.records"
@@ -72,42 +73,72 @@
         </el-table-column>
 
         <el-table-column
-          :width="150"
+          :width="200"
           align="center"
-          label="工程类别"
+          label="工程类别(一级)"
           prop="enginTypeFirstName"
           show-overflow-tooltip>
           <template slot="header" slot-scope="scope">
             <span>工程类别(一级)</span>
-            <div>
+            <el-select
+              clearable
+              filterable
+              placeholder="请选择"
+              @change="getTwo"
+              size="mini"
+              v-model="searchform.enginTypeFirstName"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.id"
+                v-for="(item, index) in projectDomainType"
+              ></el-option>
+            </el-select>
+            <!-- <div>
               <el-input
                 style="float: left; width: 100%"
                 v-model="searchform.enginTypeFirstName"
                 size="mini"/>
-            </div>
+            </div> -->
           </template>
         </el-table-column>
 
 
         <el-table-column
-          :width="150"
+          :width="200"
           align="center"
-          label="工程类别"
+          label="工程类别(二级)"
           prop="enginTypeSecondName"
           show-overflow-tooltip>
           <template slot="header" slot-scope="scope">
             <span>工程类别(二级)</span>
-            <div>
+            <el-select
+              clearable
+              filterable
+              placeholder="请选择"
+              @change="getTwo"
+              size="mini"
+              v-model="searchform.enginTypeSecondName"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.id"
+                v-for="(item, index) in projectDomainType"
+              ></el-option>
+            </el-select>
+            <!-- <div>
               <el-input
                 style="float: left; width: 100%"
                 v-model="searchform.enginTypeSecondName"
                 size="mini"/>
-            </div>
+            </div> -->
           </template>
         </el-table-column>
 
         <el-table-column
-          :width="150"
+          :width="300"
           align="center"
           label="建设单位"
           prop="constructionOrg"
@@ -159,7 +190,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchform.flowStatus"
                 size="mini"/>
             </div>
           </template>
@@ -186,6 +217,7 @@
             scope.row.endTime | dateformat
           }}</template>
         </el-table-column>
+
         <el-table-column
           :width="150"
           align="center"
@@ -197,11 +229,12 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchform.createUserName"
                 size="mini"/>
             </div>
           </template>
         </el-table-column>
+
         <el-table-column
           :width="150"
           align="center"
@@ -216,7 +249,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchform.tioCreateTime"
                 size="mini"/>
             </div>
           </template>
@@ -224,6 +257,7 @@
             scope.row.createtime | dateformat
           }}</template>
         </el-table-column>
+
       </el-table>
     </div>
           <el-pagination
@@ -443,7 +477,8 @@ export default {
 
 
     rowshow(row) {
-      let p = { actpoint: "look", instid: row.uuid };
+      var id=row.flowStatus==null?row.topInfoOrgId:row.uuid;
+      let p = { actpoint: "look", instid: id ,flowStatus:row.flowStatus};
       this.$router.push({
         path: "./detail/",
         query: { p: this.$utils.encrypt(JSON.stringify(p)) },
