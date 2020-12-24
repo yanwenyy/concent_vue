@@ -1,12 +1,9 @@
 <template>
   <div>
-    <div style="width: 100%; overflow: hidden">
-      <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary">新增变更</el-button>
-        <el-button @click="editItem" plain type="primary">修改</el-button>
-        <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
-      </el-button-group>
-    </div>
+    <el-dialog title="选择项目进行资审变更"
+               :visible.sync="dialogResult"
+               :append-to-body="true">
+
 
     <div style="margin-top: 20px">
       <el-table
@@ -15,8 +12,7 @@
           'text-align': 'center',
           'background-color': 'whitesmoke',
         }"
-        @row-click="rowshow"
-        @selection-change="handleSelectionChange"
+        @selection-change="handleCurrentChangeTable"
         border
         highlight-current-row
         ref="table"
@@ -151,19 +147,19 @@
         layout="total, sizes, prev, pager, next, jumper"
       ></el-pagination>
     </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogResult = false">取消</el-button>
+        <el-button type="primary" @click="sub()">确定</el-button>
+      </div>
 
-    <ListChangeSearch v-if="dialogResult" ref="verifyChange" @refreshDataList="goAddDetail"></ListChangeSearch>
+    </el-dialog>
   </div>
 
 </template>
 
 <script>
-import ListChangeSearch from './list_ChangeSearch'
 export default {
   name: "proposal-list-look",
-  components: {
-    ListChangeSearch
-  },
   data() {
     return {
       radio:'0',
@@ -195,113 +191,49 @@ export default {
         resource: '',
         desc: ''
       },
-      formLabelWidth: '120px'
+      formLabelWidth: '120px',
+      currentRow:[]
 
     }
   },
   methods: {
+    sub(){
+      if(this.currentRow.length>1)
+      {
+        this.$message.info('请选择一条资审信息进行变更！')
+        return false
+      }
+      this.dialogResult = false;
 
-    //去新增详情页面
-    goAddDetail(data){
-      // console.log(data);
-      // if(data.topOrgId){
-      //   let p = {actpoint: "add",instid:data.topOrgId};
-      //   this.$router.push({
-      //     path: "./infoChangeDetail/",
-      //     query: {p: this.$utils.encrypt(JSON.stringify(p))},
-      //   });
-      // }
-      console.log(JSON.stringify(data));
-      //alert(JSON.stringify(this.multipleSelection[0]));
-      let p = { actpoint: 'add',instid: data.inforid, topinfoid:data.tiouuid}
-      //alert(JSON.stringify(p));
-      this.$router.push({
-        path: './detail_Chang/',
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-      })
+      this.$emit('refreshDataList', this.currentRow[0])
     },
-    handleChange(){},
-    statusFormat(row,column){
-      return row.verify.uuid != "" ? "已进行资审申请" : row.verify.uuid == "" ? "未进行资审申请" : "未进行资审申请";
-      // return statusW
-    },
+
     search(){
       this.showinput = false
     },
-    add(){
-      this.dialogResult = true
-      console.log(this.positionIndex);
-      this.$nextTick(() => {
-        this.$refs.verifyChange.init()
-      })
-    },
-    editItem() {
-      console.log(JSON.stringify(this.multipleSelection[0]));
-      //是否有资审信息判断
-      if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
-        this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
-        return;
-      }
-      //是否在审核流程中判断
-      //是否在变更流程中判断
-      let p = {
-        actpoint: 'editItem',
-        instid: this.multipleSelection[0].uuid,
-        topinfoid: this.multipleSelection[0].topInfoOrgId
-      }
-      //alert(JSON.stringify(p));
-      this.$router.push({
-        path: './detail_Chang/',
-        query: {p: this.$utils.encrypt(JSON.stringify(p))}
-      })
-    },
-    // 查看
-    rowshow(row) {
-      let p = { actpoint: 'look', instid: row.uuid }
-      this.$router.push({
-        path: './detail/',
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-      })
-    },
-    show() {
-      if (this.multipleSelection.length !== 1) {
-        this.$message.info('请选择一条记录进行查看操作！')
-        return false
-      }
-      let p = { actpoint: 'look', instid: this.multipleSelection[0].uuid }
-      this.$router.push({
-        path: '../detail/',
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-      })
-    }, // list通用方法开始
     handleSizeChange(val) {
       this.searchform.size = val
-      this.getData()
+      this.init()
     },
     handleCurrentChange(val) {
       this.searchform.current = val
-      this.getData()
+      this.init()
     },
     searchformSubmit() {
       this.searchform.current = 1
-      this.getData()
+      this.init()
     },
-    searchformReset() {
-      // this.$refs['searchform'].resetFields()
-      this.searchform.inforName = "";
-      this.searchform.enginTypeFirstName = "";
-      this.searchform.constructionOrg = "";
-      this.searchform.noticeTypeName = "";
-      this.searchform.status = "";
-      this.searchform.username = "";
-      this.searchform.saleTime = "";
-      this.getData();
+    handleCurrentChangeTable(val) {
+      //alert(JSON.stringify(val));
+      this.currentRow = val;
     },
-    // 列表选项数据
-    handleSelectionChange(val) {
-      this.multipleSelection = val
-    },
-    getData() {
+
+    // // 列表选项数据
+    // handleSelectionChange(val) {
+    //   this.multipleSelection = val
+    // },
+    init() {
+      this.dialogResult = true
       console.log(JSON.stringify(this.searchform));
       if(this.searchform.saleTime!="")
       {
@@ -313,55 +245,36 @@ export default {
       console.log(JSON.stringify(this.searchform));
       this.$http
         .post(
-          '/api/topInfo/Verify/list/loadPageDataForIsChange',
-          // '/api/topInfo/Verify/list/loadPageDataForChangeRecord',
+          //'/api/topInfo/Verify/list/loadPageDataForIsChange',
+          '/api/topInfo/Verify/list/loadPageDataForChangeRecord',
           this.searchform
         )
         .then(res => {
           this.page = res.data.data
         })
-    },
-    getMenus() {
-      this.$http
-        .post('api/base/loadcascader', { typecode: 'XMLX' })
-        .then(res => {
-          if (res.data.code === 0) {
-            this.menus = res.data.data
-          }
-        })
-    },
-    currentMenu(selVal) {
-      let selMenuObj = this.menus.filter(item => item.value === selVal)
-      this.searchform.menu = selMenuObj[0].label
-    },
-    // 获取上级单位树信息
-    getOrgTree() {
-      this.$http.get('/api/base/loadorglist').then(res => {
-        this.orgTree = res.data.data
-      })
-    },
-    // 确定单位
-    orgChange() {
-      let selectLabelArr = this.$refs['porgCascader'].getCheckedNodes()[0]
-        .pathLabels
-      this.searchform.orgname = selectLabelArr[selectLabelArr.length - 1]
     }
 
+
     // list通用方法结束
-  },
-  created() {
-    //this.getMenus()
-    //this.getOrgTree()
-    this.getData()
   }
 }
 </script>
 <style scoped>
-.btn-group{
+.dialog-footer {
+  margin-top: 50px;
   text-align: center;
-  margin-top: 20px;
 }
-.el-table__row {
-  cursor: pointer;
+
+>>>.el-dialog {
+  width: 80%;
 }
+
+>>>.el-form-item__label {
+  width: auto;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
 </style>

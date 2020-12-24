@@ -1,5 +1,6 @@
 <template>
   <el-dialog
+    :destroy-on-close="true"
     title="联合体选择"
     :visible.sync="dialogVisible"
     width="30%"
@@ -45,7 +46,7 @@
         // });
 
         //js方法引入数据
-        this.datas=datas;
+        //this.datas=datas;
         console.log(datas)
       },
       methods: {
@@ -54,6 +55,7 @@
           this.dialogVisible = true;
         },
         handleCheckChange(data, checked, indeterminate) {
+
           if(checked)
           {
             this.resultData.push(data);
@@ -70,6 +72,7 @@
         result(){
           this.dialogVisible = false;
           this.$emit('getPosition',this.resultData)
+          this.resultData=[];
         },
         loadNode(node, resolve) {
           if (node.level === 0) {
