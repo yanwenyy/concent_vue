@@ -2,7 +2,7 @@
   <div>
     <div style="width: 100%;overflow: hidden;">
       <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary">登记</el-button>
+        <el-button @click="add" :disabled="flowStatus!=null"  plain type="primary">登记</el-button>
         <el-button @click="totop" :disabled="flowStatus!=1&&flowStatus!=4" plain type="primary">修改</el-button>
         <el-button type="primary" @click="addk" plain >开标结果登记</el-button>
 
@@ -237,7 +237,7 @@
       </el-pagination>
       <info-change-search v-if="infoCSVisible" ref="infoCS" @refreshDataList="goAddDetail"></info-change-search>
 
-  <el-dialog title="中标登记结果" :visible.sync="dialogFormVisible" margin="0 auto">
+  <el-dialog title="中标登记结果" :visible.sync="dialogFormVisible" margin="0 auto" width="30%">
     <el-form>
         <el-form-item label="是否中标" :label-width="formLabelWidth">
       <el-select v-model="form.region" placeholder="请选择">
@@ -250,7 +250,7 @@
     </el-form-item>
         <el-form-item label="中标时间" :label-width="formLabelWidth">
       <el-date-picker
-      v-model="value1"
+      v-model="form.name"
       type="date"
       placeholder="选择日期">
     </el-date-picker>
@@ -322,6 +322,8 @@ export default {
       InfoChangeSearch
     },
   methods: {
+    handleChange(){},
+    handleRemove(){},
       //行选择的时候
       rowSelect(selection, row){
         if(selection.indexOf(row)!=-1){

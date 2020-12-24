@@ -15,7 +15,7 @@
           </el-button>
       </div>
 
-      <div style="overflow: scroll; max-height: 55vh;padding-bottom: 10px">
+      <div class="detailBox">
       <div class="detail-class-tltle">项目前期信息:</div>
         <el-form
           :inline="false"
@@ -216,7 +216,7 @@
             </el-form-item>
 
             <div>
-              <el-form-item  label="项目跟踪负责人:">
+              <el-form-item   class="formItem" label="项目跟踪负责人:">
               <el-input
                 disabled
                 placeholder="请选择"
@@ -225,7 +225,7 @@
               </el-input>
               </el-form-item>
 
-              <el-form-item  label="联系电话:">
+              <el-form-item  class="formItem"  label="联系电话:">
               <el-input
                 disabled
                 placeholder="请选择"
@@ -236,7 +236,8 @@
 
             </div>
 
-            <el-row>
+
+            <div>
             <el-form-item
               class="neirong"
               label="项目内容:"
@@ -251,10 +252,11 @@
                 v-model="detailform.topInforBO.topInfor.inforContent"
               />
             </el-form-item>
-            </el-row>
+            </div>
 <div>
   <div class="detail-class-tltle">投标信息:</div>
             <el-form-item
+            class="formItem"
               label="投标截止日期:"
               prop="bidInfo.endTime"
               :rules="{
@@ -276,6 +278,7 @@
 
 
             <el-form-item
+            class="formItem"
               label="招标公告发布日期:"
               prop="bidInfo.publishTime"
               :rules="{
@@ -296,6 +299,7 @@
             </el-form-item>
 
             <el-form-item
+             class="formItem"
               label="招标文件发售截止日期"
             >
               <el-date-picker
@@ -311,6 +315,7 @@
 
             <el-form-item
               label="招标方式:"
+              class="formItem"
             >
               <el-select
                 :disabled="p.actpoint === 'look'"
@@ -330,6 +335,7 @@
             </el-form-item>
 
             <el-form-item
+            class="formItem"
               label="是否联合体投标:"
               prop="bidInfo.isCoalitionBid"
               :rules="{
@@ -355,6 +361,7 @@
 
 
             <el-form-item
+            class="formItem"
               label="是否为费率招标:"
               prop="bidInfo.isBidRates"
               :rules="{
@@ -377,10 +384,45 @@
                 ></el-option>
                 </el-select>
             </el-form-item>
+
+              <el-form-item label="内部联合体单位:"
+              v-if="detailform.bidInfo.isCoalitionBid==='0'"
+              class="formItem1" >
+              <el-select
+                :disabled="p.actpoint === 'look'"
+                filterable
+                clearable
+                multiple
+                placeholder="请选择"
+                size="mini"
+                v-model="detailform.bidInfoInnerOrgList.innerOrgName"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in amountSource"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+
+            <el-form-item class="formItem1"
+            v-if="detailform.bidInfo.isCoalitionBid==='0'"
+                label="外部联合体单位:"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'"
+                  clearable
+                  placeholder=""
+                  size="mini"
+                  v-model="detailform.bidInfo.outOrg"
+                />
+              </el-form-item>
+
 </div>
 
 
-          <el-row>
+          <div>
             <el-form-item
               class="neirong"
               label="投标说明(最多1000字):"
@@ -389,7 +431,9 @@
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
+
               }"
+              style="width: 100%"
             >
               <el-input
                 type="textarea"
@@ -399,8 +443,7 @@
                 v-model="detailform.bidInfo.bidExplain"
               />
             </el-form-item>
-          </el-row>
-
+          </div>
           <el-row>
             <el-form-item
               class="neirong"
@@ -479,7 +522,7 @@
                 clearable
                 placeholder=""
                 size="mini"
-                v-model="scope.row.bidInfoSection.sectionId">
+                v-model="scope.row.sectionId">
               <el-option
                   :key="index"
                   :label="item.sectionName"
@@ -497,14 +540,18 @@
               show-overflow-tooltip
               align="center"
               :width="180"
+              v-if="detailform.bidInfo.isBidRates==='1'"
             >
               <template slot-scope="scope">
-                 <el-form-item class="tabelForm" :prop="'bidInfoSectionList.' + scope.$index + '.bidInfoSection.riskFee'" :rules='rules.contractAmount'>
+                 <el-form-item
+                 class="tabelForm"
+                 :prop="'bidInfoSectionList.' + scope.$index + '.riskFee'"
+                 :rules='rules.contractAmount'>
                     <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                     <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.riskFee"
+                    v-model="scope.row.riskFee"
                   ></el-input>
                   </el-form-item>
 
@@ -518,14 +565,16 @@
               show-overflow-tooltip
               align="center"
               :width="180"
+              v-if="detailform.bidInfo.isBidRates==='1'"
             >
               <template slot-scope="scope">
-
+                <el-form-item class="tabelForm" :prop="'bidInfoSectionList.' + scope.$index + '.safetyFee'" :rules='rules.contractAmount'>
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.safetyFee"
+                    v-model="scope.row.safetyFee"
                   ></el-input>
+                  </el-form-item>
               </template>
             </el-table-column>
 
@@ -536,13 +585,16 @@
               show-overflow-tooltip
               align="center"
               :width="180"
+               v-if="detailform.bidInfo.isBidRates==='1'"
             >
               <template slot-scope="scope">
+                <el-form-item class="tabelForm" :prop="'bidInfoSectionList.' + scope.$index + '.bidPriceLimit'" :rules='rules.contractAmount'>
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.bidPriceLimit"
+                    v-model="scope.row.bidPriceLimit"
                   ></el-input>
+                  </el-form-item>
               </template>
             </el-table-column>
 
@@ -555,11 +607,37 @@
               :width="180"
             >
               <template slot-scope="scope">
+                 <el-form-item class="tabelForm"
+                 :prop="'bidInfoSectionList.' + scope.$index + '.bidEarnestMoney'"
+                 :rules='rules.contractAmount'>
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.bidEarnestMoney"
+                    v-model="scope.row.bidEarnestMoney"
                   ></el-input>
+                   </el-form-item>
+              </template>
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="投标费率(百分比)"
+              prop="bidRate"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+               v-if="detailform.bidInfo.isBidRates==='0'"
+            >
+              <template slot-scope="scope">
+                 <el-form-item class="tabelForm"
+                 :prop="'bidInfoSectionList.' + scope.$index + '.bidRate'"
+                 :rules='rules.contractAmount'>
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.bidRate"
+                  ></el-input>
+                   </el-form-item>
               </template>
             </el-table-column>
 
@@ -570,12 +648,13 @@
               show-overflow-tooltip
               align="center"
               :width="180"
+               v-if="detailform.bidInfo.isBidRates==='1'"
             >
               <template slot-scope="scope">
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.bidMoney"
+                    v-model="scope.row.bidMoney"
                   ></el-input>
               </template>
             </el-table-column>
@@ -592,7 +671,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.openBidAddress"
+                    v-model="scope.row.openBidAddress"
                   ></el-input>
               </template>
             </el-table-column>
@@ -609,7 +688,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.evaluationBidId"
+                    v-model="scope.row.evaluationBidId"
                   ></el-input>
               </template>
             </el-table-column>
@@ -627,7 +706,7 @@
                     value-format="timestamp"
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.openBidTime"
+                    v-model="scope.row.openBidTime"
                   ></el-input>
               </template>
             </el-table-column>
@@ -644,7 +723,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.joinBidOrg"
+                    v-model="scope.row.joinBidOrg"
                   ></el-input>
               </template>
             </el-table-column>
@@ -661,7 +740,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.otherBidInner"
+                    v-model="scope.row.otherBidInner"
                   ></el-input>
               </template>
             </el-table-column>
@@ -678,7 +757,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.otherBidOther"
+                    v-model="scope.row.otherBidOther"
                   ></el-input>
               </template>
             </el-table-column>
@@ -695,7 +774,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.notListedOrg"
+                    v-model="scope.row.notListedOrg"
                   ></el-input>
               </template>
             </el-table-column>
@@ -712,7 +791,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.projectManager"
+                    v-model="scope.row.projectManager"
                   ></el-input>
               </template>
             </el-table-column>
@@ -729,7 +808,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.projectDeputyManager"
+                    v-model="scope.row.projectDeputyManager"
                   ></el-input>
 
               </template>
@@ -747,7 +826,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.technicalDirector"
+                    v-model="scope.row.technicalDirector"
                   ></el-input>
               </template>
             </el-table-column>
@@ -764,7 +843,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.securityDirector"
+                    v-model="scope.row.securityDirector"
                   ></el-input>
               </template>
             </el-table-column>
@@ -781,7 +860,7 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.financeDirectorr"
+                    v-model="scope.row.financeDirectorr"
                   ></el-input>
               </template>
             </el-table-column>
@@ -798,13 +877,12 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.costDirector"
+                    v-model="scope.row.costDirector"
                   ></el-input>
               </template>
             </el-table-column>
 
               <el-table-column
-
                 v-show="!p.actpoint === 'look'"
                 :resizable="false"
                 fixed="right"
@@ -941,11 +1019,7 @@ export default {
     add(type) {
       var v = {};
       v = {
-            bidInfoSection:{
-              riskFee:""
-
-            },
-            bidInfoSectionOrgList:{},
+            riskFee:""
           }
           this.detailform.bidInfoSectionList.push(v);
           console.log(v)
@@ -1134,7 +1208,9 @@ export default {
 
     // 详情信息
     getDetail() {
-        var q=this.p.actpoint === "edit"?{id:this.id}:{topInfoOrgId:this.id};
+
+        console.log(this.p.actpoint)
+        var q=this.p.actpoint === "edit"||this.p.actpoint === "look"?{id:this.id}:{topInfoOrgId:this.id};
         console.log(q)
         this.$http
           .post("/api/topInfo/BidInfo/detail/entityInfo", q)
@@ -1145,7 +1221,7 @@ export default {
             this.detailform={
               bidInfo:datas.bidInfo,
               bidInfoInnerOrgList: datas.bidInfoInnerOrgList,
-              bidInfoSectionList: datas.bidInfoSectionList,
+              bidInfoSectionList: datas.bidInfoSectionList||[],
               topInforBO: this.nullToStr(datas.topInforBO),
             }
             console.log(this.detailform.topInforBO)
@@ -1186,10 +1262,16 @@ export default {
       text-align: right;
       top: 0%;
     }
-    .el-form-item,>>>.formItem {
+    >.el-form-item,>>>.formItem {
       // float: left;
       display: inline-block;
       width: 32.5% !important;
+    }
+        >.el-form-item,>>>.formItem1 {
+      // float: left;
+      display: inline-block;
+      width: 32.5% !important;
+      // display: none;
     }
     .detailformfooter1 {
       margin-top: 5px;
@@ -1261,7 +1343,7 @@ export default {
   }
 
   .el-card__body {
-    padding: 0 100px;
+    // padding: 0 100px;
     // height: 400px;
     // border: 1px solid black;
     // height: 200px;

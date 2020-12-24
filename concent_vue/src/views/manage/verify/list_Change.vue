@@ -117,19 +117,19 @@
           :width="150"
           align="center"
           label="填报人"
-          prop="verify.username"
+          prop="verify.createUserName"
           show-overflow-tooltip
         >
 
           <template slot-scope="scope">
-            {{scope.row.username}}
+            {{scope.row.createUserName}}
           </template>
         </el-table-column>
         <el-table-column
           :width="150"
           align="center"
           label="填报时间"
-          prop="verify.createtime"
+          prop="verify.createTime"
           show-overflow-tooltip
         >
           <!-- <template slot-scope="scope">{{
@@ -137,7 +137,7 @@
           }}</template> -->
 
           <template slot-scope="scope">
-            {{scope.row.createtime | dateformat}}
+            {{scope.row.createTime | dateformat}}
           </template>
         </el-table-column>
       </el-table>
@@ -236,11 +236,11 @@ export default {
     },
     add(){
       console.log(JSON.stringify(this.multipleSelection[0].uuid));
-      if(this.multipleSelection[0].flowStatus!='2' )
-      {
-        this.$message.info("当前登记的资审信息未审核通过，不能进行变更！");
-        return;
-      }
+      // if(this.multipleSelection[0].flowStatus!='2' )
+      // {
+      //   this.$message.info("当前登记的资审信息未审核通过，不能进行变更！");
+      //   return;
+      // }
       //alert(JSON.stringify(this.multipleSelection[0]));
       let p = { actpoint: 'add',instid: this.multipleSelection[0].inforid, topinfoid:this.multipleSelection[0].tiouuid}
       //alert(JSON.stringify(p));

@@ -14,6 +14,8 @@
         <el-date-picker
           v-model="searchform.saleTime"
           type="daterange"
+          @change="searchform.selectTimeTypeSaleTime='01'"
+          value-format="timestamp"
           range-separator="至"
           start-placeholder="开始日期"
           end-placeholder="结束日期">
@@ -97,7 +99,9 @@
         <el-form-item label="登记时间:">
           <el-date-picker
             v-model="searchform.createTime"
+            @change="searchform.selectTimeTypeCreateTime='01'"
             type="daterange"
+            value-format="timestamp"
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期">
@@ -233,22 +237,22 @@
           :width="150"
           align="center"
           label="填报人"
-          prop="verify.username"
+          prop="verify.createUserName"
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{scope.row.username}}
+            {{scope.row.createUserName}}
           </template>
         </el-table-column>
         <el-table-column
           :width="150"
           align="center"
           label="填报时间"
-          prop="verify.createtime"
+          prop="verify.createTime"
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{scope.row.createtime}}
+            {{scope.row.createTime | dateformat}}
           </template>
         </el-table-column>
       </el-table>
@@ -293,21 +297,27 @@
         planBidTime:'',
         bidAgentCompany:'',
         sectionNames:'',
-        path:''
+        path:'',
+        selectTimeTypeSaleTime:'',
+        saleTimeBeginTime:"",
+        saleTimeEndTime:'',
+        selectTimeTypeCreateTime:'',
+        createTimeBeginTime:"",
+        createTimeEndTime:''
       },
       multipleSelection: [],
       xqprojectType:[],//工程二级列表
       projectStatus:[
         {
-          id:'1',
+          id:'0',
           detailName:'草稿'
         },
         {
-          id:'2',
+          id:'1',
           detailName:'审核中'
         },
         {
-          id:'3',
+          id:'2',
           detailName:'审核通过'
         }
       ],//项目状态列表
@@ -420,7 +430,12 @@
         createTime:'',
         bidAgentCompany:'',
         sectionNames:'',
-        planBidTime:''
+        selectTimeTypeSaleTime:'',
+        saleTimeBeginTime:"",
+        saleTimeEndTime:'',
+        selectTimeTypeCreateTime:'',
+        createTimeBeginTime:"",
+        createTimeEndTime:'',
       }
       this.getData();
     },
@@ -430,6 +445,18 @@
     },
     // 查询
     getData() {
+      if(this.searchform.selectTimeTypeSaleTime=='01'){
+        this.searchform.saleTimeBeginTime=this.searchform.saleTime[0];
+        this.searchform.saleTimeEndTime=this.searchform.saleTime[1];
+      }
+      if(this.searchform.selectTimeTypeCreateTime=='01'){
+        this.searchform.createTimeBeginTime=this.searchform.createTime[0];
+        this.searchform.createTimeEndTime=this.searchform.createTime[1];
+      }
+      this.searchform.createTime=null;
+      this.searchform.saleTime=null;
+
+      console.log(this.searchform)
       this.$http
         .post(
           "/api/topInfo/Verify/list/loadPageDataForFlowStatus",
