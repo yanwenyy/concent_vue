@@ -3,7 +3,7 @@
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
         <el-button @click="add" type="primary" plain>新增</el-button>
-        <el-button type="primary" plain>修改</el-button>
+        <el-button @click="totop" type="primary" plain>修改</el-button>
         <el-button type="primary" plain>提交</el-button>
         <el-button type="primary" plain>删除</el-button>
       </el-button-group>
@@ -24,7 +24,7 @@
           'text-align': 'center',
           'background-color': 'whitesmoke',
         }"
-        @row-click="rowshow"
+        @row-dblclick="rowshow"
         @selection-change="handleSelectionChange"
         border
         highlight-current-row
@@ -48,9 +48,8 @@
         ></el-table-column>
         <el-table-column
           :width="500"
-          align="center"
           label="项目名称"
-          prop="year"
+          prop="inforName"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -58,16 +57,19 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="searchFrom.id"
+                v-model="searchform.inforName"
                 size="mini"
               />
             </div>
+          </template>
+          <template slot-scope="scope">
+            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
           </template>
         </el-table-column>
         <el-table-column
           :width="150"
           label="合同名称"
-          prop="name"
+          prop="contractName"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -75,7 +77,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="searchFrom.id"
+                v-model="searchFrom.contractName"
                 size="mini"
               />
             </div>
@@ -85,7 +87,7 @@
           :width="150"
           align="center"
           label="合同号"
-          prop="ptypename"
+          prop="contractNo"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -93,7 +95,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="searchFrom.id"
+                v-model="searchFrom.contractNo"
                 size="mini"
               />
             </div>
@@ -103,7 +105,7 @@
           :width="150"
           align="center"
           label="填报单位"
-          prop="unitname"
+          prop="createOrgId"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -111,7 +113,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="searchFrom.id"
+                v-model="searchFrom.createOrgId"
                 size="mini"
               />
             </div>
@@ -121,7 +123,7 @@
           :width="150"
           align="center"
           label="主推单位"
-          prop="mianunit"
+          prop="contractMianOrg"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -129,7 +131,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="searchFrom.id"
+                v-model="searchFrom.contractMianOrg"
                 size="mini"
               />
             </div>
@@ -139,7 +141,7 @@
           :width="150"
           align="center"
           label="合同金额(万元)"
-          prop="totalamount"
+          prop="contractAmount"
           show-overflow-tooltip
         >
           <!-- <template slot-scope="scope">{{
@@ -150,7 +152,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="searchFrom.id"
+                v-model="searchFrom.contractAmount"
                 size="mini"
               />
             </div>
@@ -160,7 +162,7 @@
           :width="150"
           align="center"
           label="填报人"
-          prop="username"
+          prop="createUserName"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -168,7 +170,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="searchFrom.id"
+                v-model="searchFrom.createUserName"
                 size="mini"
               />
             </div>
@@ -178,7 +180,7 @@
           :width="150"
           align="center"
           label="录入时间"
-          prop="createtime"
+          prop="createTime"
           show-overflow-tooltip
         >
           <!-- <template slot-scope="scope">{{
@@ -189,7 +191,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="searchFrom.id"
+                v-model="searchFrom.createTime"
                 size="mini"
               />
             </div>
@@ -199,7 +201,7 @@
           :width="150"
           align="center"
           label="状态"
-          prop="state"
+          prop="flowStatus"
           fixed="right"
           show-overflow-tooltip
         >
@@ -217,12 +219,7 @@
             </div>
           </template>
           <template slot-scope="scope">
-            <el-link
-              :underline="false"
-              @click="del(scope.$index)"
-              type="warning"
-              >删除</el-link
-            >
+             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
           </template>
         </el-table-column>
       </el-table>
@@ -250,11 +247,6 @@ export default {
       searchFrom: {
         current: 1,
         size: 10,
-        year: "",
-        name: "",
-        ptype: "",
-        orgid: "",
-        orgname: "",
       },
       menus: [],
       multipleSelection: [],
@@ -262,6 +254,27 @@ export default {
     };
   },
   methods: {
+    // 修改
+    totop() {
+      if (this.multipleSelection.length !== 1) {
+        this.$message.info("请选择一条记录进行查看操作！");
+        return false;
+      }
+      let p = {actpoint: "edit", instid: this.multipleSelection[0].uuid};
+      this.$router.push({
+        path: "./detail/",
+        query: {p: this.$utils.encrypt(JSON.stringify(p))},
+      });
+
+    },
+    // 查看
+    rowshow(row) {
+      let p = {actpoint: "look", instid: row.uuid};
+      this.$router.push({
+        path: "./detail/",
+        query: {p: this.$utils.encrypt(JSON.stringify(p))},
+      });
+    },
     add() {
       let p = { actpoint: "add" };
       this.$router.push({
@@ -284,7 +297,7 @@ export default {
       }
       let p = { actpoint: "look", instid: this.multipleSelection[0].uuid };
       this.$router.push({
-        path: "../detail/",
+        path: "./detail/",
         query: { p: this.$utils.encrypt(JSON.stringify(p)) },
       });
     }, // list通用方法开始
@@ -310,44 +323,15 @@ export default {
     getData() {
       this.$http
         .post(
-          "/api" + this.$route.path.substr(0, this.$route.path.length - 1),
+          "/api/contract/ContractInfo/list/loadPageData",
           this.searchform
         )
         .then((res) => {
-          this.page = res.data.data;
-        });
-    },
-    getMenus() {
-      this.$http
-        .post("api/base/loadcascader", { typecode: "XMLX" })
-        .then((res) => {
-          if (res.data.code === 0) {
-            this.menus = res.data.data;
-          }
-        });
-    },
-    currentMenu(selVal) {
-      let selMenuObj = this.menus.filter((item) => item.value === selVal);
-      this.searchform.menu = selMenuObj[0].label;
-    },
-    // 获取上级单位树信息
-    getOrgTree() {
-      this.$http.get("/api/base/loadorglist").then((res) => {
-        this.orgTree = res.data.data;
+        this.page = res.data.data;
       });
     },
-    // 确定单位
-    orgChange() {
-      let selectLabelArr = this.$refs["porgCascader"].getCheckedNodes()[0]
-        .pathLabels;
-      this.searchform.orgname = selectLabelArr[selectLabelArr.length - 1];
-    },
-
-    // list通用方法结束
   },
   created() {
-    this.getMenus();
-    this.getOrgTree();
     this.getData();
   },
 };

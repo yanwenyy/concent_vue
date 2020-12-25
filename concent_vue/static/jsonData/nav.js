@@ -381,8 +381,8 @@ export default {
                   },
                   {
                     "name": "合同信息变更",
-                    "path": "/manage/contractManager/other/list",
-                    "component": "/manage/contractManager/other/list",
+                    "path": "/manage/contractManager/change/list",
+                    "component": "/manage/contractManager/change/list",
                     "iconCls": "el-icon-edit-outline",
                     "menushow": true,
                     "leaf": true,
@@ -390,8 +390,8 @@ export default {
                   },
                   {
                     "name": "合同信息查询",
-                    "path": "/manage/contractManager/other/list",
-                    "component": "/manage/contractManager/other/list",
+                    "path": "/manage/contractManager/search/list",
+                    "component": "/manage/contractManager/search/list",
                     "iconCls": "el-icon-search",
                     "menushow": true,
                     "leaf": true,

@@ -48,19 +48,19 @@
           prop="inforName"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>项目名称</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.inforName"
-                size="mini"
-              />
-            </div>
-          </template>
-          <template slot-scope="scope">
-              <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
-          </template>
+          <!--<template slot="header" slot-scope="scope">-->
+            <!--<span>项目名称</span>-->
+            <!--<div>-->
+              <!--<el-input-->
+                <!--style="float: left; width: 100%"-->
+                <!--v-model="searchform.inforName"-->
+                <!--size="mini"-->
+              <!--/>-->
+            <!--</div>-->
+          <!--</template>-->
+          <!--<template slot-scope="scope">-->
+              <!--<span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>-->
+          <!--</template>-->
         </el-table-column>
         <el-table-column
           :width="200"

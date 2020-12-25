@@ -9,7 +9,7 @@
     <el-form
       :inline="false"
       :model="detailform"
-      :rules="detailformrules"
+      :rules="rules"
       class="gcform"
       ref="detailform"
     >
@@ -22,7 +22,7 @@
     <p></p> -->
       <el-form-item
         label="合同名称:"
-        prop="clothSize.bcPlateTypeId"
+        prop="contractInfo.contractName"
           :rules="{
       required: true, message: '此项不能为空', trigger: 'blur'
     }"
@@ -31,13 +31,13 @@
           clearable
           placeholder="请输入"
           size="mini"
-          v-model="detailform.clothSize.bcPlateTypeId"
+          v-model="detailform.contractInfo.contractName"
          />
       </el-form-item>
 
             <el-form-item
         label="合同编号:"
-        prop="clothSize.bcPlateTypeId"
+        prop="contractInfo.contractNo"
 
           :rules="{
     }"
@@ -46,14 +46,14 @@
           clearable
           placeholder="请输入"
           size="mini"
-          v-model="detailform.clothSize.bcPlateTypeId"
+          v-model="detailform.contractInfo.contractNo"
          />
       </el-form-item>
 
  <el-form-item
         label="合同规模（万元）:"
         required
-        prop="clothSize.bcPlateTypeId"
+        prop="contractInfo.bcPlateTypeId"
           :rules="{
 
     }"
@@ -62,25 +62,25 @@
           clearable
           placeholder="请输入"
           size="mini"
-          v-model="detailform.clothSize.bcPlateTypeId"
+          v-model="detailform.contractInfo.bcPlateTypeId"
          />
       </el-form-item>
       <el-form-item
         label="合同收益（万元）:"
         required
-        prop="clothSize.bcPlateTypeId"
+        prop="contractInfo.insureIncome"
       >
         <el-input
           clearable
           placeholder="请输入"
           size="mini"
-          v-model="detailform.clothSize.bcPlateTypeId"
+          v-model="detailform.contractInfo.insureIncome"
          />
       </el-form-item>
 
             <el-form-item
         label="我方份额（万元）:"
-        prop="clothSize.bcPlateTypeId"
+        prop="contractInfo.ourAmount"
          :rules="{
       required: true, message: '此项不能为空', trigger: 'blur'
     }"
@@ -89,37 +89,38 @@
           clearable
           placeholder="请输入"
           size="mini"
-          v-model="detailform.clothSize.bcPlateTypeId"
+          v-model="detailform.contractInfo.ourAmount"
          />
       </el-form-item>
 
        <el-form-item
             label="合同生效地点:"
-            prop="clothSize.bcTypeId"
+            prop="contractInfo.insureEffPlace"
             required
             size="mini"
           >
-            <el-cascader
-            v-model="value"
-            :options="options"
-            @change="handleChange">
-            </el-cascader>
+         <el-input
+           clearable
+           placeholder="请输入"
+           size="mini"
+           v-model="detailform.contractInfo.insureEffPlace"
+         />
          </el-form-item>
       <el-form-item
         label="合同签定日期:"
-        prop="clothSize.bcPlateTypeId"
+        prop="contractInfo.contractSignTime"
       >
-      <el-date-picker
-        v-model="value1"
-        type="datetime"
-        size="mini"
-        placeholder="选择日期时间">
-     </el-date-picker>
+        <el-date-picker
+          v-model="detailform.contractInfo.contractSignTime"
+          type="datetime"
+          size="mini"
+          placeholder="选择日期时间">
+        </el-date-picker>
       </el-form-item>
 
           <el-form-item
               label="增值税（万元）:"
-              prop="clothSize.bcPlateTypeId"
+              prop="contractInfo.valueAddedTax"
               :rules="{
             required: true, message: '此项不能为空', trigger: 'blur'
           }"
@@ -128,59 +129,80 @@
                 clearable
                 placeholder="请输入"
                 size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
+                v-model="detailform.contractInfo.valueAddedTax"
               />
             </el-form-item>
 
       <el-form-item
-        label="新兴市场类别（一级）:"
-        prop="clothSize.bcTypeId"
-        required
+        label="新兴市场类别(一级):"
+        prop="contractInfo.marketFirstNameId"
+        :rules="{
+            required: true,
+            message: '此项不能为空',
+            trigger: 'blur',
+          }"
       >
         <el-select
-          :disabled="p.actpoint==='look'"
-          @change="chg"
-          clearable
+          :disabled="p.actpoint === 'look'"
           filterable
+          clearable
           placeholder="请选择"
+          @change="getTwoSC"
           size="mini"
-          v-model="detailform.clothSize.bcTypeId"
+          v-model="detailform.contractInfo.marketFirstNameId"
         >
-          <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options1"></el-option>
+          <el-option
+            :key="index"
+            :label="item.detailName"
+            :value="item.id"
+            v-for="(item, index) in emergingMarket"
+          ></el-option>
         </el-select>
       </el-form-item>
-
-          <el-form-item
-            label="新兴市场类别（二级）:"
-            prop="clothSize.bcTypeId"
-            required
-          >
-            <el-select
-              :disabled="p.actpoint==='look'"
-              @change="chg"
-              clearable
-              filterable
-              placeholder="请选择"
-              size="mini"
-              v-model="detailform.clothSize.bcTypeId"
-            >
-              <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options1"></el-option>
-            </el-select>
-          </el-form-item>
-
+      <el-form-item
+        label="新兴市场类别(二级):"
+        prop="contractInfo.marketSecondId"
+        :rules="{
+            required: true,
+            message: '此项不能为空',
+            trigger: 'blur',
+          }"
+      >
+        <el-select
+          :disabled="p.actpoint === 'look'"
+          filterable
+          clearable
+          placeholder="请选择"
+          size="mini"
+          @change="
+              getName(
+                detailform.contractInfo.marketSecondId,
+                emergingMarketTwo,
+                'marketSecondName'
+              )
+            "
+          v-model="detailform.contractInfo.marketSecondId"
+        >
+          <el-option
+            :key="index"
+            :label="item.detailName"
+            :value="item.id"
+            v-for="(item, index) in emergingMarketTwo"
+          ></el-option>
+        </el-select>
+      </el-form-item>
      <el-form-item
         label="业务类别:"
-        prop="clothSize.bcTypeId"
+        prop="contractInfo.bcTypeId"
         required
       >
         <el-select
           :disabled="p.actpoint==='look'"
-          @change="chg"
           clearable
           filterable
           placeholder="请选择"
           size="mini"
-          v-model="detailform.clothSize.bcTypeId"
+          v-model="detailform.contractInfo.bcTypeId"
         >
           <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options1"></el-option>
         </el-select>
@@ -189,24 +211,23 @@
 
       <el-form-item
         label="使用资质单位:"
-        prop="clothSize.bcTypeId"
+        prop="contractInfo.signOrgId"
         required
       >
         <el-select
           :disabled="p.actpoint==='look'"
-          @change="chg"
           clearable
           filterable
           placeholder="请选择"
           size="mini"
-          v-model="detailform.clothSize.bcTypeId"
+          v-model="detailform.contractInfo.signOrgId"
         >
           <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options1"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item
         label="录入单位:"
-        prop="clothSize.bcPlateTypeId"
+        prop="contractInfo.createOrgName"
           :rules="{
       required: true, message: '此项不能为空', trigger: 'blur'
     }"
@@ -215,14 +236,14 @@
           clearable
           placeholder="请输入"
           size="mini"
-          v-model="detailform.clothSize.bcPlateTypeId"
+          v-model="detailform.contractInfo.createOrgName"
          />
       </el-form-item>
 
 
       <el-form-item
         label="录入时间:"
-        prop="clothSize.bcPlateTypeId"
+        prop="contractInfo.createTime"
           :rules="{
       required: true, message: '此项不能为空', trigger: 'blur'
     }"
@@ -231,60 +252,58 @@
           clearable
           placeholder="请输入"
           size="mini"
-          v-model="detailform.clothSize.bcPlateTypeId"
+          v-model="detailform.contractInfo.createTime"
          />
       </el-form-item>
 
       <el-form-item
         label="合同类型:"
-        prop="clothSize.bcTypeId"
+        prop="contractInfo.contractType"
         required
       >
         <el-select
           :disabled="p.actpoint==='look'"
-          @change="chg"
           clearable
           filterable
           placeholder="请选择"
           size="mini"
-          v-model="detailform.clothSize.bcTypeId"
+          v-model="detailform.contractInfo.contractType"
         >
           <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options1"></el-option>
         </el-select>
       </el-form-item>
     <el-form-item
         label="是否年度合同:"
-        prop="clothSize.bcTypeId"
+        prop="contractInfo.isYearContract"
         required
       >
-        <el-select
-          :disabled="p.actpoint==='look'"
-          @change="chg"
-          clearable
-          filterable
-          placeholder="请选择"
-          size="mini"
-          v-model="detailform.clothSize.bcTypeId"
-        >
-          <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options1"></el-option>
-        </el-select>
+      <el-select
+        :disabled="p.actpoint==='look'"
+        filterable
+        clearable
+        placeholder="请选择"
+        size="mini"
+        v-model="detailform.contractInfo.isYearContract"
+      >
+        <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>
+      </el-select>
       </el-form-item>
 
        <el-form-item
         label="合同有效期:"
-        prop="clothSize.bcPlateTypeId"
+        prop="contractInfo.insureValidityTime"
       >
-      <el-date-picker
-        v-model="value1"
-        type="datetime"
-        size="mini"
-        placeholder="选择日期时间">
-     </el-date-picker>
+         <el-date-picker
+           v-model="detailform.contractInfo.insureValidityTime"
+           type="datetime"
+           size="mini"
+           placeholder="选择日期时间">
+         </el-date-picker>
       </el-form-item>
 
      <el-form-item
         label="对方名称:"
-        prop="clothSize.bcPlateTypeId"
+        prop="contractInfo.insureOtherName"
           :rules="{
       required: true, message: '此项不能为空', trigger: 'blur'
     }"
@@ -293,81 +312,66 @@
           clearable
           placeholder="请输入"
           size="mini"
-          v-model="detailform.clothSize.bcPlateTypeId"
+          v-model="detailform.contractInfo.insureOtherName"
          />
       </el-form-item>
-      <p><span>证明文件(最大10MB): </span>   <el-button
-        @click="show('add')"
-        size="mini"
-        class="detatil-flie-btn"
-        type="primary"
-      >增加文件</el-button> </p>
-
-        <el-table
-          :data="detailform.clothSizePartList"
-          :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
-
-          @selection-change="handleSelectionChange"
-          align="center"
-          border
-          class="clothSizeTable"
-          ref="table"
-          style="width: 100%;min-height: calc(100vh - 370px);"
+      <p><span >证明文件: </span>
+        <el-upload
+          class="upload-demo detailUpload detatil-flie-btn"
+          :action="'/api/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+          :on-success="handleChange1"
+          :on-error="handleChange1"
+          :on-remove="handleRemove1"
+          :show-file-list="false"
+          multiple
         >
-         <el-table-column
-          :width="200"
+          <el-button size="small" type="primary">点击上传</el-button>
+        </el-upload>
+      </p>
+
+      <el-table
+        :data="detailform.commonFilesList"
+        :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+
+        @selection-change="handleSelectionChange"
+        align="center"
+        border
+        class="clothSizeTable"
+        ref="table"
+        style="width: 100%;min-height: calc(100vh - 370px);"
+      >
+        <el-table-column
+          :width="55"
           align="center"
-          label="文件名"
+          label="序号"
           show-overflow-tooltip
           type="index"
         ></el-table-column>
-          <el-table-column :resizable="false" label="大小" prop="part" show-overflow-tooltip>
-            <template slot-scope="scope">
-              <el-form-item
-                :prop="'clothSizePartList.'+scope.$index+'.part'"
-                label-width="0"
-              >
-                <el-input max-length=50 clearable :disabled="p.actpoint==='look'" size="mini" v-model="scope.row.part"></el-input>
-              </el-form-item>
+        <el-table-column align="center" :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
 
-            </template>
-          </el-table-column>
-            <el-table-column :resizable="false" label="预览" prop="part" show-overflow-tooltip>
-            <template slot-scope="scope">
-              <el-form-item
-                :prop="'clothSizePartList.'+scope.$index+'.part'"
-                label-width="0"
-              >
-                <el-input max-length=50 clearable :disabled="p.actpoint==='look'" size="mini" v-model="scope.row.part"></el-input>
-              </el-form-item>
+        </el-table-column>
 
-            </template>
-          </el-table-column>
-            <el-table-column :resizable="false" label="类型" prop="part" show-overflow-tooltip>
-            <template slot-scope="scope">
-              <el-form-item
-                :prop="'clothSizePartList.'+scope.$index+'.part'"
-                label-width="0"
-              >
-                <el-input max-length=50 clearable :disabled="p.actpoint==='look'" size="mini" v-model="scope.row.part"></el-input>
-              </el-form-item>
+        <el-table-column align="center" :resizable="false" label="大小" prop="fileSize" show-overflow-tooltip>
 
-            </template>
-          </el-table-column>
+        </el-table-column>
+        <el-table-column align="center" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
 
-          <el-table-column
-            :resizable="false"
-            fixed="right"
-            label="进度"
-            show-overflow-tooltip
-            v-if="p.actpoint!=='look'"
-            width="200"
-          >
-            <template slot-scope="scope">
-              <el-link :underline="false" @click="del(scope.$index)" type="warning">删除</el-link>
-            </template>
-          </el-table-column>
-        </el-table>
+        </el-table-column>
+
+        <el-table-column
+          align="center"
+          :resizable="false"
+          fixed="right"
+          label="操作"
+          show-overflow-tooltip
+          v-if="p.actpoint!=='look'"
+          width="200"
+        >
+          <template slot-scope="scope">
+            <el-link :underline="false" @click="handleRemove1(scope.row,scope.$index)" type="warning">删除</el-link>
+          </template>
+        </el-table-column>
+      </el-table>
 
     </el-form>
 
@@ -377,335 +381,109 @@
 </template>
 
 <script>
+  import Tree from '@/components/tree'
+  import { isMoney } from '@/utils/validate'
 export default {
   data() {
+    var validateMoney = (rule, value, callback) => {
+      console.log(value)
+      if(value===''){
+        callback(new Error('不能为空'))
+      }else if (!isMoney(value)) {
+        callback(new Error('请输入正确的金额格式'))
+      } else {
+        callback()
+      }
+    }
     return {
-            pickerOptions: {
-          shortcuts: [{
-            text: '今天',
-            onClick(picker) {
-              picker.$emit('pick', new Date());
-            }
-          }, {
-            text: '昨天',
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit('pick', date);
-            }
-          }, {
-            text: '一周前',
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit('pick', date);
-            }
-          }]
-        },
         value1: '',
         value2: '',
         value3: '',
       options1:[{label:"值",value:'111'}],
-
-       value: [],
-               options: [{
-          value: 'zhinan',
-          label: '指南',
-          children: [{
-            value: 'shejiyuanze',
-            label: '设计原则',
-            children: [{
-              value: 'yizhi',
-              label: '一致'
-            }, {
-              value: 'fankui',
-              label: '反馈'
-            }, {
-              value: 'xiaolv',
-              label: '效率'
-            }, {
-              value: 'kekong',
-              label: '可控'
-            }]
-          }, {
-            value: 'daohang',
-            label: '导航',
-            children: [{
-              value: 'cexiangdaohang',
-              label: '侧向导航'
-            }, {
-              value: 'dingbudaohang',
-              label: '顶部导航'
-            }]
-          }]
-        }, {
-          value: 'zujian',
-          label: '组件',
-          children: [{
-            value: 'basic',
-            label: 'Basic',
-            children: [{
-              value: 'layout',
-              label: 'Layout 布局'
-            }, {
-              value: 'color',
-              label: 'Color 色彩'
-            }, {
-              value: 'typography',
-              label: 'Typography 字体'
-            }, {
-              value: 'icon',
-              label: 'Icon 图标'
-            }, {
-              value: 'button',
-              label: 'Button 按钮'
-            }]
-          }, {
-            value: 'form',
-            label: 'Form',
-            children: [{
-              value: 'radio',
-              label: 'Radio 单选框'
-            }, {
-              value: 'checkbox',
-              label: 'Checkbox 多选框'
-            }, {
-              value: 'input',
-              label: 'Input 输入框'
-            }, {
-              value: 'input-number',
-              label: 'InputNumber 计数器'
-            }, {
-              value: 'select',
-              label: 'Select 选择器'
-            }, {
-              value: 'cascader',
-              label: 'Cascader 级联选择器'
-            }, {
-              value: 'switch',
-              label: 'Switch 开关'
-            }, {
-              value: 'slider',
-              label: 'Slider 滑块'
-            }, {
-              value: 'time-picker',
-              label: 'TimePicker 时间选择器'
-            }, {
-              value: 'date-picker',
-              label: 'DatePicker 日期选择器'
-            }, {
-              value: 'datetime-picker',
-              label: 'DateTimePicker 日期时间选择器'
-            }, {
-              value: 'upload',
-              label: 'Upload 上传'
-            }, {
-              value: 'rate',
-              label: 'Rate 评分'
-            }, {
-              value: 'form',
-              label: 'Form 表单'
-            }]
-          }, {
-            value: 'data',
-            label: 'Data',
-            children: [{
-              value: 'table',
-              label: 'Table 表格'
-            }, {
-              value: 'tag',
-              label: 'Tag 标签'
-            }, {
-              value: 'progress',
-              label: 'Progress 进度条'
-            }, {
-              value: 'tree',
-              label: 'Tree 树形控件'
-            }, {
-              value: 'pagination',
-              label: 'Pagination 分页'
-            }, {
-              value: 'badge',
-              label: 'Badge 标记'
-            }]
-          }, {
-            value: 'notice',
-            label: 'Notice',
-            children: [{
-              value: 'alert',
-              label: 'Alert 警告'
-            }, {
-              value: 'loading',
-              label: 'Loading 加载'
-            }, {
-              value: 'message',
-              label: 'Message 消息提示'
-            }, {
-              value: 'message-box',
-              label: 'MessageBox 弹框'
-            }, {
-              value: 'notification',
-              label: 'Notification 通知'
-            }]
-          }, {
-            value: 'navigation',
-            label: 'Navigation',
-            children: [{
-              value: 'menu',
-              label: 'NavMenu 导航菜单'
-            }, {
-              value: 'tabs',
-              label: 'Tabs 标签页'
-            }, {
-              value: 'breadcrumb',
-              label: 'Breadcrumb 面包屑'
-            }, {
-              value: 'dropdown',
-              label: 'Dropdown 下拉菜单'
-            }, {
-              value: 'steps',
-              label: 'Steps 步骤条'
-            }]
-          }, {
-            value: 'others',
-            label: 'Others',
-            children: [{
-              value: 'dialog',
-              label: 'Dialog 对话框'
-            }, {
-              value: 'tooltip',
-              label: 'Tooltip 文字提示'
-            }, {
-              value: 'popover',
-              label: 'Popover 弹出框'
-            }, {
-              value: 'card',
-              label: 'Card 卡片'
-            }, {
-              value: 'carousel',
-              label: 'Carousel 走马灯'
-            }, {
-              value: 'collapse',
-              label: 'Collapse 折叠面板'
-            }]
-          }]
-        }, {
-          value: 'ziyuan',
-          label: '资源',
-          children: [{
-            value: 'axure',
-            label: 'Axure Components'
-          }, {
-            value: 'sketch',
-            label: 'Sketch Templates'
-          }, {
-            value: 'jiaohu',
-            label: '组件交互文档'
-          }]
-        }],
-         methods: {
-      handleChange(value) {
-        console.log(value);
-      }
-    },
-
-    //  fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
-
       detailform: {
-        'clothSize': {
-          'id': '',
-          'bcTypeId': '',
-          'bcStyleId': '',
-          'bcPlateTypeId': '',
-          'bcTypeName': '',
-          'bcStyleName': '',
-          'bcPlateTypeName': '',
-          'isDelete': 0,
-          'createTime': '',
-          'createUserId': 0,
-          'createUserName': '',
-          'createOrgId': 0,
-          'createOrgName': ''
-        },
-        'clothSizePartList': [
-
-        ]
+        contractInfo: {},
+        commonFilesList: [],
       },
-
+      emergingMarketTwo:[],
+      yesOrNo:[
+        {
+          id:'0',
+          detailName:'是'
+        },
+        {
+          id:'1',
+          detailName:'否'
+        }
+      ],
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
-
+      rules:{
+        contractAmount: [
+          { required: true,validator: validateMoney, trigger: 'change' }
+        ]
+      },//表单验证规则
     }
   },
   computed: {
-
+    emergingMarket() {
+      // console.log(this.$store.state.category.emergingMarket)
+      return this.$store.state.category.emergingMarket;
+    },
   },
   methods: {
+    handleRemove1(file,index) {
+      this.$http
+        .post(
+          "/api/topInfo/CommonFiles/list/delete",
+          {ids:[file.uuid]},
+        )
+        .then((res) => {
+        if (res.data.code === 200) {
+        this.detailform.commonFilesList.splice(index,1);
+      }
 
-          handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePreview(file) {
-        console.log(file);
-      },
-      handleExceed(files, fileList) {
-        this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-      },
-
-     beforeRemove(file, fileList) {
-        return this.$confirm(`确定移除 ${ file.name }？`);
-      },
-
-    pageGo() {
-      this.searchParam.current = this.current
-      this.getuserlist()
+    });
+      console.log(this.detailform.commonFilesList)
     },
-    showinputchg() {},
-    partchg(row) {
-      row.showinput = false
-    },
-
-    chg(val) {
-      this.errorMsg = Math.random()
-      this.errorMsg0 = Math.random()
-      this.$nextTick(() => {
-        this.errorMsg = ''
-        this.errorMsg0 = ''
+    //上传附件
+    handleChange1(response, file, fileList){
+      if (response && response.code === 200) {
+        this.$message({
+          message: '上传成功',
+          type: 'success',
+          duration: 1500,
+          onClose: () => {
+          this.detailform.commonFilesList.push(response.data);
+      }
       })
-      this.detailform.clothSize.bcStyleId = ''
-      this.detailform.clothSize.bcPlateTypeId = ''
-      this.options1.forEach((item) => {
-        if (val === item.value) {
-          this.options2 = item.children
+      } else {
+        this.$message.error(response.msg)
+      }
+    },
+    //获取下拉框id和name的公共方法
+    getName(id, list, name) {
+      if(id){
+        this.$forceUpdate()
+        this.detailform.topInfor[name] = list.find(
+          (item) => item.id == id
+      ).detailName;
+        console.log(this.detailform.topInfor[name]);
+      }
+    },
+    //新兴市场二级
+    getTwoSC(id) {
+      this.detailform.contractInfo.marketSecondId='';
+      this.emergingMarketTwo=[];
+      if(id!=''){
+        this.emergingMarket.find(
+          (item)=>{
+          if (item.id == id) {
+          this.detailform.contractInfo.marketFirstName = item.detailName;
+          this.emergingMarketTwo = item.children;
         }
-      })
-    },
-    chg1() {
-      this.errorMsg = Math.random()
-      this.errorMsg0 = Math.random()
-      this.$nextTick(() => {
-        this.errorMsg = ''
-        this.errorMsg0 = ''
-      })
-      if (this.detailform.clothSize.bcStyleId === '') {
-        this.detailform.clothSize.bcPlateTypeId = ''
       }
-      if (this.detailform.clothSize.bcTypeId === '') {
-        this.$message.error('请先选择样衣类型！')
+      )
       }
     },
-    chg2() {
-      this.errorMsg = Math.random()
-      this.errorMsg0 = Math.random()
-      this.$nextTick(() => {
-        this.errorMsg = ''
-        this.errorMsg0 = ''
-      })
-      if (this.detailform.clothSize.bcStyleId === '') {
-        this.detailform.clothSize.bcPlateTypeId = ''
-        this.$message.error('请先选择款式类型！')
-      }
-    },
-
     del(index) {
       console.log(index)
       var _self = this
@@ -731,47 +509,8 @@ export default {
 
       }
     },
-    handleClose(done) {
-      this.resetform('form')
-      done()
-    },
     resetform(formName) {
       this.$refs[formName].resetFields()
-    },
-    carry(formName) {
-      if ([...new Set(this.detailform.clothSizePartList.map(item => item.part))].length < this.detailform.clothSizePartList.length) {
-        this.$message.error('部位填写重复')
-        return
-      }
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.$http
-            .post(
-              '/api/basicConfig/ClothSize/detail/save',
-              JSON.stringify(this.detailform), {useJson: true}
-            )
-            .then(res => {
-              if (res.data.code === 0) {
-                this.$message({
-                  message: '保存成功',
-                  type: 'success'
-                })
-                this.$refs[formName].resetFields()
-              }
-              if (res.data.code === 10) {
-                this.errorMsg = Math.random()
-                this.errorMsg0 = Math.random()
-                this.$nextTick(() => {
-                  this.errorMsg = res.data.msg
-                  this.errorMsg0 = ' '
-                })
-              }
-            })
-        } else {
-          this.$message.error('请添加必填项')
-          return false
-        }
-      })
     },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
@@ -795,19 +534,6 @@ export default {
         }
       })
     },
-    sure() {
-      console.log(this.sizeform)
-      this.$refs['sizeform'].validate(valid => {
-        if (valid) {
-          this.detailform.clothSizePartList.push(this.sizeform)
-          this.dialogVisibleAdd = false
-        } else {
-          console.log('error submit!')
-          return false
-        }
-      })
-    },
-
 
     // 加载列表
     getDetail() {
@@ -821,6 +547,7 @@ export default {
   },
   mounted() {
     // eslint-disable-next-line no-unde
+      this.$store.dispatch("getConfig", {});
       this.getDetail()
   }
 }

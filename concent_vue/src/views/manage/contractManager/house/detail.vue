@@ -41,8 +41,9 @@
         label="合同编号:"
         prop="contractInfo.contractNo"
 
-          :rules="{
-    }"
+        :rules="{
+           required: true, message: '此项不能为空', trigger: 'blur'
+        }"
       >
         <el-input
           clearable
@@ -416,7 +417,7 @@ export default {
     }
     return {
       options1:[{label:"值",value:'111'}],
-       value: [],
+      value: [],
       detailform: {
         contractInfo: {},
         commonFilesList: [],
@@ -538,21 +539,6 @@ export default {
       )
       }
     },
-          handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePreview(file) {
-        console.log(file);
-      },
-      handleExceed(files, fileList) {
-        this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-      },
-
-     beforeRemove(file, fileList) {
-        return this.$confirm(`确定移除 ${ file.name }？`);
-      },
-
-
     del(index) {
       console.log(index)
       var _self = this
@@ -584,18 +570,6 @@ export default {
     },
     resetform(formName) {
       this.$refs[formName].resetFields()
-    },
-    sure() {
-      console.log(this.sizeform)
-      this.$refs['sizeform'].validate(valid => {
-        if (valid) {
-          this.detailform.contractInfo.push(this.sizeform)
-          this.dialogVisibleAdd = false
-        } else {
-          console.log('error submit!')
-          return false
-        }
-      })
     },
     // 加载列表
     getDetail() {
