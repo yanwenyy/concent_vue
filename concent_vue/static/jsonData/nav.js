@@ -919,8 +919,8 @@ export default {
               "children": [
                 {
                   "name": "档案文件录入",
-                  "path": "/archives/list_archives",
-                  "component": "/archives/list_archives",
+                  "path": "/archives/archives/list_archives",
+                  "component": "/archives/archives/list_archives",
                   "iconCls": "el-icon-printer",
                   "menushow": true,
                   "leaf": true,
@@ -928,8 +928,8 @@ export default {
                 },
                 {
                   "name": "档案文件详细",
-                  "path": "/archives/detail_archives",
-                  "component": "/archives/detail_archives",
+                  "path": "/archives/archives/detail_archives",
+                  "component": "/archives/archives/detail_archives",
                   "iconCls": "el-icon-printer",
                   "menushow": false,
                   "leaf": true,
@@ -937,8 +937,8 @@ export default {
                 },
                 {
                   "name": "档案文件查询",
-                  "path": "/archives/list_archivesSearch",
-                  "component": "/archives/list_archivesSearch",
+                  "path": "/archives/archives/list_archivesSearch",
+                  "component": "/archives/archives/list_archivesSearch",
                   "iconCls": "el-icon-printer",
                   "menushow": true,
                   "leaf": true,
@@ -946,8 +946,8 @@ export default {
                 },
                 {
                   "name": "统计分析录入",
-                  "path": "/archives/list_statistics",
-                  "component": "/archives/list_statistics",
+                  "path": "/archives/statistics/list_statistics",
+                  "component": "/archives/statistics/list_statistics",
                   "iconCls": "el-icon-printer",
                   "menushow": true,
                   "leaf": true,
@@ -955,8 +955,8 @@ export default {
                 },
                 {
                   "name": "统计分析详细",
-                  "path": "/archives/detail_statistics",
-                  "component": "/archives/detail_statistics",
+                  "path": "/archives/statistics/detail_statistics",
+                  "component": "/archives/statistics/detail_statistics",
                   "iconCls": "el-icon-printer",
                   "menushow": false,
                   "leaf": true,
@@ -964,8 +964,8 @@ export default {
                 },
                 {
                   "name": "统计分析查询",
-                  "path": "/archives/list_statisticsSearch",
-                  "component": "/archives/list_statisticsSearch",
+                  "path": "/archives/statistics/list_statisticsSearch",
+                  "component": "/archives/statistics/list_statisticsSearch",
                   "iconCls": "el-icon-printer",
                   "menushow": true,
                   "leaf": true,

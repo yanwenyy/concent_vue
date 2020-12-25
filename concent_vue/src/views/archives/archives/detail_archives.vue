@@ -3,7 +3,7 @@
         <el-card class="box-card">
       <div slot="header"
            class="clearfix">
-        <span style="color: #2a2a7d"><b>统计分析详情</b></span>
+        <span style="color: #2a2a7d"><b>档案详情</b></span>
         <el-button
           @click="back"
           style="
@@ -29,7 +29,7 @@
     >
     <el-row>
       <el-form-item
-        label="统计分析名称:"
+        label="档案名称:"
         style="width: 33%"
       >
 
@@ -40,7 +40,26 @@
         />
 
       </el-form-item>
-
+      <el-form-item
+        label="档案类型:"
+        style="width: 33%
+              "
+      >
+        <el-select
+          :disabled="p.actpoint === 'look'"
+          filterable
+          placeholder="请选择"
+          size="mini"
+          v-model="detailform.archivesTypeId"
+        >
+          <el-option
+            :key="index"
+            :label="item.detailName"
+            :value="item.id"
+            v-for="(item, index) in archivesType"
+          ></el-option>
+        </el-select>
+      </el-form-item>
     </el-row>
       <el-row>
         <el-form-item
@@ -62,8 +81,8 @@
             ></el-option>
           </el-select>
       </el-form-item>
-        <el-form-item
-                      label="填报月度:"
+        <el-form-item v-show="detailform.archivesTypeName=='3'"
+                      label="填报时间:"
                       style="width: 33%"
         >
 
@@ -73,7 +92,7 @@
             value-format="timestamp"
             v-model="detailform.reportTime"
             align="right"
-            type="month"
+            type="date"
             placeholder="选择日期">
           </el-date-picker>
 
@@ -230,18 +249,16 @@ export default {
           //alert(JSON.stringify(this.detailform));
           console.log(JSON.stringify(this.detailform));
           this.archivesType.forEach((item, index) => {
-            if (item.id === this.detailformarchivesTypeId) {
+            if (item.id === this.detailform.archivesTypeId) {
               this.detailform.archivesTypeName = item.detailName;
             }
           })
-          // if (this.detailform.archivesTypeId == '3') {
-          //   this.detailform.archivesInfoType = '2'
-          // } else {
-          //   this.detailform.archivesInfoType = '1'
-          // }
-          this.detailform.archivesInfoType = '3'
-          this.detailform.archivesTypeId='0'
-          this.detailform.archivesTypeName='0'
+          if (this.detailform.archivesTypeId == '3') {
+            this.detailform.archivesInfoType = '2'
+          } else {
+            this.detailform.archivesInfoType = '1'
+          }
+
           this.$http
             .post(
               "/api/archives/ArchivesInfo/detail/save",
@@ -257,7 +274,7 @@ export default {
                 });
                 this.$refs[formName].resetFields();
                 this.$router.push({
-                  path: "/archives/list_statistics",
+                  path: "./list_archives",
                 });
               }
 
@@ -301,7 +318,7 @@ export default {
     },
 
     getDetail() {
-     // alert(JSON.stringify(this.p))
+      //alert(JSON.stringify(this.p))
       if (this.p.actpoint === "add") {
 
       } else {

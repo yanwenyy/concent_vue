@@ -275,7 +275,7 @@ export default {
       }
       let p = {actpoint: 'look', instid: this.multipleSelection[0].uuid}
       this.$router.push({
-        path: '../detail/',
+        path: './detail_archives/',
         query: {p: this.$utils.encrypt(JSON.stringify(p))}
       })
     }, // list通用方法开始
