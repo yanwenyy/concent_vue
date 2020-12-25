@@ -907,6 +907,72 @@ export default {
               }
 
             ]
+            },
+            {
+              "name": "档案管理",
+              "path": "/archives",
+              "component": "/router",
+              "iconCls": "el-icon-printer",
+              "menushow": true,
+              "leaf": false,
+              "defaultpage": false,
+              "children": [
+                {
+                  "name": "档案文件录入",
+                  "path": "/archives/list_archives",
+                  "component": "/archives/list_archives",
+                  "iconCls": "el-icon-printer",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": true
+                },
+                {
+                  "name": "档案文件详细",
+                  "path": "/archives/detail_archives",
+                  "component": "/archives/detail_archives",
+                  "iconCls": "el-icon-printer",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": true
+                },
+                {
+                  "name": "档案文件查询",
+                  "path": "/archives/list_archivesSearch",
+                  "component": "/archives/list_archivesSearch",
+                  "iconCls": "el-icon-printer",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": true
+                },
+                {
+                  "name": "统计分析录入",
+                  "path": "/archives/list_statistics",
+                  "component": "/archives/list_statistics",
+                  "iconCls": "el-icon-printer",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": true
+                },
+                {
+                  "name": "统计分析详细",
+                  "path": "/archives/detail_statistics",
+                  "component": "/archives/detail_statistics",
+                  "iconCls": "el-icon-printer",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": true
+                },
+                {
+                  "name": "统计分析查询",
+                  "path": "/archives/list_statisticsSearch",
+                  "component": "/archives/list_statisticsSearch",
+                  "iconCls": "el-icon-printer",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": true
+                }
+
+              ]
             }
            ]
           }
