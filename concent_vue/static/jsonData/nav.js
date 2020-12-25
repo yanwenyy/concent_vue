@@ -970,6 +970,61 @@ export default {
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": true
+                },
+                {
+                  "name": "月度分析录入",
+                  "path": "/archives/analysis/list",
+                  "component": "/archives/analysis/list",
+                  "iconCls": "el-icon-printer",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": true
+                },
+                {
+                  "name": "月度分析详细",
+                  "path": "/archives/analysis/detail",
+                  "component": "/archives/analysis/detail",
+                  "iconCls": "el-icon-printer",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": true
+                },
+                {
+                  "name": "月度分析查询",
+                  "path": "/archives/analysis/list_search",
+                  "component": "/archives/analysis/list_search",
+                  "iconCls": "el-icon-printer",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": true
+                }
+                ,
+                {
+                  "name": "消息信息录入",
+                  "path": "/archives/news/list",
+                  "component": "/archives/news/list",
+                  "iconCls": "el-icon-printer",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": true
+                },
+                {
+                  "name": "消息信息详细",
+                  "path": "/archives/news/detail",
+                  "component": "/archives/news/detail",
+                  "iconCls": "el-icon-printer",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": true
+                },
+                {
+                  "name": "消息信息查询",
+                  "path": "/archives/news/list_search",
+                  "component": "/archives/news/list_search",
+                  "iconCls": "el-icon-printer",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": true
                 }
 
               ]
