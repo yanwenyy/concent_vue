@@ -6,99 +6,18 @@
                @keyup.enter.native="getData()"
                class="gcform">
       <el-row>
-      <el-form-item label="档案名称:">
-        <el-input v-model="searchform.name"
-                  placeholder="请输入档案名称"
-                  clearable></el-input>
-      </el-form-item>
-      <el-form-item label="所属单位:">
-        <el-input v-model="searchform.createOrgName"
-                  placeholder="选择单位"
-                  clearable></el-input>
-      </el-form-item>
-</el-row>
-      <el-row>
-      <el-form-item label="填报时间:">
+      <el-form-item label="填报年度:">
         <el-date-picker
           v-model="searchform.reportTime"
-          type="daterange"
+          type="month"
           @change="searchform.selectTimeTypeReportTime='01'"
-          value-format="timestamp"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期">
+          value-format="timestamp">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="登记时间:">
-          <el-date-picker
-            v-model="searchform.createTime"
-            @change="searchform.selectTimeTypeCreateTime='01'"
-            type="daterange"
-            value-format="timestamp"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期">
-          </el-date-picker>
-        </el-form-item>
-      </el-row>
-      <el-row>
-      <el-form-item
-        label="是否共享:"
-      >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          size="mini"
-          v-model="searchform.isShare"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in isShare"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="档案类型:"
-      >
-        <el-select
-          filterable
-          placeholder="请选择"
-          size="mini"
-          v-model="searchform.archivesTypeId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in archivesType"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="填报人:"
-      >
-        <el-input v-model="searchform.createUserName"
-                  placeholder="填报人姓名"
-                  clearable></el-input>
-      </el-form-item>
-      </el-row>
-      <el-row>
-      <el-button @click="searchformReset"
-                 type="info"
-                 plain
-                 style="color:black;background:none">重置</el-button>
       <el-button @click="getData"
                  type="primary"
                  plain>查询</el-button>
-      <el-button @click="exportdata"
-                 type="primary"
-                 plain>导出</el-button>
-
       </el-row>
-
     </el-form>
     </div>
 
@@ -119,90 +38,34 @@
         tooltip-effect="dark"
       >
         <el-table-column
-          :width="50"
-          align="center"
-          show-overflow-tooltip
-          type="selection"
-        ></el-table-column>
-        <el-table-column
           :width="70"
           align="center"
           label="序号"
           show-overflow-tooltip
           type="index">
         </el-table-column>
-
-        <el-table-column
-          :width="120"
-          align="center"
-          label="档案类型"
-          prop="archivesTypeName"
-          show-overflow-tooltip>
-        </el-table-column>
-        <el-table-column
-          :width="300"
-          label="档案名称"
-          prop="Name"
-          show-overflow-tooltip>
-          <template slot-scope="scope">
-            <span class="blue pointer"
-                  @click="rowshow(scope.row)">{{ scope.row.name }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="填报单位"
-          prop="createOrgName"
-          show-overflow-tooltip
-        >
-
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="填报人"
-          prop="createUserName"
-          show-overflow-tooltip>
-
-          <template slot-scope="scope">
-            {{ scope.row.createUserName }}
-          </template>
-        </el-table-column>
         <el-table-column
           :width="180"
           align="center"
-          label="填报时间"
-          prop="createTime"
+          label="填报年月"
+          prop="reportTime"
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{ scope.row.createTime | dateformat }}
+            {{ scope.row.reportTime | dateformat }}
           </template>
         </el-table-column>
         <el-table-column
-          :width="150"
+          :width="120"
           align="center"
-          filter-multiple="true"
-          label="提交时间"
-          prop="sumbitTime"
-          show-overflow-tooltip
-        >
-
-          <template slot-scope="scope">
-            {{ scope.row.sumbitTime | dateformat }}
-          </template>
+          label="附件"
+          show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          :width="150"
+          :width="120"
+          label="附件个数"
           align="center"
-          label="是否发布"
-          prop="isShare"
-          show-overflow-tooltip
-        >
-        <template slot-scope="scope">
-          {{ scope.row.isShare | statusFormat }}
-        </template>
+          show-overflow-tooltip>
         </el-table-column>
 
         <el-table-column
@@ -231,7 +94,7 @@
 
 <script>
 export default {
-  name: "档案列表",
+  name: "月度分析查询",
   data() {
     return {
       page: {current: 1, size: 10, total: 0, records: []},

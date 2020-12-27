@@ -6,9 +6,9 @@
                @keyup.enter.native="getData()"
                class="gcform">
       <el-row>
-      <el-form-item label="档案名称:">
+      <el-form-item label="消息名称:">
         <el-input v-model="searchform.name"
-                  placeholder="请输入档案名称"
+                  placeholder="请输入消息名称"
                   clearable></el-input>
       </el-form-item>
       <el-form-item label="所属单位:">
@@ -61,7 +61,7 @@
         </el-select>
       </el-form-item>
       <el-form-item
-        label="档案类型:"
+        label="消息类型:"
       >
         <el-select
           filterable
@@ -135,13 +135,13 @@
         <el-table-column
           :width="120"
           align="center"
-          label="档案类型"
+          label="消息类型"
           prop="archivesTypeName"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           :width="300"
-          label="档案名称"
+          label="消息名称"
           prop="Name"
           show-overflow-tooltip>
           <template slot-scope="scope">
@@ -231,7 +231,7 @@
 
 <script>
 export default {
-  name: "档案列表",
+  name: "消息列表",
   data() {
     return {
       page: {current: 1, size: 10, total: 0, records: []},
@@ -269,19 +269,23 @@ export default {
         }
       ],//是否共享
       archivesType: [
-        {
-          id: '1',
-          detailName: '管理办法'
-        },
-        {
-          id: '2',
-          detailName: '其他'
-        },
-        {
-          id: '3',
-          detailName: '计划文件'
-        }
-      ],//联合投标选择
+      {
+        id: '1',
+        detailName: '市场动态'
+      },
+      {
+        id: '2',
+        detailName: '征信消息'
+      },
+      {
+        id: '3',
+        detailName: '通知公告'
+      },
+      {
+        id: '4',
+        detailName: '其他信息'
+      }
+    ],//联合投标选择
 
     }
   },
@@ -459,7 +463,7 @@ export default {
       console.log(JSON.stringify(this.searchform));
       this.$http
         .post(
-          '/api/archives/ArchivesInfo/list/loadPageDataByArchives',
+          '/api/archives/ArchivesInfo/list/loadPageDataByNews',
           this.searchform
         )
         .then(res => {

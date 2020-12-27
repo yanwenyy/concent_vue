@@ -1,18 +1,46 @@
 <template>
   <div>
     <div style="width: 100%; overflow: hidden">
-      <el-button-group style="float: left">
-        <el-button plain
-                   type="primary"
-                   @click="add">新增</el-button>
-        <el-button plain
-                   type="primary"
-                   @click="editItem">修改</el-button>
-        <el-button plain
+
+      <el-form :inline="true"
+               :model="searchform"
+               @keyup.enter.native="getData()"
+               class="gcform">
+          <el-row>
+           <el-button plain
+                      type="primary"
+                      @click="add">新增</el-button>
+            <el-button plain
                    type="primary"
                    @click="remove">删除</el-button>
-      </el-button-group>
+            <el-form-item label="填报年度:">
+            <el-select
+              placeholder="请选择"
+              size="mini"
+              v-model="searchform.selectYear"
+            >
+          <el-option
+            :key="index"
+            :label="item.detailName"
+            :value="item.id"
+            v-for="(item, index) in years"
+          ></el-option>
+        </el-select>
+<!--            <el-date-picker-->
+<!--              v-model="searchform.reportTime"-->
+<!--              type="month"-->
+<!--              value-format="timestamp">-->
+<!--            </el-date-picker>-->
+          </el-form-item>
+          <el-button @click="getData"
+                     type="primary"
+                     plain>查询</el-button>
+
+
+      </el-row>
+        </el-form>
     </div>
+
 
     <div style="margin-top: 20px">
       <el-table
@@ -27,7 +55,6 @@
         stripe
         style="width: 100%"
         tooltip-effect="dark"
-        @row-click="rowshow"
         @selection-change="handleSelectionChange"
       >
         <el-table-column
@@ -43,24 +70,18 @@
           show-overflow-tooltip
           type="index">
         </el-table-column>
-
         <el-table-column
-          :width="120"
+          :width="180"
           align="center"
-          label="档案类型"
-          prop="archivesTypeName"
-          show-overflow-tooltip>
-        </el-table-column>
-        <el-table-column
-          :width="300"
-          label="档案名称"
-          prop="Name"
-          show-overflow-tooltip>
+          label="填报年月"
+          prop="reportTime"
+          show-overflow-tooltip
+        >
           <template slot-scope="scope">
-            <span class="blue pointer"
-                  @click="rowshow(scope.row)">{{ scope.row.name }}</span>
+            {{ scope.row.reportTime | dateformat }}
           </template>
         </el-table-column>
+
         <el-table-column
           :width="150"
           align="center"
@@ -105,6 +126,38 @@
             {{ scope.row.sumbitTime | dateformat }}
           </template>
         </el-table-column>
+         <el-table-column
+           :width="120"
+           align="center"
+           label="附件"
+           show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
+          :width="120"
+          label="附件个数"
+          align="center"
+          prop="fileCount"
+          show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
+          :width="120"
+          align="center"
+          label="可见范围"
+          show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
+          :width="120"
+          label="可见数"
+          prop="orgCount"
+          align="center"
+          show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
+          :width="120"
+          label="不可见数"
+          align="center"
+          show-overflow-tooltip>
+        </el-table-column>
         <el-table-column
           :width="150"
           align="center"
@@ -136,6 +189,30 @@
         @size-change="handleSizeChange"
       ></el-pagination>
     </div>
+     <el-dialog title="选择填报年份" :visible.sync="dialogAdd"
+                width="30%">
+      <el-form :model="resultform">
+        <el-form-item
+          prop="year">
+        <el-select
+          placeholder="请选择"
+          size="mini"
+          v-model="resultform.year"
+        >
+          <el-option
+            :key="index"
+            :label="item.detailName"
+            :value="item.id"
+            v-for="(item, index) in years"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogAdd = false">取 消</el-button>
+        <el-button type="primary" @click="saveResult">确 定</el-button>
+      </div>
+    </el-dialog>
 
   </div>
 
@@ -143,7 +220,7 @@
 
 <script>
 export default {
-  name: "档案列表",
+  name: "月度分析列表",
   data() {
     return {
       page: {current: 1, size: 10, total: 0, records: []},
@@ -158,38 +235,108 @@ export default {
         remarks: '',
         submitTime: '',
         reportTime: '',
-        archivesInfoType: ''
+        archivesInfoType: '',
+        selectTimeTypeReportTime: '',
+        reportTimeBeginTime: "",
+        reportTimeEndTime: '',
+        selectTimeTypeCreateTime: '',
+        createTimeBeginTime: "",
+        createTimeEndTime: '',
+        createTime: '',
+        createOrgName: '',
+        createUserName: '',
+        selectYear:'',
+        orgCount:''
       },
       multipleSelection: [],
+      dialogAdd:false,
+      resultform:{
+        year:''
+      },
+      years: [
+        {
+          id: '2020',
+          detailName: '2020'
+        },
+        {
+          id: '2021',
+          detailName: '2021'
+        },
+        {
+          id: '2022',
+          detailName: '2022'
+        },
+        {
+          id: '2023',
+          detailName: '2023'
+        }
+      ],//是否共享
+      detailform: {
+        name: '',
+        archivesTypeId: '',
+        isShare: '',
+        archivesTypeName: '',
+        remarks: '',
+        submitTime: '',
+        reportTime: '',
+        archivesInfoType: '',
+        createOrgName: '',
+        createUserName: '',
+        selectYear:''
 
+      },
 
     }
   },
-  filters:{
-    isActiveFitlter : (value)=>{
-      return value===1?'激活':'冻结'
+  filters: {
+    isActiveFitlter: (value) => {
+      return value === 1 ? '激活' : '冻结'
     },
-    statusFormat: (value)=> {
-      return value == "1" ? "是" :"否";
+    statusFormat: (value) => {
+      return value == "1" ? "是" : "否";
       // return statusW
     },
   },
   methods: {
+    saveResult(){
+      //alert(this.resultform.year)
+      // var time = Date.parse(new Date());
+        this.detailformarchivesTypeId='0',
+        this.detailform.isShare='0',
+        this.detailform.archivesTypeName='0',
+        this.detailform.remarks='',
+        this.detailform.submitTime='',
+        this.detailform.reportTime="",
+        this.detailform.archivesInfoType='5',
+        this.detailform.selectYear = this.resultform.year;
+      this.$http
+        .post(
+          "/api/archives/ArchivesInfo/detail/save",
+          JSON.stringify(this.detailform),
+          {useJson: true}
+        )
+        .then((res) => {
 
+          if (res.data.msg === "SUCCESS") {
+            this.$message({
+              message: "保存成功",
+              type: "success",
+            });
+            // this.$refs[formName].resetFields();
+            // this.$router.push({
+            //   path: "./list",
+            // });
+            this.dialogAdd = false;
+            this.getData();
+          }
+
+        });
+    },
 
     add() {
-      // console.log(JSON.stringify(this.multipleSelection[0].uuid));
-      // if (this.multipleSelection[0].uuid != null) {
-      //   this.$message.info("当前登记的项目信息已经添加的资审信息！");
-      //   return;
-      // }
-      //alert(JSON.stringify(this.multipleSelection[0]));
-      let p = {actpoint: 'add'}
-      //alert(JSON.stringify(p));
-      this.$router.push({
-        path: './detail/',
-        query: {p: this.$utils.encrypt(JSON.stringify(p))}
-      })
+      //alert(1)
+      this.dialogAdd = true;
+
     },
     editItem() {
       console.log(JSON.stringify(this.multipleSelection[0].uuid));
@@ -211,6 +358,7 @@ export default {
       })
     },
     remove() {
+      //alert(1)
       console.log(JSON.stringify(this.multipleSelection[0].uuid));
       // if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
       //   this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
@@ -248,26 +396,7 @@ export default {
       });
 
     },
-    // 查看
-    rowshow(row) {
-      // let p = {actpoint: 'look', instid: row.uuid}
-      // this.$router.push({
-      //   path: './detail/',
-      //   query: {p: this.$utils.encrypt(JSON.stringify(p))}
-      // })
-      console.log(JSON.stringify(row));
-      // if (row.uuid === null) {
-      //   this.$message.error("当前登记的项目信息未添加的资审信息！");
-      //   return;
-      // }
-      //alert(JSON.stringify(this.multipleSelection[0]));
-      let p = {actpoint: 'look', instid: row.uuid}
-      //alert(JSON.stringify(p));
-      this.$router.push({
-        path: './detail/',
-        query: {p: this.$utils.encrypt(JSON.stringify(p))}
-      })
-    },
+
     show() {
       if (this.multipleSelection.length !== 1) {
         this.$message.info('请选择一条记录进行查看操作！')
@@ -298,14 +427,21 @@ export default {
       this.multipleSelection = val
     },
     getData() {
+      if(this.searchform.selectYear==="")
+      {
+        var date = new Date();
+        this.searchform.selectYear = date.getFullYear();
+      }
+
       console.log(JSON.stringify(this.searchform));
       this.$http
         .post(
-          '/api/archives/ArchivesInfo/list/loadPageDataByArchives',
+          '/api/archives/ArchivesInfo/list/loadPageDataByAnalysis',
           this.searchform
         )
         .then(res => {
           this.page = res.data.data
+          console.log(JSON.stringify(this.page));
         })
     },
 
@@ -316,7 +452,20 @@ export default {
 }
 </script>
 <style scoped>
+.gcform .el-form-item{
+  width: auto;
+  margin-bottom:22px;
+  margin-left:22px;
+}
+>>>.el-form-item__label{
+  width: auto;
+}
+>>>.el-input--mini .el-input__inner{
+  height: auto;
+  line-height: inherit;
+}
 .el-table__row {
   cursor: pointer;
 }
+
 </style>
