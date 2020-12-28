@@ -1,42 +1,62 @@
 <template>
   <div>
     <div style="width: 100%; overflow: hidden">
+
       <el-form :inline="true"
                :model="searchform"
                @keyup.enter.native="getData()"
                class="gcform">
-      <el-row>
-      <el-form-item label="填报年度:">
-        <el-date-picker
-          v-model="searchform.reportTime"
-          type="month"
-          @change="searchform.selectTimeTypeReportTime='01'"
-          value-format="timestamp">
-        </el-date-picker>
-      </el-form-item>
-      <el-button @click="getData"
-                 type="primary"
-                 plain>查询</el-button>
+          <el-row>
+            <el-form-item label="填报年度:">
+            <el-select
+              placeholder="请选择"
+              size="mini"
+              v-model="searchform.selectYear"
+            >
+          <el-option
+            :key="index"
+            :label="item.detailName"
+            :value="item.id"
+            v-for="(item, index) in years"
+          ></el-option>
+        </el-select>
+            <!--            <el-date-picker-->
+            <!--              v-model="searchform.reportTime"-->
+            <!--              type="month"-->
+            <!--              value-format="timestamp">-->
+            <!--            </el-date-picker>-->
+          </el-form-item>
+          <el-button @click="getData"
+                     type="primary"
+                     plain>查询</el-button>
+
+
       </el-row>
-    </el-form>
+        </el-form>
     </div>
+
 
     <div style="margin-top: 20px">
       <el-table
+        ref="table"
         :data="page.records"
         :header-cell-style="{
           'text-align': 'center',
           'background-color': 'whitesmoke',
         }"
-        @row-click="rowshow"
-        @selection-change="handleSelectionChange"
         border
         highlight-current-row
-        ref="table"
         stripe
         style="width: 100%"
         tooltip-effect="dark"
+        @selection-change="handleSelectionChange"
       >
+        <el-table-column
+          :width="50"
+          align="center"
+          show-overflow-tooltip
+          type="selection"
+        ></el-table-column>
         <el-table-column
           :width="70"
           align="center"
@@ -55,17 +75,93 @@
             {{ scope.row.reportTime | dateformat }}
           </template>
         </el-table-column>
+
         <el-table-column
-          :width="120"
+          :width="150"
           align="center"
-          label="附件"
+          label="填报单位"
+          prop="createOrgName"
+          show-overflow-tooltip
+        >
+
+        </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="填报人"
+          prop="createUserName"
           show-overflow-tooltip>
+
+          <template slot-scope="scope">
+            {{ scope.row.createUserName }}
+          </template>
+        </el-table-column>
+        <el-table-column
+          :width="180"
+          align="center"
+          label="填报时间"
+          prop="createTime"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+            {{ scope.row.createTime | dateformat }}
+          </template>
+        </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          filter-multiple="true"
+          label="提交时间"
+          prop="sumbitTime"
+          show-overflow-tooltip
+        >
+
+          <template slot-scope="scope">
+            {{ scope.row.sumbitTime | dateformat }}
+          </template>
+        </el-table-column>
+         <el-table-column
+           :width="120"
+           align="center"
+           label="附件"
+           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           :width="120"
           label="附件个数"
           align="center"
+          prop="fileCount"
           show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
+          :width="120"
+          align="center"
+          label="可见范围"
+          show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
+          :width="120"
+          label="可见数"
+          prop="orgCount"
+          align="center"
+          show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
+          :width="120"
+          label="不可见数"
+          align="center"
+          show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="是否发布"
+          prop="isShare"
+          show-overflow-tooltip
+        >
+        <template slot-scope="scope">
+          {{ scope.row.isShare | statusFormat }}
+        </template>
         </el-table-column>
 
         <el-table-column
@@ -82,11 +178,35 @@
         :page-size="page.size"
         :page-sizes="[10, 50, 100]"
         :total="page.total"
+        layout="total, sizes, prev, pager, next, jumper"
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
-        layout="total, sizes, prev, pager, next, jumper"
       ></el-pagination>
     </div>
+     <el-dialog title="选择填报年份" :visible.sync="dialogAdd"
+                width="30%">
+      <el-form :model="resultform">
+        <el-form-item
+          prop="year">
+        <el-select
+          placeholder="请选择"
+          size="mini"
+          v-model="resultform.year"
+        >
+          <el-option
+            :key="index"
+            :label="item.detailName"
+            :value="item.id"
+            v-for="(item, index) in years"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogAdd = false">取 消</el-button>
+        <el-button type="primary" @click="saveResult">确 定</el-button>
+      </div>
+    </el-dialog>
 
   </div>
 
@@ -94,7 +214,7 @@
 
 <script>
 export default {
-  name: "月度分析查询",
+  name: "月度分析列表",
   data() {
     return {
       page: {current: 1, size: 10, total: 0, records: []},
@@ -110,63 +230,42 @@ export default {
         submitTime: '',
         reportTime: '',
         archivesInfoType: '',
-        selectTimeTypeReportTime:'',
-        reportTimeBeginTime:"",
-        reportTimeEndTime:'',
-        selectTimeTypeCreateTime:'',
-        createTimeBeginTime:"",
-        createTimeEndTime:'',
-        createTime:'',
-        createOrgName:'',
-        createUserName:''
+        selectTimeTypeReportTime: '',
+        reportTimeBeginTime: "",
+        reportTimeEndTime: '',
+        selectTimeTypeCreateTime: '',
+        createTimeBeginTime: "",
+        createTimeEndTime: '',
+        createTime: '',
+        createOrgName: '',
+        createUserName: '',
+        selectYear:'',
+        orgCount:''
       },
       multipleSelection: [],
-      isShare: [
+      dialogAdd:false,
+      resultform:{
+        year:''
+      },
+      years: [
         {
-          id: '1',
-          detailName: '是'
+          id: '2020',
+          detailName: '2020'
         },
         {
-          id: '0',
-          detailName: '否'
+          id: '2021',
+          detailName: '2021'
+        },
+        {
+          id: '2022',
+          detailName: '2022'
+        },
+        {
+          id: '2023',
+          detailName: '2023'
         }
       ],//是否共享
-      archivesType: [
-        {
-          id: '1',
-          detailName: '管理办法'
-        },
-        {
-          id: '2',
-          detailName: '其他'
-        },
-        {
-          id: '3',
-          detailName: '计划文件'
-        }
-      ],//联合投标选择
-
-    }
-  },
-  filters:{
-    isActiveFitlter : (value)=>{
-      return value===1?'激活':'冻结'
-    },
-    statusFormat: (value)=> {
-
-      return value == "1" ? "是" :"否";
-      // return statusW
-    },
-  },
-  methods: {
-    exportdata() {
-    },
-    searchformReset() {
-      // this.$refs["searchform"].resetFields();
-      this.searchform={
-        current: 1,
-        size: 10,
-        uuid: '',
+      detailform: {
         name: '',
         archivesTypeId: '',
         isShare: '',
@@ -175,31 +274,63 @@ export default {
         submitTime: '',
         reportTime: '',
         archivesInfoType: '',
-        selectTimeTypeReportTime:'',
-        reportTimeBeginTime:"",
-        reportTimeEndTime:'',
-        selectTimeTypeCreateTime:'',
-        createTimeBeginTime:"",
-        createTimeEndTime:'',
-        createTime:'',
-        createOrgName:'',
-        createUserName:''
-      }
-      this.getData();
+        createOrgName: '',
+        createUserName: '',
+        selectYear:''
+
+      },
+
+    }
+  },
+  filters: {
+    isActiveFitlter: (value) => {
+      return value === 1 ? '激活' : '冻结'
     },
+    statusFormat: (value) => {
+      return value == "1" ? "是" : "否";
+      // return statusW
+    },
+  },
+  methods: {
+    saveResult(){
+      //alert(this.resultform.year)
+      // var time = Date.parse(new Date());
+      this.detailformarchivesTypeId='0',
+        this.detailform.isShare='0',
+        this.detailform.archivesTypeName='0',
+        this.detailform.remarks='',
+        this.detailform.submitTime='',
+        this.detailform.reportTime="",
+        this.detailform.archivesInfoType='5',
+        this.detailform.selectYear = this.resultform.year;
+      this.$http
+        .post(
+          "/api/archives/ArchivesInfo/detail/save",
+          JSON.stringify(this.detailform),
+          {useJson: true}
+        )
+        .then((res) => {
+
+          if (res.data.msg === "SUCCESS") {
+            this.$message({
+              message: "保存成功",
+              type: "success",
+            });
+            // this.$refs[formName].resetFields();
+            // this.$router.push({
+            //   path: "./list",
+            // });
+            this.dialogAdd = false;
+            this.getData();
+          }
+
+        });
+    },
+
     add() {
-      console.log(JSON.stringify(this.multipleSelection[0].uuid));
-      if (this.multipleSelection[0].uuid != null) {
-        this.$message.info("当前登记的项目信息已经添加的资审信息！");
-        return;
-      }
-      //alert(JSON.stringify(this.multipleSelection[0]));
-      let p = {actpoint: 'add', instid: this.multipleSelection[0].uuid}
-      //alert(JSON.stringify(p));
-      this.$router.push({
-        path: './detail/',
-        query: {p: this.$utils.encrypt(JSON.stringify(p))}
-      })
+      //alert(1)
+      this.dialogAdd = true;
+
     },
     editItem() {
       console.log(JSON.stringify(this.multipleSelection[0].uuid));
@@ -221,6 +352,7 @@ export default {
       })
     },
     remove() {
+      //alert(1)
       console.log(JSON.stringify(this.multipleSelection[0].uuid));
       // if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
       //   this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
@@ -244,7 +376,7 @@ export default {
         // });
         this.$http
           .post(
-            '/api/archives/ArchivesInfo/list/delete',
+            '/api/archives/list/delete',
             {ids: uuids}
           )
           .then(res => {
@@ -258,26 +390,7 @@ export default {
       });
 
     },
-    // 查看
-    rowshow(row) {
-      // let p = {actpoint: 'look', instid: row.uuid}
-      // this.$router.push({
-      //   path: './detail/',
-      //   query: {p: this.$utils.encrypt(JSON.stringify(p))}
-      // })
-      console.log(JSON.stringify(row));
-      // if (row.uuid === null) {
-      //   this.$message.error("当前登记的项目信息未添加的资审信息！");
-      //   return;
-      // }
-      //alert(JSON.stringify(this.multipleSelection[0]));
-      let p = {actpoint: 'look', instid: row.uuid}
-      //alert(JSON.stringify(p));
-      this.$router.push({
-        path: './detail/',
-        query: {p: this.$utils.encrypt(JSON.stringify(p))}
-      })
-    },
+
     show() {
       if (this.multipleSelection.length !== 1) {
         this.$message.info('请选择一条记录进行查看操作！')
@@ -308,27 +421,21 @@ export default {
       this.multipleSelection = val
     },
     getData() {
+      if(this.searchform.selectYear==="")
+      {
+        var date = new Date();
+        this.searchform.selectYear = date.getFullYear();
+      }
 
-      if(this.searchform.selectTimeTypeReportTime=='01'){
-        this.searchform.reportTimeBeginTime=this.searchform.reportTime[0];
-        this.searchform.reportTimeEndTime=this.searchform.reportTime[1];
-      }
-      if(this.searchform.selectTimeTypeCreateTime=='01'){
-        this.searchform.createTimeBeginTime=this.searchform.createTime[0];
-        this.searchform.createTimeEndTime=this.searchform.createTime[1];
-      }
-      this.searchform.createTime=null;
-      this.searchform.reportTime=null;
       console.log(JSON.stringify(this.searchform));
       this.$http
         .post(
-          '/api/archives/ArchivesInfo/list/loadPageDataByArchives',
+          '/api/archives/ArchivesInfo/list/loadPageDataByAnalysis',
           this.searchform
         )
         .then(res => {
           this.page = res.data.data
-          this.searchform.selectTimeTypeCreateTime=='00'
-          this.searchform.selectTimeTypeReportTime=='00'
+          console.log(JSON.stringify(this.page));
         })
     },
 
@@ -342,6 +449,7 @@ export default {
 .gcform .el-form-item{
   width: auto;
   margin-bottom:22px;
+  margin-left:22px;
 }
 >>>.el-form-item__label{
   width: auto;
@@ -353,4 +461,5 @@ export default {
 .el-table__row {
   cursor: pointer;
 }
+
 </style>

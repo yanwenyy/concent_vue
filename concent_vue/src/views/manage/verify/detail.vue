@@ -388,14 +388,60 @@
             >
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-upload
-                class="upload-demo"
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :on-change="handleChange">
-                <el-button size="small" type="primary"  v-show="p.actpoint != 'look'">点击上传</el-button>
-                <div slot="tip" class="el-upload__tip"></div>
-              </el-upload>
+                class="upload-demo detailUpload"
+                :action="'/api/topInfo/CommonFiles/verify/01/uploadFile'"
+                :on-success="handleChange"
+                :on-error="handleChange"
+                :on-remove="handleRemove"
+                multiple
+              >
+              <el-button size="small" type="primary">点击上传</el-button>
+            </el-upload>
             </el-form-item>
      </el-row>
+    <div>
+      <el-table
+        :data="detailform.fileList"
+        :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+        @selection-change="handleSelectionChange1"
+        align="center"
+        border
+        class="contractInfoTable"
+        ref="table"
+        style="width: 100%;height: auto;"
+      >
+                <el-table-column
+                  :width="55"
+                  align="center"
+                  label="序号"
+                  show-overflow-tooltip
+                  type="index"
+                ></el-table-column>
+                <el-table-column :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+
+                </el-table-column>
+
+                <el-table-column :resizable="false" label="大小" prop="fileSize" show-overflow-tooltip>
+
+                </el-table-column>
+                <el-table-column :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+
+                </el-table-column>
+
+                <el-table-column
+                  :resizable="false"
+                  fixed="right"
+                  label="操作"
+                  show-overflow-tooltip
+                  v-if="p.actpoint!=='look'"
+                  width="200"
+                >
+                  <template slot-scope="scope">
+                    <el-link :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
+                  </template>
+                </el-table-column>
+              </el-table>
+    </div>
 
      <p style="overflow:hidden;margin-right: 30px"><span style="float:left;">标段信息: </span>   <el-button
        @click="dialogTopInfoSection = true"
@@ -584,7 +630,8 @@ export default {
         ],
         'verifyOrgList': [
         ],
-        verifyOrgLists:"111"
+        verifyOrgLists:"111",
+        fileList:[]
       },
       detailform1: {
         topInfor: {},
@@ -603,7 +650,9 @@ export default {
           detailName:'否'
         }
       ],//联合投标选择
-      myVerifySection:{}
+      myVerifySection:{},
+      multipleSelection:[],
+      multipleSelection1:[]
     }
   },
   computed: {
@@ -711,16 +760,13 @@ export default {
       }
     },
 
-    del1(index) {
-      console.log(index)
-      var _self = this
-      // this.$utils.isdel(function() {
-      _self.detailform.clothSizePartList.splice(index, 1)
-      // })
-    },
+
     del(index,item,list,type) {
       console.log(index);
-      list.splice(index, 1);
+
+        list.splice(index, 1);
+      // console.log(index);
+      // list.splice(index, 1);
 
     },
     selectOrg(){
@@ -901,19 +947,48 @@ export default {
         }
       });
     },
-    handleChange(){},
-    sure() {
-      console.log(this.sizeform)
-      this.$refs['sizeform'].validate(valid => {
-        if (valid) {
-          this.detailform.clothSizePartList.push(this.sizeform)
-          this.dialogVisibleAdd = false
-        } else {
-          console.log('error submit!')
-          return false
-        }
-      })
+    handleRemove(file,index) {
+      this.$http
+        .post(
+          "/api/topInfo/CommonFiles/list/delete",
+          {ids:[file.uuid]},
+        )
+        .then((res) => {
+          if (res.data.code === 200) {
+            this.detailform.fileList.splice(index,1);
+          }
+
+        });
+      console.log(this.detailform.fileList)
     },
+    //上传附件
+    handleChange(response, file, fileList){
+      if (response && response.code === 200) {
+        this.$message({
+          message: '上传成功',
+          type: 'success',
+          duration: 1500,
+          onClose: () => {
+            this.detailform.fileList.push(response.data);
+            console.log( JSON.stringify(this.detailform.fileList))
+          }
+        })
+      } else {
+        this.$message.error(response.msg)
+      }
+    },
+    // sure() {
+    //   console.log(this.sizeform)
+    //   this.$refs['sizeform'].validate(valid => {
+    //     if (valid) {
+    //       this.detailform.clothSizePartList.push(this.sizeform)
+    //       this.dialogVisibleAdd = false
+    //     } else {
+    //       console.log('error submit!')
+    //       return false
+    //     }
+    //   })
+    // },
     //加载本页面数据
 
 
@@ -921,7 +996,7 @@ export default {
     getDetail() {
 
 
-      alert(this.p.topinfoid);
+      //alert(this.p.topinfoid);
       this.$http
         .post(
           '/api/topInfo/Verify/detail/entityInfo',
@@ -931,7 +1006,7 @@ export default {
         .then(res => {
           this.detailform = res.data.data
 
-          //alert( JSON.stringify(this.detailform.verifySectionList))
+          console.log( JSON.stringify(this.detailform.verifySectionList))
         })
          //alert(JSON.stringify(this.p))
       // this.detailform.Verify.contactMode = this.p.selectrow.contactMode;
@@ -966,6 +1041,9 @@ export default {
 
     handleSelectionChange(val) {
       this.multipleSelection = val
+    },
+    handleSelectionChange1(val) {
+      this.multipleSelection1 = val
     }
 
   },
