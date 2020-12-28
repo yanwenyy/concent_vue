@@ -205,6 +205,7 @@
                 </el-select>
               </el-form-item>
               <el-form-item
+                v-if="detailform.contractInfo.enginTypeFirstId!='17ff5c08d36b41ea8f2dc2e9d3029cac'"
                 label="建设单位:"
                 prop="contractInfo.constructionOrg"
                 :rules="{
@@ -1096,7 +1097,16 @@
                   align="center"
                 >
                   <template slot-scope="scope">
-                    <el-link :underline="false" @click="del(scope.$index)" type="warning">删除</el-link>
+                    <el-link
+                      :underline="false"
+                      @click="del(scope.$index,scope.row,detailform.topInfoSectionList,'bd')"
+                      type="warning">删除
+                    </el-link>
+                    <el-link
+                      :underline="false"
+                      @click="del(scope.$index,scope.row,detailform.topInfoSectionList,'bd')"
+                      type="warning">修改
+                    </el-link>
                   </template>
                 </el-table-column>
               </el-table>
@@ -1853,7 +1863,7 @@ export default {
         }).then(() => {
           this.$http
           .post(
-            "/api/topInfo/TopInfoSection/list/delete",
+            "/api/contract/ContractInfo/list/deleteSection",
             {ids: [item.uuid]}
           )
           .then((res) => {
