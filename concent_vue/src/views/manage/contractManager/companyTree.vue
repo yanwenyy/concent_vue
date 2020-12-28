@@ -13,7 +13,7 @@
         :props="defaultProps"
         :highlight-current="true"
         node-key="id"
-        :default-checked-keys="['dab06e2e7b2d4240b089985cedd9e24c']"
+        :default-checked-keys="list"
         >
       </el-tree>
     </div>
@@ -31,6 +31,7 @@
     data() {
       return {
         datas: [],
+        list:[],
         dialogVisible:true,
         defaultProps: {
           children: 'children',
@@ -48,11 +49,15 @@
 
       //js方法引入数据
       this.datas=datas;
-      console.log(datas)
+      // console.log(datas)
     },
     methods: {
-      init(){
+      init(type,list){
         this.dialogVisible = true;
+        this.type=type;
+        if(list){
+          this.list=list.split(",")
+        }
       },
       handleNodeClick(data) {
         // console.log(data);
@@ -63,6 +68,7 @@
       },
       getCheckedNodes() {
         var data=this.$refs.tree.getCheckedNodes();
+        data.type=this.type;
         // console.log(this.$refs.tree.getCheckedNodes());
         this.$emit('refreshBD',data)
       },

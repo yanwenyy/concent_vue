@@ -6,7 +6,7 @@
       <div>
         <el-form :inline="true" :model="detailForm" @keyup.enter.native="init()">
           <el-form-item label="标段名称:" class="list-item">
-            <el-input v-model="detailForm.sectionId" placeholder="标段名称" clearable></el-input>
+            <el-input v-model="detailForm.sectionName" placeholder="标段名称" clearable></el-input>
           </el-form-item>
           <el-form-item label="风险费(万元):" class="list-item">
             <el-input v-model="detailForm.riskFee" placeholder="风险费(万元)" clearable></el-input>
@@ -126,7 +126,7 @@
               align="center"
               label="投标价">
               <template slot-scope="scope">
-                <el-input type="text" v-model="scope.row.price"></el-input>
+                <el-input type="text" v-model="scope.row.bidAmount"></el-input>
               </template>
             </el-table-column>
             <el-table-column
@@ -137,7 +137,7 @@
               align="center"
             >
               <template slot-scope="scope">
-                <el-link :underline="false" @click="del(scope.$index,'inside')" type="warning">删除</el-link>
+                <el-link :underline="false" @click="del(scope.$index,'inside',scope.row)" type="warning">删除</el-link>
               </template>
             </el-table-column>
           </el-table>
@@ -176,7 +176,14 @@
                   clearable
                   filterable
                   placeholder="请选择"
-                  v-model="scope.row.name"
+                  v-model="scope.row.orgId"
+                  @change="
+                  getBdName(
+                    scope.row.orgId,
+                    detailForm.dataList2,
+                    scope.$index
+                  )
+                "
                 >
                   <el-option
                     :key="index"
@@ -193,7 +200,7 @@
               align="center"
               label="投标价">
               <template slot-scope="scope">
-                <el-input type="text" v-model="scope.row.price"></el-input>
+                <el-input type="text" v-model="scope.row.bidAmount"></el-input>
               </template>
             </el-table-column>
             <el-table-column
@@ -204,7 +211,7 @@
               align="center"
             >
               <template slot-scope="scope">
-                <el-link :underline="false" @click="del(scope.$index,'outside')" type="warning">删除</el-link>
+                <el-link :underline="false" @click="del(scope.$index,'outside',scope.row)" type="warning">删除</el-link>
               </template>
             </el-table-column>
           </el-table>
@@ -236,6 +243,8 @@
           dataList: [],
           dataList2: []
         },
+        type:'',
+        index:'',
         pageIndex: 1,
         pageSize: 10,
         totalPage: 0,
@@ -314,15 +323,38 @@
         var contractInfoSectionOrgList=this.detailForm.dataList.concat(this.detailForm.dataList2);
         this.detailForm.contractInfoSectionOrgList=contractInfoSectionOrgList;
         this.visible = false;
+        this.detailForm.type=this.type;
+        if(this.type=='edit'){
+          this.detailForm.index=this.index;
+        }
         this.$emit('refreshBD', this.detailForm)
       },
       // 初始化
-      init() {
+      init(type,detail,index) {
+        // console.log(detail)
         this.visible = true;
-        // this.detailForm={
-        //   dataList: [],
-        //     dataList2: []
-        // };
+        this.type=type;
+        if(type!='add'){
+          this.detailForm=detail;
+          this.detailForm.dataList=[];
+          this.detailForm.dataList2=[];
+          this.index=index;
+          if(detail.contractInfoSectionOrgList){
+            detail.contractInfoSectionOrgList.forEach((item, index) => {
+              if (item.orgType == '1') {
+              // item.detailName = _data.detailName;
+              this.detailForm.dataList.push(item)
+            }else{
+              this.detailForm.dataList2.push(item)
+            }
+            })
+          }
+        }else{
+          this.detailForm={
+            dataList: [],
+            dataList2: []
+          };
+        }
       },
       //新增列表
       add(type,orgType){
@@ -338,12 +370,39 @@
           this.detailForm.dataList2.push(v)
         }
       },
-      del(index,type){
-        if(type=='inside'){
-          this.detailForm.dataList.splice(index, 1);
+      del(index,type,value){
+        console.log(value)
+        if(value.uuid){
+          this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$http
+            .post(
+              "/api/contract/ContractInfo/list/deleteSectionOrg",
+              {ids: [value.uuid]}
+            )
+            .then((res) => {
+            if (res.data && res.data.code === 200) {
+              if(type=='inside'){
+                this.detailForm.dataList.splice(index, 1);
+              }else{
+                this.detailForm.dataList2.splice(index, 1);
+              }
+          } else {
+            this.$message.error(data.msg)
+          }
+        });
+        }).catch(() => {})
         }else{
-          this.detailForm.dataList2.splice(index, 1);
+          if(type=='inside'){
+            this.detailForm.dataList.splice(index, 1);
+          }else{
+            this.detailForm.dataList2.splice(index, 1);
+          }
         }
+
       }
     }
   }
