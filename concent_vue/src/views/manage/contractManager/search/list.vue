@@ -46,9 +46,25 @@
           show-overflow-tooltip
           type="index"
         ></el-table-column>
-
         <el-table-column
           :width="500"
+          label="项目名称"
+          prop="inforName"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>项目名称</span>
+            <div>
+              <el-input
+                style="float: left; width: 100%"
+                v-model="searchFrom.inforName"
+                size="mini"
+              />
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column
+          :width="150"
           label="合同名称"
           prop="contractName"
           show-overflow-tooltip
@@ -100,7 +116,45 @@
             </div>
           </template>
         </el-table-column>
-
+        <el-table-column
+          :width="150"
+          align="center"
+          label="主推单位"
+          prop="contractMianOrg"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>主推单位</span>
+            <div>
+              <el-input
+                style="float: left; width: 100%"
+                v-model="searchFrom.contractMianOrg"
+                size="mini"
+              />
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="合同金额(万元)"
+          prop="contractAmount"
+          show-overflow-tooltip
+        >
+          <!-- <template slot-scope="scope">{{
+            scope.row.exetime | datetoMonth
+          }}</template> -->
+          <template slot="header" slot-scope="scope">
+            <span>合同金额（万元）</span>
+            <div>
+              <el-input
+                style="float: left; width: 100%"
+                v-model="searchFrom.contractAmount"
+                size="mini"
+              />
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column
           :width="150"
           align="center"
@@ -190,11 +244,6 @@ export default {
       searchFrom: {
         current: 1,
         size: 10,
-        year: "",
-        name: "",
-        ptype: "",
-        orgid: "",
-        orgname: "",
       },
       menus: [],
       multipleSelection: [],

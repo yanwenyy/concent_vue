@@ -56,6 +56,9 @@
 </script>
 
 <style scoped>
+  .el-dialog{
+    z-index: 999999999999999999;
+  }
   .tree-div{
     height: 300px;
     overflow: auto;

@@ -485,5 +485,8 @@ pre {
 .detail-card-title{
   color: #2a2a7d
 }
+.detailUpload{
+  display: inline-block;
+}
 /**/
 

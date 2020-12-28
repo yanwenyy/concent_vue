@@ -174,7 +174,7 @@
           <el-input
             disabled
             size="mini"
-            v-model="detailform.verify.projectTrackResponPerson"
+            v-model="detailform.topInfor.projectTrackResponPerson"
           />
 
         </el-form-item>
@@ -186,7 +186,7 @@
             disabled
             placeholder=""
             size="mini"
-            v-model="detailform.verify.contactMode"
+            v-model="detailform.topInfor.contactMode"
           />
 
         </el-form-item>
@@ -921,7 +921,7 @@ export default {
     getDetail() {
 
 
-      //alert(this.p.topinfoid);
+      alert(this.p.topinfoid);
       this.$http
         .post(
           '/api/topInfo/Verify/detail/entityInfo',

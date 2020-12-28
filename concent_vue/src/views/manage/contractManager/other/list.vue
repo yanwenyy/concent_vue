@@ -9,13 +9,16 @@
       </el-button-group>
     </div>
     <div style="float: right; margin: -40px 0 0 0">
-      <el-button @click="reset" type="info" plain style="color:black;background:none">重置</el-button>
-      <el-button @click="search" type="primary" plain>查询</el-button>
-      <el-button @click="exportdata" type="primary" plain>导出</el-button>
+      <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
+      <el-button @click="getData" type="primary" plain>查询</el-button>
+      <el-button type="primary" plain>导出</el-button>
     </div>
 
     <div style="margin-top: 20px">
       <el-table
+        class="tableStyle"
+        :max-height="$tableHeight"
+        :height="$tableHeight"
         :data="page.records"
         :header-cell-style="{
           'text-align': 'center',
@@ -47,7 +50,7 @@
         <el-table-column
           :width="500"
           label="合同名称"
-          prop="name"
+          prop="contractName"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -55,18 +58,17 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchFrom.contractName"
                 size="mini"
               />
             </div>
           </template>
         </el-table-column>
-
         <el-table-column
           :width="150"
           align="center"
           label="合同号"
-          prop="ptypename"
+          prop="contractNo"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -74,18 +76,17 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchFrom.contractNo"
                 size="mini"
               />
             </div>
           </template>
         </el-table-column>
-
         <el-table-column
           :width="150"
           align="center"
           label="填报单位"
-          prop="unitname"
+          prop="createOrgId"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -93,19 +94,18 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchFrom.createOrgId"
                 size="mini"
               />
             </div>
           </template>
         </el-table-column>
 
-
         <el-table-column
           :width="150"
           align="center"
           label="填报人"
-          prop="username"
+          prop="createUserName"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -113,7 +113,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchFrom.createUserName"
                 size="mini"
               />
             </div>
@@ -123,7 +123,7 @@
           :width="150"
           align="center"
           label="录入时间"
-          prop="createtime"
+          prop="createTime"
           show-overflow-tooltip
         >
           <!-- <template slot-scope="scope">{{
@@ -134,7 +134,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchFrom.createTime"
                 size="mini"
               />
             </div>
@@ -144,7 +144,7 @@
           :width="150"
           align="center"
           label="状态"
-          prop="state"
+          prop="flowStatus"
           fixed="right"
           show-overflow-tooltip
         >
@@ -156,18 +156,13 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchFrom.id"
                 size="mini"
               />
             </div>
           </template>
           <template slot-scope="scope">
-            <el-link
-              :underline="false"
-              @click="del(scope.$index)"
-              type="warning"
-              >删除</el-link
-            >
+             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
           </template>
         </el-table-column>
       </el-table>
@@ -187,118 +182,89 @@
 </template>
 
 <script>
-export default {
-  name: "proposal-list-look",
-  data() {
-    return {
-      page: { current: 1, size: 10, total: 0, records: [] },
-      searchform: {
-        current: 1,
-        size: 10,
-        year: "",
-        name: "",
-        ptype: "",
-        orgid: "",
-        orgname: "",
+  export default {
+    name: "proposal-list-look",
+    data() {
+      return {
+        page: { current: 1, size: 10, total: 0, records: [] },
+        searchFrom: {
+          current: 1,
+          size: 10,
+          year: "",
+          name: "",
+          ptype: "",
+          orgid: "",
+          orgname: "",
+        },
+        menus: [],
+        multipleSelection: [],
+        orgTree: [],
+      };
+    },
+    methods: {
+      add() {
+        let p = { actpoint: "add" };
+        this.$router.push({
+          path: "./detail/",
+          query: { p: this.$utils.encrypt(JSON.stringify(p)) },
+        });
       },
-      menus: [],
-      multipleSelection: [],
-      orgTree: [],
-    };
-  },
-  methods: {
-    add() {
-      let p = { actpoint: "add" };
-      this.$router.push({
-        path: "./detail/",
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
-      });
-    },
-    // 查看
-    rowshow(row) {
-      let p = { actpoint: "look", instid: row.uuid };
-      this.$router.push({
-        path: "./detail/",
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
-      });
-    },
-    show() {
-      if (this.multipleSelection.length !== 1) {
-        this.$message.info("请选择一条记录进行查看操作！");
-        return false;
-      }
-      let p = { actpoint: "look", instid: this.multipleSelection[0].uuid };
-      this.$router.push({
-        path: "../detail/",
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
-      });
-    }, // list通用方法开始
-    handleSizeChange(val) {
-      this.searchform.size = val;
-      this.getData();
-    },
-    handleCurrentChange(val) {
-      this.searchform.current = val;
-      this.getData();
-    },
-    searchformSubmit() {
-      this.searchform.current = 1;
-      this.getData();
-    },
-    searchformReset() {
-      this.$refs["searchform"].resetFields();
-    },
-    // 列表选项数据
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
-    },
-    getData() {
-      this.$http
-        .post(
-          "/api" + this.$route.path.substr(0, this.$route.path.length - 1),
-          this.searchform
-        )
-        .then((res) => {
+      // 查看
+      rowshow(row) {
+        let p = { actpoint: "look", instid: row.uuid };
+        this.$router.push({
+          path: "./detail/",
+          query: { p: this.$utils.encrypt(JSON.stringify(p)) },
+        });
+      },
+      show() {
+        if (this.multipleSelection.length !== 1) {
+          this.$message.info("请选择一条记录进行查看操作！");
+          return false;
+        }
+        let p = { actpoint: "look", instid: this.multipleSelection[0].uuid };
+        this.$router.push({
+          path: "../detail/",
+          query: { p: this.$utils.encrypt(JSON.stringify(p)) },
+        });
+      }, // list通用方法开始
+      handleSizeChange(val) {
+        this.searchform.size = val;
+        this.getData();
+      },
+      handleCurrentChange(val) {
+        this.searchform.current = val;
+        this.getData();
+      },
+      searchformSubmit() {
+        this.searchform.current = 1;
+        this.getData();
+      },
+      searchformReset() {
+        this.$refs["searchform"].resetFields();
+      },
+      // 列表选项数据
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
+      getData() {
+        this.$http
+          .post(
+            "/api/contract/ContractInfo/list/loadPageData",
+            this.searchform
+          )
+          .then((res) => {
           this.page = res.data.data;
-        });
-    },
-    getMenus() {
-      this.$http
-        .post("api/base/loadcascader", { typecode: "XMLX" })
-        .then((res) => {
-          if (res.data.code === 0) {
-            this.menus = res.data.data;
-          }
-        });
-    },
-    currentMenu(selVal) {
-      let selMenuObj = this.menus.filter((item) => item.value === selVal);
-      this.searchform.menu = selMenuObj[0].label;
-    },
-    // 获取上级单位树信息
-    getOrgTree() {
-      this.$http.get("/api/base/loadorglist").then((res) => {
-        this.orgTree = res.data.data;
       });
+      },
     },
-    // 确定单位
-    orgChange() {
-      let selectLabelArr = this.$refs["porgCascader"].getCheckedNodes()[0]
-        .pathLabels;
-      this.searchform.orgname = selectLabelArr[selectLabelArr.length - 1];
+    created() {
+      this.getData();
     },
-
-    // list通用方法结束
-  },
-  created() {
-    this.getMenus();
-    this.getOrgTree();
-    this.getData();
-  },
-};
+  };
 </script>
 <style scoped>
-.el-table__row {
-  cursor: pointer;
-}
+  .el-table__row {
+    cursor: pointer;
+  }
 </style>

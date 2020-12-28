@@ -71,7 +71,7 @@
       <el-form-item
         label="标段名称:"
       >
-        <el-input v-model="searchform.sectionNames" placeholder="标段名称" clearable></el-input>
+        <el-input v-model="searchform.sectionName" placeholder="标段名称" clearable></el-input>
       </el-form-item>
       <el-form-item
         label="资审状态:"
@@ -163,7 +163,17 @@
         >
 
         </el-table-column>
+        <el-table-column
+          :width="300"
+          label="标段名称"
+          prop="sectionName"
+          show-overflow-tooltip
+        >
 
+          <template slot-scope="scope">
+            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.sectionName}}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           :width="300"
           label="项目名称"
@@ -171,9 +181,7 @@
           show-overflow-tooltip
         >
 
-          <template slot-scope="scope">
-            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
-          </template>
+
         </el-table-column>
         <el-table-column
           :width="150"
@@ -296,7 +304,7 @@
         createTime:'',
         planBidTime:'',
         bidAgentCompany:'',
-        sectionNames:'',
+        sectionName:'',
         path:'',
         selectTimeTypeSaleTime:'',
         saleTimeBeginTime:"",
@@ -429,7 +437,7 @@
         saleTime:'',
         createTime:'',
         bidAgentCompany:'',
-        sectionNames:'',
+        sectionName:'',
         selectTimeTypeSaleTime:'',
         saleTimeBeginTime:"",
         saleTimeEndTime:'',
