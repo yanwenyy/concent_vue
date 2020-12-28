@@ -3,7 +3,7 @@
         <el-card class="box-card">
       <div slot="header"
            class="clearfix">
-        <span style="color: #2a2a7d"><b>档案详情</b></span>
+        <span style="color: #2a2a7d"><b>消息详情</b></span>
         <el-button
           @click="back"
           style="
@@ -29,7 +29,7 @@
     >
     <el-row>
       <el-form-item
-        label="档案名称:"
+        label="消息名称:"
         style="width: 33%"
       >
 
@@ -41,7 +41,7 @@
 
       </el-form-item>
       <el-form-item
-        label="档案类型:"
+        label="消息类型:"
         style="width: 33%
               "
       >
@@ -62,41 +62,41 @@
       </el-form-item>
     </el-row>
       <el-row>
-        <el-form-item
-          label="是否共享:"
-          style="width: 33%"
-        >
-          <el-select
-            :disabled="p.actpoint === 'look'"
-            filterable
-            placeholder="请选择"
-            size="mini"
-            v-model="detailform.isShare"
-          >
-            <el-option
-              :key="index"
-              :label="item.detailName"
-              :value="item.id"
-              v-for="(item, index) in isShare"
-            ></el-option>
-          </el-select>
-      </el-form-item>
-        <el-form-item v-show="detailform.archivesTypeName=='3'"
-                      label="填报时间:"
-                      style="width: 33%"
-        >
+<!--        <el-form-item-->
+<!--          label="是否共享:"-->
+<!--          style="width: 33%"-->
+<!--        >-->
+<!--          <el-select-->
+<!--            :disabled="p.actpoint === 'look'"-->
+<!--            filterable-->
+<!--            placeholder="请选择"-->
+<!--            size="mini"-->
+<!--            v-model="detailform.isShare"-->
+<!--          >-->
+<!--            <el-option-->
+<!--              :key="index"-->
+<!--              :label="item.detailName"-->
+<!--              :value="item.id"-->
+<!--              v-for="(item, index) in isShare"-->
+<!--            ></el-option>-->
+<!--          </el-select>-->
+<!--      </el-form-item>-->
+<!--        <el-form-item v-show="detailform.archivesTypeName=='3'"-->
+<!--                      label="填报时间:"-->
+<!--                      style="width: 33%"-->
+<!--        >-->
 
-          <el-date-picker
-            clearable
-            :readonly="p.actpoint === 'look'"
-            value-format="timestamp"
-            v-model="detailform.reportTime"
-            align="right"
-            type="date"
-            placeholder="选择日期">
-          </el-date-picker>
+<!--          <el-date-picker-->
+<!--            clearable-->
+<!--            :readonly="p.actpoint === 'look'"-->
+<!--            value-format="timestamp"-->
+<!--            v-model="detailform.reportTime"-->
+<!--            align="right"-->
+<!--            type="date"-->
+<!--            placeholder="选择日期">-->
+<!--          </el-date-picker>-->
 
-        </el-form-item>
+<!--        </el-form-item>-->
 
 </el-row>
 
@@ -212,15 +212,19 @@ export default {
       archivesType: [
         {
           id: '1',
-          detailName: '管理办法'
+          detailName: '市场动态'
         },
         {
           id: '2',
-          detailName: '其他'
+          detailName: '征信消息'
         },
         {
           id: '3',
-          detailName: '计划文件'
+          detailName: '通知公告'
+        },
+        {
+          id: '4',
+          detailName: '其他信息'
         }
       ],//联合投标选择
       myVerifySection: {}
@@ -253,12 +257,12 @@ export default {
               this.detailform.archivesTypeName = item.detailName;
             }
           })
-          if (this.detailform.archivesTypeId == '3') {
-            this.detailform.archivesInfoType = '2'
-          } else {
-            this.detailform.archivesInfoType = '1'
-          }
-
+          // if (this.detailform.archivesTypeId == '3') {
+          //   this.detailform.archivesInfoType = '4'
+          // } else {
+          //   this.detailform.archivesInfoType = '1'
+          // }
+          this.detailform.archivesInfoType = '4'
           this.$http
             .post(
               "/api/archives/ArchivesInfo/detail/save",
@@ -274,7 +278,7 @@ export default {
                 });
                 this.$refs[formName].resetFields();
                 this.$router.push({
-                  path: "./list",
+                  path: "/archives/news/list",
                 });
               }
 

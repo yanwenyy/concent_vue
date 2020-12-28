@@ -47,13 +47,13 @@
         <el-table-column
           :width="120"
           align="center"
-          label="档案类型"
+          label="消息类型"
           prop="archivesTypeName"
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           :width="300"
-          label="档案名称"
+          label="消息名称"
           prop="Name"
           show-overflow-tooltip>
           <template slot-scope="scope">
@@ -143,7 +143,7 @@
 
 <script>
 export default {
-  name: "档案列表",
+  name: "消息列表",
   data() {
     return {
       page: {current: 1, size: 10, total: 0, records: []},
@@ -301,7 +301,7 @@ export default {
       console.log(JSON.stringify(this.searchform));
       this.$http
         .post(
-          '/api/archives/ArchivesInfo/list/loadPageDataByArchives',
+          '/api/archives/ArchivesInfo/list/loadPageDataByNews',
           this.searchform
         )
         .then(res => {
