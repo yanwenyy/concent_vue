@@ -25,7 +25,13 @@
           style="background: white； height: ceil(100%-300px)"
         >
 
-            <el-form-item label="项目板块:">
+            <el-form-item label="项目板块:"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
               <el-input
                 disabled
                 filterable
@@ -56,7 +62,13 @@
               >
               </el-input>
             </el-form-item>
-            <el-form-item  label="项目名称:">
+            <el-form-item  label="项目名称:"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
               <el-input
                 disabled
                 clearable
@@ -64,13 +76,25 @@
                 v-model="detailform.topInforBO.topInfor.inforName"/>
             </el-form-item>
 
-            <el-form-item  label="建设单位:">
+            <el-form-item  label="建设单位:"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
               <el-input
                 disabled
                 v-model="detailform.topInforBO.topInfor.constructionOrg"
               />
             </el-form-item>
-            <el-form-item label="公告类型:">
+            <el-form-item label="公告类型:"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
               <el-input
                 disabled
                 placeholder="公告类型"
@@ -80,7 +104,13 @@
               </el-input>
             </el-form-item>
           <!-- 下拉 -->
-            <el-form-item label="预计招标时间:">
+            <el-form-item label="预计招标时间:"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
               <el-date-picker
                 disabled
                 filterable
@@ -101,7 +131,13 @@
               </el-input>
             </el-form-item>
             <!-- --------------------------------------------------------------- -->
-            <el-form-item label="招标人:">
+            <el-form-item label="招标人:"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
               <el-input
                 disabled
                 size="mini"
@@ -161,7 +197,13 @@
               />
             </el-form-item>
 
-            <el-form-item label="资金来源:">
+            <el-form-item label="资金来源:"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
               <el-input
                 disabled
                 placeholder="请选择"
@@ -170,7 +212,13 @@
               </el-input>
             </el-form-item>
 
-            <el-form-item label="投资额（万元）:">
+            <el-form-item label="投资额（万元）:"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
               <el-input
                 disabled
                 clearable
@@ -178,7 +226,13 @@
                 v-model="detailform.topInforBO.topInfor.investment"
               />
             </el-form-item>
-            <el-form-item  label="新兴市场(一级):">
+            <el-form-item  label="新兴市场(一级):"
+                          :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
               <el-input
                 disabled
                 placeholder="请选择"
@@ -187,7 +241,13 @@
               </el-input>
             </el-form-item>
 
-            <el-form-item  label="新兴市场(二级):">
+            <el-form-item  label="新兴市场(二级):"
+                          :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
               <el-input
                 disabled
                 placeholder="请选择"
@@ -196,7 +256,13 @@
               </el-input>
             </el-form-item>
 
-            <el-form-item  label="是否为重大项目:">
+            <el-form-item  label="是否为重大项目:"
+                          :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
               <el-input
                 disabled
                 placeholder="请选择"
@@ -206,7 +272,13 @@
               </el-input>
             </el-form-item>
 
-            <el-form-item  label="预计中标概率:">
+            <el-form-item  label="预计中标概率:"
+                          :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
               <el-input
                 disabled
                 placeholder="请选择"
@@ -216,7 +288,12 @@
             </el-form-item>
 
             <div>
-              <el-form-item   class="formItem" label="项目跟踪负责人:">
+              <el-form-item   class="formItem" label="项目跟踪负责人:"
+                            :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }">
               <el-input
                 disabled
                 placeholder="请选择"
@@ -225,7 +302,12 @@
               </el-input>
               </el-form-item>
 
-              <el-form-item  class="formItem"  label="联系电话:">
+              <el-form-item  class="formItem"  label="联系电话:"
+                            :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }">
               <el-input
                 disabled
                 placeholder="请选择"
@@ -446,7 +528,7 @@
             </el-form-item>
           </div>
           <el-row>
-            <el-form-item
+            <!-- <el-form-item
               class="neirong"
               label="附件（最大10MB）:"
               prop=""
@@ -462,11 +544,73 @@
               :on-success="handleChange"
               :on-error="handleChange"
               :on-remove="handleRemove"
-                multiple
+              multiple
+              :show-file-list="true"
+              :file-list="detailform.bidInfo_01"
               >
               <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
-            </el-form-item>
+            </el-form-item> -->
+
+            <p><span >附件（最大10MB）: </span>
+                <el-upload
+                  class="upload-demo detailUpload"
+                  :action="'/api/topInfo/CommonFiles/bidInfo/01/uploadFile'"
+                  :on-success="handleChange"
+                  :on-error="handleChange"
+                  :on-remove="handleRemove"
+                  :show-file-list="false"
+                  :file-list="detailform.bidInfo_01"
+                  :disabled="p.actpoint === 'look'"
+                  multiple
+                >
+                  <el-button size="small" type="primary">点击上传</el-button>
+                </el-upload>
+              </p>
+
+                <el-table
+                :data="detailform.bidInfo_01"
+                :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+
+                @selection-change="handleSelectionChange"
+                align="center"
+                border
+                class="clothSizeTable"
+                ref="table"
+                style="width: 100%;min-height: calc(100vh - 370px);"
+              >
+                <el-table-column
+                  :width="55"
+                  align="center"
+                  label="序号"
+                  show-overflow-tooltip
+                  type="index"
+                ></el-table-column>
+                <el-table-column align="center" :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+
+                </el-table-column>
+
+                <el-table-column align="center" :resizable="false" label="大小" prop="fileSize" show-overflow-tooltip>
+
+                </el-table-column>
+                <el-table-column align="center" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+
+                </el-table-column>
+
+                <el-table-column
+                  align="center"
+                  :resizable="false"
+                  fixed="right"
+                  label="操作"
+                  show-overflow-tooltip
+                  v-if="p.actpoint!=='look'"
+                  width="200"
+                >
+                  <template slot-scope="scope">
+                    <el-link :underline="false" @click="handleRemove1(scope.row,scope.$index)" type="warning">删除</el-link>
+                  </template>
+                </el-table-column>
+              </el-table>
           </el-row>
 
           <p style="overflow: hidden">
@@ -831,9 +975,10 @@ export default {
         topInforBO:{
           capitalName:'',
           topInfor:{}
-        }
+        },
+         bidInfo_01:[],
       },
-      fileList:[],
+
       bidInfoSection:[],
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
       yesOrNo:[
@@ -866,6 +1011,21 @@ export default {
 
   },
   methods: {
+// 上传删除
+        handleRemove1(file,index) {
+      this.$http
+        .post(
+          "/api/topInfo/CommonFiles/list/delete",
+          {ids:[file.uuid]},
+        )
+        .then((res) => {
+        if (res.data.code === 200) {
+        this.detailform.bidInfo_01.splice(index,1);
+      }
+
+    });
+      console.log(this.detailform.bidInfo_01)
+    },
      //打开标段弹框
     openBd(type,detail,index){
       this.BDCSVisible = true;
@@ -893,7 +1053,7 @@ export default {
           )
           .then((res) => {
             if (res.data.code === 200) {
-               this.fileList=fileList;
+               this.detailform.bidInfo_01=fileList;
             }
           });
         console.log(this.fileList)
@@ -906,7 +1066,7 @@ export default {
           type: 'success',
           duration: 1500,
           onClose: () => {
-          this.fileList.push(response.data.fileName);
+          this.detailform.bidInfo_01.push(response.data);
           console.log(fileList)
         }
       })
@@ -1144,6 +1304,7 @@ export default {
               bidInfoInnerOrgList: datas.bidInfoInnerOrgList,
               bidInfoSectionList: datas.bidInfoSectionList||[],
               topInforBO: this.nullToStr(datas.topInforBO),
+              bidInfo_01:datas.bidInfo_01
             }
             console.log(this.detailform.bidInfoSectionList)
           });
@@ -1329,6 +1490,9 @@ export default {
 
   .el-table--border {
     min-height: auto !important;
+  }
+  .detailUpload .el-upload-list__item{
+    width: 200px;
   }
 
 </style>
