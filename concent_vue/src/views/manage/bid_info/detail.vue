@@ -514,7 +514,7 @@
             <el-table-column
               :resizable="false"
               label="标段名称"
-              prop="bidInfoSection.sectionName"
+              prop="bidInfoSection.sectionId"
               show-overflow-tooltip
               align="center"
               :width="180"
@@ -1111,7 +1111,7 @@ export default {
               bidInfoSectionList: datas.bidInfoSectionList||[],
               topInforBO: this.nullToStr(datas.topInforBO),
             }
-            console.log(this.detailform.topInforBO)
+            console.log(this.detailform.bidInfoSectionList)
           });
 
 

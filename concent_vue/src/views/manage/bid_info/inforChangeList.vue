@@ -68,16 +68,35 @@
         <el-table-column
           :width="150"
           align="center"
-          label="工程类别"
+          label="工程类别(一级)"
+          prop="enginTypeFirstName"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>工程类别(一级)</span>
+            <div>
+              <el-input
+                style="float: left; width: 100%"
+                v-model="searchform.enginTypeFirstName"
+                size="mini"
+              />
+            </div>
+          </template>
+        </el-table-column>
+
+               <el-table-column
+          :width="150"
+          align="center"
+          label="工程类别(二级)"
           prop="enginTypeSecondName"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>工程类别</span>
+            <span>工程类别(二级)</span>
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="searchform.enginTypeFirstId"
+                v-model="searchform.enginTypeSecondName"
                 size="mini"
               />
             </div>
@@ -114,7 +133,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="searchform.noticeTypeId"
+                v-model="searchform.noticeTypeName"
                 size="mini"
               />
             </div>
@@ -132,7 +151,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchform.endTime"
                 size="mini"
               />
             </div>
@@ -153,7 +172,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchform.createUserName"
                 size="mini"
               />
             </div>
@@ -174,7 +193,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchform.tioCreateTime"
                 size="mini"
               />
             </div>
@@ -199,7 +218,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="sousuo"
+                v-model="searchform.flowStatus"
                 size="mini"
               />
             </div>
@@ -282,14 +301,22 @@
         });
 
       },
-      // 查看
-      rowshow(row) {
-        let p = {actpoint: "look", instid: row.beforeId,afterId:row.afterId};
-        this.$router.push({
-          path: "./InfoChangeDetail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
-      },
+
+    rowshow(row) {
+      var id=row.flowStatus==null?row.topInfoOrgId:row.uuid;
+      let p = { actpoint: "look", instid: id ,flowStatus:row.flowStatus};
+      this.$router.push({
+        path: "./detail/",
+        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
+      });
+    },
+      // rowshow(row) {
+      //   let p = {actpoint: "look", instid: row.beforeId,afterId:row.afterId};
+      //   this.$router.push({
+      //     path: "/api/topInfo/BidInfo/list/loadPageDataForChangeRecord",
+      //     query: {p: this.$utils.encrypt(JSON.stringify(p))},
+      //   });
+      // },
       // 删除
       remove() {
         if (this.multipleSelection.length < 1) {
@@ -318,7 +345,7 @@
         }
         let p = {actpoint: "look", instid: this.multipleSelection[0].uuid};
         this.$router.push({
-          path: "../detail/",
+          path: "/api/topInfo/BidInfo/list/loadPageDataForChangeRecord",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       }, // list通用方法开始
@@ -346,6 +373,19 @@
       handleSelectionChange(val) {
         this.multipleSelection = val;
       },
+        getMenus() {
+      this.$http
+        .post("api/base/loadcascader", { typecode: "XMLX" })
+        .then((res) => {
+          if (res.data.code === 0) {
+            this.menus = res.data.data;
+          }
+        });
+    },
+    currentMenu(selVal) {
+      let selMenuObj = this.menus.filter((item) => item.value === selVal);
+      this.searchform.menu = selMenuObj[0].label;
+    },
       //行选择的时候
       rowSelect(selection,row){
         if(selection.indexOf(row)!=-1&&row.flowStatus==null){
@@ -356,9 +396,10 @@
       },
       // 查询
       getData() {
+        console.log(11111)
         this.$http
           .post(
-            // "/api/topInfo/TopInfor/list/loadPageDataForChangeRecord",
+            "/api/topInfo/BidInfo/list/loadPageDataForChangeRecord",
             this.searchform
           )
           .then((res) => {
