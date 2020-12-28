@@ -46,22 +46,41 @@
 
               <el-form-item
                 label="合同所属类别:"
-                prop="contractInfo.bcPlateTypeId"
-                required
+                prop="contractInfo.tradeContractCategoryId"
+                :rules="{
+           required: true, message: '此项不能为空', trigger: 'blur'
+        }"
 
               >
-                <el-input
+                <el-select
+                  :disabled="p.actpoint === 'look'"
+                  filterable
                   clearable
-                  placeholder="请输入"
+                  placeholder="请选择"
                   size="mini"
-                  v-model="detailform.contractInfo.bcPlateTypeId"
-                />
+                  @change="
+                  getName(
+                    detailform.contractInfo.tradeContractCategoryId,
+                    emergingMarketTwo,
+                    'tradeContractCategory'
+                  )
+                "
+                  v-model="detailform.contractInfo.tradeContractCategoryId"
+                >
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in emergingMarketTwo"
+                  ></el-option>
+                </el-select>
               </el-form-item>
               <el-form-item
                 label="合同甲方:"
                 prop="contractInfo.bcTypeId"
-                required
-
+                :rules="{
+           required: true, message: '此项不能为空', trigger: 'blur'
+        }"
               >
                 <el-input
                   clearable
@@ -74,7 +93,9 @@
               <el-form-item
                 label="合同乙方:"
                 prop="contractInfo.bcStyleId"
-                required
+                :rules="{
+           required: true, message: '此项不能为空', trigger: 'blur'
+        }"
 
               >
                 <el-input
@@ -88,7 +109,9 @@
               <el-form-item
                 label="供货地点:"
                 prop="contractInfo.supplyPlace"
-                required
+                :rules="{
+           required: true, message: '此项不能为空', trigger: 'blur'
+        }"
 
               >
                 <el-input
@@ -101,7 +124,7 @@
               <el-form-item
                 label="合同金额(万元):"
                 prop="contractInfo.contractAmount"
-                required
+                :rules="rules.contractAmount"
 
               >
                 <el-input
@@ -115,7 +138,7 @@
               <el-form-item
                 label="预期收益率(%):"
                 prop="contractInfo.tradeExpectedProfit"
-                required
+
 
               >
                 <el-input
@@ -129,7 +152,6 @@
               <el-form-item
                 label="预期收益额:"
                 prop="contractInfo.tradeExpectedIncome"
-                required
 
               >
                 <el-input
@@ -142,7 +164,7 @@
               <el-form-item
                 label="我方份额(万元):"
                 prop="contractInfo.ourAmount"
-                required
+                :rules="rules.contractAmount"
 
               >
                 <el-input
@@ -156,7 +178,9 @@
               <el-form-item
                 label="使用资质单位:"
                 prop="contractInfo.signOrgId"
-                required
+                :rules="{
+           required: true, message: '此项不能为空', trigger: 'blur'
+        }"
 
               >
                 <el-input
@@ -170,7 +194,9 @@
               <el-form-item
                 label="系统内外:"
                 prop="contractInfo.tradeInoutSystem"
-                required
+                :rules="{
+           required: true, message: '此项不能为空', trigger: 'blur'
+        }"
 
               >
                 <el-select
@@ -187,7 +213,7 @@
               <el-form-item
                 label="增值税(万元):"
                 prop="contractInfo.valueAddedTax"
-                required
+                :rules="rules.contractAmount"
 
               >
                 <el-input
@@ -258,8 +284,9 @@
               <el-form-item
                 label="合同签订时间:"
                 prop="contractInfo.contractSignTime"
-                required
-
+                :rules="{
+           required: true, message: '此项不能为空', trigger: 'blur'
+        }"
               >
                 <el-date-picker
                   v-model="detailform.contractInfo.contractSignTime"
@@ -272,7 +299,6 @@
               <el-form-item
                 label="合同开始日期:"
                 prop="contractInfo.contractStartTime"
-                required
 
               >
                 <el-date-picker
@@ -299,7 +325,6 @@
               <el-form-item
                 label="路内路外:"
                 prop="contractInfo.tradeInoutRoad"
-                required
 
               >
                 <el-select
@@ -317,7 +342,9 @@
               <el-form-item
                 label="是否年度合同:"
                 prop="contractInfo.isYearContract"
-                required
+                :rules="{
+           required: true, message: '此项不能为空', trigger: 'blur'
+        }"
 
               >
                 <el-select
@@ -335,7 +362,9 @@
               <el-form-item
                 label="录入单位:"
                 prop="contractInfo.createOrgName"
-                required
+                :rules="{
+           required: true, message: '此项不能为空', trigger: 'blur'
+        }"
 
               >
                 <el-input
@@ -348,7 +377,9 @@
               <el-form-item
                 label="录入时间:"
                 prop="contractInfo.createTime"
-                required
+                :rules="{
+           required: true, message: '此项不能为空', trigger: 'blur'
+        }"
 
               >
                 <el-input
@@ -386,11 +417,6 @@
                   label="补充说明(最多600字):"
                   prop="contractInfo.extendExplain"
                   style="width: 33%"
-                  :rules="{
-          required: true,
-          message: '此项不能为空',
-          trigger: 'blur',
-        }"
                 >
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-input
@@ -408,11 +434,6 @@
                   label="合同主要内容(最多600字):"
                   prop="contractInfo.mainContent"
                   style="width: 33%"
-                  :rules="{
-          required: true,
-          message: '此项不能为空',
-          trigger: 'blur',
-        }"
                 >
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-input
