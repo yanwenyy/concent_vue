@@ -63,6 +63,9 @@
               />
             </div>
           </template>
+        <template slot-scope="scope">
+            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
+        </template>
         </el-table-column>
 
         <el-table-column
@@ -240,7 +243,7 @@
 </template>
 
 <script>
-  import InfoChangeSearch from '../proposal/infoChangeSearch'
+  import InfoChangeSearch from './infoChangeSearch'
   export default {
     // inject:['reload'],
     data() {
@@ -310,13 +313,13 @@
         query: { p: this.$utils.encrypt(JSON.stringify(p)) },
       });
     },
-      // rowshow(row) {
-      //   let p = {actpoint: "look", instid: row.beforeId,afterId:row.afterId};
-      //   this.$router.push({
-      //     path: "/api/topInfo/BidInfo/list/loadPageDataForChangeRecord",
-      //     query: {p: this.$utils.encrypt(JSON.stringify(p))},
-      //   });
-      // },
+      rowshow(row) {
+        let p = {actpoint: "look", instid: row.beforeId,afterId:row.afterId};
+        this.$router.push({
+          path: "./InfoChangeDetail",
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        });
+      },
       // 删除
       remove() {
         if (this.multipleSelection.length < 1) {
