@@ -274,7 +274,7 @@ export default {
                 });
                 this.$refs[formName].resetFields();
                 this.$router.push({
-                  path: "./list_archives",
+                  path: "/archives/archives/list_archives",
                 });
               }
 
