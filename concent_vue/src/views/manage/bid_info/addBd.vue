@@ -3,6 +3,7 @@
     :visible.sync="visible"
     :append-to-body="true">
     <div>
+    <p>标段信息</p>
       <el-form :inline="true" :model="detailForm" @keyup.enter.native="init()">
         <el-form-item label="标段名称:" class="list-item">
           <el-select
@@ -378,4 +379,13 @@
     width: 100%;
     box-sizing: border-box;
   }
+
+>>>form{
+  height: 500px;
+  overflow: auto;
+}
+p{
+ font-size: 18px;
+ font-weight:bolder;
+}
 </style>

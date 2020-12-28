@@ -473,6 +473,7 @@
             <span style="float: left">标段信息: </span>
             <!-- @click="add('bd')" -->
             <el-button
+            :disabled="p.actpoint === 'look'"
               @click="openBd('add')"
               size="mini"
               style="
@@ -488,6 +489,8 @@
           </p>
 
           <el-table
+
+          :key="key"
           @row-dblclick="openBd('look')"
             :data="detailform.bidInfoSectionList"
             :header-cell-style="{
@@ -735,7 +738,36 @@
               align="center"
               :width="180"
             >
+            </el-table-column>
 
+            <el-table-column
+              :resizable="false"
+              label="编标拟配合单位"
+              prop="bidInfoSection.costOwner"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="投资估算"
+              prop="bidInfoSection.costOwner"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="其中建安投资"
+              prop="bidInfoSection.costOwner"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
             </el-table-column>
 
               <el-table-column
@@ -789,6 +821,7 @@ export default {
       }
     }
     return {
+      key:0,
        BDCSVisible:false,//标段新增弹框状态
       options1: [{ label: "值", value: "111" }],
       detailform: {
@@ -848,8 +881,9 @@ export default {
       }else if(data.type=='edit'){
         this.detailform.bidInfoSectionList[data.index]=data;
       }
-
+      console.log(this.detailform.bidInfoSectionList)
       this.BDCSVisible=false;
+       this.key = this.key + 1;
     },
     handleRemove(file, fileList) {
          this.$http

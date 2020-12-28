@@ -37,6 +37,7 @@
               disabled
             ></el-input>
           </el-form-item>
+
           <el-form-item label="项目名称:">
             <el-input
               v-model="detailFormBefore.topInfor.inforName"
@@ -1329,6 +1330,7 @@
                 }"
               >
                 <el-input
+                :disabled="p.actpoint === 'look'"
                   type="textarea"
                   clearable
                   placeholder="请输入"
@@ -1366,7 +1368,7 @@
               <span style="float: left">标段信息: </span>
               <el-button
                 v-show="p.actpoint != 'look'"
-                @click="add('bd')"
+                @click="openBd('add')"
                 size="mini"
                 style="
                   float: right;
@@ -1380,7 +1382,9 @@
               </el-button>
             </p>
             <el-table
-              :data="detailform.topInfoSectionList"
+            :key="key"
+            @row-dblclick="openBd('look')"
+              :data="detailform.bidInfoSectionList"
               :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -1759,9 +1763,7 @@
         </div>
       </el-card>
       <div class="btn-group" v-show="p.actpoint != 'look'">
-        <el-button type="primary" @click="saveInfo('detailform')"
-          >保存</el-button
-        >
+        <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
         <el-button @click="submit">提交</el-button>
       </div>
       <Tree
@@ -1780,6 +1782,8 @@ export default {
   // name: "详情",
   data() {
     return {
+      key:0,
+       BDCSVisible:false,//标段新增弹框状态
       id: "",
       afterId: "",
       key: 0,
@@ -1875,6 +1879,25 @@ export default {
     // eslint-disable-next-line no-unde
   },
   methods: {
+     //打开标段弹框
+    openBd(type,detail,index){
+      this.BDCSVisible = true;
+      this.$nextTick(() => {
+        this.$refs.infoBD.init(this.detailform.topInforBO.topInfoSectionList,this.detailform.bidInfo.isBidRates,type,detail,index);
+      })
+    },
+    //获取新增的标段
+    getBdInfo(data){
+      console.log(data);
+      if(data.type=='add'){
+        this.detailform.bidInfoSectionList.push(data)
+      }else if(data.type=='edit'){
+        this.detailform.bidInfoSectionList[data.index]=data;
+      }
+      console.log(this.detailform.bidInfoSectionList)
+      this.BDCSVisible=false;
+       this.key = this.key + 1;
+    },
     //金额过滤
     getMoney(value) {
       return isMoney(value);
@@ -1898,7 +1921,7 @@ export default {
           item.path = _data.fullDetailName;
         }
       });
-      this.key = this.key + 1;
+
     },
     //选择项目地点
     selectPosition() {
@@ -1961,10 +1984,7 @@ export default {
         if (valid) {
           this.$http
             .post(
-              `/api/topInfo/TopInfor/detail/${
-                this.p.actpoint === "add"
-                  ? "saveChangeRecord"
-                  : "updateChangeRecord"
+              `/api/topInfo/Infor/detail/${this.p.actpoint === "add"? "saveChangeRecord": "updateChangeRecord"
               }`,
               JSON.stringify(this.detailform),
               { useJson: true }
@@ -2084,7 +2104,7 @@ export default {
     getAddDetail() {
       // console.log(111);
       this.$http
-        .post("/api/topInfo/TopInfor/detail/entityInfo", { topOrgId: this.id })
+        .post("/api/topInfo/BidInfo/detail/saveChangeRecord", { topOrgId: this.id })
         .then((res) => {
           var datas = res.data.data;
           this.getTwo(datas.topInfor.enginTypeFirstId);
