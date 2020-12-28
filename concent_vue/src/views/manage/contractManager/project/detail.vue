@@ -1938,6 +1938,7 @@ export default {
             contractInfo: datas.contractInfo,
             contractInfoAttachBO: datas.contractInfoAttachBO,
             contractInfoSectionList: datas.contractInfoSectionList,
+            topInfoSiteList:datas.topInfoSiteList,
             fileList1:fileList1,
             fileList2:fileList2,
             fileList3:fileList3,

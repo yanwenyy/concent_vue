@@ -3,7 +3,7 @@
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
         <el-button @click="add" type="primary" plain>新增</el-button>
-        <el-button type="primary" plain>修改</el-button>
+        <el-button @click="totop" type="primary" plain>修改</el-button>
         <el-button type="primary" plain>提交</el-button>
         <el-button type="primary" plain>删除</el-button>
       </el-button-group>
@@ -221,6 +221,19 @@ export default {
     };
   },
   methods: {
+    // 修改
+    totop() {
+      if (this.multipleSelection.length !== 1) {
+        this.$message.info("请选择一条记录进行查看操作！");
+        return false;
+      }
+      let p = {actpoint: "edit", instid: this.multipleSelection[0].uuid};
+      this.$router.push({
+        path: "./detail/",
+        query: {p: this.$utils.encrypt(JSON.stringify(p))},
+      });
+
+    },
     add() {
       let p = { actpoint: "add" };
       this.$router.push({

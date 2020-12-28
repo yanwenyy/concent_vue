@@ -57,7 +57,7 @@
             <div>
               <el-input
                 style="float: left; width: 100%"
-                v-model="searchform.inforName"
+                v-model="searchFrom.inforName"
                 size="mini"
               />
             </div>
@@ -302,19 +302,19 @@ export default {
       });
     }, // list通用方法开始
     handleSizeChange(val) {
-      this.searchform.size = val;
+      this.searchFrom.size = val;
       this.getData();
     },
     handleCurrentChange(val) {
-      this.searchform.current = val;
+      this.searchFrom.current = val;
       this.getData();
     },
     searchformSubmit() {
-      this.searchform.current = 1;
+      this.searchFrom.current = 1;
       this.getData();
     },
     searchformReset() {
-      this.$refs["searchform"].resetFields();
+      this.$refs["searchFrom"].resetFields();
     },
     // 列表选项数据
     handleSelectionChange(val) {
@@ -324,7 +324,7 @@ export default {
       this.$http
         .post(
           "/api/contract/ContractInfo/list/loadPageData",
-          this.searchform
+          this.searchFrom
         )
         .then((res) => {
         this.page = res.data.data;
