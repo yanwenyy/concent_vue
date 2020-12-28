@@ -173,13 +173,16 @@
           style="width: 33%"
         >
           <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
-          <el-upload
-            class="upload-demo"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :on-change="handleChange">
-            <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip"></div>
-          </el-upload>
+         <el-upload
+           class="upload-demo detailUpload"
+           :action="'/api/topInfo/CommonFiles/verify/02/uploadFile'"
+           :on-success="handleChange"
+           :on-error="handleChange"
+           :on-remove="handleRemove"
+           multiple
+         >
+              <el-button size="small" type="primary">点击上传</el-button>
+            </el-upload>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -260,7 +263,47 @@ export default {
           this.getData();
         })
     },
-    handleChange() {
+    selectFile()
+    {
+      this.$http
+        .post(
+          "/api/topInfo/CommonFiles/list/delete",
+          {ids:[file.response.data.uuid]},
+        )
+        .then((res) => {
+          if (res.data.code === 200) {
+            this.fileList=fileList;
+          }
+        });
+    },
+    handleRemove(file,index) {
+      this.$http
+        .post(
+          "/api/topInfo/CommonFiles/list/delete",
+          {ids:[file.uuid]},
+        )
+        .then((res) => {
+          if (res.data.code === 200) {
+            this.detailform.fileList2.splice(index,1);
+          }
+
+        });
+      console.log(this.detailform.fileList1)
+    },
+    //上传附件
+    handleChange(response, file, fileList){
+      if (response && response.code === 200) {
+        this.$message({
+          message: '上传成功',
+          type: 'success',
+          duration: 1500,
+          onClose: () => {
+            this.detailform.fileList.push(response.data);
+          }
+        })
+      } else {
+        this.$message.error(response.msg)
+      }
     },
     statusFormat(row, column) {
       //alert(row.verify.uuid)
