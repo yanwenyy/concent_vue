@@ -331,6 +331,7 @@
               align="center"
               prop="contractAmount"
               show-overflow-tooltip
+              :width="180"
             >
               <template slot-scope="scope">
                 <el-input
@@ -1227,7 +1228,16 @@
                 </el-date-picker>
               </el-form-item>
 
-              <el-form-item label="招标文件发售截止日期">
+              <el-form-item
+              class="formItem"
+              label="招标文件发售截止日期"
+              prop="detailform"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+              >
                 <el-date-picker
                   :disabled="p.actpoint === 'look'"
                   value-format="timestamp"
@@ -1394,7 +1404,7 @@
               <el-table-column
                 class="listTabel"
                 :resizable="false"
-                label="标段名"
+                label="标段名称"
                 prop="sectionName"
                 align="center"
                 show-overflow-tooltip
@@ -1417,6 +1427,7 @@
                 show-overflow-tooltip
                 align="center"
                 :width="180"
+
               >
                 <template slot-scope="scope">
                   <el-input
