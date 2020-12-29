@@ -211,7 +211,7 @@ export default {
       })
     },
     remove() {
-      console.log(JSON.stringify(this.multipleSelection[0].uuid));
+      //console.log(JSON.stringify(this.multipleSelection[0].uuid));
       // if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
       //   this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
       //   return;
@@ -223,6 +223,7 @@ export default {
         }
 
       })
+      console.log(JSON.stringify(uuids));
       this.$confirm('此操作将永久删除该资审信息, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -232,9 +233,10 @@ export default {
         //   type: 'success',
         //   message: '删除成功!'
         // });
+
         this.$http
           .post(
-            '/api/archives/list/delete',
+            '/api/archives/ArchivesInfo/list/delete',
             {ids: uuids}
           )
           .then(res => {

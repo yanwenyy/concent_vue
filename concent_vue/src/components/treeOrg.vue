@@ -11,7 +11,7 @@
       ></el-tree>
     </div>
     <div style="text-align: center">
-      <el-button @click="result()">确 认</el-button>
+      <el-button @click="resultresult()">确 认</el-button>
       <el-button @click="dialogVisible = false">取 消</el-button>
     </div>
 
