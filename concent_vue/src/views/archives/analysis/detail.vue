@@ -36,7 +36,7 @@
         <el-input
           :disabled="p.actpoint === 'look'"
           size="mini"
-          v-model="detailform.name"
+          v-model="detailform.archivesInfo.name"
         />
 
       </el-form-item>
@@ -50,7 +50,7 @@
           filterable
           placeholder="请选择"
           size="mini"
-          v-model="detailform.archivesTypeId"
+          v-model="detailform.archivesInfo.archivesTypeId"
         >
           <el-option
             :key="index"
@@ -71,7 +71,7 @@
             filterable
             placeholder="请选择"
             size="mini"
-            v-model="detailform.isShare"
+            v-model="detailform.archivesInfo.isShare"
           >
             <el-option
               :key="index"
@@ -81,7 +81,7 @@
             ></el-option>
           </el-select>
       </el-form-item>
-        <el-form-item v-show="detailform.archivesTypeName=='3'"
+        <el-form-item v-show="detailform.archivesInfo.archivesTypeName=='3'"
                       label="填报时间:"
                       style="width: 33%"
         >
@@ -90,7 +90,7 @@
             clearable
             :readonly="p.actpoint === 'look'"
             value-format="timestamp"
-            v-model="detailform.reportTime"
+            v-model="detailform.archivesInfo.reportTime"
             align="right"
             type="date"
             placeholder="选择日期">
@@ -117,7 +117,7 @@
                 clearable
                 placeholder="请输入"
                 size="mini"
-                v-model="detailform.remarks"
+                v-model="detailform.archivesInfo.remarks"
               />
             </el-form-item>
 </el-row>
@@ -151,7 +151,7 @@
         <el-input
           disabled
           size="mini"
-          v-model="detailform.createOrgName"
+          v-model="detailform.archivesInfo.createOrgName"
         />
       </el-form-item>
         <el-form-item
@@ -162,7 +162,7 @@
           <el-input
             disabled
             size="mini"
-            v-model="detailform.createUserName"
+            v-model="detailform.archivesInfo.createUserName"
           />
         </el-form-item>
 </el-row>
@@ -185,20 +185,24 @@ export default {
   data() {
     return {
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
-      detailform: {
-          uuid: '',
-          name: '',
-          archivesTypeId: '',
-          isShare: '',
-          archivesTypeName: '',
-          remarks: '',
-          submitTime: '',
-          reportTime: '',
-          archivesInfoType: '',
-          createOrgName: '',
-          createUserName: ''
+      detailform:{
+        archivesInfo:{
+            uuid: '',
+            name: '',
+            archivesTypeId: '',
+            isShare: '',
+            archivesTypeName: '',
+            remarks: '',
+            submitTime: '',
+            reportTime: '',
+            archivesInfoType: '',
+            createOrgName: '',
+            createUserName: ''
 
-      },
+        },archivesInfoOrgList:[],
+        commonFilesList:[]
+
+      } ,
       isShare: [
         {
           id: '1',
@@ -223,7 +227,9 @@ export default {
           detailName: '计划文件'
         }
       ],//联合投标选择
-      myVerifySection: {}
+      myVerifySection: {},
+      multipleSelection:[],
+      multipleSelection1:[],
     }
   },
   computed: {
@@ -249,19 +255,19 @@ export default {
           //alert(JSON.stringify(this.detailform));
           console.log(JSON.stringify(this.detailform));
           this.archivesType.forEach((item, index) => {
-            if (item.id === this.detailform.archivesTypeId) {
-              this.detailform.archivesTypeName = item.detailName;
+            if (item.id === this.detailform.archivesInfo.archivesTypeId) {
+              this.detailform.archivesInfo.archivesTypeName = item.detailName;
             }
           })
-          if (this.detailform.archivesTypeId == '3') {
-            this.detailform.archivesInfoType = '2'
+          if (this.detailform.archivesInfo.archivesTypeId == '3') {
+            this.detailform.archivesInfo.archivesInfoType = '2'
           } else {
-            this.detailform.archivesInfoType = '1'
+            this.detailform.archivesInfo.archivesInfoType = '1'
           }
 
           this.$http
             .post(
-              "/api/archives/ArchivesInfo/detail/save",
+              "/api/archives/ArchivesInfo/detail/saveBo",
               JSON.stringify(this.detailform),
               {useJson: true}
             )
@@ -324,7 +330,7 @@ export default {
       } else {
         this.$http
           .post(
-            '/api/archives/ArchivesInfo/detail/entityInfo',
+            '/api/archives/ArchivesInfo/detail/entityInfoBo',
             {"id": this.p.instid}
           )
           .then(res => {

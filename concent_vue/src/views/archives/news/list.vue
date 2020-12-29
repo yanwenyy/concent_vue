@@ -234,7 +234,7 @@ export default {
         // });
         this.$http
           .post(
-            '/api/archives/list/delete',
+            '/api/archives/ArchivesInfo/list/delete',
             {ids: uuids}
           )
           .then(res => {

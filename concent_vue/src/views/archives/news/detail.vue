@@ -36,7 +36,7 @@
         <el-input
           :disabled="p.actpoint === 'look'"
           size="mini"
-          v-model="detailform.name"
+          v-model="detailform.archivesInfo.name"
         />
 
       </el-form-item>
@@ -50,7 +50,7 @@
           filterable
           placeholder="请选择"
           size="mini"
-          v-model="detailform.archivesTypeId"
+          v-model="detailform.archivesInfo.archivesTypeId"
         >
           <el-option
             :key="index"
@@ -117,7 +117,7 @@
                 clearable
                 placeholder="请输入"
                 size="mini"
-                v-model="detailform.remarks"
+                v-model="detailform.archivesInfo.remarks"
               />
             </el-form-item>
 </el-row>
@@ -129,21 +129,104 @@
             >
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-upload
-                class="upload-demo"
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :on-change="handleChange">
-                <el-button size="small"
-                           type="primary"
-                           v-show="p.actpoint != 'look'">点击上传</el-button>
-                <div slot="tip"
-                     class="el-upload__tip"></div>
-              </el-upload>
+                class="upload-demo detailUpload"
+                :action="'/api/topInfo/CommonFiles/archives/04/uploadFile'"
+                :on-success="handleChange"
+                :on-error="handleChange"
+                :on-remove="handleRemove"
+                multiple
+              >
+              <el-button size="small" type="primary">点击上传</el-button>
+            </el-upload>
             </el-form-item>
      </el-row>
+    <div>
+      <el-table
+        :data="detailform.commonFilesList"
+        :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+        @selection-change="handleSelectionChange1"
+        align="center"
+        border
+        class="contractInfoTable"
+        ref="table"
+        style="width: 100%;height: auto;"
+      >
+                <el-table-column
+                  :width="55"
+                  align="center"
+                  label="序号"
+                  show-overflow-tooltip
+                  type="index"
+                ></el-table-column>
+                <el-table-column :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+
+                </el-table-column>
+
+                <el-table-column :resizable="false" label="大小" prop="fileSize" show-overflow-tooltip>
+
+                </el-table-column>
+                <el-table-column :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+
+                </el-table-column>
+
+                <el-table-column
+                  :resizable="false"
+                  fixed="right"
+                  label="操作"
+                  show-overflow-tooltip
+                  v-if="p.actpoint!=='look'"
+                  width="200"
+                >
+                  <template slot-scope="scope">
+                    <el-link :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
+                  </template>
+                </el-table-column>
+              </el-table>
+    </div>
+    <div>
+      <el-table
+        :data="detailform.commonFilesList"
+        :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+        @selection-change="handleSelectionChange1"
+        align="center"
+        border
+        class="contractInfoTable"
+        ref="table"
+        style="width: 100%;height: auto;"
+      >
+                <el-table-column
+                  :width="55"
+                  align="center"
+                  label="序号"
+                  show-overflow-tooltip
+                  type="index"
+                ></el-table-column>
+                <el-table-column :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+
+                </el-table-column>
+
+                <el-table-column :resizable="false" label="大小" prop="fileSize" show-overflow-tooltip>
+
+                </el-table-column>
+                <el-table-column :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+
+                </el-table-column>
+
+                <el-table-column
+                  :resizable="false"
+                  fixed="right"
+                  label="操作"
+                  show-overflow-tooltip
+                  v-if="p.actpoint!=='look'"
+                  width="200"
+                >
+                  <template slot-scope="scope">
+                    <el-link :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
+                  </template>
+                </el-table-column>
+              </el-table>
+    </div>
 <el-row>
-
-
-
       <el-form-item
         label="填报单位:"
         style="width: 33%"
@@ -151,7 +234,7 @@
         <el-input
           disabled
           size="mini"
-          v-model="detailform.createOrgName"
+          v-model="detailform.archivesInfo.createOrgName"
         />
       </el-form-item>
         <el-form-item
@@ -162,12 +245,11 @@
           <el-input
             disabled
             size="mini"
-            v-model="detailform.createUserName"
+            v-model="detailform.archivesInfo.createUserName"
           />
         </el-form-item>
 </el-row>
     </el-form>
-
     </div>
 </el-card>
     <div class="btn-group"
@@ -185,7 +267,8 @@ export default {
   data() {
     return {
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
-      detailform: {
+      detailform:{
+        archivesInfo:{
           uuid: '',
           name: '',
           archivesTypeId: '',
@@ -197,6 +280,9 @@ export default {
           archivesInfoType: '',
           createOrgName: '',
           createUserName: ''
+
+        },archivesInfoOrgList:[],
+        commonFilesList:[]
 
       },
       isShare: [
@@ -227,7 +313,9 @@ export default {
           detailName: '其他信息'
         }
       ],//联合投标选择
-      myVerifySection: {}
+      myVerifySection: {},
+      multipleSelection:[],
+      multipleSelection1:[],
     }
   },
   computed: {
@@ -253,8 +341,8 @@ export default {
           //alert(JSON.stringify(this.detailform));
           console.log(JSON.stringify(this.detailform));
           this.archivesType.forEach((item, index) => {
-            if (item.id === this.detailform.archivesTypeId) {
-              this.detailform.archivesTypeName = item.detailName;
+            if (item.id === this.detailform.archivesInfo.archivesTypeId) {
+              this.detailform.archivesInfo.archivesTypeName = item.detailName;
             }
           })
           // if (this.detailform.archivesTypeId == '3') {
@@ -262,10 +350,10 @@ export default {
           // } else {
           //   this.detailform.archivesInfoType = '1'
           // }
-          this.detailform.archivesInfoType = '4'
+          this.detailform.archivesInfo.archivesInfoType = '4'
           this.$http
             .post(
-              "/api/archives/ArchivesInfo/detail/save",
+              "/api/archives/ArchivesInfo/detail/saveBo",
               JSON.stringify(this.detailform),
               {useJson: true}
             )
@@ -318,7 +406,35 @@ export default {
         }
       });
     },
-    handleChange() {
+    //上传附件
+    handleChange(response, file, fileList){
+      if (response && response.code === 200) {
+        this.$message({
+          message: '上传成功',
+          type: 'success',
+          duration: 1500,
+          onClose: () => {
+            this.detailform.commonFilesList.push(response.data);
+            console.log( JSON.stringify(this.detailform.commonFilesList))
+          }
+        })
+      } else {
+        this.$message.error(response.msg)
+      }
+    },
+    handleRemove(file,index) {
+      this.$http
+        .post(
+          "/api/topInfo/CommonFiles/list/delete",
+          {ids:[file.uuid]},
+        )
+        .then((res) => {
+          if (res.data.code === 200) {
+            this.detailform.commonFilesList.splice(index,1);
+          }
+
+        });
+      console.log(this.detailform.commonFilesList)
     },
 
     getDetail() {
@@ -328,7 +444,7 @@ export default {
       } else {
         this.$http
           .post(
-            '/api/archives/ArchivesInfo/detail/entityInfo',
+            '/api/archives/ArchivesInfo/detail/entityInfoBo',
             {"id": this.p.instid}
           )
           .then(res => {
@@ -340,6 +456,9 @@ export default {
     },
     handleSelectionChange(val) {
       this.multipleSelection = val
+    },
+    handleSelectionChange1(val) {
+      this.multipleSelection1 = val
     }
 
   },

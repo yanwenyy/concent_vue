@@ -131,6 +131,11 @@
            align="center"
            label="附件"
            show-overflow-tooltip>
+         <template slot-scope="scope">
+          <el-button plain
+                     type="primary"
+                     @click="selectUploadTable(scope.row.uuid)">上传附件</el-button>
+        </template>
         </el-table-column>
         <el-table-column
           :width="120"
@@ -144,6 +149,11 @@
           align="center"
           label="可见范围"
           show-overflow-tooltip>
+        <template slot-scope="scope">
+          <el-button plain
+                     type="primary"
+                     @click="add">选择范围</el-button>
+        </template>
         </el-table-column>
         <el-table-column
           :width="120"
@@ -213,14 +223,21 @@
         <el-button type="primary" @click="saveResult">确 定</el-button>
       </div>
     </el-dialog>
-
+<uploadTable v-if="uploadTableStatus" ref="addOrUpdate" @getPosition="getUploadTable"></uploadTable>
+  <orgTable v-if="orgTableStatus" ref="addOrUpdate1" @getPosition="getOrgTable"></orgTable>
   </div>
 
 </template>
 
 <script>
+import orgTable from '@/components/orgTable'
+import uploadTable from '@/components/fileUploadTable'
 export default {
   name: "月度分析列表",
+  components: {
+    uploadTable,
+    orgTable
+  },
   data() {
     return {
       page: {current: 1, size: 10, total: 0, records: []},
@@ -250,6 +267,8 @@ export default {
       },
       multipleSelection: [],
       dialogAdd:false,
+      uploadTableStatus:false,
+      orgTableStatus:false,
       resultform:{
         year:''
       },
@@ -283,7 +302,6 @@ export default {
         createOrgName: '',
         createUserName: '',
         selectYear:''
-
       },
 
     }
@@ -298,6 +316,56 @@ export default {
     },
   },
   methods: {
+    selectUploadTable(val){
+      this.uploadTableStatus = true;
+      console.log(this.positionIndex);
+      this.$nextTick(() => {
+        this.$refs.addOrUpdate.init(val)
+      })
+    },
+    selectOrgTable(val){
+      this.uploadTableStatus = true;
+      console.log(this.positionIndex);
+      this.$nextTick(() => {
+        this.$refs.addOrUpdate1.init(val)
+      })
+    },
+    getOrgTable()
+    {
+      console.log(data)
+      this.orgTableStatus = false;
+
+      var resultStr = [];
+      data.forEach((item, index) => {
+
+        //var verifyOrg={ orgId:item.name,orgName:item.name};
+        //this.detailform.verifyOrgList.push(verifyOrg)
+        //resultStr+=item.name+",";
+      });
+
+      // this.detailform.verifyOrgLists=resultStr;
+      // alert(this.detailform.verifyOrgLists);
+      console.log(this.detailform.verifyOrgLists)
+      // this.key = this.key + 1;
+    },
+    getUploadTable(data) {
+
+      console.log(data)
+      this.uploadTableStatus = false;
+
+      var resultStr = [];
+      data.forEach((item, index) => {
+
+        //var verifyOrg={ orgId:item.name,orgName:item.name};
+        //this.detailform.verifyOrgList.push(verifyOrg)
+        //resultStr+=item.name+",";
+      });
+
+      // this.detailform.verifyOrgLists=resultStr;
+      // alert(this.detailform.verifyOrgLists);
+      console.log(this.detailform.verifyOrgLists)
+      // this.key = this.key + 1;
+    },
     saveResult(){
       //alert(this.resultform.year)
       // var time = Date.parse(new Date());
@@ -382,7 +450,7 @@ export default {
         // });
         this.$http
           .post(
-            '/api/archives/list/delete',
+            '/api/archives/ArchivesInfo/list/delete',
             {ids: uuids}
           )
           .then(res => {
