@@ -26,20 +26,20 @@
               }"
           >
             <el-input
-              v-model="detailFormBefore.topInfor.moduleName"
+              v-model="detailFormBefore.topInforBO.topInfor.moduleName"
               disabled
             ></el-input>
           </el-form-item>
           <el-form-item label="工程类别(一级):">
             <el-input
-              v-model="detailFormBefore.topInfor.enginTypeFirstName"
+              v-model="detailFormBefore.topInforBO.topInfor.enginTypeFirstName"
               disabled
             ></el-input>
           </el-form-item>
 
           <el-form-item label="工程类别(二级):">
             <el-input
-              v-model="detailFormBefore.topInfor.enginTypeSecondName"
+              v-model="detailFormBefore.topInforBO.topInfor.enginTypeSecondName"
               disabled
             ></el-input>
           </el-form-item>
@@ -51,7 +51,7 @@
                 trigger: 'blur',
               }">
             <el-input
-              v-model="detailFormBefore.topInfor.inforName"
+              v-model="detailFormBefore.topInforBO.topInfor.inforName"
               disabled
             ></el-input>
           </el-form-item>
@@ -63,7 +63,7 @@
                 trigger: 'blur',
               }">
             <el-input
-              v-model="detailFormBefore.topInfor.constructionOrg"
+              v-model="detailFormBefore.topInforBO.topInfor.constructionOrg"
               disabled
             ></el-input>
           </el-form-item>
@@ -74,7 +74,7 @@
                 trigger: 'blur',
               }">
             <el-input
-              v-model="detailFormBefore.topInfor.noticeTypeName"
+              v-model="detailFormBefore.topInforBO.topInfor.noticeTypeName"
               disabled
             ></el-input>
           </el-form-item>
@@ -91,7 +91,7 @@
               clearable
               type="date"
               value-format="timestamp"
-              v-model="detailFormBefore.topInfor.planBidTime"
+              v-model="detailFormBefore.topInforBO.topInfor.planBidTime"
             >
             </el-date-picker>
           </el-form-item>
@@ -100,7 +100,7 @@
 
           <el-form-item label="所属线路:">
             <el-input
-              v-model="detailFormBefore.topInfor.belongLineName"
+              v-model="detailFormBefore.topInforBO.topInfor.belongLineName"
               disabled
             ></el-input>
           </el-form-item>
@@ -112,39 +112,39 @@
                 trigger: 'blur',
               }">
             <el-input
-              v-model="detailFormBefore.topInfor.bidPerson"
+              v-model="detailFormBefore.topInforBO.topInfor.bidPerson"
               disabled
             ></el-input>
           </el-form-item>
           <el-form-item label="设计单位:">
             <el-input
-              v-model="detailFormBefore.topInfor.designOrg"
+              v-model="detailFormBefore.topInforBO.topInfor.designOrg"
               disabled
             ></el-input>
           </el-form-item>
 
           <el-form-item label="招标代理公司:">
             <el-input
-              v-model="detailFormBefore.topInfor.bidAgentCompany"
+              v-model="detailFormBefore.topInforBO.topInfor.bidAgentCompany"
               disabled
             ></el-input>
           </el-form-item>
           <el-form-item label="项目性质(一级):">
             <el-input
-              v-model="detailFormBefore.topInfor.projectModelName"
+              v-model="detailFormBefore.topInforBO.topInfor.projectModelName"
               disabled
             ></el-input>
           </el-form-item>
           <el-form-item label="项目性质(二级):">
             <el-input
-              v-model="detailFormBefore.topInfor.projectModelName"
+              v-model="detailFormBefore.topInforBO.topInfor.projectModelName"
               disabled
             ></el-input>
           </el-form-item>
 
           <el-form-item label="资审方式:">
             <el-input
-              v-model="detailFormBefore.topInfor.verifyTypeId"
+              v-model="detailFormBefore.topInforBO.topInfor.verifyTypeId"
               disabled
             ></el-input>
           </el-form-item>
@@ -156,7 +156,7 @@
                 trigger: 'blur',
               }">
             <el-input
-              v-model="detailFormBefore.capitalName"
+              v-model="detailFormBefore.topInforBO.capitalName"
               disabled
             ></el-input>
           </el-form-item>
@@ -171,7 +171,7 @@
             }"
           >
             <el-input
-              v-model="detailFormBefore.topInfor.investment"
+              v-model="detailFormBefore.topInforBO.topInfor.investment"
               disabled
             ></el-input>
           </el-form-item>
@@ -182,7 +182,7 @@
                 trigger: 'blur',
               }">
             <el-input
-              v-model="detailFormBefore.topInfor.marketFirstName"
+              v-model="detailFormBefore.topInforBO.topInfor.marketFirstName"
               disabled
             ></el-input>
           </el-form-item>
@@ -194,7 +194,7 @@
                 trigger: 'blur',
               }">
             <el-input
-              v-model="detailFormBefore.topInfor.marketSecondName"
+              v-model="detailFormBefore.topInforBO.topInfor.marketSecondName"
               disabled
             ></el-input>
           </el-form-item>
@@ -204,22 +204,18 @@
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
-              }">
-            <el-select
-              :disabled="true"
-              filterable
-              clearable
-              placeholder="请选择"
-              size="mini"
-              v-model="detailFormBefore.topInfor.isMajorProject"
-            >
-              <el-option
-                :key="index + '__'"
-                :label="item.detailName"
-                :value="item.id"
-                v-for="(item, index) in yesOrNo"
-              ></el-option>
-            </el-select>
+              }"
+              >
+
+            <el-radio  label="0"
+            v-model="detailFormBefore.topInforBO.topInfor.isMajorProject"
+            disabled
+            >是</el-radio>
+            <el-radio  label="1"
+            v-model="detailFormBefore.topInforBO.topInfor.isMajorProject"
+            disabled
+            >否</el-radio>
+
           </el-form-item>
           <el-form-item label="预计中标概率:"
            :rules="{
@@ -228,26 +224,10 @@
                 trigger: 'blur',
               }">
             <el-input
-              v-model="detailFormBefore.topInfor.bidProbName"
+              v-model="detailFormBefore.topInforBO.topInfor.bidProbName"
               disabled
             ></el-input>
           </el-form-item>
-          <!-- <el-form-item
-              label="投资额（万元）:"
-              prop="topInfor.investment"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                clearable
-                placeholder=""
-                size="mini"
-                v-model="detailform.topInfor.investment"
-              />
-            </el-form-item> -->
 
           <div>
             <el-form-item label="项目跟踪负责人:"
@@ -257,7 +237,7 @@
                 trigger: 'blur',
               }">
               <el-input
-                v-model="detailFormBefore.topInfoOrg.projectTrackResponPerson"
+                v-model="detailFormBefore.topInforBO.topInfoOrg.projectTrackResponPerson"
                 disabled
               ></el-input>
             </el-form-item>
@@ -268,7 +248,7 @@
                 trigger: 'blur',
               }">
               <el-input
-                v-model="detailFormBefore.topInfoOrg.contactMode"
+                v-model="detailFormBefore.topInforBO.topInfoOrg.contactMode"
                 disabled
               ></el-input>
             </el-form-item>
@@ -282,7 +262,7 @@
               clearable
               placeholder="请输入"
               size="mini"
-              v-model="detailFormBefore.topInfor.inforContent"
+              v-model="detailFormBefore.topInforBO.topInfor.inforContent"
             />
           </el-form-item>
           <div class="detail-class-tltle">投标信息:</div>
@@ -293,7 +273,7 @@
                 trigger: 'blur',
               }">
             <el-input
-              v-model="detailFormBefore.topInfor.bidProbName"
+              v-model="detailFormBefore.bidInfo.endTime"
               disabled
             ></el-input>
           </el-form-item>
@@ -304,19 +284,19 @@
                 trigger: 'blur',
               }">
             <el-input
-              v-model="detailFormBefore.topInfor.bidProbName"
+              v-model="detailFormBefore.bidInfo.publishTime"
               disabled
             ></el-input>
           </el-form-item>
           <el-form-item label="招标文件发售截止日期:">
             <el-input
-              v-model="detailFormBefore.topInfor.bidProbName"
+              v-model="detailFormBefore.bidInfo.saleTime"
               disabled
             ></el-input>
           </el-form-item>
           <el-form-item label="招标方式:">
             <el-input
-              v-model="detailFormBefore.topInfor.bidProbName"
+              v-model="detailFormBefore.bidInfo.bidModeName"
               disabled
             ></el-input>
           </el-form-item>
@@ -326,19 +306,70 @@
                 message: '此项不能为空',
                 trigger: 'blur',
               }">
-            <el-input
-              v-model="detailFormBefore.topInfor.bidProbName"
+            <div>
+              <el-radio  label="0"
+            v-model="detailFormBefore.bidInfo.isCoalitionBid"
+            disabled
+            style= margin-right:40px
+            >是</el-radio>
+            <el-radio  label="1"
+            v-model="detailFormBefore.bidInfo.isCoalitionBid"
+            disabled
+            >否</el-radio>
+              <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in yesOrNo"
+                ></el-option>
+                </div>
+            <!-- <el-input
+              v-model="detailFormBefore.bidInfo.isCoalitionBid"
               disabled
-            ></el-input>
+            ></el-input> -->
           </el-form-item>
+
           <el-form-item label="是否为费率招标:"
            :rules="{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
               }">
+          <div>
+            <el-radio  label="0"
+            v-model="detailFormBefore.bidInfo.isBidRates"
+            disabled
+            style= margin-right:40px
+            >是</el-radio>
+            <el-radio  label="1"
+            v-model="detailFormBefore.bidInfo.isBidRates"
+            disabled
+            >否</el-radio>
+              <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in yesOrNo"
+                ></el-option>
+          </div>
+            <!-- <el-input
+              v-model="detailFormBefore.bidInfo.isBidRates"
+              disabled
+            ></el-input> -->
+          </el-form-item>
+
+            <el-form-item label="内部联合体单位:"
+              v-if="detailform.bidInfo.isCoalitionBid==='0'">
             <el-input
-              v-model="detailFormBefore.topInfor.bidProbName"
+              v-model="detailFormBefore.bidInfoInnerOrgList.innerOrgName"
+              disabled
+            ></el-input>
+          </el-form-item>
+
+            <el-form-item label="外部联合体单位:"
+              v-if="detailform.bidInfo.isCoalitionBid==='0'">
+            <el-input
+              v-model="detailFormBefore.bidInfo.outOrg"
               disabled
             ></el-input>
           </el-form-item>
@@ -356,33 +387,78 @@
               clearable
               placeholder="请输入"
               size="mini"
-              v-model="detailFormBefore.topInfor.inforContent"
+              v-model="detailFormBefore.bidInfo.bidExplain"
             />
           </el-form-item>
 
-          <el-form-item class="neirong" label="附件:"
-           :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }">
-            <el-upload
-              class="upload-demo"
-              ref="upload"
-              disabled
-              action="https://jsonplaceholder.typicode.com/posts/"
-              :auto-upload="false"
-            >
-              <div>
-                <!-- <el-button display="block" slot="trigger" size="small" type="primary">选取文件</el-button> -->
-              </div>
-            </el-upload>
-          </el-form-item>
+          <el-row>
+            <p><span >附件（最大10MB）: </span>
+                <el-upload
+                  class="upload-demo detailUpload"
+                  :action="'/api/topInfo/CommonFiles/bidInfo/03/uploadFile'"
+                  :on-success="handleChange"
+                  :on-error="handleChange"
+                  :on-remove="handleRemove"
+                  :show-file-list="false"
+                  :file-list="detailform.bidInfo_03"
+                  disabled
+                  multiple
+                >
+                  <!-- <el-button size="small" type="primary">点击上传</el-button> -->
+                </el-upload>
+              </p>
+<el-table
+                :data="detailFormBefore.bidInfo_03"
+                :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
 
-          <p style="overflow: hidden；margin-right: 30px">
+                @selection-change="handleSelectionChange"
+                align="center"
+                border
+                class="clothSizeTable"
+                ref="table"
+                style="width: 100%;min-height: calc(100vh - 370px);"
+              >
+                <el-table-column
+                  :width="55"
+                  align="center"
+                  label="序号"
+                  show-overflow-tooltip
+                  type="index"
+                ></el-table-column>
+                <el-table-column align="center" :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+
+                </el-table-column>
+
+                <el-table-column align="center" :resizable="false" label="大小" prop="fileSize" show-overflow-tooltip>
+
+                </el-table-column>
+                <el-table-column align="center" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+
+                </el-table-column>
+
+                <el-table-column
+                  align="center"
+                  :resizable="false"
+                  fixed="right"
+                  label="操作"
+                  show-overflow-tooltip
+                  v-if="p.actpoint!=='look'"
+                  width="200"
+                >
+                  <template slot-scope="scope">
+                    <el-link :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
+                  </template>
+                </el-table-column>
+              </el-table>
+          </el-row>
+
+
+          <p style="overflow: hidden；">
             <span style="float: left">标段信息: </span>
           </p>
           <el-table
+          :key="key"
+          @row-dblclick="openBd('look')"
             :data="detailFormBefore.topInfoSectionList"
             :header-cell-style="{
               'text-align': 'center',
@@ -394,7 +470,7 @@
             border
             class="clothSizeTable"
             ref="table"
-            style="width: 98%; min-height: calc(100vh - 370px)"
+            style="width: 100%; min-height: calc(100vh - 370px)"
           >
             <el-table-column
               :width="80"
@@ -407,179 +483,133 @@
             <el-table-column
               class="listTabel"
               :resizable="false"
-              label="标段名"
-              prop="sectionName"
+              label="标段名称"
+              prop="bidInfoSection.sectionId"
               align="center"
               show-overflow-tooltip
             >
-              <template slot-scope="scope">
-                <el-input
-                  clearable
-                  :disabled="true"
-                  v-model="scope.row.sectionName"
-                ></el-input>
-                <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-              </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="风险费(万元)"
               align="center"
-              prop="contractAmount"
+              prop="bidInfoSection.riskFee"
               show-overflow-tooltip
               :width="180"
+              v-if="detailform.bidInfo.isBidRates==='1'"
             >
-              <template slot-scope="scope">
-                <el-input
-                  @input="
-                    scope.row.projectScale = getMoney(scope.row.projectScale)
-                  "
-                  clearable
-                  :disabled="true"
-                  v-model="scope.row.projectScale"
-                ></el-input>
-                <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-              </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="安全费(万元)"
-              prop="safetyFee"
+              prop="bidInfoSection.safetyCost"
               show-overflow-tooltip
               align="center"
+              v-if="detailform.bidInfo.isBidRates==='1'"
             >
-              <template slot-scope="scope">
-                <el-input
-                  clearable
-                  :disabled="true"
-                  v-model="scope.row.bidInfoSection.safetyFee"
-                ></el-input>
-              </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="投标限价(万元)"
-              prop="bidPriceLimit"
+              prop="bidInfoSection.biddingPriceLimit"
               show-overflow-tooltip
               align="center"
               :width="180"
+              v-if="detailform.bidInfo.isBidRates==='1'"
             >
-              <template slot-scope="scope">
-                <el-input
-                  clearable
-                  :disabled="p.actpoint === 'look'"
-                  v-model="scope.row.bidInfoSection.bidPriceLimit"
-                ></el-input>
-              </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="投标保证金(万元)"
-              prop="bidEarnestMoney"
+              prop="bidInfoSection.tenderSecurity"
               show-overflow-tooltip
               align="center"
               :width="180"
             >
-              <template slot-scope="scope">
-                <el-input
-                  clearable
-                  :disabled="p.actpoint === 'look'"
-                  v-model="scope.row.bidInfoSection.bidEarnestMoney"
-                ></el-input>
-              </template>
+            </el-table-column>
+
+              <el-table-column
+              :resizable="false"
+              label="投标费率(百分比)"
+              prop="bidInfoSection.tenderRate"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+              v-if="detailform.bidInfo.isBidRates==='0'"
+            >
+
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="投标价(万元)"
-              prop="bidMoney"
+              prop="bidInfoSection.bidPrice"
               show-overflow-tooltip
               align="center"
               :width="180"
+              v-if="detailform.bidInfo.isBidRates==='1'"
             >
-              <template slot-scope="scope">
-                <el-input
-                  clearable
-                  :disabled="p.actpoint === 'look'"
-                  v-model="scope.row.bidInfoSection.bidMoney"
-                ></el-input>
-              </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="开标地点"
-              prop="openBidAddress"
+              prop="bidInfoSection.openBidPlaceName"
               show-overflow-tooltip
               align="center"
               :width="180"
             >
-              <template slot-scope="scope">
-                <el-input
-                  clearable
-                  :disabled="p.actpoint === 'look'"
-                  v-model="scope.row.bidInfoSection.openBidAddress"
-                ></el-input>
-              </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="评标办法"
-              prop="evaluationBidId"
+              prop="bidInfoSection.bidEvaluationMethodName"
               show-overflow-tooltip
               align="center"
               :width="180"
             >
-              <template slot-scope="scope">
-                <el-input
-                  clearable
-                  :disabled="p.actpoint === 'look'"
-                  v-model="scope.row.bidInfoSection.evaluationBidId"
-                ></el-input>
-              </template>
+
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="开标日期"
-              prop="openBidTime"
+              prop="bidInfoSection.dateOfBidOpeningName"
               show-overflow-tooltip
               align="center"
               :width="180"
             >
-              <template slot-scope="scope">
-                <el-input
-                  value-format="timestamp"
-                  clearable
-                  :disabled="p.actpoint === 'look'"
-                  v-model="scope.row.bidInfoSection.openBidTime"
-                ></el-input>
-              </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="参与投标单位"
-              prop="openBidTime"
+              prop="bidInfoSection.participatingUnitsName"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="其他投标单位(系统内)"
               show-overflow-tooltip
               align="center"
               :width="180"
             >
               <template slot-scope="scope">
-                <el-input
-                  clearable
-                  :disabled="p.actpoint === 'look'"
-                  v-model="scope.row.bidInfoSection.openBidTime"
-                ></el-input>
+                <span v-for="(item,index) in scope.row.bidInfoSectionOrgList">{{item.orgType==1?item.orgName:''}}{{index <scope.row.bidInfoSectionOrgList.length-1? ',':''}}</span>
               </template>
+
             </el-table-column>
 
-            <el-table-column
+            <!-- <el-table-column
               :resizable="false"
               label="其他投标单位(系统内)"
               prop="openBidTime"
@@ -594,9 +624,21 @@
                   v-model="scope.row.bidInfoSection.openBidTime"
                 ></el-input>
               </template>
+            </el-table-column> -->
+
+           <el-table-column
+              :resizable="false"
+              label="其他投标单位(系统外)"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+                <template slot-scope="scope">
+                <span v-for="(item,index) in scope.row.bidInfoSectionOrgList">{{item.orgType==2?item.orgName:''}}{{index < scope.row.bidInfoSectionOrgList.length-1? ',':''}}</span>
+              </template>
             </el-table-column>
 
-            <el-table-column
+            <!-- <el-table-column
               :resizable="false"
               label="其他投标单位(系统外)"
               prop="openBidTime"
@@ -611,131 +653,115 @@
                   v-model="scope.row.bidInfoSection.openBidTime"
                 ></el-input>
               </template>
-            </el-table-column>
+            </el-table-column> -->
 
             <el-table-column
               :resizable="false"
               label="其他未列出单位"
-              prop="openBidTime"
+              prop="bidInfoSection.otherUnitsNotListed"
               show-overflow-tooltip
               align="center"
               :width="180"
             >
-              <template slot-scope="scope">
-                <el-input
-                  clearable
-                  :disabled="p.actpoint === 'look'"
-                  v-model="scope.row.bidInfoSection.openBidTime"
-                ></el-input>
-              </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="项目经理"
-              prop="projectManager"
+              prop="bidInfoSection.projectManager"
               show-overflow-tooltip
               align="center"
               :width="180"
             >
-              <template slot-scope="scope">
-                <el-input
-                  clearable
-                  :disabled="p.actpoint === 'look'"
-                  v-model="scope.row.bidInfoSection.projectManager"
-                ></el-input>
-              </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="项目副经理"
-              prop="projectDeputyManager"
+              prop="bidInfoSection.deputyProjectManager"
               show-overflow-tooltip
               align="center"
               :width="180"
             >
-              <template slot-scope="scope">
-                <el-input
-                  clearable
-                  :disabled="p.actpoint === 'look'"
-                  v-model="scope.row.bidInfoSection.projectDeputyManager"
-                ></el-input>
-              </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="技术负责人"
-              prop="technicalDirector"
+              prop="bidInfoSection.technicalDirector"
               show-overflow-tooltip
               align="center"
               :width="180"
             >
-              <template slot-scope="scope">
-                <el-input
-                  clearable
-                  :disabled="p.actpoint === 'look'"
-                  v-model="scope.row.bidInfoSection.technicalDirector"
-                ></el-input>
-              </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="安全负责人"
-              prop="securityDirector"
+              prop="bidInfoSection.personInChargeOfSafety"
               show-overflow-tooltip
               align="center"
               :width="180"
             >
-              <template slot-scope="scope">
-                <el-input
-                  clearable
-                  :disabled="p.actpoint === 'look'"
-                  v-model="scope.row.bidInfoSection.securityDirector"
-                ></el-input>
-              </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="财务负责人"
-              prop="financeDirector"
+              prop="bidInfoSection.personInChargeOfFinance"
               show-overflow-tooltip
               align="center"
               :width="180"
             >
-              <template slot-scope="scope">
-                <el-input
-                  clearable
-                  :disabled="p.actpoint === 'look'"
-                  v-model="scope.row.bidInfoSection.financeDirectorr"
-                ></el-input>
-              </template>
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="成本负责人"
-              prop="costDirector"
+              prop="bidInfoSection.costOwner"
               show-overflow-tooltip
               align="center"
               :width="180"
             >
-              <template slot-scope="scope">
-                <el-input
-                  clearable
-                  :disabled="p.actpoint === 'look'"
-                  v-model="scope.row.bidInfoSection.costDirector"
-                ></el-input>
-              </template>
             </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="编标拟配合单位"
+              prop="bidInfoSection.costOwner"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="投资估算"
+              prop="bidInfoSection.costOwner"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="其中建安投资"
+              prop="bidInfoSection.costOwner"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+            </el-table-column>
+
           </el-table>
         </el-form>
         <!-- </div> -->
       </el-card>
     </el-tab-pane>
+
+
     <el-tab-pane label="项目变更信息">
       <el-card class="box-card">
         <div slot="header" class="clearfix">
@@ -762,13 +788,12 @@
             class="gcform"
             ref="detailform"
           >
-            <el-form-item label="项目板块:" prop="topInfor.moduleId"
+            <!-- <el-form-item label="项目板块:" prop="topInforBO.topInfor.moduleName"
              :rules="{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
               }">
-              <!--@change="chg('bulletinType')"-->
               <el-select
                 :disabled="p.actpoint === 'look'"
                 clearable
@@ -777,9 +802,9 @@
                 placeholder="请选择"
                 size="mini"
                 @change="
-                  getName(detailform.topInfor.moduleId, bizCode, 'moduleName')
+                  getName(detailform.topInforBO.topInfor.moduleName, bizCode, 'moduleId')
                 "
-                v-model="detailform.topInfor.moduleId"
+                v-model="detailform.topInforBO.topInfor.moduleName"
               >
                 <el-option
                   :key="index + '-only'"
@@ -788,8 +813,24 @@
                   v-for="(item, index) in bizCode"
                 ></el-option>
               </el-select>
+            </el-form-item> -->
+
+            <el-form-item label="项目板块:"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
+              <el-input
+                disabled
+                filterable
+                size="mini"
+                v-model="detailform.topInforBO.topInfor.moduleName">
+              </el-input>
             </el-form-item>
-            <el-form-item
+
+            <!-- <el-form-item
               label="工程类别(一级):"
               prop="topInfor.enginTypeFirstId"
             >
@@ -800,7 +841,7 @@
                 placeholder="请选择"
                 @change="getTwo"
                 size="mini"
-                v-model="detailform.topInfor.enginTypeFirstId"
+                v-model="detailform.topInforBO.topInfor.enginTypeFirstId"
               >
                 <el-option
                   :key="index + '-only'"
@@ -809,9 +850,21 @@
                   v-for="(item, index) in projectDomainType"
                 ></el-option>
               </el-select>
+            </el-form-item> -->
+
+            <el-form-item label="工程类别(一级):">
+              <el-input
+                 disabled
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="detailform.topInforBO.topInfor.enginTypeFirstName"
+              >
+              </el-input>
             </el-form-item>
 
-            <el-form-item
+            <!-- <el-form-item
               label="工程类别(二级):"
               prop="topInfor.enginTypeSecondId"
             >
@@ -823,12 +876,12 @@
                 size="mini"
                 @change="
                   getName(
-                    detailform.topInfor.enginTypeSecondId,
+                    detailform.topInforBO.topInfor.enginTypeSecondId,
                     xqprojectType,
                     'enginTypeSecondName'
                   )
                 "
-                v-model="detailform.topInfor.enginTypeSecondId"
+                v-model="detailform.topInforBO.topInfor.enginTypeSecondId"
               >
                 <el-option
                   :key="index + '-only'"
@@ -837,8 +890,20 @@
                   v-for="(item, index) in xqprojectType"
                 ></el-option>
               </el-select>
-            </el-form-item>
+            </el-form-item> -->
+
             <el-form-item
+              label="工程类别(二级):"
+            >
+              <el-input
+                disabled
+                placeholder="工程类别(二级)"
+                v-model="detailform.topInforBO.topInfor.enginTypeSecondName"
+              >
+              </el-input>
+            </el-form-item>
+
+            <!-- <el-form-item
               label="项目名称:"
               prop="topInfor.inforName"
               :rules="{
@@ -851,11 +916,25 @@
                 :disabled="p.actpoint === 'look'"
                 clearable
                 size="mini"
-                v-model="detailform.topInfor.inforName"
+                v-model="detailform.topInforBO.topInfor.inforName"
               />
+            </el-form-item> -->
+
+            <el-form-item  label="项目名称:"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
+              <el-input
+                disabled
+                clearable
+                size="mini"
+                v-model="detailform.topInforBO.topInfor.inforName"/>
             </el-form-item>
 
-            <el-form-item
+            <!-- <el-form-item
               label="建设单位:"
               prop="topInfor.constructionOrg"
               :rules="{
@@ -868,10 +947,40 @@
                 :disabled="p.actpoint === 'look'"
                 clearable
                 size="mini"
-                v-model="detailform.topInfor.constructionOrg"
+                v-model="detailform.topInforBO.topInfor.constructionOrg"
+              />
+            </el-form-item> -->
+
+            <el-form-item  label="建设单位:"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
+              <el-input
+                disabled
+                v-model="detailform.topInforBO.topInfor.constructionOrg"
               />
             </el-form-item>
-            <el-form-item label="公告类型:" prop="topInfor.noticeTypeId"
+
+            <el-form-item label="公告类型:"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
+              <el-input
+                disabled
+                placeholder="公告类型"
+                v-model="detailform.topInforBO.topInfor.noticeTypeName"
+              >
+
+              </el-input>
+            </el-form-item>
+
+            <!-- <el-form-item label="公告类型:" prop="topInfor.noticeTypeId"
              :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -883,10 +992,10 @@
                 filterable
                 placeholder="请选择"
                 size="mini"
-                v-model="detailform.topInfor.noticeTypeId"
+                v-model="detailform.topInforBO.topInfor.noticeTypeId"
                 @change="
                   getName(
-                    detailform.topInfor.noticeTypeId,
+                    detailform.topInforBO.topInfor.noticeTypeId,
                     bulletinType,
                     'noticeTypeName'
                   )
@@ -899,8 +1008,26 @@
                   v-for="(item, index) in bulletinType"
                 ></el-option>
               </el-select>
+            </el-form-item> -->
+
+            <el-form-item label="预计招标时间:"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
+              <el-date-picker
+                disabled
+                filterable
+                clearable
+                type="date"
+                value-format="timestamp"
+                v-model="detailform.topInforBO.topInfor.planBidTime"
+              >
+              </el-date-picker>
             </el-form-item>
-            <!-- 下拉 -->
+<!--
             <el-form-item
               label="预计招标时间:"
               prop="topInfor.planBidTime"
@@ -916,14 +1043,21 @@
                 clearable
                 type="date"
                 value-format="timestamp"
-                v-model="detailform.topInfor.planBidTime"
+                v-model="detailform.topInforBO.topInfor.planBidTime"
               >
               </el-date-picker>
+            </el-form-item> -->
+
+            <el-form-item label="所属线路:">
+              <el-input
+                disabled
+                v-model="detailform.topInforBO.topInfor.belongLineName"
+              >
+
+              </el-input>
             </el-form-item>
 
-            <!-- 下拉 -->
-
-            <el-form-item label="所属线路:" prop="topInfor.belongLineId">
+            <!-- <el-form-item label="所属线路:" prop="topInfor.belongLineId">
               <el-select
                 :disabled="p.actpoint === 'look'"
                 filterable
@@ -932,12 +1066,12 @@
                 size="mini"
                 @change="
                   getName(
-                    detailform.topInfor.belongLineId,
+                    detailform.topInforBO.topInfor.belongLineId,
                     railwayLine,
                     'belongLineName'
                   )
                 "
-                v-model="detailform.topInfor.belongLineId"
+                v-model="detailform.topInforBO.topInfor.belongLineId"
               >
                 <el-option
                   :key="index + '-only'"
@@ -946,9 +1080,24 @@
                   v-for="(item, index) in railwayLine"
                 ></el-option>
               </el-select>
-            </el-form-item>
+            </el-form-item> -->
             <!-- --------------------------------------------------------------- -->
-            <el-form-item
+
+            <el-form-item label="招标人:"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
+              <el-input
+                disabled
+                size="mini"
+                v-model="detailform.topInforBO.topInfor.bidPerson"
+              />
+            </el-form-item>
+
+            <!-- <el-form-item
               label="招标人:"
               prop="topInfor.bidPerson"
               :rules="{
@@ -961,10 +1110,19 @@
                 :disabled="p.actpoint === 'look'"
                 clearable
                 size="mini"
-                v-model="detailform.topInfor.bidPerson"
+                v-model="detailform.topInforBO.topInfor.bidPerson"
+              />
+            </el-form-item> -->
+
+            <el-form-item label="设计单位:">
+              <el-input
+                disabled
+                size="mini"
+                v-model="detailform.topInforBO.topInfor.designOrg"
               />
             </el-form-item>
-            <el-form-item
+
+            <!-- <el-form-item
               label="设计单位:"
               prop="topInfor.designOrg"
               :rules="{
@@ -976,11 +1134,19 @@
                 clearable
                 :disabled="p.actpoint === 'look'"
                 size="mini"
-                v-model="detailform.topInfor.designOrg"
+                v-model="detailform.topInforBO.topInfor.designOrg"
+              />
+            </el-form-item> -->
+
+            <el-form-item label="招标代理公司:">
+              <el-input
+                disabled
+                size="mini"
+                v-model="detailform.topInforBO.topInfor.bidAgentCompany"
               />
             </el-form-item>
 
-            <el-form-item
+            <!-- <el-form-item
               label="招标代理公司:"
               prop="topInfor.bidAgentCompany"
               :rules="{
@@ -991,10 +1157,25 @@
               <el-input
                 :disabled="p.actpoint === 'look'"
                 size="mini"
-                v-model="detailform.topInfor.bidAgentCompany"
+                v-model="detailform.topInforBO.topInfor.bidAgentCompany"
               />
-            </el-form-item>
+            </el-form-item> -->
+
             <el-form-item
+              label="项目性质(一级):"
+            >
+              <el-input
+                 disabled
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="detailform.topInforBO.topInfor.projectNatureFirstName"
+              >
+              </el-input>
+            </el-form-item>
+
+            <!-- <el-form-item
               label="项目性质(一级):"
               prop="topInfor.projectModelId"
             >
@@ -1006,12 +1187,12 @@
                 size="mini"
                 @change="
                   getName(
-                    detailform.topInfor.projectModelId,
+                    detailform.topInforBO.topInfor.projectModelId,
                     projectModel,
                     'projectModelName'
                   )
                 "
-                v-model="detailform.topInfor.projectModelId"
+                v-model="detailform.topInforBO.topInfor.projectModelId"
               >
                 <el-option
                   :key="index + '-only'"
@@ -1020,9 +1201,23 @@
                   v-for="(item, index) in projectModel"
                 ></el-option>
               </el-select>
-            </el-form-item>
+            </el-form-item> -->
 
             <el-form-item
+              label="项目性质(二级):"
+            >
+              <el-input
+                 disabled
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="detailform.topInforBO.topInfor.projectNatureSecondName"
+              >
+              </el-input>
+            </el-form-item>
+
+            <!-- <el-form-item
               label="项目性质(二级):"
               prop="topInfor.projectModelId"
             >
@@ -1034,12 +1229,12 @@
                 size="mini"
                 @change="
                   getName(
-                    detailform.topInfor.projectModelId,
+                    detailform.topInforBO.topInfor.projectModelId,
                     projectModel,
                     'projectModelName'
                   )
                 "
-                v-model="detailform.topInfor.projectModelId"
+                v-model="detailform.topInforBO.topInfor.projectModelId"
               >
                 <el-option
                   :key="index + '-only'"
@@ -1048,9 +1243,19 @@
                   v-for="(item, index) in projectModel"
                 ></el-option>
               </el-select>
+            </el-form-item> -->
+
+            <el-form-item label="资审方式:">
+              <el-input
+                disabled
+                clearable
+                placeholder="资审方式"
+                size="mini"
+                v-model="detailform.topInforBO.topInfor.verifyTypeName"
+              />
             </el-form-item>
 
-            <el-form-item
+            <!-- <el-form-item
               label="资审方式:"
               prop="topInfor.verifyTypeId"
               :rules="{
@@ -1063,11 +1268,26 @@
                 clearable
                 placeholder=""
                 size="mini"
-                v-model="detailform.topInfor.verifyTypeId"
+                v-model="detailform.topInforBO.topInfor.verifyTypeId"
               />
+            </el-form-item> -->
+
+            <el-form-item label="资金来源:"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
+              <el-input
+                disabled
+                placeholder="请选择"
+                v-model="detailform.topInforBO.capitalName"
+              >
+              </el-input>
             </el-form-item>
 
-            <el-form-item label="资金来源:" prop="capitalId"
+            <!-- <el-form-item label="资金来源:" prop="capitalId"
              :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -1089,9 +1309,24 @@
                   v-for="(item, index) in amountSource"
                 ></el-option>
               </el-select>
+            </el-form-item> -->
+
+            <el-form-item label="投资额（万元）:"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
+              <el-input
+                disabled
+                clearable
+                placeholder="投资额（万元）:"
+                v-model="detailform.topInforBO.topInfor.investment"
+              />
             </el-form-item>
 
-            <el-form-item
+            <!-- <el-form-item
               label="投资额（万元）:"
               prop="topInfor.investment"
               :rules="{
@@ -1110,10 +1345,26 @@
                 clearable
                 placeholder=""
                 size="mini"
-                v-model="detailform.topInfor.investment"
+                v-model="detailform.topInforBO.topInfor.investment"
               />
+            </el-form-item> -->
+
+            <el-form-item  label="新兴市场(一级):"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
+              <el-input
+                disabled
+                placeholder="请选择"
+                v-model="detailform.topInforBO.topInfor.marketFirstName"
+              >
+              </el-input>
             </el-form-item>
-            <el-form-item
+
+            <!-- <el-form-item
               label="新兴市场(一级):"
               prop="topInfor.marketFirstNameId"
               :rules="{
@@ -1129,7 +1380,7 @@
                 placeholder="请选择"
                 @change="getTwoSC"
                 size="mini"
-                v-model="detailform.topInfor.marketFirstNameId"
+                v-model="detailform.topInforBO.topInfor.marketFirstNameId"
               >
                 <el-option
                   :key="index + '-only'"
@@ -1138,9 +1389,24 @@
                   v-for="(item, index) in emergingMarket"
                 ></el-option>
               </el-select>
+            </el-form-item> -->
+
+            <el-form-item  label="新兴市场(二级):"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
+              <el-input
+                disabled
+                placeholder="请选择"
+                v-model="detailform.topInforBO.topInfor.marketSecondName"
+              >
+              </el-input>
             </el-form-item>
 
-            <el-form-item
+            <!-- <el-form-item
               label="新兴市场(二级):"
               prop="topInfor.marketSecondId"
               :rules="{
@@ -1157,7 +1423,7 @@
                 size="mini"
                 @change="
                   getName(
-                    detailform.topInfor.marketSecondId,
+                    detailform.topInforBO.topInfor.marketSecondId,
                     emergingMarketTwo,
                     'marketSecondName'
                   )
@@ -1171,9 +1437,33 @@
                   v-for="(item, index) in emergingMarketTwo"
                 ></el-option>
               </el-select>
+            </el-form-item> -->
+
+            <el-form-item  label="是否为重大项目:"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            ><div>
+            <el-radio  label="0"
+            v-model="detailform.topInforBO.topInfor.bidProbName"
+            disabled
+            >是</el-radio>
+            <el-radio  label="1"
+            v-model="detailform.topInforBO.topInfor.bidProbName"
+            disabled
+            >否</el-radio>
+                              <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in yesOrNo"
+                  ></el-option>
+              </div>
             </el-form-item>
 
-            <el-form-item
+            <!-- <el-form-item
               label="是否为重大项目:"
               prop="topInfor.isMajorProject"
                :rules="{
@@ -1188,7 +1478,7 @@
                 clearable
                 placeholder="请选择"
                 size="mini"
-                v-model="detailform.topInfor.isMajorProject"
+                v-model="detailform.topInforBO.topInfor.isMajorProject"
               >
                 <el-option
                   :key="index + '-only'"
@@ -1197,8 +1487,25 @@
                   v-for="(item, index) in yesOrNo"
                 ></el-option>
               </el-select>
+            </el-form-item> -->
+
+
+            <el-form-item  label="预计中标概率:"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
+              <el-input
+                disabled
+                placeholder="请选择"
+                v-model="detailform.topInforBO.topInfor.bidProbName"
+              >
+              </el-input>
             </el-form-item>
-            <el-form-item
+
+            <!-- <el-form-item
               label="预计中标概率:"
               prop="topInfor.bidProbId"
               :rules="{
@@ -1215,7 +1522,7 @@
                 size="mini"
                 @change="
                   getName(
-                    detailform.topInfor.bidProbId,
+                    detailform.topInforBO.topInfor.bidProbId,
                     probability,
                     'bidProbName'
                   )
@@ -1229,7 +1536,9 @@
                   v-for="(item, index) in probability"
                 ></el-option>
               </el-select>
-            </el-form-item>
+            </el-form-item> -->
+
+
             <!-- <el-form-item
               label="投资额（万元）:"
               prop="topInfor.investment"
@@ -1247,7 +1556,21 @@
               />
             </el-form-item> -->
             <div>
-              <el-form-item
+              <el-form-item   class="formItem" label="项目跟踪负责人:"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }">
+              <el-input
+                disabled
+                placeholder="请选择"
+                v-model="detailform.topInforBO.topInfoOrg.projectTrackResponPerson"
+              >
+              </el-input>
+              </el-form-item>
+
+              <!-- <el-form-item
                 label="项目跟踪负责人:"
                 prop="topInfoOrg.projectTrackResponPerson"
                 :rules="{
@@ -1261,10 +1584,25 @@
                   clearable
                   placeholder=""
                   size="mini"
-                  v-model="detailform.topInfoOrg.projectTrackResponPerson"
+                  v-model="detailform.topInforBO.topInfoOrg.projectTrackResponPerson"
                 />
+              </el-form-item> -->
+
+              <el-form-item  class="formItem"  label="联系电话:"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }">
+              <el-input
+                disabled
+                placeholder="请选择"
+                v-model="detailform.topInforBO.topInfoOrg.contactMode"
+              >
+              </el-input>
               </el-form-item>
-              <el-form-item
+
+              <!-- <el-form-item
                 label="联系电话:"
                 prop="topInfoOrg.contactMode"
                 :rules="{
@@ -1278,11 +1616,27 @@
                   clearable
                   placeholder=""
                   size="mini"
-                  v-model="detailform.topInfoOrg.contactMode"
+                  v-model="detailform.topInforBO.topInfoOrg.contactMode"
                 />
-              </el-form-item>
+              </el-form-item> -->
             </div>
+
             <el-form-item
+              class="neirong"
+              label="项目内容:"
+              style="width: 100%"
+            >
+              <el-input
+                disabled
+                type="textarea"
+                clearable
+                placeholder="请输入"
+                size="mini"
+                v-model="detailform.topInforBO.topInfor.inforContent"
+              />
+            </el-form-item>
+
+            <!-- <el-form-item
               class="neirong"
               label="项目内容:"
               prop="topInfor.inforContent"
@@ -1293,16 +1647,15 @@
                 trigger: 'blur',
               }"
             >
-              <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-input
                 :disabled="p.actpoint === 'look'"
                 type="textarea"
                 clearable
                 placeholder="请输入"
                 size="mini"
-                v-model="detailform.topInfor.inforContent"
+                v-model="detailform.topInforBO.topInfor.inforContent"
               />
-            </el-form-item>
+            </el-form-item> -->
             <div>
               <div class="detail-class-tltle">投标信息:</div>
               <el-form-item
@@ -1320,7 +1673,7 @@
                   clearable
                   filterable
                   size="mini"
-                  v-model="detailform"
+                  v-model="detailFormBefore.bidInfo.endTime"
                 >
                 </el-date-picker>
               </el-form-item>
@@ -1340,7 +1693,7 @@
                   clearable
                   size="mini"
                   value-format="timestamp"
-                  v-model="detailform"
+                  v-model="detailform.bidInfo.publishTime"
                 >
                 </el-date-picker>
               </el-form-item>
@@ -1348,12 +1701,7 @@
               <el-form-item
               class="formItem"
               label="招标文件发售截止日期"
-              prop="detailform"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
+              prop="saleTime"
               >
                 <el-date-picker
                   :disabled="p.actpoint === 'look'"
@@ -1361,7 +1709,7 @@
                   filterable
                   clearable
                   size="mini"
-                  v-model="detailform"
+                  v-model="detailform.bidInfo.saleTime"
                 >
                 </el-date-picker>
               </el-form-item>
@@ -1373,7 +1721,7 @@
                   clearable
                   placeholder="请选择"
                   size="mini"
-                  v-model="detailform"
+                  v-model="detailform.bidInfo.bidModeName"
                 >
                   <el-option
                     :key="index"
@@ -1393,19 +1741,23 @@
                   trigger: 'blur',
                 }"
               >
-                <el-select
-                  :disabled="p.actpoint === 'look'"
-                  clearable
-                  size="mini"
-                  v-model="detailform"
-                >
+            <div>
+             <el-radio  label="0"
+            v-model="detailform.bidInfo.isCoalitionBid"
+            :disabled="p.actpoint === 'look'"
+            style= margin-right:40px
+            >是</el-radio>
+            <el-radio  label="1"
+            v-model="detailform.bidInfo.isCoalitionBid"
+            :disabled="p.actpoint === 'look'"
+            >否</el-radio>
                   <el-option
                     :key="index"
                     :label="item.detailName"
                     :value="item.id"
                     v-for="(item, index) in yesOrNo"
                   ></el-option>
-                </el-select>
+          </div>
               </el-form-item>
 
               <el-form-item
@@ -1417,20 +1769,55 @@
                   trigger: 'blur',
                 }"
               >
-                <el-select
-                  :disabled="p.actpoint === 'look'"
-                  clearable
-                  placeholder=""
-                  size="mini"
-                  v-model="detailform"
-                >
+            <div>
+            <el-radio  label="0"
+            v-model="detailform.bidInfo.isBidRates"
+            :disabled="p.actpoint === 'look'"
+            >是</el-radio>
+            <el-radio  label="1"
+            v-model="detailform.bidInfo.isBidRates"
+            :disabled="p.actpoint === 'look'"
+            >否</el-radio>
                   <el-option
                     :key="index"
                     :label="item.detailName"
                     :value="item.id"
                     v-for="(item, index) in yesOrNo"
                   ></el-option>
-                </el-select>
+             </div>
+              </el-form-item>
+
+              <el-form-item label="内部联合体单位:"
+              v-if="detailform.bidInfo.isCoalitionBid==='0'"
+              class="formItem1" >
+              <el-select
+                :disabled="p.actpoint === 'look'"
+                filterable
+                clearable
+                placeholder="请选择"
+                size="mini"
+                v-model="detailform.bidInfoInnerOrgList.innerOrgName"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in amountSource"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+
+            <el-form-item class="formItem1"
+            v-if="detailform.bidInfo.isCoalitionBid==='0'"
+                label="外部联合体单位:"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'"
+                  clearable
+                  placeholder=""
+                  size="mini"
+                  v-model="detailform.bidInfo.outOrg"
+                />
               </el-form-item>
             </div>
 
@@ -1451,33 +1838,71 @@
                   clearable
                   placeholder="请输入"
                   size="mini"
-                  v-model="detailform"
+                  v-model="detailform.bidInfo.bidExplain"
                 />
               </el-form-item>
             </el-row>
 
             <el-row>
-              <el-form-item
-                class="neirong"
-                label="附件（最大10MB）:"
-                prop=""
-                :rules="{
-                  required: true,
-                  message: '此项不能为空',
-                  trigger: 'blur',
-                }"
-              >
+                <p><span >附件（最大10MB）: </span>
                 <el-upload
                   class="upload-demo detailUpload"
-                  :action="'/api/topInfo/CommonFiles/bidInfo/01/uploadFile'"
+                  :action="'/api/topInfo/CommonFiles/bidInfo/03/uploadFile'"
                   :on-success="handleChange"
                   :on-error="handleChange"
                   :on-remove="handleRemove"
+                  :show-file-list="false"
+                  :file-list="detailform.bidInfo_03"
+                  :disabled="p.actpoint === 'look'"
                   multiple
                 >
                   <el-button size="small" type="primary">点击上传</el-button>
                 </el-upload>
-              </el-form-item>
+              </p>
+
+              <el-table
+                :data="detailform.bidInfo_03"
+                :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+
+                @selection-change="handleSelectionChange"
+                align="center"
+                border
+                class="clothSizeTable"
+                ref="table"
+                style="width: 100%;min-height: calc(100vh - 370px);"
+              >
+                <el-table-column
+                  :width="55"
+                  align="center"
+                  label="序号"
+                  show-overflow-tooltip
+                  type="index"
+                ></el-table-column>
+                <el-table-column align="center" :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+
+                </el-table-column>
+
+                <el-table-column align="center" :resizable="false" label="大小" prop="fileSize" show-overflow-tooltip>
+
+                </el-table-column>
+                <el-table-column align="center" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+
+                </el-table-column>
+
+                <el-table-column
+                  align="center"
+                  :resizable="false"
+                  fixed="right"
+                  label="操作"
+                  show-overflow-tooltip
+                  v-if="p.actpoint!=='look'"
+                  width="200"
+                >
+                  <template slot-scope="scope">
+                    <el-link :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
+                  </template>
+                </el-table-column>
+              </el-table>
             </el-row>
 
             <p style="overflow: hidden；margin-right: 30px">
@@ -1499,7 +1924,7 @@
             </p>
             <el-table
             :key="key"
-            @row-dblclick="openBd('look')"
+            @row-dblclick="lookBd"
               :data="detailform.bidInfoSectionList"
               :header-cell-style="{
                 'text-align': 'center',
@@ -1511,7 +1936,7 @@
               border
               class="clothSizeTable"
               ref="table"
-              style="width: 98%; min-height: calc(100vh - 370px)"
+              style="width: 100%; min-height: calc(100vh - 370px)"
             >
               <el-table-column
                 :width="80"
@@ -1525,328 +1950,243 @@
                 class="listTabel"
                 :resizable="false"
                 label="标段名称"
-                prop="sectionName"
+                prop="bidInfoSection.sectionId"
                 align="center"
                 show-overflow-tooltip
                 :width="180"
               >
-                <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.sectionName"
-                  ></el-input>
-                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                </template>
               </el-table-column>
 
               <el-table-column
                 :resizable="false"
                 label="风险费(万元)"
-                prop="riskFee"
+                prop="bidInfoSection.riskFee"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
-
+                v-if="detailform.bidInfo.isBidRates==='1'"
               >
-                <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.riskFee"
-                  ></el-input>
-                </template>
               </el-table-column>
 
               <el-table-column
                 :resizable="false"
                 label="安全费(万元)"
-                prop="safetyFee"
+                prop="bidInfoSection.safetyCost"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
+                v-if="detailform.bidInfo.isBidRates==='1'"
               >
-                <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.safetyFee"
-                  ></el-input>
-                </template>
               </el-table-column>
 
               <el-table-column
                 :resizable="false"
                 label="投标限价(万元)"
-                prop="bidPriceLimit"
+                prop="bidInfoSection.biddingPriceLimit"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
+                v-if="detailform.bidInfo.isBidRates==='1'"
               >
-                <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.bidPriceLimit"
-                  ></el-input>
-                </template>
               </el-table-column>
 
               <el-table-column
                 :resizable="false"
                 label="投标保证金(万元)"
-                prop="bidEarnestMoney"
+                prop="bidInfoSection.tenderSecurity"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
               >
-                <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.bidEarnestMoney"
-                  ></el-input>
-                </template>
               </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="投标费率(百分比)"
+              prop="bidInfoSection.tenderRate"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+               v-if="detailform.bidInfo.isBidRates==='0'"
+            >
+
+            </el-table-column>
 
               <el-table-column
                 :resizable="false"
                 label="投标价(万元)"
-                prop="bidMoney"
+                prop="bidInfoSection.bidPrice"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
+                v-if="detailform.bidInfo.isBidRates==='1'"
               >
-                <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.bidMoney"
-                  ></el-input>
-                </template>
               </el-table-column>
 
               <el-table-column
                 :resizable="false"
                 label="开标地点"
-                prop="openBidAddress"
+                prop="bidInfoSection.openBidPlaceName"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
               >
-                <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.openBidAddress"
-                  ></el-input>
-                </template>
               </el-table-column>
 
               <el-table-column
                 :resizable="false"
                 label="评标办法"
-                prop="evaluationBidId"
+                prop="bidInfoSection.bidEvaluationMethodName"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
               >
-                <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.evaluationBidId"
-                  ></el-input>
-                </template>
               </el-table-column>
 
               <el-table-column
                 :resizable="false"
                 label="开标日期"
-                prop="openBidTime"
+                prop="bidInfoSection.dateOfBidOpeningName"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
+                value-format="timestamp"
               >
-                <template slot-scope="scope">
-                  <el-input
-                    value-format="timestamp"
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.openBidTime"
-                  ></el-input>
-                </template>
               </el-table-column>
 
               <el-table-column
                 :resizable="false"
                 label="参与投标单位"
-                prop="openBidTime"
+                prop="bidInfoSection.participatingUnitsName"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
               >
-                <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.openBidTime"
-                  ></el-input>
-                </template>
               </el-table-column>
 
-              <el-table-column
-                :resizable="false"
-                label="其他投标单位(系统内)"
-                prop="openBidTime"
-                show-overflow-tooltip
-                align="center"
-                :width="180"
-              >
-                <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.openBidTime"
-                  ></el-input>
-                </template>
-              </el-table-column>
+            <el-table-column
+              :resizable="false"
+              label="其他投标单位(系统内)"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+              <template slot-scope="scope">
+                <span v-for="(item,index) in scope.row.bidInfoSectionOrgList">{{item.orgType==1?item.orgName:''}}{{index <scope.row.bidInfoSectionOrgList.length-1? ',':''}}</span>
+              </template>
+            </el-table-column>
 
-              <el-table-column
-                :resizable="false"
-                label="其他投标单位(系统外)"
-                prop="openBidTime"
-                show-overflow-tooltip
-                align="center"
-                :width="180"
-              >
+            <el-table-column
+              :resizable="false"
+              label="其他投标单位(系统外)"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
                 <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.openBidTime"
-                  ></el-input>
-                </template>
-              </el-table-column>
+                <span v-for="(item,index) in scope.row.bidInfoSectionOrgList">{{item.orgType==2?item.orgName:''}}{{index < scope.row.bidInfoSectionOrgList.length-1? ',':''}}</span>
+              </template>
+            </el-table-column>
 
               <el-table-column
                 :resizable="false"
                 label="其他未列出单位"
-                prop="openBidTime"
+                prop="bidInfoSection.otherUnitsNotListed"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
               >
-                <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.openBidTime"
-                  ></el-input>
-                </template>
               </el-table-column>
 
               <el-table-column
                 :resizable="false"
                 label="项目经理"
-                prop="projectManager"
+                prop="bidInfoSection.projectManager"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
               >
-                <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.projectManager"
-                  ></el-input>
-                </template>
               </el-table-column>
 
               <el-table-column
                 :resizable="false"
                 label="项目副经理"
-                prop="projectDeputyManager"
+                prop="bidInfoSection.deputyProjectManager"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
               >
-                <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.projectDeputyManager"
-                  ></el-input>
-                </template>
               </el-table-column>
 
               <el-table-column
                 :resizable="false"
                 label="技术负责人"
-                prop="technicalDirector"
+                prop="bidInfoSection.technicalDirector"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
               >
-                <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.technicalDirector"
-                  ></el-input>
-                </template>
               </el-table-column>
 
               <el-table-column
                 :resizable="false"
                 label="安全负责人"
-                prop="securityDirector"
+                prop="bidInfoSection.personInChargeOfSafety"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
               >
-                <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.securityDirector"
-                  ></el-input>
-                </template>
               </el-table-column>
 
               <el-table-column
                 :resizable="false"
                 label="财务负责人"
-                prop="financeDirector"
+                prop="bidInfoSection.personInChargeOfFinance"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
               >
-                <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.financeDirectorr"
-                  ></el-input>
-                </template>
               </el-table-column>
 
               <el-table-column
                 :resizable="false"
                 label="成本负责人"
-                prop="costDirector"
+                prop="bidInfoSection.costOwner"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
               >
-                <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.bidInfoSection.costDirector"
-                  ></el-input>
-                </template>
               </el-table-column>
+
+<el-table-column
+              :resizable="false"
+              label="编标拟配合单位"
+              prop="bidInfoSection.costOwner"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="投资估算"
+              prop="bidInfoSection.costOwner"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="其中建安投资"
+              prop="bidInfoSection.costOwner"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+            </el-table-column>
 
               <el-table-column
                 v-show="!p.actpoint === 'look'"
@@ -1861,16 +2201,13 @@
                 <template slot-scope="scope">
                   <el-link
                     :underline="false"
-                    @click="
-                      del(
-                        scope.$index,
-                        scope.row,
-                        detailform.topInfoSectionList,
-                        'bd'
-                      )
-                    "
-                    type="warning"
-                    >删除
+                    @click="del(scope.$index,scope.row,detailform.bidInfoSectionList,'bd')"
+                    type="warning">删除
+                  </el-link>
+                    <el-link
+                    :underline="false"
+                    @click="openBd('edit',scope.row,scope.$index)"
+                    type="warning">修改
                   </el-link>
                 </template>
               </el-table-column>
@@ -1882,16 +2219,13 @@
         <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
         <el-button @click="submit">提交</el-button>
       </div>
-      <Tree
-        v-if="treeStatas"
-        ref="addOrUpdate"
-        @getPosition="getPositionTree"
-      ></Tree>
+      <add-bd  v-if="BDCSVisible" ref="infoBD" @refreshBD="getBdInfo"></add-bd>
     </el-tab-pane>
   </el-tabs>
 </template>
 
 <script>
+import AddBd from './addBd'
 import Tree from "@/components/tree";
 import { isMoney } from "@/utils/validate";
 export default {
@@ -1901,6 +2235,7 @@ export default {
       key:0,
        BDCSVisible:false,//标段新增弹框状态
       id: "",
+      uuid:'',
       afterId: "",
       key: 0,
       treeStatas: false,
@@ -1909,16 +2244,25 @@ export default {
       options2: [],
       options: [],
       detailform: {
-        topInfor: {},
-        topInfoOrg: {},
-        topInfoSiteList: [],
-        topInfoSectionList: [],
+        bidInfo: {},
+        bidInfoInnerOrgList:[],
+        bidInfoSectionList: [],
+        bidInfo_03: [],
+        topInforBO:{
+          topInfor:{},
+          topInfoOrg:{},
+        }
       },
       detailFormBefore: {
-        topInfor: {},
-        topInfoOrg: {},
-        topInfoSiteList: [],
-        topInfoSectionList: [],
+        bidInfo: {},
+        bidInfoInnerOrgList:[],
+        bidInfoSectionList: [],
+        bidInfo_03: [],
+        topInforBO:{
+          topInfor:{},
+          topInfoOrg:{},
+
+        }
       },
       detailformrules: {},
       xqprojectType: [], //工程类别二级
@@ -1939,6 +2283,7 @@ export default {
   },
   components: {
     Tree,
+    AddBd
   },
   computed: {
     projectDomainType() {
@@ -1973,10 +2318,14 @@ export default {
     railwayLine() {
       return this.$store.state.railwayLine;
     },
+    bidType(){
+      return this.$store.state.bidType;
+    }
   },
   mounted() {
     // this.$store.commit("setCategory", 'projectDomainType');
     (this.id = this.p.instid), (this.afterId = this.p.afterId);
+    this.uuid=this.p.uuid;
     if (this.p.actpoint === "edit" || this.p.actpoint === "look") {
       this.getDetail();
     }
@@ -1995,11 +2344,50 @@ export default {
     // eslint-disable-next-line no-unde
   },
   methods: {
+    //上传附件
+    handleChange(response, file, fileList){
+      if (response && response.code === 200) {
+        this.$message({
+          message: '上传成功',
+          type: 'success',
+          duration: 1500,
+          onClose: () => {
+          this.detailform.bidInfo_03.push(response.data);
+          console.log(fileList)
+        }
+      })
+      } else {
+        this.$message.error(response.msg)
+      }
+    },
+
+// 上传附件的删除
+        handleRemove(file,index) {
+      this.$http
+        .post(
+          "/api/topInfo/CommonFiles/list/delete",
+          {ids:[file.uuid]},
+        )
+        .then((res) => {
+        if (res.data.code === 200) {
+        this.detailform.bidInfo_03.splice(index,1);
+      }
+
+    });
+    },
+
      //打开标段弹框
     openBd(type,detail,index){
       this.BDCSVisible = true;
       this.$nextTick(() => {
         this.$refs.infoBD.init(this.detailform.topInforBO.topInfoSectionList,this.detailform.bidInfo.isBidRates,type,detail,index);
+      })
+    },
+    //查看标段弹框
+    lookBd(row){
+       this.BDCSVisible = true;
+      this.$nextTick(() => {
+        this.$refs.infoBD.init(this.detailform.topInforBO.topInfoSectionList,this.detailform.bidInfo.isBidRates,'look',row);
       })
     },
     //获取新增的标段
@@ -2014,6 +2402,20 @@ export default {
       this.BDCSVisible=false;
        this.key = this.key + 1;
     },
+
+        handleRemove(file, fileList) {
+         this.$http
+          .post(
+            "/api/topInfo/CommonFiles/list/delete",
+            {ids:[file.response.data.uuid]},
+          )
+          .then((res) => {
+            if (res.data.code === 200) {
+               this.detailform.bidInfo_03=fileList;
+            }
+          });
+        console.log(this.fileList)
+      },
     //金额过滤
     getMoney(value) {
       return isMoney(value);
@@ -2100,7 +2502,7 @@ export default {
         if (valid) {
           this.$http
             .post(
-              `/api/topInfo/Infor/detail/${this.p.actpoint === "add"? "saveChangeRecord": "updateChangeRecord"
+              `/api/topInfo/BidInfo/detail/${this.p.actpoint === "add"? "saveChangeRecord": "updateChangeRecord"
               }`,
               JSON.stringify(this.detailform),
               { useJson: true }
@@ -2112,9 +2514,7 @@ export default {
                   type: "success",
                 });
                 this.$refs[formName].resetFields();
-                this.$router.push({
-                  path: "/manage/bid_info/infoChangeList",
-                });
+                this.$router.back();
               }
             });
         } else {
@@ -2132,6 +2532,8 @@ export default {
         path: "/manage/bid_info/inforChangeList",
       });
     },
+
+    // 删除
     del(index, item, list, type) {
       console.log(index);
       if (item.uuid && type == "bd") {
@@ -2142,7 +2544,7 @@ export default {
         })
           .then(() => {
             this.$http
-              .post("/api/topInfo/TopInfoSection/list/delete", {
+              .post("/api/topInfo/BidInfo/list/delete", {
                 ids: [item.uuid],
               })
               .then((res) => {
@@ -2180,7 +2582,7 @@ export default {
     // 修改的时候详情
     getDetail() {
       this.$http
-        .post("/api/topInfo/TopInfor/detail/entityInfoByBeforeAndAfterId", {
+        .post("/api/topInfo/BidInfo/detail/entityInfoByBeforeAndAfterId", {
           beforeId: this.id,
           afterId: this.afterId,
         })
@@ -2220,19 +2622,15 @@ export default {
     getAddDetail() {
       // console.log(111);
       this.$http
-        .post("/api/topInfo/BidInfo/detail/saveChangeRecord", { topOrgId: this.id })
+        .post("/api/topInfo/BidInfo/detail/entityInfo", { topInfoOrgId: this.id ,id:this.uuid})
         .then((res) => {
           var datas = res.data.data;
-          this.getTwo(datas.topInfor.enginTypeFirstId);
-          this.getTwoSC(datas.topInfor.marketFirstNameId);
-          datas.topInforCapitalList.forEach((item) => {
-            this.value1.push(item.capitalId);
-          });
           this.detailform = {
-            topInfor: datas.topInfor,
-            topInfoOrg: datas.topInfoOrg,
-            topInfoSiteList: datas.topInfoSiteList,
-            topInfoSectionList: datas.topInfoSectionList,
+            bidInfo: datas.bidInfo,
+            bidInfoInnerOrgList: datas.bidInfoInnerOrgList,
+            bidInfoSectionList: datas.bidInfoSectionList,
+            bidInfo_03: datas.bidInfo_03,
+            topInforBO:datas.topInforBO
           };
           for (var i in this.detailform) {
             this.detailFormBefore[i] = JSON.parse(
@@ -2240,6 +2638,7 @@ export default {
             );
           }
           this.detailFormBefore.capitalName = datas.capitalName;
+          // console.log(this.detailFormBefore.topInforBO.topInfor.moduleName)
           // this.detailFormBefore={
           //   capitalName:datas.capitalName,
           //   topInfor: datas.topInfor,
