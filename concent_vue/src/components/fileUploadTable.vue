@@ -8,7 +8,7 @@
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-upload
                 class="upload-demo detailUpload"
-                :action="'/api/topInfo/CommonFiles/archives/05/uploadFile'"
+                :action="UploadUrl()"
                 :on-success="handleChange"
                 :on-error="handleChange"
                 :on-remove="handleRemove"
@@ -128,13 +128,16 @@
       //console.log(datas)
     },
     methods: {
+      UploadUrl:function(){
+        return '/api/topInfo/CommonFiles/'+this.selectbusinessId+'/archives/05/uploadFileByBusinessId';
+      },
       handleSizeChange(val) {
         this.searchform.size = val
-        this.getData()
+        this.loadData()
       },
       handleCurrentChange(val) {
         this.searchform.current = val
-        this.getData()
+        this.loadData()
       },
       //上传附件
       handleChange(response, file, fileList) {
@@ -144,8 +147,8 @@
             type: 'success',
             duration: 1500,
             onClose: () => {
+              console.log(JSON.stringify(response.data))
               this.detailform.commonFilesList.push(response.data);
-              console.log(JSON.stringify(this.detailform.commonFilesList))
             }
           })
         } else {
@@ -169,6 +172,7 @@
       init(val) {
         this.selectbusinessId = val;
         this.dialogVisible = true;
+        this.loadData();
       },
       handleCheckChange(data, checked, indeterminate) {
 
@@ -193,7 +197,7 @@
         this.resultData = [];
       },
       loadData() {
-        alert(this.selectbusinessId);
+        //alert(this.selectbusinessId);
         this.searchform.businessId = this.selectbusinessId;
         this.$http
           .post(
@@ -210,5 +214,7 @@
 </script>
 
 <style scoped>
-
+.el-upload-list{
+  display: none;
+}
 </style>

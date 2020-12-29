@@ -152,7 +152,7 @@
         <template slot-scope="scope">
           <el-button plain
                      type="primary"
-                     @click="add">选择范围</el-button>
+                     @click="selectOrgTable(scope.row.uuid)">选择范围</el-button>
         </template>
         </el-table-column>
         <el-table-column
@@ -217,6 +217,40 @@
           ></el-option>
         </el-select>
       </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogAdd = false">取 消</el-button>
+        <el-button type="primary" @click="saveResult">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog title="修改填报内容" :visible.sync="dialogEdit"
+               width="30%">
+      <el-form :model="editform">
+       <el-form-item
+         prop="year">
+          <el-radio v-model="isShare" label="1">共享</el-radio>
+          <el-radio v-model="isShare" label="0">不共享</el-radio>
+       </el-form-item>
+          <el-form-item
+            class="neirong"
+            label="备注:"
+            prop="remarks"
+            :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+          >
+              <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
+              <el-input
+                :readonly="p.actpoint === 'look'"
+                clearable
+                placeholder="请输入"
+                size="mini"
+                v-model="searchform.archivesInfo.remarks"
+              />
+            </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogAdd = false">取 消</el-button>
@@ -318,14 +352,14 @@ export default {
   methods: {
     selectUploadTable(val){
       this.uploadTableStatus = true;
-      console.log(this.positionIndex);
+      console.log(val);
       this.$nextTick(() => {
         this.$refs.addOrUpdate.init(val)
       })
     },
     selectOrgTable(val){
-      this.uploadTableStatus = true;
-      console.log(this.positionIndex);
+      this.orgTableStatus = true;
+      //console.log(this.positionIndex);
       this.$nextTick(() => {
         this.$refs.addOrUpdate1.init(val)
       })
@@ -363,13 +397,13 @@ export default {
 
       // this.detailform.verifyOrgLists=resultStr;
       // alert(this.detailform.verifyOrgLists);
-      console.log(this.detailform.verifyOrgLists)
+      //console.log(this.detailform.verifyOrgLists)
       // this.key = this.key + 1;
     },
     saveResult(){
       //alert(this.resultform.year)
       // var time = Date.parse(new Date());
-        this.detailformarchivesTypeId='0',
+        this.detailform.archivesTypeId='0',
         this.detailform.isShare='0',
         this.detailform.archivesTypeName='0',
         this.detailform.remarks='',

@@ -469,6 +469,9 @@ export default {
 }
 </script>
 <style lang="scss">
+.el-upload-list{
+  display: none;
+}
 .btn-group {
   text-align: center;
   margin-top: 20px;

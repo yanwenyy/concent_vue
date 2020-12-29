@@ -11,6 +11,7 @@
         :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
         @selection-change="handleSelectionChange"
         align="center"
+        height="400"
         border
         class="contractInfoTable"
         ref="table"
@@ -31,6 +32,7 @@
                 </el-table-column>
 
                 <el-table-column :resizable="false"
+                                 align="center"
                                  label="是否可见"
                                  prop="isDisplay"
                                  show-overflow-tooltip>
@@ -38,6 +40,7 @@
                 </el-table-column>
 
                 <el-table-column
+                  align="center"
                   :resizable="false"
                   fixed="right"
                   label="操作"
@@ -46,7 +49,7 @@
                 >
                   <template slot-scope="scope">
                     <el-button :underline="false"
-                             @click="handleRemove(scope.row,scope.$index)"
+                             @click="handleChange(scope.row,scope.$index)"
                              type="warning">可见切换</el-button>
                   </template>
                 </el-table-column>
@@ -76,14 +79,10 @@
         page: {current: 1, size: 10, total: 0, records: []},
         searchform:{
           uuid:'',
-          businessId:'',
-          businessType:'',
-          businessCode:'',
-          fileName:'',
-          fileType:'',
-          fileSize:'',
-          filePath:'',
-          remarks:''
+          archivesInfoId:'',
+          orgId:'',
+          orgName:'',
+          isDisplay:''
         },
         detailform:{
           commonFilesList:[
@@ -424,7 +423,7 @@
             }
           ]
         },
-        selectbusinessId:"",
+        selectId:"",
 
 
         dialogVisible: true,
@@ -453,39 +452,44 @@
         this.searchform.current = val
         this.getData()
       },
-      //上传附件
-      handleChange(response, file, fileList) {
-        if (response && response.code === 200) {
-          this.$message({
-            message: '上传成功',
-            type: 'success',
-            duration: 1500,
-            onClose: () => {
-              this.detailform.commonFilesList.push(response.data);
-              console.log(JSON.stringify(this.detailform.commonFilesList))
-            }
-          })
-        } else {
-          this.$message.error(response.msg)
+
+      handleChange(file, index) {
+        var isDisplay ='0';
+        var result = "可见";
+        if(file.isDisplay==='可见')
+        {
+          isDisplay = '0';
+          result="不可见";
+        }else
+        {
+          isDisplay = '1';
+          result="可见";
         }
-      },
-      handleRemove(file, index) {
+        var archivesInfoOrg = {
+          archivesInfoId:this.selectId,
+          orgId:file.orgId,
+          orgName:file.orgName,
+          isDisplay:isDisplay
+        }
         this.$http
           .post(
-            "/api/topInfo/CommonFiles/list/delete",
-            {ids: [file.uuid]},
+            "/api/archives/ArchivesInfoOrg/detail/save",
+            JSON.stringify(archivesInfoOrg),{useJson: true}
           )
           .then((res) => {
             if (res.data.code === 200) {
-              this.detailform.commonFilesList.splice(index, 1);
+              //this.detailform.commonFilesList.splice(index, 1);
+
+              this.detailform.commonFilesList[index].isDisplay = result;
             }
 
           });
-        console.log(this.detailform.commonFilesList)
+        //console.log(this.detailform.commonFilesList)
       },
       init(val) {
-        this.selectbusinessId = val;
+        this.selectId = val;
         this.dialogVisible = true;
+        this.loadData();
       },
       handleCheckChange(data, checked, indeterminate) {
 
@@ -510,16 +514,23 @@
         this.resultData = [];
       },
       loadData() {
-        alert(this.selectbusinessId);
-        this.searchform.businessId = this.selectbusinessId;
+        //alert(this.selectId);
+        this.searchform.archivesInfoId = this.selectId;
         this.$http
           .post(
-            '/api/topInfo/CommonFiles/list/loadPageData',
-            this.searchform
+            '/api/archives/ArchivesInfoOrg/detail/entityInfoByarchivesInfoId',
+            {id:this.selectId}
           )
           .then(res => {
-            this.page = res.data.data
+            this.multipleSelection = res.data.data
             console.log(JSON.stringify(this.page));
+            if(this.multipleSelection.length>0)
+            {
+              this.multipleSelection.forEach((item, index) => {
+
+              });
+            }
+
           })
       }
     }
