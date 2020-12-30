@@ -1334,7 +1334,7 @@ export default {
   }
 
   .el-card__body {
-    // padding: 0 100px;
+    //
     // height: 400px;
     // border: 1px solid black;
     // height: 200px;

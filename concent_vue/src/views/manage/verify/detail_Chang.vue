@@ -1225,7 +1225,7 @@ export default {
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .btn-group{
   text-align: center;
   margin-top: 20px;
@@ -1385,7 +1385,7 @@ export default {
 }
 
 .el-card__body {
-  padding: 0 100px;
+
 }
 
 .el-input--mini .el-input__inner {

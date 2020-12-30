@@ -3,6 +3,7 @@
     :destroy-on-close="true"
     title="附件列表"
     :visible.sync="dialogVisible"
+    @close="result"
   >
 
     <div>
@@ -56,17 +57,7 @@
               </el-table>
 
     </div>
-    <div>
-<el-pagination
-  :current-page="page.current"
-  :page-size="page.size"
-  :page-sizes="[10, 50, 100]"
-  :total="page.total"
-  @current-change="handleCurrentChange"
-  @size-change="handleSizeChange"
-  layout="total, sizes, prev, pager, next, jumper"
-></el-pagination>
-    </div>
+
   </el-dialog>
 </template>
 
@@ -460,30 +451,52 @@
         {
           isDisplay = '0';
           result="不可见";
+          var archivesInfoOrg = {
+            archivesInfoId:this.selectId,
+            orgId:file.orgId,
+            orgName:file.orgName,
+            isDisplay:isDisplay
+          }
+          this.$http
+            .post(
+              "/api/archives/ArchivesInfoOrg/detail/save",
+              JSON.stringify(archivesInfoOrg),{useJson: true}
+            )
+            .then((res) => {
+              if (res.data.code === 200) {
+                //this.detailform.commonFilesList.splice(index, 1);
+
+                this.detailform.commonFilesList[index].isDisplay = result;
+              }
+
+            });
         }else
         {
           isDisplay = '1';
           result="可见";
-        }
-        var archivesInfoOrg = {
-          archivesInfoId:this.selectId,
-          orgId:file.orgId,
-          orgName:file.orgName,
-          isDisplay:isDisplay
-        }
-        this.$http
-          .post(
-            "/api/archives/ArchivesInfoOrg/detail/save",
-            JSON.stringify(archivesInfoOrg),{useJson: true}
-          )
-          .then((res) => {
-            if (res.data.code === 200) {
-              //this.detailform.commonFilesList.splice(index, 1);
-
-              this.detailform.commonFilesList[index].isDisplay = result;
-            }
-
+          let uuids = []
+          this.multipleSelection.forEach((itemy, indexy) => {
+              if(itemy.orgId===file.orgId)
+              {
+                uuids.push(itemy.uuid);
+              }
           });
+
+          console.log(uuids)
+
+          this.$http
+            .post(
+              "/api/archives/ArchivesInfoOrg/list/delete",
+              {ids: uuids}
+            )
+            .then((res) => {
+              if (res.data.code === 200) {
+                this.loadData();
+              }
+
+            });
+        }
+
         //console.log(this.detailform.commonFilesList)
       },
       init(val) {
@@ -523,10 +536,20 @@
           )
           .then(res => {
             this.multipleSelection = res.data.data
-            console.log(JSON.stringify(this.page));
+            console.log(JSON.stringify(this.multipleSelection));
             if(this.multipleSelection.length>0)
             {
-              this.multipleSelection.forEach((item, index) => {
+              this.detailform.commonFilesList.forEach((item, index) => {
+
+                this.multipleSelection.forEach((itemy, indexy) => {
+                    if(item.orgId===itemy.orgId)
+                    {
+                      if(itemy.isDisplay==="0")
+                      {
+                        item.isDisplay="不可见";
+                      }
+                    }
+                });
 
               });
             }
