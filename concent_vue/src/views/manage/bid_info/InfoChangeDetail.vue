@@ -15,7 +15,7 @@
             >返回</el-button
           >
         </div>
-        <div class="detail-class-tltle">项目前期信息:</div>
+        <el-divider content-position="left">项目前期信息</el-divider>
         <!--<div class="detailBox">-->
         <el-form :inline="false" :model="detailFormBefore" class="gcform">
           <el-form-item label="项目板块:"
@@ -36,7 +36,6 @@
               disabled
             ></el-input>
           </el-form-item>
-
           <el-form-item label="工程类别(二级):">
             <el-input
               v-model="detailFormBefore.topInforBO.topInfor.enginTypeSecondName"
@@ -260,7 +259,7 @@
               v-model="detailFormBefore.topInforBO.topInfor.inforContent"
             />
           </el-form-item>
-          <div class="detail-class-tltle">投标信息:</div>
+<el-divider content-position="left">投标信息</el-divider>
           <el-form-item label="投标截止日期:"
            :rules="{
                 required: true,
@@ -763,7 +762,7 @@
         </div>
 
         <div style="overflow: scroll; max-height: calc(100vh - 420px)">
-          <div class="detail-class-tltle">项目前期信息:</div>
+          <el-divider content-position="left">项目前期信息</el-divider>
           <el-form
             :inline="false"
             :model="detailform"
@@ -1184,7 +1183,7 @@
 
 
             <div>
-              <div class="detail-class-tltle">投标信息:</div>
+              <el-divider content-position="left">投标信息</el-divider>
               <el-form-item
                 label="投标截止日期:"
                 prop="bidInfo.endTime"

@@ -16,7 +16,7 @@
       </div>
 
       <div class="detailBox">
-      <div class="detail-class-tltle">项目前期信息:</div>
+        <el-divider content-position="left">项目前期信息</el-divider>
         <el-form
           :inline="false"
           :model="detailform"
@@ -341,7 +341,7 @@
             </el-form-item>
             </div>
 <div>
-  <div class="detail-class-tltle">投标信息:</div>
+  <el-divider content-position="left">投标信息</el-divider>
             <el-form-item
             class="formItem"
               label="投标截止日期:"
@@ -603,7 +603,6 @@
               @click="openBd('add')"
               size="mini"
               style="
-                float: right;
                 width: 70px;
                 height: 32px;
                 background: #5c8bfa;

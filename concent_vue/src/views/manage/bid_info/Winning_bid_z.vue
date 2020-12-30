@@ -2,7 +2,7 @@
   <div>
     <div style="width: 100%;overflow: hidden;">
       <el-button-group style="float: left">
-        <el-button @click="setZB" plain type="primary" :disabled="flowStatus==1">中标结果登记</el-button>
+        <el-button @click="setZB" plain type="primary" :disabled="isWinBid==1">中标结果登记</el-button>
       </el-button-group>
     </div>
 
@@ -44,22 +44,22 @@
           :width="150"
           align="center"
           label="是否中标"
-          prop="flowStatus"
+          prop="isWinBid"
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            <span> {{scope.row.flowStatus==1?'中标':scope.row.flowStatus==2?'废标':scope.row.flowStatus==3?'流标':scope.row.flowStatus==4?'未中标':'待操作'}}</span>
+            <span> {{scope.row.isWinBid==1?'中标':scope.row.isWinBid==2?'废标':scope.row.isWinBid==3?'流标':scope.row.isWinBid==4?'未中标':'待操作'}}</span>
           </template>
         </el-table-column>
 
         <el-table-column
           :width="500"
           label="标段名称"
-          prop="sectionName"
+          prop="sectionId"
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
+            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.sectionId}}</span>
           </template>
         </el-table-column>
 
@@ -83,11 +83,11 @@
         >
         </el-table-column>
 
-                <el-table-column
+        <el-table-column
           :width="150"
           align="center"
           label="中标价"
-          prop="enginTypeFirstName"
+          prop="winBidPrice"
           show-overflow-tooltip
         >
         </el-table-column>
@@ -194,7 +194,7 @@
   <el-dialog title="中标登记结果" :visible.sync="dialogFormVisible" margin="0 auto" width="30%">
     <el-form>
         <el-form-item label="是否中标" :label-width="formLabelWidth">
-      <el-select v-model="zbForm.flowStatus" placeholder="请选择">
+      <el-select v-model="zbForm.isWinBid" placeholder="请选择">
         <el-option label="中标" value="1"></el-option>
         <el-option label="废标" value="2"></el-option>
         <el-option label="流标" value="3"></el-option>
@@ -304,7 +304,7 @@ export default {
 
     return {
       key:0,
-      flowStatus:'',
+      isWinBid:'',
       dialogFormVisible: false,
       infoCSVisible:false,
       detailform: {
@@ -402,9 +402,9 @@ export default {
       //行选择的时候
       rowSelect(selection, row){
         if(selection.indexOf(row)!=-1){
-          this.flowStatus=row.flowStatus;
+          this.isWinBid=row.isWinBid;
         }else{
-          this.flowStatus='';
+          this.isWinBid='';
         }
       },
       //去新增详情页面
@@ -452,8 +452,8 @@ export default {
 
 
     rowshow(row) {
-      var id=row.flowStatus==null?row.topInfoOrgId:row.uuid;
-      let p = { actpoint: "look", instid: id ,flowStatus:row.flowStatus};
+      var id=row.isWinBid==null?row.topInfoOrgId:row.uuid;
+      let p = { actpoint: "look", instid: id ,isWinBid:row.isWinBid};
       this.$router.push({
         path: "./detail/",
         query: { p: this.$utils.encrypt(JSON.stringify(p)) },
@@ -505,7 +505,7 @@ export default {
     getData() {
       this.$http
         .post(
-         "/api/topInfo/BidInfo/detail/loadPageDataForReg",
+         "/api/topInfo/BidInfoSection/list/loadPageDataForZb",
           this.searchform
         )
         .then((res) => {
