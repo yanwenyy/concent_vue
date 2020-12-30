@@ -6,11 +6,8 @@
         <el-button @click="totop" :disabled="flowStatus!=1&&flowStatus!=4" plain type="primary">修改</el-button>
         <el-button type="primary" @click="addk" plain :disabled="flowStatus!=1">开标结果登记</el-button>
 
-        <el-button @click="dialogFormVisible= true" plain type="primary">中标结果登记</el-button>
         <el-button @click="remove" type="primary" plain>删除</el-button>
-        <!-- <el-button type="primary" style="height: 40px" plain>
-          <input placeholder="请输入项目名称"/>
-          </el-button> -->
+
       </el-button-group>
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
@@ -76,7 +73,7 @@
           :width="200"
           align="center"
           label="工程类别(一级)"
-          prop="enginTypeFirstName"
+          prop="enginTypeFirstId"
           show-overflow-tooltip>
           <template slot="header" slot-scope="scope">
             <span>工程类别(一级)</span>
@@ -86,7 +83,7 @@
               placeholder="请选择"
               @change="getTwo"
               size="mini"
-              v-model="searchform.enginTypeFirstName"
+              v-model="searchform.enginTypeFirstId"
             >
               <el-option
                 :key="index"
@@ -95,12 +92,7 @@
                 v-for="(item, index) in projectDomainType"
               ></el-option>
             </el-select>
-            <!-- <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.enginTypeFirstName"
-                size="mini"/>
-            </div> -->
+
           </template>
         </el-table-column>
 
@@ -116,8 +108,7 @@
             <el-select
               clearable
               filterable
-              placeholder="请选择"
-              @change="getTwo"
+              placeholder="请选择工程类别(一级)"
               size="mini"
               v-model="searchform.enginTypeSecondName"
             >
@@ -125,15 +116,10 @@
                 :key="index"
                 :label="item.detailName"
                 :value="item.id"
-                v-for="(item, index) in projectDomainType"
+                v-for="(item, index) in xqprojectType"
               ></el-option>
             </el-select>
-            <!-- <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.enginTypeSecondName"
-                size="mini"/>
-            </div> -->
+
           </template>
         </el-table-column>
 
@@ -201,9 +187,7 @@
           label="投标截止日期"
           prop="endTime"
           show-overflow-tooltip>
-          <!-- <template slot-scope="scope">{{
-            scope.row.state === '0' ? '草稿' : '已上报'
-          }}</template> -->
+
           <template slot="header" slot-scope="scope">
             <span>截至投标日期</span>
             <div>
@@ -271,44 +255,6 @@
       </el-pagination>
       <info-change-search v-if="infoCSVisible" ref="infoCS" @refreshDataList="goAddDetail"></info-change-search>
 
-  <el-dialog title="中标登记结果" :visible.sync="dialogFormVisible" margin="0 auto" width="30%">
-    <el-form>
-        <el-form-item label="是否中标" :label-width="formLabelWidth">
-      <el-select v-model="form.region" placeholder="请选择">
-        <el-option label="中标" value="shanghai"></el-option>
-        <el-option label="未中标" value="beijing"></el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item label="中标价" :label-width="formLabelWidth">
-      <el-input v-model="form.name" autocomplete="off"></el-input>
-    </el-form-item>
-        <el-form-item label="中标时间" :label-width="formLabelWidth">
-      <el-date-picker
-      v-model="form.name"
-      type="date"
-      placeholder="选择日期">
-    </el-date-picker>
-    </el-form-item>
-    <el-form-item label="文件公示" :label-width="formLabelWidth">
-    <el-upload
-      class="upload-demo detailUpload"
-      :action="'/api/topInfo/CommonFiles/bidInfo/01/uploadFile'"
-      :on-success="handleChange"
-      :on-error="handleChange"
-      :on-remove="handleRemove"
-      multiple
-    >
-      <el-button size="small" type="primary">点击上传</el-button>
-    </el-upload>
-    </el-form-item>
-    </el-form>
-
-  <div slot="footer" class="dialog-footer">
-    <el-button @click="dialogFormVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-  </div>
-</el-dialog>
-
   </div>
 </template>
 
@@ -349,13 +295,34 @@ export default {
       menus: [],
       multipleSelection: [],
       orgTree: [],
+      xqprojectType:[],//工程二级列表
       formLabelWidth: '120px'
     };
   },
    components: {
       InfoChangeSearch
     },
+    computed: {
+  projectDomainType() {
+    // console.log(this.$store.state.category["projectDomainType"])
+    return this.$store.state.category.projectDomainType;
+  }
+},
   methods: {
+        //工程类别二级
+      getTwo(id) {
+        this.searchform.enginTypeSecondId='';
+        this.xqprojectType =[];
+        if(id!=''){
+          this.projectDomainType.find(
+            (item) => {
+            if (item.id == id) {
+            this.xqprojectType = item.children;
+          }
+        }
+        )
+        }
+      },
     handleChange(){},
     handleRemove(){},
       //行选择的时候
@@ -442,8 +409,7 @@ export default {
             return itemStatus=false;
           }
         })
-        // uuids.join(',')
-        // console.log(uuids)
+
         if(itemStatus){
           this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
             confirmButtonText: '确定',
@@ -475,7 +441,6 @@ export default {
             this.page = res.data.data;
           });
       },
-
 
     rowshow(row) {
       var id=row.flowStatus==null?row.topInfoOrgId:row.uuid;
@@ -569,6 +534,7 @@ export default {
     // this.getMenus();
     // this.getOrgTree();
     this.getData();
+     this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
   },
 };
 </script>

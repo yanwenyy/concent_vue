@@ -718,7 +718,7 @@ export default {
   clear: both;
 }
 .el-card__body {
-  padding: 0 100px;
+
   // height: 400px;
 // border: 1px solid black;
 // height: 200px;
@@ -726,7 +726,6 @@ export default {
 .el-input--mini .el-input__inner{
   height: 40px;
   width: 100%;;
-  padding: 0;
 }
 .gcform .el-input{
   width: 95%;

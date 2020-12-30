@@ -112,12 +112,11 @@
           align="center"
           filter-multiple="true"
           label="提交时间"
-          prop="sumbitTime"
+          prop="submitTime"
           show-overflow-tooltip
         >
-
           <template slot-scope="scope">
-            {{ scope.row.sumbitTime | dateformat }}
+            {{ scope.row.submitTime | dateformat }}
           </template>
         </el-table-column>
          <el-table-column
@@ -125,6 +124,11 @@
            align="center"
            label="附件"
            show-overflow-tooltip>
+         <template slot-scope="scope">
+          <el-button plain
+                     type="primary"
+                     @click="selectUploadTable(scope.row.uuid)">上传附件</el-button>
+        </template>
         </el-table-column>
         <el-table-column
           :width="120"
@@ -135,20 +139,18 @@
         </el-table-column>
         <el-table-column
           :width="120"
-          align="center"
-          label="可见范围"
-          show-overflow-tooltip>
-        </el-table-column>
-        <el-table-column
-          :width="120"
           label="可见数"
           prop="orgCount"
           align="center"
           show-overflow-tooltip>
+        <template slot-scope="scope">
+            {{ scope.row.orgCount | getNotIncludedOrg }}
+          </template>
         </el-table-column>
         <el-table-column
           :width="120"
           label="不可见数"
+          prop="orgCount"
           align="center"
           show-overflow-tooltip>
         </el-table-column>
@@ -207,14 +209,18 @@
         <el-button type="primary" @click="saveResult">确 定</el-button>
       </div>
     </el-dialog>
-
+<uploadTable v-if="uploadTableStatus" ref="addOrUpdate" @getPosition="getUploadTable"></uploadTable>
   </div>
 
 </template>
 
 <script>
+import uploadTable from '@/components/fileUploadTable'
 export default {
   name: "月度分析列表",
+  components: {
+    uploadTable
+  },
   data() {
     return {
       page: {current: 1, size: 10, total: 0, records: []},
@@ -243,7 +249,7 @@ export default {
         orgCount:''
       },
       multipleSelection: [],
-      dialogAdd:false,
+      uploadTableStatus:false,
       resultform:{
         year:''
       },
@@ -290,8 +296,24 @@ export default {
       return value == "1" ? "是" : "否";
       // return statusW
     },
+    getNotIncludedOrg: (value) => {
+      return 67-parseInt( value );
+    },
   },
   methods: {
+    getUploadTable(data) {
+
+      console.log(data)
+      this.uploadTableStatus = false;
+      this.getData();
+    },
+    selectUploadTable(val){
+      this.uploadTableStatus = true;
+      console.log(val);
+      this.$nextTick(() => {
+        this.$refs.addOrUpdate.init(val,"0")
+      })
+    },
     saveResult(){
       //alert(this.resultform.year)
       // var time = Date.parse(new Date());
@@ -426,6 +448,7 @@ export default {
         var date = new Date();
         this.searchform.selectYear = date.getFullYear();
       }
+      this.searchform.isShare = 1;
 
       console.log(JSON.stringify(this.searchform));
       this.$http

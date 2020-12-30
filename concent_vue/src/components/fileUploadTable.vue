@@ -2,11 +2,13 @@
   <el-dialog
     :destroy-on-close="true"
     title="附件列表"
+    @close="result"
     :visible.sync="dialogVisible"
   >
     <div>
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-upload
+                v-show="isShow==='1'"
                 class="upload-demo detailUpload"
                 :action="UploadUrl()"
                 :on-success="handleChange"
@@ -20,6 +22,7 @@
     </div>
     <div>
       <el-table
+        height="400"
         :data="detailform.commonFilesList"
         :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
         @selection-change="handleSelectionChange"
@@ -46,22 +49,26 @@
                 <el-table-column :resizable="false"
                                  label="大小"
                                  prop="fileSize"
+                                 :width="120"
                                  show-overflow-tooltip>
 
                 </el-table-column>
                 <el-table-column :resizable="false"
                                  label="类型"
+                                 :width="80"
                                  prop="fileType"
                                  show-overflow-tooltip>
 
                 </el-table-column>
 
                 <el-table-column
+                  v-if="isShow=='1'"
+                  v-show="isShow=='1'"
                   :resizable="false"
                   fixed="right"
                   label="操作"
                   show-overflow-tooltip
-                  width="200"
+                  :width="80"
                 >
                   <template slot-scope="scope">
                     <el-link :underline="false"
@@ -71,17 +78,6 @@
                 </el-table-column>
               </el-table>
 
-    </div>
-    <div>
-<el-pagination
-  :current-page="page.current"
-  :page-size="page.size"
-  :page-sizes="[10, 50, 100]"
-  :total="page.total"
-  @current-change="handleCurrentChange"
-  @size-change="handleSizeChange"
-  layout="total, sizes, prev, pager, next, jumper"
-></el-pagination>
     </div>
   </el-dialog>
 </template>
@@ -108,11 +104,8 @@
           commonFilesList:[]
         },
         selectbusinessId:"",
-
-
+        isShow:'',
         dialogVisible: true,
-
-
         multipleSelection: [],
       }
     },
@@ -169,8 +162,10 @@
           });
         console.log(this.detailform.commonFilesList)
       },
-      init(val) {
+      init(val,type) {
         this.selectbusinessId = val;
+
+        this.isShow = type;
         this.dialogVisible = true;
         this.loadData();
       },
@@ -188,6 +183,7 @@
         // console.log(data);
         if (this.notSelect.indexOf(data.detailCode) == '-1') {
           this.dialogVisible = false;
+          this.$emit('getPosition', this.resultData)
           //this.$emit('getPosition',data)
         }
       },
@@ -207,6 +203,15 @@
           .then(res => {
             this.page = res.data.data
             console.log(JSON.stringify(this.page));
+            if( this.page.records.length>0)
+            {
+              this.detailform.commonFilesList=[];
+              this.page.records.forEach((item,index)=>{
+
+                this.detailform.commonFilesList.push(item);
+              })
+            }
+
           })
       }
     }
@@ -214,7 +219,7 @@
 </script>
 
 <style scoped>
-.el-upload-list{
+>>>.el-upload-list{
   display: none;
 }
 </style>

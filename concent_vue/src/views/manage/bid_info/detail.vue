@@ -16,7 +16,7 @@
       </div>
 
       <div class="detailBox">
-      <div class="detail-class-tltle">项目前期信息:</div>
+        <el-divider content-position="left">项目前期信息</el-divider>
         <el-form
           :inline="false"
           :model="detailform"
@@ -42,7 +42,7 @@
 
             <el-form-item label="工程类别(一级):">
               <el-input
-                 disabled
+                disabled
                 clearable
                 filterable
                 placeholder="请选择"
@@ -264,14 +264,17 @@
                 trigger: 'blur',
               }"
             >
+            <div>
             <el-radio  label="0"
             v-model="detailform.topInforBO.topInfor.bidProbName"
             disabled
+            style="margin-right:40px"
             >是</el-radio>
             <el-radio  label="1"
             v-model="detailform.topInforBO.topInfor.bidProbName"
             disabled
             >否</el-radio>
+            </div>
             </el-form-item>
 
             <el-form-item  label="预计中标概率:"
@@ -338,7 +341,7 @@
             </el-form-item>
             </div>
 <div>
-  <div class="detail-class-tltle">投标信息:</div>
+  <el-divider content-position="left">投标信息</el-divider>
             <el-form-item
             class="formItem"
               label="投标截止日期:"
@@ -429,6 +432,7 @@
 
               }"
             >
+            <div>
             <el-radio  label="0"
             v-model="detailform.bidInfo.isCoalitionBid"
             :disabled="p.actpoint === 'look'"
@@ -438,13 +442,7 @@
             v-model="detailform.bidInfo.isCoalitionBid"
             :disabled="p.actpoint === 'look'"
             >否</el-radio>
-              <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in yesOrNo"
-                ></el-option>
-
+            </div>
             </el-form-item>
 
 
@@ -458,20 +456,17 @@
                 trigger: 'blur',
               }"
             >
+            <div>
             <el-radio  label="0"
             v-model="detailform.bidInfo.isBidRates"
             :disabled="p.actpoint === 'look'"
+            style="margin-right:40px"
             >是</el-radio>
             <el-radio  label="1"
             v-model="detailform.bidInfo.isBidRates"
             :disabled="p.actpoint === 'look'"
             >否</el-radio>
-              <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in yesOrNo"
-                ></el-option>
+            </div>
             </el-form-item>
 
               <el-form-item label="内部联合体单位:"
@@ -574,8 +569,11 @@
 
                 </el-table-column>
 
-                <el-table-column align="center" :resizable="false" label="大小" prop="fileSize" show-overflow-tooltip>
+                <el-table-column align="center" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip>
 
+                  <template slot-scope="scope">
+                    {{(scope.row.fileSize/1024).toFixed(2)}}
+                  </template>
                 </el-table-column>
                 <el-table-column align="center" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
 
@@ -598,14 +596,13 @@
           </el-row>
 
           <p style="overflow: hidden">
-            <span style="float: left">标段信息: </span>
+            <span>标段信息: </span>
             <!-- @click="add('bd')" -->
             <el-button
             :disabled="p.actpoint === 'look'"
               @click="openBd('add')"
               size="mini"
               style="
-                float: right;
                 width: 70px;
                 height: 32px;
                 background: #5c8bfa;
@@ -1221,10 +1218,7 @@ export default {
               topInforBO: this.nullToStr(datas.topInforBO),
               bidInfo_01:datas.bidInfo_01
             }
-
           });
-
-
     },
 
     handleinputionChange(val) {
@@ -1340,7 +1334,7 @@ export default {
   }
 
   .el-card__body {
-    // padding: 0 100px;
+    //
     // height: 400px;
     // border: 1px solid black;
     // height: 200px;
