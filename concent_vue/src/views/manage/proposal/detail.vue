@@ -119,7 +119,21 @@
                 size="mini"
                 v-model="detailform.topInfor.inforName"/>
             </el-form-item>
-
+          <el-form-item
+            label="外文名称:"
+            prop="topInfor.inforNameForeign"
+            :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+          >
+            <el-input
+              :disabled="p.actpoint === 'look'"
+              clearable
+              size="mini"
+              v-model="detailform.topInfor.inforNameForeign"/>
+          </el-form-item>
             <el-form-item
               label="建设单位:"
               prop="topInfor.constructionOrg"
@@ -594,18 +608,11 @@
               </el-form-item>
             </div>
             <p class="detail-title" style="overflow: hidden；margin-right: 30px">
-              <span style="float: left">项目地点: </span>
+              <span>项目地点: </span>
               <el-button
                 v-show="p.actpoint != 'look'"
                 @click="add('dd')"
-                size="mini"
-                style="
-                  float: right;
-                  width: 70px;
-                  height: 32px;
-                  background: #5c8bfa;
-                  font-size: 16px;
-                "
+                class="detatil-flie-btn"
                 type="primary"
               >新增
               </el-button
@@ -701,18 +708,11 @@
             </el-table-column>
           </el-table>
             <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
-              <span style="float: left">标段信息: </span>
+              <span>标段信息: </span>
               <el-button
                 v-show="p.actpoint != 'look'"
                 @click="add('bd')"
-                size="mini"
-                style="
-                  float: right;
-                  width: 70px;
-                  height: 32px;
-                  background: #5c8bfa;
-                  font-size: 16px;
-                "
+                class="detatil-flie-btn"
                 type="primary"
               >新增
               </el-button
@@ -763,7 +763,7 @@
                 label="项目份额(万元)"
                 align="center"
                 prop="projectScale"
-
+                width="200"
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">

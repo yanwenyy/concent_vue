@@ -63,6 +63,9 @@
               />
             </div>
           </template>
+          <template slot-scope="scope">
+            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.contractName}}</span>
+          </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -158,6 +161,9 @@
               />
             </div>
           </template>
+          <template slot-scope="scope">{{
+            scope.row.createTime | dateformat
+            }}</template>
         </el-table-column>
         <el-table-column
           :width="150"

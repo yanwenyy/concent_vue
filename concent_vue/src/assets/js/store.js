@@ -51,6 +51,7 @@ const state = {
   probability:[],//预计中标概率
   projectDomainType:[],//工程行业类别
   railwayLine:[],//所属线路
+  contractType:[],//合同类型
 
   optiondata:[],
   dialogState: 'edit',
@@ -80,161 +81,320 @@ const getters = {
 }
 const mutations = {
   setToolData(state, data) {
-    // 添加标签按钮，如果当前路由已经打开，则不再重复添加
-    Vue.prototype.$http.get('/jsonapi/System/system/category/v1.0/wholetreeNew').then(res => {
-
-      state.optiondata = res.data.data
+    this.state.optiondata=JSON.parse(sessionStorage.getItem('optiondata'));
+    // console.log(state.category[data.name])
+    if(this.state.optiondata== null){
+      // 添加标签按钮，如果当前路由已经打开，则不再重复添加
+      Vue.prototype.$http.get('/jsonapi/System/system/category/v1.0/wholetreeNew').then(res => {
+        this.state.optiondata = res.data.data;
+      sessionStorage.setItem('optiondata',JSON.stringify(state.optiondata));
+      this.state.optiondata=JSON.parse(sessionStorage.getItem('optiondata'));
       this.state.optiondata.forEach((item) => {
         switch (item.categoryCode){
-          case 'railwayLine':
-            state.railwayLine=item.sysCategoryDetailList;
-            break;
-          case 'bulletinType':
-            state.bulletinType=item.sysCategoryDetailList;
-            break;
-          case 'certificationType':
-            state.certificationType=item.sysCategoryDetailList;
-            break;
-          case 'amountSource':
-            state.amountSource=item.sysCategoryDetailList;
-            break;
-          case 'purchaseNature':
-            state.purchaseNature=item.sysCategoryDetailList;
-            break;
-          case 'orgType':
-            state.orgType=item.sysCategoryDetailList;
-            break;
-          case 'bizCode':
-            state.bizCode=item.sysCategoryDetailList;
-            break;
-          case 'measureUnit':
-            state.measureUnit=item.sysCategoryDetailList;
-            break;
-          case 'xqprojectType':
-            state.xqprojectType=item.sysCategoryDetailList;
-            break;
-          case 'railwayBureau':
-            state.railwayBureau=item.sysCategoryDetailList;
-            break;
-          case 'statistics':
-            state.statistics=item.sysCategoryDetailList;
-            break;
-          case 'wumoveType':
-            state.wumoveType=item.sysCategoryDetailList;
-            break;
-          case 'eacode':
-            state.eacode=item.sysCategoryDetailList;
-            break;
-          case 'projectNature':
-            state.projectNature=item.sysCategoryDetailList;
-            break;
-          case 'bizTypeCode':
-            state.bizTypeCode=item.sysCategoryDetailList;
-            break;
-          case 'taxType':
-            state.taxType=item.sysCategoryDetailList;
-            break;
-          case 'authCode':
-            state.authCode=item.sysCategoryDetailList;
-            break;
-          case 'supLevel':
-            state.supLevel=item.sysCategoryDetailList;
-            break;
-          case 'businessType':
-            state.businessType=item.sysCategoryDetailList;
-            break;
-          case 'supType':
-            state.supType=item.sysCategoryDetailList;
-            break;
-          case 'constructionUnitNature':
-            state.constructionUnitNature=item.sysCategoryDetailList;
-            break;
-          case 'position':
-            state.position=item.sysCategoryDetailList;
-            break;
-          case 'warZone':
-            state.warZone=item.sysCategoryDetailList;
-            break;
-          case 'arms':
-            state.arms=item.sysCategoryDetailList;
-            break;
-          case 'siteName':
-            state.siteName=item.sysCategoryDetailList;
-            break;
-          case 'assemblyType':
-            state.assemblyType=item.sysCategoryDetailList;
-            break;
-          case 'architecturalType':
-            state.architecturalType=item.sysCategoryDetailList;
-            break;
-          case 'buildingStructure':
-            state.buildingStructure=item.sysCategoryDetailList;
-            break;
-          case 'yesOrNo':
-            state.yesOrNo=item.sysCategoryDetailList;
-            break;
-          case 'systemAround':
-            state.systemAround=item.sysCategoryDetailList;
-            break;
-          case 'roadOutside':
-            state.roadOutside=item.sysCategoryDetailList;
-            break;
-          case 'domesticOverseas':
-            state.domesticOverseas=item.sysCategoryDetailList;
-            break;
-          case 'projectType':
-            state.projectType=item.sysCategoryDetailList;
-            break;
-          case 'emergingMarket':
-            state.emergingMarket=item.sysCategoryDetailList;
-            break;
-          case 'customernatureCode':
-            state.customernatureCode=item.sysCategoryDetailList;
-            break;
-          case 'cooperation':
-            state.cooperation=item.sysCategoryDetailList;
-            break;
-          case 'qwe':
-            state.qwe=item.sysCategoryDetailList;
-            break;
-          case 'stage':
-            state.stage=item.sysCategoryDetailList;
-            break;
-          case 'plantype':
-            state.plantype=item.sysCategoryDetailList;
-            break;
-          case 'processState':
-            state.processState=item.sysCategoryDetailList;
-            break;
-          case 'followType':
-            state.followType=item.sysCategoryDetailList;
-            break;
-          case 'customerStatus':
-            state.customerStatus=item.sysCategoryDetailList;
-            break;
-          case 'bidType':
-            state.bidType=item.sysCategoryDetailList;
-            break;
-          case 'Information':
-            state.Information=item.sysCategoryDetailList;
-            break;
-          case 'projectModel':
-            state.projectModel=item.sysCategoryDetailList;
-            break;
-          case 'companyType':
-            state.companyType=item.sysCategoryDetailList;
-            break;
-          case 'probability':
-            state.probability=item.sysCategoryDetailList;
-            break;
-          case 'projectDomainType':
-            state.projectDomainType=item.sysCategoryDetailList;
-            break;
-        }
-
-      })
+      case 'railwayLine':
+        state.railwayLine=item.sysCategoryDetailList;
+        break;
+      case 'bulletinType':
+        state.bulletinType=item.sysCategoryDetailList;
+        break;
+      case 'certificationType':
+        state.certificationType=item.sysCategoryDetailList;
+        break;
+      case 'amountSource':
+        state.amountSource=item.sysCategoryDetailList;
+        break;
+      case 'purchaseNature':
+        state.purchaseNature=item.sysCategoryDetailList;
+        break;
+      case 'orgType':
+        state.orgType=item.sysCategoryDetailList;
+        break;
+      case 'bizCode':
+        state.bizCode=item.sysCategoryDetailList;
+        break;
+      case 'measureUnit':
+        state.measureUnit=item.sysCategoryDetailList;
+        break;
+      case 'xqprojectType':
+        state.xqprojectType=item.sysCategoryDetailList;
+        break;
+      case 'railwayBureau':
+        state.railwayBureau=item.sysCategoryDetailList;
+        break;
+      case 'statistics':
+        state.statistics=item.sysCategoryDetailList;
+        break;
+      case 'wumoveType':
+        state.wumoveType=item.sysCategoryDetailList;
+        break;
+      case 'eacode':
+        state.eacode=item.sysCategoryDetailList;
+        break;
+      case 'projectNature':
+        state.projectNature=item.sysCategoryDetailList;
+        break;
+      case 'bizTypeCode':
+        state.bizTypeCode=item.sysCategoryDetailList;
+        break;
+      case 'taxType':
+        state.taxType=item.sysCategoryDetailList;
+        break;
+      case 'authCode':
+        state.authCode=item.sysCategoryDetailList;
+        break;
+      case 'supLevel':
+        state.supLevel=item.sysCategoryDetailList;
+        break;
+      case 'businessType':
+        state.businessType=item.sysCategoryDetailList;
+        break;
+      case 'supType':
+        state.supType=item.sysCategoryDetailList;
+        break;
+      case 'constructionUnitNature':
+        state.constructionUnitNature=item.sysCategoryDetailList;
+        break;
+      case 'position':
+        state.position=item.sysCategoryDetailList;
+        break;
+      case 'warZone':
+        state.warZone=item.sysCategoryDetailList;
+        break;
+      case 'arms':
+        state.arms=item.sysCategoryDetailList;
+        break;
+      case 'siteName':
+        state.siteName=item.sysCategoryDetailList;
+        break;
+      case 'assemblyType':
+        state.assemblyType=item.sysCategoryDetailList;
+        break;
+      case 'architecturalType':
+        state.architecturalType=item.sysCategoryDetailList;
+        break;
+      case 'buildingStructure':
+        state.buildingStructure=item.sysCategoryDetailList;
+        break;
+      case 'yesOrNo':
+        state.yesOrNo=item.sysCategoryDetailList;
+        break;
+      case 'systemAround':
+        state.systemAround=item.sysCategoryDetailList;
+        break;
+      case 'roadOutside':
+        state.roadOutside=item.sysCategoryDetailList;
+        break;
+      case 'domesticOverseas':
+        state.domesticOverseas=item.sysCategoryDetailList;
+        break;
+      case 'projectType':
+        state.projectType=item.sysCategoryDetailList;
+        break;
+      case 'emergingMarket':
+        state.emergingMarket=item.sysCategoryDetailList;
+        break;
+      case 'customernatureCode':
+        state.customernatureCode=item.sysCategoryDetailList;
+        break;
+      case 'cooperation':
+        state.cooperation=item.sysCategoryDetailList;
+        break;
+      case 'qwe':
+        state.qwe=item.sysCategoryDetailList;
+        break;
+      case 'stage':
+        state.stage=item.sysCategoryDetailList;
+        break;
+      case 'plantype':
+        state.plantype=item.sysCategoryDetailList;
+        break;
+      case 'processState':
+        state.processState=item.sysCategoryDetailList;
+        break;
+      case 'followType':
+        state.followType=item.sysCategoryDetailList;
+        break;
+      case 'customerStatus':
+        state.customerStatus=item.sysCategoryDetailList;
+        break;
+      case 'bidType':
+        state.bidType=item.sysCategoryDetailList;
+        break;
+      case 'Information':
+        state.Information=item.sysCategoryDetailList;
+        break;
+      case 'projectModel':
+        state.projectModel=item.sysCategoryDetailList;
+        break;
+      case 'companyType':
+        state.companyType=item.sysCategoryDetailList;
+        break;
+      case 'probability':
+        state.probability=item.sysCategoryDetailList;
+        break;
+      case 'projectDomainType':
+        state.projectDomainType=item.sysCategoryDetailList;
+        break;
+      case 'contractType':
+        state.contractType=item.sysCategoryDetailList;
+        break;
+      }
     })
-
+    })
+    }else{
+      this.state.optiondata.forEach((item) => {
+        switch (item.categoryCode){
+      case 'railwayLine':
+        state.railwayLine=item.sysCategoryDetailList;
+        break;
+      case 'bulletinType':
+        state.bulletinType=item.sysCategoryDetailList;
+        break;
+      case 'certificationType':
+        state.certificationType=item.sysCategoryDetailList;
+        break;
+      case 'amountSource':
+        state.amountSource=item.sysCategoryDetailList;
+        break;
+      case 'purchaseNature':
+        state.purchaseNature=item.sysCategoryDetailList;
+        break;
+      case 'orgType':
+        state.orgType=item.sysCategoryDetailList;
+        break;
+      case 'bizCode':
+        state.bizCode=item.sysCategoryDetailList;
+        break;
+      case 'measureUnit':
+        state.measureUnit=item.sysCategoryDetailList;
+        break;
+      case 'xqprojectType':
+        state.xqprojectType=item.sysCategoryDetailList;
+        break;
+      case 'railwayBureau':
+        state.railwayBureau=item.sysCategoryDetailList;
+        break;
+      case 'statistics':
+        state.statistics=item.sysCategoryDetailList;
+        break;
+      case 'wumoveType':
+        state.wumoveType=item.sysCategoryDetailList;
+        break;
+      case 'eacode':
+        state.eacode=item.sysCategoryDetailList;
+        break;
+      case 'projectNature':
+        state.projectNature=item.sysCategoryDetailList;
+        break;
+      case 'bizTypeCode':
+        state.bizTypeCode=item.sysCategoryDetailList;
+        break;
+      case 'taxType':
+        state.taxType=item.sysCategoryDetailList;
+        break;
+      case 'authCode':
+        state.authCode=item.sysCategoryDetailList;
+        break;
+      case 'supLevel':
+        state.supLevel=item.sysCategoryDetailList;
+        break;
+      case 'businessType':
+        state.businessType=item.sysCategoryDetailList;
+        break;
+      case 'supType':
+        state.supType=item.sysCategoryDetailList;
+        break;
+      case 'constructionUnitNature':
+        state.constructionUnitNature=item.sysCategoryDetailList;
+        break;
+      case 'position':
+        state.position=item.sysCategoryDetailList;
+        break;
+      case 'warZone':
+        state.warZone=item.sysCategoryDetailList;
+        break;
+      case 'arms':
+        state.arms=item.sysCategoryDetailList;
+        break;
+      case 'siteName':
+        state.siteName=item.sysCategoryDetailList;
+        break;
+      case 'assemblyType':
+        state.assemblyType=item.sysCategoryDetailList;
+        break;
+      case 'architecturalType':
+        state.architecturalType=item.sysCategoryDetailList;
+        break;
+      case 'buildingStructure':
+        state.buildingStructure=item.sysCategoryDetailList;
+        break;
+      case 'yesOrNo':
+        state.yesOrNo=item.sysCategoryDetailList;
+        break;
+      case 'systemAround':
+        state.systemAround=item.sysCategoryDetailList;
+        break;
+      case 'roadOutside':
+        state.roadOutside=item.sysCategoryDetailList;
+        break;
+      case 'domesticOverseas':
+        state.domesticOverseas=item.sysCategoryDetailList;
+        break;
+      case 'projectType':
+        state.projectType=item.sysCategoryDetailList;
+        break;
+      case 'emergingMarket':
+        state.emergingMarket=item.sysCategoryDetailList;
+        break;
+      case 'customernatureCode':
+        state.customernatureCode=item.sysCategoryDetailList;
+        break;
+      case 'cooperation':
+        state.cooperation=item.sysCategoryDetailList;
+        break;
+      case 'qwe':
+        state.qwe=item.sysCategoryDetailList;
+        break;
+      case 'stage':
+        state.stage=item.sysCategoryDetailList;
+        break;
+      case 'plantype':
+        state.plantype=item.sysCategoryDetailList;
+        break;
+      case 'processState':
+        state.processState=item.sysCategoryDetailList;
+        break;
+      case 'followType':
+        state.followType=item.sysCategoryDetailList;
+        break;
+      case 'customerStatus':
+        state.customerStatus=item.sysCategoryDetailList;
+        break;
+      case 'bidType':
+        state.bidType=item.sysCategoryDetailList;
+        break;
+      case 'Information':
+        state.Information=item.sysCategoryDetailList;
+        break;
+      case 'projectModel':
+        state.projectModel=item.sysCategoryDetailList;
+        break;
+      case 'companyType':
+        state.companyType=item.sysCategoryDetailList;
+        break;
+      case 'probability':
+        state.probability=item.sysCategoryDetailList;
+        break;
+      case 'projectDomainType':
+        state.projectDomainType=item.sysCategoryDetailList;
+        break;
+      case 'contractType':
+        state.contractType=item.sysCategoryDetailList;
+        break;
+      }
+    })
+      console.log(state.railwayLine)
+    }
   },
   setCategory(state, data) {
 
@@ -243,9 +403,9 @@ const mutations = {
     if(state.category[data.name]== undefined){
       Vue.prototype.$http.get('/jsonapi/System/system/category/detail//v1.0/tree/' + data.id).then(res => {
         state.category[data.name] = res.data.data;
-        sessionStorage.setItem('category',JSON.stringify(state.category));
-        state.category=JSON.parse(sessionStorage.getItem('category'));
-      })
+      sessionStorage.setItem('category',JSON.stringify(state.category));
+      state.category=JSON.parse(sessionStorage.getItem('category'));
+    })
     }else{
       state.category=JSON.parse(sessionStorage.getItem('category'));
     }

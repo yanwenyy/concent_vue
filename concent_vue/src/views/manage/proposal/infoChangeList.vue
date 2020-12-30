@@ -103,6 +103,7 @@
           <template slot="header" slot-scope="scope">
             <span>工程类别(二级)</span>
             <el-select
+              :disabled="searchform.enginTypeFirstId==''"
               clearable
               filterable
               placeholder="请选择工程类别(一级)"

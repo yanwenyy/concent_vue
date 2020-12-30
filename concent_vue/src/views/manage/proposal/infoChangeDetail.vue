@@ -310,6 +310,7 @@
                   :resizable="false"
                   label="项目份额"
                   align="center"
+                  width="200"
                   prop="contractAmount"
                   show-overflow-tooltip
                 >
@@ -916,14 +917,7 @@
                 <el-button
                   v-show="p.actpoint != 'look'"
                   @click="add('dd')"
-                  size="mini"
-                  style="
-                  float: right;
-                  width: 70px;
-                  height: 32px;
-                  background: #5c8bfa;
-                  font-size: 16px;
-                "
+                  class="detatil-flie-btn"
                   type="primary"
                 >新增
                 </el-button
@@ -1023,14 +1017,7 @@
                 <el-button
                   v-show="p.actpoint != 'look'"
                   @click="add('bd')"
-                  size="mini"
-                  style="
-                  float: right;
-                  width: 70px;
-                  height: 32px;
-                  background: #5c8bfa;
-                  font-size: 16px;
-                "
+                  class="detatil-flie-btn"
                   type="primary"
                 >新增
                 </el-button
@@ -1081,7 +1068,7 @@
                   label="项目份额(万元)"
                   align="center"
                   prop="projectScale"
-
+                  width="200"
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">

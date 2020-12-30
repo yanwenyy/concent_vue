@@ -164,7 +164,7 @@
                 :rules="{
                 required: true,
                 message: '此项不能为空',
-                trigger: 'blur',
+                trigger: 'change',
               }"
               >
                 <el-input placeholder="请输入内容" v-model="detailform.contractInfo.qualityOrgNames" class="input-with-select">
@@ -423,11 +423,11 @@
               <el-form-item
                 label="新兴市场类别(二级):"
                 prop="contractInfo.marketSecondId"
-                :rules="{
+                :rules="detailform.contractInfo.marketFirstNameId&&emergingMarketTwo?{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
-              }"
+              }:{}"
               >
                 <el-select
                   :disabled="p.actpoint === 'look'"
@@ -452,6 +452,179 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
+            <el-form-item
+              label="是否为系统内联合体:"
+              prop="contractInfo.isInSystemUnion"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
+              <el-select
+                :disabled="p.actpoint==='look'"
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="detailform.contractInfo.isInSystemUnion"
+              >
+                <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="是否含系统内分包:"
+              prop="contractInfo.isInSystemSub"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
+              <el-select
+                :disabled="p.actpoint==='look'"
+                filterable
+                clearable
+                placeholder="请选择"
+                size="mini"
+                v-model="detailform.contractInfo.isInSystemSub"
+              >
+                <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="装配率(%):"
+              prop="contractInfo.otherAssemblyRate"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+              v-if="detailform.contractInfo.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'"
+                size="mini"
+                v-model="detailform.contractInfo.otherAssemblyRate"
+              />
+            </el-form-item>
+            <el-form-item
+              label="装配类型:"
+              prop="zplx"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+              v-if="detailform.contractInfo.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
+            >
+              <el-select
+                :disabled="p.actpoint==='look'"
+                multiple
+                @change="getMultipleName(detailform.zplx,assemblyType,'otherAssemblyTypeId','otherAssemblyType')"
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="detailform.zplx"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in assemblyType"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="建筑类型:"
+              prop="jzlx"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+              v-if="detailform.contractInfo.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
+            >
+              <el-select
+                :disabled="p.actpoint==='look'"
+                multiple
+                @change="getMultipleName(detailform.jzlx,architecturalType,'otherBuildingTypeId','otherBuildingType')"
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="detailform.jzlx"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in architecturalType"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="建筑结构类型:"
+              prop="jzjglx"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+              v-if="detailform.contractInfo.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
+            >
+              <el-select
+                :disabled="p.actpoint==='look'"
+                multiple
+                @change="getMultipleName(detailform.jzjglx,buildingStructure,'otherBuildingStructureTypeId','otherBuildingStructureType')"
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="detailform.jzjglx"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in buildingStructure"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="场地名称:"
+              prop="cdmc"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+              v-if="detailform.contractInfo.marketFirstNameId=='50cd5e9992ac4653920fac8c1f2eb2e3'"
+
+            >
+              <el-select
+                :disabled="p.actpoint==='look'"
+                multiple
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="detailform.cdmc"
+                @change="getMultipleName(detailform.cdmc,siteName,'siteNameId','siteName')"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in siteName"
+                ></el-option>
+              </el-select>
+            </el-form-item>
               <el-form-item
                 label="项目性质(一级):"
                 prop="contractInfo.projectNatureFirstId"
@@ -870,8 +1043,10 @@
 
                   </el-table-column>
 
-                  <el-table-column align="center" :resizable="false" label="大小" prop="fileSize" show-overflow-tooltip>
-
+                  <el-table-column align="center" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip>
+                    <template slot-scope="scope">
+                      {{(scope.row.fileSize/1024).toFixed(2)}}
+                    </template>
                   </el-table-column>
                   <el-table-column align="center" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
 
@@ -922,18 +1097,21 @@
                   show-overflow-tooltip
                   type="index"
                 ></el-table-column>
-                <el-table-column :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+                <el-table-column align="center" :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
 
                 </el-table-column>
 
-                <el-table-column :resizable="false" label="大小" prop="fileSize" show-overflow-tooltip>
-
+                <el-table-column align="center" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    {{(scope.row.fileSize/1024).toFixed(2)}}
+                  </template>
                 </el-table-column>
-                <el-table-column :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+                <el-table-column align="center" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
 
                 </el-table-column>
 
                 <el-table-column
+                  align="center"
                   :resizable="false"
                   fixed="right"
                   label="操作"
@@ -978,17 +1156,20 @@
                   show-overflow-tooltip
                   type="index"
                 ></el-table-column>
-                <el-table-column :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+                <el-table-column align="center" :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
 
                 </el-table-column>
 
-                <el-table-column :resizable="false" label="大小" prop="fileSize" show-overflow-tooltip>
-
+                <el-table-column align="center" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    {{(scope.row.fileSize/1024).toFixed(2)}}
+                  </template>
                 </el-table-column>
-                <el-table-column :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+                <el-table-column align="center" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
 
                 </el-table-column>
                 <el-table-column
+                  align="center"
                   :resizable="false"
                   fixed="right"
                   label="操作"
@@ -1255,7 +1436,7 @@
       <el-tab-pane v-if="detailform.contractInfo.isInSystemUnion==='0'||detailform.contractInfo.isInSystemSub==='0'" label="合同附属信息">
         <div  v-if="detailform.contractInfo.isInSystemUnion==='0'">
              <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
-               <span style="float: left">系统内其他联合体单位列表: </span>
+               <span>系统内其他联合体单位列表: </span>
                <el-button
                  v-show="p.actpoint != 'look'"
                  @click="addfs('lht',1,1)"
@@ -1394,7 +1575,7 @@
            </div>
         <div  v-if="detailform.contractInfo.isInSystemSub==='0'">
           <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
-            <span style="float: left">系统内分包单位列表: </span>
+            <span>系统内分包单位列表: </span>
             <el-button
               v-show="p.actpoint != 'look'"
               @click="addfs('fb',2,1)"
@@ -1587,6 +1768,10 @@ export default {
         fileList1:[],
         fileList2:[],
         fileList3:[],
+        zplx:[],//装配类型
+        jzlx:[],//建筑类型
+        jzjglx:[],//建筑结构类型
+        cdmc:[],//场地名称
       },
       yesOrNo:[
         {
@@ -1634,6 +1819,18 @@ export default {
     amountSource() {
       return this.$store.state.amountSource;
     },
+    assemblyType(){
+      return this.$store.state.assemblyType;//装配类型
+    },
+    architecturalType(){
+      return this.$store.state.architecturalType;//建筑类型
+    },
+    buildingStructure(){
+      return this.$store.state.buildingStructure;//建筑结构类型
+    },
+    siteName(){
+      return this.$store.state.siteName;//场地名称
+    }
   },
   mounted() {
     var list=datas[0].children;
@@ -1658,6 +1855,19 @@ export default {
     // eslint-disable-next-line no-unde
   },
   methods: {
+    //复选下拉框框获取name
+    getMultipleName(valueList,list,id,name){
+      var _id=[],_name=[];
+      list.forEach((item)=>{
+        if(valueList.indexOf(item.id)!=-1){
+        _id.push(item.id);
+        _name.push(item.detailName)
+      }
+    });
+      this.detailform.contractInfo[id]=_id.join(",");
+      this.detailform.contractInfo[name]=_name.join(",");
+      console.log(this.detailform.contractInfo[id])
+    },
     //获取我方份额
     getOurAmount(index,list){
       var money=0;
@@ -1969,6 +2179,26 @@ export default {
         }
       });
       }).catch(() => {})
+      }else if(item.uuid&&(type=='lht'||type=='fb')){
+        this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$http
+          .post(
+            "/api/contract/ContractInfo/list/deleteAttach",
+            {ids: [item.uuid]}
+          )
+          .then((res) => {
+          if (res.data && res.data.code === 200) {
+          list.splice(index, 1);
+          console.log(list)
+        } else {
+          this.$message.error(data.msg)
+        }
+      });
+      }).catch(() => {})
       }else{
         list.splice(index, 1);
       }
@@ -2046,7 +2276,15 @@ export default {
             fileList1:fileList1,
             fileList2:fileList2,
             fileList3:fileList3,
+            zplx:[],//装配类型
+            jzlx:[],//建筑类型
+            jzjglx:[],//建筑结构类型
+            cdmc:[],//场地名称
           }
+      this.detailform.cdmc=datas.contractInfo.siteNameId&&datas.contractInfo.siteNameId.split(",");
+      this.detailform.zplx=datas.contractInfo.otherAssemblyTypeId&&datas.contractInfo.otherAssemblyTypeId.split(",");
+      this.detailform.jzlx=datas.contractInfo.otherBuildingTypeId&&datas.contractInfo.otherBuildingTypeId.split(",");
+      this.detailform.jzjglx=datas.contractInfo.otherBuildingStructureTypeId&&datas.contractInfo.otherBuildingStructureTypeId.split(",");
     });
     },
 
