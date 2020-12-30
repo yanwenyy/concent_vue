@@ -54,7 +54,7 @@
 
             <el-form-item
               label="工程类别(二级):"
-            ><!-- :disabled="p.actpoint === 'look'" -->
+            >
               <el-input
                 disabled
                 placeholder="工程类别(二级)"
@@ -62,6 +62,7 @@
               >
               </el-input>
             </el-form-item>
+
             <el-form-item  label="项目名称:"
                 :rules="{
                 required: true,
@@ -173,7 +174,7 @@
               </el-input>
             </el-form-item>
 
-                        <el-form-item
+            <el-form-item
               label="项目性质(二级):"
             >
               <el-input
@@ -227,7 +228,7 @@
               />
             </el-form-item>
             <el-form-item  label="新兴市场(一级):"
-                          :rules="{
+                :rules="{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
@@ -242,7 +243,7 @@
             </el-form-item>
 
             <el-form-item  label="新兴市场(二级):"
-                          :rules="{
+                :rules="{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
@@ -257,23 +258,24 @@
             </el-form-item>
 
             <el-form-item  label="是否为重大项目:"
-                          :rules="{
+                :rules="{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
               }"
             >
-              <el-input
-                disabled
-                placeholder="请选择"
-                size="mini"
-                v-model="detailform.topInforBO.topInfor.bidProbName"
-              >
-              </el-input>
+            <el-radio  label="0"
+            v-model="detailform.topInforBO.topInfor.bidProbName"
+            disabled
+            >是</el-radio>
+            <el-radio  label="1"
+            v-model="detailform.topInforBO.topInfor.bidProbName"
+            disabled
+            >否</el-radio>
             </el-form-item>
 
             <el-form-item  label="预计中标概率:"
-                          :rules="{
+                :rules="{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
@@ -289,7 +291,7 @@
 
             <div>
               <el-form-item   class="formItem" label="项目跟踪负责人:"
-                            :rules="{
+                :rules="{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
@@ -303,7 +305,7 @@
               </el-form-item>
 
               <el-form-item  class="formItem"  label="联系电话:"
-                            :rules="{
+                :rules="{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
@@ -424,21 +426,25 @@
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
+
               }"
             >
-              <el-select
-              :disabled="p.actpoint === 'look'"
-                clearable
-                size="mini"
-                v-model="detailform.bidInfo.isCoalitionBid"
-              >
+            <el-radio  label="0"
+            v-model="detailform.bidInfo.isCoalitionBid"
+            :disabled="p.actpoint === 'look'"
+            style= margin-right:40px
+            >是</el-radio>
+            <el-radio  label="1"
+            v-model="detailform.bidInfo.isCoalitionBid"
+            :disabled="p.actpoint === 'look'"
+            >否</el-radio>
               <el-option
                   :key="index"
                   :label="item.detailName"
                   :value="item.id"
                   v-for="(item, index) in yesOrNo"
                 ></el-option>
-                </el-select>
+
             </el-form-item>
 
 
@@ -452,19 +458,20 @@
                 trigger: 'blur',
               }"
             >
-              <el-select
-              :disabled="p.actpoint === 'look'"
-                clearable
-                placeholder=""
-                size="mini"
-                v-model="detailform.bidInfo.isBidRates">
+            <el-radio  label="0"
+            v-model="detailform.bidInfo.isBidRates"
+            :disabled="p.actpoint === 'look'"
+            >是</el-radio>
+            <el-radio  label="1"
+            v-model="detailform.bidInfo.isBidRates"
+            :disabled="p.actpoint === 'look'"
+            >否</el-radio>
               <el-option
                   :key="index"
                   :label="item.detailName"
                   :value="item.id"
                   v-for="(item, index) in yesOrNo"
                 ></el-option>
-                </el-select>
             </el-form-item>
 
               <el-form-item label="内部联合体单位:"
@@ -528,29 +535,6 @@
             </el-form-item>
           </div>
           <el-row>
-            <!-- <el-form-item
-              class="neirong"
-              label="附件（最大10MB）:"
-              prop=""
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-           <el-upload
-              class="upload-demo detailUpload"
-              :action="'/api/topInfo/CommonFiles/bidInfo/01/uploadFile'"
-              :on-success="handleChange"
-              :on-error="handleChange"
-              :on-remove="handleRemove"
-              multiple
-              :show-file-list="true"
-              :file-list="detailform.bidInfo_01"
-              >
-              <el-button size="small" type="primary">点击上传</el-button>
-            </el-upload>
-            </el-form-item> -->
 
             <p><span >附件（最大10MB）: </span>
                 <el-upload
@@ -651,7 +635,7 @@
           >
             <el-table-column
               :width="80"
-             align="center"
+              align="center"
               label="序号"
               show-overflow-tooltip
               type="index"
@@ -697,9 +681,8 @@
               show-overflow-tooltip
               align="center"
               :width="180"
-               v-if="detailform.bidInfo.isBidRates==='1'"
+              v-if="detailform.bidInfo.isBidRates==='1'"
             >
-
             </el-table-column>
 
             <el-table-column
@@ -710,7 +693,6 @@
               align="center"
               :width="180"
             >
-
             </el-table-column>
 
             <el-table-column
@@ -732,7 +714,7 @@
               show-overflow-tooltip
               align="center"
               :width="180"
-               v-if="detailform.bidInfo.isBidRates==='1'"
+              v-if="detailform.bidInfo.isBidRates==='1'"
             >
 
             </el-table-column>
@@ -790,7 +772,7 @@
               :width="180"
             >
               <template slot-scope="scope">
-                <span v-for="(item,index) in scope.row.bidInfoSectionOrgList">{{item.orgType==1?item.orgName:''}}{{index < scope.row.bidInfoSectionOrgList.length-1? ',':''}}</span>
+                <span v-for="(item,index) in scope.row.bidInfoSectionOrgList">{{item.orgType==1?item.orgName:''}}{{index <scope.row.bidInfoSectionOrgList.length-1? ',':''}}</span>
 
               </template>
 
@@ -816,7 +798,6 @@
               align="center"
               :width="180"
             >
-
             </el-table-column>
 
             <el-table-column
@@ -1024,7 +1005,6 @@ export default {
       }
 
     });
-      console.log(this.detailform.bidInfo_01)
     },
      //打开标段弹框
     openBd(type,detail,index){
@@ -1205,74 +1185,9 @@ export default {
         showinput: true,
       };
     },
-    handleClose(done) {
-      this.resetform("form");
-      done();
-    },
+
     resetform(formName) {
       this.$refs[formName].resetFields();
-    },
-    carry(formName) {
-      if (
-        [...new Set(this.detailform.clothSizePartList.map((item) => item.part))]
-          .length < this.detailform.clothSizePartList.length
-      ) {
-        this.$message.error("部位填写重复");
-        return;
-      }
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.$http
-            .post(
-              "/api/topInfo/BidInfo/detail/saveOrUpdate",
-              JSON.stringify(this.detailform),
-              { useJson: true }
-            )
-            .then((res) => {
-              if (res.data.code === 0) {
-                this.$message({
-                  message: "保存成功",
-                  type: "success",
-                });
-                this.$refs[formName].resetFields();
-              }
-              if (res.data.code === 10) {
-                this.errorMsg = Math.random();
-                this.errorMsg0 = Math.random();
-                this.$nextTick(() => {
-                  this.errorMsg = res.data.msg;
-                  this.errorMsg0 = " ";
-                });
-              }
-            });
-        } else {
-          this.$message.error("请添加必填项");
-          return false;
-        }
-      });
-    },
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.$http
-            .post(
-              "/api/basicConfig/ClothSize/detail/save",
-              JSON.stringify(this.detailform),
-              { useJson: true }
-            )
-            .then((res) => {
-              if (res.data.code === 0) {
-                this.$message({
-                  message: "保存成功",
-                  type: "success",
-                });
-              }
-            });
-        } else {
-          console.log("error submit!");
-          return false;
-        }
-      });
     },
     sure() {
       console.log(this.sizeform);
@@ -1292,7 +1207,7 @@ export default {
 
         console.log(this.p.actpoint)
         var q=this.p.actpoint === "edit"||(this.p.actpoint === "look"&&this.p.flowStatus!=null)?{id:this.id}:{topInfoOrgId:this.id};
-        console.log(q)
+
         this.$http
           .post("/api/topInfo/BidInfo/detail/entityInfo", q)
           .then((res) => {
@@ -1306,7 +1221,7 @@ export default {
               topInforBO: this.nullToStr(datas.topInforBO),
               bidInfo_01:datas.bidInfo_01
             }
-            console.log(this.detailform.bidInfoSectionList)
+
           });
 
 

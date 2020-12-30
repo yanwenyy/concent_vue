@@ -75,6 +75,15 @@
       </el-form-item>
 
       <el-form-item label="是否中标:">
+            <!-- <el-radio  label="0"
+            v-model="searchform.isWinBid"
+            :disabled="p.actpoint === 'look'"
+            >是</el-radio>
+            <el-radio  label="1"
+            v-model="searchform.isWinBid"
+            :disabled="p.actpoint === 'look'"
+            >否</el-radio> -->
+
         <el-select
           clearable
           filterable
@@ -173,6 +182,28 @@
             <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
           </template>
         </el-table-column>
+
+        <!-- <el-form-item
+              label="工程类别(一级):"
+              prop="enginTypeFirstName"
+            >
+              <el-select
+                :disabled="p.actpoint === 'look'"
+                clearable
+                filterable
+                placeholder="请选择"
+                @change="getTwo"
+                size="mini"
+              >
+                <el-option
+                  :key="index + '-only'"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectDomainType"
+                ></el-option>
+              </el-select>
+            </el-form-item> -->
+
         <el-table-column
           :width="150"
           align="center"
@@ -181,6 +212,34 @@
           show-overflow-tooltip
         >
         </el-table-column>
+
+        <!-- <el-form-item
+              label="工程类别(二级):"
+              prop="enginTypeSecondName"
+            >
+              <el-select
+                :disabled="p.actpoint === 'look'"
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                @change="
+                  getName(
+                    detailform.topInfor.enginTypeSecondId,
+                    xqprojectType,
+                    'enginTypeSecondName'
+                  )
+                "
+              >
+                <el-option
+                  :key="index + '-only'"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in xqprojectType"
+                ></el-option>
+              </el-select>
+            </el-form-item> -->
+
         <el-table-column
           :width="150"
           align="center"

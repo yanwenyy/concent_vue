@@ -4,7 +4,7 @@
       <el-button-group style="float: left">
         <el-button @click="add" :disabled="flowStatus!=null"  plain type="primary">登记</el-button>
         <el-button @click="totop" :disabled="flowStatus!=1&&flowStatus!=4" plain type="primary">修改</el-button>
-        <el-button type="primary" @click="addk" plain >开标结果登记</el-button>
+        <el-button type="primary" @click="addk" plain :disabled="flowStatus!=1">开标结果登记</el-button>
 
         <el-button @click="dialogFormVisible= true" plain type="primary">中标结果登记</el-button>
         <el-button @click="remove" type="primary" plain>删除</el-button>
@@ -402,7 +402,7 @@ export default {
           this.$message.info("请选择一条记录进行登记操作！");
           return false;
         }
-        let p = {actpoint: "addk", instid: this.multipleSelection[0].topInfoOrgId};
+        let p = {actpoint: "addk", instid: this.multipleSelection[0].uuid};
         this.$router.push({
           path: "./Winning_bid/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
@@ -413,6 +413,7 @@ export default {
         //   this.$refs.infoCS.init();
         // })
     },
+
     // 修改
       totop() {
         if (this.multipleSelection.length !== 1||this.multipleSelection.length>1) {

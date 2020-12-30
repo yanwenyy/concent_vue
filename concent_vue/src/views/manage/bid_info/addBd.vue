@@ -74,6 +74,15 @@
         <el-form-item label="成本负责人:" class="list-item">
           <el-input v-model="detailForm.bidInfoSection.costOwner" placeholder="成本负责人" clearable></el-input>
         </el-form-item>
+          <el-form-item label="编标拟配合单位:" class="list-item">
+          <el-input v-model="detailForm.bidInfoSection.costOwner" placeholder="成本负责人" clearable></el-input>
+        </el-form-item>
+          <el-form-item label="投资估算:" class="list-item">
+          <el-input v-model="detailForm.bidInfoSection.costOwner" placeholder="成本负责人" clearable></el-input>
+        </el-form-item>
+          <el-form-item label="其中建安投资:" class="list-item">
+          <el-input v-model="detailForm.bidInfoSection.costOwner" placeholder="成本负责人" clearable></el-input>
+        </el-form-item>
         <div class="list-title">
           其他投标单位(系统内):
           <el-button
@@ -212,7 +221,7 @@
     </div>
     <div slot="footer" class="dialog-footer">
       <el-button @click="visible = false">取消</el-button>
-      <el-button type="primary" @click="sub()">确定</el-button>
+      <el-button v-if="type!='look'" type="primary" @click="sub()">确定</el-button>
     </div>
   </el-dialog>
 </template>

@@ -401,7 +401,7 @@
      </el-row>
     <div>
       <el-table
-        :data="detailform.fileList"
+        :data="detailform.commonFilesList"
         :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
         @selection-change="handleSelectionChange1"
         align="center"
@@ -631,7 +631,7 @@ export default {
         'verifyOrgList': [
         ],
         verifyOrgLists:"111",
-        fileList:[]
+        commonFilesList:[]
       },
       detailform1: {
         topInfor: {},
@@ -955,11 +955,11 @@ export default {
         )
         .then((res) => {
           if (res.data.code === 200) {
-            this.detailform.fileList.splice(index,1);
+            this.detailform.commonFilesList.splice(index,1);
           }
 
         });
-      console.log(this.detailform.fileList)
+      console.log(this.detailform.commonFilesList)
     },
     //上传附件
     handleChange(response, file, fileList){
@@ -969,8 +969,8 @@ export default {
           type: 'success',
           duration: 1500,
           onClose: () => {
-            this.detailform.fileList.push(response.data);
-            console.log( JSON.stringify(this.detailform.fileList))
+            this.detailform.commonFilesList.push(response.data);
+            console.log( JSON.stringify(this.detailform.commonFilesList))
           }
         })
       } else {
@@ -1058,6 +1058,9 @@ export default {
 }
 </script>
 <style lang="scss">
+.el-upload-list{
+  display: none;
+}
 .btn-group{
   text-align: center;
   margin-top: 20px;

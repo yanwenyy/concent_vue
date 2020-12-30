@@ -272,8 +272,8 @@
     methods: {
       //去新增详情页面
       goAddDetail(data){
-        // console.log(data);
-        let p = {actpoint: "add",instid:data.topOrgId};
+        console.log(data);
+        let p = {actpoint: "add",instid:data.topInfoOrgId,uuid:data.uuid};
         this.$router.push({
           path: "./InfoChangeDetail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
