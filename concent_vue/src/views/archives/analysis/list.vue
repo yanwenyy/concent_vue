@@ -10,13 +10,13 @@
            <el-button plain
                       type="primary"
                       @click="add">新增</el-button>
-<!--            <el-button plain-->
-<!--                   type="primary"-->
-<!--                   @click="remove">删除</el-button>-->
+            <el-button plain
+                   type="primary"
+                   @click="editItem">修改</el-button>
 
             <el-button plain
                        type="primary"
-                       @click="sumbitFrom">删除</el-button>
+                       @click="sumbitFrom">提交</el-button>
             <el-form-item label="填报年度:">
             <el-select
               placeholder="请选择"
@@ -122,12 +122,11 @@
           align="center"
           filter-multiple="true"
           label="提交时间"
-          prop="sumbitTime"
+          prop="submitTime"
           show-overflow-tooltip
         >
-
           <template slot-scope="scope">
-            {{ scope.row.sumbitTime | dateformat }}
+            {{ scope.row.submitTime | dateformat }}
           </template>
         </el-table-column>
          <el-table-column
@@ -235,33 +234,27 @@
     <el-dialog title="修改填报内容" :visible.sync="dialogEdit"
                width="30%">
       <el-form :model="editform">
-<!--       <el-form-item-->
-<!--         prop="year">-->
-<!--          <el-radio v-model="isShare" label="1">共享</el-radio>-->
-<!--          <el-radio v-model="isShare" label="0">不共享</el-radio>-->
-<!--       </el-form-item>-->
-<!--          <el-form-item-->
-<!--            class="neirong"-->
-<!--            label="备注:"-->
-<!--            prop="remarks"-->
-<!--            :rules="{-->
-<!--                required: true,-->
-<!--                message: '此项不能为空',-->
-<!--                trigger: 'blur',-->
-<!--              }"-->
-<!--          >-->
-<!--              &lt;!&ndash; <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> &ndash;&gt;-->
-<!--              <el-input-->
-<!--                clearable-->
-<!--                placeholder="请输入"-->
-<!--                size="mini"-->
-<!--                v-model="remarks"-->
-<!--              />-->
-<!--            </el-form-item>-->
+       <el-form-item
+         prop="isShare">
+          <el-radio v-model="editform.isShare" label="1">共享</el-radio>
+          <el-radio v-model="editform.isShare" label="0">不共享</el-radio>
+       </el-form-item>
+          <el-form-item
+            class="neirong"
+            label="备注:"
+            prop="remarks"
+          >
+              <el-input
+                placeholder="请输入"
+                size="mini"
+                type="textarea"
+                v-model="editform.remarks"
+              />
+            </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogAdd = false">取 消</el-button>
-        <el-button type="primary" @click="saveResult">确 定</el-button>
+        <el-button @click="dialogEdit = false">取 消</el-button>
+        <el-button type="primary" @click="saveEditResult">确 定</el-button>
       </div>
     </el-dialog>
 <uploadTable v-if="uploadTableStatus" ref="addOrUpdate" @getPosition="getUploadTable"></uploadTable>
@@ -370,7 +363,7 @@ export default {
       this.uploadTableStatus = true;
       console.log(val);
       this.$nextTick(() => {
-        this.$refs.addOrUpdate.init(val)
+        this.$refs.addOrUpdate.init(val,"1")
       })
     },
     selectOrgTable(val){
@@ -403,18 +396,6 @@ export default {
       console.log(data)
       this.uploadTableStatus = false;
       this.getData();
-      //var resultStr = [];
-      //data.forEach((item, index) => {
-
-        //var verifyOrg={ orgId:item.name,orgName:item.name};
-        //this.detailform.verifyOrgList.push(verifyOrg)
-        //resultStr+=item.name+",";
-      //});
-
-      // this.detailform.verifyOrgLists=resultStr;
-      // alert(this.detailform.verifyOrgLists);
-      //console.log(this.detailform.verifyOrgLists)
-      // this.key = this.key + 1;
     },
     saveResult(){
       //alert(this.resultform.year)
@@ -450,6 +431,42 @@ export default {
 
         });
     },
+    saveEditResult(){
+        this.detailform.uuid = this.multipleSelection[0].uuid;
+        this.detailform.archivesTypeId=  this.multipleSelection[0].archivesTypeId;
+        this.detailform.isShare = this.editform.isShare;
+        this.detailform.archivesTypeName = this.multipleSelection[0].archivesTypeName;
+        this.detailform.remarks = this.editform.remarks;
+        this.detailform.submitTime = this.multipleSelection[0].submitTime;
+        this.detailform.reportTime = this.multipleSelection[0].reportTime;
+        this.detailform.archivesInfoType = this.multipleSelection[0].archivesInfoType;
+        this.detailform.reportYear = this.multipleSelection[0].reportYear;
+      this.detailform.createOrgName = this.multipleSelection[0].createOrgName;
+      this.detailform.createUserName = this.multipleSelection[0].createUserName;
+      console.log(this.detailform)
+      this.$http
+        .post(
+          "/api/archives/ArchivesInfo/detail/saveItem",
+          JSON.stringify(this.detailform),
+          {useJson: true}
+        )
+        .then((res) => {
+
+          if (res.data.msg === "SUCCESS") {
+            this.$message({
+              message: "保存成功",
+              type: "success",
+            });
+            // this.$refs[formName].resetFields();
+            // this.$router.push({
+            //   path: "./list",
+            // });
+            this.dialogEdit = false;
+            this.getData();
+          }
+
+        });
+    },
 
     add() {
       //alert(1)
@@ -458,76 +475,54 @@ export default {
     },
     editItem() {
       console.log(JSON.stringify(this.multipleSelection[0].uuid));
-      //是否有资审信息判断
-      // if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
-      //   this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
-      //   return;
-      // }
-      //是否在审核流程中判断
-      //是否在变更流程中判断
-      let p = {
-        actpoint: 'editItem',
-        instid: this.multipleSelection[0].uuid
+      if(this.multipleSelection.length>1)
+      {
+        this.$message.info("请选择一条信息进行修改！");
+        return;
       }
+      this.dialogEdit  =true;
+
       //alert(JSON.stringify(p));
-      this.$router.push({
-        path: './detail/',
-        query: {p: this.$utils.encrypt(JSON.stringify(p))}
-      })
-    },
-    remove() {
-      //alert(1)
-      console.log(JSON.stringify(this.multipleSelection[0].uuid));
-      // if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
-      //   this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
-      //   return;
-      // }
-      let uuids = []
-      this.multipleSelection.forEach((item) => {
-        if (item.uuid != null) {
-          uuids.push(item.uuid);
-        }
-
-      })
-      this.$confirm('此操作将永久删除该资审信息, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        // this.$message({
-        //   type: 'success',
-        //   message: '删除成功!'
-        // });
-        this.$http
-          .post(
-            '/api/archives/ArchivesInfo/list/delete',
-            {ids: uuids}
-          )
-          .then(res => {
-            this.getData();
-          })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });
-      });
 
     },
+
     sumbitFrom(){
+      this.detailform.uuid = this.multipleSelection[0].uuid;
+      this.detailform.archivesTypeId=  this.multipleSelection[0].archivesTypeId;
+      this.detailform.isShare = this.multipleSelection.isShare;
+      this.detailform.archivesTypeName = this.multipleSelection[0].archivesTypeName;
+      this.detailform.remarks = this.multipleSelection.remarks;
+      this.detailform.submitTime = Date.parse(new Date());
+      this.detailform.reportTime = this.multipleSelection[0].reportTime;
+      this.detailform.archivesInfoType = this.multipleSelection[0].archivesInfoType;
+      this.detailform.reportYear = this.multipleSelection[0].reportYear;
+      this.detailform.createOrgName = this.multipleSelection[0].createOrgName;
+      this.detailform.createUserName = this.multipleSelection[0].createUserName;
+      console.log(this.detailform)
+      this.$http
+        .post(
+          "/api/archives/ArchivesInfo/detail/saveItem",
+          JSON.stringify(this.detailform),
+          {useJson: true}
+        )
+        .then((res) => {
 
+          if (res.data.msg === "SUCCESS") {
+            this.$message({
+              message: "保存成功",
+              type: "success",
+            });
+            // this.$refs[formName].resetFields();
+            // this.$router.push({
+            //   path: "./list",
+            // });
+            this.dialogEdit = false;
+            this.getData();
+          }
+
+        });
     },
-    show() {
-      if (this.multipleSelection.length !== 1) {
-        this.$message.info('请选择一条记录进行查看操作！')
-        return false
-      }
-      let p = {actpoint: 'look', instid: this.multipleSelection[0].uuid}
-      this.$router.push({
-        path: './detail/',
-        query: {p: this.$utils.encrypt(JSON.stringify(p))}
-      })
-    }, // list通用方法开始
+
     handleSizeChange(val) {
       this.searchform.size = val
       this.getData()
@@ -544,7 +539,9 @@ export default {
     // 列表选项数据
     handleSelectionChange(val) {
       //alert(JSON.stringify(val))
-      this.multipleSelection = val
+      this.multipleSelection = val;
+      this.editform.isShare = this.multipleSelection[0].isShare;
+      this.editform.remarks = this.multipleSelection[0].remarks;
     },
     getData() {
       if(this.searchform.selectYear==="")

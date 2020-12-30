@@ -8,6 +8,7 @@
     <div>
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-upload
+                v-show="isShow==='1'"
                 class="upload-demo detailUpload"
                 :action="UploadUrl()"
                 :on-success="handleChange"
@@ -48,22 +49,26 @@
                 <el-table-column :resizable="false"
                                  label="大小"
                                  prop="fileSize"
+                                 :width="120"
                                  show-overflow-tooltip>
 
                 </el-table-column>
                 <el-table-column :resizable="false"
                                  label="类型"
+                                 :width="80"
                                  prop="fileType"
                                  show-overflow-tooltip>
 
                 </el-table-column>
 
                 <el-table-column
+                  v-if="isShow=='1'"
+                  v-show="isShow=='1'"
                   :resizable="false"
                   fixed="right"
                   label="操作"
                   show-overflow-tooltip
-                  width="200"
+                  :width="80"
                 >
                   <template slot-scope="scope">
                     <el-link :underline="false"
@@ -99,11 +104,8 @@
           commonFilesList:[]
         },
         selectbusinessId:"",
-
-
+        isShow:'',
         dialogVisible: true,
-
-
         multipleSelection: [],
       }
     },
@@ -160,8 +162,10 @@
           });
         console.log(this.detailform.commonFilesList)
       },
-      init(val) {
+      init(val,type) {
         this.selectbusinessId = val;
+
+        this.isShow = type;
         this.dialogVisible = true;
         this.loadData();
       },
