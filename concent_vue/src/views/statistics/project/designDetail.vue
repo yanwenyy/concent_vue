@@ -1408,7 +1408,6 @@ export default {
 .el-input--mini .el-input__inner{
   height: 40px;
   width: 100%;;
-  padding: 0;
 }
 .gcform .el-input{
   width: 95%;
