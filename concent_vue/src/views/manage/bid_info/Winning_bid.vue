@@ -1286,12 +1286,6 @@ export default {
     clear: both;
   }
 
-  .el-card__body {
-    padding: 0 100px;
-    // height: 400px;
-    // border: 1px solid black;
-    // height: 200px;
-  }
 
   >>>.el-input--mini .el-input__inner {
     height: 40px;

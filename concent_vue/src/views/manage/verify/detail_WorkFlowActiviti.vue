@@ -855,7 +855,7 @@ export default {
   clear: both;
 }
 .el-card__body {
-  padding: 0 100px;
+
 }
 .el-input--mini .el-input__inner{
   height: 40px;
