@@ -488,5 +488,8 @@ pre {
 .detailUpload{
   display: inline-block;
 }
+.tabelformItem{
+  width: 100%!important;
+}
 /**/
 

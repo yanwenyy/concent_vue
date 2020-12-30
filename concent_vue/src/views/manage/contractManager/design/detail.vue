@@ -460,7 +460,14 @@
                   clearable
                   placeholder="请选择"
                   size="mini"
-                  v-model="detailform.contractInfo.isInSystemSub"
+                  v-model="detailform.contractInfo.businessTypeId"
+                  @change="
+                  getName(
+                    detailform.contractInfo.businessTypeId,
+                    xqprojectType,
+                    'businessType'
+                  )
+                "
                 >
                   <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options2"></el-option>
                 </el-select>
@@ -943,7 +950,7 @@
                   <template slot-scope="scope">
                     <el-link
                       :underline="false"
-                      @click="del(scope.$index,scope.row,detailform.topInfoSectionList,'bd')"
+                      @click="del(scope.$index,scope.row,detailform.contractInfoSectionList,'bd')"
                       type="warning">删除
                     </el-link>
                     <el-link
@@ -1734,7 +1741,7 @@
           }).then(() => {
             this.$http
             .post(
-              "/api/topInfo/TopInfoSection/list/delete",
+              "/api/contract/ContractInfo/list/deleteSection",
               {ids: [item.uuid]}
             )
             .then((res) => {
