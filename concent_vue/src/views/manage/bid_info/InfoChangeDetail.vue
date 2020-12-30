@@ -1661,11 +1661,7 @@
               <el-form-item
                 label="投标截止日期:"
                 prop="bidInfo.endTime"
-                :rules="{
-                  required: true,
-                  message: '此项不能为空',
-                  trigger: 'blur',
-                }"
+
               >
                 <el-date-picker
                   :disabled="p.actpoint === 'look'"
@@ -1720,7 +1716,6 @@
                   filterable
                   clearable
                   placeholder="请选择"
-                  size="mini"
                   v-model="detailform.bidInfo.bidModeName"
                 >
                   <el-option
@@ -1795,7 +1790,6 @@
                 filterable
                 clearable
                 placeholder="请选择"
-                size="mini"
                 v-model="detailform.bidInfoInnerOrgList.innerOrgName"
               >
                 <el-option
@@ -2329,7 +2323,8 @@ export default {
     if (this.p.actpoint === "edit" || this.p.actpoint === "look") {
       this.getDetail();
     }
-    if (this.p.actpoint === "add" || this.id) {
+    if (this.p.actpoint === "add") {
+
       this.getAddDetail();
     }
     this.$store.dispatch("getConfig", {});
@@ -2590,31 +2585,27 @@ export default {
           var datas = res.data.data;
           var beforData = [],
             afterData = [];
-          if (datas[0].topInfoOrg.changeStatus == 1) {
+          if (datas[0].bidInfo.changeStatus == 1) {
             beforData = datas[0];
             afterData = datas[1];
           } else {
             beforData = datas[1];
             afterData = datas[0];
           }
-          this.getTwo(afterData.topInfor.enginTypeFirstId);
-          this.getTwoSC(afterData.topInfor.marketFirstNameId);
-          // afterData.topInforCapitalList.forEach((item)=>{
-          //   this.value1.push(item.capitalId);
-          // });
           console.log(afterData);
           this.detailform = {
-            topInfor: afterData.topInfor,
-            topInfoOrg: afterData.topInfoOrg,
-            topInfoSiteList: afterData.topInfoSiteList,
-            topInfoSectionList: afterData.topInfoSectionList,
+             bidInfo: afterData.bidInfo,
+            bidInfoInnerOrgList: afterData.bidInfoInnerOrgList,
+            bidInfoSectionList: afterData.bidInfoSectionList,
+            bidInfo_03: afterData.bidInfo_03||[],
+            topInforBO:afterData.topInforBO
           };
           this.detailFormBefore = {
-            capitalName: beforData.capitalName,
-            topInfor: beforData.topInfor,
-            topInfoOrg: beforData.topInfoOrg,
-            topInfoSiteList: beforData.topInfoSiteList,
-            topInfoSectionList: beforData.topInfoSectionList,
+             bidInfo: beforData.bidInfo,
+            bidInfoInnerOrgList: beforData.bidInfoInnerOrgList,
+            bidInfoSectionList: beforData.bidInfoSectionList,
+            bidInfo_03: beforData.bidInfo_03||[],
+            topInforBO:beforData  .topInforBO
           };
         });
     },
@@ -2629,7 +2620,7 @@ export default {
             bidInfo: datas.bidInfo,
             bidInfoInnerOrgList: datas.bidInfoInnerOrgList,
             bidInfoSectionList: datas.bidInfoSectionList,
-            bidInfo_03: datas.bidInfo_03,
+            bidInfo_03: datas.bidInfo_03||[],
             topInforBO:datas.topInforBO
           };
           for (var i in this.detailform) {
