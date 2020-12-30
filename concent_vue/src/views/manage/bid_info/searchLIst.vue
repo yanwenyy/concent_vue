@@ -9,18 +9,38 @@
         ></el-input>
       </el-form-item>
       <el-form-item label="工程类别(一级):">
-        <el-input
-          v-model="searchform.enginTypeFirstName"
-          placeholder="工程类别(一级)"
-          clearable
-        ></el-input>
+            <el-select
+              clearable
+              filterable
+              placeholder="请选择"
+              @change="getTwo"
+              size="mini"
+              v-model="searchform.enginTypeFirstName"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.id"
+                v-for="(item, index) in projectDomainType"
+              ></el-option>
+            </el-select>
       </el-form-item>
       <el-form-item label="工程类别(二级):">
-        <el-input
-          v-model="searchform.enginTypeSecondName"
-          placeholder="工程类别(二级)"
-          clearable
-        ></el-input>
+            <el-select
+              clearable
+              filterable
+              placeholder="请选择"
+              @change="getTwo"
+              size="mini"
+              v-model="searchform.enginTypeSecondName"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.id"
+                v-for="(item, index) in xqprojectType"
+              ></el-option>
+            </el-select>
       </el-form-item>
       <el-form-item label="标段名称:">
         <el-input
@@ -75,15 +95,17 @@
       </el-form-item>
 
       <el-form-item label="是否中标:">
-            <!-- <el-radio  label="0"
-            v-model="searchform.isWinBid"
+            <!-- <div>
+            <el-radio  label="0"
+            v-model="detailform.bidInfo.isWinBid"
             :disabled="p.actpoint === 'look'"
+            style= margin-right:40px
             >是</el-radio>
             <el-radio  label="1"
-            v-model="searchform.isWinBid"
+            v-model="detailform.bidInfo.isWinBid"
             :disabled="p.actpoint === 'look'"
-            >否</el-radio> -->
-
+            >否</el-radio>
+            </div> -->
         <el-select
           clearable
           filterable
@@ -183,27 +205,6 @@
           </template>
         </el-table-column>
 
-        <!-- <el-form-item
-              label="工程类别(一级):"
-              prop="enginTypeFirstName"
-            >
-              <el-select
-                :disabled="p.actpoint === 'look'"
-                clearable
-                filterable
-                placeholder="请选择"
-                @change="getTwo"
-                size="mini"
-              >
-                <el-option
-                  :key="index + '-only'"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in projectDomainType"
-                ></el-option>
-              </el-select>
-            </el-form-item> -->
-
         <el-table-column
           :width="150"
           align="center"
@@ -212,33 +213,6 @@
           show-overflow-tooltip
         >
         </el-table-column>
-
-        <!-- <el-form-item
-              label="工程类别(二级):"
-              prop="enginTypeSecondName"
-            >
-              <el-select
-                :disabled="p.actpoint === 'look'"
-                clearable
-                filterable
-                placeholder="请选择"
-                size="mini"
-                @change="
-                  getName(
-                    detailform.topInfor.enginTypeSecondId,
-                    xqprojectType,
-                    'enginTypeSecondName'
-                  )
-                "
-              >
-                <el-option
-                  :key="index + '-only'"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in xqprojectType"
-                ></el-option>
-              </el-select>
-            </el-form-item> -->
 
         <el-table-column
           :width="150"
@@ -465,17 +439,20 @@ export default {
       });
     },
     submit() {},
-    //工程类别二级
-    getTwo(id) {
-      if (id != "") {
-        this.searchform.enginTypeSecondId = "";
-        this.projectDomainType.find((item) => {
-          if (item.id == id) {
+      //工程类别二级
+      getTwo(id) {
+        this.searchform.enginTypeSecondId='';
+        this.xqprojectType =[];
+        if(id!=''){
+          this.projectDomainType.find(
+            (item) => {
+            if (item.id == id) {
             this.xqprojectType = item.children;
           }
-        });
-      }
-    },
+        }
+        )
+        }
+      },
     exportdata() {},
     // 查看
     rowshow(row) {
@@ -548,6 +525,7 @@ export default {
   },
   created() {
     this.getData();
+    this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
   },
 };
 </script>

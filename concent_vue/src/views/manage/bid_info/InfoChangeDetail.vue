@@ -149,7 +149,7 @@
             ></el-input>
           </el-form-item>
 
-          <el-form-item label="资金来源:" prop="capitalId"
+          <el-form-item label="资金来源:"
            :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -163,12 +163,6 @@
 
           <el-form-item
             label="投资额（万元）:"
-            prop="topInfor.investment"
-            :rules="{
-              required: true,
-              message: '此项不能为空',
-              trigger: 'blur',
-            }"
           >
             <el-input
               v-model="detailFormBefore.topInforBO.topInfor.investment"
@@ -206,16 +200,17 @@
                 trigger: 'blur',
               }"
               >
-
-            <el-radio  label="0"
-            v-model="detailFormBefore.topInforBO.topInfor.isMajorProject"
-            disabled
-            >是</el-radio>
-            <el-radio  label="1"
-            v-model="detailFormBefore.topInforBO.topInfor.isMajorProject"
-            disabled
-            >否</el-radio>
-
+            <div>
+              <el-radio  label="0"
+              v-model="detailFormBefore.topInforBO.topInfor.isMajorProject"
+              disabled
+              style="margin-right:40px"
+              >是</el-radio>
+              <el-radio  label="1"
+              v-model="detailFormBefore.topInforBO.topInfor.isMajorProject"
+              disabled
+              >否</el-radio>
+          </div>
           </el-form-item>
           <el-form-item label="预计中标概率:"
            :rules="{
@@ -316,12 +311,7 @@
             v-model="detailFormBefore.bidInfo.isCoalitionBid"
             disabled
             >否</el-radio>
-              <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in yesOrNo"
-                ></el-option>
+
                 </div>
             <!-- <el-input
               v-model="detailFormBefore.bidInfo.isCoalitionBid"
@@ -345,23 +335,14 @@
             v-model="detailFormBefore.bidInfo.isBidRates"
             disabled
             >否</el-radio>
-              <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in yesOrNo"
-                ></el-option>
           </div>
-            <!-- <el-input
-              v-model="detailFormBefore.bidInfo.isBidRates"
-              disabled
-            ></el-input> -->
+
           </el-form-item>
 
             <el-form-item label="内部联合体单位:"
               v-if="detailform.bidInfo.isCoalitionBid==='0'">
             <el-input
-              v-model="detailFormBefore.bidInfoInnerOrgList.innerOrgName"
+              v-model="detailFormBefore.bidInfo.innerOrgName"
               disabled
             ></el-input>
           </el-form-item>
@@ -395,12 +376,12 @@
             <p><span >附件（最大10MB）: </span>
                 <el-upload
                   class="upload-demo detailUpload"
-                  :action="'/api/topInfo/CommonFiles/bidInfo/03/uploadFile'"
+                  :action="'/api/topInfo/CommonFiles/bidInfo/01/uploadFile'"
                   :on-success="handleChange"
                   :on-error="handleChange"
                   :on-remove="handleRemove"
                   :show-file-list="false"
-                  :file-list="detailform.bidInfo_03"
+                  :file-list="detailform.bidInfo_01"
                   disabled
                   multiple
                 >
@@ -408,7 +389,7 @@
                 </el-upload>
               </p>
 <el-table
-                :data="detailFormBefore.bidInfo_03"
+                :data="detailFormBefore.bidInfo_01"
                 :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
 
                 @selection-change="handleSelectionChange"
@@ -430,7 +411,9 @@
                 </el-table-column>
 
                 <el-table-column align="center" :resizable="false" label="大小" prop="fileSize" show-overflow-tooltip>
-
+                  <template slot-scope="scope">
+                    {{(scope.row.fileSize/1024).toFixed(2)}}
+                  </template>
                 </el-table-column>
                 <el-table-column align="center" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
 
@@ -788,32 +771,7 @@
             class="gcform"
             ref="detailform"
           >
-            <!-- <el-form-item label="项目板块:" prop="topInforBO.topInfor.moduleName"
-             :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }">
-              <el-select
-                :disabled="p.actpoint === 'look'"
-                clearable
-                filterable
-                style="width: 100%"
-                placeholder="请选择"
-                size="mini"
-                @change="
-                  getName(detailform.topInforBO.topInfor.moduleName, bizCode, 'moduleId')
-                "
-                v-model="detailform.topInforBO.topInfor.moduleName"
-              >
-                <el-option
-                  :key="index + '-only'"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in bizCode"
-                ></el-option>
-              </el-select>
-            </el-form-item> -->
+
 
             <el-form-item label="项目板块:"
               :rules="{
@@ -830,27 +788,6 @@
               </el-input>
             </el-form-item>
 
-            <!-- <el-form-item
-              label="工程类别(一级):"
-              prop="topInfor.enginTypeFirstId"
-            >
-              <el-select
-                :disabled="p.actpoint === 'look'"
-                clearable
-                filterable
-                placeholder="请选择"
-                @change="getTwo"
-                size="mini"
-                v-model="detailform.topInforBO.topInfor.enginTypeFirstId"
-              >
-                <el-option
-                  :key="index + '-only'"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in projectDomainType"
-                ></el-option>
-              </el-select>
-            </el-form-item> -->
 
             <el-form-item label="工程类别(一级):">
               <el-input
@@ -864,33 +801,7 @@
               </el-input>
             </el-form-item>
 
-            <!-- <el-form-item
-              label="工程类别(二级):"
-              prop="topInfor.enginTypeSecondId"
-            >
-              <el-select
-                :disabled="p.actpoint === 'look'"
-                clearable
-                filterable
-                placeholder="请选择"
-                size="mini"
-                @change="
-                  getName(
-                    detailform.topInforBO.topInfor.enginTypeSecondId,
-                    xqprojectType,
-                    'enginTypeSecondName'
-                  )
-                "
-                v-model="detailform.topInforBO.topInfor.enginTypeSecondId"
-              >
-                <el-option
-                  :key="index + '-only'"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in xqprojectType"
-                ></el-option>
-              </el-select>
-            </el-form-item> -->
+
 
             <el-form-item
               label="工程类别(二级):"
@@ -903,22 +814,7 @@
               </el-input>
             </el-form-item>
 
-            <!-- <el-form-item
-              label="项目名称:"
-              prop="topInfor.inforName"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                :disabled="p.actpoint === 'look'"
-                clearable
-                size="mini"
-                v-model="detailform.topInforBO.topInfor.inforName"
-              />
-            </el-form-item> -->
+
 
             <el-form-item  label="项目名称:"
                 :rules="{
@@ -934,22 +830,7 @@
                 v-model="detailform.topInforBO.topInfor.inforName"/>
             </el-form-item>
 
-            <!-- <el-form-item
-              label="建设单位:"
-              prop="topInfor.constructionOrg"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                :disabled="p.actpoint === 'look'"
-                clearable
-                size="mini"
-                v-model="detailform.topInforBO.topInfor.constructionOrg"
-              />
-            </el-form-item> -->
+
 
             <el-form-item  label="建设单位:"
               :rules="{
@@ -980,35 +861,6 @@
               </el-input>
             </el-form-item>
 
-            <!-- <el-form-item label="公告类型:" prop="topInfor.noticeTypeId"
-             :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }">
-              <el-select
-                :disabled="p.actpoint === 'look'"
-                clearable
-                filterable
-                placeholder="请选择"
-                size="mini"
-                v-model="detailform.topInforBO.topInfor.noticeTypeId"
-                @change="
-                  getName(
-                    detailform.topInforBO.topInfor.noticeTypeId,
-                    bulletinType,
-                    'noticeTypeName'
-                  )
-                "
-              >
-                <el-option
-                  :key="index + '-only'"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in bulletinType"
-                ></el-option>
-              </el-select>
-            </el-form-item> -->
 
             <el-form-item label="预计招标时间:"
                 :rules="{
@@ -1027,26 +879,6 @@
               >
               </el-date-picker>
             </el-form-item>
-<!--
-            <el-form-item
-              label="预计招标时间:"
-              prop="topInfor.planBidTime"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-date-picker
-                :disabled="p.actpoint === 'look'"
-                filterable
-                clearable
-                type="date"
-                value-format="timestamp"
-                v-model="detailform.topInforBO.topInfor.planBidTime"
-              >
-              </el-date-picker>
-            </el-form-item> -->
 
             <el-form-item label="所属线路:">
               <el-input
@@ -1057,30 +889,7 @@
               </el-input>
             </el-form-item>
 
-            <!-- <el-form-item label="所属线路:" prop="topInfor.belongLineId">
-              <el-select
-                :disabled="p.actpoint === 'look'"
-                filterable
-                clearable
-                placeholder="请选择或直接填写所属现路"
-                size="mini"
-                @change="
-                  getName(
-                    detailform.topInforBO.topInfor.belongLineId,
-                    railwayLine,
-                    'belongLineName'
-                  )
-                "
-                v-model="detailform.topInforBO.topInfor.belongLineId"
-              >
-                <el-option
-                  :key="index + '-only'"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in railwayLine"
-                ></el-option>
-              </el-select>
-            </el-form-item> -->
+
             <!-- --------------------------------------------------------------- -->
 
             <el-form-item label="招标人:"
@@ -1175,33 +984,7 @@
               </el-input>
             </el-form-item>
 
-            <!-- <el-form-item
-              label="项目性质(一级):"
-              prop="topInfor.projectModelId"
-            >
-              <el-select
-                :disabled="p.actpoint === 'look'"
-                clearable
-                filterable
-                placeholder="请选择"
-                size="mini"
-                @change="
-                  getName(
-                    detailform.topInforBO.topInfor.projectModelId,
-                    projectModel,
-                    'projectModelName'
-                  )
-                "
-                v-model="detailform.topInforBO.topInfor.projectModelId"
-              >
-                <el-option
-                  :key="index + '-only'"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in projectModel"
-                ></el-option>
-              </el-select>
-            </el-form-item> -->
+
 
             <el-form-item
               label="项目性质(二级):"
@@ -1217,33 +1000,7 @@
               </el-input>
             </el-form-item>
 
-            <!-- <el-form-item
-              label="项目性质(二级):"
-              prop="topInfor.projectModelId"
-            >
-              <el-select
-                :disabled="p.actpoint === 'look'"
-                clearable
-                filterable
-                placeholder="请选择"
-                size="mini"
-                @change="
-                  getName(
-                    detailform.topInforBO.topInfor.projectModelId,
-                    projectModel,
-                    'projectModelName'
-                  )
-                "
-                v-model="detailform.topInforBO.topInfor.projectModelId"
-              >
-                <el-option
-                  :key="index + '-only'"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in projectModel"
-                ></el-option>
-              </el-select>
-            </el-form-item> -->
+
 
             <el-form-item label="资审方式:">
               <el-input
@@ -1287,30 +1044,6 @@
               </el-input>
             </el-form-item>
 
-            <!-- <el-form-item label="资金来源:" prop="capitalId"
-             :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }">
-              <el-select
-                :disabled="p.actpoint === 'look'"
-                filterable
-                clearable
-                multiple
-                placeholder="请选择"
-                size="mini"
-                v-model="value1"
-              >
-                <el-option
-                  :key="index + '-only'"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in amountSource"
-                ></el-option>
-              </el-select>
-            </el-form-item> -->
-
             <el-form-item label="投资额（万元）:"
                 :rules="{
                 required: true,
@@ -1326,28 +1059,6 @@
               />
             </el-form-item>
 
-            <!-- <el-form-item
-              label="投资额（万元）:"
-              prop="topInfor.investment"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                @input="
-                  detailform.topInfor.investment = getMoney(
-                    detailform.topInfor.investment
-                  )
-                "
-                :disabled="p.actpoint === 'look'"
-                clearable
-                placeholder=""
-                size="mini"
-                v-model="detailform.topInforBO.topInfor.investment"
-              />
-            </el-form-item> -->
 
             <el-form-item  label="新兴市场(一级):"
                 :rules="{
@@ -1364,32 +1075,7 @@
               </el-input>
             </el-form-item>
 
-            <!-- <el-form-item
-              label="新兴市场(一级):"
-              prop="topInfor.marketFirstNameId"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-select
-                :disabled="p.actpoint === 'look'"
-                filterable
-                clearable
-                placeholder="请选择"
-                @change="getTwoSC"
-                size="mini"
-                v-model="detailform.topInforBO.topInfor.marketFirstNameId"
-              >
-                <el-option
-                  :key="index + '-only'"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in emergingMarket"
-                ></el-option>
-              </el-select>
-            </el-form-item> -->
+
 
             <el-form-item  label="新兴市场(二级):"
                 :rules="{
@@ -1406,38 +1092,7 @@
               </el-input>
             </el-form-item>
 
-            <!-- <el-form-item
-              label="新兴市场(二级):"
-              prop="topInfor.marketSecondId"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-select
-                :disabled="p.actpoint === 'look'"
-                filterable
-                clearable
-                placeholder="请选择"
-                size="mini"
-                @change="
-                  getName(
-                    detailform.topInforBO.topInfor.marketSecondId,
-                    emergingMarketTwo,
-                    'marketSecondName'
-                  )
-                "
-                v-model="detailform.topInfor.marketSecondId"
-              >
-                <el-option
-                  :key="index + '-only'"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in emergingMarketTwo"
-                ></el-option>
-              </el-select>
-            </el-form-item> -->
+
 
             <el-form-item  label="是否为重大项目:"
                 :rules="{
@@ -1449,45 +1104,17 @@
             <el-radio  label="0"
             v-model="detailform.topInforBO.topInfor.bidProbName"
             disabled
+            style="margin-right:40px"
             >是</el-radio>
             <el-radio  label="1"
             v-model="detailform.topInforBO.topInfor.bidProbName"
             disabled
             >否</el-radio>
-                              <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in yesOrNo"
-                  ></el-option>
+
               </div>
             </el-form-item>
 
-            <!-- <el-form-item
-              label="是否为重大项目:"
-              prop="topInfor.isMajorProject"
-               :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-select
-                :disabled="p.actpoint === 'look'"
-                filterable
-                clearable
-                placeholder="请选择"
-                size="mini"
-                v-model="detailform.topInforBO.topInfor.isMajorProject"
-              >
-                <el-option
-                  :key="index + '-only'"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in yesOrNo"
-                ></el-option>
-              </el-select>
-            </el-form-item> -->
+
 
 
             <el-form-item  label="预计中标概率:"
@@ -1505,56 +1132,7 @@
               </el-input>
             </el-form-item>
 
-            <!-- <el-form-item
-              label="预计中标概率:"
-              prop="topInfor.bidProbId"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-select
-                :disabled="p.actpoint === 'look'"
-                filterable
-                clearable
-                placeholder="请选择"
-                size="mini"
-                @change="
-                  getName(
-                    detailform.topInforBO.topInfor.bidProbId,
-                    probability,
-                    'bidProbName'
-                  )
-                "
-                v-model="detailform.topInfor.bidProbId"
-              >
-                <el-option
-                  :key="index + '-only'"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in probability"
-                ></el-option>
-              </el-select>
-            </el-form-item> -->
 
-
-            <!-- <el-form-item
-              label="投资额（万元）:"
-              prop="topInfor.investment"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                clearable
-                placeholder=""
-                size="mini"
-                v-model="detailform.topInfor.investment"
-              />
-            </el-form-item> -->
             <div>
               <el-form-item   class="formItem" label="项目跟踪负责人:"
                 :rules="{
@@ -1570,23 +1148,7 @@
               </el-input>
               </el-form-item>
 
-              <!-- <el-form-item
-                label="项目跟踪负责人:"
-                prop="topInfoOrg.projectTrackResponPerson"
-                :rules="{
-                  required: true,
-                  message: '此项不能为空',
-                  trigger: 'blur',
-                }"
-              >
-                <el-input
-                  :disabled="p.actpoint === 'look'"
-                  clearable
-                  placeholder=""
-                  size="mini"
-                  v-model="detailform.topInforBO.topInfoOrg.projectTrackResponPerson"
-                />
-              </el-form-item> -->
+
 
               <el-form-item  class="formItem"  label="联系电话:"
                 :rules="{
@@ -1602,23 +1164,7 @@
               </el-input>
               </el-form-item>
 
-              <!-- <el-form-item
-                label="联系电话:"
-                prop="topInfoOrg.contactMode"
-                :rules="{
-                  required: true,
-                  message: '此项不能为空',
-                  trigger: 'blur',
-                }"
-              >
-                <el-input
-                  :disabled="p.actpoint === 'look'"
-                  clearable
-                  placeholder=""
-                  size="mini"
-                  v-model="detailform.topInforBO.topInfoOrg.contactMode"
-                />
-              </el-form-item> -->
+
             </div>
 
             <el-form-item
@@ -1636,26 +1182,7 @@
               />
             </el-form-item>
 
-            <!-- <el-form-item
-              class="neirong"
-              label="项目内容:"
-              prop="topInfor.inforContent"
-              style="width: 100%"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                :disabled="p.actpoint === 'look'"
-                type="textarea"
-                clearable
-                placeholder="请输入"
-                size="mini"
-                v-model="detailform.topInforBO.topInfor.inforContent"
-              />
-            </el-form-item> -->
+
             <div>
               <div class="detail-class-tltle">投标信息:</div>
               <el-form-item
@@ -1746,12 +1273,7 @@
             v-model="detailform.bidInfo.isCoalitionBid"
             :disabled="p.actpoint === 'look'"
             >否</el-radio>
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in yesOrNo"
-                  ></el-option>
+
           </div>
               </el-form-item>
 
@@ -1768,17 +1290,13 @@
             <el-radio  label="0"
             v-model="detailform.bidInfo.isBidRates"
             :disabled="p.actpoint === 'look'"
+            style="margin-right:40px"
             >是</el-radio>
             <el-radio  label="1"
             v-model="detailform.bidInfo.isBidRates"
             :disabled="p.actpoint === 'look'"
             >否</el-radio>
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in yesOrNo"
-                  ></el-option>
+
              </div>
               </el-form-item>
 
@@ -1841,12 +1359,12 @@
                 <p><span >附件（最大10MB）: </span>
                 <el-upload
                   class="upload-demo detailUpload"
-                  :action="'/api/topInfo/CommonFiles/bidInfo/03/uploadFile'"
+                  :action="'/api/topInfo/CommonFiles/bidInfo/01/uploadFile'"
                   :on-success="handleChange"
                   :on-error="handleChange"
                   :on-remove="handleRemove"
                   :show-file-list="false"
-                  :file-list="detailform.bidInfo_03"
+                  :file-list="detailform.bidInfo_01"
                   :disabled="p.actpoint === 'look'"
                   multiple
                 >
@@ -1855,7 +1373,7 @@
               </p>
 
               <el-table
-                :data="detailform.bidInfo_03"
+                :data="detailform.bidInfo_01"
                 :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
 
                 @selection-change="handleSelectionChange"
@@ -1876,8 +1394,10 @@
 
                 </el-table-column>
 
-                <el-table-column align="center" :resizable="false" label="大小" prop="fileSize" show-overflow-tooltip>
-
+                <el-table-column align="center" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    {{(scope.row.fileSize/1024).toFixed(2)}}
+                  </template>
                 </el-table-column>
                 <el-table-column align="center" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
 
@@ -1900,13 +1420,12 @@
             </el-row>
 
             <p style="overflow: hidden；margin-right: 30px">
-              <span style="float: left">标段信息: </span>
+              <span >标段信息: </span>
               <el-button
                 v-show="p.actpoint != 'look'"
                 @click="openBd('add')"
                 size="mini"
                 style="
-                  float: right;
                   width: 70px;
                   height: 32px;
                   background: #5c8bfa;
@@ -2241,7 +1760,7 @@ export default {
         bidInfo: {},
         bidInfoInnerOrgList:[],
         bidInfoSectionList: [],
-        bidInfo_03: [],
+        bidInfo_01: [],
         topInforBO:{
           topInfor:{},
           topInfoOrg:{},
@@ -2251,7 +1770,7 @@ export default {
         bidInfo: {},
         bidInfoInnerOrgList:[],
         bidInfoSectionList: [],
-        bidInfo_03: [],
+        bidInfo_01: [],
         topInforBO:{
           topInfor:{},
           topInfoOrg:{},
@@ -2347,7 +1866,7 @@ export default {
           type: 'success',
           duration: 1500,
           onClose: () => {
-          this.detailform.bidInfo_03.push(response.data);
+          this.detailform.bidInfo_01.push(response.data);
           console.log(fileList)
         }
       })
@@ -2365,7 +1884,7 @@ export default {
         )
         .then((res) => {
         if (res.data.code === 200) {
-        this.detailform.bidInfo_03.splice(index,1);
+        this.detailform.bidInfo_01.splice(index,1);
       }
 
     });
@@ -2406,7 +1925,7 @@ export default {
           )
           .then((res) => {
             if (res.data.code === 200) {
-               this.detailform.bidInfo_03=fileList;
+               this.detailform.bidInfo_01=fileList;
             }
           });
         console.log(this.fileList)
@@ -2597,14 +2116,14 @@ export default {
              bidInfo: afterData.bidInfo,
             bidInfoInnerOrgList: afterData.bidInfoInnerOrgList,
             bidInfoSectionList: afterData.bidInfoSectionList,
-            bidInfo_03: afterData.bidInfo_03||[],
+            bidInfo_01: afterData.bidInfo_01||[],
             topInforBO:afterData.topInforBO
           };
           this.detailFormBefore = {
              bidInfo: beforData.bidInfo,
             bidInfoInnerOrgList: beforData.bidInfoInnerOrgList,
             bidInfoSectionList: beforData.bidInfoSectionList,
-            bidInfo_03: beforData.bidInfo_03||[],
+            bidInfo_01: beforData.bidInfo_01||[],
             topInforBO:beforData  .topInforBO
           };
         });
@@ -2620,7 +2139,7 @@ export default {
             bidInfo: datas.bidInfo,
             bidInfoInnerOrgList: datas.bidInfoInnerOrgList,
             bidInfoSectionList: datas.bidInfoSectionList,
-            bidInfo_03: datas.bidInfo_03||[],
+            bidInfo_01: datas.bidInfo_01||[],
             topInforBO:datas.topInforBO
           };
           for (var i in this.detailform) {

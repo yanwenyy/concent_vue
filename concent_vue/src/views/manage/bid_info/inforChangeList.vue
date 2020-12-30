@@ -6,6 +6,7 @@
         <el-button :disabled="btnStatus" @click="add" plain type="primary">新增</el-button>
         <el-button @click="totop" plain type="primary">修改</el-button>
         <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
+        <el-button @click="remove" type="primary" plain>删除</el-button>
       </el-button-group>
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
@@ -68,41 +69,58 @@
         </template>
         </el-table-column>
 
+
         <el-table-column
-          :width="150"
+          :width="200"
           align="center"
           label="工程类别(一级)"
           prop="enginTypeFirstName"
-          show-overflow-tooltip
-        >
+          show-overflow-tooltip>
           <template slot="header" slot-scope="scope">
             <span>工程类别(一级)</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.enginTypeFirstName"
-                size="mini"
-              />
-            </div>
+            <el-select
+              clearable
+              filterable
+              placeholder="请选择"
+              @change="getTwo"
+              size="mini"
+              v-model="searchform.enginTypeFirstName"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.id"
+                v-for="(item, index) in projectDomainType"
+              ></el-option>
+            </el-select>
+
           </template>
         </el-table-column>
 
-               <el-table-column
-          :width="150"
+        <el-table-column
+          :width="200"
           align="center"
           label="工程类别(二级)"
           prop="enginTypeSecondName"
-          show-overflow-tooltip
-        >
+          show-overflow-tooltip>
           <template slot="header" slot-scope="scope">
             <span>工程类别(二级)</span>
-            <div>
-              <el-input
-                style="float: left; width: 100%"
-                v-model="searchform.enginTypeSecondName"
-                size="mini"
-              />
-            </div>
+            <el-select
+              clearable
+              filterable
+              placeholder="请选择"
+              @change="getTwo"
+              size="mini"
+              v-model="searchform.enginTypeSecondName"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.id"
+                v-for="(item, index) in xqprojectType"
+              ></el-option>
+            </el-select>
+
           </template>
         </el-table-column>
 
@@ -269,6 +287,11 @@
     components: {
       InfoChangeSearch
     },
+        computed: {
+      projectDomainType() {
+        return this.$store.state.category.projectDomainType;
+      }
+    },
     methods: {
       //去新增详情页面
       goAddDetail(data){
@@ -321,24 +344,62 @@
         });
       },
       // 删除
+      // remove() {
+      //   if (this.multipleSelection.length < 1) {
+      //     this.$message.info("请选择一条记录进行查看操作！");
+      //     return false;
+      //   }
+      //   let uuids = []
+      //   this.multipleSelection.forEach((item) => {
+      //     uuids.push(item.topOrgId)
+      //   });
+      //   this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+      //     confirmButtonText: '确定',
+      //     cancelButtonText: '取消',
+      //     type: 'warning'
+      //   }).then(() => {
+      //     this.$http
+      //     .post(
+      //       "/api/topInfo/BidInfo/list/deleteChange",
+      //       {ids: uuids}
+      //     )
+      //     .then((res) => {
+      //     this.getData()
+      //    });
+      // }).catch(() => {})
+      // },
+
       remove() {
         if (this.multipleSelection.length < 1) {
           this.$message.info("请选择一条记录进行查看操作！");
           return false;
         }
-        let uuids = []
+        let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          uuids.push(item.topOrgId)
-      })
-        // uuids.join(',')
-        this.$http
-          .post(
-            // "/api/topInfo/TopInfor/list/delete",
-            {ids: uuids}
-          )
-          .then((res) => {
-          this.getData()
-      });
+          // if(item.flowStatus==1||item.flowStatus==4){
+          //   uuids.push(item.uuid);
+          // }else{
+          //   this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
+          //   return itemStatus=false;
+          // }
+          uuids.push(item.uuid);
+        })
+
+        if(itemStatus){
+          this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$http
+            .post(
+              "/api/topInfo/BidInfo/list/deleteChange",{ids:uuids}
+            )
+            .then((res) => {
+            this.getData()
+        });
+        }).catch(() => {})
+        }
       },
       // 展示
       show() {
@@ -397,6 +458,20 @@
           // this.btnStatus=false;
         }
       },
+      //工程类别二级
+      getTwo(id) {
+        this.searchform.enginTypeSecondId='';
+        this.xqprojectType =[];
+        if(id!=''){
+          this.projectDomainType.find(
+            (item) => {
+            if (item.id == id) {
+            this.xqprojectType = item.children;
+          }
+        }
+        )
+        }
+      },
       // 查询
       getData() {
         console.log(11111)
@@ -439,6 +514,7 @@
     },
     created() {
       this.getData();
+       this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
     },
   };
 </script>

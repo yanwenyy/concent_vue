@@ -224,6 +224,16 @@ export default {
                       "leaf": true,
                       "defaultpage":  true
                   },
+                  {
+                    "name": "中标结果登记",
+                    "path": "/manage/bid_info/Winning_bid_z",
+                    "component": "/manage/bid_info/Winning_bid_z",
+                    "iconCls": "el-icon-switch-button",
+                    "menushow": true,
+                    "leaf": true,
+                    "defaultpage":  true
+                },
+
                   ]
                 },
                 {
