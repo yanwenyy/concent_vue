@@ -10,9 +10,13 @@
            <el-button plain
                       type="primary"
                       @click="add">新增</el-button>
+<!--            <el-button plain-->
+<!--                   type="primary"-->
+<!--                   @click="remove">删除</el-button>-->
+
             <el-button plain
-                   type="primary"
-                   @click="remove">删除</el-button>
+                       type="primary"
+                       @click="sumbitFrom">删除</el-button>
             <el-form-item label="填报年度:">
             <el-select
               placeholder="请选择"
@@ -161,10 +165,14 @@
           prop="orgCount"
           align="center"
           show-overflow-tooltip>
+        <template slot-scope="scope">
+            {{ scope.row.orgCount | getNotIncludedOrg }}
+          </template>
         </el-table-column>
         <el-table-column
           :width="120"
           label="不可见数"
+          prop="orgCount"
           align="center"
           show-overflow-tooltip>
         </el-table-column>
@@ -227,30 +235,29 @@
     <el-dialog title="修改填报内容" :visible.sync="dialogEdit"
                width="30%">
       <el-form :model="editform">
-       <el-form-item
-         prop="year">
-          <el-radio v-model="isShare" label="1">共享</el-radio>
-          <el-radio v-model="isShare" label="0">不共享</el-radio>
-       </el-form-item>
-          <el-form-item
-            class="neirong"
-            label="备注:"
-            prop="remarks"
-            :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-          >
-              <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
-              <el-input
-                :readonly="p.actpoint === 'look'"
-                clearable
-                placeholder="请输入"
-                size="mini"
-                v-model="searchform.archivesInfo.remarks"
-              />
-            </el-form-item>
+<!--       <el-form-item-->
+<!--         prop="year">-->
+<!--          <el-radio v-model="isShare" label="1">共享</el-radio>-->
+<!--          <el-radio v-model="isShare" label="0">不共享</el-radio>-->
+<!--       </el-form-item>-->
+<!--          <el-form-item-->
+<!--            class="neirong"-->
+<!--            label="备注:"-->
+<!--            prop="remarks"-->
+<!--            :rules="{-->
+<!--                required: true,-->
+<!--                message: '此项不能为空',-->
+<!--                trigger: 'blur',-->
+<!--              }"-->
+<!--          >-->
+<!--              &lt;!&ndash; <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> &ndash;&gt;-->
+<!--              <el-input-->
+<!--                clearable-->
+<!--                placeholder="请输入"-->
+<!--                size="mini"-->
+<!--                v-model="remarks"-->
+<!--              />-->
+<!--            </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogAdd = false">取 消</el-button>
@@ -303,6 +310,7 @@ export default {
       dialogAdd:false,
       uploadTableStatus:false,
       orgTableStatus:false,
+      dialogEdit:false,
       resultform:{
         year:''
       },
@@ -337,6 +345,10 @@ export default {
         createUserName: '',
         selectYear:''
       },
+      editform:{
+        isShare: '',
+        remarks: ''
+      }
 
     }
   },
@@ -348,8 +360,12 @@ export default {
       return value == "1" ? "是" : "否";
       // return statusW
     },
+    getNotIncludedOrg: (value) => {
+      return 67-parseInt( value );
+    },
   },
   methods: {
+
     selectUploadTable(val){
       this.uploadTableStatus = true;
       console.log(val);
@@ -364,18 +380,18 @@ export default {
         this.$refs.addOrUpdate1.init(val)
       })
     },
-    getOrgTable()
+    getOrgTable(data)
     {
       console.log(data)
       this.orgTableStatus = false;
-
+      this.getData();
       var resultStr = [];
-      data.forEach((item, index) => {
+      //data.forEach((item, index) => {
 
         //var verifyOrg={ orgId:item.name,orgName:item.name};
         //this.detailform.verifyOrgList.push(verifyOrg)
         //resultStr+=item.name+",";
-      });
+      //});
 
       // this.detailform.verifyOrgLists=resultStr;
       // alert(this.detailform.verifyOrgLists);
@@ -386,14 +402,14 @@ export default {
 
       console.log(data)
       this.uploadTableStatus = false;
-
-      var resultStr = [];
-      data.forEach((item, index) => {
+      this.getData();
+      //var resultStr = [];
+      //data.forEach((item, index) => {
 
         //var verifyOrg={ orgId:item.name,orgName:item.name};
         //this.detailform.verifyOrgList.push(verifyOrg)
         //resultStr+=item.name+",";
-      });
+      //});
 
       // this.detailform.verifyOrgLists=resultStr;
       // alert(this.detailform.verifyOrgLists);
@@ -498,7 +514,9 @@ export default {
       });
 
     },
+    sumbitFrom(){
 
+    },
     show() {
       if (this.multipleSelection.length !== 1) {
         this.$message.info('请选择一条记录进行查看操作！')

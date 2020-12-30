@@ -1225,7 +1225,7 @@ export default {
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .btn-group{
   text-align: center;
   margin-top: 20px;

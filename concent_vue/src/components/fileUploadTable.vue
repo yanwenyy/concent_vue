@@ -2,6 +2,7 @@
   <el-dialog
     :destroy-on-close="true"
     title="附件列表"
+    @close="result"
     :visible.sync="dialogVisible"
   >
     <div>
@@ -20,6 +21,7 @@
     </div>
     <div>
       <el-table
+        height="400"
         :data="detailform.commonFilesList"
         :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
         @selection-change="handleSelectionChange"
@@ -71,17 +73,6 @@
                 </el-table-column>
               </el-table>
 
-    </div>
-    <div>
-<el-pagination
-  :current-page="page.current"
-  :page-size="page.size"
-  :page-sizes="[10, 50, 100]"
-  :total="page.total"
-  @current-change="handleCurrentChange"
-  @size-change="handleSizeChange"
-  layout="total, sizes, prev, pager, next, jumper"
-></el-pagination>
     </div>
   </el-dialog>
 </template>
@@ -188,6 +179,7 @@
         // console.log(data);
         if (this.notSelect.indexOf(data.detailCode) == '-1') {
           this.dialogVisible = false;
+          this.$emit('getPosition', this.resultData)
           //this.$emit('getPosition',data)
         }
       },
@@ -207,6 +199,15 @@
           .then(res => {
             this.page = res.data.data
             console.log(JSON.stringify(this.page));
+            if( this.page.records.length>0)
+            {
+              this.detailform.commonFilesList=[];
+              this.page.records.forEach((item,index)=>{
+
+                this.detailform.commonFilesList.push(item);
+              })
+            }
+
           })
       }
     }
@@ -214,7 +215,7 @@
 </script>
 
 <style scoped>
-.el-upload-list{
+>>>.el-upload-list{
   display: none;
 }
 </style>
