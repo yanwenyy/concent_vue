@@ -887,7 +887,7 @@ export default {
                     "leaf": true,
                     "defaultpage": true
                   },
-                  {
+                 /* {
                     "name": "标准库新增",
                     "path": "/boq/dataStandards/ordinaryStandard/detail",
                     "component": "/boq/dataStandards/ordinaryStandard/detail",
@@ -895,10 +895,19 @@ export default {
                     "menushow": false,
                     "leaf": true,
                     "defaultpage": true
+                  },*/
+                  {
+                    "name": "国标库",
+                    "path": "/boq/dataStandards/nationalStandard/list",
+                    "component": "/boq/dataStandards/nationalStandard/list",
+                    "iconCls": "el-icon-switch-button",
+                    "menushow": true,
+                    "leaf": true,
+                    "defaultpage": true
                   },
                   {
                     "name": "知识库",
-                    "path": "/boq/dataStandards/nationalStandard",
+                    "path": "/boq/dataStandards/ordinaryScience",
                     "component": "",
                     "iconCls": "el-icon-switch-button",
                     "menushow": true,
@@ -906,8 +915,8 @@ export default {
                     "defaultpage": true
                   }, {
                     "name": "近义词库",
-                    "path": "/boq/dataStandards/standardSynonym",
-                    "component": "",
+                    "path": "/boq/dataStandards/standardSynonym/list",
+                    "component": "/boq/dataStandards/standardSynonym/list",
                     "iconCls": "el-icon-switch-button",
                     "menushow": true,
                     "leaf": true,
