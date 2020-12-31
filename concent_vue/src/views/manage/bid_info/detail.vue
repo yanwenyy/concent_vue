@@ -1095,6 +1095,8 @@ export default {
       saveInfo(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            // this.detailform.bidInfo_02=[];
+            // this.detailform.srcId='';
             this.$http
               .post(
                 "/api/topInfo/BidInfo/detail/saveOrUpdate",
@@ -1229,7 +1231,7 @@ export default {
     // this.id=this.p.instid;
     this.id=this.p.instid;
     this.$store.dispatch("getConfig", {});
-      if (this.p.actpoint === "edit"||this.id) {
+      if (this.p.actpoint === "edit"||this.p.actpoint === "look"||this.id) {
         this.getDetail();
       }
   },

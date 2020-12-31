@@ -1,30 +1,19 @@
 <template>
+<div style="position: relative">
+  <el-button
+      @click="back"
+      class="detail-back-tab"
+      type="text">返回</el-button>
+
   <el-tabs type="border-card">
     <el-tab-pane label="项目原信息">
       <el-card class="box-card">
-        <div slot="header" class="clearfix">
-          <el-button
-            @click="back"
-            style="
-              float: right;
-              padding: 10px 20px;
-              border: 1px solid #ddd;
-              color: black;
-            "
-            type="text"
-            >返回</el-button
-          >
-        </div>
+
+      <div class="detailBox">
         <el-divider content-position="left">项目前期信息</el-divider>
         <!--<div class="detailBox">-->
         <el-form :inline="false" :model="detailFormBefore" class="gcform">
-          <el-form-item label="项目板块:"
-           :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-          >
+          <el-form-item label="项目板块:">
             <el-input
               v-model="detailFormBefore.topInforBO.topInfor.moduleName"
               disabled
@@ -739,27 +728,13 @@
 
           </el-table>
         </el-form>
-        <!-- </div> -->
+        </div>
       </el-card>
     </el-tab-pane>
 
 
     <el-tab-pane label="项目变更信息">
       <el-card class="box-card">
-        <div slot="header" class="clearfix">
-          <el-button
-            @click="back"
-            style="
-              float: right;
-              padding: 10px 20px;
-              border: 1px solid #ddd;
-              color: black;
-              position: fixe;
-            "
-            type="text"
-            >返回
-          </el-button>
-        </div>
 
         <div style="overflow: scroll; max-height: calc(100vh - 420px)">
           <el-divider content-position="left">项目前期信息</el-divider>
@@ -1734,6 +1709,7 @@
       <add-bd  v-if="BDCSVisible" ref="infoBD" @refreshBD="getBdInfo"></add-bd>
     </el-tab-pane>
   </el-tabs>
+</div>
 </template>
 
 <script>
@@ -2164,6 +2140,16 @@ export default {
 };
 </script>
 <style lang="scss" scope>
+  .detail-back-tab{
+    padding: 10px 20px ;
+    border:1px solid #ddd;
+    color: black;
+    position: absolute;
+    top:1px;
+    right:15px;
+    z-index: 999999999;
+    background: #fff;
+  }
 .detail-class-tltle {
   font-size: 18px;
   font-weight: bold;

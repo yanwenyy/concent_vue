@@ -73,7 +73,7 @@
           :width="200"
           align="center"
           label="工程类别(一级)"
-          prop="enginTypeFirstId"
+          prop="enginTypeFirstName"
           show-overflow-tooltip>
           <template slot="header" slot-scope="scope">
             <span>工程类别(一级)</span>
@@ -83,7 +83,7 @@
               placeholder="请选择"
               @change="getTwo"
               size="mini"
-              v-model="searchform.enginTypeFirstId"
+              v-model="searchform.enginTypeFirstName"
             >
               <el-option
                 :key="index"
@@ -169,7 +169,7 @@
           fixed="right"
           show-overflow-tooltip>
           <template slot-scope="scope">
-              {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
+              {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':scope.row.flowStatus==null?'待登记':'其他'}}
           </template>
           <template slot="header" slot-scope="scope">
             <span>状态</span>

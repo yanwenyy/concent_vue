@@ -181,6 +181,9 @@
           prop="isWinBid"
           show-overflow-tooltip
         >
+          <template slot-scope="scope">
+            {{scope.row.isWinBid==='1'?'中标':'未中标'}}
+          </template>
         </el-table-column>
 
         <el-table-column
@@ -303,7 +306,7 @@
             }}</template>
         </el-table-column>
 
-        <el-table-column
+        <!-- <el-table-column
           :width="150"
           align="center"
           label="项目状态"
@@ -313,7 +316,7 @@
           <template slot-scope="scope">
             <span> {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}</span>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column
           :width="150"
           align="center"
