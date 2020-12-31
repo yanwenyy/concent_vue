@@ -157,6 +157,15 @@ export default {
                       "menushow": false,
                       "leaf": true,
                       "defaultpage": false
+                    },
+                    {
+                      "name": "资审结果登记",
+                      "path": "/manage/verify/resultlist",
+                      "component": "/manage/verify/resultlist",
+                      "iconCls": "el-icon-notebook-2",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": true
                     }
                   ]
                 },
