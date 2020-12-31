@@ -140,8 +140,27 @@
             type: 'success',
             duration: 1500,
             onClose: () => {
-              console.log(JSON.stringify(response.data))
-              this.detailform.commonFilesList.push(response.data);
+              if(response.data.uuid!=null) {
+                var list =[];
+                this.detailform.commonFilesList = list;
+                var commonFile = {
+                  uuid: response.data.uuid,
+                  businessId: response.data.businessId,
+                  businessType: response.data.businessType,
+                  businessCode: response.data.businessCode,
+                  fileName: response.data.fileName,
+                  fileType: response.data.fileType,
+                  fileSize: response.data.fileSize,
+                  filePath: response.data.filePath,
+                  remarks: response.data.remarks,
+                  createTime: response.data.createTime,
+                  createUserId: response.data.createUserId,
+                  createUserName: response.data.createUserName,
+                  createOrgId: response.data.createOrgId,
+                  createOrgName: response.data.createOrgName
+                }
+                this.detailform.commonFilesList.push(commonFile);
+              }
             }
           })
         } else {

@@ -196,6 +196,9 @@
               />
             </div>
           </template>
+          <template slot-scope="scope">{{
+            scope.row.createTime | dateformat
+            }}</template>
         </el-table-column>
         <el-table-column
           :width="150"

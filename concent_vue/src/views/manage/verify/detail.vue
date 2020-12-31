@@ -27,10 +27,10 @@
       class="gcform"
       ref="detailform"
     >
-    <el-row>
+   <div>
       <el-form-item
         label="项目名称:"
-        style="width: 33%"
+
       >
 
         <el-input
@@ -39,9 +39,10 @@
           v-model="detailform.topInfor.inforName"
         />
       </el-form-item>
+      </div>
         <el-form-item
         label="工程类别（一级）:"
-        style="width: 33%"
+
       >
 <!--        <el-select-->
 <!--          :disabled="p.actpoint==='look'"-->
@@ -72,11 +73,9 @@
         />
       </el-form-item>
 
-</el-row>
-      <el-row>
         <el-form-item
           label="公告类型:"
-          style="width: 33%"
+
         >
           <el-input
             disabled
@@ -87,7 +86,7 @@
         </el-form-item>
         <el-form-item
           label="设计单位:"
-          style="width: 33%">
+          >
           <el-input
             disabled
             size="mini"
@@ -108,8 +107,7 @@
           />
 
         </el-form-item>
-      </el-row>
-      <el-row>
+
 
         <el-form-item
           label="招标代理公司:"
@@ -139,7 +137,7 @@
         </el-form-item>
         <el-form-item
           label="资审方式:"
-          style="width: 33%"
+
         >
           <el-input
             disabled
@@ -149,8 +147,7 @@
           />
 
         </el-form-item>
-      </el-row>
-      <el-row>
+
 
         <el-form-item
 
@@ -180,7 +177,7 @@
         </el-form-item>
         <el-form-item
           label="联系电话:"
-          style="width: 33%"
+
         >
           <el-input
             disabled
@@ -190,8 +187,7 @@
           />
 
         </el-form-item>
-      </el-row>
-      <el-row>
+      <div>
         <el-form-item
           class="neirong"
           label="项目内容(最多1000字):"
@@ -204,16 +200,13 @@
             v-model="detailform.topInfor.inforContent"
           />
         </el-form-item>
-      </el-row>
+      </div>
       <p style="overflow:hidden;margin-right: 30px"><span style="float:left;font-weight: bold">资审信息</span></p>
-      <el-row>
 
         <!-- --------------------------------------------------------------- -->
         <el-form-item
           label="资审文件发售截止日期:"
           prop="verify.saleTime"
-          style="width: 33%"
-
           :rules="{
           required: true, message: '此项不能为空', trigger: 'blur'
         }"
@@ -232,7 +225,7 @@
         <el-form-item
           label="递交资格预审申请文件日期:"
           prop="verify.subTime"
-          style="width: 33%"
+
 
           :rules="{
           required: true, message: '此项不能为空', trigger: 'blur'
@@ -254,7 +247,7 @@
           label="资格预审公告发布日期:"
           prop="verify.publishTime"
 
-          style="width: 33%"
+
           :rules="{
           required: true, message: '此项不能为空', trigger: 'blur'
         }"
@@ -269,12 +262,10 @@
             placeholder="选择日期">
           </el-date-picker>
         </el-form-item>
-      </el-row>
-      <el-row>
 
         <el-form-item
         label="招标方式:"
-        style="width: 33%"
+
         :disabled="p.actpoint === 'look'"
       >
           <el-select
@@ -302,7 +293,7 @@
       <el-form-item
         label="是否联合体投标:"
         prop="verify.isCoalitionBid"
-        style="width: 33%"
+
 
         :rules="{
           required: true, message: '此项不能为空', trigger: 'blur'
@@ -330,11 +321,10 @@
 <!--        />-->
       </el-form-item>
 
-</el-row>
-      <el-row v-show='detailform.verify.isCoalitionBid=="是"'>
+      <div v-show='detailform.verify.isCoalitionBid=="是"'>
         <el-form-item
           label="内部联合体单位:"
-          style="width: 33%"
+
           :disabled="p.actpoint === 'look'"
         >
 
@@ -344,7 +334,7 @@
         </el-form-item>
         <el-form-item
           label="外部联合体单位:"
-          style="width: 33%"
+
         >
           <el-input
             placeholder=""
@@ -353,12 +343,12 @@
           />
 
         </el-form-item>
-      </el-row>
+      </div>
 <!-- 不下拉 -->
 
 
 
-<el-row>
+<div>
             <el-form-item
             class="neirong"
               label="资审说明(最多1000字):"
@@ -379,12 +369,10 @@
                 v-model="detailform.verify.verifyExplain"
               />
             </el-form-item>
-</el-row>
-<el-row>
+</div>
             <el-form-item
             class="neirong"
               label="附件（最大10MB）:"
-              style="width: 33%"
             >
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-upload
@@ -398,7 +386,6 @@
               <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
             </el-form-item>
-     </el-row>
     <div>
       <el-table
         :data="detailform.commonFilesList"
@@ -421,10 +408,10 @@
 
                 </el-table-column>
 
-                <el-table-column :resizable="false" label="大小" prop="fileSize" show-overflow-tooltip>
+                <el-table-column :resizable="false" label="大小" :width="120" prop="fileSize" show-overflow-tooltip>
 
                 </el-table-column>
-                <el-table-column :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+                <el-table-column :resizable="false" label="类型" :width="80" prop="fileType" show-overflow-tooltip>
 
                 </el-table-column>
 
@@ -434,7 +421,7 @@
                   label="操作"
                   show-overflow-tooltip
                   v-if="p.actpoint!=='look'"
-                  width="200"
+                  :width="80"
                 >
                   <template slot-scope="scope">
                     <el-link :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
@@ -508,7 +495,7 @@
           align="center"
           show-overflow-tooltip
           v-if="p.actpoint !== 'look'"
-          width="200">
+          :width="80">
           <template slot-scope="scope">
             <el-link
               :underline="false"
@@ -566,25 +553,6 @@
       >
 
       </el-table-column>
-
-
-<!--      <el-table-column-->
-<!--        v-show="!p.actpoint === 'look'"-->
-<!--        :resizable="false"-->
-<!--        fixed="right"-->
-<!--        label="操作"-->
-<!--        align="center"-->
-<!--        show-overflow-tooltip-->
-<!--        v-if="p.actpoint !== 'look'"-->
-<!--        width="200">-->
-<!--        <template slot-scope="scope">-->
-<!--          <el-link-->
-<!--            :underline="false"-->
-<!--            @click="addSection(scope.$index,scope.row,detailform1.topInfoSectionList,'bd')"-->
-<!--            type="warning">选择-->
-<!--          </el-link>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
     </el-table>
       <span slot="footer" class="dialog-footer">
     <el-button @click="dialogTopInfoSection = false">取 消</el-button>
@@ -969,7 +937,31 @@ export default {
           type: 'success',
           duration: 1500,
           onClose: () => {
-            this.detailform.commonFilesList.push(response.data);
+            console.log(response.data)
+            console.log( JSON.stringify(this.detailform.commonFilesList))
+            console.log( JSON.stringify(this.detailform))
+            if(response.data.uuid!=null) {
+              var list =[];
+              this.detailform.commonFilesList = list;
+              var commonFile = {
+
+                uuid: response.data.uuid,
+                businessId: response.data.businessId,
+                businessType: response.data.businessType,
+                businessCode: response.data.businessCode,
+                fileName: response.data.fileName,
+                fileType: response.data.fileType,
+                fileSize: response.data.fileSize,
+                filePath: response.data.filePath,
+                remarks: response.data.remarks,
+                createTime: response.data.createTime,
+                createUserId: response.data.createUserId,
+                createUserName: response.data.createUserName,
+                createOrgId: response.data.createOrgId,
+                createOrgName: response.data.createOrgName
+              }
+              this.detailform.commonFilesList.push(commonFile);
+            }
             console.log( JSON.stringify(this.detailform.commonFilesList))
           }
         })
@@ -1058,165 +1050,165 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.el-upload-list{
-  display: none;
-}
-.btn-group{
-  text-align: center;
-  margin-top: 20px;
-}
-.gcform {
-  margin-top: 10px;
-  .el-form-item__label:before {
-    position: initial;
-    left: -10px;
+  .btn-group{
+    text-align: center;
+    margin-top: 20px;
   }
-  .el-form-item__error {
-    padding-top: 0px;
-    width: 95%;
-    margin-left: 0;
-    text-align: right;
-    top: 0%;
-  }
-  .el-form-item {
-    /*float: left;*/
-    display: inline-block;
-    width: 32.5%;
-  }
-  .detailformfooter1 {
-    margin-top: 5px;
-    width: 100%;
-    .el-button {
-      margin: 0 30px;
-      width: 140px;
-      height: 42px;
-      font-size: 18px;
-      font-family: Microsoft YaHei;
+  .gcform {
+    margin-top: 10px;
+    >>>.el-form-item__label:before {
+      position: initial;
+      left: -10px;
     }
-    .el-button--primary {
-      background: #5c8bfa;
+    >>>.el-form-item__error {
+      padding-top: 0px;
+      width: 95%;
+      margin-left: 0;
+      text-align: right;
+      top: 0%;
     }
-    .el-button--default {
-      border: 1px solid #5c8bfa;
-      color: #5c8bfa;
+    >.el-form-item,>>>.formItem{
+      /*float: left;*/
+      display: inline-block;
+      width: 32.5%!important;
+    }
+    .detailformfooter1 {
+      margin-top: 5px;
+      width: 100%;
+      .el-button {
+        margin: 0 30px;
+        width: 140px;
+        height: 42px;
+        font-size: 18px;
+        font-family: Microsoft YaHei;
+      }
+      .el-button--primary {
+        background: #5c8bfa;
+      }
+      .el-button--default {
+        border: 1px solid #5c8bfa;
+        color: #5c8bfa;
+      }
+    }
+    .errorMsg >>>.el-form-item__label {
+      color: red;
+    }
+    .el-input {
+      width: 300px;
+    }
+    .el-input .el-input_inner {
+      width: 300px;
+      height: 500px;
     }
   }
-  .errorMsg .el-form-item__label {
-    color: red;
-  }
-  .el-input {
-    width: 300px;
-  }
+
   .el-input .el-input_inner {
     width: 300px;
     height: 500px;
   }
-}
 
-.el-input .el-input_inner {
-  width: 300px;
-  height: 500px;
-}
+  .el-table thead.is-group th {
+    background: #fff;
+  }
 
-.el-table thead.is-group th {
-  background: #fff;
-}
-
-.clothSizeTable {
-  /*td {*/
-  /*padding: 0;*/
-  /*}*/
-  .el-form-item__content {
-    height: 60px;
-    line-height: 60px;
-    .el-form-item__error {
-      top: 42px;
+  .clothSizeTable {
+    /*td {*/
+    /*padding: 0;*/
+    /*}*/
+    .el-form-item__content {
+      height: 60px;
+      line-height: 60px;
+      .el-form-item__error {
+        top: 42px;
+      }
     }
   }
-}
 
-.text {
-  font-size: 14px;
-}
+  .text {
+    font-size: 14px;
+  }
 
-.item {
-  margin-bottom: 18px;
-}
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
+  .item {
+    margin-bottom: 18px;
+  }
+  .clearfix:before,
+  .clearfix:after {
+    display: table;
+    content: "";
+  }
 
-.clearfix:after {
-  clear: both;
-}
+  .clearfix:after {
+    clear: both;
+  }
 
-.el-card__body {
-  /*padding: 0 100px;*/
-  // height: 400px;
-  // border: 1px solid black;
-  // height: 200px;
-}
+  .el-card__body {
+    /*padding: 0 100px;*/
+    // height: 400px;
+    // border: 1px solid black;
+    // height: 200px;
+  }
 
-.el-input--mini .el-input__inner {
-  height: 40px;
-  width: 100%;
-  box-sizing: border-box;
-  // margin: 10px 0 0 10px;
-}
+  >>>.el-input--mini .el-input__inner {
+    height: 40px;
+    width: 100%;
+    box-sizing: border-box;
+    // margin: 10px 0 0 10px;
+  }
 
-.gcform .el-input {
-  width: 95%;
-}
-.listInput{
-  width: auto!important;
-}
-.gcform .listInput input{
-  width: 100px!important;
-  padding:10px!important;
-  box-sizing: border-box;
-}
-.neirong {
-  width: 100% !important;
-}
+  .gcform >>>.el-input {
+    width: 95%;
+  }
+  .listInput{
+    width: auto!important;
+  }
+  .gcform .listInput input{
+    width: 100px!important;
+    padding:10px!important;
+    box-sizing: border-box;
+  }
+  .neirong {
+    width: 100% !important;
+  }
 
-.gcform .el-form-item {
-  margin-bottom: 0px;
-}
+  .gcform >>>.el-form-item {
+    margin-bottom: 0px;
+  }
 
-.neirong .el-input--mini .el-input__inner {
-  height: 100px;
-}
+  .neirong >>>.el-input--mini .el-input__inner {
+    height: 100px;
+  }
 
-.detail_bottom {
-  margin: 20px 0 0 0;
-  // border: 1px solid #ddd;
-}
+  .detail_bottom {
+    margin: 20px 0 0 0;
+    // border: 1px solid #ddd;
+  }
 
-.el-card,
-.el-message {
-  overflow: hidden;
-}
+  .el-card,
+  .el-message {
+    overflow: hidden;
+  }
 
-.el-scrollbar__wrap.default-scrollbar__wrap {
-  overflow: hidden;
-}
+  .el-scrollbar__wrap.default-scrollbar__wrap {
+    overflow: hidden;
+  }
 
-.el-card.is-always-shadow,
-.el-card.is-hover-shadow:focus,
-.el-card.is-hover-shadow:hover {
-  overflow: auto;
-  // height: 500px ;
-  /*height: 44vh;*/
-}
+  .el-card.is-always-shadow,
+  .el-card.is-hover-shadow:focus,
+  .el-card.is-hover-shadow:hover {
+    overflow: auto;
+    // height: 500px ;
+    /*height: 44vh;*/
+  }
 
-.el-button--mini,
-.el-button--mini.is-round {
-  margin: 0 27px 5px 0;
-}
+  .el-button--mini,
+  .el-button--mini.is-round {
+    margin: 0 27px 5px 0;
+  }
 
-.el-table--border {
-  min-height: auto !important;
-}
+  .el-table--border {
+    min-height: auto !important;
+  }
+  .detailBox{
+    max-height:calc(100vh - 410px)!important;
+  }
 </style>
