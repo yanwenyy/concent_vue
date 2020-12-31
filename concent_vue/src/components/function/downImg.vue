@@ -57,7 +57,7 @@ export default {
   .downimgbox {
     width: 100px;
     height: 100px;
-    float: left;
+
     margin-right: 10px;
     position: relative;
   }

@@ -55,7 +55,7 @@
             <span>项目编号</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.importCode"
                 size="mini"
               />
@@ -74,7 +74,7 @@
             <span>项目名称</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.name"
                 size="mini"
               />
@@ -93,7 +93,7 @@
             <span>单位</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.unit"
                 size="mini"
               />
@@ -111,7 +111,7 @@
             <span>标准库项目特征</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.feature"
                 size="mini"
               />
@@ -129,7 +129,7 @@
             <span>国标表中上级节点id</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.parentCode"
                 size="mini"
               />

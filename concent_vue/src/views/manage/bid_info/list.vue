@@ -59,7 +59,7 @@
             <span>项目名称</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.inforName"
                 size="mini"/>
             </div>
@@ -133,7 +133,7 @@
             <span>建设单位</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.constructionOrg"
                 size="mini"/>
             </div>
@@ -152,7 +152,7 @@
             <span>公告类型</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.noticeTypeName"
                 size="mini"/>
             </div>
@@ -175,7 +175,7 @@
             <span>状态</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.flowStatus"
                 size="mini"/>
             </div>
@@ -192,7 +192,7 @@
             <span>截至投标日期</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.endTime"
                 size="mini"/>
             </div>
@@ -212,7 +212,7 @@
             <span>填报人</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.createUserName"
                 size="mini"/>
             </div>
@@ -232,7 +232,7 @@
             <span>登记时间</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.tioCreateTime"
                 size="mini"/>
             </div>

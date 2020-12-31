@@ -56,7 +56,7 @@
             <span>项目名称</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.inforName"
                 size="mini"
               />
@@ -74,7 +74,7 @@
             <span>标段名称</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.sectionId"
                 size="mini"
               />

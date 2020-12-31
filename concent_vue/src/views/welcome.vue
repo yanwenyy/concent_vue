@@ -581,7 +581,7 @@ export default {
   margin-right: -20px;
 }
 .home-true-notice-title {
-  float: left;
+
   background: url(../../static/images/home-true-notice-icon.png) left center
     no-repeat;
   background-position: 20px center;
@@ -597,7 +597,7 @@ export default {
 }
 
 .home-exchange-title {
-  float: left;
+
   background: url(../../static/images/home-exchange-icon.png) left center
     no-repeat;
   background-position: 0px 15px;
@@ -614,7 +614,7 @@ export default {
 }
 
 .home-notice-title {
-  float: left;
+
   padding-left: 20px;
   line-height: 42px;
   width: calc(100% - 165px);
@@ -837,7 +837,7 @@ export default {
     // box-sizing: border-box;
     // font-family: 'fanti';
     p {
-      float: left;
+
       font-size: 18px;
       color: #aaa;
       line-height: 20px;

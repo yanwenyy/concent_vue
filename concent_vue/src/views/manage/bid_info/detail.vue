@@ -1254,12 +1254,12 @@ export default {
       top: 0%;
     }
     >.el-form-item,>>>.formItem {
-      // float: left;
+
       display: inline-block;
       width: 32.5% !important;
     }
         >.el-form-item,>>>.formItem1 {
-      // float: left;
+
       display: inline-block;
       width: 32.5% !important;
       // display: none;

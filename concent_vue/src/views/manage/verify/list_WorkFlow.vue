@@ -65,7 +65,7 @@
             <span>项目名称</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.inforName"
                 size="mini"
               />
@@ -86,7 +86,7 @@
             <span>工程类别</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.enginTypeFirstName"
                 size="mini"
               />
@@ -107,7 +107,7 @@
             <span>建设单位</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.constructionOrg"
                 size="mini"
               />
@@ -128,7 +128,7 @@
             <span>公告类型</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.noticeTypeName"
                 size="mini"
               />
@@ -201,7 +201,7 @@
             <span>填报人</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.username"
                 size="mini"
               />

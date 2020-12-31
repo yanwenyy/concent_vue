@@ -23,7 +23,7 @@
   line-height: 16px;
 }
 .importbox {
-  float: left;
+
   margin-top: -10px;
 }
 /* 开始 */
@@ -490,6 +490,20 @@ pre {
 }
 .tabelformItem{
   width: 100%!important;
+}
+.inline-formitem .el-form-item__label{
+  display: inline-block;
+  width: auto!important;
+  vertical-align: middle;
+}
+.inline-formitem-switch{
+  vertical-align: middle;
+  margin-top: -5px;
+}
+.detail-p::before,.detail-p::after{
+  display: table;
+  content: '';
+  clear: both;
 }
 /**/
 

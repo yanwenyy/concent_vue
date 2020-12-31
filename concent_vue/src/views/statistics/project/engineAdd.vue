@@ -1207,7 +1207,7 @@ export default {
     top:0%
   }
   .el-form-item {
-    float: left;
+
   }
   .detailformfooter1 {
     margin-top: 5px;

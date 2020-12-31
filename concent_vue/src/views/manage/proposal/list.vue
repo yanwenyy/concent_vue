@@ -52,7 +52,7 @@
             <span>项目名称</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.inforName"
                 size="mini"
               />
@@ -126,7 +126,7 @@
             <span>建设单位</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.constructionOrg"
                 size="mini"
               />
@@ -144,7 +144,7 @@
             <span>公告类型</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.noticeTypeId"
                 size="mini"
               />
@@ -162,7 +162,7 @@
             <span>截止日期</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="sousuo"
                 size="mini"
               />
@@ -184,7 +184,7 @@
             <span>状态</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="sousuo"
                 size="mini"
               />

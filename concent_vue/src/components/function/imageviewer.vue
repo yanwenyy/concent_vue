@@ -347,12 +347,12 @@ ul {
   }
 
   .rightBox {
-    float: left;
+
     width: calc(100vw - 850px);
     overflow: hidden;
   }
   .window {
-    float: left;
+
     width: 500px;
     min-height: 400px;
     .imgBox {
@@ -390,7 +390,7 @@ ul {
     top: 50px;
   }
   .dots {
-    float: left;
+
     height: 132px;
 
     width: max-content;
@@ -398,7 +398,7 @@ ul {
   }
 
   .dots li {
-    float: left;
+
     padding: 10px 10px;
     width: 132px;
     height: 132px;
@@ -413,7 +413,7 @@ ul {
     // background-color: orange;
   }
   .imgtitle {
-    float: left;
+
     font-size: 14px;
     line-height: 44px;
     font-family: Microsoft YaHei;
@@ -434,7 +434,7 @@ ul {
     display: none;
   }
   .ulImgBox {
-    float: left;
+
     width: calc(100% - 185px);
     margin-left: 10px;
     height: 142px;

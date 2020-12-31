@@ -14,7 +14,7 @@
       <el-col :span="24">
         <div style="border-radius: 10px; margin:0 auto; height:40px; line-height: 40px;">
           <span
-            style="font-family: Microsoft YaHei; font-weight: bold; margin-left: 20px; float: left;"
+            style="font-family: Microsoft YaHei; font-weight: bold; margin-left: 20px; "
           >{{lc_title}}</span>
           <div style="float: right; margin-right:40px;">
             <!-- <el-button
@@ -75,7 +75,7 @@
       </el-row>
     </template>
 
-    <el-dialog :append-to-body='true' 
+    <el-dialog :append-to-body='true'
       :before-close="beforeClose"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
@@ -135,7 +135,7 @@
         <el-button @click="surelist" type="primary">确 定</el-button>
       </span>
     </el-dialog>
-    <el-dialog :append-to-body='true' 
+    <el-dialog :append-to-body='true'
       :destroy-on-close="true"
       :lock-scroll="true"
       :visible.sync="pdfVisible"
@@ -238,11 +238,11 @@ export default {
     beforepic(file) {
       console.log(file);
     },
-    
+
     getUploadUrl() {
       return "/api" + this.$route.path + this.lc_urlparam + this.action;
     },
-    
+
     open() {
       this.loading = true;
       let _self = this;
@@ -261,7 +261,7 @@ export default {
           if (res.data.code === 0) this.getData();
         });
     },
-   
+
    convertImgToBase64(imgUrl) {
       window.URL = window.URL || window.webkitURL;
       var xhr = new XMLHttpRequest();
@@ -310,7 +310,7 @@ export default {
       };
       xhr.send();
     },
-   
+
    picShow(file) {
       var project =
         this.projectid === undefined
@@ -329,7 +329,7 @@ export default {
       this.convertImgToBase64(this.pdfsrc);
       // })
     },
-    
+
     uppic(file) {
       let picaccept = [".jpg", ".jpeg", ".png"];
       let imageUrl = URL.createObjectURL(file.raw);
@@ -354,7 +354,7 @@ export default {
         }
       });
     },
-    
+
     beforeUpload(file) {
       let isaccept = false;
       this.lc_accept.forEach(element => {
@@ -381,29 +381,29 @@ export default {
       return isaccept;
     },
 
-   
+
    handleUpload() {
       this.uploadvisible = true;
       this.action = "upload/operate";
       this.multiple = true;
     },
-    
+
   handleImp() {
       this.uploadvisible = true;
       this.action = "imp";
       this.multiple = false;
     },
-    
+
   selgxzl() {
       this.dialogVisible = true;
       this.getgxzllist();
     },
-    
+
   closelist() {
       this.dialogVisible = false;
       this.getData();
     },
-    
+
   checkboxd(val) {
       if (val.showdelete === false) {
         return false;
@@ -411,7 +411,7 @@ export default {
         return true;
       }
     },
-    
+
   surelist() {
       this.fileid = [];
       this.selgxzllist.forEach(item => {
@@ -435,7 +435,7 @@ export default {
     handleSelectionChange(val) {
       this.selgxzllist = val;
     },
-    
+
   getgxzllist(val) {
       this.$http
         .post("/api" + this.$route.path + "projectfile", {

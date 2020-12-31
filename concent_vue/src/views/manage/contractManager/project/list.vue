@@ -56,7 +56,7 @@
             <span>项目名称</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchFrom.inforName"
                 size="mini"
               />
@@ -76,7 +76,7 @@
             <span>合同名称</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchFrom.contractName"
                 size="mini"
               />
@@ -94,7 +94,7 @@
             <span>合同号</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchFrom.contractNo"
                 size="mini"
               />
@@ -112,7 +112,7 @@
             <span>填报单位</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchFrom.createOrgId"
                 size="mini"
               />
@@ -130,7 +130,7 @@
             <span>主推单位</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchFrom.contractMianOrg"
                 size="mini"
               />
@@ -151,7 +151,7 @@
             <span>合同金额（万元）</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchFrom.contractAmount"
                 size="mini"
               />
@@ -169,7 +169,7 @@
             <span>填报人</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchFrom.createUserName"
                 size="mini"
               />
@@ -190,7 +190,7 @@
             <span>录入时间</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchFrom.createTime"
                 size="mini"
               />
@@ -215,7 +215,7 @@
             <span>状态</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchFrom.id"
                 size="mini"
               />

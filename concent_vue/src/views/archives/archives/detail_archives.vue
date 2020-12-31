@@ -446,7 +446,6 @@ export default {
   }
 
   .el-form-item {
-    /*float: left;*/
     display: inline-block;
     width: 32.5%;
   }

@@ -55,7 +55,7 @@
             <span>编码</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.code"
                 size="mini"
               />
@@ -74,7 +74,7 @@
             <span>父编码</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.parentId"
                 size="mini"
               />
@@ -93,7 +93,7 @@
             <span>项目名称</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.name"
                 size="mini"
               />
@@ -111,7 +111,7 @@
             <span>特征描述</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.feature"
                 size="mini"
               />
@@ -129,7 +129,7 @@
             <span>单位</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.unit"
                 size="mini"
               />
@@ -148,7 +148,7 @@
             <span>排序</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.sortNo"
                 size="mini"
               />

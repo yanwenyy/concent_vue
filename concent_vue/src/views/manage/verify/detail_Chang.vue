@@ -1304,7 +1304,7 @@ export default {
   }
 
   .el-form-item {
-    float: left;
+    /**/
   }
 
   .detailformfooter1 {

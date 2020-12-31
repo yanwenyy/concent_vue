@@ -55,7 +55,7 @@
             <span>清单名称</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.standardName"
                 size="mini"
               />
@@ -74,7 +74,7 @@
             <span>近义词</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.nearName"
                 size="mini"
               />
@@ -93,7 +93,7 @@
             <span>排序号</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="searchform.sortNo"
                 size="mini"
               />
@@ -373,7 +373,7 @@
     cursor: pointer;
   }
   .el-form-item el-input{
-    float: left;
+
     width: 60%;
   }
 </style>

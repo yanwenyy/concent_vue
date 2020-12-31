@@ -967,13 +967,7 @@
                 <el-form-item
                   class="neirong"
                   label="项目内容(最多600字):"
-                  prop="contractInfo.inforContent"
-                  :rules="{
-              required: true,
-              message: '此项不能为空',
-              trigger: 'blur',
-            }"
-                >
+                 >
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-input
                     type="textarea"
@@ -988,12 +982,6 @@
                 <el-form-item
                   class="neirong"
                   label="备注(最多600字):"
-                  prop="contractInfo.remarks"
-                  :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
                 >
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-input
@@ -1004,13 +992,9 @@
                   />
                 </el-form-item>
               </div>
-              <p>
+              <p class="detail-p">
                 <span>中标通知书(最大10MB): </span>
-                <!--<el-button-->
-                <!--class="detatil-flie-btn"-->
-                <!--@click="show('add')"-->
-                <!--type="primary"-->
-                <!--&gt;增加文件</el-button> </p>-->
+
                 <el-upload
                   class="upload-demo detailUpload detatil-flie-btn"
                   :action="'/api/topInfo/CommonFiles/contractInfo/01/uploadFile'"
@@ -1022,6 +1006,7 @@
                 >
                   <el-button size="small" type="primary">点击上传</el-button>
                 </el-upload>
+              </p>
                 <el-table
                   :data="detailform.fileList1"
                   :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
@@ -1442,7 +1427,6 @@
                  @click="addfs('lht',1,1)"
                  size="mini"
                  style="
-                  float: right;
                   width: 70px;
                   height: 32px;
                   background: #5c8bfa;
@@ -1581,7 +1565,6 @@
               @click="addfs('fb',2,1)"
               size="mini"
               style="
-                  float: right;
                   width: 70px;
                   height: 32px;
                   background: #5c8bfa;
@@ -2326,7 +2309,7 @@ export default {
       top: 0%;
     }
     .el-form-item,>>>.formItem{
-      /*float: left;*/
+      /**/
       display: inline-block;
       width: 32.5%;
     }

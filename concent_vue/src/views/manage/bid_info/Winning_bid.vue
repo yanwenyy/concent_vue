@@ -1213,7 +1213,7 @@ export default {
       top: 0%;
     }
     .el-form-item {
-      // float: left;
+      //
       display: inline-block;
       width: 32.5%;
     }

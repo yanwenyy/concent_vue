@@ -616,13 +616,6 @@
                 <el-form-item
                   class="neirong"
                   label="备注(最多600字):"
-                  prop="contractInfo.remarks"
-                  style="width: 33%"
-                  :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
                 >
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-input
@@ -1580,7 +1573,7 @@ export default {
       top: 0%;
     }
     .el-form-item,>>>.formItem{
-      /*float: left;*/
+      /**/
       display: inline-block;
       width: 32.5%;
     }

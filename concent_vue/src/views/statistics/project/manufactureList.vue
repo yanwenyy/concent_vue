@@ -56,7 +56,7 @@
             <span>项目简称</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="sousuo"
                 size="mini"
               />
@@ -74,7 +74,7 @@
             <span>项目名称</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="sousuo"
                 size="mini"
               />
@@ -92,7 +92,7 @@
             <span>工业行业类别</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="sousuo"
                 size="mini"
               />
@@ -109,7 +109,7 @@
             <span>合同（万元）</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="sousuo"
                 size="mini"
               />
@@ -127,7 +127,7 @@
             <span>承建单位</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="sousuo"
                 size="mini"
               />
@@ -146,7 +146,7 @@
             <span>项目性质</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="sousuo"
                 size="mini"
               />
@@ -164,7 +164,7 @@
             <span>项目类型</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="sousuo"
                 size="mini"
               />
@@ -182,7 +182,7 @@
             <span>是否为联合体</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="sousuo"
                 size="mini"
               />
@@ -203,7 +203,7 @@
             <span>新签推送</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="sousuo"
                 size="mini"
               />
@@ -221,7 +221,7 @@
             <span>合同号</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="sousuo"
                 size="mini"
               />
@@ -242,7 +242,7 @@
             <span>项目所在地</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="sousuo"
                 size="mini"
               />
@@ -263,7 +263,7 @@
             <span>创建时间</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="sousuo"
                 size="mini"
               />
@@ -285,7 +285,7 @@
             <span>状态</span>
             <div>
               <el-input
-                style="float: left; width: 100%"
+                style=" width: 100%"
                 v-model="sousuo"
                 size="mini"
               />

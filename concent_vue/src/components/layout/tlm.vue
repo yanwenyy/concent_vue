@@ -11,7 +11,7 @@
         @select="handleSelect"
         class="el-menu-demo"
         mode="horizontal"
-        style="float: left;"
+        style=""
       >
         <!-- 上下布局 -->
         <template v-for="(route) in this.$store.state.route[0].children">
@@ -187,7 +187,7 @@ export default {
   position: fixed;
 }
 .block{
-  float: left;
+
   position: fixed;
 }
 .el-pagination{

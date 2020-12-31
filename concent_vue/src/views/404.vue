@@ -70,7 +70,7 @@ export default {
   overflow: hidden;
   .pic-404 {
     position: relative;
-    float: left;
+
     width: 600px;
     overflow: hidden;
     &__parent {
@@ -181,7 +181,7 @@ export default {
   }
   .bullshit {
     position: relative;
-    float: left;
+
     width: 300px;
     padding: 30px 0;
     overflow: hidden;
@@ -221,7 +221,7 @@ export default {
     }
     &__return-home {
       display: block;
-      float: left;
+
       width: 110px;
       height: 36px;
       background: #1482f0;
