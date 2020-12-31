@@ -312,12 +312,7 @@
             v-model="detailform.bidInfo.isCoalitionBid"
             disabled
             >否</el-radio>
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in yesOrNo"
-                  ></el-option>
+
           </div>
             </el-form-item>
 
@@ -335,12 +330,7 @@
             v-model="detailform.bidInfo.isBidRates"
             disabled
             >否</el-radio>
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in yesOrNo"
-                  ></el-option>
+
              </div>
             </el-form-item>
 
@@ -538,7 +528,7 @@
               </template>
             </el-table-column>
 
-                        <el-table-column
+            <el-table-column
               :resizable="false"
               label="开标金额"
               prop="bidInfoSection.riskFee"
@@ -856,8 +846,10 @@ export default {
         bidInfoSectionList:[],
         topInforBO:{
           capitalName:'',
-          topInfor:{}
-        }
+          topInfor:{},
+          topInfoOrg:{}
+        },
+        bidInfo_02:[],
       },
       bidInfoSection:[],
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
@@ -946,7 +938,7 @@ export default {
           duration: 1500,
           onClose: () => {
           this.detailform.bidInfo_02.push(response.data);
-          console.log(fileList)
+          console.log(this.detailform.bidInfo_02)
         }
       })
       } else {
@@ -1164,6 +1156,7 @@ export default {
               bidInfoInnerOrgList: datas.bidInfoInnerOrgList,
               bidInfoSectionList: datas.bidInfoSectionList,
               topInforBO: this.nullToStr(datas.topInforBO),
+              bidInfo_02:datas.bidInfo_02||[],
             }
             console.log(this.detailform.topInforBO)
           });
