@@ -292,7 +292,11 @@
               <el-form-item
                 label="是否导入清单:"
                 prop="contractInfo.isImport"
-                required
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
               >
                 <el-select
                   :disabled="p.actpoint==='look'"
@@ -670,7 +674,7 @@
                   getName(
                     detailform.contractInfo.projectNatureSecondId,
                     projectNatureTwo,
-                    'projectNatureSecondName'
+                    'projectNaturetSecondName'
                   )
                 "
                   v-model="detailform.contractInfo.projectNatureSecondId"
@@ -834,8 +838,15 @@
                   placeholder="请选择"
                   size="mini"
                   v-model="detailform.contractInfo.contractProvinceId"
+                  @change="
+                  getName(
+                    detailform.contractInfo.contractProvinceId,
+                    ssList,
+                    'contractProvinceName'
+                  )
+                "
                 >
-                  <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in ssList"></el-option>
+                  <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in ssList"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item
@@ -1820,8 +1831,8 @@ export default {
     list.forEach((item)=>{
       item.children.forEach((i)=>{
         var _v={
-          label:i.detailName,
-          value:i.id
+          detailName:i.detailName,
+          id:i.id
         }
         this.ssList.push(_v)
       })

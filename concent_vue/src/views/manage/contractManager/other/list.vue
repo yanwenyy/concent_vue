@@ -5,7 +5,7 @@
         <el-button @click="add" type="primary" plain>新增</el-button>
         <el-button @click="totop" type="primary" plain>修改</el-button>
         <el-button type="primary" plain>提交</el-button>
-        <el-button type="primary" plain>删除</el-button>
+        <el-button @click="remove" type="primary" plain>删除</el-button>
       </el-button-group>
     </div>
     <div style="float: right; margin: -40px 0 0 0">
@@ -208,6 +208,31 @@
       };
     },
     methods: {
+      // 删除
+      remove() {
+        if (this.multipleSelection.length < 1) {
+          this.$message.info("请选择一条记录进行删除操作！");
+          return false;
+        }
+        let uuids = []
+        this.multipleSelection.forEach((item) => {
+          uuids.push(item.uuid)
+      });
+        this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$http
+          .post(
+            "/api/contract/ContractInfo/list/delete",
+            {ids: uuids}
+          )
+          .then((res) => {
+          this.getData()
+      });
+      }).catch(() => {})
+      },
       // 修改
       totop() {
         if (this.multipleSelection.length !== 1) {

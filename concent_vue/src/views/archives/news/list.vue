@@ -161,8 +161,6 @@ export default {
         archivesInfoType: ''
       },
       multipleSelection: [],
-
-
     }
   },
   filters:{

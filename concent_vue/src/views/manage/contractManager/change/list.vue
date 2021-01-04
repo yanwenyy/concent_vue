@@ -3,13 +3,36 @@
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
         <el-button @click="add" type="primary" plain>新增</el-button>
-        <el-button type="primary" plain>修改</el-button>
+        <el-button @click="totop" type="primary" plain>修改</el-button>
         <el-button type="primary" plain>提交</el-button>
-        <el-button type="primary" plain>删除</el-button>
+        <el-button @click="remove" type="primary" plain>删除</el-button>
       </el-button-group>
     </div>
     <div style="float: right; margin: -40px 0 0 0">
-      <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
+      <el-form class="search-form" :inline="true" :model="searchFrom" @keyup.enter.native="init()">
+        <el-form-item label="合同名称:">
+          <el-input v-model="searchFrom.contractName" placeholder="项目名称" clearable></el-input>
+        </el-form-item>
+        <el-form-item
+          label="审核状态:"
+        >
+          <el-select
+            clearable
+            filterable
+            placeholder="请选择"
+            size="mini"
+            v-model="searchFrom.flowStatus"
+          >
+            <el-option
+              :key="index"
+              :label="item.detailName"
+              :value="item.id"
+              v-for="(item, index) in shztList"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <el-button @click="searchFromReset" type="info" plain style="color:black;background:none">重置</el-button>
       <el-button @click="getData" type="primary" plain>查询</el-button>
       <el-button type="primary" plain>导出</el-button>
     </div>
@@ -24,7 +47,7 @@
           'text-align': 'center',
           'background-color': 'whitesmoke',
         }"
-        @row-click="rowshow"
+        @row-dblclick="rowshow"
         @selection-change="handleSelectionChange"
         border
         highlight-current-row
@@ -47,38 +70,20 @@
           type="index"
         ></el-table-column>
         <el-table-column
-          :width="500"
-          label="项目名称"
+          label="合同类型"
           prop="inforName"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>项目名称</span>
-            <div>
-              <el-input
-                style=" width: 100%"
-                v-model="searchFrom.inforName"
-                size="mini"
-              />
-            </div>
+          <template slot-scope="scope">
+            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
           </template>
         </el-table-column>
         <el-table-column
-          :width="150"
+          :width="200"
           label="合同名称"
           prop="contractName"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>合同名称</span>
-            <div>
-              <el-input
-                style=" width: 100%"
-                v-model="searchFrom.contractName"
-                size="mini"
-              />
-            </div>
-          </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -87,16 +92,6 @@
           prop="contractNo"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>合同号</span>
-            <div>
-              <el-input
-                style=" width: 100%"
-                v-model="searchFrom.contractNo"
-                size="mini"
-              />
-            </div>
-          </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -105,16 +100,6 @@
           prop="createOrgId"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>填报单位</span>
-            <div>
-              <el-input
-                style=" width: 100%"
-                v-model="searchFrom.createOrgId"
-                size="mini"
-              />
-            </div>
-          </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -123,37 +108,6 @@
           prop="contractMianOrg"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>主推单位</span>
-            <div>
-              <el-input
-                style=" width: 100%"
-                v-model="searchFrom.contractMianOrg"
-                size="mini"
-              />
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="合同金额(万元)"
-          prop="contractAmount"
-          show-overflow-tooltip
-        >
-          <!-- <template slot-scope="scope">{{
-            scope.row.exetime | datetoMonth
-          }}</template> -->
-          <template slot="header" slot-scope="scope">
-            <span>合同金额（万元）</span>
-            <div>
-              <el-input
-                style=" width: 100%"
-                v-model="searchFrom.contractAmount"
-                size="mini"
-              />
-            </div>
-          </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -162,62 +116,28 @@
           prop="createUserName"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>填报人</span>
-            <div>
-              <el-input
-                style=" width: 100%"
-                v-model="searchFrom.createUserName"
-                size="mini"
-              />
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="录入时间"
-          prop="createTime"
-          show-overflow-tooltip
-        >
-          <!-- <template slot-scope="scope">{{
-            scope.row.createtime | dateformat
-          }}</template> -->
-          <template slot="header" slot-scope="scope">
-            <span>录入时间</span>
-            <div>
-              <el-input
-                style=" width: 100%"
-                v-model="searchFrom.createTime"
-                size="mini"
-              />
-            </div>
-          </template>
         </el-table-column>
         <el-table-column
           :width="150"
           align="center"
           label="状态"
           prop="flowStatus"
-          fixed="right"
           show-overflow-tooltip
         >
-          <!-- <template slot-scope="scope">{{
-            scope.row.state === '0' ? '草稿' : '已上报'
-          }}</template> -->
-          <template slot="header" slot-scope="scope">
-            <span>状态</span>
-            <div>
-              <el-input
-                style=" width: 100%"
-                v-model="searchFrom.id"
-                size="mini"
-              />
-            </div>
-          </template>
           <template slot-scope="scope">
              {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
           </template>
+        </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="创建时间"
+          prop="createTime"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">{{
+            scope.row.createTime | dateformat
+            }}</template>
         </el-table-column>
       </el-table>
       <el-pagination
@@ -232,88 +152,175 @@
         v-if="page.total !== 0"
       ></el-pagination>
     </div>
+    <change-search v-if="infoCSVisible" ref="infoCS" @refreshDataList="goAddDetail"></change-search>
   </div>
 </template>
 
 <script>
-export default {
-  name: "proposal-list-look",
-  data() {
-    return {
-      page: { current: 1, size: 10, total: 0, records: [] },
-      searchFrom: {
-        current: 1,
-        size: 10,
+  import ChangeSearch from './ChangeSearch'
+  export default {
+    data() {
+      return {
+        infoCSVisible:false,
+        page: { current: 1, size: 10, total: 0, records: [] },
+        searchFrom: {
+          current: 1,
+          size: 10,
+        },
+        menus: [],
+        multipleSelection: [],
+        orgTree: [],
+        shztList:[
+          {
+            id:'0',
+            detailName:'变更中'
+          },
+          {
+            id:'1',
+            detailName:'待审核'
+          },
+          {
+            id:'2',
+            detailName:'退回'
+          }
+        ],//审核状态下拉框
+      };
+    },
+    components: {
+      ChangeSearch
+    },
+    methods: {
+      // 增加
+      add() {
+        this.infoCSVisible = true;
+        this.$nextTick(() => {
+          this.$refs.infoCS.init();
+      })
       },
-      menus: [],
-      multipleSelection: [],
-      orgTree: [],
-    };
-  },
-  methods: {
-    add() {
-      let p = { actpoint: "add" };
-      this.$router.push({
-        path: "./detail/",
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
+      //去新增详情页面
+      goAddDetail(data){
+        // console.log(data);
+        if(data.uuid){
+          let p = {actpoint: "add",instid:data.uuid};
+          this.$router.push({
+            path: "../design/changeDetail/",
+            query: {p: this.$utils.encrypt(JSON.stringify(p))},
+          });
+        }
+      },
+      // 删除
+      remove() {
+        if (this.multipleSelection.length < 1) {
+          this.$message.info("请选择一条记录进行删除操作！");
+          return false;
+        }
+        let uuids = []
+        this.multipleSelection.forEach((item) => {
+          uuids.push(item.uuid)
       });
+        this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$http
+          .post(
+            "/api/contract/ContractInfo/list/delete",
+            {ids: uuids}
+          )
+          .then((res) => {
+          this.getData()
+      });
+      }).catch(() => {})
+      },
+      // 修改
+      totop() {
+        if (this.multipleSelection.length !== 1) {
+          this.$message.info("请选择一条记录进行查看操作！");
+          return false;
+        }
+        let p = {actpoint: "edit", instid: this.multipleSelection[0].uuid};
+        this.$router.push({
+          path: "./detail/",
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        });
+
+      },
+      // 查看
+      rowshow(row) {
+        let p = {actpoint: "look", instid: row.uuid};
+        this.$router.push({
+          path: "./detail/",
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        });
+      },
+      // 查看
+      rowshow(row) {
+        let p = { actpoint: "look", instid: row.uuid };
+        this.$router.push({
+          path: "./detail/",
+          query: { p: this.$utils.encrypt(JSON.stringify(p)) },
+        });
+      },
+      show() {
+        if (this.multipleSelection.length !== 1) {
+          this.$message.info("请选择一条记录进行查看操作！");
+          return false;
+        }
+        let p = { actpoint: "look", instid: this.multipleSelection[0].uuid };
+        this.$router.push({
+          path: "./detail/",
+          query: { p: this.$utils.encrypt(JSON.stringify(p)) },
+        });
+      }, // list通用方法开始
+      handleSizeChange(val) {
+        this.searchFrom.size = val;
+        this.getData();
+      },
+      handleCurrentChange(val) {
+        this.searchFrom.current = val;
+        this.getData();
+      },
+      searchFromSubmit() {
+        this.searchFrom.current = 1;
+        this.getData();
+      },
+      searchFromReset() {
+        this.$refs["searchFrom"].resetFields();
+      },
+      // 列表选项数据
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
+      getData() {
+        this.$http
+          .post(
+            "/api/contract/ContractInfo/list/loadPageData",
+            this.searchFrom
+          )
+          .then((res) => {
+          this.page = res.data.data;
+      });
+      },
     },
-    // 查看
-    rowshow(row) {
-      let p = { actpoint: "look", instid: row.uuid };
-      this.$router.push({
-        path: "./detail/",
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
-      });
-    },
-    show() {
-      if (this.multipleSelection.length !== 1) {
-        this.$message.info("请选择一条记录进行查看操作！");
-        return false;
-      }
-      let p = { actpoint: "look", instid: this.multipleSelection[0].uuid };
-      this.$router.push({
-        path: "../detail/",
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
-      });
-    }, // list通用方法开始
-    handleSizeChange(val) {
-      this.searchform.size = val;
+    created() {
       this.getData();
     },
-    handleCurrentChange(val) {
-      this.searchform.current = val;
-      this.getData();
-    },
-    searchformSubmit() {
-      this.searchform.current = 1;
-      this.getData();
-    },
-    searchformReset() {
-      this.$refs["searchform"].resetFields();
-    },
-    // 列表选项数据
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
-    },
-    getData() {
-      this.$http
-        .post(
-          "/api/contract/ContractInfo/list/loadPageData",
-          this.searchform
-        )
-        .then((res) => {
-        this.page = res.data.data;
-      });
-    },
-  },
-  created() {
-    this.getData();
-  },
-};
+  };
 </script>
 <style scoped>
-.el-table__row {
-  cursor: pointer;
-}
+  .el-table__row {
+    cursor: pointer;
+  }
+  .search-form{
+    display: inline-block;
+    float: left;
+  }
+  >>>.search-form .el-form-item__label{
+    width:auto;
+  }
+  >>>.el-input--mini .el-input__inner{
+    height: auto;
+    line-height: inherit;
+  }
 </style>
