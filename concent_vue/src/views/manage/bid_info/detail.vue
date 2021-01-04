@@ -605,7 +605,7 @@
                 :data="detailform.bidInfo_01"
                 :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
 
-                @selection-change="handleSelectionChange"
+
                 align="center"
                 border
                 class="clothSizeTable"
@@ -823,10 +823,17 @@
               align="center"
               :width="180"
             >
-              <template slot-scope="scope">
+              <!-- <template slot-scope="scope">
                 <span v-for="(item,index) in scope.row.bidInfoSectionOrgList">{{item.orgType==1?item.orgName:''}}{{index <scope.row.bidInfoSectionOrgList.length-1? ',':''}}</span>
 
-              </template>
+              </template> -->
+                <template slot-scope="scope">
+                <span v-for="(item,index ) in scope.row.bidInfoSectionOrgList">
+                    {{item.orgType==1?item.orgName:''}}
+                    {{scope.row.bidInfoSectionOrgList[index+1]&& index>0&&scope.row.bidInfoSectionOrgList[index-1].orgType==1 && scope.row.bidInfoSectionOrgList[index+1].orgType==1? ',':''}}
+                </span>
+
+                  </template>
 
             </el-table-column>
 
@@ -837,9 +844,16 @@
               align="center"
               :width="180"
             >
-                <template slot-scope="scope">
+                <!-- <template slot-scope="scope">
                 <span v-for="(item,index) in scope.row.bidInfoSectionOrgList">{{item.orgType==2?item.orgName:''}}{{index < scope.row.bidInfoSectionOrgList.length-1? ',':''}}</span>
-              </template>
+              </template> -->
+               <template slot-scope="scope">
+                <span v-for="(item,index ) in scope.row.bidInfoSectionOrgList">
+                    {{item.orgType==1?item.orgName:''}}
+                    {{scope.row.bidInfoSectionOrgList[index+1]&& index>0&&scope.row.bidInfoSectionOrgList[index-1].orgType==2 && scope.row.bidInfoSectionOrgList[index+1].orgType==2? ',':''}}
+                </span>
+
+                  </template>
             </el-table-column>
 
             <el-table-column
@@ -920,7 +934,7 @@
             <el-table-column
               :resizable="false"
               label="编标拟配合单位"
-              prop="bidInfoSection.costOwner"
+              prop="bidInfoSection.orgName"
               show-overflow-tooltip
               align="center"
               :width="180"
@@ -930,7 +944,7 @@
             <el-table-column
               :resizable="false"
               label="投资估算"
-              prop="bidInfoSection.costOwner"
+              prop="bidInfoSection.investmentReckon"
               show-overflow-tooltip
               align="center"
               :width="180"
@@ -940,7 +954,7 @@
             <el-table-column
               :resizable="false"
               label="其中建安投资"
-              prop="bidInfoSection.costOwner"
+              prop="bidInfoSection.jananInvestment"
               show-overflow-tooltip
               align="center"
               :width="180"

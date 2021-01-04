@@ -4,7 +4,7 @@
     :append-to-body="true">
     <div>
     <p>标段信息</p>
-      <el-form :inline="true" :model="detailForm" :rules="rules" @keyup.enter.native="init()">
+      <el-form :inline="true" :model="detailForm" :rules="rules" ref="detailform" @keyup.enter.native="init()">
         <el-form-item label="标段名称:" class="list-item">
           <el-select
             clearable
@@ -68,7 +68,7 @@
           <!-- <el-input v-model="detailForm.bidInfoSection.tenderSecurity" placeholder="投标保证金(万元)" clearable></el-input> -->
         </el-form-item>
 
-        <el-form-item v-if="isBidRates=='1'" label="投标价(万元):" class="list-item" prop="bidInfoSection.bidPrice"  :rules="rules.contractAmount">
+        <el-form-item label="投标价(万元):" class="list-item" prop="bidInfoSection.bidPrice"  :rules="rules.contractAmount">
                 <el-input
                     v-model="detailForm.bidInfoSection.bidPrice"
                     clearable
@@ -129,13 +129,13 @@
           <el-input v-model="detailForm.bidInfoSection.costOwner" placeholder="成本负责人" clearable></el-input>
         </el-form-item>
           <el-form-item label="编标拟配合单位:" class="list-item">
-          <el-input v-model="detailForm.bidInfoSection.costOwner" placeholder="成本负责人" clearable></el-input>
+          <el-input v-model="detailForm.bidInfoSection.orgName" placeholder="编标拟配合单位" clearable></el-input>
         </el-form-item>
           <el-form-item label="投资估算:" class="list-item">
-          <el-input v-model="detailForm.bidInfoSection.costOwner" placeholder="成本负责人" clearable></el-input>
+          <el-input v-model="detailForm.bidInfoSection.investmentReckon" placeholder="投资估算" clearable></el-input>
         </el-form-item>
           <el-form-item label="其中建安投资:" class="list-item">
-          <el-input v-model="detailForm.bidInfoSection.costOwner" placeholder="成本负责人" clearable></el-input>
+          <el-input v-model="detailForm.bidInfoSection.jananInvestment" placeholder="其中建安投资" clearable></el-input>
         </el-form-item>
         <div class="list-title">
           其他投标单位(系统内):
@@ -188,9 +188,18 @@
             header-align="center"
             align="center"
             label="投标价">
-            <template slot-scope="scope">
+             <template slot-scope="scope">
+                <el-form-item class="tabelForm" :prop="'dataList.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
+                  <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                 <el-input type="text" v-model="scope.row.bidAmount">
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-form-item>
+              </template>
+            <!-- <template slot-scope="scope">
               <el-input type="text" v-model="scope.row.bidAmount"></el-input>
-            </template>
+            </template> -->
           </el-table-column>
           <el-table-column
             :resizable="false"
@@ -250,7 +259,27 @@
               </el-select>
             </template>
           </el-table-column>
+
           <el-table-column
+            prop="bidAmount"
+            header-align="center"
+            align="center"
+            label="投标价">
+             <template slot-scope="scope">
+                <el-form-item class="tabelForm" :prop="'dataList2.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
+                  <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                 <el-input type="text" v-model="scope.row.bidAmount">
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-form-item>
+              </template>
+            <!-- <template slot-scope="scope">
+              <el-input type="text" v-model="scope.row.bidAmount"></el-input>
+            </template> -->
+          </el-table-column>
+
+          <!-- <el-table-column
             prop="bidAmount"
             header-align="center"
             align="center"
@@ -259,7 +288,8 @@
             <template slot-scope="scope">
               <el-input type="text" v-model="scope.row.bidAmount"></el-input>
             </template>
-          </el-table-column>
+          </el-table-column> -->
+
           <el-table-column
             :resizable="false"
             fixed="right"
@@ -347,13 +377,20 @@ import { isMoney } from '@/utils/validate'
       sub() {
         var bidInfoSectionOrgList=this.detailForm.dataList.concat(this.detailForm.dataList2);
         this.detailForm.bidInfoSectionOrgList=bidInfoSectionOrgList;
-        this.visible = false;
+
          this.detailForm.type=this.type;
         if(this.type=='edit'){
           this.detailForm.index=this.index;
 
         }
-        this.$emit('refreshBD', this.detailForm)
+          this.$refs.detailform.validate((valid) => {
+          if (valid) {
+           this.visible = false;
+           this.$emit('refreshBD', this.detailForm);
+
+          }
+        });
+
       },
       // 初始化
       init(list,isBidRates,type,detail,index) {
@@ -409,6 +446,9 @@ import { isMoney } from '@/utils/validate'
   }
 </script>
 <style scoped>
+  .tabelForm{
+    margin-bottom: 0;
+  }
   .list-title{
     margin: 20px 0;
   }
