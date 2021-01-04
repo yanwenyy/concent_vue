@@ -203,7 +203,7 @@
         if(data.uuid){
           let p = {actpoint: "add",instid:data.uuid};
           this.$router.push({
-            path: "../design/changeDetail/",
+            path: "../house/changeDetail/",
             query: {p: this.$utils.encrypt(JSON.stringify(p))},
           });
         }
