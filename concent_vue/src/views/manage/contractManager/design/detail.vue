@@ -411,46 +411,6 @@
                 </el-select>
               </el-form-item>
               <el-form-item
-                label="是否为系统内联合体:"
-                prop="contractInfo.isInSystemUnion"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              >
-                <el-select
-                  :disabled="p.actpoint==='look'"
-                  clearable
-                  filterable
-                  placeholder="请选择"
-                  size="mini"
-                  v-model="detailform.contractInfo.isInSystemUnion"
-                >
-                  <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item
-                label="是否含系统内分包:"
-                prop="contractInfo.isInSystemSub"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              >
-                <el-select
-                  :disabled="p.actpoint==='look'"
-                  filterable
-                  clearable
-                  placeholder="请选择"
-                  size="mini"
-                  v-model="detailform.contractInfo.isInSystemSub"
-                >
-                  <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item
                 label="装配率(%):"
                 prop="contractInfo.otherAssemblyRate"
                 :rules="{
@@ -671,8 +631,15 @@
                   placeholder="请选择"
                   size="mini"
                   v-model="detailform.contractInfo.contractProvinceId"
+                  @change="
+                  getName(
+                    detailform.contractInfo.contractProvinceId,
+                    ssList,
+                    'contractProvinceName'
+                  )
+                "
                 >
-                  <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in ssList"></el-option>
+                  <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in ssList"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item
@@ -1635,8 +1602,8 @@
         list.forEach((item)=>{
           item.children.forEach((i)=>{
           var _v={
-            label:i.detailName,
-            value:i.id
+            detailName:i.detailName,
+            id:i.id
           }
           this.ssList.push(_v)
       })

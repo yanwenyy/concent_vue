@@ -408,6 +408,24 @@ export default {
                     "defaultpage": true
                   },
                   {
+                    "name": "工程承包变更",
+                    "path": "/manage/contractManager/project/changeDetail",
+                    "component": "/manage/contractManager/project/changeDetail",
+                    "iconCls": "el-icon-switch-button",
+                    "menushow": false,
+                    "leaf": true,
+                    "defaultpage": false
+                  },
+                    {
+                      "name": "勘察设计变更",
+                      "path": "/manage/contractManager/design/changeDetail",
+                      "component": "/manage/contractManager/design/changeDetail",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": false,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                  {
                     "name": "合同信息查询",
                     "path": "/manage/contractManager/search/list",
                     "component": "/manage/contractManager/search/list",

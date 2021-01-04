@@ -42,12 +42,6 @@
           </el-form-item>
           <el-form-item
             label="外文名称:"
-            prop="topInfor.inforNameForeign"
-            :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
           >
             <el-input
               :disabled="p.actpoint === 'look'"
@@ -87,9 +81,8 @@
               <!--</el-select>-->
               <br>
               <template>
-                <el-radio-group v-model="detailform.topInfor.moduleId"  @change="
-                  getName(detailform.topInfor.moduleId, bizCode, 'moduleName')">
-                  <el-radio v-for="(item, index) in bizCode" :label="item.id">{{item.detailName}}</el-radio>
+                <el-radio-group v-model="detailform.topInfor.moduleId"  @change="getName(detailform.topInfor.moduleId, bizCode, 'moduleName')">
+                  <el-radio v-for="(item, index) in bizCode" :label="item.id" :key="index">{{item.detailName}}</el-radio>
                 </el-radio-group>
               </template>
             </el-form-item>
@@ -473,7 +466,7 @@
                 disabled
                 clearable
                 placeholder="请输入"
-                v-model="detailform.topInfor.verifyTypeName"
+                v-model="detailform.topInfor.noticeTypeName=='资审公告'?detailform.topInfor.verifyTypeName='资格预审':detailform.topInfor.noticeTypeName=='招标公告'?detailform.topInfor.verifyTypeName='资格后审':detailform.topInfor.noticeTypeName=='竞争性谈判'?detailform.topInfor.verifyTypeName='竞争性谈判':detailform.topInfor.verifyTypeName=''"
               />
               <!--<el-select-->
                 <!--:disabled="p.actpoint === 'look'"-->
@@ -591,12 +584,11 @@
                   type="textarea"
                   clearable
                   placeholder="请输入"
-                  size="mini"
                   v-model="detailform.topInfor.inforContent"
                 />
               </el-form-item>
             </div>
-            <p class="detail-title" style="overflow: hidden；margin-right: 30px">
+            <p class="detail-title" style="overflow: hidden;margin-right: 30px">
               <span>项目地点: </span>
               <el-button
                 v-show="p.actpoint != 'look'"
@@ -699,7 +691,7 @@
               </template>
             </el-table-column>
           </el-table>
-            <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+            <p  class="detail-title" style="overflow: hidden;margin-right:30px">
               <span>标段信息: </span>
               <el-button
                 v-show="p.actpoint != 'look'"
