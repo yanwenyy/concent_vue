@@ -4,7 +4,6 @@
       <el-button-group style="float: left">
         <el-button @click="add" plain type="primary">新增</el-button>
         <el-button @click="editItem" plain type="primary">修改</el-button>
-        <el-button @click="verifyResultEdit" plain type="primary">资审结果登记</el-button>
         <el-button @click="remove" type="primary" plain>删除</el-button>
         <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
       </el-button-group>
