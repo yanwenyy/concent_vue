@@ -95,17 +95,15 @@
       </el-form-item>
 
       <el-form-item label="是否中标:">
-            <!-- <div>
-            <el-radio  label="0"
-            v-model="detailform.bidInfo.isWinBid"
-            :disabled="p.actpoint === 'look'"
-            style= margin-right:40px
-            >是</el-radio>
-            <el-radio  label="1"
-            v-model="detailform.bidInfo.isWinBid"
-            :disabled="p.actpoint === 'look'"
-            >否</el-radio>
-            </div> -->
+            <!-- <el-switch
+              class="inline-formitem-switch"
+              v-model="searchform.isWinBid"
+              active-color="#409EFF"
+              inactive-color="#ddd"
+              active-value="0"
+              inactive-value="1"
+            >
+            </el-switch> -->
         <el-select
           clearable
           filterable
@@ -182,7 +180,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{scope.row.isWinBid==='1'?'中标':'未中标'}}
+            {{scope.row.isWinBid==='0'?'中标':'未中标'}}
           </template>
         </el-table-column>
 
@@ -392,11 +390,11 @@ export default {
             yesOrNo:[
           {
             id:'0',
-            detailName:'是'
+            detailName:'中标'
           },
           {
             id:'1',
-            detailName:'否'
+            detailName:'未中标'
           }
         ],
     };

@@ -37,7 +37,8 @@
           align="center"
           label="序号"
           show-overflow-tooltip
-          type="index">
+          type="index"
+           fixed>
         </el-table-column>
 
         <el-table-column
@@ -190,7 +191,7 @@
         <el-option label="废标" value="2"></el-option>
         <el-option label="流标" value="3"></el-option>
         <el-option label="未中标" value="4"></el-option>
-        <el-option label="待操作" :value="null"></el-option>
+        <!-- <el-option label="待操作" :value="null"></el-option> -->
 
       </el-select>
     </el-form-item>

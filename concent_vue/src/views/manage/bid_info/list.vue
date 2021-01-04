@@ -47,14 +47,16 @@
           align="center"
           label="序号"
           show-overflow-tooltip
-          type="index">
+          type="index"
+          fixed>
         </el-table-column>
 
         <el-table-column
           :width="500"
           label="项目名称"
           prop="inforName"
-          show-overflow-tooltip>
+          show-overflow-tooltip
+          fixed>
           <template slot="header" slot-scope="scope">
             <span>项目名称</span>
             <div>
@@ -166,7 +168,7 @@
           align="center"
           label="状态"
           prop="orgname"
-          fixed="right"
+
           show-overflow-tooltip>
           <template slot-scope="scope">
               {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':scope.row.flowStatus==null?'待登记':'其他'}}
