@@ -128,7 +128,7 @@
       <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
       <el-button @click="getData" type="primary" plain>查询</el-button>
       <el-button @click="exportdata" type="primary" plain>导出</el-button>
-      <el-button @click="verifyResultEdit" plain type="primary">资审结果登记</el-button>
+      <el-button @click="verifyResultEdit" plain type="primary">资审结果登记查看</el-button>
       </el-row>
 
     </el-form>
@@ -276,6 +276,78 @@
       ></el-pagination>
 
     </div>
+    <el-dialog title="资审结果登记查看" :visible.sync="dialogResult"
+               width="300">
+      <el-form :model="resultform.verifySection">
+        <el-form-item label="资格预审结果" :label-width="formLabelWidth"  prop="verifyResult">
+         <el-switch
+           disabled
+           active-text="通过"
+           v-model="resultform.verifySection.verifyResult"
+           active-value="true"
+           inactive-value="false"
+         >
+            </el-switch>
+        </el-form-item>
+        <el-form-item label="通过时间" :label-width="formLabelWidth" prop="verifyResultTime">
+          <el-date-picker
+            disabled
+            value-format="timestamp"
+            v-model="resultform.verifySection.verifyResultTime"
+            type="date"
+            placeholder="选择日期">
+          </el-date-picker>
+        </el-form-item>
+
+      </el-form>
+      <div>
+      <el-table
+        height="200"
+        :data="resultform.commonFilesList"
+        :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+        align="center"
+        border
+        class="contractInfoTable"
+        ref="table"
+        style="width: 100%;height: auto;"
+      >
+                <el-table-column
+                  :width="55"
+                  align="center"
+                  label="序号"
+                  show-overflow-tooltip
+                  type="index"
+                ></el-table-column>
+                <el-table-column :resizable="false"
+                                 label="文件名"
+                                 prop="fileName"
+                                 show-overflow-tooltip>
+
+                </el-table-column>
+
+                <el-table-column :resizable="false"
+                                 label="大小"
+                                 prop="fileSize"
+                                 :width="120"
+                                 show-overflow-tooltip>
+
+                </el-table-column>
+                <el-table-column :resizable="false"
+                                 label="类型"
+                                 :width="80"
+                                 prop="fileType"
+                                 show-overflow-tooltip>
+
+                </el-table-column>
+
+              </el-table>
+
+    </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogResult = false">取 消</el-button>
+        <el-button type="primary" @click="saveVerifyResult">确 定</el-button>
+      </div>
+    </el-dialog>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
   </div>
 </template>
@@ -290,6 +362,7 @@
   data() {
     return {
       treeStatas: false,
+      dialogResult:false,
       page: { current: 1, size: 10, total: 0, records: [] },
       searchform: {
         inforName: "",
@@ -330,6 +403,19 @@
           detailName:'审核通过'
         }
       ],//项目状态列表
+      formLabelWidth: '120px',
+      resultform:{
+        verifySection:{
+          uuid:'',
+          verifyId:'',
+          sectionId:'',
+          investmentReckon:'',
+          jananInvestment:'',
+          verifyResult:'1',
+          verifyResultTime:'2020-12-18'
+        },
+        commonFilesList:[]
+      },
     }
   },
   mounted() {
@@ -352,9 +438,32 @@
     }
   },
   methods: {
+    saveVerifyResult() {
+      this.dialogResult = false
+
+    },
+    verifyResultEdit() {
+      if (this.multipleSelection.length > 0) {
+        this.dialogResult = true;
+        console.log(this.multipleSelection[0].verifySectionId)
+        this.$http
+          .post(
+            '/api/topInfo/Verify/detail/entitySectionInfo',
+            {"id":this.multipleSelection[0].verifySectionId}
+          )
+          .then(res => {
+            this.resultform = res.data.data
+            console.log(JSON.stringify(this.resultform))
+            //this.getData();
+          })
+
+      } else {
+        this.$message.info("请选择列表中的项目！");
+      }
+    },
     //获取项目地点的值
     getPositionTree(data) {
-      alert(1);
+      //alert(1);
       console.log(data)
       this.treeStatas = false;
       this.searchform.ffid=data.fullDetailCode;
