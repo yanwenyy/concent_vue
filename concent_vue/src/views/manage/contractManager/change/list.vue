@@ -157,7 +157,7 @@
 </template>
 
 <script>
-  import ChangeSearch from './ChangeSearch'
+  import ChangeSearch from './changeSearch'
   export default {
     data() {
       return {
