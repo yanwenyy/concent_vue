@@ -479,7 +479,6 @@
           :resizable="false"
           label="标段名"
           prop="verifySection.sectionName"
-          align="center"
           show-overflow-tooltip
         >
         </el-table-column>
@@ -492,12 +491,69 @@
           prop="verifySectionOrgName"
           show-overflow-tooltip
           v-show="p.actpoint != 'look'"
-
           width="200">
+
           <template slot-scope="scope" v-show="p.actpoint != 'look'">
             <span  >
-              {{scope.row.verifySectionOrgName}}
+              {{scope.row.verifySectionOrgNameType01}}
             </span>
+          </template>
+        </el-table-column>
+        <el-table-column
+
+          :resizable="false"
+          fixed="right"
+          label="编标拟配合单位"
+          align="center"
+          prop="verifySectionOrgNameType02"
+          show-overflow-tooltip
+          v-show="p.actpoint != 'look'"
+          width="200">
+
+          <template slot-scope="scope" v-show="p.actpoint != 'look'">
+
+            <span  >
+              {{scope.row.verifySectionOrgNameType02}}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column
+
+          :resizable="false"
+          fixed="right"
+          label="投资估算"
+          align="center"
+          prop="investmentReckon"
+          show-overflow-tooltip
+          width="80">
+
+          <template slot-scope="scope" >
+          <el-input
+            :disabled="p.actpoint === 'look'"
+            placeholder=""
+            size="mini"
+            v-model="scope.row.verifySection.investmentReckon"
+          />
+          </template>
+        </el-table-column>
+        <el-table-column
+
+          :resizable="false"
+          fixed="right"
+          label="其中建安投资"
+          align="center"
+          prop="jananInvestment"
+          show-overflow-tooltip
+          v-show="p.actpoint != 'look'"
+          width="80">
+
+          <template slot-scope="scope" >
+           <el-input
+             :disabled="p.actpoint === 'look'"
+             placeholder=""
+             size="mini"
+             v-model="scope.row.verifySection.jananInvestment"
+           />
           </template>
         </el-table-column>
         <el-table-column
@@ -593,6 +649,7 @@
     </el-dialog>
     <TreeOrg v-if="treeOrgStatas" ref="addOrUpdate" @getPosition="getTreeOrg"></TreeOrg>
     <TreeOrg v-if="treeOrgStatas1" ref="addOrUpdate1" @getPosition="getTreeOrg1"></TreeOrg>
+   <TreeOrg v-if="treeOrgStatas2" ref="addOrUpdate2" @getPosition="getTreeOrg2"></TreeOrg>
   </div>
 </template>
 
@@ -608,6 +665,7 @@ export default {
     return {
       treeOrgStatas: false,
       treeOrgStatas1: false,
+      treeOrgStatas2: false,
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
       detailform: {
         'verify': {
@@ -651,6 +709,7 @@ export default {
         }
       ],//联合投标选择
       myVerifySection:{},
+      myVerifySection1:{},
       multipleSelection:[],
       multipleSelection1:[]
     }
@@ -682,6 +741,7 @@ export default {
         if (valid) {
           //alert(JSON.stringify(this.detailform));
           console.log(JSON.stringify(this.detailform));
+          console.log(this.detailform.verifySectionList);
           this.detailform.verify.flowStatus="0";
           this.$http
             .post(
@@ -797,7 +857,8 @@ export default {
     getTreeOrg1(data) {
 
       console.log(data)
-      this.treeStatas1 = false;
+
+      this.treeOrgStatas1 = false;
 
       var resultStr = "";
       this.myVerifySection.verifySectionOrgList= [];
@@ -807,8 +868,29 @@ export default {
         this.myVerifySection.verifySectionOrgList.push(VerifySectionOrg)
         resultStr+=item.name+",";
       });
-       this.detailform.verifySectionList[this.myVerifySection.index].verifySectionOrgName =resultStr.substring(0,resultStr.length-1);
-       this.detailform.verifySectionList[this.myVerifySection.index].verifySectionOrgList=this.myVerifySection.verifySectionOrgList;
+       this.detailform.verifySectionList[this.myVerifySection.index].verifySectionOrgNameType01 =resultStr.substring(0,resultStr.length-1);
+       this.detailform.verifySectionList[this.myVerifySection.index].verifySectionOrgListType01=this.myVerifySection.verifySectionOrgList;
+      // this.detailform.verifyOrgLists=resultStr;
+      // alert(this.detailform.verifyOrgLists);
+      console.log(this.detailform.verifySectionList)
+      // this.key = this.key + 1;
+    },
+    getTreeOrg2(data) {
+
+      console.log(data)
+      this.treeOrgStatas2 = false;
+
+      var resultStr = "";
+      this.myVerifySection1.verifySectionOrgList= [];
+      data.forEach((item, index) => {
+
+        var VerifySectionOrg={ orgId:item.name,orgName:item.name,orgType:"02"};
+        this.myVerifySection1.verifySectionOrgList.push(VerifySectionOrg)
+        resultStr+=item.name+",";
+      });
+      this.detailform.verifySectionList[this.myVerifySection1.index].verifySectionOrgNameType02
+        =resultStr.substring(0,resultStr.length-1);
+      this.detailform.verifySectionList[this.myVerifySection1.index].verifySectionOrgListType02=this.myVerifySection1.verifySectionOrgList;
       // this.detailform.verifyOrgLists=resultStr;
       // alert(this.detailform.verifyOrgLists);
       console.log(this.detailform.verifySectionList)
@@ -819,9 +901,16 @@ export default {
       if(column.label==="参与投标单位") {
         this.myVerifySection = row;
         this.treeOrgStatas1 = true;
-        console.log(this.positionIndex);
+        //console.log(this.positionIndex);
         this.$nextTick(() => {
           this.$refs.addOrUpdate1.init()
+        })
+      }else if(column.label==="编标拟配合单位") {
+        this.myVerifySection1 = row;
+        this.treeOrgStatas2 = true;
+        //console.log(this.positionIndex);
+        this.$nextTick(() => {
+          this.$refs.addOrUpdate2.init()
         })
       }
     },
@@ -843,8 +932,10 @@ export default {
         }
         var vsBo={
           verifySection:{},
-          verifySectionOrgList:[],
-          verifySectionOrgName:''
+          verifySectionOrgListType01:[],
+          verifySectionOrgNameType01:'',
+          verifySectionOrgListType02:[],
+          verifySectionOrgNameType02:''
         }
         var isadd = true;
         this.detailform.verifySectionList.forEach((item1, index1) => {
