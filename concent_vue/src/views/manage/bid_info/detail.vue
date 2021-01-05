@@ -54,19 +54,19 @@
             </el-form-item>
            <br>
 
-            <el-form-item label="项目板块:"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
+            <el-form-item label="项目板块:">
+            <br>
+              <template >
+                <el-radio-group disabled v-model="detailform.topInforBO.topInfor.moduleId"  @change="getName(detailform.topInforBO.topInfor, bizCode, 'moduleName')">
+                  <el-radio v-for="(item, index) in bizCode" :label="item.id" :key="index">{{item.detailName}}</el-radio>
+                </el-radio-group>
+              </template>
+              <!-- <el-input
                 disabled
                 filterable
                 size="mini"
                 v-model="detailform.topInforBO.topInfor.moduleName">
-              </el-input>
+              </el-input> -->
             </el-form-item>
             <br>
 
@@ -133,7 +133,7 @@
             </el-form-item>
             <br>
 
-                        <el-form-item  label="新兴市场(一级):"
+            <el-form-item  label="新兴市场(一级):"
                 :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -252,7 +252,7 @@
               <el-input
                 disabled
                 placeholder="请选择"
-                v-model="detailform.topInforBO.capitalName.capitalName"
+                v-model="detailform.topInforBO.capitalName"
               >
               </el-input>
             </el-form-item>
@@ -349,7 +349,7 @@
               <el-input
                 disabled
                 placeholder="请选择"
-                v-model="detailform.topInforBO.topInfor.bidProbName"
+                v-model="detailform.topInforBO.topInfoOrg.bidProbName"
               >
               </el-input>
             </el-form-item>
@@ -562,12 +562,6 @@
               class="neirong"
               label="投标说明(最多1000字):"
               prop="bidInfo.bidExplain"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-
-              }"
               style="width: 100%"
             >
               <el-input
@@ -1049,6 +1043,9 @@ export default {
       bidType() {
         return this.$store.state.bidType;
       },
+      bizCode() {
+        return this.$store.state.bizCode;
+      },
       // yesOrNo(){
       //   return this.$store.state.yesOrNo;
       // }
@@ -1473,6 +1470,9 @@ export default {
   }
 .el-divider--horizontal{
   margin: 30px 0 25px 0;
+}
+.el-textarea__inner{
+  width: 100% !important;
 }
 </style>
 

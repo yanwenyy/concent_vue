@@ -39,11 +39,22 @@
           <br>
 
 
-          <el-form-item label="项目板块:">
-            <el-input
+          <el-form-item label="项目板块:"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }">
+            <br>
+              <template >
+                <el-radio-group disabled v-model="detailform.topInforBO.topInfor.moduleId"  @change="getName(detailform.topInforBO.topInfor, bizCode, 'moduleName')">
+                  <el-radio v-for="(item, index) in bizCode" :label="item.id" :key="index">{{item.detailName}}</el-radio>
+                </el-radio-group>
+              </template>
+            <!-- <el-input
               v-model="detailFormBefore.topInforBO.topInfor.moduleName"
               disabled
-            ></el-input>
+            ></el-input> -->
           </el-form-item>
           <br>
 
@@ -59,6 +70,15 @@
               disabled
             ></el-input>
           </el-form-item>
+
+          <el-form-item label="所属线路:"
+          v-if="detailFormBefore.topInforBO.topInfor.enginTypeFirstName=='17ff5c08d36b41ea8f2dc2e9d3029cac'">
+            <el-input
+              v-model="detailFormBefore.topInforBO.topInfor.belongLineName"
+              disabled
+            ></el-input>
+          </el-form-item>
+
           <br>
           <el-form-item label="项目性质(一级):">
             <el-input
@@ -220,20 +240,14 @@
           <!-- 下拉 -->
           <el-form-item label="资审方式:">
             <el-input
-              v-model="detailFormBefore.topInforBO.topInfor.verifyTypeId"
+              v-model="detailFormBefore.topInforBO.topInfor.verifyTypeName"
               disabled
             ></el-input>
           </el-form-item>
           <br>
           <!-- 下拉 -->
 
-          <el-form-item label="所属线路:">
-            <el-input
-              v-model="detailFormBefore.topInforBO.topInfor.belongLineName"
-              disabled
-            ></el-input>
-          </el-form-item>
-          <br>
+
           <!-- --------------------------------------------------------------- -->
             <el-form-item label="项目跟踪负责人:"
              :rules="{
@@ -265,7 +279,7 @@
                 trigger: 'blur',
               }">
             <el-input
-              v-model="detailFormBefore.topInforBO.topInfor.bidProbName"
+              v-model="detailFormBefore.topInforBO.topInfoOrg.bidProbName"
               disabled
             ></el-input>
           </el-form-item>
@@ -834,12 +848,12 @@
                 trigger: 'blur',
               }"
             >
-              <el-input
-                disabled
-                filterable
-                size="mini"
-                v-model="detailform.topInforBO.topInfor.moduleName">
-              </el-input>
+            <br>
+              <template >
+                <el-radio-group disabled v-model="detailform.topInforBO.topInfor.moduleId"  @change="getName(detailform.topInforBO.topInfor, bizCode, 'moduleName')">
+                  <el-radio v-for="(item, index) in bizCode" :label="item.id" :key="index">{{item.detailName}}</el-radio>
+                </el-radio-group>
+              </template>
             </el-form-item>
             <br>
 
@@ -863,6 +877,17 @@
                 placeholder="工程类别(二级)"
                 v-model="detailform.topInforBO.topInfor.enginTypeSecondName"
               >
+              </el-input>
+            </el-form-item>
+
+            <el-form-item label="所属线路:"
+            v-if="detailform.topInforBO.topInfor.enginTypeFirstName=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
+            >
+              <el-input
+                disabled
+                v-model="detailform.topInforBO.topInfor.belongLineName"
+              >
+
               </el-input>
             </el-form-item>
             <br>
@@ -1070,14 +1095,7 @@
             </el-form-item>
             <br>
 
-            <el-form-item label="所属线路:">
-              <el-input
-                disabled
-                v-model="detailform.topInforBO.topInfor.belongLineName"
-              >
 
-              </el-input>
-            </el-form-item>
 
 
               <el-form-item   class="formItem" label="项目跟踪负责人:"
@@ -1119,7 +1137,7 @@
               <el-input
                 disabled
                 placeholder="请选择"
-                v-model="detailform.topInforBO.topInfor.bidProbName"
+                v-model="detailform.topInforBO.topInfoOrg.bidProbName"
               >
               </el-input>
             </el-form-item>

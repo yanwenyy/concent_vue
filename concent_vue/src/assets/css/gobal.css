@@ -505,5 +505,8 @@ pre {
   content: '';
   clear: both;
 }
+.detail-back-tab{
+  z-index: 2000!important;
+}
 /**/
 

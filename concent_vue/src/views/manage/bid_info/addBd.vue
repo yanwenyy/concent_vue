@@ -1,9 +1,11 @@
 <template>
+
   <el-dialog
     :visible.sync="visible"
     :append-to-body="true">
+    <p class="bd">标段信息</p>
     <div>
-    <p>标段信息</p>
+
       <el-form :inline="true" :model="detailForm" :rules="rules" ref="detailform" @keyup.enter.native="init()">
         <el-form-item label="标段名称:" class="list-item">
           <el-select
@@ -446,6 +448,9 @@ import { isMoney } from '@/utils/validate'
   }
 </script>
 <style scoped>
+.bd{
+  margin: -30px 0 35px 0;
+}
   .tabelForm{
     margin-bottom: 0;
   }
