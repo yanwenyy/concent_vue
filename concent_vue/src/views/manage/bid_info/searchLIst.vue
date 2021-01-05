@@ -284,11 +284,11 @@
           :width="150"
           align="center"
           label="开标日期"
-          prop="openBidTime"
+          prop="dateOfBidOpeningName"
           show-overflow-tooltip
         >
         <template slot-scope="scope">{{
-            scope.row.openBidTime | dateformat
+            scope.row.dateOfBidOpeningName | dateformat
             }}</template>
         </el-table-column>
         <!-- ??? -->
