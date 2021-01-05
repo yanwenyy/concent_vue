@@ -508,5 +508,17 @@ pre {
 .detail-back-tab{
   z-index: 2000!important;
 }
+.list-search-picker{
+  width: 100%!important;
+}
+.list-search-picker .el-input__inner{
+  box-sizing: border-box;
+  width: 100%!important;
+  height: 28px;
+  line-height: 28px;
+}
+.list-search-picker .el-input__icon{
+  line-height: 28px;
+}
 /**/
 

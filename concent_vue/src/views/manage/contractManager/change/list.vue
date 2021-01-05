@@ -21,7 +21,7 @@
             filterable
             placeholder="请选择"
             size="mini"
-            v-model="searchFrom.flowStatus"
+            v-model="searchFrom.state"
           >
             <el-option
               :key="index"
@@ -97,7 +97,7 @@
           :width="150"
           align="center"
           label="填报单位"
-          prop="createOrgId"
+          prop="createOrgName"
           show-overflow-tooltip
         >
         </el-table-column>
@@ -125,7 +125,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
+             {{scope.row.state==1?'变更中':scope.row.state==2?'待审核':scope.row.state==3?'退回':''}}
           </template>
         </el-table-column>
         <el-table-column
@@ -172,15 +172,15 @@
         orgTree: [],
         shztList:[
           {
-            id:'0',
+            id:'1',
             detailName:'变更中'
           },
           {
-            id:'1',
+            id:'2',
             detailName:'待审核'
           },
           {
-            id:'2',
+            id:'3',
             detailName:'退回'
           }
         ],//审核状态下拉框
@@ -203,7 +203,7 @@
         if(data.uuid){
           let p = {actpoint: "add",instid:data.uuid};
           this.$router.push({
-            path: "../house/changeDetail/",
+            path: "../other/changeDetail/",
             query: {p: this.$utils.encrypt(JSON.stringify(p))},
           });
         }
@@ -239,9 +239,9 @@
           this.$message.info("请选择一条记录进行查看操作！");
           return false;
         }
-        let p = {actpoint: "edit", instid: this.multipleSelection[0].uuid};
+        let p = {actpoint: "edit", instid: this.multipleSelection[0].beforeId,afterId:this.multipleSelection[0].afterId};
         this.$router.push({
-          path: "./detail/",
+          path: "../project/changeDetail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
 
@@ -295,7 +295,7 @@
       getData() {
         this.$http
           .post(
-            "/api/contract/ContractInfo/list/loadPageData",
+            "/api/contract/ContractInfo/list/loadPageDataForChangeRecord",
             this.searchFrom
           )
           .then((res) => {

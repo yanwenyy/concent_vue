@@ -524,11 +524,7 @@
               <el-form-item  class="formItem"
                 label="联系电话:"
                 prop="topInfoOrg.contactMode"
-                :rules="{
-                  required: true,
-                  message: '此项不能为空',
-                  trigger: 'blur',
-                }"
+                :rules="rules.phone"
               >
                 <el-input
                   :disabled="p.actpoint === 'look'"
@@ -635,7 +631,7 @@
 
             <el-table-column
               :resizable="false"
-              label="份额(万元)"
+              label="项目规模(万元)"
               prop="contractAmount"
               show-overflow-tooltip
               align="center"
@@ -744,7 +740,7 @@
 
               <el-table-column
                 :resizable="false"
-                label="项目份额(万元)"
+                label="项目规模(万元)"
                 align="center"
                 prop="projectScale"
                 width="300"
@@ -800,7 +796,7 @@
 <script>
   import Tree from '@/components/tree'
   import FileUpload from '@/components/fileUpload'
-  import { isMoney } from '@/utils/validate'
+  import { isMoney, isMobile} from '@/utils/validate'
   export default {
     // name: "详情",
     data() {
@@ -810,6 +806,16 @@
           callback(new Error('不能为空'))
         }else if (!isMoney(value)) {
           callback(new Error('请输入正确的金额格式'))
+        } else {
+          callback()
+        }
+      };
+      var validatePhone = (rule, value, callback) => {
+        // console.log(value)
+        if(value===''){
+          callback(new Error('不能为空'))
+        }else if (!isMobile(value)) {
+          callback(new Error('请输入正确的手机格式'))
         } else {
           callback()
         }
@@ -847,6 +853,9 @@
         rules:{
           contractAmount: [
             { required: true,validator: validateMoney, trigger: 'change' }
+          ],
+          phone: [
+            { required: true,validator: validatePhone, trigger: 'change' }
           ]
         },//表单验证规则
       };
@@ -865,7 +874,7 @@
         return this.$store.state.category.emergingMarket;
       },
       projectNature(){
-        return this.$store.state.projectNature;
+        return this.$store.state.category.projectNature;
       },
       certificationType(){
         return this.$store.state.certificationType;
@@ -987,11 +996,11 @@
         }
       },
       //项目性质二级
-      getTwoXZ(){
+      getTwoXZ(id){
         this.detailform.topInfor.projectNatureSecondId='';
         this.projectNatureTwo=[];
         if(id!=''){
-          this.emergingMarket.find(
+          this.projectNature.find(
             (item)=>{
             if (item.id == id) {
             this.detailform.topInfor.projectNatureFirstName = item.detailName;
@@ -1133,6 +1142,7 @@
             var datas=res.data.data;
             this.getTwo(datas.topInfor.enginTypeFirstId);
             this.getTwoSC(datas.topInfor.marketFirstNameId);
+            this.getTwoXZ(datas.topInfor.projectNatureFirstId);
             this.detailform={
               topInfor: datas.topInfor,
               topInfoOrg: datas.topInfoOrg,
