@@ -13,10 +13,10 @@
               ref="detailformBefore"
               style="background: white;width:calc(100% - 4px);">
               <p style="overflow:hidden;margin-right: 30px"><span style="float:left;font-weight: bold">项目前期信息</span></p>
-              <el-row>
+              <div>
                 <el-form-item
                   label="项目名称:"
-                  style="width: 33%"
+
                 >
 
                   <el-input
@@ -25,9 +25,10 @@
                     v-model="detailformBefore.topInfor.inforName"
                   />
                 </el-form-item>
+              </div>
                 <el-form-item
                   label="工程类别（一级）:"
-                  style="width: 33%"
+
                 >
                   <el-input
                     disabled
@@ -37,8 +38,7 @@
                 </el-form-item>
                 <el-form-item
                   label="工程类别（二级）:"
-                  style="width: 33%
-              "
+
                 >
                   <el-input
                     disabled
@@ -46,13 +46,10 @@
                     v-model="detailformBefore.topInfor.enginTypeSecondName"
                   />
                 </el-form-item>
-
-              </el-row>
-              <el-row>
                 <el-form-item
                   disabled
                   label="公告类型:"
-                  style="width: 33%"
+
                 >
                   <el-input
                     disabled
@@ -63,7 +60,7 @@
                 </el-form-item>
                 <el-form-item
                   label="设计单位:"
-                  style="width: 33%">
+                >
                   <el-input
                     disabled
                     size="mini"
@@ -74,7 +71,7 @@
 
                 <el-form-item
                   label="建设单位:"
-                  style="width: 33%">
+                >
                   <el-input
                     disabled
                     size="mini"
@@ -82,12 +79,9 @@
                   />
 
                 </el-form-item>
-              </el-row>
-              <el-row>
                 <el-form-item
                   label="招标代理公司:"
-                  style="width: 33%
-        "
+
                 >
                   <el-input
                     disabled
@@ -99,8 +93,7 @@
                 </el-form-item>
                 <el-form-item
                   label="项目模式:"
-                  style="width: 33%
-        "
+
                 >
                   <el-input
                     disabled
@@ -112,7 +105,7 @@
                 </el-form-item>
                 <el-form-item
                   label="资审方式:"
-                  style="width: 33%"
+
                 >
                   <el-input
                     disabled
@@ -122,13 +115,10 @@
                   />
 
                 </el-form-item>
-              </el-row>
-              <el-row>
                 <el-form-item
 
                   label="资金来源:"
-                  style="width: 33%
-        "
+
                 >
                   <el-input
                     disabled
@@ -140,8 +130,7 @@
                 </el-form-item>
                 <el-form-item
                   label="项目跟踪负责人:"
-                  style="width: 33%
-        "
+
                 >
                   <el-input
                     disabled
@@ -152,7 +141,7 @@
                 </el-form-item>
                 <el-form-item
                   label="联系电话:"
-                  style="width: 33%"
+
                 >
                   <el-input
                     disabled
@@ -162,13 +151,11 @@
                   />
 
                 </el-form-item>
-
-              </el-row>
-              <el-row>
+              <div>
                 <el-form-item
                   class="neirong"
                   label="项目内容(最多1000字):"
-                  style="width: 33%"
+
                 >
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-input
@@ -178,13 +165,13 @@
                     v-model="detailformBefore.topInfor.inforContent"
                   />
                 </el-form-item>
-              </el-row>
+              </div>
               <p style="overflow:hidden;margin-right: 30px"><span style="float:left;font-weight: bold">资审信息</span></p>
-              <el-row>
+
                 <el-form-item
                   label="资审文件发售截止日期:"
                   prop="verify.saleTime"
-                  style="width: 33%"
+
                   :rules="{
           required: true, message: '此项不能为空', trigger: 'blur'
         }"
@@ -199,13 +186,12 @@
                   </el-date-picker>
 
                 </el-form-item>
-                <!-- --------------------------------------------------------------- -->
+              <!-- --------------------------------------------------------------- -->
 
                 <el-form-item
                   label="递交资格预审申请文件日期:"
                   prop="verify.subTime"
-                  style="width: 33%
-        "
+
                   :rules="{
           required: true, message: '此项不能为空', trigger: 'blur'
         }"
@@ -224,7 +210,7 @@
                 <el-form-item
                   label="资格预审公告发布日期:"
                   prop="verify.publishTime"
-                  style="width: 33%"
+
                   :rules="{
           required: true, message: '此项不能为空', trigger: 'blur'
         }"
@@ -238,11 +224,9 @@
                     placeholder="选择日期">
                   </el-date-picker>
                 </el-form-item>
-              </el-row>
-              <el-row>
                 <el-form-item
                   label="招标方式:"
-                  style="width: 33%">
+                >
                   <el-input
                     disabled
                     size="mini"
@@ -252,18 +236,17 @@
                 <el-form-item
                   label="是否联合体投标:"
                   prop="verify.isCoalitionBid"
-                  style="width: 33%"
+
                   :rules="{required: true, message: '此项不能为空', trigger: 'blur'}">
                   <el-input
                     disabled
                     size="mini"
                     v-model="detailformBefore.verify.isCoalitionBid"/>
                 </el-form-item>
-              </el-row>
-              <el-row v-show='detailformBefore.verify.isCoalitionBid=="是"'>
+              <div v-show='detailformBefore.verify.isCoalitionBid=="是"'>
                 <el-form-item
                   label="内部联合体单位:"
-                  style="width: 33%"
+
                 >
 
                   <el-input disabled v-model="detailformBefore.verifyOrgLists" placeholder="内部联合体单位">
@@ -272,7 +255,7 @@
                 </el-form-item>
                 <el-form-item
                   label="外部联合体单位:"
-                  style="width: 33%"
+
                 >
                   <el-input
                     disabled
@@ -282,13 +265,13 @@
                   />
 
                 </el-form-item>
-              </el-row>
-              <el-row>
+              </div>
+              <div>
                 <el-form-item
                   class="neirong"
                   label="资审说明(最多1000字):"
                   prop="verify.verifyExplain"
-                  style="width: 33%"
+
                   :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -303,23 +286,52 @@
                     v-model="detailformBefore.verify.verifyExplain"
                   />
                 </el-form-item>
-              </el-row>
-              <el-row>
+              </div>
+              <div>
                 <el-form-item
                   class="neirong"
                   label="附件（最大10MB）:"
-                  style="width: 33%"
+
                 >
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-upload
                     disabled
                     class="upload-demo"
                     action="https://jsonplaceholder.typicode.com/posts/"
-                    >
-                    <div slot="tip" class="el-upload__tip">最大上传文件不超过500kb</div>
+                  >
                   </el-upload>
                 </el-form-item>
-              </el-row>
+              </div>
+              <div>
+                  <el-table
+                    :data="detailformBefore.commonFilesList"
+                    :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+                    align="center"
+                    border
+                    class="contractInfoTable"
+                    ref="table"
+                    style="width: 100%;height: auto;"
+                  >
+                            <el-table-column
+                              :width="55"
+                              align="center"
+                              label="序号"
+                              show-overflow-tooltip
+                              type="index"
+                            ></el-table-column>
+                            <el-table-column :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+
+                            </el-table-column>
+
+                            <el-table-column :resizable="false" label="大小" :width="120" prop="fileSize" show-overflow-tooltip>
+
+                            </el-table-column>
+                            <el-table-column :resizable="false" label="类型" :width="80" prop="fileType" show-overflow-tooltip>
+
+                            </el-table-column>
+
+                          </el-table>
+                </div>
               <p style="overflow:hidden;margin-right: 30px"><span style="float:left;">标段信息: </span>
               </p>
               <el-table
@@ -387,19 +399,20 @@
               style="background: white;width:calc(100% - 4px);"
             >
               <p style="overflow:hidden;margin-right: 30px"><span style="float:left;font-weight: bold">项目前期信息</span></p>
-              <el-row>
+              <div>
                 <el-form-item
                   label="项目名称:"
-                  style="width: 33%"
+
                 ><el-input
                   disabled
-                    size="mini"
-                    v-model="detailformAfter.topInfor.inforName"
-                  />
+                  size="mini"
+                  v-model="detailformAfter.topInfor.inforName"
+                />
                 </el-form-item>
+                </div>
                 <el-form-item
                   label="工程类别（一级）:"
-                  style="width: 33%"
+
                 >
                   <el-input
                     disabled
@@ -409,8 +422,7 @@
                 </el-form-item>
                 <el-form-item
                   label="工程类别（二级）:"
-                  style="width: 33%
-              "
+
                 >
                   <el-input
                     disabled
@@ -419,11 +431,9 @@
                   />
                 </el-form-item>
 
-              </el-row>
-              <el-row>
                 <el-form-item
                   label="公告类型:"
-                  style="width: 33%"
+
                 >
                   <el-input
                     disabled
@@ -434,7 +444,7 @@
                 </el-form-item>
                 <el-form-item
                   label="设计单位:"
-                  style="width: 33%">
+                >
                   <el-input
                     disabled
                     size="mini"
@@ -445,8 +455,7 @@
                 <el-form-item
 
                   label="建设单位:"
-                  style="width: 33%
-        "
+
                 >
                   <el-input
                     disabled
@@ -455,13 +464,10 @@
                   />
 
                 </el-form-item>
-              </el-row>
-              <el-row>
 
                 <el-form-item
                   label="招标代理公司:"
-                  style="width: 33%
-        "
+
                 >
                   <el-input
                     disabled
@@ -473,8 +479,7 @@
                 </el-form-item>
                 <el-form-item
                   label="项目模式:"
-                  style="width: 33%
-        "
+
                 >
                   <el-input
                     disabled
@@ -486,7 +491,7 @@
                 </el-form-item>
                 <el-form-item
                   label="资审方式:"
-                  style="width: 33%"
+
                 >
                   <el-input
                     disabled
@@ -496,14 +501,11 @@
                   />
 
                 </el-form-item>
-              </el-row>
-              <el-row>
 
                 <el-form-item
 
                   label="资金来源:"
-                  style="width: 33%
-        "
+
                 >
                   <el-input
                     disabled
@@ -515,8 +517,7 @@
                 </el-form-item>
                 <el-form-item
                   label="项目跟踪负责人:"
-                  style="width: 33%
-        "
+
                 >
                   <el-input
                     disabled
@@ -527,7 +528,7 @@
                 </el-form-item>
                 <el-form-item
                   label="联系电话:"
-                  style="width: 33%"
+
                 >
                   <el-input
                     disabled
@@ -537,12 +538,11 @@
                   />
 
                 </el-form-item>
-              </el-row>
-              <el-row>
+              <div>
                 <el-form-item
                   class="neirong"
                   label="项目内容(最多1000字):"
-                  style="width: 33%"
+
                 >
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-input
@@ -552,14 +552,14 @@
                     v-model="detailformAfter.topInfor.inforContent"
                   />
                 </el-form-item>
-              </el-row>
+              </div>
 
               <p style="overflow:hidden;margin-right: 30px"><span style="float:left;font-weight: bold">资审信息</span></p>
-              <el-row>
+
                 <el-form-item
                   label="资审文件发售截止日期:"
                   prop="verify.saleTime"
-                  style="width: 33%"
+
                   :rules="{
           required: true, message: '此项不能为空', trigger: 'blur'
         }"
@@ -575,13 +575,12 @@
 
                 </el-form-item>
 
-                <!-- --------------------------------------------------------------- -->
+              <!-- --------------------------------------------------------------- -->
 
                 <el-form-item
                   label="递交资格预审申请文件日期:"
                   prop="verify.subTime"
-                  style="width: 33%
-        "
+
                   :rules="{
           required: true, message: '此项不能为空', trigger: 'blur'
         }"
@@ -600,7 +599,7 @@
                 <el-form-item
                   label="资格预审公告发布日期:"
                   prop="verify.publishTime"
-                  style="width: 33%"
+
                   :rules="{
           required: true, message: '此项不能为空', trigger: 'blur'
         }"
@@ -614,12 +613,10 @@
                     placeholder="选择日期">
                   </el-date-picker>
                 </el-form-item>
-              </el-row>
-              <el-row>
 
                 <el-form-item
                   label="招标方式:"
-                  style="width: 33%"
+
                 >
                   <el-select
                     :disabled="p.actpoint === 'look'"
@@ -637,12 +634,12 @@
                   </el-select>
                 </el-form-item>
 
-                <!-- 下拉 -->
+              <!-- 下拉 -->
 
                 <el-form-item
                   label="是否联合体投标:"
                   prop="verify.isCoalitionBid"
-                  style="width: 33%"
+
                   :rules="{
           required: true, message: '此项不能为空', trigger: 'blur'
         }"
@@ -661,13 +658,12 @@
                     ></el-option>
                   </el-select>
                 </el-form-item>
-              </el-row>
               <!-- 不下拉 -->
 
-              <el-row v-show='detailformAfter.verify.isCoalitionBid=="是"'>
+              <div v-show='detailformAfter.verify.isCoalitionBid=="是"'>
                 <el-form-item
                   label="内部联合体单位:"
-                  style="width: 33%"
+
                   :disabled="p.actpoint === 'look'"
                 >
 
@@ -677,7 +673,7 @@
                 </el-form-item>
                 <el-form-item
                   label="外部联合体单位:"
-                  style="width: 33%"
+
                 >
                   <el-input
                     placeholder=""
@@ -686,13 +682,13 @@
                   />
 
                 </el-form-item>
-              </el-row>
-              <el-row>
+              </div>
+              <div>
                 <el-form-item
                   class="neirong"
                   label="资审说明(最多1000字):"
                   prop="verify.verifyExplain"
-                  style="width: 33%"
+
                   :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -707,24 +703,69 @@
                     v-model="detailformAfter.verify.verifyExplain"
                   />
                 </el-form-item>
-              </el-row>
-              <el-row>
+              </div>
+              <div>
                 <el-form-item
                   class="neirong"
                   label="附件（最大10MB）:"
-                  style="width: 33%"
+
                 >
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-upload
-                    class="upload-demo"
-                    action="https://jsonplaceholder.typicode.com/posts/"
-                    :on-change="handleChange">
-                    <el-button size="small" type="primary">点击上传</el-button>
-                    <div slot="tip" class="el-upload__tip">最大上传文件不超过500kb</div>
-                  </el-upload>
+                    class="upload-demo detailUpload"
+                    :action="'/api/topInfo/CommonFiles/verify/01/uploadFile'"
+                    :on-success="handleChange"
+                    :on-error="handleChange"
+                    :on-remove="handleRemove"
+                    multiple
+                  >
+              <el-button size="small" type="primary">点击上传</el-button>
+            </el-upload>
                 </el-form-item>
-              </el-row>
+              </div>
+               <div>
+                  <el-table
+                    :data="detailformAfter.commonFilesList"
+                    :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+                    @selection-change="handleSelectionChange1"
+                    align="center"
+                    border
+                    class="contractInfoTable"
+                    ref="table"
+                    style="width: 100%;height: auto;"
+                  >
+                            <el-table-column
+                              :width="55"
+                              align="center"
+                              label="序号"
+                              show-overflow-tooltip
+                              type="index"
+                            ></el-table-column>
+                            <el-table-column :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
 
+                            </el-table-column>
+
+                            <el-table-column :resizable="false" label="大小" :width="120" prop="fileSize" show-overflow-tooltip>
+
+                            </el-table-column>
+                            <el-table-column :resizable="false" label="类型" :width="80" prop="fileType" show-overflow-tooltip>
+
+                            </el-table-column>
+
+                            <el-table-column
+                              :resizable="false"
+                              fixed="right"
+                              label="操作"
+                              show-overflow-tooltip
+                              v-if="p.actpoint!=='look'"
+                              :width="80"
+                            >
+                              <template slot-scope="scope">
+                                <el-link :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
+                              </template>
+                            </el-table-column>
+                          </el-table>
+                </div>
               <p style="overflow:hidden;margin-right: 30px"><span style="float:left;">标段信息: </span>
                 <el-button
                   @click="dialogTopInfoSection = true"
@@ -887,7 +928,9 @@ export default {
         'topInfor': {},
         'sectionStr': [],
         'verifySectionList': [],
-        'verifyOrgList': []
+        'verifyOrgList': [],
+        verifyOrgLists:"111",
+        commonFilesList:[]
       },
       detailformAfter: {
         'verify': {
@@ -904,7 +947,10 @@ export default {
         'topInfor': {},
         'sectionStr': [],
         'verifySectionList': [],
-        'verifyOrgList': []
+        'verifyOrgList': [],
+        verifyOrgLists:"111",
+        commonFilesList:[]
+
       },
       detailform1: {
         topInfor: {},
@@ -923,7 +969,8 @@ export default {
         }
       ],//联合投标选择
       dialogTopInfoSection: false
-      , myVerifySection:{}
+      , myVerifySection:{},
+      multipleSelection1:[]
 
     }
   },
@@ -1060,32 +1107,7 @@ export default {
     del(index, item, list, type) {
       console.log(index);
       list.splice(index, 1);
-      // if(item.uuid&&type=='bd'){
-      //   this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
-      //     confirmButtonText: '确定',
-      //     cancelButtonText: '取消',
-      //     type: 'warning'
-      //   }).then(() => {
-      //
-      // this.$http
-      //   .post(
-      //     "/api/topInfo/TopInfoSection/list/delete",
-      //     {ids: [item.uuid]}
-      //   )
-      //   .then((res) => {
-      //     if (res.data && res.data.code === 200) {
-      //
-      //       console.log(list)
-      //     } else {
-      //       this.$message.error(data.msg)
-      //     }
-      //   });
-      //   }).catch(() => {})
-      // }else{
-      //   list.splice(index, 1);
-      // }
-      // var _self = this;
-      // _self.detailform.topInfoSectionList.splice(index, 1);
+
     },
     addSection()
     {
@@ -1141,9 +1163,49 @@ export default {
     resetform(formName) {
       this.$refs[formName].resetFields()
     },
-    handleChange() {
-    },
+    //上传附件
+    handleChange(response, file, fileList){
+      if (response && response.code === 200) {
+        this.$message({
+          message: '上传成功',
+          type: 'success',
+          duration: 1500,
+          onClose: () => {
+            console.log(response.data)
+            console.log( JSON.stringify(this.detailformAfter.commonFilesList))
+            console.log( JSON.stringify(this.detailformAfter))
+            if(response.data.uuid!=null) {
+              var list =[];
+              this.detailformAfter.commonFilesList = list;
+              var commonFile = {
 
+                uuid: response.data.uuid,
+                businessId: response.data.businessId,
+                businessType: response.data.businessType,
+                businessCode: response.data.businessCode,
+                fileName: response.data.fileName,
+                fileType: response.data.fileType,
+                fileSize: response.data.fileSize,
+                filePath: response.data.filePath,
+                remarks: response.data.remarks,
+                createTime: response.data.createTime,
+                createUserId: response.data.createUserId,
+                createUserName: response.data.createUserName,
+                createOrgId: response.data.createOrgId,
+                createOrgName: response.data.createOrgName
+              }
+              this.detailformAfter.commonFilesList.push(commonFile);
+            }
+            console.log( JSON.stringify(this.detailformAfter.commonFilesList))
+          }
+        })
+      } else {
+        this.$message.error(response.msg)
+      }
+    },
+    handleSelectionChange1(val) {
+      this.multipleSelection1 = val
+    },
     //加载本页面数据
 
 
@@ -1164,7 +1226,7 @@ export default {
             this.detailformBefore = res.data.data;
             this.detailformAfter = res.data.data
 
-           // alert( JSON.stringify(this.detailformAfter.verifySectionList))
+            // alert( JSON.stringify(this.detailformAfter.verifySectionList))
           })
       }else
       {
@@ -1212,7 +1274,21 @@ export default {
 
     handleSelectionChange(val) {
       this.multipleSelection = val
-    }
+    },
+    handleRemove(file,index) {
+      this.$http
+        .post(
+          "/api/topInfo/CommonFiles/list/delete",
+          {ids:[file.uuid]},
+        )
+        .then((res) => {
+          if (res.data.code === 200) {
+            this.detailformAfter.commonFilesList.splice(index,1);
+          }
+
+        });
+      console.log(this.detailformAfter.commonFilesList)
+    },
 
   },
   mounted() {
@@ -1226,91 +1302,34 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+>>>.el-upload-list{
+  display: none;
+}
 .btn-group{
   text-align: center;
   margin-top: 20px;
 }
-// .gcform {
-
-//   margin-top: 10px;
-//   .el-form-item__label:before {
-//     position: initial;
-//     left: -10px;
-//   }
-//   .el-form-item__error {
-//     padding-top: 0px;
-//       width: 100%;
-//     text-align: left;
-//     margin-left: 0;
-//   }
-//   .el-form-item  {
-//    float:left;
-//   }
-//   .detailformfooter1 {
-//     margin-top: 5px;
-//     width: 100%;
-//     .el-button {
-//       margin: 0 30px;
-//       width: 140px;
-//       height: 42px;
-//       font-size: 18px;
-//       font-family: Microsoft YaHei;
-//     }
-//     .el-button--primary {
-//       background: #5c8bfa;
-//     }
-//     .el-button--default {
-//       border: 1px solid #5c8bfa;
-//       color: #5c8bfa;
-//     }
-//   }
-//   .errorMsg .el-form-item__label {
-//     color: red;
-//   }
-//   .el-input {
-//     width: 200px;
-//   }
-// }
-
-// .el-table thead.is-group th {
-//   background: #fff;
-// }
-// .clothSizeTable {
-//   td {
-//     padding: 0;
-//   }
-//   .el-form-item__content {
-//     height: 50px;
-//     .el-form-item__error {
-//       top: 42px;
-//     }
-//   }
-// }
 .gcform {
   margin-top: 10px;
-
-  .el-form-item__label:before {
+  >>>.el-form-item__label:before {
     position: initial;
     left: -10px;
   }
-
-  .el-form-item__error {
+  >>>.el-form-item__error {
     padding-top: 0px;
     width: 95%;
-    text-align: left;
     margin-left: 0;
     text-align: right;
-    top: 0%
+    top: 0%;
   }
-
-  .el-form-item {
-    /**/
+  >.el-form-item,>>>.formItem{
+    /*float: left;*/
+    display: inline-block;
+    width: 32.5%!important;
   }
-
   .detailformfooter1 {
     margin-top: 5px;
     width: 100%;
-
     .el-button {
       margin: 0 30px;
       width: 140px;
@@ -1318,25 +1337,20 @@ export default {
       font-size: 18px;
       font-family: Microsoft YaHei;
     }
-
     .el-button--primary {
       background: #5c8bfa;
     }
-
     .el-button--default {
       border: 1px solid #5c8bfa;
       color: #5c8bfa;
     }
   }
-
-  .errorMsg .el-form-item__label {
+  .errorMsg >>>.el-form-item__label {
     color: red;
   }
-
   .el-input {
     width: 300px;
   }
-
   .el-input .el-input_inner {
     width: 300px;
     height: 500px;
@@ -1353,13 +1367,12 @@ export default {
 }
 
 .clothSizeTable {
-  td {
-    padding: 0;
-  }
-
+  /*td {*/
+  /*padding: 0;*/
+  /*}*/
   .el-form-item__content {
     height: 60px;
-
+    line-height: 60px;
     .el-form-item__error {
       top: 42px;
     }
@@ -1373,7 +1386,6 @@ export default {
 .item {
   margin-bottom: 18px;
 }
-
 .clearfix:before,
 .clearfix:after {
   display: table;
@@ -1385,36 +1397,49 @@ export default {
 }
 
 .el-card__body {
-
+  /*padding: 0 100px;*/
+  // height: 400px;
+  // border: 1px solid black;
+  // height: 200px;
 }
 
-.el-input--mini .el-input__inner {
+>>>.el-input--mini .el-input__inner {
   height: 40px;
-  width: 100%;;
+  width: 100%;
+  box-sizing: border-box;
+  // margin: 10px 0 0 10px;
 }
 
-.gcform .el-input {
+.gcform >>>.el-input {
   width: 95%;
 }
-
+.listInput{
+  width: auto!important;
+}
+.gcform .listInput input{
+  width: 100px!important;
+  padding:10px!important;
+  box-sizing: border-box;
+}
 .neirong {
   width: 100% !important;
 }
 
-.gcform .el-form-item {
+.gcform >>>.el-form-item {
   margin-bottom: 0px;
 }
 
-.neirong .el-input--mini .el-input__inner {
+.neirong >>>.el-input--mini .el-input__inner {
   height: 100px;
 }
 
 .detail_bottom {
-  margin: 50px 0 0 0;
-  border: 1px solid #ddd;
+  margin: 20px 0 0 0;
+  // border: 1px solid #ddd;
 }
 
-.el-card, .el-message {
+.el-card,
+.el-message {
   overflow: hidden;
 }
 
@@ -1422,8 +1447,24 @@ export default {
   overflow: hidden;
 }
 
-.el-card.is-always-shadow, .el-card.is-hover-shadow:focus, .el-card.is-hover-shadow:hover {
+.el-card.is-always-shadow,
+.el-card.is-hover-shadow:focus,
+.el-card.is-hover-shadow:hover {
   overflow: auto;
+  // height: 500px ;
+  /*height: 44vh;*/
+}
+
+.el-button--mini,
+.el-button--mini.is-round {
+  margin: 0 27px 5px 0;
+}
+
+.el-table--border {
+  min-height: auto !important;
+}
+.detailBox{
+  max-height:calc(100vh - 410px)!important;
 }
 </style>
 
