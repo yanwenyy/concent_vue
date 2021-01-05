@@ -2,7 +2,7 @@
 <template>
   <div>
     <el-form :inline="true" :model="searchform" @keyup.enter.native="getData()" class="gcform">
-      <el-row>
+
       <el-form-item label="项目名称:">
         <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
       </el-form-item>
@@ -21,9 +21,6 @@
           end-placeholder="结束日期">
         </el-date-picker>
       </el-form-item>
-
-      </el-row>
-      <el-row>
       <el-form-item
         label="工程类别(一级):"
       >
@@ -66,8 +63,6 @@
       >
         <el-input v-model="searchform.bidAgentCompany" placeholder="招标代理机构" clearable></el-input>
       </el-form-item>
-      </el-row>
-      <el-row>
       <el-form-item
         label="标段名称:"
       >
@@ -129,7 +124,7 @@
       <el-button @click="getData" type="primary" plain>查询</el-button>
       <el-button @click="exportdata" type="primary" plain>导出</el-button>
       <el-button @click="verifyResultEdit" plain type="primary">资审结果登记查看</el-button>
-      </el-row>
+
 
     </el-form>
 
