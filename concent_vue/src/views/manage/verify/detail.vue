@@ -176,7 +176,6 @@
             size="mini"
             v-model="detailform.topInfor.projectTrackResponPerson"
           />
-
         </el-form-item>
         <el-form-item
           label="联系电话:"

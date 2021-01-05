@@ -5,7 +5,6 @@
         <el-button @click="verifyResultEdit" plain type="primary">资审结果登记</el-button>
       </el-button-group>
     </div>
-
     <div style="margin-top: 20px">
       <el-table
         :data="page.records"
