@@ -540,7 +540,7 @@
               </el-form-item>
               <el-form-item  class="formItem"
                 label="预计中标概率:"
-                prop="topInfor.bidProbId"
+                prop="topInfoOrg.bidProbId"
                 :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -554,13 +554,13 @@
                   placeholder="请选择"
                   size="mini"
                   @change="
-                  getName(
-                    detailform.topInfor.bidProbId,
+                  getNameZb(
+                    detailform.topInfoOrg.bidProbId,
                     probability,
                     'bidProbName'
                   )
                 "
-                  v-model="detailform.topInfor.bidProbId"
+                  v-model="detailform.topInfoOrg.bidProbId"
                 >
                   <el-option
                     :key="index"
@@ -1011,11 +1011,21 @@
           console.log(this.detailform.topInfor[name]);
         }
       },
+      //获取下拉框id和name的公共方法
+      getNameZb(id, list, name) {
+        if(id){
+          this.$forceUpdate()
+          this.detailform.topInfoOrg[name] = list.find(
+            (item) => item.id == id
+        ).detailName;
+          console.log(this.detailform.topInfoOrg[name]);
+        }
+      },
       saveInfo(formName) {
 
         var topInforCapitalList = [];
         this.amountSource.forEach((item) => {
-          if (this.detailform.value1.indexOf(item.id) != -1) {
+          if (this.detailform.value1&&this.detailform.value1.indexOf(item.id) != -1) {
             var v = {
               capitalId: item.id,
               capitalName: item.detailName,
@@ -1123,15 +1133,16 @@
             var datas=res.data.data;
             this.getTwo(datas.topInfor.enginTypeFirstId);
             this.getTwoSC(datas.topInfor.marketFirstNameId);
-            datas.topInforCapitalList.forEach((item)=>{
-              this.detailform.value1.push(item.capitalId)
-            });
             this.detailform={
               topInfor: datas.topInfor,
               topInfoOrg: datas.topInfoOrg,
               topInfoSiteList: datas.topInfoSiteList,
               topInfoSectionList: datas.topInfoSectionList,
+              value1:[],
             }
+            datas.topInforCapitalList.forEach((item)=>{
+              this.detailform.value1.push(item.capitalId)
+            });
           });
       },
 

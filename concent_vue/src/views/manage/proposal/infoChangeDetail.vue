@@ -191,7 +191,7 @@
               <el-form-item
                 label="预计中标概率:"
               >
-                <el-input v-model="detailFormBefore.topInfor.bidProbName" disabled></el-input>
+                <el-input v-model="detailFormBefore.topInfoOrg.bidProbName" disabled></el-input>
               </el-form-item>
               <!-- <el-form-item
                 label="投资额（万元）:"
@@ -888,7 +888,7 @@
 
               <el-form-item
                 label="预计中标概率:"
-                prop="topInfor.bidProbId"
+                prop="topInfoOrg.bidProbId"
                 :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -902,13 +902,13 @@
                   placeholder="请选择"
                   size="mini"
                   @change="
-                  getName(
-                    detailform.topInfor.bidProbId,
+                  getNameZb(
+                    detailform.topInfoOrg.bidProbId,
                     probability,
                     'bidProbName'
                   )
                 "
-                  v-model="detailform.topInfor.bidProbId"
+                  v-model="detailform.topInfoOrg.bidProbId"
                 >
                   <el-option
                     :key="index"
@@ -1185,6 +1185,7 @@
           topInfoSectionList: [],
         },
         detailformrules: {},
+        projectNatureTwo:[],//项目性质二级
         xqprojectType: [],//工程类别二级
         emergingMarketTwo:[],//新兴市场二级
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
@@ -1354,11 +1355,21 @@
           console.log(this.detailform.topInfor[name]);
         }
       },
+      //获取下拉框id和name的公共方法
+      getNameZb(id, list, name) {
+        if(id){
+          this.$forceUpdate()
+          this.detailform.topInfoOrg[name] = list.find(
+            (item) => item.id == id
+        ).detailName;
+          console.log(this.detailform.topInfoOrg[name]);
+        }
+      },
       saveInfo(formName) {
 
         var topInforCapitalList = [];
         this.amountSource.forEach((item) => {
-          if (this.detailform.value1.indexOf(item.id) != -1) {
+          if (this.detailform.value1&&this.detailform.value1.indexOf(item.id) != -1) {
           var v = {
             capitalId: item.id,
             capitalName: item.detailName,
@@ -1482,8 +1493,12 @@
           topInfor: afterData.topInfor,
           topInfoOrg: afterData.topInfoOrg,
           topInfoSiteList: afterData.topInfoSiteList,
-          topInfoSectionList: afterData.topInfoSectionList
+          topInfoSectionList: afterData.topInfoSectionList,
+          value1:[],
         };
+        afterData.topInforCapitalList.forEach((item)=>{
+          this.detailform.value1.push(item.capitalId)
+      });
           this.detailFormBefore={
             capitalName: beforData.capitalName,
             topInfor: beforData.topInfor,

@@ -425,6 +425,15 @@ export default {
                       "leaf": true,
                       "defaultpage": false
                     },
+                    {
+                      "name": "房地产变更",
+                      "path": "/manage/contractManager/house/changeDetail",
+                      "component": "/manage/contractManager/house/changeDetail",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": false,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
                   {
                     "name": "合同信息查询",
                     "path": "/manage/contractManager/search/list",
