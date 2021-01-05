@@ -92,6 +92,16 @@
               >
               </el-input>
             </el-form-item>
+
+
+            <el-form-item label="所属线路:"
+            v-if="detailform.topInforBO.topInfor.enginTypeFirstName=='17ff5c08d36b41ea8f2dc2e9d3029cac'">
+              <el-input
+                disabled
+                v-model="detailform.topInforBO.topInfor.belongLineName"
+              >
+              </el-input>
+            </el-form-item>
             <br>
 
             <el-form-item
@@ -300,19 +310,6 @@
             </el-form-item>
             <br>
           <!-- 下拉 -->
-
-
-            <el-form-item label="所属线路:">
-              <el-input
-                disabled
-                v-model="detailform.topInforBO.topInfor.belongLineName"
-              >
-              </el-input>
-            </el-form-item>
-            <!-- --------------------------------------------------------------- -->
-          <br>
-
-
 
               <el-form-item   class="formItem" label="项目跟踪负责人:"
                 :rules="{
