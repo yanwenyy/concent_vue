@@ -10,9 +10,9 @@
 
       </el-button-group>
       <div style="float: right">
-        <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-        <el-button @click="getData" type="primary" plain>查询</el-button>
-        <el-button @click="" type="primary" plain>导出</el-button>
+        <el-button @click="searchformReset" type="info" plain style="color:black;background:none;font-size:10px">重置</el-button>
+        <el-button @click="getData" type="primary" plain class="cx">查询</el-button>
+        <el-button @click="" type="primary" plain class="cx">导出</el-button>
       </div>
     </div>
 
@@ -208,7 +208,7 @@
           :width="150"
           align="center"
           label="填报人"
-          prop="username"
+          prop="createUserName"
           show-overflow-tooltip>
           <template slot="header" slot-scope="scope">
             <span>填报人</span>
@@ -225,7 +225,7 @@
           :width="150"
           align="center"
           label="登记时间"
-          prop="createtime"
+          prop="tioCreateTime"
           show-overflow-tooltip>
           <!-- <template slot-scope="scope">{{
             scope.row.createtime | dateformat
@@ -541,6 +541,9 @@ export default {
 };
 </script>
 <style scoped>
+.cx{
+  font-size:10px;
+}
 .el-dialog{
   width: 60%;
 }

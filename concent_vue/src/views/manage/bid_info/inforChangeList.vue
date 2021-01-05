@@ -9,9 +9,9 @@
         <el-button @click="remove" type="primary" plain>删除</el-button>
       </el-button-group>
       <div style="float: right">
-        <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-        <el-button @click="getData" type="primary" plain>查询</el-button>
-        <el-button @click="exportdata" type="primary" plain>导出</el-button>
+        <el-button @click="searchformReset" type="info" plain style="color:black;background:none;font-size:10px">重置</el-button>
+        <el-button @click="getData" type="primary" plain class="cx">查询</el-button>
+        <el-button @click="exportdata" type="primary" plain class="cx">导出</el-button>
       </div>
     </div>
     <div style="margin-top: 20px">
@@ -164,7 +164,7 @@
           :width="150"
           align="center"
           label="投标截止时间"
-          prop="state"
+          prop="endTime"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -178,14 +178,14 @@
             </div>
           </template>
           <template slot-scope="scope">{{
-            scope.row.planBidTime | dateformat
+            scope.row.endTime | dateformat
             }}</template>
         </el-table-column>
                 <el-table-column
           :width="150"
           align="center"
           label="填报人"
-          prop="state"
+          prop="createUserName"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -198,15 +198,12 @@
               />
             </div>
           </template>
-          <template slot-scope="scope">{{
-            scope.row.planBidTime | dateformat
-            }}</template>
         </el-table-column>
-                <el-table-column
+        <el-table-column
           :width="150"
           align="center"
           label="录入时间"
-          prop="state"
+          prop="tioCreateTime"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -220,7 +217,7 @@
             </div>
           </template>
           <template slot-scope="scope">{{
-            scope.row.planBidTime | dateformat
+            scope.row.tioCreateTime | dateformat
             }}</template>
         </el-table-column>
         <el-table-column
@@ -491,4 +488,8 @@
   .el-table__row {
     cursor: pointer;
   }
+  .cx{
+    font-size:10px
+  }
+
 </style>

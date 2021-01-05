@@ -12,7 +12,11 @@
       <div class="detailBox">
         <el-divider content-position="left">项目前期信息</el-divider>
         <!--<div class="detailBox">-->
- <el-form :inline="false" :model="detailFormBefore" class="gcform">
+        <el-form
+        :inline="false"
+        :model="detailFormBefore"
+        class="gcform"
+        ref="detailform">
           <el-form-item label="项目名称:"
            :rules="{
                 required: true,
@@ -292,7 +296,6 @@
               type="textarea"
               clearable
               placeholder="请输入"
-              size="mini"
               v-model="detailFormBefore.topInforBO.topInfor.inforContent"
             />
           </el-form-item>
@@ -423,7 +426,6 @@
               type="textarea"
               clearable
               placeholder="请输入"
-              size="mini"
               v-model="detailFormBefore.bidInfo.bidExplain"
             />
           </el-form-item>
@@ -767,7 +769,7 @@
             <el-table-column
               :resizable="false"
               label="编标拟配合单位"
-              prop="bidInfoSection.costOwner"
+              prop="bidInfoSection.orgName"
               show-overflow-tooltip
               align="center"
               :width="180"
@@ -777,7 +779,7 @@
             <el-table-column
               :resizable="false"
               label="投资估算"
-              prop="bidInfoSection.costOwner"
+              prop="bidInfoSection.investmentReckon"
               show-overflow-tooltip
               align="center"
               :width="180"
@@ -787,7 +789,7 @@
             <el-table-column
               :resizable="false"
               label="其中建安投资"
-              prop="bidInfoSection.costOwner"
+              prop="bidInfoSection.jananInvestment"
               show-overflow-tooltip
               align="center"
               :width="180"
@@ -823,7 +825,6 @@
               <el-input
                 disabled
                 clearable
-                size="mini"
                 v-model="detailform.topInforBO.topInfor.inforName"/>
             </el-form-item>
 
@@ -837,7 +838,6 @@
               <el-input
                 disabled
                 clearable
-                size="mini"
                 v-model="detailform.topInforBO.topInfor.inforNameForeign"/>
             </el-form-item>
             <br>
@@ -859,11 +859,7 @@
 
             <el-form-item label="工程类别(一级):">
               <el-input
-                 disabled
-                clearable
-                filterable
-                placeholder="请选择"
-                size="mini"
+                disabled
                 v-model="detailform.topInforBO.topInfor.enginTypeFirstName"
               >
               </el-input>
@@ -874,7 +870,6 @@
             >
               <el-input
                 disabled
-                placeholder="工程类别(二级)"
                 v-model="detailform.topInforBO.topInfor.enginTypeSecondName"
               >
               </el-input>
@@ -895,11 +890,7 @@
               label="项目性质(一级):"
             >
               <el-input
-                 disabled
-                clearable
-                filterable
-                placeholder="请选择"
-                size="mini"
+                disabled
                 v-model="detailform.topInforBO.topInfor.projectNatureFirstName"
               >
               </el-input>
@@ -911,11 +902,7 @@
               label="项目性质(二级):"
             >
               <el-input
-                 disabled
-                clearable
-                filterable
-                placeholder="请选择"
-                size="mini"
+                disabled
                 v-model="detailform.topInforBO.topInfor.projectNatureSecondName"
               >
               </el-input>
@@ -930,7 +917,6 @@
             >
               <el-input
                 disabled
-                placeholder="请选择"
                 v-model="detailform.topInforBO.topInfor.marketFirstName"
               >
               </el-input>
@@ -947,7 +933,6 @@
             >
               <el-input
                 disabled
-                placeholder="请选择"
                 v-model="detailform.topInforBO.topInfor.marketSecondName"
               >
               </el-input>
@@ -970,7 +955,6 @@
             <el-form-item label="设计单位:">
               <el-input
                 disabled
-                size="mini"
                 v-model="detailform.topInforBO.topInfor.designOrg"
               />
             </el-form-item>
@@ -984,7 +968,6 @@
             >
               <el-input
                 disabled
-                size="mini"
                 v-model="detailform.topInforBO.topInfor.bidPerson"
               />
             </el-form-item>
@@ -992,7 +975,6 @@
             <el-form-item label="招标代理公司:">
               <el-input
                 disabled
-                size="mini"
                 v-model="detailform.topInforBO.topInfor.bidAgentCompany"
               />
             </el-form-item>
@@ -1006,8 +988,6 @@
             >
               <el-date-picker
                 disabled
-                filterable
-                clearable
                 type="date"
                 value-format="timestamp"
                 v-model="detailform.topInforBO.topInfor.planBidTime"
@@ -1024,8 +1004,6 @@
             >
               <el-input
                 disabled
-                clearable
-                placeholder="投资额（万元）:"
                 v-model="detailform.topInforBO.topInfor.investment"
               />
             </el-form-item>
@@ -1040,7 +1018,6 @@
             >
               <el-input
                 disabled
-                placeholder="请选择"
                 v-model="detailform.topInforBO.capitalName"
               >
               </el-input>
@@ -1076,7 +1053,6 @@
             >
               <el-input
                 disabled
-                placeholder="公告类型"
                 v-model="detailform.topInforBO.topInfor.noticeTypeName"
               >
 
@@ -1089,7 +1065,6 @@
                 disabled
                 clearable
                 placeholder="资审方式"
-                size="mini"
                 v-model="detailform.topInforBO.topInfor.verifyTypeName"
               />
             </el-form-item>
@@ -1152,7 +1127,6 @@
                 type="textarea"
                 clearable
                 placeholder="请输入"
-                size="mini"
                 v-model="detailform.topInforBO.topInfor.inforContent"
               />
             </el-form-item>
@@ -1163,14 +1137,12 @@
               <el-form-item
                 label="投标截止日期:"
                 prop="bidInfo.endTime"
-
               >
                 <el-date-picker
                   :disabled="p.actpoint === 'look'"
                   value-format="timestamp"
                   clearable
                   filterable
-                  size="mini"
                   v-model="detailFormBefore.bidInfo.endTime"
                 >
                 </el-date-picker>
@@ -1189,7 +1161,6 @@
                   :disabled="p.actpoint === 'look'"
                   filterable
                   clearable
-                  size="mini"
                   value-format="timestamp"
                   v-model="detailform.bidInfo.publishTime"
                 >
@@ -1206,13 +1177,13 @@
                   value-format="timestamp"
                   filterable
                   clearable
-                  size="mini"
                   v-model="detailform.bidInfo.saleTime"
                 >
                 </el-date-picker>
               </el-form-item>
 
-              <el-form-item label="招标方式:">
+              <el-form-item label="招标方式:"
+              class="formItem">
                 <el-select
                   :disabled="p.actpoint === 'look'"
                   filterable
@@ -1230,6 +1201,7 @@
               </el-form-item>
 
               <el-form-item
+              class="formItem"
                 label="是否联合体投标:"
                 prop="bidInfo.isCoalitionBid"
                 :rules="{
@@ -1263,6 +1235,7 @@
               </el-form-item>
 
               <el-form-item
+              class="formItem"
                 label="是否为费率招标:"
                 prop="bidInfo.isBidRates"
                 :rules="{
@@ -1285,8 +1258,9 @@
               </el-form-item>
 
               <el-form-item label="内部联合体单位:"
+
               v-if="detailform.bidInfo.isCoalitionBid==='0'"
-              class="formItem1" >
+              class="formItem" >
               <el-select
                 :disabled="p.actpoint === 'look'"
                 filterable
@@ -1303,7 +1277,7 @@
               </el-select>
             </el-form-item>
 
-            <el-form-item class="formItem1"
+            <el-form-item class="formItem"
             v-if="detailform.bidInfo.isCoalitionBid==='0'"
                 label="外部联合体单位:"
               >
@@ -1311,7 +1285,6 @@
                   :disabled="p.actpoint === 'look'"
                   clearable
                   placeholder=""
-                  size="mini"
                   v-model="detailform.bidInfo.outOrg"
                 />
               </el-form-item>
@@ -1333,7 +1306,6 @@
                   type="textarea"
                   clearable
                   placeholder="请输入"
-                  size="mini"
                   v-model="detailform.bidInfo.bidExplain"
                 />
               </el-form-item>
@@ -1658,7 +1630,7 @@
 <el-table-column
               :resizable="false"
               label="编标拟配合单位"
-              prop="bidInfoSection.costOwner"
+              prop="bidInfoSection.orgName"
               show-overflow-tooltip
               align="center"
               :width="180"
@@ -1668,7 +1640,7 @@
             <el-table-column
               :resizable="false"
               label="投资估算"
-              prop="bidInfoSection.costOwner"
+              prop="bidInfoSection.investmentReckon"
               show-overflow-tooltip
               align="center"
               :width="180"
@@ -1678,7 +1650,7 @@
             <el-table-column
               :resizable="false"
               label="其中建安投资"
-              prop="bidInfoSection.costOwner"
+              prop="bidInfoSection.jananInvestment"
               show-overflow-tooltip
               align="center"
               :width="180"
@@ -2151,6 +2123,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+
   .detail-back-tab{
     padding: 10px 20px ;
     border:1px solid #ddd;
@@ -2276,7 +2249,7 @@ export default {
   // margin: 10px 0 0 10px;
 }
 
-.gcform .el-input {
+.gcform .el-input ,.gcform .el-select{
   width: 95%;
 }
 .listInput {

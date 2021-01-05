@@ -35,7 +35,6 @@
               <el-input
                 disabled
                 clearable
-                size="mini"
                 v-model="detailform.topInforBO.topInfor.inforName"/>
             </el-form-item>
 
@@ -49,7 +48,6 @@
               <el-input
                 disabled
                 clearable
-                size="mini"
                 v-model="detailform.topInforBO.topInfor.inforNameForeign"/>
             </el-form-item>
            <br>
@@ -61,12 +59,7 @@
                   <el-radio v-for="(item, index) in bizCode" :label="item.id" :key="index">{{item.detailName}}</el-radio>
                 </el-radio-group>
               </template>
-              <!-- <el-input
-                disabled
-                filterable
-                size="mini"
-                v-model="detailform.topInforBO.topInfor.moduleName">
-              </el-input> -->
+
             </el-form-item>
             <br>
 
@@ -76,7 +69,6 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
                 v-model="detailform.topInforBO.topInfor.enginTypeFirstName"
               >
               </el-input>
@@ -112,7 +104,6 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
                 v-model="detailform.topInforBO.topInfor.projectNatureFirstName"
               >
               </el-input>
@@ -126,7 +117,6 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
                 v-model="detailform.topInforBO.topInfor.projectNatureSecondName"
               >
               </el-input>
@@ -181,7 +171,6 @@
               <el-form-item label="设计单位:">
               <el-input
                 disabled
-                size="mini"
                 v-model="detailform.topInforBO.topInfor.designOrg"
               />
             </el-form-item>
@@ -196,7 +185,6 @@
             >
               <el-input
                 disabled
-                size="mini"
                 v-model="detailform.topInforBO.topInfor.bidPerson"
               />
             </el-form-item>
@@ -204,7 +192,6 @@
             <el-form-item label="招标代理公司:">
               <el-input
                 disabled
-                size="mini"
                 v-model="detailform.topInforBO.topInfor.bidAgentCompany"
               />
             </el-form-item>
@@ -304,7 +291,6 @@
                 disabled
                 clearable
                 placeholder="资审方式"
-                size="mini"
                 v-model="detailform.topInforBO.topInfor.verifyTypeName"
               />
             </el-form-item>
@@ -366,7 +352,6 @@
                 type="textarea"
                 clearable
                 placeholder="请输入"
-                size="mini"
                 v-model="detailform.topInforBO.topInfor.inforContent"
               />
             </el-form-item>
@@ -388,7 +373,6 @@
                 value-format="timestamp"
                 clearable
                 filterable
-                size="mini"
                 v-model="detailform.bidInfo.endTime"
               >
               </el-date-picker>
@@ -409,7 +393,6 @@
                 :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
-                size="mini"
                 value-format="timestamp"
                 v-model="detailform.bidInfo.publishTime"
               >
@@ -425,7 +408,6 @@
                 value-format="timestamp"
                 filterable
                 clearable
-                size="mini"
                 v-model="detailform.bidInfo.saleTime"
               >
               </el-date-picker>
@@ -440,7 +422,6 @@
                 filterable
                 clearable
                 placeholder="请选择"
-                size="mini"
                 v-model="detailform.bidInfo.bidModeName"
               >
                 <el-option
@@ -529,7 +510,6 @@
                 clearable
                 multiple
                 placeholder="请选择"
-                size="mini"
                 v-model="detailform.bidInfoInnerOrgList.innerOrgName"
               >
                 <el-option
@@ -549,7 +529,6 @@
                   :disabled="p.actpoint === 'look'"
                   clearable
                   placeholder=""
-                  size="mini"
                   v-model="detailform.bidInfo.outOrg"
                 />
               </el-form-item>
@@ -569,7 +548,6 @@
                 type="textarea"
                 clearable
                 placeholder="请输入"
-                size="mini"
                 v-model="detailform.bidInfo.bidExplain"
               />
             </el-form-item>
@@ -647,7 +625,6 @@
             v-show="p.actpoint != 'look'"
             :disabled="p.actpoint === 'look'"
               @click="openBd('add')"
-              size="mini"
               style="
                 width: 70px;
                 height: 32px;

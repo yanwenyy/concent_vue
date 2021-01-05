@@ -8,7 +8,6 @@
         <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
       </el-button-group>
     </div>
-
     <div style="margin-top: 20px">
       <el-table
         :data="page.records"

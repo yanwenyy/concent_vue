@@ -1,6 +1,7 @@
 <template>
 
   <el-dialog
+    :lock-scroll="false"
     :visible.sync="visible"
     :append-to-body="true">
     <p class="bd">标段信息</p>
@@ -333,6 +334,7 @@ import { isMoney } from '@/utils/validate'
           bidInfoSection:{},
           dataList: [],
           dataList2: []
+
         },
         type:'',
         index:'',
@@ -417,6 +419,7 @@ import { isMoney } from '@/utils/validate'
         }else{
           this.detailForm={
             bidInfoSection:{},
+            verifySectionBOList:{},
             dataList: [],
             dataList2: []
           };
@@ -470,6 +473,9 @@ import { isMoney } from '@/utils/validate'
 
   >>>.el-dialog {
     width: 60%;
+    /* position: absolute;
+    left:20%; */
+
   }
 
   >>>.el-form-item__label {
