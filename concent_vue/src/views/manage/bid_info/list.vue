@@ -53,12 +53,12 @@
 
         <el-table-column
           :width="500"
-          label="项目名称"
+          label="项目名称11"
           prop="inforName"
           show-overflow-tooltip
           fixed>
           <template slot="header" slot-scope="scope">
-            <span>项目名称</span>
+            <span>项目名称11</span>
             <div>
               <el-input
                 style=" width: 100%"

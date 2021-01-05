@@ -1474,6 +1474,8 @@ export default {
   .detailUpload .el-upload-list__item{
     width: 200px;
   }
-
+.el-divider--horizontal{
+  margin: 30px 0 25px 0;
+}
 </style>
 
