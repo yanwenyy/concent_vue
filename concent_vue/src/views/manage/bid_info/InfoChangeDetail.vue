@@ -2132,7 +2132,7 @@ export default {
   },
 };
 </script>
-<style lang="scss" scope>
+<style lang="scss" scoped>
   .detail-back-tab{
     padding: 10px 20px ;
     border:1px solid #ddd;
