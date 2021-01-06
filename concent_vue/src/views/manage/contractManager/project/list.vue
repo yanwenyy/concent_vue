@@ -250,6 +250,7 @@ export default {
       searchFrom: {
         current: 1,
         size: 10,
+        changeStatus:'0'
       },
       menus: [],
       multipleSelection: [],

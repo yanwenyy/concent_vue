@@ -101,7 +101,7 @@ export default {
                       "iconCls": "el-icon-notebook-2",
                       "menushow": true,
                       "leaf": true,
-                      "defaultpage": true
+                      "defaultpage": false
                     },
 
                     {
@@ -429,6 +429,51 @@ export default {
                       "name": "房地产变更",
                       "path": "/manage/contractManager/house/changeDetail",
                       "component": "/manage/contractManager/house/changeDetail",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": false,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "物资贸易变更",
+                      "path": "/manage/contractManager/trade/changeDetail",
+                      "component": "/manage/contractManager/trade/changeDetail",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": false,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "工业制造变更",
+                      "path": "/manage/contractManager/industrial/changeDetail",
+                      "component": "/manage/contractManager/industrial/changeDetail",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": false,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "金融保险变更",
+                      "path": "/manage/contractManager/finance/changeDetail",
+                      "component": "/manage/contractManager/finance/changeDetail",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": false,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "运营维管变更",
+                      "path": "/manage/contractManager/operate/changeDetail",
+                      "component": "/manage/contractManager/operate/changeDetail",
+                      "iconCls": "el-icon-switch-button",
+                      "menushow": false,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "其他合同变更",
+                      "path": "/manage/contractManager/other/changeDetail",
+                      "component": "/manage/contractManager/other/changeDetail",
                       "iconCls": "el-icon-switch-button",
                       "menushow": false,
                       "leaf": true,

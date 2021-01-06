@@ -12,7 +12,7 @@
         <el-button @click="exportdata" type="primary" plain>导出</el-button>
       </div>
     </div>
-    <div style="margin-top: 20px">
+    <div style="margin-top: 10px">
       <el-table
         class="tableStyle"
         :max-height="$tableHeight"
@@ -164,31 +164,43 @@
         >
           <template slot="header" slot-scope="scope">
             <span>公告类型</span>
-            <div>
-              <el-input
-                style=" width: 100%"
-                v-model="searchform.noticeTypeId"
-                size="mini"
-              />
-            </div>
+            <el-select
+              clearable
+              filterable
+              placeholder="请选择"
+              size="mini"
+              v-model="searchform.noticeTypeId"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.id"
+                v-for="(item, index) in bulletinType"
+              ></el-option>
+            </el-select>
           </template>
         </el-table-column>
         <el-table-column
-          :width="150"
+          :width="180"
           align="center"
           label="预计招标时间"
-          prop="state"
+          prop="planBidTime"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
             <span>预计招标时间</span>
             <div>
-              <el-input
-                style=" width: 100%"
-                v-model="sousuo"
-                size="mini"
-              />
-            </div>
+              <el-date-picker
+                class="list-search-picker"
+                filterable
+                clearable
+                type="date"
+                value-format="timestamp"
+                v-model="searchform.planBidTime"
+
+              >
+              </el-date-picker>
+              </div>
           </template>
           <template slot-scope="scope">{{
             scope.row.planBidTime | dateformat
@@ -263,7 +275,10 @@
       projectDomainType() {
         // console.log(this.$store.state.category["projectDomainType"])
         return this.$store.state.category.projectDomainType;
-      }
+      },
+      bulletinType() {
+        return this.$store.state.bulletinType;
+      },
     },
     methods: {
       //工程类别二级
@@ -429,6 +444,8 @@
     },
     created() {
       this.getData();
+      this.$store.dispatch("getConfig", {});
+      this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
     },
   };
 </script>

@@ -18,20 +18,31 @@
             <div class="detailBox">
 
               <el-form-item
-                label="合同名称:"
+                label="合同名称(中文):"
                 prop="contractInfo.contractName"
                 :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-
+           required: true, message: '此项不能为空', trigger: 'blur'
+        }"
               >
                 <el-input
                   clearable
                   placeholder="请输入"
                   size="mini"
                   v-model="detailform.contractInfo.contractName"
+                />
+              </el-form-item>
+              <el-form-item
+                label="合同名称(外文):"
+                prop="contractInfo.contractNameForeign"
+                :rules="{
+           required: true, message: '此项不能为空', trigger: 'blur'
+        }"
+              >
+                <el-input
+                  clearable
+                  placeholder="请输入"
+                  size="mini"
+                  v-model="detailform.contractInfo.contractNameForeign"
                 />
               </el-form-item>
               <el-form-item
@@ -235,11 +246,11 @@
               <el-form-item
                 label="新兴市场类别(二级):"
                 prop="contractInfo.marketSecondId"
-                :rules="{
-            required: true,
-            message: '此项不能为空',
-            trigger: 'blur',
-          }"
+                :rules="detailform.contractInfo.marketFirstNameId&&emergingMarketTwo?{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }:{}"
               >
                 <el-select
                   :disabled="p.actpoint === 'look'"

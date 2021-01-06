@@ -5,7 +5,7 @@
       @click="back"
       type="text">返回</el-button>
     <el-tabs type="border-card">
-      <el-tab-pane label="项目原信息">
+      <el-tab-pane label="变更前">
         <el-card class="box-card">
           <div class="detailBox">
             <el-form
@@ -168,7 +168,7 @@
               <el-form-item
                 label="资审方式:"
               >
-                <el-input v-model="detailFormBefore.topInfor.verifyTypeId" disabled></el-input>
+                <el-input v-model="detailFormBefore.topInfor.verifyTypeName" disabled></el-input>
               </el-form-item>
               <br>
               <!-- 下拉 -->
@@ -368,7 +368,7 @@
 
         </el-card>
       </el-tab-pane>
-      <el-tab-pane label="项目变更信息">
+      <el-tab-pane label="变更后">
         <el-card class="box-card">
           <div class="detailBox">
             <el-form
@@ -827,28 +827,34 @@
                 trigger: 'blur',
               }"
               >
-                <el-select
-                  :disabled="p.actpoint === 'look'"
+                <el-input
+                  disabled
                   clearable
-                  filterable
-                  placeholder="请选择"
-                  size="mini"
-                  @change="
-                  getName(
-                    detailform.topInfor.verifyTypeId,
-                    certificationType,
-                    'verifyTypeName'
-                  )
-                "
-                  v-model="detailform.topInfor.verifyTypeId"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in certificationType"
-                  ></el-option>
-                </el-select>
+                  placeholder="请输入"
+                  v-model="detailform.topInfor.noticeTypeName=='资审公告'?detailform.topInfor.verifyTypeName='资格预审':detailform.topInfor.noticeTypeName=='招标公告'?detailform.topInfor.verifyTypeName='资格后审':detailform.topInfor.noticeTypeName=='竞争性谈判'?detailform.topInfor.verifyTypeName='竞争性谈判':detailform.topInfor.verifyTypeName=''"
+                />
+                <!--<el-select-->
+                  <!--:disabled="p.actpoint === 'look'"-->
+                  <!--clearable-->
+                  <!--filterable-->
+                  <!--placeholder="请选择"-->
+                  <!--size="mini"-->
+                  <!--@change="-->
+                  <!--getName(-->
+                    <!--detailform.topInfor.verifyTypeId,-->
+                    <!--certificationType,-->
+                    <!--'verifyTypeName'-->
+                  <!--)-->
+                <!--"-->
+                  <!--v-model="detailform.topInfor.verifyTypeId"-->
+                <!--&gt;-->
+                  <!--<el-option-->
+                    <!--:key="index"-->
+                    <!--:label="item.detailName"-->
+                    <!--:value="item.id"-->
+                    <!--v-for="(item, index) in certificationType"-->
+                  <!--&gt;</el-option>-->
+                <!--</el-select>-->
               </el-form-item>
               <br>
                 <el-form-item
@@ -1220,7 +1226,7 @@
         return this.$store.state.category.emergingMarket;
       },
       projectNature(){
-        return this.$store.state.projectNature;
+        return this.$store.state.category.projectNature;
       },
       certificationType(){
         return this.$store.state.certificationType;
@@ -1256,7 +1262,7 @@
       if (this.p.actpoint === "edit"||this.p.actpoint === "look") {
         this.getDetail();
       }
-      if(this.p.actpoint === "add"||this.id){
+      if(this.p.actpoint === "add"){
         this.getAddDetail()
       }
       this.$store.dispatch("getConfig", {});
@@ -1331,11 +1337,11 @@
         }
       },
       //项目性质二级
-      getTwoXZ(){
+      getTwoXZ(id){
         this.detailform.topInfor.projectNatureSecondId='';
         this.projectNatureTwo=[];
         if(id!=''){
-          this.emergingMarket.find(
+          this.projectNature.find(
             (item)=>{
             if (item.id == id) {
             this.detailform.topInfor.projectNatureFirstName = item.detailName;
@@ -1485,6 +1491,7 @@
         }
         this.getTwo(afterData.topInfor.enginTypeFirstId);
         this.getTwoSC(afterData.topInfor.marketFirstNameId);
+        this.getTwoXZ(afterData.topInfor.projectNatureFirstId);
         // afterData.topInforCapitalList.forEach((item)=>{
         //   this.value1.push(item.capitalId);
         // });
@@ -1517,15 +1524,18 @@
             var datas=res.data.data;
           this.getTwo(datas.topInfor.enginTypeFirstId);
           this.getTwoSC(datas.topInfor.marketFirstNameId);
-          datas.topInforCapitalList.forEach((item)=>{
-            this.detailform.value1.push(item.capitalId);
-          });
+          this.getTwoXZ(datas.topInfor.projectNatureFirstId);
+
           this.detailform={
             topInfor: datas.topInfor,
             topInfoOrg: datas.topInfoOrg,
             topInfoSiteList: datas.topInfoSiteList,
             topInfoSectionList: datas.topInfoSectionList,
+            value1:[],
           };
+        datas.topInforCapitalList.forEach((item)=>{
+          this.detailform.value1.push(item.capitalId);
+      });
           for(var i in this.detailform){
             this.detailFormBefore[i]=JSON.parse(JSON.stringify(this.detailform[i]));
           }

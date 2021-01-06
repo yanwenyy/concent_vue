@@ -114,7 +114,8 @@
         searchform: {
           contractName: '',
           contractNo: '',
-          moduleId: ''
+          moduleId: '',
+          changeStatus:'0'
         },
         lxList:[
           {

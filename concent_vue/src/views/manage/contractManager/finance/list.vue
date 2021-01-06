@@ -9,7 +9,7 @@
       </el-button-group>
     </div>
     <div style="float: right; margin: -40px 0 0 0">
-      <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
+      <el-button @click="searchFromReset" type="info" plain style="color:black;background:none">重置</el-button>
       <el-button @click="getData" type="primary" plain>查询</el-button>
       <el-button type="primary" plain>导出</el-button>
     </div>
@@ -201,6 +201,7 @@ export default {
         ptype: "",
         orgid: "",
         orgname: "",
+        changeStatus:'0'
       },
       menus: [],
       multipleSelection: [],
@@ -273,19 +274,19 @@ export default {
       });
     }, // list通用方法开始
     handleSizeChange(val) {
-      this.searchform.size = val;
+      this.searchFrom.size = val;
       this.getData();
     },
     handleCurrentChange(val) {
-      this.searchform.current = val;
+      this.searchFrom.current = val;
       this.getData();
     },
-    searchformSubmit() {
-      this.searchform.current = 1;
+    searchFromSubmit() {
+      this.searchFrom.current = 1;
       this.getData();
     },
-    searchformReset() {
-      this.$refs["searchform"].resetFields();
+    searchFromReset() {
+      this.$refs["searchFrom"].resetFields();
     },
     // 列表选项数据
     handleSelectionChange(val) {
@@ -295,7 +296,7 @@ export default {
       this.$http
         .post(
           "/api/contract/ContractInfo/list/loadPageData",
-          this.searchform
+          this.searchFrom
         )
         .then((res) => {
         this.page = res.data.data;
