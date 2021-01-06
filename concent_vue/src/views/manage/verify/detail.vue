@@ -7,6 +7,8 @@
           class="detail-back-tab detailbutton"
           @click="back"
           type="text">返回</el-button>
+       <el-button class="detailbutton" type="primary" @click="saveInfo('detailform')" v-show="p.actpoint != 'look'">保存</el-button>
+      <el-button class="detailbutton"  @click="submitForm('detailform')" v-show="p.actpoint != 'look'">提交</el-button>
       </div>
 
 
@@ -547,10 +549,7 @@
 
     </div>
 </el-card>
-    <div class="btn-group" v-show="p.actpoint != 'look'">
-      <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
-      <el-button  @click="submitForm('detailform')">提交</el-button>
-    </div>
+
     <el-dialog title="前期项目标段列表" :visible.sync="dialogTopInfoSection">
     <el-table
       :data="detailform1.topInfoSectionList"
