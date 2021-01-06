@@ -3,8 +3,8 @@
   <el-dialog
     :lock-scroll="false"
     :visible.sync="visible"
-    :append-to-body="true">
-    <p class="bd">标段信息</p>
+    :append-to-body="true"
+    title="标段信息">
     <div>
 
       <el-form :inline="true" :model="detailForm" :rules="rules" ref="detailform" @keyup.enter.native="init()"  class="gcform">
@@ -161,7 +161,7 @@
           <el-form-item label="其中建安投资:" class="list-item">
           <el-input v-model="detailForm.verifySection.jananInvestment" placeholder="其中建安投资" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
-        <div class="list-title">
+        <div class="detail-title">
           其他投标单位(系统内):
           <el-button
             @click="add('inside',1)"
@@ -243,7 +243,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <div class="list-title">
+        <div class="detail-title">
           其他投标单位(系统外):
           <el-button
             @click="add('outside',2)"
@@ -493,7 +493,15 @@ import { isMoney } from '@/utils/validate'
   }
 </script>
 <style scoped>
-
+>>>.el-dialog__body{
+  padding: 10px 20px !important;
+}
+>>>.dialog-footer{
+  margin: 25px 0 0 0 !important;
+}
+>>>.gcform .el-form-item{
+  margin-bottom: 0px!important;
+}
 >>>.gcform .el-form-item__error{
   margin: -25px -7px 0 335px!important;
 }
@@ -509,9 +517,9 @@ import { isMoney } from '@/utils/validate'
 /* .el-form-item__label{
 width: 390px!important;
 } */
-.bd{
+/* .bd{
   margin: -30px 0 35px 0;
-}
+} */
   /* .tabelForm{
     margin-bottom: 0;
   } */
