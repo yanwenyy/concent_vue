@@ -491,6 +491,11 @@ pre {
   max-height:calc(100vh - 195px)!important;
   padding:0 100px;
 }
+.detailBoxBG{
+  overflow: scroll;
+  max-height:calc(100vh - 190px)!important;
+  padding:0 100px;
+}
 .gcform{
   background: white;
   width:calc(100% - 4px)!important;
@@ -555,6 +560,10 @@ pre {
 }
 .detail-back-tab{
   z-index: 2000!important;
+  top: 5px !important;
+}
+.el-tabs__content{
+  padding:0px !important;
 }
 .list-search-picker{
   width: 100%!important;
