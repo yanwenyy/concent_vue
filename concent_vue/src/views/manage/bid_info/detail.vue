@@ -468,9 +468,7 @@
                   v-model="detailform.bidInfo.outOrg"
                 />
               </el-form-item>
-
-<br>
-
+            <br>
             <el-form-item
               class="inline-formitem formItem"
               label="是否为费率招标:"
@@ -538,7 +536,7 @@
           </div>
           <el-row>
 
-            <p class="detail-title"><span >附件（最大10MB）: </span>
+            <p class="detail-title"><span >附件: </span>
                 <el-upload
                   class="upload-demo detailUpload"
                   :action="'/api/topInfo/CommonFiles/bidInfo/01/uploadFile'"
@@ -575,13 +573,13 @@
 
                 </el-table-column>
 
-                <el-table-column align="center" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip>
+                <el-table-column align="center" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip width="160">
 
                   <template slot-scope="scope">
                     {{(scope.row.fileSize/1024).toFixed(2)}}
                   </template>
                 </el-table-column>
-                <el-table-column align="center" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+                <el-table-column align="center" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip width="100" >
 
                 </el-table-column>
 
@@ -592,7 +590,7 @@
                   label="操作"
                   show-overflow-tooltip
                   v-if="p.actpoint!=='look'"
-                  width="200"
+                  width="60"
                 >
                   <template slot-scope="scope">
                     <el-link :underline="false" @click="handleRemove1(scope.row,scope.$index)" type="warning">删除</el-link>

@@ -1,6 +1,7 @@
 <template>
 
   <el-dialog
+
     :lock-scroll="false"
     :visible.sync="visible"
     :append-to-body="true">
@@ -8,7 +9,7 @@
     <div>
 
       <el-form :inline="true" :model="detailForm" :rules="rules" ref="detailform" @keyup.enter.native="init()">
-        <el-form-item label="标段名称:" class="list-item">
+        <el-form-item label="标段名称:" class="list-item" >
           <el-select
             clearable
             placeholder=""
@@ -23,45 +24,34 @@
             </el-select>
         </el-form-item>
 
-
-        <el-form-item v-if="isBidRates=='1'" label="风险费(万元):" class="list-item"  prop="bidInfoSection.riskFee"  :rules="rules.contractAmount">
-                <el-input
-                      v-model="detailForm.bidInfoSection.riskFee"
-                      clearable
-                      placeholder="风险费(万元)"
-                      :disabled="type === 'look'"
-                    >
-                <template slot="prepend">¥</template>
-                <template slot="append">(万元)</template>
-              </el-input>
-          <!-- <el-input v-model="detailForm.bidInfoSection.riskFee" placeholder="风险费(万元)" clearable></el-input> -->
+        <el-form-item label="评标办法:" class="list-item">
+          <el-input v-model="detailForm.bidInfoSection.bidEvaluationMethodName" placeholder="评标办法" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
 
-        <el-form-item v-if="isBidRates=='1'" label="安全费(万元):" class="list-item"  prop="bidInfoSection.safetyCost"  :rules="rules.contractAmount">
-                <el-input
-                    v-model="detailForm.bidInfoSection.safetyCost"
-                    clearable
-                    placeholder="安全费(万元)"
-                    :disabled="type === 'look'"
-                  >
-                <template slot="prepend">¥</template>
-                <template slot="append">(万元)</template>
-              </el-input>
-          <!-- <el-input v-model="detailForm.bidInfoSection.safetyCost" placeholder="安全费(万元)" clearable></el-input> -->
+        <el-form-item label="开标地点:" class="list-item">
+          <el-input v-model="detailForm.bidInfoSection.openBidPlaceName" placeholder="开标地点" clearable :disabled="type === 'look'"></el-input>
+        </el-form-item>
+<br>
+        <el-form-item label="开标日期:" class="list-item">
+          <el-date-picker
+            filterable
+            clearable
+            type="date"
+            value-format="timestamp"
+            :disabled="type === 'look'"
+            v-model="detailForm.bidInfoSection.dateOfBidOpeningName"
+          >
+          </el-date-picker>
         </el-form-item>
 
-        <el-form-item v-if="isBidRates=='1'" label="投标限价(万元):" class="list-item" prop="bidInfoSection.biddingPriceLimit"  :rules="rules.contractAmount">
-                <el-input
-                    v-model="detailForm.bidInfoSection.biddingPriceLimit"
-                    clearable
-                    placeholder="投标限价(万元)"
-                    :disabled="type === 'look'"
-                  >
-                <template slot="prepend">¥</template>
-                <template slot="append">(万元)</template>
-              </el-input>
-          <!-- <el-input v-model="detailForm.bidInfoSection.biddingPriceLimit" placeholder="投标限价(万元)" clearable></el-input> -->
+        <el-form-item label="参与投标单位:" class="list-item">
+          <el-input v-model="detailForm.bidInfoSection.participatingUnitsName" placeholder="评标办法" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
+
+        <el-form-item label="编标拟配合单位:" class="list-item">
+          <el-input v-model="detailForm.bidInfoSection.orgName" placeholder="编标拟配合单位" clearable :disabled="type === 'look'"></el-input>
+        </el-form-item>
+        <br>
 
         <el-form-item label="投标保证金(万元):" class="list-item" prop="bidInfoSection.tenderSecurity"  :rules="rules.contractAmount">
                 <el-input
@@ -101,47 +91,71 @@
               </el-input>
           <!-- <el-input v-model="detailForm.bidInfoSection.tenderRate" placeholder="投标费率(百分比)" clearable></el-input> -->
         </el-form-item>
-        <el-form-item label="开标地点:" class="list-item">
-          <el-input v-model="detailForm.bidInfoSection.openBidPlaceName" placeholder="开标地点" clearable :disabled="type === 'look'"></el-input>
-        </el-form-item>
-        <el-form-item label="评标办法:" class="list-item">
-          <el-input v-model="detailForm.bidInfoSection.bidEvaluationMethodName" placeholder="评标办法" clearable :disabled="type === 'look'"></el-input>
-        </el-form-item>
-        <el-form-item label="开标日期:" class="list-item">
-          <el-date-picker
-            filterable
-            clearable
-            type="date"
-            value-format="timestamp"
-            :disabled="type === 'look'"
-            v-model="detailForm.bidInfoSection.dateOfBidOpeningName"
-          >
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="参与投标单位:" class="list-item">
-          <el-input v-model="detailForm.bidInfoSection.participatingUnitsName" placeholder="评标办法" clearable :disabled="type === 'look'"></el-input>
-        </el-form-item>
+          <br>
         <el-form-item label="项目经理:" class="list-item">
           <el-input v-model="detailForm.bidInfoSection.projectManager" placeholder="项目经理" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
+
         <el-form-item label="项目副经理:" class="list-item">
           <el-input v-model="detailForm.bidInfoSection.deputyProjectManager	" placeholder="项目副经理" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
+
+        <el-form-item v-if="isBidRates=='1'" label="风险费(万元):" class="list-item"  prop="bidInfoSection.riskFee"  :rules="rules.contractAmount">
+                <el-input
+                      v-model="detailForm.bidInfoSection.riskFee"
+                      clearable
+                      placeholder="风险费(万元)"
+                      :disabled="type === 'look'"
+                    >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+          <!-- <el-input v-model="detailForm.bidInfoSection.riskFee" placeholder="风险费(万元)" clearable></el-input> -->
+        </el-form-item>
+        <br>
         <el-form-item label="技术负责人:" class="list-item">
           <el-input v-model="detailForm.bidInfoSection.technicalDirector" placeholder="技术负责人" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
+
         <el-form-item label="安全负责人:" class="list-item">
           <el-input v-model="detailForm.bidInfoSection.personInChargeOfSafety" placeholder="安全负责人" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
+
+        <el-form-item v-if="isBidRates=='1'" label="安全费(万元):" class="list-item"  prop="bidInfoSection.safetyCost"  :rules="rules.contractAmount">
+                <el-input
+                    v-model="detailForm.bidInfoSection.safetyCost"
+                    clearable
+                    placeholder="安全费(万元)"
+                    :disabled="type === 'look'"
+                  >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+          <!-- <el-input v-model="detailForm.bidInfoSection.safetyCost" placeholder="安全费(万元)" clearable></el-input> -->
+        </el-form-item>
+          <br>
+
         <el-form-item label="财务负责人:" class="list-item">
           <el-input v-model="detailForm.bidInfoSection.personInChargeOfFinance" placeholder="财务负责人" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
+
         <el-form-item label="成本负责人:" class="list-item">
           <el-input v-model="detailForm.bidInfoSection.costOwner" placeholder="成本负责人" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
-          <el-form-item label="编标拟配合单位:" class="list-item">
-          <el-input v-model="detailForm.bidInfoSection.orgName" placeholder="编标拟配合单位" clearable :disabled="type === 'look'"></el-input>
+
+        <el-form-item v-if="isBidRates=='1'" label="投标限价(万元):" class="list-item" prop="bidInfoSection.biddingPriceLimit"  :rules="rules.contractAmount">
+                <el-input
+                    v-model="detailForm.bidInfoSection.biddingPriceLimit"
+                    clearable
+                    placeholder="投标限价(万元)"
+                    :disabled="type === 'look'"
+                  >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+          <!-- <el-input v-model="detailForm.bidInfoSection.biddingPriceLimit" placeholder="投标限价(万元)" clearable></el-input> -->
         </el-form-item>
+          <br>
           <el-form-item label="投资估算:" class="list-item">
           <el-input v-model="detailForm.verifySection.investmentReckon" placeholder="投资估算" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
@@ -172,7 +186,7 @@
             header-align="center"
             align="center"
             width="80"
-            label="ID">
+            label="序号">
           </el-table-column>
           <el-table-column
             :width="500"
@@ -252,7 +266,7 @@
             header-align="center"
             align="center"
             width="80"
-            label="ID">
+            label="序号">
           </el-table-column>
           <el-table-column
             :width="500"
@@ -476,12 +490,21 @@ import { isMoney } from '@/utils/validate'
   }
 </script>
 <style scoped>
+>>>.el-form--inline .el-form-item__content{
+  width: 100%;
+}
+.el-date-editor.el-input, .el-date-editor.el-input__inner {
+  width: 100%;
+}
+/* .el-form-item__label{
+width: 390px!important;
+} */
 .bd{
   margin: -30px 0 35px 0;
 }
-  .tabelForm{
+  /* .tabelForm{
     margin-bottom: 0;
-  }
+  } */
   .list-title{
     margin: 20px 0;
   }
@@ -489,7 +512,7 @@ import { isMoney } from '@/utils/validate'
     float: right;
   }
   .list-item{
-    width: 45%;
+    width: 32%;
   }
   .dialog-footer {
     margin-top: 50px;
@@ -503,9 +526,6 @@ import { isMoney } from '@/utils/validate'
 
   }
 
-  >>>.el-form-item__label {
-    width: auto;
-  }
 
   .inline-block {
     display: inline-block;
@@ -548,6 +568,7 @@ p{
 }
 >>>.el-dialog{
   position: fixed;
-  left: 20%;
+  left: 10%;
+  width: 80%;
 }
 </style>
