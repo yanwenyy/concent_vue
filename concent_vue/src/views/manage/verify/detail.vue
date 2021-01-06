@@ -296,20 +296,10 @@
           required: true, message: '此项不能为空', trigger: 'blur'
         }"
       >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          size="mini"
-          v-model="detailform.verify.isCoalitionBid"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in coalitionBid"
-          ></el-option>
-        </el-select>
+       <el-radio-group v-model="detailform.verify.isCoalitionBid" >
+                  <el-radio :disabled="p.actpoint === 'look'"  v-for="(item, index) in coalitionBid" :label="item.id" :key="index">{{item.detailName}}</el-radio>
+                </el-radio-group>
+
 <!--        <el-input-->
 <!--          clearable-->
 <!--          :readonly="p.actpoint === 'look'"-->
@@ -467,7 +457,7 @@
           fixed="right"
           label="参与投标单位"
           align="center"
-          prop="verifySectionOrgName"
+          prop="verifySectionOrgNameType01"
           show-overflow-tooltip
           v-show="p.actpoint != 'look'"
           width="200">
@@ -1135,21 +1125,21 @@ export default {
 }
 .gcform {
   margin-top: 10px;
-  .el-form-item__label:before {
+  >>>.el-form-item__label:before {
     position: initial;
     left: -10px;
   }
-  .el-form-item__error {
+  >>>.el-form-item__error {
     padding-top: 0px;
     width: 95%;
     margin-left: 0;
     text-align: right;
     top: 0%;
   }
-  .el-form-item {
+  >.el-form-item,>>>.formItem{
 
     display: inline-block;
-    width: 32.5%;
+    width: 32.5%!important;
   }
   .detailformfooter1 {
     margin-top: 5px;
@@ -1169,7 +1159,7 @@ export default {
       color: #5c8bfa;
     }
   }
-  .errorMsg .el-form-item__label {
+  .errorMsg >>>.el-form-item__label {
     color: red;
   }
   .el-input {
@@ -1188,19 +1178,6 @@ export default {
 
 .el-table thead.is-group th {
   background: #fff;
-}
-
-.clothSizeTable {
-  /*td {*/
-  /*padding: 0;*/
-  /*}*/
-  .el-form-item__content {
-    height: 60px;
-    line-height: 60px;
-    .el-form-item__error {
-      top: 42px;
-    }
-  }
 }
 
 .text {
@@ -1227,14 +1204,14 @@ export default {
   // height: 200px;
 }
 
-.el-input--mini .el-input__inner {
+>>>.el-input--mini .el-input__inner {
   height: 40px;
   width: 100%;
   box-sizing: border-box;
   // margin: 10px 0 0 10px;
 }
 
-.gcform .el-input {
+.gcform >>>.el-input {
   width: 95%;
 }
 .listInput{
@@ -1249,11 +1226,11 @@ export default {
   width: 100% !important;
 }
 
-.gcform .el-form-item {
+.gcform >>>.el-form-item {
   margin-bottom: 0px;
 }
 
-.neirong .el-input--mini .el-input__inner {
+.neirong >>>.el-input--mini .el-input__inner {
   height: 100px;
 }
 
