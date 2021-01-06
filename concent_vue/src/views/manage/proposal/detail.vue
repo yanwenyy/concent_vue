@@ -43,6 +43,7 @@
           <br>
           <div>
             <el-form-item
+              class="inline-formitem"
               label="项目板块:"
               prop="topInfor.moduleId"
               :rules="{
@@ -70,10 +71,9 @@
                   <!--v-for="(item, index) in bizCode"-->
                 <!--&gt;</el-option>-->
               <!--</el-select>-->
-              <br>
               <template>
-                <el-radio-group v-model="detailform.topInfor.moduleId"  @change="getName(detailform.topInfor.moduleId, bizCode, 'moduleName')">
-                  <el-radio :disabled="p.actpoint === 'look'"  v-for="(item, index) in bizCode" :label="item.id" :key="index">{{item.detailName}}</el-radio>
+                <el-radio-group class="detail-radio-group" v-model="detailform.topInfor.moduleId"  @change="getName(detailform.topInfor.moduleId, projectPlate, 'moduleName')">
+                  <el-radio :disabled="p.actpoint === 'look'"  v-for="(item, index) in projectPlate" :label="item.id" :key="index">{{item.detailName}}</el-radio>
                 </el-radio-group>
               </template>
             </el-form-item>
@@ -875,6 +875,9 @@
       },
       bizCode() {
         return this.$store.state.bizCode;
+      },
+      projectPlate(){
+        return this.$store.state.projectPlate;
       },
       bulletinType() {
         return this.$store.state.bulletinType;

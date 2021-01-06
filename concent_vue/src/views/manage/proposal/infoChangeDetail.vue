@@ -1,7 +1,9 @@
 <template>
   <div style="position: relative">
+    <el-button  class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform')">保存</el-button>
+    <el-button  class="detail-back-tab detailbutton sub-btn" @click="submit">提交</el-button>
     <el-button
-      class="detail-back-tab"
+      class="detail-back-tab detailbutton"
       @click="back"
       type="text">返回</el-button>
     <el-tabs type="border-card">
@@ -420,6 +422,7 @@
               <br>
               <div>
                 <el-form-item
+                  class="inline-formitem"
                   style="width:100%;"
                   label="项目板块:"
                   prop="topInfor.moduleId"
@@ -449,15 +452,14 @@
                   <!--v-for="(item, index) in bizCode"-->
                   <!--&gt;</el-option>-->
                   <!--</el-select>-->
-                  <br>
+
                   <template>
-                    <el-radio-group v-model="detailform.topInfor.moduleId"  @change="getName(detailform.topInfor.moduleId, bizCode, 'moduleName')">
-                      <el-radio :disabled="p.actpoint === 'look'"  v-for="(item, index) in bizCode" :label="item.id" :key="index">{{item.detailName}}</el-radio>
+                    <el-radio-group class="detail-radio-group" v-model="detailform.topInfor.moduleId"  @change="getName(detailform.topInfor.moduleId, projectPlate, 'moduleName')">
+                      <el-radio :disabled="p.actpoint === 'look'"  v-for="(item, index) in projectPlate" :label="item.id" :key="index">{{item.detailName}}</el-radio>
                     </el-radio-group>
                   </template>
                 </el-form-item>
               </div>
-              <br>
               <el-form-item
                 label="工程类别(一级):"
                 prop="topInfor.enginTypeFirstId"
@@ -1187,10 +1189,7 @@
           </div>
 
         </el-card>
-        <div class="btn-group" v-show="p.actpoint != 'look'">
-          <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
-          <el-button @click="submit">提交</el-button>
-        </div>
+
         <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
       </el-tab-pane>
     </el-tabs>
@@ -1279,6 +1278,9 @@
       },
       bizCode() {
         return this.$store.state.bizCode;
+      },
+      projectPlate(){
+        return this.$store.state.projectPlate;
       },
       bulletinType() {
         return this.$store.state.bulletinType;
@@ -1611,6 +1613,14 @@
     right:15px;
     z-index: 999999999;
     background: #fff;
+  }
+  .save-btn{
+    right: 95px;
+    background: #409EFF;
+    color:#fff;
+  }
+  .sub-btn{
+    right: 175px;
   }
   .positon-path{
     word-wrap: break-word;
