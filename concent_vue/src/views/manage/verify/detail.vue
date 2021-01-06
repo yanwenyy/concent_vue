@@ -298,8 +298,8 @@
 <!--          v-model="detailform.verify.isCoalitionBid"-->
 <!--        />-->
       </el-form-item>
-
-        <el-form-item v-show='detailform.verify.isCoalitionBid=="是"'
+<div v-show='detailform.verify.isCoalitionBid=="是"'>
+        <el-form-item
           label="内部联合体单位:"
           :disabled="p.actpoint === 'look'"
         >
@@ -308,7 +308,7 @@
             <el-button slot="append" icon="el-icon-search"  @click="selectOrg()"></el-button>
           </el-input>
         </el-form-item>
-        <el-form-item v-show='detailform.verify.isCoalitionBid=="是"'
+        <el-form-item
           label="外部联合体单位:"
         >
           <el-input
@@ -318,6 +318,7 @@
           />
 
         </el-form-item>
+        </div>
 <div>
             <el-form-item
             class="neirong"
