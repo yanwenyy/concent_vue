@@ -376,6 +376,8 @@ pre {
 /* 新加的 */
 .detailDivider{
   margin: 20px 0 10px 0 !important;
+}
+.detailDivider .el-divider__text{
   font-size: 16px !important;
 }
 .queryForm .el-form-item{
@@ -534,6 +536,9 @@ pre {
 .tabelformItem{
   width: 100%!important;
 }
+.inline-formitem{
+  margin-top: 10px;
+}
 .inline-formitem .el-form-item__label{
   display: inline-block;
   width: auto!important;
@@ -562,6 +567,12 @@ pre {
 }
 .list-search-picker .el-input__icon{
   line-height: 28px;
+}
+.detail-radio-group{
+  white-space: pre-wrap;
+  word-break: break-all;
+  vertical-align: middle;
+  margin-top: -5px;
 }
 /**/
 

@@ -123,7 +123,7 @@
           :width="150"
           align="center"
           label="录入单位"
-          prop="constructionOrg"
+          prop="createOrgName"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -131,7 +131,7 @@
             <div>
               <el-input
                 style=" width: 100%"
-                v-model="searchform.constructionOrg"
+                v-model="searchform.createOrgName"
                 size="mini"
               />
             </div>
@@ -260,6 +260,7 @@
           enginTypeFirstId: "",
           enginTypeSecondId:'',
           constructionOrg: "",
+          planBidTime:'',
           noticeTypeId: "",
         },
         menus: [],
@@ -385,10 +386,16 @@
       },
       searchformReset() {
         // this.$refs["searchform"].resetFields();
-        this.searchform.inforName = "";
-        this.searchform.enginTypeFirstId = "";
-        this.searchform.constructionOrg = "";
-        this.searchform.noticeTypeId = "";
+        this.searchform={
+          orgid: "",
+          orgname: "",
+          inforName: "",
+          enginTypeFirstId: "",
+          enginTypeSecondId:'',
+          constructionOrg: "",
+          planBidTime:'',
+          noticeTypeId: "",
+        }
         this.getData();
       },
       // 列表选项数据

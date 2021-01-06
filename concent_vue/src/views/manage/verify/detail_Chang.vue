@@ -1,18 +1,25 @@
 <!--资审变更列表-->
 <template>
+ <div style="position: relative">
+ <el-button  class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform')">保存</el-button>
+    <el-button  class="detail-back-tab detailbutton sub-btn" @click="submit">提交</el-button>
+ <el-button
+   class="detail-back-tab detailbutton"
+   @click="back"
+   type="text">返回</el-button>
   <el-tabs type="border-card">
     <el-tab-pane label="资审原信息">
       <div>
         <el-card class="box-card">
 
-          <div style="overflow: scroll;max-height:calc(100vh - 380px);">
+          <div class="detailBox">
             <el-form
               :inline="false"
               :model="detailformBefore"
               class="gcform"
               ref="detailformBefore"
               style="background: white;width:calc(100% - 4px);">
-              <p style="overflow:hidden;margin-right: 30px"><span style="float:left;font-weight: bold">项目前期信息</span></p>
+              <p style="overflow:hidden;margin-right: 30px"><span style="font-weight: bold">项目前期信息</span></p>
               <div>
                 <el-form-item
                   label="项目名称:"
@@ -166,7 +173,7 @@
                   />
                 </el-form-item>
               </div>
-              <p style="overflow:hidden;margin-right: 30px"><span style="float:left;font-weight: bold">资审信息</span></p>
+              <p style="overflow:hidden;margin-right: 30px"><span style="font-weight: bold">资审信息</span></p>
 
                 <el-form-item
                   label="资审文件发售截止日期:"
@@ -311,7 +318,7 @@
                     border
                     class="contractInfoTable"
                     ref="table"
-                    style="width: 100%;height: auto;"
+                    style="width: 98%;height: auto;"
                   >
                             <el-table-column
                               :width="55"
@@ -333,7 +340,7 @@
 
                           </el-table>
                 </div>
-              <p style="overflow:hidden;margin-right: 30px"><span style="float:left;">标段信息: </span>
+              <p style="overflow:hidden;margin-right: 30px"><span >标段信息: </span>
               </p>
               <el-table
                 :data="detailformBefore.verifySectionList"
@@ -365,20 +372,85 @@
                 >
                 </el-table-column>
                 <el-table-column
+
                   :resizable="false"
                   fixed="right"
                   label="参与投标单位"
                   align="center"
-                  prop="verifySectionOrgName"
+                  prop="verifySectionOrgNameType01"
                   show-overflow-tooltip
                   v-show="p.actpoint != 'look'"
-                  width="200">
-                  <template slot-scope="scope">
-                    <span>
-                      {{scope.row.verifySectionOrgName}}
-                    </span>
-                  </template>
-                </el-table-column>
+                  width="160">
+
+          <template slot-scope="scope" v-show="p.actpoint != 'look'">
+            <span  >
+              {{scope.row.verifySectionOrgNameType01}}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column
+
+          :resizable="false"
+          fixed="right"
+          label="编标拟配合单位"
+          align="center"
+          prop="verifySectionOrgNameType02"
+          show-overflow-tooltip
+          v-show="p.actpoint != 'look'"
+          width="160">
+
+          <template slot-scope="scope" v-show="p.actpoint != 'look'">
+
+            <span  >
+              {{scope.row.verifySectionOrgNameType02}}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column
+
+          :resizable="false"
+          fixed="right"
+          label="投资估算"
+          align="center"
+          prop="investmentReckon"
+          show-overflow-tooltip
+          width="260">
+
+          <template slot-scope="scope" >
+          <el-input
+            disabled
+            placeholder=""
+            size="mini"
+            v-model="scope.row.verifySection.investmentReckon"
+          >
+          <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+          </el-input>
+          </template>
+        </el-table-column>
+        <el-table-column
+
+          :resizable="false"
+          fixed="right"
+          label="其中建安投资"
+          align="center"
+          prop="jananInvestment"
+          show-overflow-tooltip
+          v-show="p.actpoint != 'look'"
+          width="260">
+
+          <template slot-scope="scope" >
+           <el-input
+             disabled
+             placeholder=""
+             size="mini"
+             v-model="scope.row.verifySection.jananInvestment"
+           >
+          <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+          </el-input>
+          </template>
+        </el-table-column>
 
               </el-table>
             </el-form>
@@ -391,7 +463,7 @@
 
         <el-card class="box-card">
 
-          <div style="overflow: scroll;max-height:calc(100vh - 380px);">
+          <div class="detailBox">
             <el-form
               :inline="false"
               :model="detailformAfter"
@@ -399,7 +471,7 @@
               ref="detailformAfter"
               style="background: white;width:calc(100% - 4px);"
             >
-              <p style="overflow:hidden;margin-right: 30px"><span style="float:left;font-weight: bold">项目前期信息</span></p>
+              <p style="overflow:hidden;margin-right: 30px"><span style="font-weight: bold">项目前期信息</span></p>
               <div>
                 <el-form-item
                   label="项目名称:"
@@ -556,7 +628,7 @@
                 </el-form-item>
               </div>
 
-              <p style="overflow:hidden;margin-right: 30px"><span style="float:left;font-weight: bold">资审信息</span></p>
+              <p style="overflow:hidden;margin-right: 30px"><span style="font-weight: bold">资审信息</span></p>
 
                 <el-form-item
                   label="资审文件发售截止日期:"
@@ -646,7 +718,7 @@
           required: true, message: '此项不能为空', trigger: 'blur'
         }"
                 >
-                    <el-radio-group v-model="detailform.verify.isCoalitionBid" >
+                    <el-radio-group v-model="detailformAfter.verify.isCoalitionBid" >
                   <el-radio :disabled="p.actpoint === 'look'"  v-for="(item, index) in coalitionBid" :label="item.id" :key="index">{{item.detailName}}</el-radio>
                 </el-radio-group>
 
@@ -726,7 +798,7 @@
                     border
                     class="contractInfoTable"
                     ref="table"
-                    style="width: 100%;height: auto;"
+                    style="width: 98%;height: auto;"
                   >
                             <el-table-column
                               :width="55"
@@ -760,11 +832,11 @@
                             </el-table-column>
                           </el-table>
                 </div>
-              <p style="overflow:hidden;margin-right: 30px"><span style="float:left;">标段信息: </span>
+              <p style="overflow:hidden;margin-right: 30px"><span>标段信息: </span>
                 <el-button
                   @click="dialogTopInfoSection = true"
                   size="mini"
-                  style="float:right;width: 70px;height: 32px;background: #5C8BFA;font-size: 16px;"
+                  style="width: 70px;height: 32px;background: #5C8BFA;font-size: 16px;"
                   type="primary"
                 >新增
                 </el-button>
@@ -786,7 +858,7 @@
                 style="width: 98%;margin-bottom: 20px "
               >
                 <el-table-column
-                  :width="80"
+                  :width="60"
                   align="center"
                   label="序号"
                   show-overflow-tooltip
@@ -812,7 +884,7 @@
                   prop="verifySectionOrgNameType01"
                   show-overflow-tooltip
                   v-show="p.actpoint != 'look'"
-                  width="200">
+                  width="160">
 
           <template slot-scope="scope" v-show="p.actpoint != 'look'">
             <span  >
@@ -829,7 +901,7 @@
           prop="verifySectionOrgNameType02"
           show-overflow-tooltip
           v-show="p.actpoint != 'look'"
-          width="200">
+          width="160">
 
           <template slot-scope="scope" v-show="p.actpoint != 'look'">
 
@@ -846,7 +918,7 @@
           align="center"
           prop="investmentReckon"
           show-overflow-tooltip
-          width="80">
+          width="260">
 
           <template slot-scope="scope" >
           <el-input
@@ -854,7 +926,10 @@
             placeholder=""
             size="mini"
             v-model="scope.row.verifySection.investmentReckon"
-          />
+          >
+          <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+          </el-input>
           </template>
         </el-table-column>
         <el-table-column
@@ -866,7 +941,7 @@
           prop="jananInvestment"
           show-overflow-tooltip
           v-show="p.actpoint != 'look'"
-          width="80">
+          width="260">
 
           <template slot-scope="scope" >
            <el-input
@@ -874,7 +949,10 @@
              placeholder=""
              size="mini"
              v-model="scope.row.verifySection.jananInvestment"
-           />
+           >
+          <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+          </el-input>
           </template>
         </el-table-column>
                 <el-table-column
@@ -883,6 +961,7 @@
                   fixed="right"
                   label="操作"
                   align="center"
+                  width="80"
                   show-overflow-tooltip
                   v-if="p.actpoint != 'look'">
                   <template slot-scope="scope">
@@ -900,9 +979,9 @@
 
           </div>
         </el-card>
-        <div class="btn-group" v-show="p.actpoint != 'look'">
-          <el-button type="primary" @click="saveInfo('detailformAfter')">保存</el-button>
-        </div>
+<!--        <div class="btn-group" v-show="p.actpoint != 'look'">-->
+<!--          <el-button type="primary" @click="saveInfo('detailformAfter')">保存</el-button>-->
+<!--        </div>-->
         <el-dialog title="前期项目标段列表" :visible.sync="dialogTopInfoSection">
           <el-table
             :data="detailform1.topInfoSectionList"
@@ -952,7 +1031,7 @@
       <TreeOrg v-if="treeOrgStatas1" ref="addOrUpdate1" @getPosition="getTreeOrg1"></TreeOrg>
     </el-tab-pane>
   </el-tabs>
-
+ </div>
 </template>
 
 <script>
@@ -1355,6 +1434,29 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.detail-back-tab{
+  padding: 10px 20px ;
+  border:1px solid #ddd;
+  color: black;
+  position: absolute;
+  top:1px;
+  right:15px;
+  z-index: 999999999;
+  background: #fff;
+}
+.save-btn{
+  right: 95px;
+  background: #409EFF;
+  color:#fff;
+}
+.sub-btn{
+  right: 175px;
+}
+.positon-path{
+  word-wrap: break-word;
+  word-break: break-all;
+  width: 90%;
+}
 .btn-group{
   text-align: center;
   margin-top: 20px;
@@ -1372,10 +1474,10 @@ export default {
     text-align: right;
     top: 0%;
   }
-  >.el-form-item,>>>.formItem{
-
+  >>>.el-form-item {
+    /**/
     display: inline-block;
-    width: 32.5%!important;
+    width: 32.5%;
   }
   .detailformfooter1 {
     margin-top: 5px;
@@ -1398,22 +1500,35 @@ export default {
   .errorMsg >>>.el-form-item__label {
     color: red;
   }
-  .el-input {
+  >>>.el-input {
     width: 300px;
   }
-  .el-input .el-input_inner {
+  >>>.el-input >>>.el-input_inner {
     width: 300px;
     height: 500px;
   }
 }
 
-.el-input .el-input_inner {
+.el-input >>>.el-input_inner {
   width: 300px;
   height: 500px;
 }
 
 .el-table thead.is-group th {
   background: #fff;
+}
+
+.clothSizeTable {
+  /*td {*/
+  /*padding: 0;*/
+  /*}*/
+  .el-form-item__content {
+    height: 60px;
+    line-height: 60px;
+    .el-form-item__error {
+      top: 42px;
+    }
+  }
 }
 
 .text {
@@ -1431,13 +1546,6 @@ export default {
 
 .clearfix:after {
   clear: both;
-}
-
-.el-card__body {
-  /*padding: 0 100px;*/
-  // height: 400px;
-  // border: 1px solid black;
-  // height: 200px;
 }
 
 >>>.el-input--mini .el-input__inner {
@@ -1462,11 +1570,11 @@ export default {
   width: 100% !important;
 }
 
-.gcform >>>.el-form-item {
+.gcform .el-form-item {
   margin-bottom: 0px;
 }
 
-.neirong >>>.el-input--mini .el-input__inner {
+.neirong  >>>.el-input--mini >>>.el-input__inner {
   height: 100px;
 }
 
@@ -1500,6 +1608,7 @@ export default {
 .el-table--border {
   min-height: auto !important;
 }
+
 >>>.el-form-item__label{
   width: auto;
 }

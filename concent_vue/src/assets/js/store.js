@@ -52,6 +52,7 @@ const state = {
   projectDomainType:[],//工程行业类别
   railwayLine:[],//所属线路
   contractType:[],//合同类型
+  certificationType:[],//项目板块
 
   optiondata:[],
   dialogState: 'edit',
@@ -238,6 +239,9 @@ const mutations = {
       case 'contractType':
         state.contractType=item.sysCategoryDetailList;
         break;
+      case 'projectPlate':
+        state.projectPlate=item.sysCategoryDetailList;
+        break;
       }
     })
     })
@@ -390,6 +394,9 @@ const mutations = {
         break;
       case 'contractType':
         state.contractType=item.sysCategoryDetailList;
+        break;
+      case 'projectPlate':
+        state.projectPlate=item.sysCategoryDetailList;
         break;
       }
     })
