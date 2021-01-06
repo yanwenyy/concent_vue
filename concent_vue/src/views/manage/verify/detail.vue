@@ -4,23 +4,14 @@
       <div slot="header" class="clearfix" >
         <span style="color: #2a2a7d"><b>资审管理详情</b></span>
         <el-button
+          class="detail-back-tab detailbutton"
           @click="back"
-          style="
-            float: right;
-            padding: 10px 20px;
-            border: 1px solid #ddd;
-            color: black;
-            position: fixe;
-          "
-          type="text"
-        >返回
-        </el-button
-        >
+          type="text">返回</el-button>
       </div>
 
 
       <div class="detailBox">
-        <p style="overflow:hidden;margin-right: 30px"><span style="float:left;font-weight: bold">项目前期信息</span></p>
+        <p style="overflow:hidden;margin-right: 30px"><span style="font-weight: bold">项目前期信息</span></p>
     <el-form
       :inline="false"
       :model="detailform"
@@ -412,11 +403,11 @@
               </el-table>
     </div>
 
-     <p style="overflow:hidden;margin-right: 30px"><span style="float:left;">标段信息: </span>   <el-button
+     <p style="overflow:hidden;margin-right: 30px"><span >标段信息: </span>   <el-button
        @click="dialogTopInfoSection = true"
        v-show="p.actpoint != 'look'"
             size="mini"
-            style="float:right;width: 70px;height: 32px;background: #5C8BFA;font-size: 16px;"
+            style="width: 70px;height: 32px;background: #5C8BFA;font-size: 16px;"
             type="primary"
           >新增</el-button> </p>
 
