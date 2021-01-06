@@ -160,6 +160,7 @@
                   <el-input
                     disabled
                     placeholder="请输入"
+                    type="textarea"
                     size="mini"
                     v-model="detailformBefore.topInfor.inforContent"
                   />
@@ -281,6 +282,7 @@
                   <el-input
                     disabled
                     placeholder="请输入"
+                    type="textarea"
                     size="mini"
                     v-model="detailformBefore.verify.verifyExplain"
                   />
@@ -547,6 +549,7 @@
                   <el-input
                     disabled
                     placeholder="请输入"
+                    type="textarea"
                     size="mini"
                     v-model="detailformAfter.topInfor.inforContent"
                   />
@@ -698,6 +701,7 @@
                   <el-input
                     clearable
                     placeholder="请输入"
+                    type="textarea"
                     size="mini"
                     v-model="detailformAfter.verify.verifyExplain"
                   />
