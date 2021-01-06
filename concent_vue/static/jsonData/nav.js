@@ -101,7 +101,7 @@ export default {
                       "iconCls": "el-icon-notebook-2",
                       "menushow": true,
                       "leaf": true,
-                      "defaultpage": true
+                      "defaultpage": false
                     },
 
                     {
