@@ -1,12 +1,16 @@
 <template>
 
   <el-dialog
-    :lock-scroll="false"
+    :lock-scroll="true"
     :visible.sync="visible"
-    :append-to-body="true"
-    title="标段信息">
-    <div>
-
+    :append-to-body="true">
+    <el-card>
+      <div class="clearfix el-card__header">
+        <span style="color: #2a2a7d;line-height: 32px"><b>标段信息</b></span>
+        <el-button @click="visible = false" style="float: right;">返回</el-button>
+      </div>
+    </el-card>
+    <div style="height: calc(100% - 50px);overflow: auto;padding: 0 50px;">
       <el-form :inline="true" :model="detailForm" :rules="rules" ref="detailform" @keyup.enter.native="init()"  class="gcform">
         <el-form-item label="标段名称:" class="list-item" >
           <el-select
@@ -490,11 +494,26 @@ import { isMoney } from '@/utils/validate'
   }
 </script>
 <style scoped>
+>>>.el-dialog{
+    height: 70vh!important;
+  }
+>>>.el-card__header{
+  padding: 8px 20px !important;
+}
+>>>.el-dialog__header{
+  display: none;
+}
 >>>.el-dialog__body{
-  padding: 10px 20px !important;
+  padding: 0;
+  height: calc(100% - 60px)!important;
+  width: 100%;
+  overflow: hidden;
 }
 >>>.dialog-footer{
-  margin: 25px 0 0 0 !important;
+  padding-top: 14px;
+  margin:0;
+  text-align: center;
+  background-color: #fafafa;
 }
 >>>.gcform .el-form-item{
   margin-bottom: 0px!important;
@@ -511,39 +530,11 @@ import { isMoney } from '@/utils/validate'
 .el-date-editor.el-input, .el-date-editor.el-input__inner {
   width: 100%;
 }
-/* .el-form-item__label{
-width: 390px!important;
-} */
-/* .bd{
-  margin: -30px 0 35px 0;
-} */
-  /* .tabelForm{
-    margin-bottom: 0;
-  } */
   .list-title{
     margin: 20px 0;
   }
-  /* .detatil-flie-btn{
-    float: right;
-  } */
   .list-item{
     width: 32%;
-  }
-  .dialog-footer {
-    margin-top: 50px;
-    text-align: center;
-  }
-
-  >>>.el-dialog {
-    width: 60%;
-    /* position: absolute;
-    left:20%; */
-
-  }
-
-
-  .inline-block {
-    display: inline-block;
   }
 
   .dr-notice-warn {
@@ -575,7 +566,6 @@ width: 390px!important;
 
 >>>form{
   height: 500px;
-  overflow: auto;
   padding: 0 10px 0 0;
 }
 p{
