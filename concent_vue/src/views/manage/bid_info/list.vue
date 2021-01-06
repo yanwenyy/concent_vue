@@ -10,7 +10,7 @@
 
       </el-button-group>
       <div style="float: right">
-        <el-button @click="searchformReset" type="info" plain style="color:black;background:none;font-size:10px">重置</el-button>
+        <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
         <el-button @click="getData" type="primary" plain >查询</el-button>
         <el-button @click="" type="primary" plain >导出</el-button>
       </div>
