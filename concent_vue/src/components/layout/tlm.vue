@@ -3,8 +3,8 @@
     <el-header style="border-bottom: 1px solid #e6e6e6; width:100%;margin:0;padding:0;">
       <top></top>
     </el-header>
-    <div :class="el_container_style" style="width: 100%; height: calc(100% - 60px);margin-top:5px;">
-      <div style="width:100%;height:60px;box-sizing:border-box;padding:0 20px;">
+    <div :class="el_container_style" style="width: 100%; height: calc(100% - 68px);margin-top:8px;">
+      <div style="width:100%;height:45px;box-sizing:border-box;padding:0 20px;">
         <el-menu
         :default-active="defaultActiveIndex"
         :router="true"
@@ -28,30 +28,15 @@
           <el-menu-item
             class="biaoqian"
             :index="route.path"
-            style="font-size:20px;padding:0 6px;font-weight: 1000; width: 177px;height: 60px;text-align: center;"
+            style="font-size:20px;padding:0 6px;font-weight: 1000; width: 177px;height: 45px;line-height: 45px;text-align: center;"
             v-bind:key="route.name"
             v-if="route.menushow"
           >{{route.name}}</el-menu-item>
         </template>
       </el-menu>
       </div>
-      <div  style="position:relatve;width:100%;height:100%;background:#F7F9FA;;box-sizing:border-box;padding:1px 0 100px;">
-        <p style="width: 100%;
-        position:absolute;
-        bottom:0;
-        height: 30px;
-        font-size: 15px;
-        font-family: PingFangSC-Regular, PingFang SC;
-        font-weight: 400;
-        color: #C0C4CC;
-        text-align: center;
-        line-height: 20px;
-        margin:10px 0px 20px 0px;">
-         <span>中国铁建股份有限公司 版权所有 建设监管：中国铁建股份有限公司 </span><br>
-         <span>技术维护：中铁建网络信息科技有限公司</span>
-         </p>
-        <div style="height:calc(100% - 20px);background:white;display:flex;">
-
+      <div  style="position:relatve;width:100%;height:100%;background:#F7F9FA;;box-sizing:border-box;padding:1px 0 60px;">
+        <div style="height:calc(100%);background:white;display:flex;">
       <el-scrollbar
         :class="tlm_height"
         id="el-leftnav-scrollbar"
@@ -62,7 +47,7 @@
           <sidebar></sidebar>
         </el-aside>
       </el-scrollbar>
-          <el-main class="el-tlm-main" style="width: 80%; height: 100%;">
+          <el-main class="el-tlm-main" style="width: 80%; height: 100%;padding-top: 10px !important; padding-bottom: 10px !important;">
             <router-view></router-view>
             <div class="block">
               <breadcrumb v-if="breadcrumb" style="flex:none;">

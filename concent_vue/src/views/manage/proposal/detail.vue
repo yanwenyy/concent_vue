@@ -3,19 +3,10 @@
     <!--<FileUpload :businessCode='"01"' :businessType='"bidInfo"' ></FileUpload>-->
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span style="color: #2a2a7d;line-height: 37px;"><b>信息管理详情</b></span>
-        <el-button
-          @click="back"
-          style="
-            float: right;
-            padding: 10px 20px;
-            border: 1px solid #ddd;
-            color: black;
-          "
-          type="text"
-        >返回
-        </el-button
-        >
+        <span class="detailSpan"><b>信息管理详情</b></span>
+        <el-button @click="back" class="detailbutton" >返回</el-button>
+        <el-button type="primary" @click="saveInfo('detailform')" class="detailbutton">保存</el-button>
+        <el-button @click="submit" class="detailbutton">提交</el-button>
       </div>
       <div class="detailBox">
         <el-form
@@ -606,9 +597,9 @@
             @selection-change="handleSelectionChange"
             align="center"
             border
-            class="clothSizeTable"
+            class="detailTable"
             ref="table"
-            style="width: 98%; min-height: calc(100vh - 370px)"
+            style="width: 98%;"
           >
             <el-table-column
               :width="80"
@@ -708,9 +699,9 @@
               @selection-change="handleSelectionChange"
               align="center"
               border
-              class="clothSizeTable"
+              class="detailTable"
               ref="table"
-              style="width: 98%; min-height: calc(100vh - 370px)"
+              style="width: 98%;"
             >
               <el-table-column
                 :width="80"
@@ -785,10 +776,6 @@
       </div>
 
     </el-card>
-    <div class="btn-group" v-show="p.actpoint != 'look'">
-      <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
-      <el-button @click="submit">提交</el-button>
-    </div>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
   </div>
 </template>
@@ -1224,19 +1211,6 @@
     background: #fff;
   }
 
-  .clothSizeTable {
-    /*td {*/
-      /*padding: 0;*/
-    /*}*/
-    .el-form-item__content {
-      height: 60px;
-      line-height: 60px;
-      .el-form-item__error {
-        top: 42px;
-      }
-    }
-  }
-
   .text {
     font-size: 14px;
   }
@@ -1321,8 +1295,6 @@
   .el-table--border {
     min-height: auto !important;
   }
-  .detailBox{
-    max-height:calc(100vh - 410px)!important;
-  }
+
 </style>
 
