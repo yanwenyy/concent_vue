@@ -45,14 +45,12 @@
             </el-form-item>
            <br>
           <div>
-            <el-form-item label="项目板块:">
-            <br>
-              <template >
-                <el-radio-group disabled v-model="detailform.topInforBO.topInfor.moduleId"  @change="getName(detailform.topInforBO.topInfor, bizCode, 'moduleName')">
-                  <el-radio v-for="(item, index) in bizCode" :label="item.id" :key="index">{{item.detailName}}</el-radio>
+            <el-form-item label="项目板块:" class="inline-formitem">
+              <template>
+                <el-radio-group class="detail-radio-group" disabled v-model="detailform.topInforBO.topInfor.moduleId"  @change="getName(detailform.topInforBO.topInfor, bizCode,projectPlate, 'moduleName')">
+                  <el-radio v-for="(item, index) in projectPlate" :label="item.id" :key="index">{{item.detailName}}</el-radio>
                 </el-radio-group>
               </template>
-
             </el-form-item>
             </div>
             <br>
@@ -995,6 +993,9 @@ export default {
       },
       bizCode() {
         return this.$store.state.bizCode;
+      },
+      projectPlate(){
+        return this.$store.state.projectPlate;
       },
       // yesOrNo(){
       //   return this.$store.state.yesOrNo;
