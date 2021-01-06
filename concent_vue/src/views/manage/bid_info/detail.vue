@@ -2,8 +2,8 @@
   <div>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span class="detailSpan"><b>投标信息维护</b></span>
-        <el-button @click="back" class="detailbutton" >返回</el-button>
+      <span class="detailSpan"><b>投标信息维护</b></span>
+      <el-button @click="back" class="detailbutton" >返回</el-button>
       <el-button type="primary" @click="saveInfo('detailform')" class="detailbutton">保存</el-button>
       <el-button @click="saveInfo('detailform')" class="detailbutton">提交</el-button>
       </div>
@@ -44,7 +44,7 @@
                 v-model="detailform.topInforBO.topInfor.inforNameForeign"/>
             </el-form-item>
            <br>
-
+          <div>
             <el-form-item label="项目板块:">
             <br>
               <template >
@@ -54,6 +54,7 @@
               </template>
 
             </el-form-item>
+            </div>
             <br>
 
             <el-form-item label="工程类别(一级):">
@@ -579,7 +580,6 @@
 
                 align="center"
                 border
-               class="detailTable"
                 ref="table"
                 style="width: 100%;min-height: calc(100vh - 370px);"
               >
@@ -646,7 +646,6 @@
             @selection-change="handleinputionChange"
            align="center"
             border
-            class="detailTable"
             ref="table"
             style="width: 100%; min-height: calc(100vh - 370px)"
           >
@@ -953,9 +952,6 @@
         </el-form>
       </div>
     </el-card>
-        <div class="btn-group" v-show="p.actpoint != 'look'">
-
-    </div>
     <add-bd  v-if="BDCSVisible" ref="infoBD" @refreshBD="getBdInfo"></add-bd>
   </div>
 
