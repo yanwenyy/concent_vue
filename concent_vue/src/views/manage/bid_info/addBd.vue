@@ -214,10 +214,10 @@
             header-align="center"
             align="center"
             label="投标价"
-            width="300"
+            width="475"
             >
              <template slot-scope="scope">
-                <el-form-item class="tabelForm" :prop="'dataList.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
+                <el-form-item class="tabelForm bd-table-item" :prop="'dataList.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
                   <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                  <el-input type="text" v-model="scope.row.bidAmount" :disabled="type === 'look'">
                     <template slot="prepend">¥</template>
@@ -295,10 +295,10 @@
             header-align="center"
             align="center"
             label="投标价"
-            width="300"
+            width="475"
             :disabled="type === 'look'">
              <template slot-scope="scope">
-                <el-form-item class="tabelForm" :prop="'dataList2.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
+                <el-form-item class="tabelForm bd-table-item" :prop="'dataList2.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
                   <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                  <el-input type="text" v-model="scope.row.bidAmount" :disabled="type === 'look'">
                     <template slot="prepend">¥</template>
@@ -493,6 +493,13 @@ import { isMoney } from '@/utils/validate'
   }
 </script>
 <style scoped>
+
+>>>.gcform .el-form-item__error{
+  margin: -25px -7px 0 335px!important;
+}
+.bd-table-item  >>>.el-form-item__error{
+  margin: -13px -7px 0 310px!important;
+}
 >>>.el-form--inline .el-form-item__content{
   width: 100%;
 }
