@@ -364,6 +364,7 @@
 <br>
 
           <el-form-item label="是否为费率招标:"
+          class="inline-formitem formItem"
            :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -382,6 +383,7 @@
           </el-form-item>
 
           <el-form-item label="是否联合体投标:"
+          class="inline-formitem formItem"
            :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -1219,7 +1221,7 @@
               </el-form-item>
 <br>
               <el-form-item
-              class="formItem"
+              class="inline-formitem formItem"
                 label="是否为费率招标:"
                 prop="bidInfo.isBidRates"
                 :rules="{
@@ -1242,7 +1244,7 @@
               </el-form-item>
 
               <el-form-item
-              class="formItem"
+              class="inline-formitem formItem"
                 label="是否联合体投标:"
                 prop="bidInfo.isCoalitionBid"
                 :rules="{
