@@ -170,14 +170,11 @@
             :disabled="type === 'look'"
           >新增</el-button >
         </div>
-        <el-table
+        <el-table class="detailTable"
           :data="detailForm.dataList"
           border
           v-loading="dataListLoading"
-          :header-cell-style="{
-          'text-align': 'center',
-          'background-color': 'whitesmoke',
-        }"
+          :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
           style="width: 100%;">
           <el-table-column
             type="index"
@@ -252,7 +249,7 @@
             :disabled="type === 'look'"
           >新增</el-button >
         </div>
-        <el-table
+        <el-table class="detailTable"
           :data="detailForm.dataList2"
           border
           v-loading="dataListLoading"
