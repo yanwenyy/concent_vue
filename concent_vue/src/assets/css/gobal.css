@@ -366,9 +366,31 @@ pre {
   line-height: 59px;
 }
 
+.el-card__body{
+  padding: 0px !important;
+}
+.el-card__header{
+  padding: 5px 20px !important;
+}
 
 
 /* 新加的 */
+.queryForm .el-form-item{
+  margin-bottom: 5px !important;
+}
+.queryForm .el-input__inner{
+  height: 32px !important;
+  line-height: 32px !important;
+}
+.detailSpan{
+  color: #2a2a7d;
+  line-height: 32px;
+}
+.detailbutton{
+  float: right;
+  margin-left:5px;
+  margin-right:5px;
+}
 .gcform .el-form-item {
   width: 390px;
   margin: 20px;
@@ -378,6 +400,10 @@ pre {
 }
 .gcform .el-input {
   width: 100% !important;
+}
+.gcform .el-input .el-input__inner{
+  height: 32px !important;
+  line-height: 28px !important;
 }
 .col2 {
   width: 820px !important;
@@ -396,12 +422,17 @@ pre {
 .el-table-column {
   width: 20%;
 }
+.el-button{
+  height: 32px !important;
+  line-height: 32px !important;
+  padding-bottom: 0px !important;
+   padding-top: 0px !important;
+}
 .el-button--primary.is-plain {
   background: #ebf0f9 !important;
   color: #0a469d !important;
   border: 1px solid #08459c !important;
   width: auto;
-  height: auto;
 }
 .el-button--primary:hover {
   background: #0a469d !important;
@@ -427,11 +458,19 @@ pre {
   width: 98%;
 }
 .gcform .el-form-item__error{
-  top:11% !important;
+  padding-top: 7px !important;
 }
 
-
-
+/* 表格样式 */
+.el-table td, .el-table th{
+  padding: 9px 0;
+}
+.detailTable td, .detailTable th{
+      padding: 0 0 !important;
+}
+.detailTable .el-input__icon{
+  line-height: 32px !important;
+}
 
 /*yw*/
 .search-btn{
@@ -440,11 +479,11 @@ pre {
 }
 .tableStyle{
   width: 100%;
-  min-height: calc(100vh - 342px)!important;
+  min-height: calc(100vh - 233px)!important;
 }
 .detailBox{
   overflow: scroll;
-  max-height:calc(100vh - 380px)!important;
+  max-height:calc(100vh - 195px)!important;
   padding:0 100px;
 }
 .gcform{
@@ -453,10 +492,11 @@ pre {
 }
 .tabelForm{
   width: 100%!important;
-  padding: 10px 0;
+  padding-top: 15px !important;
+  padding-bottom: 0px !important;
 }
 .tabelForm .el-form-item__error{
-  top:-10px!important;
+  margin-top: -10px !important;
 }
 .blue{
   color: blue!important;
@@ -466,7 +506,7 @@ pre {
   cursor: pointer;
 }
 .detail-title{
-  margin: 20px 0;
+  margin: 10px 0;
 }
 .el-loading-spinner {
   color:red!important;

@@ -12,7 +12,7 @@
         <el-button @click="exportdata" type="primary" plain>导出</el-button>
       </div>
     </div>
-    <div style="margin-top: 20px">
+    <div style="margin-top: 10px">
       <el-table
         class="tableStyle"
         :max-height="$tableHeight"

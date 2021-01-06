@@ -1,6 +1,6 @@
 <template>
   <el-row class="heaaderclass">
-    <el-col :span="6" style="text-align: left;margin-top: 5px;">
+    <el-col :span="6" style="text-align: left;">
      &nbsp;
     </el-col>
     <!-- 注意：这里就是topNavState作用之处，根据当前路由所在根路由的type值判断显示不同顶部导航菜单 -->
@@ -34,7 +34,7 @@
         </template>
       </el-menu> -->
     </el-col>
-    <el-col :span="2" style="line-height: 20px; margin-top: 18px">
+    <!-- <el-col :span="2" style="line-height: 20px; margin-top: 18px">
       <el-dropdown>
         <span class="el-dropdown-link" style="cursor: pointer;">
           <i class="iconfont icon-user"></i>
@@ -50,7 +50,7 @@
           <el-dropdown-item @click.native="logout" divided>退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-    </el-col>
+    </el-col> -->
   </el-row>
 </template>
 <script>
@@ -218,6 +218,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .heaaderclass{
+  height: 68px;
   background: url('../../../static/images/daohang.png') no-repeat;
   background-size: 100% 100%;
 }

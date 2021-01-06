@@ -3,7 +3,7 @@
     <el-header style="border-bottom: 1px solid #e6e6e6; width: 100%; ">
       <top></top>
     </el-header>
-    <el-main class="el-tm-main" style="width: 100%;height:calc(100% - 60px);overflow:hidden;">
+    <el-main class="el-tm-main" style="width: 100%;height:calc(100% - 68px);overflow:hidden;">
       <el-card style="height:100%;overflow-y:scroll;overflow-x:hidden;background:rgb(245,249,250);">
         <router-view></router-view>
       </el-card>

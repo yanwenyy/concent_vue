@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :inline="true" :model="searchform" @keyup.enter.native="getData()">
+    <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
       <el-form-item label="项目名称:">
         <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
       </el-form-item>
@@ -132,11 +132,9 @@
       <el-button @click="getData" type="primary" plain>查询</el-button>
       <el-button @click="exportdata" type="primary" plain>导出</el-button>
     </el-form>
-    <div style="margin-top: 20px">
+    <div style="margin-top: 10px">
       <el-table
-        class="tableStyle"
-        :max-height="$tableHeight"
-        :height="$tableHeight"
+        class=""
         :data="page.records"
         :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
         @row-dblclick="rowshow"
