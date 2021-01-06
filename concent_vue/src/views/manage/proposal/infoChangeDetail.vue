@@ -240,7 +240,7 @@
                 />
               </el-form-item>
               <p class="detail-title" style="overflow: hidden；margin-right: 30px">
-                <span style="float: left">项目地点: </span>
+                <span>项目地点: </span>
               </p>
               <el-table
                 :data="detailFormBefore.topInfoSiteList"
@@ -420,6 +420,7 @@
               <br>
               <div>
                 <el-form-item
+                  style="width:100%;"
                   label="项目板块:"
                   prop="topInfor.moduleId"
                   :rules="{
@@ -975,7 +976,7 @@
                 />
               </el-form-item>
               <p class="detail-title" style="overflow: hidden；margin-right: 30px">
-                <span style="float: left">项目地点: </span>
+                <span>项目地点: </span>
                 <el-button
                   v-show="p.actpoint != 'look'"
                   @click="add('dd')"
@@ -1079,7 +1080,7 @@
                 </el-table-column>
               </el-table>
               <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
-                <span style="float: left">标段信息: </span>
+                <span>标段信息: </span>
                 <el-button
                   v-show="p.actpoint != 'look'"
                   @click="add('bd')"
@@ -1120,11 +1121,21 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <el-input
-                      clearable
-                      :disabled="p.actpoint === 'look'"
-                      v-model="scope.row.sectionName"
-                    ></el-input>
+                    <el-form-item class="tabelForm" :prop="'topInfoSectionList.' + scope.$index + '.sectionName'"     :rules="{
+           required: true, message: '此项不能为空', trigger: 'blur'
+        }">
+                      <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                      <el-input
+                        clearable
+                        :disabled="p.actpoint === 'look'"
+                        v-model="scope.row.sectionName"
+                      ></el-input>
+                    </el-form-item>
+                    <!--<el-input-->
+                      <!--clearable-->
+                      <!--:disabled="p.actpoint === 'look'"-->
+                      <!--v-model="scope.row.sectionName"-->
+                    <!--&gt;</el-input>-->
                     <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                   </template>
                 </el-table-column>
