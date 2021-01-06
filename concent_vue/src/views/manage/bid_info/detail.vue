@@ -2,17 +2,10 @@
   <div>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span style="color: #2a2a7d"><b>投标管理详情</b></span>
-        <el-button
-          @click="back"
-          style="
-            float: right;
-            padding: 10px 20px;
-            border: 1px solid #ddd;
-            color: black;
-            "
-          type="text">返回
-          </el-button>
+        <span class="detailSpan"><b>投标信息维护</b></span>
+        <el-button @click="back" class="detailbutton" >返回</el-button>
+      <el-button type="primary" @click="saveInfo('detailform')" class="detailbutton">保存</el-button>
+      <el-button @click="saveInfo('detailform')" class="detailbutton">提交</el-button>
       </div>
 
       <div class="detailBox">
@@ -563,7 +556,7 @@
           </div>
           <el-row>
 
-            <p><span >附件（最大10MB）: </span>
+            <p class="detail-title"><span >附件（最大10MB）: </span>
                 <el-upload
                   class="upload-demo detailUpload"
                   :action="'/api/topInfo/CommonFiles/bidInfo/01/uploadFile'"
@@ -586,7 +579,7 @@
 
                 align="center"
                 border
-                class="clothSizeTable"
+               class="detailTable"
                 ref="table"
                 style="width: 100%;min-height: calc(100vh - 370px);"
               >
@@ -627,19 +620,14 @@
               </el-table>
           </el-row>
 
-          <p style="overflow: hidden">
+          <p class="detail-title" style="overflow: hidden;margin-right:30px">
             <span>标段信息: </span>
             <!-- @click="add('bd')" -->
             <el-button
             v-show="p.actpoint != 'look'"
             :disabled="p.actpoint === 'look'"
               @click="openBd('add')"
-              style="
-                width: 70px;
-                height: 32px;
-                background: #5c8bfa;
-                font-size: 16px;
-              "
+              class="detatil-flie-btn"
               type="primary"
               >新增</el-button
             >
@@ -658,7 +646,7 @@
             @selection-change="handleinputionChange"
            align="center"
             border
-            class="clothSizeTable"
+            class="detailTable"
             ref="table"
             style="width: 100%; min-height: calc(100vh - 370px)"
           >
@@ -966,8 +954,7 @@
       </div>
     </el-card>
         <div class="btn-group" v-show="p.actpoint != 'look'">
-      <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
-      <el-button @click="saveInfo('detailform')">提交</el-button>
+
     </div>
     <add-bd  v-if="BDCSVisible" ref="infoBD" @refreshBD="getBdInfo"></add-bd>
   </div>
