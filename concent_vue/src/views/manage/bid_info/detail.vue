@@ -87,7 +87,7 @@
 
 
             <el-form-item label="所属线路:"
-            v-if="detailform.topInforBO.topInfor.enginTypeFirstName=='17ff5c08d36b41ea8f2dc2e9d3029cac'">
+            v-if="detailform.topInforBO.topInfor.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'">
               <el-input
                 disabled
                 v-model="detailform.topInforBO.topInfor.belongLineName"
@@ -248,7 +248,7 @@
               <el-switch
 
               class="inline-formitem-switch"
-              v-model="detailform.topInforBO.topInfor.bidProbName"
+              v-model="detailform.topInforBO.topInfor.isMajorProject"
               active-color="#409EFF"
               inactive-color="#ddd"
               active-value="0"
@@ -292,6 +292,15 @@
                 clearable
                 placeholder="资审方式"
                 v-model="detailform.topInforBO.topInfor.verifyTypeName"
+              />
+            </el-form-item>
+             <el-form-item
+              v-show="detailform.topInforBO.topInfor.investment<maxMoney&&detailform.topInforBO.topInfor.isMajorProject=='0'"
+              label="重大项目说明"
+            >
+              <el-input
+                disabled
+                v-model="detailform.topInforBO.topInfor.majorProjectExplain"
               />
             </el-form-item>
             <br>
@@ -639,7 +648,7 @@
           <el-table
 
           :key="key"
-          @row-dblclick="openBd('look')"
+          @row-dblclick="openBd2"
             :data="detailform.bidInfoSectionList"
             :header-cell-style="{
               'text-align': 'center',
@@ -912,7 +921,7 @@
             <el-table-column
               :resizable="false"
               label="投资估算"
-              prop="bidInfoSection.investmentReckon"
+              prop="verifySection.investmentReckon"
               show-overflow-tooltip
               align="center"
               :width="180"
@@ -922,7 +931,7 @@
             <el-table-column
               :resizable="false"
               label="其中建安投资"
-              prop="bidInfoSection.jananInvestment"
+              prop="verifySection.jananInvestment"
               show-overflow-tooltip
               align="center"
               :width="180"
@@ -980,6 +989,7 @@ export default {
       }
     }
     return {
+      maxMoney:1000000,
       key:0,
        BDCSVisible:false,//标段新增弹框状态
       options1: [{ label: "值", value: "111" }],
@@ -995,6 +1005,7 @@ export default {
       },
 
       bidInfoSection:[],
+      verifySection:[],
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
       yesOrNo:[
           {
@@ -1048,6 +1059,12 @@ export default {
       this.BDCSVisible = true;
       this.$nextTick(() => {
         this.$refs.infoBD.init(this.detailform.topInforBO.topInfoSectionList,this.detailform.bidInfo.isBidRates,type,detail,index);
+      })
+    },
+    openBd2(row){
+       this.BDCSVisible = true;
+      this.$nextTick(() => {
+        this.$refs.infoBD.init(this.detailform.topInforBO.topInfoSectionList,this.detailform.bidInfo.isBidRates,'look',row);
       })
     },
     //获取新增的标段
@@ -1114,7 +1131,9 @@ export default {
     //新增标段
     add(type) {
       var v = {
-        bidInfoSection:{}
+        bidInfoSection:{},
+        verifySection:{}
+
       };
       v = {
             riskFee:""

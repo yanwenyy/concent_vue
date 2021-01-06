@@ -193,10 +193,17 @@
           <template slot="header" slot-scope="scope">
             <span>截至投标日期</span>
             <div>
-              <el-input
+              <!-- <el-input
                 style=" width: 100%"
                 v-model="searchform.endTime"
-                size="mini"/>
+                size="mini"/> -->
+              <el-date-picker
+              style=" width: 100%"
+              v-model="searchform.endTime"
+              size="mini"
+              value-format="timestamp"
+              >
+              </el-date-picker>
             </div>
           </template>
            <template slot-scope="scope">{{
