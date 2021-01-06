@@ -47,7 +47,7 @@
           <div>
             <el-form-item label="项目板块:" class="inline-formitem">
               <template>
-                <el-radio-group class="detail-radio-group" disabled v-model="detailform.topInforBO.topInfor.moduleId"  @change="getName(detailform.topInforBO.topInfor, bizCode,projectPlate, 'moduleName')">
+                <el-radio-group class="detail-radio-group" disabled v-model="detailform.topInforBO.topInfor.moduleId">
                   <el-radio v-for="(item, index) in projectPlate" :label="item.id" :key="index">{{item.detailName}}</el-radio>
                 </el-radio-group>
               </template>
@@ -959,7 +959,8 @@ export default {
         bidInfoSectionList:[],
         topInforBO:{
           capitalName:'',
-          topInfor:{}
+          topInfor:{},
+          topInfoOrg:{}
         },
          bidInfo_01:[],
       },

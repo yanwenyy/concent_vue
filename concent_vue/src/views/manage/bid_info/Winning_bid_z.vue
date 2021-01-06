@@ -38,7 +38,7 @@
           label="序号"
           show-overflow-tooltip
           type="index"
-           fixed>
+          >
         </el-table-column>
 
         <el-table-column
@@ -186,20 +186,32 @@
   <el-dialog title="中标登记结果" :visible.sync="dialogFormVisible" margin="0 auto" width="30%">
     <el-form ref="zbForm" :model="zbForm" :rules="rules">
         <el-form-item label="是否中标" :label-width="formLabelWidth" >
-      <el-select v-model="zbForm.bidInfoSection.isWinBid" placeholder="请选择">
-        <el-option label="中标" value="1"></el-option>
+          <template>
+            <el-radio-group class="detail-radio-group" v-model="zbForm.bidInfoSection.isWinBid">
+              <el-radio  label="中标" value="1"></el-radio>
+              <el-radio  label="废标" value="2"></el-radio>
+              <el-radio  label="流标" value="3"></el-radio>
+              <el-radio  label="未中标" value="4"></el-radio>
+            </el-radio-group>
+          </template>
+      <!-- <el-select v-model="zbForm.bidInfoSection.isWinBid" placeholder="请选择"> -->
+        <!-- <el-option label="中标" value="1"></el-option>
         <el-option label="废标" value="2"></el-option>
         <el-option label="流标" value="3"></el-option>
-        <el-option label="未中标" value="4"></el-option>
+        <el-option label="未中标" value="4"></el-option> -->
         <!-- <el-option label="待操作" :value="null"></el-option> -->
 
-      </el-select>
+      <!-- </el-select> -->
     </el-form-item>
     <el-form-item label="中标价(万元)" :label-width="formLabelWidth"
      prop="bidInfoSection.winBidPrice"
     :rules="rules.contractAmount"
+
     >
-      <el-input v-model="zbForm.bidInfoSection.winBidPrice"></el-input>
+      <el-input v-model="zbForm.bidInfoSection.winBidPrice">
+      <template slot="prepend">¥</template>
+      <template slot="append">(万元)</template>
+      </el-input>
     </el-form-item>
         <el-form-item label="中标时间" :label-width="formLabelWidth">
       <el-date-picker
@@ -262,7 +274,7 @@
                   fixed="right"
                   label="操作"
                   show-overflow-tooltip
-                  width="200"
+                  width="100"
                   v-if="zbType=='add'"
                 >
                   <template slot-scope="scope">
