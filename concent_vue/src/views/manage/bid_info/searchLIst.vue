@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :inline="true" :model="searchform" @keyup.enter.native="getData()">
+    <el-form :inline="true" :model="searchform" @keyup.enter.native="getData()" class="queryForm">
       <el-form-item label="项目名称:">
         <el-input
           v-model="searchform.inforName"
@@ -140,11 +140,8 @@
       <el-button @click="getData" type="primary" plain>查询</el-button>
       <el-button @click="exportdata" type="primary" plain>导出</el-button>
     </el-form>
-    <div style="margin-top: 20px">
+    <div style="margin-top: 10px">
       <el-table
-        class="tableStyle"
-        :max-height="$tableHeight"
-        :height="$tableHeight"
         :data="page.records"
         :header-cell-style="{
           'text-align': 'center',
@@ -316,7 +313,7 @@
           </template>
         </el-table-column> -->
         <el-table-column
-          :width="150"
+          :width="200"
           align="center"
           label="登记时间(审核通过时间)"
           prop="createTime"
