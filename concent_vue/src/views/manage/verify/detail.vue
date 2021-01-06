@@ -1148,9 +1148,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.el-upload-list{
-  display: none;
-}
+
 .btn-group{
   text-align: center;
   margin-top: 20px;
@@ -1308,5 +1306,11 @@ export default {
 
 .el-table--border {
   min-height: auto !important;
+}
+>>>.el-form-item__label{
+  width: auto;
+}
+>>>.el-upload-list{
+  display: none;
 }
 </style>

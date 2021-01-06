@@ -729,6 +729,9 @@ export default {
   .detailBox{
     max-height:calc(100vh - 410px)!important;
   }
+  >>>.el-form-item__label{
+    width: auto;
+  }
   >>>.el-upload-list{
     display: none;
   }
