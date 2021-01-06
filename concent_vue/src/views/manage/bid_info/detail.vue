@@ -912,7 +912,7 @@
                 align="center"
                 show-overflow-tooltip
                 v-if="p.actpoint !== 'look'"
-                width="60">
+                width="100">
                 <template slot-scope="scope">
                   <el-link
                     :underline="false"
