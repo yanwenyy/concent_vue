@@ -2,14 +2,10 @@
   <div style="position: relative">
     <el-button  class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform')">保存</el-button>
     <el-button  class="detail-back-tab detailbutton sub-btn" @click="submit">提交</el-button>
-    <el-button
-      class="detail-back-tab detailbutton"
-      @click="back"
-      type="text">返回</el-button>
+    <el-button  class="detail-back-tab detailbutton" @click="back" type="text">返回</el-button>
     <el-tabs type="border-card">
       <el-tab-pane label="变更前">
-        <el-card class="box-card">
-          <div class="detailBox">
+          <div class="detailBoxBG">
             <el-form
               :inline="false"
               :model="detailFormBefore"
@@ -382,11 +378,9 @@
             </el-form>
           </div>
 
-        </el-card>
       </el-tab-pane>
       <el-tab-pane label="变更后">
-        <el-card class="box-card">
-          <div class="detailBox">
+          <div class="detailBoxBG">
             <el-form
               :inline="false"
               :model="detailform"
@@ -1187,8 +1181,6 @@
 
             </el-form>
           </div>
-
-        </el-card>
 
         <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
       </el-tab-pane>
