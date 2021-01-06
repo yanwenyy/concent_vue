@@ -1,14 +1,13 @@
 <template>
 
   <el-dialog
-
     :lock-scroll="false"
     :visible.sync="visible"
     :append-to-body="true">
     <p class="bd">标段信息</p>
     <div>
 
-      <el-form :inline="true" :model="detailForm" :rules="rules" ref="detailform" @keyup.enter.native="init()">
+      <el-form :inline="true" :model="detailForm" :rules="rules" ref="detailform" @keyup.enter.native="init()"  class="gcform">
         <el-form-item label="标段名称:" class="list-item" >
           <el-select
             clearable
@@ -341,7 +340,9 @@
       <el-button @click="visible = false">取消</el-button>
       <el-button v-if="type!='look'" type="primary" @click="sub()">确定</el-button>
     </div>
+
   </el-dialog>
+
 </template>
 
 <script>
