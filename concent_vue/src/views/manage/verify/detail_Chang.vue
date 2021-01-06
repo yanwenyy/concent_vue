@@ -365,20 +365,85 @@
                 >
                 </el-table-column>
                 <el-table-column
+
                   :resizable="false"
                   fixed="right"
                   label="参与投标单位"
                   align="center"
-                  prop="verifySectionOrgName"
+                  prop="verifySectionOrgNameType01"
                   show-overflow-tooltip
                   v-show="p.actpoint != 'look'"
-                  width="200">
-                  <template slot-scope="scope">
-                    <span>
-                      {{scope.row.verifySectionOrgName}}
-                    </span>
-                  </template>
-                </el-table-column>
+                  width="160">
+
+          <template slot-scope="scope" v-show="p.actpoint != 'look'">
+            <span  >
+              {{scope.row.verifySectionOrgNameType01}}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column
+
+          :resizable="false"
+          fixed="right"
+          label="编标拟配合单位"
+          align="center"
+          prop="verifySectionOrgNameType02"
+          show-overflow-tooltip
+          v-show="p.actpoint != 'look'"
+          width="160">
+
+          <template slot-scope="scope" v-show="p.actpoint != 'look'">
+
+            <span  >
+              {{scope.row.verifySectionOrgNameType02}}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column
+
+          :resizable="false"
+          fixed="right"
+          label="投资估算"
+          align="center"
+          prop="investmentReckon"
+          show-overflow-tooltip
+          width="260">
+
+          <template slot-scope="scope" >
+          <el-input
+            disabled
+            placeholder=""
+            size="mini"
+            v-model="scope.row.verifySection.investmentReckon"
+          >
+          <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+          </el-input>
+          </template>
+        </el-table-column>
+        <el-table-column
+
+          :resizable="false"
+          fixed="right"
+          label="其中建安投资"
+          align="center"
+          prop="jananInvestment"
+          show-overflow-tooltip
+          v-show="p.actpoint != 'look'"
+          width="260">
+
+          <template slot-scope="scope" >
+           <el-input
+             disabled
+             placeholder=""
+             size="mini"
+             v-model="scope.row.verifySection.jananInvestment"
+           >
+          <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+          </el-input>
+          </template>
+        </el-table-column>
 
               </el-table>
             </el-form>
@@ -786,7 +851,7 @@
                 style="width: 98%;margin-bottom: 20px "
               >
                 <el-table-column
-                  :width="80"
+                  :width="60"
                   align="center"
                   label="序号"
                   show-overflow-tooltip
@@ -812,7 +877,7 @@
                   prop="verifySectionOrgNameType01"
                   show-overflow-tooltip
                   v-show="p.actpoint != 'look'"
-                  width="200">
+                  width="160">
 
           <template slot-scope="scope" v-show="p.actpoint != 'look'">
             <span  >
@@ -829,7 +894,7 @@
           prop="verifySectionOrgNameType02"
           show-overflow-tooltip
           v-show="p.actpoint != 'look'"
-          width="200">
+          width="160">
 
           <template slot-scope="scope" v-show="p.actpoint != 'look'">
 
@@ -846,7 +911,7 @@
           align="center"
           prop="investmentReckon"
           show-overflow-tooltip
-          width="80">
+          width="260">
 
           <template slot-scope="scope" >
           <el-input
@@ -854,7 +919,10 @@
             placeholder=""
             size="mini"
             v-model="scope.row.verifySection.investmentReckon"
-          />
+          >
+          <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+          </el-input>
           </template>
         </el-table-column>
         <el-table-column
@@ -866,7 +934,7 @@
           prop="jananInvestment"
           show-overflow-tooltip
           v-show="p.actpoint != 'look'"
-          width="80">
+          width="260">
 
           <template slot-scope="scope" >
            <el-input
@@ -874,7 +942,10 @@
              placeholder=""
              size="mini"
              v-model="scope.row.verifySection.jananInvestment"
-           />
+           >
+          <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+          </el-input>
           </template>
         </el-table-column>
                 <el-table-column
@@ -883,6 +954,7 @@
                   fixed="right"
                   label="操作"
                   align="center"
+                  width="80"
                   show-overflow-tooltip
                   v-if="p.actpoint != 'look'">
                   <template slot-scope="scope">

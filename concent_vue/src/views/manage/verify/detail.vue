@@ -435,7 +435,7 @@
         style="width: 98%;margin-bottom: 20px "
       >
         <el-table-column
-          :width="80"
+          :width="60"
 
           align="center"
           label="序号"
@@ -460,7 +460,7 @@
           prop="verifySectionOrgNameType01"
           show-overflow-tooltip
           v-show="p.actpoint != 'look'"
-          width="200">
+          width="160">
 
           <template slot-scope="scope" v-show="p.actpoint != 'look'">
             <span  >
@@ -477,7 +477,7 @@
           prop="verifySectionOrgNameType02"
           show-overflow-tooltip
           v-show="p.actpoint != 'look'"
-          width="200">
+          width="160">
 
           <template slot-scope="scope" v-show="p.actpoint != 'look'">
 
@@ -494,7 +494,7 @@
           align="center"
           prop="investmentReckon"
           show-overflow-tooltip
-          width="80">
+          width="260">
 
           <template slot-scope="scope" >
           <el-input
@@ -502,7 +502,10 @@
             placeholder=""
             size="mini"
             v-model="scope.row.verifySection.investmentReckon"
-          />
+          >
+          <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+          </el-input>
           </template>
         </el-table-column>
         <el-table-column
@@ -514,7 +517,7 @@
           prop="jananInvestment"
           show-overflow-tooltip
           v-show="p.actpoint != 'look'"
-          width="80">
+          width="260">
 
           <template slot-scope="scope" >
            <el-input
@@ -522,7 +525,10 @@
              placeholder=""
              size="mini"
              v-model="scope.row.verifySection.jananInvestment"
-           />
+           >
+          <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+          </el-input>
           </template>
         </el-table-column>
         <el-table-column
@@ -533,7 +539,7 @@
           align="center"
           show-overflow-tooltip
           v-if="p.actpoint !== 'look'"
-          width="200">
+          width="80">
           <template slot-scope="scope">
             <el-link
               :underline="false"
