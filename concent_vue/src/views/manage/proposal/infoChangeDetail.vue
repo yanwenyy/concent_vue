@@ -68,6 +68,7 @@
               <br>
               <el-form-item
                 label="所属线路:"
+                v-if="detailFormBefore.topInfor.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
               >
                 <el-input v-model="detailFormBefore.topInfor.belongLineName" disabled></el-input>
               </el-form-item>
@@ -132,13 +133,13 @@
                 prop="topInfor.isMajorProject"
               >
             <el-switch
+              disabled
               class="inline-formitem-switch"
-              v-model="detailform.topInfor.isMajorProject"
+              v-model="detailFormBefore.topInfor.isMajorProject"
               active-color="#409EFF"
               inactive-color="#ddd"
               active-value="0"
               inactive-value="1"
-              disabled
             >
             </el-switch>
                 <!-- <el-select
@@ -169,6 +170,19 @@
                 label="资审方式:"
               >
                 <el-input v-model="detailFormBefore.topInfor.verifyTypeName" disabled></el-input>
+              </el-form-item>
+
+              <el-form-item
+                v-show="detailFormBefore.topInfor.investment<maxMoney&&detailFormBefore.topInfor.isMajorProject=='0'"
+                label="重大项目说明"
+              >
+                <el-input
+                  disabled
+                  clearable
+                  placeholder=""
+                  size="mini"
+                  v-model="detailFormBefore.topInfor.majorProjectExplain"
+                />
               </el-form-item>
               <br>
               <!-- 下拉 -->
@@ -264,7 +278,7 @@
 
                 <el-table-column
                   :resizable="false"
-                  label="份额"
+                  label="项目规模"
                   prop="contractAmount"
                   show-overflow-tooltip
                   align="center"
@@ -342,9 +356,9 @@
 
                 <el-table-column
                   :resizable="false"
-                  label="项目份额"
+                  label="项目规模"
                   align="center"
-                  width="200"
+                  width="300"
                   prop="contractAmount"
                   show-overflow-tooltip
                 >
@@ -404,37 +418,44 @@
                   v-model="detailform.topInfor.inforNameForeign"/>
               </el-form-item>
               <br>
-
-              <el-form-item
-                label="项目板块:"
-                prop="topInfor.moduleId"
-                :rules="{
+              <div>
+                <el-form-item
+                  label="项目板块:"
+                  prop="topInfor.moduleId"
+                  :rules="{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
               }"
-              >
-                <!--@change="chg('bulletinType')"-->
-                <el-select
-                  :disabled="p.actpoint === 'look'"
-                  clearable
-                  filterable
-                  style="width: 100%"
-                  placeholder="请选择"
-                  size="mini"
-                  @change="
-                  getName(detailform.topInfor.moduleId, bizCode, 'moduleName')
-                "
-                  v-model="detailform.topInfor.moduleId"
                 >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in bizCode"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
+                  <!--@change="chg('bulletinType')"-->
+                  <!--<el-select-->
+                  <!--:disabled="p.actpoint === 'look'"-->
+                  <!--clearable-->
+                  <!--filterable-->
+                  <!--style="width: 100%"-->
+                  <!--placeholder="请选择"-->
+                  <!--size="mini"-->
+                  <!--@change="-->
+                  <!--getName(detailform.topInfor.moduleId, bizCode, 'moduleName')-->
+                  <!--"-->
+                  <!--v-model="detailform.topInfor.moduleId"-->
+                  <!--&gt;-->
+                  <!--<el-option-->
+                  <!--:key="index"-->
+                  <!--:label="item.detailName"-->
+                  <!--:value="item.id"-->
+                  <!--v-for="(item, index) in bizCode"-->
+                  <!--&gt;</el-option>-->
+                  <!--</el-select>-->
+                  <br>
+                  <template>
+                    <el-radio-group v-model="detailform.topInfor.moduleId"  @change="getName(detailform.topInfor.moduleId, bizCode, 'moduleName')">
+                      <el-radio :disabled="p.actpoint === 'look'"  v-for="(item, index) in bizCode" :label="item.id" :key="index">{{item.detailName}}</el-radio>
+                    </el-radio-group>
+                  </template>
+                </el-form-item>
+              </div>
               <br>
               <el-form-item
                 label="工程类别(一级):"
@@ -597,8 +618,8 @@
                 </el-select>
               </el-form-item>
                 <br>
-
-                              <el-form-item
+              <el-form-item
+                v-if="detailform.topInfor.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
                 label="所属线路:"
                 prop="topInfor.belongLineId"
               >
@@ -760,6 +781,7 @@
               }"
               >
             <el-switch
+              :disabled="p.actpoint === 'look'"
               class="inline-formitem-switch"
               v-model="detailform.topInfor.isMajorProject"
               active-color="#409EFF"
@@ -855,6 +877,17 @@
                     <!--v-for="(item, index) in certificationType"-->
                   <!--&gt;</el-option>-->
                 <!--</el-select>-->
+              </el-form-item>
+              <el-form-item
+                v-show="detailform.topInfor.investment<maxMoney&&detailform.topInfor.isMajorProject=='0'"
+                label="重大项目说明"
+              >
+                <el-input
+                  clearable
+                  placeholder=""
+                  size="mini"
+                  v-model="detailform.topInfor.majorProjectExplain"
+                />
               </el-form-item>
               <br>
                 <el-form-item
@@ -988,10 +1021,11 @@
 
                 <el-table-column
                   :resizable="false"
-                  label="份额(万元)"
+                  label="项目规模(万元)"
                   prop="contractAmount"
                   show-overflow-tooltip
                   align="center"
+                  width="300"
                 >
                   <template slot-scope="scope">
                     <el-form-item class="tabelForm" :prop="'topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
@@ -1029,7 +1063,7 @@
                   fixed="right"
                   label="操作"
                   align="center"
-                  width="200"
+                  width="80"
                   show-overflow-tooltip
                   v-if="p.actpoint !== 'look'"
                 >
@@ -1097,10 +1131,10 @@
 
                 <el-table-column
                   :resizable="false"
-                  label="项目份额(万元)"
+                  label="项目规模(万元)"
                   align="center"
                   prop="projectScale"
-                  width="400"
+                  width="300"
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
@@ -1127,7 +1161,7 @@
                   align="center"
                   show-overflow-tooltip
                   v-if="p.actpoint !== 'look'"
-                  width="200">
+                  width="80">
                   <template slot-scope="scope">
                     <el-link
                       :underline="false"
@@ -1169,6 +1203,7 @@
         }
       }
       return {
+        maxMoney:1000000,
         id:'',
         afterId:'',
         key: 0,
