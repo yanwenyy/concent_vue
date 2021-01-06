@@ -27,7 +27,6 @@
       class="gcform"
       ref="detailform"
     >
-    <el-row>
       <el-form-item
         label="项目名称:"
         style="width: 33%"
@@ -72,8 +71,6 @@
         />
       </el-form-item>
 
-</el-row>
-      <el-row>
         <el-form-item
           label="公告类型:"
           style="width: 33%"
@@ -108,8 +105,6 @@
           />
 
         </el-form-item>
-      </el-row>
-      <el-row>
 
         <el-form-item
           label="招标代理公司:"
@@ -149,9 +144,6 @@
           />
 
         </el-form-item>
-      </el-row>
-      <el-row>
-
         <el-form-item
 
           label="资金来源:"
@@ -189,8 +181,7 @@
           />
 
         </el-form-item>
-      </el-row>
-      <el-row>
+      <div>
         <el-form-item
           class="neirong"
           label="项目内容(最多1000字):"
@@ -205,9 +196,8 @@
             v-model="detailform.topInfor.inforContent"
           />
         </el-form-item>
-      </el-row>
-      <p style="overflow:hidden;margin-right: 30px"><span style="float:left;font-weight: bold">资审信息</span></p>
-      <el-row>
+        </div>
+      <p style="overflow:hidden;margin-right: 30px"><span style="font-weight: bold">资审信息</span></p>
 
         <!-- --------------------------------------------------------------- -->
         <el-form-item
@@ -270,8 +260,6 @@
             placeholder="选择日期">
           </el-date-picker>
         </el-form-item>
-      </el-row>
-      <el-row>
 
         <el-form-item
         label="招标方式:"
@@ -303,7 +291,6 @@
       <el-form-item
         label="是否联合体投标:"
         prop="verify.isCoalitionBid"
-        style="width: 33%"
 
         :rules="{
           required: true, message: '此项不能为空', trigger: 'blur'
@@ -331,11 +318,8 @@
 <!--        />-->
       </el-form-item>
 
-</el-row>
-      <el-row v-show='detailform.verify.isCoalitionBid=="是"'>
-        <el-form-item
+        <el-form-item v-show='detailform.verify.isCoalitionBid=="是"'
           label="内部联合体单位:"
-          style="width: 33%"
           :disabled="p.actpoint === 'look'"
         >
 
@@ -343,9 +327,8 @@
             <el-button slot="append" icon="el-icon-search"  @click="selectOrg()"></el-button>
           </el-input>
         </el-form-item>
-        <el-form-item
+        <el-form-item v-show='detailform.verify.isCoalitionBid=="是"'
           label="外部联合体单位:"
-          style="width: 33%"
         >
           <el-input
             placeholder=""
@@ -354,12 +337,7 @@
           />
 
         </el-form-item>
-      </el-row>
-<!-- 不下拉 -->
-
-
-
-<el-row>
+<div>
             <el-form-item
             class="neirong"
               label="资审说明(最多1000字):"
@@ -376,16 +354,16 @@
                 :readonly="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
+                type="textarea"
                 size="mini"
                 v-model="detailform.verify.verifyExplain"
               />
             </el-form-item>
-</el-row>
-<el-row>
+            </div>
+      <div>
             <el-form-item
             class="neirong"
               label="附件（最大10MB）:"
-              style="width: 33%"
             >
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-upload
@@ -399,7 +377,7 @@
               <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
             </el-form-item>
-     </el-row>
+            </div>
     <div>
       <el-table
         :data="detailform.commonFilesList"
@@ -409,7 +387,7 @@
         border
         class="contractInfoTable"
         ref="table"
-        style="width: 100%;height: auto;"
+        style="width: 98%;height: auto;"
       >
                 <el-table-column
                   :width="55"
