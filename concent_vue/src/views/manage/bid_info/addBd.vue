@@ -166,7 +166,6 @@
           <el-button
             @click="add('inside',1)"
             class="detatil-flie-btn"
-            size="mini"
             type="primary"
             :disabled="type === 'look'"
           >新增</el-button >
@@ -188,7 +187,7 @@
             label="序号">
           </el-table-column>
           <el-table-column
-            :width="500"
+
             prop="inforName"
             show-overflow-tooltip
             label="其他投标单位(系统内)">
@@ -199,6 +198,7 @@
                 placeholder="请选择"
                 v-model="scope.row.orgName"
                 :disabled="type === 'look'"
+
               >
                 <el-option
                   :key="index"
@@ -214,6 +214,7 @@
             header-align="center"
             align="center"
             label="投标价"
+            width="300"
             >
              <template slot-scope="scope">
                 <el-form-item class="tabelForm" :prop="'dataList.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
@@ -234,6 +235,7 @@
             label="操作"
             show-overflow-tooltip
             align="center"
+            width="100"
             :disabled="type === 'look'"
           >
             <template slot-scope="scope">
@@ -246,7 +248,6 @@
           <el-button
             @click="add('outside',2)"
             class="detatil-flie-btn"
-            size="mini"
             type="primary"
             :disabled="type === 'look'"
           >新增</el-button >
@@ -268,7 +269,6 @@
             label="序号">
           </el-table-column>
           <el-table-column
-            :width="500"
             prop="inforName"
             show-overflow-tooltip
             label="其他投标单位(系统外)">
@@ -295,6 +295,7 @@
             header-align="center"
             align="center"
             label="投标价"
+            width="300"
             :disabled="type === 'look'">
              <template slot-scope="scope">
                 <el-form-item class="tabelForm" :prop="'dataList2.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
@@ -327,6 +328,7 @@
             label="操作"
             show-overflow-tooltip
             align="center"
+            width="100"
             :disabled="type === 'look'"
           >
             <template slot-scope="scope">
@@ -509,9 +511,9 @@ width: 390px!important;
   .list-title{
     margin: 20px 0;
   }
-  .detatil-flie-btn{
+  /* .detatil-flie-btn{
     float: right;
-  }
+  } */
   .list-item{
     width: 32%;
   }
@@ -562,6 +564,7 @@ width: 390px!important;
 >>>form{
   height: 500px;
   overflow: auto;
+  padding: 0 10px 0 0;
 }
 p{
  font-size: 18px;
