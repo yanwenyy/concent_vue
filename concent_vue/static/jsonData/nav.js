@@ -101,7 +101,7 @@ export default {
                       "iconCls": "el-icon-notebook-2",
                       "menushow": true,
                       "leaf": true,
-                      "defaultpage": false
+                      "defaultpage": true
                     },
 
                     {
@@ -120,7 +120,7 @@ export default {
                       "iconCls": "el-icon-edit-outline",
                       "menushow": true,
                       "leaf": true,
-                      "defaultpage": false
+                      "defaultpage": true
                     },
                     {
                       "name": "资格预审查询",
@@ -129,7 +129,7 @@ export default {
                       "iconCls": "el-icon-search",
                       "menushow": true,
                       "leaf": true,
-                      "defaultpage": false
+                      "defaultpage": true
                     },
                     {
                       "name": "资格预审变更详细",

@@ -194,11 +194,13 @@
         <el-form-item
           class="neirong"
           label="项目内容(最多1000字):"
+          style="width: 100%"
         >
           <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
           <el-input
             disabled
             placeholder="请输入"
+            type="textarea"
             size="mini"
             v-model="detailform.topInfor.inforContent"
           />
