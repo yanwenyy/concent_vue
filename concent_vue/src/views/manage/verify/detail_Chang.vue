@@ -160,6 +160,7 @@
                   <el-input
                     disabled
                     placeholder="请输入"
+                    type="textarea"
                     size="mini"
                     v-model="detailformBefore.topInfor.inforContent"
                   />
@@ -281,6 +282,7 @@
                   <el-input
                     disabled
                     placeholder="请输入"
+                    type="textarea"
                     size="mini"
                     v-model="detailformBefore.verify.verifyExplain"
                   />
@@ -547,6 +549,7 @@
                   <el-input
                     disabled
                     placeholder="请输入"
+                    type="textarea"
                     size="mini"
                     v-model="detailformAfter.topInfor.inforContent"
                   />
@@ -643,19 +646,10 @@
           required: true, message: '此项不能为空', trigger: 'blur'
         }"
                 >
-                  <el-select
-                    filterable
-                    placeholder="请选择"
-                    size="mini"
-                    v-model="detailformAfter.verify.isCoalitionBid"
-                  >
-                    <el-option
-                      :key="index"
-                      :label="item.detailName"
-                      :value="item.id"
-                      v-for="(item, index) in coalitionBid"
-                    ></el-option>
-                  </el-select>
+                    <el-radio-group v-model="detailform.verify.isCoalitionBid" >
+                  <el-radio :disabled="p.actpoint === 'look'"  v-for="(item, index) in coalitionBid" :label="item.id" :key="index">{{item.detailName}}</el-radio>
+                </el-radio-group>
+
                 </el-form-item>
               <!-- 不下拉 -->
 
@@ -698,6 +692,7 @@
                   <el-input
                     clearable
                     placeholder="请输入"
+                    type="textarea"
                     size="mini"
                     v-model="detailformAfter.verify.verifyExplain"
                   />
@@ -809,20 +804,79 @@
 
                 </el-table-column>
                 <el-table-column
+
                   :resizable="false"
                   fixed="right"
                   label="参与投标单位"
                   align="center"
-                  prop="verifySectionOrgName"
+                  prop="verifySectionOrgNameType01"
                   show-overflow-tooltip
+                  v-show="p.actpoint != 'look'"
+                  width="200">
 
-                  v-show="p.actpoint != 'look'">
-                  <template slot-scope="scope">
-                    <span>
-                      {{scope.row.verifySectionOrgName}}
-                    </span>
-                  </template>
-                </el-table-column>
+          <template slot-scope="scope" v-show="p.actpoint != 'look'">
+            <span  >
+              {{scope.row.verifySectionOrgNameType01}}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column
+
+          :resizable="false"
+          fixed="right"
+          label="编标拟配合单位"
+          align="center"
+          prop="verifySectionOrgNameType02"
+          show-overflow-tooltip
+          v-show="p.actpoint != 'look'"
+          width="200">
+
+          <template slot-scope="scope" v-show="p.actpoint != 'look'">
+
+            <span  >
+              {{scope.row.verifySectionOrgNameType02}}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column
+
+          :resizable="false"
+          fixed="right"
+          label="投资估算"
+          align="center"
+          prop="investmentReckon"
+          show-overflow-tooltip
+          width="80">
+
+          <template slot-scope="scope" >
+          <el-input
+            :disabled="p.actpoint === 'look'"
+            placeholder=""
+            size="mini"
+            v-model="scope.row.verifySection.investmentReckon"
+          />
+          </template>
+        </el-table-column>
+        <el-table-column
+
+          :resizable="false"
+          fixed="right"
+          label="其中建安投资"
+          align="center"
+          prop="jananInvestment"
+          show-overflow-tooltip
+          v-show="p.actpoint != 'look'"
+          width="80">
+
+          <template slot-scope="scope" >
+           <el-input
+             :disabled="p.actpoint === 'look'"
+             placeholder=""
+             size="mini"
+             v-model="scope.row.verifySection.jananInvestment"
+           />
+          </template>
+        </el-table-column>
                 <el-table-column
                   v-show="!p.actpoint === 'look'"
                   :resizable="false"
@@ -1319,7 +1373,7 @@ export default {
     top: 0%;
   }
   >.el-form-item,>>>.formItem{
-    /*float: left;*/
+
     display: inline-block;
     width: 32.5%!important;
   }
@@ -1360,19 +1414,6 @@ export default {
 
 .el-table thead.is-group th {
   background: #fff;
-}
-
-.clothSizeTable {
-  /*td {*/
-  /*padding: 0;*/
-  /*}*/
-  .el-form-item__content {
-    height: 60px;
-    line-height: 60px;
-    .el-form-item__error {
-      top: 42px;
-    }
-  }
 }
 
 .text {
@@ -1458,9 +1499,6 @@ export default {
 
 .el-table--border {
   min-height: auto !important;
-}
-.detailBox{
-  max-height:calc(100vh - 410px)!important;
 }
 >>>.el-form-item__label{
   width: auto;

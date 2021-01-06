@@ -27,7 +27,6 @@
       class="gcform"
       ref="detailform"
     >
-    <el-row>
       <el-form-item
         label="项目名称:"
         style="width: 33%"
@@ -72,8 +71,6 @@
         />
       </el-form-item>
 
-</el-row>
-      <el-row>
         <el-form-item
           label="公告类型:"
           style="width: 33%"
@@ -108,8 +105,6 @@
           />
 
         </el-form-item>
-      </el-row>
-      <el-row>
 
         <el-form-item
           label="招标代理公司:"
@@ -149,9 +144,6 @@
           />
 
         </el-form-item>
-      </el-row>
-      <el-row>
-
         <el-form-item
 
           label="资金来源:"
@@ -189,23 +181,23 @@
           />
 
         </el-form-item>
-      </el-row>
-      <el-row>
+      <div>
         <el-form-item
           class="neirong"
           label="项目内容(最多1000字):"
+          style="width: 100%"
         >
           <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
           <el-input
             disabled
             placeholder="请输入"
+            type="textarea"
             size="mini"
             v-model="detailform.topInfor.inforContent"
           />
         </el-form-item>
-      </el-row>
-      <p style="overflow:hidden;margin-right: 30px"><span style="float:left;font-weight: bold">资审信息</span></p>
-      <el-row>
+        </div>
+      <p style="overflow:hidden;margin-right: 30px"><span style="font-weight: bold">资审信息</span></p>
 
         <!-- --------------------------------------------------------------- -->
         <el-form-item
@@ -268,8 +260,6 @@
             placeholder="选择日期">
           </el-date-picker>
         </el-form-item>
-      </el-row>
-      <el-row>
 
         <el-form-item
         label="招标方式:"
@@ -301,26 +291,15 @@
       <el-form-item
         label="是否联合体投标:"
         prop="verify.isCoalitionBid"
-        style="width: 33%"
 
         :rules="{
           required: true, message: '此项不能为空', trigger: 'blur'
         }"
       >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          size="mini"
-          v-model="detailform.verify.isCoalitionBid"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in coalitionBid"
-          ></el-option>
-        </el-select>
+       <el-radio-group v-model="detailform.verify.isCoalitionBid" >
+                  <el-radio :disabled="p.actpoint === 'look'"  v-for="(item, index) in coalitionBid" :label="item.id" :key="index">{{item.detailName}}</el-radio>
+                </el-radio-group>
+
 <!--        <el-input-->
 <!--          clearable-->
 <!--          :readonly="p.actpoint === 'look'"-->
@@ -329,11 +308,8 @@
 <!--        />-->
       </el-form-item>
 
-</el-row>
-      <el-row v-show='detailform.verify.isCoalitionBid=="是"'>
-        <el-form-item
+        <el-form-item v-show='detailform.verify.isCoalitionBid=="是"'
           label="内部联合体单位:"
-          style="width: 33%"
           :disabled="p.actpoint === 'look'"
         >
 
@@ -341,9 +317,8 @@
             <el-button slot="append" icon="el-icon-search"  @click="selectOrg()"></el-button>
           </el-input>
         </el-form-item>
-        <el-form-item
+        <el-form-item v-show='detailform.verify.isCoalitionBid=="是"'
           label="外部联合体单位:"
-          style="width: 33%"
         >
           <el-input
             placeholder=""
@@ -352,12 +327,7 @@
           />
 
         </el-form-item>
-      </el-row>
-<!-- 不下拉 -->
-
-
-
-<el-row>
+<div>
             <el-form-item
             class="neirong"
               label="资审说明(最多1000字):"
@@ -374,16 +344,16 @@
                 :readonly="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
+                type="textarea"
                 size="mini"
                 v-model="detailform.verify.verifyExplain"
               />
             </el-form-item>
-</el-row>
-<el-row>
+            </div>
+      <div>
             <el-form-item
             class="neirong"
               label="附件（最大10MB）:"
-              style="width: 33%"
             >
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-upload
@@ -397,7 +367,7 @@
               <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
             </el-form-item>
-     </el-row>
+            </div>
     <div>
       <el-table
         :data="detailform.commonFilesList"
@@ -407,7 +377,7 @@
         border
         class="contractInfoTable"
         ref="table"
-        style="width: 100%;height: auto;"
+        style="width: 98%;height: auto;"
       >
                 <el-table-column
                   :width="55"
@@ -487,7 +457,7 @@
           fixed="right"
           label="参与投标单位"
           align="center"
-          prop="verifySectionOrgName"
+          prop="verifySectionOrgNameType01"
           show-overflow-tooltip
           v-show="p.actpoint != 'look'"
           width="200">
@@ -1155,21 +1125,21 @@ export default {
 }
 .gcform {
   margin-top: 10px;
-  .el-form-item__label:before {
+  >>>.el-form-item__label:before {
     position: initial;
     left: -10px;
   }
-  .el-form-item__error {
+  >>>.el-form-item__error {
     padding-top: 0px;
     width: 95%;
     margin-left: 0;
     text-align: right;
     top: 0%;
   }
-  .el-form-item {
+  >.el-form-item,>>>.formItem{
 
     display: inline-block;
-    width: 32.5%;
+    width: 32.5%!important;
   }
   .detailformfooter1 {
     margin-top: 5px;
@@ -1189,7 +1159,7 @@ export default {
       color: #5c8bfa;
     }
   }
-  .errorMsg .el-form-item__label {
+  .errorMsg >>>.el-form-item__label {
     color: red;
   }
   .el-input {
@@ -1208,19 +1178,6 @@ export default {
 
 .el-table thead.is-group th {
   background: #fff;
-}
-
-.clothSizeTable {
-  /*td {*/
-  /*padding: 0;*/
-  /*}*/
-  .el-form-item__content {
-    height: 60px;
-    line-height: 60px;
-    .el-form-item__error {
-      top: 42px;
-    }
-  }
 }
 
 .text {
@@ -1247,14 +1204,14 @@ export default {
   // height: 200px;
 }
 
-.el-input--mini .el-input__inner {
+>>>.el-input--mini .el-input__inner {
   height: 40px;
   width: 100%;
   box-sizing: border-box;
   // margin: 10px 0 0 10px;
 }
 
-.gcform .el-input {
+.gcform >>>.el-input {
   width: 95%;
 }
 .listInput{
@@ -1269,11 +1226,11 @@ export default {
   width: 100% !important;
 }
 
-.gcform .el-form-item {
+.gcform >>>.el-form-item {
   margin-bottom: 0px;
 }
 
-.neirong .el-input--mini .el-input__inner {
+.neirong >>>.el-input--mini .el-input__inner {
   height: 100px;
 }
 

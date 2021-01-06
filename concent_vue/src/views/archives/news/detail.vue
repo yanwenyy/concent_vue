@@ -3,16 +3,10 @@
         <el-card class="box-card">
       <div slot="header"
            class="clearfix">
-        <span style="color: #2a2a7d"><b>消息详情</b></span>
+        <span class="detailSpan"><b>消息详情</b></span>
         <el-button
           @click="back"
-          style="
-            float: right;
-            padding: 10px 20px;
-            border: 1px solid #ddd;
-            color: black;
-            position: fixe;
-          "
+          class="detailbutton"
           type="text"
         >返回
         </el-button
@@ -27,10 +21,8 @@
       class="gcform"
       ref="detailform"
     >
-    <el-row>
       <el-form-item
         label="消息名称:"
-        style="width: 33%"
       >
 
         <el-input
@@ -42,8 +34,6 @@
       </el-form-item>
       <el-form-item
         label="消息类型:"
-        style="width: 33%
-              "
       >
         <el-select
           :disabled="p.actpoint === 'look'"
@@ -60,47 +50,6 @@
           ></el-option>
         </el-select>
       </el-form-item>
-    </el-row>
-      <el-row>
-<!--        <el-form-item-->
-<!--          label="是否共享:"-->
-<!--          style="width: 33%"-->
-<!--        >-->
-<!--          <el-select-->
-<!--            :disabled="p.actpoint === 'look'"-->
-<!--            filterable-->
-<!--            placeholder="请选择"-->
-<!--            size="mini"-->
-<!--            v-model="detailform.isShare"-->
-<!--          >-->
-<!--            <el-option-->
-<!--              :key="index"-->
-<!--              :label="item.detailName"-->
-<!--              :value="item.id"-->
-<!--              v-for="(item, index) in isShare"-->
-<!--            ></el-option>-->
-<!--          </el-select>-->
-<!--      </el-form-item>-->
-<!--        <el-form-item v-show="detailform.archivesTypeName=='3'"-->
-<!--                      label="填报时间:"-->
-<!--                      style="width: 33%"-->
-<!--        >-->
-
-<!--          <el-date-picker-->
-<!--            clearable-->
-<!--            :readonly="p.actpoint === 'look'"-->
-<!--            value-format="timestamp"-->
-<!--            v-model="detailform.reportTime"-->
-<!--            align="right"-->
-<!--            type="date"-->
-<!--            placeholder="选择日期">-->
-<!--          </el-date-picker>-->
-
-<!--        </el-form-item>-->
-
-</el-row>
-
-<el-row>
             <el-form-item
               class="neirong"
               label="备注:"
@@ -120,12 +69,9 @@
                 v-model="detailform.archivesInfo.remarks"
               />
             </el-form-item>
-</el-row>
-<el-row>
             <el-form-item
               class="neirong"
               label="附件（最大10MB）:"
-              style="width: 33%"
             >
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-upload
@@ -139,7 +85,6 @@
               <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
             </el-form-item>
-     </el-row>
     <div>
       <el-table
         :data="detailform.commonFilesList"
@@ -226,10 +171,8 @@
                 </el-table-column>
               </el-table>
     </div>
-<el-row>
       <el-form-item
         label="填报单位:"
-        style="width: 33%"
       >
         <el-input
           disabled
@@ -239,7 +182,6 @@
       </el-form-item>
         <el-form-item
           label="录入人:"
-          style="width: 33%"
         >
 
           <el-input
@@ -248,7 +190,6 @@
             v-model="detailform.archivesInfo.createUserName"
           />
         </el-form-item>
-</el-row>
     </el-form>
     </div>
 </el-card>
@@ -469,22 +410,17 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.el-upload-list{
-  display: none;
-}
-.btn-group {
+
+.btn-group{
   text-align: center;
   margin-top: 20px;
 }
-
 .gcform {
   margin-top: 10px;
-
   .el-form-item__label:before {
     position: initial;
     left: -10px;
   }
-
   .el-form-item__error {
     padding-top: 0px;
     width: 95%;
@@ -492,17 +428,14 @@ export default {
     text-align: right;
     top: 0%;
   }
-
   .el-form-item {
 
     display: inline-block;
     width: 32.5%;
   }
-
   .detailformfooter1 {
     margin-top: 5px;
     width: 100%;
-
     .el-button {
       margin: 0 30px;
       width: 140px;
@@ -510,25 +443,20 @@ export default {
       font-size: 18px;
       font-family: Microsoft YaHei;
     }
-
     .el-button--primary {
       background: #5c8bfa;
     }
-
     .el-button--default {
       border: 1px solid #5c8bfa;
       color: #5c8bfa;
     }
   }
-
   .errorMsg .el-form-item__label {
     color: red;
   }
-
   .el-input {
     width: 300px;
   }
-
   .el-input .el-input_inner {
     width: 300px;
     height: 500px;
@@ -551,7 +479,6 @@ export default {
   .el-form-item__content {
     height: 60px;
     line-height: 60px;
-
     .el-form-item__error {
       top: 42px;
     }
@@ -565,7 +492,6 @@ export default {
 .item {
   margin-bottom: 18px;
 }
-
 .clearfix:before,
 .clearfix:after {
   display: table;
@@ -593,17 +519,14 @@ export default {
 .gcform .el-input {
   width: 95%;
 }
-
-.listInput {
-  width: auto !important;
+.listInput{
+  width: auto!important;
 }
-
-.gcform .listInput input {
-  width: 100px !important;
-  padding: 10px !important;
+.gcform .listInput input{
+  width: 100px!important;
+  padding:10px!important;
   box-sizing: border-box;
 }
-
 .neirong {
   width: 100% !important;
 }
@@ -645,5 +568,11 @@ export default {
 
 .el-table--border {
   min-height: auto !important;
+}
+>>>.el-form-item__label{
+  width: auto;
+}
+>>>.el-upload-list{
+  display: none;
 }
 </style>
