@@ -2,7 +2,7 @@
   <div >
         <el-card class="box-card">
       <div slot="header" class="clearfix" >
-        <span style="color: #2a2a7d"><b>资审管理详情</b></span>
+        <span class="detailSpan"><b>资审管理详情</b></span>
         <el-button
           class="detail-back-tab detailbutton"
           @click="back"
