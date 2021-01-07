@@ -4,8 +4,8 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span class="detailSpan"><b>信息管理详情</b></span>
-        <el-button @click="back" class="detailbutton" >返回</el-button>
-        <el-button type="primary" @click="saveInfo('detailform')" class="detailbutton">保存</el-button>
+        <el-button v-show="p.actpoint != 'look'" @click="back" class="detailbutton" >返回</el-button>
+        <el-button v-show="p.actpoint != 'look'" type="primary" @click="saveInfo('detailform')" class="detailbutton">保存</el-button>
         <el-button @click="submit" class="detailbutton">提交</el-button>
       </div>
       <div class="detailBox">

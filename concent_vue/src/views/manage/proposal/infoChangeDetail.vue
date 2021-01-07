@@ -1,7 +1,7 @@
 <template>
   <div style="position: relative">
-    <el-button  class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform')">保存</el-button>
-    <el-button  class="detail-back-tab detailbutton sub-btn" @click="submit">提交</el-button>
+    <el-button v-show="p.actpoint != 'look'" class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform')">保存</el-button>
+    <el-button v-show="p.actpoint != 'look'" class="detail-back-tab detailbutton sub-btn" @click="submit">提交</el-button>
     <el-button  class="detail-back-tab detailbutton" @click="back" type="text">返回</el-button>
     <el-tabs type="border-card">
       <el-tab-pane label="变更前">
@@ -22,13 +22,21 @@
               >
                 <el-input v-model="detailFormBefore.topInfor.inforNameForeign" disabled></el-input>
               </el-form-item>
-            <br>
-              <el-form-item
-                label="项目板块:"
-              >
-                <el-input v-model="detailFormBefore.topInfor.moduleName" disabled></el-input>
-              </el-form-item>
               <br>
+              <div>
+                <el-form-item
+                  class="inline-formitem"
+                  style="width:100%;"
+                  label="项目板块:"
+                >
+                  <template>
+                    <el-radio-group class="detail-radio-group" v-model="detailFormBefore.topInfor.moduleId">
+                      <el-radio disabled  v-for="(item, index) in projectPlate" :label="item.id" :key="index">{{item.detailName}}</el-radio>
+                    </el-radio-group>
+                  </template>
+                  <!--<el-input v-model="detailFormBefore.topInfor.moduleName" disabled></el-input>-->
+                </el-form-item>
+              </div>
               <el-form-item
                 label="工程类别(一级):"
               >
@@ -377,7 +385,6 @@
 
             </el-form>
           </div>
-
       </el-tab-pane>
       <el-tab-pane label="变更后">
           <div class="detailBoxBG">
@@ -993,7 +1000,7 @@
                 @selection-change="handleSelectionChange"
                 align="center"
                 border
-                class="clothSizeTable"
+                class="clothSizeTable detailTable"
                 ref="table"
                 style="width: 98%; min-height: calc(100vh - 370px)"
               >
@@ -1096,7 +1103,7 @@
                 @selection-change="handleSelectionChange"
                 align="center"
                 border
-                class="clothSizeTable"
+                class="clothSizeTable detailTable"
                 ref="table"
                 style="width: 98%; min-height: calc(100vh - 370px)"
               >
