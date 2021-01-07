@@ -537,7 +537,7 @@
             <p class="detail-title"><span >附件: </span>
                 <el-upload
                   class="upload-demo detailUpload"
-                  :action="'/api/topInfo/CommonFiles/bidInfo/01/uploadFile'"
+                  :action="'/api/contract/topInfo/CommonFiles/bidInfo/01/uploadFile'"
                   :on-success="handleChange"
                   :on-error="handleChange"
                   :on-remove="handleRemove"
@@ -1008,7 +1008,7 @@ export default {
         handleRemove1(file,index) {
       this.$http
         .post(
-          "/api/topInfo/CommonFiles/list/delete",
+          "/api/contract/topInfo/CommonFiles/list/delete",
           {ids:[file.uuid]},
         )
         .then((res) => {
@@ -1046,7 +1046,7 @@ export default {
     handleRemove(file, fileList) {
          this.$http
           .post(
-            "/api/topInfo/CommonFiles/list/delete",
+            "/api/contract/topInfo/CommonFiles/list/delete",
             {ids:[file.response.data.uuid]},
           )
           .then((res) => {
@@ -1122,7 +1122,7 @@ export default {
             // this.detailform.srcId='';
             this.$http
               .post(
-                "/api/topInfo/BidInfo/detail/saveOrUpdate",
+                "/api/contract/topInfo/BidInfo/detail/saveOrUpdate",
                 JSON.stringify(this.detailform),
                 {useJson: true}
               )
@@ -1165,7 +1165,7 @@ export default {
           }).then(() => {
             this.$http
               .post(
-                "/api/topInfo/BidInfo/list/delete",
+                "/api/contract/topInfo/BidInfo/list/delete",
                 {ids: [item.uuid]}
               )
               .then((res) => {
@@ -1231,7 +1231,7 @@ export default {
         var q=this.p.actpoint === "edit"||(this.p.actpoint === "look"&&this.p.flowStatus!=null)?{id:this.id}:{topInfoOrgId:this.id};
 
         this.$http
-          .post("/api/topInfo/BidInfo/detail/entityInfo", q)
+          .post("/api/contract/topInfo/BidInfo/detail/entityInfo", q)
           .then((res) => {
             var datas=res.data.data;
             datas.bidInfo=this.nullToStr(datas.bidInfo);

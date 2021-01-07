@@ -29,7 +29,7 @@ export function permissionRouter() {
   var string = ''
   getRouter = data.data//本地路由
   routerGo()
-  // Vue.prototype.$http.post('/api/resource/getRoute').then(res => {
+  // Vue.prototype.$http.post('/api/contract/resource/getRoute').then(res => {
   //   getRouter = res.data.data
   //   getRouter[0] = zcsbRoute
   //   sessionStorage.setItem('a', JSON.stringify(getRouter))
@@ -55,7 +55,7 @@ export function permissionRouter() {
 export function getPermission(path, callback) {
   // 获取当前登陆人模块权限
   Vue.prototype.$http
-    .post('/api/resource/getUserCompanyPermissionByModule' + path)
+    .post('/api/contract/resource/getUserCompanyPermissionByModule' + path)
     .then(res => {
       localStorage.setItem('permissionArr', JSON.stringify(res.data.data))
       callback()
@@ -66,7 +66,7 @@ export function getPermission(path, callback) {
 export function getOrgPermission(path, callback) {
   // 获取当前登陆人组织树权限
   Vue.prototype.$http
-    .post('/api/resource/getPermissionByModule' + path)
+    .post('/api/contract/resource/getPermissionByModule' + path)
     .then(res => {
       localStorage.setItem('orgPermissionArr', JSON.stringify(res.data.data))
       callback()

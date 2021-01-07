@@ -313,8 +313,8 @@ export default {
       console.log(JSON.stringify(this.searchform));
       this.$http
         .post(
-          '/api/topInfo/Verify/list/loadPageDataForIsChange',
-          // '/api/topInfo/Verify/list/loadPageDataForChangeRecord',
+          '/api/contract/topInfo/Verify/list/loadPageDataForIsChange',
+          // '/api/contract/topInfo/Verify/list/loadPageDataForChangeRecord',
           this.searchform
         )
         .then(res => {
@@ -336,7 +336,7 @@ export default {
     },
     // 获取上级单位树信息
     getOrgTree() {
-      this.$http.get('/api/base/loadorglist').then(res => {
+      this.$http.get('/api/contract/base/loadorglist').then(res => {
         this.orgTree = res.data.data
       })
     },

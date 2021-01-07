@@ -459,7 +459,7 @@
           }
           this.$http
             .post(
-              "/api/archives/ArchivesInfoOrg/detail/save",
+              "/api/contract/archives/ArchivesInfoOrg/detail/save",
               JSON.stringify(archivesInfoOrg),{useJson: true}
             )
             .then((res) => {
@@ -486,7 +486,7 @@
 
           this.$http
             .post(
-              "/api/archives/ArchivesInfoOrg/list/delete",
+              "/api/contract/archives/ArchivesInfoOrg/list/delete",
               {ids: uuids}
             )
             .then((res) => {
@@ -531,7 +531,7 @@
         this.searchform.archivesInfoId = this.selectId;
         this.$http
           .post(
-            '/api/archives/ArchivesInfoOrg/detail/entityInfoByarchivesInfoId',
+            '/api/contract/archives/ArchivesInfoOrg/detail/entityInfoByarchivesInfoId',
             {id:this.selectId}
           )
           .then(res => {

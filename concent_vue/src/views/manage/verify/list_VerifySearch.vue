@@ -443,7 +443,7 @@
         console.log(this.multipleSelection[0].verifySectionId)
         this.$http
           .post(
-            '/api/topInfo/Verify/detail/entitySectionInfo',
+            '/api/contract/topInfo/Verify/detail/entitySectionInfo',
             {"id":this.multipleSelection[0].verifySectionId}
           )
           .then(res => {
@@ -572,7 +572,7 @@
       console.log(this.searchform)
       this.$http
         .post(
-          "/api/topInfo/Verify/list/loadPageDataForFlowStatus",
+          "/api/contract/topInfo/Verify/list/loadPageDataForFlowStatus",
           this.searchform
         )
         .then((res)=>{

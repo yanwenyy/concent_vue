@@ -151,7 +151,7 @@ export default {
     getData() {
       alert(this.id)
       this.$http
-        .post("/api/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.id})
+        .post("/api/contract/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.id})
         .then((res) => {
           var datas=res.data.data;
           this.getTwo(datas.topInfor.enginTypeFirstId);
@@ -182,7 +182,7 @@ export default {
     },
     // 获取上级单位树信息
     getOrgTree() {
-      this.$http.get('/api/base/loadorglist').then(res => {
+      this.$http.get('/api/contract/base/loadorglist').then(res => {
         this.orgTree = res.data.data
       })
     },

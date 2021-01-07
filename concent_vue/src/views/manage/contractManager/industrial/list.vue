@@ -227,7 +227,7 @@ export default {
       }).then(() => {
         this.$http
         .post(
-          "/api/contract/ContractInfo/list/delete",
+          "/api/contract/contract/ContractInfo/list/delete",
           {ids: uuids}
         )
         .then((res) => {
@@ -296,7 +296,7 @@ export default {
     getData() {
       this.$http
         .post(
-          "/api/contract/ContractInfo/list/loadPageData",
+          "/api/contract/contract/ContractInfo/list/loadPageData",
           this.searchFrom
         )
         .then((res) => {

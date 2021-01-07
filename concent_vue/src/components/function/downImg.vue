@@ -45,7 +45,7 @@ export default {
     },
     downloadimg(file) {
       var path =
-        this.$baseURL + '/api/common/Files/downloadFile?fileId=' + file.id
+        this.$baseURL + '/api/contract/common/Files/downloadFile?fileId=' + file.id
       window.open(path)
     }
   }

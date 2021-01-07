@@ -97,9 +97,9 @@ export default {
     //     return resolve(arr)
     //   }
 
-    //   var path = '/api/resource/getChildrenOrgs'
+    //   var path = '/api/contract/resource/getChildrenOrgs'
     //   if (this.qtype === 1 && node.data.type === 3) {
-    //     path = '/api/resource/getChildrenOrgs'
+    //     path = '/api/contract/resource/getChildrenOrgs'
     //   }
     //   this.$http
     //     .post(path, {
@@ -136,7 +136,7 @@ export default {
         return resolve(arr)
       }
       this.$http
-        .post('/api/resource/getChildrenOrgs', {
+        .post('/api/contract/resource/getChildrenOrgs', {
           // 获取下级单位
           id: node.data.id,
           providerId: node.data.providerId

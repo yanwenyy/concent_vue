@@ -512,7 +512,7 @@ export default {
     getData() {
       this.$http
         .post(
-          "/api/topInfo/BidInfo/list/loadPageDataForSelect",
+          "/api/contract/topInfo/BidInfo/list/loadPageDataForSelect",
           this.searchform
         )
         .then((res) => {

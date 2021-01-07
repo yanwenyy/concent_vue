@@ -293,7 +293,7 @@
         save(){
             this.$http
                 .post(
-                    "/api/ boq/BoqNationalStandard/detail/save",
+                    "/api/contract/ boq/BoqNationalStandard/detail/save",
                     JSON.stringify(this.form),
                     {useJson: true}
                 )
@@ -402,7 +402,7 @@
           }).then(() => {
               this.$http
                   .post(
-                      '/api/ boq/BoqNationalStandard/list/delete',
+                      '/api/contract/ boq/BoqNationalStandard/list/delete',
                       {ids: uuids}
                   )
                   .then(res => {
@@ -457,7 +457,7 @@
       getData() {
         this.$http
           .post(
-            "/api/ boq/BoqNationalStandard/list/loadPageData",
+            "/api/contract/ boq/BoqNationalStandard/list/loadPageData",
             this.searchform
           )
           .then((res) => {
@@ -479,7 +479,7 @@
       },
       // 获取上级单位树信息
       getOrgTree() {
-        this.$http.get("/api/base/loadorglist").then((res) => {
+        this.$http.get("/api/contract/base/loadorglist").then((res) => {
           this.orgTree = res.data.data;
         });
       },

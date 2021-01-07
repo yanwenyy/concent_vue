@@ -126,7 +126,7 @@ export default {
     getAlert() {
       let _self = this
       this.$http
-        .post('/api/resource/getAlert', {}, { isLoading: false })
+        .post('/api/contract/resource/getAlert', {}, { isLoading: false })
         .then(res => {
           if (res.data.code === 2) {
             // this.$notify({
@@ -151,7 +151,7 @@ export default {
     },
     getNum() {
       // this.$http
-      //   .post('/api/resource/getMsgNum', {}, { isLoading: false })
+      //   .post('/api/contract/resource/getMsgNum', {}, { isLoading: false })
       //   .then(res => {
       //     if (res.data.code === 0) {
       //       // console.log(res.data)
@@ -182,7 +182,7 @@ export default {
     }
   },
   mounted() {
-    // this.$http.post('/api/resource/getConfig').then(res => {
+    // this.$http.post('/api/contract/resource/getConfig').then(res => {
     //   if (res.data.code === 0) {
     //     this.outurl = res.data.data.logoutUrl;
     //     localStorage.setItem("outUrl",this.outurl);
@@ -191,7 +191,7 @@ export default {
     //     }, 2000)
     //   }
     // })
-    // this.$http.post('/api/resource/getUsersBaseInfo').then(res => {
+    // this.$http.post('/api/contract/resource/getUsersBaseInfo').then(res => {
     //   if (res.data.code === 0) {
     //     this.username = res.data.data.userName
     //     this.userdata = res.data.data

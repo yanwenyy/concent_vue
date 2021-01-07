@@ -170,7 +170,7 @@ export default {
     getData() {
       this.$http
         .post(
-          '/api/topInfo/Section/list/loadPageData',
+          '/api/contract/topInfo/Section/list/loadPageData',
           // '/api' + this.$route.path.substr(0, this.$route.path.length - 1),
           this.searchform
         )
@@ -193,7 +193,7 @@ export default {
     },
     // 获取上级单位树信息
     getOrgTree() {
-      this.$http.get('/api/base/loadorglist').then(res => {
+      this.$http.get('/api/contract/base/loadorglist').then(res => {
         this.orgTree = res.data.data
       })
     },

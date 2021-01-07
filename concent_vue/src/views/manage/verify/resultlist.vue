@@ -175,7 +175,7 @@
           <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
          <el-upload :width="formLabelWidth"
            class="upload-demo detailUpload"
-           :action="'/api/topInfo/CommonFiles/verify/02/uploadFile'"
+           :action="'/api/contract/topInfo/CommonFiles/verify/02/uploadFile'"
            :on-success="handleChange"
            :on-error="handleChange"
            :on-remove="handleRemove"
@@ -299,7 +299,7 @@ export default {
   },
   methods: {
     // UploadUrl:function(){
-    //   return '/api/topInfo/CommonFiles/'+this.multipleSelection[0].verify.sectionId+'/verify/02/uploadFileByBusinessId';
+    //   return '/api/contract/topInfo/CommonFiles/'+this.multipleSelection[0].verify.sectionId+'/verify/02/uploadFileByBusinessId';
     // },
     verifyResultEdit() {
       if (this.multipleSelection.length > 0) {
@@ -307,7 +307,7 @@ export default {
         console.log(this.multipleSelection[0].verifySectionId)
         this.$http
           .post(
-            '/api/topInfo/Verify/detail/entitySectionInfo',
+            '/api/contract/topInfo/Verify/detail/entitySectionInfo',
             {"id":this.multipleSelection[0].verifySectionId}
           )
           .then(res => {
@@ -329,7 +329,7 @@ export default {
       // alert(JSON.stringify(this.multipleSelection[0]))
       this.$http
         .post(
-          '/api/topInfo/Verify/detail/saveSectionResult',
+          '/api/contract/topInfo/Verify/detail/saveSectionResult',
           JSON.stringify(this.resultform), {useJson: true}
         )
         .then(res => {
@@ -349,7 +349,7 @@ export default {
     {
       this.$http
         .post(
-          "/api/topInfo/CommonFiles/list/delete",
+          "/api/contract/topInfo/CommonFiles/list/delete",
           {ids:[file.response.data.uuid]},
         )
         .then((res) => {
@@ -361,7 +361,7 @@ export default {
     // handleRemove(file,index) {
     //   this.$http
     //     .post(
-    //       "/api/topInfo/CommonFiles/list/delete",
+    //       "/api/contract/topInfo/CommonFiles/list/delete",
     //       {ids:[file.uuid]},
     //     )
     //     .then((res) => {
@@ -375,7 +375,7 @@ export default {
     handleRemove(file,index) {
       this.$http
         .post(
-          "/api/topInfo/CommonFiles/list/delete",
+          "/api/contract/topInfo/CommonFiles/list/delete",
           {ids:[file.uuid]},
         )
         .then((res) => {
@@ -465,7 +465,7 @@ export default {
         // });
         this.$http
           .post(
-            '/api/topInfo/Verify/list/delete',
+            '/api/contract/topInfo/Verify/list/delete',
             {ids: uuids}
           )
           .then(res => {
@@ -525,7 +525,7 @@ export default {
       console.log(JSON.stringify(this.searchform));
       this.$http
         .post(
-          '/api/topInfo/Verify/list/loadPageDataForFlowStatus',
+          '/api/contract/topInfo/Verify/list/loadPageDataForFlowStatus',
           this.searchform
         )
         .then(res => {
@@ -547,7 +547,7 @@ export default {
     },
     // 获取上级单位树信息
     getOrgTree() {
-      this.$http.get('/api/base/loadorglist').then(res => {
+      this.$http.get('/api/contract/base/loadorglist').then(res => {
         this.orgTree = res.data.data
       })
     },

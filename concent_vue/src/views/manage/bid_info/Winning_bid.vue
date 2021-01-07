@@ -386,7 +386,7 @@
                 <p><span >开标记录（最大10MB）: </span>
                 <el-upload
                   class="upload-demo detailUpload"
-                  :action="'/api/topInfo/CommonFiles/bidInfo/02/uploadFile'"
+                  :action="'/api/contract/topInfo/CommonFiles/bidInfo/02/uploadFile'"
                   :on-success="handleChange"
                   :on-error="handleChange"
                   :on-remove="handleRemove"
@@ -887,7 +887,7 @@ export default {
         handleRemove1(file,index) {
       this.$http
         .post(
-          "/api/topInfo/CommonFiles/list/delete",
+          "/api/contract/topInfo/CommonFiles/list/delete",
           {ids:[file.uuid]},
         )
         .then((res) => {
@@ -919,7 +919,7 @@ export default {
     handleRemove(file, fileList) {
          this.$http
           .post(
-            "/api/topInfo/CommonFiles/list/delete",
+            "/api/contract/topInfo/CommonFiles/list/delete",
             {ids:[file.response.data.uuid]},
           )
           .then((res) => {
@@ -1033,7 +1033,7 @@ export default {
           }).then(() => {
             this.$http
               .post(
-                "/api/topInfo/BidInfo/list/delete",
+                "/api/contract/topInfo/BidInfo/list/delete",
                 {ids: [item.uuid]}
               )
               .then((res) => {
@@ -1094,7 +1094,7 @@ export default {
         if (valid) {
           this.$http
             .post(
-              "/api/topInfo/BidInfo/detail/saveOrUpdate",
+              "/api/contract/topInfo/BidInfo/detail/saveOrUpdate",
               JSON.stringify(this.detailform),
               { useJson: true }
             )
@@ -1146,7 +1146,7 @@ export default {
         var q=this.p.actpoint === "addk"?{id:this.id}:{topInfoOrgId:this.id};
         console.log(q)
         this.$http
-          .post("/api/topInfo/BidInfo/detail/entityInfo", q)
+          .post("/api/contract/topInfo/BidInfo/detail/entityInfo", q)
           .then((res) => {
             var datas=res.data.data;
             datas.bidInfo=this.nullToStr(datas.bidInfo);

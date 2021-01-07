@@ -102,7 +102,7 @@ export default {
   methods: {
     // 加载机构树
     getOrgTree() {
-      this.$http.post('/api/base/orgs', this.postdata).then(res => {
+      this.$http.post('/api/contract/base/orgs', this.postdata).then(res => {
         this.orgTree = res.data.data
         if (this.orgTree.length) this.expandKey = this.orgTree[0].id
       })
@@ -113,13 +113,13 @@ export default {
     },
     // 加载列表
     sure(row) {
-      this.$http.post('/api/resource/readMsg', { uuid: row.uuid }).then(res => {
+      this.$http.post('/api/contract/resource/readMsg', { uuid: row.uuid }).then(res => {
         this.getuserlist()
         this.getNum()
       })
     },
     getNum() {
-      this.$http.post('/api/resource/getMsgNum').then(res => {
+      this.$http.post('/api/contract/resource/getMsgNum').then(res => {
         if (res.data.code === 0) {
           console.log(res.data)
           this.$store.state.num = res.data.data
@@ -127,7 +127,7 @@ export default {
       })
     },
     getuserlist() {
-      this.$http.post('/api/resource/getMsgByPage', this.page).then(res => {
+      this.$http.post('/api/contract/resource/getMsgByPage', this.page).then(res => {
         this.page = res.data.data
       })
     },

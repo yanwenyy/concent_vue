@@ -2,7 +2,7 @@
   <!--:headers="{'Authorization':Authorization}"-->
   <el-upload
     class="upload-demo"
-    :action="'/api/topInfo/CommonFiles/'+businessType+'/'+businessCode+'/uploadFile'"
+    :action="'/api/contract/topInfo/CommonFiles/'+businessType+'/'+businessCode+'/uploadFile'"
     :on-success="handleChange"
     :on-error="handleChange"
     :on-remove="handleRemove"

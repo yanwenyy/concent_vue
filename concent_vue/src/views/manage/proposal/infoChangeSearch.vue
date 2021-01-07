@@ -179,7 +179,7 @@
         this.visible = true;
         this.$http
           .post(
-            "/api/topInfo/TopInfor/list/loadPageDataForReg",
+            "/api/contract/topInfo/TopInfor/list/loadPageDataForReg",
             this.searchform,
             {isLoading: false}
           )

@@ -427,7 +427,7 @@ export default {
           }).then(() => {
             this.$http
             .post(
-              "/api/topInfo/BidInfo/list/delete",{ids: uuids}
+              "/api/contract/topInfo/BidInfo/list/delete",{ids: uuids}
 
             )
             .then((res) => {
@@ -443,7 +443,7 @@ export default {
         getData() {
         this.$http
           .post(
-            "/api/topInfo/BidInfo/detail/loadPageDataForReg",
+            "/api/contract/topInfo/BidInfo/detail/loadPageDataForReg",
             this.searchform
           )
           .then((res) => {
@@ -504,7 +504,7 @@ export default {
     getData() {
       this.$http
         .post(
-         "/api/topInfo/BidInfo/detail/loadPageDataForReg",
+         "/api/contract/topInfo/BidInfo/detail/loadPageDataForReg",
           this.searchform
         )
         .then((res) => {
@@ -526,7 +526,7 @@ export default {
     },
     // 获取上级单位树信息
     getOrgTree() {
-      this.$http.get("/api/base/loadorglist").then((res) => {
+      this.$http.get("/api/contract/base/loadorglist").then((res) => {
         this.orgTree = res.data.data;
       });
     },

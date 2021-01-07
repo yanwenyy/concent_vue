@@ -410,7 +410,7 @@ export default {
         this.detailform.selectYear = this.resultform.year;
       this.$http
         .post(
-          "/api/archives/ArchivesInfo/detail/save",
+          "/api/contract/archives/ArchivesInfo/detail/save",
           JSON.stringify(this.detailform),
           {useJson: true}
         )
@@ -446,7 +446,7 @@ export default {
       console.log(this.detailform)
       this.$http
         .post(
-          "/api/archives/ArchivesInfo/detail/saveItem",
+          "/api/contract/archives/ArchivesInfo/detail/saveItem",
           JSON.stringify(this.detailform),
           {useJson: true}
         )
@@ -501,7 +501,7 @@ export default {
       console.log(this.detailform)
       this.$http
         .post(
-          "/api/archives/ArchivesInfo/detail/saveItem",
+          "/api/contract/archives/ArchivesInfo/detail/saveItem",
           JSON.stringify(this.detailform),
           {useJson: true}
         )
@@ -553,7 +553,7 @@ export default {
       console.log(JSON.stringify(this.searchform));
       this.$http
         .post(
-          '/api/archives/ArchivesInfo/list/loadPageDataByAnalysis',
+          '/api/contract/archives/ArchivesInfo/list/loadPageDataByAnalysis',
           this.searchform
         )
         .then(res => {

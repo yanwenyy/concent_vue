@@ -1044,7 +1044,7 @@
           if (valid) {
             this.$http
               .post(
-                "/api/topInfo/TopInfor/detail/saveOrUpdate",
+                "/api/contract/topInfo/TopInfor/detail/saveOrUpdate",
                 JSON.stringify(this.detailform),
                 {useJson: true}
               )
@@ -1086,7 +1086,7 @@
           }).then(() => {
             this.$http
               .post(
-                "/api/topInfo/TopInfoSection/list/delete",
+                "/api/contract/topInfo/TopInfoSection/list/delete",
                 {ids: [item.uuid]}
               )
               .then((res) => {
@@ -1134,7 +1134,7 @@
       // 加载列表
       getDetail() {
         this.$http
-          .post("/api/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.id})
+          .post("/api/contract/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.id})
           .then((res) => {
             var datas=res.data.data;
             this.getTwo(datas.topInfor.enginTypeFirstId);

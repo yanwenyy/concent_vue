@@ -1436,7 +1436,7 @@
           if (valid) {
             this.$http
               .post(
-                `/api/topInfo/TopInfor/detail/${this.p.actpoint === "add"?'saveChangeRecord':'updateChangeRecord'}`,
+                `/api/contract/topInfo/TopInfor/detail/${this.p.actpoint === "add"?'saveChangeRecord':'updateChangeRecord'}`,
                 JSON.stringify(this.detailform),
                 {useJson: true}
               )
@@ -1477,7 +1477,7 @@
           }).then(() => {
             this.$http
             .post(
-              "/api/topInfo/TopInfoSection/list/delete",
+              "/api/contract/topInfo/TopInfoSection/list/delete",
               {ids: [item.uuid]}
             )
             .then((res) => {
@@ -1525,7 +1525,7 @@
       // 修改的时候详情
       getDetail() {
         this.$http
-          .post("/api/topInfo/TopInfor/detail/entityInfoByBeforeAndAfterId", {beforeId:this.id,afterId:this.afterId})
+          .post("/api/contract/topInfo/TopInfor/detail/entityInfoByBeforeAndAfterId", {beforeId:this.id,afterId:this.afterId})
           .then((res) => {
           var datas=res.data.data;
           var beforData=[],afterData=[];
@@ -1566,7 +1566,7 @@
       getAddDetail(){
         console.log(111)
           this.$http
-            .post("/api/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.id})
+            .post("/api/contract/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.id})
             .then((res) => {
             var datas=res.data.data;
           this.getTwo(datas.topInfor.enginTypeFirstId);

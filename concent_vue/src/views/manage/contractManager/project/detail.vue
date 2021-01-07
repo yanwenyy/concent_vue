@@ -237,7 +237,7 @@
                   @change="
                   getName(
                     detailform.contractInfo.constructionNatureId,
-                    xqprojectType,
+                    constructionUnitNature,
                     'constructionNature'
                   )
                 "
@@ -1011,7 +1011,7 @@
 
                 <el-upload
                   class="upload-demo detailUpload detatil-flie-btn"
-                  :action="'/api/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                  :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
                   :on-success="handleChange1"
                   :on-error="handleChange1"
                   :on-remove="handleRemove1"
@@ -1069,7 +1069,7 @@
                 <span>合同附件(最大10MB): </span>
                 <el-upload
                   class="upload-demo detailUpload detatil-flie-btn"
-                  :action="'/api/topInfo/CommonFiles/contractInfo/02/uploadFile'"
+                  :action="'/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile'"
                   :on-success="handleChange2"
                   :on-error="handleChange2"
                   :on-remove="handleRemove2"
@@ -1127,7 +1127,7 @@
                 <span>工程量清单和劳材机附件(两种文件都要)(最大10MB): </span>
                 <el-upload
                   class="upload-demo detailUpload detatil-flie-btn"
-                  :action="'/api/topInfo/CommonFiles/contractInfo/03/uploadFile'"
+                  :action="'/api/contract/topInfo/CommonFiles/contractInfo/03/uploadFile'"
                   :on-success="handleChange3"
                   :on-error="handleChange3"
                   :on-remove="handleRemove3"
@@ -2186,26 +2186,28 @@ export default {
           list[index].contractAmount=''
         }
       }else{
-        this.$forceUpdate();
+
         this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
           tj_money+=Number(item.contractAmount);
         });
+        this.$forceUpdate();
         this.detailform.contractInfo.crccCash=this.detailform.contractInfo.contractAmount-tj_money;
-        console.log(this.detailform.contractInfo.crccCash)
         this.detailform.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
           our_money+=Number(item.contractAmount);
         });
-        this.detailform.contractInfo.ourAmount=this.detailform.contractInfo.contractAmount-our_money;
+        this.$forceUpdate();
+        this.detailform.contractInfo.ourAmount=this.detailform.contractInfo.crccCash-our_money;
       }
     },
     //获取其他投资
     getOther(){
+      this.$forceUpdate();
       this.detailform.contractInfo.otherInvest=this.detailform.contractInfo.ourAmount-this.detailform.contractInfo.installDesignFee>0?this.detailform.contractInfo.ourAmount-this.detailform.contractInfo.installDesignFee:0;
     },
     handleRemove1(file,index) {
       this.$http
         .post(
-          "/api/topInfo/CommonFiles/list/delete",
+          "/api/contract/topInfo/CommonFiles/list/delete",
           {ids:[file.uuid]},
         )
         .then((res) => {
@@ -2234,7 +2236,7 @@ export default {
     handleRemove2(file,index) {
       this.$http
         .post(
-          "/api/topInfo/CommonFiles/list/delete",
+          "/api/contract/topInfo/CommonFiles/list/delete",
           {ids:[file.uuid]},
         )
         .then((res) => {
@@ -2263,7 +2265,7 @@ export default {
     handleRemove3(file,index) {
       this.$http
         .post(
-          "/api/topInfo/CommonFiles/list/delete",
+          "/api/contract/topInfo/CommonFiles/list/delete",
           {ids:[file.uuid]},
         )
         .then((res) => {
@@ -2440,7 +2442,7 @@ export default {
         if (valid) {
           this.$http
             .post(
-              "/api/contract/ContractInfo/detail/saveOrUpdate",
+              "/api/contract/contract/ContractInfo/detail/saveOrUpdate",
               JSON.stringify(this.detailform),
               {useJson: true}
             )
@@ -2480,7 +2482,7 @@ export default {
         }).then(() => {
           this.$http
           .post(
-            "/api/contract/ContractInfo/list/deleteSection",
+            "/api/contract/contract/ContractInfo/list/deleteSection",
             {ids: [item.uuid]}
           )
           .then((res) => {
@@ -2500,7 +2502,7 @@ export default {
         }).then(() => {
           this.$http
           .post(
-            "/api/contract/ContractInfo/list/deleteAttach",
+            "/api/contract/contract/ContractInfo/list/deleteAttach",
             {ids: [item.uuid]}
           )
           .then((res) => {
@@ -2513,7 +2515,9 @@ export default {
       });
       }).catch(() => {})
       }else{
+
         list.splice(index, 1);
+        this.getOurAmount()
       }
       // var _self = this;
       // _self.detailform.topInfoSectionList.splice(index, 1);
@@ -2569,7 +2573,7 @@ export default {
     getDetail() {
       var fileList1=[],fileList2=[],fileList3=[];
       this.$http
-        .post("/api/contract/ContractInfo/detail/entityInfo", {id:this.id})
+        .post("/api/contract/contract/ContractInfo/detail/entityInfo", {id:this.id})
         .then((res) => {
         var datas=res.data.data;
           this.getTwo(datas.contractInfo.enginTypeFirstId);

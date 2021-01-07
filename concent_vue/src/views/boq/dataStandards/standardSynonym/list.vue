@@ -189,7 +189,7 @@
         save(){
             this.$http
                 .post(
-                    "/api/boq/BoqStandardSynonym/detail/save",
+                    "/api/contract/boq/BoqStandardSynonym/detail/save",
                     JSON.stringify(this.form),
                     {useJson: true}
                 )
@@ -277,7 +277,7 @@
           }).then(() => {
               this.$http
                   .post(
-                      '/api/boq/BoqStandardSynonym/list/delete',
+                      '/api/contract/boq/BoqStandardSynonym/list/delete',
                       {ids: uuids}
                   )
                   .then(res => {
@@ -329,7 +329,7 @@
       getData() {
         this.$http
           .post(
-            "/api/boq/BoqStandardSynonym/list/loadPageData",
+            "/api/contract/boq/BoqStandardSynonym/list/loadPageData",
             this.searchform
           )
           .then((res) => {
@@ -351,7 +351,7 @@
       },
       // 获取上级单位树信息
       getOrgTree() {
-        this.$http.get("/api/base/loadorglist").then((res) => {
+        this.$http.get("/api/contract/base/loadorglist").then((res) => {
           this.orgTree = res.data.data;
         });
       },
