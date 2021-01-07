@@ -77,7 +77,7 @@
 
       <el-form-item label="录入单位:">
         <el-input
-          v-model="searchform.ticCreateName"
+          v-model="searchform.createOrgName"
           placeholder="录入单位"
           clearable
         ></el-input>
@@ -251,7 +251,7 @@
           :width="300"
           align="center"
           label="录入单位"
-          prop="ticCreateName"
+          prop="createOrgName"
           show-overflow-tooltip
         >
         </el-table-column>

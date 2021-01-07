@@ -170,11 +170,13 @@
           <template slot="header" slot-scope="scope">
             <span>投标截止时间</span>
             <div>
-              <el-input
-                style=" width: 100%"
-                v-model="searchform.endTime"
-                size="mini"
-              />
+            <el-date-picker
+              style=" width: 100%"
+              v-model="searchform.endTime"
+              size="mini"
+              value-format="timestamp"
+              >
+              </el-date-picker>
             </div>
           </template>
           <template slot-scope="scope">{{

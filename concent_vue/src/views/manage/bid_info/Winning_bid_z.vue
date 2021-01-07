@@ -187,7 +187,7 @@
     <el-form ref="zbForm" :model="zbForm" :rules="rules">
         <el-form-item label="是否中标" :label-width="formLabelWidth" >
           <template>
-            <el-radio-group class="detail-radio-group" v-model="zbForm.bidInfoSection.isWinBid">
+            <el-radio-group class="detail-radio-group" v-model="zbForm.bidInfoSection.isWinBid" >
               <el-radio  label="中标" value="1"></el-radio>
               <el-radio  label="废标" value="2"></el-radio>
               <el-radio  label="流标" value="3"></el-radio>
