@@ -203,25 +203,24 @@
 
       <!-- </el-select> -->
     </el-form-item>
-    <el-form-item label="中标价(万元)" :label-width="formLabelWidth"
-     prop="bidInfoSection.winBidPrice"
-    :rules="rules.contractAmount"
 
-    >
+    <el-form-item label="中标价(万元)" :label-width="formLabelWidth"
+    class="item_zbj"
+    prop="bidInfoSection.winBidPrice"
+    :rules="rules.contractAmount">
       <el-input v-model="zbForm.bidInfoSection.winBidPrice">
       <template slot="prepend">¥</template>
       <template slot="append">(万元)</template>
       </el-input>
     </el-form-item>
-        <el-form-item label="中标时间" :label-width="formLabelWidth">
+    <el-form-item label="中标时间" :label-width="formLabelWidth" class="item_zbj">
       <el-date-picker
       v-model="zbForm.bidInfoSection.bidTime"
       type="date"
-       value-format="timestamp"
+      value-format="timestamp"
       placeholder="选择日期">
     </el-date-picker>
     </el-form-item>
-
     <p><span >文件公示: </span>
                 <el-upload
                 v-show="zbType=='add'"
@@ -244,9 +243,9 @@
 
                 align="center"
                 border
-                class="clothSizeTable"
+                class="detailTable"
                 ref="table"
-                style="width: 100%;min-height: calc(100vh - 370px);"
+                style="width: 98%;"
               >
                 <el-table-column
                   :width="55"
@@ -610,6 +609,11 @@ export default {
 };
 </script>
 <style scoped>
+.item_zbj{
+  width: 40%;
+  display: inline-block;
+  padding-right: 9%;
+}
 .el-dialog{
   width: 60%;
 }

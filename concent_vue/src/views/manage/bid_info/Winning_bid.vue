@@ -1,6 +1,5 @@
 <template>
   <div>
-    <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span style="color: #2a2a7d"><b>开标结果登记</b></span>
         <el-button
@@ -813,7 +812,7 @@
           </el-table>
         </el-form>
       </div>
-    </el-card>
+
         <div class="btn-group" v-show="p.actpoint != 'look'">
       <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
       <el-button @click="saveInfo('detailform')">提交</el-button>
