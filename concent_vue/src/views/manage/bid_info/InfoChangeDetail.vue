@@ -1,7 +1,7 @@
 <template>
 <div style="position: relative">
-  <el-button class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform')">保存</el-button>
-  <el-button class="detail-back-tab detailbutton sub-btn" @click="submit">提交</el-button>
+  <el-button class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform')" v-if="p.actpoint!='look'">保存</el-button>
+  <el-button class="detail-back-tab detailbutton sub-btn" @click="submit" v-if="p.actpoint!='look'">提交</el-button>
   <el-button class="detail-back-tab detailbutton" @click="back"  type="text">返回</el-button>
 
 
@@ -321,10 +321,14 @@
                 message: '此项不能为空',
                 trigger: 'blur',
               }">
-            <el-input
-              v-model="detailFormBefore.bidInfo.publishTime"
-              disabled
-            ></el-input>
+              <el-date-picker
+                :disabled="p.actpoint === 'look'"
+                filterable
+                clearable
+                value-format="timestamp"
+                v-model="detailform.bidInfo.publishTime"
+              >
+              </el-date-picker>
           </el-form-item>
 
           <el-form-item label="内部联合体单位:"
@@ -342,17 +346,25 @@
                 message: '此项不能为空',
                 trigger: 'blur',
               }">
-            <el-input
-              v-model="detailFormBefore.bidInfo.endTime"
-              disabled
-            ></el-input>
+                <el-date-picker
+                  :disabled="p.actpoint === 'look'"
+                  value-format="timestamp"
+                  clearable
+                  filterable
+                  v-model="detailFormBefore.bidInfo.endTime"
+                >
+                </el-date-picker>
           </el-form-item>
 
           <el-form-item label="招标文件发售截止日期:">
-            <el-input
-              v-model="detailFormBefore.bidInfo.saleTime"
-              disabled
-            ></el-input>
+                <el-date-picker
+                  :disabled="p.actpoint === 'look'"
+                  value-format="timestamp"
+                  filterable
+                  clearable
+                  v-model="detailform.bidInfo.saleTime"
+                >
+                </el-date-picker>
           </el-form-item>
 
           <el-form-item label="外部联合体单位:"
@@ -484,7 +496,7 @@
           <el-table
           :key="key"
           @row-dblclick="openBd('look')"
-            :data="detailFormBefore.topInfoSectionList"
+            :data="detailFormBefore.bidInfoSectionList"
             :header-cell-style="{
               'text-align': 'center',
               'background-color': 'rgba(246,248,252,1)',

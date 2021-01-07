@@ -31,7 +31,7 @@
                 <template slot-scope="scope">
                  <el-select
                 clearable
-                placeholder=""
+                placeholder="评标办法"
                 size="mini"
                 :disabled="type === 'look'"
                 v-model="detailForm.bidInfoSection.bidEvaluationMethodName">
@@ -254,8 +254,8 @@
             width="100"
             :disabled="type === 'look'"
           >
-            <template slot-scope="scope">
-              <el-link :underline="false" @click="del(scope.$index,'inside')" type="warning">删除</el-link>
+            <template slot-scope="scope" >
+              <el-link :underline="false" @click="del(scope.$index,'inside')" type="warning" :disabled="type === 'look'">删除</el-link>
             </template>
           </el-table-column>
         </el-table>
@@ -334,7 +334,7 @@
             :disabled="type === 'look'"
           >
             <template slot-scope="scope">
-              <el-link :underline="false" @click="del(scope.$index,'outside')" type="warning">删除</el-link>
+              <el-link :underline="false" @click="del(scope.$index,'outside')" type="warning" :disabled="type === 'look'">删除</el-link>
             </template>
           </el-table-column>
         </el-table>

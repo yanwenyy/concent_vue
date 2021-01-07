@@ -986,6 +986,9 @@ export default {
       projectPlate(){
         return this.$store.state.projectPlate;
       },
+      amountSource() {
+      return this.$store.state.amountSource;
+    },
       // yesOrNo(){
       //   return this.$store.state.yesOrNo;
       // }

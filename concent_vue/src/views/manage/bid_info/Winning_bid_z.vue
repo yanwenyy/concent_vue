@@ -183,15 +183,15 @@
       </el-pagination>
       <info-change-search v-if="infoCSVisible" ref="infoCS" @refreshDataList="goAddDetail"></info-change-search>
 
-  <el-dialog title="中标登记结果" :visible.sync="dialogFormVisible" margin="0 auto" width="30%">
+  <el-dialog title="中标结果登记" :visible.sync="dialogFormVisible" margin="0 auto" width="30%">
     <el-form ref="zbForm" :model="zbForm" :rules="rules">
         <el-form-item label="是否中标" :label-width="formLabelWidth" >
           <template>
-            <el-radio-group class="detail-radio-group" v-model="zbForm.bidInfoSection.isWinBid" >
-              <el-radio  label="中标" value="1"></el-radio>
-              <el-radio  label="废标" value="2"></el-radio>
-              <el-radio  label="流标" value="3"></el-radio>
-              <el-radio  label="未中标" value="4"></el-radio>
+            <el-radio-group class="detail-radio-group" v-model="zbForm.bidInfoSection.isWinBid"  :disabled="zbType=='look'">
+              <el-radio  label="1" value="1">中标</el-radio>
+              <el-radio  label="2" value="2">废标</el-radio>
+              <el-radio  label="3" value="3">流标</el-radio>
+              <el-radio  label="4" value="4">未中标</el-radio>
             </el-radio-group>
           </template>
       <!-- <el-select v-model="zbForm.bidInfoSection.isWinBid" placeholder="请选择"> -->
@@ -208,13 +208,14 @@
     class="item_zbj"
     prop="bidInfoSection.winBidPrice"
     :rules="rules.contractAmount">
-      <el-input v-model="zbForm.bidInfoSection.winBidPrice">
+      <el-input v-model="zbForm.bidInfoSection.winBidPrice" :disabled="zbType=='look'">
       <template slot="prepend">¥</template>
       <template slot="append">(万元)</template>
       </el-input>
     </el-form-item>
     <el-form-item label="中标时间" :label-width="formLabelWidth" class="item_zbj">
       <el-date-picker
+      :disabled="zbType=='look'"
       v-model="zbForm.bidInfoSection.bidTime"
       type="date"
       value-format="timestamp"
@@ -239,8 +240,6 @@
               <el-table
                 :data="zbForm.bidInfo_03"
                 :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
-
-
                 align="center"
                 border
                 class="detailTable"

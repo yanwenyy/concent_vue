@@ -177,7 +177,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{scope.row.isWinBid==='0'?'中标':'未中标'}}
+            {{scope.row.isWinBid==='1'?'中标':'未中标'}}
           </template>
         </el-table-column>
 
@@ -386,11 +386,11 @@ export default {
 
             yesOrNo:[
           {
-            id:'0',
+            id:'1',
             detailName:'中标'
           },
           {
-            id:'1',
+            id:'0',
             detailName:'未中标'
           }
         ],
