@@ -565,6 +565,14 @@ pre {
   z-index: 2000!important;
   top: 5px !important;
 }
+.save-btn{
+  right: 95px!important;
+  background: #409EFF!important;
+  color:#fff!important;
+}
+.sub-btn{
+  right: 175px!important;
+}
 .el-tabs__content{
   padding:0px !important;
 }

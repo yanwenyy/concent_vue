@@ -499,7 +499,7 @@
               <p><span >证明文件: </span>
                 <el-upload
                   class="upload-demo detailUpload detatil-flie-btn"
-                  :action="'/api/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                  :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
                   :on-success="handleChange1"
                   :on-error="handleChange1"
                   :on-remove="handleRemove1"
@@ -1153,7 +1153,7 @@
       handleRemove1(file,index) {
         this.$http
           .post(
-            "/api/topInfo/CommonFiles/list/delete",
+            "/api/contract/topInfo/CommonFiles/list/delete",
             {ids:[file.uuid]},
           )
           .then((res) => {
@@ -1214,7 +1214,7 @@
           }).then(() => {
             this.$http
             .post(
-              "/api/contract/ContractInfo/list/deleteSection",
+              "/api/contract/contract/ContractInfo/list/deleteSection",
               {ids: [item.uuid]}
             )
             .then((res) => {
@@ -1234,7 +1234,7 @@
           }).then(() => {
             this.$http
             .post(
-              "/api/contract/ContractInfo/list/deleteAttach",
+              "/api/contract/contract/ContractInfo/list/deleteAttach",
               {ids: [item.uuid]}
             )
             .then((res) => {
@@ -1258,7 +1258,7 @@
           if (valid) {
             this.$http
               .post(
-                "/api/contract/ContractInfo/detail/saveOrUpdate",
+                "/api/contract/contract/ContractInfo/detail/saveOrUpdate",
                 JSON.stringify(this.detailform),
                 {useJson: true}
               )
@@ -1302,7 +1302,7 @@
       // 加载列表
       getDetail() {
         this.$http
-          .post("/api/contract/ContractInfo/detail/entityInfo", {id:this.id})
+          .post("/api/contract/contract/ContractInfo/detail/entityInfo", {id:this.id})
           .then((res) => {
           var datas=res.data.data;
         this.getTwoSC(datas.contractInfo.marketFirstNameId);

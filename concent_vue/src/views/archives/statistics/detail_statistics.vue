@@ -87,7 +87,7 @@
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-upload
                 class="upload-demo detailUpload"
-                :action="'/api/topInfo/CommonFiles/archives/03/uploadFile'"
+                :action="'/api/contract/topInfo/CommonFiles/archives/03/uploadFile'"
                 :on-success="handleChange"
                 :on-error="handleChange"
                 :on-remove="handleRemove"
@@ -275,7 +275,7 @@ export default {
           this.detailform.archivesInfo.archivesTypeName = '0'
           this.$http
             .post(
-              "/api/archives/ArchivesInfo/detail/saveBo",
+              "/api/contract/archives/ArchivesInfo/detail/saveBo",
               JSON.stringify(this.detailform),
               {useJson: true}
             )
@@ -308,7 +308,7 @@ export default {
           //this.detailform.verify.flowStatus="1";
           this.$http
             .post(
-              "/api/archives/ArchivesInfo/detail/saveOrUpdate",
+              "/api/contract/archives/ArchivesInfo/detail/saveOrUpdate",
               JSON.stringify(this.detailform),
               {useJson: true}
             )
@@ -347,7 +347,7 @@ export default {
     handleRemove(file, index) {
       this.$http
         .post(
-          "/api/topInfo/CommonFiles/list/delete",
+          "/api/contract/topInfo/CommonFiles/list/delete",
           {ids: [file.uuid]},
         )
         .then((res) => {
@@ -366,7 +366,7 @@ export default {
       } else {
         this.$http
           .post(
-            '/api/archives/ArchivesInfo/detail/entityInfoBo',
+            '/api/contract/archives/ArchivesInfo/detail/entityInfoBo',
             {"id": this.p.instid}
           )
           .then(res => {

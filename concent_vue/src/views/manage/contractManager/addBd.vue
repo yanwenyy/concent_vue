@@ -380,7 +380,7 @@
           }).then(() => {
             this.$http
             .post(
-              "/api/contract/ContractInfo/list/deleteSectionOrg",
+              "/api/contract/contract/ContractInfo/list/deleteSectionOrg",
               {ids: [value.uuid]}
             )
             .then((res) => {

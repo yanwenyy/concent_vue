@@ -177,19 +177,19 @@ export default {
       var upData = JSON.parse(localStorage.getItem('upData'))
       upData.fileId = this.radio
       this.$http
-        .post('/api/common/Files/upByFile', upData)
+        .post('/api/contract/common/Files/upByFile', upData)
         .then((res) => {
           this.$player.$emit('getImgData', {imgData: res.data.data, no: this.no})
         })
     },
     downloadimg() {
       var path =
-        this.$baseURL + '/api/common/Files/downloadFile?fileId=' + this.file.id
+        this.$baseURL + '/api/contract/common/Files/downloadFile?fileId=' + this.file.id
       window.open(path)
     },
     downloadfile() {
       var path =
-        this.$baseURL + '/api/common/Files/downloadFile?fileId=' + this.file.id
+        this.$baseURL + '/api/contract/common/Files/downloadFile?fileId=' + this.file.id
       window.open(path)
     },
     jump(data) {

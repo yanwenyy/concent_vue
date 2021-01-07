@@ -299,7 +299,7 @@ export default {
     getData() {
       this.$http
         .post(
-          "/api/contract/ContractInfo/list/loadPageData",
+          "/api/contract/contract/ContractInfo/list/loadPageData",
           this.searchform
         )
         .then((res) => {

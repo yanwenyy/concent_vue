@@ -400,7 +400,6 @@ const mutations = {
         break;
       }
     })
-      console.log(state.railwayLine)
     }
   },
   setCategory(state, data) {

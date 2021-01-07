@@ -125,7 +125,7 @@
 </template>
 
 <script>
-// import { loadData } from '@/api/caigouhetong'
+// import { loadData } from '@/api/contract/caigouhetong'
 
 // import cardTitile from '@/layout/mixin/cardTitile'
 
@@ -182,7 +182,7 @@ export default {
   methods: {
     initData() {
       this.$http.get(
-        'http://120.78.186.60:8085/api/Approve/getApproveState?pkNo=' + this.no
+        'http://120.78.186.60:8085/api/contract/Approve/getApproveState?pkNo=' + this.no
       )
         .then((res) => {
           this.approveState = res.data.data.approveState

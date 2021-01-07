@@ -412,7 +412,7 @@
         this.searchform.planBidTime=null;
         this.$http
           .post(
-            "/api/topInfo/TopInfor/list/loadPageDataForSelect",
+            "/api/contract/topInfo/TopInfor/list/loadPageDataForSelect",
             this.searchform
           )
           .then((res)=>{

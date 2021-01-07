@@ -23,7 +23,7 @@
         <el-button style="width: 100%;" type="primary" v-on:click="onSubmit('loginForm')">登录</el-button>
       </el-form-item>
     </el-form>
-    <el-dialog :append-to-body='true' 
+    <el-dialog :append-to-body='true'
       :close-on-click-modal="false"
       :close-on-press-escape="false"
       :show-close="false"
@@ -123,7 +123,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$http
-            .post('/api/base/updatepassword', {
+            .post('/api/contract/base/updatepassword', {
               oldPassword: this.$utils.getRSA().encrypt(this.form.password),
               password: this.$utils.getRSA().encrypt(this.pwcform.newpassword)
             })
@@ -187,7 +187,7 @@ export default {
   created() {
     // 在登录状态下用户手工修改浏览器地址到登录页面时，做登出操作，清空sessionstorage内容
     if (sessionStorage.getItem('a')) {
-      this.$http.post('/api/base/logout').then(res => {
+      this.$http.post('/api/contract/base/logout').then(res => {
         if (res.data.code === 0) {
           // 清空sessionStorage数据
           sessionStorage.clear()

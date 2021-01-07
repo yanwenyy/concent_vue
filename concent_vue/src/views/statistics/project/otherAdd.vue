@@ -698,7 +698,7 @@ export default {
         if (valid) {
           this.$http
             .post(
-              '/api/basicConfig/ClothSize/detail/save',
+              '/api/contract/basicConfig/ClothSize/detail/save',
               JSON.stringify(this.detailform), {useJson: true}
             )
             .then(res => {
@@ -729,7 +729,7 @@ export default {
         if (valid) {
           this.$http
             .post(
-              '/api/basicConfig/ClothSize/detail/save',
+              '/api/contract/basicConfig/ClothSize/detail/save',
               JSON.stringify(this.detailform), {useJson: true}
             )
             .then(res => {

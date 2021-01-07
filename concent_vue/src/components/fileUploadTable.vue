@@ -122,7 +122,7 @@
     },
     methods: {
       UploadUrl:function(){
-        return '/api/topInfo/CommonFiles/'+this.selectbusinessId+'/archives/05/uploadFileByBusinessId';
+        return '/api/contract/topInfo/CommonFiles/'+this.selectbusinessId+'/archives/05/uploadFileByBusinessId';
       },
       handleSizeChange(val) {
         this.searchform.size = val
@@ -170,7 +170,7 @@
       handleRemove(file, index) {
         this.$http
           .post(
-            "/api/topInfo/CommonFiles/list/delete",
+            "/api/contract/topInfo/CommonFiles/list/delete",
             {ids: [file.uuid]},
           )
           .then((res) => {
@@ -216,7 +216,7 @@
         this.searchform.businessId = this.selectbusinessId;
         this.$http
           .post(
-            '/api/topInfo/CommonFiles/list/loadPageData',
+            '/api/contract/topInfo/CommonFiles/list/loadPageData',
             this.searchform
           )
           .then(res => {

@@ -750,7 +750,7 @@
         <!--&gt;增加文件</el-button> </p>-->
         <el-upload
           class="upload-demo detailUpload detatil-flie-btn"
-          :action="'/api/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+          :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
           :on-success="handleChange1"
           :on-error="handleChange1"
           :on-remove="handleRemove1"
@@ -805,7 +805,7 @@
           <span>合同附件(最大10MB): </span>
         <el-upload
           class="upload-demo detailUpload detatil-flie-btn"
-          :action="'/api/topInfo/CommonFiles/contractInfo/02/uploadFile'"
+          :action="'/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile'"
           :on-success="handleChange2"
           :on-error="handleChange2"
           :on-remove="handleRemove2"
@@ -860,7 +860,7 @@
           <span>工程量清单和劳材机附件(两种文件都要)(最大10MB): </span>
           <el-upload
             class="upload-demo detailUpload detatil-flie-btn"
-            :action="'/api/topInfo/CommonFiles/contractInfo/03/uploadFile'"
+            :action="'/api/contract/topInfo/CommonFiles/contractInfo/03/uploadFile'"
             :on-success="handleChange3"
             :on-error="handleChange3"
             :on-remove="handleRemove3"
@@ -1283,7 +1283,7 @@ export default {
     handleRemove1(file,index) {
       this.$http
         .post(
-          "/api/topInfo/CommonFiles/list/delete",
+          "/api/contract/topInfo/CommonFiles/list/delete",
           {ids:[file.uuid]},
         )
         .then((res) => {
@@ -1312,7 +1312,7 @@ export default {
     handleRemove2(file,index) {
       this.$http
         .post(
-          "/api/topInfo/CommonFiles/list/delete",
+          "/api/contract/topInfo/CommonFiles/list/delete",
           {ids:[file.uuid]},
         )
         .then((res) => {
@@ -1341,7 +1341,7 @@ export default {
     handleRemove3(file,index) {
       this.$http
         .post(
-          "/api/topInfo/CommonFiles/list/delete",
+          "/api/contract/topInfo/CommonFiles/list/delete",
           {ids:[file.uuid]},
         )
         .then((res) => {
@@ -1510,7 +1510,7 @@ export default {
         if (valid) {
           this.$http
             .post(
-              "/api/topInfo/contractInfo/detail/saveOrUpdate",
+              "/api/contract/topInfo/contractInfo/detail/saveOrUpdate",
               JSON.stringify(this.detailform),
               {useJson: true}
             )
@@ -1552,7 +1552,7 @@ export default {
         }).then(() => {
           this.$http
           .post(
-            "/api/topInfo/TopInfoSection/list/delete",
+            "/api/contract/topInfo/TopInfoSection/list/delete",
             {ids: [item.uuid]}
           )
           .then((res) => {
@@ -1600,7 +1600,7 @@ export default {
     // 加载列表
     getDetail() {
       this.$http
-        .post("/api/topInfo/contractInfo/detail/entityInfo", {topOrgId:this.id})
+        .post("/api/contract/topInfo/contractInfo/detail/entityInfo", {topOrgId:this.id})
         .then((res) => {
         var datas=res.data.data;
       this.getTwo(datas.contractInfo.enginTypeFirstId);

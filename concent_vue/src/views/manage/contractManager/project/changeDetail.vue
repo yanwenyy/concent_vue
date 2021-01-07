@@ -2032,7 +2032,7 @@
 
                     <el-upload
                       class="upload-demo detailUpload detatil-flie-btn"
-                      :action="'/api/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                      :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
                       :on-success="handleChange1"
                       :on-error="handleChange1"
                       :on-remove="handleRemove1"
@@ -2090,7 +2090,7 @@
                     <span>合同附件(最大10MB): </span>
                     <el-upload
                       class="upload-demo detailUpload detatil-flie-btn"
-                      :action="'/api/topInfo/CommonFiles/contractInfo/02/uploadFile'"
+                      :action="'/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile'"
                       :on-success="handleChange2"
                       :on-error="handleChange2"
                       :on-remove="handleRemove2"
@@ -2148,7 +2148,7 @@
                     <span>工程量清单和劳材机附件(两种文件都要)(最大10MB): </span>
                     <el-upload
                       class="upload-demo detailUpload detatil-flie-btn"
-                      :action="'/api/topInfo/CommonFiles/contractInfo/03/uploadFile'"
+                      :action="'/api/contract/topInfo/CommonFiles/contractInfo/03/uploadFile'"
                       :on-success="handleChange3"
                       :on-error="handleChange3"
                       :on-remove="handleRemove3"
@@ -2962,7 +2962,7 @@
       handleRemove1(file,index) {
         this.$http
           .post(
-            "/api/topInfo/CommonFiles/list/delete",
+            "/api/contract/topInfo/CommonFiles/list/delete",
             {ids:[file.uuid]},
           )
           .then((res) => {
@@ -2991,7 +2991,7 @@
       handleRemove2(file,index) {
         this.$http
           .post(
-            "/api/topInfo/CommonFiles/list/delete",
+            "/api/contract/topInfo/CommonFiles/list/delete",
             {ids:[file.uuid]},
           )
           .then((res) => {
@@ -3020,7 +3020,7 @@
       handleRemove3(file,index) {
         this.$http
           .post(
-            "/api/topInfo/CommonFiles/list/delete",
+            "/api/contract/topInfo/CommonFiles/list/delete",
             {ids:[file.uuid]},
           )
           .then((res) => {
@@ -3211,7 +3211,7 @@
           }).then(() => {
             this.$http
             .post(
-              "/api/contract/ContractInfo/list/deleteSection",
+              "/api/contract/contract/ContractInfo/list/deleteSection",
               {ids: [item.uuid]}
             )
             .then((res) => {
@@ -3231,7 +3231,7 @@
           }).then(() => {
             this.$http
             .post(
-              "/api/contract/ContractInfo/list/deleteAttach",
+              "/api/contract/contract/ContractInfo/list/deleteAttach",
               {ids: [item.uuid]}
             )
             .then((res) => {
@@ -3306,7 +3306,7 @@
             }:this.detailform;
             this.$http
               .post(
-                `/api/contract/ContractInfo/detail/${this.p.actpoint === "add"?'saveChangeRecord':'saveOrUpdate'}`,
+                `/api/contract/contract/ContractInfo/detail/${this.p.actpoint === "add"?'saveChangeRecord':'saveOrUpdate'}`,
                 JSON.stringify(datas),
                 {useJson: true}
               )
@@ -3329,7 +3329,7 @@
       getDetail() {
 
         this.$http
-          .post("/api/contract/ContractInfo/detail/entityInfoByBeforeAndAfterId", {beforeId:this.id,afterId:this.afterId})
+          .post("/api/contract/contract/ContractInfo/detail/entityInfoByBeforeAndAfterId", {beforeId:this.id,afterId:this.afterId})
           .then((res) => {
           var datas=res.data.data;
         var beforData=[],afterData=[];
@@ -3405,7 +3405,7 @@
       getAddDetail(){
         var fileList1=[],fileList2=[],fileList3=[];
         this.$http
-          .post("/api/contract/ContractInfo/detail/entityInfo", {id:this.id})
+          .post("/api/contract/contract/ContractInfo/detail/entityInfo", {id:this.id})
           .then((res) => {
           var datas=res.data.data;
         this.getTwo(datas.contractInfo.enginTypeFirstId);

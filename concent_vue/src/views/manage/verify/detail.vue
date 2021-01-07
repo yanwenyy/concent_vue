@@ -352,7 +352,7 @@
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-upload
                 class="upload-demo detailUpload"
-                :action="'/api/topInfo/CommonFiles/verify/01/uploadFile'"
+                :action="'/api/contract/topInfo/CommonFiles/verify/01/uploadFile'"
                 :on-success="handleChange"
                 :on-error="handleChange"
                 :on-remove="handleRemove"
@@ -711,7 +711,7 @@ export default {
           this.detailform.verify.flowStatus="0";
           this.$http
             .post(
-              "/api/topInfo/Verify/detail/saveOrUpdate",
+              "/api/contract/topInfo/Verify/detail/saveOrUpdate",
               JSON.stringify(this.detailform),
               { useJson: true }
             )
@@ -949,7 +949,7 @@ export default {
         if (valid) {
           this.$http
             .post(
-              '/api/topInfo/Verify/detail/save',
+              '/api/contract/topInfo/Verify/detail/save',
               JSON.stringify(this.detailform), {useJson: true}
             )
             .then(res => {
@@ -984,7 +984,7 @@ export default {
           this.detailform.verify.flowStatus="1";
           this.$http
             .post(
-              "/api/topInfo/Verify/detail/saveOrUpdate",
+              "/api/contract/topInfo/Verify/detail/saveOrUpdate",
               JSON.stringify(this.detailform),
               { useJson: true }
             )
@@ -1007,7 +1007,7 @@ export default {
     handleRemove(file,index) {
       this.$http
         .post(
-          "/api/topInfo/CommonFiles/list/delete",
+          "/api/contract/topInfo/CommonFiles/list/delete",
           {ids:[file.uuid]},
         )
         .then((res) => {
@@ -1056,7 +1056,7 @@ export default {
       //alert(this.p.topinfoid);
       this.$http
         .post(
-          '/api/topInfo/Verify/detail/entityInfo',
+          '/api/contract/topInfo/Verify/detail/entityInfo',
           // '/api' + this.$route.path.substr(0, this.$route.path.length - 1),
           {"id":this.p.topinfoid}
         )
@@ -1078,7 +1078,7 @@ export default {
    getTopInforDetail() {
 
     this.$http
-      .post("/api/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.p.topinfoid})
+      .post("/api/contract/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.p.topinfoid})
       .then((res1) => {
         var datas=res1.data.data;
         // this.getTwo(datas.topInfor.enginTypeFirstId);

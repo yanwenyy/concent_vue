@@ -44,7 +44,7 @@ export default {
     },
     deleteFiles(fileId) {
       this.$http
-        .post('/api/common/Files/delete', {
+        .post('/api/contract/common/Files/delete', {
           ids: [fileId]
         })
         .then((res) => {
@@ -64,7 +64,7 @@ export default {
     },
     downloadimg(file) {
       var path =
-        this.$baseURL + '/api/common/Files/downloadFile?fileId=' + file.id
+        this.$baseURL + '/api/contract/common/Files/downloadFile?fileId=' + file.id
       window.open(path)
     }
   }

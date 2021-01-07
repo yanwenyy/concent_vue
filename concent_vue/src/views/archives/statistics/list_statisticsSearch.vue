@@ -366,7 +366,7 @@ export default {
         // });
         this.$http
           .post(
-            '/api/archives/ArchivesInfo/list/delete',
+            '/api/contract/archives/ArchivesInfo/list/delete',
             {ids: uuids}
           )
           .then(res => {
@@ -444,7 +444,7 @@ export default {
       console.log(JSON.stringify(this.searchform));
       this.$http
         .post(
-          '/api/archives/ArchivesInfo/list/loadPageDataByStatistics',
+          '/api/contract/archives/ArchivesInfo/list/loadPageDataByStatistics',
           this.searchform
         )
         .then(res => {

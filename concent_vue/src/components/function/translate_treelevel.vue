@@ -105,7 +105,7 @@ export default {
     },
     searchtree() {
       this.$http
-        .post('/api/init/queryUserTree/query', {
+        .post('/api/contract/init/queryUserTree/query', {
           item2: [this.node.data],
           username: this.filtertext
         })
@@ -120,9 +120,9 @@ export default {
     },
     loadNode(node, resolve) {
       console.log(node)
-      var path = '/api/resource/getAllChildren'
+      var path = '/api/contract/resource/getAllChildren'
       if (this.qtype === 1 && node.data.type === 3) {
-        path = '/api/resource/getUsers'
+        path = '/api/contract/resource/getUsers'
       }
       this.$http
         .post(

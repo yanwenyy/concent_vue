@@ -267,7 +267,7 @@ export default {
 
           this.$http
             .post(
-              "/api/archives/ArchivesInfo/detail/saveBo",
+              "/api/contract/archives/ArchivesInfo/detail/saveBo",
               JSON.stringify(this.detailform),
               {useJson: true}
             )
@@ -300,7 +300,7 @@ export default {
           //this.detailform.verify.flowStatus="1";
           this.$http
             .post(
-              "/api/archives/ArchivesInfo/detail/saveOrUpdate",
+              "/api/contract/archives/ArchivesInfo/detail/saveOrUpdate",
               JSON.stringify(this.detailform),
               {useJson: true}
             )
@@ -330,7 +330,7 @@ export default {
       } else {
         this.$http
           .post(
-            '/api/archives/ArchivesInfo/detail/entityInfoBo',
+            '/api/contract/archives/ArchivesInfo/detail/entityInfoBo',
             {"id": this.p.instid}
           )
           .then(res => {

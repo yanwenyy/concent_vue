@@ -225,7 +225,7 @@
                 <el-upload
                 v-show="zbType=='add'"
                   class="upload-demo detailUpload"
-                  :action="'/api/topInfo/CommonFiles/bidInfo/03/uploadFile'"
+                  :action="'/api/contract/topInfo/CommonFiles/bidInfo/03/uploadFile'"
                   :on-success="handleChange"
                   :on-error="handleChange"
                   :on-remove="handleRemove"
@@ -285,7 +285,7 @@
 <!-- <el-form-item label="文件公示" :label-width="formLabelWidth">
 <el-upload
   class="upload-demo detailUpload"
-  :action="'/api/topInfo/CommonFiles/bidInfo/01/uploadFile'"
+  :action="'/api/contract/topInfo/CommonFiles/bidInfo/01/uploadFile'"
   :on-success="handleChange"
   :on-error="handleChange"
   :on-remove="handleRemove"
@@ -393,7 +393,7 @@ export default {
         handleRemove(file,index) {
          this.$http
         .post(
-          "/api/topInfo/CommonFiles/list/delete",
+          "/api/contract/topInfo/CommonFiles/list/delete",
           {ids:[file.uuid]},
         )
         .then((res) => {
@@ -466,7 +466,7 @@ export default {
         getData() {
         this.$http
           .post(
-            "/api/topInfo/BidInfo/detail/loadPageDataForReg",
+            "/api/contract/topInfo/BidInfo/detail/loadPageDataForReg",
             this.searchform
           )
           .then((res) => {
@@ -479,7 +479,7 @@ export default {
           if (valid) {
             this.$http
               .post(
-                "/api/topInfo/BidInfoSection/detail/save",
+                "/api/contract/topInfo/BidInfoSection/detail/save",
                 JSON.stringify(this.zbForm),
                 {useJson: true}
               )
@@ -510,7 +510,7 @@ export default {
 
 
       this.$http
-          .post("/api/topInfo/BidInfoSection/detail/entityInfo", {id:row.uuid})
+          .post("/api/contract/topInfo/BidInfoSection/detail/entityInfo", {id:row.uuid})
           .then((res) => {
             var datas=res.data.data;
           console.log(datas)
@@ -566,7 +566,7 @@ export default {
     getData() {
       this.$http
         .post(
-         "/api/topInfo/BidInfoSection/list/loadPageDataForZb",
+         "/api/contract/topInfo/BidInfoSection/list/loadPageDataForZb",
           this.searchform
         )
         .then((res) => {
@@ -588,7 +588,7 @@ export default {
     },
     // 获取上级单位树信息
     getOrgTree() {
-      this.$http.get("/api/base/loadorglist").then((res) => {
+      this.$http.get("/api/contract/base/loadorglist").then((res) => {
         this.orgTree = res.data.data;
       });
     },

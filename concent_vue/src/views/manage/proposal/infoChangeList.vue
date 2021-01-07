@@ -353,7 +353,7 @@
         // uuids.join(',')
         this.$http
           .post(
-            "/api/topInfo/TopInfor/list/delete",
+            "/api/contract/topInfo/TopInfor/list/delete",
             {ids: uuids}
           )
           .then((res) => {
@@ -414,7 +414,7 @@
       getData() {
         this.$http
           .post(
-            "/api/topInfo/TopInfor/list/loadPageDataForChangeRecord",
+            "/api/contract/topInfo/TopInfor/list/loadPageDataForChangeRecord",
             this.searchform
           )
           .then((res) => {
@@ -436,7 +436,7 @@
       },
       // 获取上级单位树信息
       getOrgTree() {
-        this.$http.get("/api/base/loadorglist").then((res) => {
+        this.$http.get("/api/contract/base/loadorglist").then((res) => {
           this.orgTree = res.data.data;
       });
       },

@@ -1079,7 +1079,7 @@
                   <p><span >证明文件: </span>
                     <el-upload
                       class="upload-demo detailUpload detatil-flie-btn"
-                      :action="'/api/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                      :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
                       :on-success="handleChange1"
                       :on-error="handleChange1"
                       :on-remove="handleRemove1"
@@ -1801,7 +1801,7 @@
       handleRemove1(file,index) {
         this.$http
           .post(
-            "/api/topInfo/CommonFiles/list/delete",
+            "/api/contract/topInfo/CommonFiles/list/delete",
             {ids:[file.uuid]},
           )
           .then((res) => {
@@ -1830,7 +1830,7 @@
       handleRemove2(file,index) {
         this.$http
           .post(
-            "/api/topInfo/CommonFiles/list/delete",
+            "/api/contract/topInfo/CommonFiles/list/delete",
             {ids:[file.uuid]},
           )
           .then((res) => {
@@ -1859,7 +1859,7 @@
       handleRemove3(file,index) {
         this.$http
           .post(
-            "/api/topInfo/CommonFiles/list/delete",
+            "/api/contract/topInfo/CommonFiles/list/delete",
             {ids:[file.uuid]},
           )
           .then((res) => {
@@ -2050,7 +2050,7 @@
           }).then(() => {
             this.$http
             .post(
-              "/api/contract/ContractInfo/list/deleteSection",
+              "/api/contract/contract/ContractInfo/list/deleteSection",
               {ids: [item.uuid]}
             )
             .then((res) => {
@@ -2070,7 +2070,7 @@
           }).then(() => {
             this.$http
             .post(
-              "/api/contract/ContractInfo/list/deleteAttach",
+              "/api/contract/contract/ContractInfo/list/deleteAttach",
               {ids: [item.uuid]}
             )
             .then((res) => {
@@ -2152,7 +2152,7 @@
           if (valid) {
             this.$http
               .post(
-                `/api/topInfo/TopInfor/detail/${this.p.actpoint === "add"?'saveChangeRecord':'updateChangeRecord'}`,
+                `/api/contract/topInfo/TopInfor/detail/${this.p.actpoint === "add"?'saveChangeRecord':'updateChangeRecord'}`,
                 JSON.stringify(this.detailform),
                 {useJson: true}
               )
@@ -2176,7 +2176,7 @@
       },
       getDetail() {
         this.$http
-          .post("/api/topInfo/TopInfor/detail/entityInfoByBeforeAndAfterId", {beforeId:this.id,afterId:this.afterId})
+          .post("/api/contract/topInfo/TopInfor/detail/entityInfoByBeforeAndAfterId", {beforeId:this.id,afterId:this.afterId})
           .then((res) => {
           var datas=res.data.data;
         var beforData=[],afterData=[];
@@ -2211,7 +2211,7 @@
       //新增的时候详情
       getAddDetail(){
         this.$http
-          .post("/api/contract/ContractInfo/detail/entityInfo", {id:this.id})
+          .post("/api/contract/contract/ContractInfo/detail/entityInfo", {id:this.id})
           .then((res) => {
           var datas=res.data.data;
         this.getTwoSC(datas.contractInfo.marketFirstNameId);

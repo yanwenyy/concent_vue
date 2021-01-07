@@ -99,7 +99,7 @@ export default {
         })
     },
     getNum() {
-      this.$http.post('/api/resource/getMsgNum').then(res => {
+      this.$http.post('/api/contract/resource/getMsgNum').then(res => {
         if (res.data.code === 0) {
           console.log(res.data)
           this.$store.state.num = res.data.data
@@ -111,7 +111,7 @@ export default {
       let obj = {
         uuid: localStorage.getItem('routerstring')
       }
-      this.$http.post('/api/init/homepage/queryList/query', obj).then(res => {
+      this.$http.post('/api/contract/init/homepage/queryList/query', obj).then(res => {
         this.page2.records = res.data.data
       })
     },
@@ -121,7 +121,7 @@ export default {
       let obj = {
         page: this.page
       }
-      this.$http.post('/api/resource/getMsgByPage', obj).then(res => {
+      this.$http.post('/api/contract/resource/getMsgByPage', obj).then(res => {
         this.page = res.data.data
       })
     },
@@ -130,7 +130,7 @@ export default {
       let obj = {
         page: this.page1
       }
-      this.$http.post('/api/init/myapply/queryList/query', obj).then(res => {
+      this.$http.post('/api/contract/init/myapply/queryList/query', obj).then(res => {
         this.page1 = res.data.data
       })
     },
@@ -140,7 +140,7 @@ export default {
         page: this.page5
       }
       this.$http
-        .post('/api/init/publicity/queryPageList/query', obj)
+        .post('/api/contract/init/publicity/queryPageList/query', obj)
         .then(res => {
           this.page5 = res.data.data
         })
@@ -152,7 +152,7 @@ export default {
         page: this.page6
       }
       this.$http
-        .post('/api/init/publicity/queryPageList2/query', obj)
+        .post('/api/contract/init/publicity/queryPageList2/query', obj)
         .then(res => {
           this.page6 = res.data.data
         })
@@ -220,7 +220,7 @@ export default {
     // 轮播图
     getcarouselData() {
       this.$http
-        .post('/cms/admin/api/cms/banner.json', { pageNum: 1, pageSize: 3 })
+        .post('/cms/admin/api/contract/cms/banner.json', { pageNum: 1, pageSize: 3 })
         .then(res => {
           if (res.data.code === '200') {
             this.carouselData = res.data.data
@@ -230,7 +230,7 @@ export default {
     // 通知公告
     getAnnounceData() {
       this.$http
-        .post('/cms/admin/api/cms/announce.json ', { pageNum: 1, pageSize: 8 })
+        .post('/cms/admin/api/contract/cms/announce.json ', { pageNum: 1, pageSize: 8 })
         .then(res => {
           if (res.data.code === '200') {
             this.announceData = res.data.data
@@ -240,7 +240,7 @@ export default {
     // 交流园地
     getForumData() {
       this.$http
-        .post('/cms/admin/api/cms/news.json', { pageNum: 1, pageSize: 5 })
+        .post('/cms/admin/api/contract/cms/news.json', { pageNum: 1, pageSize: 5 })
         .then(res => {
           if (res.data.code === '200') {
             this.forumData = res.data.data
@@ -249,7 +249,7 @@ export default {
     },
     // 简报
     getBriefData() {
-      this.$http.post('/api/welcome/briefing/detail').then(res => {
+      this.$http.post('/api/contract/welcome/briefing/detail').then(res => {
         if (res.data.code === 0) {
           this.brief = res.data.data
         }
@@ -258,7 +258,7 @@ export default {
     // 待办--流程审批
     getApproveList() {
       this.$http
-        .post('/api/base/approve/todo', { current: 1, size: 3 })
+        .post('/api/contract/base/approve/todo', { current: 1, size: 3 })
         .then(res => {
           if (res.data.code === 0) {
             this.approveList = res.data.data.records
@@ -268,7 +268,7 @@ export default {
     // 待办--行政工作(通知)
     getNoticeList() {
       this.$http
-        .post('/api/welcome/message/notice/list', { current: 1, size: 3 })
+        .post('/api/contract/welcome/message/notice/list', { current: 1, size: 3 })
         .then(res => {
           if (res.data.code === 0) {
             this.noticeList = res.data.data.records
@@ -278,7 +278,7 @@ export default {
     // 我的项目
     getProjectList() {
       this.$http
-        .post('/api/welcome/project/list ', { current: 1, size: 8 })
+        .post('/api/contract/welcome/project/list ', { current: 1, size: 8 })
         .then(res => {
           if (res.data.code === 0) {
             this.projectList = res.data.data.records
@@ -288,7 +288,7 @@ export default {
     // 待阅
     getReadList() {
       this.$http
-        .post('/api/welcome/message/read/list ', { current: 1, size: 5 })
+        .post('/api/contract/welcome/message/read/list ', { current: 1, size: 5 })
         .then(res => {
           if (res.data.code === 0) {
             this.readList = res.data.data.records

@@ -4,8 +4,8 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span class="detailSpan"><b>信息管理详情</b></span>
-        <el-button @click="back" class="detailbutton" >返回</el-button>
-        <el-button type="primary" @click="saveInfo('detailform')" class="detailbutton">保存</el-button>
+        <el-button v-show="p.actpoint != 'look'" @click="back" class="detailbutton" >返回</el-button>
+        <el-button v-show="p.actpoint != 'look'" type="primary" @click="saveInfo('detailform')" class="detailbutton">保存</el-button>
         <el-button @click="submit" class="detailbutton">提交</el-button>
       </div>
       <div class="detailBox">
@@ -1044,7 +1044,7 @@
           if (valid) {
             this.$http
               .post(
-                "/api/topInfo/TopInfor/detail/saveOrUpdate",
+                "/api/contract/topInfo/TopInfor/detail/saveOrUpdate",
                 JSON.stringify(this.detailform),
                 {useJson: true}
               )
@@ -1086,7 +1086,7 @@
           }).then(() => {
             this.$http
               .post(
-                "/api/topInfo/TopInfoSection/list/delete",
+                "/api/contract/topInfo/TopInfoSection/list/delete",
                 {ids: [item.uuid]}
               )
               .then((res) => {
@@ -1134,7 +1134,7 @@
       // 加载列表
       getDetail() {
         this.$http
-          .post("/api/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.id})
+          .post("/api/contract/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.id})
           .then((res) => {
             var datas=res.data.data;
             this.getTwo(datas.topInfor.enginTypeFirstId);

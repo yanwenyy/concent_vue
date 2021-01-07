@@ -360,7 +360,7 @@
           }).then(() => {
             this.$http
             .post(
-              "/api/topInfo/BidInfo/list/deleteChange",{ids:uuids}
+              "/api/contract/topInfo/BidInfo/list/deleteChange",{ids:uuids}
             )
             .then((res) => {
             this.getData()
@@ -376,7 +376,7 @@
         }
         let p = {actpoint: "look", instid: this.multipleSelection[0].uuid};
         this.$router.push({
-          path: "/api/topInfo/BidInfo/list/loadPageDataForChangeRecord",
+          path: "/api/contract/topInfo/BidInfo/list/loadPageDataForChangeRecord",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       }, // list通用方法开始
@@ -444,7 +444,7 @@
         console.log(11111)
         this.$http
           .post(
-            "/api/topInfo/BidInfo/list/loadPageDataForChangeRecord",
+            "/api/contract/topInfo/BidInfo/list/loadPageDataForChangeRecord",
             this.searchform
           )
           .then((res) => {
@@ -466,7 +466,7 @@
       },
       // 获取上级单位树信息
       getOrgTree() {
-        this.$http.get("/api/base/loadorglist").then((res) => {
+        this.$http.get("/api/contract/base/loadorglist").then((res) => {
           this.orgTree = res.data.data;
       });
       },

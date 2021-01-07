@@ -422,7 +422,7 @@
             <p><span >附件（最大10MB）: </span>
                 <el-upload
                   class="upload-demo detailUpload"
-                  :action="'/api/topInfo/CommonFiles/bidInfo/01/uploadFile'"
+                  :action="'/api/contract/topInfo/CommonFiles/bidInfo/01/uploadFile'"
                   :on-success="handleChange"
                   :on-error="handleChange"
                   :on-remove="handleRemove"
@@ -1293,7 +1293,7 @@
                 <p><span >附件（最大10MB）: </span>
                 <el-upload
                   class="upload-demo detailUpload"
-                  :action="'/api/topInfo/CommonFiles/bidInfo/01/uploadFile'"
+                  :action="'/api/contract/topInfo/CommonFiles/bidInfo/01/uploadFile'"
                   :on-success="handleChange"
                   :on-error="handleChange"
                   :on-remove="handleRemove"
@@ -1814,7 +1814,7 @@ export default {
         handleRemove(file,index) {
       this.$http
         .post(
-          "/api/topInfo/CommonFiles/list/delete",
+          "/api/contract/topInfo/CommonFiles/list/delete",
           {ids:[file.uuid]},
         )
         .then((res) => {
@@ -1855,7 +1855,7 @@ export default {
         handleRemove(file, fileList) {
          this.$http
           .post(
-            "/api/topInfo/CommonFiles/list/delete",
+            "/api/contract/topInfo/CommonFiles/list/delete",
             {ids:[file.response.data.uuid]},
           )
           .then((res) => {
@@ -1951,7 +1951,7 @@ export default {
         if (valid) {
           this.$http
             .post(
-              `/api/topInfo/BidInfo/detail/${this.p.actpoint === "add"? "saveChangeRecord": "updateChangeRecord"
+              `/api/contract/topInfo/BidInfo/detail/${this.p.actpoint === "add"? "saveChangeRecord": "updateChangeRecord"
               }`,
               JSON.stringify(this.detailform),
               { useJson: true }
@@ -1993,7 +1993,7 @@ export default {
         })
           .then(() => {
             this.$http
-              .post("/api/topInfo/BidInfo/list/delete", {
+              .post("/api/contract/topInfo/BidInfo/list/delete", {
                 ids: [item.uuid],
               })
               .then((res) => {
@@ -2031,7 +2031,7 @@ export default {
     // 修改的时候详情
     getDetail() {
       this.$http
-        .post("/api/topInfo/BidInfo/detail/entityInfoByBeforeAndAfterId", {
+        .post("/api/contract/topInfo/BidInfo/detail/entityInfoByBeforeAndAfterId", {
           beforeId: this.id,
           afterId: this.afterId,
         })
@@ -2067,7 +2067,7 @@ export default {
     getAddDetail() {
       // console.log(111);
       this.$http
-        .post("/api/topInfo/BidInfo/detail/entityInfo", { topInfoOrgId: this.id ,id:this.uuid})
+        .post("/api/contract/topInfo/BidInfo/detail/entityInfo", { topInfoOrgId: this.id ,id:this.uuid})
         .then((res) => {
           var datas = res.data.data;
           this.detailform = {
