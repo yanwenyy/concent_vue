@@ -1,14 +1,17 @@
 <template>
 
   <el-dialog
-
-    :lock-scroll="false"
+    :lock-scroll="true"
     :visible.sync="visible"
     :append-to-body="true">
-    <p class="bd">标段信息</p>
-    <div>
-
-      <el-form :inline="true" :model="detailForm" :rules="rules" ref="detailform" @keyup.enter.native="init()">
+    <el-card>
+      <div class="clearfix el-card__header">
+        <span style="color: #2a2a7d;line-height: 32px"><b>标段信息</b></span>
+        <el-button @click="visible = false" style="float: right;">返回</el-button>
+      </div>
+    </el-card>
+    <div style="height: calc(100% - 50px);overflow: auto;padding: 0 50px;">
+      <el-form :inline="true" :model="detailForm" :rules="rules" ref="detailform" @keyup.enter.native="init()"  class="gcform">
         <el-form-item label="标段名称:" class="list-item" >
           <el-select
             clearable
@@ -162,24 +165,20 @@
           <el-form-item label="其中建安投资:" class="list-item">
           <el-input v-model="detailForm.verifySection.jananInvestment" placeholder="其中建安投资" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
-        <div class="list-title">
+        <div class="detail-title">
           其他投标单位(系统内):
           <el-button
             @click="add('inside',1)"
             class="detatil-flie-btn"
-            size="mini"
             type="primary"
             :disabled="type === 'look'"
           >新增</el-button >
         </div>
-        <el-table
+        <el-table class="detailTable"
           :data="detailForm.dataList"
           border
           v-loading="dataListLoading"
-          :header-cell-style="{
-          'text-align': 'center',
-          'background-color': 'whitesmoke',
-        }"
+          :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
           style="width: 100%;">
           <el-table-column
             type="index"
@@ -189,7 +188,7 @@
             label="序号">
           </el-table-column>
           <el-table-column
-            :width="500"
+
             prop="inforName"
             show-overflow-tooltip
             label="其他投标单位(系统内)">
@@ -200,6 +199,7 @@
                 placeholder="请选择"
                 v-model="scope.row.orgName"
                 :disabled="type === 'look'"
+
               >
                 <el-option
                   :key="index"
@@ -215,9 +215,10 @@
             header-align="center"
             align="center"
             label="投标价"
+            width="475"
             >
              <template slot-scope="scope">
-                <el-form-item class="tabelForm" :prop="'dataList.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
+                <el-form-item class="tabelForm bd-table-item" :prop="'dataList.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
                   <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                  <el-input type="text" v-model="scope.row.bidAmount" :disabled="type === 'look'">
                     <template slot="prepend">¥</template>
@@ -235,6 +236,7 @@
             label="操作"
             show-overflow-tooltip
             align="center"
+            width="100"
             :disabled="type === 'look'"
           >
             <template slot-scope="scope">
@@ -242,17 +244,16 @@
             </template>
           </el-table-column>
         </el-table>
-        <div class="list-title">
+        <div class="detail-title">
           其他投标单位(系统外):
           <el-button
             @click="add('outside',2)"
             class="detatil-flie-btn"
-            size="mini"
             type="primary"
             :disabled="type === 'look'"
           >新增</el-button >
         </div>
-        <el-table
+        <el-table class="detailTable"
           :data="detailForm.dataList2"
           border
           v-loading="dataListLoading"
@@ -269,7 +270,6 @@
             label="序号">
           </el-table-column>
           <el-table-column
-            :width="500"
             prop="inforName"
             show-overflow-tooltip
             label="其他投标单位(系统外)">
@@ -296,9 +296,10 @@
             header-align="center"
             align="center"
             label="投标价"
+            width="475"
             :disabled="type === 'look'">
              <template slot-scope="scope">
-                <el-form-item class="tabelForm" :prop="'dataList2.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
+                <el-form-item class="tabelForm bd-table-item" :prop="'dataList2.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
                   <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                  <el-input type="text" v-model="scope.row.bidAmount" :disabled="type === 'look'">
                     <template slot="prepend">¥</template>
@@ -328,6 +329,7 @@
             label="操作"
             show-overflow-tooltip
             align="center"
+            width="100"
             :disabled="type === 'look'"
           >
             <template slot-scope="scope">
@@ -341,7 +343,9 @@
       <el-button @click="visible = false">取消</el-button>
       <el-button v-if="type!='look'" type="primary" @click="sub()">确定</el-button>
     </div>
+
   </el-dialog>
+
 </template>
 
 <script>
@@ -490,45 +494,47 @@ import { isMoney } from '@/utils/validate'
   }
 </script>
 <style scoped>
+>>>.el-dialog{
+    height: 70vh!important;
+  }
+>>>.el-card__header{
+  padding: 8px 20px !important;
+}
+>>>.el-dialog__header{
+  display: none;
+}
+>>>.el-dialog__body{
+  padding: 0;
+  height: calc(100% - 60px)!important;
+  width: 100%;
+  overflow: hidden;
+}
+>>>.dialog-footer{
+  padding-top: 14px;
+  margin:0;
+  text-align: center;
+  background-color: #fafafa;
+}
+>>>.gcform .el-form-item{
+  margin-bottom: 0px!important;
+}
+>>>.gcform .el-form-item__error{
+  margin: -25px -7px 0 335px!important;
+}
+.bd-table-item  >>>.el-form-item__error{
+  margin: -13px -7px 0 310px!important;
+}
 >>>.el-form--inline .el-form-item__content{
   width: 100%;
 }
 .el-date-editor.el-input, .el-date-editor.el-input__inner {
   width: 100%;
 }
-/* .el-form-item__label{
-width: 390px!important;
-} */
-.bd{
-  margin: -30px 0 35px 0;
-}
-  /* .tabelForm{
-    margin-bottom: 0;
-  } */
   .list-title{
     margin: 20px 0;
   }
-  .detatil-flie-btn{
-    float: right;
-  }
   .list-item{
     width: 32%;
-  }
-  .dialog-footer {
-    margin-top: 50px;
-    text-align: center;
-  }
-
-  >>>.el-dialog {
-    width: 60%;
-    /* position: absolute;
-    left:20%; */
-
-  }
-
-
-  .inline-block {
-    display: inline-block;
   }
 
   .dr-notice-warn {
@@ -560,7 +566,7 @@ width: 390px!important;
 
 >>>form{
   height: 500px;
-  overflow: auto;
+  padding: 0 10px 0 0;
 }
 p{
  font-size: 18px;

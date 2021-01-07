@@ -275,6 +275,7 @@
           constructionOrg: "",
           noticeTypeId: "",
         },
+        xqprojectType:[],
         menus: [],
         multipleSelection: [],
         orgTree: [],
@@ -283,7 +284,7 @@
     components: {
       InfoChangeSearch
     },
-        computed: {
+    computed: {
       projectDomainType() {
         return this.$store.state.category.projectDomainType;
       }

@@ -2,11 +2,13 @@
   <div >
         <el-card class="box-card">
       <div slot="header" class="clearfix" >
-        <span style="color: #2a2a7d"><b>资审管理详情</b></span>
+        <span class="detailSpan"><b>资审管理详情</b></span>
         <el-button
           class="detail-back-tab detailbutton"
           @click="back"
           type="text">返回</el-button>
+       <el-button class="detailbutton" type="primary" @click="saveInfo('detailform')" v-show="p.actpoint != 'look'">保存</el-button>
+      <el-button class="detailbutton"  @click="submitForm('detailform')" v-show="p.actpoint != 'look'">提交</el-button>
       </div>
 
 
@@ -298,8 +300,8 @@
 <!--          v-model="detailform.verify.isCoalitionBid"-->
 <!--        />-->
       </el-form-item>
-
-        <el-form-item v-show='detailform.verify.isCoalitionBid=="是"'
+<div v-show='detailform.verify.isCoalitionBid=="是"'>
+        <el-form-item
           label="内部联合体单位:"
           :disabled="p.actpoint === 'look'"
         >
@@ -308,7 +310,7 @@
             <el-button slot="append" icon="el-icon-search"  @click="selectOrg()"></el-button>
           </el-input>
         </el-form-item>
-        <el-form-item v-show='detailform.verify.isCoalitionBid=="是"'
+        <el-form-item
           label="外部联合体单位:"
         >
           <el-input
@@ -318,6 +320,7 @@
           />
 
         </el-form-item>
+        </div>
 <div>
             <el-form-item
             class="neirong"
@@ -546,10 +549,7 @@
 
     </div>
 </el-card>
-    <div class="btn-group" v-show="p.actpoint != 'look'">
-      <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
-      <el-button  @click="submitForm('detailform')">提交</el-button>
-    </div>
+
     <el-dialog title="前期项目标段列表" :visible.sync="dialogTopInfoSection">
     <el-table
       :data="detailform1.topInfoSectionList"

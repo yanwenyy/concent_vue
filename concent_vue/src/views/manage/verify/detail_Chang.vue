@@ -1,8 +1,8 @@
 <!--资审变更列表-->
 <template>
  <div style="position: relative">
- <el-button  class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform')">保存</el-button>
-    <el-button  class="detail-back-tab detailbutton sub-btn" @click="submit">提交</el-button>
+ <el-button  class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailformAfter')">保存</el-button>
+    <el-button  class="detail-back-tab detailbutton sub-btn" >提交</el-button>
  <el-button
    class="detail-back-tab detailbutton"
    @click="back"
@@ -1029,6 +1029,7 @@
 
       <TreeOrg v-if="treeOrgStatas" ref="addOrUpdate" @getPosition="getTreeOrg"></TreeOrg>
       <TreeOrg v-if="treeOrgStatas1" ref="addOrUpdate1" @getPosition="getTreeOrg1"></TreeOrg>
+    <TreeOrg v-if="treeOrgStatas2" ref="addOrUpdate2" @getPosition="getTreeOrg2"></TreeOrg>
     </el-tab-pane>
   </el-tabs>
  </div>
@@ -1044,6 +1045,7 @@ export default {
     return {
       treeOrgStatas: false,
       treeOrgStatas1: false,
+      treeOrgStatas2: false,
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
       detailformBefore: {
         'verify': {
@@ -1100,8 +1102,10 @@ export default {
           detailName:'否'
         }
       ],//联合投标选择
-      dialogTopInfoSection: false
-      , myVerifySection:{},
+      dialogTopInfoSection: false,
+      myVerifySection:{},
+      myVerifySection1:{},
+      multipleSelection:[],
       multipleSelection1:[]
 
     }
@@ -1158,13 +1162,35 @@ export default {
       //   verifySectionOrgName:resultStr.substring(0,resultStr.length-1),
       //   verifySectionOrgList:this.myVerifySection.verifySectionOrgList
       // };
-      this.detailformAfter.verifySectionList[this.myVerifySection.index].verifySectionOrgName =resultStr.substring(0,resultStr.length-1);
-      this.detailformAfter.verifySectionList[this.myVerifySection.index].verifySectionOrgList=this.myVerifySection.verifySectionOrgList;
+      this.detailformAfter.verifySectionList[this.myVerifySection.index].verifySectionOrgNameType01
+        =resultStr.substring(0,resultStr.length-1);
+      this.detailformAfter.verifySectionList[this.myVerifySection.index].verifySectionOrgListType01=this.myVerifySection.verifySectionOrgList;
       //this.detailformAfter.verifySectionList[this.myVerifySection.index].verifySectionOrgList=this.myVerifySection.verifySectionOrgList;
       // this.detailformAfter.verifyOrgLists=resultStr;
       // alert(this.detailformAfter.verifyOrgLists);
       console.log(this.detailformAfter.verifySectionList)
       this.$forceUpdate();
+      // this.key = this.key + 1;
+    },
+    getTreeOrg2(data) {
+
+      console.log(data)
+      this.treeOrgStatas2 = false;
+
+      var resultStr = "";
+      this.myVerifySection1.verifySectionOrgList= [];
+      data.forEach((item, index) => {
+
+        var VerifySectionOrg={ orgId:item.name,orgName:item.name,orgType:"02"};
+        this.myVerifySection1.verifySectionOrgList.push(VerifySectionOrg)
+        resultStr+=item.name+",";
+      });
+      this.detailformAfter.verifySectionList[this.myVerifySection1.index].verifySectionOrgNameType02
+        =resultStr.substring(0,resultStr.length-1);
+      this.detailformAfter.verifySectionList[this.myVerifySection1.index].verifySectionOrgListType02=this.myVerifySection1.verifySectionOrgList;
+      // this.detailform.verifyOrgLists=resultStr;
+      // alert(this.detailform.verifyOrgLists);
+      console.log(this.detailformAfter.verifySectionList)
       // this.key = this.key + 1;
     },
     selectOrg1(row, column, cell, event){
@@ -1176,6 +1202,13 @@ export default {
         console.log(this.positionIndex);
         this.$nextTick(() => {
           this.$refs.addOrUpdate1.init()
+        })
+      }else if(column.label==="编标拟配合单位") {
+        this.myVerifySection1 = row;
+        this.treeOrgStatas2 = true;
+        //console.log(this.positionIndex);
+        this.$nextTick(() => {
+          this.$refs.addOrUpdate2.init()
         })
       }
 
@@ -1255,12 +1288,14 @@ export default {
         }
         var vsBo={
           verifySection:{},
-          verifySectionOrgList:[],
-          verifySectionOrgName:''
+          verifySectionOrgListType01:[],
+          verifySectionOrgNameType01:'',
+          verifySectionOrgListType02:[],
+          verifySectionOrgNameType02:''
         }
         var isadd = true;
         this.detailformAfter.verifySectionList.forEach((item1, index1) => {
-          if (item.uuid == item1.sectionId) {
+          if (item.uuid == item1.verifySection.sectionId) {
             isadd = false;
           }
         })
@@ -1379,6 +1414,7 @@ export default {
               }else if(item.verify.changeStatus==2)
               {
                 this.detailformAfter =item
+                console.log( this.detailformAfter)
               }
             })
 

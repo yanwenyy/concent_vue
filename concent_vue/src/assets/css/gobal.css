@@ -470,8 +470,11 @@ pre {
 .el-table td, .el-table th{
   padding: 9px 0;
 }
-.detailTable td, .detailTable th{
+.detailTable td {
       padding: 0 0 !important;
+}
+.detailTable th{
+  padding: 8px 0 !important;
 }
 .detailTable .el-input__icon{
   line-height: 32px !important;

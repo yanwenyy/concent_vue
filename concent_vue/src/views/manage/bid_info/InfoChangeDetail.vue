@@ -1,16 +1,15 @@
 <template>
 <div style="position: relative">
-  <el-button
-      @click="back"
-      class="detail-back-tab"
-      type="text">返回</el-button>
+  <el-button class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform')">保存</el-button>
+  <el-button class="detail-back-tab detailbutton sub-btn" @click="submit">提交</el-button>
+  <el-button class="detail-back-tab detailbutton" @click="back"  type="text">返回</el-button>
+
 
   <el-tabs type="border-card">
     <el-tab-pane label="变更前">
-      <el-card class="box-card">
 
-      <div class="detailBox">
-        <el-divider content-position="left">项目前期信息</el-divider>
+      <div class="detailBoxBG">
+        <el-divider content-position="left" class="detailDivider">项目前期信息</el-divider>
         <!--<div class="detailBox">-->
         <el-form
         :inline="false"
@@ -44,15 +43,16 @@
 
 
           <el-form-item label="项目板块:"
+           class="inline-formitem"
+           style="width:100%"
                 :rules="{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
               }">
-            <br>
               <template >
-                <el-radio-group disabled v-model="detailform.topInforBO.topInfor.moduleId"  @change="getName(detailform.topInforBO.topInfor, bizCode, 'moduleName')">
-                  <el-radio v-for="(item, index) in bizCode" :label="item.id" :key="index">{{item.detailName}}</el-radio>
+                <el-radio-group class="detail-radio-group" disabled v-model="detailform.topInforBO.topInfor.moduleId">
+                  <el-radio v-for="(item, index) in projectPlate" :label="item.id" :key="index">{{item.detailName}}</el-radio>
                 </el-radio-group>
               </template>
             <!-- <el-input
@@ -60,6 +60,7 @@
               disabled
             ></el-input> -->
           </el-form-item>
+
           <br>
 
           <el-form-item label="工程类别(一级):">
@@ -86,13 +87,13 @@
           <br>
           <el-form-item label="项目性质(一级):">
             <el-input
-              v-model="detailFormBefore.topInforBO.topInfor.projectModelName"
+              v-model="detailFormBefore.topInforBO.topInfor.projectNatureFirstName"
               disabled
             ></el-input>
           </el-form-item>
           <el-form-item label="项目性质(二级):">
             <el-input
-              v-model="detailFormBefore.topInforBO.topInfor.projectModelName"
+              v-model="detailFormBefore.topInforBO.topInfor.projectNatureSecondName"
               disabled
             ></el-input>
           </el-form-item>
@@ -180,6 +181,11 @@
           <br>
           <el-form-item
             label="投资额（万元）:"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
           >
             <el-input
               v-model="detailFormBefore.topInforBO.topInfor.investment"
@@ -209,7 +215,7 @@
             <el-switch
 
               class="inline-formitem-switch"
-              v-model="detailFormBefore.topInforBO.topInfor.isMajorProject"
+              v-model="detailFormBefore.topInforBO.topInfor.bidProbName"
               active-color="#409EFF"
               inactive-color="#ddd"
               active-value="0"
@@ -299,18 +305,15 @@
               v-model="detailFormBefore.topInforBO.topInfor.inforContent"
             />
           </el-form-item>
-<el-divider content-position="left">投标信息</el-divider>
-          <el-form-item label="投标截止日期:"
-           :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }">
+         <div>
+<el-divider content-position="left" class="detailDivider">投标信息</el-divider>
+          <el-form-item label="招标方式:">
             <el-input
-              v-model="detailFormBefore.bidInfo.endTime"
+              v-model="detailFormBefore.bidInfo.bidModeName"
               disabled
             ></el-input>
           </el-form-item>
+
           <el-form-item label="招标公告发布日期:"
            :rules="{
                 required: true,
@@ -322,53 +325,46 @@
               disabled
             ></el-input>
           </el-form-item>
+
+          <el-form-item label="内部联合体单位:"
+              v-if="detailform.bidInfo.isCoalitionBid==='0'">
+            <el-input
+              v-model="detailFormBefore.bidInfo.innerOrgName"
+              disabled
+            ></el-input>
+          </el-form-item>
+<br>
+
+          <el-form-item label="投标截止日期:"
+           :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }">
+            <el-input
+              v-model="detailFormBefore.bidInfo.endTime"
+              disabled
+            ></el-input>
+          </el-form-item>
+
           <el-form-item label="招标文件发售截止日期:">
             <el-input
               v-model="detailFormBefore.bidInfo.saleTime"
               disabled
             ></el-input>
           </el-form-item>
-          <el-form-item label="招标方式:">
+
+          <el-form-item label="外部联合体单位:"
+              v-if="detailform.bidInfo.isCoalitionBid==='0'">
             <el-input
-              v-model="detailFormBefore.bidInfo.bidModeName"
+              v-model="detailFormBefore.bidInfo.outOrg"
               disabled
             ></el-input>
           </el-form-item>
-          <el-form-item label="是否联合体投标:"
-           :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }">
-            <el-switch
-              class="inline-formitem-switch"
-              v-model="detailFormBefore.bidInfo.isCoalitionBid"
-              active-color="#409EFF"
-              inactive-color="#ddd"
-              active-value="0"
-              inactive-value="1"
-              disabled
-            >
-            </el-switch>
-            <!-- <div>
-              <el-radio  label="0"
-            v-model="detailFormBefore.bidInfo.isCoalitionBid"
-            disabled
-            style= margin-right:40px
-            >是</el-radio>
-            <el-radio  label="1"
-            v-model="detailFormBefore.bidInfo.isCoalitionBid"
-            disabled
-            >否</el-radio>
-
-                </div> -->
-            <!-- <el-input
-              v-model="detailFormBefore.bidInfo.isCoalitionBid"
-              disabled
-            ></el-input> -->
-          </el-form-item>
+<br>
 
           <el-form-item label="是否为费率招标:"
+          class="inline-formitem formItem"
            :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -384,35 +380,27 @@
               disabled
             >
             </el-switch>
-          <!-- <div>
-            <el-radio  label="0"
-            v-model="detailFormBefore.bidInfo.isBidRates"
-            disabled
-            style= margin-right:40px
-            >是</el-radio>
-            <el-radio  label="1"
-            v-model="detailFormBefore.bidInfo.isBidRates"
-            disabled
-            >否</el-radio>
-          </div> -->
-
           </el-form-item>
 
-            <el-form-item label="内部联合体单位:"
-              v-if="detailform.bidInfo.isCoalitionBid==='0'">
-            <el-input
-              v-model="detailFormBefore.bidInfo.innerOrgName"
+          <el-form-item label="是否联合体投标:"
+          class="inline-formitem formItem"
+           :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }">
+            <el-switch
+              class="inline-formitem-switch"
+              v-model="detailFormBefore.bidInfo.isCoalitionBid"
+              active-color="#409EFF"
+              inactive-color="#ddd"
+              active-value="0"
+              inactive-value="1"
               disabled
-            ></el-input>
+            >
+            </el-switch>
           </el-form-item>
-
-            <el-form-item label="外部联合体单位:"
-              v-if="detailform.bidInfo.isCoalitionBid==='0'">
-            <el-input
-              v-model="detailFormBefore.bidInfo.outOrg"
-              disabled
-            ></el-input>
-          </el-form-item>
+</div>
 
           <el-form-item class="neirong" label="投标说明(最多1000字):"
            :rules="{
@@ -484,7 +472,7 @@
                   label="操作"
                   show-overflow-tooltip
                   v-if="p.actpoint!=='look'"
-                  width="200"
+                  width="60"
                 >
                   <template slot-scope="scope">
                     <el-link :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
@@ -494,7 +482,7 @@
           </el-row>
 
 
-          <p style="overflow: hidden；">
+          <p class="detail-title" style="overflow: hidden；">
             <span style="float: left">标段信息: </span>
           </p>
           <el-table
@@ -799,15 +787,14 @@
           </el-table>
         </el-form>
         </div>
-      </el-card>
+
     </el-tab-pane>
 
 
     <el-tab-pane label="变更后">
-      <el-card class="box-card">
-        <div class="detailBox">
 
-          <el-divider content-position="left">项目前期信息</el-divider>
+        <div class="detailBoxBG">
+          <el-divider content-position="left" class="detailDivider">项目前期信息</el-divider>
           <el-form
             :inline="false"
             :model="detailform"
@@ -842,16 +829,17 @@
             </el-form-item>
             <br>
             <el-form-item label="项目板块:"
+            class="inline-formitem"
+            style="width:100%"
               :rules="{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
               }"
             >
-            <br>
               <template >
-                <el-radio-group disabled v-model="detailform.topInforBO.topInfor.moduleId"  @change="getName(detailform.topInforBO.topInfor, bizCode, 'moduleName')">
-                  <el-radio v-for="(item, index) in bizCode" :label="item.id" :key="index">{{item.detailName}}</el-radio>
+                <el-radio-group class="detail-radio-group" disabled v-model="detailform.topInforBO.topInfor.moduleId">
+                  <el-radio v-for="(item, index) in projectPlate" :label="item.id" :key="index">{{item.detailName}}</el-radio>
                 </el-radio-group>
               </template>
             </el-form-item>
@@ -1133,19 +1121,23 @@
 
 
             <div>
-              <el-divider content-position="left">投标信息</el-divider>
-              <el-form-item
-                label="投标截止日期:"
-                prop="bidInfo.endTime"
-              >
-                <el-date-picker
+              <el-divider content-position="left" class="detailDivider">投标信息</el-divider>
+              <el-form-item label="招标方式:"
+              class="formItem">
+                <el-select
                   :disabled="p.actpoint === 'look'"
-                  value-format="timestamp"
-                  clearable
                   filterable
-                  v-model="detailFormBefore.bidInfo.endTime"
+                  clearable
+                  placeholder="请选择"
+                  v-model="detailform.bidInfo.bidModeName"
                 >
-                </el-date-picker>
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in bidType"
+                  ></el-option>
+                </el-select>
               </el-form-item>
 
               <el-form-item
@@ -1167,6 +1159,40 @@
                 </el-date-picker>
               </el-form-item>
 
+              <el-form-item label="内部联合体单位:"
+              v-if="detailform.bidInfo.isCoalitionBid==='0'"
+              class="formItem" >
+              <el-select
+                :disabled="p.actpoint === 'look'"
+                filterable
+                clearable
+                placeholder="请选择"
+                v-model="detailform.bidInfoInnerOrgList.innerOrgName"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in amountSource"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <br>
+
+              <el-form-item
+                label="投标截止日期:"
+                prop="bidInfo.endTime"
+              >
+                <el-date-picker
+                  :disabled="p.actpoint === 'look'"
+                  value-format="timestamp"
+                  clearable
+                  filterable
+                  v-model="detailFormBefore.bidInfo.endTime"
+                >
+                </el-date-picker>
+              </el-form-item>
+
               <el-form-item
               class="formItem"
               label="招标文件发售截止日期"
@@ -1182,60 +1208,20 @@
                 </el-date-picker>
               </el-form-item>
 
-              <el-form-item label="招标方式:"
-              class="formItem">
-                <el-select
-                  :disabled="p.actpoint === 'look'"
-                  filterable
-                  clearable
-                  placeholder="请选择"
-                  v-model="detailform.bidInfo.bidModeName"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in bidType"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-
-              <el-form-item
-              class="formItem"
-                label="是否联合体投标:"
-                prop="bidInfo.isCoalitionBid"
-                :rules="{
-                  required: true,
-                  message: '此项不能为空',
-                  trigger: 'blur',
-                }"
+            <el-form-item class="formItem"
+            v-if="detailform.bidInfo.isCoalitionBid==='0'"
+                label="外部联合体单位:"
               >
-            <el-switch
-              class="inline-formitem-switch"
-              v-model="detailform.bidInfo.isCoalitionBid"
-              active-color="#409EFF"
-              inactive-color="#ddd"
-              active-value="0"
-              inactive-value="1"
-              :disabled="p.actpoint === 'look'"
-            >
-            </el-switch>
-            <!-- <div>
-             <el-radio  label="0"
-            v-model="detailform.bidInfo.isCoalitionBid"
-            :disabled="p.actpoint === 'look'"
-            style= margin-right:40px
-            >是</el-radio>
-            <el-radio  label="1"
-            v-model="detailform.bidInfo.isCoalitionBid"
-            :disabled="p.actpoint === 'look'"
-            >否</el-radio>
-
-          </div> -->
+                <el-input
+                  :disabled="p.actpoint === 'look'"
+                  clearable
+                  placeholder=""
+                  v-model="detailform.bidInfo.outOrg"
+                />
               </el-form-item>
-
+<br>
               <el-form-item
-              class="formItem"
+              class="inline-formitem formItem"
                 label="是否为费率招标:"
                 prop="bidInfo.isBidRates"
                 :rules="{
@@ -1257,37 +1243,29 @@
 
               </el-form-item>
 
-              <el-form-item label="内部联合体单位:"
-
-              v-if="detailform.bidInfo.isCoalitionBid==='0'"
-              class="formItem" >
-              <el-select
-                :disabled="p.actpoint === 'look'"
-                filterable
-                clearable
-                placeholder="请选择"
-                v-model="detailform.bidInfoInnerOrgList.innerOrgName"
+              <el-form-item
+              class="inline-formitem formItem"
+                label="是否联合体投标:"
+                prop="bidInfo.isCoalitionBid"
+                :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'blur',
+                }"
               >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in amountSource"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-
-            <el-form-item class="formItem"
-            v-if="detailform.bidInfo.isCoalitionBid==='0'"
-                label="外部联合体单位:"
-              >
-                <el-input
-                  :disabled="p.actpoint === 'look'"
-                  clearable
-                  placeholder=""
-                  v-model="detailform.bidInfo.outOrg"
-                />
+            <el-switch
+              class="inline-formitem-switch"
+              v-model="detailform.bidInfo.isCoalitionBid"
+              active-color="#409EFF"
+              inactive-color="#ddd"
+              active-value="0"
+              inactive-value="1"
+              :disabled="p.actpoint === 'look'"
+            >
+            </el-switch>
               </el-form-item>
+
+
             </div>
 
             <el-row>
@@ -1366,7 +1344,7 @@
                   label="操作"
                   show-overflow-tooltip
                   v-if="p.actpoint!=='look'"
-                  width="200"
+                  width="60"
                 >
                   <template slot-scope="scope">
                     <el-link :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
@@ -1375,7 +1353,7 @@
               </el-table>
             </el-row>
 
-            <p style="overflow: hidden；margin-right: 30px">
+            <p class="detail-title" style="overflow: hidden；margin-right: 30px">
               <span >标段信息: </span>
               <el-button
                 v-show="p.actpoint != 'look'"
@@ -1388,6 +1366,7 @@
                   font-size: 16px;
                 "
                 type="primary"
+                class="detatil-flie-btn"
                 >新增
               </el-button>
             </p>
@@ -1665,7 +1644,7 @@
                 align="center"
                 show-overflow-tooltip
                 v-if="p.actpoint !== 'look'"
-                width="200"
+                width="100"
               >
                 <template slot-scope="scope">
                   <el-link
@@ -1684,11 +1663,6 @@
           </el-form>
 
         </div>
-      </el-card>
-      <div class="btn-group" v-show="p.actpoint != 'look'">
-        <el-button type="primary" @click="saveInfo('detailform')">保存</el-button>
-        <el-button @click="submit">提交</el-button>
-      </div>
       <add-bd  v-if="BDCSVisible" ref="infoBD" @refreshBD="getBdInfo"></add-bd>
     </el-tab-pane>
   </el-tabs>
@@ -1791,7 +1765,10 @@ export default {
     },
     bidType(){
       return this.$store.state.bidType;
-    }
+    },
+    projectPlate(){
+        return this.$store.state.projectPlate;
+    },
   },
   mounted() {
     // this.$store.commit("setCategory", 'projectDomainType');
@@ -2123,7 +2100,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-
+  .el-tlm-main{
+    overflow: hidden!important;
+  }
   .detail-back-tab{
     padding: 10px 20px ;
     border:1px solid #ddd;
@@ -2134,11 +2113,14 @@ export default {
     z-index: 999999999;
     background: #fff;
   }
-.detail-class-tltle {
-  font-size: 18px;
-  font-weight: bold;
-  margin: 20px 0;
-}
+  .save-btn{
+    right: 95px;
+    background: #409EFF;
+    color:#fff;
+  }
+  .sub-btn{
+    right: 175px;
+  }
 .positon-path {
   word-wrap: break-word;
   word-break: break-all;
@@ -2149,7 +2131,7 @@ export default {
   margin-top: 20px;
 }
 .gcform {
-  margin-top: 10px;
+  // margin-top: 10px;
   >>> .el-form-item__label:before {
     position: initial;
     left: -10px;

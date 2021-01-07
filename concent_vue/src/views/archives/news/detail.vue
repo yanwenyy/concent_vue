@@ -5,12 +5,13 @@
            class="clearfix">
         <span class="detailSpan"><b>消息详情</b></span>
         <el-button
+          class="detail-back-tab detailbutton"
           @click="back"
-          class="detailbutton"
-          type="text"
-        >返回
-        </el-button
-        >
+          type="text">返回</el-button>
+         <el-button type="primary" class="detailbutton" v-show="p.actpoint != 'look'"
+                    @click="saveInfo('detailform')">保存</el-button>
+      <el-button class="detailbutton" @click="submitForm('detailform')" v-show="p.actpoint != 'look'">提交</el-button>
+
       </div>
 
 
@@ -50,25 +51,25 @@
           ></el-option>
         </el-select>
       </el-form-item>
+
+      <div>
             <el-form-item
               class="neirong"
               label="备注:"
               prop="remarks"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
             >
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-input
                 :readonly="p.actpoint === 'look'"
                 clearable
+                type="textarea"
                 placeholder="请输入"
                 size="mini"
                 v-model="detailform.archivesInfo.remarks"
               />
             </el-form-item>
+            </div>
+      <div>
             <el-form-item
               class="neirong"
               label="附件（最大10MB）:"
@@ -85,6 +86,7 @@
               <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
             </el-form-item>
+            </div>
     <div>
       <el-table
         :data="detailform.commonFilesList"
@@ -120,7 +122,7 @@
                   label="操作"
                   show-overflow-tooltip
                   v-if="p.actpoint!=='look'"
-                  width="200"
+                  width="80"
                 >
                   <template slot-scope="scope">
                     <el-link :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
@@ -128,49 +130,13 @@
                 </el-table-column>
               </el-table>
     </div>
-    <div>
-      <el-table
-        :data="detailform.commonFilesList"
-        :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
-        @selection-change="handleSelectionChange1"
-        align="center"
-        border
-        class="contractInfoTable"
-        ref="table"
-        style="width: 100%;height: auto;"
-      >
-                <el-table-column
-                  :width="55"
-                  align="center"
-                  label="序号"
-                  show-overflow-tooltip
-                  type="index"
-                ></el-table-column>
-                <el-table-column :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column :resizable="false" label="大小" prop="fileSize" show-overflow-tooltip>
-
-                </el-table-column>
-                <el-table-column :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column
-                  :resizable="false"
-                  fixed="right"
-                  label="操作"
-                  show-overflow-tooltip
-                  v-if="p.actpoint!=='look'"
-                  width="200"
-                >
-                  <template slot-scope="scope">
-                    <el-link :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
-                  </template>
-                </el-table-column>
-              </el-table>
-    </div>
+<div>
+  <el-form-item  label="范围选择:">
+         <el-button size="small"
+                    type="primary"
+                    @click="selectOrgTable(detailform.archivesInfo.uuid)">点击选择</el-button>
+      </el-form-item>
+</div>
       <el-form-item
         label="填报单位:"
       >
@@ -193,18 +159,23 @@
     </el-form>
     </div>
 </el-card>
-    <div class="btn-group"
-         v-show="p.actpoint != 'look'">
-      <el-button type="primary"
-                 @click="saveInfo('detailform')">保存</el-button>
-      <el-button @click="submitForm('detailform')">提交</el-button>
-    </div>
+<!--    <div class="btn-group"-->
+<!--         v-show="p.actpoint != 'look'">-->
+<!--      <el-button type="primary"-->
+<!--                 @click="saveInfo('detailform')">保存</el-button>-->
+<!--      <el-button @click="submitForm('detailform')">提交</el-button>-->
+<!--    </div>-->
+  <orgTable v-if="orgTableStatus" ref="addOrUpdate1" @getPosition="getOrgTable"></orgTable>
   </div>
 </template>
 
 <script>
+import orgTable from '@/components/orgTable'
 export default {
   name: '详情',
+  components: {
+    orgTable
+  },
   data() {
     return {
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
@@ -257,6 +228,7 @@ export default {
       myVerifySection: {},
       multipleSelection:[],
       multipleSelection1:[],
+      orgTableStatus:false,
     }
   },
   computed: {
@@ -270,7 +242,30 @@ export default {
 
   },
   methods: {
+    getOrgTable(data)
+    {
+      console.log(data)
+      this.orgTableStatus = false;
+      var resultStr = [];
+      //data.forEach((item, index) => {
 
+      //var verifyOrg={ orgId:item.name,orgName:item.name};
+      //this.detailform.verifyOrgList.push(verifyOrg)
+      //resultStr+=item.name+",";
+      //});
+
+      // this.detailform.verifyOrgLists=resultStr;
+      // alert(this.detailform.verifyOrgLists);
+      console.log(this.detailform.verifyOrgLists)
+      // this.key = this.key + 1;
+    },
+    selectOrgTable(val){
+      this.orgTableStatus = true;
+      console.log(val);
+      this.$nextTick(() => {
+        this.$refs.addOrUpdate1.init(val)
+      })
+    },
     back() {
       this.$router.back()
 
@@ -381,7 +376,14 @@ export default {
     getDetail() {
       //alert(JSON.stringify(this.p))
       if (this.p.actpoint === "add") {
-
+        this.$http
+          .post(
+            '/api/archives/ArchivesInfo/detail/Add',
+        {"id": ""}
+          )
+          .then(res => {
+            this.detailform.archivesInfo = res.data.data
+          })
       } else {
         this.$http
           .post(
@@ -417,21 +419,21 @@ export default {
 }
 .gcform {
   margin-top: 10px;
-  .el-form-item__label:before {
+  >>>.el-form-item__label:before {
     position: initial;
     left: -10px;
   }
-  .el-form-item__error {
+  >>>.el-form-item__error {
     padding-top: 0px;
     width: 95%;
     margin-left: 0;
     text-align: right;
     top: 0%;
   }
-  .el-form-item {
+  >.el-form-item,>>>.formItem{
 
     display: inline-block;
-    width: 32.5%;
+    width: 32.5%!important;
   }
   .detailformfooter1 {
     margin-top: 5px;
@@ -451,7 +453,7 @@ export default {
       color: #5c8bfa;
     }
   }
-  .errorMsg .el-form-item__label {
+  .errorMsg >>>.el-form-item__label {
     color: red;
   }
   .el-input {
@@ -470,19 +472,6 @@ export default {
 
 .el-table thead.is-group th {
   background: #fff;
-}
-
-.clothSizeTable {
-  /*td {*/
-  /*padding: 0;*/
-  /*}*/
-  .el-form-item__content {
-    height: 60px;
-    line-height: 60px;
-    .el-form-item__error {
-      top: 42px;
-    }
-  }
 }
 
 .text {
@@ -509,14 +498,14 @@ export default {
   // height: 200px;
 }
 
-.el-input--mini .el-input__inner {
+>>>.el-input--mini .el-input__inner {
   height: 40px;
   width: 100%;
   box-sizing: border-box;
   // margin: 10px 0 0 10px;
 }
 
-.gcform .el-input {
+.gcform >>>.el-input {
   width: 95%;
 }
 .listInput{
@@ -531,11 +520,11 @@ export default {
   width: 100% !important;
 }
 
-.gcform .el-form-item {
+.gcform >>>.el-form-item {
   margin-bottom: 0px;
 }
 
-.neirong .el-input--mini .el-input__inner {
+.neirong >>>.el-input--mini .el-input__inner {
   height: 100px;
 }
 
