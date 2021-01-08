@@ -5,7 +5,6 @@
                :model="searchform"
                @keyup.enter.native="getData()"
                class="queryForm">
-      <el-row>
       <el-form-item label="档案名称:">
         <el-input v-model="searchform.name"
                   placeholder="请输入档案名称"
@@ -16,8 +15,6 @@
                   placeholder="选择单位"
                   clearable></el-input>
       </el-form-item>
-</el-row>
-      <el-row>
       <el-form-item label="填报时间:">
         <el-date-picker
           v-model="searchform.reportTime"
@@ -40,8 +37,6 @@
             end-placeholder="结束日期">
           </el-date-picker>
         </el-form-item>
-      </el-row>
-      <el-row>
       <el-form-item
         label="是否共享:"
       >
@@ -84,8 +79,6 @@
                   placeholder="填报人姓名"
                   clearable></el-input>
       </el-form-item>
-      </el-row>
-      <el-row>
       <el-button @click="searchformReset"
                  type="info"
                  plain
@@ -96,8 +89,6 @@
       <el-button @click="exportdata"
                  type="primary"
                  plain>导出</el-button>
-
-      </el-row>
 
     </el-form>
     </div>

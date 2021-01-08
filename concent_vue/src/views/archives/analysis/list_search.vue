@@ -6,7 +6,6 @@
                :model="searchform"
                @keyup.enter.native="getData()"
                class="queryForm">
-          <el-row>
             <el-form-item label="填报年度:">
             <el-select
               placeholder="请选择"
@@ -31,12 +30,11 @@
                      plain>查询</el-button>
 
 
-      </el-row>
         </el-form>
     </div>
 
 
-    <div style="margin-top: 20px">
+    <div style="margin-top: 0px">
       <el-table
         ref="table"
         :data="page.records"
