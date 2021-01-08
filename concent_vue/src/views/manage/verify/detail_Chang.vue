@@ -480,8 +480,8 @@
             disabled
             active-text="是"
             v-model="detailformBefore.verify.isCoalitionBid"
-            active-value="true"
-            inactive-value="false"
+            active-value="是"
+            inactive-value="否"
           >
             </el-switch>
 <!--       <el-radio-group v-model="detailformBefore.verify.isCoalitionBid" >-->
@@ -1154,8 +1154,8 @@
          <el-switch
            active-text="是"
            v-model="detailformAfter.verify.isCoalitionBid"
-           active-value="true"
-           inactive-value="false"
+           active-value="是"
+           inactive-value="否"
          >
             </el-switch>
 <!--       <el-radio-group v-model="detailformAfter.verify.isCoalitionBid" >-->
@@ -1554,7 +1554,7 @@ export default {
 
       console.log(data)
       this.treeStatas = false;
-
+      this.detailformAfter.verifyOrgList=[];
       var resultStr = "";
       data.forEach((item, index) => {
 
@@ -1669,7 +1669,7 @@ export default {
                 });
                 this.$refs[formName].resetFields();
                 this.$router.push({
-                  path: "/manage/verify/list_Change",
+                  path: "/manage/verify/listChange",
                 });
               }
 

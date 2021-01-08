@@ -96,14 +96,13 @@ export default {
                   "children": [
                     {
                       "name": "资格预审登记",
-                      "path": "/manage/verify/list",
-                      "component": "/manage/verify/list",
+                      "path": "/manage/verify/listAll",
+                      "component": "/manage/verify/listAll",
                       "iconCls": "el-icon-notebook-2",
                       "menushow": true,
                       "leaf": true,
                       "defaultpage": true
                     },
-
                     {
                       "name": "资格预审登记审核",
                       "path": "/manage/verify/list_WorkFlow",
@@ -115,8 +114,8 @@ export default {
                     },
                     {
                       "name": "资格预审变更",
-                      "path": "/manage/verify/list_Change",
-                      "component": "/manage/verify/list_Change",
+                      "path": "/manage/verify/listChange",
+                      "component": "/manage/verify/listChange",
                       "iconCls": "el-icon-edit-outline",
                       "menushow": true,
                       "leaf": true,
@@ -124,8 +123,8 @@ export default {
                     },
                     {
                       "name": "资格预审查询",
-                      "path": "/manage/verify/list_VerifySearch",
-                      "component": "/manage/verify/list_VerifySearch",
+                      "path": "/manage/verify/listVerifySearch",
+                      "component": "/manage/verify/listVerifySearch",
                       "iconCls": "el-icon-search",
                       "menushow": true,
                       "leaf": true,

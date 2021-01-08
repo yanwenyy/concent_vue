@@ -481,8 +481,8 @@
            :disabled="p.actpoint === 'look'"
            active-text="是"
            v-model="detailform.verify.isCoalitionBid"
-           active-value="true"
-           inactive-value="false"
+           active-value="是"
+           inactive-value="否"
          >
             </el-switch>
 <!--       <el-radio-group v-model="detailform.verify.isCoalitionBid" >-->
@@ -907,7 +907,7 @@ export default {
                 });
                 this.$refs[formName].resetFields();
                 this.$router.push({
-                  path: "/manage/verify/list",
+                  path: "/manage/verify/listAll",
                 });
               }
 
@@ -989,7 +989,7 @@ export default {
 
       console.log(data)
       this.treeStatas = false;
-
+      this.detailform.verifyOrgList=[];
       var resultStr = "";
       data.forEach((item, index) => {
 
