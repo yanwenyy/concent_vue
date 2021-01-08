@@ -590,7 +590,6 @@ export default {
     >.el-form-item,>>>.formItem{
 
       display: inline-block;
-      width: 32.5%!important;
     }
     .detailformfooter1 {
       margin-top: 5px;
