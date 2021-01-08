@@ -214,12 +214,21 @@
                 trigger: 'blur',
               }"
             >
-              <el-input
-                disabled
-                clearable
-                placeholder="投资额（万元）:"
-                v-model="detailformBefore.topInfor.investment"
-              />
+            <el-input
+              disabled
+              placeholder=""
+              size="mini"
+              v-model="detailformBefore.topInfor.investment"
+            >
+          <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+          </el-input>
+<!--              <el-input-->
+<!--                disabled-->
+<!--                clearable-->
+<!--                placeholder="投资额（万元）:"-->
+<!--                v-model="detailformBefore.topInfor.investment"-->
+<!--              />-->
             </el-form-item>
 
             <el-form-item label="资金来源:"
@@ -879,12 +888,21 @@
                 trigger: 'blur',
               }"
             >
-              <el-input
-                disabled
-                clearable
-                placeholder="投资额（万元）:"
-                v-model="detailformAfter.topInfor.investment"
-              />
+             <el-input
+               disabled
+               placeholder=""
+               size="mini"
+               v-model="detailformAfter.topInfor.investment"
+             >
+          <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+          </el-input>
+<!--              <el-input-->
+<!--                disabled-->
+<!--                clearable-->
+<!--                placeholder="投资额（万元）:"-->
+<!--                v-model="detailformAfter.topInfor.investment"-->
+<!--              />-->
             </el-form-item>
 
             <el-form-item label="资金来源:"

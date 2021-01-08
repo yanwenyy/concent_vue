@@ -214,12 +214,21 @@
                 trigger: 'blur',
               }"
             >
-              <el-input
-                disabled
-                clearable
-                placeholder="投资额（万元）:"
-                v-model="detailform.topInfor.investment"
-              />
+          <el-input
+            disabled
+            placeholder=""
+            size="mini"
+            v-model="detailform.topInfor.investment"
+          >
+          <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+          </el-input>
+<!--              <el-input-->
+<!--                disabled-->
+<!--                clearable-->
+<!--                placeholder="投资额（万元）:"-->
+<!--                v-model="detailform.topInfor.investment"-->
+<!--              />-->
             </el-form-item>
 
             <el-form-item label="资金来源:"
@@ -516,10 +525,8 @@
             </el-form-item>
             </div>
       <div>
-            <el-form-item
-            class="neirong"
-              label="附件:"
-            >
+
+            <p class="detail-title"><span >附件: </span>
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-upload
                 class="upload-demo detailUpload"
@@ -531,7 +538,7 @@
               >
               <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
-            </el-form-item>
+            </p>
             </div>
     <div>
       <el-table
@@ -555,10 +562,10 @@
 
                 </el-table-column>
 
-                <el-table-column :resizable="false" label="大小" prop="fileSize" show-overflow-tooltip>
+                <el-table-column :resizable="false" label="大小" prop="fileSize" width="120" show-overflow-tooltip>
 
                 </el-table-column>
-                <el-table-column :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+                <el-table-column :resizable="false" label="类型" prop="fileType" width="80" show-overflow-tooltip>
 
                 </el-table-column>
 
@@ -568,7 +575,7 @@
                   label="操作"
                   show-overflow-tooltip
                   v-if="p.actpoint!=='look'"
-                  width="200"
+                  width="80"
                 >
                   <template slot-scope="scope">
                     <el-link :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
@@ -577,7 +584,7 @@
               </el-table>
     </div>
 <p class="detail-title" style="overflow: hidden;margin-right:30px">
-     <span style="font-size: 14px" >标段信息: </span>   <el-button
+     <span  >标段信息: </span>   <el-button
        @click="dialogTopInfoSection = true"
        v-show="p.actpoint != 'look'"
             size="mini"
