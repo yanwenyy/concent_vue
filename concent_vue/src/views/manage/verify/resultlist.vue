@@ -398,29 +398,36 @@ export default {
             console.log(response.data)
             console.log( JSON.stringify(this.resultform.commonFilesList))
             console.log( JSON.stringify(this.resultform))
-            // if(response.data.uuid!=null) {
-            //   var list =[];
-            //   this.resultform.commonFilesList = list;
-            //   var commonFile = {
-            //
-            //     uuid: response.data.uuid,
-            //     businessId: response.data.businessId,
-            //     businessType: response.data.businessType,
-            //     businessCode: response.data.businessCode,
-            //     fileName: response.data.fileName,
-            //     fileType: response.data.fileType,
-            //     fileSize: response.data.fileSize,
-            //     filePath: response.data.filePath,
-            //     remarks: response.data.remarks,
-            //     createTime: response.data.createTime,
-            //     createUserId: response.data.createUserId,
-            //     createUserName: response.data.createUserName,
-            //     createOrgId: response.data.createOrgId,
-            //     createOrgName: response.data.createOrgName
-            //   }
-            //   this.resultform.commonFilesList.push(commonFile);
-            // }
-            this.resultform.commonFilesList.push(response.data);
+            if(response.data.uuid!=null) {
+
+              var commonFile = {
+
+                uuid: response.data.uuid,
+                businessId: response.data.businessId,
+                businessType: response.data.businessType,
+                businessCode: response.data.businessCode,
+                fileName: response.data.fileName,
+                fileType: response.data.fileType,
+                fileSize: response.data.fileSize,
+                filePath: response.data.filePath,
+                remarks: response.data.remarks,
+                createTime: response.data.createTime,
+                createUserId: response.data.createUserId,
+                createUserName: response.data.createUserName,
+                createOrgId: response.data.createOrgId,
+                createOrgName: response.data.createOrgName
+              }
+              if(this.resultform.commonFilesList==null)
+              {
+                var list =[];
+                list.push(commonFile);
+                this.resultform.commonFilesList = list;
+              }else {
+                this.resultform.commonFilesList.push(commonFile);
+              }
+
+            }
+            //this.resultform.commonFilesList.push(response.data);
             console.log( JSON.stringify(this.resultform.commonFilesList))
           }
         })
@@ -590,7 +597,6 @@ export default {
     >.el-form-item,>>>.formItem{
 
       display: inline-block;
-      width: 32.5%!important;
     }
     .detailformfooter1 {
       margin-top: 5px;

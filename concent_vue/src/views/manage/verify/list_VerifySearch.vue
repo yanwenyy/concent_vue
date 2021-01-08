@@ -127,7 +127,7 @@
 
 
     </el-form>
-
+<div style="margin-top: 10px">
       <el-table
         :data="page.records"
         :header-cell-style="{
@@ -268,7 +268,7 @@
         @size-change="handleSizeChange"
         layout="total, sizes, prev, pager, next, jumper"
       ></el-pagination>
-
+</div>
 
     <el-dialog title="资审结果登记查看" :visible.sync="dialogResult"
                width="300">
@@ -619,7 +619,6 @@
   width: auto;
   margin-bottom: 5px !important;
   display: inline-block;
-  width: 32.5% !important;
 }
 .item_zbj{
   width: 40%;

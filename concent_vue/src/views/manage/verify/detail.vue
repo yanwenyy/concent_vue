@@ -214,12 +214,21 @@
                 trigger: 'blur',
               }"
             >
-              <el-input
-                disabled
-                clearable
-                placeholder="投资额（万元）:"
-                v-model="detailform.topInfor.investment"
-              />
+          <el-input
+            disabled
+            placeholder=""
+            size="mini"
+            v-model="detailform.topInfor.investment"
+          >
+          <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+          </el-input>
+<!--              <el-input-->
+<!--                disabled-->
+<!--                clearable-->
+<!--                placeholder="投资额（万元）:"-->
+<!--                v-model="detailform.topInfor.investment"-->
+<!--              />-->
             </el-form-item>
 
             <el-form-item label="资金来源:"
@@ -322,7 +331,7 @@
               <el-input
                 disabled
                 placeholder="请选择"
-                v-model="detailform.verify.contactMode"
+                v-model="detailform.verify.tioContactMode"
               >
               </el-input>
               </el-form-item>
@@ -468,9 +477,17 @@
                   required: true, message: '此项不能为空', trigger: 'blur'
                 }"
          >
-       <el-radio-group v-model="detailform.verify.isCoalitionBid" >
-                  <el-radio :disabled="p.actpoint === 'look'"  v-for="(item, index) in coalitionBid" :label="item.id" :key="index">{{item.detailName}}</el-radio>
-                </el-radio-group>
+         <el-switch
+           :disabled="p.actpoint === 'look'"
+           active-text="是"
+           v-model="detailform.verify.isCoalitionBid"
+           active-value="true"
+           inactive-value="false"
+         >
+            </el-switch>
+<!--       <el-radio-group v-model="detailform.verify.isCoalitionBid" >-->
+<!--                  <el-radio :disabled="p.actpoint === 'look'"  v-for="(item, index) in coalitionBid" :label="item.id" :key="index">{{item.detailName}}</el-radio>-->
+<!--                </el-radio-group>-->
 
        <!--        <el-input-->
        <!--          clearable-->
@@ -508,10 +525,8 @@
             </el-form-item>
             </div>
       <div>
-            <el-form-item
-            class="neirong"
-              label="附件（最大10MB）:"
-            >
+
+            <p class="detail-title"><span >附件: </span>
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-upload
                 class="upload-demo detailUpload"
@@ -523,7 +538,7 @@
               >
               <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
-            </el-form-item>
+            </p>
             </div>
     <div>
       <el-table
@@ -547,10 +562,10 @@
 
                 </el-table-column>
 
-                <el-table-column :resizable="false" label="大小" prop="fileSize" show-overflow-tooltip>
+                <el-table-column :resizable="false" label="大小" prop="fileSize" width="120" show-overflow-tooltip>
 
                 </el-table-column>
-                <el-table-column :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+                <el-table-column :resizable="false" label="类型" prop="fileType" width="80" show-overflow-tooltip>
 
                 </el-table-column>
 
@@ -560,7 +575,7 @@
                   label="操作"
                   show-overflow-tooltip
                   v-if="p.actpoint!=='look'"
-                  width="200"
+                  width="80"
                 >
                   <template slot-scope="scope">
                     <el-link :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
@@ -569,7 +584,7 @@
               </el-table>
     </div>
 <p class="detail-title" style="overflow: hidden;margin-right:30px">
-     <span style="font-size: 14px" >标段信息: </span>   <el-button
+     <span  >标段信息: </span>   <el-button
        @click="dialogTopInfoSection = true"
        v-show="p.actpoint != 'look'"
             size="mini"
@@ -1194,7 +1209,41 @@ export default {
           type: 'success',
           duration: 1500,
           onClose: () => {
-            this.detailform.commonFilesList.push(response.data);
+            console.log(response.data)
+            console.log( JSON.stringify(this.detailform.commonFilesList))
+            console.log( JSON.stringify(this.detailform))
+            if(response.data.uuid!=null) {
+              //var list =[];
+              //this.detailform.commonFilesList = list;
+              var commonFile = {
+
+                uuid: response.data.uuid,
+                businessId: response.data.businessId,
+                businessType: response.data.businessType,
+                businessCode: response.data.businessCode,
+                fileName: response.data.fileName,
+                fileType: response.data.fileType,
+                fileSize: response.data.fileSize,
+                filePath: response.data.filePath,
+                remarks: response.data.remarks,
+                createTime: response.data.createTime,
+                createUserId: response.data.createUserId,
+                createUserName: response.data.createUserName,
+                createOrgId: response.data.createOrgId,
+                createOrgName: response.data.createOrgName
+              }
+              if(this.detailform.commonFilesList==null)
+              {
+                var list =[];
+                list.push(commonFile);
+                this.detailform.commonFilesList = list;
+              }else {
+                this.detailform.commonFilesList.push(commonFile);
+              }
+              // this.detailform.commonFilesList.push(commonFile);
+            }
+
+            //this.detailform.commonFilesList.push(response.data);
             console.log( JSON.stringify(this.detailform.commonFilesList))
           }
         })

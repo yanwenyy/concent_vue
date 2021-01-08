@@ -387,6 +387,12 @@ pre {
   height: 32px !important;
   line-height: 32px !important;
 }
+.queryForm .el-date-editor .el-range__icon{
+  line-height: 25px;
+}
+.queryForm .el-date-editor .el-range-separator{
+  line-height: 25px;
+}
 .detailSpan{
   color: #2a2a7d;
   line-height: 32px;

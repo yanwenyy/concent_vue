@@ -46,9 +46,11 @@
     </div>
 
 
-    <div style="margin-top: 20px">
+    <div style="margin-top: 0px">
       <el-table
         ref="table"
+        :max-height="$tableHeight"
+        :height="$tableHeight"
         :data="page.records"
         :header-cell-style="{
           'text-align': 'center',
@@ -571,8 +573,7 @@ export default {
 <style scoped>
 .gcform .el-form-item{
   width: auto;
-  margin-bottom:22px;
-  margin-left:22px;
+  margin-bottom: 5px !important;
 }
 >>>.el-form-item__label{
   width: auto;
