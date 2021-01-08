@@ -4,9 +4,9 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span class="detailSpan"><b>信息管理详情</b></span>
-        <el-button v-show="p.actpoint != 'look'" @click="back" class="detailbutton" >返回</el-button>
+        <el-button @click="back" class="detailbutton" >返回</el-button>
         <el-button v-show="p.actpoint != 'look'" type="primary" @click="saveInfo('detailform')" class="detailbutton">保存</el-button>
-        <el-button @click="submit" class="detailbutton">提交</el-button>
+        <el-button v-show="p.actpoint != 'look'" @click="submit" class="detailbutton">提交</el-button>
       </div>
       <div class="detailBox">
         <el-form
@@ -43,7 +43,7 @@
           <br>
           <div>
             <el-form-item
-              class="inline-formitem"
+              class="inline-formitem xmbk-item"
               label="项目板块:"
               prop="topInfor.moduleId"
               :rules="{
@@ -355,10 +355,12 @@
               :disabled="p.actpoint === 'look'"
               clearable
               placeholder=""
-
               v-model="detailform.topInfor.investment"
               @input="detailform.topInfor.investment>maxMoney?detailform.topInfor.isMajorProject='0':detailform.topInfor.isMajorProject='1'"
-            />
+            >
+              <template slot="prepend">¥</template>
+              <template slot="append">(万元)</template>
+          </el-input>
           </el-form-item>
           <el-form-item label="资金来源:" prop="value1"  :rules="{
                 required: true,
@@ -627,7 +629,7 @@
               prop="contractAmount"
               show-overflow-tooltip
               align="center"
-              width="300"
+              width="350"
             >
               <template slot-scope="scope">
                 <el-form-item class="tabelForm" :prop="'topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
@@ -747,7 +749,7 @@
                 label="项目规模(万元)"
                 align="center"
                 prop="projectScale"
-                width="300"
+                width="350"
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
@@ -908,6 +910,12 @@
       },
     },
     mounted() {
+      window.onresize = () => {
+        return (() => {
+          window.screenWidth = document.body.clientWidth
+        console.log( window.screenWidth)
+      })()
+      }
       // this.$store.commit("setCategory", 'projectDomainType');
       this.id=this.p.instid;
       if (this.p.actpoint === "edit"||this.id) {

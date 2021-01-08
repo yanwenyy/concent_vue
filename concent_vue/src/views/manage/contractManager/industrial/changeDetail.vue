@@ -1533,7 +1533,7 @@
                     width="200"
                   >
                     <template slot-scope="scope">
-                      <el-link :underline="false" @click="handleRemove1(scope.row,scope.$index)" type="warning">删除</el-link>
+                      <el-link  v-show="!scope.row.uuid" :underline="false" @click="handleRemove1(scope.row,scope.$index)" type="warning">删除</el-link>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -1674,7 +1674,7 @@
                     width="200"
                   >
                     <template slot-scope="scope">
-                      <el-link :underline="false"  @click="del(scope.$index,scope.row,detailform.contractInfoProductInformtList,'cpxx')" type="warning">删除</el-link>
+                      <el-link  v-show="!scope.row.uuid" :underline="false"  @click="del(scope.$index,scope.row,detailform.contractInfoProductInformtList,'cpxx')" type="warning">删除</el-link>
                     </template>
                   </el-table-column>
                 </el-table>
