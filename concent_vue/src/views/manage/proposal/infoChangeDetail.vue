@@ -127,7 +127,10 @@
                 trigger: 'blur',
               }"
               >
-                <el-input v-model="detailFormBefore.topInfor.investment" disabled></el-input>
+                <el-input v-model="detailFormBefore.topInfor.investment" disabled>
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
               </el-form-item>
 
               <el-form-item label="资金来源:" prop="capitalId">
@@ -364,7 +367,7 @@
                   :resizable="false"
                   label="项目规模"
                   align="center"
-                  width="300"
+                  width="350"
                   prop="contractAmount"
                   show-overflow-tooltip
                 >
@@ -423,7 +426,7 @@
               <br>
               <div>
                 <el-form-item
-                  class="inline-formitem"
+                  class="inline-formitem xmbk-item"
                   style="width:100%;"
                   label="项目板块:"
                   prop="topInfor.moduleId"
@@ -749,7 +752,10 @@
                   placeholder=""
 
                   v-model="detailform.topInfor.investment"
-                />
+                >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+                </el-input>
               </el-form-item>
 
               <el-form-item label="资金来源:" prop="value1"  :rules="{
@@ -758,6 +764,7 @@
                 trigger: 'blur',
               }">
                 <el-select
+                  class="multiple-sel"
                   :disabled="p.actpoint === 'look'"
                   filterable
                   clearable
@@ -1024,7 +1031,7 @@
                   prop="contractAmount"
                   show-overflow-tooltip
                   align="center"
-                  width="300"
+                  width="350"
                 >
                   <template slot-scope="scope">
                     <el-form-item class="tabelForm" :prop="'topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
@@ -1149,7 +1156,7 @@
                   label="项目规模(万元)"
                   align="center"
                   prop="projectScale"
-                  width="300"
+                  width="350"
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">

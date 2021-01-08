@@ -96,7 +96,7 @@
       <div>
             <el-form-item
               class="neirong"
-              label="附件（最大10MB）:"
+              label="附件:"
               style="width: 33%"
             >
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->

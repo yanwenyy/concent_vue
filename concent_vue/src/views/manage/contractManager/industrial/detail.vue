@@ -1,7 +1,7 @@
 <template>
   <div style="position: relative">
     <el-button v-show="p.actpoint != 'look'" class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform')">保存</el-button>
-    <el-button v-show="p.actpoint != 'look'" class="detail-back-tab detailbutton sub-btn" @click="submit">提交</el-button>
+    <el-button v-show="p.actpoint != 'look'" class="detail-back-tab detailbutton sub-btn">提交</el-button>
     <el-button class="detail-back-tab" @click="back" type="text">返回</el-button>
     <el-form
       :inline="false"
@@ -23,6 +23,7 @@
         }"
               >
                 <el-input
+                  :disabled="p.actpoint === 'look'"
                   clearable
                   placeholder="请输入"
 
@@ -37,6 +38,7 @@
         }"
               >
                 <el-input
+                  :disabled="p.actpoint === 'look'"
                   clearable
                   placeholder="请输入"
 
@@ -54,6 +56,7 @@
 
               >
                 <el-input
+                  :disabled="p.actpoint === 'look'"
                   clearable
                   placeholder="请输入"
 
@@ -71,7 +74,7 @@
 
               >
                 <el-input
-
+                  :disabled="p.actpoint === 'look'"
                   clearable
 
                   placeholder="请输入"
@@ -158,7 +161,7 @@
               >
                 <el-date-picker
                   v-model="detailform.contractInfo.contractSignTime"
-
+                  :disabled="p.actpoint === 'look'"
                   type="date"
                   value-format="timestamp"
                   placeholder="选择日期时间">
@@ -175,6 +178,7 @@
 
               >
                 <el-date-picker
+                  :disabled="p.actpoint === 'look'"
                   v-model="detailform.contractInfo.contractStartTime"
                   type="date"
                   value-format="timestamp"
@@ -192,6 +196,7 @@
 
               >
                 <el-date-picker
+                  :disabled="p.actpoint === 'look'"
                   v-model="detailform.contractInfo.contractEndTime"
                   type="date"
                   value-format="timestamp"
@@ -206,6 +211,7 @@
 
               >
                 <el-input
+                  :disabled="p.actpoint === 'look'"
                   clearable
                   placeholder="请输入"
 
@@ -218,6 +224,7 @@
                 :rules="rules.contractAmount"
               >
                 <el-input
+                  :disabled="p.actpoint === 'look'"
                   clearable
                   placeholder="请输入"
 
@@ -392,6 +399,7 @@
 
               >
                 <el-select
+                  class="multiple-sel"
                   :disabled="p.actpoint==='look'"
                   multiple
                   @change="getMultipleName(detailform.zplx,assemblyType,'otherAssemblyTypeId','otherAssemblyType')"
@@ -421,6 +429,7 @@
 
               >
                 <el-select
+                  class="multiple-sel"
                   :disabled="p.actpoint==='look'"
                   multiple
                   @change="getMultipleName(detailform.jzlx,architecturalType,'otherBuildingTypeId','otherBuildingType')"
@@ -450,6 +459,7 @@
 
               >
                 <el-select
+                  class="multiple-sel"
                   :disabled="p.actpoint==='look'"
                   multiple
                   @change="getMultipleName(detailform.jzjglx,buildingStructure,'otherBuildingStructureTypeId','otherBuildingStructureType')"
@@ -479,6 +489,7 @@
 
               >
                 <el-select
+                  class="multiple-sel"
                   :disabled="p.actpoint==='look'"
                   multiple
                   clearable
@@ -538,7 +549,7 @@
                 trigger: 'change',
               }"
               >
-                <el-input placeholder="请输入内容" v-model="detailform.contractInfo.qualityOrgNames" class="input-with-select">
+                <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.qualityOrgNames" class="input-with-select">
                   <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('使用资质单位',detailform.contractInfo.qualityOrgIds)" ></el-button>
                 </el-input>
               </el-form-item>
@@ -553,6 +564,7 @@
 
               >
                 <el-input
+                  :disabled="p.actpoint === 'look'"
                   clearable
                   placeholder="请输入"
 
@@ -603,6 +615,7 @@
 
               >
                 <el-input
+                  :disabled="p.actpoint === 'look'"
                   clearable
                   placeholder="请输入"
 
@@ -616,6 +629,7 @@
                 :rules="rules.contractAmount"
               >
                 <el-input
+                  :disabled="p.actpoint === 'look'"
                   clearable
                   placeholder="请输入"
 
@@ -628,6 +642,7 @@
 
               >
                 <el-input
+                  :disabled="p.actpoint === 'look'"
                   clearable
                   placeholder="请输入"
 
@@ -679,6 +694,7 @@
                 >
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-input
+                    :disabled="p.actpoint === 'look'"
                     type="textarea"
                     clearable
                     placeholder="请输入"
@@ -688,6 +704,7 @@
               </div>
               <p><span >证明文件: </span>
                 <el-upload
+                  v-show="p.actpoint != 'look'"
                   class="upload-demo detailUpload detatil-flie-btn"
                   :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
                   :on-success="handleChange1"
@@ -748,6 +765,7 @@
               <p style="overflow: hidden">
                 <span style="float: left">产品信息: </span>
                 <el-button
+                  v-show="p.actpoint != 'look'"
                   @click="addXs()"
                   class="upload-demo detailUpload detatil-flie-btn"
                   type="primary"
@@ -1458,7 +1476,7 @@
 export default {
   data() {
     var validateMoney = (rule, value, callback) => {
-      console.log(value)
+      // console.log(value)
       if(value===''){
         callback(new Error('不能为空'))
       }else if (!isMoney(value)) {
@@ -1933,7 +1951,7 @@ export default {
     background: #fff;
   }
   .detatil-flie-btn{
-    margin-left: 30px;
+    /*margin-left: 30px;*/
   }
   .btn-group{
     text-align: center;

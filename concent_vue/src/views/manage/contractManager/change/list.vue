@@ -7,37 +7,36 @@
         <el-button type="primary" plain>提交</el-button>
         <el-button @click="remove" type="primary" plain>删除</el-button>
       </el-button-group>
-    </div>
-    <div style="float: right; margin: -40px 0 0 0">
-      <el-form class="search-form" :inline="true" :model="searchFrom" @keyup.enter.native="init()">
-        <el-form-item label="合同名称:">
-          <el-input v-model="searchFrom.contractName" placeholder="项目名称" clearable></el-input>
-        </el-form-item>
-        <el-form-item
-          label="审核状态:"
-        >
-          <el-select
-            clearable
-            filterable
-            placeholder="请选择"
-            size="mini"
-            v-model="searchFrom.state"
+      <div style="float: right;">
+        <el-form class="search-form" :inline="true" :model="searchFrom" @keyup.enter.native="init()">
+          <el-form-item label="合同名称:">
+            <el-input  class="list-search-picker" v-model="searchFrom.contractName" placeholder="项目名称" clearable></el-input>
+          </el-form-item>
+          <el-form-item
+            label="审核状态:"
           >
-            <el-option
-              :key="index"
-              :label="item.detailName"
-              :value="item.id"
-              v-for="(item, index) in shztList"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <el-button @click="searchFromReset" type="info" plain style="color:black;background:none">重置</el-button>
-      <el-button @click="getData" type="primary" plain>查询</el-button>
-      <el-button type="primary" plain>导出</el-button>
+            <el-select
+              class="list-search-picker"
+              clearable
+              filterable
+              placeholder="请选择"
+              v-model="searchFrom.state"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.id"
+                v-for="(item, index) in shztList"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <el-button @click="searchFromReset" type="info" plain style="color:black;background:none">重置</el-button>
+        <el-button @click="getData" type="primary" plain>查询</el-button>
+        <el-button type="primary" plain>导出</el-button>
+      </div>
     </div>
-
-    <div style="margin-top: 20px">
+    <div style="margin-top: 10px">
       <el-table
         class="tableStyle"
         :max-height="$tableHeight"
@@ -317,6 +316,12 @@
 <style scoped>
   .el-table__row {
     cursor: pointer;
+  }
+  .search-form >>>.el-form-item{
+    margin-bottom: 0;
+  }
+  .search-form >>>.el-form-item__content,.search-form >>>.el-form-item__label{
+    line-height: 30px;
   }
   .search-form{
     display: inline-block;

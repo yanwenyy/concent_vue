@@ -52,6 +52,7 @@
             <span>项目名称</span>
             <div>
               <el-input
+                class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.inforName"
                 size="mini"
@@ -72,6 +73,7 @@
           <template slot="header" slot-scope="scope">
             <span>工程类别(一级)</span>
             <el-select
+              class="list-search-picker"
               clearable
               filterable
               placeholder="请选择"
@@ -99,6 +101,7 @@
           <template slot="header" slot-scope="scope">
             <span>工程类别(二级)</span>
             <el-select
+              class="list-search-picker"
               :disabled="searchform.enginTypeFirstId==''"
               clearable
               filterable
@@ -126,6 +129,7 @@
             <span>建设单位</span>
             <div>
               <el-input
+                class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.constructionOrg"
                 size="mini"
@@ -143,6 +147,7 @@
           <template slot="header" slot-scope="scope">
             <span>公告类型</span>
             <el-select
+              class="list-search-picker"
               clearable
               filterable
               placeholder="请选择"
@@ -195,6 +200,7 @@
             <span>状态</span>
             <div>
               <el-input
+                class="list-search-picker"
                 style=" width: 100%"
                 v-model="sousuo"
                 size="mini"

@@ -1,11 +1,9 @@
 <template>
   <div>
     <div style="width: 100%; overflow: hidden">
-      <el-form :inline="true"
+      <el-form :inline="true" class="queryForm"
                :model="searchform"
-               @keyup.enter.native="getData()"
-               class="gcform">
-      <el-row>
+               @keyup.enter.native="getData()">
       <el-form-item label="统计分析名称:">
         <el-input v-model="searchform.name"
                   placeholder="请输入统计分析名称"
@@ -16,8 +14,6 @@
                   placeholder="选择单位"
                   clearable></el-input>
       </el-form-item>
-</el-row>
-      <el-row>
       <el-form-item label="填报月度:">
         <el-date-picker
           v-model="searchform.reportTime"
@@ -37,8 +33,6 @@
             end-placeholder="结束日期">
           </el-date-picker>
         </el-form-item>
-      </el-row>
-      <el-row>
       <el-form-item
         label="是否共享:"
       >
@@ -65,8 +59,6 @@
                   placeholder="填报人姓名"
                   clearable></el-input>
       </el-form-item>
-      </el-row>
-      <el-row>
       <el-button @click="searchformReset"
                  type="info"
                  plain
@@ -77,13 +69,10 @@
       <el-button @click="exportdata"
                  type="primary"
                  plain>导出</el-button>
-
-      </el-row>
-
     </el-form>
     </div>
 
-    <div style="margin-top: 20px">
+    <div style="margin-top: 10px">
       <el-table
         :data="page.records"
         :header-cell-style="{
@@ -461,9 +450,9 @@ export default {
 }
 </script>
 <style scoped>
-.gcform .el-form-item{
+.el-form-item{
   width: auto;
-  margin-bottom:22px;
+  margin-bottom: 5px !important;
 }
 >>>.el-form-item__label{
   width: auto;

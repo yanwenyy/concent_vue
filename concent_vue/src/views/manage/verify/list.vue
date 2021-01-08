@@ -169,8 +169,7 @@
         </el-form-item>
         <el-form-item
           class="neirong"
-          label="附件（最大10MB）:"
-          style="width: 33%"
+          label="附件:"
         >
           <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
          <el-upload
@@ -509,5 +508,12 @@ export default {
 <style scoped>
 .el-table__row {
   cursor: pointer;
+}
+>>>.el-table td, .el-table th
+{
+  padding:5px 0px;
+}
+.gcform >>>.el-form-item {
+  margin-bottom: 5px !important;
 }
 </style>
