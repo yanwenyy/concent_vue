@@ -92,7 +92,7 @@
               label="项目性质(一级):"
             >
               <el-input
-                 disabled
+                disabled
                 clearable
                 filterable
                 placeholder="请选择"
@@ -236,7 +236,8 @@
               </el-input>
             </el-form-item>
 
-            <el-form-item  label="是否为重大项目:">
+            <el-form-item  label="是否为重大项目:"
+            class="inline-formitem formItem">
               <el-switch
 
               class="inline-formitem-switch"
@@ -248,17 +249,6 @@
               disabled
             >
             </el-switch>
-            <!-- <div>
-            <el-radio  label="0"
-            v-model="detailform.topInforBO.topInfor.bidProbName"
-            disabled
-            style="margin-right:40px"
-            >是</el-radio>
-            <el-radio  label="1"
-            v-model="detailform.topInforBO.topInfor.bidProbName"
-            disabled
-            >否</el-radio>
-            </div> -->
             </el-form-item>
             <br>
 
@@ -553,8 +543,6 @@
                 <el-table
                 :data="detailform.bidInfo_01"
                 :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
-
-
                 align="center"
                 border
                 ref="table"
@@ -998,6 +986,9 @@ export default {
       projectPlate(){
         return this.$store.state.projectPlate;
       },
+      amountSource() {
+      return this.$store.state.amountSource;
+    },
       // yesOrNo(){
       //   return this.$store.state.yesOrNo;
       // }

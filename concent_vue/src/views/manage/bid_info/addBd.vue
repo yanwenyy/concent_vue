@@ -28,7 +28,22 @@
         </el-form-item>
 
         <el-form-item label="评标办法:" class="list-item">
-          <el-input v-model="detailForm.bidInfoSection.bidEvaluationMethodName" placeholder="评标办法" clearable :disabled="type === 'look'"></el-input>
+                <template slot-scope="scope">
+                 <el-select
+                clearable
+                placeholder="评标办法"
+                size="mini"
+                :disabled="type === 'look'"
+                v-model="detailForm.bidInfoSection.bidEvaluationMethodName">
+                 <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in bidMethod"
+
+                ></el-option>
+                </el-select>
+              </template>
         </el-form-item>
 
         <el-form-item label="开标地点:" class="list-item">
@@ -48,7 +63,7 @@
         </el-form-item>
 
         <el-form-item label="参与投标单位:" class="list-item">
-          <el-input v-model="detailForm.bidInfoSection.participatingUnitsName" placeholder="评标办法" clearable :disabled="type === 'look'"></el-input>
+          <el-input v-model="detailForm.bidInfoSection.participatingUnitsName" placeholder="参与投标单位" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
 
         <el-form-item label="编标拟配合单位:" class="list-item">
@@ -239,8 +254,8 @@
             width="100"
             :disabled="type === 'look'"
           >
-            <template slot-scope="scope">
-              <el-link :underline="false" @click="del(scope.$index,'inside')" type="warning">删除</el-link>
+            <template slot-scope="scope" >
+              <el-link :underline="false" @click="del(scope.$index,'inside')" type="warning" :disabled="type === 'look'">删除</el-link>
             </template>
           </el-table-column>
         </el-table>
@@ -307,21 +322,7 @@
                   </el-input>
                 </el-form-item>
               </template>
-            <!-- <template slot-scope="scope">
-              <el-input type="text" v-model="scope.row.bidAmount"></el-input>
-            </template> -->
           </el-table-column>
-
-          <!-- <el-table-column
-            prop="bidAmount"
-            header-align="center"
-            align="center"
-            label="投标价"
-            :rules="rules.contractAmount">
-            <template slot-scope="scope">
-              <el-input type="text" v-model="scope.row.bidAmount"></el-input>
-            </template>
-          </el-table-column> -->
 
           <el-table-column
             :resizable="false"
@@ -333,7 +334,7 @@
             :disabled="type === 'look'"
           >
             <template slot-scope="scope">
-              <el-link :underline="false" @click="del(scope.$index,'outside')" type="warning">删除</el-link>
+              <el-link :underline="false" @click="del(scope.$index,'outside')" type="warning" :disabled="type === 'look'">删除</el-link>
             </template>
           </el-table-column>
         </el-table>
@@ -389,7 +390,7 @@ import { isMoney } from '@/utils/validate'
           },
           {
             id:'1',
-            detailName:'啦啦啦啦啦'
+            detailName:'22222222222222测试'
           },
         ],
          rules:{
@@ -401,6 +402,11 @@ import { isMoney } from '@/utils/validate'
     },
     mounted() {
 
+    },
+    computed:{
+      bidMethod (){
+        return this.$store.state.bidMethod;
+      },
     },
     methods: {
           //获取下拉框id和name的公共方法

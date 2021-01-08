@@ -53,6 +53,7 @@ const state = {
   railwayLine:[],//所属线路
   contractType:[],//合同类型
   certificationType:[],//项目板块
+  bidMethod:[],//评标办法
 
   optiondata:[],
   dialogState: 'edit',
@@ -242,6 +243,9 @@ const mutations = {
       case 'projectPlate':
         state.projectPlate=item.sysCategoryDetailList;
         break;
+        case 'bidMethod':
+          state.bidMethod=item.sysCategoryDetailList;
+          break;
       }
     })
     })
@@ -398,6 +402,9 @@ const mutations = {
       case 'projectPlate':
         state.projectPlate=item.sysCategoryDetailList;
         break;
+        case 'bidMethod':
+          state.bidMethod=item.sysCategoryDetailList;
+          break;
       }
     })
     }

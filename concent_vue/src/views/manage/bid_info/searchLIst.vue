@@ -77,7 +77,7 @@
 
       <el-form-item label="录入单位:">
         <el-input
-          v-model="searchform.ticCreateName"
+          v-model="searchform.createOrgName"
           placeholder="录入单位"
           clearable
         ></el-input>
@@ -177,7 +177,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{scope.row.isWinBid==='0'?'中标':'未中标'}}
+            {{scope.row.isWinBid==='1'?'中标':'未中标'}}
           </template>
         </el-table-column>
 
@@ -251,7 +251,7 @@
           :width="300"
           align="center"
           label="录入单位"
-          prop="ticCreateName"
+          prop="createOrgName"
           show-overflow-tooltip
         >
         </el-table-column>
@@ -386,11 +386,11 @@ export default {
 
             yesOrNo:[
           {
-            id:'0',
+            id:'1',
             detailName:'中标'
           },
           {
-            id:'1',
+            id:'0',
             detailName:'未中标'
           }
         ],

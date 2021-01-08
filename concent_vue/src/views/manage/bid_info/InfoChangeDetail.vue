@@ -1,7 +1,7 @@
 <template>
 <div style="position: relative">
-  <el-button class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform')">保存</el-button>
-  <el-button class="detail-back-tab detailbutton sub-btn" @click="submit">提交</el-button>
+  <el-button class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform')" v-if="p.actpoint!='look'">保存</el-button>
+  <el-button class="detail-back-tab detailbutton sub-btn" @click="submit" v-if="p.actpoint!='look'">提交</el-button>
   <el-button class="detail-back-tab detailbutton" @click="back"  type="text">返回</el-button>
 
 
@@ -315,15 +315,20 @@
           </el-form-item>
 
           <el-form-item label="招标公告发布日期:"
+          class="formItem"
            :rules="{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
               }">
-            <el-input
-              v-model="detailFormBefore.bidInfo.publishTime"
-              disabled
-            ></el-input>
+              <el-date-picker
+                :disabled="p.actpoint === 'look'"
+                filterable
+                clearable
+                value-format="timestamp"
+                v-model="detailform.bidInfo.publishTime"
+              >
+              </el-date-picker>
           </el-form-item>
 
           <el-form-item label="内部联合体单位:"
@@ -341,17 +346,25 @@
                 message: '此项不能为空',
                 trigger: 'blur',
               }">
-            <el-input
-              v-model="detailFormBefore.bidInfo.endTime"
-              disabled
-            ></el-input>
+                <el-date-picker
+                  :disabled="p.actpoint === 'look'"
+                  value-format="timestamp"
+                  clearable
+                  filterable
+                  v-model="detailFormBefore.bidInfo.endTime"
+                >
+                </el-date-picker>
           </el-form-item>
 
           <el-form-item label="招标文件发售截止日期:">
-            <el-input
-              v-model="detailFormBefore.bidInfo.saleTime"
-              disabled
-            ></el-input>
+                <el-date-picker
+                  :disabled="p.actpoint === 'look'"
+                  value-format="timestamp"
+                  filterable
+                  clearable
+                  v-model="detailform.bidInfo.saleTime"
+                >
+                </el-date-picker>
           </el-form-item>
 
           <el-form-item label="外部联合体单位:"
@@ -364,12 +377,12 @@
 <br>
 
           <el-form-item label="是否为费率招标:"
-          class="inline-formitem formItem"
-           :rules="{
+          class="inline-formitem formItem">
+           <!-- :rules="{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
-              }">
+              }" -->
             <el-switch
               class="inline-formitem-switch"
               v-model="detailFormBefore.bidInfo.isBidRates"
@@ -383,12 +396,12 @@
           </el-form-item>
 
           <el-form-item label="是否联合体投标:"
-          class="inline-formitem formItem"
-           :rules="{
+          class="inline-formitem formItem">
+           <!-- :rules="{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
-              }">
+              }" -->
             <el-switch
               class="inline-formitem-switch"
               v-model="detailFormBefore.bidInfo.isCoalitionBid"
@@ -402,12 +415,7 @@
           </el-form-item>
 </div>
 
-          <el-form-item class="neirong" label="投标说明(最多1000字):"
-           :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }">
+          <el-form-item class="neirong" label="投标说明(最多1000字):">
             <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
             <el-input
               :disabled="true"
@@ -488,7 +496,7 @@
           <el-table
           :key="key"
           @row-dblclick="openBd('look')"
-            :data="detailFormBefore.topInfoSectionList"
+            :data="detailFormBefore.bidInfoSectionList"
             :header-cell-style="{
               'text-align': 'center',
               'background-color': 'rgba(246,248,252,1)',
@@ -1140,24 +1148,25 @@
                 </el-select>
               </el-form-item>
 
-              <el-form-item
-                label="招标公告发布日期:"
-                prop="bidInfo.publishTime"
-                :rules="{
-                  required: true,
-                  message: '此项不能为空',
-                  trigger: 'blur',
-                }"
+            <el-form-item
+            class="formItem"
+              label="招标公告发布日期:"
+              prop="bidInfo.publishTime"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
+              <el-date-picker
+                :disabled="p.actpoint === 'look'"
+                filterable
+                clearable
+                value-format="timestamp"
+                v-model="detailform.bidInfo.publishTime"
               >
-                <el-date-picker
-                  :disabled="p.actpoint === 'look'"
-                  filterable
-                  clearable
-                  value-format="timestamp"
-                  v-model="detailform.bidInfo.publishTime"
-                >
-                </el-date-picker>
-              </el-form-item>
+              </el-date-picker>
+            </el-form-item>
 
               <el-form-item label="内部联合体单位:"
               v-if="detailform.bidInfo.isCoalitionBid==='0'"
@@ -1223,13 +1232,13 @@
               <el-form-item
               class="inline-formitem formItem"
                 label="是否为费率招标:"
-                prop="bidInfo.isBidRates"
-                :rules="{
+                prop="bidInfo.isBidRates">
+                <!-- :rules="{
                   required: true,
                   message: '此项不能为空',
                   trigger: 'blur',
-                }"
-              >
+                }" -->
+
               <el-switch
               class="inline-formitem-switch"
               v-model="detailform.bidInfo.isBidRates"
@@ -1246,13 +1255,13 @@
               <el-form-item
               class="inline-formitem formItem"
                 label="是否联合体投标:"
-                prop="bidInfo.isCoalitionBid"
-                :rules="{
+                prop="bidInfo.isCoalitionBid">
+                <!-- :rules="{
                   required: true,
                   message: '此项不能为空',
                   trigger: 'blur',
-                }"
-              >
+                }" -->
+
             <el-switch
               class="inline-formitem-switch"
               v-model="detailform.bidInfo.isCoalitionBid"
@@ -1272,13 +1281,13 @@
               <el-form-item
                 class="neirong"
                 label="投标说明(最多1000字):"
-                prop="bidInfo.bidExplain"
-                :rules="{
+                prop="bidInfo.bidExplain">
+                <!-- :rules="{
                   required: true,
                   message: '此项不能为空',
                   trigger: 'blur',
-                }"
-              >
+                }" -->
+
                 <el-input
                 :disabled="p.actpoint === 'look'"
                   type="textarea"
@@ -2100,6 +2109,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+>>>.gcform .el-form-item__error{
+  margin: 0 0 0 365px;
+}
   .el-tlm-main{
     overflow: hidden!important;
   }
@@ -2217,12 +2229,6 @@ export default {
   clear: both;
 }
 
-.el-card__body {
-
-  // height: 400px;
-  // border: 1px solid black;
-  // height: 200px;
-}
 
 .el-input--mini .el-input__inner {
   height: 40px;
