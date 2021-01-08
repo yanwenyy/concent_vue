@@ -5,7 +5,7 @@
                :append-to-body="true">
 
 
-    <div style="margin-top: 20px">
+    <div style="margin-top: 10px">
       <el-table
         :data="page.records"
         :header-cell-style="{

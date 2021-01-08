@@ -4,385 +4,199 @@
       <div slot="header" class="clearfix" >
         <span class="detailSpan"><b>资审管理详情</b></span>
         <el-button
-          class="detailbutton"
-          @click="back">返回</el-button>
+          class="detail-back-tab detailbutton"
+          @click="back"
+          type="text">返回</el-button>
        <el-button class="detailbutton" type="primary" @click="saveInfo('detailform')" v-show="p.actpoint != 'look'">保存</el-button>
       <el-button class="detailbutton"  @click="submitForm('detailform')" v-show="p.actpoint != 'look'">提交</el-button>
       </div>
 
 
       <div class="detailBox">
-       <el-divider content-position="left" class="detailDivider">项目前期信息</el-divider>
+        <p style="overflow:hidden;margin-right: 30px"><span style="font-weight: bold">项目前期信息</span></p>
     <el-form
       :inline="false"
       :model="detailform"
       class="gcform"
       ref="detailform"
     >
-       <el-form-item  label="项目名称:"
-                      :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-       >
-              <el-input
-                disabled
-                clearable
-                v-model="detailform.topInfor.inforName"/>
-            </el-form-item>
+      <el-form-item
+        label="项目名称:"
+        style="width: 33%"
+      >
 
-            <el-form-item  label="外文名称:"
-                           :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                disabled
-                clearable
-                v-model="detailform.topInfor.inforNameForeign"/>
-            </el-form-item>
-           <br>
-          <div>
-            <el-form-item label="项目板块:" class="inline-formitem">
-              <template>
-                <el-radio-group class="detail-radio-group" disabled v-model="detailform.topInfor.moduleId">
-                  <el-radio v-for="(item, index) in projectPlate" :label="item.id" :key="index">{{item.detailName}}</el-radio>
-                </el-radio-group>
-              </template>
-            </el-form-item>
-            </div>
-            <br>
+        <el-input
+          disabled
+          size="mini"
+          v-model="detailform.topInfor.inforName"
+        />
+      </el-form-item>
+        <el-form-item
+        label="工程类别（一级）:"
+        style="width: 33%"
+      >
+<!--        <el-select-->
+<!--          :disabled="p.actpoint==='look'"-->
+<!--          @change="chg"-->
+<!--          clearable-->
+<!--          filterable-->
+<!--          placeholder="请选择"-->
+<!--          size="mini"-->
+<!--          v-model="detailform.clothSize.bcTypeId"-->
+<!--        >-->
+<!--          <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options1"></el-option>-->
+<!--        </el-select>-->
+          <el-input
+            disabled
+            size="mini"
+            v-model="detailform.topInfor.enginTypeFirstName"
+          />
+      </el-form-item>
+      <el-form-item
+        label="工程类别（二级）:"
+        style="width: 33%
+              "
+      >
+        <el-input
+          disabled
+          size="mini"
+          v-model="detailform.topInfor.enginTypeSecondName"
+        />
+      </el-form-item>
 
-            <el-form-item label="工程类别(一级):">
-              <el-input
-                disabled
-                clearable
-                filterable
-                placeholder="请选择"
-                v-model="detailform.topInfor.enginTypeFirstName"
-              >
-              </el-input>
-            </el-form-item>
+        <el-form-item
+          label="公告类型:"
+          style="width: 33%"
+        >
+          <el-input
+            disabled
+            size="mini"
+            v-model="detailform.topInfor.noticeTypeName"
+          />
 
-            <el-form-item
-              label="工程类别(二级):"
-            >
-              <el-input
-                disabled
-                placeholder="工程类别(二级)"
-                v-model="detailform.topInfor.enginTypeSecondName"
-              >
-              </el-input>
-            </el-form-item>
+        </el-form-item>
+        <el-form-item
+          label="设计单位:"
+          style="width: 33%">
+          <el-input
+            disabled
+            size="mini"
+            v-model="detailform.topInfor.designOrg"
+          />
 
+        </el-form-item>
+        <el-form-item
 
-            <el-form-item label="所属线路:"
-                          v-if="detailform.topInfor.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'">
-              <el-input
-                disabled
-                v-model="detailform.topInfor.belongLineName"
-              >
-              </el-input>
-            </el-form-item>
-            <br>
+          label="建设单位:"
+          style="width: 33%
+        "
+        >
+          <el-input
+            disabled
+            size="mini"
+            v-model="detailform.topInfor.constructionOrg"
+          />
 
-            <el-form-item
-              label="项目性质(一级):"
-            >
-              <el-input
-                disabled
-                clearable
-                filterable
-                placeholder="请选择"
-                v-model="detailform.topInfor.projectNatureFirstName"
-              >
-              </el-input>
-            </el-form-item>
+        </el-form-item>
 
-            <el-form-item
-              label="项目性质(二级):"
-            >
-              <el-input
-                disabled
-                clearable
-                filterable
-                placeholder="请选择"
-                v-model="detailform.topInfor.projectNatureSecondName"
-              >
-              </el-input>
-            </el-form-item>
-            <br>
+        <el-form-item
+          label="招标代理公司:"
+          style="width: 33%
+        "
+        >
+          <el-input
+            disabled
+            placeholder=""
+            size="mini"
+            v-model="detailform.topInfor.bidAgentCompany"
+          />
 
-            <el-form-item  label="新兴市场(一级):"
-                           :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                disabled
-                placeholder="请选择"
-                v-model="detailform.topInfor.marketFirstName"
-              >
-              </el-input>
-            </el-form-item>
+        </el-form-item>
+        <el-form-item
+          label="项目模式:"
+          style="width: 33%
+        "
+        >
+          <el-input
+            disabled
+            placeholder=""
+            size="mini"
+            v-model="detailform.topInfor.projectModelName"
+          />
 
-            <el-form-item  label="新兴市场(二级):"
-                           :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                disabled
-                placeholder="请选择"
-                v-model="detailform.topInfor.marketSecondName"
-              >
-              </el-input>
-            </el-form-item>
-            <br>
+        </el-form-item>
+        <el-form-item
+          label="资审方式:"
+          style="width: 33%"
+        >
+          <el-input
+            disabled
+            placeholder=""
+            size="mini"
+            v-model="detailform.topInfor.verifyTypeName"
+          />
 
+        </el-form-item>
+        <el-form-item
 
-            <el-form-item  label="建设单位:"
-                           :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                disabled
-                v-model="detailform.topInfor.constructionOrg"
-              />
-            </el-form-item>
+          label="资金来源:"
+          style="width: 33%
+        "
+        >
+          <el-input
+            disabled
+            placeholder=""
+            size="mini"
+            v-model="detailform.capitalName"
+          />
 
-              <el-form-item label="设计单位:">
-              <el-input
-                disabled
-                v-model="detailform.topInfor.designOrg"
-              />
-            </el-form-item>
-            <br>
+        </el-form-item>
+        <el-form-item
+          label="项目跟踪负责人:"
+          style="width: 33%
+        "
+        >
+          <el-input
+            disabled
+            size="mini"
+            v-model="detailform.topInfor.projectTrackResponPerson"
+          />
+        </el-form-item>
+        <el-form-item
+          label="联系电话:"
+          style="width: 33%"
+        >
+          <el-input
+            disabled
+            placeholder=""
+            size="mini"
+            v-model="detailform.topInfor.contactMode"
+          />
 
-            <el-form-item label="招标人:"
-                          :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                disabled
-                v-model="detailform.topInfor.bidPerson"
-              />
-            </el-form-item>
-
-            <el-form-item label="招标代理公司:">
-              <el-input
-                disabled
-                v-model="detailform.topInfor.bidAgentCompany"
-              />
-            </el-form-item>
-
-            <el-form-item label="预计招标时间:"
-                          :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-date-picker
-                disabled
-                filterable
-                clearable
-                type="date"
-                value-format="timestamp"
-                v-model="detailform.topInfor.planBidTime"
-              >
-              </el-date-picker>
-            </el-form-item>
-            <br>
-            <el-form-item label="投资额（万元）:"
-                          :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                disabled
-                clearable
-                placeholder="投资额（万元）:"
-                v-model="detailform.topInfor.investment"
-              />
-            </el-form-item>
-
-            <el-form-item label="资金来源:"
-                          :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                disabled
-                placeholder="请选择"
-                v-model="detailform.capitalName"
-              >
-              </el-input>
-            </el-form-item>
-
-            <el-form-item  label="是否为重大项目:">
-              <el-switch
-
-                class="inline-formitem-switch"
-                v-model="detailform.topInfor.isMajorProject"
-                active-color="#409EFF"
-                inactive-color="#ddd"
-                active-value="0"
-                inactive-value="1"
-                disabled
-              >
-            </el-switch>
-              <!-- <div>
-              <el-radio  label="0"
-              v-model="detailform.topInfor.bidProbName"
-              disabled
-              style="margin-right:40px"
-              >是</el-radio>
-              <el-radio  label="1"
-              v-model="detailform.topInfor.bidProbName"
-              disabled
-              >否</el-radio>
-              </div> -->
-            </el-form-item>
-            <br>
-
-            <el-form-item label="公告类型:"
-                          :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                disabled
-                placeholder="公告类型"
-                v-model="detailform.topInfor.noticeTypeName"
-              >
-
-              </el-input>
-            </el-form-item>
-
-            <el-form-item label="资审方式:">
-              <el-input
-                disabled
-                clearable
-                placeholder="资审方式"
-                v-model="detailform.topInfor.verifyTypeName"
-              />
-            </el-form-item>
-             <el-form-item
-               v-show="detailform.topInfor.investment<maxMoney&&detailform.topInfor.isMajorProject=='0'"
-               label="重大项目说明"
-             >
-              <el-input
-                disabled
-                v-model="detailform.topInfor.majorProjectExplain"
-              />
-            </el-form-item>
-            <br>
-       <!-- 下拉 -->
-
-              <el-form-item   class="formItem" label="项目跟踪负责人:"
-                              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }">
-              <el-input
-                disabled
-                placeholder="请选择"
-                v-model="detailform.verify.projectTrackResponPerson"
-              >
-              </el-input>
-              </el-form-item>
-
-              <el-form-item  class="formItem"  label="联系电话:"
-                             :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }">
-              <el-input
-                disabled
-                placeholder="请选择"
-                v-model="detailform.verify.contactMode"
-              >
-              </el-input>
-              </el-form-item>
-
-            <el-form-item  label="预计中标概率:"
-                           :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                disabled
-                placeholder="请选择"
-                v-model="detailform.verify.bidProbName"
-              >
-              </el-input>
-            </el-form-item>
-
-
-            <div>
-            <el-form-item
-              class="neirong"
-              label="项目内容:"
-              style="width: 100%"
-            >
-              <el-input
-                disabled
-                type="textarea"
-                clearable
-                placeholder="请输入"
-                v-model="detailform.topInfor.inforContent"
-              />
-            </el-form-item>
-            </div>
+        </el-form-item>
+      <div>
+        <el-form-item
+          class="neirong"
+          label="项目内容(最多1000字):"
+          style="width: 100%"
+        >
+          <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
+          <el-input
+            disabled
+            placeholder="请输入"
+            type="textarea"
+            size="mini"
+            v-model="detailform.topInfor.inforContent"
+          />
+        </el-form-item>
+        </div>
       <p style="overflow:hidden;margin-right: 30px"><span style="font-weight: bold">资审信息</span></p>
 
         <!-- --------------------------------------------------------------- -->
-       <el-form-item
-         label="招标方式:"
-         class="formItem"
-       >
-              <el-select
-                :disabled="p.actpoint === 'look'"
-                filterable
-                clearable
-                placeholder="请选择"
-                v-model="detailform.verify.bidModeName"
-              >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in bidType"
-                ></el-option>
-              </el-select>
-            </el-form-item>
         <el-form-item
           label="资审文件发售截止日期:"
           prop="verify.saleTime"
+          style="width: 33%"
 
           :rules="{
           required: true, message: '此项不能为空', trigger: 'blur'
@@ -399,25 +213,15 @@
           </el-date-picker>
 
         </el-form-item>
+        <el-form-item
+          label="递交资格预审申请文件日期:"
+          prop="verify.subTime"
+          style="width: 33%"
 
-        <el-form-item v-show='detailform.verify.isCoalitionBid=="是"'
-                      label="内部联合体单位:"
-                      :disabled="p.actpoint === 'look'"
-        >
-
-          <el-input v-model="detailform.verifyOrgLists" placeholder="内部联合体单位">
-            <el-button slot="append" icon="el-icon-search"  @click="selectOrg()"></el-button>
-          </el-input>
-        </el-form-item>
-       <br>
-       <el-form-item
-         label="递交资格预审申请文件日期:"
-         prop="verify.subTime"
-
-         :rules="{
+          :rules="{
           required: true, message: '此项不能为空', trigger: 'blur'
         }"
-       >
+        >
 
           <el-date-picker
             clearable
@@ -434,6 +238,7 @@
           label="资格预审公告发布日期:"
           prop="verify.publishTime"
 
+          style="width: 33%"
           :rules="{
           required: true, message: '此项不能为空', trigger: 'blur'
         }"
@@ -449,8 +254,64 @@
           </el-date-picker>
         </el-form-item>
 
-        <el-form-item v-show='detailform.verify.isCoalitionBid=="是"'
-                      label="外部联合体单位:"
+        <el-form-item
+        label="招标方式:"
+        style="width: 33%"
+        :disabled="p.actpoint === 'look'"
+      >
+          <el-select
+            :disabled="p.actpoint === 'look'"
+            filterable
+            placeholder="请选择"
+            size="mini"
+            v-model="detailform.verify.bidModeName"
+          >
+            <el-option
+              :key="index"
+              :label="item.detailName"
+              :value="item.id"
+              v-for="(item, index) in bidType"
+            ></el-option>
+          </el-select>
+<!--          <el-input-->
+<!--            size="mini"-->
+<!--            v-model="detailform.verify.bidModeName"-->
+<!--          />-->
+      </el-form-item>
+
+<!-- 下拉 -->
+
+      <el-form-item
+        label="是否联合体投标:"
+        prop="verify.isCoalitionBid"
+
+        :rules="{
+          required: true, message: '此项不能为空', trigger: 'blur'
+        }"
+      >
+       <el-radio-group v-model="detailform.verify.isCoalitionBid" >
+                  <el-radio :disabled="p.actpoint === 'look'"  v-for="(item, index) in coalitionBid" :label="item.id" :key="index">{{item.detailName}}</el-radio>
+                </el-radio-group>
+
+<!--        <el-input-->
+<!--          clearable-->
+<!--          :readonly="p.actpoint === 'look'"-->
+<!--          size="mini"-->
+<!--          v-model="detailform.verify.isCoalitionBid"-->
+<!--        />-->
+      </el-form-item>
+<div v-show='detailform.verify.isCoalitionBid=="是"'>
+        <el-form-item
+          label="内部联合体单位:"
+          :disabled="p.actpoint === 'look'"
+        >
+
+          <el-input v-model="detailform.verifyOrgLists" placeholder="内部联合体单位">
+            <el-button slot="append" icon="el-icon-search"  @click="selectOrg()"></el-button>
+          </el-input>
+        </el-form-item>
+        <el-form-item
+          label="外部联合体单位:"
         >
           <el-input
             placeholder=""
@@ -459,31 +320,7 @@
           />
 
         </el-form-item>
-<br>
-         <el-form-item
-           label="是否联合体投标:"
-           prop="verify.isCoalitionBid"
-
-           :rules="{
-                  required: true, message: '此项不能为空', trigger: 'blur'
-                }"
-         >
-       <el-radio-group v-model="detailform.verify.isCoalitionBid" >
-                  <el-radio :disabled="p.actpoint === 'look'"  v-for="(item, index) in coalitionBid" :label="item.id" :key="index">{{item.detailName}}</el-radio>
-                </el-radio-group>
-
-       <!--        <el-input-->
-       <!--          clearable-->
-       <!--          :readonly="p.actpoint === 'look'"-->
-       <!--          size="mini"-->
-       <!--          v-model="detailform.verify.isCoalitionBid"-->
-       <!--        />-->
-      </el-form-item>
-<!-- 下拉 -->
-
-
-
-
+        </div>
 <div>
             <el-form-item
             class="neirong"
@@ -568,15 +405,14 @@
                 </el-table-column>
               </el-table>
     </div>
-<p class="detail-title" style="overflow: hidden;margin-right:30px">
-     <span style="font-size: 14px" >标段信息: </span>   <el-button
+
+     <p style="overflow:hidden;margin-right: 30px"><span >标段信息: </span>   <el-button
        @click="dialogTopInfoSection = true"
        v-show="p.actpoint != 'look'"
             size="mini"
-       class="detatil-flie-btn"
+            style="width: 70px;height: 32px;background: #5C8BFA;font-size: 16px;"
             type="primary"
-          >新增</el-button>
-</p>
+          >新增</el-button> </p>
 
       <el-table
         :data="detailform.verifySectionList"
@@ -793,7 +629,6 @@ export default {
   },
   data() {
     return {
-      maxMoney:1000000,
       treeOrgStatas: false,
       treeOrgStatas1: false,
       treeOrgStatas2: false,
@@ -852,9 +687,6 @@ export default {
     },
     yesOrNo () {
       return this.$store.state.yesOrNo
-    },
-    projectPlate(){
-      return this.$store.state.projectPlate;
     },
 
   },
