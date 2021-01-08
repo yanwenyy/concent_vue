@@ -4,7 +4,7 @@
       <el-form :inline="true"
                :model="searchform"
                @keyup.enter.native="getData()"
-               class="gcform">
+               class="queryForm">
       <el-row>
       <el-form-item label="消息名称:">
         <el-input v-model="searchform.name"
@@ -102,7 +102,7 @@
     </el-form>
     </div>
 
-    <div style="margin-top: 20px">
+    <div style="margin-top: 10px">
       <el-table
         :data="page.records"
         :header-cell-style="{
@@ -480,9 +480,9 @@ export default {
 }
 </script>
 <style scoped>
-.gcform .el-form-item{
+.el-form-item{
   width: auto;
-  margin-bottom:22px;
+  margin-bottom: 5px !important;
 }
 >>>.el-form-item__label{
   width: auto;

@@ -14,9 +14,11 @@
       </el-button-group>
     </div>
 
-    <div style="margin-top: 20px">
+    <div style="margin-top: 10px">
       <el-table
         ref="table"
+        :max-height="$tableHeight"
+        :height="$tableHeight"
         :data="page.records"
         :header-cell-style="{
           'text-align': 'center',
@@ -323,5 +325,9 @@ export default {
 <style scoped>
 .el-table__row {
   cursor: pointer;
+}
+.gcform .el-form-item{
+  width: auto;
+  margin-bottom: 5px !important;
 }
 </style>

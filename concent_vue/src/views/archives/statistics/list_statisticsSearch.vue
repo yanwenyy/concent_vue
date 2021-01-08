@@ -1,10 +1,9 @@
 <template>
   <div>
     <div style="width: 100%; overflow: hidden">
-      <el-form :inline="true"
+      <el-form :inline="true" class="queryForm"
                :model="searchform"
-               @keyup.enter.native="getData()"
-               class="gcform">
+               @keyup.enter.native="getData()">
       <el-row>
       <el-form-item label="统计分析名称:">
         <el-input v-model="searchform.name"
@@ -83,7 +82,7 @@
     </el-form>
     </div>
 
-    <div style="margin-top: 20px">
+    <div style="margin-top: 10px">
       <el-table
         :data="page.records"
         :header-cell-style="{
@@ -461,9 +460,9 @@ export default {
 }
 </script>
 <style scoped>
-.gcform .el-form-item{
+.el-form-item{
   width: auto;
-  margin-bottom:22px;
+  margin-bottom: 5px !important;
 }
 >>>.el-form-item__label{
   width: auto;

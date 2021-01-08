@@ -5,7 +5,7 @@
       <el-form :inline="true"
                :model="searchform"
                @keyup.enter.native="getData()"
-               class="gcform">
+               class="queryForm">
           <el-row>
             <el-form-item label="填报年度:">
             <el-select
@@ -469,10 +469,9 @@ export default {
 }
 </script>
 <style scoped>
-.gcform .el-form-item{
+.el-form-item{
   width: auto;
-  margin-bottom:22px;
-  margin-left:22px;
+  margin-bottom: 5px !important;
 }
 >>>.el-form-item__label{
   width: auto;
