@@ -149,19 +149,10 @@
         layout="total, sizes, prev, pager, next, jumper"
       ></el-pagination>
     </div>
-    <el-dialog title="资审结果登记" :visible.sync="dialogResult"
-        width="300">
-      <el-form :model="resultform.verifySection">
-
-        <el-form-item label="通过时间"  prop="verifyResultTime">
-          <el-date-picker
-            value-format="timestamp"
-            v-model="resultform.verifySection.verifyResultTime"
-            type="date"
-            placeholder="选择日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="资格预审结果"   prop="verifyResult">
+    <el-dialog title="资审结果登记" :visible.sync="dialogResult" width="70%">
+      <el-form :model="resultform.verifySection" >
+   <el-row>
+        <el-form-item label="资格预审结果"   prop="verifyResult" :label-width="formLabelWidth">
          <el-switch
            active-text="通过"
            v-model="resultform.verifySection.verifyResult"
@@ -170,10 +161,18 @@
          >
             </el-switch>
         </el-form-item>
+        <el-form-item label="通过时间"  prop="verifyResultTime" :label-width="formLabelWidth">
+          <el-date-picker
+            value-format="timestamp"
+            v-model="resultform.verifySection.verifyResultTime"
+            type="date"
+            placeholder="选择日期">
+          </el-date-picker>
+        </el-form-item>
+</el-row>
         <el-form-item
           class="neirong"
-          label="附件（最大10MB）:"
-          style="width: 33%"
+          label="附件:"
         >
           <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
          <el-upload
@@ -262,6 +261,7 @@ export default {
       page: {current: 1, size: 10, total: 0, records: []},
       showinput: false,
       sousuo: "",
+      formLabelWidth: '120px',
       searchform: {
         current: 1,
         size: 10,
@@ -720,5 +720,44 @@ export default {
   }
   >>>.el-upload-list{
     display: none;
+  }
+  >>>.el-table td, .el-table th
+  {
+    padding:5px 0px;
+  }
+  >>>.el-form-item__label{
+    width: auto;
+  }
+  >>>.el-input--mini .el-input__inner{
+    height: auto;
+    line-height: inherit;
+  }
+>>>.el-form-item {
+  width: auto;
+    margin-bottom: 5px !important;
+  display: inline-block;
+  width: 32.5% !important;
+  }
+  .item_zbj{
+    width: 40%;
+    display: inline-block;
+    padding-right: 9%;
+  }
+  .el-dialog{
+    width: 60%;
+  }
+  .el-table__row {
+    cursor: pointer;
+  }
+  >>>.el-dialog{
+    width: 70%!important;
+    /* overflow: auto; */
+  }
+  >>>.el-dialog__body{
+    height: 500px;
+    overflow: auto;
+  }
+  >>>.el-form-item__label{
+    width: auto;
   }
 </style>

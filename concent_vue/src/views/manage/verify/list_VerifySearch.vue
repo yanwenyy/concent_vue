@@ -1,7 +1,7 @@
 <!--资审结果操作列表-->
 <template>
   <div>
-    <el-form :inline="true" :model="searchform" @keyup.enter.native="getData()" class="gcform">
+    <el-form :inline="true" :model="searchform" @keyup.enter.native="getData()" class="queryForm">
 
       <el-form-item label="项目名称:">
         <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
@@ -383,6 +383,7 @@
       },
       multipleSelection: [],
       xqprojectType:[],//工程二级列表
+
       projectStatus:[
         {
           id:'0',
@@ -587,9 +588,25 @@
 };
 </script>
 <style scoped>
-.gcform .el-form-item{
+>>>.el-form-item__label{
   width: auto;
-  margin-bottom:22px;
+}
+.el-table__row {
+  cursor: pointer;
+}
+>>>.el-table td, .el-table th
+{
+  padding:5px 0px;
+}
+>>>.el-form-item__label{
+  width: auto;
+}
+>>>.el-upload-list{
+  display: none;
+}
+>>>.el-table td, .el-table th
+{
+  padding:5px 0px;
 }
 >>>.el-form-item__label{
   width: auto;
@@ -598,7 +615,32 @@
   height: auto;
   line-height: inherit;
 }
+>>>.el-form-item {
+  width: auto;
+  margin-bottom: 5px !important;
+  display: inline-block;
+  width: 32.5% !important;
+}
+.item_zbj{
+  width: 40%;
+  display: inline-block;
+  padding-right: 9%;
+}
+.el-dialog{
+  width: 60%;
+}
 .el-table__row {
   cursor: pointer;
+}
+>>>.el-dialog{
+  width: 70%!important;
+  /* overflow: auto; */
+}
+>>>.el-dialog__body{
+  height: 500px;
+  overflow: auto;
+}
+>>>.el-form-item__label{
+  width: auto;
 }
 </style>
