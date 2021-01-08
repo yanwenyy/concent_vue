@@ -211,11 +211,12 @@
           <template slot="header" slot-scope="scope">
             <span>录入时间</span>
             <div>
-              <el-input
-                style=" width: 100%"
+              <el-date-picker
+                type="date"
+                value-format="timestamp"
                 v-model="searchform.tioCreateTime"
-                size="mini"
-              />
+              >
+              </el-date-picker>
             </div>
           </template>
           <template slot-scope="scope">{{

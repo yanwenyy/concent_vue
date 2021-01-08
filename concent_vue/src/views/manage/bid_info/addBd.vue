@@ -34,7 +34,14 @@
                 placeholder="评标办法"
                 size="mini"
                 :disabled="type === 'look'"
-                v-model="detailForm.bidInfoSection.bidEvaluationMethodName">
+                @change="
+                getName(
+                  detailform.bidInfoSection.bidEvaluationMethodId,
+                  bidMethod,
+                  'bidEvaluationMethodName'
+                )
+              "
+                v-model="detailForm.bidInfoSection.bidEvaluationMethodId">
                  <el-option
                   :key="index"
                   :label="item.detailName"
@@ -409,6 +416,15 @@ import { isMoney } from '@/utils/validate'
       },
     },
     methods: {
+      //获取下拉框id和name的公共方法
+    getName(id, list, name) {
+        if(id){
+          this.$forceUpdate()
+          this.detailform.bidInfoSection[name] = list.find(
+            (item) => item.id == id
+          ).detailName;
+        }
+      },
           //获取下拉框id和name的公共方法
     getName(id, list, name) {
       if(id){

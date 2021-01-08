@@ -206,6 +206,7 @@
           </el-form-item>
 
           <el-form-item label="是否为重大项目:"
+          class="inline-formitem formItem"
            :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -215,7 +216,7 @@
             <el-switch
 
               class="inline-formitem-switch"
-              v-model="detailFormBefore.topInforBO.topInfor.bidProbName"
+              v-model="detailFormBefore.topInforBO.topInfor.isMajorProject"
               active-color="#409EFF"
               inactive-color="#ddd"
               active-value="0"
@@ -308,10 +309,21 @@
          <div>
 <el-divider content-position="left" class="detailDivider">投标信息</el-divider>
           <el-form-item label="招标方式:">
-            <el-input
-              v-model="detailFormBefore.bidInfo.bidModeName"
-              disabled
-            ></el-input>
+                <el-select
+                  disabled
+                  filterable
+                  clearable
+                  placeholder="请选择"
+                  v-model="detailFormBefore.bidInfo.bidModeName"
+                >
+                  <el-option
+
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in bidType"
+                  ></el-option>
+                </el-select>
           </el-form-item>
 
           <el-form-item label="招标公告发布日期:"
@@ -322,7 +334,7 @@
                 trigger: 'blur',
               }">
               <el-date-picker
-                :disabled="p.actpoint === 'look'"
+                disabled
                 filterable
                 clearable
                 value-format="timestamp"
@@ -334,7 +346,7 @@
           <el-form-item label="内部联合体单位:"
               v-if="detailform.bidInfo.isCoalitionBid==='0'">
             <el-input
-              v-model="detailFormBefore.bidInfo.innerOrgName"
+              v-model="detailFormBefore.value1"
               disabled
             ></el-input>
           </el-form-item>
@@ -347,7 +359,7 @@
                 trigger: 'blur',
               }">
                 <el-date-picker
-                  :disabled="p.actpoint === 'look'"
+                  disabled
                   value-format="timestamp"
                   clearable
                   filterable
@@ -358,7 +370,7 @@
 
           <el-form-item label="招标文件发售截止日期:">
                 <el-date-picker
-                  :disabled="p.actpoint === 'look'"
+                  disabled
                   value-format="timestamp"
                   filterable
                   clearable
@@ -605,7 +617,7 @@
             <el-table-column
               :resizable="false"
               label="评标办法"
-              prop="bidInfoSection.bidEvaluationMethodName"
+              prop="bidInfoSection.bidEvaluationMethodId"
               show-overflow-tooltip
               align="center"
               :width="180"
@@ -621,6 +633,9 @@
               align="center"
               :width="180"
             >
+              <template slot-scope="scope">{{
+            scope.row.dateOfBidOpeningName | dateformat
+          }}</template>
             </el-table-column>
 
             <el-table-column
@@ -1020,6 +1035,7 @@
             </el-form-item>
 
             <el-form-item  label="是否为重大项目:"
+            class="inline-formitem formItem"
                 :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -1028,7 +1044,7 @@
             >
             <el-switch
               class="inline-formitem-switch"
-              v-model="detailform.topInforBO.topInfor.bidProbName"
+              v-model="detailform.topInforBO.topInfor.isMajorProject"
               active-color="#409EFF"
               inactive-color="#ddd"
               active-value="0"
@@ -1175,8 +1191,9 @@
                 :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
+                multiple
                 placeholder="请选择"
-                v-model="detailform.bidInfoInnerOrgList.innerOrgName"
+                v-model="detailform.value1"
               >
                 <el-option
                   :key="index"
@@ -1493,7 +1510,7 @@
               <el-table-column
                 :resizable="false"
                 label="评标办法"
-                prop="bidInfoSection.bidEvaluationMethodName"
+                prop="bidInfoSection.bidEvaluationMethodId"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
@@ -1509,6 +1526,9 @@
                 :width="180"
                 value-format="timestamp"
               >
+               <template slot-scope="scope">{{
+            scope.row.bidInfoSection.dateOfBidOpeningName | dateformat
+          }}</template>
               </el-table-column>
 
               <el-table-column
@@ -1694,23 +1714,25 @@ export default {
       key: 0,
       treeStatas: false,
       positionIndex: "", //缓存当前的选中的项目地点的index
-      value1: [],
       options2: [],
       options: [],
       detailform: {
         bidInfo: {},
         bidInfoInnerOrgList:[],
         bidInfoSectionList: [],
+        bidInfoSectionOrgList:[],
         bidInfo_01: [],
         topInforBO:{
           topInfor:{},
           topInfoOrg:{},
         }
+
       },
       detailFormBefore: {
         bidInfo: {},
         bidInfoInnerOrgList:[],
         bidInfoSectionList: [],
+        bidInfoSectionOrgList:[],
         bidInfo_01: [],
         topInforBO:{
           topInfor:{},
@@ -1777,6 +1799,9 @@ export default {
     },
     projectPlate(){
         return this.$store.state.projectPlate;
+    },
+    bidEvaluationMethodName(){
+      return this.$store.state.bidEvaluationMethodName;
     },
   },
   mounted() {
@@ -1931,16 +1956,8 @@ export default {
       }
     },
     saveInfo(formName) {
+
       var topInforCapitalList = [];
-      this.amountSource.forEach((item) => {
-        if (this.value1.indexOf(item.id) != -1) {
-          var v = {
-            capitalId: item.id,
-            capitalName: item.detailName,
-          };
-          topInforCapitalList.push(v);
-        }
-      });
       this.detailform.topInforCapitalList = topInforCapitalList;
       this.detailform.srcId = this.id;
       this.$refs[formName].validate((valid) => {
@@ -2048,14 +2065,14 @@ export default {
             bidInfoInnerOrgList: afterData.bidInfoInnerOrgList,
             bidInfoSectionList: afterData.bidInfoSectionList,
             bidInfo_01: afterData.bidInfo_01||[],
-            topInforBO:afterData.topInforBO
+            topInforBO:afterData.topInforBO,
           };
           this.detailFormBefore = {
              bidInfo: beforData.bidInfo,
             bidInfoInnerOrgList: beforData.bidInfoInnerOrgList,
             bidInfoSectionList: beforData.bidInfoSectionList,
             bidInfo_01: beforData.bidInfo_01||[],
-            topInforBO:beforData  .topInforBO
+            topInforBO:beforData  .topInforBO,
           };
         });
     },
@@ -2071,7 +2088,7 @@ export default {
             bidInfoInnerOrgList: datas.bidInfoInnerOrgList,
             bidInfoSectionList: datas.bidInfoSectionList,
             bidInfo_01: datas.bidInfo_01||[],
-            topInforBO:datas.topInforBO
+            topInforBO:datas.topInforBO,
           };
           for (var i in this.detailform) {
             this.detailFormBefore[i] = JSON.parse(

@@ -121,7 +121,7 @@
       </el-form-item>
 
       <el-form-item label="项目地点:">
-        <el-input v-model="searchform.path" placeholder="项目地点">
+        <el-input v-model="searchform.path" placeholder="项目地点" clearable>
           <el-button
             slot="append"
             icon="el-icon-search"

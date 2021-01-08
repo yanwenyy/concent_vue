@@ -399,7 +399,7 @@
                 clearable
                 multiple
                 placeholder="请选择"
-                v-model="detailform.bidInfoInnerOrgList.innerOrgName"
+                v-model="detailform.value1"
               >
                 <el-option
                   :key="index"
@@ -936,6 +936,7 @@ export default {
           topInfoOrg:{}
         },
          bidInfo_01:[],
+         value1: [],
       },
 
       bidInfoSection:[],
@@ -974,6 +975,9 @@ export default {
       amountSource() {
       return this.$store.state.amountSource;
     },
+    innerOrgName(){
+      return this.$store.state.innerOrgName;
+    }
       // yesOrNo(){
       //   return this.$store.state.yesOrNo;
       // }
@@ -1092,6 +1096,18 @@ export default {
         }
       },
       saveInfo(formName) {
+        var bidInfoInnerOrgList = [];
+        //内部联合体单位
+        this.amountSource.forEach((item) => {
+          if (this.detailform.value1&&this.detailform.value1.indexOf(item.id) != -1) {
+            var v = {
+              innerOrgId: item.id,
+              innerOrgName: item.detailName,
+            };
+            bidInfoInnerOrgList.push(v);
+          }
+        });
+        this.detailform.bidInfoInnerOrgList=bidInfoInnerOrgList;
         this.$refs[formName].validate((valid) => {
           if (valid) {
             // this.detailform.bidInfo_02=[];
@@ -1219,8 +1235,12 @@ export default {
               bidInfoInnerOrgList: datas.bidInfoInnerOrgList,
               bidInfoSectionList: datas.bidInfoSectionList||[],
               topInforBO: this.nullToStr(datas.topInforBO),
-              bidInfo_01:datas.bidInfo_01
+              bidInfo_01:datas.bidInfo_01,
+              value1:[],
             }
+             datas.bidInfoInnerOrgList.forEach((item)=>{
+              this.detailform.value1.push(item.innerOrgId)
+            });
           });
     },
 
