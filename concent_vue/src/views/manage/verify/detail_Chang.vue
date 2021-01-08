@@ -365,7 +365,7 @@
                    class="formItem"
                  >
               <el-select
-                :disabled="p.actpoint === 'look'"
+                disabled
                 filterable
                 clearable
                 placeholder="请选择"
@@ -388,8 +388,7 @@
         }"
         >
           <el-date-picker
-            clearable
-            :readonly="p.actpoint === 'look'"
+            disabled
             value-format="timestamp"
             v-model="detailformBefore.verify.saleTime"
             align="right"
@@ -404,7 +403,7 @@
                       :disabled="p.actpoint === 'look'"
         >
 
-          <el-input v-model="detailformBefore.verifyOrgLists" placeholder="内部联合体单位">
+          <el-input disabled v-model="detailformBefore.verifyOrgLists" placeholder="内部联合体单位">
             <el-button slot="append" icon="el-icon-search"  @click="selectOrg()"></el-button>
           </el-input>
         </el-form-item>
@@ -419,8 +418,8 @@
        >
 
           <el-date-picker
-            clearable
-            :readonly="p.actpoint === 'look'"
+            disabled
+
             value-format="timestamp"
             v-model="detailformBefore.verify.subTime"
             align="right"
@@ -438,8 +437,8 @@
         }"
         >
           <el-date-picker
-            clearable
-            :readonly="p.actpoint === 'look'"
+            disabled
+
             value-format="timestamp"
             v-model="detailformBefore.verify.publishTime"
             align="right"
@@ -452,6 +451,7 @@
                       label="外部联合体单位:"
         >
           <el-input
+            disabled
             placeholder=""
             size="mini"
             v-model="detailformBefore.verify.outOrg"
@@ -467,9 +467,17 @@
                   required: true, message: '此项不能为空', trigger: 'blur'
                 }"
          >
-       <el-radio-group v-model="detailformBefore.verify.isCoalitionBid" >
-                  <el-radio :disabled="p.actpoint === 'look'"  v-for="(item, index) in coalitionBid" :label="item.id" :key="index">{{item.detailName}}</el-radio>
-                </el-radio-group>
+          <el-switch
+            disabled
+            active-text="是"
+            v-model="detailformBefore.verify.isCoalitionBid"
+            active-value="true"
+            inactive-value="false"
+          >
+            </el-switch>
+<!--       <el-radio-group v-model="detailformBefore.verify.isCoalitionBid" >-->
+<!--                  <el-radio :disabled="p.actpoint === 'look'"  v-for="(item, index) in coalitionBid" :label="item.id" :key="index">{{item.detailName}}</el-radio>-->
+<!--                </el-radio-group>-->
 
        <!--        <el-input-->
        <!--          clearable-->
@@ -503,8 +511,7 @@
               <div>
                 <el-form-item
                   class="neirong"
-                  label="附件（最大10MB）:"
-
+                  label="附件:"
                 >
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-upload
@@ -1126,9 +1133,16 @@
                   required: true, message: '此项不能为空', trigger: 'blur'
                 }"
          >
-       <el-radio-group v-model="detailformAfter.verify.isCoalitionBid" >
-                  <el-radio :disabled="p.actpoint === 'look'"  v-for="(item, index) in coalitionBid" :label="item.id" :key="index">{{item.detailName}}</el-radio>
-                </el-radio-group>
+         <el-switch
+           active-text="是"
+           v-model="detailformAfter.verify.isCoalitionBid"
+           active-value="true"
+           inactive-value="false"
+         >
+            </el-switch>
+<!--       <el-radio-group v-model="detailformAfter.verify.isCoalitionBid" >-->
+<!--                  <el-radio :disabled="p.actpoint === 'look'"  v-for="(item, index) in coalitionBid" :label="item.id" :key="index">{{item.detailName}}</el-radio>-->
+<!--                </el-radio-group>-->
 
        <!--        <el-input-->
        <!--          clearable-->
@@ -1162,7 +1176,7 @@
               <div>
                 <el-form-item
                   class="neirong"
-                  label="附件（最大10MB）:"
+                  label="附件:"
 
                 >
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->

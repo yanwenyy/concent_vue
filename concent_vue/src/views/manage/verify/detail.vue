@@ -468,9 +468,17 @@
                   required: true, message: '此项不能为空', trigger: 'blur'
                 }"
          >
-       <el-radio-group v-model="detailform.verify.isCoalitionBid" >
-                  <el-radio :disabled="p.actpoint === 'look'"  v-for="(item, index) in coalitionBid" :label="item.id" :key="index">{{item.detailName}}</el-radio>
-                </el-radio-group>
+         <el-switch
+           :disabled="p.actpoint === 'look'"
+           active-text="是"
+           v-model="detailform.verify.isCoalitionBid"
+           active-value="true"
+           inactive-value="false"
+         >
+            </el-switch>
+<!--       <el-radio-group v-model="detailform.verify.isCoalitionBid" >-->
+<!--                  <el-radio :disabled="p.actpoint === 'look'"  v-for="(item, index) in coalitionBid" :label="item.id" :key="index">{{item.detailName}}</el-radio>-->
+<!--                </el-radio-group>-->
 
        <!--        <el-input-->
        <!--          clearable-->
@@ -510,7 +518,7 @@
       <div>
             <el-form-item
             class="neirong"
-              label="附件（最大10MB）:"
+              label="附件:"
             >
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-upload
