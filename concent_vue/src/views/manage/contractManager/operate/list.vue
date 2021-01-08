@@ -7,14 +7,13 @@
         <el-button type="primary" plain>提交</el-button>
         <el-button @click="remove" type="primary" plain>删除</el-button>
       </el-button-group>
+      <div style="float: right;">
+        <el-button @click="searchFromReset" type="info" plain style="color:black;background:none">重置</el-button>
+        <el-button @click="getData" type="primary" plain>查询</el-button>
+        <el-button type="primary" plain>导出</el-button>
+      </div>
     </div>
-    <div style="float: right; margin: -40px 0 0 0">
-      <el-button @click="searchFromReset" type="info" plain style="color:black;background:none">重置</el-button>
-      <el-button @click="getData" type="primary" plain>查询</el-button>
-      <el-button type="primary" plain>导出</el-button>
-    </div>
-
-    <div style="margin-top: 20px">
+    <div style="margin-top: 10px">
       <el-table
         class="tableStyle"
         :max-height="$tableHeight"
@@ -57,6 +56,7 @@
             <span>合同名称</span>
             <div>
               <el-input
+                class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchFrom.contractName"
                 size="mini"
@@ -78,6 +78,7 @@
             <span>合同号</span>
             <div>
               <el-input
+                class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchFrom.contractNo"
                 size="mini"
@@ -96,6 +97,7 @@
             <span>填报单位</span>
             <div>
               <el-input
+                class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchFrom.createOrgId"
                 size="mini"
@@ -115,6 +117,7 @@
             <span>填报人</span>
             <div>
               <el-input
+                class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchFrom.createUserName"
                 size="mini"
@@ -135,11 +138,16 @@
           <template slot="header" slot-scope="scope">
             <span>录入时间</span>
             <div>
-              <el-input
-                style=" width: 100%"
+              <el-date-picker
+                class="list-search-picker"
+                filterable
+                clearable
+                type="date"
+                value-format="timestamp"
                 v-model="searchFrom.createTime"
-                size="mini"
-              />
+
+              >
+              </el-date-picker>
             </div>
           </template>
           <template slot-scope="scope">{{
@@ -161,6 +169,7 @@
             <span>状态</span>
             <div>
               <el-input
+                class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchFrom.id"
                 size="mini"

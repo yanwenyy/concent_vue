@@ -582,8 +582,8 @@ pre {
 .list-search-picker .el-input__inner{
   box-sizing: border-box;
   width: 100%!important;
-  height: 28px;
-  line-height: 28px;
+  height: 28px!important;
+  line-height: 28px!important;
 }
 .list-search-picker .el-input__icon{
   line-height: 28px;
@@ -603,6 +603,9 @@ pre {
     top:-20px!important;
   }
 }
-
+.multiple-sel .el-select__tags{
+  overflow: auto;
+  height: 95%;
+}
 /**/
 

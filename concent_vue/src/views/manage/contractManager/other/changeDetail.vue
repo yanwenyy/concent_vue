@@ -992,6 +992,7 @@
 
                 >
                   <el-select
+                    class="multiple-sel"
                     :disabled="p.actpoint==='look'"
                     multiple
                     @change="getMultipleName(detailform.zplx,assemblyType,'otherAssemblyTypeId','otherAssemblyType')"
@@ -1021,6 +1022,7 @@
 
                 >
                   <el-select
+                    class="multiple-sel"
                     :disabled="p.actpoint==='look'"
                     multiple
                     @change="getMultipleName(detailform.jzlx,architecturalType,'otherBuildingTypeId','otherBuildingType')"
@@ -1050,6 +1052,7 @@
 
                 >
                   <el-select
+                    class="multiple-sel"
                     :disabled="p.actpoint==='look'"
                     multiple
                     @change="getMultipleName(detailform.jzjglx,buildingStructure,'otherBuildingStructureTypeId','otherBuildingStructureType')"
@@ -1079,6 +1082,7 @@
 
                 >
                   <el-select
+                    class="multiple-sel"
                     :disabled="p.actpoint==='look'"
                     multiple
                     clearable

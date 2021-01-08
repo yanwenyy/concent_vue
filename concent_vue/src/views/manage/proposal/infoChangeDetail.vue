@@ -764,6 +764,7 @@
                 trigger: 'blur',
               }">
                 <el-select
+                  class="multiple-sel"
                   :disabled="p.actpoint === 'look'"
                   filterable
                   clearable

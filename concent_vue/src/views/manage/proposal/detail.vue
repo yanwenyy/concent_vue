@@ -368,6 +368,7 @@
                 trigger: 'blur',}"
             >
             <el-select
+              class="multiple-sel"
               :disabled="p.actpoint === 'look'"
               filterable
               clearable
@@ -910,12 +911,12 @@
       },
     },
     mounted() {
-      window.onresize = () => {
-        return (() => {
-          window.screenWidth = document.body.clientWidth
-        console.log( window.screenWidth)
-      })()
-      }
+      // window.onresize = () => {
+      //   return (() => {
+      //     window.screenWidth = document.body.clientWidth
+      //   console.log( window.screenWidth)
+      // })()
+      // }
       // this.$store.commit("setCategory", 'projectDomainType');
       this.id=this.p.instid;
       if (this.p.actpoint === "edit"||this.id) {

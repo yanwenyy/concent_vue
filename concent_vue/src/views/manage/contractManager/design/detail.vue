@@ -1,7 +1,7 @@
 <template>
   <div style="position: relative">
     <el-button v-show="p.actpoint != 'look'" class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform')">保存</el-button>
-    <el-button v-show="p.actpoint != 'look'" class="detail-back-tab detailbutton sub-btn" @click="submit">提交</el-button>
+    <el-button v-show="p.actpoint != 'look'" class="detail-back-tab detailbutton sub-btn">提交</el-button>
     <el-button class="detail-back-tab" @click="back" type="text">返回</el-button>
     <el-form
       :inline="false"
@@ -23,7 +23,7 @@
                 trigger: 'blur',
               }"
               >
-                <el-input placeholder="请输入内容" v-model="detailform.contractInfo.inforName" class="input-with-select">
+                <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.inforName" class="input-with-select">
                   <el-button slot="append" icon="el-icon-search" @click="searchName"></el-button>
                 </el-input>
               </el-form-item>
@@ -36,7 +36,7 @@
                 trigger: 'blur',
               }"
               >
-                <el-input placeholder="请输入内容" v-model="detailform.contractInfo.inforNameForeign" class="input-with-select">
+                <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.inforNameForeign" class="input-with-select">
 
                 </el-input>
               </el-form-item>
@@ -107,7 +107,7 @@
                 trigger: 'blur',
               }"
               >
-                <el-input placeholder="请输入内容" v-model="detailform.contractInfo.contractName" class="input-with-select">
+                <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.contractName" class="input-with-select">
                   <el-button slot="append" icon="el-icon-search" @click="searchName"></el-button>
                 </el-input>
               </el-form-item>
@@ -120,7 +120,7 @@
                 trigger: 'blur',
               }"
               >
-                <el-input placeholder="请输入内容" v-model="detailform.contractInfo.contractNameForeign" class="input-with-select">
+                <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.contractNameForeign" class="input-with-select">
 
                 </el-input>
               </el-form-item>
@@ -152,7 +152,7 @@
               <el-form-item
                 label="施工单位:"
               >
-                <el-input placeholder="请输入内容" v-model="detailform.contractInfo.buildOrgNames" class="input-with-select">
+                <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.buildOrgNames" class="input-with-select">
                   <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('施工单位',detailform.contractInfo.buildOrgIds)" ></el-button>
                 </el-input>
               </el-form-item>
@@ -165,7 +165,7 @@
                 trigger: 'blur',
               }"
               >
-                <el-input placeholder="请输入内容" v-model="detailform.contractInfo.qualityOrgNames" class="input-with-select">
+                <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.qualityOrgNames" class="input-with-select">
                   <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('使用资质单位',detailform.contractInfo.qualityOrgIds)" ></el-button>
                 </el-input>
               </el-form-item>
@@ -212,6 +212,7 @@
               }"
               >
                 <el-input
+                  :disabled="p.actpoint === 'look'"
                   clearable
                   placeholder="请输入"
 
@@ -447,6 +448,7 @@
 
               >
                 <el-select
+                  class="multiple-sel"
                   :disabled="p.actpoint==='look'"
                   multiple
                   @change="getMultipleName(detailform.zplx,assemblyType,'otherAssemblyTypeId','otherAssemblyType')"
@@ -476,6 +478,7 @@
 
               >
                 <el-select
+                  class="multiple-sel"
                   :disabled="p.actpoint==='look'"
                   multiple
                   @change="getMultipleName(detailform.jzlx,architecturalType,'otherBuildingTypeId','otherBuildingType')"
@@ -505,6 +508,7 @@
 
               >
                 <el-select
+                  class="multiple-sel"
                   :disabled="p.actpoint==='look'"
                   multiple
                   @change="getMultipleName(detailform.jzjglx,buildingStructure,'otherBuildingStructureTypeId','otherBuildingStructureType')"
@@ -534,6 +538,7 @@
 
               >
                 <el-select
+                  class="multiple-sel"
                   :disabled="p.actpoint==='look'"
                   multiple
                   clearable
@@ -736,6 +741,7 @@
                 label="设计单位:"
               >
                 <el-input
+                  :disabled="p.actpoint === 'look'"
                   clearable
                   placeholder="请输入"
 
@@ -746,6 +752,7 @@
                 label="起讫地点:"
               >
                 <el-input
+                  :disabled="p.actpoint === 'look'"
                   clearable
                   placeholder="请输入"
 
@@ -776,6 +783,7 @@
               }"
               >
                 <el-input
+                  :disabled="p.actpoint === 'look'"
                   clearable
                   placeholder="请输入"
 
@@ -837,6 +845,7 @@
                 label="工期(天):"
               >
                 <el-input
+                  :disabled="p.actpoint === 'look'"
                   clearable
                   placeholder="请输入"
 
@@ -851,6 +860,7 @@
                 >
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-input
+                    :disabled="p.actpoint === 'look'"
                     type="textarea"
                     clearable
                     placeholder="请输入"
@@ -867,6 +877,7 @@
                 >
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-input
+                    :disabled="p.actpoint === 'look'"
                     type="textarea"
                     clearable
                     placeholder="请输入"
@@ -882,6 +893,7 @@
                 <!--type="primary"-->
                 <!--&gt;增加文件</el-button> </p>-->
                 <el-upload
+                  v-show="p.actpoint != 'look'"
                   class="upload-demo detailUpload detatil-flie-btn"
                   :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
                   :on-success="handleChange1"
@@ -939,6 +951,7 @@
               <p>
                 <span>合同附件(最大10MB): </span>
                 <el-upload
+                  v-show="p.actpoint != 'look'"
                   class="upload-demo detailUpload detatil-flie-btn"
                   :action="'/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile'"
                   :on-success="handleChange2"
@@ -996,6 +1009,7 @@
               <p>
                 <span >标段信息: </span>
                 <el-button
+                  v-show="p.actpoint != 'look'"
                   class="detatil-flie-btn"
                   @click="openBd('add')"
                   type="primary"
@@ -1146,6 +1160,7 @@
               <p>
                 <span >项目地点: </span>
                 <el-button
+                  v-show="p.actpoint != 'look'"
                   class="detatil-flie-btn"
                   @click="add('dd')"
                   type="primary"
@@ -2411,7 +2426,7 @@
     background: #fff;
   }
   .detatil-flie-btn{
-    margin-left: 30px;
+    /*margin-left: 30px;*/
   }
   .btn-group{
     text-align: center;

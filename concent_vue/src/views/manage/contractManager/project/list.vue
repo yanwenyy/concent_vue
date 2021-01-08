@@ -201,7 +201,7 @@
                 clearable
                 type="date"
                 value-format="timestamp"
-                v-model="searchform.createTime"
+                v-model="searchFrom.createTime"
 
               >
               </el-date-picker>
