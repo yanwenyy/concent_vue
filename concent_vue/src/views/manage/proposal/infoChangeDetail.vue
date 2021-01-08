@@ -48,6 +48,12 @@
               >
                 <el-input v-model="detailFormBefore.topInfor.enginTypeSecondName" disabled></el-input>
               </el-form-item>
+              <el-form-item
+                label="所属线路:"
+                v-if="detailFormBefore.topInfor.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
+              >
+                <el-input v-model="detailFormBefore.topInfor.belongLineName" disabled></el-input>
+              </el-form-item>
             <br>
               <el-form-item
                 label="项目性质(一级):"
@@ -71,13 +77,7 @@
               >
                 <el-input v-model="detailFormBefore.topInfor.marketSecondName" disabled></el-input>
               </el-form-item>
-              <br>
-              <el-form-item
-                label="所属线路:"
-                v-if="detailFormBefore.topInfor.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
-              >
-                <el-input v-model="detailFormBefore.topInfor.belongLineName" disabled></el-input>
-              </el-form-item>
+
               <br>
               <el-form-item
                 label="建设单位:"
@@ -153,7 +153,7 @@
                   filterable
                   clearable
                   placeholder="请选择"
-                  size="mini"
+
                   v-model="detailFormBefore.topInfor.isMajorProject"
                 >
                   <el-option
@@ -186,7 +186,7 @@
                   disabled
                   clearable
                   placeholder=""
-                  size="mini"
+
                   v-model="detailFormBefore.topInfor.majorProjectExplain"
                 />
               </el-form-item>
@@ -225,7 +225,7 @@
                 <el-input
                   clearable
                   placeholder=""
-                  size="mini"
+
                   v-model="detailform.topInfor.investment"
                 />
               </el-form-item> -->
@@ -241,7 +241,7 @@
                   type="textarea"
                   clearable
                   placeholder="请输入"
-                  size="mini"
+
                   v-model="detailFormBefore.topInfor.inforContent"
                 />
               </el-form-item>
@@ -407,7 +407,7 @@
                 <el-input
                   :disabled="p.actpoint === 'look'"
                   clearable
-                  size="mini"
+
                   v-model="detailform.topInfor.inforName"/>
               </el-form-item>
 
@@ -417,7 +417,7 @@
                 <el-input
                   :disabled="p.actpoint === 'look'"
                   clearable
-                  size="mini"
+
                   v-model="detailform.topInfor.inforNameForeign"/>
               </el-form-item>
               <br>
@@ -440,7 +440,7 @@
                   <!--filterable-->
                   <!--style="width: 100%"-->
                   <!--placeholder="请选择"-->
-                  <!--size="mini"-->
+                  <!---->
                   <!--@change="-->
                   <!--getName(detailform.topInfor.moduleId, bizCode, 'moduleName')-->
                   <!--"-->
@@ -471,7 +471,7 @@
                   filterable
                   placeholder="请选择"
                   @change="getTwo"
-                  size="mini"
+
                   v-model="detailform.topInfor.enginTypeFirstId"
                 >
                   <el-option
@@ -492,7 +492,7 @@
                   clearable
                   filterable
                   placeholder="请选择"
-                  size="mini"
+
                   @change="
                   getName(
                     detailform.topInfor.enginTypeSecondId,
@@ -510,6 +510,34 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
+              <el-form-item
+                v-if="detailform.topInfor.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
+                label="所属线路:"
+                prop="topInfor.belongLineId"
+              >
+                <el-select
+                  :disabled="p.actpoint === 'look'"
+                  filterable
+                  clearable
+                  placeholder="请选择或直接填写所属现路"
+
+                  @change="
+                  getName(
+                    detailform.topInfor.belongLineId,
+                    railwayLine,
+                    'belongLineName'
+                  )
+                "
+                  v-model="detailform.topInfor.belongLineId"
+                >
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in railwayLine"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
               <br>
 
 
@@ -523,7 +551,7 @@
                   filterable
                   placeholder="请选择"
                   @change="getTwoXZ"
-                  size="mini"
+
                   v-model="detailform.topInfor.projectNatureFirstId"
                 >
                   <el-option
@@ -543,7 +571,7 @@
                   clearable
                   filterable
                   placeholder="请选择"
-                  size="mini"
+
                   @change="
                   getName(
                     detailform.topInfor.projectNatureSecondId,
@@ -577,7 +605,7 @@
                   clearable
                   placeholder="请选择"
                   @change="getTwoSC"
-                  size="mini"
+
                   v-model="detailform.topInfor.marketFirstNameId"
                 >
                   <el-option
@@ -603,7 +631,7 @@
                   filterable
                   clearable
                   placeholder="请选择"
-                  size="mini"
+
                   @change="
                   getName(
                     detailform.topInfor.marketSecondId,
@@ -621,35 +649,7 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
-                <br>
-              <el-form-item
-                v-if="detailform.topInfor.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
-                label="所属线路:"
-                prop="topInfor.belongLineId"
-              >
-                <el-select
-                  :disabled="p.actpoint === 'look'"
-                  filterable
-                  clearable
-                  placeholder="请选择或直接填写所属现路"
-                  size="mini"
-                  @change="
-                  getName(
-                    detailform.topInfor.belongLineId,
-                    railwayLine,
-                    'belongLineName'
-                  )
-                "
-                  v-model="detailform.topInfor.belongLineId"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in railwayLine"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
+
               <br>
               <el-form-item
                 label="建设单位:"
@@ -663,7 +663,7 @@
                 <el-input
                   :disabled="p.actpoint === 'look'"
                   clearable
-                  size="mini"
+
                   v-model="detailform.topInfor.constructionOrg"
                 />
               </el-form-item>
@@ -678,7 +678,7 @@
                 <el-input
                   clearable
                   :disabled="p.actpoint === 'look'"
-                  size="mini"
+
                   v-model="detailform.topInfor.designOrg"
                 />
               </el-form-item>
@@ -695,7 +695,7 @@
                 <el-input
                   :disabled="p.actpoint === 'look'"
                   clearable
-                  size="mini"
+
                   v-model="detailform.topInfor.bidPerson"
                 />
               </el-form-item>
@@ -710,7 +710,7 @@
               >
                 <el-input
                   :disabled="p.actpoint === 'look'"
-                  size="mini"
+
                   v-model="detailform.topInfor.bidAgentCompany"
                 />
               </el-form-item>
@@ -747,7 +747,7 @@
                   :disabled="p.actpoint === 'look'"
                   clearable
                   placeholder=""
-                  size="mini"
+
                   v-model="detailform.topInfor.investment"
                 />
               </el-form-item>
@@ -763,7 +763,7 @@
                   clearable
                   multiple
                   placeholder="请选择"
-                  size="mini"
+
                   v-model="detailform.value1"
                 >
                   <el-option
@@ -799,7 +799,7 @@
                   filterable
                   clearable
                   placeholder="请选择"
-                  size="mini"
+
                   v-model="detailform.topInfor.isMajorProject"
                 >
                   <el-option
@@ -825,7 +825,7 @@
                   clearable
                   filterable
                   placeholder="请选择"
-                  size="mini"
+
                   v-model="detailform.topInfor.noticeTypeId"
                   @change="
                   getName(
@@ -846,12 +846,7 @@
 
               <el-form-item
                 label="资审方式:"
-                prop="topInfor.verifyTypeId"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
+                prop="topInfor.noticeTypeName"
               >
                 <el-input
                   disabled
@@ -864,7 +859,7 @@
                   <!--clearable-->
                   <!--filterable-->
                   <!--placeholder="请选择"-->
-                  <!--size="mini"-->
+                  <!---->
                   <!--@change="-->
                   <!--getName(-->
                     <!--detailform.topInfor.verifyTypeId,-->
@@ -889,7 +884,7 @@
                 <el-input
                   clearable
                   placeholder=""
-                  size="mini"
+
                   v-model="detailform.topInfor.majorProjectExplain"
                 />
               </el-form-item>
@@ -907,7 +902,7 @@
                     :disabled="p.actpoint === 'look'"
                     clearable
                     placeholder=""
-                    size="mini"
+
                     v-model="detailform.topInfoOrg.projectTrackResponPerson"
                   />
                 </el-form-item>
@@ -924,7 +919,7 @@
                     :disabled="p.actpoint === 'look'"
                     clearable
                     placeholder=""
-                    size="mini"
+
                     v-model="detailform.topInfoOrg.contactMode"
                   />
                 </el-form-item>
@@ -943,7 +938,7 @@
                   filterable
                   clearable
                   placeholder="请选择"
-                  size="mini"
+
                   @change="
                   getNameZb(
                     detailform.topInfoOrg.bidProbId,
@@ -974,7 +969,7 @@
                   type="textarea"
                   clearable
                   placeholder="请输入"
-                  size="mini"
+
                   v-model="detailform.topInfor.inforContent"
                 />
               </el-form-item>
@@ -1123,6 +1118,12 @@
                   align="center"
                   show-overflow-tooltip
                 >
+                  <template slot="header">
+                    <p>
+                      <span class="red-star">*</span>
+                      标段名
+                    </p>
+                  </template>
                   <template slot-scope="scope">
                     <el-form-item class="tabelForm" :prop="'topInfoSectionList.' + scope.$index + '.sectionName'"     :rules="{
            required: true, message: '此项不能为空', trigger: 'blur'

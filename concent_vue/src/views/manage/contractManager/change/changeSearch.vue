@@ -24,7 +24,7 @@
               :key="index"
               :label="item.detailName"
               :value="item.id"
-              v-for="(item, index) in lxList"
+              v-for="(item, index) in projectPlate"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -51,7 +51,7 @@
           label="ID">
         </el-table-column>
         <el-table-column
-          prop="inforName"
+          prop="moduleName"
           show-overflow-tooltip
           label="合同类型">
         </el-table-column>
@@ -115,7 +115,9 @@
           contractName: '',
           contractNo: '',
           moduleId: '',
-          changeStatus:'0'
+          changeStatus:'0',
+          current: 1,
+          size: 10,
         },
         lxList:[
           {
@@ -164,8 +166,12 @@
       projectDomainType() {
         return this.$store.state.category.projectDomainType;
       },
+      projectPlate(){
+        return this.$store.state.projectPlate;
+      },
     },
     mounted() {
+      this.$store.dispatch("getConfig", {});
       this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
     },
     methods: {
@@ -212,13 +218,13 @@
       },
       // 每页数
       sizeChangeHandle(val) {
-        this.pageSize = val
-        this.pageIndex = 1
+        this.searchform.size = val
+        this.searchform.current = 1
         this.init()
       },
       // 当前页
       currentChangeHandle(val) {
-        this.pageIndex = val
+        this.searchform.current = val
         this.init()
       },
       // 单选

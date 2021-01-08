@@ -71,11 +71,11 @@
         ></el-table-column>
         <el-table-column
           label="合同类型"
-          prop="inforName"
+          prop="moduleName"
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
+            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.moduleName}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -190,6 +190,28 @@
       ChangeSearch
     },
     methods: {
+      //根据id跳页面
+      getUrl(id){
+        var url='';
+        if(id=='7f4fcba4255b43a8babf15afd6c04a53'){
+          url= '../project/changeDetail/';
+        }else if(id=='f6823a41e9354b81a1512155a5565aeb'){
+          url= '../design/changeDetail/';
+        }else if(id=='510ba0d79593418493eb1a11ea4e7af6'){
+          url=  '../house/changeDetail/';
+        }else if(id=='510ba0d79593418493eb1a11ea4e7af4'){
+          url=  '../trade/changeDetail/';
+        }else if(id=='510ba0d79593418493eb1a11ed3e7df4'){
+          url=  '../industrial/changeDetail/';
+        }else if(id=='510ba0d79593418493eb1a11ea4e7df4'){
+          url=  '../finance/changeDetail/';
+        }else if(id=='510ba0d79593418493eb1a11ed4e7df4'){
+          url=  '../operate/changeDetail/';
+        }else if(id=='510ba0d79593419493eb1a11ed3e7df4'){
+          url=  '../other/changeDetail/';
+        }
+        return url;
+      },
       // 增加
       add() {
         this.infoCSVisible = true;
@@ -201,9 +223,10 @@
       goAddDetail(data){
         // console.log(data);
         if(data.uuid){
+          var url=this.getUrl(data.moduleId);
           let p = {actpoint: "add",instid:data.uuid};
           this.$router.push({
-            path: "../other/changeDetail/",
+            path: url,
             query: {p: this.$utils.encrypt(JSON.stringify(p))},
           });
         }
@@ -240,39 +263,22 @@
           return false;
         }
         let p = {actpoint: "edit", instid: this.multipleSelection[0].beforeId,afterId:this.multipleSelection[0].afterId};
+        var url=this.getUrl(this.multipleSelection[0].moduleId);
         this.$router.push({
-          path: "../project/changeDetail/",
+          path: url,
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
 
       },
       // 查看
       rowshow(row) {
-        let p = {actpoint: "look", instid: row.uuid};
+        let p = {actpoint: "look", instid: row.beforeId,afterId:row.afterId};
+        var url=this.getUrl(row.moduleId);
         this.$router.push({
-          path: "./detail/",
+          path: url,
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       },
-      // 查看
-      rowshow(row) {
-        let p = { actpoint: "look", instid: row.uuid };
-        this.$router.push({
-          path: "./detail/",
-          query: { p: this.$utils.encrypt(JSON.stringify(p)) },
-        });
-      },
-      show() {
-        if (this.multipleSelection.length !== 1) {
-          this.$message.info("请选择一条记录进行查看操作！");
-          return false;
-        }
-        let p = { actpoint: "look", instid: this.multipleSelection[0].uuid };
-        this.$router.push({
-          path: "./detail/",
-          query: { p: this.$utils.encrypt(JSON.stringify(p)) },
-        });
-      }, // list通用方法开始
       handleSizeChange(val) {
         this.searchFrom.size = val;
         this.getData();

@@ -594,5 +594,9 @@ pre {
   vertical-align: middle;
   margin-top: -5px;
 }
+.red-star{
+  font-size: 16px;
+  color:red;
+}
 /**/
 
