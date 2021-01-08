@@ -1764,8 +1764,8 @@ export default {
             console.log( JSON.stringify(this.detailformAfter.commonFilesList))
             console.log( JSON.stringify(this.detailformAfter))
             if(response.data.uuid!=null) {
-              var list =[];
-              this.detailformAfter.commonFilesList = list;
+              //var list =[];
+              //this.detailformAfter.commonFilesList = list;
               var commonFile = {
 
                 uuid: response.data.uuid,
@@ -1783,7 +1783,15 @@ export default {
                 createOrgId: response.data.createOrgId,
                 createOrgName: response.data.createOrgName
               }
-              this.detailformAfter.commonFilesList.push(commonFile);
+              if(this.detailformAfter.commonFilesList==null)
+              {
+                var list =[];
+                list.push(commonFile);
+                this.detailformAfter.commonFilesList = list;
+              }else {
+                this.detailformAfter.commonFilesList.push(commonFile);
+              }
+              // this.detailformAfter.commonFilesList.push(commonFile);
             }
             console.log( JSON.stringify(this.detailformAfter.commonFilesList))
           }

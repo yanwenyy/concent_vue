@@ -1209,7 +1209,41 @@ export default {
           type: 'success',
           duration: 1500,
           onClose: () => {
-            this.detailform.commonFilesList.push(response.data);
+            console.log(response.data)
+            console.log( JSON.stringify(this.detailform.commonFilesList))
+            console.log( JSON.stringify(this.detailform))
+            if(response.data.uuid!=null) {
+              //var list =[];
+              //this.detailform.commonFilesList = list;
+              var commonFile = {
+
+                uuid: response.data.uuid,
+                businessId: response.data.businessId,
+                businessType: response.data.businessType,
+                businessCode: response.data.businessCode,
+                fileName: response.data.fileName,
+                fileType: response.data.fileType,
+                fileSize: response.data.fileSize,
+                filePath: response.data.filePath,
+                remarks: response.data.remarks,
+                createTime: response.data.createTime,
+                createUserId: response.data.createUserId,
+                createUserName: response.data.createUserName,
+                createOrgId: response.data.createOrgId,
+                createOrgName: response.data.createOrgName
+              }
+              if(this.detailform.commonFilesList==null)
+              {
+                var list =[];
+                list.push(commonFile);
+                this.detailform.commonFilesList = list;
+              }else {
+                this.detailform.commonFilesList.push(commonFile);
+              }
+              // this.detailform.commonFilesList.push(commonFile);
+            }
+
+            //this.detailform.commonFilesList.push(response.data);
             console.log( JSON.stringify(this.detailform.commonFilesList))
           }
         })
