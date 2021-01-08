@@ -427,7 +427,7 @@
           </el-form-item>
 
           <el-row>
-            <p><span >附件（最大10MB）: </span>
+            <p><span >附件: </span>
                 <el-upload
                   class="upload-demo detailUpload"
                   :action="'/api/contract/topInfo/CommonFiles/bidInfo/01/uploadFile'"
@@ -473,7 +473,7 @@
 
                 </el-table-column>
 
-                <el-table-column
+                <!-- <el-table-column
                   align="center"
                   :resizable="false"
                   fixed="right"
@@ -485,7 +485,7 @@
                   <template slot-scope="scope">
                     <el-link :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
                   </template>
-                </el-table-column>
+                </el-table-column> -->
               </el-table>
           </el-row>
 
@@ -1299,7 +1299,7 @@
             </el-row>
 
             <el-row>
-                <p><span >附件（最大10MB）: </span>
+                <p><span >附件: </span>
                 <el-upload
                   class="upload-demo detailUpload"
                   :action="'/api/contract/topInfo/CommonFiles/bidInfo/01/uploadFile'"
@@ -1861,19 +1861,6 @@ export default {
        this.key = this.key + 1;
     },
 
-        handleRemove(file, fileList) {
-         this.$http
-          .post(
-            "/api/contract/topInfo/CommonFiles/list/delete",
-            {ids:[file.response.data.uuid]},
-          )
-          .then((res) => {
-            if (res.data.code === 200) {
-               this.detailform.bidInfo_01=fileList;
-            }
-          });
-        console.log(this.fileList)
-      },
     //金额过滤
     getMoney(value) {
       return isMoney(value);
@@ -1971,7 +1958,7 @@ export default {
                   message: "保存成功",
                   type: "success",
                 });
-                this.$refs[formName].resetFields();
+                // this.$refs[formName].resetFields();
                 this.$router.back();
               }
             });

@@ -4,8 +4,8 @@
       <div slot="header" class="clearfix">
       <span class="detailSpan"><b>投标信息维护</b></span>
       <el-button @click="back" class="detailbutton" >返回</el-button>
-      <el-button type="primary" @click="saveInfo('detailform')" class="detailbutton">保存</el-button>
-      <el-button @click="saveInfo('detailform')" class="detailbutton">提交</el-button>
+      <el-button v-if="p.actpoint != 'look'" type="primary" @click="saveInfo('detailform')" class="detailbutton">保存</el-button>
+      <el-button v-if="p.actpoint != 'look'" @click="saveInfo('detailform')" class="detailbutton">提交</el-button>
       </div>
 
       <div class="detailBox">
@@ -414,11 +414,7 @@
             class="formItem"
               label="投标截止日期:"
               prop="bidInfo.endTime"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
+
             >
               <el-date-picker
                 :disabled="p.actpoint === 'look'"
@@ -461,11 +457,6 @@
               class="inline-formitem formItem"
               label="是否为费率招标:"
               prop="bidInfo.isBidRates"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
             >
 
             <el-switch
@@ -484,12 +475,6 @@
               class="inline-formitem formItem"
               label="是否联合体投标:"
               prop="bidInfo.isCoalitionBid"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-
-              }"
             >
             <el-switch
               class="inline-formitem-switch"
@@ -1123,10 +1108,12 @@ export default {
                     message: "保存成功",
                     type: "success",
                   });
-                  this.$refs[formName].resetFields();
-                  this.$router.push({
-                    path: "/manage/bid_info/list",
-                  });
+                   this.$router.back();
+                  // this.$refs[formName].resetFields();
+
+                  // this.$router.push({
+                  //   path: "/manage/bid_info/list",
+                  // });
                 }
               });
           } else {
