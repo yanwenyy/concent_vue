@@ -331,7 +331,7 @@
               <el-input
                 disabled
                 placeholder="请选择"
-                v-model="detailform.verify.contactMode"
+                v-model="detailform.verify.tioContactMode"
               >
               </el-input>
               </el-form-item>
