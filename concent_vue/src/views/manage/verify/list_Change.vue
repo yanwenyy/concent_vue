@@ -2,14 +2,16 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary">新增变更</el-button>
+        <el-button @click="add" plain type="primary">变更</el-button>
         <el-button @click="editItem" plain type="primary">修改</el-button>
         <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
       </el-button-group>
     </div>
 
-    <div style="margin-top: 20px">
+    <div style="margin-top: 10px">
       <el-table
+        :max-height="$tableHeight"
+        :height="$tableHeight"
         :data="page.records"
         :header-cell-style="{
           'text-align': 'center',

@@ -92,7 +92,7 @@ export default {
                   "iconCls": "el-icon-document-checked",
                   "menushow": true,
                   "leaf": false,
-                  "defaultpage": true,
+                  "defaultpage": false,
                   "children": [
                     {
                       "name": "资格预审登记",
@@ -938,7 +938,36 @@ export default {
                     "defaultpage": false
                   }
                 ]
-              }
+              },
+                {
+                  "name": "统计指标",
+                  "path": "/statistics/bp",
+                  "component": "/router",
+                  "iconCls": "el-icon-printer",
+                  "menushow": true,
+                  "leaf": false,
+                  "defaultpage": false,
+                  "children": [
+                    {
+                      "name": "统计项管理",
+                      "path": "/statistics/bp/list",
+                      "component": "/statistics/plan/01-1",
+                      "iconCls": "el-icon-notebook-2",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "本单位统计项",
+                      "path": "/statistics/bp/list_Company",
+                      "component": "/statistics/plan/02-1",
+                      "iconCls": "el-icon-receiving",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": false
+                    }
+                  ]
+                }
               ]
             },
             {
