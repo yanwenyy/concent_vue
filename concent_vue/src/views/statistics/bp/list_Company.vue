@@ -2,18 +2,20 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="verifyResultEdit" plain type="primary">资审结果登记</el-button>
+        <el-button @click="add" plain type="primary">新增</el-button>
+        <el-button @click="editItem" plain type="primary">修改</el-button>
+        <el-button @click="remove" type="primary" plain>删除</el-button>
+        <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
       </el-button-group>
     </div>
-    <div style="margin-top: 10px">
+    <div style="margin-top: 20px">
       <el-table
-        :max-height="$tableHeight"
-        :height="$tableHeight"
         :data="page.records"
         :header-cell-style="{
           'text-align': 'center',
           'background-color': 'whitesmoke',
         }"
+        @row-click="rowshow"
         @selection-change="handleSelectionChange"
         border
         highlight-current-row
@@ -150,25 +152,18 @@
       ></el-pagination>
     </div>
     <el-dialog title="资审结果登记" :visible.sync="dialogResult"
-        width="300">
-      <el-form :model="resultform.verifySection">
-
-        <el-form-item label="通过时间"  prop="verifyResultTime">
+    width="30%">
+      <el-form :model="resultform">
+        <el-form-item label="资格预审结果" :label-width="formLabelWidth" prop="verifyResult">
+          <el-radio v-model="resultform.verifyResult" label="1" border>通过</el-radio>
+          <el-radio v-model="resultform.verifyResult" label="0" border>不通过</el-radio>
+        </el-form-item>
+        <el-form-item label="通过时间" :label-width="formLabelWidth" prop="verifyResultTime">
           <el-date-picker
-            value-format="timestamp"
-            v-model="resultform.verifySection.verifyResultTime"
+            v-model="resultform.verifyResultTime"
             type="date"
             placeholder="选择日期">
           </el-date-picker>
-        </el-form-item>
-        <el-form-item label="资格预审结果"   prop="verifyResult">
-         <el-switch
-           active-text="通过"
-           v-model="resultform.verifySection.verifyResult"
-           active-value="true"
-           inactive-value="false"
-         >
-            </el-switch>
         </el-form-item>
         <el-form-item
           class="neirong"
@@ -188,62 +183,6 @@
             </el-upload>
         </el-form-item>
       </el-form>
-      <div>
-      <el-table
-        :data="resultform.commonFilesList"
-        :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
-        @selection-change="handleSelectionChange"
-        align="center"
-        border
-        class="contractInfoTable"
-        ref="table"
-        style="width: 100%;height: auto;"
-      >
-                <el-table-column
-                  :width="55"
-                  align="center"
-                  label="序号"
-                  show-overflow-tooltip
-                  type="index"
-                ></el-table-column>
-                <el-table-column :resizable="false"
-                                 label="文件名"
-                                 prop="fileName"
-                                 show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column :resizable="false"
-                                 label="大小"
-                                 prop="fileSize"
-                                 :width="120"
-                                 show-overflow-tooltip>
-
-                </el-table-column>
-                <el-table-column :resizable="false"
-                                 label="类型"
-                                 :width="80"
-                                 prop="fileType"
-                                 show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column
-                  :resizable="false"
-                  fixed="right"
-                  label="操作"
-                  show-overflow-tooltip
-                  :width="80"
-                >
-                  <template slot-scope="scope">
-                    <el-link :underline="false"
-                             @click="handleRemove(scope.row,scope.$index)"
-                             type="warning">删除</el-link>
-                  </template>
-                </el-table-column>
-              </el-table>
-
-    </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogResult = false">取 消</el-button>
         <el-button type="primary" @click="saveVerifyResult">确 定</el-button>
@@ -255,7 +194,7 @@
 
 <script>
 export default {
-  name: "标段通过信息录入",
+  name: "proposal-list-look",
   data() {
     return {
       radio: '0',
@@ -277,61 +216,37 @@ export default {
       multipleSelection: [],
       orgTree: [],
       dialogResult: false,
-      // resultform: {
-      //   verifyResult: '1',
-      //   verifyResultTime: '2020-12-18',
-      //   verifyResultfile: '',
-      //   commonFilesList:[]
-      // },
-      resultform:{
-        verifySection:{
-          uuid:'',
-          verifyId:'',
-          sectionId:'',
-          investmentReckon:'',
-          jananInvestment:'',
-          verifyResult:'1',
-          verifyResultTime:'2020-12-18'
-        },
-        commonFilesList:[]
+      resultform: {
+        verifyResult: '1',
+        verifyResultTime: '2020-12-18',
+        verifyResultfile: ''
       },
+      formLabelWidth: '120px'
 
     }
   },
   methods: {
-    // UploadUrl:function(){
-    //   return '/api/contract/topInfo/CommonFiles/'+this.multipleSelection[0].verify.sectionId+'/verify/02/uploadFileByBusinessId';
-    // },
     verifyResultEdit() {
       if (this.multipleSelection.length > 0) {
         this.dialogResult = true;
-        console.log(this.multipleSelection[0].verifySectionId)
-        this.$http
-          .post(
-            '/api/contract/topInfo/Verify/detail/entitySectionInfo',
-            {"id":this.multipleSelection[0].verifySectionId}
-          )
-          .then(res => {
-            this.resultform = res.data.data
-            console.log(JSON.stringify(this.resultform))
-            //this.getData();
-          })
-
+        //alert(JSON.stringify(this.multipleSelection[0]));
+        this.resultform.verifyResult = this.multipleSelection[0].verifyResult;
+        this.resultform.verifyResultTime = this.multipleSelection[0].verifyResultTime;
       } else {
         this.$message.info("请选择列表中的项目！");
       }
     },
     saveVerifyResult() {
       this.dialogResult = false
-      // var date = new Date(this.resultform.verifyResultTime);
-      // var time1 = date.getTime();
-      // this.resultform.verifySection.verifyResultTime = time1;
-      // this.resultform.verifySection.verifyResult =
+      this.multipleSelection[0].verifyResult = this.resultform.verifyResult;
+      var date = new Date(this.resultform.verifyResultTime);
+      var time1 = date.getTime();
+      this.multipleSelection[0].verifyResultTime = time1;
       // alert(JSON.stringify(this.multipleSelection[0]))
       this.$http
         .post(
-          '/api/contract/topInfo/Verify/detail/saveSectionResult',
-          JSON.stringify(this.resultform), {useJson: true}
+          '/api/contract/topInfo/Verify/detail/saveVerifyResult',
+          JSON.stringify(this.multipleSelection[0]), {useJson: true}
         )
         .then(res => {
           if (res.data.code === 0) {
@@ -359,20 +274,6 @@ export default {
           }
         });
     },
-    // handleRemove(file,index) {
-    //   this.$http
-    //     .post(
-    //       "/api/contract/topInfo/CommonFiles/list/delete",
-    //       {ids:[file.uuid]},
-    //     )
-    //     .then((res) => {
-    //       if (res.data.code === 200) {
-    //         this.detailform.fileList2.splice(index,1);
-    //       }
-    //
-    //     });
-    //   console.log(this.detailform.fileList1)
-    // },
     handleRemove(file,index) {
       this.$http
         .post(
@@ -381,11 +282,11 @@ export default {
         )
         .then((res) => {
           if (res.data.code === 200) {
-            this.resultform.commonFilesList.splice(index,1);
+            this.detailform.fileList2.splice(index,1);
           }
 
         });
-      console.log(this.resultform.commonFilesList)
+      console.log(this.detailform.fileList1)
     },
     //上传附件
     handleChange(response, file, fileList){
@@ -395,33 +296,7 @@ export default {
           type: 'success',
           duration: 1500,
           onClose: () => {
-            console.log(response.data)
-            console.log( JSON.stringify(this.resultform.commonFilesList))
-            console.log( JSON.stringify(this.resultform))
-            // if(response.data.uuid!=null) {
-            //   var list =[];
-            //   this.resultform.commonFilesList = list;
-            //   var commonFile = {
-            //
-            //     uuid: response.data.uuid,
-            //     businessId: response.data.businessId,
-            //     businessType: response.data.businessType,
-            //     businessCode: response.data.businessCode,
-            //     fileName: response.data.fileName,
-            //     fileType: response.data.fileType,
-            //     fileSize: response.data.fileSize,
-            //     filePath: response.data.filePath,
-            //     remarks: response.data.remarks,
-            //     createTime: response.data.createTime,
-            //     createUserId: response.data.createUserId,
-            //     createUserName: response.data.createUserName,
-            //     createOrgId: response.data.createOrgId,
-            //     createOrgName: response.data.createOrgName
-            //   }
-            //   this.resultform.commonFilesList.push(commonFile);
-            // }
-            this.resultform.commonFilesList.push(response.data);
-            console.log( JSON.stringify(this.resultform.commonFilesList))
+            this.detailform.fileList.push(response.data);
           }
         })
       } else {
@@ -442,7 +317,43 @@ export default {
       return row.verify.uuid != "" ? "已进行资审申请" : row.verify.uuid == "" ? "未进行资审申请" : "未进行资审申请";
       // return statusW
     },
-
+    search() {
+      this.showinput = false
+    },
+    add() {
+      console.log(JSON.stringify(this.multipleSelection[0].uuid));
+      if (this.multipleSelection[0].uuid != null) {
+        this.$message.info("当前登记的项目信息已经添加的资审信息！");
+        return;
+      }
+      //alert(JSON.stringify(this.multipleSelection[0]));
+      let p = {actpoint: 'add', instid: this.multipleSelection[0].inforid, topinfoid: this.multipleSelection[0].tiouuid}
+      //alert(JSON.stringify(p));
+      this.$router.push({
+        path: './detail/',
+        query: {p: this.$utils.encrypt(JSON.stringify(p))}
+      })
+    },
+    editItem() {
+      console.log(JSON.stringify(this.multipleSelection[0].uuid));
+      //是否有资审信息判断
+      if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
+        this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
+        return;
+      }
+      //是否在审核流程中判断
+      //是否在变更流程中判断
+      let p = {
+        actpoint: 'editItem',
+        instid: this.multipleSelection[0].uuid,
+        topinfoid: this.multipleSelection[0].tiouuid
+      }
+      //alert(JSON.stringify(p));
+      this.$router.push({
+        path: './detail/',
+        query: {p: this.$utils.encrypt(JSON.stringify(p))}
+      })
+    },
     remove() {
       console.log(JSON.stringify(this.multipleSelection[0].uuid));
       if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
@@ -481,7 +392,26 @@ export default {
       });
 
     },
-
+    // 查看
+    rowshow(row) {
+      // let p = {actpoint: 'look', instid: row.uuid}
+      // this.$router.push({
+      //   path: './detail/',
+      //   query: {p: this.$utils.encrypt(JSON.stringify(p))}
+      // })
+      console.log(JSON.stringify(row));
+      if (row.uuid === null) {
+        this.$message.error("当前登记的项目信息未添加的资审信息！");
+        return;
+      }
+      //alert(JSON.stringify(this.multipleSelection[0]));
+      let p = {actpoint: 'look', instid: row.inforid, topinfoid: row.tiouuid}
+      //alert(JSON.stringify(p));
+      this.$router.push({
+        path: './detail/',
+        query: {p: this.$utils.encrypt(JSON.stringify(p))}
+      })
+    },
     show() {
       if (this.multipleSelection.length !== 1) {
         this.$message.info('请选择一条记录进行查看操作！')
@@ -522,12 +452,17 @@ export default {
       this.multipleSelection = val
     },
     getData() {
-
+      console.log(JSON.stringify(this.searchform));
+      if (this.searchform.saleTime != "") {
+        var date = new Date(this.searchform.saleTime);
+        var time1 = Date.parse(date);
+        this.searchform.saleTime = time1;
+      }
 
       console.log(JSON.stringify(this.searchform));
       this.$http
         .post(
-          '/api/contract/topInfo/Verify/list/loadPageDataForFlowStatus',
+          '/api/contract/topInfo/Verify/list/loadPageDataForReg',
           this.searchform
         )
         .then(res => {
@@ -569,156 +504,8 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
-  .btn-group{
-    text-align: center;
-    margin-top: 20px;
-  }
-  .gcform {
-    margin-top: 10px;
-    >>>.el-form-item__label:before {
-      position: initial;
-      left: -10px;
-    }
-    >>>.el-form-item__error {
-      padding-top: 0px;
-      width: 95%;
-      margin-left: 0;
-      text-align: right;
-      top: 0%;
-    }
-    >.el-form-item,>>>.formItem{
-
-      display: inline-block;
-      width: 32.5%!important;
-    }
-    .detailformfooter1 {
-      margin-top: 5px;
-      width: 100%;
-      .el-button {
-        margin: 0 30px;
-        width: 140px;
-        height: 42px;
-        font-size: 18px;
-        font-family: Microsoft YaHei;
-      }
-      .el-button--primary {
-        background: #5c8bfa;
-      }
-      .el-button--default {
-        border: 1px solid #5c8bfa;
-        color: #5c8bfa;
-      }
-    }
-    .errorMsg >>>.el-form-item__label {
-      color: red;
-    }
-    .el-input {
-      width: 300px;
-    }
-    .el-input .el-input_inner {
-      width: 300px;
-      height: 500px;
-    }
-  }
-
-  .el-input .el-input_inner {
-    width: 300px;
-    height: 500px;
-  }
-
-  .el-table thead.is-group th {
-    background: #fff;
-  }
-
-  .text {
-    font-size: 14px;
-  }
-
-  .item {
-    margin-bottom: 18px;
-  }
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
-  }
-
-  .clearfix:after {
-    clear: both;
-  }
-
-  .el-card__body {
-    /*padding: 0 100px;*/
-    // height: 400px;
-    // border: 1px solid black;
-    // height: 200px;
-  }
-
-  >>>.el-input--mini .el-input__inner {
-    height: 40px;
-    width: 100%;
-    box-sizing: border-box;
-    // margin: 10px 0 0 10px;
-  }
-
-  .gcform >>>.el-input {
-    width: 95%;
-  }
-  .listInput{
-    width: auto!important;
-  }
-  .gcform .listInput input{
-    width: 100px!important;
-    padding:10px!important;
-    box-sizing: border-box;
-  }
-  .neirong {
-    width: 100% !important;
-  }
-
-  .gcform >>>.el-form-item {
-    margin-bottom: 0px;
-  }
-
-  .neirong >>>.el-input--mini .el-input__inner {
-    height: 100px;
-  }
-
-  .detail_bottom {
-    margin: 20px 0 0 0;
-    // border: 1px solid #ddd;
-  }
-
-  .el-card,
-  .el-message {
-    overflow: hidden;
-  }
-
-  .el-scrollbar__wrap.default-scrollbar__wrap {
-    overflow: hidden;
-  }
-
-  .el-card.is-always-shadow,
-  .el-card.is-hover-shadow:focus,
-  .el-card.is-hover-shadow:hover {
-    overflow: auto;
-    // height: 500px ;
-    /*height: 44vh;*/
-  }
-
-  .el-button--mini,
-  .el-button--mini.is-round {
-    margin: 0 27px 5px 0;
-  }
-
-  .el-table--border {
-    min-height: auto !important;
-  }
-  >>>.el-form-item__label{
-    width: auto;
-  }
-  >>>.el-upload-list{
-    display: none;
-  }
+<style scoped>
+.el-table__row {
+  cursor: pointer;
+}
 </style>

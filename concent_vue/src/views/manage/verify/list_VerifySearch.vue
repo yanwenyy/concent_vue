@@ -128,7 +128,6 @@
 
     </el-form>
 
-    <div style="margin-top: 20px">
       <el-table
         :data="page.records"
         :header-cell-style="{
@@ -270,7 +269,7 @@
         layout="total, sizes, prev, pager, next, jumper"
       ></el-pagination>
 
-    </div>
+
     <el-dialog title="资审结果登记查看" :visible.sync="dialogResult"
                width="300">
       <el-form :model="resultform.verifySection">

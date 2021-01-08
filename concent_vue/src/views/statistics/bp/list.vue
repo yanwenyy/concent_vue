@@ -2,16 +2,14 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary">登记</el-button>
+        <el-button @click="add" plain type="primary">新增</el-button>
         <el-button @click="editItem" plain type="primary">修改</el-button>
         <el-button @click="remove" type="primary" plain>删除</el-button>
         <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
       </el-button-group>
     </div>
-    <div style="margin-top: 10px">
+    <div style="margin-top: 20px">
       <el-table
-        :max-height="$tableHeight"
-        :height="$tableHeight"
         :data="page.records"
         :header-cell-style="{
           'text-align': 'center',
@@ -44,104 +42,53 @@
 
         <el-table-column
           :width="300"
-          label="项目名称"
-          prop="inforName"
+          label="统计名称"
+          prop="vName"
           show-overflow-tooltip
         >
-
-          <template slot-scope="scope">
-            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
-          </template>
         </el-table-column>
         <el-table-column
           :width="150"
           align="center"
-          label="工程类别"
-          prop="topInfor.enginTypeFirstName"
+          label="计量单位"
+          prop="vJldw"
           show-overflow-tooltip
         >
-
-          <template slot-scope="scope">
-            {{ scope.row.enginTypeFirstName }}
-          </template>
         </el-table-column>
         <el-table-column
           :width="150"
           align="center"
-          label="建设单位"
-          prop="topInfor.constructionOrg"
+          label="工程（行业）类别"
+          prop="vProjecttypeName"
           show-overflow-tooltip
         >
-
-          <template slot-scope="scope">
-            {{ scope.row.constructionOrg }}
-          </template>
         </el-table-column>
         <el-table-column
           :width="150"
           align="center"
-          label="公告类型"
+          label="使用设置"
           prop="topInfor.noticeTypeName"
           show-overflow-tooltip
         >
-
-          <template slot-scope="scope">
-            {{ scope.row.noticeTypeName }}
-          </template>
         </el-table-column>
         <el-table-column
           :width="180"
           align="center"
-          label="资审文件发售截止日期"
+          label="是否填报"
           prop="verify.saleTime"
           show-overflow-tooltip
         >
-
-          <template slot-scope="scope">
-            {{ scope.row.saleTime | dateformat }}
-          </template>
         </el-table-column>
         <el-table-column
           :width="150"
           align="center"
-          label="状态"
+          label="是否隐藏"
           prop="verify.uuid"
           filter-multiple="true"
           show-overflow-tooltip
         >
-
-          <template slot-scope="scope">
-            <el-tag v-if="scope.row.uuid===null" type="warning">未进行资审申请</el-tag>
-            <el-tag v-else type="success">已进行资审申请</el-tag>
-          </template>
         </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="填报人"
-          prop="verify.createUserName"
-          show-overflow-tooltip
-        >
 
-          <template slot-scope="scope">
-            {{ scope.row.createUserName }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="填报时间"
-          prop="verify.createTime"
-          show-overflow-tooltip
-        >
-          <!-- <template slot-scope="scope">{{
-            scope.row.createtime | dateformat
-          }}</template> -->
-
-          <template slot-scope="scope">
-            {{ scope.row.createTime | dateformat }}
-          </template>
-        </el-table-column>
       </el-table>
       <el-pagination
         :current-page="page.current"
@@ -153,12 +100,53 @@
         layout="total, sizes, prev, pager, next, jumper"
       ></el-pagination>
     </div>
-    <el-dialog title="资审结果登记" :visible.sync="dialogResult"
+    <el-dialog title="新增统计项" :visible.sync="dialogResult"
     width="30%">
-      <el-form :model="resultform">
-        <el-form-item label="资格预审结果" :label-width="formLabelWidth" prop="verifyResult">
-          <el-radio v-model="resultform.verifyResult" label="1" border>通过</el-radio>
-          <el-radio v-model="resultform.verifyResult" label="0" border>不通过</el-radio>
+      <el-form :model="detailform">
+        <el-form-item label="统计名称" :label-width="formLabelWidth" prop="verifyResult">
+          <el-input
+            disabled
+            placeholder=""
+            size="mini"
+            v-model="detailform"
+          />
+        </el-form-item>
+        <el-form-item label="计量单位" :label-width="formLabelWidth" prop="verifyResult">
+          <el-select
+            :disabled="p.actpoint === 'look'"
+            filterable
+            placeholder="请选择"
+            size="mini"
+            v-model="detailform.verify.bidModeName"
+          >
+            <el-option
+              :key="index"
+              :label="item.detailName"
+              :value="item.id"
+              v-for="(item, index) in bidType"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+         <el-form-item label="工程（行业）类别" :label-width="formLabelWidth" prop="verifyResult">
+         <el-input
+           disabled
+           placeholder=""
+           size="mini"
+           v-model="detailform.topInfor.bidAgentCompany"
+         />
+        </el-form-item>
+        <el-form-item label="使用设置" :label-width="formLabelWidth" prop="verifyResult">
+          <el-radio v-model="resultform.verifyResult" label="0" border>全部</el-radio>
+          <el-radio v-model="resultform.verifyResult" label="1" border>仅年报</el-radio>
+          <el-radio v-model="resultform.verifyResult" label="2" border>仅月报</el-radio>
+        </el-form-item>
+        <el-form-item label="是否填报" :label-width="formLabelWidth" prop="verifyResult">
+          <el-radio v-model="resultform.verifyResult" label="1" border>是</el-radio>
+          <el-radio v-model="resultform.verifyResult" label="0" border>否</el-radio>
+        </el-form-item>
+         <el-form-item label="是否隐藏" :label-width="formLabelWidth" prop="verifyResult">
+          <el-radio v-model="resultform.verifyResult" label="1" border>是</el-radio>
+          <el-radio v-model="resultform.verifyResult" label="0" border>否</el-radio>
         </el-form-item>
         <el-form-item label="通过时间" :label-width="formLabelWidth" prop="verifyResultTime">
           <el-date-picker
