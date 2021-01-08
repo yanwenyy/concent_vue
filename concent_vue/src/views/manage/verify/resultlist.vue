@@ -153,7 +153,7 @@
         width="300">
       <el-form :model="resultform.verifySection">
 
-        <el-form-item label="通过时间" :label-width="formLabelWidth" prop="verifyResultTime">
+        <el-form-item label="通过时间"  prop="verifyResultTime">
           <el-date-picker
             value-format="timestamp"
             v-model="resultform.verifySection.verifyResultTime"
@@ -161,7 +161,7 @@
             placeholder="选择日期">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="资格预审结果" :label-width="formLabelWidth"  prop="verifyResult">
+        <el-form-item label="资格预审结果"   prop="verifyResult">
          <el-switch
            active-text="通过"
            v-model="resultform.verifySection.verifyResult"
@@ -176,7 +176,7 @@
           style="width: 33%"
         >
           <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
-         <el-upload :width="formLabelWidth"
+         <el-upload
            class="upload-demo detailUpload"
            :action="'/api/contract/topInfo/CommonFiles/verify/02/uploadFile'"
            :on-success="handleChange"
@@ -295,7 +295,6 @@ export default {
         },
         commonFilesList:[]
       },
-      formLabelWidth: '120px'
 
     }
   },
