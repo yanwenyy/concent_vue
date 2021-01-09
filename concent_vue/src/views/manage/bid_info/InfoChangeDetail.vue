@@ -341,17 +341,29 @@
                 filterable
                 clearable
                 value-format="timestamp"
-                v-model="detailform.bidInfo.publishTime"
+                v-model="detailFormBefore.bidInfo.publishTime"
               >
               </el-date-picker>
           </el-form-item>
 
           <el-form-item label="内部联合体单位:"
-              v-if="detailform.bidInfo.isCoalitionBid==='0'">
-            <el-input
-              v-model="detailFormBefore.value1"
-              disabled
-            ></el-input>
+              v-if="detailFormBefore.bidInfo.isCoalitionBid==='0'">
+
+              <el-select
+                :disabled="true"
+                filterable
+                clearable
+                multiple
+                placeholder="请选择"
+                v-model="detailFormBefore.value1"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in amountSource"
+                ></el-option>
+              </el-select>
           </el-form-item>
 <br>
 
@@ -1759,6 +1771,7 @@ export default {
         bidInfoSectionList: [],
         bidInfoSectionOrgList:[],
         bidInfo_01: [],
+        value1: [],
         topInforBO:{
           topInfor:{},
           topInfoOrg:{},
@@ -1775,7 +1788,8 @@ export default {
           topInfor:{},
           topInfoOrg:{},
 
-        }
+        },
+        value1:[]
       },
       detailformrules: {},
       xqprojectType: [], //工程类别二级
@@ -1993,9 +2007,18 @@ export default {
       }
     },
     saveInfo(formName) {
-
-      var topInforCapitalList = [];
-      this.detailform.topInforCapitalList = topInforCapitalList;
+      var bidInfoInnerOrgList = [];
+        //内部联合体单位
+        this.amountSource.forEach((item) => {
+          if (this.detailform.value1&&this.detailform.value1.indexOf(item.id) != -1) {
+            var v = {
+              innerOrgId: item.id,
+              innerOrgName: item.detailName,
+            };
+            bidInfoInnerOrgList.push(v);
+          }
+        });
+      this.detailform.bidInfoInnerOrgList=bidInfoInnerOrgList;
       this.detailform.srcId = this.id;
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -2103,14 +2126,22 @@ export default {
             bidInfoSectionList: afterData.bidInfoSectionList,
             bidInfo_01: afterData.bidInfo_01||[],
             topInforBO:afterData.topInforBO,
+            value1:[]
           };
+          afterData.bidInfoInnerOrgList.forEach((item)=>{
+            this.detailform.value1.push(item.innerOrgId)
+            });
           this.detailFormBefore = {
              bidInfo: beforData.bidInfo,
             bidInfoInnerOrgList: beforData.bidInfoInnerOrgList,
             bidInfoSectionList: beforData.bidInfoSectionList,
             bidInfo_01: beforData.bidInfo_01||[],
             topInforBO:beforData  .topInforBO,
+            value1:[],
           };
+           beforData.bidInfoInnerOrgList.forEach((item)=>{
+            this.detailFormBefore.value1.push(item.innerOrgId)
+            });
         });
     },
     //新增的时候详情
@@ -2126,7 +2157,12 @@ export default {
             bidInfoSectionList: datas.bidInfoSectionList,
             bidInfo_01: datas.bidInfo_01||[],
             topInforBO:datas.topInforBO,
+            value1:[],
+
           };
+           datas.bidInfoInnerOrgList.forEach((item)=>{
+            this.detailform.value1.push(item.innerOrgId)
+            });
           for (var i in this.detailform) {
             this.detailFormBefore[i] = JSON.parse(
               JSON.stringify(this.detailform[i])

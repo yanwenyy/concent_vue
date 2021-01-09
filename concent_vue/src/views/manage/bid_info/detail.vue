@@ -396,7 +396,7 @@
             <el-form-item label="内部联合体单位:"
               v-if="detailform.bidInfo.isCoalitionBid==='0'"
               class="formItem1" >
-                <el-select
+                <!-- <el-select
                 :disabled="p.actpoint === 'look'"
                 filterable
                 multiple
@@ -404,15 +404,15 @@
                  @change="getMultipleName(detailform.nblht,amountSource,'innerOrgId','innerOrgName')"
                 placeholder="请选择"
                 v-model="detailform.nblht"
-              >
-              <!-- <el-select
+              > -->
+              <el-select
                 :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
                 multiple
                 placeholder="请选择"
                 v-model="detailform.value1"
-              > -->
+              >
                 <el-option
                   :key="index"
                   :label="item.detailName"

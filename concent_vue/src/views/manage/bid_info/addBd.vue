@@ -1,6 +1,7 @@
 <template>
-
-  <el-dialog
+  <div>
+     <el-dialog
+     class="bdClass"
     :lock-scroll="true"
     :visible.sync="visible"
     :append-to-body="true">
@@ -11,7 +12,7 @@
       </div>
     </el-card>
     <div style="height: calc(100% - 50px);overflow: auto;padding: 0 50px;">
-      <el-form :inline="true" :model="detailForm" :rules="rules" ref="detailform" @keyup.enter.native="init()"  class="gcform">
+      <el-form :inline="true" :model="detailForm" :rules="rules" ref="detailForm" @keyup.enter.native="init()"  class="gcform">
         <el-form-item label="标段名称:" class="list-item" >
           <el-select
             clearable
@@ -81,7 +82,10 @@
         </el-form-item>
 
         <el-form-item label="参与投标单位:" class="list-item">
-          <el-input
+          <el-input  placeholder="请输入内容" v-model="detailForm.bidInfoSection.participatingUnitsName" class="input-with-select">
+            <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('参与投标单位',detailForm.bidInfoSection.participatingUnitsId)" ></el-button>
+          </el-input>
+          <!-- <el-input
           v-model="detailForm.bidInfoSection.participatingUnitsName"
           placeholder="参与投标单位"
           clearable :disabled="type === 'look'">
@@ -90,11 +94,14 @@
             icon="el-icon-search"
             @click="selectPosition()"
           ></el-button>
-          </el-input>
+          </el-input> -->
         </el-form-item>
 
         <el-form-item label="编标拟配合单位:" class="list-item">
-          <el-input
+           <el-input  placeholder="请输入内容" v-model="detailForm.bidInfoSection.orgName" class="input-with-select">
+            <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('编标拟配合单位',detailForm.bidInfoSection.orgId)" ></el-button>
+          </el-input>
+          <!-- <el-input
           v-model="detailForm.bidInfoSection.orgName"
           placeholder="编标拟配合单位"
           clearable
@@ -104,7 +111,7 @@
             icon="el-icon-search"
             @click="selectPosition()"
           ></el-button>
-          </el-input>
+          </el-input> -->
         </el-form-item>
         <br>
 
@@ -381,23 +388,29 @@
       <el-button @click="visible = false">取消</el-button>
       <el-button v-if="type!='look'" type="primary" @click="sub()">确定</el-button>
     </div>
-    <Tree
-      v-if="treeStatas"
-      ref="addOrUpdate"
-      @getPosition="getPositionTree"
-    ></Tree>
-  </el-dialog>
+
+    </el-dialog>
+    <Tree v-if="treeStatas" ref="addOrUpdate"  @getPosition="getPositionTree" ></Tree>
+    <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
+
+
+
+
+  </div>
+
 
 </template>
 
 <script>
+import CompanyTree from '../contractManager/companyTree'
 import Tree from "@/components/tree";
 import { isMoney } from '@/utils/validate'
 
   export default {
-    components: {
-      Tree,
-      },
+  components: {
+    Tree,
+    CompanyTree,
+    },
     data() {
         var validateMoney = (rule, value, callback) => {
         // console.log(value)
@@ -412,6 +425,7 @@ import { isMoney } from '@/utils/validate'
       return {
         treeStatas:false,
         visible: false,
+        DwVisible:false,//选择单位弹框状态
         detailForm: {
           bidInfoSection:{},
           verifySection:{},
@@ -457,6 +471,32 @@ import { isMoney } from '@/utils/validate'
       },
     },
     methods: {
+    //打开单位弹框
+    addDw(type,list){
+      this.DwVisible = true;
+      this.$nextTick(() => {
+        this.$refs.infoDw.init(type,list);
+      })
+    },
+    //获取单位的值
+    getDwInfo(data){
+      console.log(data);
+      var id=[],name=[];
+      if(data){
+        data.forEach((item)=>{
+          id.push(item.id);
+          name.push(item.detailName);
+        })
+      }
+      if(data.type=="参与投标单位"){
+        this.detailForm.bidInfoSection.participatingUnitsId=id.join(",");
+        this.detailForm.bidInfoSection.participatingUnitsName=name.join(",");
+      }else if(data.type=="编标拟配合单位"){
+        this.detailForm.bidInfoSection.orgId=id.join(",");
+        this.detailForm.bidInfoSection.orgName=name.join(",");
+      }
+      this.DwVisible=false;
+    },
     //获取项目地点的值
     getPositionTree(data) {
       this.treeStatas = false;
@@ -492,7 +532,7 @@ import { isMoney } from '@/utils/validate'
           this.detailForm.index=this.index;
 
         }
-          this.$refs.detailform.validate((valid) => {
+          this.$refs.detailForm.validate((valid) => {
           if (valid) {
             this.visible = false;
             this.$emit('refreshBD', this.detailForm);
@@ -563,22 +603,22 @@ import { isMoney } from '@/utils/validate'
   }
 </script>
 <style scoped>
->>>.el-dialog{
+.bdClass >>>.el-dialog{
     height: 70vh!important;
   }
->>>.el-card__header{
+.bdClass >>>.el-card__header{
   padding: 8px 20px !important;
 }
->>>.el-dialog__header{
+.bdClass >>>.el-dialog__header{
   display: none;
 }
->>>.el-dialog__body{
+.bdClass >>>.el-dialog__body{
   padding: 0;
   height: calc(100% - 60px)!important;
   width: 100%;
   overflow: hidden;
 }
->>>.dialog-footer{
+.bdClass >>>.dialog-footer{
   padding-top: 14px;
   margin:0;
   text-align: center;
@@ -641,7 +681,7 @@ p{
  font-size: 18px;
  font-weight:bolder;
 }
->>>.el-dialog{
+.bdClass >>>.el-dialog{
   position: fixed;
   left: 10%;
   width: 80%;
