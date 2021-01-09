@@ -62,16 +62,10 @@
               class="neirong"
               label="备注:"
               prop="remarks"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
             >
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-input
                 :readonly="p.actpoint === 'look'"
-                clearable
                 type="textarea"
                 placeholder="请输入"
                 size="mini"
