@@ -50,6 +50,11 @@
               ></el-option>
             </el-select>
           </el-form-item>
+           <el-form-item  label="范围选择:">
+             <el-button size="small"
+                        type="primary"
+                        @click="selectOrgTable(detailform.archivesInfo.uuid)">点击选择</el-button>
+          </el-form-item>
 
           <div>
                 <el-form-item
@@ -131,13 +136,7 @@
                     </el-table-column>
                   </el-table>
         </div>
-    <div>
-      <el-form-item  label="范围选择:">
-             <el-button size="small"
-                        type="primary"
-                        @click="selectOrgTable(detailform.archivesInfo.uuid)">点击选择</el-button>
-          </el-form-item>
-    </div>
+
     <!--      <el-form-item-->
     <!--        label="填报单位:"-->
     <!--      >-->

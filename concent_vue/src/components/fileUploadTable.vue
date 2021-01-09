@@ -20,9 +20,8 @@
                          type="primary">点击上传</el-button>
             </el-upload>
     </div>
-    <div>
+    <div style="height: 400px">
       <el-table
-        height="400"
         :data="detailform.commonFilesList"
         :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
         @selection-change="handleSelectionChange"
@@ -241,4 +240,5 @@
 >>>.el-upload-list{
   display: none;
 }
+
 </style>

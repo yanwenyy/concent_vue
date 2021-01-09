@@ -52,10 +52,8 @@
       </el-form-item>
 
         <el-form-item v-show="detailform.archivesInfo.archivesTypeName=='3'"
-                      label="填报时间:"
-        >
-
-          <el-date-picker
+                      label="填报时间:">
+        <el-date-picker
             clearable
             :readonly="p.actpoint === 'look'"
             value-format="timestamp"
@@ -66,7 +64,6 @@
           </el-date-picker>
 
         </el-form-item>
-      <div>
         <el-form-item
           label="是否共享:"
         >
@@ -79,7 +76,6 @@
             </el-switch>
 
       </el-form-item>
-        </div>
 <div>
             <el-form-item
               class="neirong"

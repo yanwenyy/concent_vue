@@ -43,7 +43,6 @@
           </el-date-picker>
 
         </el-form-item>
-<div>
   <el-form-item
     label="是否共享:"
   >
@@ -55,7 +54,6 @@
   >
             </el-switch>
       </el-form-item>
-</div>
 
 <div>
             <el-form-item

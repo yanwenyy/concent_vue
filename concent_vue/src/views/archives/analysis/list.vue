@@ -603,5 +603,7 @@ export default {
 .el-table__row {
   cursor: pointer;
 }
-
+>>>.el-dialog__body{
+  padding-top: 0px;
+}
 </style>
