@@ -47,12 +47,13 @@
   <el-form-item
     label="是否共享:"
   >
-           <el-radio-group v-model="detailform.archivesInfo.isShare">
-                  <el-radio :disabled="p.actpoint === 'look'"
-                            v-for="(item, index) in isShare"
-                            :label="item.id"
-                            :key="index">{{ item.detailName }}</el-radio>
-                </el-radio-group>
+  <el-switch
+    :disabled="p.actpoint === 'look'"
+    v-model="detailform.archivesInfo.isShare"
+    active-value="1"
+    inactive-value="0"
+  >
+            </el-switch>
       </el-form-item>
 </div>
 
