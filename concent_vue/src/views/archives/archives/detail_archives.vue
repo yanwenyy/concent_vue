@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div :max-height="$tableHeight"
+       :height="$tableHeight">
         <el-card class="box-card">
       <div slot="header"
            class="clearfix">
@@ -100,10 +101,9 @@
             <el-form-item
               class="neirong"
               label="附件:"
-              style="width: 33%"
             >
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
-              <el-upload
+              <el-upload v-show="p.actpoint != 'look'"
                 class="upload-demo detailUpload"
                 :action="'/api/contract/topInfo/CommonFiles/archives/01/uploadFile'"
                 :on-success="handleChange"
@@ -164,27 +164,27 @@
 
 
 
-      <el-form-item
-        label="填报单位:"
-        style="width: 33%"
-      >
-        <el-input
-          disabled
-          size="mini"
-          v-model="detailform.createOrgName"
-        />
-      </el-form-item>
-        <el-form-item
-          label="录入人:"
-          style="width: 33%"
-        >
+<!--      <el-form-item-->
+<!--        label="填报单位:"-->
+<!--        style="width: 33%"-->
+<!--      >-->
+<!--        <el-input-->
+<!--          disabled-->
+<!--          size="mini"-->
+<!--          v-model="detailform.createOrgName"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--        <el-form-item-->
+<!--          label="录入人:"-->
+<!--          style="width: 33%"-->
+<!--        >-->
 
-          <el-input
-            disabled
-            size="mini"
-            v-model="detailform.createUserName"
-          />
-        </el-form-item>
+<!--          <el-input-->
+<!--            disabled-->
+<!--            size="mini"-->
+<!--            v-model="detailform.createUserName"-->
+<!--          />-->
+<!--        </el-form-item>-->
     </el-form>
 
     </div>

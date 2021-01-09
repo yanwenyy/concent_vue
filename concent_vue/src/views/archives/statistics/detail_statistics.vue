@@ -85,7 +85,7 @@
               label="附件:"
             >
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
-              <el-upload
+              <el-upload v-show="p.actpoint != 'look'"
                 class="upload-demo detailUpload"
                 :action="'/api/contract/topInfo/CommonFiles/archives/03/uploadFile'"
                 :on-success="handleChange"
@@ -157,30 +157,30 @@
                 </el-table-column>
               </el-table>
     </div>
-<div>
+<!--<div>-->
 
 
 
-      <el-form-item
-        label="填报单位:"
-      >
-        <el-input
-          disabled
-          size="mini"
-          v-model="detailform.archivesInfo.createOrgName"
-        />
-      </el-form-item>
-        <el-form-item
-          label="录入人:"
-        >
+<!--      <el-form-item-->
+<!--        label="填报单位:"-->
+<!--      >-->
+<!--        <el-input-->
+<!--          disabled-->
+<!--          size="mini"-->
+<!--          v-model="detailform.archivesInfo.createOrgName"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--        <el-form-item-->
+<!--          label="录入人:"-->
+<!--        >-->
 
-          <el-input
-            disabled
-            size="mini"
-            v-model="detailform.archivesInfo.createUserName"
-          />
-        </el-form-item>
-</div>
+<!--          <el-input-->
+<!--            disabled-->
+<!--            size="mini"-->
+<!--            v-model="detailform.archivesInfo.createUserName"-->
+<!--          />-->
+<!--        </el-form-item>-->
+<!--</div>-->
     </el-form>
 
     </div>
