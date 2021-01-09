@@ -58,7 +58,8 @@
       </el-form-item>
       <el-form-item label="开标日期:">
         <el-date-picker
-          v-model="searchform.openBidTime"
+          v-model="searchform.dateOfBidOpeningName"
+          value-format="timestamp"
           type="daterange"
           range-separator="至"
           start-placeholder="开始日期"
@@ -97,6 +98,7 @@
       <el-form-item label="资审截止日期:">
         <el-date-picker
           v-model="searchform.vifSaleTime"
+          value-format="timestamp"
           type="daterange"
           range-separator="至"
           start-placeholder="开始日期"
