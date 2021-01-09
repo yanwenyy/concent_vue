@@ -12,6 +12,7 @@
       </el-form-item>
       <el-form-item label="创建日期:">
         <el-date-picker
+          clearable
           v-model="searchform.createTime"
           type="daterange"
           @change="searchform.selectTimeType='01',searchform.planBidTime=''"
@@ -23,6 +24,7 @@
       </el-form-item>
       <el-form-item label="预计招标日期:">
         <el-date-picker
+          clearable
           v-model="searchform.planBidTime"
           type="daterange"
           @change="searchform.selectTimeType='02',searchform.createTime=''"
@@ -124,7 +126,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="项目地点:">
-        <el-input v-model="searchform.path" placeholder="项目地点">
+        <el-input v-model="searchform.path" placeholder="项目地点" clearable @clear="searchform.ffid=''">
           <el-button slot="append" icon="el-icon-search"  @click="selectPosition()"></el-button>
         </el-input>
       </el-form-item>
@@ -382,16 +384,20 @@
         // this.$refs["searchform"].resetFields();
         this.searchform={
           inforName: "",
-            enginTypeFirstId: "",
-            enginTypeSecondId: "",
-            constructionOrg: "",
-            noticeTypeId: "",
-            belongLineId: "",
-            designOrg:"",
-            ffid:'',
-            flowStatus:'',
-            createTime:'',
-            planBidTime:'',
+          enginTypeFirstId: "",
+          enginTypeSecondId: "",
+          constructionOrg: "",
+          noticeTypeId: "",
+          belongLineId: "",
+          designOrg:"",
+          ffid:'',
+          flowStatus:'',
+          createTime:'',
+          planBidTime:'',
+          path:'',
+          selectTimeType:'',
+          beginTime:"",
+          endTime:'',
         }
         this.getData();
       },
@@ -401,23 +407,25 @@
       },
       // 查询
       getData() {
-        if(this.searchform.selectTimeType=='01'){
+        console.log(this.searchform.selectTimeType)
+        if(this.searchform.selectTimeType=='01'&&this.searchform.createTime){
           this.searchform.beginTime=this.searchform.createTime[0];
           this.searchform.endTime=this.searchform.createTime[1];
-        }else{
+        }else if(this.searchform.selectTimeType=='02'&&this.searchform.planBidTime){
           this.searchform.beginTime=this.searchform.planBidTime[0];
           this.searchform.endTime=this.searchform.planBidTime[1];
+        }else{
+          this.searchform.selectTimeType='';
+          this.searchform.beginTime=null;
+          this.searchform.endTime=null;
         }
-        this.searchform.createTime=null;
-        this.searchform.planBidTime=null;
         this.$http
           .post(
             "/api/contract/topInfo/TopInfor/list/loadPageDataForSelect",
             this.searchform
           )
           .then((res)=>{
-          this.page = res.data.data;
-          // console.log(this.page)
+            this.page = res.data.data;
       });
       },
 

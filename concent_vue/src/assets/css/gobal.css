@@ -498,6 +498,7 @@ pre {
 .detailBox{
   overflow: scroll;
   max-height:calc(100vh - 195px)!important;
+  min-height:calc(100vh - 195px)!important;
   padding:0 100px;
 }
 .detailBoxBG{
@@ -611,7 +612,14 @@ pre {
 }
 .multiple-sel .el-select__tags{
   overflow: auto;
-  height: 95%;
+  height: 30px;
+}
+.tooltip-class{
+  border:1px solid #ddd!important;
+}
+.upload-progress{
+  display: inline-block;
+  width: 300px;
 }
 .shadow-search-item .el-input__inner,.shadow-search-item .el-form-item__content{
   height: 32px!important;

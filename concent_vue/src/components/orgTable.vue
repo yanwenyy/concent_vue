@@ -475,13 +475,16 @@
           isDisplay = '1';
           result="可见";
           let uuids = []
+          let item = []
           this.multipleSelection.forEach((itemy, indexy) => {
               if(itemy.orgId===file.orgId)
               {
                 uuids.push(itemy.uuid);
+                //itemy.isDisplay="1";
+                item.push(itemy);
               }
           });
-
+          console.log(item)
           console.log(uuids)
 
           this.$http
@@ -491,7 +494,8 @@
             )
             .then((res) => {
               if (res.data.code === 200) {
-                this.loadData();
+                //this.loadData();
+                this.detailform.commonFilesList[index].isDisplay = result;
               }
 
             });

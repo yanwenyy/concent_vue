@@ -38,7 +38,7 @@
           </el-date-picker>
         </el-form-item>
       <el-form-item
-        label="是否共享:"
+        label="是否发布:"
       >
         <el-select
           clearable
@@ -449,8 +449,8 @@ export default {
         this.searchform.createTimeBeginTime=this.searchform.createTime[0];
         this.searchform.createTimeEndTime=this.searchform.createTime[1];
       }
-      this.searchform.createTime=null;
-      this.searchform.reportTime=null;
+      // this.searchform.createTime=null;
+      // this.searchform.reportTime=null;
       console.log(JSON.stringify(this.searchform));
       this.$http
         .post(

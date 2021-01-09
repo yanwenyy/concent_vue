@@ -1,41 +1,61 @@
 <template>
   <!--:headers="{'Authorization':Authorization}"-->
-  <el-upload
-    class="upload-demo"
-    :action="'/api/contract/topInfo/CommonFiles/'+businessType+'/'+businessCode+'/uploadFile'"
-    :on-success="handleChange"
-    :on-error="handleChange"
-    :on-remove="handleRemove"
+  <el-dialog
+    :visible.sync="dialogVisible"
+    width="40%"
+  >
+    <el-upload
+      ref="fileList1"
+      class="upload-demo"
+      :action="url"
+      :on-success="handleChange"
+      :on-error="handleChange"
+      :on-remove="handleRemove"
       multiple
-    :limit="3"
-    :file-list="fileList">
-    <el-button size="small" type="primary">点击上传</el-button>
-    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-  </el-upload>
+      :show-file-list="true">
+      <el-button size="small" type="primary">选择文件</el-button>
+    </el-upload>
+    <div class="btn-group">
+      <el-button @click="dialogVisible = false">取 消</el-button>
+      <el-button @click="sub"  type="primary">确定</el-button>
+    </div>
 
+  </el-dialog>
 </template>
 
 <script>
     export default {
       data() {
         return {
-          fileList: []
+          url:'',
+          list:'',
+          fileList: [],
+          dialogVisible:true,
         };
       },
-      props:{
-        businessCode:{
-          type: String
-        },
-        businessType:{
-          type: String
-        }
-      },
       mounted(){
-        console.log(this.businessCode)
+
       },
       methods: {
+        sub(){
+          var data={
+            list:this.list,
+            fileList:this.fileList
+          };
+          this.$emit('refreshBD',data);
+          this.dialogVisible = false;
+          this.$refs.fileList1.clearFiles();
+        },
+        init(url,list){
+          this.fileList=[];
+          this.url=url;
+          this.list=list;
+          this.dialogVisible = true;
+
+        },
         handleRemove(file, fileList) {
-          this.dataForm.imgUrl='';
+          this.fileList=fileList;
+          console.log(this.fileList)
         },
         //上传图片
         handleChange(response, file, fileList){
@@ -45,21 +65,25 @@
               type: 'success',
               duration: 1500,
               onClose: () => {
-              this.dataForm.imgUrl=response.data;
+              this.fileList.push(response.data);
+              console.log(this.fileList)
           }
           })
           } else {
             this.$message.error(response.msg)
           }
         },
-        handlePictureCardPreview(file) {
-          this.dialogImageUrl = file.url;
-          this.dialogVisible = true;
-        }
       }
     }
 </script>
 
 <style scoped>
-
+  >>>.el-dialog__body{
+    max-height: 400px;
+    overflow: auto;
+  }
+  .btn-group{
+    text-align: center;
+    margin-top: 20px;
+  }
 </style>

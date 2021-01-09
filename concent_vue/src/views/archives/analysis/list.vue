@@ -410,28 +410,46 @@ export default {
         this.detailform.reportTime="",
         this.detailform.archivesInfoType='5',
         this.detailform.selectYear = this.resultform.year;
+        //查询选中年度是否已经有填报信息
+      this.searchform.selectYear = this.resultform.year;
       this.$http
         .post(
-          "/api/contract/archives/ArchivesInfo/detail/save",
-          JSON.stringify(this.detailform),
-          {useJson: true}
+          '/api/contract/archives/ArchivesInfo/list/loadPageDataByAnalysis',
+          this.searchform
         )
-        .then((res) => {
+        .then(res => {
+          if(res.data.data.records.length>0)
+          {
+            this.$message.error("不能对相同年度进行重复填报！");
+          }else {
+            this.$http
+              .post(
+                "/api/contract/archives/ArchivesInfo/detail/save",
+                JSON.stringify(this.detailform),
+                {useJson: true}
+              )
+              .then((res) => {
 
-          if (res.data.msg === "SUCCESS") {
-            this.$message({
-              message: "保存成功",
-              type: "success",
-            });
-            // this.$refs[formName].resetFields();
-            // this.$router.push({
-            //   path: "./list",
-            // });
-            this.dialogAdd = false;
-            this.getData();
+                if (res.data.msg === "SUCCESS") {
+                  this.$message({
+                    message: "保存成功",
+                    type: "success",
+                  });
+                  // this.$refs[formName].resetFields();
+                  // this.$router.push({
+                  //   path: "./list",
+                  // });
+                  this.dialogAdd = false;
+                  this.getData();
+                }
+
+              });
           }
+          console.log(JSON.stringify(this.page));
+        })
 
-        });
+
+
     },
     saveEditResult(){
         this.detailform.uuid = this.multipleSelection[0].uuid;
@@ -585,5 +603,7 @@ export default {
 .el-table__row {
   cursor: pointer;
 }
-
+>>>.el-dialog__body{
+  padding-top: 0px;
+}
 </style>

@@ -1019,19 +1019,27 @@
               </div>
               <p class="detail-p">
                 <span>中标通知书(最大10MB): </span>
-
-                <el-upload
-                  v-show="p.actpoint !== 'look'"
-                  class="upload-demo detailUpload detatil-flie-btn"
-                  :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
-                  :on-success="handleChange1"
-                  :on-error="handleChange1"
-                  :on-remove="handleRemove1"
-                  :show-file-list="false"
-                  multiple
-                >
-                  <el-button size="small" type="primary">点击上传</el-button>
-                </el-upload>
+                <el-button
+                  size="small"
+                  type="primary"
+                  @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile','fileList1')">
+                  点击上传
+                </el-button>
+                <!--<el-upload-->
+                  <!--ref="fileList1"-->
+                  <!--v-show="p.actpoint !== 'look'"-->
+                  <!--class="upload-demo detailUpload detatil-flie-btn"-->
+                  <!--:action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"-->
+                  <!--:on-success="handleChange1"-->
+                  <!--:on-change="fileChage1"-->
+                  <!--:on-error="handleChange1"-->
+                  <!--:on-remove="handleRemove1"-->
+                  <!--:show-file-list="detailform.fileList1.showFile"-->
+                  <!--multiple-->
+                <!--&gt;-->
+                  <!--<el-button size="small" type="primary">点击上传</el-button>-->
+                <!--</el-upload>-->
+                <!--<el-progress v-if="detailform.fileList1.percentage" class="upload-progress" :text-inside="true" :stroke-width="24" :percentage="detailform.fileList1.percentage" :status="detailform.fileList1.status"></el-progress>-->
               </p>
                 <el-table
                   :data="detailform.fileList1"
@@ -1079,18 +1087,25 @@
                 </el-table>
               <p>
                 <span>合同附件(最大10MB): </span>
-                <el-upload
-                  v-show="p.actpoint !== 'look'"
-                  class="upload-demo detailUpload detatil-flie-btn"
-                  :action="'/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile'"
-                  :on-success="handleChange2"
-                  :on-error="handleChange2"
-                  :on-remove="handleRemove2"
-                  :show-file-list="false"
-                  multiple
-                >
-                  <el-button size="small" type="primary">点击上传</el-button>
-                </el-upload>
+                <el-button
+                  size="small"
+                  type="primary"
+                  @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','fileList2')">
+                  点击上传
+                </el-button>
+                <!--<el-upload-->
+                  <!--ref="fileList2"-->
+                  <!--v-show="p.actpoint !== 'look'"-->
+                  <!--class="upload-demo detailUpload detatil-flie-btn"-->
+                  <!--:action="'/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile'"-->
+                  <!--:on-success="handleChange2"-->
+                  <!--:on-error="handleChange2"-->
+                  <!--:on-remove="handleRemove2"-->
+                  <!--:show-file-list="detailform.fileList2.showFile"-->
+                  <!--multiple-->
+                <!--&gt;-->
+                  <!--<el-button size="small" type="primary">点击上传</el-button>-->
+                <!--</el-upload>-->
               </p>
               <el-table
                 :data="detailform.fileList2"
@@ -1138,18 +1153,25 @@
               </el-table>
               <p >
                 <span>工程量清单和劳材机附件(两种文件都要)(最大10MB): </span>
-                <el-upload
-                  v-show="p.actpoint !== 'look'"
-                  class="upload-demo detailUpload detatil-flie-btn"
-                  :action="'/api/contract/topInfo/CommonFiles/contractInfo/03/uploadFile'"
-                  :on-success="handleChange3"
-                  :on-error="handleChange3"
-                  :on-remove="handleRemove3"
-                  :show-file-list="false"
-                  multiple
-                >
-                  <el-button size="small" type="primary">点击上传</el-button>
-                </el-upload>
+                <el-button
+                  size="small"
+                  type="primary"
+                  @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/03/uploadFile','fileList3')">
+                  点击上传
+                </el-button>
+                <!--<el-upload-->
+                  <!--ref="fileList3"-->
+                  <!--v-show="p.actpoint !== 'look'"-->
+                  <!--class="upload-demo detailUpload detatil-flie-btn"-->
+                  <!--:action="'/api/contract/topInfo/CommonFiles/contractInfo/03/uploadFile'"-->
+                  <!--:on-success="handleChange3"-->
+                  <!--:on-error="handleChange3"-->
+                  <!--:on-remove="handleRemove3"-->
+                  <!--:show-file-list="detailform.fileList3.showFile"-->
+                  <!--multiple-->
+                <!--&gt;-->
+                  <!--<el-button size="small" type="primary">点击上传</el-button>-->
+                <!--</el-upload>-->
               </p>
               <el-table
                 :data="detailform.fileList3"
@@ -2009,6 +2031,7 @@
     <add-bd  v-if="BDCSVisible" ref="infoBD" @refreshBD="getBdInfo"></add-bd>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
     <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
+    <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
   </div>
 </template>
 
@@ -2019,6 +2042,7 @@
   import AddBd from '../addBd'
   import CompanyTree from '../companyTree'
   import datas from '@/utils/position'
+  import FileUpload from '@/components/fileUpload'
 export default {
   data() {
     var validateMoney = (rule, value, callback) => {
@@ -2039,6 +2063,7 @@ export default {
       infoCSVisible:false,//项目名称查询的状态
       BDCSVisible:false,//标段新增弹框状态
       DwVisible:false,//选择单位弹框状态
+      uploadVisible:false,//上传附件组件状态
       options2: [],
       options: [],
       options1:[{label:"值",value:'111'}],
@@ -2064,6 +2089,7 @@ export default {
         jzjglx:[],//建筑结构类型
         cdmc:[],//场地名称
       },
+      timer:'',
       yesOrNo:[
         {
           id:'0',
@@ -2090,7 +2116,8 @@ export default {
     Tree,
     SearchName,
     AddBd,
-    CompanyTree
+    CompanyTree,
+    FileUpload
   },
   computed: {
     projectDomainType() {
@@ -2146,6 +2173,19 @@ export default {
     // eslint-disable-next-line no-unde
   },
   methods: {
+    //打开附件上传的组件
+    openFileUp(url,list){
+      this.uploadVisible = true;
+      this.$nextTick(() => {
+        this.$refs.infoUp.init(url,list);
+    })
+    },
+    //获取上传的附件列表
+    getUpInfo(data){
+      this.$forceUpdate();
+      this.detailform[data.list]=this.detailform[data.list].concat(data.fileList);
+      this.uploadVisible = false;
+    },
     //复选下拉框框获取name
     getMultipleName(valueList,list,id,name){
       var _id=[],_name=[];
@@ -2223,6 +2263,24 @@ export default {
       this.$forceUpdate();
       this.detailform.contractInfo.otherInvest=this.detailform.contractInfo.ourAmount-this.detailform.contractInfo.installDesignFee>0?this.detailform.contractInfo.ourAmount-this.detailform.contractInfo.installDesignFee:0;
     },
+    //上传改变时
+    fileChage1(file, fileList){
+      this.$forceUpdate();
+      // this.detailform.fileList1.percentage=30;
+      // this.detailform.fileList1.percentage=50;
+      // this.detailform.fileList1.status='success';
+      this.detailform.fileList1.showFile=true;
+      if(file.status==='success'){
+        // this.detailform.fileList1.percentage=100;
+        // this.detailform.fileList1.status='success';
+        this.detailform.fileList1.showFile=false;
+      }
+      if(file.status==='fail'){
+        // this.detailform.fileList1.percentage=60;
+        // this.detailform.fileList1.status='exception';
+
+      }
+    },
     handleRemove1(file,index) {
       this.$http
         .post(
@@ -2246,10 +2304,33 @@ export default {
           duration: 1500,
           onClose: () => {
           this.detailform.fileList1.push(response.data);
+          // this.detailform.fileList1.percentage=null;
+          // this.detailform.fileList1.status=null;
+          this.detailform.fileList1.showFile=false;
+          this.$refs.fileList1.clearFiles();
       }
       })
       } else {
-        this.$message.error(response.msg)
+        this.$message({
+          message: '上传失败',
+          type: 'error',
+          duration: 1500,
+          onClose: () => {
+            this.$forceUpdate();
+            this.detailform.fileList1.percentage=null;
+            this.detailform.fileList1.status=null;
+          }
+        })
+      }
+    },
+    //上传改变时
+    fileChage2(file, fileList){
+      this.$forceUpdate();
+      this.detailform.fileList2.showFile=true;
+      if(file.status==='success'){
+        this.detailform.fileList2.showFile=false;
+      }
+      if(file.status==='fail'){
       }
     },
     handleRemove2(file,index) {
@@ -2275,10 +2356,31 @@ export default {
           duration: 1500,
           onClose: () => {
           this.detailform.fileList2.push(response.data);
+          this.detailform.fileList2.showFile=false;
+          this.$refs.fileList2.clearFiles();
       }
       })
       } else {
-        this.$message.error(response.msg)
+        this.$message({
+          message: '上传失败',
+          type: 'error',
+          duration: 1500,
+          onClose: () => {
+          this.$forceUpdate();
+        this.detailform.fileList2.percentage=null;
+        this.detailform.fileList2.status=null;
+      }
+      })
+      }
+    },
+    //上传改变时
+    fileChage3(file, fileList){
+      this.$forceUpdate();
+      this.detailform.fileList3.showFile=true;
+      if(file.status==='success'){
+        this.detailform.fileList3.showFile=false;
+      }
+      if(file.status==='fail'){
       }
     },
     handleRemove3(file,index) {
@@ -2304,10 +2406,21 @@ export default {
           duration: 1500,
           onClose: () => {
           this.detailform.fileList3.push(response.data);
+          this.detailform.fileList3.showFile=false;
+          this.$refs.fileList3.clearFiles();
       }
       })
       } else {
-        this.$message.error(response.msg)
+        this.$message({
+          message: '上传失败',
+          type: 'error',
+          duration: 1500,
+          onClose: () => {
+          this.$forceUpdate();
+        this.detailform.fileList3.percentage=null;
+        this.detailform.fileList3.status=null;
+      }
+      })
       }
     },
     //打开单位弹框

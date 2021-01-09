@@ -43,7 +43,6 @@
           </el-date-picker>
 
         </el-form-item>
-<div>
   <el-form-item
     label="是否共享:"
   >
@@ -55,23 +54,16 @@
   >
             </el-switch>
       </el-form-item>
-</div>
 
 <div>
             <el-form-item
               class="neirong"
               label="备注:"
               prop="remarks"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
             >
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-input
                 :readonly="p.actpoint === 'look'"
-                clearable
                 type="textarea"
                 placeholder="请输入"
                 size="mini"
