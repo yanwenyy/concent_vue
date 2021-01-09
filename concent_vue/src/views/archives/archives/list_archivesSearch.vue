@@ -38,7 +38,7 @@
           </el-date-picker>
         </el-form-item>
       <el-form-item
-        label="是否共享:"
+        label="是否发布:"
       >
         <el-select
           clearable
