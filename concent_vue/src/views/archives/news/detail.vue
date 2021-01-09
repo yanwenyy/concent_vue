@@ -74,7 +74,7 @@
                   label="附件:"
                 >
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
-                  <el-upload
+                  <el-upload v-show="p.actpoint != 'look'"
                     class="upload-demo detailUpload"
                     :action="'/api/contract/topInfo/CommonFiles/archives/04/uploadFile'"
                     :on-success="handleChange"

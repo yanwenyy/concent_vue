@@ -1,7 +1,6 @@
 <template>
   <div>
-    <div style="width: 100%; overflow: hidden" :max-height="$tableHeight"
-         :height="$tableHeight">
+    <div style="width: 100%; overflow: hidden" >
       <el-form :inline="true"
                :model="searchform"
                @keyup.enter.native="getData()"
