@@ -160,7 +160,7 @@
 </template>
 
 <script>
-import ListChangeSearch from './list_ChangeSearch'
+import ListChangeSearch from './listChangeSearch'
 export default {
   name: "proposal-list-look",
   components: {

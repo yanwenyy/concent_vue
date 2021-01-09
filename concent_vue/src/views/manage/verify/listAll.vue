@@ -322,7 +322,12 @@ export default {
       this.showinput = false
     },
     add() {
-      console.log(JSON.stringify(this.multipleSelection[0].uuid));
+      console.log(JSON.stringify(this.multipleSelection));
+      if(this.multipleSelection.length==0)
+      {
+        this.$message.info("请选择未登记资审信息的项目进行资审登记！");
+        return;
+      }
       if (this.multipleSelection[0].uuid != null) {
         this.$message.info("当前登记的项目信息已经添加的资审信息！");
         return;
@@ -401,10 +406,10 @@ export default {
       //   query: {p: this.$utils.encrypt(JSON.stringify(p))}
       // })
       console.log(JSON.stringify(row));
-      if (row.uuid === null) {
-        this.$message.error("当前登记的项目信息未添加的资审信息！");
-        return;
-      }
+      // if (row.uuid === null) {
+      //   this.$message.error("当前登记的项目信息未添加的资审信息！");
+      //   return;
+      // }
       //alert(JSON.stringify(this.multipleSelection[0]));
       let p = {actpoint: 'look', instid: row.inforid, topinfoid: row.tiouuid}
       //alert(JSON.stringify(p));

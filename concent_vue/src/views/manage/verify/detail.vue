@@ -48,7 +48,7 @@
           <div>
             <el-form-item label="项目板块:" class="inline-formitem">
               <template>
-                <el-radio-group class="detail-radio-group" disabled v-model="detailform.topInfor.moduleId">
+                <el-radio-group class="detail-radio-group" disabled v-model="detailform.topInfor.moduleId" @change="getName(detailform.topInfor.moduleId, projectPlate, 'moduleName')">
                   <el-radio v-for="(item, index) in projectPlate" :label="item.id" :key="index">{{item.detailName}}</el-radio>
                 </el-radio-group>
               </template>
@@ -479,10 +479,9 @@
          >
          <el-switch
            :disabled="p.actpoint === 'look'"
-           active-text="是"
            v-model="detailform.verify.isCoalitionBid"
-           active-value="true"
-           inactive-value="false"
+           active-value="是"
+           inactive-value="否"
          >
             </el-switch>
 <!--       <el-radio-group v-model="detailform.verify.isCoalitionBid" >-->
@@ -563,7 +562,9 @@
                 </el-table-column>
 
                 <el-table-column :resizable="false" label="大小" prop="fileSize" width="120" show-overflow-tooltip>
-
+                  <template slot-scope="scope">
+                    {{(scope.row.fileSize/1024).toFixed(2)}}
+                  </template>
                 </el-table-column>
                 <el-table-column :resizable="false" label="类型" prop="fileType" width="80" show-overflow-tooltip>
 
@@ -621,13 +622,13 @@
           :resizable="false"
           label="标段名"
           prop="verifySection.sectionName"
+          min-width="260"
           show-overflow-tooltip
         >
         </el-table-column>
         <el-table-column
 
           :resizable="false"
-          fixed="right"
           label="参与投标单位"
           align="center"
           prop="verifySectionOrgNameType01"
@@ -644,7 +645,6 @@
         <el-table-column
 
           :resizable="false"
-          fixed="right"
           label="编标拟配合单位"
           align="center"
           prop="verifySectionOrgNameType02"
@@ -662,7 +662,6 @@
         <el-table-column
 
           :resizable="false"
-          fixed="right"
           label="投资估算"
           align="center"
           prop="investmentReckon"
@@ -684,7 +683,6 @@
         <el-table-column
 
           :resizable="false"
-          fixed="right"
           label="其中建安投资"
           align="center"
           prop="jananInvestment"
@@ -874,7 +872,16 @@ export default {
 
   },
   methods: {
-
+//获取下拉框id和name的公共方法
+    getName(id, list, name) {
+      if(id){
+        this.$forceUpdate()
+        this.detailform.topInfor[name] = list.find(
+          (item) => item.id == id
+        ).detailName;
+        console.log(this.detailform.topInfor[name]);
+      }
+    },
     back() {
       this.$router.back()
       // this.$router.push({
@@ -907,7 +914,7 @@ export default {
                 });
                 this.$refs[formName].resetFields();
                 this.$router.push({
-                  path: "/manage/verify/list",
+                  path: "/manage/verify/listAll",
                 });
               }
 
@@ -989,7 +996,7 @@ export default {
 
       console.log(data)
       this.treeStatas = false;
-
+      this.detailform.verifyOrgList=[];
       var resultStr = "";
       data.forEach((item, index) => {
 
@@ -1281,6 +1288,7 @@ export default {
           this.detailform = res.data.data
 
           console.log( JSON.stringify(this.detailform.verifySectionList))
+          console.log( JSON.stringify(this.detailform.topInfor))
         })
          //alert(JSON.stringify(this.p))
       // this.detailform.Verify.contactMode = this.p.selectrow.contactMode;

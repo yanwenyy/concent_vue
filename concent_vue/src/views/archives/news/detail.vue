@@ -6,8 +6,7 @@
         <span class="detailSpan"><b>消息详情</b></span>
         <el-button
           class="detail-back-tab detailbutton"
-          @click="back"
-          type="text">返回</el-button>
+          @click="back">返回</el-button>
          <el-button type="primary" class="detailbutton" v-show="p.actpoint != 'look'"
                     @click="saveInfo('detailform')">保存</el-button>
       <el-button class="detailbutton" @click="submitForm('detailform')" v-show="p.actpoint != 'look'">提交</el-button>
@@ -109,10 +108,13 @@
 
                 </el-table-column>
 
-                <el-table-column :resizable="false" label="大小" prop="fileSize" show-overflow-tooltip>
+                <el-table-column :resizable="false" label="大小" prop="fileSize" width="120" show-overflow-tooltip>
+                              <template slot-scope="scope">
+                                {{(scope.row.fileSize/1024).toFixed(2)}}
+                              </template>
 
                 </el-table-column>
-                <el-table-column :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+                <el-table-column :resizable="false" label="类型" prop="fileType" width="80" show-overflow-tooltip>
 
                 </el-table-column>
 
