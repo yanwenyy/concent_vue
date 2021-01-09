@@ -50,7 +50,7 @@
               ></el-option>
             </el-select>
           </el-form-item>
-           <el-form-item  label="范围选择:">
+           <el-form-item  label="范围选择:" v-show="p.actpoint != 'look'">
              <el-button size="small"
                         type="primary"
                         @click="selectOrgTable(detailform.archivesInfo.uuid)">点击选择</el-button>
