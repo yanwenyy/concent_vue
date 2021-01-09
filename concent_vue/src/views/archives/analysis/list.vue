@@ -201,7 +201,7 @@
       <el-pagination
         :current-page="page.current"
         :page-size="page.size"
-        :page-sizes="[10, 50, 100]"
+        :page-sizes="[12, 50, 100]"
         :total="page.total"
         layout="total, sizes, prev, pager, next, jumper"
         @current-change="handleCurrentChange"
@@ -276,7 +276,7 @@ export default {
   },
   data() {
     return {
-      page: {current: 1, size: 10, total: 0, records: []},
+      page: {current: 1, size: 12, total: 0, records: []},
       searchform: {
         current: 1,
         size: 10,

@@ -543,17 +543,19 @@
                               show-overflow-tooltip
                               type="index"
                             ></el-table-column>
-                            <el-table-column :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+                            <el-table-column align="center" :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
 
                             </el-table-column>
 
-                            <el-table-column :resizable="false" label="大小" :width="120" prop="fileSize" show-overflow-tooltip>
+                            <el-table-column align="center" :resizable="false" label="大小" :width="120" prop="fileSize"
+                                              show-overflow-tooltip>
                               <template slot-scope="scope">
                                 {{(scope.row.fileSize/1024).toFixed(2)}}
                               </template>
 
                             </el-table-column>
-                            <el-table-column :resizable="false" label="类型" :width="80" prop="fileType" show-overflow-tooltip>
+                            <el-table-column align="center" :resizable="false" label="类型" :width="80" prop="fileType"
+                                              show-overflow-tooltip>
 
                             </el-table-column>
 
@@ -1222,16 +1224,18 @@
 
                             </el-table-column>
 
-                            <el-table-column :resizable="false" label="大小" :width="120" prop="fileSize" show-overflow-tooltip>
+                            <el-table-column align="center" :resizable="false" label="大小" :width="120" prop="fileSize"
+                                              show-overflow-tooltip>
                               <template slot-scope="scope">
                                 {{(scope.row.fileSize/1024).toFixed(2)}}
                               </template>
                             </el-table-column>
-                            <el-table-column :resizable="false" label="类型" :width="80" prop="fileType" show-overflow-tooltip>
+                            <el-table-column  align="center" :resizable="false" label="类型" :width="80" prop="fileType"
+                                              show-overflow-tooltip>
 
                             </el-table-column>
 
-                            <el-table-column
+                            <el-table-column align="center"
                               :resizable="false"
                               label="操作"
                               show-overflow-tooltip

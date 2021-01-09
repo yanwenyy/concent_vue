@@ -210,7 +210,7 @@
 
                 </el-table-column>
 
-                <el-table-column :resizable="false"
+                <el-table-column align="center" :resizable="false"
                                  label="大小"
                                  prop="fileSize"
                                  :width="120"
@@ -220,7 +220,7 @@
                               </template>
 
                 </el-table-column>
-                <el-table-column :resizable="false"
+                <el-table-column align="center"  :resizable="false"
                                  label="类型"
                                  :width="80"
                                  prop="fileType"
@@ -228,7 +228,7 @@
 
                 </el-table-column>
 
-                <el-table-column
+                <el-table-column align="center"
                   :resizable="false"
                   label="操作"
                   show-overflow-tooltip

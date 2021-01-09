@@ -320,6 +320,7 @@
 
                 <el-table-column :resizable="false"
                                  label="大小"
+                                 align="center"
                                  prop="fileSize"
                                  :width="120"
                                  show-overflow-tooltip>
