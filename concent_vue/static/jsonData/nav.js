@@ -96,14 +96,13 @@ export default {
                   "children": [
                     {
                       "name": "资格预审登记",
-                      "path": "/manage/verify/list",
-                      "component": "/manage/verify/list",
+                      "path": "/manage/verify/listAll",
+                      "component": "/manage/verify/listAll",
                       "iconCls": "el-icon-notebook-2",
                       "menushow": true,
                       "leaf": true,
                       "defaultpage": true
                     },
-
                     {
                       "name": "资格预审登记审核",
                       "path": "/manage/verify/list_WorkFlow",
@@ -115,8 +114,8 @@ export default {
                     },
                     {
                       "name": "资格预审变更",
-                      "path": "/manage/verify/list_Change",
-                      "component": "/manage/verify/list_Change",
+                      "path": "/manage/verify/listChange",
+                      "component": "/manage/verify/listChange",
                       "iconCls": "el-icon-edit-outline",
                       "menushow": true,
                       "leaf": true,
@@ -124,8 +123,8 @@ export default {
                     },
                     {
                       "name": "资格预审查询",
-                      "path": "/manage/verify/list_VerifySearch",
-                      "component": "/manage/verify/list_VerifySearch",
+                      "path": "/manage/verify/listVerifySearch",
+                      "component": "/manage/verify/listVerifySearch",
                       "iconCls": "el-icon-search",
                       "menushow": true,
                       "leaf": true,
@@ -794,7 +793,7 @@ export default {
                 {
                   "name": "项目信息移动",
                   "path": "/statistics/project/hb",
-                  "component": "/statistics/project/hb",
+                  "component": "/statistics/project/hb1",
                   "iconCls": "el-icon-files",
                   "menushow": true,
                   "leaf": true,
@@ -803,7 +802,7 @@ export default {
                 {
                   "name": "项目信息查询",
                   "path": "/statistics/project/hb",
-                  "component": "/statistics/project/hb",
+                  "component": "/statistics/project/hb2",
                   "iconCls": "el-icon-search",
                   "menushow": true,
                   "leaf": true,
@@ -951,7 +950,7 @@ export default {
                     {
                       "name": "统计项管理",
                       "path": "/statistics/bp/list",
-                      "component": "/statistics/plan/01-1",
+                      "component": "/statistics/bp/list",
                       "iconCls": "el-icon-notebook-2",
                       "menushow": true,
                       "leaf": true,
@@ -960,7 +959,7 @@ export default {
                     {
                       "name": "本单位统计项",
                       "path": "/statistics/bp/list_Company",
-                      "component": "/statistics/plan/02-1",
+                      "component": "/statistics//list_Company",
                       "iconCls": "el-icon-receiving",
                       "menushow": true,
                       "leaf": true,

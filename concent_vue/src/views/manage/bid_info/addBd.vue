@@ -34,7 +34,14 @@
                 placeholder="评标办法"
                 size="mini"
                 :disabled="type === 'look'"
-                v-model="detailForm.bidInfoSection.bidEvaluationMethodName">
+                @change="
+                getName(
+                  detailForm.bidInfoSection.bidEvaluationMethodId,
+                  bidMethod,
+                  'bidEvaluationMethodName'
+                )
+              "
+                v-model="detailForm.bidInfoSection.bidEvaluationMethodId">
                  <el-option
                   :key="index"
                   :label="item.detailName"
@@ -47,7 +54,18 @@
         </el-form-item>
 
         <el-form-item label="开标地点:" class="list-item">
-          <el-input v-model="detailForm.bidInfoSection.openBidPlaceName" placeholder="开标地点" clearable :disabled="type === 'look'"></el-input>
+          <el-input v-model="detailForm.bidInfoSection.openBidPlaceName"
+          placeholder="开标地点"
+          clearable
+          :disabled="type === 'look'"
+          @clear="searchform.openBidPlaceId=''"
+          >
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="selectPosition()"
+          ></el-button>
+          </el-input>
         </el-form-item>
 <br>
         <el-form-item label="开标日期:" class="list-item">
@@ -175,10 +193,10 @@
         </el-form-item>
           <br>
           <el-form-item label="投资估算:" class="list-item">
-          <el-input v-model="detailForm.verifySection.investmentReckon" placeholder="投资估算" clearable :disabled="type === 'look'"></el-input>
+          <el-input v-model="detailForm.bidInfoSection.investmentReckon" placeholder="投资估算" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
           <el-form-item label="其中建安投资:" class="list-item">
-          <el-input v-model="detailForm.verifySection.jananInvestment" placeholder="其中建安投资" clearable :disabled="type === 'look'"></el-input>
+          <el-input v-model="detailForm.bidInfoSection.jananInvestment" placeholder="其中建安投资" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
         <div class="detail-title">
           其他投标单位(系统内):
@@ -344,14 +362,23 @@
       <el-button @click="visible = false">取消</el-button>
       <el-button v-if="type!='look'" type="primary" @click="sub()">确定</el-button>
     </div>
-
+    <Tree
+      v-if="treeStatas"
+      ref="addOrUpdate"
+      @getPosition="getPositionTree"
+    ></Tree>
   </el-dialog>
 
 </template>
 
 <script>
+import Tree from "@/components/tree";
 import { isMoney } from '@/utils/validate'
+
   export default {
+    components: {
+      Tree,
+      },
     data() {
         var validateMoney = (rule, value, callback) => {
         // console.log(value)
@@ -364,6 +391,7 @@ import { isMoney } from '@/utils/validate'
         }
       }
       return {
+        treeStatas:false,
         visible: false,
         detailForm: {
           bidInfoSection:{},
@@ -405,19 +433,34 @@ import { isMoney } from '@/utils/validate'
     },
     computed:{
       bidMethod (){
+        // console.log(this.$store.state.bidMethod)
         return this.$store.state.bidMethod;
       },
     },
     methods: {
-          //获取下拉框id和name的公共方法
+    //获取项目地点的值
+    getPositionTree(data) {
+      this.treeStatas = false;
+      this.searchform.openBidPlaceId = data.fullDetailCode;
+      this.searchform.openBidPlaceName = data.fullDetailName;
+      this.key = this.key + 1;
+    },
     getName(id, list, name) {
       if(id){
         this.$forceUpdate()
         this.detailForm.bidInfoSection[name] = list.find(
-          (item) => item.uuid == id
-      ).sectionName;
+          (item) => item.id == id
+      ).detailName;
         console.log(this.detailForm.bidInfoSection[name]);
       }
+    },
+        //选择项目地点
+    selectPosition() {
+      this.treeStatas = true;
+      console.log(this.positionIndex);
+      this.$nextTick(() => {
+        this.$refs.addOrUpdate.init();
+      });
     },
       //选中数据
       sub() {

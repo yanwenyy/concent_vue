@@ -6,8 +6,7 @@
         <span style="color: #2a2a7d"><b>统计分析详情</b></span>
         <el-button
           class="detail-back-tab detailbutton"
-          @click="back"
-          type="text">返回</el-button>
+          @click="back">返回</el-button>
          <el-button type="primary" class="detailbutton" v-show="p.actpoint != 'look'"
                     @click="saveInfo('detailform')">保存</el-button>
       <el-button class="detailbutton" @click="submitForm('detailform')" v-show="p.actpoint != 'look'">提交</el-button>
@@ -44,34 +43,27 @@
           </el-date-picker>
 
         </el-form-item>
-<div>
   <el-form-item
     label="是否共享:"
   >
-           <el-radio-group v-model="detailform.archivesInfo.isShare">
-                  <el-radio :disabled="p.actpoint === 'look'"
-                            v-for="(item, index) in isShare"
-                            :label="item.id"
-                            :key="index">{{ item.detailName }}</el-radio>
-                </el-radio-group>
+  <el-switch
+    :disabled="p.actpoint === 'look'"
+    v-model="detailform.archivesInfo.isShare"
+    active-value="1"
+    inactive-value="0"
+  >
+            </el-switch>
       </el-form-item>
-</div>
 
 <div>
             <el-form-item
               class="neirong"
               label="备注:"
               prop="remarks"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
             >
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-input
                 :readonly="p.actpoint === 'look'"
-                clearable
                 type="textarea"
                 placeholder="请输入"
                 size="mini"
@@ -85,7 +77,7 @@
               label="附件:"
             >
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
-              <el-upload
+              <el-upload v-show="p.actpoint != 'look'"
                 class="upload-demo detailUpload"
                 :action="'/api/contract/topInfo/CommonFiles/archives/03/uploadFile'"
                 :on-success="handleChange"
@@ -126,12 +118,17 @@
                 <el-table-column :resizable="false"
                                  label="大小"
                                  prop="fileSize"
+                                 width="120"
                                  show-overflow-tooltip>
+                              <template slot-scope="scope">
+                                {{(scope.row.fileSize/1024).toFixed(2)}}
+                              </template>
 
                 </el-table-column>
                 <el-table-column :resizable="false"
                                  label="类型"
                                  prop="fileType"
+                                 width="80"
                                  show-overflow-tooltip>
 
                 </el-table-column>
@@ -152,30 +149,30 @@
                 </el-table-column>
               </el-table>
     </div>
-<div>
+<!--<div>-->
 
 
 
-      <el-form-item
-        label="填报单位:"
-      >
-        <el-input
-          disabled
-          size="mini"
-          v-model="detailform.archivesInfo.createOrgName"
-        />
-      </el-form-item>
-        <el-form-item
-          label="录入人:"
-        >
+<!--      <el-form-item-->
+<!--        label="填报单位:"-->
+<!--      >-->
+<!--        <el-input-->
+<!--          disabled-->
+<!--          size="mini"-->
+<!--          v-model="detailform.archivesInfo.createOrgName"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--        <el-form-item-->
+<!--          label="录入人:"-->
+<!--        >-->
 
-          <el-input
-            disabled
-            size="mini"
-            v-model="detailform.archivesInfo.createUserName"
-          />
-        </el-form-item>
-</div>
+<!--          <el-input-->
+<!--            disabled-->
+<!--            size="mini"-->
+<!--            v-model="detailform.archivesInfo.createUserName"-->
+<!--          />-->
+<!--        </el-form-item>-->
+<!--</div>-->
     </el-form>
 
     </div>

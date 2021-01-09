@@ -620,5 +620,9 @@ pre {
   display: inline-block;
   width: 300px;
 }
+.shadow-search-item .el-input__inner,.shadow-search-item .el-form-item__content{
+  height: 32px!important;
+  line-height: 32px!important;
+}
 /**/
 

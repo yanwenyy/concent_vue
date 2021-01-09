@@ -58,7 +58,8 @@
       </el-form-item>
       <el-form-item label="开标日期:">
         <el-date-picker
-          v-model="searchform.openBidTime"
+          v-model="searchform.dateOfBidOpeningName"
+          value-format="timestamp"
           type="daterange"
           range-separator="至"
           start-placeholder="开始日期"
@@ -67,12 +68,23 @@
         </el-date-picker>
       </el-form-item>
 
-      <el-form-item label="公告类型:">
-        <el-input
-          v-model="searchform.noticeTypeName"
-          placeholder="公告类型"
+      <el-form-item
+        label="公告类型:"
+      >
+        <el-select
           clearable
-        ></el-input>
+          filterable
+          placeholder="请选择"
+          size="mini"
+          v-model="searchform.noticeTypeId"
+        >
+          <el-option
+            :key="index"
+            :label="item.detailName"
+            :value="item.id"
+            v-for="(item, index) in bulletinType"
+          ></el-option>
+        </el-select>
       </el-form-item>
 
       <el-form-item label="录入单位:">
@@ -86,6 +98,7 @@
       <el-form-item label="资审截止日期:">
         <el-date-picker
           v-model="searchform.vifSaleTime"
+          value-format="timestamp"
           type="daterange"
           range-separator="至"
           start-placeholder="开始日期"
@@ -121,7 +134,7 @@
       </el-form-item>
 
       <el-form-item label="项目地点:">
-        <el-input v-model="searchform.path" placeholder="项目地点">
+        <el-input v-model="searchform.path" placeholder="项目地点" clearable  @clear="searchform.ffid=''">
           <el-button
             slot="append"
             icon="el-icon-search"
@@ -255,6 +268,7 @@
           show-overflow-tooltip
         >
         </el-table-column>
+
 
         <el-table-column
           :width="150"
@@ -397,7 +411,7 @@ export default {
     };
   },
   mounted() {
-    this.getData();
+    // this.getData();
     this.$store.dispatch("getConfig", {});
     this.$store.dispatch("getCategory", {
       name: "projectDomainType",
@@ -422,7 +436,6 @@ export default {
   methods: {
     //获取项目地点的值
     getPositionTree(data) {
-      console.log(data);
       this.treeStatas = false;
       this.searchform.ffid = data.fullDetailCode;
       this.searchform.path = data.fullDetailName;
@@ -454,7 +467,7 @@ export default {
     exportdata() {},
     // 查看
     rowshow(row) {
-      var id=row.flowStatus==null?row.topInfoOrgId:row.uuid;
+      var id=row.flowStatus==null?row.uuid:row.uuid;
       let p = { actpoint: "look", instid: id ,flowStatus:row.flowStatus};
       this.$router.push({
         path: "./detail/",

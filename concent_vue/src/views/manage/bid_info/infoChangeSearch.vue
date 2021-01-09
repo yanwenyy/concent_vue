@@ -4,13 +4,14 @@
     :append-to-body="true">
     <div>
       <el-form :inline="true" :model="searchform" @keyup.enter.native="init()">
-        <el-form-item label="项目名称:">
+        <el-form-item label="项目名称:" class="shadow-search-item">
           <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
         </el-form-item>
         <el-form-item
           label="工程类别(一级):"
         >
           <el-select
+            class="shadow-search-item"
             clearable
             filterable
             placeholder="请选择"
@@ -30,6 +31,7 @@
           label="工程类别(二级):"
         >
           <el-select
+          class="shadow-search-item"
             clearable
             filterable
             placeholder="请选择"

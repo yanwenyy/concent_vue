@@ -205,17 +205,20 @@
           :width="150"
           align="center"
           label="录入时间"
+
           prop="tioCreateTime"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
             <span>录入时间</span>
             <div>
-              <el-input
+              <el-date-picker
                 style=" width: 100%"
-                v-model="searchform.tioCreateTime"
                 size="mini"
-              />
+                value-format="timestamp"
+                v-model="searchform.tioCreateTime"
+              >
+              </el-date-picker>
             </div>
           </template>
           <template slot-scope="scope">{{

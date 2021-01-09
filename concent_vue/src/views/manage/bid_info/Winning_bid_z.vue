@@ -384,8 +384,8 @@ export default {
       // for (var i in _val) {
       //    this.zbForm[i]=_val[i]
       //   }
-      this.zbForm.bidInfo_03=[];
-      console.log(this.zbForm)
+      // this.zbForm.bidInfo_03=[];
+      // console.log(this.zbForm)
     },
     // 上传删除
 
