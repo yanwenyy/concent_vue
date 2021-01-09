@@ -282,31 +282,36 @@
               label="招标方式:"
               prop="bidInfo.bidModeName"
             >
-              <el-input
+              <el-select
                 disabled
-                value-format="timestamp"
                 filterable
                 clearable
-                size="mini"
+                placeholder="请选择"
                 v-model="detailform.bidInfo.bidModeName"
               >
-              </el-input>
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in bidType"
+                ></el-option>
+              </el-select>
             </el-form-item>
 
             <el-form-item
             class="formItem1"
               label="招标公告发布日期:"
               prop="bidInfo.publishTime"
+              value-format="timestamp"
             >
-              <el-input
+             <el-date-picker
                 disabled
                 filterable
                 clearable
-                size="mini"
                 value-format="timestamp"
                 v-model="detailform.bidInfo.publishTime"
               >
-              </el-input>
+              </el-date-picker>
             </el-form-item>
 
             <el-form-item label="内部联合体单位:"
@@ -331,10 +336,14 @@
               prop="bidInfo.endTime"
               class="formItem1"
             >
-              <el-input
+              <el-date-picker
                 disabled
+                value-format="timestamp"
+                clearable
+                filterable
                 v-model="detailform.bidInfo.endTime"
-              />
+              >
+              </el-date-picker>
             </el-form-item>
 
 
@@ -343,15 +352,14 @@
               prop="bidInfo.saleTime"
               class="formItem1"
             >
-              <el-input
+              <el-date-picker
                 disabled
                 value-format="timestamp"
                 filterable
                 clearable
-                size="mini"
                 v-model="detailform.bidInfo.saleTime"
               >
-              </el-input>
+              </el-date-picker>
             </el-form-item>
 
             <el-form-item class="formItem1"
@@ -670,17 +678,6 @@
 
             <el-table-column
               :resizable="false"
-              label="评标办法"
-              prop="bidInfoSection.bidEvaluationMethodName"
-              show-overflow-tooltip
-              align="center"
-              :width="180"
-            >
-
-            </el-table-column>
-
-            <el-table-column
-              :resizable="false"
               label="开标日期"
               prop="bidInfoSection.dateOfBidOpeningName"
               show-overflow-tooltip
@@ -688,7 +685,9 @@
               :width="180"
               value-format="timestamp"
             >
-
+            <template slot-scope="scope">{{
+            scope.row.bidInfoSection.dateOfBidOpeningName | dateformat
+          }}</template>
             </el-table-column>
 
             <el-table-column
@@ -709,12 +708,20 @@
               align="center"
               :width="180"
             >
-              <template slot-scope="scope">
+              <!-- <template slot-scope="scope">
                 <span v-for="(item,index) in scope.row.bidInfoSectionOrgList">{{item.orgType==1?item.orgName:''}}{{index <scope.row.bidInfoSectionOrgList.length-1? ',':''}}</span>
 
-              </template>
+              </template> -->
+                <template slot-scope="scope">
+                <span v-for="(item,index ) in scope.row.bidInfoSectionOrgList">
+                    {{item.orgType==1?item.orgName:''}}
+                    {{scope.row.bidInfoSectionOrgList[index+1]&& index>0&&scope.row.bidInfoSectionOrgList[index-1].orgType==1 && scope.row.bidInfoSectionOrgList[index+1].orgType==1? ',':''}}
+                </span>
+
+                  </template>
 
             </el-table-column>
+
 
             <el-table-column
               :resizable="false"
@@ -723,9 +730,16 @@
               align="center"
               :width="180"
             >
-                <template slot-scope="scope">
+                <!-- <template slot-scope="scope">
                 <span v-for="(item,index) in scope.row.bidInfoSectionOrgList">{{item.orgType==2?item.orgName:''}}{{index < scope.row.bidInfoSectionOrgList.length-1? ',':''}}</span>
-              </template>
+              </template> -->
+               <template slot-scope="scope">
+                <span v-for="(item,index ) in scope.row.bidInfoSectionOrgList">
+                    {{item.orgType==1?item.orgName:''}}
+                    {{scope.row.bidInfoSectionOrgList[index+1]&& index>0&&scope.row.bidInfoSectionOrgList[index-1].orgType==2 && scope.row.bidInfoSectionOrgList[index+1].orgType==2? ',':''}}
+                </span>
+
+                  </template>
             </el-table-column>
 
             <el-table-column

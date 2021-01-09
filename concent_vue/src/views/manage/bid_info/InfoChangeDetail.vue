@@ -617,7 +617,7 @@
             <el-table-column
               :resizable="false"
               label="评标办法"
-              prop="bidInfoSection.bidEvaluationMethodId"
+              prop="bidInfoSection.bidEvaluationMethodName"
               show-overflow-tooltip
               align="center"
               :width="180"
@@ -633,7 +633,7 @@
               align="center"
               :width="180"
             >
-              <template slot-scope="scope">{{
+          <template slot-scope="scope">{{
             scope.row.dateOfBidOpeningName | dateformat
           }}</template>
             </el-table-column>
@@ -655,9 +655,17 @@
               align="center"
               :width="180"
             >
-              <template slot-scope="scope">
+              <!-- <template slot-scope="scope">
                 <span v-for="(item,index) in scope.row.bidInfoSectionOrgList">{{item.orgType==1?item.orgName:''}}{{index <scope.row.bidInfoSectionOrgList.length-1? ',':''}}</span>
-              </template>
+
+              </template> -->
+                <template slot-scope="scope">
+                <span v-for="(item,index ) in scope.row.bidInfoSectionOrgList">
+                    {{item.orgType==1?item.orgName:''}}
+                    {{scope.row.bidInfoSectionOrgList[index+1]&& index>0&&scope.row.bidInfoSectionOrgList[index-1].orgType==1 && scope.row.bidInfoSectionOrgList[index+1].orgType==1? ',':''}}
+                </span>
+
+                  </template>
 
             </el-table-column>
 
@@ -678,16 +686,23 @@
               </template>
             </el-table-column> -->
 
-           <el-table-column
+            <el-table-column
               :resizable="false"
               label="其他投标单位(系统外)"
               show-overflow-tooltip
               align="center"
               :width="180"
             >
-                <template slot-scope="scope">
+                <!-- <template slot-scope="scope">
                 <span v-for="(item,index) in scope.row.bidInfoSectionOrgList">{{item.orgType==2?item.orgName:''}}{{index < scope.row.bidInfoSectionOrgList.length-1? ',':''}}</span>
-              </template>
+              </template> -->
+               <template slot-scope="scope">
+                <span v-for="(item,index ) in scope.row.bidInfoSectionOrgList">
+                    {{item.orgType==1?item.orgName:''}}
+                    {{scope.row.bidInfoSectionOrgList[index+1]&& index>0&&scope.row.bidInfoSectionOrgList[index-1].orgType==2 && scope.row.bidInfoSectionOrgList[index+1].orgType==2? ',':''}}
+                </span>
+
+                  </template>
             </el-table-column>
 
             <!-- <el-table-column
@@ -1510,7 +1525,7 @@
               <el-table-column
                 :resizable="false"
                 label="评标办法"
-                prop="bidInfoSection.bidEvaluationMethodId"
+                prop="bidInfoSection.bidEvaluationMethodName"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
@@ -1548,9 +1563,18 @@
               align="center"
               :width="180"
             >
-              <template slot-scope="scope">
+              <!-- <template slot-scope="scope">
                 <span v-for="(item,index) in scope.row.bidInfoSectionOrgList">{{item.orgType==1?item.orgName:''}}{{index <scope.row.bidInfoSectionOrgList.length-1? ',':''}}</span>
-              </template>
+
+              </template> -->
+                <template slot-scope="scope">
+                <span v-for="(item,index ) in scope.row.bidInfoSectionOrgList">
+                    {{item.orgType==1?item.orgName:''}}
+                    {{scope.row.bidInfoSectionOrgList[index+1]&& index>0&&scope.row.bidInfoSectionOrgList[index-1].orgType==1 && scope.row.bidInfoSectionOrgList[index+1].orgType==1? ',':''}}
+                </span>
+
+                  </template>
+
             </el-table-column>
 
             <el-table-column
@@ -1560,9 +1584,16 @@
               align="center"
               :width="180"
             >
-                <template slot-scope="scope">
+                <!-- <template slot-scope="scope">
                 <span v-for="(item,index) in scope.row.bidInfoSectionOrgList">{{item.orgType==2?item.orgName:''}}{{index < scope.row.bidInfoSectionOrgList.length-1? ',':''}}</span>
-              </template>
+              </template> -->
+               <template slot-scope="scope">
+                <span v-for="(item,index ) in scope.row.bidInfoSectionOrgList">
+                    {{item.orgType==1?item.orgName:''}}
+                    {{scope.row.bidInfoSectionOrgList[index+1]&& index>0&&scope.row.bidInfoSectionOrgList[index-1].orgType==2 && scope.row.bidInfoSectionOrgList[index+1].orgType==2? ',':''}}
+                </span>
+
+                  </template>
             </el-table-column>
 
               <el-table-column

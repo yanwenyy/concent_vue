@@ -205,6 +205,7 @@
           :width="150"
           align="center"
           label="录入时间"
+
           prop="tioCreateTime"
           show-overflow-tooltip
         >
@@ -212,7 +213,8 @@
             <span>录入时间</span>
             <div>
               <el-date-picker
-                type="date"
+                style=" width: 100%"
+                size="mini"
                 value-format="timestamp"
                 v-model="searchform.tioCreateTime"
               >
