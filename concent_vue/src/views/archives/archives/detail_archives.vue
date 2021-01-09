@@ -164,27 +164,27 @@
 
 
 
-      <el-form-item
-        label="填报单位:"
-        style="width: 33%"
-      >
-        <el-input
-          disabled
-          size="mini"
-          v-model="detailform.createOrgName"
-        />
-      </el-form-item>
-        <el-form-item
-          label="录入人:"
-          style="width: 33%"
-        >
+<!--      <el-form-item-->
+<!--        label="填报单位:"-->
+<!--        style="width: 33%"-->
+<!--      >-->
+<!--        <el-input-->
+<!--          disabled-->
+<!--          size="mini"-->
+<!--          v-model="detailform.createOrgName"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--        <el-form-item-->
+<!--          label="录入人:"-->
+<!--          style="width: 33%"-->
+<!--        >-->
 
-          <el-input
-            disabled
-            size="mini"
-            v-model="detailform.createUserName"
-          />
-        </el-form-item>
+<!--          <el-input-->
+<!--            disabled-->
+<!--            size="mini"-->
+<!--            v-model="detailform.createUserName"-->
+<!--          />-->
+<!--        </el-form-item>-->
     </el-form>
 
     </div>

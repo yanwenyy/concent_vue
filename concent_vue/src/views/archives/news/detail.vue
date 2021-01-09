@@ -139,25 +139,25 @@
                     @click="selectOrgTable(detailform.archivesInfo.uuid)">点击选择</el-button>
       </el-form-item>
 </div>
-      <el-form-item
-        label="填报单位:"
-      >
-        <el-input
-          disabled
-          size="mini"
-          v-model="detailform.archivesInfo.createOrgName"
-        />
-      </el-form-item>
-        <el-form-item
-          label="录入人:"
-        >
+<!--      <el-form-item-->
+<!--        label="填报单位:"-->
+<!--      >-->
+<!--        <el-input-->
+<!--          disabled-->
+<!--          size="mini"-->
+<!--          v-model="detailform.archivesInfo.createOrgName"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--        <el-form-item-->
+<!--          label="录入人:"-->
+<!--        >-->
 
-          <el-input
-            disabled
-            size="mini"
-            v-model="detailform.archivesInfo.createUserName"
-          />
-        </el-form-item>
+<!--          <el-input-->
+<!--            disabled-->
+<!--            size="mini"-->
+<!--            v-model="detailform.archivesInfo.createUserName"-->
+<!--          />-->
+<!--        </el-form-item>-->
     </el-form>
     </div>
 </el-card>
