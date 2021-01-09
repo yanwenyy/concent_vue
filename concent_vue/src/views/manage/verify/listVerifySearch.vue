@@ -566,8 +566,8 @@
         this.searchform.createTimeBeginTime=this.searchform.createTime[0];
         this.searchform.createTimeEndTime=this.searchform.createTime[1];
       }
-      this.searchform.createTime=null;
-      this.searchform.saleTime=null;
+      // this.searchform.createTime=null;
+      // this.searchform.saleTime=null;
 
       console.log(this.searchform)
       this.$http

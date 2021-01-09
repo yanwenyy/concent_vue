@@ -428,7 +428,7 @@ export default {
         this.searchform.createTimeBeginTime=this.searchform.createTime[0];
         this.searchform.createTimeEndTime=this.searchform.createTime[1];
       }
-      this.searchform.createTime=null;
+      // this.searchform.createTime=null;
       // this.searchform.reportTime=null;
       console.log(JSON.stringify(this.searchform));
       this.$http
