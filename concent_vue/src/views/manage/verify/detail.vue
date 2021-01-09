@@ -622,13 +622,13 @@
           :resizable="false"
           label="标段名"
           prop="verifySection.sectionName"
+          min-width="260"
           show-overflow-tooltip
         >
         </el-table-column>
         <el-table-column
 
           :resizable="false"
-          fixed="right"
           label="参与投标单位"
           align="center"
           prop="verifySectionOrgNameType01"
@@ -645,7 +645,6 @@
         <el-table-column
 
           :resizable="false"
-          fixed="right"
           label="编标拟配合单位"
           align="center"
           prop="verifySectionOrgNameType02"
@@ -663,7 +662,6 @@
         <el-table-column
 
           :resizable="false"
-          fixed="right"
           label="投资估算"
           align="center"
           prop="investmentReckon"
@@ -685,7 +683,6 @@
         <el-table-column
 
           :resizable="false"
-          fixed="right"
           label="其中建安投资"
           align="center"
           prop="jananInvestment"
