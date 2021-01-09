@@ -150,9 +150,8 @@
       ></el-pagination>
     </div>
     <el-dialog title="资审结果登记" :visible.sync="dialogResult" width="70%">
-      <el-form :model="resultform.verifySection" >
-   <el-row>
-        <el-form-item label="资格预审结果"   prop="verifyResult" :label-width="formLabelWidth">
+      <el-form :model="resultform.verifySection" class="queryForm">
+        <el-form-item label="资格预审结果"   prop="verifyResult" >
          <el-switch
            active-text="通过"
            v-model="resultform.verifySection.verifyResult"
@@ -161,7 +160,7 @@
          >
             </el-switch>
         </el-form-item>
-        <el-form-item label="通过时间"  prop="verifyResultTime" :label-width="formLabelWidth">
+        <el-form-item label="通过时间"  prop="verifyResultTime" >
           <el-date-picker
             value-format="timestamp"
             v-model="resultform.verifySection.verifyResultTime"
@@ -169,11 +168,9 @@
             placeholder="选择日期">
           </el-date-picker>
         </el-form-item>
-</el-row>
-        <el-form-item
-          class="neirong"
-          label="附件:"
+        <div
         >
+        <p class="detail-title"><span class="uploadSpan">附件: </span>
           <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
          <el-upload
            class="upload-demo detailUpload"
@@ -185,7 +182,8 @@
          >
               <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
-        </el-form-item>
+        </p>
+        </div>
       </el-form>
       <div>
       <el-table
@@ -768,5 +766,69 @@ export default {
   }
   >>>.el-form-item__label{
     width: auto;
+  }
+  >>>.el-dialog__body{
+    padding-top: 0px;
+  }
+  .uploadSpan{
+    font-size: 16px;
+    color: #303133;
+  }
+  >>>.el-form-item__label{
+    width: auto;
+  }
+  .el-table__row {
+    cursor: pointer;
+  }
+  >>>.el-table td, .el-table th
+  {
+    padding:5px 0px;
+  }
+  >>>.el-form-item__label{
+    width: auto;
+  }
+  >>>.el-upload-list{
+    display: none;
+  }
+  >>>.el-table td, .el-table th
+  {
+    padding:5px 0px;
+  }
+  >>>.el-form-item__label{
+    width: auto;
+  }
+  >>>.el-input--mini .el-input__inner{
+    height: auto;
+    line-height: inherit;
+  }
+  >>>.el-form-item {
+    width: auto;
+    margin-bottom: 5px !important;
+    display: inline-block;
+  }
+  .item_zbj{
+    width: 40%;
+    display: inline-block;
+    padding-right: 9%;
+  }
+  .el-dialog{
+    width: 60%;
+  }
+  .el-table__row {
+    cursor: pointer;
+  }
+  .mydialog .el-dialog{
+    width: 70%!important;
+    /* overflow: auto; */
+  }
+  .mydialog >>>.el-dialog__body{
+    height: 500px;
+    overflow: auto;
+  }
+  >>>.el-form-item__label{
+    width: auto;
+  }
+  >>>.el-dialog__body{
+    padding-top: 0px;
   }
 </style>

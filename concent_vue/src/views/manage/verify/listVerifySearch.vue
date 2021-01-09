@@ -272,8 +272,8 @@
 <div   class="mydialog">
     <el-dialog title="资审结果登记查看" :visible.sync="dialogResult"
              >
-      <el-form :model="resultform.verifySection">
-        <el-form-item label="资格预审结果" :label-width="formLabelWidth"  prop="verifyResult">
+      <el-form :model="resultform.verifySection" class="queryForm">
+        <el-form-item label="资格预审结果"   prop="verifyResult">
          <el-switch
            disabled
            active-text="通过"
@@ -283,7 +283,7 @@
          >
             </el-switch>
         </el-form-item>
-        <el-form-item label="通过时间" :label-width="formLabelWidth" prop="verifyResultTime">
+        <el-form-item label="通过时间"  prop="verifyResultTime">
           <el-date-picker
             disabled
             value-format="timestamp"
@@ -296,7 +296,6 @@
       </el-form>
       <div>
       <el-table
-        height="200"
         :data="resultform.commonFilesList"
         :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
         align="center"
@@ -616,7 +615,7 @@
   height: auto;
   line-height: inherit;
 }
->>>.el-form-item {
+>.el-form-item {
   width: auto;
   margin-bottom: 5px !important;
   display: inline-block;
@@ -642,5 +641,18 @@
 }
 >>>.el-form-item__label{
   width: auto;
+}
+>>>.el-dialog__body{
+  padding-top: 0px;
+}
+.mydialog >>>.el-form-item {
+  width: auto;
+  margin-bottom: 5px !important;
+  display: inline-block;
+  width: 32.5% !important;
+}
+.mydialog >>>.el-form-item__label:before {
+  position: initial;
+  left: -10px;
 }
 </style>

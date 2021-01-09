@@ -516,11 +516,7 @@
                   />
                 </el-form-item>
               </div>
-              <div>
-                <el-form-item
-                  class="neirong"
-                  label="附件:"
-                >
+              <div><p class="detail-title"><span  class="uploadSpan">附件: </span>
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-upload
                     disabled
@@ -528,7 +524,7 @@
                     action="https://jsonplaceholder.typicode.com/posts/"
                   >
                   </el-upload>
-                </el-form-item>
+                </p>
               </div>
               <div>
                   <el-table
@@ -1190,11 +1186,7 @@
                 </el-form-item>
               </div>
               <div>
-                <el-form-item
-                  class="neirong"
-                  label="附件:"
-
-                >
+                <p class="detail-title"><span  class="uploadSpan">附件: </span>
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-upload
                     class="upload-demo detailUpload"
@@ -1206,7 +1198,7 @@
                   >
               <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
-                </el-form-item>
+                </p>
               </div>
                <div>
                   <el-table
@@ -2082,6 +2074,10 @@ export default {
 }
 >>>.el-upload-list{
   display: none;
+}
+.uploadSpan{
+  font-size: 16px;
+  color: #303133;
 }
 </style>
 
