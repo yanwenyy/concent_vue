@@ -269,11 +269,11 @@
         layout="total, sizes, prev, pager, next, jumper"
       ></el-pagination>
 </div>
-
+<div   class="mydialog">
     <el-dialog title="资审结果登记查看" :visible.sync="dialogResult"
-               width="300">
-      <el-form :model="resultform.verifySection">
-        <el-form-item label="资格预审结果" :label-width="formLabelWidth"  prop="verifyResult">
+             >
+      <el-form :model="resultform.verifySection" class="queryForm">
+        <el-form-item label="资格预审结果"   prop="verifyResult">
          <el-switch
            disabled
            active-text="通过"
@@ -283,7 +283,7 @@
          >
             </el-switch>
         </el-form-item>
-        <el-form-item label="通过时间" :label-width="formLabelWidth" prop="verifyResultTime">
+        <el-form-item label="通过时间"  prop="verifyResultTime">
           <el-date-picker
             disabled
             value-format="timestamp"
@@ -296,7 +296,6 @@
       </el-form>
       <div>
       <el-table
-        height="200"
         :data="resultform.commonFilesList"
         :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
         align="center"
@@ -342,6 +341,7 @@
         <el-button type="primary" @click="saveVerifyResult">确 定</el-button>
       </div>
     </el-dialog>
+    </div>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
   </div>
 </template>
@@ -615,7 +615,7 @@
   height: auto;
   line-height: inherit;
 }
->>>.el-form-item {
+>.el-form-item {
   width: auto;
   margin-bottom: 5px !important;
   display: inline-block;
@@ -631,15 +631,28 @@
 .el-table__row {
   cursor: pointer;
 }
->>>.el-dialog{
+.mydialog .el-dialog{
   width: 70%!important;
   /* overflow: auto; */
 }
->>>.el-dialog__body{
+.mydialog >>>.el-dialog__body{
   height: 500px;
   overflow: auto;
 }
 >>>.el-form-item__label{
   width: auto;
+}
+>>>.el-dialog__body{
+  padding-top: 0px;
+}
+.mydialog >>>.el-form-item {
+  width: auto;
+  margin-bottom: 5px !important;
+  display: inline-block;
+  width: 32.5% !important;
+}
+.mydialog >>>.el-form-item__label:before {
+  position: initial;
+  left: -10px;
 }
 </style>

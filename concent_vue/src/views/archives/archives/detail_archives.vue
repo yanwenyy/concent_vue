@@ -93,10 +93,7 @@
             </el-form-item>
             </div>
       <div>
-            <el-form-item
-              class="neirong"
-              label="附件:"
-            >
+            <p class="detail-title"><span  class="uploadSpan">附件: </span>
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-upload v-show="p.actpoint != 'look'"
                 class="upload-demo detailUpload"
@@ -108,7 +105,7 @@
               >
               <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
-            </el-form-item>
+            </p>
             </div>
     <div>
       <el-table
@@ -144,7 +141,6 @@
 
                 <el-table-column
                   :resizable="false"
-                  fixed="right"
                   label="操作"
                   show-overflow-tooltip
                   v-if="p.actpoint!=='look'"
@@ -547,5 +543,12 @@ export default {
 }
 >>>.el-upload-list{
   display: none;
+}
+>>>.el-dialog__body{
+  padding-top: 0px;
+}
+.uploadSpan{
+  font-size: 16px;
+  color: #303133;
 }
 </style>
