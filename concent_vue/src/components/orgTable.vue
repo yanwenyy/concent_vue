@@ -42,6 +42,7 @@
 
                 <el-table-column
                   align="center"
+                  prop="isDisplay"
                   :resizable="false"
                   fixed="right"
                   label="操作"
@@ -49,9 +50,14 @@
                   width="200"
                 >
                   <template slot-scope="scope">
-                    <el-button :underline="false"
-                             @click="handleChange(scope.row,scope.$index)"
-                             type="warning">可见切换</el-button>
+                   <el-switch
+                     v-model="scope.row.isDisplay"
+                     @click="handleChange(scope.row,scope.$index)"
+                     active-value="可见"
+                     inactive-value="不可见"
+                   >
+                </el-switch>
+
                   </template>
                 </el-table-column>
               </el-table>
@@ -445,6 +451,7 @@
       },
 
       handleChange(file, index) {
+
         var isDisplay ='0';
         var result = "可见";
         if(file.isDisplay==='可见')
