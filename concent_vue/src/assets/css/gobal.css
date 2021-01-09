@@ -614,7 +614,7 @@ pre {
   height: 30px;
 }
 .tooltip-class{
-  border:1px solid #ddd!important;
+  /*border:1px solid #ddd!important;*/
 }
 .upload-progress{
   display: inline-block;
