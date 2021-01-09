@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div :max-height="$tableHeight"
+       :height="$tableHeight">
         <el-card class="box-card">
       <div slot="header"
            class="clearfix">
