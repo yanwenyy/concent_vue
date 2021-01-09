@@ -177,7 +177,10 @@
                 clearable
                 placeholder="投资额（万元）:"
                 v-model="detailform.topInforBO.topInfor.investment"
-              />
+              >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+                </el-input>
             </el-form-item>
 
             <el-form-item label="资金来源:">

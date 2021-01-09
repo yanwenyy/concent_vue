@@ -498,6 +498,7 @@ pre {
 .detailBox{
   overflow: scroll;
   max-height:calc(100vh - 195px)!important;
+  min-height:calc(100vh - 195px)!important;
   padding:0 100px;
 }
 .detailBoxBG{

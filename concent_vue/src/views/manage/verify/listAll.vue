@@ -167,10 +167,8 @@
             placeholder="选择日期">
           </el-date-picker>
         </el-form-item>
-        <el-form-item
-          class="neirong"
-          label="附件:"
-        >
+        <div
+        ><p class="detail-title"><span  class="uploadSpan">附件: </span>
           <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
          <el-upload
            class="upload-demo detailUpload"
@@ -182,7 +180,8 @@
          >
               <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
-        </el-form-item>
+        </p>
+        </div>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogResult = false">取 消</el-button>
@@ -518,7 +517,14 @@ export default {
 {
   padding:5px 0px;
 }
-.gcform >>>.el-form-item {
+>>>.el-form-item {
   margin-bottom: 5px !important;
+}
+>>>.el-dialog__body{
+  padding-top: 0px;
+}
+.uploadSpan{
+  font-size: 16px;
+  color: #303133;
 }
 </style>

@@ -81,11 +81,30 @@
         </el-form-item>
 
         <el-form-item label="参与投标单位:" class="list-item">
-          <el-input v-model="detailForm.bidInfoSection.participatingUnitsName" placeholder="参与投标单位" clearable :disabled="type === 'look'"></el-input>
+          <el-input
+          v-model="detailForm.bidInfoSection.participatingUnitsName"
+          placeholder="参与投标单位"
+          clearable :disabled="type === 'look'">
+            <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="selectPosition()"
+          ></el-button>
+          </el-input>
         </el-form-item>
 
         <el-form-item label="编标拟配合单位:" class="list-item">
-          <el-input v-model="detailForm.bidInfoSection.orgName" placeholder="编标拟配合单位" clearable :disabled="type === 'look'"></el-input>
+          <el-input
+          v-model="detailForm.bidInfoSection.orgName"
+          placeholder="编标拟配合单位"
+          clearable
+          :disabled="type === 'look'">
+            <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="selectPosition()"
+          ></el-button>
+          </el-input>
         </el-form-item>
         <br>
 
@@ -441,8 +460,9 @@ import { isMoney } from '@/utils/validate'
     //获取项目地点的值
     getPositionTree(data) {
       this.treeStatas = false;
-      this.searchform.openBidPlaceId = data.fullDetailCode;
-      this.searchform.openBidPlaceName = data.fullDetailName;
+      console.log(data)
+      this.detailForm.bidInfoSection.openBidPlaceId = data.fullDetailCode;
+      this.detailForm.bidInfoSection.openBidPlaceName = data.fullDetailName;
       this.key = this.key + 1;
     },
     getName(id, list, name) {

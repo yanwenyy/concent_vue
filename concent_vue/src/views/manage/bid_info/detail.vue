@@ -218,7 +218,10 @@
                 clearable
                 placeholder="投资额（万元）:"
                 v-model="detailform.topInforBO.topInfor.investment"
-              />
+              >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+                </el-input>
             </el-form-item>
 
             <el-form-item label="资金来源:"
@@ -393,14 +396,23 @@
             <el-form-item label="内部联合体单位:"
               v-if="detailform.bidInfo.isCoalitionBid==='0'"
               class="formItem1" >
-              <el-select
+                <el-select
+                :disabled="p.actpoint === 'look'"
+                filterable
+                multiple
+                clearable
+                 @change="getMultipleName(detailform.nblht,amountSource,'innerOrgId','innerOrgName')"
+                placeholder="请选择"
+                v-model="detailform.nblht"
+              >
+              <!-- <el-select
                 :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
                 multiple
                 placeholder="请选择"
                 v-model="detailform.value1"
-              >
+              > -->
                 <el-option
                   :key="index"
                   :label="item.detailName"
@@ -938,6 +950,7 @@ export default {
         },
          bidInfo_01:[],
          value1: [],
+         nblht:[],//内部联合体单位列表
       },
 
       bidInfoSection:[],
@@ -988,6 +1001,19 @@ export default {
 
   },
   methods: {
+    //复选下拉框框获取name
+    getMultipleName(valueList,list,id,name){
+      var _id=[],_name=[];
+      list.forEach((item)=>{
+        if(valueList.indexOf(item.id)!=-1){
+        _id.push(item.id);
+        _name.push(item.detailName)
+      }
+    });
+      this.detailform.bidInfo[id]=_id.join(",");
+      this.detailform.bidInfo[name]=_name.join(",");
+      console.log(this.detailform.bidInfo[id])
+    },
 // 上传删除
         handleRemove1(file,index) {
       this.$http
@@ -1227,7 +1253,12 @@ export default {
     getDetail() {
 
         console.log('==>',this.p.instid)
-        var q=this.p.actpoint === "edit"||(this.p.actpoint === "look"&&this.p.flowStatus!=null)?{id:this.id}:{id:this.id};
+        if(this.p.actpoint === "searchLook"){
+          var q={id:this.id};
+        }else{
+          var q=this.p.actpoint === "edit"||(this.p.actpoint === "look"&&this.p.flowStatus!=null)?{id:this.id}:{topInfoOrgId:this.id};
+        }
+
 
         this.$http
           .post("/api/contract/topInfo/BidInfo/detail/entityInfo", q)
@@ -1242,7 +1273,9 @@ export default {
               topInforBO: this.nullToStr(datas.topInforBO),
               bidInfo_01:datas.bidInfo_01,
               value1:[],
+              nblht:[],
             }
+            // this.detailform.nblht=datas.bidInfo.innerOrgId&&datas.contractInfo.innerOrgId.split(",");
              datas.bidInfoInnerOrgList.forEach((item)=>{
               this.detailform.value1.push(item.innerOrgId)
             });
