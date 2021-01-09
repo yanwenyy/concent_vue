@@ -141,7 +141,6 @@
 
                 <el-table-column
                   :resizable="false"
-                  fixed="right"
                   label="操作"
                   show-overflow-tooltip
                   v-if="p.actpoint!=='look'"

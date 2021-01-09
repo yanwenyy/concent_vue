@@ -230,7 +230,6 @@
 
                 <el-table-column
                   :resizable="false"
-                  fixed="right"
                   label="操作"
                   show-overflow-tooltip
                   :width="80"
