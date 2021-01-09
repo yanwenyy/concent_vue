@@ -351,16 +351,19 @@
             prop="topInfor.investment"
             :rules="rules.contractAmount"
           >
-            <el-input
-              :disabled="p.actpoint === 'look'"
-              clearable
-              placeholder=""
-              v-model="detailform.topInfor.investment"
-              @input="detailform.topInfor.investment>maxMoney?detailform.topInfor.isMajorProject='0':detailform.topInfor.isMajorProject='1'"
-            >
-              <template slot="prepend">¥</template>
-              <template slot="append">(万元)</template>
-          </el-input>
+            <el-tooltip popper-class="tooltip-class" :content="String(detailform.topInfor.investment)" placement="bottom" effect="light">
+              <el-input
+                :disabled="p.actpoint === 'look'"
+                clearable
+                placeholder=""
+                v-model="detailform.topInfor.investment"
+                @input="detailform.topInfor.investment>maxMoney?detailform.topInfor.isMajorProject='0':detailform.topInfor.isMajorProject='1'"
+              >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-tooltip>
+
           </el-form-item>
           <el-form-item label="资金来源:" prop="value1"  :rules="{
                 required: true,
@@ -628,21 +631,23 @@
               :resizable="false"
               label="项目规模(万元)"
               prop="contractAmount"
-              show-overflow-tooltip
               align="center"
               width="350"
             >
               <template slot-scope="scope">
                 <el-form-item class="tabelForm" :prop="'topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
                   <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.contractAmount"
-                  >
-                    <template slot="prepend">¥</template>
-                    <template slot="append">(万元)</template>
-                  </el-input>
+                  <el-tooltip popper-class="tooltip-class" :content="String(scope.row.contractAmount)" placement="bottom" effect="light">
+                    <el-input
+                      clearable
+                      :disabled="p.actpoint === 'look'"
+                      v-model="scope.row.contractAmount"
+                    >
+                      <template slot="prepend">¥</template>
+                      <template slot="append">(万元)</template>
+                    </el-input>
+                  </el-tooltip>
+
                 </el-form-item>
                 <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
               </template>
@@ -751,19 +756,21 @@
                 align="center"
                 prop="projectScale"
                 width="350"
-                show-overflow-tooltip
               >
                 <template slot-scope="scope">
                   <el-form-item class="tabelForm" :prop="'topInfoSectionList.' + scope.$index + '.projectScale'" :rules='rules.contractAmount'>
                     <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                    <el-input
-                      v-model="scope.row.projectScale"
-                      clearable
-                      :disabled="p.actpoint === 'look'"
-                    >
-                      <template slot="prepend">¥</template>
-                      <template slot="append">(万元)</template>
-                    </el-input>
+                    <el-tooltip popper-class="tooltip-class" :content="String(scope.row.projectScale)" placement="bottom" effect="light">
+                      <el-input
+                        v-model="scope.row.projectScale"
+                        clearable
+                        :disabled="p.actpoint === 'look'"
+                      >
+                        <template slot="prepend">¥</template>
+                        <template slot="append">(万元)</template>
+                      </el-input>
+                    </el-tooltip>
+
                   </el-form-item>
                   <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                 </template>

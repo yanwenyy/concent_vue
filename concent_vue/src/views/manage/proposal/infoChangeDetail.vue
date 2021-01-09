@@ -127,10 +127,13 @@
                 trigger: 'blur',
               }"
               >
-                <el-input v-model="detailFormBefore.topInfor.investment" disabled>
-                  <template slot="prepend">¥</template>
-                  <template slot="append">(万元)</template>
-                </el-input>
+                <el-tooltip popper-class="tooltip-class" :content="String(detailFormBefore.topInfor.investment)" placement="bottom" effect="light">
+                  <el-input v-model="detailFormBefore.topInfor.investment" disabled>
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-tooltip>
+
               </el-form-item>
 
               <el-form-item label="资金来源:" prop="capitalId">
@@ -289,19 +292,21 @@
                   :resizable="false"
                   label="项目规模"
                   prop="contractAmount"
-                  show-overflow-tooltip
                   align="center"
                 >
                   <template slot-scope="scope">
-                    <el-input
-                      class="listInput"
-                      clearable
-                      :disabled="true"
-                      v-model="scope.row.contractAmount"
-                    >
-                     <template slot="prepend">¥</template>
-                    <template slot="append">(万元)</template>
-                    </el-input>
+                    <el-tooltip popper-class="tooltip-class" :content="String(scope.row.contractAmount)" placement="bottom" effect="light">
+                      <el-input
+                        class="listInput"
+                        clearable
+                        :disabled="true"
+                        v-model="scope.row.contractAmount"
+                      >
+                        <template slot="prepend">¥</template>
+                        <template slot="append">(万元)</template>
+                      </el-input>
+                    </el-tooltip>
+
                     <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                   </template>
                 </el-table-column>
@@ -369,18 +374,20 @@
                   align="center"
                   width="350"
                   prop="contractAmount"
-                  show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <el-input
-                      @input="scope.row.projectScale=getMoney(scope.row.projectScale)"
-                      clearable
-                      :disabled="true"
-                      v-model="scope.row.projectScale"
-                    >
-                     <template slot="prepend">¥</template>
-                    <template slot="append">(万元)</template>
-                    </el-input>
+                    <el-tooltip popper-class="tooltip-class" :content="String(scope.row.projectScale)" placement="bottom" effect="light">
+                      <el-input
+                        @input="scope.row.projectScale=getMoney(scope.row.projectScale)"
+                        clearable
+                        :disabled="true"
+                        v-model="scope.row.projectScale"
+                      >
+                        <template slot="prepend">¥</template>
+                        <template slot="append">(万元)</template>
+                      </el-input>
+                    </el-tooltip>
+
                     <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                   </template>
                 </el-table-column>
@@ -746,16 +753,19 @@
                 prop="topInfor.investment"
                 :rules="rules.contractAmount"
               >
-                <el-input
-                  :disabled="p.actpoint === 'look'"
-                  clearable
-                  placeholder=""
+                <el-tooltip popper-class="tooltip-class" :content="String(detailform.topInfor.investment)" placement="bottom" effect="light">
+                  <el-input
+                    :disabled="p.actpoint === 'look'"
+                    clearable
+                    placeholder=""
 
-                  v-model="detailform.topInfor.investment"
-                >
-                <template slot="prepend">¥</template>
-                <template slot="append">(万元)</template>
-                </el-input>
+                    v-model="detailform.topInfor.investment"
+                  >
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-tooltip>
+
               </el-form-item>
 
               <el-form-item label="资金来源:" prop="value1"  :rules="{
@@ -1029,21 +1039,23 @@
                   :resizable="false"
                   label="项目规模(万元)"
                   prop="contractAmount"
-                  show-overflow-tooltip
                   align="center"
                   width="350"
                 >
                   <template slot-scope="scope">
                     <el-form-item class="tabelForm" :prop="'topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                      <el-input
-                        clearable
-                        :disabled="p.actpoint === 'look'"
-                        v-model="scope.row.contractAmount"
-                      >
-                    <template slot="prepend">¥</template>
-                    <template slot="append">(万元)</template>
-                      </el-input>
+                      <el-tooltip popper-class="tooltip-class" :content="String(scope.row.contractAmount)" placement="bottom" effect="light">
+                        <el-input
+                          clearable
+                          :disabled="p.actpoint === 'look'"
+                          v-model="scope.row.contractAmount"
+                        >
+                          <template slot="prepend">¥</template>
+                          <template slot="append">(万元)</template>
+                        </el-input>
+                      </el-tooltip>
+
                     </el-form-item>
                     <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                   </template>
@@ -1157,19 +1169,21 @@
                   align="center"
                   prop="projectScale"
                   width="350"
-                  show-overflow-tooltip
                 >
                   <template slot-scope="scope">
                     <el-form-item class="tabelForm" :prop="'topInfoSectionList.' + scope.$index + '.projectScale'" :rules='rules.contractAmount'>
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                      <el-input
-                        v-model="scope.row.projectScale"
-                        clearable
-                        :disabled="p.actpoint === 'look'"
-                      >
-                    <template slot="prepend">¥</template>
-                    <template slot="append">(万元)</template>
-                      </el-input>
+                      <el-tooltip popper-class="tooltip-class" :content="String(scope.row.projectScale)" placement="bottom" effect="light">
+                        <el-input
+                          v-model="scope.row.projectScale"
+                          clearable
+                          :disabled="p.actpoint === 'look'"
+                        >
+                          <template slot="prepend">¥</template>
+                          <template slot="append">(万元)</template>
+                        </el-input>
+                      </el-tooltip>
+
                     </el-form-item>
                     <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                   </template>

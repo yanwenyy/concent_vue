@@ -611,7 +611,14 @@ pre {
 }
 .multiple-sel .el-select__tags{
   overflow: auto;
-  height: 95%;
+  height: 30px;
+}
+.tooltip-class{
+  border:1px solid #ddd!important;
+}
+.upload-progress{
+  display: inline-block;
+  width: 300px;
 }
 /**/
 
