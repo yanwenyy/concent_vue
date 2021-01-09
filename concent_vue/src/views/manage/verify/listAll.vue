@@ -406,10 +406,10 @@ export default {
       //   query: {p: this.$utils.encrypt(JSON.stringify(p))}
       // })
       console.log(JSON.stringify(row));
-      if (row.uuid === null) {
-        this.$message.error("当前登记的项目信息未添加的资审信息！");
-        return;
-      }
+      // if (row.uuid === null) {
+      //   this.$message.error("当前登记的项目信息未添加的资审信息！");
+      //   return;
+      // }
       //alert(JSON.stringify(this.multipleSelection[0]));
       let p = {actpoint: 'look', instid: row.inforid, topinfoid: row.tiouuid}
       //alert(JSON.stringify(p));
