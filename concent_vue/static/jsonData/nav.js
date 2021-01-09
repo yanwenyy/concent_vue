@@ -793,7 +793,7 @@ export default {
                 {
                   "name": "项目信息移动",
                   "path": "/statistics/project/hb",
-                  "component": "/statistics/project/hb",
+                  "component": "/statistics/project/hb1",
                   "iconCls": "el-icon-files",
                   "menushow": true,
                   "leaf": true,
@@ -802,7 +802,7 @@ export default {
                 {
                   "name": "项目信息查询",
                   "path": "/statistics/project/hb",
-                  "component": "/statistics/project/hb",
+                  "component": "/statistics/project/hb2",
                   "iconCls": "el-icon-search",
                   "menushow": true,
                   "leaf": true,
@@ -950,7 +950,7 @@ export default {
                     {
                       "name": "统计项管理",
                       "path": "/statistics/bp/list",
-                      "component": "/statistics/plan/01-1",
+                      "component": "/statistics/bp/list",
                       "iconCls": "el-icon-notebook-2",
                       "menushow": true,
                       "leaf": true,
@@ -959,7 +959,7 @@ export default {
                     {
                       "name": "本单位统计项",
                       "path": "/statistics/bp/list_Company",
-                      "component": "/statistics/plan/02-1",
+                      "component": "/statistics//list_Company",
                       "iconCls": "el-icon-receiving",
                       "menushow": true,
                       "leaf": true,

@@ -109,10 +109,13 @@
 
                 </el-table-column>
 
-                <el-table-column :resizable="false" label="大小" prop="fileSize" show-overflow-tooltip>
+                <el-table-column :resizable="false" label="大小" prop="fileSize" width="120" show-overflow-tooltip>
+                              <template slot-scope="scope">
+                                {{(scope.row.fileSize/1024).toFixed(2)}}
+                              </template>
 
                 </el-table-column>
-                <el-table-column :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+                <el-table-column :resizable="false" label="类型" prop="fileType" width="80" show-overflow-tooltip>
 
                 </el-table-column>
 

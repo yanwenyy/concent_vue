@@ -48,7 +48,7 @@
           <div>
             <el-form-item label="项目板块:" class="inline-formitem">
               <template>
-                <el-radio-group class="detail-radio-group" disabled v-model="detailformBefore.topInfor.moduleId">
+                <el-radio-group class="detail-radio-group" disabled v-model="detailformBefore.topInfor.moduleId" @change="getName(detailformBefore.topInfor.moduleId, projectPlate, 'moduleName')">
                   <el-radio v-for="(item, index) in projectPlate" :label="item.id" :key="index">{{item.detailName}}</el-radio>
                 </el-radio-group>
               </template>
@@ -478,7 +478,6 @@
          >
           <el-switch
             disabled
-            active-text="是"
             v-model="detailformBefore.verify.isCoalitionBid"
             active-value="是"
             inactive-value="否"
@@ -553,6 +552,9 @@
                             </el-table-column>
 
                             <el-table-column :resizable="false" label="大小" :width="120" prop="fileSize" show-overflow-tooltip>
+                              <template slot-scope="scope">
+                                {{(scope.row.fileSize/1024).toFixed(2)}}
+                              </template>
 
                             </el-table-column>
                             <el-table-column :resizable="false" label="类型" :width="80" prop="fileType" show-overflow-tooltip>
@@ -1152,7 +1154,6 @@
                 }"
          >
          <el-switch
-           active-text="是"
            v-model="detailformAfter.verify.isCoalitionBid"
            active-value="是"
            inactive-value="否"
@@ -1233,7 +1234,9 @@
                             </el-table-column>
 
                             <el-table-column :resizable="false" label="大小" :width="120" prop="fileSize" show-overflow-tooltip>
-
+                              <template slot-scope="scope">
+                                {{(scope.row.fileSize/1024).toFixed(2)}}
+                              </template>
                             </el-table-column>
                             <el-table-column :resizable="false" label="类型" :width="80" prop="fileType" show-overflow-tooltip>
 
@@ -1540,9 +1543,13 @@ export default {
     yesOrNo() {
       return this.$store.state.yesOrNo
     },
+    projectPlate(){
+      return this.$store.state.projectPlate;
+    },
 
   },
   methods: {
+
     selectOrg(){
       this.treeOrgStatas = true;
       console.log(this.positionIndex);
@@ -1940,10 +1947,10 @@ export default {
     text-align: right;
     top: 0%;
   }
-  >>>.el-form-item {
-    /**/
+  >.el-form-item,>>>.formItem{
+
     display: inline-block;
-    width: 32.5%;
+    width: 32.5%!important;
   }
   .detailformfooter1 {
     margin-top: 5px;

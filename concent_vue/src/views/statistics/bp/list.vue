@@ -1,183 +1,129 @@
 <template>
   <div>
-    <div style="width: 100%; overflow: hidden">
-      <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary">新增</el-button>
-        <el-button @click="editItem" plain type="primary">修改</el-button>
-        <el-button @click="remove" type="primary" plain>删除</el-button>
-        <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
-      </el-button-group>
-    </div>
-    <div style="margin-top: 20px">
-      <el-table
-        :data="page.records"
-        :header-cell-style="{
-          'text-align': 'center',
-          'background-color': 'whitesmoke',
-        }"
-        @row-click="rowshow"
-        @selection-change="handleSelectionChange"
-        border
-        highlight-current-row
-        ref="table"
-        stripe
-        style="width: 100%"
-        tooltip-effect="dark"
-      >
-        <el-table-column
-          :width="50"
-          align="center"
-          show-overflow-tooltip
-          type="selection"
-        ></el-table-column>
-        <el-table-column
-          :width="70"
-          align="center"
-          label="序号"
-          show-overflow-tooltip
-          type="index"
-        >
 
-        </el-table-column>
+   <el-container style="height: 500px; border: 1px solid #eee">
+  <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+    <el-tree
+      :data="data"
+      show-checkbox
+      node-key="id"
+      :default-expanded-keys="[2, 3]"
+      :default-checked-keys="[5]"
+      :props="defaultProps">
+    </el-tree>
+  </el-aside>
 
-        <el-table-column
-          :width="300"
-          label="统计名称"
-          prop="vName"
-          show-overflow-tooltip
-        >
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="计量单位"
-          prop="vJldw"
-          show-overflow-tooltip
-        >
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="工程（行业）类别"
-          prop="vProjecttypeName"
-          show-overflow-tooltip
-        >
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="使用设置"
-          prop="topInfor.noticeTypeName"
-          show-overflow-tooltip
-        >
-        </el-table-column>
-        <el-table-column
-          :width="180"
-          align="center"
-          label="是否填报"
-          prop="verify.saleTime"
-          show-overflow-tooltip
-        >
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="是否隐藏"
-          prop="verify.uuid"
-          filter-multiple="true"
-          show-overflow-tooltip
-        >
-        </el-table-column>
+  <el-container>
+    <el-header style="text-align: right; font-size: 12px">
 
+        <div style="width: 100%; overflow: hidden;margin-top: 10px">
+          <el-button-group style="float: left">
+            <el-button @click="add" class="detailbutton" >新增</el-button>
+            <el-button @click="editItem" class="detailbutton" >修改</el-button>
+            <el-button @click="remove" class="detailbutton"  >删除</el-button>
+            <el-button @click="searchformReset" class="detailbutton" >刷新</el-button>
+          </el-button-group>
+        </div>
+    </el-header>
+
+    <el-main>
+      <el-table :data="tableData">
+        <el-table-column prop="date" label="序号" width="140">
+        </el-table-column>
+        <el-table-column prop="name" label="统计名称" width="120">
+        </el-table-column>
+        <el-table-column prop="address" label="计量单位">
+        </el-table-column>
+      <el-table-column prop="address" label="工程（行业）类别">
+        </el-table-column>
+      <el-table-column prop="address" label="使用设置">
+        </el-table-column>
+      <el-table-column prop="address" label="是否填报">
+        </el-table-column>
+      <el-table-column prop="address" label="是否隐藏">
+        </el-table-column>
       </el-table>
-      <el-pagination
-        :current-page="page.current"
-        :page-size="page.size"
-        :page-sizes="[10, 50, 100]"
-        :total="page.total"
-        @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"
-        layout="total, sizes, prev, pager, next, jumper"
-      ></el-pagination>
-    </div>
-    <el-dialog title="新增统计项" :visible.sync="dialogResult"
-    width="30%">
-      <el-form :model="detailform">
-        <el-form-item label="统计名称" :label-width="formLabelWidth" prop="verifyResult">
-          <el-input
-            disabled
-            placeholder=""
-            size="mini"
-            v-model="detailform"
-          />
-        </el-form-item>
-        <el-form-item label="计量单位" :label-width="formLabelWidth" prop="verifyResult">
-          <el-select
-            :disabled="p.actpoint === 'look'"
-            filterable
-            placeholder="请选择"
-            size="mini"
-            v-model="detailform.verify.bidModeName"
-          >
-            <el-option
-              :key="index"
-              :label="item.detailName"
-              :value="item.id"
-              v-for="(item, index) in bidType"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-         <el-form-item label="工程（行业）类别" :label-width="formLabelWidth" prop="verifyResult">
-         <el-input
-           disabled
-           placeholder=""
-           size="mini"
-           v-model="detailform.topInfor.bidAgentCompany"
-         />
-        </el-form-item>
-        <el-form-item label="使用设置" :label-width="formLabelWidth" prop="verifyResult">
-          <el-radio v-model="resultform.verifyResult" label="0" border>全部</el-radio>
-          <el-radio v-model="resultform.verifyResult" label="1" border>仅年报</el-radio>
-          <el-radio v-model="resultform.verifyResult" label="2" border>仅月报</el-radio>
-        </el-form-item>
-        <el-form-item label="是否填报" :label-width="formLabelWidth" prop="verifyResult">
-          <el-radio v-model="resultform.verifyResult" label="1" border>是</el-radio>
-          <el-radio v-model="resultform.verifyResult" label="0" border>否</el-radio>
-        </el-form-item>
-         <el-form-item label="是否隐藏" :label-width="formLabelWidth" prop="verifyResult">
-          <el-radio v-model="resultform.verifyResult" label="1" border>是</el-radio>
-          <el-radio v-model="resultform.verifyResult" label="0" border>否</el-radio>
-        </el-form-item>
-        <el-form-item label="通过时间" :label-width="formLabelWidth" prop="verifyResultTime">
-          <el-date-picker
-            v-model="resultform.verifyResultTime"
-            type="date"
-            placeholder="选择日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item
-          class="neirong"
-          label="附件（最大10MB）:"
-          style="width: 33%"
-        >
-          <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
-         <el-upload
-           class="upload-demo detailUpload"
-           :action="'/api/contract/topInfo/CommonFiles/verify/02/uploadFile'"
-           :on-success="handleChange"
-           :on-error="handleChange"
-           :on-remove="handleRemove"
-           multiple
-         >
-              <el-button size="small" type="primary">点击上传</el-button>
-            </el-upload>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogResult = false">取 消</el-button>
-        <el-button type="primary" @click="saveVerifyResult">确 定</el-button>
-      </div>
-    </el-dialog>
+    </el-main>
+  </el-container>
+</el-container>
+<!--    <el-dialog title="新增统计项" :visible.sync="dialogResult"-->
+<!--    width="30%">-->
+<!--      <el-form :model="detailform">-->
+<!--        <el-form-item label="统计名称" :label-width="formLabelWidth" prop="verifyResult">-->
+<!--          <el-input-->
+<!--            disabled-->
+<!--            placeholder=""-->
+<!--            size="mini"-->
+<!--            v-model="detailform"-->
+<!--          />-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="计量单位" :label-width="formLabelWidth" prop="verifyResult">-->
+<!--          <el-select-->
+<!--            :disabled="p.actpoint === 'look'"-->
+<!--            filterable-->
+<!--            placeholder="请选择"-->
+<!--            size="mini"-->
+<!--            v-model="detailform.verify.bidModeName"-->
+<!--          >-->
+<!--            <el-option-->
+<!--              :key="index"-->
+<!--              :label="item.detailName"-->
+<!--              :value="item.id"-->
+<!--              v-for="(item, index) in bidType"-->
+<!--            ></el-option>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
+<!--         <el-form-item label="工程（行业）类别" :label-width="formLabelWidth" prop="verifyResult">-->
+<!--         <el-input-->
+<!--           disabled-->
+<!--           placeholder=""-->
+<!--           size="mini"-->
+<!--           v-model="detailform.topInfor.bidAgentCompany"-->
+<!--         />-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="使用设置" :label-width="formLabelWidth" prop="verifyResult">-->
+<!--          <el-radio v-model="resultform.verifyResult" label="0" border>全部</el-radio>-->
+<!--          <el-radio v-model="resultform.verifyResult" label="1" border>仅年报</el-radio>-->
+<!--          <el-radio v-model="resultform.verifyResult" label="2" border>仅月报</el-radio>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="是否填报" :label-width="formLabelWidth" prop="verifyResult">-->
+<!--          <el-radio v-model="resultform.verifyResult" label="1" border>是</el-radio>-->
+<!--          <el-radio v-model="resultform.verifyResult" label="0" border>否</el-radio>-->
+<!--        </el-form-item>-->
+<!--         <el-form-item label="是否隐藏" :label-width="formLabelWidth" prop="verifyResult">-->
+<!--          <el-radio v-model="resultform.verifyResult" label="1" border>是</el-radio>-->
+<!--          <el-radio v-model="resultform.verifyResult" label="0" border>否</el-radio>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="通过时间" :label-width="formLabelWidth" prop="verifyResultTime">-->
+<!--          <el-date-picker-->
+<!--            v-model="resultform.verifyResultTime"-->
+<!--            type="date"-->
+<!--            placeholder="选择日期">-->
+<!--          </el-date-picker>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item-->
+<!--          class="neirong"-->
+<!--          label="附件（最大10MB）:"-->
+<!--          style="width: 33%"-->
+<!--        >-->
+<!--          &lt;!&ndash; <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> &ndash;&gt;-->
+<!--         <el-upload-->
+<!--           class="upload-demo detailUpload"-->
+<!--           :action="'/api/contract/topInfo/CommonFiles/verify/02/uploadFile'"-->
+<!--           :on-success="handleChange"-->
+<!--           :on-error="handleChange"-->
+<!--           :on-remove="handleRemove"-->
+<!--           multiple-->
+<!--         >-->
+<!--              <el-button size="small" type="primary">点击上传</el-button>-->
+<!--            </el-upload>-->
+<!--        </el-form-item>-->
+<!--      </el-form>-->
+<!--      <div slot="footer" class="dialog-footer">-->
+<!--        <el-button @click="dialogResult = false">取 消</el-button>-->
+<!--        <el-button type="primary" @click="saveVerifyResult">确 定</el-button>-->
+<!--      </div>-->
+<!--    </el-dialog>-->
   </div>
 
 </template>
@@ -211,7 +157,46 @@ export default {
         verifyResultTime: '2020-12-18',
         verifyResultfile: ''
       },
-      formLabelWidth: '120px'
+      formLabelWidth: '120px',
+      data: [{
+        id: 1,
+        label: '一级 1',
+        children: [{
+          id: 4,
+          label: '二级 1-1',
+          children: [{
+            id: 9,
+            label: '三级 1-1-1'
+          }, {
+            id: 10,
+            label: '三级 1-1-2'
+          }]
+        }]
+      }, {
+        id: 2,
+        label: '一级 2',
+        children: [{
+          id: 5,
+          label: '二级 2-1'
+        }, {
+          id: 6,
+          label: '二级 2-2'
+        }]
+      }, {
+        id: 3,
+        label: '一级 3',
+        children: [{
+          id: 7,
+          label: '二级 3-1'
+        }, {
+          id: 8,
+          label: '二级 3-2'
+        }]
+      }],
+      defaultProps: {
+        children: 'children',
+        label: 'label'
+      }
 
     }
   },

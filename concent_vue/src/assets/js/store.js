@@ -52,7 +52,7 @@ const state = {
   projectDomainType:[],//工程行业类别
   railwayLine:[],//所属线路
   contractType:[],//合同类型
-  certificationType:[],//项目板块
+  //certificationType:[],//项目板块
   bidMethod:[],//评标办法
 
   optiondata:[],

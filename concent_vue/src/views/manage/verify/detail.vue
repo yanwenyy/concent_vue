@@ -48,7 +48,7 @@
           <div>
             <el-form-item label="项目板块:" class="inline-formitem">
               <template>
-                <el-radio-group class="detail-radio-group" disabled v-model="detailform.topInfor.moduleId">
+                <el-radio-group class="detail-radio-group" disabled v-model="detailform.topInfor.moduleId" @change="getName(detailform.topInfor.moduleId, projectPlate, 'moduleName')">
                   <el-radio v-for="(item, index) in projectPlate" :label="item.id" :key="index">{{item.detailName}}</el-radio>
                 </el-radio-group>
               </template>
@@ -479,7 +479,6 @@
          >
          <el-switch
            :disabled="p.actpoint === 'look'"
-           active-text="是"
            v-model="detailform.verify.isCoalitionBid"
            active-value="是"
            inactive-value="否"
@@ -563,7 +562,9 @@
                 </el-table-column>
 
                 <el-table-column :resizable="false" label="大小" prop="fileSize" width="120" show-overflow-tooltip>
-
+                  <template slot-scope="scope">
+                    {{(scope.row.fileSize/1024).toFixed(2)}}
+                  </template>
                 </el-table-column>
                 <el-table-column :resizable="false" label="类型" prop="fileType" width="80" show-overflow-tooltip>
 
@@ -874,7 +875,16 @@ export default {
 
   },
   methods: {
-
+//获取下拉框id和name的公共方法
+    getName(id, list, name) {
+      if(id){
+        this.$forceUpdate()
+        this.detailform.topInfor[name] = list.find(
+          (item) => item.id == id
+        ).detailName;
+        console.log(this.detailform.topInfor[name]);
+      }
+    },
     back() {
       this.$router.back()
       // this.$router.push({
@@ -1281,6 +1291,7 @@ export default {
           this.detailform = res.data.data
 
           console.log( JSON.stringify(this.detailform.verifySectionList))
+          console.log( JSON.stringify(this.detailform.topInfor))
         })
          //alert(JSON.stringify(this.p))
       // this.detailform.Verify.contactMode = this.p.selectrow.contactMode;
