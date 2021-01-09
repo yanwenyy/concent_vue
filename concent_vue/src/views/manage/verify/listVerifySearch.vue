@@ -269,9 +269,9 @@
         layout="total, sizes, prev, pager, next, jumper"
       ></el-pagination>
 </div>
-
+<div   class="mydialog">
     <el-dialog title="资审结果登记查看" :visible.sync="dialogResult"
-               width="300">
+             >
       <el-form :model="resultform.verifySection">
         <el-form-item label="资格预审结果" :label-width="formLabelWidth"  prop="verifyResult">
          <el-switch
@@ -342,6 +342,7 @@
         <el-button type="primary" @click="saveVerifyResult">确 定</el-button>
       </div>
     </el-dialog>
+    </div>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
   </div>
 </template>
@@ -631,11 +632,11 @@
 .el-table__row {
   cursor: pointer;
 }
->>>.el-dialog{
+.mydialog .el-dialog{
   width: 70%!important;
   /* overflow: auto; */
 }
->>>.el-dialog__body{
+.mydialog >>>.el-dialog__body{
   height: 500px;
   overflow: auto;
 }
