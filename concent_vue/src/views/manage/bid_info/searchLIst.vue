@@ -468,7 +468,7 @@ export default {
     // 查看
     rowshow(row) {
       var id=row.flowStatus==null?row.uuid:row.uuid;
-      let p = { actpoint: "look", instid: id ,flowStatus:row.flowStatus};
+      let p = { actpoint: "searchLook", instid: id ,flowStatus:row.flowStatus};
       this.$router.push({
         path: "./detail/",
         query: { p: this.$utils.encrypt(JSON.stringify(p)) },
