@@ -287,7 +287,7 @@ export default {
                 });
                 this.$refs[formName].resetFields();
                 this.$router.push({
-                  path: "/archives/statistics//list_statistics",
+                  path: "/archives/statistics/list_statistics",
                 });
               }
 
