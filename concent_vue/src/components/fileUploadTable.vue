@@ -245,5 +245,8 @@
 >>>.el-upload-list{
   display: none;
 }
-
+>>>.el-table td, .el-table th
+{
+  padding:5px 0px;
+}
 </style>

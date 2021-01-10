@@ -588,4 +588,8 @@ export default {
   text-align: right;
   top: 0%;
 }
+>>>.el-table td, .el-table th
+{
+  padding:5px 0px;
+}
 </style>

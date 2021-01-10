@@ -367,7 +367,7 @@
               />
             </el-form-item>
             </div>
-      <p style="overflow:hidden;margin-right: 30px"><span style="font-weight: bold">资审信息</span></p>
+       <el-divider content-position="left" class="detailDivider">资审信息</el-divider>
 
         <!-- --------------------------------------------------------------- -->
        <el-form-item

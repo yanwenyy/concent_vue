@@ -20,7 +20,7 @@
               class="gcform"
               ref="detailformBefore"
               style="background: white;width:calc(100% - 4px);">
-              <p style="overflow:hidden;margin-right: 30px"><span style="font-weight: bold">项目前期信息</span></p>
+              <el-divider content-position="left" class="detailDivider">项目前期信息</el-divider>
               <el-form-item  label="项目名称:"
                              :rules="{
                 required: true,
@@ -369,7 +369,7 @@
               />
             </el-form-item>
             </div>
-              <p style="overflow:hidden;margin-right: 30px"><span style="font-weight: bold">资审信息</span></p>
+               <el-divider content-position="left" class="detailDivider">资审信息</el-divider>
 
                  <el-form-item
                    label="招标方式:"
@@ -691,7 +691,7 @@
               ref="detailformAfter"
               style="background: white;width:calc(100% - 4px);"
             >
-              <p style="overflow:hidden;margin-right: 30px"><span style="font-weight: bold">项目前期信息</span></p>
+             <el-divider content-position="left" class="detailDivider">项目前期信息</el-divider>
               <el-form-item  label="项目名称:"
                              :rules="{
                 required: true,
@@ -1041,7 +1041,7 @@
             </el-form-item>
             </div>
 
-              <p style="overflow:hidden;margin-right: 30px"><span style="font-weight: bold">资审信息</span></p>
+               <el-divider content-position="left" class="detailDivider">资审信息</el-divider>
 
                  <el-form-item
                    label="招标方式:"
