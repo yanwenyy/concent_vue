@@ -17,7 +17,7 @@
           'text-align': 'center',
           'background-color': 'whitesmoke',
         }"
-        @row-click="rowshow"
+
         @selection-change="handleSelectionChange"
         border
         highlight-current-row
@@ -48,9 +48,8 @@
           prop="inforName"
           show-overflow-tooltip
         >
-
-          <template slot-scope="scope">
-            {{scope.row.inforName}}
+        <template slot-scope="scope">
+            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -259,10 +258,15 @@ export default {
     },
     // 查看
     rowshow(row) {
-      let p = { actpoint: 'look', instid: row.uuid }
+      let p = {
+        actpoint: 'look',
+        instid: row.uuid,
+        topinfoid: row.topInfoOrgId
+      }
+      //alert(JSON.stringify(p));
       this.$router.push({
-        path: './detail/',
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+        path: './detail_Chang/',
+        query: {p: this.$utils.encrypt(JSON.stringify(p))}
       })
     },
     show() {
