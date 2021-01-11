@@ -1502,4 +1502,8 @@ export default {
   text-align: right;
   top: 0%;
 }
+.neirong >>>.el-form-item__error
+{
+  padding-top:0px !important;
+}
 </style>
