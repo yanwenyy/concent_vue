@@ -322,7 +322,10 @@
             prop="bidInfoInnerOrgList.innerOrgName"
               v-if="detailform.bidInfo.isCoalitionBid==='0'"
               class="formItem1" >
-              <el-select
+              <el-input  disabled placeholder="请输入内容" v-model="detailform.bidInfo.innerOrgName" class="input-with-select">
+                <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('内部联合体单位',detailform.bidInfo.innerOrgId)" ></el-button>
+              </el-input>
+              <!-- <el-select
                 disabled
                 filterable
                 clearable
@@ -330,7 +333,7 @@
                 size="mini"
                 v-model="detailform.bidInfoInnerOrgList.innerOrgName"
               >
-              </el-select>
+              </el-select> -->
             </el-form-item>
 <br>
 
@@ -857,13 +860,15 @@
 
     </div>
     <add-bd  v-if="BDCSVisible" ref="infoBD" @refreshBD="getBdInfo"></add-bd>
+    <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
   </div>
 
 </template>
 
 <script>
 import { isMoney } from '@/utils/validate'
- import AddBd from './addBd'
+import CompanyTree from '../contractManager/companyTree'
+import AddBd from './addBd'
 export default {
   data() {
       var validateMoney = (rule, value, callback) => {
@@ -890,6 +895,7 @@ export default {
           topInfoOrg:{}
         },
         bidInfo_02:[],
+        nblht:[],//内部联合体单位列表
       },
       bidInfoSection:[],
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
@@ -912,6 +918,7 @@ export default {
   },
     components: {
     AddBd,
+    CompanyTree
   },
   computed: {
       bidType() {
@@ -929,7 +936,35 @@ export default {
 
   },
   methods: {
+    //打开单位弹框
+    addDw(type,list){
+      this.DwVisible = true;
+      this.$nextTick(() => {
+        this.$refs.infoDw.init(type,list);
+      })
+    },
+        //获取单位的值
+    getDwInfo(data){
+      console.log(data);
+      var list=[];
+      var id=[],name=[];
+      if(data){
+        data.forEach((item)=>{
+          id.push(item.id);
+          name.push(item.detailName);
+          var _v={
+            innerOrgId:item.id,
+            innerOrgName:item.detailName
+          }
+          list.push(_v)
+        });
+        this.detailform.bidInfoInnerOrgList=list;
+        this.detailform.bidInfo.innerOrgId=id.join(",");
+        this.detailform.bidInfo.innerOrgName=name.join(",");
+      }
 
+      this.DwVisible=false;
+    },
     // 上传删除
         handleRemove1(file,index) {
       this.$http
@@ -1205,7 +1240,14 @@ export default {
               topInforBO: this.nullToStr(datas.topInforBO),
               bidInfo_02:datas.bidInfo_02||[],
             }
-            console.log(this.detailform.topInforBO)
+            //内部联合体回显
+            var id=[],name=[];
+            datas.bidInfoInnerOrgList.forEach((item)=>{
+              id.push(item.innerOrgId);
+              name.push(item.innerOrgName);
+            });
+            this.detailform.bidInfo.innerOrgId=id.join(",");
+            this.detailform.bidInfo.innerOrgName=name.join(",");
           });
 
 
