@@ -435,7 +435,7 @@ export default {
       },
 
 
-    // 查看
+    // 查讯
         getData() {
         this.$http
           .post(

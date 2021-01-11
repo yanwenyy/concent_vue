@@ -8,7 +8,7 @@
     <el-card>
       <div class="clearfix el-card__header">
         <span style="color: #2a2a7d;line-height: 32px"><b>标段信息</b></span>
-        <el-button @click="visible = false" style="float: right;">返回</el-button>
+        <el-button @click="close" style="float: right;">返回</el-button>
       </div>
     </el-card>
     <div style="height: calc(100% - 50px);overflow: auto;padding: 0 50px;">
@@ -82,7 +82,7 @@
         </el-form-item>
 
         <el-form-item label="参与投标单位:" class="list-item">
-          <el-input  placeholder="请输入内容" v-model="detailForm.bidInfoSection.participatingUnitsName" class="input-with-select">
+          <el-input  placeholder="请输入内容" v-model="detailForm.bidInfoSection.participatingUnitsName" class="input-with-select" :disabled="type === 'look'">
             <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('参与投标单位',detailForm.bidInfoSection.participatingUnitsId)" ></el-button>
           </el-input>
           <!-- <el-input
@@ -98,7 +98,7 @@
         </el-form-item>
 
         <el-form-item label="编标拟配合单位:" class="list-item">
-           <el-input  placeholder="请输入内容" v-model="detailForm.bidInfoSection.orgName" class="input-with-select">
+           <el-input  placeholder="请输入内容" v-model="detailForm.bidInfoSection.orgName" class="input-with-select" :disabled="type === 'look'">
             <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('编标拟配合单位',detailForm.bidInfoSection.orgId)" ></el-button>
           </el-input>
           <!-- <el-input
@@ -218,11 +218,17 @@
           <!-- <el-input v-model="detailForm.bidInfoSection.biddingPriceLimit" placeholder="投标限价(万元)" clearable></el-input> -->
         </el-form-item>
           <br>
-          <el-form-item label="投资估算:" class="list-item">
-          <el-input v-model="detailForm.bidInfoSection.investmentReckon" placeholder="投资估算" clearable :disabled="type === 'look'"></el-input>
+          <el-form-item label="投资估算:" class="list-item" prop="bidInfoSection.investmentReckon" :rules="rules.contractAmount">
+          <el-input v-model="detailForm.bidInfoSection.investmentReckon" placeholder="投资估算" clearable :disabled="type === 'look'">
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+          </el-input>
         </el-form-item>
-          <el-form-item label="其中建安投资:" class="list-item">
-          <el-input v-model="detailForm.bidInfoSection.jananInvestment" placeholder="其中建安投资" clearable :disabled="type === 'look'"></el-input>
+          <el-form-item label="其中建安投资:" class="list-item" prop="bidInfoSection.jananInvestment" :rules="rules.contractAmount">
+          <el-input v-model="detailForm.bidInfoSection.jananInvestment" placeholder="其中建安投资" clearable :disabled="type === 'look'" >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+          </el-input>
         </el-form-item>
         <div class="detail-title">
           其他投标单位(系统内):
@@ -385,7 +391,7 @@
       </el-form>
     </div>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="visible = false">取消</el-button>
+      <el-button @click="close">取消</el-button>
       <el-button v-if="type!='look'" type="primary" @click="sub()">确定</el-button>
     </div>
 
@@ -471,6 +477,10 @@ import { isMoney } from '@/utils/validate'
       },
     },
     methods: {
+    close(){
+        this.$refs['detailForm'].clearValidate();
+        this.visible = false;
+      },
     //打开单位弹框
     addDw(type,list){
       this.DwVisible = true;
@@ -536,12 +546,14 @@ import { isMoney } from '@/utils/validate'
           if (valid) {
             this.visible = false;
             this.$emit('refreshBD', this.detailForm);
+
           }
         });
 
       },
       // 初始化
       init(list,isBidRates,type,detail,index) {
+
         this.detailForm={
             bidInfoSection:{},
             verifySection:{},
@@ -627,12 +639,12 @@ import { isMoney } from '@/utils/validate'
 >>>.gcform .el-form-item{
   margin-bottom: 0px!important;
 }
->>>.gcform .el-form-item__error{
+/* >>>.gcform .el-form-item__error{
   margin: -25px -7px 0 335px!important;
 }
 .bd-table-item  >>>.el-form-item__error{
   margin: -13px -7px 0 310px!important;
-}
+} */
 >>>.el-form--inline .el-form-item__content{
   width: 100%;
 }
@@ -685,5 +697,20 @@ p{
   position: fixed;
   left: 10%;
   width: 80%;
+}
+/* @media (min-width: 1300px) and (max-width: 1400px) {
+  .xmbk-item .el-form-item__error{
+    top:-20px!important;
+  }
+} */
+.gcform >>>.el-form-item__error {
+    top: -20px!important;
+    right:80px;
+    text-align: right;
+}
+.tabelForm >>>.el-form-item__error {
+    top: -10px!important;
+    right:80px;
+    text-align: right;
 }
 </style>
