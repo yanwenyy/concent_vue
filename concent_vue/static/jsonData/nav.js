@@ -56,6 +56,23 @@ export default {
                       "defaultpage": true
                     },
                     {
+                    "name": "项目信息跟踪",
+                    "path": "/manage/proposal/track_list",
+                    "component": "/manage/proposal/track_list",
+                    "iconCls": "el-icon-aim",
+                    "menushow": true,
+                    "leaf": true,
+                    "defaultpage": true
+                  },
+                  {
+                    "name": "项目信息跟踪详情",
+                    "path": "/manage/proposal/track_detail",
+                    "component": "/manage/proposal/track_detail",
+                    "menushow": false,
+                    "leaf": true,
+                    "defaultpage": true
+                  },
+                    {
                       "name": "项目信息变更",
                       "path": "/manage/proposal/infoChangeList",
                       "component": "/manage/proposal/infoChangeList",

@@ -44,7 +44,7 @@
       </el-form-item>
       <el-form-item label="标段名称:">
         <el-input
-          v-model="searchform.sectionName"
+          v-model="searchform.sectionId"
           placeholder="标段名称"
           clearable
         ></el-input>
@@ -199,11 +199,11 @@
         <el-table-column
           :width="500"
           label="标段名称"
-          prop="sectionName"
+          prop="sectionId"
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
+            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.sectionId}}</span>
           </template>
         </el-table-column>
 

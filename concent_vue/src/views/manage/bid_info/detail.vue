@@ -4,8 +4,8 @@
       <div slot="header" class="clearfix">
       <span class="detailSpan"><b>投标信息维护</b></span>
       <el-button @click="back" class="detailbutton" >返回</el-button>
-      <el-button v-if="p.actpoint != 'look'" type="primary" @click="saveInfo('detailform')" class="detailbutton">保存</el-button>
-      <el-button v-if="p.actpoint != 'look'" @click="saveInfo('detailform')" class="detailbutton">提交</el-button>
+      <el-button v-if="p.actpoint != 'look'||p.actpoint === 'searchLook'" :disabled="p.actpoint === 'look'||p.actpoint === 'searchLook'" type="primary" @click="saveInfo('detailform')" class="detailbutton">保存</el-button>
+      <el-button v-if="p.actpoint != 'look'||p.actpoint === 'searchLook'" @click="saveInfo('detailform')" :disabled="p.actpoint === 'look'||p.actpoint === 'searchLook'" class="detailbutton">提交</el-button>
       </div>
 
       <div class="detailBox">
@@ -358,7 +358,7 @@
               class="formItem"
             >
               <el-select
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'searchLook'"
                 filterable
                 clearable
                 placeholder="请选择"
@@ -384,7 +384,7 @@
               }"
             >
               <el-date-picker
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'searchLook'"
                 filterable
                 clearable
                 value-format="timestamp"
@@ -396,7 +396,7 @@
             <el-form-item label="内部联合体单位:"
               v-if="detailform.bidInfo.isCoalitionBid==='0'"
               class="formItem1" >
-              <el-input  :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.bidInfo.innerOrgName" class="input-with-select">
+              <el-input  :disabled="p.actpoint === 'look'||p.actpoint === 'searchLook'" placeholder="请输入内容" v-model="detailform.bidInfo.innerOrgName" class="input-with-select">
                 <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('内部联合体单位',detailform.bidInfo.innerOrgId)" ></el-button>
               </el-input>
                 <!-- <el-select
@@ -432,7 +432,7 @@
 
             >
               <el-date-picker
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'searchLook'"
                 value-format="timestamp"
                 clearable
                 filterable
@@ -446,7 +446,7 @@
               label="招标文件发售截止日期"
             >
               <el-date-picker
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'searchLook'"
                 value-format="timestamp"
                 filterable
                 clearable
@@ -461,7 +461,7 @@
               >
 
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'searchLook'"
                   clearable
                   placeholder=""
                   v-model="detailform.bidInfo.outOrg"
@@ -481,7 +481,7 @@
               inactive-color="#ddd"
               active-value="0"
               inactive-value="1"
-              :disabled="p.actpoint === 'look'"
+              :disabled="p.actpoint === 'look'||p.actpoint === 'searchLook'"
             >
             </el-switch>
             </el-form-item>
@@ -498,7 +498,7 @@
               inactive-color="#ddd"
               active-value="0"
               inactive-value="1"
-              :disabled="p.actpoint === 'look'"
+              :disabled="p.actpoint === 'look'||p.actpoint === 'searchLook'"
             >
             </el-switch>
             </el-form-item>
@@ -514,7 +514,7 @@
               style="width: 100%"
             >
               <el-input
-               :disabled="p.actpoint === 'look'"
+               :disabled="p.actpoint === 'look'||p.actpoint === 'searchLook'"
                 type="textarea"
                 clearable
                 placeholder="请输入"
@@ -533,10 +533,10 @@
                   :on-remove="handleRemove"
                   :show-file-list="false"
                   :file-list="detailform.bidInfo_01"
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'searchLook'"
                   multiple
                 >
-                  <el-button size="small" type="primary" v-show="p.actpoint != 'look'">点击上传</el-button>
+                  <el-button size="small" type="primary" v-show="p.actpoint != 'look'||p.actpoint === 'searchLook'" :disabled="p.actpoint === 'look'||p.actpoint === 'searchLook'">点击上传</el-button>
                 </el-upload>
               </p>
 
@@ -575,7 +575,8 @@
                   fixed="right"
                   label="操作"
                   show-overflow-tooltip
-                  v-if="p.actpoint!=='look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'searchLook'"
+                  v-show="p.actpoint!=='look'||p.actpoint === 'searchLook'"
                   width="60"
                 >
                   <template slot-scope="scope">
@@ -589,8 +590,8 @@
             <span>标段信息: </span>
             <!-- @click="add('bd')" -->
             <el-button
-            v-show="p.actpoint != 'look'"
-            :disabled="p.actpoint === 'look'"
+            v-show="p.actpoint != 'look'||p.actpoint === 'searchLook'"
+            :disabled="p.actpoint === 'look'||p.actpoint === 'searchLook'"
               @click="openBd('add')"
               class="detatil-flie-btn"
               type="primary"
@@ -892,13 +893,13 @@
             </el-table-column>
 
               <el-table-column
-                v-show="!p.actpoint === 'look'"
+                v-show="p.actpoint !== 'look'||p.actpoint === 'searchLook'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'searchLook'"
                 :resizable="false"
                 fixed="right"
                 label="操作"
                 align="center"
                 show-overflow-tooltip
-                v-if="p.actpoint !== 'look'"
                 width="100">
                 <template slot-scope="scope">
                   <el-link
@@ -1272,17 +1273,18 @@ export default {
 
     // 详情信息
     getDetail() {
-
-        console.log('==>',this.p.instid)
+        // console.log('==>',this.p.instid)
+        var url='';
         if(this.p.actpoint === "searchLook"){
           var q={id:this.id};
+          url="/api/contract/topInfo/BidInfo/detail/entityInfoSelect"
         }else{
           var q=this.p.actpoint === "edit"||(this.p.actpoint === "look"&&this.p.flowStatus!=null)?{id:this.id}:{topInfoOrgId:this.id};
+          url="/api/contract/topInfo/BidInfo/detail/entityInfo"
         }
 
-
         this.$http
-          .post("/api/contract/topInfo/BidInfo/detail/entityInfo", q)
+          .post(url, q)
           .then((res) => {
             var datas=res.data.data;
             datas.bidInfo=this.nullToStr(datas.bidInfo);

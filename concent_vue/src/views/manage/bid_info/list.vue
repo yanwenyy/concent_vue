@@ -153,10 +153,21 @@
           <template slot="header" slot-scope="scope">
             <span>公告类型</span>
             <div>
-              <el-input
-                style=" width: 100%"
-                v-model="searchform.noticeTypeName"
-                size="mini"/>
+              <el-select
+              class="list-search-picker"
+              clearable
+              filterable
+              placeholder="请选择"
+              size="mini"
+              v-model="searchform.noticeTypeName"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.id"
+                v-for="(item, index) in bulletinType"
+              ></el-option>
+            </el-select>
             </div>
           </template>
         </el-table-column>
@@ -308,10 +319,13 @@ export default {
       InfoChangeSearch
     },
     computed: {
-  projectDomainType() {
+        projectDomainType() {
     // console.log(this.$store.state.category["projectDomainType"])
     return this.$store.state.category.projectDomainType;
-  }
+  },
+        bulletinType() {
+    return this.$store.state.bulletinType;
+      },
 },
   methods: {
         //工程类别二级
