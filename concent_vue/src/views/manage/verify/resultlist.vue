@@ -149,8 +149,8 @@
         layout="total, sizes, prev, pager, next, jumper"
       ></el-pagination>
     </div>
-    <el-dialog title="资审结果登记" :visible.sync="dialogResult" width="70%">
-      <el-form :model="resultform.verifySection" class="queryForm">
+    <el-dialog title="资审结果登记" :visible.sync="dialogResult" width="70%"  >
+      <el-form :model="resultform.verifySection" class="queryForm" >
         <el-form-item label="资格预审结果"   prop="verifyResult" >
          <el-switch
            active-text="通过"
@@ -194,7 +194,8 @@
         border
         class="contractInfoTable"
         ref="table"
-        style="width: 100%;height: auto;"
+        height="240"
+        style="width: 100%;"
       >
                 <el-table-column
                   :width="55"
@@ -759,10 +760,10 @@ export default {
     width: 70%!important;
     /* overflow: auto; */
   }
-  >>>.el-dialog__body{
-    height: 500px;
-    overflow: auto;
-  }
+  //>>>.el-dialog__body{
+  //  height: 300px;
+  //  overflow: auto;
+  //}
   >>>.el-form-item__label{
     width: auto;
   }
@@ -821,7 +822,7 @@ export default {
     /* overflow: auto; */
   }
   .mydialog >>>.el-dialog__body{
-    height: 500px;
+    //height: 300px;
     overflow: auto;
   }
   >>>.el-form-item__label{
