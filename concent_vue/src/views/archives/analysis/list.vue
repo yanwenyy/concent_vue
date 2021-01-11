@@ -18,23 +18,24 @@
                        type="primary"
                        @click="sumbitFrom">提交</el-button>
             <el-form-item label="填报年度:">
-            <el-select
-              placeholder="请选择"
-              size="mini"
-              v-model="searchform.selectYear"
-            >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in years"
-          ></el-option>
-        </el-select>
-<!--            <el-date-picker-->
-<!--              v-model="searchform.reportTime"-->
-<!--              type="month"-->
-<!--              value-format="timestamp">-->
-<!--            </el-date-picker>-->
+<!--            <el-select-->
+<!--              placeholder="请选择"-->
+<!--              size="mini"-->
+<!--              v-model="searchform.selectYear"-->
+<!--            >-->
+<!--          <el-option-->
+<!--            :key="index"-->
+<!--            :label="item.detailName"-->
+<!--            :value="item.id"-->
+<!--            v-for="(item, index) in years"-->
+<!--          ></el-option>-->
+<!--        </el-select>-->
+
+            <el-date-picker
+              v-model="searchform.selectYears"
+              type="year"
+              value-format="yyyy">
+            </el-date-picker>
           </el-form-item>
           <el-button @click="getData"
                      type="primary"
@@ -201,7 +202,7 @@
       <el-pagination
         :current-page="page.current"
         :page-size="page.size"
-        :page-sizes="[10, 50, 100]"
+        :page-sizes="[12, 50, 100]"
         :total="page.total"
         layout="total, sizes, prev, pager, next, jumper"
         @current-change="handleCurrentChange"
@@ -213,19 +214,24 @@
       <el-form :model="resultform">
         <el-form-item
           prop="year">
-        <el-select
-          placeholder="请选择"
-          size="mini"
+        <el-date-picker
           v-model="resultform.year"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in years"
-          ></el-option>
-        </el-select>
-      </el-form-item>
+          type="year"
+          value-format="yyyy">
+            </el-date-picker>
+          </el-form-item>
+<!--        <el-select-->
+<!--          placeholder="请选择"-->
+<!--          size="mini"-->
+<!--          v-model="resultform.year"-->
+<!--        >-->
+<!--          <el-option-->
+<!--            :key="index"-->
+<!--            :label="item.detailName"-->
+<!--            :value="item.id"-->
+<!--            v-for="(item, index) in years"-->
+<!--          ></el-option>-->
+<!--        </el-select>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogAdd = false">取 消</el-button>
@@ -276,7 +282,7 @@ export default {
   },
   data() {
     return {
-      page: {current: 1, size: 10, total: 0, records: []},
+      page: {current: 1, size: 12, total: 0, records: []},
       searchform: {
         current: 1,
         size: 10,
@@ -299,6 +305,7 @@ export default {
         createOrgName: '',
         createUserName: '',
         selectYear:'',
+        selectYears:new Date(),
         orgCount:''
       },
       multipleSelection: [],
@@ -564,13 +571,17 @@ export default {
       this.editform.remarks = this.multipleSelection[0].remarks;
     },
     getData() {
-      if(this.searchform.selectYear==="")
+      if(this.searchform.selectYears==="")
       {
         var date = new Date();
         this.searchform.selectYear = date.getFullYear();
+      }else {
+        var date = new Date(this.searchform.selectYears);
+        this.searchform.selectYear = date.getFullYear()
       }
 
       console.log(JSON.stringify(this.searchform));
+
       this.$http
         .post(
           '/api/contract/archives/ArchivesInfo/list/loadPageDataByAnalysis',
@@ -578,6 +589,7 @@ export default {
         )
         .then(res => {
           this.page = res.data.data
+          console.log(this.searchform);
           console.log(JSON.stringify(this.page));
         })
     },
@@ -585,7 +597,8 @@ export default {
   },
   created() {
     this.getData()
-  }
+  },
+
 }
 </script>
 <style scoped>
@@ -605,5 +618,13 @@ export default {
 }
 >>>.el-dialog__body{
   padding-top: 0px;
+}
+>>>.el-date-editor.el-input, .el-date-editor.el-input__inner
+{
+  width: 100%;
+}
+>>>.el-table td, .el-table th
+{
+  padding:5px 0px;
 }
 </style>

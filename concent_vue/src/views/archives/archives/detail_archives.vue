@@ -23,9 +23,16 @@
     >
       <el-form-item
         label="档案名称:"
+        prop="archivesInfo.name"
+        :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
       >
 
         <el-input
+          clearable
           :disabled="p.actpoint === 'look'"
           size="mini"
           v-model="detailform.archivesInfo.name"
@@ -34,8 +41,15 @@
       </el-form-item>
       <el-form-item
         label="档案类型:"
+        prop="archivesInfo.archivesTypeId"
+        :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
       >
         <el-select
+          clearable
           :disabled="p.actpoint === 'look'"
           filterable
           placeholder="请选择"
@@ -129,18 +143,21 @@
 
                 </el-table-column>
 
-                <el-table-column :resizable="false" label="大小" prop="fileSize" width="120" show-overflow-tooltip>
+                <el-table-column :resizable="false" align="center" label="大小" prop="fileSize" width="120"
+                                 show-overflow-tooltip>
                               <template slot-scope="scope">
                                 {{(scope.row.fileSize/1024).toFixed(2)}}
                               </template>
 
                 </el-table-column>
-                <el-table-column :resizable="false" label="类型" prop="fileType" width="80" show-overflow-tooltip>
+                <el-table-column align="center" :resizable="false" label="类型" prop="fileType" width="80"
+                                  show-overflow-tooltip>
 
                 </el-table-column>
 
                 <el-table-column
                   :resizable="false"
+                  align="center"
                   label="操作"
                   show-overflow-tooltip
                   v-if="p.actpoint!=='look'"
@@ -550,5 +567,16 @@ export default {
 .uploadSpan{
   font-size: 16px;
   color: #303133;
+}
+>>>.el-form-item__error {
+  padding-top: 0px;
+  width: 95%;
+  margin-left: 0;
+  text-align: right;
+  top: 0%;
+}
+>>>.el-table td, .el-table th
+{
+  padding:5px 0px;
 }
 </style>

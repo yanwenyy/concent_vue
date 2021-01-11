@@ -367,7 +367,7 @@
               />
             </el-form-item>
             </div>
-      <p style="overflow:hidden;margin-right: 30px"><span style="font-weight: bold">资审信息</span></p>
+       <el-divider content-position="left" class="detailDivider">资审信息</el-divider>
 
         <!-- --------------------------------------------------------------- -->
        <el-form-item
@@ -557,20 +557,20 @@
                   show-overflow-tooltip
                   type="index"
                 ></el-table-column>
-                <el-table-column :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+                <el-table-column align="center" :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
 
                 </el-table-column>
 
-                <el-table-column :resizable="false" label="大小" prop="fileSize" width="120" show-overflow-tooltip>
+                <el-table-column align="center" :resizable="false" label="大小" prop="fileSize" width="120" show-overflow-tooltip>
                   <template slot-scope="scope">
                     {{(scope.row.fileSize/1024).toFixed(2)}}
                   </template>
                 </el-table-column>
-                <el-table-column :resizable="false" label="类型" prop="fileType" width="80" show-overflow-tooltip>
+                <el-table-column align="center" :resizable="false" label="类型" prop="fileType" width="80" show-overflow-tooltip>
 
                 </el-table-column>
 
-                <el-table-column
+                <el-table-column align="center"
                   :resizable="false"
                   label="操作"
                   show-overflow-tooltip
@@ -1494,5 +1494,16 @@ export default {
 .uploadSpan{
   font-size: 16px;
   color: #303133;
+}
+>>>.el-form-item__error {
+  padding-top: 0px;
+  width: 95%;
+  margin-left: 0;
+  text-align: right;
+  top: 0%;
+}
+.neirong >>>.el-form-item__error
+{
+  padding-top:0px !important;
 }
 </style>
