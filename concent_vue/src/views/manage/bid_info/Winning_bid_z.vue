@@ -269,9 +269,7 @@
                 <el-table-column
                   align="center"
                   :resizable="false"
-                  fixed="right"
                   label="操作"
-                  show-overflow-tooltip
                   width="100"
                   v-if="zbType=='add'"
                 >

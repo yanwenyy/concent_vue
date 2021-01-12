@@ -48,12 +48,16 @@
                 <el-table-column :resizable="false"
                                  label="大小"
                                  prop="fileSize"
+                                 align="center"
                                  :width="120"
                                  show-overflow-tooltip>
-
+                  <template slot-scope="scope">
+                    {{(scope.row.fileSize/1024).toFixed(2)}}
+                  </template>
                 </el-table-column>
                 <el-table-column :resizable="false"
                                  label="类型"
+                                 align="center"
                                  :width="80"
                                  prop="fileType"
                                  show-overflow-tooltip>
@@ -64,6 +68,7 @@
                   v-if="isShow=='1'"
                   v-show="isShow=='1'"
                   :resizable="false"
+                  align="center"
                   fixed="right"
                   label="操作"
                   show-overflow-tooltip
@@ -240,5 +245,8 @@
 >>>.el-upload-list{
   display: none;
 }
-
+>>>.el-table td, .el-table th
+{
+  padding:5px 0px;
+}
 </style>

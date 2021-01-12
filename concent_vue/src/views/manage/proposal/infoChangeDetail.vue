@@ -127,7 +127,7 @@
                 trigger: 'blur',
               }"
               >
-                <el-tooltip popper-class="tooltip-class" :content="String(detailFormBefore.topInfor.investment)" placement="bottom" effect="light">
+                <el-tooltip popper-class="tooltip-class" :content="String(detailFormBefore.topInfor.investment)" placement="bottom" :disabled="p.actpoint !== 'look'" effect="dark">
                   <el-input v-model="detailFormBefore.topInfor.investment" disabled>
                     <template slot="prepend">¥</template>
                     <template slot="append">(万元)</template>
@@ -295,7 +295,7 @@
                   align="center"
                 >
                   <template slot-scope="scope">
-                    <el-tooltip popper-class="tooltip-class" :content="String(scope.row.contractAmount)" placement="bottom" effect="light">
+                    <el-tooltip popper-class="tooltip-class" :content="String(scope.row.contractAmount)" placement="bottom" :disabled="p.actpoint !== 'look'" effect="dark">
                       <el-input
                         class="listInput"
                         clearable
@@ -376,7 +376,7 @@
                   prop="contractAmount"
                 >
                   <template slot-scope="scope">
-                    <el-tooltip popper-class="tooltip-class" :content="String(scope.row.projectScale)" placement="bottom" effect="light">
+                    <el-tooltip popper-class="tooltip-class" :content="String(scope.row.projectScale)" placement="bottom" :disabled="p.actpoint !== 'look'" effect="dark">
                       <el-input
                         @input="scope.row.projectScale=getMoney(scope.row.projectScale)"
                         clearable
@@ -753,7 +753,7 @@
                 prop="topInfor.investment"
                 :rules="rules.contractAmount"
               >
-                <el-tooltip popper-class="tooltip-class" :content="String(detailform.topInfor.investment)" placement="bottom" effect="light">
+                <el-tooltip popper-class="tooltip-class" :content="String(detailform.topInfor.investment)" placement="bottom" :disabled="p.actpoint !== 'look'" effect="dark">
                   <el-input
                     :disabled="p.actpoint === 'look'"
                     clearable
@@ -901,7 +901,7 @@
                 <el-input
                   clearable
                   placeholder=""
-
+                  :disabled="p.actpoint === 'look'"
                   v-model="detailform.topInfor.majorProjectExplain"
                 />
               </el-form-item>
@@ -1045,7 +1045,7 @@
                   <template slot-scope="scope">
                     <el-form-item class="tabelForm" :prop="'topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                      <el-tooltip popper-class="tooltip-class" :content="String(scope.row.contractAmount)" placement="bottom" effect="light">
+                      <el-tooltip popper-class="tooltip-class" :content="String(scope.row.contractAmount)" placement="bottom" :disabled="p.actpoint !== 'look'" effect="dark">
                         <el-input
                           clearable
                           :disabled="p.actpoint === 'look'"
@@ -1173,7 +1173,7 @@
                   <template slot-scope="scope">
                     <el-form-item class="tabelForm" :prop="'topInfoSectionList.' + scope.$index + '.projectScale'" :rules='rules.contractAmount'>
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                      <el-tooltip popper-class="tooltip-class" :content="String(scope.row.projectScale)" placement="bottom" effect="light">
+                      <el-tooltip popper-class="tooltip-class" :content="String(scope.row.projectScale)" placement="bottom" :disabled="p.actpoint !== 'look'" effect="dark">
                         <el-input
                           v-model="scope.row.projectScale"
                           clearable

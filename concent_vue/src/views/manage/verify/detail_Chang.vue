@@ -1,8 +1,10 @@
 <!--资审变更列表-->
 <template>
  <div style="position: relative">
- <el-button  class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailformAfter')">保存</el-button>
-    <el-button  class="detail-back-tab detailbutton sub-btn" >提交</el-button>
+ <el-button  class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailformAfter')"
+             v-show="p.actpoint != 'look'">保存
+ </el-button>
+    <el-button  class="detail-back-tab detailbutton sub-btn" v-show="p.actpoint != 'look'">提交</el-button>
  <el-button
    class="detail-back-tab detailbutton"
    @click="back">返回</el-button>
@@ -18,7 +20,7 @@
               class="gcform"
               ref="detailformBefore"
               style="background: white;width:calc(100% - 4px);">
-              <p style="overflow:hidden;margin-right: 30px"><span style="font-weight: bold">项目前期信息</span></p>
+              <el-divider content-position="left" class="detailDivider">项目前期信息</el-divider>
               <el-form-item  label="项目名称:"
                              :rules="{
                 required: true,
@@ -367,7 +369,7 @@
               />
             </el-form-item>
             </div>
-              <p style="overflow:hidden;margin-right: 30px"><span style="font-weight: bold">资审信息</span></p>
+               <el-divider content-position="left" class="detailDivider">资审信息</el-divider>
 
                  <el-form-item
                    label="招标方式:"
@@ -516,11 +518,7 @@
                   />
                 </el-form-item>
               </div>
-              <div>
-                <el-form-item
-                  class="neirong"
-                  label="附件:"
-                >
+              <div><p class="detail-title"><span  class="uploadSpan">附件: </span>
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-upload
                     disabled
@@ -528,7 +526,7 @@
                     action="https://jsonplaceholder.typicode.com/posts/"
                   >
                   </el-upload>
-                </el-form-item>
+                </p>
               </div>
               <div>
                   <el-table
@@ -547,17 +545,19 @@
                               show-overflow-tooltip
                               type="index"
                             ></el-table-column>
-                            <el-table-column :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+                            <el-table-column align="center" :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
 
                             </el-table-column>
 
-                            <el-table-column :resizable="false" label="大小" :width="120" prop="fileSize" show-overflow-tooltip>
+                            <el-table-column align="center" :resizable="false" label="大小" :width="120" prop="fileSize"
+                                              show-overflow-tooltip>
                               <template slot-scope="scope">
                                 {{(scope.row.fileSize/1024).toFixed(2)}}
                               </template>
 
                             </el-table-column>
-                            <el-table-column :resizable="false" label="类型" :width="80" prop="fileType" show-overflow-tooltip>
+                            <el-table-column align="center" :resizable="false" label="类型" :width="80" prop="fileType"
+                                              show-overflow-tooltip>
 
                             </el-table-column>
 
@@ -691,7 +691,7 @@
               ref="detailformAfter"
               style="background: white;width:calc(100% - 4px);"
             >
-              <p style="overflow:hidden;margin-right: 30px"><span style="font-weight: bold">项目前期信息</span></p>
+             <el-divider content-position="left" class="detailDivider">项目前期信息</el-divider>
               <el-form-item  label="项目名称:"
                              :rules="{
                 required: true,
@@ -1041,7 +1041,7 @@
             </el-form-item>
             </div>
 
-              <p style="overflow:hidden;margin-right: 30px"><span style="font-weight: bold">资审信息</span></p>
+               <el-divider content-position="left" class="detailDivider">资审信息</el-divider>
 
                  <el-form-item
                    label="招标方式:"
@@ -1072,7 +1072,7 @@
         >
           <el-date-picker
             clearable
-            :readonly="p.actpoint === 'look'"
+            :disabled="p.actpoint === 'look'"
             value-format="timestamp"
             v-model="detailformAfter.verify.saleTime"
             align="right"
@@ -1087,8 +1087,9 @@
                       :disabled="p.actpoint === 'look'"
         >
 
-          <el-input v-model="detailformAfter.verifyOrgLists" placeholder="内部联合体单位">
-            <el-button slot="append" icon="el-icon-search"  @click="selectOrg()"></el-button>
+          <el-input :disabled="p.actpoint === 'look'" v-model="detailformAfter.verifyOrgLists" placeholder="内部联合体单位">
+            <el-button  :disabled="p.actpoint === 'look'" slot="append" icon="el-icon-search"
+                        @click="selectOrg()"></el-button>
           </el-input>
         </el-form-item>
        <br>
@@ -1103,7 +1104,7 @@
 
           <el-date-picker
             clearable
-            :readonly="p.actpoint === 'look'"
+            :disabled="p.actpoint === 'look'"
             value-format="timestamp"
             v-model="detailformAfter.verify.subTime"
             align="right"
@@ -1122,7 +1123,7 @@
         >
           <el-date-picker
             clearable
-            :readonly="p.actpoint === 'look'"
+            :disabled="p.actpoint === 'look'"
             value-format="timestamp"
             v-model="detailformAfter.verify.publishTime"
             align="right"
@@ -1136,6 +1137,7 @@
         >
           <el-input
             placeholder=""
+            :disabled="p.actpoint === 'look'"
             size="mini"
             v-model="detailformAfter.verify.outOrg"
           />
@@ -1150,7 +1152,7 @@
                   required: true, message: '此项不能为空', trigger: 'blur'
                 }"
          >
-         <el-switch
+         <el-switch :disabled="p.actpoint === 'look'"
            v-model="detailformAfter.verify.isCoalitionBid"
            active-value="是"
            inactive-value="否"
@@ -1181,6 +1183,7 @@
                 >
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-input
+                    :disabled="p.actpoint === 'look'"
                     clearable
                     placeholder="请输入"
                     type="textarea"
@@ -1190,11 +1193,7 @@
                 </el-form-item>
               </div>
               <div>
-                <el-form-item
-                  class="neirong"
-                  label="附件:"
-
-                >
+                <p class="detail-title"><span  class="uploadSpan">附件: </span>
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-upload
                     class="upload-demo detailUpload"
@@ -1204,9 +1203,9 @@
                     :on-remove="handleRemove"
                     multiple
                   >
-              <el-button size="small" type="primary">点击上传</el-button>
+              <el-button size="small" type="primary" v-show="p.actpoint != 'look'">点击上传</el-button>
             </el-upload>
-                </el-form-item>
+                </p>
               </div>
                <div>
                   <el-table
@@ -1230,31 +1229,32 @@
 
                             </el-table-column>
 
-                            <el-table-column :resizable="false" label="大小" :width="120" prop="fileSize" show-overflow-tooltip>
+                            <el-table-column align="center" :resizable="false" label="大小" :width="120" prop="fileSize"
+                                              show-overflow-tooltip>
                               <template slot-scope="scope">
                                 {{(scope.row.fileSize/1024).toFixed(2)}}
                               </template>
                             </el-table-column>
-                            <el-table-column :resizable="false" label="类型" :width="80" prop="fileType" show-overflow-tooltip>
+                            <el-table-column  align="center" :resizable="false" label="类型" :width="80" prop="fileType"
+                                              show-overflow-tooltip>
 
                             </el-table-column>
 
-                            <el-table-column
+                            <el-table-column align="center" v-show="p.actpoint != 'look'"
                               :resizable="false"
-                              fixed="right"
                               label="操作"
                               show-overflow-tooltip
-                              v-if="p.actpoint!=='look'"
                               :width="80"
                             >
                               <template slot-scope="scope">
-                                <el-link :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
+                                <el-link  v-show="p.actpoint != 'look'" :underline="false" @click="handleRemove(scope.row,scope.$index)"
+                                          type="warning">删除</el-link>
                               </template>
                             </el-table-column>
                           </el-table>
                 </div>
               <p style="overflow:hidden;margin-right: 30px"><span style="font-size: 14px">标段信息: </span>
-                <el-button
+                <el-button v-show="p.actpoint != 'look'"
                   @click="dialogTopInfoSection = true"
                   size="mini"
                   class="detatil-flie-btn"
@@ -1358,7 +1358,7 @@
           align="center"
           prop="jananInvestment"
           show-overflow-tooltip
-          v-show="p.actpoint != 'look'"
+
           width="260">
 
           <template slot-scope="scope" >
@@ -1374,16 +1374,15 @@
           </template>
         </el-table-column>
                 <el-table-column
-                  v-show="!p.actpoint === 'look'"
+                  v-show="p.actpoint != 'look'"
                   :resizable="false"
                   fixed="right"
                   label="操作"
                   align="center"
                   width="80"
-                  show-overflow-tooltip
-                  v-if="p.actpoint != 'look'">
+                  show-overflow-tooltip>
                   <template slot-scope="scope">
-                    <el-link
+                    <el-link  v-show="p.actpoint != 'look'"
                       :underline="false"
                       @click="del(scope.$index,scope.row,detailformAfter.verifySectionList,'bd')"
                       type="warning">删除
@@ -2082,6 +2081,14 @@ export default {
 }
 >>>.el-upload-list{
   display: none;
+}
+.uploadSpan{
+  font-size: 16px;
+  color: #303133;
+}
+.neirong >>>.el-form-item__error
+{
+  padding-top:0px !important;
 }
 </style>
 

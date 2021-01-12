@@ -98,11 +98,12 @@
         this.$emit('refreshDataList', this.currentRow)
       },
       // 初始化
-      init() {
+      init(id) {
         this.visible = true;
+        this.searchform.moduleId=id;
         this.$http
           .post(
-            "/api/contract/topInfo/TopInfor/list/loadPageDataForReg",
+            "/api/contract/topInfo/TopInfor/list/loadPageDataForContract",
             this.searchform,
             {isLoading: false}
           )

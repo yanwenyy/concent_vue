@@ -52,7 +52,7 @@
                   <template slot-scope="scope">
                    <el-switch
                      v-model="scope.row.isDisplay"
-                     @click="handleChange(scope.row,scope.$index)"
+                     @change="handleChange(scope.row,scope.$index)"
                      active-value="可见"
                      inactive-value="不可见"
                    >
@@ -451,10 +451,10 @@
       },
 
       handleChange(file, index) {
-
+        console.log(file)
         var isDisplay ='0';
         var result = "可见";
-        if(file.isDisplay==='可见')
+        if(file.isDisplay==='不可见')
         {
           isDisplay = '0';
           result="不可见";
@@ -472,8 +472,8 @@
             .then((res) => {
               if (res.data.code === 200) {
                 //this.detailform.commonFilesList.splice(index, 1);
-
-                this.detailform.commonFilesList[index].isDisplay = result;
+                this.loadData();
+                //this.detailform.commonFilesList[index].isDisplay = result;
               }
 
             });
@@ -486,6 +486,7 @@
           this.multipleSelection.forEach((itemy, indexy) => {
               if(itemy.orgId===file.orgId)
               {
+                console.log(itemy)
                 uuids.push(itemy.uuid);
                 //itemy.isDisplay="1";
                 item.push(itemy);
@@ -501,8 +502,8 @@
             )
             .then((res) => {
               if (res.data.code === 200) {
-                //this.loadData();
-                this.detailform.commonFilesList[index].isDisplay = result;
+                this.loadData();
+                //this.detailform.commonFilesList[index].isDisplay = result;
               }
 
             });
@@ -572,5 +573,8 @@
 </script>
 
 <style scoped>
-
+>>>.el-table td, .el-table th
+{
+  padding:5px 0px;
+}
 </style>

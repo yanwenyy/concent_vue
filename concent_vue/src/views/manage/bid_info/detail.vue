@@ -396,7 +396,10 @@
             <el-form-item label="内部联合体单位:"
               v-if="detailform.bidInfo.isCoalitionBid==='0'"
               class="formItem1" >
-                <el-select
+              <el-input  :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.bidInfo.innerOrgName" class="input-with-select">
+                <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('内部联合体单位',detailform.bidInfo.innerOrgId)" ></el-button>
+              </el-input>
+                <!-- <el-select
                 :disabled="p.actpoint === 'look'"
                 filterable
                 multiple
@@ -404,7 +407,7 @@
                  @change="getMultipleName(detailform.nblht,amountSource,'innerOrgId','innerOrgName')"
                 placeholder="请选择"
                 v-model="detailform.nblht"
-              >
+              > -->
               <!-- <el-select
                 :disabled="p.actpoint === 'look'"
                 filterable
@@ -412,14 +415,14 @@
                 multiple
                 placeholder="请选择"
                 v-model="detailform.value1"
-              > -->
+              >
                 <el-option
                   :key="index"
                   :label="item.detailName"
                   :value="item.id"
                   v-for="(item, index) in amountSource"
                 ></el-option>
-              </el-select>
+              </el-select> -->
             </el-form-item>
 <br>
             <el-form-item
@@ -916,13 +919,15 @@
       </div>
     </el-card>
     <add-bd  v-if="BDCSVisible" ref="infoBD" @refreshBD="getBdInfo"></add-bd>
+    <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
   </div>
 
 </template>
 
 <script>
 import { isMoney } from '@/utils/validate'
- import AddBd from './addBd'
+import AddBd from './addBd'
+import CompanyTree from '../contractManager/companyTree'
 export default {
   data() {
   var validateMoney = (rule, value, callback) => {
@@ -938,6 +943,7 @@ export default {
       maxMoney:1000000,
       key:0,
        BDCSVisible:false,//标段新增弹框状态
+       DwVisible:false,//选择单位弹框状态
       options1: [{ label: "值", value: "111" }],
       detailform: {
         bidInfo: {},
@@ -975,6 +981,7 @@ export default {
   },
   components: {
     AddBd,
+    CompanyTree
   },
   computed: {
       bidType() {
@@ -1001,6 +1008,35 @@ export default {
 
   },
   methods: {
+    //打开单位弹框
+    addDw(type,list){
+      this.DwVisible = true;
+      this.$nextTick(() => {
+        this.$refs.infoDw.init(type,list);
+      })
+    },
+        //获取单位的值
+    getDwInfo(data){
+      console.log(data);
+      var list=[];
+      var id=[],name=[];
+      if(data){
+        data.forEach((item)=>{
+          id.push(item.id);
+          name.push(item.detailName);
+          var _v={
+            innerOrgId:item.id,
+            innerOrgName:item.detailName
+          }
+          list.push(_v)
+        });
+        this.detailform.bidInfoInnerOrgList=list;
+        this.detailform.bidInfo.innerOrgId=id.join(",");
+        this.detailform.bidInfo.innerOrgName=name.join(",");
+      }
+
+      this.DwVisible=false;
+    },
     //复选下拉框框获取name
     getMultipleName(valueList,list,id,name){
       var _id=[],_name=[];
@@ -1126,18 +1162,18 @@ export default {
         }
       },
       saveInfo(formName) {
-        var bidInfoInnerOrgList = [];
-        //内部联合体单位
-        this.amountSource.forEach((item) => {
-          if (this.detailform.value1&&this.detailform.value1.indexOf(item.id) != -1) {
-            var v = {
-              innerOrgId: item.id,
-              innerOrgName: item.detailName,
-            };
-            bidInfoInnerOrgList.push(v);
-          }
-        });
-        this.detailform.bidInfoInnerOrgList=bidInfoInnerOrgList;
+        // var bidInfoInnerOrgList = [];
+        // //内部联合体单位
+        // this.amountSource.forEach((item) => {
+        //   if (this.detailform.value1&&this.detailform.value1.indexOf(item.id) != -1) {
+        //     var v = {
+        //       innerOrgId: item.id,
+        //       innerOrgName: item.detailName,
+        //     };
+        //     bidInfoInnerOrgList.push(v);
+        //   }
+        // });
+        // this.detailform.bidInfoInnerOrgList=bidInfoInnerOrgList;
         this.$refs[formName].validate((valid) => {
           if (valid) {
             // this.detailform.bidInfo_02=[];
@@ -1233,21 +1269,6 @@ export default {
       };
     },
 
-    resetform(formName) {
-      this.$refs[formName].resetFields();
-    },
-    sure() {
-      console.log(this.sizeform);
-      this.$refs["sizeform"].validate((valid) => {
-        if (valid) {
-          this.detailform.clothSizePartList.push(this.sizeform);
-          this.dialogVisibleAdd = false;
-        } else {
-          console.log("error submit!");
-          return false;
-        }
-      });
-    },
 
     // 详情信息
     getDetail() {
@@ -1275,10 +1296,16 @@ export default {
               value1:[],
               nblht:[],
             }
-            // this.detailform.nblht=datas.bidInfo.innerOrgId&&datas.contractInfo.innerOrgId.split(",");
-             datas.bidInfoInnerOrgList.forEach((item)=>{
-              this.detailform.value1.push(item.innerOrgId)
+            //内部联合体回显
+            var id=[],name=[];
+            datas.bidInfoInnerOrgList.forEach((item)=>{
+              id.push(item.innerOrgId);
+              name.push(item.innerOrgName);
             });
+            this.detailform.bidInfo.innerOrgId=id.join(",");
+            this.detailform.bidInfo.innerOrgName=name.join(",");
+            //结束
+            // this.detailform.nblht=datas.bidInfo.innerOrgId&&datas.contractInfo.innerOrgId.split(",");
           });
     },
 

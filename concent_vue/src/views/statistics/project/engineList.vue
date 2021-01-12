@@ -324,11 +324,11 @@ export default {
       searchform: {
         current: 1,
         size: 10,
-        year: "",
-        name: "",
-        ptype: "",
-        orgid: "",
-        orgname: "",
+        year: '',
+        name: '',
+        ptype: '',
+        orgid: '',
+        orgname: ''
       },
       menus: [],
       multipleSelection: [],
@@ -420,11 +420,11 @@ export default {
     // list通用方法结束
   },
   created() {
-    this.getMenus();
-    this.getOrgTree();
-    this.getData();
-  },
-};
+    this.getMenus()
+    this.getOrgTree()
+    this.getData()
+  }
+}
 </script>
 <style scoped>
 .el-table__row {

@@ -13,756 +13,821 @@
     <el-tabs type="border-card">
       <el-tab-pane label="工程承包合同">
         <div class="detailBoxBG">
-              <el-form-item
-                label="项目名称(中文):"
-                prop="contractInfo.inforName"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              >
-                <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.inforName" class="input-with-select">
-                  <el-button slot="append" icon="el-icon-search" @click="searchName"></el-button>
-                </el-input>
-              </el-form-item>
-              <el-form-item
-                label="项目名称(外文):"
-                prop="contractInfo.inforNameForeign"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              >
-                <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.inforNameForeign" class="input-with-select">
-
-                </el-input>
-              </el-form-item>
-              <el-form-item
-                label="工程类别(一级):"
-                prop="contractInfo.enginTypeFirstId"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              >
-                <el-select
-                  :disabled="p.actpoint === 'look'"
-                  clearable
-                  filterable
-                  placeholder="请选择"
-                  @change="getTwo"
-
-                  v-model="detailform.contractInfo.enginTypeFirstId"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in projectDomainType"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item
-                label="工程类别(二级):"
-                prop="contractInfo.enginTypeSecondId"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              >
-                <el-select
-                  :disabled="p.actpoint === 'look'"
-                  clearable
-                  filterable
-                  placeholder="请选择"
-
-                  @change="
-                  getName(
-                    detailform.contractInfo.enginTypeSecondId,
-                    xqprojectType,
-                    'enginTypeSecondName'
-                  )
-                "
-                  v-model="detailform.contractInfo.enginTypeSecondId"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in xqprojectType"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item
-                label="合同名称(中文):"
-                prop="contractInfo.contractName"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              >
-                <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.contractName" class="input-with-select">
-                  <el-button slot="append" icon="el-icon-search" @click="searchName"></el-button>
-                </el-input>
-              </el-form-item>
-              <el-form-item
-                label="合同名称(外文):"
-                prop="contractInfo.contractNameForeign"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              >
-                <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.contractNameForeign" class="input-with-select">
-
-                </el-input>
-              </el-form-item>
-              <el-form-item
-                label="合同编号:"
-              >
-                <el-input
-                  :disabled="p.actpoint === 'look'"
-                  clearable
-                  placeholder=""
-
-                  v-model="detailform.contractInfo.contractNo"
-                />
-              </el-form-item>
-              <el-form-item
-                label="合同签订日期:"
-              >
-                <el-date-picker
-                  :disabled="p.actpoint === 'look'"
-                  filterable
-                  clearable
-                  type="date"
-                  value-format="timestamp"
-                  v-model="detailform.contractInfo.contractSignTime"
-
-                >
-                </el-date-picker>
-              </el-form-item>
-              <el-form-item
-                label="施工单位:"
-              >
-                <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.buildOrgNames" class="input-with-select">
-                  <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('施工单位',detailform.contractInfo.buildOrgIds)" ></el-button>
-                </el-input>
-              </el-form-item>
-              <el-form-item
-                label="使用资质单位:"
-                prop="contractInfo.qualityOrgNames"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'change',
-              }"
-              >
-                <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.qualityOrgNames" class="input-with-select">
-                  <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('使用资质单位',detailform.contractInfo.qualityOrgIds)" ></el-button>
-                </el-input>
-              </el-form-item>
-              <el-form-item
-                v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
-                label="建设单位:"
-                prop="contractInfo.constructionOrgId"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              >
-                <el-select
-                  :disabled="p.actpoint === 'look'"
-                  clearable
-                  filterable
-                  placeholder="请选择"
-
-                  @change="
-                  getName(
-                    detailform.contractInfo.constructionOrgId,
-                    xqprojectType,
-                    'constructionOrg'
-                  )
-                "
-                  v-model="detailform.contractInfo.constructionOrgId"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in xqprojectType"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item
-                v-if="detailform.contractInfo.enginTypeFirstId!='17ff5c08d36b41ea8f2dc2e9d3029cac'"
-                label="建设单位:"
-                prop="contractInfo.constructionOrg"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              >
-                <el-input
-                  :disabled="p.actpoint === 'look'"
-                  clearable
-                  placeholder="请输入"
-
-                  v-model="detailform.contractInfo.constructionOrg"
-                />
-              </el-form-item>
-              <el-form-item
-                label="建设单位性质:"
-                prop="contractInfo.constructionNatureId"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              >
-                <el-select
-                  :disabled="p.actpoint==='look'"
-                  clearable
-                  filterable
-                  placeholder="请选择"
-
-                  v-model="detailform.contractInfo.constructionNatureId"
-                  @change="
-                  getName(
-                    detailform.contractInfo.constructionNatureId,
-                    constructionUnitNature,
-                    'constructionNature'
-                  )
-                "
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in constructionUnitNature"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item
-                label="铁路分类:"
-                v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'||detailform.contractInfo.enginTypeFirstId==null"
-              >
-                <el-select
-                  :disabled="p.actpoint==='look'"
-                  filterable
-                  clearable
-                  placeholder="请选择"
-
-                  v-model="detailform.contractInfo.designRailwayClassifyId"
-                >
-                  <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options2"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item
-                v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'||
-                  detailform.contractInfo.enginTypeFirstId=='24ebba9f2f3447579d0086209aff6ecd'||
-                  detailform.contractInfo.enginTypeFirstId=='0f16c387f17b402db45c4de58e1cf8b4'||
-                  detailform.contractInfo.enginTypeFirstId=='f6f5188458ab4c5ba1e0bc12a9a4188b'"
-                label="线路长度(千米):"
-                prop="contractInfo.lineLength"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              >
-                <el-input
-                  :disabled="p.actpoint === 'look'"
-                  clearable
-                  placeholder=""
-
-                  v-model="detailform.contractInfo.lineLength"
-                />
-              </el-form-item>
-              <el-form-item
-                label="是否导入清单:"
-                prop="contractInfo.isImport"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              >
-                <el-select
-                  :disabled="p.actpoint==='look'"
-                  clearable
-                  filterable
-                  placeholder="请选择"
-
-                  v-model="detailform.contractInfo.isImport"
-                >
-                  <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item
-                v-if="detailform.contractInfo.enginTypeFirstId=='193b4d4003d04899a1d09c8d5f7877fe'||detailform.contractInfo.enginTypeFirstId==null"
-                label="建筑面积(平方米):"
-                prop="contractInfo.contractBuiltArea"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              >
-                <el-input
-                  :disabled="p.actpoint === 'look'"
-                  clearable
-                  placeholder=""
-
-                  v-model="detailform.contractInfo.contractBuiltArea"
-                />
-              </el-form-item>
-              <el-form-item
-                label="合同总金额(万元):"
-                prop="contractInfo.contractAmount"
-                :rules="rules.contractAmount"
-              >
-                <el-input
-                  :disabled="p.actpoint === 'look'"
-                  @input="getOurAmount"
-                  clearable
-                  placeholder=""
-
-                  v-model="detailform.contractInfo.contractAmount"
-                />
-              </el-form-item>
-              <el-form-item
-                label="铁建金额(万元):"
-                prop="contractInfo.crccCash"
-                :rules="rules.contractAmount"
-              >
-                <el-input
-                  :disabled="true"
-                  v-model="detailform.contractInfo.crccCash"
-                />
-              </el-form-item>
-              <el-form-item
-                label="我方份额(万元):"
-                prop="contractInfo.ourAmount"
-                :rules="rules.contractAmount"
-              >
-                <el-input
-                  :disabled="true"
-                  v-model="detailform.contractInfo.ourAmount"
-                />
-              </el-form-item>
-              <el-form-item
-                label="增值税(万元):"
-                prop="contractInfo.valueAddedTax"
-                :rules="rules.contractAmount"
-
-              >
-                <el-input
-                  :disabled="p.actpoint === 'look'"
-                  clearable
-                  placeholder=""
-
-                  v-model="detailform.contractInfo.valueAddedTax"
-                />
-              </el-form-item>
-              <el-form-item
-                label="系统外份额(万元):"
-                prop="contractInfo.outSystemAmount"
-                :rules="rules.contractAmount"
-
-              >
-                <el-input
-                  :disabled="p.actpoint === 'look'"
-                  clearable
-                  placeholder=""
-
-                  v-model="detailform.contractInfo.outSystemAmount"
-                />
-              </el-form-item>
-              <el-form-item
-                label="暂定金(万元):"
-                prop="contractInfo.designTempPrice"
-                :rules="rules.contractAmount"
-
-              >
-                <el-input
-                  :disabled="p.actpoint === 'look'"
-                  clearable
-                  placeholder=""
-
-                  v-model="detailform.contractInfo.designTempPrice"
-                />
-              </el-form-item>
-              <el-form-item
-                label="新兴市场类别(一级):"
-                prop="contractInfo.marketFirstNameId"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              >
-                <el-select
-                  :disabled="p.actpoint === 'look'"
-                  filterable
-                  clearable
-                  placeholder="请选择"
-                  @change="getTwoSC"
-
-                  v-model="detailform.contractInfo.marketFirstNameId"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in emergingMarket"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item
-                label="新兴市场类别(二级):"
-                prop="contractInfo.marketSecondId"
-                :rules="detailform.contractInfo.marketFirstNameId&&emergingMarketTwo?{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }:{}"
-              >
-                <el-select
-                  :disabled="p.actpoint === 'look'"
-                  filterable
-                  clearable
-                  placeholder="请选择"
-
-                  @change="
-                  getName(
-                    detailform.contractInfo.marketSecondId,
-                    emergingMarketTwo,
-                    'marketSecondName'
-                  )
-                "
-                  v-model="detailform.contractInfo.marketSecondId"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in emergingMarketTwo"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-
             <el-form-item
-              label="装配率(%):"
-              prop="contractInfo.otherAssemblyRate"
+              label="项目名称(中文)"
+              prop="contractInfo.inforName"
               :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              v-if="detailform.contractInfo.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+            >
+              <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.inforName" class="input-with-select">
+                <el-button slot="append" icon="el-icon-search" @click="searchName"></el-button>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+              label="项目名称(外文)"
+              prop="contractInfo.inforNameForeign"
+              :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+            >
+              <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.inforNameForeign" class="input-with-select">
+
+              </el-input>
+            </el-form-item>
+            <br>
+            <el-form-item
+              label="合同名称(中文)"
+              prop="contractInfo.contractName"
+              :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'blur',
+                }"
+            >
+              <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.contractName" class="input-with-select">
+                <el-button slot="append" icon="el-icon-search" @click="searchName"></el-button>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+              label="合同名称(外文)"
+              prop="contractInfo.contractNameForeign"
+              :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'blur',
+                }"
+            >
+              <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.contractNameForeign" class="input-with-select">
+
+              </el-input>
+            </el-form-item>
+            <br>
+            <el-form-item
+              label="工程类别(一级)"
+              prop="contractInfo.enginTypeFirstId"
+              :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+            >
+              <el-select
+                :disabled="p.actpoint === 'look'"
+                clearable
+                filterable
+                placeholder="请选择"
+                @change="getTwo"
+
+                v-model="detailform.contractInfo.enginTypeFirstId"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectDomainType"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="工程类别(二级)"
+              prop="contractInfo.enginTypeSecondId"
+              :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+            >
+              <el-select
+                :disabled="p.actpoint === 'look'"
+                clearable
+                filterable
+                placeholder="请选择"
+
+                @change="
+                getName(
+                  detailform.contractInfo.enginTypeSecondId,
+                  xqprojectType,
+                  'enginTypeSecondName'
+                )
+              "
+                v-model="detailform.contractInfo.enginTypeSecondId"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in xqprojectType"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+          label="铁路分类"
+          v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'||detailform.contractInfo.enginTypeFirstId==null"
+        >
+          <el-select
+            :disabled="p.actpoint==='look'"
+            filterable
+            clearable
+            placeholder="请选择"
+
+            v-model="detailform.contractInfo.designRailwayClassifyId"
+          >
+            <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options2"></el-option>
+          </el-select>
+        </el-form-item>
+            <br>
+            <el-form-item
+              label="合同编号"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'"
+                clearable
+                placeholder=""
+
+                v-model="detailform.contractInfo.contractNo"
+              />
+            </el-form-item>
+            <el-form-item
+              label="合同签订日期"
+            >
+              <el-date-picker
+                :disabled="p.actpoint === 'look'"
+                filterable
+                clearable
+                type="date"
+                value-format="timestamp"
+                v-model="detailform.contractInfo.contractSignTime"
+
+              >
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item
+              class="inline-formitem"
+              label="是否导入清单"
+            >
+              <el-switch
+              :disabled="p.actpoint === 'look'"
+              class="inline-formitem-switch"
+              v-model="detailform.contractInfo.isImport"
+              active-color="#409EFF"
+              inactive-color="#ddd"
+              active-value="0"
+              inactive-value="1"
+              >
+              </el-switch>
+              <!--<el-select-->
+                <!--:disabled="p.actpoint==='look'"-->
+                <!--clearable-->
+                <!--filterable-->
+                <!--placeholder="请选择"-->
+
+                <!--v-model="detailform.contractInfo.isImport"-->
+              <!--&gt;-->
+                <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
+              <!--</el-select>-->
+            </el-form-item>
+            <el-form-item
+              label="使用资质单位"
+              prop="contractInfo.qualityOrgNames"
+              :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'change',
+                }"
+            >
+              <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.qualityOrgNames" class="input-with-select">
+                <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('使用资质单位',detailform.contractInfo.qualityOrgIds)" ></el-button>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+              label="施工单位"
+            >
+              <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.buildOrgNames" class="input-with-select">
+                <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('施工单位',detailform.contractInfo.buildOrgIds)" ></el-button>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+              v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'||
+                    detailform.contractInfo.enginTypeFirstId=='24ebba9f2f3447579d0086209aff6ecd'||
+                    detailform.contractInfo.enginTypeFirstId=='0f16c387f17b402db45c4de58e1cf8b4'||
+                    detailform.contractInfo.enginTypeFirstId=='f6f5188458ab4c5ba1e0bc12a9a4188b'"
+              label="线路长度(千米)"
+              prop="contractInfo.lineLength"
+              :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'blur',
+                }"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'"
+                clearable
+                placeholder=""
+
+                v-model="detailform.contractInfo.lineLength"
+              />
+            </el-form-item>
+            <el-form-item
+          v-if="detailform.contractInfo.enginTypeFirstId=='193b4d4003d04899a1d09c8d5f7877fe'||detailform.contractInfo.enginTypeFirstId==null"
+          label="建筑面积(平方米)"
+          prop="contractInfo.contractBuiltArea"
+          :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+        >
+          <el-input
+            :disabled="p.actpoint === 'look'"
+            clearable
+            placeholder=""
+
+            v-model="detailform.contractInfo.contractBuiltArea"
+          />
+        </el-form-item>
+            <br>
+            <el-form-item
+              v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
+              label="建设单位"
+              prop="contractInfo.constructionOrgId"
+              :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+            >
+              <el-select
+                :disabled="p.actpoint === 'look'"
+                clearable
+                filterable
+                placeholder="请选择"
+
+                @change="
+                getName(
+                  detailform.contractInfo.constructionOrgId,
+                  xqprojectType,
+                  'constructionOrg'
+                )
+              "
+                v-model="detailform.contractInfo.constructionOrgId"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in xqprojectType"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              v-if="detailform.contractInfo.enginTypeFirstId!='17ff5c08d36b41ea8f2dc2e9d3029cac'"
+              label="建设单位"
+              prop="contractInfo.constructionOrg"
+              :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'"
+                clearable
+                placeholder="请输入"
+
+                v-model="detailform.contractInfo.constructionOrg"
+              />
+            </el-form-item>
+            <el-form-item
+              label="建设单位性质"
+              prop="contractInfo.constructionNatureId"
+              :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+            >
+              <el-select
+                :disabled="p.actpoint==='look'"
+                clearable
+                filterable
+                placeholder="请选择"
+
+                v-model="detailform.contractInfo.constructionNatureId"
+                @change="
+                getName(
+                  detailform.contractInfo.constructionNatureId,
+                  constructionUnitNature,
+                  'constructionNature'
+                )
+              "
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in constructionUnitNature"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <br>
+            <el-form-item
+              label="合同总金额(万元)"
+              prop="contractInfo.contractAmount"
+              :rules="rules.contractAmount"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'"
+                @input="getOurAmount"
+                clearable
+                placeholder=""
+
+                v-model="detailform.contractInfo.contractAmount"
+              />
+            </el-form-item>
+            <el-form-item
+              label="铁建金额(万元)"
+              prop="contractInfo.crccCash"
+              :rules="rules.contractAmount"
+            >
+              <el-input
+                :disabled="true"
+                v-model="detailform.contractInfo.crccCash"
+              />
+            </el-form-item>
+            <el-form-item
+              label="我方份额(万元)"
+              prop="contractInfo.ourAmount"
+              :rules="rules.contractAmount"
+            >
+              <el-input
+                :disabled="true"
+                v-model="detailform.contractInfo.ourAmount"
+              />
+            </el-form-item>
+            <el-form-item
+              label="系统外份额(万元)"
+              prop="contractInfo.outSystemAmount"
+              :rules="rules.contractAmount"
 
             >
               <el-input
                 :disabled="p.actpoint === 'look'"
+                clearable
+                placeholder=""
 
-                v-model="detailform.contractInfo.otherAssemblyRate"
+                v-model="detailform.contractInfo.outSystemAmount"
               />
             </el-form-item>
             <el-form-item
-              label="装配类型:"
-              prop="zplx"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              v-if="detailform.contractInfo.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+              label="增值税(万元)"
+              prop="contractInfo.valueAddedTax"
+              :rules="rules.contractAmount"
 
             >
-              <el-select
-                class="multiple-sel"
-                :disabled="p.actpoint==='look'"
-                multiple
-                @change="getMultipleName(detailform.zplx,assemblyType,'otherAssemblyTypeId','otherAssemblyType')"
+              <el-input
+                :disabled="p.actpoint === 'look'"
                 clearable
-                filterable
-                placeholder="请选择"
+                placeholder=""
 
-                v-model="detailform.zplx"
+                v-model="detailform.contractInfo.valueAddedTax"
+              />
+            </el-form-item>
+            <br>
+            <el-form-item
+              class="inline-formitem"
+              label="是否为系统内联合体"
+            >
+              <el-switch
+                :disabled="p.actpoint === 'look'"
+                class="inline-formitem-switch"
+                v-model="detailform.contractInfo.isInSystemUnion"
+                active-color="#409EFF"
+                inactive-color="#ddd"
+                active-value="0"
+                inactive-value="1"
+              >
+              </el-switch>
+              <!--<el-select-->
+                <!--:disabled="p.actpoint==='look'"-->
+                <!--clearable-->
+                <!--filterable-->
+                <!--placeholder="请选择"-->
+
+                <!--v-model="detailform.contractInfo.isInSystemUnion"-->
+              <!--&gt;-->
+                <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
+              <!--</el-select>-->
+            </el-form-item>
+            <el-form-item
+              class="inline-formitem"
+              label="是否含系统内分包"
+            >
+              <el-switch
+                :disabled="p.actpoint === 'look'"
+                class="inline-formitem-switch"
+                v-model="detailform.contractInfo.isInSystemSub"
+                active-color="#409EFF"
+                inactive-color="#ddd"
+                active-value="0"
+                inactive-value="1"
+              >
+              </el-switch>
+              <!--<el-select-->
+                <!--:disabled="p.actpoint==='look'"-->
+                <!--filterable-->
+                <!--clearable-->
+                <!--placeholder="请选择"-->
+
+                <!--v-model="detailform.contractInfo.isInSystemSub"-->
+              <!--&gt;-->
+                <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
+              <!--</el-select>-->
+            </el-form-item>
+            <br>
+            <el-form-item
+              v-show="detailform.contractInfo.isInSystemUnion==='1'"
+              label="暂定金(万元)"
+              prop="contractInfo.designTempPrice"
+              :rules="rules.contractAmount"
+
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'"
+                clearable
+                placeholder=""
+
+                v-model="detailform.contractInfo.designTempPrice"
+              />
+            </el-form-item>
+            <el-form-item
+              v-if="detailform.contractInfo.isInSystemUnion==='0'"
+              label="未分配(万元)"
+              prop="contractInfo.unAllocatedFee"
+              :rules="rules.contractAmount"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'"
+                clearable
+
+                v-model="detailform.contractInfo.unAllocatedFee"/>
+            </el-form-item>
+            <el-form-item
+              v-if="detailform.contractInfo.isInSystemUnion==='0'"
+              label="自留份额(万元)"
+              prop="contractInfo.selfCash"
+              :rules="rules.contractAmount"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'"
+                clearable
+
+                v-model="detailform.contractInfo.selfCash"/>
+            </el-form-item>
+            <br>
+            <el-form-item
+              class="inline-formitem"
+              label="是否为系统外联合体"
+            >
+              <el-switch
+                :disabled="p.actpoint === 'look'"
+                class="inline-formitem-switch"
+                v-model="detailform.contractInfo.isOutSystemUnion"
+                active-color="#409EFF"
+                inactive-color="#ddd"
+                active-value="0"
+                inactive-value="1"
+              >
+              </el-switch>
+              <!--<el-select-->
+                <!--:disabled="p.actpoint==='look'"-->
+                <!--clearable-->
+                <!--filterable-->
+                <!--placeholder="请选择"-->
+
+                <!--v-model="detailform.contractInfo.isOutSystemUnion"-->
+              <!--&gt;-->
+                <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
+              <!--</el-select>-->
+            </el-form-item>
+            <el-form-item
+              class="inline-formitem"
+              label="是否含系统外分包:"
+            >
+              <el-switch
+                :disabled="p.actpoint === 'look'"
+                class="inline-formitem-switch"
+                v-model="detailform.contractInfo.isOutSystemSub"
+                active-color="#409EFF"
+                inactive-color="#ddd"
+                active-value="0"
+                inactive-value="1"
+              >
+              </el-switch>
+              <!--<el-select-->
+                <!--:disabled="p.actpoint==='look'"-->
+                <!--filterable-->
+                <!--clearable-->
+                <!--placeholder="请选择"-->
+
+                <!--v-model="detailform.contractInfo.isOutSystemSub"-->
+              <!--&gt;-->
+                <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
+              <!--</el-select>-->
+            </el-form-item>
+            <br>
+            <el-form-item
+              label="新兴市场类别(一级)"
+              prop="contractInfo.marketFirstNameId"
+              :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+            >
+              <el-select
+                :disabled="p.actpoint === 'look'"
+                filterable
+                clearable
+                placeholder="请选择"
+                @change="getTwoSC"
+
+                v-model="detailform.contractInfo.marketFirstNameId"
               >
                 <el-option
                   :key="index"
                   :label="item.detailName"
                   :value="item.id"
-                  v-for="(item, index) in assemblyType"
+                  v-for="(item, index) in emergingMarket"
                 ></el-option>
               </el-select>
             </el-form-item>
             <el-form-item
-              label="建筑类型:"
-              prop="jzlx"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              v-if="detailform.contractInfo.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
-
+              label="新兴市场类别(二级)"
+              prop="contractInfo.marketSecondId"
+              :rules="detailform.contractInfo.marketFirstNameId&&emergingMarketTwo?{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }:{}"
             >
               <el-select
-                class="multiple-sel"
-                :disabled="p.actpoint==='look'"
-                multiple
-                @change="getMultipleName(detailform.jzlx,architecturalType,'otherBuildingTypeId','otherBuildingType')"
-                clearable
+                :disabled="p.actpoint === 'look'"
                 filterable
+                clearable
                 placeholder="请选择"
 
-                v-model="detailform.jzlx"
+                @change="
+                getName(
+                  detailform.contractInfo.marketSecondId,
+                  emergingMarketTwo,
+                  'marketSecondName'
+                )
+              "
+                v-model="detailform.contractInfo.marketSecondId"
               >
                 <el-option
                   :key="index"
                   :label="item.detailName"
                   :value="item.id"
-                  v-for="(item, index) in architecturalType"
+                  v-for="(item, index) in emergingMarketTwo"
                 ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item
-              label="建筑结构类型:"
-              prop="jzjglx"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              v-if="detailform.contractInfo.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
-
-            >
-              <el-select
-                class="multiple-sel"
-                :disabled="p.actpoint==='look'"
-                multiple
-                @change="getMultipleName(detailform.jzjglx,buildingStructure,'otherBuildingStructureTypeId','otherBuildingStructureType')"
-                clearable
-                filterable
-                placeholder="请选择"
-
-                v-model="detailform.jzjglx"
-              >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in buildingStructure"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item
-              label="场地名称:"
-              prop="cdmc"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              v-if="detailform.contractInfo.marketFirstNameId=='50cd5e9992ac4653920fac8c1f2eb2e3'"
-
-            >
-              <el-select
-                class="multiple-sel"
-                :disabled="p.actpoint==='look'"
-                multiple
-                clearable
-                filterable
-                placeholder="请选择"
-
-                v-model="detailform.cdmc"
-                @change="getMultipleName(detailform.cdmc,siteName,'siteNameId','siteName')"
-              >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in siteName"
-                ></el-option>
-              </el-select>
-            </el-form-item>
+            <br>
+            <div>
               <el-form-item
-                label="项目性质(一级):"
-                prop="contractInfo.projectNatureFirstId"
+                label="装配率(%)"
+                prop="contractInfo.otherAssemblyRate"
                 :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'blur',
+                }"
+                v-if="detailform.contractInfo.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'"
+
+                  v-model="detailform.contractInfo.otherAssemblyRate"
+                />
+              </el-form-item>
+              <el-form-item
+                label="装配类型"
+                prop="zplx"
+                :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'blur',
+                }"
+                v-if="detailform.contractInfo.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
               >
                 <el-select
-                  :disabled="p.actpoint === 'look'"
+                  class="multiple-sel"
+                  :disabled="p.actpoint==='look'"
+                  multiple
+                  @change="getMultipleName(detailform.zplx,assemblyType,'otherAssemblyTypeId','otherAssemblyType')"
                   clearable
                   filterable
                   placeholder="请选择"
-                  @change="getTwoXZ"
 
-                  v-model="detailform.contractInfo.projectNatureFirstId"
+                  v-model="detailform.zplx"
                 >
                   <el-option
                     :key="index"
                     :label="item.detailName"
                     :value="item.id"
-                    v-for="(item, index) in projectNature"
+                    v-for="(item, index) in assemblyType"
                   ></el-option>
                 </el-select>
               </el-form-item>
+            </div>
+            <div>
               <el-form-item
-                label="项目性质(二级):"
-                prop="contractInfo.projectNatureSecondId"
+                label="建筑类型"
+                prop="jzlx"
                 :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+                v-if="detailform.contractInfo.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
               >
                 <el-select
-                  :disabled="p.actpoint === 'look'"
+                  class="multiple-sel"
+                  :disabled="p.actpoint==='look'"
+                  multiple
+                  @change="getMultipleName(detailform.jzlx,architecturalType,'otherBuildingTypeId','otherBuildingType')"
                   clearable
                   filterable
                   placeholder="请选择"
 
-                  @change="
-                  getName(
-                    detailform.contractInfo.projectNatureSecondId,
-                    projectNatureTwo,
-                    'projectNaturetSecondName'
-                  )
-                "
-                  v-model="detailform.contractInfo.projectNatureSecondId"
+                  v-model="detailform.jzlx"
                 >
                   <el-option
                     :key="index"
                     :label="item.detailName"
                     :value="item.id"
-                    v-for="(item, index) in projectNatureTwo"
+                    v-for="(item, index) in architecturalType"
                   ></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item
-                label="是否为系统内联合体:"
-                prop="contractInfo.isInSystemUnion"
+                label="建筑结构类型"
+                prop="jzjglx"
                 :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+                v-if="detailform.contractInfo.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
               >
                 <el-select
+                  class="multiple-sel"
                   :disabled="p.actpoint==='look'"
+                  multiple
+                  @change="getMultipleName(detailform.jzjglx,buildingStructure,'otherBuildingStructureTypeId','otherBuildingStructureType')"
                   clearable
                   filterable
                   placeholder="请选择"
 
-                  v-model="detailform.contractInfo.isInSystemUnion"
+                  v-model="detailform.jzjglx"
                 >
-                  <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in buildingStructure"
+                  ></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item
-                label="是否含系统内分包:"
-                prop="contractInfo.isInSystemSub"
+                label="场地名称"
+                prop="cdmc"
                 :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
-              >
-                <el-select
-                  :disabled="p.actpoint==='look'"
-                  filterable
-                  clearable
-                  placeholder="请选择"
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+                v-if="detailform.contractInfo.marketFirstNameId=='50cd5e9992ac4653920fac8c1f2eb2e3'"
 
-                  v-model="detailform.contractInfo.isInSystemSub"
-                >
-                  <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item
-                label="是否为系统外联合体:"
-                prop="contractInfo.isOutSystemUnion"
-                :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
               >
                 <el-select
+                  class="multiple-sel"
                   :disabled="p.actpoint==='look'"
+                  multiple
                   clearable
                   filterable
                   placeholder="请选择"
 
-                  v-model="detailform.contractInfo.isOutSystemUnion"
+                  v-model="detailform.cdmc"
+                  @change="getMultipleName(detailform.cdmc,siteName,'siteNameId','siteName')"
                 >
-                  <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in siteName"
+                  ></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item
-                label="是否含系统外分包:"
-                prop="contractInfo.isOutSystemSub"
-                :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
-              >
-                <el-select
-                  :disabled="p.actpoint==='look'"
-                  filterable
-                  clearable
-                  placeholder="请选择"
+            </div>
+            <el-form-item
+              label="项目性质(一级)"
+              prop="contractInfo.projectNatureFirstId"
+              :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+            >
+              <el-select
+                :disabled="p.actpoint === 'look'"
+                clearable
+                filterable
+                placeholder="请选择"
+                @change="getTwoXZ"
 
-                  v-model="detailform.contractInfo.isOutSystemSub"
-                >
-                  <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item
-                v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
-                label="建安和勘察设计费(万元):"
-                prop="contractInfo.installDesignFee"
-                :rules="rules.contractAmount"
+                v-model="detailform.contractInfo.projectNatureFirstId"
               >
-                <el-input
-                  @blur="getOther"
-                  :disabled="p.actpoint === 'look'"
-                  clearable
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectNature"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="项目性质(二级)"
+              prop="contractInfo.projectNatureSecondId"
+              :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+            >
+              <el-select
+                :disabled="p.actpoint === 'look'"
+                clearable
+                filterable
+                placeholder="请选择"
 
-                  v-model="detailform.contractInfo.installDesignFee"/>
-              </el-form-item>
-              <el-form-item
-                v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
-                label="其他投资(万元):"
-                prop="contractInfo.otherInvest"
-                :rules="rules.contractAmount"
+                @change="
+                getName(
+                  detailform.contractInfo.projectNatureSecondId,
+                  projectNatureTwo,
+                  'projectNaturetSecondName'
+                )
+              "
+                v-model="detailform.contractInfo.projectNatureSecondId"
               >
-                <el-input
-                  :disabled="true"
-                  clearable
-
-                  v-model="detailform.contractInfo.otherInvest"/>
-              </el-form-item>
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectNatureTwo"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <br>
             <el-form-item
               v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
-              label="本企业实际应投入资本金:"
+              label="建安和勘察设计费(万元)"
+              prop="contractInfo.installDesignFee"
+              :rules="rules.contractAmount"
+            >
+              <el-input
+                @blur="getOther"
+                :disabled="p.actpoint === 'look'"
+                clearable
+
+                v-model="detailform.contractInfo.installDesignFee"/>
+            </el-form-item>
+            <el-form-item
+              v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
+              label="其他投资(万元)"
+              prop="contractInfo.otherInvest"
+              :rules="rules.contractAmount"
+            >
+              <el-input
+                :disabled="true"
+                clearable
+
+                v-model="detailform.contractInfo.otherInvest"/>
+            </el-form-item>
+            <br>
+            <el-form-item
+              v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
+              label="本企业实际应投入资本金"
               prop="contractInfo.actualInvest"
               :rules="rules.contractAmount"
             >
@@ -774,7 +839,7 @@
             </el-form-item>
             <el-form-item
               v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
-              label="本企业建安部分已分配:"
+              label="本企业建安部分已分配"
               prop="contractInfo.installDesignAllocated"
               :rules="rules.contractAmount"
             >
@@ -786,7 +851,7 @@
             </el-form-item>
             <el-form-item
               v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
-              label="本企业建安部分未分配:"
+              label="本企业建安部分未分配"
               prop="contractInfo.installDesignUnallocat"
               :rules="rules.contractAmount"
             >
@@ -796,678 +861,688 @@
 
                 v-model="detailform.contractInfo.installDesignUnallocat"/>
             </el-form-item>
-              <el-form-item
-                v-if="detailform.contractInfo.isInSystemUnion==='0'"
-                label="未分配(万元):"
-                prop="contractInfo.unAllocatedFee"
-                :rules="rules.contractAmount"
+            <br>
+            <el-form-item
+              label="承揽所属机构"
+
+            >
+              <el-select
+                :disabled="p.actpoint==='look'"
+                filterable
+                clearable
+                placeholder="请选择"
+
+                v-model="detailform.contractInfo.contractOrgId"
               >
-                <el-input
-                  :disabled="p.actpoint === 'look'"
-                  clearable
+                <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options2"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="承揽所属省市"
 
-                  v-model="detailform.contractInfo.unAllocatedFee"/>
-              </el-form-item>
-              <el-form-item
-                v-if="detailform.contractInfo.isInSystemUnion==='0'"
-                label="自留份额(万元):"
-                prop="contractInfo.selfCash"
-                :rules="rules.contractAmount"
+            >
+              <el-select
+                :disabled="p.actpoint==='look'"
+                clearable
+                filterable
+                placeholder="请选择"
+
+                v-model="detailform.contractInfo.contractProvinceId"
+                @change="
+                getName(
+                  detailform.contractInfo.contractProvinceId,
+                  ssList,
+                  'contractProvinceName'
+                )
+              "
               >
-                <el-input
-                  :disabled="p.actpoint === 'look'"
-                  clearable
+                <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in ssList"></el-option>
+              </el-select>
+            </el-form-item>
+            <br>
+            <el-form-item
+              label="录入单位"
+              prop="contractInfo.createOrgName"
+              :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'blur',
+                }"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'"
+                clearable
+                placeholder="请输入"
 
-                  v-model="detailform.contractInfo.selfCash"/>
-              </el-form-item>
-              <el-form-item
-                label="承揽所属机构:"
+                v-model="detailform.contractInfo.createOrgName"
+              />
+            </el-form-item>
+            <el-form-item
+              label="设计单位"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'"
+                clearable
+                placeholder="请输入"
+
+                v-model="detailform.contractInfo.designOrg"
+              />
+            </el-form-item>
+            <br>
+            <el-form-item
+          label="中标日期"
+          prop="contractInfo.bidTime"
+          :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+        >
+          <el-date-picker
+            :disabled="p.actpoint === 'look'"
+            filterable
+            clearable
+            type="date"
+            value-format="timestamp"
+            v-model="detailform.contractInfo.bidTime"
+
+          >
+          </el-date-picker>
+        </el-form-item>
+            <el-form-item
+              label="开工日期"
+            >
+              <el-date-picker
+                :disabled="p.actpoint === 'look'"
+                filterable
+                clearable
+                type="date"
+                value-format="timestamp"
+                v-model="detailform.contractInfo.startTime"
 
               >
-                <el-select
-                  :disabled="p.actpoint==='look'"
-                  filterable
-                  clearable
-                  placeholder="请选择"
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item
+          label="竣工日期"
+        >
+          <el-date-picker
+            :disabled="p.actpoint === 'look'"
+            filterable
+            clearable
+            type="date"
+            value-format="timestamp"
+            v-model="detailform.contractInfo.endTime"
 
-                  v-model="detailform.contractInfo.contractOrgId"
-                >
-                  <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options2"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item
-                label="承揽所属省市:"
+          >
+          </el-date-picker>
+        </el-form-item>
+            <el-form-item
+              label="合同类型"
+            >
+              <el-input
+                disabled
+                clearable
+                placeholder="请输入"
 
-              >
-                <el-select
-                  :disabled="p.actpoint==='look'"
-                  clearable
-                  filterable
-                  placeholder="请选择"
+                v-model="detailform.contractInfo.contractType=='2'?'补充合同':'主合同'"
+              />
+            </el-form-item>
+            <el-form-item
+              label="工期(天)"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'"
+                clearable
+                placeholder="请输入"
 
-                  v-model="detailform.contractInfo.contractProvinceId"
-                  @change="
-                  getName(
-                    detailform.contractInfo.contractProvinceId,
-                    ssList,
-                    'contractProvinceName'
-                  )
-                "
-                >
-                  <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in ssList"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item
-                label="开工日期:"
-              >
-                <el-date-picker
-                  :disabled="p.actpoint === 'look'"
-                  filterable
-                  clearable
-                  type="date"
-                  value-format="timestamp"
-                  v-model="detailform.contractInfo.startTime"
-
-                >
-                </el-date-picker>
-              </el-form-item>
-              <el-form-item
-                label="设计单位:"
-              >
-                <el-input
-                  :disabled="p.actpoint === 'look'"
-                  clearable
-                  placeholder="请输入"
-
-                  v-model="detailform.contractInfo.designOrg"
-                />
-              </el-form-item>
-              <el-form-item
-                label="起讫地点:"
-              >
-                <el-input
-                  :disabled="p.actpoint === 'look'"
-                  clearable
-                  placeholder="请输入"
-
-                  v-model="detailform.contractInfo.beginEndPlace"
-                />
-              </el-form-item>
-              <el-form-item
-                label="竣工日期:"
-              >
-                <el-date-picker
-                  :disabled="p.actpoint === 'look'"
-                  filterable
-                  clearable
-                  type="date"
-                  value-format="timestamp"
-                  v-model="detailform.contractInfo.endTime"
-
-                >
-                </el-date-picker>
-              </el-form-item>
-              <el-form-item
-                label="录入单位:"
-                prop="contractInfo.createOrgName"
-                :rules="{
+                v-model="detailform.contractInfo.contractPeriod"
+              />
+            </el-form-item>
+            <br>
+            <el-form-item
+            label="录入时间"
+            prop="contractInfo.createTime"
+            :rules="{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
               }"
-              >
+          >
+          <el-date-picker
+            :disabled="p.actpoint === 'look'"
+            filterable
+            clearable
+            type="date"
+            value-format="timestamp"
+            v-model="detailform.contractInfo.createTime"
+
+          >
+          </el-date-picker>
+        </el-form-item>
+            <el-form-item
+              label="起讫地点"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'"
+                clearable
+                placeholder="请输入"
+
+                v-model="detailform.contractInfo.beginEndPlace"
+              />
+            </el-form-item>
+            <br>
+            <el-form-item
+              label="扩展字段1"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'"
+                clearable
+                placeholder="请输入"
+              />
+            </el-form-item>
+            <el-form-item
+              label="扩展字段2"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'"
+                clearable
+                placeholder="请输入"
+              />
+            </el-form-item>
+            <el-form-item
+              label="扩展字段3"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'"
+                clearable
+                placeholder="请输入"
+              />
+            </el-form-item>
+            <div>
+              <el-form-item
+                class="neirong"
+                label="项目内容(最多600字)"
+               >
+                <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                 <el-input
                   :disabled="p.actpoint === 'look'"
+                  type="textarea"
                   clearable
                   placeholder="请输入"
 
-                  v-model="detailform.contractInfo.createOrgName"
+                  v-model="detailform.contractInfo.inforContent"
                 />
               </el-form-item>
+            </div>
+            <div>
               <el-form-item
-                label="录入时间:"
-                prop="contractInfo.createTime"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
+                class="neirong"
+                label="备注(最多600字)"
               >
-                <el-date-picker
-                  :disabled="p.actpoint === 'look'"
-                  filterable
-                  clearable
-                  type="date"
-                  value-format="timestamp"
-                  v-model="detailform.contractInfo.createTime"
-
-                >
-                </el-date-picker>
-              </el-form-item>
-              <el-form-item
-                label="合同类型:"
-              >
-                <el-input
-                  disabled
-                  clearable
-                  placeholder="请输入"
-
-                  v-model="detailform.contractInfo.contractType=='2'?'补充合同':'主合同'"
-                />
-              </el-form-item>
-              <el-form-item
-                label="中标日期:"
-                prop="contractInfo.bidTime"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              >
-                <el-date-picker
-                  :disabled="p.actpoint === 'look'"
-                  filterable
-                  clearable
-                  type="date"
-                  value-format="timestamp"
-                  v-model="detailform.contractInfo.bidTime"
-
-                >
-                </el-date-picker>
-              </el-form-item>
-              <el-form-item
-                label="工期(天):"
-              >
+                <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                 <el-input
                   :disabled="p.actpoint === 'look'"
+                  type="textarea"
                   clearable
                   placeholder="请输入"
-
-                  v-model="detailform.contractInfo.contractPeriod"
+                  v-model="detailform.contractInfo.remarks"
                 />
               </el-form-item>
-              <div>
-                <el-form-item
-                  class="neirong"
-                  label="项目内容(最多600字):"
-                 >
-                  <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
-                  <el-input
-                    :disabled="p.actpoint === 'look'"
-                    type="textarea"
-                    clearable
-                    placeholder="请输入"
-
-                    v-model="detailform.contractInfo.inforContent"
-                  />
-                </el-form-item>
-              </div>
-              <div>
-                <el-form-item
-                  class="neirong"
-                  label="备注(最多600字):"
-                >
-                  <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
-                  <el-input
-                    :disabled="p.actpoint === 'look'"
-                    type="textarea"
-                    clearable
-                    placeholder="请输入"
-                    v-model="detailform.contractInfo.remarks"
-                  />
-                </el-form-item>
-              </div>
-              <p class="detail-p">
-                <span>中标通知书(最大10MB): </span>
-                <el-button
-                  size="small"
-                  type="primary"
-                  @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile','fileList1')">
-                  点击上传
-                </el-button>
-                <!--<el-upload-->
-                  <!--ref="fileList1"-->
-                  <!--v-show="p.actpoint !== 'look'"-->
-                  <!--class="upload-demo detailUpload detatil-flie-btn"-->
-                  <!--:action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"-->
-                  <!--:on-success="handleChange1"-->
-                  <!--:on-change="fileChage1"-->
-                  <!--:on-error="handleChange1"-->
-                  <!--:on-remove="handleRemove1"-->
-                  <!--:show-file-list="detailform.fileList1.showFile"-->
-                  <!--multiple-->
-                <!--&gt;-->
-                  <!--<el-button size="small" type="primary">点击上传</el-button>-->
-                <!--</el-upload>-->
-                <!--<el-progress v-if="detailform.fileList1.percentage" class="upload-progress" :text-inside="true" :stroke-width="24" :percentage="detailform.fileList1.percentage" :status="detailform.fileList1.status"></el-progress>-->
-              </p>
-                <el-table
-                  :data="detailform.fileList1"
-                  :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
-                  @selection-change="handleSelectionChange"
+            </div>
+            <p class="detail-p">
+              <span>中标通知书(最大10MB): </span>
+              <el-button
+                v-show="p.actpoint !== 'look'"
+                size="small"
+                type="primary"
+                @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile','fileList1')">
+                点击上传
+              </el-button>
+              <!--<el-upload-->
+                <!--ref="fileList1"-->
+                <!--v-show="p.actpoint !== 'look'"-->
+                <!--class="upload-demo detailUpload detatil-flie-btn"-->
+                <!--:action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"-->
+                <!--:on-success="handleChange1"-->
+                <!--:on-change="fileChage1"-->
+                <!--:on-error="handleChange1"-->
+                <!--:on-remove="handleRemove1"-->
+                <!--:show-file-list="detailform.fileList1.showFile"-->
+                <!--multiple-->
+              <!--&gt;-->
+                <!--<el-button size="small" type="primary">点击上传</el-button>-->
+              <!--</el-upload>-->
+              <!--<el-progress v-if="detailform.fileList1.percentage" class="upload-progress" :text-inside="true" :stroke-width="24" :percentage="detailform.fileList1.percentage" :status="detailform.fileList1.status"></el-progress>-->
+            </p>
+              <el-table
+                :data="detailform.fileList1"
+                :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+                @selection-change="handleSelectionChange"
+                align="center"
+                border
+                class="contractInfoTable"
+                ref="table"
+                style="width: 100%;height: auto;"
+              >
+                <el-table-column
+                  :width="55"
                   align="center"
-                  border
-                  class="contractInfoTable"
-                  ref="table"
-                  style="width: 100%;height: auto;"
+                  label="序号"
+                  show-overflow-tooltip
+                  type="index"
+                ></el-table-column>
+                <el-table-column align="center" :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+
+                </el-table-column>
+
+                <el-table-column align="center" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    {{(scope.row.fileSize/1024).toFixed(2)}}
+                  </template>
+                </el-table-column>
+                <el-table-column align="center" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+
+                </el-table-column>
+
+                <el-table-column
+                  align="center"
+                  :resizable="false"
+                  fixed="right"
+                  label="操作"
+                  show-overflow-tooltip
+                  v-if="p.actpoint!=='look'"
+                  width="200"
                 >
-                  <el-table-column
-                    :width="55"
-                    align="center"
-                    label="序号"
-                    show-overflow-tooltip
-                    type="index"
-                  ></el-table-column>
-                  <el-table-column align="center" :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-link :underline="false" @click="handleRemove1(scope.row,scope.$index)" type="warning">删除</el-link>
+                  </template>
+                </el-table-column>
+              </el-table>
+            <p>
+              <span>合同附件(最大10MB): </span>
+              <el-button
+                v-show="p.actpoint !== 'look'"
+                size="small"
+                type="primary"
+                @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','fileList2')">
+                点击上传
+              </el-button>
+              <!--<el-upload-->
+                <!--ref="fileList2"-->
+                <!--v-show="p.actpoint !== 'look'"-->
+                <!--class="upload-demo detailUpload detatil-flie-btn"-->
+                <!--:action="'/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile'"-->
+                <!--:on-success="handleChange2"-->
+                <!--:on-error="handleChange2"-->
+                <!--:on-remove="handleRemove2"-->
+                <!--:show-file-list="detailform.fileList2.showFile"-->
+                <!--multiple-->
+              <!--&gt;-->
+                <!--<el-button size="small" type="primary">点击上传</el-button>-->
+              <!--</el-upload>-->
+            </p>
+            <el-table
+              :data="detailform.fileList2"
+              :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+              @selection-change="handleSelectionChange"
+              align="center"
+              border
+              class="contractInfoTable"
+              ref="table"
+              style="width: 100%;height: auto;"
+            >
+              <el-table-column
+                :width="55"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+              <el-table-column align="center" :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
 
-                  </el-table-column>
+              </el-table-column>
 
-                  <el-table-column align="center" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip>
-                    <template slot-scope="scope">
-                      {{(scope.row.fileSize/1024).toFixed(2)}}
-                    </template>
-                  </el-table-column>
-                  <el-table-column align="center" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+              <el-table-column align="center" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip>
+                <template slot-scope="scope">
+                  {{(scope.row.fileSize/1024).toFixed(2)}}
+                </template>
+              </el-table-column>
+              <el-table-column align="center" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
 
-                  </el-table-column>
+              </el-table-column>
 
-                  <el-table-column
-                    align="center"
-                    :resizable="false"
-                    fixed="right"
-                    label="操作"
-                    show-overflow-tooltip
-                    v-if="p.actpoint!=='look'"
-                    width="200"
+              <el-table-column
+                align="center"
+                :resizable="false"
+                fixed="right"
+                label="操作"
+                show-overflow-tooltip
+                v-if="p.actpoint!=='look'"
+                width="200"
+              >
+                <template slot-scope="scope">
+                  <el-link :underline="false" @click="handleRemove2(scope.row,scope.$index)" type="warning">删除</el-link>
+                </template>
+              </el-table-column>
+            </el-table>
+            <p >
+              <span>工程量清单和劳材机附件(两种文件都要)(最大10MB): </span>
+              <el-button
+                v-show="p.actpoint !== 'look'"
+                size="small"
+                type="primary"
+                @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/03/uploadFile','fileList3')">
+                点击上传
+              </el-button>
+              <!--<el-upload-->
+                <!--ref="fileList3"-->
+                <!--v-show="p.actpoint !== 'look'"-->
+                <!--class="upload-demo detailUpload detatil-flie-btn"-->
+                <!--:action="'/api/contract/topInfo/CommonFiles/contractInfo/03/uploadFile'"-->
+                <!--:on-success="handleChange3"-->
+                <!--:on-error="handleChange3"-->
+                <!--:on-remove="handleRemove3"-->
+                <!--:show-file-list="detailform.fileList3.showFile"-->
+                <!--multiple-->
+              <!--&gt;-->
+                <!--<el-button size="small" type="primary">点击上传</el-button>-->
+              <!--</el-upload>-->
+            </p>
+            <el-table
+              :data="detailform.fileList3"
+              :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+              @selection-change="handleSelectionChange"
+              align="center"
+              border
+              class="contractInfoTable"
+              ref="table"
+              style="width: 100%;height: auto;"
+
+            >
+              <el-table-column
+                :width="55"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+              <el-table-column align="center" :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+
+              </el-table-column>
+
+              <el-table-column align="center" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip>
+                <template slot-scope="scope">
+                  {{(scope.row.fileSize/1024).toFixed(2)}}
+                </template>
+              </el-table-column>
+              <el-table-column align="center" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+
+              </el-table-column>
+              <el-table-column
+                align="center"
+                :resizable="false"
+                fixed="right"
+                label="操作"
+                show-overflow-tooltip
+                v-if="p.actpoint!=='look'"
+                width="200"
+              >
+                <template slot-scope="scope">
+                  <el-link :underline="false" @click="handleRemove3(scope.row,scope.$index)" type="warning">删除</el-link>
+                </template>
+              </el-table-column>
+            </el-table>
+            <p>
+              <span >标段信息: </span>
+              <el-button
+                v-show="p.actpoint !== 'look'"
+                class="detatil-flie-btn"
+                @click="openBd('add')"
+                type="primary"
+              >新增</el-button >
+            </p>
+            <el-table
+              :data="detailform.contractInfoSectionList"
+              :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+              @selection-change="handleSelectionChange"
+              align="center"
+              border
+              class="contractInfoTable"
+              ref="table"
+              style="width: 100%;height: auto;"
+            >
+              <el-table-column
+                :width="80"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+              <el-table-column align="center" :width="200" :resizable="false" label="标段名称" prop="sectionName" show-overflow-tooltip>
+                <!--<template slot-scope="scope">-->
+                <!--<el-form-item-->
+                <!--:prop="'topInfoSectionList.'+scope.$index+'.inforName'"-->
+                <!--:rules="{-->
+                <!--required: true, message: '此项不能为空', trigger: 'blur'-->
+                <!--}"-->
+                <!--label-width="0"-->
+                <!--&gt;-->
+                <!--<el-input max-length=50 clearable :disabled="p.actpoint==='look'"  v-model="scope.row.inforName"></el-input>-->
+                <!--</el-form-item>-->
+                <!--&lt;!&ndash; <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> &ndash;&gt;-->
+                <!--</template>-->
+              </el-table-column>
+
+              <el-table-column align="center" :width="200" :resizable="false" label="风险费(万元)" prop="riskFee" show-overflow-tooltip>
+
+              </el-table-column>
+
+              <el-table-column align="center" :width="200" :resizable="false" label="安全费(万元)" prop="safetyCost" show-overflow-tooltip>
+
+              </el-table-column>
+
+              <el-table-column align="center" :width="200" :resizable="false" label="投标限价(万元)" prop="biddingPriceLimit" show-overflow-tooltip>
+
+              </el-table-column>
+
+              <el-table-column align="center" :width="200" :resizable="false" label="投标保证金(万元)" prop="tenderSecurity" show-overflow-tooltip>
+
+              </el-table-column>
+
+              <el-table-column align="center" :width="200" :resizable="false" label="投标价(万元)" prop="bidPrice" show-overflow-tooltip>
+
+              </el-table-column>
+
+              <el-table-column align="center" :width="200" :resizable="false" label="投标费率(百分比)" prop="tenderRate" show-overflow-tooltip>
+
+              </el-table-column>
+
+              <el-table-column align="center" :width="200" :resizable="false" label="开标地点" prop="openBidPlaceName" show-overflow-tooltip>
+
+              </el-table-column>
+
+              <el-table-column align="center" :width="200" :resizable="false" label="评标办法" prop="bidEvaluationMethodName" show-overflow-tooltip>
+
+              </el-table-column>
+
+              <el-table-column align="center" :width="200" :resizable="false" label="开标日期" prop="dateOfBidOpeningName" show-overflow-tooltip>
+
+              </el-table-column>
+
+              <el-table-column align="center" :width="200" :resizable="false" label="参与投标单位" prop="participatingUnitsName" show-overflow-tooltip>
+
+              </el-table-column>
+
+              <el-table-column align="center" width="200" :resizable="false" label="其他投标单位(系统内)" prop="part" show-overflow-tooltip>
+                <template slot-scope="scope">
+              <span v-for="(item,index ) in scope.row.contractInfoSectionOrgList">
+                  {{item.orgType==1?item.orgName:''}}
+                  {{scope.row.contractInfoSectionOrgList[index+1]&& index>0&&scope.row.contractInfoSectionOrgList[index-1].orgType==1 && scope.row.contractInfoSectionOrgList[index+1].orgType==1? ',':''}}
+              </span>
+
+                </template>
+              </el-table-column>
+
+              <el-table-column align="center" width="200" :resizable="false" label="其他投标单位(系统外)" prop="part" show-overflow-tooltip>
+                <template slot-scope="scope">
+             <span v-for="(item,index ) in scope.row.contractInfoSectionOrgList">
+                {{item.orgType==2?item.orgName:''}}
+                {{scope.row.contractInfoSectionOrgList[index+1]&&index>0&&scope.row.contractInfoSectionOrgList[index-1].orgType==2 && scope.row.contractInfoSectionOrgList[index+1].orgType==2? ',':''}}
+              </span>
+                </template>
+              </el-table-column>
+
+              <el-table-column align="center" width="200" :resizable="false" label="其他未列单位" prop="otherUnitsNotListed" show-overflow-tooltip>
+
+              </el-table-column>
+
+              <el-table-column align="center" width="200" :resizable="false" label="项目经理" prop="projectManager" show-overflow-tooltip>
+
+              </el-table-column>
+
+              <el-table-column align="center" width="200" :resizable="false" label="项目副经理" prop="deputyProjectManager	" show-overflow-tooltip>
+
+              </el-table-column>
+
+              <el-table-column align="center" width="200" :resizable="false" label="技术负责人" prop="technicalDirector" show-overflow-tooltip>
+
+              </el-table-column>
+
+              <el-table-column align="center" width="200" :resizable="false" label="安全负责人" prop="personInChargeOfSafety" show-overflow-tooltip>
+
+              </el-table-column>
+
+              <el-table-column align="center" width="200" :resizable="false" label="财务负责人" prop="personInChargeOfFinance" show-overflow-tooltip>
+
+              </el-table-column>
+
+              <el-table-column align="center" width="200" :resizable="false" label="成本负责人" prop="costOwner" show-overflow-tooltip>
+
+              </el-table-column>
+
+              <el-table-column
+                :resizable="false"
+                fixed="right"
+                label="操作"
+                show-overflow-tooltip
+                v-if="p.actpoint!=='look'"
+                align="center"
+                width="100"
+              >
+                <template slot-scope="scope">
+                  <el-link
+                    :underline="false"
+                    @click="del(scope.$index,scope.row,detailform.topInfoSectionList,'bd')"
+                    type="warning">删除
+                  </el-link>
+                  <el-link
+                    :underline="false"
+                    @click="openBd('edit',scope.row,scope.$index)"
+                    type="warning">修改
+                  </el-link>
+                </template>
+              </el-table-column>
+            </el-table>
+            <p>
+              <span >项目地点: </span>
+              <el-button
+                v-show="p.actpoint !== 'look'"
+                class="detatil-flie-btn"
+                @click="add('dd')"
+                type="primary"
+              >新增</el-button >
+            </p>
+          <el-table
+              :data="detailform.topInfoSiteList"
+              :key="key"
+              :header-cell-style="{
+              'text-align': 'center',
+              'background-color': 'rgba(246,248,252,1)',
+              color: 'rgba(0,0,0,1)',
+            }"
+              @selection-change="handleSelectionChange"
+              align="center"
+              border
+              class="contractInfoTable"
+              ref="table"
+              style="width: 100%;height: auto;"
+            >
+              <el-table-column
+                :width="80"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+              <el-table-column
+                :resizable="false"
+                label="项目地点"
+                align="center"
+                prop="inforName"
+              >
+                <template slot-scope="scope">
+                  <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
+                  <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
+                </template>
+              </el-table-column>
+
+              <el-table-column
+                :resizable="false"
+                label="份额(万元)"
+                prop="contractAmount"
+                show-overflow-tooltip
+                align="center"
+              >
+                <template slot-scope="scope">
+                  <el-form-item class="tabelForm" :prop="'topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
+                    <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                    <el-input
+                      clearable
+                      :disabled="p.actpoint === 'look'"
+                      v-model="scope.row.contractAmount"
+                    ></el-input>
+                  </el-form-item>
+                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                </template>
+              </el-table-column>
+
+              <el-table-column
+                :resizable="false"
+                label="是否为主地点"
+                prop="contractAmount"
+                align="center"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-radio v-model="scope.row.isMain" label="1">是</el-radio>
+                  <el-radio v-model="scope.row.isMain" label="0">否</el-radio>
+                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                </template>
+              </el-table-column>
+
+              <el-table-column
+                v-show="!p.actpoint === 'look'"
+                :resizable="false"
+                fixed="right"
+                label="操作"
+                align="center"
+                width="200"
+                show-overflow-tooltip
+                v-if="p.actpoint !== 'look'"
+              >
+                <template slot-scope="scope">
+                  <el-link
+                    :underline="false"
+                    @click="del(scope.$index,scope.row,detailform.topInfoSiteList)"
+                    type="warning"
+                  >删除
+                  </el-link
                   >
-                    <template slot-scope="scope">
-                      <el-link :underline="false" @click="handleRemove1(scope.row,scope.$index)" type="warning">删除</el-link>
-                    </template>
-                  </el-table-column>
-                </el-table>
-              <p>
-                <span>合同附件(最大10MB): </span>
-                <el-button
-                  size="small"
-                  type="primary"
-                  @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','fileList2')">
-                  点击上传
-                </el-button>
-                <!--<el-upload-->
-                  <!--ref="fileList2"-->
-                  <!--v-show="p.actpoint !== 'look'"-->
-                  <!--class="upload-demo detailUpload detatil-flie-btn"-->
-                  <!--:action="'/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile'"-->
-                  <!--:on-success="handleChange2"-->
-                  <!--:on-error="handleChange2"-->
-                  <!--:on-remove="handleRemove2"-->
-                  <!--:show-file-list="detailform.fileList2.showFile"-->
-                  <!--multiple-->
-                <!--&gt;-->
-                  <!--<el-button size="small" type="primary">点击上传</el-button>-->
-                <!--</el-upload>-->
-              </p>
-              <el-table
-                :data="detailform.fileList2"
-                :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
-                @selection-change="handleSelectionChange"
-                align="center"
-                border
-                class="contractInfoTable"
-                ref="table"
-                style="width: 100%;height: auto;"
-              >
-                <el-table-column
-                  :width="55"
-                  align="center"
-                  label="序号"
-                  show-overflow-tooltip
-                  type="index"
-                ></el-table-column>
-                <el-table-column align="center" :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column align="center" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip>
-                  <template slot-scope="scope">
-                    {{(scope.row.fileSize/1024).toFixed(2)}}
-                  </template>
-                </el-table-column>
-                <el-table-column align="center" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column
-                  align="center"
-                  :resizable="false"
-                  fixed="right"
-                  label="操作"
-                  show-overflow-tooltip
-                  v-if="p.actpoint!=='look'"
-                  width="200"
-                >
-                  <template slot-scope="scope">
-                    <el-link :underline="false" @click="handleRemove2(scope.row,scope.$index)" type="warning">删除</el-link>
-                  </template>
-                </el-table-column>
-              </el-table>
-              <p >
-                <span>工程量清单和劳材机附件(两种文件都要)(最大10MB): </span>
-                <el-button
-                  size="small"
-                  type="primary"
-                  @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/03/uploadFile','fileList3')">
-                  点击上传
-                </el-button>
-                <!--<el-upload-->
-                  <!--ref="fileList3"-->
-                  <!--v-show="p.actpoint !== 'look'"-->
-                  <!--class="upload-demo detailUpload detatil-flie-btn"-->
-                  <!--:action="'/api/contract/topInfo/CommonFiles/contractInfo/03/uploadFile'"-->
-                  <!--:on-success="handleChange3"-->
-                  <!--:on-error="handleChange3"-->
-                  <!--:on-remove="handleRemove3"-->
-                  <!--:show-file-list="detailform.fileList3.showFile"-->
-                  <!--multiple-->
-                <!--&gt;-->
-                  <!--<el-button size="small" type="primary">点击上传</el-button>-->
-                <!--</el-upload>-->
-              </p>
-              <el-table
-                :data="detailform.fileList3"
-                :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
-                @selection-change="handleSelectionChange"
-                align="center"
-                border
-                class="contractInfoTable"
-                ref="table"
-                style="width: 100%;height: auto;"
-
-              >
-                <el-table-column
-                  :width="55"
-                  align="center"
-                  label="序号"
-                  show-overflow-tooltip
-                  type="index"
-                ></el-table-column>
-                <el-table-column align="center" :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column align="center" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip>
-                  <template slot-scope="scope">
-                    {{(scope.row.fileSize/1024).toFixed(2)}}
-                  </template>
-                </el-table-column>
-                <el-table-column align="center" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
-
-                </el-table-column>
-                <el-table-column
-                  align="center"
-                  :resizable="false"
-                  fixed="right"
-                  label="操作"
-                  show-overflow-tooltip
-                  v-if="p.actpoint!=='look'"
-                  width="200"
-                >
-                  <template slot-scope="scope">
-                    <el-link :underline="false" @click="handleRemove3(scope.row,scope.$index)" type="warning">删除</el-link>
-                  </template>
-                </el-table-column>
-              </el-table>
-              <p>
-                <span >标段信息: </span>
-                <el-button
-                  v-show="p.actpoint !== 'look'"
-                  class="detatil-flie-btn"
-                  @click="openBd('add')"
-                  type="primary"
-                >新增</el-button >
-              </p>
-              <el-table
-                :data="detailform.contractInfoSectionList"
-                :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
-                @selection-change="handleSelectionChange"
-                align="center"
-                border
-                class="contractInfoTable"
-                ref="table"
-                style="width: 100%;height: auto;"
-              >
-                <el-table-column
-                  :width="80"
-                  align="center"
-                  label="序号"
-                  show-overflow-tooltip
-                  type="index"
-                ></el-table-column>
-                <el-table-column align="center" :width="200" :resizable="false" label="标段名称" prop="sectionName" show-overflow-tooltip>
-                  <!--<template slot-scope="scope">-->
-                  <!--<el-form-item-->
-                  <!--:prop="'topInfoSectionList.'+scope.$index+'.inforName'"-->
-                  <!--:rules="{-->
-                  <!--required: true, message: '此项不能为空', trigger: 'blur'-->
-                  <!--}"-->
-                  <!--label-width="0"-->
-                  <!--&gt;-->
-                  <!--<el-input max-length=50 clearable :disabled="p.actpoint==='look'"  v-model="scope.row.inforName"></el-input>-->
-                  <!--</el-form-item>-->
-                  <!--&lt;!&ndash; <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> &ndash;&gt;-->
-                  <!--</template>-->
-                </el-table-column>
-
-                <el-table-column align="center" :width="200" :resizable="false" label="风险费(万元)" prop="riskFee" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column align="center" :width="200" :resizable="false" label="安全费(万元)" prop="safetyCost" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column align="center" :width="200" :resizable="false" label="投标限价(万元)" prop="biddingPriceLimit" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column align="center" :width="200" :resizable="false" label="投标保证金(万元)" prop="tenderSecurity" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column align="center" :width="200" :resizable="false" label="投标价(万元)" prop="bidPrice" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column align="center" :width="200" :resizable="false" label="投标费率(百分比)" prop="tenderRate" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column align="center" :width="200" :resizable="false" label="开标地点" prop="openBidPlaceName" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column align="center" :width="200" :resizable="false" label="评标办法" prop="bidEvaluationMethodName" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column align="center" :width="200" :resizable="false" label="开标日期" prop="dateOfBidOpeningName" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column align="center" :width="200" :resizable="false" label="参与投标单位" prop="participatingUnitsName" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column align="center" width="200" :resizable="false" label="其他投标单位(系统内)" prop="part" show-overflow-tooltip>
-                  <template slot-scope="scope">
-                <span v-for="(item,index ) in scope.row.contractInfoSectionOrgList">
-                    {{item.orgType==1?item.orgName:''}}
-                    {{scope.row.contractInfoSectionOrgList[index+1]&& index>0&&scope.row.contractInfoSectionOrgList[index-1].orgType==1 && scope.row.contractInfoSectionOrgList[index+1].orgType==1? ',':''}}
-                </span>
-
-                  </template>
-                </el-table-column>
-
-                <el-table-column align="center" width="200" :resizable="false" label="其他投标单位(系统外)" prop="part" show-overflow-tooltip>
-                  <template slot-scope="scope">
-               <span v-for="(item,index ) in scope.row.contractInfoSectionOrgList">
-                  {{item.orgType==2?item.orgName:''}}
-                  {{scope.row.contractInfoSectionOrgList[index+1]&&index>0&&scope.row.contractInfoSectionOrgList[index-1].orgType==2 && scope.row.contractInfoSectionOrgList[index+1].orgType==2? ',':''}}
-                </span>
-                  </template>
-                </el-table-column>
-
-                <el-table-column align="center" width="200" :resizable="false" label="其他未列单位" prop="otherUnitsNotListed" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column align="center" width="200" :resizable="false" label="项目经理" prop="projectManager" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column align="center" width="200" :resizable="false" label="项目副经理" prop="deputyProjectManager	" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column align="center" width="200" :resizable="false" label="技术负责人" prop="technicalDirector" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column align="center" width="200" :resizable="false" label="安全负责人" prop="personInChargeOfSafety" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column align="center" width="200" :resizable="false" label="财务负责人" prop="personInChargeOfFinance" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column align="center" width="200" :resizable="false" label="成本负责人" prop="costOwner" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column
-                  :resizable="false"
-                  fixed="right"
-                  label="操作"
-                  show-overflow-tooltip
-                  v-if="p.actpoint!=='look'"
-                  align="center"
-                  width="100"
-                >
-                  <template slot-scope="scope">
-                    <el-link
-                      :underline="false"
-                      @click="del(scope.$index,scope.row,detailform.topInfoSectionList,'bd')"
-                      type="warning">删除
-                    </el-link>
-                    <el-link
-                      :underline="false"
-                      @click="openBd('edit',scope.row,scope.$index)"
-                      type="warning">修改
-                    </el-link>
-                  </template>
-                </el-table-column>
-              </el-table>
-              <p>
-                <span >项目地点: </span>
-                <el-button
-                  v-show="p.actpoint !== 'look'"
-                  class="detatil-flie-btn"
-                  @click="add('dd')"
-                  type="primary"
-                >新增</el-button >
-              </p>
-              <el-table
-                :data="detailform.topInfoSiteList"
-                :key="key"
-                :header-cell-style="{
-                'text-align': 'center',
-                'background-color': 'rgba(246,248,252,1)',
-                color: 'rgba(0,0,0,1)',
-              }"
-                @selection-change="handleSelectionChange"
-                align="center"
-                border
-                class="contractInfoTable"
-                ref="table"
-                style="width: 100%;height: auto;"
-              >
-                <el-table-column
-                  :width="80"
-                  align="center"
-                  label="序号"
-                  show-overflow-tooltip
-                  type="index"
-                ></el-table-column>
-                <el-table-column
-                  :resizable="false"
-                  label="项目地点"
-                  align="center"
-                  prop="inforName"
-                >
-                  <template slot-scope="scope">
-                    <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
-                    <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
-                  </template>
-                </el-table-column>
-
-                <el-table-column
-                  :resizable="false"
-                  label="份额(万元)"
-                  prop="contractAmount"
-                  show-overflow-tooltip
-                  align="center"
-                >
-                  <template slot-scope="scope">
-                    <el-form-item class="tabelForm" :prop="'topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
-                      <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                      <el-input
-                        clearable
-                        :disabled="p.actpoint === 'look'"
-                        v-model="scope.row.contractAmount"
-                      ></el-input>
-                    </el-form-item>
-                    <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                  </template>
-                </el-table-column>
-
-                <el-table-column
-                  :resizable="false"
-                  label="是否为主地点"
-                  prop="contractAmount"
-                  align="center"
-                  show-overflow-tooltip
-                >
-                  <template slot-scope="scope">
-                    <el-radio v-model="scope.row.isMain" label="1">是</el-radio>
-                    <el-radio v-model="scope.row.isMain" label="0">否</el-radio>
-                    <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                  </template>
-                </el-table-column>
-
-                <el-table-column
-                  v-show="!p.actpoint === 'look'"
-                  :resizable="false"
-                  fixed="right"
-                  label="操作"
-                  align="center"
-                  width="200"
-                  show-overflow-tooltip
-                  v-if="p.actpoint !== 'look'"
-                >
-                  <template slot-scope="scope">
-                    <el-link
-                      :underline="false"
-                      @click="del(scope.$index,scope.row,detailform.topInfoSiteList)"
-                      type="warning"
-                    >删除
-                    </el-link
-                    >
-                  </template>
-                </el-table-column>
-              </el-table>
-
-          </div>
+                </template>
+              </el-table-column>
+          </el-table>
+        </div>
       </el-tab-pane>
       <el-tab-pane v-if="detailform.contractInfo.isInSystemUnion==='0'||detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isOutSystemUnion==='0'||detailform.contractInfo.isOutSystemSub==='0'" label="合同附属信息">
         <div class="detailBoxBG">
@@ -2470,12 +2545,38 @@ export default {
     searchName() {
       this.infoCSVisible = true;
       this.$nextTick(() => {
-        this.$refs.infoCS.init();
+        this.$refs.infoCS.init(this.detailform.contractInfo.moduleId);
       })
     },
     //项目名称查询回来的数据
     goAddDetail(data){
-      console.log(data);
+      this.$http
+        .post("/api/contract/topInfo/TopInfor/detail/entityInfoByIdForContract", {uuid :data.uuid})
+        .then((res) => {
+        var datas=res.data.data;
+        // this.$forceUpdate();
+        this.detailform.contractInfo={};
+        this.detailform.contractInfo.moduleId="7f4fcba4255b43a8babf15afd6c04a53";
+        this.detailform.contractInfo.moduleName="工程承包";
+        this.getTwo(datas.topInfor.enginTypeFirstId);
+        this.getTwoSC(datas.topInfor.marketFirstNameId);
+        this.getTwoXZ(datas.topInfor.projectNatureFirstId);
+
+        for(var i in datas.topInfor){
+          // i!='isImport'
+          if(datas.topInfor[i]){
+            this.detailform.contractInfo[i]=JSON.parse(JSON.stringify(datas.topInfor[i]));
+          }
+        }
+
+        for(var i in datas.bidInfoSectionBOList){
+          datas.bidInfoSectionBOList[i].bidInfoSection.bidInfoSectionOrgList=datas.bidInfoSectionBOList[i].bidInfoSectionOrgList
+
+          this.detailform.contractInfoSectionList.push(datas.bidInfoSectionBOList[i].bidInfoSection)
+        }
+
+      });
+      this.$forceUpdate();
       this.infoCSVisible=false;
     },
     //金额过滤
@@ -2569,6 +2670,7 @@ export default {
       }
     },
     saveInfo(formName) {
+
       this.detailform.commonFilesList=this.detailform.fileList1.concat(this.detailform.fileList2).concat(this.detailform.fileList3)
       this.$refs[formName].validate((valid) => {
         if (valid) {

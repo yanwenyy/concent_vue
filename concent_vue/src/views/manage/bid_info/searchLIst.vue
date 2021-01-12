@@ -59,6 +59,7 @@
       <el-form-item label="开标日期:">
         <el-date-picker
           v-model="searchform.dateOfBidOpeningName"
+          @change="searchform.selectTimeTypeSaleTime='02',searchform.vifSaleTime=''"
           value-format="timestamp"
           type="daterange"
           range-separator="至"
@@ -97,6 +98,7 @@
 
       <el-form-item label="资审截止日期:">
         <el-date-picker
+         @change="searchform.selectTimeTypeSaleTime='01',searchform.dateOfBidOpeningName=''"
           v-model="searchform.vifSaleTime"
           value-format="timestamp"
           type="daterange"
@@ -523,6 +525,17 @@ export default {
     },
     // 查询
     getData() {
+       if(this.searchform.selectTimeTypeSaleTime=='01'&&this.searchform.vifSaleTime){
+          this.searchform.SaleTimeBeginTime=this.searchform.vifSaleTime[0];
+          this.searchform.SaleTimeEndTime=this.searchform.vifSaleTime[1];
+        }else if(this.searchform.selectTimeTypeSaleTime=='02'&&this.searchform.dateOfBidOpeningName){
+          this.searchform.SaleTimeBeginTime=this.searchform.dateOfBidOpeningName[0];
+          this.searchform.SaleTimeEndTime=this.searchform.dateOfBidOpeningName[1];
+        }else{
+          this.searchform.selectTimeTypeSaleTime='';
+          this.searchform.SaleTimeBeginTime=null;
+          this.searchform.SaleTimeEndTime=null;
+        }
       this.$http
         .post(
           "/api/contract/topInfo/BidInfo/list/loadPageDataForSelect",

@@ -206,7 +206,7 @@
           align="center"
           label="录入时间"
 
-          prop="tioCreateTime"
+          prop="ccrCreateTime"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -216,13 +216,13 @@
                 style=" width: 100%"
                 size="mini"
                 value-format="timestamp"
-                v-model="searchform.tioCreateTime"
+                v-model="searchform.ccrCreateTime"
               >
               </el-date-picker>
             </div>
           </template>
           <template slot-scope="scope">{{
-            scope.row.tioCreateTime | dateformat
+            scope.row.ccrCreateTime | dateformat
             }}</template>
         </el-table-column>
         <el-table-column
