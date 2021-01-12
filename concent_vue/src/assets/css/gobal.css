@@ -625,5 +625,11 @@ pre {
   height: 32px!important;
   line-height: 32px!important;
 }
+.gcform .el-input-group{
+  margin-top: 5px;
+}
+.detailTable .el-input-group{
+  margin-top:0;
+}
 /**/
 
