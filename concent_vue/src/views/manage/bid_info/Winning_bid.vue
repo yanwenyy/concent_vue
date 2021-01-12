@@ -884,6 +884,7 @@ export default {
       maxMoney:1000000,
       key:0,
       BDCSVisible:false,//标段新增弹框状态
+      DwVisible:false,//选择单位弹框状态
       options1: [{ label: "值", value: "111" }],
       detailform: {
         bidInfo: {},

@@ -349,7 +349,7 @@
           <el-form-item label="内部联合体单位:"
               v-if="detailFormBefore.bidInfo.isCoalitionBid==='0'">
           <el-input disabled  placeholder="请输入内容" v-model="detailFormBefore.bidInfo.innerOrgName" class="input-with-select">
-            <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('内部联合体单位',detailform.bidInfo.innerOrgId)" ></el-button>
+            <!-- <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('内部联合体单位',detailFormBefore.bidInfo.innerOrgId)" ></el-button> -->
           </el-input>
               <!-- <el-select
                 :disabled="true"
@@ -1221,8 +1221,9 @@
 
               <el-form-item label="内部联合体单位:"
               v-if="detailform.bidInfo.isCoalitionBid==='0'"
-              class="formItem" >
-              <el-input  placeholder="请输入内容" v-model="detailform.bidInfo.innerOrgName" class="input-with-select">
+              class="formItem"
+              >
+              <el-input  placeholder="请输入内容" v-model="detailform.bidInfo.innerOrgName" class="input-with-select" :disabled="p.actpoint === 'look'">
                 <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('内部联合体单位',detailform.bidInfo.innerOrgId)" ></el-button>
               </el-input>
               <!-- <el-select
@@ -2179,9 +2180,6 @@ export default {
             value1:[],
             nblht:[],
           };
-           beforData.bidInfoInnerOrgList.forEach((item)=>{
-            this.detailFormBefore.value1.push(item.innerOrgId)
-            });
             //内部联合体回显
             var id=[],name=[];
             datas.bidInfoInnerOrgList.forEach((item)=>{
@@ -2190,6 +2188,10 @@ export default {
             });
             this.detailform.bidInfo.innerOrgId=id.join(",");
             this.detailform.bidInfo.innerOrgName=name.join(",");
+          //  beforData.bidInfoInnerOrgList.forEach((item)=>{
+          //   this.detailFormBefore.value1.push(item.innerOrgId)
+          //   });
+
         });
     },
     //新增的时候详情
@@ -2208,14 +2210,10 @@ export default {
             value1:[],
             nblht:[],
           };
-           datas.bidInfoInnerOrgList.forEach((item)=>{
-            this.detailform.value1.push(item.innerOrgId)
-            });
-          for (var i in this.detailform) {
-            this.detailFormBefore[i] = JSON.parse(
-              JSON.stringify(this.detailform[i])
-            );
-          }
+          //  datas.bidInfoInnerOrgList.forEach((item)=>{
+          //   this.detailform.value1.push(item.innerOrgId)
+          //   });
+
           this.detailFormBefore.capitalName = datas.capitalName;
 
             //内部联合体回显
@@ -2226,6 +2224,11 @@ export default {
             });
             this.detailform.bidInfo.innerOrgId=id.join(",");
             this.detailform.bidInfo.innerOrgName=name.join(",");
+          for (var i in this.detailform) {
+            this.detailFormBefore[i] = JSON.parse(
+              JSON.stringify(this.detailform[i])
+            );
+          }
           // console.log(this.detailFormBefore.topInforBO.topInfor.moduleName)
           // this.detailFormBefore={
           //   capitalName:datas.capitalName,

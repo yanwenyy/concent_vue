@@ -183,11 +183,328 @@
       </el-pagination>
       <info-change-search v-if="infoCSVisible" ref="infoCS" @refreshDataList="goAddDetail"></info-change-search>
 
-  <el-dialog title="中标结果登记" :visible.sync="dialogFormVisible" margin="0 auto" width="30%">
+  <el-dialog title="中标结果登记" :visible.sync="dialogFormVisible" >
+
+        <div>
+      <el-form :inline="true" :model="zbForm" :rules="rules" ref="zbForm" @keyup.enter.native="init()"  class="gcform">
+        <el-form-item label="标段名称:" class="list-item" >
+          <el-select
+            clearable
+            placeholder=""
+            v-model="zbForm.bidInfoSection.sectionId"
+            disabled>
+          <el-option
+              :key="index"
+              :label="item.sectionName"
+              :value="item.sectionName"
+              v-for="(item, index) in bdName"
+            ></el-option>
+            </el-select>
+        </el-form-item>
+
+        <el-form-item label="评标办法:" class="list-item">
+                <template slot-scope="scope">
+                 <el-select
+                clearable
+                placeholder="评标办法"
+                size="mini"
+                disabled
+                @change="
+                getName(
+                  zbForm.bidInfoSection.bidEvaluationMethodId,
+                  bidMethod,
+                  'bidEvaluationMethodName'
+                )
+              "
+                v-model="zbForm.bidInfoSection.bidEvaluationMethodId">
+                 <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in bidMethod"
+
+                ></el-option>
+                </el-select>
+              </template>
+        </el-form-item>
+
+        <el-form-item label="开标地点:" class="list-item">
+          <el-input v-model="zbForm.bidInfoSection.openBidPlaceName"
+          placeholder="开标地点"
+          clearable
+          disabled
+          @clear="searchform.openBidPlaceId=''"
+          >
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="selectPosition()"
+          ></el-button>
+          </el-input>
+        </el-form-item>
+<br>
+        <el-form-item label="开标日期:" class="list-item">
+          <el-date-picker
+            filterable
+            clearable
+            type="date"
+            value-format="timestamp"
+            disabled
+            v-model="zbForm.bidInfoSection.dateOfBidOpeningName"
+          >
+          </el-date-picker>
+        </el-form-item>
+
+        <el-form-item label="参与投标单位:" class="list-item">
+          <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.participatingUnitsName" class="input-with-select" disabled>
+            <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('参与投标单位',zbForm.bidInfoSection.participatingUnitsId)" ></el-button>
+          </el-input>
+        </el-form-item>
+
+        <el-form-item label="编标拟配合单位:" class="list-item">
+           <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.orgName" class="input-with-select" disabled>
+            <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('编标拟配合单位',zbForm.bidInfoSection.orgId)" ></el-button>
+          </el-input>
+        </el-form-item>
+        <br>
+
+        <el-form-item label="投标保证金(万元):" class="list-item" prop="bidInfoSection.tenderSecurity"  :rules="rules.contractAmount">
+                <el-input
+                    v-model="zbForm.bidInfoSection.tenderSecurity"
+                    clearable
+                    placeholder="投标保证金(万元)"
+                    disabled
+                  >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+        </el-form-item>
+
+        <el-form-item label="投标价(万元):" class="list-item" prop="bidInfoSection.bidPrice"  :rules="rules.contractAmount">
+                <el-input
+                    v-model="zbForm.bidInfoSection.bidPrice"
+                    clearable
+                    placeholder="投标价(万元)"
+                    disabled
+                  >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+        </el-form-item>
+
+        <el-form-item v-if="isBidRates=='0'" label="投标费率(百分比):" class="list-item" prop="bidInfoSection.tenderRate"  :rules="rules.contractAmount">
+                <el-input
+                    v-model="zbForm.bidInfoSection.tenderRate"
+                    clearable
+                    placeholder="投标费率(百分比)"
+                    disabled
+                  >
+              </el-input>
+        </el-form-item>
+          <br>
+        <el-form-item label="项目经理:" class="list-item">
+          <el-input v-model="zbForm.bidInfoSection.projectManager" placeholder="项目经理" clearable disabled></el-input>
+        </el-form-item>
+
+        <el-form-item label="项目副经理:" class="list-item">
+          <el-input v-model="zbForm.bidInfoSection.deputyProjectManager	" placeholder="项目副经理" clearable disabled></el-input>
+        </el-form-item>
+
+        <el-form-item v-if="isBidRates=='1'" label="风险费(万元):" class="list-item"  prop="bidInfoSection.riskFee"  :rules="rules.contractAmount">
+                <el-input
+                      v-model="zbForm.bidInfoSection.riskFee"
+                      clearable
+                      placeholder="风险费(万元)"
+                      disabled=
+                    >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+        </el-form-item>
+        <br>
+        <el-form-item label="技术负责人:" class="list-item">
+          <el-input v-model="zbForm.bidInfoSection.technicalDirector" placeholder="技术负责人" clearable disabled></el-input>
+        </el-form-item>
+
+        <el-form-item label="安全负责人:" class="list-item">
+          <el-input v-model="zbForm.bidInfoSection.personInChargeOfSafety" placeholder="安全负责人" clearable disabled></el-input>
+        </el-form-item>
+
+        <el-form-item v-if="isBidRates=='1'" label="安全费(万元):" class="list-item"  prop="bidInfoSection.safetyCost"  :rules="rules.contractAmount">
+                <el-input
+                    v-model="zbForm.bidInfoSection.safetyCost"
+                    clearable
+                    placeholder="安全费(万元)"
+                    disabled
+                  >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+        </el-form-item>
+          <br>
+
+        <el-form-item label="财务负责人:" class="list-item">
+          <el-input v-model="zbForm.bidInfoSection.personInChargeOfFinance" placeholder="财务负责人" clearable disabled></el-input>
+        </el-form-item>
+
+        <el-form-item label="成本负责人:" class="list-item">
+          <el-input v-model="zbForm.bidInfoSection.costOwner" placeholder="成本负责人" clearable disabled></el-input>
+        </el-form-item>
+
+        <el-form-item v-if="isBidRates=='1'" label="投标限价(万元):" class="list-item" prop="bidInfoSection.biddingPriceLimit"  :rules="rules.contractAmount">
+                <el-input
+                    v-model="zbForm.bidInfoSection.biddingPriceLimit"
+                    clearable
+                    placeholder="投标限价(万元)"
+                    disabled
+                  >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+        </el-form-item>
+          <br>
+          <el-form-item label="投资估算:" class="list-item" >
+          <el-input v-model="zbForm.bidInfoSection.investmentReckon" placeholder="投资估算" clearable disabled>
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+          </el-input>
+        </el-form-item>
+          <el-form-item label="其中建安投资:" class="list-item" >
+          <el-input v-model="zbForm.bidInfoSection.jananInvestment" placeholder="其中建安投资" clearable disabled >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+          </el-input>
+        </el-form-item>
+<br>
+        <el-form-item label="其他未列出单位(单位与单位之间用英文逗号隔开):" >
+          <el-input
+          class="textarea_qt"
+          v-model="zbForm.bidInfoSection.otherUnitsNotListed"
+          placeholder="其他未列出单位(单位与单位之间用英文逗号隔开)"
+          clearable
+          disabled
+          :autosize="{ minRows: 2, maxRows: 4}"
+          type="textarea"></el-input>
+        </el-form-item>
+
+        <div class="detail-title">
+          其他投标单位(系统内):
+        </div>
+        <el-table class="detailTable"
+          :data="zbForm.dataList"
+          border
+          v-loading="dataListLoading"
+          :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
+          style="width: 100%;">
+          <el-table-column
+            type="index"
+            header-align="center"
+            align="center"
+            width="80"
+            label="序号">
+          </el-table-column>
+          <el-table-column
+
+            prop="inforName"
+            show-overflow-tooltip
+            label="其他投标单位(系统内)">
+            <template slot-scope="scope">
+              <el-select
+                clearable
+                filterable
+                placeholder="请选择"
+                v-model="scope.row.orgName"
+                disabled
+
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.detailName"
+                  v-for="(item, index) in nameList"
+                ></el-option>
+              </el-select>
+            </template>
+          </el-table-column>
+
+          <el-table-column
+            :resizable="false"
+            fixed="right"
+            label="操作"
+            show-overflow-tooltip
+            align="center"
+            width="100"
+            disabled
+          >
+            <template slot-scope="scope" >
+              <el-link :underline="false" @click="del(scope.$index,'inside')" type="warning" disabled>删除</el-link>
+            </template>
+          </el-table-column>
+        </el-table>
+
+        <div class="detail-title">
+          其他投标单位(系统外):
+        </div>
+
+        <el-table class="detailTable"
+          :data="zbForm.dataList2"
+          border
+          v-loading="dataListLoading"
+          :header-cell-style="{
+          'text-align': 'center',
+          'background-color': 'whitesmoke',
+        }"
+          style="width: 100%;">
+          <el-table-column
+            type="index"
+            header-align="center"
+            align="center"
+            width="80"
+            label="序号">
+          </el-table-column>
+          <el-table-column
+            prop="inforName"
+            show-overflow-tooltip
+            label="其他投标单位(系统外)">
+            <template slot-scope="scope">
+              <el-select
+                clearable
+                filterable
+                placeholder="请选择"
+                v-model="scope.row.orgName"
+                disabled
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.detailName"
+                  v-for="(item, index) in nameList"
+                ></el-option>
+              </el-select>
+            </template>
+          </el-table-column>
+
+          <el-table-column
+            :resizable="false"
+            fixed="right"
+            label="操作"
+            show-overflow-tooltip
+            align="center"
+            width="100"
+            disabled
+          >
+            <template slot-scope="scope">
+              <el-link :underline="false" @click="del(scope.$index,'outside')" type="warning" disabled>删除</el-link>
+            </template>
+          </el-table-column>
+          </el-table>
+
+      </el-form>
+        <el-divider content-position="left" class="detailDivider">中标登记</el-divider>
     <el-form ref="zbForm" :model="zbForm" :rules="rules">
         <el-form-item label="是否中标" :label-width="formLabelWidth" >
           <template>
-            <el-radio-group class="detail-radio-group" v-model="zbForm.bidInfoSection.isWinBid"  :disabled="zbType=='look'">
+            <el-radio-group @change="zbForm.bidInfoSection.isOutBidOrg='1'" class="detail-radio-group" v-model="zbForm.bidInfoSection.isWinBid"  :disabled="zbType=='look'">
               <el-radio  label="1" value="1">中标</el-radio>
               <el-radio  label="2" value="2">废标</el-radio>
               <el-radio  label="3" value="3">流标</el-radio>
@@ -203,17 +520,83 @@
 
       <!-- </el-select> -->
     </el-form-item>
+           <el-form-item
+           label="是否系统外单位中标:"
+            class="inline-formitem formItem"
+            v-if="zbForm.bidInfoSection.isWinBid==='4'">
+              <el-switch
+              class="inline-formitem-switch"
+              v-model="zbForm.bidInfoSection.isOutBidOrg"
+              active-color="#409EFF"
+              inactive-color="#ddd"
+              active-value="0"
+              inactive-value="1"
+              :disabled="zbType=='look'"
+            >
+            </el-switch>
+            </el-form-item>
 
-    <el-form-item label="中标价(万元)" :label-width="formLabelWidth"
-    class="item_zbj"
+          <el-form-item
+              class="list-item"
+              v-if="zbForm.bidInfoSection.isOutBidOrg === '0'"
+              label="系统外中标单位:"
+            >
+              <el-input
+                :disabled="zbType === 'look'"
+                clearable
+                placeholder="系统外中标单位"
+                v-model="zbForm.bidInfoSection.outBidOrg"
+              />
+            </el-form-item>
+
+      <el-form-item
+    label="系统外中标金额"
+    v-if="zbForm.bidInfoSection.isOutBidOrg==='0'"
+    class="list-item"
     prop="bidInfoSection.winBidPrice"
-    :rules="rules.contractAmount">
-      <el-input v-model="zbForm.bidInfoSection.winBidPrice" :disabled="zbType=='look'">
+    :rules="rules.contractAmount"
+    >
+      <el-input
+      v-model="zbForm.bidInfoSection.outOrgBidMoney"
+      :disabled="zbType=='look'">
       <template slot="prepend">¥</template>
       <template slot="append">(万元)</template>
       </el-input>
     </el-form-item>
-    <el-form-item label="中标时间" :label-width="formLabelWidth" class="item_zbj">
+
+          <el-form-item
+              class="list-item"
+              v-if="zbForm.bidInfoSection.isOutBidOrg === '0'"
+              label="未中标原因:"
+            >
+              <el-input
+              type="textarea"
+                :disabled="zbType === 'look'"
+                clearable
+                placeholder="未中标原因"
+                v-model="zbForm.bidInfoSection.notBidReason"
+              />
+            </el-form-item>
+
+    <el-form-item
+    label="中标价(万元)"
+    v-if="zbForm.bidInfoSection.isWinBid==='1'"
+    class="list-item"
+    prop="bidInfoSection.winBidPrice"
+    :rules="rules.contractAmount"
+    >
+      <el-input
+      v-model="zbForm.bidInfoSection.winBidPrice"
+      :disabled="zbType=='look'">
+      <template slot="prepend">¥</template>
+      <template slot="append">(万元)</template>
+      </el-input>
+    </el-form-item>
+
+    <el-form-item
+    label="中标时间"
+    class="list-item"
+    v-if="zbForm.bidInfoSection.isWinBid==='1'">
       <el-date-picker
       :disabled="zbType=='look'"
       v-model="zbForm.bidInfoSection.bidTime"
@@ -222,8 +605,11 @@
       placeholder="选择日期">
     </el-date-picker>
     </el-form-item>
-    <p><span >文件公示: </span>
+    </el-form>
+    <el-form v-if="zbForm.bidInfoSection.isWinBid==='1'">
+    <p ><span >文件公示: </span>
                 <el-upload
+
                 v-show="zbType=='add'"
                   class="upload-demo detailUpload"
                   :action="'/api/contract/topInfo/CommonFiles/bidInfo/03/uploadFile'"
@@ -279,65 +665,53 @@
                 </el-table-column>
               </el-table>
 
-<!-- <el-form-item label="文件公示" :label-width="formLabelWidth">
-<el-upload
-  class="upload-demo detailUpload"
-  :action="'/api/contract/topInfo/CommonFiles/bidInfo/01/uploadFile'"
-  :on-success="handleChange"
-  :on-error="handleChange"
-  :on-remove="handleRemove"
-  multiple
->
-  <el-button size="small" type="primary">点击上传</el-button>
-</el-upload>
-</el-form-item> -->
     </el-form>
-
+</div>
   <div slot="footer" class="dialog-footer">
     <el-button @click="dialogFormVisible = false">取 消</el-button>
     <el-button v-show="zbType=='add'" type="primary" @click="saveInfo('zbForm')">确 定</el-button>
   </div>
+
 </el-dialog>
 
   </div>
 </template>
 
 <script>
-import InfoChangeSearch from '../proposal/infoChangeSearch'
- import { isMoney } from '@/utils/validate'
+import InfoChangeSearch from "../proposal/infoChangeSearch";
+import { isMoney } from "@/utils/validate";
 export default {
   name: "proposal-list-look",
   data() {
-  var validateMoney = (rule, value, callback) => {
-        if(value===''){
-          callback(new Error('不能为空'))
-        }else if (!isMoney(value)) {
-          callback(new Error('请输入正确的金额格式'))
-        } else {
-          callback()
-        }
+    var validateMoney = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("不能为空"));
+      } else if (!isMoney(value)) {
+        callback(new Error("请输入正确的金额格式"));
+      } else {
+        callback();
       }
+    };
     return {
-
-      key:0,
-      isWinBid:'',
+      key: 0,
+      isWinBid: "",
       dialogFormVisible: false,
-      infoCSVisible:false,
+      infoCSVisible: false,
       detailform: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: '',
-          bidInfo_03:[],
-        },
-        zbType:'add',//中标弹框打开的方式
-      zbForm:{
-        bidInfoSection:{},
-        bidInfo_03:[],
+        name: "",
+        region: "",
+        date1: "",
+        date2: "",
+        delivery: false,
+        type: [],
+        resource: "",
+        desc: "",
+        bidInfo_03: [],
+      },
+      zbType: "add", //中标弹框打开的方式
+      zbForm: {
+        bidInfoSection: {},
+        bidInfo_03: [],
       },
       page: { current: 1, size: 10, total: 0, records: [] },
       showinput: false,
@@ -354,30 +728,49 @@ export default {
       menus: [],
       multipleSelection: [],
       orgTree: [],
-      formLabelWidth: '120px',
-      rules:{
+      bdName: [],
+      isBidRates: "",
+      dataListLoading: false,
+      formLabelWidth: "120px",
+      rules: {
         contractAmount: [
-          { required: true,validator: validateMoney, trigger: 'change' }
-        ]
-      },//表单验证规则
+          { required: true, validator: validateMoney, trigger: "change" },
+        ],
+      }, //表单验证规则
     };
   },
-   components: {
-      InfoChangeSearch
+  components: {
+    InfoChangeSearch,
+  },
+  computed: {
+    bidMethod() {
+      // console.log(this.$store.state.bidMethod)
+      return this.$store.state.bidMethod;
     },
+  },
   methods: {
     //打开中标弹框
-    setZB(){
-      if (this.multipleSelection.length !== 1||this.multipleSelection.length>1) {
-          this.$message.info("请选择一条记录进行登记操作！");
-          return false;
-        }
-        this.zbType='add';
-      this.dialogFormVisible= true;
+    setZB(isBidRates, list) {
+      if (
+        this.multipleSelection.length !== 1 ||
+        this.multipleSelection.length > 1
+      ) {
+        this.$message.info("请选择一条记录进行登记操作！");
+        return false;
+      }
+      this.$http
+        .post("/api/contract/topInfo/BidInfoSection/detail/entityInfo", {
+          id: this.multipleSelection[0].uuid,
+        })
+      this.zbType = "add";
+      this.bdName = list || [];
+      this.isBidRates = isBidRates;
+      this.dialogFormVisible = true;
       // this.zbForm=this.multipleSelection[0];
-       this.zbForm.bidInfoSection= JSON.parse(
-              JSON.stringify(this.multipleSelection[0])
-            );
+      this.zbForm.bidInfoSection = JSON.parse(
+        JSON.stringify(this.multipleSelection[0])
+      );
+
       // var _val=this.multipleSelection[0];
       // for (var i in _val) {
       //    this.zbForm[i]=_val[i]
@@ -387,117 +780,117 @@ export default {
     },
     // 上传删除
 
-        handleRemove(file,index) {
-         this.$http
-        .post(
-          "/api/contract/topInfo/CommonFiles/list/delete",
-          {ids:[file.uuid]},
-        )
+    handleRemove(file, index) {
+      this.$http
+        .post("/api/contract/topInfo/CommonFiles/list/delete", {
+          ids: [file.uuid],
+        })
         .then((res) => {
-        if (res.data.code === 200) {
-        this.zbForm.bidInfo_03.splice(index,1);
-        }
-
-    });
-      },
+          if (res.data.code === 200) {
+            this.zbForm.bidInfo_03.splice(index, 1);
+          }
+        });
+    },
 
     //上传附件
-    handleChange(response, file, fileList){
+    handleChange(response, file, fileList) {
       if (response && response.code === 200) {
         this.$message({
-          message: '上传成功',
-          type: 'success',
+          message: "上传成功",
+          type: "success",
           duration: 1500,
           onClose: () => {
-          this.zbForm.bidInfo_03.push(response.data);
-          console.log(fileList)
-        }
-      })
+            this.zbForm.bidInfo_03.push(response.data);
+            console.log(fileList);
+          },
+        });
       } else {
-        this.$message.error(response.msg)
+        this.$message.error(response.msg);
       }
     },
 
-
-
-      //行选择的时候
-      rowSelect(selection, row){
-        if(selection.indexOf(row)!=-1){
-          this.isWinBid=row.isWinBid;
-        }else{
-          this.isWinBid='';
-        }
-      },
-      //去新增详情页面
-      goAddDetail(data){
-        console.log(data);
-        let p = {actpoint: "add",instid: data.topOrgId};
-        this.$router.push({
-          path: "./detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
-      },
+    //行选择的时候
+    rowSelect(selection, row) {
+      if (selection.indexOf(row) != -1) {
+        this.isWinBid = row.isWinBid;
+      } else {
+        this.isWinBid = "";
+      }
+    },
+    //去新增详情页面
+    goAddDetail(data) {
+      console.log(data);
+      let p = { actpoint: "add", instid: data.topOrgId };
+      this.$router.push({
+        path: "./detail/",
+        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
+      });
+    },
     search() {
       this.showinput = false;
     },
     //登记
     add() {
-        if (this.multipleSelection.length !== 1||this.multipleSelection.length>1) {
-          this.$message.info("请选择一条记录进行登记操作！");
-          return false;
-        }
-        let p = {actpoint: "add", instid: this.multipleSelection[0].topInfoOrgId};
-        this.$router.push({
-          path: "./detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
+      if (
+        this.multipleSelection.length !== 1 ||
+        this.multipleSelection.length > 1
+      ) {
+        this.$message.info("请选择一条记录进行登记操作！");
+        return false;
+      }
+      let p = {
+        actpoint: "add",
+        instid: this.multipleSelection[0].topInfoOrgId,
+      };
+      this.$router.push({
+        path: "./detail/",
+        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
+      });
 
-        // this.infoCSVisible = true;
-        // this.$nextTick(() => {
-        //   this.$refs.infoCS.init();
-        // })
+      // this.infoCSVisible = true;
+      // this.$nextTick(() => {
+      //   this.$refs.infoCS.init();
+      // })
     },
 
-
     // 查看
-        getData() {
-        this.$http
-          .post(
-            "/api/contract/topInfo/BidInfo/detail/loadPageDataForReg",
-            this.searchform
-          )
-          .then((res) => {
-            this.page = res.data.data;
-          });
-      },
-// 保存
-      saveInfo(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            this.$http
-              .post(
-                "/api/contract/topInfo/BidInfoSection/detail/save",
-                JSON.stringify(this.zbForm),
-                {useJson: true}
-              )
-              .then((res) => {
-                if (res.data.code === 200) {
-                  this.dialogFormVisible = false
-                  this.$message({
-                    message: "保存成功",
-                    type: "success",
-                  });
-                  this.getData();
-                }
-              });
-          } else {
-            this.$message.error("请添加必填项");
-            return false;
-          }
+    getData() {
+      this.$http
+        .post(
+          "/api/contract/topInfo/BidInfo/detail/loadPageDataForReg",
+          this.searchform
+        )
+        .then((res) => {
+          this.page = res.data.data;
         });
-      },
+    },
+    // 保存
+    saveInfo(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.$http
+            .post(
+              "/api/contract/topInfo/BidInfoSection/detail/save",
+              JSON.stringify(this.zbForm),
+              { useJson: true }
+            )
+            .then((res) => {
+              if (res.data.code === 200) {
+                this.dialogFormVisible = false;
+                this.$message({
+                  message: "保存成功",
+                  type: "success",
+                });
+                this.getData();
+              }
+            });
+        } else {
+          this.$message.error("请添加必填项");
+          return false;
+        }
+      });
+    },
     rowshow(row) {
-
       // var id=row.isWinBid==null?row.topInfoOrgId:row.uuid;
       // let p = { actpoint: "look", instid: id ,isWinBid:row.isWinBid};
       // this.$router.push({
@@ -505,17 +898,18 @@ export default {
       //   query: { p: this.$utils.encrypt(JSON.stringify(p)) },
       // });
 
-
       this.$http
-          .post("/api/contract/topInfo/BidInfoSection/detail/entityInfo", {id:row.uuid})
-          .then((res) => {
-            var datas=res.data.data;
-          console.log(datas)
-          this.zbType='look';
-          this.dialogFormVisible= true;
-          this.zbForm.bidInfoSection=datas.bidInfoSection;
-          this.zbForm.bidInfo_03=datas.bidInfo_03;
-          });
+        .post("/api/contract/topInfo/BidInfoSection/detail/entityInfo", {
+          id: row.uuid,
+        })
+        .then((res) => {
+          var datas = res.data.data;
+          console.log(datas);
+          this.zbType = "look";
+          this.dialogFormVisible = true;
+          this.zbForm.bidInfoSection = datas.bidInfoSection;
+          this.zbForm.bidInfo_03 = datas.bidInfo_03;
+        });
     },
     // 展示
     show() {
@@ -544,7 +938,7 @@ export default {
     },
     searchformReset() {
       // this.$refs["searchform"].resetFields();
-        this.searchform= {
+      this.searchform = {
         current: 1,
         size: 10,
         year: "",
@@ -552,9 +946,9 @@ export default {
         ptype: "",
         orgid: "",
         orgname: "",
-      }
+      };
 
-        this.getData();
+      this.getData();
     },
     // 列表选项数据
     handleSelectionChange(val) {
@@ -563,7 +957,7 @@ export default {
     getData() {
       this.$http
         .post(
-         "/api/contract/topInfo/BidInfoSection/list/loadPageDataForZb",
+          "/api/contract/topInfo/BidInfoSection/list/loadPageDataForZb",
           this.searchform
         )
         .then((res) => {
@@ -606,23 +1000,25 @@ export default {
 };
 </script>
 <style scoped>
-.item_zbj{
-  width: 40%;
-  display: inline-block;
-  padding-right: 9%;
-}
-.el-dialog{
-  width: 60%;
-}
 .el-table__row {
   cursor: pointer;
 }
->>>.el-dialog{
-  width: 70%!important;
+>>> .el-dialog {
+  width: 70% !important;
   /* overflow: auto; */
 }
->>>.el-dialog__body{
+>>> .el-dialog__body {
   height: 500px;
   overflow: auto;
 }
+.list-item{
+  width: 32%;
+}
+>>>.el-form--inline .el-form-item__content {
+    width: 100%;
+}
+>>>.el-input{
+  width: 100%;
+}
+
 </style>

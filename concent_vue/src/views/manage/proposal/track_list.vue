@@ -2,15 +2,11 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary">新增</el-button>
-        <el-button @click="totop" plain type="primary">修改</el-button>
-        <el-button @click="remove" type="primary" plain>删除</el-button>
-        <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
+        <el-button @click="add" plain type="primary">跟踪</el-button>
       </el-button-group>
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
         <el-button @click="getData" type="primary" plain>查询</el-button>
-        <el-button @click="exportdata" type="primary" plain>导出</el-button>
       </div>
     </div>
 
@@ -179,9 +175,7 @@
                 clearable
                 type="date"
                 value-format="timestamp"
-                v-model="searchform.planBidTime"
-
-              >
+                v-model="searchform.planBidTime">
               </el-date-picker>
             </div>
           </template>
@@ -189,15 +183,65 @@
             scope.row.planBidTime | dateformat
             }}</template>
         </el-table-column>
+
+        <el-table-column
+          :width="180"
+          align="center"
+          label="放弃跟踪时间"
+          prop="state"
+          show-overflow-tooltip
+        >
+        <template slot="header" slot-scope="scope">
+            <span>放弃跟踪时间</span>
+            <div>
+              <el-date-picker
+                class="list-search-picker"
+                filterable
+                clearable
+                type="date"
+                value-format="timestamp"
+                v-model="searchform.planBidTime">
+              </el-date-picker>
+            </div>
+          </template>
+          <template slot-scope="scope">{{
+            scope.row.planBidTime | dateformat
+            }}</template>
+        </el-table-column>
+
+        <el-table-column
+          :width="180"
+          align="center"
+          label="结束跟踪时间"
+          prop="state"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>结束跟踪时间</span>
+            <div>
+              <el-date-picker
+                class="list-search-picker"
+                filterable
+                clearable
+                type="date"
+                value-format="timestamp"
+                v-model="searchform.planBidTime">
+              </el-date-picker>
+            </div>
+          </template>
+          <template slot-scope="scope">{{
+            scope.row.planBidTime | dateformat
+            }}</template>
+          </el-table-column>
         <el-table-column
           :width="150"
           align="center"
           label="状态"
-          prop="flowStatus"
+          prop="trackStatus"
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
+             {{scope.row.trackStatus==1?'跟踪中':scope.row.trackStatus==2?'放弃跟踪':scope.row.trackStatus==3?'结束跟踪':'待跟踪'}}
           </template>
           <template slot="header" slot-scope="scope">
             <span>状态</span>
@@ -291,8 +335,6 @@
         )
         }
       },
-      exportdata() {
-      },
       search() {
         this.showinput = false;
       },
@@ -300,57 +342,17 @@
       add() {
         let p = {actpoint: "add"};
         this.$router.push({
-          path: "./detail/",
+          path: "./track_detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
-      },
-      // 修改
-      totop() {
-        if (this.multipleSelection.length !== 1) {
-          this.$message.info("请选择一条记录进行查看操作！");
-          return false;
-        }
-        let p = {actpoint: "edit", instid: this.multipleSelection[0].topOrgId};
-        this.$router.push({
-          path: "./detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
-
       },
       // 查看
       rowshow(row) {
         let p = {actpoint: "look", instid: row.topOrgId};
         this.$router.push({
-          path: "./detail/",
+          path: "./track_detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
-      },
-      // 删除
-      remove() {
-        if (this.multipleSelection.length < 1) {
-          this.$message.info("请选择一条记录进行删除操作！");
-          return false;
-        }
-        let uuids = []
-        this.multipleSelection.forEach((item) => {
-          uuids.push(item.topOrgId)
-        });
-        this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$http
-          .post(
-            "/api/contract/topInfo/TopInfor/list/delete",
-            {ids: uuids}
-          )
-          .then((res) => {
-          this.getData()
-         });
-      }).catch(() => {})
-        // uuids.join(',')
-
       },
       // 展示
       show() {
@@ -360,7 +362,7 @@
         }
         let p = {actpoint: "look", instid: this.multipleSelection[0].uuid};
         this.$router.push({
-          path: "../detail/",
+          path: "../track_detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       }, // list通用方法开始
@@ -376,6 +378,7 @@
         this.searchform.current = 1;
         this.getData();
       },
+      //重置
       searchformReset() {
         // this.$refs["searchform"].resetFields();
         this.searchform.inforName = "";
@@ -392,7 +395,7 @@
       getData() {
         this.$http
           .post(
-            "/api/contract/topInfo/TopInfor/list/loadPageDataForReg",
+            "/api/contract/topInfo/TopInfor/list/loadPageDataTrack",
             this.searchform
           )
           .then((res) => {

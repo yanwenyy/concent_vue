@@ -138,7 +138,6 @@
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
               </el-input>
-          <!-- <el-input v-model="detailForm.bidInfoSection.bidPrice" placeholder="投标价(万元)" clearable></el-input> -->
         </el-form-item>
 
         <el-form-item v-if="isBidRates=='0'" label="投标费率(百分比):" class="list-item" prop="bidInfoSection.tenderRate"  :rules="rules.contractAmount">
@@ -230,6 +229,18 @@
                 <template slot="append">(万元)</template>
           </el-input>
         </el-form-item>
+<br>
+        <el-form-item label="其他未列出单位(单位与单位之间用英文逗号隔开):" >
+          <el-input
+          class="textarea_qt"
+          v-model="detailForm.bidInfoSection.otherUnitsNotListed"
+          placeholder="其他未列出单位(单位与单位之间用英文逗号隔开)"
+          clearable
+          :disabled="type === 'look'"
+          :autosize="{ minRows: 2, maxRows: 4}"
+          type="textarea"></el-input>
+        </el-form-item>
+
         <div class="detail-title">
           其他投标单位(系统内):
           <el-button
@@ -275,7 +286,8 @@
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column
+
+          <!-- <el-table-column
             prop="bidAmount"
             header-align="center"
             align="center"
@@ -284,17 +296,14 @@
             >
              <template slot-scope="scope">
                 <el-form-item class="tabelForm bd-table-item" :prop="'dataList.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
-                  <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                  <el-input type="text" v-model="scope.row.bidAmount" :disabled="type === 'look'">
                     <template slot="prepend">¥</template>
                     <template slot="append">(万元)</template>
                   </el-input>
                 </el-form-item>
               </template>
-            <!-- <template slot-scope="scope">
-              <el-input type="text" v-model="scope.row.bidAmount"></el-input>
-            </template> -->
-          </el-table-column>
+          </el-table-column> -->
+
           <el-table-column
             :resizable="false"
             fixed="right"
@@ -309,6 +318,7 @@
             </template>
           </el-table-column>
         </el-table>
+
         <div class="detail-title">
           其他投标单位(系统外):
           <el-button
@@ -318,6 +328,7 @@
             :disabled="type === 'look'"
           >新增</el-button >
         </div>
+
         <el-table class="detailTable"
           :data="detailForm.dataList2"
           border
@@ -356,7 +367,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column
+          <!-- <el-table-column
             prop="bidAmount"
             header-align="center"
             align="center"
@@ -365,14 +376,13 @@
             :disabled="type === 'look'">
              <template slot-scope="scope">
                 <el-form-item class="tabelForm bd-table-item" :prop="'dataList2.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
-                  <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                  <el-input type="text" v-model="scope.row.bidAmount" :disabled="type === 'look'">
                     <template slot="prepend">¥</template>
                     <template slot="append">(万元)</template>
                   </el-input>
                 </el-form-item>
               </template>
-          </el-table-column>
+          </el-table-column> -->
 
           <el-table-column
             :resizable="false"
@@ -387,7 +397,8 @@
               <el-link :underline="false" @click="del(scope.$index,'outside')" type="warning" :disabled="type === 'look'">删除</el-link>
             </template>
           </el-table-column>
-        </el-table>
+          </el-table>
+
       </el-form>
     </div>
     <div slot="footer" class="dialog-footer">
