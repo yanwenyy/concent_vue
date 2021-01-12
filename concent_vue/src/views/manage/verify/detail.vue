@@ -54,7 +54,6 @@
               </template>
             </el-form-item>
             </div>
-            <br>
 
             <el-form-item label="工程类别(一级):">
               <el-input
