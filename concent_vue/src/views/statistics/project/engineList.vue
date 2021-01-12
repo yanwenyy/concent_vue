@@ -324,6 +324,7 @@ export default {
       searchform: {
         current: 1,
         size: 10,
+        projectModuleId: '7f4fcba4255b43a8babf15afd6c04a53',
         year: '',
         name: '',
         ptype: '',
@@ -384,7 +385,7 @@ export default {
     getData() {
       this.$http
         .post(
-          "/api" + this.$route.path.substr(0, this.$route.path.length - 1),
+          '/newApi/statistics/StatisticsProject/list/loadPageData',
           this.searchform
         )
         .then((res) => {
@@ -420,8 +421,8 @@ export default {
     // list通用方法结束
   },
   created() {
-    this.getMenus()
-    this.getOrgTree()
+    // this.getMenus()
+    // this.getOrgTree()
     this.getData()
   }
 }
