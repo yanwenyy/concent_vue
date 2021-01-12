@@ -730,10 +730,8 @@
                 show-overflow-tooltip
               >
                 <template slot="header">
-                  <p>
-                    <span class="red-star">*</span>
+                    <span style="color:#F56C6C;">*</span>
                     标段名
-                  </p>
                 </template>
                 <template slot-scope="scope">
                   <el-form-item class="tabelForm" :prop="'topInfoSectionList.' + scope.$index + '.sectionName'"     :rules="{
