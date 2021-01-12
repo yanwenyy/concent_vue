@@ -10,12 +10,14 @@ const state = {
   orgType:[],//组织类型
   bizCode:[],//业务板块
   measureUnit:[],//计量单位表
+  unit:[],//计量单位表
   xqprojectType:[],//新签工程行业类别
   railwayBureau:[],//所属铁路局
   statistics:[],//统计相关表
   wumoveType:[],//物资贸易合同所属类别
   eacode:[],//代码对照表
   projectNature:[],//项目性质类别
+  projectProperties:[],//项目性质类别概况
   bizTypeCode:[],//业务类别
   taxType:[],//纳税类型
   authCode:[],//权限类别
@@ -35,6 +37,7 @@ const state = {
   roadOutside:[],//路内路外
   domesticOverseas:[],//境内、外
   projectType:[],//项目类型
+  projectStatus:[],//项目状态
   emergingMarket:[],//新兴市场
   customernatureCode:[],//客户性质
   cooperation:[],//框架合作协议
@@ -54,6 +57,8 @@ const state = {
   contractType:[],//合同类型
   //certificationType:[],//项目板块
   bidMethod:[],//评标办法
+  projectPlate:[],//项目板块
+  investmentModel:[],//投资模式
 
   optiondata:[],
   dialogState: 'edit',
@@ -117,6 +122,9 @@ const mutations = {
       case 'measureUnit':
         state.measureUnit=item.sysCategoryDetailList;
         break;
+      case 'unit':
+        state.unit=item.sysCategoryDetailList;
+        break;
       case 'xqprojectType':
         state.xqprojectType=item.sysCategoryDetailList;
         break;
@@ -134,6 +142,9 @@ const mutations = {
         break;
       case 'projectNature':
         state.projectNature=item.sysCategoryDetailList;
+        break;
+      case 'projectProperties':
+        state.projectProperties=item.sysCategoryDetailList;
         break;
       case 'bizTypeCode':
         state.bizTypeCode=item.sysCategoryDetailList;
@@ -192,6 +203,9 @@ const mutations = {
       case 'projectType':
         state.projectType=item.sysCategoryDetailList;
         break;
+      case 'projectStatus':
+        state.projectStatus=item.sysCategoryDetailList;
+        break;
       case 'emergingMarket':
         state.emergingMarket=item.sysCategoryDetailList;
         break;
@@ -243,9 +257,12 @@ const mutations = {
       case 'projectPlate':
         state.projectPlate=item.sysCategoryDetailList;
         break;
-        case 'bidMethod':
-          state.bidMethod=item.sysCategoryDetailList;
-          break;
+      case 'bidMethod':
+        state.bidMethod=item.sysCategoryDetailList;
+        break;
+      case 'investmentModel':
+        state.investmentModel=item.sysCategoryDetailList;
+        break;
       }
     })
     })
@@ -276,6 +293,9 @@ const mutations = {
       case 'measureUnit':
         state.measureUnit=item.sysCategoryDetailList;
         break;
+      case 'unit':
+        state.unit=item.sysCategoryDetailList;
+        break;
       case 'xqprojectType':
         state.xqprojectType=item.sysCategoryDetailList;
         break;
@@ -293,6 +313,9 @@ const mutations = {
         break;
       case 'projectNature':
         state.projectNature=item.sysCategoryDetailList;
+        break;
+      case 'projectProperties':
+        state.projectProperties=item.sysCategoryDetailList;
         break;
       case 'bizTypeCode':
         state.bizTypeCode=item.sysCategoryDetailList;
@@ -351,6 +374,9 @@ const mutations = {
       case 'projectType':
         state.projectType=item.sysCategoryDetailList;
         break;
+      case 'projectStatus':
+        state.projectStatus=item.sysCategoryDetailList;
+        break;
       case 'emergingMarket':
         state.emergingMarket=item.sysCategoryDetailList;
         break;
@@ -402,9 +428,12 @@ const mutations = {
       case 'projectPlate':
         state.projectPlate=item.sysCategoryDetailList;
         break;
-        case 'bidMethod':
-          state.bidMethod=item.sysCategoryDetailList;
-          break;
+      case 'bidMethod':
+        state.bidMethod=item.sysCategoryDetailList;
+        break;
+      case 'investmentModel':
+        state.investmentModel=item.sysCategoryDetailList;
+        break;
       }
     })
     }

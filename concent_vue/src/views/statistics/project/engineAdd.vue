@@ -4,57 +4,42 @@
   <div>
     <el-card>
       <div class="clearfix el-card__header">
-        <span style="color: #2a2a7d;line-height: 32px"><b>工程承包项目管理详情</b></span>
+        <span style="color: #2a2a7d;line-height: 32px"><b>工程承包项目详情</b></span>
         <el-button @click="back" class="detailbutton">返回</el-button>
         <el-button type="primary"  class="detailbutton">保存</el-button>
-        <el-button @click="submit" class="detailbutton">提交</el-button>
+        <el-button @click="submitForm" class="detailbutton">提交</el-button>
       </div>
     </el-card>
     <el-card class="box-card">
       <div class="detailBox">
         <el-form
-          :model="detailform"
-          :rules="detailformrules"
+          :model="detailForm"
+          :rules="rules"
           class="gcform"
-          ref="detailform">
+          ref="detailForm">
+          <!--项目名称-->
           <el-row>
             <el-form-item
               label="项目名称:"
-              prop="clothSize.bcPlateTypeId"
-              required
+              prop="projectName"
               style="width: 33%">
               <el-input
                 clearable
                 placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"/>
-            </el-form-item>
-            <el-form-item
-              label="外文名称:"
-              prop="clothSize.bcPlateTypeId"
-              required
-              style="width: 33%">
-              <el-input
-                clearable
-                placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"/>
+                v-model="detailForm.project.projectName"/>
             </el-form-item>
           </el-row>
+          <!--父项目名称-->
           <el-row>
             <el-form-item
               label="父项目名称:"
-              prop="clothSize.bcTypeId"
-              required
+              prop="fatherProjectId"
               style="width: 33%">
               <el-select
-                :disabled="p.actpoint === 'look'"
-                @change="chg"
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
-                v-model="detailform.clothSize.bcTypeId">
+                v-model="detailForm.project.fatherProjectId">
                 <el-option
                   :key="index"
                   :label="item.label"
@@ -64,30 +49,67 @@
             </el-form-item>
             <el-form-item
               label="项目简称:"
-              prop="clothSize.bcPlateTypeId"
+              prop="projectOmit"
               required
               style="width: 33%">
               <el-input
                 clearable
                 placeholder="请输入"
                 size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"/>
+                v-model="detailForm.project.projectOmit"/>
             </el-form-item>
           </el-row>
+          <!--项目性质-->
           <el-row>
             <el-form-item
               label="项目性质:"
-              prop="clothSize.bcTypeId"
+              prop="projectNatureId"
+              style="width: 33%">
+              <el-select
+                :disabled="p.actpoint === 'look'"
+                clearable
+                filterable
+                placeholder="请选择"
+                v-model="detailForm.project.projectNatureId">
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectProperties"/>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="签约/使用资质单位:"
+              prop="companyId"
+              style="width: 33%"
+              required>
+              <el-select
+                :disabled="p.actpoint === 'look'"
+                filterable
+                clearable
+                placeholder="请选择"
+                v-model="detailForm.project.companyId">
+                <el-option
+                  :key="index"
+                  :label="item.label"
+                  :value="item.value"
+                  v-for="(item, index) in options1"/>
+              </el-select>
+            </el-form-item>
+          </el-row>
+          <!--承建单位-->
+          <el-row>
+            <el-form-item
+              label="承建单位:"
+              prop="companyBuiltId"
               required
               style="width: 33%">
               <el-select
                 :disabled="p.actpoint === 'look'"
-                @change="chg"
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
-                v-model="detailform.clothSize.bcTypeId">
+                v-model="detailForm.project.companyBuiltId">
                 <el-option
                   :key="index"
                   :label="item.label"
@@ -96,712 +118,662 @@
               </el-select>
             </el-form-item>
             <el-form-item
-              label="签约/使用资质单位:"
-              prop="clothSize.bcStyleId"
-              style="width: 33%"
-              required>
-              <el-select
-                :disabled="p.actpoint === 'look'"
-                @change="chg1"
-                filterable
-                clearable
-                placeholder="请选择"
-                size="mini"
-                v-model="detailform.clothSize.bcStyleId">
-                <el-option
-                  :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options2"/>
-              </el-select>
-            </el-form-item>
-          </el-row>
-          <el-row>
-            <el-form-item
-              label="承建单位:"
-              prop="clothSize.bcTypeId"
-              required
-              style="width: 33%">
-              <el-select
-                :disabled="p.actpoint === 'look'"
-                @change="chg"
-                clearable
-                filterable
-                placeholder="请选择"
-                size="mini"
-                v-model="detailform.clothSize.bcTypeId">
-                <el-option
-                  :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options4"/>
-              </el-select>
-            </el-form-item>
-            <el-form-item
-              label="工程行业类别:"
-              required
-              prop="clothSize.bcStyleId"
-              style="width: 33%">
-              <el-select
-                :disabled="p.actpoint === 'look'"
-                @change="chg1"
-                filterable
-                clearable
-                placeholder="请选择"
-                size="mini"
-                v-model="detailform.clothSize.bcStyleId">
-                <el-option
-                  :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options2"/>
-              </el-select>
-            </el-form-item>
-            <el-form-item
               label="所属铁路局:"
-              prop="clothSize.bcTypeId"
               style="width: 33%">
               <el-select
-                :disabled="p.actpoint === 'look'"
-                @change="chg"
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
-                v-model="detailform.clothSize.bcTypeId">
+                v-model="detailForm.project.railwayId">
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options5"/>
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in railwayBureau"/>
               </el-select>
             </el-form-item>
           </el-row>
+          <!--工程类别(一级)-->
           <el-row>
             <el-form-item
-              label="板块:"
-              prop="clothSize.bcTypeId"
+              label="工程类别(一级):"
+              style="width: 33%">
+              <el-select
+                clearable
+                filterable
+                placeholder="请选择"
+                @change="getProjectTwo"
+                v-model="detailForm.project.projectTypeFirst">
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectDomainType"/>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="工程类别(二级):"
+              style="width: 33%">
+              <el-select
+                clearable
+                filterable
+                placeholder="请选择"
+                v-model="detailForm.project.projectTypeSecond">
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectTypeTwo"/>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              v-if="detailForm.project.projectTypeFirst=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
+              label="所属线路:"
+              style="width: 33%">
+              <el-select
+                filterable
+                clearable
+                placeholder="请选择或直接填写所属现路"
+                v-model="detailForm.project.projectLine">
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in railwayLine"/>
+              </el-select>
+            </el-form-item>
+          </el-row>
+          <!--项目板块-->
+          <el-row>
+            <el-form-item
+              label="项目板块:"
+              prop="projectModuleId"
               required
               style="width: 33%">
               <el-select
                 :disabled="p.actpoint === 'look'"
-                @change="chg"
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
-                v-model="detailform.clothSize.bcTypeId">
+                v-model="detailForm.project.projectModuleId">
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options3"/>
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectPlate"/>
               </el-select>
             </el-form-item>
             <el-form-item
               label="业务板块:"
-              prop="clothSize.bcStyleId"
+              prop="businessId"
               style="width: 33%"
               required>
               <el-select
                 :disabled="p.actpoint === 'look'"
-                @change="chg1"
                 filterable
                 clearable
                 placeholder="请选择"
-                size="mini"
-                v-model="detailform.clothSize.bcStyleId">
+                v-model="detailForm.project.businessId">
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options2"/>
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in bizCode"/>
               </el-select>
             </el-form-item>
             <el-form-item
               label="是否为联合体:"
-              prop="clothSize.bcStyleId"
+              prop="isConsortion"
               style="width: 33%">
               <el-switch
                 :disabled="p.actpoint === 'look'"
                 class="inline-formitem-switch"
-                v-model="detailform.clothSize.bcTypeId"
+                v-model="detailForm.project.isConsortion"
                 active-color="#409EFF"
                 inactive-color="#ddd"
                 active-value="0"
                 inactive-value="1"/>
             </el-form-item>
           </el-row>
+          <!--项目类型-->
           <el-row>
             <el-form-item
               label="项目类型:"
               required
-              prop="clothSize.bcStyleId"
+              prop="projectTypeId"
               style="width: 33%">
               <el-select
-                :disabled="p.actpoint === 'look'"
-                @change="chg1"
                 filterable
                 clearable
                 placeholder="请选择"
-                size="mini"
-                v-model="detailform.clothSize.bcStyleId">
+                v-model="detailForm.project.projectTypeId">
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options2"/>
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectType"/>
               </el-select>
             </el-form-item>
             <el-form-item
               label="项目状态:"
               required
-              prop="clothSize.bcStyleId"
+              prop="projectStatusId"
               style="width: 33%">
               <el-select
-                :disabled="p.actpoint === 'look'"
-                @change="chg1"
                 filterable
                 clearable
                 placeholder="请选择"
-                size="mini"
-                v-model="detailform.clothSize.bcStyleId">
+                v-model="detailForm.project.projectStatusId">
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options2"/>
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectStatus"/>
               </el-select>
             </el-form-item>
             <el-form-item
               label="项目所在地:"
-              prop="clothSize.bcStyleId"
+              prop="projectLocationId"
               style="width: 33%"
               required>
               <el-select
                 :disabled="p.actpoint === 'look'"
-                @change="chg1"
                 filterable
                 clearable
                 placeholder="请选择"
-                size="mini"
-                v-model="detailform.clothSize.bcStyleId">
+                v-model="detailForm.project.projectLocationId">
                 <el-option
                   :key="index"
                   :label="item.label"
                   :value="item.value"
-                  v-for="(item, index) in options2"/>
+                  v-for="(item, index) in options1"/>
               </el-select>
             </el-form-item>
           </el-row>
+          <!--投资模式-->
           <el-row>
             <el-form-item
               label="投资模式:"
-              prop="clothSize.bcTypeId"
+              prop="investmentModelId"
               style="width: 33%">
               <el-select
                 :disabled="p.actpoint === 'look'"
-                @change="chg"
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
-                v-model="detailform.clothSize.bcTypeId">
+                v-model="detailForm.project.investmentModelId">
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options2"/>
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in investmentModel"/>
               </el-select>
             </el-form-item>
             <el-form-item
               label="投资合同总额(万元):"
-              prop="clothSize.bcStyleId"
+              prop="investmentContract"
               style="width: 33%">
               <el-input
                 clearable
                 placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"/>
+                v-model="detailForm.project.investmentContract"/>
             </el-form-item>
             <el-form-item
               label="是否代局指:"
-              prop="clothSize.bcTypeId"
+              prop="isBureauIndex"
               style="width: 33%">
               <el-switch
                 :disabled="p.actpoint === 'look'"
                 class="inline-formitem-switch"
-                v-model="detailform.clothSize.bcTypeId"
+                v-model="detailForm.project.isBureauIndex"
                 active-color="#409EFF"
                 inactive-color="#ddd"
                 active-value="0"
                 inactive-value="1"/>
             </el-form-item>
           </el-row>
+          <!--新兴市场(一级)-->
           <el-row>
             <el-form-item
-              label="新兴市场一级类别:"
-              prop="clothSize.bcTypeId"
+              label="新兴市场类别(一级):"
+              prop="marketFirstId"
               style="width: 33%">
               <el-select
                 :disabled="p.actpoint === 'look'"
-                @change="chg"
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
-                v-model="detailform.clothSize.bcTypeId">
+                @change="getMarketTwo"
+                v-model="detailForm.project.marketFirstId">
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options7"/>
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in emergingMarket"/>
               </el-select>
             </el-form-item>
             <el-form-item
-              label="新兴市场二级类别:"
-              prop="clothSize.bcStyleId"
+              label="新兴市场类别(二级):"
+              prop="marketSecondId"
               style="width: 33%">
               <el-select
-                :disabled="p.actpoint === 'look'"
-                @change="chg1"
                 filterable
                 clearable
                 placeholder="请选择"
-                size="mini"
-                v-model="detailform.clothSize.bcStyleId">
+                v-model="detailForm.project.marketSecondId">
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options2"/>
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in emergingMarketTwo"/>
               </el-select>
             </el-form-item>
           </el-row>
+          <!--装配率-->
           <el-row>
             <el-form-item
               label="装配率(%):"
-              prop="clothSize.bcTypeId"
+              prop="assemblyRate"
               style="width: 33%">
-              <el-select
-                :disabled="p.actpoint === 'look'"
-                filterable
+              <el-input
                 clearable
-                placeholder="请选择"
-                v-model="detailform.clothSize.bcStyleId">
-                <el-option
-                  :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options2"/>
-              </el-select>
+                placeholder="请输入"
+                v-model="detailForm.project.assemblyRate"/>
             </el-form-item>
             <el-form-item
               label="装配类型:"
-              prop="clothSize.bcTypeId"
               style="width: 33%">
               <el-select
-                :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
                 placeholder="请选择"
-                v-model="detailform.clothSize.bcStyleId">
+                v-model="detailForm.project.assemblyTypeId">
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options2"/>
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in assemblyType"/>
               </el-select>
             </el-form-item>
             <el-form-item
               label="建筑类型:"
-              prop="clothSize.bcTypeId"
+              prop="architectureTypeId"
               style="width: 33%">
               <el-select
-                :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
                 placeholder="请选择"
-                v-model="detailform.clothSize.bcStyleId">
+                v-model="detailForm.project.architectureTypeId">
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options2"/>
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in architecturalType"/>
               </el-select>
             </el-form-item>
           </el-row>
+          <!--场地-->
           <el-row>
             <el-form-item
               label="场地名称:"
-              prop="clothSize.bcTypeId"
+              prop="fieldName"
               style="width: 33%">
               <el-select
-                :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
                 placeholder="请选择"
-                v-model="detailform.clothSize.bcStyleId">
+                v-model="detailForm.project.fieldName">
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options2"/>
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in siteName"/>
               </el-select>
             </el-form-item>
             <el-form-item
               label="房屋结构类型:"
-              prop="clothSize.bcTypeId"
+              prop="houseTypeId"
               style="width: 33%">
               <el-select
-                :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
                 placeholder="请选择"
-                v-model="detailform.clothSize.bcStyleId">
+                v-model="detailForm.project.houseTypeId">
                 <el-option
                   :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options2"/>
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in buildingStructure"/>
               </el-select>
             </el-form-item>
           </el-row>
+          <!--初始合同额-->
           <el-row>
             <el-form-item
-              label="初始签订合同额(万元):"
-              prop="clothSize.bcTypeId"
+              label="初始合同额(万元):"
+              prop="contractAmountInitial"
               style="width: 33%"
               required>
               <el-input
                 clearable
                 placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"/>
+                v-model="detailForm.project.contractAmountInitial"/>
             </el-form-item>
             <el-form-item
               label="工程合同额(万元):"
               required
-              prop="clothSize.bcStyleId"
+              prop="contractAmountEngine"
               style="width: 33%">
               <el-input
                 clearable
                 placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"/>
+                v-model="detailForm.project.contractAmountEngine"/>
             </el-form-item>
           </el-row>
+          <!--合同总额(万元)-->
           <el-row>
             <el-form-item
               label="合同总额(万元):"
-              prop="clothSize.bcStyleId"
+              prop="contractAmountTotal"
               style="width: 33%"
               required>
               <el-input
                 clearable
                 placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"/>
+                v-model="detailForm.project.contractAmountTotal"/>
             </el-form-item>
             <el-form-item
               label="合同额增减(万元):"
-              prop="clothSize.bcTypeId"
+              prop="contractAmountChange"
               style="width: 33%"
               required>
               <el-input
                 clearable
                 placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"/>
+                v-model="detailForm.project.contractAmountChange"/>
             </el-form-item>
           </el-row>
+          <!--增值税-->
           <el-row>
             <el-form-item
               label="增值税(万元):"
-              required
-              prop="clothSize.bcStyleId"
+              prop="valueAddedTax"
               style="width: 33%">
               <el-input
                 clearable
                 placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"/>
+                v-model="detailForm.project.valueAddedTax"/>
             </el-form-item>
             <el-form-item
               label="上报产值是否含税:"
-              prop="clothSize.bcStyleId"
-              style="width: 33%"
-              required>
-              <el-input
-                clearable
-                placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"/>
-            </el-form-item>
-          </el-row>
-          <el-row>
-            <el-form-item
-              label="计量单位:"
-              prop="clothSize.bcTypeId"
+              prop="isOutputTax"
               style="width: 33%">
               <el-select
-                :disabled="p.actpoint === 'look'"
-                @change="chg1"
                 filterable
                 clearable
                 placeholder="请选择"
-                size="mini"
-                v-model="detailform.clothSize.bcStyleId">
+                v-model="detailForm.project.isOutputTax">
                 <el-option
                   :key="index"
                   :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options2"/>
+                  :value="item.label"
+                  v-for="(item, index) in isOutputTax"/>
+              </el-select>
+            </el-form-item>
+          </el-row>
+          <!--计量单位-->
+          <el-row>
+            <el-form-item
+              label="计量单位:"
+              prop="unitId"
+              style="width: 33%">
+              <el-select
+                filterable
+                clearable
+                placeholder="请选择"
+                v-model="detailForm.project.unitId">
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in unit"/>
               </el-select>
             </el-form-item>
             <el-form-item
               label="实物工程量:"
-              prop="clothSize.bcTypeId"
+              prop="physicalQuantity"
               style="width: 33%"
               required>
               <el-input
                 clearable
                 placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"/>
+                v-model="detailForm.project.physicalQuantity"/>
             </el-form-item>
           </el-row>
+          <!--初始签订数量-->
           <el-row>
             <el-form-item
               label="初始签订数量:"
-              required
-              prop="clothSize.bcStyleId"
+              prop="signedNumber"
               style="width: 33%">
               <el-input
                 clearable
                 placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"/>
+                v-model="detailForm.project.signedNumber"/>
             </el-form-item>
             <el-form-item
               label="工程合同数量:"
-              prop="clothSize.bcStyleId"
-              style="width: 33%"
-              required>
+              prop="contractCount"
+              style="width: 33%">
               <el-input
                 clearable
                 placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"/>
+                v-model="detailForm.project.contractCount"/>
             </el-form-item>
           </el-row>
+          <!--合同开工日期-->
           <el-row>
             <el-form-item
               label="合同开工日期:"
-              prop="clothSize.bcTypeId"
+              prop="contractStartTime"
               style="width: 33%">
               <el-date-picker
-                v-model="value1"
+                v-model="detailForm.project.contractStartTime"
                 type="datetime"
                 placeholder="选择日期时间"/>
             </el-form-item>
             <el-form-item
               label="合同竣工日期:"
               required
-              prop="clothSize.bcStyleId"
+              prop="contractEndTime"
               style="width: 33%">
               <el-date-picker
-                v-model="value1"
+                v-model="detailForm.project.contractEndTime"
                 type="datetime"
                 placeholder="选择日期时间"/>
             </el-form-item>
             <el-form-item
               label="合同签订日期:"
-              prop="clothSize.bcStyleId"
+              prop="contractSignTime"
               style="width: 33%"
               required>
               <el-date-picker
-                v-model="value1"
+                v-model="detailForm.project.contractSignTime"
                 type="datetime"
                 placeholder="选择日期时间"/>
             </el-form-item>
           </el-row>
+          <!--实际开工日期-->
           <el-row>
             <el-form-item
               label="实际开工日期:"
-              prop="clothSize.bcTypeId"
+              prop="realStartTime"
               style="width: 33%">
               <el-date-picker
-                v-model="value1"
+                v-model="detailForm.project.realStartTime"
                 type="datetime"
                 placeholder="选择日期时间"/>
             </el-form-item>
             <el-form-item
               label="实际竣工日期:"
               required
-              prop="clothSize.bcStyleId"
+              prop="realEndTime"
               style="width: 33%">
               <el-date-picker
-                v-model="value1"
+                v-model="detailForm.project.realEndTime"
                 type="datetime"
                 placeholder="选择日期时间"/>
             </el-form-item>
             <el-form-item
               label="竣工日期:"
-              prop="clothSize.bcStyleId"
+              prop="projectEndTime"
               style="width: 33%"
               required>
               <el-date-picker
-                v-model="value1"
+                v-model="detailForm.project.projectEndTime"
                 type="datetime"
                 placeholder="选择日期时间"/>
             </el-form-item>
           </el-row>
+          <!--建设单位-->
           <el-row>
             <el-form-item
               label="建设单位:"
-              prop="clothSize.bcTypeId"
+              prop="companyBuild"
               style="width: 33%">
               <el-input
                 clearable
                 placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"/>
+                v-model="detailForm.project.companyBuild"/>
             </el-form-item>
             <el-form-item
               label="设计单位:"
-              required
-              prop="clothSize.bcStyleId"
+              prop="companyDesign"
               style="width: 33%">
               <el-input
                 clearable
                 placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"/>
+                v-model="detailForm.project.companyDesign"/>
             </el-form-item>
             <el-form-item
               label="监理单位:"
-              prop="clothSize.bcStyleId"
-              style="width: 33%"
-              required>
+              prop="companySupervisor"
+              style="width: 33%">
               <el-input
                 clearable
                 placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"/>
+                v-model="detailForm.project.companySupervisor"/>
             </el-form-item>
           </el-row>
+          <!--项目经理-->
           <el-row>
             <el-form-item
               label="项目经理:"
-              required
-              prop="clothSize.bcStyleId"
+              prop="projectManagerName"
               style="width: 33%">
               <el-input
                 clearable
                 placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"/>
+                v-model="detailForm.project.projectManagerName"/>
             </el-form-item>
             <el-form-item
               label="竣工产值:"
-              prop="clothSize.bcStyleId"
-              style="width: 33%"
-              required>
+              prop="completedOutputValue"
+              style="width: 33%">
               <el-input
                 clearable
                 placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"/>
+                v-model="detailForm.project.completedOutputValue"/>
             </el-form-item>
             <el-form-item
               label="是否托管:"
-              prop="clothSize.bcTypeId"
+              prop="isTrusteeship"
               style="width: 33%">
               <el-switch
                 :disabled="p.actpoint === 'look'"
                 class="inline-formitem-switch"
-                v-model="detailform.clothSize.bcTypeId"
+                v-model="detailForm.project.isTrusteeship"
                 active-color="#409EFF"
                 inactive-color="#ddd"
                 active-value="0"
                 inactive-value="1"/>
             </el-form-item>
           </el-row>
+          <!--工程标段-->
           <el-row>
             <el-form-item
               label="工程标段:"
-              prop="clothSize.bcTypeId"
+              prop="projectBidSection"
               style="width: 33%">
               <el-input
                 clearable
                 placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"/>
+                v-model="detailForm.project.projectBidSection"/>
             </el-form-item>
             <el-form-item
-              label="起讫地点（标段）:"
-              prop="clothSize.bcStyleId"
-              style="width: 33%"
-              required>
+              label="起讫地点(标段):"
+              prop="beginAddress"
+              style="width: 33%">
               <el-input
                 clearable
                 placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"/>
+                v-model="detailForm.project.beginAddress"/>
             </el-form-item>
             <el-form-item
               label="是否代管:"
-              prop="clothSize.bcStyleId"
+              prop="isEscrow"
               style="width: 33%">
               <el-switch
                 :disabled="p.actpoint === 'look'"
                 class="inline-formitem-switch"
-                v-model="detailform.clothSize.bcTypeId"
+                v-model="detailForm.project.isEscrow"
                 active-color="#409EFF"
                 inactive-color="#ddd"
                 active-value="0"
                 inactive-value="1"/>
             </el-form-item>
           </el-row>
+          <!--实际投资额(万元)-->
           <el-row>
             <el-form-item
-              label="实际投资额（万元）:"
-              prop="clothSize.bcTypeId"
+              label="实际投资额(万元):"
+              prop="realInvest"
               style="width: 33%">
               <el-input
                 clearable
                 placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"/>
+                v-model="detailForm.project.realInvest"/>
             </el-form-item>
           </el-row>
+          <!--工程概况(最多700字)-->
           <el-row>
             <el-form-item
               class="neirong"
               label="工程概况(最多700字):"
-              prop="clothSize.bcPlateTypeId">
+              prop="engineSurvey">
               <el-input
                 clearable
                 type="textarea"
                 placeholder="请输入"
-                v-model="detailform.clothSize.bcPlateTypeId"/>
+                v-model="detailForm.project.engineSurvey"/>
             </el-form-item>
           </el-row>
+          <!--备注(最多2000字)-->
           <el-row>
             <el-form-item
               class="neirong"
-              label="备注（最多2000字）:"
-              prop="clothSize.bcPlateTypeId">
+              label="备注(最多2000字):"
+              prop="projectRemark">
               <el-input
                 type="textarea"
                 placeholder="请输入"
-                v-model="detailform.clothSize.bcPlateTypeId"/>
+                v-model="detailForm.project.projectRemark"/>
             </el-form-item>
           </el-row>
+          <!--相关附件(最多10MB)-->
           <el-row>
             <el-form-item
-              label="相关附件（最多10MB）:"
+              label="相关附件(最多10MB):"
               prop="clothSize.bcTypeId">
               <el-upload
                 class="upload-demo"
@@ -826,255 +798,262 @@
 
 <script>
 export default {
-  name: '投资模式',
+  name: 'InvestMode',
   data() {
     return {
-      switchvalue: true,
+      emergingMarketTwo: [], // 新兴市场二级类别
+      projectTypeTwo: [], // 工程类别二级
+      isOutputTax: [{label: '是'}, {label: '否'}], // 上报产值是否含税
       value1: '',
-      options1: [{ label: "值1", value: "111" }],
-      options2: [{ label: "值2", value: "111" }],
-      options3: [{ label: "值3", value: "111" }],
-      options4: [{ label: "值4", value: "111" }],
-      options5: [{ label: "值5", value: "111" }],
-      options6: [{ label: "值", value: "111" }],
-      options7: [{ label: "值", value: "111" }],
-      options8: [{ label: "值", value: "111" }],
-      options9: [{ label: "值", value: "111" }],
-      options10: [{ label: "值", value: "111" }],
-      options11: [{ label: "值", value: "111" }],
-      options12: [{ label: "值", value: "111" }],
-      options13: [{ label: "值", value: "111" }],
-      fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
-      detailform: {
-        clothSize: {
-          id: "",
-          bcTypeId: "",
-          bcStyleId: "",
-          bcPlateTypeId: "",
-          bcTypeName: "",
-          bcStyleName: "",
-          bcPlateTypeName: "",
-          isDelete: 0,
-          createTime: "",
-          createUserId: 0,
-          createUserName: "",
-          createOrgId: 0,
-          createOrgName: ""
+      options1: [{ label: '值1', value: '111' }],
+      fileList: [
+        {name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'},
+        {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}
+      ],
+      detailForm: {
+        project: {
+          projectName: '', // 项目名称
+          fatherProjectId: '', // 父项目名称
+          projectOmit: '', // 项目简称
+          projectNatureId: '', // 项目性质
+          companyId: '', // 签约/使用资质单位
+          companyBuiltId: '', // 承建单位
+          railwayId: '', // 所属铁路局
+          projectTypeFirst: '', // 工程类别（一级）
+          projectTypeSecond: '', // 工程类别（二级）
+          projectLine: '', // 所属线路
+          projectModuleId: '', // 项目板块
+          businessId: '', // 业务板块
+          isConsortion: '', // 是否联合体项目
+          projectTypeId: '', // 项目类型
+          projectStatusId: '', // 项目状态
+          projectLocationId: '', // 项目所在地
+          investmentModelId: '', // 投资模式
+          investmentContract: '', // 投资合同总额(万元)
+          isBureauIndex: '', // 是否代局指
+          marketFirstId: '', // 新兴市场类别(一级)
+          marketSecondId: '', // 新兴市场类别(二级)
+          assemblyRate: '', // 装配率(%)
+          assemblyTypeId: '', // 装配类型
+          architectureTypeId: '', // 建筑类型
+          fieldName: '', // 场地名称
+          houseTypeId: '', // 房屋结构类型
+          contractAmountInitial: '', // 初始合同额(万元)
+          contractAmountEngine: '', // 工程合同额(万元)
+          contractAmountTotal: '', // 合总同额(万元)
+          contractAmountChange: '', // 合总额增减(万元)
+          valueAddedTax: '', // 增值税(万元)
+          isOutputTax: '', // 上报产值是否含税
+          unitId: '', // 计量单位
+          physicalQuantity: '', // 实物工程量
+          signedNumber: '', // 初始签订数量
+          contractCount: '', // 工程合同数量
+          contractStartTime: '', // 合同开工日期
+          contractEndTime: '', // 合同竣工日期
+          contractSignTime: '', // 合同签订日期
+          realStartTime: '', // 实际开工日期
+          realEndTime: '', // 实际竣工日期
+          projectEndTime: '', // 竣工日期
+          companyBuild: '', // 建设单位
+          companyDesign: '', // 设计单位
+          companySupervisor: '', // 监理单位
+          projectManagerName: '', // 项目经理
+          completedOutputValue: '', // 竣工产值
+          isTrusteeship: '', // 是否托管
+          projectBidSection: '', // 工程标段
+          beginAddress: '', // 起讫地点(标段)
+          isEscrow: '', // 是否代管
+          realInvest: '', // 实际投资额(万元)
+          engineSurvey: '', // 工程概况(最多700字)
+          projectRemark: '' // 备注(最多2000字)
         },
-        clothSizePartList: []
+        topInfoSiteList: {}
       },
-
-      p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
-    };
+      rules: {
+        projectName: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
+        projectOmit: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
+        projectNatureId: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
+        // projectNatureId: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
+      },
+      p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
+    }
   },
-  computed: {},
+  computed: {
+    emergingMarket() {
+      return this.$store.state.category.emergingMarket
+    },
+    assemblyType() {
+      return this.$store.state.assemblyType
+    },
+    railwayBureau() {
+      return this.$store.state.railwayBureau
+    },
+    projectDomainType() {
+      return this.$store.state.category.projectDomainType
+    },
+    railwayLine() {
+      return this.$store.state.railwayLine
+    },
+    projectType() {
+      return this.$store.state.projectType
+    },
+    projectStatus() {
+      return this.$store.state.projectStatus
+    },
+    architecturalType() {
+      return this.$store.state.architecturalType
+    },
+    siteName() {
+      return this.$store.state.siteName
+    },
+    buildingStructure() {
+      return this.$store.state.buildingStructure
+    },
+    unit() {
+      return this.$store.state.unit
+    },
+    projectProperties() {
+      return this.$store.state.projectProperties
+    },
+    projectPlate() {
+      return this.$store.state.projectPlate
+    },
+    bizCode() {
+      return this.$store.state.bizCode
+    },
+    investmentModel() {
+      return this.$store.state.investmentModel
+    }
+  },
   methods: {
-
-    pageGo() {
-      this.searchParam.current = this.current;
-      this.getuserlist();
-    },
-    showinputchg() {},
-    partchg(row) {
-      row.showinput = false;
-    },
-
-    chg(val) {
-      this.errorMsg = Math.random();
-      this.errorMsg0 = Math.random();
-      this.$nextTick(() => {
-        this.errorMsg = "";
-        this.errorMsg0 = "";
-      });
-      this.detailform.clothSize.bcStyleId = "";
-      this.detailform.clothSize.bcPlateTypeId = "";
-      this.options1.forEach((item) => {
-        if (val === item.value) {
-          this.options2 = item.children;
-        }
-      });
-    },
-    chg1() {
-      this.errorMsg = Math.random();
-      this.errorMsg0 = Math.random();
-      this.$nextTick(() => {
-        this.errorMsg = "";
-        this.errorMsg0 = "";
-      });
-      if (this.detailform.clothSize.bcStyleId === "") {
-        this.detailform.clothSize.bcPlateTypeId = "";
-      }
-      if (this.detailform.clothSize.bcTypeId === "") {
-        this.$message.error("请先选择样衣类型！");
+    getMarketTwo(id) {
+      this.detailForm.project.marketSecondId = ''
+      this.emergingMarketTwo = []
+      if (id !== '') {
+        this.emergingMarket.find(
+          (item) => {
+            if (item.id === id) {
+              this.emergingMarketTwo = item.children
+            }
+          }
+        )
       }
     },
-    chg2() {
-      this.errorMsg = Math.random();
-      this.errorMsg0 = Math.random();
-      this.$nextTick(() => {
-        this.errorMsg = "";
-        this.errorMsg0 = "";
-      });
-      if (this.detailform.clothSize.bcStyleId === "") {
-        this.detailform.clothSize.bcPlateTypeId = "";
-        this.$message.error("请先选择款式类型！");
+    getProjectTwo(id) {
+      this.detailForm.project.projectTypeSecond = ''
+      this.detailForm.project.projectLine = ''
+      this.projectTypeTwo = []
+      if (id !== '') {
+        this.projectDomainType.find(
+          (item) => {
+            if (item.id === id) {
+              this.projectTypeTwo = item.children
+            }
+          }
+        )
       }
-    },
-
-    del(index) {
-      console.log(index);
-      var _self = this;
-      // this.$utils.isdel(function() {
-      _self.detailform.clothSizePartList.splice(index, 1);
-      // })
-    },
-
-    show(type) {
-      this.type = type;
-      if (type === "add") {
-        this.resetinfo();
-        this.title = "新增";
-        this.detailform.clothSizePartList.push(this.sizeform);
-        // this.dialogVisibleAdd = true
-      }
-    },
-    resetinfo() {
-      this.sizeform = {
-        id: "",
-        part: "",
-        showinput: true,
-      };
-    },
-    handleClose(done) {
-      this.resetform("form");
-      done();
-    },
-    resetform(formName) {
-      this.$refs[formName].resetFields();
     },
     handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePreview(file) {
-        console.log(file);
-      },
-      handleExceed(files, fileList) {
-        this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-      },
-      beforeRemove(file, fileList) {
-        return this.$confirm(`确定移除 ${ file.name }？`);
-      },
+      console.log(file, fileList)
+    },
+    handlePreview(file) {
+      console.log(file)
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除${file.name}?`)
+    },
     carry(formName) {
       if (
-        [...new Set(this.detailform.clothSizePartList.map((item) => item.part))]
-          .length < this.detailform.clothSizePartList.length
+        [...new Set(this.detailForm.clothSizePartList.map((item) => item.part))]
+          .length < this.detailForm.clothSizePartList.length
       ) {
-        this.$message.error("部位填写重复");
-        return;
+        this.$message.error('部位填写重复')
+        return
       }
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$http
             .post(
-              "/api/contract/basicConfig/ClothSize/detail/save",
-              JSON.stringify(this.detailform),
-              { useJson: true }
+              '/api/contract/basicConfig/ClothSize/detail/save',
+              JSON.stringify(this.detailForm),
+              {useJson: true}
             )
             .then((res) => {
               if (res.data.code === 0) {
                 this.$message({
-                  message: "保存成功",
-                  type: "success",
-                });
-                this.$refs[formName].resetFields();
+                  message: '保存成功',
+                  type: 'success'
+                })
+                this.$refs[formName].resetFields()
               }
               if (res.data.code === 10) {
-                this.errorMsg = Math.random();
-                this.errorMsg0 = Math.random();
+                this.errorMsg = Math.random()
+                this.errorMsg0 = Math.random()
                 this.$nextTick(() => {
-                  this.errorMsg = res.data.msg;
-                  this.errorMsg0 = " ";
-                });
+                  this.errorMsg = res.data.msg
+                  this.errorMsg0 = ' '
+                })
               }
-            });
+            })
         } else {
-          this.$message.error("请添加必填项");
-          return false;
+          this.$message.error('请添加必填项')
+          return false
         }
-      });
+      })
     },
     submitForm(formName) {
-      if (
-        [...new Set(this.detailform.clothSizePartList.map((item) => item.part))]
-          .length < this.detailform.clothSizePartList.length
-      ) {
-        this.$message.error("部位填写重复");
-        return;
-      }
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$http
             .post(
-              "/api/contract/basicConfig/ClothSize/detail/save",
-              JSON.stringify(this.detailform),
+              '/api/statistics/StatisticsProject/detail/save',
+              JSON.stringify(this.detailForm),
               { useJson: true }
             )
             .then((res) => {
               if (res.data.code === 0) {
                 this.$message({
-                  message: "保存成功",
-                  type: "success",
-                });
-                this.$store.dispatch("clearToolBar", {
-                  detail: this.$route.fullPath,
-                });
-                this.$store.dispatch("clearCache", this.$route.name);
-                let p = { actpoint: "edit", uuid: res.data.data.clothSize.id };
+                  message: '保存成功',
+                  type: 'success'
+                })
+                this.$store.dispatch('clearToolBar', {
+                  detail: this.$route.fullPath
+                })
+                this.$store.dispatch('clearCache', this.$route.name)
+                let p = { actpoint: 'edit', uuid: res.data.data.clothSize.id }
                 this.$router.push({
-                  path: "/app/base/tailsize/detailedit",
-                  query: { p: this.$utils.encrypt(JSON.stringify(p)) },
-                });
+                  path: '/app/base/tailsize/detailedit',
+                  query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+                })
               }
               if (res.data.code === 10) {
-                this.errorMsg = Math.random();
-                this.errorMsg0 = Math.random();
+                this.errorMsg = Math.random()
+                this.errorMsg0 = Math.random()
                 this.$nextTick(() => {
-                  this.errorMsg = res.data.msg;
-                  this.errorMsg0 = " ";
-                });
+                  this.errorMsg = res.data.msg
+                  this.errorMsg0 = ' '
+                })
               }
-            });
+            })
         } else {
-          console.log("error submit!");
-          return false;
+          console.log('error submit!')
+          return false
         }
-      });
+      })
     },
-    sure() {
-      console.log(this.sizeform);
-      this.$refs["sizeform"].validate((valid) => {
-        if (valid) {
-          this.detailform.clothSizePartList.push(this.sizeform);
-          this.dialogVisibleAdd = false;
-        } else {
-          console.log("error submit!");
-          return false;
-        }
-      });
-    },
-
-    // 加载列表
-    getDetail() {},
-
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
-    },
+    back() {
+      this.$router.back()
+    }
   },
   mounted() {
-    // eslint-disable-next-line no-unde
-    this.getDetail();
-  },
-};
+    this.$store.dispatch('getConfig', {})
+    this.$store.dispatch('getCategory', {name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3'})
+    this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'})
+  }
+}
 </script>
 <style lang="scss" scoped>
   .gcform{
