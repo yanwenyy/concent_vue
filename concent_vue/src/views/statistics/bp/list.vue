@@ -4,12 +4,21 @@
    <el-container style="height: 500px; border: 1px solid #eee">
   <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
     <el-tree
-      :data="data"
+      :props="props"
+      lazy height="500" width="160"
+      :default-expanded-keys="['']"
+      node-key="uuid"
+      :load="loadNode"
       show-checkbox
-      node-key="id"
-      :default-expanded-keys="[2, 3]"
-      :default-checked-keys="[5]"
-      :props="defaultProps">
+      @check-change="handleCheckChange"
+      @node-click="handleNodeClick"
+    @node-expand="handleNodeExpand"
+    @node-collapse = "handleNodeCollapse">
+    <span class="custom-tree-node" slot-scope="{ node, data }">
+            <span>
+                <i :class="data.icon"></i>{{ node.label }}
+            </span>
+        </span>
     </el-tree>
   </el-aside>
 
@@ -133,6 +142,12 @@ export default {
   name: "proposal-list-look",
   data() {
     return {
+      props: {
+        label: 'vname',
+        isLeaf: 'vleaf'
+      },
+      count: 1,
+
       radio: '0',
       page: {current: 1, size: 10, total: 0, records: []},
       showinput: false,
@@ -158,49 +173,74 @@ export default {
         verifyResultfile: ''
       },
       formLabelWidth: '120px',
-      data: [{
-        id: 1,
-        label: '一级 1',
-        children: [{
-          id: 4,
-          label: '二级 1-1',
-          children: [{
-            id: 9,
-            label: '三级 1-1-1'
-          }, {
-            id: 10,
-            label: '三级 1-1-2'
-          }]
-        }]
-      }, {
-        id: 2,
-        label: '一级 2',
-        children: [{
-          id: 5,
-          label: '二级 2-1'
-        }, {
-          id: 6,
-          label: '二级 2-2'
-        }]
-      }, {
-        id: 3,
-        label: '一级 3',
-        children: [{
-          id: 7,
-          label: '二级 3-1'
-        }, {
-          id: 8,
-          label: '二级 3-2'
-        }]
-      }],
-      defaultProps: {
-        children: 'children',
-        label: 'label'
-      }
+
+
 
     }
   },
   methods: {
+    handleNodeExpand(data){
+      if(data.vleaf!="1")
+      {
+
+        data.icon='el-icon-folder-opened';
+      }
+    },
+    handleNodeCollapse(data){
+      if(data.vleaf!="1")
+      {
+        data.icon='el-icon-folder';
+      }
+
+
+    },
+    handleCheckChange(data, checked, indeterminate) {
+      console.log(data, checked, indeterminate);
+    },
+    handleNodeClick(data) {
+      console.log(data);
+
+
+
+    },
+    loadNode(node, resolve) {
+      if (node.level === 0) {
+        return resolve([{ vname: '统计项',uuid:"" ,icon:'el-icon-folder-opened'}]);
+      }
+      setTimeout(() => {
+        //console.log(node);
+        this.$http
+          .post(
+            '/api/bp/BpTjx/list/getBpTjxListByParentId',
+            {"parentid":node.data.uuid}
+          )
+          .then(res => {
+            //this.page = res.data.data
+            const data = [];
+            //console.log(res.data.data);
+            var itemDatas = res.data.data;
+            itemDatas.forEach((item)=>{
+              console.log(item);
+              if(item.vleaf=="1")
+              {
+                item.icon='el-icon-document';
+              }else
+              {
+                item.icon='el-icon-folder';
+
+              }
+
+              // var itemData = {
+              //   id:item.uuid,
+              //   label:item.vname,
+              //   leaf:item.vleaf
+              // }
+              data.push(item);
+            });
+            resolve(data);
+          })
+      }, 500);
+    },
     verifyResultEdit() {
       if (this.multipleSelection.length > 0) {
         this.dialogResult = true;
@@ -427,21 +467,30 @@ export default {
       this.multipleSelection = val
     },
     getData() {
-      console.log(JSON.stringify(this.searchform));
-      if (this.searchform.saleTime != "") {
-        var date = new Date(this.searchform.saleTime);
-        var time1 = Date.parse(date);
-        this.searchform.saleTime = time1;
-      }
+
+
+
+
 
       console.log(JSON.stringify(this.searchform));
       this.$http
         .post(
-          '/api/contract/topInfo/Verify/list/loadPageDataForReg',
-          this.searchform
+          '/api/bp/BpTjx/list/getBpTjxListByParentId',
+          {"parentid":""}
         )
         .then(res => {
-          this.page = res.data.data
+          //this.page = res.data.data
+          console.log(res.data.data);
+          var itemDatas = res.data.data;
+          itemDatas.forEach((item)=>{
+            console.log(item);
+            var itemData = {
+              id:item.uuid,
+              label:item.vname
+            }
+            this.data[0].children.push(itemData);
+          });
+
         })
     },
     getMenus() {
@@ -475,7 +524,7 @@ export default {
   created() {
     //this.getMenus()
     //this.getOrgTree()
-    this.getData()
+    //this.getData()
   }
 }
 </script>
