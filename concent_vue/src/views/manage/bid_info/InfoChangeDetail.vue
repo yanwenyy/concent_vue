@@ -1221,8 +1221,9 @@
 
               <el-form-item label="内部联合体单位:"
               v-if="detailform.bidInfo.isCoalitionBid==='0'"
-              class="formItem" >
-              <el-input  placeholder="请输入内容" v-model="detailform.bidInfo.innerOrgName" class="input-with-select">
+              class="formItem"
+              >
+              <el-input  placeholder="请输入内容" v-model="detailform.bidInfo.innerOrgName" class="input-with-select" :disabled="p.actpoint === 'look'">
                 <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('内部联合体单位',detailform.bidInfo.innerOrgId)" ></el-button>
               </el-input>
               <!-- <el-select

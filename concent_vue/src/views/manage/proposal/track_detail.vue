@@ -1138,7 +1138,7 @@
       // 加载列表
       getDetail() {
         this.$http
-          .post("/api/contract/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.id})
+          .post("/api/contract/topInfo/TopInfor/detail/entityInfoForTrack", {topInfoId:this.id})
           .then((res) => {
             var datas=res.data.data;
             this.getTwo(datas.topInfor.enginTypeFirstId);

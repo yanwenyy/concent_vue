@@ -175,22 +175,73 @@
                 clearable
                 type="date"
                 value-format="timestamp"
-                v-model="searchform.planBidTime"
-
-              >
+                v-model="searchform.planBidTime">
               </el-date-picker>
             </div>
           </template>
+          <template slot-scope="scope">{{
+            scope.row.planBidTime | dateformat
+            }}</template>
         </el-table-column>
+
+        <el-table-column
+          :width="180"
+          align="center"
+          label="放弃跟踪时间"
+          prop="state"
+          show-overflow-tooltip
+        >
+        <template slot="header" slot-scope="scope">
+            <span>放弃跟踪时间</span>
+            <div>
+              <el-date-picker
+                class="list-search-picker"
+                filterable
+                clearable
+                type="date"
+                value-format="timestamp"
+                v-model="searchform.planBidTime">
+              </el-date-picker>
+            </div>
+          </template>
+          <template slot-scope="scope">{{
+            scope.row.planBidTime | dateformat
+            }}</template>
+        </el-table-column>
+
+        <el-table-column
+          :width="180"
+          align="center"
+          label="结束跟踪时间"
+          prop="state"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>结束跟踪时间</span>
+            <div>
+              <el-date-picker
+                class="list-search-picker"
+                filterable
+                clearable
+                type="date"
+                value-format="timestamp"
+                v-model="searchform.planBidTime">
+              </el-date-picker>
+            </div>
+          </template>
+          <template slot-scope="scope">{{
+            scope.row.planBidTime | dateformat
+            }}</template>
+          </el-table-column>
         <el-table-column
           :width="150"
           align="center"
           label="状态"
-          prop="flowStatus"
+          prop="trackStatus"
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
+             {{scope.row.trackStatus==1?'跟踪中':scope.row.trackStatus==2?'放弃跟踪':scope.row.trackStatus==3?'结束跟踪':'待跟踪'}}
           </template>
           <template slot="header" slot-scope="scope">
             <span>状态</span>
@@ -344,7 +395,7 @@
       getData() {
         this.$http
           .post(
-            "/api/contract/topInfo/TopInfor/list/loadPageDataForReg",
+            "/api/contract/topInfo/TopInfor/list/loadPageDataTrack",
             this.searchform
           )
           .then((res) => {

@@ -4,7 +4,7 @@
       <el-button-group style="float: left">
         <el-button @click="add" :disabled="flowStatus!=null"  plain type="primary">登记</el-button>
         <el-button @click="totop" :disabled="flowStatus!=1&&flowStatus!=4" plain type="primary">修改</el-button>
-        <el-button type="primary" @click="addk" plain :disabled="flowStatus!=1">开标结果登记</el-button>
+        <el-button type="primary" @click="addk" plain :disabled="flowStatus!=1">开标登记</el-button>
 
         <el-button @click="remove" type="primary" plain>删除</el-button>
 

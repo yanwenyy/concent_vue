@@ -248,7 +248,7 @@
           :width="150"
           align="center"
           label="项目地点"
-          prop="placeName"
+          prop="path"
           show-overflow-tooltip
         >
         </el-table-column>

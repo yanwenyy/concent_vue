@@ -185,6 +185,9 @@
               </el-date-picker>
             </div>
           </template>
+          <template slot-scope="scope">{{
+            scope.row.planBidTime | dateformat
+            }}</template>
         </el-table-column>
         <el-table-column
           :width="150"
