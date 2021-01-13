@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="ad0fbe80-642e-469b-8294-545e3bb9e69e" name="concent_vue" url=" http://192.168.70.132:8080">
+        <fileTransfer port="0" mountedRoot="D:\project\bdmp-epiboly-frontend\concent_vue" accessType="MOUNT" />
+      </webServer>
+    </option>
+  </component>
+</project>
