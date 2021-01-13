@@ -3,6 +3,8 @@
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
         <el-button @click="add" plain type="primary">跟踪</el-button>
+        <el-button @click="add" :disabled="trackStatus!='1'" plain type="primary">放弃跟踪</el-button>
+        <el-button @click="add" plain type="primary">结束跟踪</el-button>
       </el-button-group>
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
@@ -19,6 +21,7 @@
         :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
         @row-dblclick="rowshow"
         @selection-change="handleSelectionChange"
+        @select="rowSelect"
         border
         highlight-current-row
         ref="table"
@@ -247,6 +250,7 @@
             <span>状态</span>
             <div>
               <el-input
+
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="sousuo"
@@ -309,6 +313,7 @@
         multipleSelection: [],
         orgTree: [],
         xqprojectType:[],//工程二级列表
+        trackStatus:'',
       };
     },
     computed: {
@@ -340,7 +345,31 @@
       },
       // 增加
       add() {
+        if (this.multipleSelection.length !== 1||this.multipleSelection.length>1) {
+          this.$message.info("请选择一条记录进行登记操作！");
+          return false;
+        }
         let p = {actpoint: "add"};
+        this.$router.push({
+          path: "./track_detail/",
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        });
+      },
+      //行选择的时候
+      rowSelect(selection, row){
+        if(selection.indexOf(row)!=-1){
+          this.trackStatus=row.trackStatus;
+        }else{
+          this.trackStatus='';
+        }
+      },
+      //放弃跟踪
+        addfq() {
+        if (this.multipleSelection.length !== 1||this.multipleSelection.length>1) {
+          this.$message.info("请选择一条记录进行登记操作！");
+          return false;
+        }
+        let p = {actpoint: "addfq"};
         this.$router.push({
           path: "./track_detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
@@ -348,7 +377,7 @@
       },
       // 查看
       rowshow(row) {
-        let p = {actpoint: "look", instid: row.topOrgId};
+        let p = {actpoint: "look", instid: row.uuid};
         this.$router.push({
           path: "./track_detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},

@@ -349,23 +349,7 @@
           <el-form-item label="内部联合体单位:"
               v-if="detailFormBefore.bidInfo.isCoalitionBid==='0'">
           <el-input disabled  placeholder="请输入内容" v-model="detailFormBefore.bidInfo.innerOrgName" class="input-with-select">
-            <!-- <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('内部联合体单位',detailFormBefore.bidInfo.innerOrgId)" ></el-button> -->
           </el-input>
-              <!-- <el-select
-                :disabled="true"
-                filterable
-                clearable
-                multiple
-                placeholder="请选择"
-                v-model="detailFormBefore.value1"
-              >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in amountSource"
-                ></el-option>
-              </el-select> -->
           </el-form-item>
 <br>
 
@@ -397,7 +381,7 @@
           </el-form-item>
 
           <el-form-item label="外部联合体单位:"
-              v-if="detailform.bidInfo.isCoalitionBid==='0'">
+              v-if="detailFormBefore.bidInfo.isCoalitionBid==='0'">
             <el-input
               v-model="detailFormBefore.bidInfo.outOrg"
               disabled
@@ -2168,9 +2152,9 @@ export default {
             topInforBO:afterData.topInforBO,
             value1:[]
           };
-          afterData.bidInfoInnerOrgList.forEach((item)=>{
-            this.detailform.value1.push(item.innerOrgId)
-            });
+          // afterData.bidInfoInnerOrgList.forEach((item)=>{
+          //   this.detailform.value1.push(item.innerOrgId)
+          //   });
           this.detailFormBefore = {
              bidInfo: beforData.bidInfo,
             bidInfoInnerOrgList: beforData.bidInfoInnerOrgList,
@@ -2182,7 +2166,7 @@ export default {
           };
             //内部联合体回显
             var id=[],name=[];
-            datas.bidInfoInnerOrgList.forEach((item)=>{
+            afterData.bidInfoInnerOrgList.forEach((item)=>{
               id.push(item.innerOrgId);
               name.push(item.innerOrgName);
             });

@@ -342,8 +342,6 @@ export default {
         )
         }
       },
-    handleChange(){},
-    handleRemove(){},
       //行选择的时候
       rowSelect(selection, row){
         if(selection.indexOf(row)!=-1){
@@ -382,23 +380,6 @@ export default {
         // })
     },
 
-    //开标结果登记界面
-        addk() {
-        if (this.multipleSelection.length !== 1||this.multipleSelection.length>1) {
-          this.$message.info("请选择一条记录进行登记操作！");
-          return false;
-        }
-        let p = {actpoint: "addk", instid: this.multipleSelection[0].uuid};
-        this.$router.push({
-          path: "./Winning_bid/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
-
-        // this.infoCSVisible = true;
-        // this.$nextTick(() => {
-        //   this.$refs.infoCS.init();
-        // })
-    },
 
     // 修改
       totop() {
@@ -413,6 +394,21 @@ export default {
         });
 
       },
+
+
+    //开标结果登记界面
+        addk() {
+        if (this.multipleSelection.length !== 1||this.multipleSelection.length>1) {
+          this.$message.info("请选择一条记录进行登记操作！");
+          return false;
+        }
+        let p = {actpoint: "addk", instid: this.multipleSelection[0].uuid};
+        this.$router.push({
+          path: "./Winning_bid/",
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        });
+    },
+
       // 删除
       remove() {
         if (this.multipleSelection.length < 1) {

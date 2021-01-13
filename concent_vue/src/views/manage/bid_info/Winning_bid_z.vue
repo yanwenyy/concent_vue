@@ -216,7 +216,7 @@
                   'bidEvaluationMethodName'
                 )
               "
-                v-model="zbForm.bidInfoSection.bidEvaluationMethodId">
+                v-model="zbForm.bidInfoSection.bidEvaluationMethodName">
                  <el-option
                   :key="index"
                   :label="item.detailName"
@@ -405,41 +405,11 @@
           </el-table-column>
           <el-table-column
 
-            prop="inforName"
+            prop="orgName"
             show-overflow-tooltip
             label="其他投标单位(系统内)">
-            <template slot-scope="scope">
-              <el-select
-                clearable
-                filterable
-                placeholder="请选择"
-                v-model="scope.row.orgName"
-                disabled
-
-              >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.detailName"
-                  v-for="(item, index) in nameList"
-                ></el-option>
-              </el-select>
-            </template>
           </el-table-column>
 
-          <el-table-column
-            :resizable="false"
-            fixed="right"
-            label="操作"
-            show-overflow-tooltip
-            align="center"
-            width="100"
-            disabled
-          >
-            <template slot-scope="scope" >
-              <el-link :underline="false" @click="del(scope.$index,'inside')" type="warning" disabled>删除</el-link>
-            </template>
-          </el-table-column>
         </el-table>
 
         <div class="detail-title">
@@ -463,43 +433,13 @@
             label="序号">
           </el-table-column>
           <el-table-column
-            prop="inforName"
+            prop="orgName"
             show-overflow-tooltip
             label="其他投标单位(系统外)">
-            <template slot-scope="scope">
-              <el-select
-                clearable
-                filterable
-                placeholder="请选择"
-                v-model="scope.row.orgName"
-                disabled
-              >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.detailName"
-                  v-for="(item, index) in nameList"
-                ></el-option>
-              </el-select>
-            </template>
-          </el-table-column>
-
-          <el-table-column
-            :resizable="false"
-            fixed="right"
-            label="操作"
-            show-overflow-tooltip
-            align="center"
-            width="100"
-            disabled
-          >
-            <template slot-scope="scope">
-              <el-link :underline="false" @click="del(scope.$index,'outside')" type="warning" disabled>删除</el-link>
-            </template>
           </el-table-column>
           </el-table>
 
-      </el-form>
+
         <el-divider content-position="left" class="detailDivider">中标登记</el-divider>
     <el-form ref="zbForm" :model="zbForm" :rules="rules">
         <el-form-item label="是否中标" :label-width="formLabelWidth" >
@@ -553,7 +493,7 @@
     label="系统外中标金额"
     v-if="zbForm.bidInfoSection.isOutBidOrg==='0'"
     class="list-item"
-    prop="bidInfoSection.winBidPrice"
+    prop="bidInfoSection.outOrgBidMoney"
     :rules="rules.contractAmount"
     >
       <el-input
@@ -565,12 +505,14 @@
     </el-form-item>
 
           <el-form-item
-              class="list-item"
+          width="100%"
+              class="list-item_textarea"
               v-if="zbForm.bidInfoSection.isOutBidOrg === '0'"
               label="未中标原因:"
             >
               <el-input
               type="textarea"
+
                 :disabled="zbType === 'look'"
                 clearable
                 placeholder="未中标原因"
@@ -664,7 +606,7 @@
                   </template>
                 </el-table-column>
               </el-table>
-
+</el-form>
     </el-form>
 </div>
   <div slot="footer" class="dialog-footer">
@@ -706,12 +648,15 @@ export default {
         type: [],
         resource: "",
         desc: "",
+        bidInfoSectionOrgList:[],
         bidInfo_03: [],
       },
       zbType: "add", //中标弹框打开的方式
       zbForm: {
         bidInfoSection: {},
         bidInfo_03: [],
+        dataList:[],
+        dataList2:[]
       },
       page: { current: 1, size: 10, total: 0, records: [] },
       showinput: false,
@@ -762,14 +707,27 @@ export default {
         .post("/api/contract/topInfo/BidInfoSection/detail/entityInfo", {
           id: this.multipleSelection[0].uuid,
         })
-      this.zbType = "add";
-      this.bdName = list || [];
-      this.isBidRates = isBidRates;
-      this.dialogFormVisible = true;
+        .then((res) => {
+          var datas = res.data.data;
+          this.zbType = "add";
+          this.bdName = list || [];
+          this.isBidRates = isBidRates;
+          this.dialogFormVisible = true;
+          this.zbForm.bidInfoSection = datas.bidInfoSection;
+          // this.zbForm.bidInfoSectionOrgList = datas.bidInfoSectionOrgList;
+          datas.bidInfoSectionOrgList.forEach((item)=>{
+            if(item.orgType=='1'){
+              this.zbForm.dataList.push(item);
+            }else{
+              this.zbForm.dataList2.push(item);
+            }
+          })
+        });
+
       // this.zbForm=this.multipleSelection[0];
-      this.zbForm.bidInfoSection = JSON.parse(
-        JSON.stringify(this.multipleSelection[0])
-      );
+      // this.zbForm.bidInfoSection = JSON.parse(
+      //   JSON.stringify(this.multipleSelection[0])
+      // );
 
       // var _val=this.multipleSelection[0];
       // for (var i in _val) {
@@ -891,13 +849,6 @@ export default {
       });
     },
     rowshow(row) {
-      // var id=row.isWinBid==null?row.topInfoOrgId:row.uuid;
-      // let p = { actpoint: "look", instid: id ,isWinBid:row.isWinBid};
-      // this.$router.push({
-      //   path: "./detail/",
-      //   query: { p: this.$utils.encrypt(JSON.stringify(p)) },
-      // });
-
       this.$http
         .post("/api/contract/topInfo/BidInfoSection/detail/entityInfo", {
           id: row.uuid,
@@ -932,24 +883,7 @@ export default {
       this.searchform.current = val;
       this.getData();
     },
-    searchformSubmit() {
-      this.searchform.current = 1;
-      this.getData();
-    },
-    searchformReset() {
-      // this.$refs["searchform"].resetFields();
-      this.searchform = {
-        current: 1,
-        size: 10,
-        year: "",
-        name: "",
-        ptype: "",
-        orgid: "",
-        orgname: "",
-      };
 
-      this.getData();
-    },
     // 列表选项数据
     handleSelectionChange(val) {
       this.multipleSelection = val;
@@ -972,10 +906,6 @@ export default {
             this.menus = res.data.data;
           }
         });
-    },
-    currentMenu(selVal) {
-      let selMenuObj = this.menus.filter((item) => item.value === selVal);
-      this.searchform.menu = selMenuObj[0].label;
     },
     // 获取上级单位树信息
     getOrgTree() {
@@ -1016,9 +946,12 @@ export default {
 }
 >>>.el-form--inline .el-form-item__content {
     width: 100%;
+    margin-left: 0px !important;
 }
 >>>.el-input{
   width: 100%;
 }
-
+>>>.list-item_textarea{
+  width:100%;
+}
 </style>

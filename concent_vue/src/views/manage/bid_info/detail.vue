@@ -583,13 +583,10 @@
                   size="small"
                   type="primary"
                   v-show="p.actpoint != 'look' && p.actpoint !== 'searchLook'"
-                  :disabled="
-                    p.actpoint === 'look' || p.actpoint === 'searchLook'
-                  "
-                  >点击上传</el-button
-                >
-              </el-upload>
-            </p>
+                  :disabled=" p.actpoint === 'look' || p.actpoint === 'searchLook'">点击上传
+                  </el-button>
+                  </el-upload>
+                </p>
 
             <el-table
               :data="detailform.bidInfo_01"
@@ -1390,17 +1387,17 @@ export default {
         // cons ole.log(datas.bidInfo)
         this.detailform = {
           bidInfo: datas.bidInfo,
-          bidInfoInnerOrgList: datas.bidInfoInnerOrgList,
+          bidInfoInnerOrgList: datas.bidInfoInnerOrgList||[],
           bidInfoSectionList: datas.bidInfoSectionList || [],
           topInforBO: this.nullToStr(datas.topInforBO),
-          bidInfo_01: datas.bidInfo_01,
+          bidInfo_01: datas.bidInfo_01||[],
           value1: [],
           nblht: [],
         };
         //内部联合体回显
         var id = [],
           name = [];
-        datas.bidInfoInnerOrgList.forEach((item) => {
+        this.detailform.bidInfoInnerOrgList.forEach((item) => {
           id.push(item.innerOrgId);
           name.push(item.innerOrgName);
         });
@@ -1418,7 +1415,6 @@ export default {
   mounted() {
     // this.id=this.p.instid;
     this.id = this.p.instid;
-    console.log(this.p.actpoint)
     this.$store.dispatch("getConfig", {});
     if (this.p.actpoint === "edit" || this.p.actpoint === "look" || this.id) {
       this.getDetail();

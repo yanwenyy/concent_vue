@@ -493,7 +493,6 @@
                   :disabled="p.actpoint === 'look'"
                   clearable
                   placeholder=""
-
                   v-model="detailform.topInfoOrg.projectTrackResponPerson"
                 />
               </el-form-item>
@@ -822,10 +821,13 @@
         options: [],
         detailform: {
           topInfor: {},
-          topInfoOrg: {},
+          topInfoOrg: {
+            projectTrackResponPerson:"",
+          },
           topInfoSiteList: [],
           topInfoSectionList: [],
           value1: [],
+
         },
         xqprojectType: [],//工程类别二级
         emergingMarketTwo:[],//新兴市场二级
@@ -911,7 +913,7 @@
       if (this.p.actpoint === "edit"||this.id) {
         this.getDetail();
       }
-      if (this.p.actpoint === "add") {
+      if (this.p.actpoint === "add"||this.uuid) {
         this.detailform.topInfoSiteList=[{
           country: '',
           ffid: '',
@@ -1145,10 +1147,10 @@
             this.getTwoSC(datas.topInfor.marketFirstNameId);
             this.getTwoXZ(datas.topInfor.projectNatureFirstId);
             this.detailform={
-              topInfor: datas.topInfor,
-              topInfoOrg: datas.topInfoOrg,
-              topInfoSiteList: datas.topInfoSiteList,
-              topInfoSectionList: datas.topInfoSectionList,
+              topInfor: datas.topInfor||{},
+              topInfoOrg: datas.topInfoOrg||{},
+              topInfoSiteList: datas.topInfoSiteList||[],
+              topInfoSectionList: datas.topInfoSectionList||[],
               value1:[],
             }
             datas.topInforCapitalList.forEach((item)=>{
