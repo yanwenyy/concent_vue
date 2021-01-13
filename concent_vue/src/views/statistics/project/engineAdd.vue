@@ -25,6 +25,7 @@
               style="width: 33%">
               <el-input
                 clearable
+                :disabled="p.actpoint === 'look'"
                 placeholder="请输入"
                 v-model="detailForm.project.projectName"/>
             </el-form-item>
@@ -33,6 +34,7 @@
               prop="project.projectForeginName"
               style="width: 33%">
               <el-input
+                :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.projectForeginName"/>
@@ -42,6 +44,7 @@
               prop="project.projectOmit"
               style="width: 33%">
               <el-input
+                :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.projectOmit"/>
@@ -72,6 +75,7 @@
               prop="project.projectNatureSecondId"
               style="width: 33%">
               <el-select
+                :disabled="p.actpoint === 'look'"
                 clearable
                 filterable
                 placeholder="请选择"
@@ -85,7 +89,7 @@
             </el-form-item>
             <el-form-item
               label="是否为联合体:"
-              prop="isConsortion"
+              prop="project.isConsortion"
               style="width: 33%">
               <el-switch
                 :disabled="p.actpoint === 'look'"
@@ -101,7 +105,7 @@
             <el-form-item
               v-if="detailForm.project.projectNatureFirstId === '7031076e7a5f4225b1a89f31ee017802'"
               label="投资模式:"
-              prop="investmentModelId"
+              prop="project.investmentModelId"
               style="width: 33%">
               <el-select
                 :disabled="p.actpoint === 'look'"
@@ -119,9 +123,10 @@
             <el-form-item
               v-if="detailForm.project.projectNatureFirstId === '7031076e7a5f4225b1a89f31ee017802'"
               label="投资合同总额(万元):"
-              prop="investmentContract"
+              prop="project.investmentContract"
               style="width: 33%">
               <el-input
+                :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.investmentContract"/>
@@ -130,7 +135,7 @@
           <el-row>
             <el-form-item
               :label="detailForm.project.projectNatureFirstId === '7031076e7a5f4225b1a89f31ee017802'?'投资单位:':'承建单位:'"
-              prop="companyBuiltId"
+              prop="project.companyBuiltId"
               style="width: 33%">
               <el-select
                 :disabled="p.actpoint === 'look'"
@@ -149,6 +154,7 @@
               label="所属铁路局:"
               style="width: 33%">
               <el-select
+                :disabled="p.actpoint === 'look'"
                 clearable
                 filterable
                 placeholder="请选择"
@@ -165,8 +171,10 @@
           <el-row>
             <el-form-item
               label="工程类别(一级):"
+              prop="project.projectTypeFirst"
               style="width: 33%">
               <el-select
+                :disabled="p.actpoint === 'look'"
                 clearable
                 filterable
                 placeholder="请选择"
@@ -181,8 +189,10 @@
             </el-form-item>
             <el-form-item
               label="工程类别(二级):"
+              prop="project.projectTypeSecond"
               style="width: 33%">
               <el-select
+                :disabled="p.actpoint === 'look'"
                 clearable
                 filterable
                 placeholder="请选择"
@@ -197,8 +207,10 @@
             <el-form-item
               v-if="detailForm.project.projectTypeFirst=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
               label="所属线路:"
+              prop="project.projectLine"
               style="width: 33%">
               <el-select
+                :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
                 placeholder="请选择或直接填写所属现路"
@@ -214,7 +226,7 @@
           <el-row>
             <el-form-item
               label="项目板块:"
-              prop="projectModuleId"
+              prop="project.projectModuleId"
               style="width: 33%">
               <el-select
                 disabled
@@ -231,9 +243,10 @@
             </el-form-item>
             <el-form-item
               label="项目类型:"
-              prop="projectTypeId"
+              prop="project.projectTypeId"
               style="width: 33%">
               <el-select
+                :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
                 placeholder="请选择"
@@ -252,6 +265,7 @@
               prop="project.fatherProjectId"
               style="width: 33%">
               <el-select
+                :disabled="p.actpoint === 'look'"
                 clearable
                 filterable
                 placeholder="请选择"
@@ -266,7 +280,7 @@
             <el-form-item
               v-if="detailForm.project.projectTypeId==='625a3ee0728a4f45b792d022b8bb36d9'"
               label="是否代局指:"
-              prop="isBureauIndex"
+              prop="project.isBureauIndex"
               style="width: 33%">
               <el-switch
                 :disabled="p.actpoint === 'look'"
@@ -281,9 +295,10 @@
           <el-row>
             <el-form-item
               label="计量单位:"
-              prop="unitId"
+              prop="project.unitId"
               style="width: 33%">
               <el-select
+                :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
                 placeholder="请选择"
@@ -297,18 +312,20 @@
             </el-form-item>
             <el-form-item
               label="初始签订数量:"
-              prop="signedNumber"
+              prop="project.signedNumber"
               style="width: 33%">
               <el-input
+                :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.signedNumber"/>
             </el-form-item>
             <el-form-item
               label="工程合同数量:"
-              prop="contractCount"
+              prop="project.contractCount"
               style="width: 33%">
               <el-input
+                :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.contractCount"/>
@@ -317,9 +334,10 @@
           <el-row>
             <el-form-item
               label="项目状态:"
-              prop="projectStatusId"
+              prop="project.projectStatusId"
               style="width: 33%">
               <el-select
+                :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
                 placeholder="请选择"
@@ -333,7 +351,7 @@
             </el-form-item>
             <el-form-item
               label="项目所在地"
-              prop="qualityOrgNames"
+              prop="project.qualityOrgNames"
               style="width: 33%">
               <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailForm.topInfoSiteList.ffName" class="input-with-select">
                 <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('项目所在地',detailForm.topInfoSiteList.ffid)"></el-button>
@@ -361,7 +379,7 @@
           <el-row>
             <el-form-item
               label="新兴市场类别(一级):"
-              prop="marketFirstId"
+              prop="project.marketFirstId"
               style="width: 33%">
               <el-select
                 :disabled="p.actpoint === 'look'"
@@ -379,9 +397,10 @@
             </el-form-item>
             <el-form-item
               label="新兴市场类别(二级):"
-              prop="marketSecondId"
+              prop="project.marketSecondId"
               style="width: 33%">
               <el-select
+                :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
                 placeholder="请选择"
@@ -399,9 +418,10 @@
             <el-form-item
               v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
               label="装配率(%):"
-              prop="assemblyRate"
+              prop="project.assemblyRate"
               style="width: 33%">
               <el-input
+                :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.assemblyRate"/>
@@ -409,8 +429,10 @@
             <el-form-item
               v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
               label="装配类型:"
+              prop="project.assemblyTypeId"
               style="width: 33%">
               <el-select
+                :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
                 placeholder="请选择"
@@ -427,9 +449,10 @@
             <el-form-item
               v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
               label="建筑类型:"
-              prop="architectureTypeId"
+              prop="project.architectureTypeId"
               style="width: 33%">
               <el-select
+                :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
                 placeholder="请选择"
@@ -444,9 +467,10 @@
             <el-form-item
               v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
               label="房屋结构类型:"
-              prop="houseTypeId"
+              prop="project.houseTypeId"
               style="width: 33%">
               <el-select
+                :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
                 placeholder="请选择"
@@ -463,9 +487,10 @@
             <el-form-item
               v-if="detailForm.project.marketFirstId === '50cd5e9992ac4653920fac8c1f2eb2e3'"
               label="场地名称:"
-              prop="fieldName"
+              prop="project.fieldName"
               style="width: 33%">
               <el-select
+                :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
                 placeholder="请选择"
@@ -484,6 +509,7 @@
             <!--prop="physicalQuantity"-->
             <!--style="width: 33%">-->
             <!--<el-input-->
+              <!--:disabled="p.actpoint === 'look'"-->
               <!--clearable-->
               <!--placeholder="请输入"-->
               <!--v-model="detailForm.project.physicalQuantity"/>-->
@@ -511,18 +537,20 @@
           <el-row>
             <el-form-item
               label="初始合同额(万元):"
-              prop="contractAmountInitial"
+              prop="project.contractAmountInitial"
               style="width: 33%">
               <el-input
+                :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.contractAmountInitial"/>
             </el-form-item>
             <el-form-item
               label="工程合同额(万元):"
-              prop="contractAmountEngine"
+              prop="project.contractAmountEngine"
               style="width: 33%">
               <el-input
+                :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.contractAmountEngine"/>
@@ -532,18 +560,20 @@
           <el-row>
             <el-form-item
               label="合同额增减(万元):"
-              prop="contractAmountChange"
+              prop="project.contractAmountChange"
               style="width: 33%">
               <el-input
+                :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.contractAmountChange"/>
             </el-form-item>
             <el-form-item
               label="合同总额(万元):"
-              prop="contractAmountTotal"
+              prop="project.contractAmountTotal"
               style="width: 33%">
               <el-input
+                :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.contractAmountTotal"/>
@@ -553,27 +583,30 @@
           <el-row>
             <el-form-item
               label="增值税(万元):"
-              prop="valueAddedTax"
+              prop="project.valueAddedTax"
               style="width: 33%">
               <el-input
+                :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.valueAddedTax"/>
             </el-form-item>
             <el-form-item
               label="实际投资额(万元):"
-              prop="realInvest"
+              prop="project.realInvest"
               style="width: 33%">
               <el-input
+                :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.realInvest"/>
             </el-form-item>
             <el-form-item
               label="上报产值是否含税:"
-              prop="isOutputTax"
+              prop="project.isOutputTax"
               style="width: 33%">
               <el-select
+                :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
                 placeholder="请选择"
@@ -590,25 +623,25 @@
           <el-row>
             <el-form-item
               label="合同开工日期:"
-              prop="contractStartTime"
+              prop="project.contractStartTime"
               style="width: 33%">
               <el-date-picker
                 v-model="detailForm.project.contractStartTime"
-                type="datetime"
+                type="date"
                 placeholder="选择日期时间"/>
             </el-form-item>
             <el-form-item
               label="合同竣工日期:"
-              prop="contractEndTime"
+              prop="project.contractEndTime"
               style="width: 33%">
               <el-date-picker
                 v-model="detailForm.project.contractEndTime"
-                type="datetime"
+                type="date"
                 placeholder="选择日期时间"/>
             </el-form-item>
             <el-form-item
               label="是否托管:"
-              prop="isTrusteeship"
+              prop="project.isTrusteeship"
               style="width: 33%">
               <el-switch
                 :disabled="p.actpoint === 'look'"
@@ -623,25 +656,25 @@
           <el-row>
             <el-form-item
               label="合同签订日期:"
-              prop="contractSignTime"
+              prop="project.contractSignTime"
               style="width: 33%">
               <el-date-picker
                 v-model="detailForm.project.contractSignTime"
-                type="datetime"
+                type="date"
                 placeholder="选择日期时间"/>
             </el-form-item>
             <el-form-item
               label="竣工日期:"
-              prop="projectEndTime"
+              prop="project.projectEndTime"
               style="width: 33%">
               <el-date-picker
                 v-model="detailForm.project.projectEndTime"
-                type="datetime"
+                type="date"
                 placeholder="选择日期时间"/>
             </el-form-item>
             <el-form-item
               label="是否代管:"
-              prop="isEscrow"
+              prop="project.isEscrow"
               style="width: 33%">
               <el-switch
                 :disabled="p.actpoint === 'look'"
@@ -657,27 +690,29 @@
           <el-row>
             <el-form-item
               label="实际开工日期:"
-              prop="realStartTime"
+              prop="project.realStartTime"
               style="width: 33%">
               <el-date-picker
                 v-model="detailForm.project.realStartTime"
-                type="datetime"
+                type="date"
+                value-format="timestamp"
                 placeholder="选择日期时间"/>
             </el-form-item>
             <el-form-item
               label="实际竣工日期:"
-              prop="realEndTime"
+              prop="project.realEndTime"
               style="width: 33%">
               <el-date-picker
                 v-model="detailForm.project.realEndTime"
-                type="datetime"
+                type="date"
                 placeholder="选择日期时间"/>
             </el-form-item>
             <el-form-item
               label="竣工产值:"
-              prop="completedOutputValue"
+              prop="project.completedOutputValue"
               style="width: 33%">
               <el-input
+                :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.completedOutputValue"/>
@@ -687,27 +722,30 @@
           <el-row>
             <el-form-item
               label="建设单位:"
-              prop="companyBuild"
+              prop="project.companyBuild"
               style="width: 33%">
               <el-input
+                :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.companyBuild"/>
             </el-form-item>
             <el-form-item
               label="设计单位:"
-              prop="companyDesign"
+              prop="project.companyDesign"
               style="width: 33%">
               <el-input
+                :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.companyDesign"/>
             </el-form-item>
             <el-form-item
               label="监理单位:"
-              prop="companySupervisor"
+              prop="project.companySupervisor"
               style="width: 33%">
               <el-input
+                :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.companySupervisor"/>
@@ -717,27 +755,30 @@
           <el-row>
             <el-form-item
               label="项目经理:"
-              prop="projectManagerName"
+              prop="project.projectManagerName"
               style="width: 33%">
               <el-input
+                :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.projectManagerName"/>
             </el-form-item>
             <el-form-item
               label="工程标段:"
-              prop="projectBidSection"
+              prop="project.projectBidSection"
               style="width: 33%">
               <el-input
+                :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.projectBidSection"/>
             </el-form-item>
             <el-form-item
               label="起讫地点(标段):"
-              prop="beginAddress"
+              prop="project.beginAddress"
               style="width: 33%">
               <el-input
+                :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.beginAddress"/>
@@ -748,8 +789,9 @@
             <el-form-item
               class="neirong"
               label="工程概况(最多700字):"
-              prop="engineSurvey">
+              prop="project.engineSurvey">
               <el-input
+                :disabled="p.actpoint === 'look'"
                 clearable
                 type="textarea"
                 placeholder="请输入"
@@ -761,8 +803,9 @@
             <el-form-item
               class="neirong"
               label="备注(最多2000字):"
-              prop="projectRemark">
+              prop="project.projectRemark">
               <el-input
+                :disabled="p.actpoint === 'look'"
                 type="textarea"
                 placeholder="请输入"
                 v-model="detailForm.project.projectRemark"/>
@@ -772,7 +815,7 @@
           <el-row>
             <el-form-item
               label="相关附件(最多10MB):"
-              prop="clothSize.bcTypeId">
+              prop="project.bcTypeId">
               <el-upload
                 class="upload-demo"
                 action="https://jsonplaceholder.typicode.com/posts/"
@@ -879,17 +922,17 @@ export default {
         topInfoSiteList: [
           {
             contractAmount: 0,
-            country: '',
-            ffid: '',
-            fifthId: '',
-            firstId: '',
-            fourthId: '',
-            isMain: '',
-            path: '',
-            placeId: '',
-            secondId: '',
-            thirdId: '',
-            topInfoId: '',
+            country: '1',
+            ffid: '1',
+            fifthId: '1',
+            firstId: '1',
+            fourthId: '1',
+            isMain: '1',
+            path: '1',
+            placeId: '1',
+            secondId: '1',
+            thirdId: '1',
+            topInfoId: '1',
             uuid: ''
           }
         ]
@@ -897,8 +940,28 @@ export default {
       rules: {
         project: {
           projectName: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
-          // projectOmit: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
-          // projectNatureId: [{ required: true, message: '此项不能为空', trigger: 'change' }]
+          projectForeginName: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
+          projectOmit: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
+          projectNatureFirstId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
+          investmentModelId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
+          investmentContract: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
+          companyBuiltId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
+          projectTypeFirst: [{ required: true, message: '此项不能为空', trigger: 'change' }],
+          projectTypeSecond: [{ required: true, message: '此项不能为空', trigger: 'change' }],
+          projectLine: [{ required: true, message: '此项不能为空', trigger: 'change' }],
+          projectModuleId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
+          projectTypeId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
+          fatherProjectId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
+          projectStatusId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
+          assemblyRate: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
+          assemblyTypeId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
+          architectureTypeId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
+          houseTypeId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
+          fieldName: [{ required: true, message: '此项不能为空', trigger: 'change' }],
+          contractAmountInitial: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
+          contractAmountEngine: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
+          contractAmountChange: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
+          valueAddedTax: [{ required: true, message: '此项不能为空', trigger: 'blur' }]
         }
       },
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
@@ -1064,8 +1127,8 @@ export default {
         if (valid) {
           this.$http
             .post(
-              '/newApi/statistics/StatisticsProject/detail/save',
-              JSON.stringify({projectBO: this.detailForm}),
+              '/api/statistics/StatisticsProject/detail/save',
+              JSON.stringify(this.detailForm),
               { useJson: true }
             )
             .then((res) => {
@@ -1129,6 +1192,22 @@ export default {
       //   this.detailform.contractInfo.qualityOrgNames=name.join(",");
       // }
       this.DwVisible = false
+    },
+    getShow() {
+      this.$http
+        .post(
+          '/api/statistics/StatisticsProject/detail/entityInfo',
+          JSON.stringify(this.p.uuid),
+          { useJson: true }
+        )
+        .then((res) => {
+          if (res.data.code === 0) {
+            this.$message({
+              message: '查看成功',
+              type: 'success'
+            })
+          }
+        })
     }
   },
   mounted() {
