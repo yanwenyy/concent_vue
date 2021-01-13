@@ -18,6 +18,13 @@ module.exports = {
           '^/api': '/api'
         }
       },
+      '/newApi': {
+        target: 'http://192.168.60.17:8091',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/newApi': '/api'
+        }
+      },
       '/jsonapi': {
         target: 'http://36.112.155.134:9901',
         changeOrigin: true,

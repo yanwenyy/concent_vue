@@ -21,7 +21,7 @@
           <el-row>
             <el-form-item
               label="项目名称:"
-              prop="projectName"
+              prop="project.projectName"
               style="width: 33%">
               <el-input
                 clearable
@@ -50,7 +50,7 @@
           <el-row>
             <el-form-item
               label="合同号:"
-              prop="contractNumber"
+              prop="project.contractNumber"
               style="width:33%;">
               <el-input
                 clearable
@@ -150,7 +150,7 @@
                   :key="index"
                   :label="item.label"
                   :value="item.value"
-                  v-for="(item, index) in options4"/>
+                  v-for="(item, index) in options1"/>
               </el-select>
             </el-form-item>
           </el-row>
@@ -191,29 +191,22 @@
           </el-row>
           <el-row>
             <el-form-item
-              label="推送人 :"
+              label="推送人:"
               prop="clothSize.bcPlateTypeId"
-              style="width:33%;"
-            >
+              style="width:33%;">
               <el-input
                 clearable
                 placeholder="请输入"
-                size="mini"
-                v-model="detailForm.clothSize.bcPlateTypeId"
-              />
+                v-model="detailForm.project.projectPusher"/>
             </el-form-item>
-
             <el-form-item
-              label="联系方式 :"
-              prop="clothSize.bcPlateTypeId"
-              style="width:33%;"
-            >
+              label="联系方式:"
+              prop="clothSize.projectPusherPhone"
+              style="width:33%;">
               <el-input
                 clearable
                 placeholder="请输入"
-                size="mini"
-                v-model="detailForm.clothSize.bcPlateTypeId"
-              />
+                v-model="detailForm.project.projectPusherPhone"/>
             </el-form-item>
           </el-row>
         </el-form>
@@ -224,27 +217,17 @@
 
 <script>
 export default {
-  name: "投资模式",
+  name: 'estateMode',
   data() {
     return {
       switchvalue: true,
+      emergingMarketTwo: [],
       yesOrNo: [
         { label: '是', value: 0 },
         { label: '否', value: 1 }
       ],
       options1: [{ label: "值1", value: "111" }],
       options2: [{ label: "值2", value: "111" }],
-      options3: [{ label: "值3", value: "111" }],
-      options4: [{ label: "值4", value: "111" }],
-      options5: [{ label: "值5", value: "111" }],
-      options6: [{ label: "值", value: "111" }],
-      options7: [{ label: "值", value: "111" }],
-      options8: [{ label: "值", value: "111" }],
-      options9: [{ label: "值", value: "111" }],
-      options10: [{ label: "值", value: "111" }],
-      options11: [{ label: "值", value: "111" }],
-      options12: [{ label: "值", value: "111" }],
-      options13: [{ label: "值", value: "111" }],
       fileList: [
         {
           name: "food.jpeg",
@@ -273,25 +256,17 @@ export default {
           amountCompanyId: '',
           marketFirstId: '',
           marketSecondId: '',
+          projectPusher: '',
+          projectPusherPhone: '',
         },
-        clothSize: {
-          id: "",
-          bcTypeId: "",
-          bcStyleId: "",
-          bcPlateTypeId: "",
-          bcTypeName: "",
-          bcStyleName: "",
-          bcPlateTypeName: "",
-          isDelete: 0,
-          createTime: "",
-          createUserId: 0,
-          createUserName: "",
-          createOrgId: 0,
-          createOrgName: ""
-        },
-        clothSizePartList: []
+        topInfoSiteList: {}
       },
-
+      rules: {
+        project: {
+          projectName: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
+          contractNumber: [{ required: true, message: '此项不能为空', trigger: 'blur' }]
+        }
+      },
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
     };
   },
@@ -299,8 +274,24 @@ export default {
     projectStatus() {
       return this.$store.state.projectStatus
     },
+    emergingMarket() {
+      return this.$store.state.category.emergingMarket
+    }
   },
   methods: {
+    getMarketTwo(id) {
+      this.detailForm.project.marketSecondId = ''
+      this.emergingMarketTwo = []
+      if (id !== '') {
+        this.emergingMarket.find(
+          (item) => {
+            if (item.id === id) {
+              this.emergingMarketTwo = item.children
+            }
+          }
+        )
+      }
+    },
     pageGo() {
       this.searchParam.current = this.current;
       this.getuserlist();
@@ -507,7 +498,10 @@ export default {
   },
   mounted() {
     // eslint-disable-next-line no-unde
-    this.getDetail();
+    this.getDetail()
+    this.$store.dispatch('getConfig', {})
+    this.$store.dispatch('getCategory', {name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3'})
+    this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'})
   }
 }
 </script>
