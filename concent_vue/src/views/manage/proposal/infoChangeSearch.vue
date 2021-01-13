@@ -3,7 +3,7 @@
     :visible.sync="visible"
     :append-to-body="true">
     <div>
-      <el-form :inline="true" :model="searchform" @keyup.enter.native="init()">
+      <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="init()">
         <el-form-item label="项目名称:">
           <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
         </el-form-item>

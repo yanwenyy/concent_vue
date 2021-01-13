@@ -771,7 +771,7 @@
                     @selection-change="handleSelectionChange"
                     align="center"
                     border
-                    class="contractInfoTable"
+                    class="detailTable"
                     ref="table"
                     style="width: 100%;height: auto;"
                   >
@@ -804,7 +804,7 @@
                     @selection-change="handleSelectionChange"
                     align="center"
                     border
-                    class="contractInfoTable"
+                    class="detailTable"
                     ref="table"
                     style="width: 100%;height: auto;"
 
@@ -838,7 +838,7 @@
                     @selection-change="handleSelectionChange"
                     align="center"
                     border
-                    class="contractInfoTable"
+                    class="detailTable"
                     ref="table"
                     style="width: 100%;height: auto;"
                   >
@@ -966,7 +966,7 @@
                     @selection-change="handleSelectionChange"
                     align="center"
                     border
-                    class="contractInfoTable"
+                    class="detailTable"
                     ref="table"
                     style="width: 100%;height: auto;"
                   >
@@ -2984,6 +2984,7 @@
                       prop="orgName"
                       align="center"
                       show-overflow-tooltip
+                      width="300"
                     >
                       <template slot-scope="scope">
                         <el-input
@@ -3000,7 +3001,7 @@
                       label="板块名称"
                       prop="moduleName"
                       align="center"
-                      show-overflow-tooltip
+                      width="150"
                     >
                       <template slot-scope="scope">
                         <el-select
@@ -3033,6 +3034,7 @@
                       label="项目性质"
                       prop="projectNature"
                       align="center"
+                      width="150"
                       show-overflow-tooltip
                     >
                       <template slot-scope="scope">
@@ -3169,6 +3171,7 @@
                       label="单位名称"
                       prop="orgName"
                       align="center"
+                      width="300"
                       show-overflow-tooltip
                     >
                       <template slot-scope="scope">
@@ -3186,7 +3189,7 @@
                       label="板块名称"
                       prop="moduleName"
                       align="center"
-                      show-overflow-tooltip
+                      width="150"
                     >
                       <template slot-scope="scope">
                         <el-select
@@ -3219,6 +3222,7 @@
                       label="项目性质"
                       prop="projectNature"
                       align="center"
+                      width="150"
                       show-overflow-tooltip
                     >
                       <template slot-scope="scope">
@@ -3355,6 +3359,7 @@
                       label="单位名称"
                       prop="orgName"
                       align="center"
+                      width="300"
                       show-overflow-tooltip
                     >
                       <template slot-scope="scope">
@@ -3372,7 +3377,7 @@
                       label="板块名称"
                       prop="moduleName"
                       align="center"
-                      show-overflow-tooltip
+                      width="150"
                     >
                       <template slot-scope="scope">
                         <el-select
@@ -3404,6 +3409,7 @@
                       :resizable="false"
                       label="项目性质"
                       prop="projectNature"
+                      width="150"
                       align="center"
                       show-overflow-tooltip
                     >
@@ -3541,6 +3547,7 @@
                       label="单位名称"
                       prop="orgName"
                       align="center"
+                      width="300"
                       show-overflow-tooltip
                     >
                       <template slot-scope="scope">
@@ -3557,8 +3564,8 @@
                       :resizable="false"
                       label="板块名称"
                       prop="moduleName"
+                      width="150"
                       align="center"
-                      show-overflow-tooltip
                     >
                       <template slot-scope="scope">
                         <el-select
@@ -3590,6 +3597,7 @@
                       :resizable="false"
                       label="项目性质"
                       prop="projectNature"
+                      width="150"
                       align="center"
                       show-overflow-tooltip
                     >
