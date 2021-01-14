@@ -11,6 +11,7 @@
       :on-success="handleChange"
       :on-error="handleChange"
       :on-remove="handleRemove"
+      :on-change="fileChage1"
       multiple
       :show-file-list="true">
       <el-button size="small" type="primary">选择文件</el-button>
@@ -31,6 +32,8 @@
           list:'',
           fileList: [],
           dialogVisible:true,
+          ifUP:false,
+          upLoading:false,
         };
       },
       mounted(){
@@ -42,16 +45,25 @@
             list:this.list,
             fileList:this.fileList
           };
-          this.$emit('refreshBD',data);
-          this.dialogVisible = false;
-          this.$refs.fileList1.clearFiles();
+          if(this.upLoading==true&&this.ifUP==false){
+            // this.$message.error('上传中,请稍等');
+            this.$message({
+              message: '上传中,请稍等',
+              type: 'error',
+              duration: 500})
+          }else{
+            this.$emit('refreshBD',data);
+            this.dialogVisible = false;
+            this.$refs.fileList1.clearFiles();
+          }
         },
         init(url,list){
           this.fileList=[];
           this.url=url;
           this.list=list;
           this.dialogVisible = true;
-
+          this.ifUP = false;
+          this.upLoading = false;
         },
         handleRemove(file, fileList) {
           this.fileList=fileList;
@@ -59,18 +71,27 @@
         },
         //上传图片
         handleChange(response, file, fileList){
+
           if (response && response.code === 200) {
+            this.fileList.push(response.data);
             this.$message({
               message: '上传成功',
               type: 'success',
-              duration: 1500,
-              onClose: () => {
-              this.fileList.push(response.data);
-              console.log(this.fileList)
-          }
-          })
+              duration: 1000})
           } else {
             this.$message.error(response.msg)
+          }
+        },
+        //上传改变时
+        fileChage1(file, fileList){
+          this.upLoading=true;
+          this.ifUP=false;
+          if(file.status==='success'){
+            this.upLoading=false;
+            this.ifUP=true;
+          }
+          if(file.status==='fail'){
+
           }
         },
       }
