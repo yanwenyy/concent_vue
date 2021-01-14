@@ -699,7 +699,7 @@
             <el-table-column
               :resizable="false"
               label="标段名称"
-              prop="bidInfoSection.sectionId"
+              prop="bidInfoSection.sectionName"
               show-overflow-tooltip
               align="center"
               :width="180"

@@ -2,9 +2,9 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary">跟踪</el-button>
-        <el-button @click="add" :disabled="trackStatus!='1'" plain type="primary">放弃跟踪</el-button>
-        <el-button @click="add" plain type="primary">结束跟踪</el-button>
+        <el-button @click="add('')" plain :disabled="trackStatus=='1'" type="primary">跟踪</el-button>
+        <el-button @click="add('fq')" :disabled="trackStatus!='1'" plain type="primary">放弃跟踪</el-button>
+        <el-button @click="add('end')" :disabled="trackStatus!='1'" plain type="primary">结束跟踪</el-button>
       </el-button-group>
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
@@ -203,12 +203,12 @@
                 clearable
                 type="date"
                 value-format="timestamp"
-                v-model="searchform.planBidTime">
+                v-model="searchform.quitTrackTime">
               </el-date-picker>
             </div>
           </template>
           <template slot-scope="scope">{{
-            scope.row.planBidTime | dateformat
+            scope.row.quitTrackTime | dateformat
             }}</template>
         </el-table-column>
 
@@ -228,12 +228,12 @@
                 clearable
                 type="date"
                 value-format="timestamp"
-                v-model="searchform.planBidTime">
+                v-model="searchform.endTrackTime">
               </el-date-picker>
             </div>
           </template>
           <template slot-scope="scope">{{
-            scope.row.planBidTime | dateformat
+            scope.row.endTrackTime | dateformat
             }}</template>
           </el-table-column>
         <el-table-column
@@ -344,12 +344,12 @@
         this.showinput = false;
       },
       // 增加
-      add() {
+      add(type) {
         if (this.multipleSelection.length !== 1||this.multipleSelection.length>1) {
           this.$message.info("请选择一条记录进行登记操作！");
           return false;
         }
-        let p = {actpoint: "add"};
+        let p = {actpoint: "add",type:type,instid: this.multipleSelection[0].uuid};
         this.$router.push({
           path: "./track_detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
@@ -363,21 +363,10 @@
           this.trackStatus='';
         }
       },
-      //放弃跟踪
-        addfq() {
-        if (this.multipleSelection.length !== 1||this.multipleSelection.length>1) {
-          this.$message.info("请选择一条记录进行登记操作！");
-          return false;
-        }
-        let p = {actpoint: "addfq"};
-        this.$router.push({
-          path: "./track_detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
-      },
+
       // 查看
       rowshow(row) {
-        let p = {actpoint: "look", instid: row.uuid};
+        let p = {actpoint: "look", instid: row.uuid,type:'addfq',end:'addjs'};
         this.$router.push({
           path: "./track_detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},

@@ -1,19 +1,22 @@
 <template>
   <div>
 
-   <el-container style="height: 500px; border: 1px solid #eee">
-  <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+   <el-container
+     :max-height="$tableHeight"
+     :height="$tableHeight">
+  <el-aside width="260px" >
     <el-tree
       :props="props"
-      lazy height="500" width="160"
+      lazy
+      ref="tree"
       :default-expanded-keys="['']"
       node-key="uuid"
       :load="loadNode"
       show-checkbox
       @check-change="handleCheckChange"
       @node-click="handleNodeClick"
-    @node-expand="handleNodeExpand"
-    @node-collapse = "handleNodeCollapse">
+      @node-expand="handleNodeExpand"
+      @node-collapse = "handleNodeCollapse">
     <span class="custom-tree-node" slot-scope="{ node, data }">
             <span>
                 <i :class="data.icon"></i>{{ node.label }}
@@ -36,103 +39,102 @@
     </el-header>
 
     <el-main>
-      <el-table :data="tableData">
-        <el-table-column prop="date" label="序号" width="140">
+      <el-table :data="itemList"
+                :header-cell-style="{
+                  'text-align': 'center',
+                  'background-color': 'whitesmoke',
+                }"
+                highlight-current-row
+                ref="table"
+                stripe
+                style="width: 100%"
+                tooltip-effect="dark"
+                @selection-change="handleSelectionChange">
+      <el-table-column
+        :width="50"
+        align="center"
+        show-overflow-tooltip
+        type="selection"
+      ></el-table-column>
+        <el-table-column show-overflow-tooltip
+                         type="index" label="序号" width="55" align="center">
         </el-table-column>
-        <el-table-column prop="name" label="统计名称" width="120">
+        <el-table-column prop="vname" label="统计名称" width="160">
         </el-table-column>
-        <el-table-column prop="address" label="计量单位">
+        <el-table-column prop="vjldw" label="计量单位" width="120" align="center" :formatter="vjldwFormatter">
         </el-table-column>
-      <el-table-column prop="address" label="工程（行业）类别">
+      <el-table-column prop="vprojecttype" label="工程（行业）类别" :formatter="vprojecttypeFormatter">
         </el-table-column>
-      <el-table-column prop="address" label="使用设置">
+      <el-table-column prop="vtype" label="使用设置" width="90" align="center" :formatter="vtypeFormatter">
         </el-table-column>
-      <el-table-column prop="address" label="是否填报">
+      <el-table-column prop="veditable" label="是否填报" width="90" align="center" :formatter="veditableFormatter">
         </el-table-column>
-      <el-table-column prop="address" label="是否隐藏">
+      <el-table-column prop="vdisable" label="是否隐藏" width="90" align="center" :formatter="vdisableFormatter">
         </el-table-column>
       </el-table>
     </el-main>
   </el-container>
 </el-container>
-<!--    <el-dialog title="新增统计项" :visible.sync="dialogResult"-->
-<!--    width="30%">-->
-<!--      <el-form :model="detailform">-->
-<!--        <el-form-item label="统计名称" :label-width="formLabelWidth" prop="verifyResult">-->
-<!--          <el-input-->
-<!--            disabled-->
-<!--            placeholder=""-->
-<!--            size="mini"-->
-<!--            v-model="detailform"-->
-<!--          />-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="计量单位" :label-width="formLabelWidth" prop="verifyResult">-->
-<!--          <el-select-->
-<!--            :disabled="p.actpoint === 'look'"-->
-<!--            filterable-->
-<!--            placeholder="请选择"-->
-<!--            size="mini"-->
-<!--            v-model="detailform.verify.bidModeName"-->
-<!--          >-->
-<!--            <el-option-->
-<!--              :key="index"-->
-<!--              :label="item.detailName"-->
-<!--              :value="item.id"-->
-<!--              v-for="(item, index) in bidType"-->
-<!--            ></el-option>-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
-<!--         <el-form-item label="工程（行业）类别" :label-width="formLabelWidth" prop="verifyResult">-->
-<!--         <el-input-->
-<!--           disabled-->
-<!--           placeholder=""-->
-<!--           size="mini"-->
-<!--           v-model="detailform.topInfor.bidAgentCompany"-->
-<!--         />-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="使用设置" :label-width="formLabelWidth" prop="verifyResult">-->
-<!--          <el-radio v-model="resultform.verifyResult" label="0" border>全部</el-radio>-->
-<!--          <el-radio v-model="resultform.verifyResult" label="1" border>仅年报</el-radio>-->
-<!--          <el-radio v-model="resultform.verifyResult" label="2" border>仅月报</el-radio>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="是否填报" :label-width="formLabelWidth" prop="verifyResult">-->
-<!--          <el-radio v-model="resultform.verifyResult" label="1" border>是</el-radio>-->
-<!--          <el-radio v-model="resultform.verifyResult" label="0" border>否</el-radio>-->
-<!--        </el-form-item>-->
-<!--         <el-form-item label="是否隐藏" :label-width="formLabelWidth" prop="verifyResult">-->
-<!--          <el-radio v-model="resultform.verifyResult" label="1" border>是</el-radio>-->
-<!--          <el-radio v-model="resultform.verifyResult" label="0" border>否</el-radio>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="通过时间" :label-width="formLabelWidth" prop="verifyResultTime">-->
-<!--          <el-date-picker-->
-<!--            v-model="resultform.verifyResultTime"-->
-<!--            type="date"-->
-<!--            placeholder="选择日期">-->
-<!--          </el-date-picker>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item-->
-<!--          class="neirong"-->
-<!--          label="附件（最大10MB）:"-->
-<!--          style="width: 33%"-->
-<!--        >-->
-<!--          &lt;!&ndash; <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> &ndash;&gt;-->
-<!--         <el-upload-->
-<!--           class="upload-demo detailUpload"-->
-<!--           :action="'/api/contract/topInfo/CommonFiles/verify/02/uploadFile'"-->
-<!--           :on-success="handleChange"-->
-<!--           :on-error="handleChange"-->
-<!--           :on-remove="handleRemove"-->
-<!--           multiple-->
-<!--         >-->
-<!--              <el-button size="small" type="primary">点击上传</el-button>-->
-<!--            </el-upload>-->
-<!--        </el-form-item>-->
-<!--      </el-form>-->
-<!--      <div slot="footer" class="dialog-footer">-->
-<!--        <el-button @click="dialogResult = false">取 消</el-button>-->
-<!--        <el-button type="primary" @click="saveVerifyResult">确 定</el-button>-->
-<!--      </div>-->
-<!--    </el-dialog>-->
+    <el-dialog title="新增统计项" :visible.sync="dialogResult"
+    width="30%">
+      <el-form :model="itemform">
+        <el-form-item label="统计名称"  prop="vname">
+          <el-input
+            placeholder=""
+            size="mini"
+            v-model="itemform.vname"
+          />
+        </el-form-item>
+        <el-form-item label="计量单位"  prop="vjldw">
+          <el-select
+            filterable
+            placeholder="请选择"
+            size="mini"
+            v-model="itemform.vjldw"
+          >
+            <el-option
+              :key="index"
+              :label="item.detailName"
+              :value="item.detailCode"
+              v-for="(item, index) in measureUnit"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+         <el-form-item label="工程（行业）类别"  prop="vprojecttypes">
+         <el-select
+           multiple
+           filterable
+           placeholder="请选择"
+           size="mini"
+           v-model="itemform.vprojecttypes"
+         >
+            <el-option
+              :key="index"
+              :label="item.detailName"
+              :value="item.detailCode"
+              v-for="(item, index) in projectDomainType"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="使用设置"  prop="vtype">
+          <el-radio v-model="itemform.vtype" label="0" border>全部</el-radio>
+          <el-radio v-model="itemform.vtype" label="1" border>仅年报</el-radio>
+          <el-radio v-model="itemform.vtype" label="2" border>仅月报</el-radio>
+        </el-form-item>
+        <el-form-item label="是否填报"  prop="veditable">
+          <el-radio v-model="itemform.veditable" label="1" border>是</el-radio>
+          <el-radio v-model="itemform.veditable" label="0" border>否</el-radio>
+        </el-form-item>
+         <el-form-item label="是否隐藏"  prop="vdisable">
+          <el-radio v-model="itemform.vdisable" label="1" border>是</el-radio>
+          <el-radio v-model="itemform.vdisable" label="0" border>否</el-radio>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogResult = false">取 消</el-button>
+        <el-button type="primary" @click="saveVerifyResult">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 
 </template>
@@ -144,49 +146,143 @@ export default {
     return {
       props: {
         label: 'vname',
-        isLeaf: 'vleaf'
+        isLeaf: 'vleaf',
+        icon:'icon'
       },
-      count: 1,
-
+      parentid: '',
       radio: '0',
       page: {current: 1, size: 10, total: 0, records: []},
       showinput: false,
       sousuo: "",
-      searchform: {
-        current: 1,
-        size: 10,
-        inforName: '',
-        enginTypeFirstName: '',
-        constructionOrg: '',
-        noticeTypeName: '',
-        status: '',
-        username: '',
-        saleTime: ''
+      itemTreeList:[],
+      itemList:[],
+      node:{},
+      resolve:{},
+      itemform: {
+          uuid:'',
+          vname: '',
+          vjldw:'',
+          vprojecttype:'',
+          vprojecttypes:[],
+          vleaf:'',
+          vparentid:'',
+          vxh:'',
+          vsbpc:'',
+          venabled:'',
+          vcode: '',
+          nnamelength: '',
+          vtype: '',
+          veditable: '',
+          vhjtjx: '',
+          voptional:'',
+          valtername:'',
+          vdisable: ''
+
       },
       menus: [],
       multipleSelection: [],
       orgTree: [],
       dialogResult: false,
-      resultform: {
-        verifyResult: '1',
-        verifyResultTime: '2020-12-18',
-        verifyResultfile: ''
-      },
       formLabelWidth: '120px',
-
-
-
     }
   },
+  computed: {
+
+    unit () {
+      return this.$store.state.unit
+    },
+    measureUnit () {
+      console.log(this.$store.state.measureUnit)
+      return this.$store.state.measureUnit
+    },
+    projectDomainType(){
+      console.log(this.$store.state.category.projectDomainType)
+      return this.$store.state.category.projectDomainType;
+    },
+
+  },
   methods: {
-    handleNodeExpand(data){
+    vdisableFormatter(row, column){
+      var str="";
+      if(row.vdisable=="1")
+      {
+        str="是";
+      }else
+      {
+        str="否";
+      }
+      return str;
+    },
+    veditableFormatter(row, column){
+      var str="";
+      if(row.veditable=="1")
+      {
+        str="是";
+      }else
+      {
+        str="否";
+      }
+      return str;
+    },
+    vtypeFormatter(row, column){
+      var str="";
+      if(row.vtype=="0")
+      {
+        str="全部";
+      }else if(row.vtype=="1")
+      {
+        str="仅月报";
+      }else if(row.vtype=="2")
+      {
+        str="仅年报";
+      }
+      return str;
+    },
+    vprojecttypeFormatter(row, column)
+    {
+      var str="";
+      if(row.vprojecttype!=null)
+      {
+        var strs=row.vprojecttype.split(",");
+        console.log(this.projectDomainType);
+        strs.forEach((itemstr)=> {
+          this.projectDomainType.forEach((item)=> {
+            //console.log(row);
+            if(itemstr==item.detailCode)
+            {
+              str+= item.detailName+", ";
+            }
+
+          })
+        });
+        console.log(str);
+        str=str.substring(0,str.length-2);
+        return str;
+      }
+
+    },
+    vjldwFormatter: function(row, column) {
+      //console.log(this.measureUnit);
+      var str="";
+      this.measureUnit.forEach((item)=> {
+
+        //console.log(row);
+          if(row.vjldw==item.detailCode)
+          {
+            str= item.detailName;
+          }
+
+      })
+      return str;
+    },
+    handleNodeExpand(data,note){
+      console.log(note);
       if(data.vleaf!="1")
       {
-
         data.icon='el-icon-folder-opened';
       }
     },
-    handleNodeCollapse(data){
+    handleNodeCollapse(data,note){
       if(data.vleaf!="1")
       {
         data.icon='el-icon-folder';
@@ -195,85 +291,70 @@ export default {
 
     },
     handleCheckChange(data, checked, indeterminate) {
+
       console.log(data, checked, indeterminate);
     },
-    handleNodeClick(data) {
-      console.log(data);
-
-
-
+    handleNodeClick(data,node) {
+      this.getData(node,this.resolve)
     },
     loadNode(node, resolve) {
-      if (node.level === 0) {
-        return resolve([{ vname: '统计项',uuid:"" ,icon:'el-icon-folder-opened'}]);
-      }
-      setTimeout(() => {
-        //console.log(node);
-        this.$http
-          .post(
-            '/api/bp/BpTjx/list/getBpTjxListByParentId',
-            {"parentid":node.data.uuid}
-          )
-          .then(res => {
-            //this.page = res.data.data
-            const data = [];
-            //console.log(res.data.data);
-            var itemDatas = res.data.data;
-            itemDatas.forEach((item)=>{
-              console.log(item);
-              if(item.vleaf=="1")
-              {
-                item.icon='el-icon-document';
-              }else
-              {
-                item.icon='el-icon-folder';
-
-              }
-
-              // var itemData = {
-              //   id:item.uuid,
-              //   label:item.vname,
-              //   leaf:item.vleaf
-              // }
-              data.push(item);
-            });
-            resolve(data);
-          })
-      }, 500);
+      this.getData(node,resolve)
     },
     verifyResultEdit() {
       if (this.multipleSelection.length > 0) {
         this.dialogResult = true;
         //alert(JSON.stringify(this.multipleSelection[0]));
-        this.resultform.verifyResult = this.multipleSelection[0].verifyResult;
-        this.resultform.verifyResultTime = this.multipleSelection[0].verifyResultTime;
+
       } else {
         this.$message.info("请选择列表中的项目！");
       }
     },
     saveVerifyResult() {
       this.dialogResult = false
-      this.multipleSelection[0].verifyResult = this.resultform.verifyResult;
-      var date = new Date(this.resultform.verifyResultTime);
-      var time1 = date.getTime();
-      this.multipleSelection[0].verifyResultTime = time1;
+      var str = "";
+      this.itemform.vprojecttypes.forEach((item)=> {
+        str +=item+",";
+      });
+      str=str.substring(0,str.length-1);
+      //排序
+      this.itemform.vxh='0';
+      this.itemform.vprojecttype=str;
+      this.itemform.vparentid =this.node.data.uuid;
+      console.log(this.node);
+      console.log(this.itemform);
+      //return;
+      // this.itemform.vName =
       // alert(JSON.stringify(this.multipleSelection[0]))
       this.$http
         .post(
-          '/api/contract/topInfo/Verify/detail/saveVerifyResult',
-          JSON.stringify(this.multipleSelection[0]), {useJson: true}
+          '/api/bp/BpTjx/detail/save',
+          JSON.stringify(this.itemform),
+          // this.itemform,
+          { useJson: true }
         )
         .then(res => {
-          if (res.data.code === 0) {
-            if (res.data.code === 0) {
+          console.log(res);
+          if (res.data.code === 200) {
               this.$message({
                 message: "保存成功",
                 type: "success",
               });
+              for(let i = 0; i < this.$refs.tree.store._getAllNodes().length; i++){
+                this.$refs.tree.store._getAllNodes()[i].expanded = false;
+              }
+              // var nodeall = this.$refs.tree.store.root;
+              // for (let i = 0; i < nodeall.childNodes.length; i++) {
+              //   node.childNodes[i].expanded = false;
+              //   // 遍历子节点
+              //   if (node.childNodes[i].childNodes.length > 0) {
+              //     this.changeTreeNodeStatus(node.childNodes[i])
+              //   }
+              // }
+              this.loadNode(this.node, this.resolve)
 
-            }
           }
-          this.getData();
+          //this.getData();
+
         })
     },
     selectFile()
@@ -292,7 +373,7 @@ export default {
     handleRemove(file,index) {
       this.$http
         .post(
-          "/api/contract/topInfo/CommonFiles/list/delete",
+          "/api/bp/BpTjx/list/delete",
           {ids:[file.uuid]},
         )
         .then((res) => {
@@ -318,39 +399,16 @@ export default {
         this.$message.error(response.msg)
       }
     },
-    statusFormat(row, column) {
-      //alert(row.verify.uuid)
-      // console.log(row.verify.uuid);
-      // var statusW;
-      // if(row.verify.uuid!="")
-      // {
-      //   statusW= "已进行资审申请"
-      // }else
-      // {
-      //   statusW= "未进行资审申请"
-      // }
-      return row.verify.uuid != "" ? "已进行资审申请" : row.verify.uuid == "" ? "未进行资审申请" : "未进行资审申请";
-      // return statusW
-    },
+
     search() {
       this.showinput = false
     },
     add() {
-      console.log(JSON.stringify(this.multipleSelection[0].uuid));
-      if (this.multipleSelection[0].uuid != null) {
-        this.$message.info("当前登记的项目信息已经添加的资审信息！");
-        return;
-      }
-      //alert(JSON.stringify(this.multipleSelection[0]));
-      let p = {actpoint: 'add', instid: this.multipleSelection[0].inforid, topinfoid: this.multipleSelection[0].tiouuid}
-      //alert(JSON.stringify(p));
-      this.$router.push({
-        path: './detail/',
-        query: {p: this.$utils.encrypt(JSON.stringify(p))}
-      })
+      this.dialogResult=true;
+
     },
     editItem() {
-      console.log(JSON.stringify(this.multipleSelection[0].uuid));
+      this.dialogResult=true;
       //是否有资审信息判断
       if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
         this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
@@ -358,19 +416,23 @@ export default {
       }
       //是否在审核流程中判断
       //是否在变更流程中判断
-      let p = {
-        actpoint: 'editItem',
-        instid: this.multipleSelection[0].uuid,
-        topinfoid: this.multipleSelection[0].tiouuid
-      }
+
       //alert(JSON.stringify(p));
-      this.$router.push({
-        path: './detail/',
-        query: {p: this.$utils.encrypt(JSON.stringify(p))}
-      })
+
+    },
+    changeTreeNodeStatus (node) {
+      node.expanded = false
+      for (let i = 0; i < node.childNodes.length; i++) {
+        // 改变节点的自身expanded状态
+        node.childNodes[i].expanded = false
+        // 遍历子节点
+        if (node.childNodes[i].childNodes.length > 0) {
+          this.changeTreeNodeStatus(node.childNodes[i])
+        }
+      }
     },
     remove() {
-      console.log(JSON.stringify(this.multipleSelection[0].uuid));
+      //console.log(JSON.stringify(this.multipleSelection[0].uuid));
       if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
         this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
         return;
@@ -382,7 +444,7 @@ export default {
         }
 
       })
-      this.$confirm('此操作将永久删除该资审信息, 是否继续?', '提示', {
+      this.$confirm('此操作将永久删除该统计项, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -393,11 +455,25 @@ export default {
         // });
         this.$http
           .post(
-            '/api/contract/topInfo/Verify/list/delete',
+            '/api/bp/BpTjx/list/delete',
             {ids: uuids}
           )
           .then(res => {
-            this.getData();
+            //this.$refs.tree.store.root
+            //var nodeall = this.$refs.tree.store.root;
+            for(let i = 0; i < this.$refs.tree.store._getAllNodes().length; i++){
+              this.$refs.tree.store._getAllNodes()[i].expanded = false;
+            }
+            // for (let i = 0; i < nodeall.childNodes.length; i++) {
+            //   node.childNodes[i].expanded = false;
+            //   // 遍历子节点
+            //   if (node.childNodes[i].childNodes.length > 0) {
+            //     this.changeTreeNodeStatus(node.childNodes[i])
+            //   }
+            // }
+
+            //this.$refs.tree.$children[0].node.parent.childNodes[0].expanded = false;
+            this.loadNode(this.node, this.resolve)
           })
       }).catch(() => {
         this.$message({
@@ -409,34 +485,10 @@ export default {
     },
     // 查看
     rowshow(row) {
-      // let p = {actpoint: 'look', instid: row.uuid}
-      // this.$router.push({
-      //   path: './detail/',
-      //   query: {p: this.$utils.encrypt(JSON.stringify(p))}
-      // })
-      console.log(JSON.stringify(row));
-      if (row.uuid === null) {
-        this.$message.error("当前登记的项目信息未添加的资审信息！");
-        return;
-      }
-      //alert(JSON.stringify(this.multipleSelection[0]));
-      let p = {actpoint: 'look', instid: row.inforid, topinfoid: row.tiouuid}
-      //alert(JSON.stringify(p));
-      this.$router.push({
-        path: './detail/',
-        query: {p: this.$utils.encrypt(JSON.stringify(p))}
-      })
+
     },
     show() {
-      if (this.multipleSelection.length !== 1) {
-        this.$message.info('请选择一条记录进行查看操作！')
-        return false
-      }
-      let p = {actpoint: 'look', instid: this.multipleSelection[0].uuid}
-      this.$router.push({
-        path: '../detail/',
-        query: {p: this.$utils.encrypt(JSON.stringify(p))}
-      })
+
     }, // list通用方法开始
     handleSizeChange(val) {
       this.searchform.size = val
@@ -452,46 +504,51 @@ export default {
     },
     searchformReset() {
       // this.$refs['searchform'].resetFields()
-      this.searchform.inforName = "";
-      this.searchform.enginTypeFirstName = "";
-      this.searchform.constructionOrg = "";
-      this.searchform.noticeTypeName = "";
-      this.searchform.status = "";
-      this.searchform.username = "";
-      this.searchform.saleTime = "";
-      this.getData();
+      for(let i = 0; i < this.$refs.tree.store._getAllNodes().length; i++){
+        this.$refs.tree.store._getAllNodes()[i].expanded = false;
+      }
+      this.getData(this.node,this.resolve);
     },
     // 列表选项数据
     handleSelectionChange(val) {
       //alert(JSON.stringify(val))
       this.multipleSelection = val
     },
-    getData() {
+    getData(node,resolve) {
+      this.node = node;
+      this.resolve = resolve;
+      if (node.level === 0) {
 
+        return resolve([{ vname: '统计项',uuid:"" ,icon:'el-icon-folder'}]);
+      }
+      setTimeout(() => {
+        //console.log(node);
+        this.$http
+          .post(
+            '/api/bp/BpTjx/list/getBpTjxListByParentId',
+            {"parentid":node.data.uuid}
+          )
+          .then(res => {
+            //this.page = res.data.data
+            this.parentid = node.data.uuid;
+            const data = [];
+            //console.log(res.data.data);
+            this.itemList = res.data.data;
+            this.itemList.forEach((item)=>{
+              console.log(item);
+              if(item.vleaf=="1")
+              {
+                item.icon='el-icon-document';
+              }else
+              {
+                item.icon='el-icon-folder';
 
-
-
-
-      console.log(JSON.stringify(this.searchform));
-      this.$http
-        .post(
-          '/api/bp/BpTjx/list/getBpTjxListByParentId',
-          {"parentid":""}
-        )
-        .then(res => {
-          //this.page = res.data.data
-          console.log(res.data.data);
-          var itemDatas = res.data.data;
-          itemDatas.forEach((item)=>{
-            console.log(item);
-            var itemData = {
-              id:item.uuid,
-              label:item.vname
-            }
-            this.data[0].children.push(itemData);
-          });
-
-        })
+              }
+              data.push(item);
+            });
+            resolve(data);
+          })
+      }, 500);
     },
     getMenus() {
       this.$http
@@ -525,11 +582,83 @@ export default {
     //this.getMenus()
     //this.getOrgTree()
     //this.getData()
+  },
+  mounted() {
+    //alert(2);
+    this.$store.dispatch('getConfig', { })
+    this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
+    // eslint-disable-next-line no-unde
+
   }
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
+.gcform {
+  margin-top: 10px;
+  >>>.el-form-item__label:before {
+    position: initial;
+    left: -10px;
+  }
+  >>>.el-form-item__error {
+    padding-top: 0px;
+    width: 95%;
+    margin-left: 0;
+    text-align: right;
+    top: 0%;
+  }
+  >.el-form-item,>>>.formItem{
+
+    display: inline-block;
+    width: 32.5%!important;
+  }
+  .detailformfooter1 {
+    margin-top: 5px;
+    width: 100%;
+    .el-button {
+      margin: 0 30px;
+      width: 140px;
+      height: 42px;
+      font-size: 18px;
+      font-family: Microsoft YaHei;
+    }
+    .el-button--primary {
+      background: #5c8bfa;
+    }
+    .el-button--default {
+      border: 1px solid #5c8bfa;
+      color: #5c8bfa;
+    }
+  }
+  .errorMsg >>>.el-form-item__label {
+    color: red;
+  }
+  .el-input {
+    width: 300px;
+  }
+  .el-input .el-input_inner {
+    width: 300px;
+    height: 500px;
+  }
+}
+
 .el-table__row {
   cursor: pointer;
+}
+>>>.el-table td, .el-table th
+{
+  padding:5px 0px;
+}
+>>>.el-form-item {
+  margin-bottom: 5px !important;
+}
+>>>.el-dialog__body{
+  padding-top: 0px;
+}
+.uploadSpan{
+  font-size: 16px;
+  color: #303133;
+}
+>>>.el-main{
+  padding: 0px 20px !important;
 }
 </style>
