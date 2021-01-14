@@ -135,20 +135,13 @@
           <el-row>
             <el-form-item
               :label="detailForm.project.projectNatureFirstId === '7031076e7a5f4225b1a89f31ee017802'?'投资单位:':'承建单位:'"
-              prop="project.companyBuiltId"
+              prop="project.companyBuiltName"
               style="width: 33%">
-              <el-select
-                :disabled="p.actpoint === 'look'"
+              <el-input
                 clearable
-                filterable
-                placeholder="请选择"
-                v-model="detailForm.project.companyBuiltId">
-                <el-option
-                  :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options1"/>
-              </el-select>
+                :disabled="p.actpoint === 'look'"
+                placeholder="请输入"
+                v-model="detailForm.project.companyBuiltName"/>
             </el-form-item>
             <el-form-item
               label="所属铁路局:"
@@ -626,8 +619,10 @@
               prop="project.contractStartTime"
               style="width: 33%">
               <el-date-picker
+                :disabled="p.actpoint === 'look'"
                 v-model="detailForm.project.contractStartTime"
                 type="date"
+                value-format="timestamp"
                 placeholder="选择日期时间"/>
             </el-form-item>
             <el-form-item
@@ -635,8 +630,10 @@
               prop="project.contractEndTime"
               style="width: 33%">
               <el-date-picker
+                :disabled="p.actpoint === 'look'"
                 v-model="detailForm.project.contractEndTime"
                 type="date"
+                value-format="timestamp"
                 placeholder="选择日期时间"/>
             </el-form-item>
             <el-form-item
@@ -659,8 +656,10 @@
               prop="project.contractSignTime"
               style="width: 33%">
               <el-date-picker
+                :disabled="p.actpoint === 'look'"
                 v-model="detailForm.project.contractSignTime"
                 type="date"
+                value-format="timestamp"
                 placeholder="选择日期时间"/>
             </el-form-item>
             <el-form-item
@@ -668,8 +667,10 @@
               prop="project.projectEndTime"
               style="width: 33%">
               <el-date-picker
+                :disabled="p.actpoint === 'look'"
                 v-model="detailForm.project.projectEndTime"
                 type="date"
+                value-format="timestamp"
                 placeholder="选择日期时间"/>
             </el-form-item>
             <el-form-item
@@ -693,6 +694,7 @@
               prop="project.realStartTime"
               style="width: 33%">
               <el-date-picker
+                :disabled="p.actpoint === 'look'"
                 v-model="detailForm.project.realStartTime"
                 type="date"
                 value-format="timestamp"
@@ -703,8 +705,10 @@
               prop="project.realEndTime"
               style="width: 33%">
               <el-date-picker
+                :disabled="p.actpoint === 'look'"
                 v-model="detailForm.project.realEndTime"
                 type="date"
+                value-format="timestamp"
                 placeholder="选择日期时间"/>
             </el-form-item>
             <el-form-item
@@ -869,7 +873,7 @@ export default {
           projectNatureSecondId: '', // 项目性质(二级)
           companyId: '', // 签约/使用资质单位
           companyName: '', // 签约/使用资质名称
-          companyBuiltId: '', // 承建单位
+          companyBuiltName: '', // 承建单位
           railwayId: '', // 所属铁路局
           projectTypeFirst: '', // 工程类别（一级）
           projectTypeSecond: '', // 工程类别（二级）
@@ -1022,6 +1026,23 @@ export default {
       this.detailForm.project.fatherProjectId = ''
       this.detailForm.project.isBureauIndex = ''
     },
+    getShowTwo() {
+      this.emergingMarket.find((item) => {
+        if (item.id === this.detailForm.project.marketFirstId) {
+          this.emergingMarketTwo = item.children
+        }
+      })
+      this.projectDomainType.find((item) => {
+        if (item.id === this.detailForm.project.projectTypeFirst) {
+          this.projectTypeTwo = item.children
+        }
+      })
+      this.projectNature.find((item) => {
+        if (item.id === this.detailForm.project.projectNatureFirstId) {
+          this.projectNatureTwo = item.children
+        }
+      })
+    },
     getMarketTwo(id) {
       this.detailForm.project.marketSecondId = ''
       this.detailForm.project.assemblyRate = ''
@@ -1132,28 +1153,16 @@ export default {
               { useJson: true }
             )
             .then((res) => {
-              if (res.data.code === 0) {
+              if (res.data.code === 200) {
                 this.$message({
                   message: '保存成功',
                   type: 'success'
                 })
-                this.$store.dispatch('clearToolBar', {
-                  detail: this.$route.fullPath
-                })
-                this.$store.dispatch('clearCache', this.$route.name)
-                let p = { actpoint: 'edit', uuid: res.data.data.clothSize.id }
                 this.$router.push({
-                  path: '/app/base/tailsize/detailedit',
-                  query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+                  path: '/statistics/project/engineList'
                 })
-              }
-              if (res.data.code === 10) {
-                this.errorMsg = Math.random()
-                this.errorMsg0 = Math.random()
-                this.$nextTick(() => {
-                  this.errorMsg = res.data.msg
-                  this.errorMsg0 = ' '
-                })
+              } else {
+                console.log('error submit!')
               }
             })
         } else {
@@ -1194,23 +1203,25 @@ export default {
       this.DwVisible = false
     },
     getShow() {
+      let data = { topInfoId: this.p.uuid }
       this.$http
-        .post(
-          '/api/statistics/StatisticsProject/detail/entityInfo',
-          JSON.stringify(this.p.uuid),
-          { useJson: true }
-        )
+        .post('/api/statistics/StatisticsProject/detail/entityInfo', data)
         .then((res) => {
-          if (res.data.code === 0) {
-            this.$message({
-              message: '查看成功',
-              type: 'success'
-            })
+          if (res.data.code === 200) {
+            this.detailForm.project = res.data.data.project
+            this.detailForm.topInfoSiteList = res.data.data.topInfoSiteList
+            this.getShowTwo()
           }
         })
     }
   },
   mounted() {
+    if (this.p.actpoint === 'look' || this.p.actpoint === 'edit') {
+      this.getShow()
+      // this.getMarketTwo(this.detailForm.project.marketFirstId)
+      // this.getProjectTwo(this.detailForm.project.projectTypeFirst)
+      // this.getTwoXZ(this.detailForm.project.projectNatureFirstId)
+    }
     this.$store.dispatch('getConfig', {})
     this.$store.dispatch('getCategory', {name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3'})
     this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'})

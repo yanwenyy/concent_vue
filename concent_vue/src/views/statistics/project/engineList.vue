@@ -59,7 +59,7 @@
           <template slot="header" slot-scope="scope">
             <span>项目简称</span>
             <div>
-              <el-input style=" width: 100%" v-model="sousuo" size="mini" />
+              <el-input style=" width: 100%" v-model="searchform.projectOmit" size="mini" />
             </div>
           </template>
         </el-table-column>
@@ -306,8 +306,7 @@ export default {
         current: 1,
         size: 10,
         projectModuleId: '7f4fcba4255b43a8babf15afd6c04a53',
-        projectOmit: '',
-        sousuo: ''
+        projectOmit: '测试'
       },
       menus: [],
       multipleSelection: [],
@@ -376,7 +375,7 @@ export default {
       }
       let p = { actpoint: 'look', uuid: this.multipleSelection[0].uuid }
       this.$router.push({
-        path: '../detail/',
+        path: './engineAdd/',
         query: { p: this.$utils.encrypt(JSON.stringify(p)) }
       })
     },
@@ -397,8 +396,7 @@ export default {
         current: 1,
         size: 10,
         projectModuleId: '7f4fcba4255b43a8babf15afd6c04a53',
-        projectOmit: '',
-        sousuo: ''
+        projectOmit: ''
       }
       this.getData()
     },

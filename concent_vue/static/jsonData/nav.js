@@ -654,7 +654,7 @@ export default {
                   "leaf": true,
                   "defaultpage": true
                 }, {
-                  "name": "工程承包项目新增",
+                  "name": "工程承包项目详情",
                   "path": "/statistics/project/engineAdd",
                   "component": "/statistics/project/engineAdd",
                   "iconCls": "el-icon-switch-button",
@@ -672,7 +672,7 @@ export default {
                   "defaultpage": true
                 },
                 {
-                  "name": "勘察设计项目新增",
+                  "name": "勘察设计项目详情",
                   "path": "/statistics/project/designDetail",
                   "component": "/statistics/project/designDetail",
                   "iconCls": "el-icon-switch-button",
