@@ -56,11 +56,11 @@
         <el-table-column
           :width="500"
           label="标段名称"
-          prop="sectionId"
+          prop="sectionName"
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.sectionId}}</span>
+            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.sectionName}}</span>
           </template>
         </el-table-column>
 
@@ -191,7 +191,7 @@
           <el-select
             clearable
             placeholder=""
-            v-model="zbForm.bidInfoSection.sectionId"
+            v-model="zbForm.bidInfoSection.sectionName"
             disabled>
           <el-option
               :key="index"
@@ -948,10 +948,14 @@ export default {
     width: 100%;
     margin-left: 0px !important;
 }
->>>.el-input{
+/* >>>.el-input{
   width: 100%;
-}
+} */
 >>>.list-item_textarea{
   width:100%;
 }
+>>>.el-pagination__editor.el-input .el-input__inner{
+  width: auto;
+}
+
 </style>

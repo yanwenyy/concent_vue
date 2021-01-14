@@ -239,14 +239,14 @@
           :width="150"
           align="center"
           label="登记时间"
-          prop="tioCreateTime"
+          prop="planBidTime"
           show-overflow-tooltip>
           <template slot="header" slot-scope="scope">
             <span>登记时间</span>
             <div>
             <el-date-picker
               style=" width: 100%"
-              v-model="searchform.tioCreateTime"
+              v-model="searchform.planBidTime"
               size="mini"
               value-format="timestamp"
               >

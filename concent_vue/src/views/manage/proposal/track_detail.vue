@@ -5,7 +5,23 @@
       <div slot="header" class="clearfix">
         <span class="detailSpan"><b>项目信息跟踪</b></span>
         <el-button @click="back" class="detailbutton" >返回</el-button>
-        <el-button v-show="p.actpoint != 'look'" type="primary" @click="saveInfo('detailform')" class="detailbutton">保存</el-button>
+        <el-button v-if="!p.type"
+        type="primary"
+        @click="saveInfo('detailform')"
+        class="detailbutton"
+        >保存1</el-button>
+
+        <el-button v-if="p.type == 'fq'"
+        type="primary"
+        @click="saveInfofq('detailform')"
+        class="detailbutton"
+        >保存2</el-button>
+
+        <el-button v-if="p.type == 'end'"
+        type="primary"
+        @click="saveInfoend('detailform')"
+        class="detailbutton"
+        >保存3</el-button>
         <el-button v-show="p.actpoint != 'look'" @click="submit" class="detailbutton">提交</el-button>
       </div>
       <div class="detailBox">
@@ -479,7 +495,8 @@
                 v-model="detailform.topInfor.majorProjectExplain"
               />
             </el-form-item>
-            <div>
+
+            <div v-if="p.type&&!p.actpoint == 'look'" >
               <el-form-item class="formItem"
                 label="项目跟踪负责人:"
                 prop="topInfoOrg.projectTrackResponPerson"
@@ -490,7 +507,7 @@
                 }"
               >
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                :disabled="p.type =='fq' || p.type =='end'||p.actpoint === 'look'"
                   clearable
                   placeholder=""
                   v-model="detailform.topInfoOrg.projectTrackResponPerson"
@@ -502,7 +519,7 @@
                 :rules="rules.phone"
               >
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.type =='fq' || p.type =='end'||p.actpoint === 'look'"
                   clearable
                   placeholder=""
 
@@ -519,7 +536,7 @@
               }"
               >
                 <el-select
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.type =='fq' || p.type =='end'||p.actpoint === 'look'"
                   filterable
                   clearable
                   placeholder="请选择"
@@ -542,7 +559,7 @@
                 </el-select>
               </el-form-item>
             </div>
-            <div>
+            <div >
               <el-form-item
                 class="neirong"
                 label="项目内容:"
@@ -559,15 +576,16 @@
                 />
               </el-form-item>
             </div>
+            <div>
             <p class="detail-title" style="overflow: hidden;margin-right: 30px">
               <span>项目地点: </span>
-              <el-button
+              <!-- <el-button
                 disabled
                 @click="add('dd')"
                 class="detatil-flie-btn"
                 type="primary"
               >新增
-              </el-button>
+              </el-button> -->
 
             </p>
             <el-table
@@ -670,10 +688,297 @@
               </template>
             </el-table-column>
           </el-table>
+        </div>
+
+          <div  v-if="p.type&&!p.actpoint == 'look'">
+            <p  class="detail-title" style="overflow: hidden;margin-right:30px" >
+              <span>标段信息: </span>
+              <el-button
+                :disabled="p.actpoint !== 'look'||p.type !='fq'||p.type !='end'"
+                @click="add('bd')"
+                class="detatil-flie-btn"
+                type="primary"
+              >新增
+              </el-button
+              >
+            </p>
+            <el-table
+              :disabled="p.type =='fq' || p.type =='end'||p.actpoint === 'look'"
+              :data="detailform.topInfoSectionList"
+              :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+              @selection-change="handleSelectionChange"
+              align="center"
+              border
+              class="detailTable"
+              ref="table"
+              style="width: 98%;"
+            >
+              <el-table-column
+                :width="80"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="标段名"
+                prop="sectionName"
+                align="center"
+                show-overflow-tooltip
+              >
+                <template slot="header">
+                  <p>
+                    <span class="red-star">*</span>
+                    标段名
+                  </p>
+                </template>
+                <template slot-scope="scope">
+                  <el-form-item class="tabelForm" :prop="'topInfoSectionList.' + scope.$index + '.sectionName'"     :rules="{
+           required: true, message: '此项不能为空', trigger: 'blur'
+        }">
+                    <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                    <el-input
+                      clearable
+                      :disabled="p.type =='fq' || p.type =='end'||p.actpoint === 'look'"
+                      v-model="scope.row.sectionName"
+                    ></el-input>
+                  </el-form-item>
+                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                </template>
+              </el-table-column>
+
+              <el-table-column
+                :resizable="false"
+                label="项目规模(万元)"
+                align="center"
+                prop="projectScale"
+                width="350"
+              >
+                <template slot-scope="scope">
+                  <el-form-item class="tabelForm" :prop="'topInfoSectionList.' + scope.$index + '.projectScale'" :rules='rules.contractAmount'>
+                    <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                    <el-tooltip popper-class="tooltip-class" :content="String(scope.row.projectScale)" placement="bottom" :disabled="p.actpoint !== 'look'" effect="dark">
+                      <el-input
+                        v-model="scope.row.projectScale"
+                        clearable
+                        :disabled="p.type =='fq' || p.type =='end'||p.actpoint === 'look'"
+                      >
+                        <template slot="prepend">¥</template>
+                        <template slot="append">(万元)</template>
+                      </el-input>
+                    </el-tooltip>
+
+                  </el-form-item>
+                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                </template>
+              </el-table-column>
+
+              <el-table-column
+
+                :resizable="false"
+                fixed="right"
+                label="操作"
+                align="center"
+                show-overflow-tooltip
+
+                width="80">
+                <template slot-scope="scope">
+                  <el-link
+                    :disabled="p.type =='fq' || p.type =='end'||p.actpoint == 'look'"
+                    :underline="false"
+                    @click="del(scope.$index,scope.row,detailform.topInfoSectionList,'bd')"
+                    type="warning">删除</el-link>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+        <el-divider content-position="left" class="detailDivider" >跟踪信息</el-divider>
+
+            <div  v-show="p.actpoint == 'look' || p.type==''">
+              <el-form-item class="formItem"
+                label="项目跟踪负责人:"
+                prop="topInfoOrg.projectTrackResponPerson"
+                :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'blur',
+                }"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'"
+                  clearable
+                  placeholder=""
+                  v-model="detailform.topInfoOrg.projectTrackResponPerson"
+                />
+              </el-form-item>
+              <el-form-item  class="formItem"
+                label="联系电话:"
+                prop="topInfoOrg.contactMode"
+                :rules="rules.phone"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'"
+                  clearable
+                  placeholder=""
+
+                  v-model="detailform.topInfoOrg.contactMode"
+                />
+              </el-form-item>
+              <el-form-item  class="formItem"
+                label="预计中标概率:"
+                prop="topInfoOrg.bidProbId"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+              >
+                <el-select
+                  :disabled="p.actpoint === 'look'"
+                  filterable
+                  clearable
+                  placeholder="请选择"
+
+                  @change="
+                  getNameZb(
+                    detailform.topInfoOrg.bidProbId,
+                    probability,
+                    'bidProbName'
+                  )
+                "
+                  v-model="detailform.topInfoOrg.bidProbId"
+                >
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in probability"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+
+            <div v-if="p.type == 'fq'">
+            <el-form-item class="neirong" label="放弃原因:" style="width: 100%"
+              prop="topInfoOrg.reason"
+                :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'blur',
+                }">
+              <el-input
+                type="textarea"
+                clearable
+                placeholder="请输入"
+                v-model="detailform.topInfoOrg.reason"
+              />
+            </el-form-item>
+          </div>
+          <el-row v-if="p.type == 'end'">
+            <p class="detail-title">
+              <span><span v-if="detailform.topInfor.isMajorProject=='0'" class="red-star">*</span>项目总结附件: </span>
+              <el-upload
+                class="upload-demo detailUpload"
+                :action="'/api/contract/topInfo/CommonFiles/bidInfo/01/uploadFile'"
+                :on-success="handleChange"
+                :on-error="handleChange"
+                :on-remove="handleRemove1"
+                :show-file-list="false"
+                :file-list="detailform.bidInfo_01"
+                :disabled="p.actpoint === 'look'"
+                multiple
+              >
+                <el-button
+                  size="small"
+                  type="primary"
+                  v-show="p.actpoint != 'look'"
+                  :disabled=" p.actpoint === 'look'">点击上传
+                  </el-button>
+                  </el-upload>
+                </p>
+
+            <el-table
+              :data="detailform.bidInfo_01"
+              :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+              align="center"
+              border
+              ref="table"
+              style="width: 100%; min-height: calc(100vh - 370px)"
+            >
+              <el-table-column
+                :width="55"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+              <el-table-column
+                align="center"
+                :resizable="false"
+                label="文件名"
+                prop="fileName"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+
+              <el-table-column
+                align="center"
+                :resizable="false"
+                label="大小(KB)"
+                prop="fileSize"
+                show-overflow-tooltip
+                width="160"
+              >
+                <template slot-scope="scope">
+                  {{ (scope.row.fileSize / 1024).toFixed(2) }}
+                </template>
+              </el-table-column>
+              <el-table-column
+                align="center"
+                :resizable="false"
+                label="类型"
+                prop="fileType"
+                show-overflow-tooltip
+                width="100"
+              >
+              </el-table-column>
+
+              <el-table-column
+                align="center"
+                :resizable="false"
+                fixed="right"
+                label="操作"
+                show-overflow-tooltip
+                v-if="p.actpoint !== 'look'"
+                width="60"
+              >
+                <template slot-scope="scope">
+                  <el-link
+                    :underline="false"
+                    @click="handleRemove1(scope.row, scope.$index)"
+                    type="warning"
+                    >删除</el-link
+                  >
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-row>
+            <div v-if="!p.type||p.actpoint == 'look'">
             <p  class="detail-title" style="overflow: hidden;margin-right:30px">
               <span>标段信息: </span>
               <el-button
-                v-show="p.actpoint != 'look'"
+                v-show="p.actpoint !== 'look'"
                 @click="add('bd')"
                 class="detatil-flie-btn"
                 type="primary"
@@ -724,7 +1029,7 @@
                     <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                     <el-input
                       clearable
-                      :disabled="p.actpoint === 'look'"
+                      :disabled="p.actpoint === 'look'||scope.row.uuid!=''||scope.row.uuid!=null"
                       v-model="scope.row.sectionName"
                     ></el-input>
                   </el-form-item>
@@ -738,6 +1043,7 @@
                 align="center"
                 prop="projectScale"
                 width="350"
+
               >
                 <template slot-scope="scope">
                   <el-form-item class="tabelForm" :prop="'topInfoSectionList.' + scope.$index + '.projectScale'" :rules='rules.contractAmount'>
@@ -746,7 +1052,7 @@
                       <el-input
                         v-model="scope.row.projectScale"
                         clearable
-                        :disabled="p.actpoint === 'look'"
+                        :disabled="p.actpoint === 'look'||scope.row.uuid!=''||scope.row.uuid!=null"
                       >
                         <template slot="prepend">¥</template>
                         <template slot="append">(万元)</template>
@@ -769,13 +1075,14 @@
                 width="80">
                 <template slot-scope="scope">
                   <el-link
+                    :disabled="scope.row.uuid!=''||scope.row.uuid!==null"
                     :underline="false"
                     @click="del(scope.$index,scope.row,detailform.topInfoSectionList,'bd')"
                     type="warning">删除</el-link>
                 </template>
               </el-table-column>
             </el-table>
-
+            </div>
         </el-form>
       </div>
 
@@ -827,7 +1134,7 @@
           topInfoSiteList: [],
           topInfoSectionList: [],
           value1: [],
-
+          bidInfo_01: [],
         },
         xqprojectType: [],//工程类别二级
         emergingMarketTwo:[],//新兴市场二级
@@ -927,13 +1234,40 @@
         }]
       }
       this.$store.dispatch("getConfig", {});
-
       this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
       this.$store.dispatch('getCategory', {name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3'});
       this.$store.dispatch('getCategory', {name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72'});
       // eslint-disable-next-line no-unde
     },
     methods: {
+    //上传附件
+    handleChange(response, file, fileList) {
+      if (response && response.code === 200) {
+        this.$message({
+          message: "上传成功",
+          type: "success",
+          duration: 1500,
+          onClose: () => {
+            this.detailform.bidInfo_01.push(response.data);
+            console.log(fileList);
+          },
+        });
+      } else {
+        this.$message.error(response.msg);
+      }
+    },
+       // 上传删除
+    handleRemove1(file, index) {
+      this.$http
+        .post("/api/contract/topInfo/CommonFiles/list/delete", {
+          ids: [file.uuid],
+        })
+        .then((res) => {
+          if (res.data.code === 200) {
+            this.detailform.bidInfo_01.splice(index, 1);
+          }
+        });
+    },
       //金额过滤
       getMoney(value){
         return isMoney(value);
@@ -1033,8 +1367,12 @@
           console.log(this.detailform.topInfoOrg[name]);
         }
       },
-      saveInfo(formName) {
 
+      //跟踪接口
+      saveInfo(formName) {
+        // if(this.detailform.topInfor.isMajorProject=='0'&&this.detailform.bidInfo_01==''){
+        //   this.$message.error("重大项目必须上传项目总结附件");
+        // }
         var topInforCapitalList = [];
         this.amountSource.forEach((item) => {
           if (this.detailform.value1&&this.detailform.value1.indexOf(item.id) != -1) {
@@ -1050,7 +1388,7 @@
           if (valid) {
             this.$http
               .post(
-                "/api/contract/topInfo/TopInfor/detail/saveOrUpdate",
+                "/api/contract/topInfo/TopInfor/detail/saveOrUpdateForTrack",
                 JSON.stringify(this.detailform),
                 {useJson: true}
               )
@@ -1062,7 +1400,7 @@
                   });
                   this.$refs[formName].resetFields();
                   this.$router.push({
-                    path: "/manage/proposal/list",
+                    path: "/manage/proposal/track_list",
                   });
                 }
               });
@@ -1072,6 +1410,96 @@
           }
         });
       },
+
+
+// 放弃跟踪接口
+            saveInfofq(formName) {
+        // if(this.detailform.topInfor.isMajorProject=='0'&&this.detailform.bidInfo_01==''){
+        //   this.$message.error("重大项目必须上传项目总结附件");
+        // }
+        var topInforCapitalList = [];
+        this.amountSource.forEach((item) => {
+          if (this.detailform.value1&&this.detailform.value1.indexOf(item.id) != -1) {
+            var v = {
+              capitalId: item.id,
+              capitalName: item.detailName,
+            };
+            topInforCapitalList.push(v);
+          }
+        });
+        this.detailform.topInforCapitalList=topInforCapitalList;
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.$http
+              .post(
+                "/api/contract/topInfo/TopInfor/detail/saveOrUpdateForGiveUpTrack",
+                JSON.stringify(this.detailform),
+                {useJson: true}
+              )
+              .then((res) => {
+                if (res.data.code === 200) {
+                  this.$message({
+                    message: "保存成功",
+                    type: "success",
+                  });
+                  this.$refs[formName].resetFields();
+                  this.$router.push({
+                    path: "/manage/proposal/track_list",
+                  });
+                }
+              });
+          } else {
+            this.$message.error("请添加必填项");
+            return false;
+          }
+        });
+      },
+
+// 结束跟踪接口
+            saveInfoend(formName) {
+        if(this.detailform.topInfor.isMajorProject=='0'&&this.detailform.bidInfo_01==''){
+          this.$message.error("重大项目必须上传项目总结附件");
+        }
+        var topInforCapitalList = [];
+        this.amountSource.forEach((item) => {
+          if (this.detailform.value1&&this.detailform.value1.indexOf(item.id) != -1) {
+            var v = {
+              capitalId: item.id,
+              capitalName: item.detailName,
+            };
+            topInforCapitalList.push(v);
+          }
+        });
+        this.detailform.topInforCapitalList=topInforCapitalList;
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.$http
+              .post(
+                "/api/contract/topInfo/TopInfor/detail/saveOrUpdateForEndTrack",
+                JSON.stringify(this.detailform),
+                {useJson: true}
+              )
+              .then((res) => {
+                if (res.data.code === 200) {
+                  this.$message({
+                    message: "保存成功",
+                    type: "success",
+                  });
+                  this.$refs[formName].resetFields();
+                  this.$router.push({
+                    path: "/manage/proposal/track_list",
+                  });
+                }
+              });
+          } else {
+            this.$message.error("请添加必填项");
+            return false;
+          }
+        });
+      },
+
+
+
       pageGo() {
         this.searchParam.current = this.current;
         this.getuserlist();
@@ -1152,6 +1580,7 @@
               topInfoSiteList: datas.topInfoSiteList||[],
               topInfoSectionList: datas.topInfoSectionList||[],
               value1:[],
+              bidInfo_01: datas.bidInfo_01||[],
             }
             datas.topInforCapitalList.forEach((item)=>{
               this.detailform.value1.push(item.capitalId)
@@ -1312,5 +1741,8 @@
     min-height: auto !important;
   }
 
+>>>.detailDivider {
+    margin: 60px 0 20px 0 !important;
+}
 </style>
 

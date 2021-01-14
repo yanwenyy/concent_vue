@@ -17,7 +17,7 @@
           <el-select
             clearable
             placeholder=""
-            v-model="detailForm.bidInfoSection.sectionId"
+            v-model="detailForm.bidInfoSection.sectionName"
             :disabled="type === 'look'">
           <el-option
               :key="index"

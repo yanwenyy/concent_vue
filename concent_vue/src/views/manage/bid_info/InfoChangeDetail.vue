@@ -534,7 +534,7 @@
               class="listTabel"
               :resizable="false"
               label="标段名称"
-              prop="bidInfoSection.sectionId"
+              prop="bidInfoSection.sectionName"
               align="center"
               show-overflow-tooltip
             >
@@ -1396,7 +1396,7 @@
                   width="60"
                 >
                   <template slot-scope="scope">
-                    <el-link :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
+                    <el-link @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
                   </template>
                 </el-table-column>
               </el-table>
@@ -1447,7 +1447,7 @@
                 class="listTabel"
                 :resizable="false"
                 label="标段名称"
-                prop="bidInfoSection.sectionId"
+                prop="bidInfoSection.sectionName"
                 align="center"
                 show-overflow-tooltip
                 :width="180"
