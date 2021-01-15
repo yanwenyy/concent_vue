@@ -419,7 +419,7 @@
       getPositionTree(data) {
         this.treeStatas = false
         // this.searchform.placeId = data.id
-        this.searchform.projectLocationName = data.fullDetailName
+        this.searchform.projectLocation = data.fullDetailName
       },
       getProjectTwo(id) {
         this.searchform.projectTypeSecond = ''
