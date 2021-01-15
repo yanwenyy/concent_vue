@@ -5,7 +5,7 @@
       <paths name="concent_vue">
         <serverdata>
           <mappings>
-            <mapping deploy="concent_vue" local="$PROJECT_DIR$/concent_vue" web="\" />
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

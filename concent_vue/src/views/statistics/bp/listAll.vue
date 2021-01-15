@@ -1,10 +1,13 @@
 <template>
-  <div>
+  <div  class="tableStyle"
+        style="border: 1px solid #DCDFE6"
+        :max-height="$tableHeight"
+        :height="$tableHeight">
 
-   <el-container
-     :max-height="$tableHeight"
-     :height="$tableHeight">
-  <el-aside width="260px" >
+
+<!--   style="height: calc(100% - 60px); border: 1px solid #eee"-->
+  <div style="display: inline-block;width: 16%;vertical-align: top;overflow: auto; border-right: 1px solid #DCDFE6" >
+<!--  style="background-color: rgb(238, 241, 246);height: 100%;overflow: auto"-->
     <el-tree
       :props="props"
       lazy
@@ -12,23 +15,21 @@
       :default-expanded-keys="['']"
       node-key="uuid"
       :load="loadNode"
-      show-checkbox
+
       @check-change="handleCheckChange"
       @node-click="handleNodeClick"
       @node-expand="handleNodeExpand"
       @node-collapse = "handleNodeCollapse">
+    <!--      show-checkbox-->
     <span class="custom-tree-node" slot-scope="{ node, data }">
             <span>
                 <i :class="data.icon"></i>{{ node.label }}
             </span>
         </span>
     </el-tree>
-  </el-aside>
-
-  <el-container>
-    <el-header style="text-align: right; font-size: 12px">
-
-        <div style="width: 100%; overflow: hidden;margin-top: 10px">
+  </div>
+    <div style="display: inline-block;width:83%;vertical-align: top;padding-left: 4px;" >
+      <div style="width: 100%; overflow: hidden;margin-top: 10px;">
           <el-button-group style="float: left">
             <el-button @click="add" class="detailbutton" >新增</el-button>
             <el-button @click="editItem" class="detailbutton" >修改</el-button>
@@ -36,20 +37,17 @@
             <el-button @click="searchformReset" class="detailbutton" >刷新</el-button>
           </el-button-group>
         </div>
-    </el-header>
-
-    <el-main>
       <el-table :data="itemList"
-                :header-cell-style="{
+              :header-cell-style="{
                   'text-align': 'center',
                   'background-color': 'whitesmoke',
                 }"
-                highlight-current-row
-                ref="table"
-                stripe
-                style="width: 100%"
-                tooltip-effect="dark"
-                @selection-change="handleSelectionChange">
+              highlight-current-row
+              ref="table"
+              stripe
+              style="width: 100%;margin-top: 10px"
+              tooltip-effect="dark"
+              @selection-change="handleSelectionChange">
       <el-table-column
         :width="50"
         align="center"
@@ -72,9 +70,7 @@
       <el-table-column prop="vdisable" label="是否隐藏" width="90" align="center" :formatter="vdisableFormatter">
         </el-table-column>
       </el-table>
-    </el-main>
-  </el-container>
-</el-container>
+    </div>
     <el-dialog title="新增统计项" :visible.sync="dialogResult"
     width="30%">
       <el-form :model="itemform">
@@ -117,17 +113,21 @@
           </el-select>
         </el-form-item>
         <el-form-item label="使用设置"  prop="vtype">
-          <el-radio v-model="itemform.vtype" label="0" border>全部</el-radio>
-          <el-radio v-model="itemform.vtype" label="1" border>仅年报</el-radio>
-          <el-radio v-model="itemform.vtype" label="2" border>仅月报</el-radio>
+<!--         <el-radio-group class="detail-radio-group" v-model="itemform.vtype"  @change="getName(itemform.vtype,-->
+<!--         this.vtype, 'moduleName')">-->
+<!--             <el-radio   v-for="(item, index) in this.vtype" :label="item.id" :key="index">{{item.detailName}}</el-radio>-->
+<!--         </el-radio-group>-->
+          <el-radio v-model="itemform.vtype" label="0" >全部</el-radio>
+          <el-radio v-model="itemform.vtype" label="2" >仅年报</el-radio>
+          <el-radio v-model="itemform.vtype" label="1" >仅月报</el-radio>
         </el-form-item>
         <el-form-item label="是否填报"  prop="veditable">
-          <el-radio v-model="itemform.veditable" label="1" border>是</el-radio>
-          <el-radio v-model="itemform.veditable" label="0" border>否</el-radio>
+          <el-radio v-model="itemform.veditable" label="1" >是</el-radio>
+          <el-radio v-model="itemform.veditable" label="0" >否</el-radio>
         </el-form-item>
          <el-form-item label="是否隐藏"  prop="vdisable">
-          <el-radio v-model="itemform.vdisable" label="1" border>是</el-radio>
-          <el-radio v-model="itemform.vdisable" label="0" border>否</el-radio>
+          <el-radio v-model="itemform.vdisable" label="1" >是</el-radio>
+          <el-radio v-model="itemform.vdisable" label="0" >否</el-radio>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -184,6 +184,16 @@ export default {
       orgTree: [],
       dialogResult: false,
       formLabelWidth: '120px',
+      vtypeRadio:[{
+        detailName:'全部',
+        id:'0'
+      },{
+        detailName:'仅年报',
+        id:'2'
+      },{
+        detailName:'仅月报',
+        id:'1'
+      }]
     }
   },
   computed: {
@@ -408,12 +418,21 @@ export default {
 
     },
     editItem() {
+      if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
+        this.$message.info("请选择统计项进行修改！");
+        return;
+      }
       this.dialogResult=true;
+      console.log(this.multipleSelection[0]);
       //是否有资审信息判断
       if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
         this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
         return;
       }
+      var item = this.multipleSelection[0];
+      item.vprojecttypes = item.vprojecttype.split(",");
+
+      this.itemform = item;
       //是否在审核流程中判断
       //是否在变更流程中判断
 
@@ -431,10 +450,11 @@ export default {
         }
       }
     },
+
     remove() {
       //console.log(JSON.stringify(this.multipleSelection[0].uuid));
       if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
-        this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
+        this.$message.info("请选择统计项进行删除！");
         return;
       }
       let uuids = []
@@ -464,15 +484,7 @@ export default {
             for(let i = 0; i < this.$refs.tree.store._getAllNodes().length; i++){
               this.$refs.tree.store._getAllNodes()[i].expanded = false;
             }
-            // for (let i = 0; i < nodeall.childNodes.length; i++) {
-            //   node.childNodes[i].expanded = false;
-            //   // 遍历子节点
-            //   if (node.childNodes[i].childNodes.length > 0) {
-            //     this.changeTreeNodeStatus(node.childNodes[i])
-            //   }
-            // }
 
-            //this.$refs.tree.$children[0].node.parent.childNodes[0].expanded = false;
             this.loadNode(this.node, this.resolve)
           })
       }).catch(() => {
@@ -533,19 +545,31 @@ export default {
             this.parentid = node.data.uuid;
             const data = [];
             //console.log(res.data.data);
-            this.itemList = res.data.data;
-            this.itemList.forEach((item)=>{
+            var itemDatas = res.data.data;
+            itemDatas.forEach((item)=> {
               console.log(item);
-              if(item.vleaf=="1")
-              {
-                item.icon='el-icon-document';
-              }else
-              {
-                item.icon='el-icon-folder';
+              if (item.vleaf == "1") {
+                item.icon = 'el-icon-document';
+              } else {
+                item.icon = 'el-icon-folder';
 
               }
               data.push(item);
             });
+            this.itemList=data;
+            // this.itemList = res.data.data;
+            // this.itemList.forEach((item)=>{
+            //   console.log(item);
+            //   if(item.vleaf=="1")
+            //   {
+            //     item.icon='el-icon-document';
+            //   }else
+            //   {
+            //     item.icon='el-icon-folder';
+            //
+            //   }
+            //   data.push(item);
+            // });
             resolve(data);
           })
       }, 500);
@@ -593,6 +617,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.el-tree{
+  height:calc(100vh - 223px)!important;
+  max-height:calc(100vh - 223px)!important;
+}
 .gcform {
   margin-top: 10px;
   >>>.el-form-item__label:before {
@@ -661,4 +689,20 @@ export default {
 >>>.el-main{
   padding: 0px 20px !important;
 }
+#user-manage {
+  //height: calc(100% - 500px);
+  //background-color: green;
+
+  .el-container {
+    height: calc(100% - 60px); border: 1px solid #eee
+  }
+}
+.detailbutton{
+  margin-left: 0px;
+}
+>>>.el-form-item__label
+{
+  width: auto;
+}
+
 </style>

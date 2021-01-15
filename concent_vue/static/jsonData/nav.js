@@ -966,8 +966,8 @@ export default {
                   "children": [
                     {
                       "name": "统计项管理",
-                      "path": "/statistics/bp/list",
-                      "component": "/statistics/bp/list",
+                      "path": "/statistics/bp/listAll",
+                      "component": "/statistics/bp/listAll",
                       "iconCls": "el-icon-notebook-2",
                       "menushow": true,
                       "leaf": true,
@@ -975,8 +975,8 @@ export default {
                     },
                     {
                       "name": "本单位统计项",
-                      "path": "/statistics/bp/list_Company",
-                      "component": "/statistics//list_Company",
+                      "path": "/statistics/bp/listCompany",
+                      "component": "/statistics/bp/listCompany",
                       "iconCls": "el-icon-receiving",
                       "menushow": true,
                       "leaf": true,
