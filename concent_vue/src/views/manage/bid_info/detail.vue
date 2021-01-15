@@ -1205,7 +1205,7 @@ export default {
           duration: 1500,
           onClose: () => {
             this.detailform.bidInfo_01.push(response.data);
-            console.log(fileList);
+            // console.log(fileList);
           },
         });
       } else {

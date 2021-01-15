@@ -10,7 +10,23 @@
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
         <el-button @click="getData" type="primary" plain>查询</el-button>
-        <el-button @click="Importdata" type="primary" plain>导入</el-button>
+        <!-- <el-button @click="Importdata" type="primary" plain>导入</el-button> -->
+        <el-upload
+                class="upload-demo detailUpload"
+                :action="'/api/contract/topInfo/CommonFiles/bidInfo/01/uploadFile'"
+                :on-success="handleChange"
+                :on-error="handleChange"
+                :show-file-list="false"
+                accept=".xls,.xlsx"
+                multiple
+              >
+                <el-button
+                  size="small"
+                  type="primary"
+                  plain
+                  >导入
+                  </el-button>
+                  </el-upload>
         <el-button @click="exportdata" type="primary" plain>导出</el-button>
       </div>
     </div>
@@ -278,6 +294,22 @@
       },
     },
     methods: {
+          //上传附件
+    handleChange(response, file, fileList) {
+      if (response && response.code === 200) {
+        this.$message({
+          message: "导入成功",
+          type: "success",
+          duration: 1500,
+          onClose: () => {
+            this.getData();
+            // console.log(fileList);
+          },
+        });
+      } else {
+        this.$message.error(response.msg);
+      }
+    },
       //工程类别二级
       getTwo(id) {
         this.searchform.enginTypeSecondId='';

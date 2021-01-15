@@ -10,19 +10,19 @@
           type="primary"
           @click="saveInfo('detailform')"
           class="detailbutton"
-          >保存1</el-button>
+          >保存</el-button>
 
           <el-button v-if="p.type == 'fq'&&p.actpoint != 'look'"
           type="primary"
           @click="saveInfofq('detailform')"
           class="detailbutton"
-          >保存2</el-button>
+          >保存</el-button>
 
           <el-button v-if="p.type == 'end'&&p.actpoint != 'look'"
           type="primary"
           @click="saveInfoend('detailform')"
           class="detailbutton"
-          >保存3</el-button>
+          >保存</el-button>
         <!-- </div> -->
 
         <el-button v-show="p.actpoint != 'look'" @click="submit" class="detailbutton">提交</el-button>
@@ -1754,6 +1754,9 @@
 
 >>>.detailDivider {
     margin: 60px 0 20px 0 !important;
+}
+>>>.el-form-item__error {
+    margin: -6px 0px 0 20px;
 }
 </style>
 
