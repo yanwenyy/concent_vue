@@ -594,7 +594,7 @@
                     </el-date-picker>
                   </el-form-item>
                   <el-form-item
-                    label="开工日期"
+                    label="合同开工日期"
                   >
                     <el-date-picker
                       disabled
@@ -608,7 +608,7 @@
                     </el-date-picker>
                   </el-form-item>
                   <el-form-item
-                    label="竣工日期"
+                    label="合同竣工日期"
                   >
                     <el-date-picker
                       disabled
@@ -1025,7 +1025,7 @@
                 </div>
             </el-tab-pane>
             <el-tab-pane v-if="detailFormBefore.contractInfo.isInSystemUnion==='0'||detailFormBefore.contractInfo.isInSystemSub==='0'||detailFormBefore.contractInfo.isOutSystemUnion==='0'||detailFormBefore.contractInfo.isOutSystemSub==='0'" label="合同附属信息">
-              <div class="detailBoxBG">
+              <div class="detailBoxBG htfs">
                 <div  v-if="detailFormBefore.contractInfo.isInSystemUnion==='0'">
                   <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                     <span>系统内其他联合体单位列表: </span>
@@ -1040,9 +1040,9 @@
                     @selection-change="handleSelectionChange"
                     align="center"
                     border
-                    class="clothSizeTable"
+                    class="detailTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -1119,9 +1119,9 @@
                     @selection-change="handleSelectionChange"
                     align="center"
                     border
-                    class="clothSizeTable"
+                    class="detailTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -1199,9 +1199,9 @@
                     @selection-change="handleSelectionChange"
                     align="center"
                     border
-                    class="clothSizeTable"
+                    class="detailTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -1278,9 +1278,9 @@
                     @selection-change="handleSelectionChange"
                     align="center"
                     border
-                    class="clothSizeTable"
+                    class="detailTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -2168,76 +2168,80 @@
                     ></el-option>
                   </el-select>
                 </el-form-item>
-                <br>
-                <el-form-item
-                  v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
-                  label="建安和勘察设计费(万元)"
-                  prop="contractInfo.installDesignFee"
-                  :rules="rules.contractAmount"
-                >
-                  <el-input
-                    @blur="getOther"
-                    :disabled="p.actpoint === 'look'"
-                    clearable
+                <div>
+                  <el-form-item
+                    v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
+                    label="建安和勘察设计费(万元)"
+                    prop="contractInfo.installDesignFee"
+                    :rules="rules.contractAmount"
+                  >
+                    <el-input
+                      @blur="getOther"
+                      :disabled="p.actpoint === 'look'"
+                      clearable
 
-                    v-model="detailform.contractInfo.installDesignFee">
-                    <template slot="prepend">¥</template>
-                    <template slot="append">(万元)</template>
-                  </el-input>
-                </el-form-item>
-                <el-form-item
-                  v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
-                  label="其他投资(万元)"
-                  prop="contractInfo.otherInvest"
-                  :rules="rules.contractAmount"
-                >
-                  <el-input
-                    :disabled="true"
-                    clearable
+                      v-model="detailform.contractInfo.installDesignFee">
+                      <template slot="prepend">¥</template>
+                      <template slot="append">(万元)</template>
+                    </el-input>
+                  </el-form-item>
+                  <el-form-item
+                    v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
+                    label="其他投资(万元)"
+                    prop="contractInfo.otherInvest"
+                    :rules="rules.contractAmount"
+                  >
+                    <el-input
+                      :disabled="true"
+                      clearable
 
-                    v-model="detailform.contractInfo.otherInvest">
-                    <template slot="prepend">¥</template>
-                    <template slot="append">(万元)</template>
-                  </el-input>
-                </el-form-item>
-                <br>
-                <el-form-item
-                  v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
-                  label="本企业实际应投入资本金"
-                  prop="contractInfo.actualInvest"
-                  :rules="rules.contractAmount"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'"
-                    clearable
+                      v-model="detailform.contractInfo.otherInvest">
+                      <template slot="prepend">¥</template>
+                      <template slot="append">(万元)</template>
+                    </el-input>
+                  </el-form-item>
+                </div>
+                <div>
+                  <el-form-item
+                    class="long-form-item"
+                    v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
+                    label="本企业实际应投入资本金"
+                    prop="contractInfo.actualInvest"
+                    :rules="rules.contractAmount"
+                  >
+                    <el-input
+                      :disabled="p.actpoint === 'look'"
+                      clearable
 
-                    v-model="detailform.contractInfo.actualInvest"/>
-                </el-form-item>
-                <el-form-item
-                  v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
-                  label="本企业建安部分已分配"
-                  prop="contractInfo.installDesignAllocated"
-                  :rules="rules.contractAmount"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'"
-                    clearable
+                      v-model="detailform.contractInfo.actualInvest"/>
+                  </el-form-item>
+                  <el-form-item
+                    class="long-form-item"
+                    v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
+                    label="本企业建安部分已分配"
+                    prop="contractInfo.installDesignAllocated"
+                    :rules="rules.contractAmount"
+                  >
+                    <el-input
+                      :disabled="p.actpoint === 'look'"
+                      clearable
 
-                    v-model="detailform.contractInfo.installDesignAllocated"/>
-                </el-form-item>
-                <el-form-item
-                  v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
-                  label="本企业建安部分未分配"
-                  prop="contractInfo.installDesignUnallocat"
-                  :rules="rules.contractAmount"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'"
-                    clearable
+                      v-model="detailform.contractInfo.installDesignAllocated"/>
+                  </el-form-item>
+                  <el-form-item
+                    class="long-form-item"
+                    v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
+                    label="本企业建安部分未分配"
+                    prop="contractInfo.installDesignUnallocat"
+                    :rules="rules.contractAmount"
+                  >
+                    <el-input
+                      :disabled="p.actpoint === 'look'"
+                      clearable
 
-                    v-model="detailform.contractInfo.installDesignUnallocat"/>
-                </el-form-item>
-                <br>
+                      v-model="detailform.contractInfo.installDesignUnallocat"/>
+                  </el-form-item>
+                </div>
                 <el-form-item
                   label="承揽所属机构"
 
@@ -2326,7 +2330,7 @@
                   </el-date-picker>
                 </el-form-item>
                 <el-form-item
-                  label="开工日期"
+                  label="合同开工日期"
                 >
                   <el-date-picker
                     :disabled="p.actpoint === 'look'"
@@ -2340,7 +2344,7 @@
                   </el-date-picker>
                 </el-form-item>
                 <el-form-item
-                  label="竣工日期"
+                  label="合同竣工日期"
                 >
                   <el-date-picker
                     :disabled="p.actpoint === 'look'"
@@ -2936,7 +2940,7 @@
               </div>
             </el-tab-pane>
             <el-tab-pane v-if="detailform.contractInfo.isInSystemUnion==='0'||detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isOutSystemUnion==='0'||detailform.contractInfo.isOutSystemSub==='0'" label="合同附属信息">
-              <div class="detailBoxBG">
+              <div class="detailBoxBG htfs">
                 <div  v-if="detailform.contractInfo.isInSystemUnion==='0'">
                   <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                     <span>系统内其他联合体单位列表: </span>
@@ -2967,7 +2971,7 @@
                     border
                     class="detailTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -3153,9 +3157,9 @@
                     @selection-change="handleSelectionChange"
                     align="center"
                     border
-                    class="clothSizeTable"
+                    class="detailTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -3341,9 +3345,9 @@
                     @selection-change="handleSelectionChange"
                     align="center"
                     border
-                    class="clothSizeTable"
+                    class="detailTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -3529,9 +3533,9 @@
                     @selection-change="handleSelectionChange"
                     align="center"
                     border
-                    class="clothSizeTable"
+                    class="detailTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -4640,7 +4644,7 @@
     background: #fff;
   }
 
-  .clothSizeTable {
+  .detailTable {
     /*td {*/
     /*padding: 0;*/
     /*}*/

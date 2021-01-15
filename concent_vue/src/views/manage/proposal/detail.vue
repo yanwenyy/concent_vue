@@ -108,7 +108,7 @@
               clearable
               filterable
               placeholder="请选择"
-
+              @clear="clear(detailform.topInfor.enginTypeSecondId,detailform.topInfor.enginTypeSecondName)"
               @change="
                 getName(
                   detailform.topInfor.enginTypeSecondId,
@@ -185,7 +185,7 @@
               clearable
               filterable
               placeholder="请选择"
-
+              @clear="clear(detailform.topInfor.projectNatureSecondId,detailform.topInfor.projectNatureSecondName)"
               @change="
                   getName(
                     detailform.topInfor.projectNatureSecondId,
@@ -244,7 +244,7 @@
               filterable
               clearable
               placeholder="请选择"
-
+              @clear="clear(detailform.topInfor.marketSecondId,detailform.topInfor.marketSecondName)"
               @change="
                   getName(
                     detailform.topInfor.marketSecondId,
@@ -948,6 +948,12 @@
       // eslint-disable-next-line no-unde
     },
     methods: {
+      //解决新增的时候二级联动清除不了
+      clear(id,name){
+        id='';
+        name='';
+        this.$forceUpdate();
+      },
       //金额过滤
       getMoney(value){
         return isMoney(value);
@@ -1030,7 +1036,7 @@
       //获取下拉框id和name的公共方法
       getName(id, list, name) {
         if(id){
-          this.$forceUpdate()
+          this.$forceUpdate();
           this.detailform.topInfor[name] = list.find(
             (item) => item.id == id
           ).detailName;

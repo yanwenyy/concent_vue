@@ -450,7 +450,7 @@
                     </el-date-picker>
                   </el-form-item>
                   <el-form-item
-                    label="开工日期:"
+                    label="合同开工日期:"
                   >
                     <el-date-picker
                       disabled
@@ -464,7 +464,7 @@
                     </el-date-picker>
                   </el-form-item>
                   <el-form-item
-                    label="竣工日期:"
+                    label="合同竣工日期:"
                   >
                     <el-date-picker
                       disabled
@@ -847,7 +847,7 @@
                 </div>
             </el-tab-pane>
             <el-tab-pane v-if="detailFormBefore.contractInfo.isInSystemUnion==='0'||detailFormBefore.contractInfo.isInSystemSub==='0'||detailFormBefore.contractInfo.isOutSystemUnion==='0'||detailFormBefore.contractInfo.isOutSystemSub==='0'" label="合同附属信息">
-              <div class="detailBoxBG">
+              <div class="detailBoxBG htfs">
                 <div  v-if="detailFormBefore.contractInfo.isInSystemUnion==='0'">
                   <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                     <span>系统内其他联合体单位列表: </span>
@@ -864,7 +864,7 @@
                     border
                     class="clothSizeTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -943,7 +943,7 @@
                     border
                     class="clothSizeTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -1023,7 +1023,7 @@
                     border
                     class="clothSizeTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -1102,7 +1102,7 @@
                     border
                     class="clothSizeTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -1995,7 +1995,7 @@
                   </el-date-picker>
                 </el-form-item>
                 <el-form-item
-                  label="开工日期:"
+                  label="合同开工日期:"
                 >
                   <el-date-picker
                     :disabled="p.actpoint === 'look'"
@@ -2009,7 +2009,7 @@
                   </el-date-picker>
                 </el-form-item>
                 <el-form-item
-                  label="竣工日期:"
+                  label="合同竣工日期:"
                 >
                   <el-date-picker
                     :disabled="p.actpoint === 'look'"
@@ -2534,7 +2534,7 @@
               </div>
             </el-tab-pane>
             <el-tab-pane v-if="detailform.contractInfo.isInSystemUnion==='0'||detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isOutSystemUnion==='0'||detailform.contractInfo.isOutSystemSub==='0'" label="合同附属信息">
-              <div class="detailBoxBG">
+              <div class="detailBoxBG htfs">
                 <div  v-if="detailform.contractInfo.isInSystemUnion==='0'">
                   <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                     <span>系统内其他联合体单位列表: </span>
@@ -2565,7 +2565,7 @@
                     border
                     class="detailTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -2751,9 +2751,9 @@
                     @selection-change="handleSelectionChange"
                     align="center"
                     border
-                    class="clothSizeTable"
+                    class="detailTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -2939,9 +2939,9 @@
                     @selection-change="handleSelectionChange"
                     align="center"
                     border
-                    class="clothSizeTable"
+                    class="detailTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -3127,9 +3127,9 @@
                     @selection-change="handleSelectionChange"
                     align="center"
                     border
-                    class="clothSizeTable"
+                    class="detailTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -3776,7 +3776,6 @@
         var _con={};
         this.getTwo(datas.topInfor.enginTypeFirstId);
         this.getTwoSC(datas.topInfor.marketFirstNameId);
-        this.getTwoXZ(datas.topInfor.projectNatureFirstId);
         for(var i in this.detailform.contractInfo){
           // i!='isImport'
           _con[i]=JSON.parse(JSON.stringify(this.detailform.contractInfo[i]));

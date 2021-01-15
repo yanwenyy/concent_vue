@@ -327,6 +327,7 @@
                   clearable
                   placeholder="请选择"
                   size="mini"
+                  @clear="clear(detailform.contractInfo.marketSecondId,detailform.contractInfo.marketSecondName)"
                   @change="
               getName(
                 detailform.contractInfo.marketSecondId,
@@ -904,7 +905,7 @@
             </div>
         </el-tab-pane>
         <el-tab-pane v-if="detailform.contractInfo.isInSystemUnion==='0'||detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isOutSystemUnion==='0'||detailform.contractInfo.isOutSystemSub==='0'" label="合同附属信息">
-          <div class="detailBoxBG">
+          <div class="detailBoxBG htfs">
             <div  v-if="detailform.contractInfo.isInSystemUnion==='0'">
               <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                 <span>系统内其他联合体单位列表: </span>
@@ -935,7 +936,7 @@
                 border
                 class="detailTable"
                 ref="table"
-                style="width: 98%; min-height: calc(100vh - 370px)"
+                style="width: 100%; min-height: calc(100vh - 370px)"
               >
                 <el-table-column
                   :width="80"
@@ -951,6 +952,7 @@
                   label="单位名称"
                   prop="orgName"
                   align="center"
+                  width="300"
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
@@ -968,6 +970,7 @@
                   label="板块名称"
                   prop="moduleName"
                   align="center"
+                  width="200"
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
@@ -1000,6 +1003,7 @@
                   :resizable="false"
                   label="项目性质"
                   prop="projectNature"
+                  width="150"
                   align="center"
                   show-overflow-tooltip
                 >
@@ -1038,6 +1042,7 @@
                   prop="isAdd"
                   align="center"
                   show-overflow-tooltip
+                  width="100"
                 >
                   <template slot-scope="scope">
                     否
@@ -1046,7 +1051,6 @@
                 <el-table-column
                   v-show="!p.actpoint === 'look'"
                   :resizable="false"
-                  fixed="right"
                   label="操作"
                   align="center"
                   show-overflow-tooltip
@@ -1092,7 +1096,7 @@
                 border
                 class="detailTable"
                 ref="table"
-                style="width: 98%; min-height: calc(100vh - 370px)"
+                style="width: 100%; min-height: calc(100vh - 370px)"
               >
                 <el-table-column
                   :width="80"
@@ -1108,6 +1112,7 @@
                   label="单位名称"
                   prop="orgName"
                   align="center"
+                  width="300"
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
@@ -1125,6 +1130,7 @@
                   label="板块名称"
                   prop="moduleName"
                   align="center"
+                  width="200"
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
@@ -1158,6 +1164,7 @@
                   label="项目性质"
                   prop="projectNature"
                   align="center"
+                  width="150"
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
@@ -1194,6 +1201,7 @@
                   label="是否为补充"
                   prop="isAdd"
                   align="center"
+                  width="100"
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
@@ -1203,7 +1211,6 @@
                 <el-table-column
                   v-show="!p.actpoint === 'look'"
                   :resizable="false"
-                  fixed="right"
                   label="操作"
                   align="center"
                   show-overflow-tooltip
@@ -1249,7 +1256,7 @@
                 border
                 class="detailTable"
                 ref="table"
-                style="width: 98%; min-height: calc(100vh - 370px)"
+                style="width: 100%; min-height: calc(100vh - 370px)"
               >
                 <el-table-column
                   :width="80"
@@ -1265,6 +1272,7 @@
                   label="单位名称"
                   prop="orgName"
                   align="center"
+                  width="300"
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
@@ -1282,6 +1290,7 @@
                   label="板块名称"
                   prop="moduleName"
                   align="center"
+                  width="200"
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
@@ -1315,6 +1324,7 @@
                   label="项目性质"
                   prop="projectNature"
                   align="center"
+                  width="150"
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
@@ -1351,6 +1361,7 @@
                   label="是否为补充"
                   prop="isAdd"
                   align="center"
+                  width="100"
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
@@ -1360,7 +1371,6 @@
                 <el-table-column
                   v-show="!p.actpoint === 'look'"
                   :resizable="false"
-                  fixed="right"
                   label="操作"
                   align="center"
                   show-overflow-tooltip
@@ -1406,7 +1416,7 @@
                 border
                 class="clothSizeTable"
                 ref="table"
-                style="width: 98%; min-height: calc(100vh - 370px)"
+                style="width: 100%; min-height: calc(100vh - 370px)"
               >
                 <el-table-column
                   :width="80"
@@ -1422,6 +1432,7 @@
                   label="单位名称"
                   prop="orgName"
                   align="center"
+                  width="300"
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
@@ -1439,6 +1450,7 @@
                   label="板块名称"
                   prop="moduleName"
                   align="center"
+                  width="200"
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
@@ -1473,6 +1485,7 @@
                   prop="projectNature"
                   align="center"
                   show-overflow-tooltip
+                  width="150"
                 >
                   <template slot-scope="scope">
                     系统外分包
@@ -1508,6 +1521,7 @@
                   label="是否为补充"
                   prop="isAdd"
                   align="center"
+                  width="100"
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
@@ -1517,7 +1531,6 @@
                 <el-table-column
                   v-show="!p.actpoint === 'look'"
                   :resizable="false"
-                  fixed="right"
                   label="操作"
                   align="center"
                   show-overflow-tooltip
@@ -1638,6 +1651,12 @@
       },
     },
     methods: {
+      //解决新增的时候二级联动清除不了
+      clear(id,name){
+        id='';
+        name='';
+        this.$forceUpdate();
+      },
       //年销售额
       setYearSale(year){
         var yearSale=0;
@@ -1997,7 +2016,6 @@
                 message: "保存成功",
                 type: "success",
               });
-              this.$refs[formName].resetFields();
               this.$router.back()
             }
           });
