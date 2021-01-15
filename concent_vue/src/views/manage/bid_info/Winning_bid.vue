@@ -8,7 +8,6 @@
         <el-button @click="saveInfo('detailform')" class="detailbutton">提交</el-button>
 
       </div>
-
       <div class="detailBox">
         <el-divider content-position="left" class="detailDivider">项目前期信息</el-divider>
         <el-form
@@ -856,9 +855,6 @@
         </el-form>
       </div>
     </el-card>
-        <div class="btn-group" v-show="p.actpoint != 'look'">
-
-    </div>
     <add-bd  v-if="BDCSVisible" ref="infoBD" @refreshBD="getBdInfo"></add-bd>
     <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
   </div>
