@@ -724,4 +724,7 @@ p{
     right:80px;
     text-align: right;
 }
+>>>.el-table .cell.el-tooltip{
+padding: 10px 10px;
+}
 </style>

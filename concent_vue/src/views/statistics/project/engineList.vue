@@ -5,23 +5,26 @@
         <el-button @click="add" type="primary" plain>新增</el-button>
         <el-button @click="edit" type="primary" plain>修改</el-button>
         <el-button @click="del" type="primary" plain>删除</el-button>
-        <el-button @click="show" type="primary" plain>查看详细设置</el-button>
+        <!--<el-button @click="show" type="primary" plain>查看详细设置</el-button>-->
       </el-button-group>
-    </div>
-    <div style="float: right; margin: -40px 0 0 0">
-      <el-button
-        @click="searchformReset"
-        type="info"
-        plain
-        style="color:black;background:none">
-        重置
-      </el-button>
-      <el-button @click="searchformSubmit" type="primary" plain>查询</el-button>
-      <!--<el-button @click="exportdata" type="primary" plain>导出</el-button>-->
+      <div style="float: right;">
+        <el-button
+          @click="searchformReset"
+          type="info"
+          plain
+          style="color:black;background:none">
+          重置
+        </el-button>
+        <el-button @click="searchformSubmit" type="primary" plain>查询</el-button>
+        <!--<el-button @click="exportdata" type="primary" plain>导出</el-button>-->
+      </div>
     </div>
 
-    <div style="margin-top: 20px">
+    <div style="margin-top: 10px">
       <el-table
+        class="tableStyle"
+        :max-height="$tableHeight"
+        :height="$tableHeight"
         :data="page.records"
         :header-cell-style="{
           'text-align': 'center',
@@ -274,16 +277,18 @@
           </template>
         </el-table-column>
         <el-table-column
-          :width="150"
+          :width="200"
           align="center"
           label="项目所在地"
-          prop="projectLocationName"
+          prop="projectLocation"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
             <span>项目所在地</span>
             <div>
-              <el-input style=" width: 100%" v-model="sousuo" size="mini"/>
+              <el-input v-model="searchform.projectLocation" placeholder="项目所在地" size="mini" clearable>
+                <el-button slot="append" icon="el-icon-search" size="mini" @click="selectPosition()"></el-button>
+              </el-input>
             </div>
           </template>
         </el-table-column>
@@ -347,14 +352,20 @@
         v-if="page.total !== 0"
       ></el-pagination>
     </div>
+    <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
   </div>
 </template>
 
 <script>
+  import Tree from '@/components/tree'
   export default {
     name: 'proposal-list-look',
+    components: {
+      Tree
+    },
     data() {
       return {
+        treeStatas: false,
         projectTypeTwo: [], // 工程类别(二级)
         projectNatureTwo: [], // 项目性质(二级)
         yesOrNo: [{ id: 0, detailName: '是' }, { id: 1, detailName: '否' }],
@@ -363,7 +374,7 @@
         searchform: {
           current: 1,
           size: 10,
-          projectModuleId: '7f4fcba4255b43a8babf15afd6c04a53',  //工程承包
+          projectModuleId: '7f4fcba4255b43a8babf15afd6c04a53', // 工程承包
           projectOmit: '',
           projectName: '',
           projectTypeFirstId: '',
@@ -375,7 +386,8 @@
           projectTypeId: '',
           isConsortion: '',
           createTime: '',
-          projectStatusId: ''
+          projectStatusId: '',
+          projectLocation: ''
         },
         menus: [],
         multipleSelection: [],
@@ -397,6 +409,18 @@
       }
     },
     methods: {
+      selectPosition() {
+        this.treeStatas = true
+        this.$nextTick(() => {
+          this.$refs.addOrUpdate.init()
+        })
+      },
+      // 获取项目地点的值
+      getPositionTree(data) {
+        this.treeStatas = false
+        // this.searchform.placeId = data.id
+        this.searchform.projectLocation = data.fullDetailName
+      },
       getProjectTwo(id) {
         this.searchform.projectTypeSecond = ''
         this.projectTypeTwo = []
@@ -517,7 +541,8 @@
           projectTypeId: '',
           isConsortion: '',
           createTime: '',
-          projectStatusId: ''
+          projectStatusId: '',
+          projectLocation: ''
         }
         this.getData()
       },
