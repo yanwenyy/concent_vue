@@ -1,7 +1,7 @@
 <!--工程承包项目登记-->
 
 <template>
-  <div>
+  <div style="position: relative">
     <el-card>
       <div class="clearfix el-card__header">
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'add'"><b>工程承包项目新增</b></span>

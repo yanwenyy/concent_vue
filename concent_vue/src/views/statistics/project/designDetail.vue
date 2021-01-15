@@ -1175,9 +1175,6 @@
   .el-main{
     overflow: hidden;
   }
-  .neirong .el-form-item__error{
-    padding: 0!important;
-  }
 </style>
 <style lang="scss" scoped>
   .gcform {
@@ -1196,7 +1193,6 @@
     >>>.inline-formitem {
       margin-top: 30px;
     }
-
     .el-form-item {
       float: left;
       margin-bottom: 0;
