@@ -2,18 +2,22 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button type="primary" plain>查询</el-button>
-        <el-button type="primary" plain>重置</el-button>
         <el-button @click="add" type="primary" plain>新增</el-button>
-        <el-button type="primary" plain>编辑</el-button>
-        <el-button type="primary" plain>删除</el-button>
-        <el-button type="primary" plain>批量修改项目状态</el-button>
+        <el-button @click="edit" type="primary" plain>修改</el-button>
+        <el-button @click="del" type="primary" plain>删除</el-button>
+        <el-button @click="show" type="primary" plain>查看详细设置</el-button>
       </el-button-group>
     </div>
-    <div style="float: right; margin: -40px 0 0 0">
-      <el-button @click="reset" type="info" plain style="color:black;background:none">重置</el-button>
-      <el-button @click="search" type="primary" plain>查询</el-button>
-      <el-button @click="exportdata" type="primary" plain>导出</el-button>
+    <div style="float: right; margin: -30px 0 0 0">
+      <el-button
+        @click="searchformReset"
+        type="info"
+        plain
+        style="color:black;background:none">
+        重置
+      </el-button>
+      <el-button @click="searchformSubmit" type="primary" plain>查询</el-button>
+      <!--<el-button @click="exportdata" type="primary" plain>导出</el-button>-->
     </div>
 
     <div style="margin-top: 20px">
@@ -21,9 +25,9 @@
         :data="page.records"
         :header-cell-style="{
           'text-align': 'center',
-          'background-color': 'whitesmoke',
+          'background-color': 'whitesmoke'
         }"
-        @row-click="rowshow"
+        @row-dblclick="rowShow"
         @selection-change="handleSelectionChange"
         border
         highlight-current-row
@@ -45,263 +49,143 @@
           show-overflow-tooltip
           type="index"
         ></el-table-column>
-
         <el-table-column
           :width="200"
           align="center"
           label="项目名称"
-          prop="year"
+          prop="projectName"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
             <span>项目名称</span>
             <div>
-              <el-input
-                style=" width: 100%"
-                v-model="sousuo"
-                size="mini"
-              />
+              <el-input style=" width: 100%" v-model="searchform.projectName" size="mini"/>
             </div>
           </template>
         </el-table-column>
-
-                <el-table-column
+        <el-table-column
           :width="150"
+          align="center"
           label="合同号"
-          prop="name"
+          prop="contractNumber"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
             <span>合同号</span>
             <div>
-              <el-input
-                style=" width: 100%"
-                v-model="sousuo"
-                size="mini"
-              />
+              <el-input style=" width: 100%" v-model="searchform.contractNumber" size="mini"/>
             </div>
           </template>
         </el-table-column>
+
         <el-table-column
           :width="150"
+          align="center"
           label="所属单位"
-          prop="name"
+          prop="companyBelongName"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
             <span>所属单位</span>
             <div>
-              <el-input
-                style=" width: 100%"
-                v-model="sousuo"
-                size="mini"
-              />
+              <el-input style=" width: 100%" v-model="searchform.companyBelongName" size="mini"/>
             </div>
           </template>
         </el-table-column>
         <el-table-column
           :width="150"
           align="center"
-          label="项目单位"
-          prop="ptypename"
+          label="项目状态"
+          prop="projectStatusName"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>项目单位</span>
+            <span>项目状态</span>
             <div>
-              <el-input
-                style=" width: 100%"
-                v-model="sousuo"
+              <el-select
+                filterable
+                clearable
                 size="mini"
-              />
+                placeholder="请选择"
+                v-model="searchform.projectStatusId">
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectStatus"/>
+              </el-select>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="工程合同额(万元)"
+          prop="contractAmountEngine"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>工程合同额(万元)</span>
+            <div>
+              <el-input style=" width: 100%" v-model="searchform.contractAmountEngine" size="mini"/>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="我方份额(万元)"
+          prop="amountWe"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>我方份额(万元)</span>
+            <div>
+              <el-input style=" width: 100%" v-model="searchform.amountWe" size="mini"/>
             </div>
           </template>
         </el-table-column>
 
-                <el-table-column
+        <el-table-column
           :width="150"
           align="center"
-          label="合同金额（万元）"
-          prop="unitname"
+          label="建设用地面积(万平方米)"
+          prop="projectLandArea"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>合同金额（万元）</span>
+            <span>建设用地面积(万平方米)</span>
             <div>
-              <el-input
-                style=" width: 100%"
-                v-model="sousuo"
-                size="mini"
-              />
+              <el-input style=" width: 100%" v-model="searchform.projectLandArea" size="mini"/>
             </div>
           </template>
         </el-table-column>
         <el-table-column
-          :width="150"
-          align="center"
-          label="我方分额（万元）"
-          prop="unitname"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>我方分额（万元）</span>
-            <div>
-              <el-input
-                style=" width: 100%"
-                v-model="sousuo"
-                size="mini"
-              />
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="建设用地面积（万平方米）"
-          prop="mianunit"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>建设用地面积（万平方米）</span>
-            <div>
-              <el-input
-                style=" width: 100%"
-                v-model="sousuo"
-                size="mini"
-              />
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="变更"
-          prop="totalamount"
-          show-overflow-tooltip
-        >
-          <!-- <template slot-scope="scope">{{
-            scope.row.exetime | datetoMonth
-          }}</template> -->
-          <template slot="header" slot-scope="scope">
-            <span>变更</span>
-            <div>
-              <el-input
-                style=" width: 100%"
-                v-model="sousuo"
-                size="mini"
-              />
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="状态"
-          prop="username"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>状态</span>
-            <div>
-              <el-input
-                style=" width: 100%"
-                v-model="sousuo"
-                size="mini"
-              />
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="新签推送"
-          prop="createtime"
-          show-overflow-tooltip
-        >
-          <!-- <template slot-scope="scope">{{
-            scope.row.createtime | dateformat
-          }}</template> -->
-          <template slot="header" slot-scope="scope">
-            <span>新签推送</span>
-            <div>
-              <el-input
-                style=" width: 100%"
-                v-model="sousuo"
-                size="mini"
-              />
-            </div>
-          </template>
-        </el-table-column>
-                <el-table-column
           :width="150"
           align="center"
           label="推送人"
-          prop="createtime"
+          prop="projectPusher"
           show-overflow-tooltip
         >
-          <!-- <template slot-scope="scope">{{
-            scope.row.createtime | dateformat
-          }}</template> -->
           <template slot="header" slot-scope="scope">
             <span>推送人</span>
             <div>
-              <el-input
-                style=" width: 100%"
-                v-model="sousuo"
-                size="mini"
-              />
-            </div>
-          </template>
-        </el-table-column>
-                        <el-table-column
-          :width="150"
-          align="center"
-          label="推送人联系方式"
-          prop="createtime"
-          show-overflow-tooltip
-        >
-          <!-- <template slot-scope="scope">{{
-            scope.row.createtime | dateformat
-          }}</template> -->
-          <template slot="header" slot-scope="scope">
-            <span>推送人联系方式</span>
-            <div>
-              <el-input
-                style=" width: 100%"
-                v-model="sousuo"
-                size="mini"
-              />
+              <el-input style=" width: 100%" v-model="searchform.projectPusher" size="mini"/>
             </div>
           </template>
         </el-table-column>
         <el-table-column
           :width="150"
           align="center"
-          label="状态"
-          prop="state"
-          fixed="right"
+          label="推送人联系方式"
+          prop="projectPusherPhone"
           show-overflow-tooltip
         >
-          <!-- <template slot-scope="scope">{{
-            scope.row.state === '0' ? '草稿' : '已上报'
-          }}</template> -->
           <template slot="header" slot-scope="scope">
-            <span>状态</span>
+            <span>推送人联系方式</span>
             <div>
-              <el-input
-                style=" width: 100%"
-                v-model="sousuo"
-                size="mini"
-              />
+              <el-input style=" width: 100%" v-model="searchform.projectPusherPhone" size="mini"/>
             </div>
-          </template>
-          <template slot-scope="scope">
-            <el-link
-              :underline="false"
-              @click="del(scope.$index)"
-              type="warning"
-              >删除</el-link
-            >
           </template>
         </el-table-column>
       </el-table>
@@ -317,122 +201,216 @@
         v-if="page.total !== 0"
       ></el-pagination>
     </div>
+    <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
   </div>
 </template>
 
 <script>
-export default {
-  name: "proposal-list-look",
-  data() {
-    return {
-      page: { current: 1, size: 10, total: 0, records: [] },
-      searchform: {
-        current: 1,
-        size: 10,
-        year: "",
-        name: "",
-        ptype: "",
-        orgid: "",
-        orgname: "",
-      },
-      menus: [],
-      multipleSelection: [],
-      orgTree: [],
-    };
-  },
-  methods: {
-    add() {
-      let p = { actpoint: "add" };
-      this.$router.push({
-        path: "./estateAdd/",
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
-      });
+  import Tree from '@/components/tree'
+  export default {
+    name: 'proposal-list-look',
+    components: {
+      Tree
     },
-    // 查看
-    rowshow(row) {
-      let p = { actpoint: "look", instid: row.uuid };
-      this.$router.push({
-        path: "./detail/",
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
-      });
-    },
-    show() {
-      if (this.multipleSelection.length !== 1) {
-        this.$message.info("请选择一条记录进行查看操作！");
-        return false;
+    data() {
+      return {
+        treeStatas: false,
+        projectTypeTwo: [], // 工程类别(二级)
+        projectNatureTwo: [], // 项目性质(二级)
+        yesOrNo: [{ id: 0, detailName: '是' }, { id: 1, detailName: '否' }],
+        sousuo: '',
+        page: { current: 1, size: 10, total: 0, records: [] },
+        searchform: {
+          current: 1,
+          size: 10,
+          companyBelongName: '',
+          amountWe: '',
+          projectLandArea: '',
+          projectPusher: '',
+          projectPusherPhone: '',
+          projectModuleId: '510ba0d79593418493eb1a11ea4e7af6', // 房地产
+          projectName: '',
+          contractAmountEngine: '',
+          projectStatusId: ''
+        },
+        menus: [],
+        multipleSelection: [],
+        orgTree: []
       }
-      let p = { actpoint: "look", instid: this.multipleSelection[0].uuid };
-      this.$router.push({
-        path: "../detail/",
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
-      });
-    }, // list通用方法开始
-    handleSizeChange(val) {
-      this.searchform.size = val;
-      this.getData();
     },
-    handleCurrentChange(val) {
-      this.searchform.current = val;
-      this.getData();
+    computed: {
+      projectDomainType() {
+        return this.$store.state.category.projectDomainType
+      },
+      projectNature() {
+        return this.$store.state.category.projectNature
+      },
+      projectType() {
+        return this.$store.state.projectType
+      },
+      projectStatus() {
+        return this.$store.state.projectStatus
+      }
     },
-    searchformSubmit() {
-      this.searchform.current = 1;
-      this.getData();
+    methods: {
+      selectPosition() {
+        this.treeStatas = true
+        this.$nextTick(() => {
+          this.$refs.addOrUpdate.init()
+        })
+      },
+      // 获取项目地点的值
+      getPositionTree(data) {
+        this.treeStatas = false
+        // this.searchform.placeId = data.id
+        this.searchform.projectLocationName = data.fullDetailName
+      },
+      getProjectTwo(id) {
+        this.searchform.projectTypeSecond = ''
+        this.projectTypeTwo = []
+        if (id !== '') {
+          this.projectDomainType.find(
+            (item) => {
+              if (item.id === id) {
+                this.projectTypeTwo = item.children
+              }
+            }
+          )
+        }
+      },
+      getTwoXZ(id) {
+        this.searchform.projectNatureSecondId = ''
+        this.projectNatureTwo = []
+        if (id !== '') {
+          this.projectNature.find(
+            (item) => {
+              if (item.id === id) {
+                this.projectNatureTwo = item.children
+              }
+            }
+          )
+        }
+      },
+      // 新增
+      add() {
+        let p = { actpoint: 'add' }
+        this.$router.push({
+          path: './engineAdd/',
+          query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+        })
+      },
+      // 删除
+      del() {
+        if (this.multipleSelection.length < 1) {
+          this.$message.info('请选择一条记录进行删除操作！')
+          return false
+        }
+        let uuids = []
+        this.multipleSelection.forEach((item) => {
+          uuids.push(item.uuid)
+        })
+        this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$http
+            .post(
+              '/api/statistics/StatisticsProject/list/delete',
+              { ids: uuids }
+            )
+            .then((res) => {
+              this.getData()
+            })
+        }).catch(() => {
+        })
+      },
+      // 修改
+      edit() {
+        if (this.multipleSelection.length !== 1) {
+          this.$message.info('请选择一条记录进行查看操作！')
+          return false
+        }
+        let p = { actpoint: 'edit', uuid: this.multipleSelection[0].uuid }
+        this.$router.push({
+          path: './engineAdd/',
+          query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+        })
+      },
+      // 查看
+      rowShow(row) {
+        let p = { actpoint: 'look', uuid: row.uuid }
+        this.$router.push({
+          path: './engineAdd/',
+          query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+        })
+      },
+      // 选中查看
+      show() {
+        if (this.multipleSelection.length !== 1) {
+          this.$message.info('请选择一条记录进行查看操作!')
+          return false
+        }
+        let p = { actpoint: 'look', uuid: this.multipleSelection[0].uuid }
+        this.$router.push({
+          path: './engineAdd/',
+          query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+        })
+      },
+      handleSizeChange(val) {
+        this.searchform.size = val
+        this.getData()
+      },
+      handleCurrentChange(val) {
+        this.searchform.current = val
+        this.getData()
+      },
+      searchformSubmit() {
+        this.searchform.current = 1
+        this.getData()
+      },
+      searchformReset() {
+        this.searchform = {
+          current: 1,
+          size: 10,
+          companyBelongName: '',
+          amountWe: '',
+          projectLandArea: '',
+          projectPusher: '',
+          projectPusherPhone: '',
+          projectModuleId: '510ba0d79593418493eb1a11ea4e7af6', // 房地产
+          projectName: '',
+          contractAmountEngine: '',
+          projectStatusId: ''
+        }
+        this.getData()
+      },
+      // 列表选项数据
+      handleSelectionChange(val) {
+        this.multipleSelection = val
+      },
+      // 获取分页数据
+      getData() {
+        this.$http
+          .post('/api/statistics/StatisticsProject/list/loadPageData', this.searchform)
+          .then(res => {
+            this.page = res.data.data
+          })
+      }
     },
-    searchformReset() {
-      this.$refs["searchform"].resetFields();
+    created() {
+      this.getData()
     },
-    // 列表选项数据
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
-    },
-    getData() {
-      this.$http
-        .post(
-          "/api" + this.$route.path.substr(0, this.$route.path.length - 1),
-          this.searchform
-        )
-        .then((res) => {
-          this.page = res.data.data;
-        });
-    },
-    getMenus() {
-      this.$http
-        .post("api/base/loadcascader", { typecode: "XMLX" })
-        .then((res) => {
-          if (res.data.code === 0) {
-            this.menus = res.data.data;
-          }
-        });
-    },
-    currentMenu(selVal) {
-      let selMenuObj = this.menus.filter((item) => item.value === selVal);
-      this.searchform.menu = selMenuObj[0].label;
-    },
-    // 获取上级单位树信息
-    getOrgTree() {
-      this.$http.get("/api/contract/base/loadorglist").then((res) => {
-        this.orgTree = res.data.data;
-      });
-    },
-    // 确定单位
-    orgChange() {
-      let selectLabelArr = this.$refs["porgCascader"].getCheckedNodes()[0]
-        .pathLabels;
-      this.searchform.orgname = selectLabelArr[selectLabelArr.length - 1];
-    },
-
-    // list通用方法结束
-  },
-  created() {
-    this.getMenus();
-    this.getOrgTree();
-    this.getData();
-  },
-};
+    mounted() {
+      this.$store.dispatch('getConfig', {})
+      this.$store.dispatch('getCategory', { name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3' })
+      this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
+      this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
+    }
+  }
 </script>
 <style scoped>
-.el-table__row {
-  cursor: pointer;
-}
+  .el-table__row {
+    cursor: pointer;
+  }
 </style>

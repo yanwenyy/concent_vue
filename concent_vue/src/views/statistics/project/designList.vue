@@ -274,16 +274,18 @@
           </template>
         </el-table-column>
         <el-table-column
-          :width="150"
+          :width="200"
           align="center"
           label="项目所在地"
-          prop="projectLocationName"
+          prop="projectLocation"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
             <span>项目所在地</span>
             <div>
-              <el-input style=" width: 100%" v-model="sousuo" size="mini"/>
+              <el-input v-model="searchform.projectLocation" placeholder="项目所在地" size="mini" clearable>
+                <el-button slot="append" icon="el-icon-search" size="mini" @click="selectPosition()"></el-button>
+              </el-input>
             </div>
           </template>
         </el-table-column>
@@ -347,14 +349,20 @@
         v-if="page.total !== 0"
       ></el-pagination>
     </div>
+    <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
   </div>
 </template>
 
 <script>
+  import Tree from '@/components/tree'
   export default {
     name: 'proposal-list-look',
+    components: {
+      Tree
+    },
     data() {
       return {
+        treeStatas: false,
         projectTypeTwo: [], // 工程类别(二级)
         projectNatureTwo: [], // 项目性质(二级)
         yesOrNo: [{ id: 0, detailName: '是' }, { id: 1, detailName: '否' }],
@@ -375,7 +383,8 @@
           projectTypeId: '',
           isConsortion: '',
           createTime: '',
-          projectStatusId: ''
+          projectStatusId: '',
+          projectLocation: ''
         },
         menus: [],
         multipleSelection: [],
@@ -397,6 +406,18 @@
       }
     },
     methods: {
+      selectPosition() {
+        this.treeStatas = true
+        this.$nextTick(() => {
+          this.$refs.addOrUpdate.init()
+        })
+      },
+      // 获取项目地点的值
+      getPositionTree(data) {
+        this.treeStatas = false
+        // this.searchform.placeId = data.id
+        this.searchform.projectLocationName = data.fullDetailName
+      },
       getProjectTwo(id) {
         this.searchform.projectTypeSecond = ''
         this.projectTypeTwo = []
@@ -517,7 +538,8 @@
           projectTypeId: '',
           isConsortion: '',
           createTime: '',
-          projectStatusId: ''
+          projectStatusId: '',
+          projectLocation: ''
         }
         this.getData()
       },
