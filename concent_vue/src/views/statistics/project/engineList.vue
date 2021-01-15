@@ -5,23 +5,26 @@
         <el-button @click="add" type="primary" plain>新增</el-button>
         <el-button @click="edit" type="primary" plain>修改</el-button>
         <el-button @click="del" type="primary" plain>删除</el-button>
-        <el-button @click="show" type="primary" plain>查看详细设置</el-button>
+        <!--<el-button @click="show" type="primary" plain>查看详细设置</el-button>-->
       </el-button-group>
-    </div>
-    <div style="float: right; margin: -40px 0 0 0">
-      <el-button
-        @click="searchformReset"
-        type="info"
-        plain
-        style="color:black;background:none">
-        重置
-      </el-button>
-      <el-button @click="searchformSubmit" type="primary" plain>查询</el-button>
-      <!--<el-button @click="exportdata" type="primary" plain>导出</el-button>-->
+      <div style="float: right;">
+        <el-button
+          @click="searchformReset"
+          type="info"
+          plain
+          style="color:black;background:none">
+          重置
+        </el-button>
+        <el-button @click="searchformSubmit" type="primary" plain>查询</el-button>
+        <!--<el-button @click="exportdata" type="primary" plain>导出</el-button>-->
+      </div>
     </div>
 
-    <div style="margin-top: 20px">
+    <div style="margin-top: 10px">
       <el-table
+        class="tableStyle"
+        :max-height="$tableHeight"
+        :height="$tableHeight"
         :data="page.records"
         :header-cell-style="{
           'text-align': 'center',
