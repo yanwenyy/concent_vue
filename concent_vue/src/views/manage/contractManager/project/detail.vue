@@ -1590,7 +1590,7 @@
         </div>
       </el-tab-pane>
       <el-tab-pane v-if="detailform.contractInfo.isInSystemUnion==='0'||detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isOutSystemUnion==='0'||detailform.contractInfo.isOutSystemSub==='0'" label="合同附属信息">
-        <div class="detailBoxBG">
+        <div class="detailBoxBG htfs">
           <div  v-if="detailform.contractInfo.isInSystemUnion==='0'">
             <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
               <span>系统内其他联合体单位列表: </span>
@@ -1732,7 +1732,6 @@
               <el-table-column
                 v-show="!p.actpoint === 'look'"
                 :resizable="false"
-                fixed="right"
                 label="操作"
                 align="center"
                 show-overflow-tooltip
@@ -1889,7 +1888,6 @@
               <el-table-column
                 v-show="!p.actpoint === 'look'"
                 :resizable="false"
-                fixed="right"
                 label="操作"
                 align="center"
                 show-overflow-tooltip
@@ -2046,7 +2044,6 @@
               <el-table-column
                 v-show="!p.actpoint === 'look'"
                 :resizable="false"
-                fixed="right"
                 label="操作"
                 align="center"
                 show-overflow-tooltip
@@ -2203,7 +2200,6 @@
               <el-table-column
                 v-show="!p.actpoint === 'look'"
                 :resizable="false"
-                fixed="right"
                 label="操作"
                 align="center"
                 show-overflow-tooltip

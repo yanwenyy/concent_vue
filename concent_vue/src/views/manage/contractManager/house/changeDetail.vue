@@ -1565,6 +1565,7 @@
                     >
                       <template slot-scope="scope">
                         <el-date-picker
+                          :disabled="p.actpoint === 'look'"
                           v-model="scope.row.salesPerforYear"
                           type="year"
                           value-format="yyyy"
@@ -1584,6 +1585,7 @@
                     >
                       <template slot-scope="scope">
                         <el-date-picker
+                          :disabled="p.actpoint === 'look'"
                           v-model="scope.row.salesPerforMonth"
                           type="month"
                           format="MM"

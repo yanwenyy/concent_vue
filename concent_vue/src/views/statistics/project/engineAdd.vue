@@ -354,14 +354,24 @@
             <!--所在地、使用资质单位暂无-->
             <el-form-item
               label="项目所在地"
-              prop="project.qualityOrgNames"
-              style="width: 33%">
-              <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容"
-                        v-model="detailForm.topInfoSiteList.ffName" class="input-with-select">
-                <el-button slot="append" icon="el-icon-circle-plus-outline"
-                           @click="addDw('项目所在地',detailForm.topInfoSiteList.ffid)"></el-button>
+              style="width: 33%"
+            >
+              <el-input v-model="detailForm.topInfoSiteList[0].path" placeholder="项目所在地" clearable>
+                <el-button slot="append" icon="el-icon-search"  @click="selectPosition()"></el-button>
               </el-input>
             </el-form-item>
+            <!--<el-form-item-->
+              <!--label="项目所在地"-->
+              <!--prop="path"-->
+              <!--style="width: 33%">-->
+              <!--<el-cascader-->
+                <!--:options="datas"-->
+                <!--:props="props"-->
+                <!--@change="getPath"-->
+                <!--collapse-tags-->
+                <!--clearable-->
+                <!--style="width: 100%"/>-->
+            <!--</el-form-item>-->
             <el-form-item
               label="签约/使用资质单位:"
               prop="project.companyId"
@@ -855,20 +865,31 @@
         </el-form>
       </div>
     </el-card>
-    <company-tree v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
+    <!--<company-tree v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>-->
+    <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
   </div>
 </template>
 
 <script>
-  import CompanyTree from '../../manage/contractManager/companyTree'
+  import Tree from '@/components/tree'
+  // import CompanyTree from '../../manage/contractManager/companyTree'
+  // import datas from '@/utils/position'
   export default {
     name: 'InvestMode',
     components: {
-      CompanyTree
+      Tree
     },
     data() {
       return {
         DwVisible: false,
+        treeStatas: false,
+        // datas: [],
+        // props: {
+        //   multiple: true,
+        //   checkStrictly: true,
+        //   value: 'detailName',
+        //   label: 'detailName'
+        // },
         emergingMarketTwo: [], // 新兴市场二级类别
         projectTypeTwo: [], // 工程类别二级
         projectNatureTwo: [], // 项目性质二级
@@ -948,18 +969,8 @@
           },
           topInfoSiteList: [
             {
-              contractAmount: 0,
-              country: '1',
-              ffid: '1',
-              fifthId: '1',
-              firstId: '1',
-              fourthId: '1',
-              isMain: '1',
-              path: '1',
-              placeId: '1',
-              secondId: '1',
-              thirdId: '1',
-              topInfoId: '1',
+              path: '',
+              placeId: '',
               uuid: ''
             }
           ]
@@ -1045,6 +1056,22 @@
       }
     },
     methods: {
+      // 选择项目地点
+      selectPosition() {
+        this.treeStatas = true
+        this.$nextTick(() => {
+          this.$refs.addOrUpdate.init()
+        })
+      },
+      // 获取项目地点的值
+      getPositionTree(data) {
+        this.treeStatas = false
+        this.detailForm.topInfoSiteList[0].placeId = data.id
+        this.detailForm.topInfoSiteList[0].path = data.fullDetailName
+      },
+      // getPath(info) {
+      //   console.log(info)
+      // },
       resetFuDai(id, list, name) {
         this.detailForm.project.fatherProjectId = ''
         this.detailForm.project.isBureauIndex = ''
@@ -1223,6 +1250,8 @@
       if (this.p.actpoint === 'look' || this.p.actpoint === 'edit') {
         this.getShow()
       }
+      // this.datas = datas
+      // console.log(this.datas)
       this.$store.dispatch('getConfig', {})
       this.$store.dispatch('getCategory', { name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3' })
       this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })

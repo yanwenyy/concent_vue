@@ -721,6 +721,7 @@
                   >
                     <template slot-scope="scope">
                       <el-date-picker
+                        :disabled="p.actpoint === 'look'"
                         v-model="scope.row.salesPerforYear"
                         type="year"
                         value-format="yyyy"
@@ -740,6 +741,7 @@
                   >
                     <template slot-scope="scope">
                       <el-date-picker
+                        :disabled="p.actpoint === 'look'"
                         v-model="scope.row.salesPerforMonth"
                         type="month"
                         format="MM"
@@ -1862,7 +1864,7 @@ export default {
           .then((res) => {
           if (res.data && res.data.code === 200) {
           list.splice(index, 1);
-          console.log(list)
+          this.setYearSale(item.salesPerforMonth	,item.salesPerforYear);
         } else {
           this.$message.error(data.msg)
         }

@@ -630,11 +630,11 @@
               <el-form-item
                 label="新兴市场(二级):"
                 prop="topInfor.marketSecondId"
-                :rules="{
+                :rules="detailform.topInfor.marketFirstNameId&&emergingMarketTwo?{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
-              }"
+              }:{}"
               >
                 <el-select
                   :disabled="p.actpoint === 'look'"

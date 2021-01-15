@@ -625,11 +625,14 @@ pre {
   height: 32px!important;
   line-height: 32px!important;
 }
-.gcform .el-input-group{
+.gcform .el-input-group,.queryForm .el-input-group{
   margin-top: 5px;
 }
 .detailTable .el-input-group{
-  margin-top:0;
+  margin-top:-5px;
+}
+.htfs{
+  padding: 0 20px!important;
 }
 /**/
 
