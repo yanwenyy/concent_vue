@@ -17,8 +17,7 @@
           @click="saveInfo('detailform')"
 
           class="detailbutton"
-          >提交</el-button
-        >
+          >提交</el-button>
       </div>
 
       <div class="detailBox">
