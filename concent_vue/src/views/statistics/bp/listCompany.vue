@@ -7,7 +7,8 @@
 
 <!--   style="height: calc(100% - 60px); border: 1px solid #eee"-->
   <div style="display: inline-block;width: 16%;vertical-align: top;overflow: auto; border-right: 1px solid #DCDFE6" >
-  <div>
+  <div style="padding: 10px;display: inline-block">
+  <span>工程行业类别</span>
   <el-select
     filterable
     placeholder="请选择"
@@ -45,12 +46,17 @@
   </div>
     <div style="display: inline-block;width:83%;vertical-align: top" >
       <div style="width: 100%; overflow: hidden;margin-top: 10px;">
-          <el-button-group style="float: left">
-            <el-button @click="add" class="detailbutton" >新增</el-button>
-            <el-button @click="editItem" class="detailbutton" >修改</el-button>
-            <el-button @click="remove" class="detailbutton"  >删除</el-button>
-            <el-button @click="searchformReset" class="detailbutton" >刷新</el-button>
-          </el-button-group>
+      <div style="display: inline-block">
+        <span>统计项名称：</span><span>统计项名称内容</span>
+        <span>计量单位：</span><span>计量单位内容</span>
+        <span>上报排除项：</span><span>上报排除项内容</span>
+      </div>
+<!--          <el-button-group style="float: left">-->
+<!--            <el-button @click="add" class="detailbutton" >新增</el-button>-->
+<!--            <el-button @click="editItem" class="detailbutton" >修改</el-button>-->
+<!--            <el-button @click="remove" class="detailbutton"  >删除</el-button>-->
+<!--            <el-button @click="searchformReset" class="detailbutton" >刷新</el-button>-->
+<!--          </el-button-group>-->
         </div>
       <el-table :data="itemList"
                 :header-cell-style="{
@@ -352,7 +358,7 @@ export default {
       // alert(JSON.stringify(this.multipleSelection[0]))
       this.$http
         .post(
-          '/api/bp/BpTjx/detail/save',
+          '/api/statistics/bp/BpTjx/detail/save',
           JSON.stringify(this.itemform),
           // this.itemform,
           { useJson: true }
@@ -398,7 +404,7 @@ export default {
     handleRemove(file,index) {
       this.$http
         .post(
-          "/api/bp/BpTjx/list/delete",
+          "/api/statistics/bp/BpTjx/list/delete",
           {ids:[file.uuid]},
         )
         .then((res) => {
@@ -490,7 +496,7 @@ export default {
         // });
         this.$http
           .post(
-            '/api/bp/BpTjx/list/delete',
+            '/api/statistics/bp/BpTjx/list/delete',
             {ids: uuids}
           )
           .then(res => {
@@ -552,7 +558,7 @@ export default {
         //console.log(node);
         this.$http
           .post(
-            '/api/bp/BpTjx/list/getBpTjxListByParentId',
+            '/api/statistics/bp/BpTjx/list/getBpTjxListByParentId',
             {"parentid":node.data.uuid}
           )
           .then(res => {

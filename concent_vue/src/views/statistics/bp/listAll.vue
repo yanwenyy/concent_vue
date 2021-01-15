@@ -337,7 +337,7 @@ export default {
       // alert(JSON.stringify(this.multipleSelection[0]))
       this.$http
         .post(
-          '/api/bp/BpTjx/detail/save',
+          '/api/statistics/bp/BpTjx/detail/save',
           JSON.stringify(this.itemform),
           // this.itemform,
           { useJson: true }
@@ -383,7 +383,7 @@ export default {
     handleRemove(file,index) {
       this.$http
         .post(
-          "/api/bp/BpTjx/list/delete",
+          "/api/statistics/bp/BpTjx/list/delete",
           {ids:[file.uuid]},
         )
         .then((res) => {
@@ -475,7 +475,7 @@ export default {
         // });
         this.$http
           .post(
-            '/api/bp/BpTjx/list/delete',
+            '/api/statistics/bp/BpTjx/list/delete',
             {ids: uuids}
           )
           .then(res => {
@@ -537,7 +537,7 @@ export default {
         //console.log(node);
         this.$http
           .post(
-            '/api/bp/BpTjx/list/getBpTjxListByParentId',
+            '/api/statistics/bp/BpTjx/list/getBpTjxListByParentId',
             {"parentid":node.data.uuid}
           )
           .then(res => {
