@@ -30,7 +30,7 @@
         return {
           url:'',
           list:'',
-          fileList: [],
+          fileList1: [],
           dialogVisible:true,
           ifUP:false,
           upLoading:false,
@@ -41,9 +41,10 @@
       },
       methods: {
         sub(){
+          console.log(this.fileList1)
           var data={
             list:this.list,
-            fileList:this.fileList
+            fileList:this.fileList1
           };
           if(this.upLoading==true&&this.ifUP==false){
             // this.$message.error('上传中,请稍等');
@@ -58,7 +59,7 @@
           }
         },
         init(url,list){
-          this.fileList=[];
+          this.fileList1=[];
           this.url=url;
           this.list=list;
           this.dialogVisible = true;
@@ -66,14 +67,20 @@
           this.upLoading = false;
         },
         handleRemove(file, fileList) {
-          this.fileList=fileList;
-          console.log(this.fileList)
+          this.fileList1.forEach((item,index)=>{
+            console.log(item,file.response.data)
+            if(item.uuid==file.response.data.uuid){
+              this.fileList1.splice(index,1)
+            }
+          })
+          // this.fileList1=fileList;
+          console.log(this.fileList1)
         },
         //上传图片
         handleChange(response, file, fileList){
-
           if (response && response.code === 200) {
-            this.fileList.push(response.data);
+            this.fileList1.push(response.data);
+            console.log(this.fileList1)
             this.$message({
               message: '上传成功',
               type: 'success',

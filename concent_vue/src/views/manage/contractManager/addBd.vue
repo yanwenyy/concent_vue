@@ -1,10 +1,17 @@
 <template>
   <div>
     <el-dialog
+      class="bdClass"
       :visible.sync="visible"
       :append-to-body="true">
-      <div>
-        <el-form :inline="true" :model="detailForm" @keyup.enter.native="init()">
+      <el-card>
+        <div class="clearfix el-card__header">
+          <span style="color: #2a2a7d;line-height: 32px"><b>标段信息</b></span>
+          <el-button @click="close" style="float: right;">返回</el-button>
+        </div>
+      </el-card>
+      <div style="height: calc(100% - 50px);overflow: auto;padding: 0 50px;">
+        <el-form class="gcform" :inline="true"  :model="detailForm" :rules="rules" ref="detailForm" @keyup.enter.native="init()">
           <el-form-item label="标段名称:" class="list-item">
             <el-input v-model="detailForm.sectionName" placeholder="标段名称" clearable></el-input>
           </el-form-item>
@@ -135,6 +142,7 @@
               label="操作"
               show-overflow-tooltip
               align="center"
+              width="100"
             >
               <template slot-scope="scope">
                 <el-link :underline="false" @click="del(scope.$index,'inside',scope.row)" type="warning">删除</el-link>
@@ -209,6 +217,7 @@
               label="操作"
               show-overflow-tooltip
               align="center"
+              width="100"
             >
               <template slot-scope="scope">
                 <el-link :underline="false" @click="del(scope.$index,'outside',scope.row)" type="warning">删除</el-link>
@@ -218,7 +227,7 @@
         </el-form>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="visible = false">取消</el-button>
+        <el-button @click="close">取消</el-button>
         <el-button type="primary" @click="sub()">确定</el-button>
       </div>
 
@@ -231,8 +240,19 @@
 <script>
   import Tree from '@/components/tree'
   import CompanyTree from './companyTree'
+  import { isMoney } from '@/utils/validate'
   export default {
     data() {
+      var validateMoney = (rule, value, callback) => {
+        // console.log(value)
+        if(value===''){
+          callback(new Error('不能为空'))
+        }else if (!isMoney(value)) {
+          callback(new Error('请输入数字'))
+        } else {
+          callback()
+        }
+      }
       return {
         key: 0,
         treeStatas: false,
@@ -261,6 +281,11 @@
             detailName:'啦啦啦啦啦'
           },
         ],
+        rules:{
+          contractAmount: [
+            { required: true,validator: validateMoney, trigger: 'change' }
+          ]
+        },//表单验证规则
       }
     },
     components: {
@@ -271,6 +296,10 @@
 
     },
     methods: {
+      close(){
+        this.$refs['detailForm'].clearValidate();
+        this.visible = false;
+      },
       //打开单位弹框
       addDw(type){
         this.DwVisible = true;
@@ -408,30 +437,47 @@
   }
 </script>
 <style scoped>
+  .bdClass >>>.el-dialog{
+    height: 70vh!important;
+  }
+  .bdClass >>>.el-card__header{
+    padding: 8px 20px !important;
+  }
+  .bdClass >>>.el-dialog__header{
+    display: none;
+  }
+  .bdClass >>>.el-dialog__body{
+    padding: 0;
+    height: calc(100% - 60px)!important;
+    width: 100%;
+    overflow: hidden;
+  }
+  .bdClass >>>.dialog-footer{
+    padding-top: 14px;
+    margin:0;
+    text-align: center;
+    background-color: #fafafa;
+  }
+  >>>.gcform .el-form-item{
+    margin-bottom: 0px!important;
+  }
+  /* >>>.gcform .el-form-item__error{
+    margin: -25px -7px 0 335px!important;
+  }
+  .bd-table-item  >>>.el-form-item__error{
+    margin: -13px -7px 0 310px!important;
+  } */
+  >>>.el-form--inline .el-form-item__content{
+    width: 100%;
+  }
+  .el-date-editor.el-input, .el-date-editor.el-input__inner {
+    width: 100%;
+  }
   .list-title{
     margin: 20px 0;
   }
-  .detatil-flie-btn{
-    float: right;
-  }
   .list-item{
-    width: 43%;
-  }
-  .dialog-footer {
-    margin-top: 50px;
-    text-align: center;
-  }
-
-  >>>.el-dialog {
-    width: 60%;
-  }
-
-  >>>.el-form-item__label {
-    width: auto;
-  }
-
-  .inline-block {
-    display: inline-block;
+    width: 32%;
   }
 
   .dr-notice-warn {
@@ -459,5 +505,34 @@
     height: 40px;
     width: 100%;
     box-sizing: border-box;
+  }
+
+  >>>form{
+    height: 500px;
+    padding: 0 10px 0 0;
+  }
+  p{
+    font-size: 18px;
+    font-weight:bolder;
+  }
+  .bdClass >>>.el-dialog{
+    position: fixed;
+    left: 10%;
+    width: 80%;
+  }
+  /* @media (min-width: 1300px) and (max-width: 1400px) {
+    .xmbk-item .el-form-item__error{
+      top:-20px!important;
+    }
+  } */
+  .gcform >>>.el-form-item__error {
+    top: -20px!important;
+    right:80px;
+    text-align: right;
+  }
+  .tabelForm >>>.el-form-item__error {
+    top: -10px!important;
+    right:80px;
+    text-align: right;
   }
 </style>

@@ -610,6 +610,11 @@ pre {
     top:-20px!important;
   }
 }
+@media (min-width: 1300px) and (max-width: 1500px) {
+  .long-form-item .el-form-item__error{
+    left:10px;
+  }
+}
 .multiple-sel .el-select__tags{
   overflow: auto;
   height: 30px;

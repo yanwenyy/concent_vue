@@ -107,7 +107,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-
+                @clear="clear(detailform.contractInfo.enginTypeSecondId,detailform.contractInfo.enginTypeSecondName)"
                 @change="
                 getName(
                   detailform.contractInfo.enginTypeSecondId,
@@ -604,7 +604,7 @@
                 filterable
                 clearable
                 placeholder="请选择"
-
+                @clear="clear(detailform.contractInfo.marketSecondId,detailform.contractInfo.marketSecondName)"
                 @change="
                 getName(
                   detailform.contractInfo.marketSecondId,
@@ -804,7 +804,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-
+                @clear="clear(detailform.contractInfo.projectNatureSecondId,detailform.contractInfo.projectNaturetSecondName)"
                 @change="
                 getName(
                   detailform.contractInfo.projectNatureSecondId,
@@ -822,76 +822,80 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-            <br>
-            <el-form-item
-              v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
-              label="建安和勘察设计费(万元)"
-              prop="contractInfo.installDesignFee"
-              :rules="rules.contractAmount"
-            >
-              <el-input
-                @blur="getOther"
-                :disabled="p.actpoint === 'look'"
-                clearable
+           <div>
+             <el-form-item
+               v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
+               label="建安和勘察设计费(万元)"
+               prop="contractInfo.installDesignFee"
+               :rules="rules.contractAmount"
+             >
+               <el-input
+                 @blur="getOther"
+                 :disabled="p.actpoint === 'look'"
+                 clearable
 
-                v-model="detailform.contractInfo.installDesignFee">
-                <template slot="prepend">¥</template>
-                <template slot="append">(万元)</template>
-              </el-input>
-            </el-form-item>
-            <el-form-item
-              v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
-              label="其他投资(万元)"
-              prop="contractInfo.otherInvest"
-              :rules="rules.contractAmount"
-            >
-              <el-input
-                :disabled="true"
-                clearable
+                 v-model="detailform.contractInfo.installDesignFee">
+                 <template slot="prepend">¥</template>
+                 <template slot="append">(万元)</template>
+               </el-input>
+             </el-form-item>
+             <el-form-item
+               v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
+               label="其他投资(万元)"
+               prop="contractInfo.otherInvest"
+               :rules="rules.contractAmount"
+             >
+               <el-input
+                 :disabled="true"
+                 clearable
 
-                v-model="detailform.contractInfo.otherInvest">
-                <template slot="prepend">¥</template>
-                <template slot="append">(万元)</template>
-              </el-input>
-            </el-form-item>
-            <br>
-            <el-form-item
-              v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
-              label="本企业实际应投入资本金"
-              prop="contractInfo.actualInvest"
-              :rules="rules.contractAmount"
-            >
-              <el-input
-                :disabled="p.actpoint === 'look'"
-                clearable
+                 v-model="detailform.contractInfo.otherInvest">
+                 <template slot="prepend">¥</template>
+                 <template slot="append">(万元)</template>
+               </el-input>
+             </el-form-item>
+           </div>
+           <div>
+             <el-form-item
+               class="long-form-item"
+               v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
+               label="本企业实际应投入资本金"
+               prop="contractInfo.actualInvest"
+               :rules="rules.contractAmount"
+             >
+               <el-input
+                 :disabled="p.actpoint === 'look'"
+                 clearable
 
-                v-model="detailform.contractInfo.actualInvest"/>
-            </el-form-item>
-            <el-form-item
-              v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
-              label="本企业建安部分已分配"
-              prop="contractInfo.installDesignAllocated"
-              :rules="rules.contractAmount"
-            >
-              <el-input
-                :disabled="p.actpoint === 'look'"
-                clearable
+                 v-model="detailform.contractInfo.actualInvest"/>
+             </el-form-item>
+             <el-form-item
+               class="long-form-item"
+               v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
+               label="本企业建安部分已分配"
+               prop="contractInfo.installDesignAllocated"
+               :rules="rules.contractAmount"
+             >
+               <el-input
+                 :disabled="p.actpoint === 'look'"
+                 clearable
 
-                v-model="detailform.contractInfo.installDesignAllocated"/>
-            </el-form-item>
-            <el-form-item
-              v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
-              label="本企业建安部分未分配"
-              prop="contractInfo.installDesignUnallocat"
-              :rules="rules.contractAmount"
-            >
-              <el-input
-                :disabled="p.actpoint === 'look'"
-                clearable
+                 v-model="detailform.contractInfo.installDesignAllocated"/>
+             </el-form-item>
+             <el-form-item
+               class="long-form-item"
+               v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
+               label="本企业建安部分未分配"
+               prop="contractInfo.installDesignUnallocat"
+               :rules="rules.contractAmount"
+             >
+               <el-input
+                 :disabled="p.actpoint === 'look'"
+                 clearable
 
-                v-model="detailform.contractInfo.installDesignUnallocat"/>
-            </el-form-item>
-            <br>
+                 v-model="detailform.contractInfo.installDesignUnallocat"/>
+             </el-form-item>
+           </div>
             <el-form-item
               label="承揽所属机构"
 
@@ -980,7 +984,7 @@
           </el-date-picker>
         </el-form-item>
             <el-form-item
-              label="开工日期"
+              label="合同开工日期"
             >
               <el-date-picker
                 :disabled="p.actpoint === 'look'"
@@ -994,7 +998,7 @@
               </el-date-picker>
             </el-form-item>
             <el-form-item
-          label="竣工日期"
+          label="合同竣工日期"
         >
           <el-date-picker
             :disabled="p.actpoint === 'look'"
@@ -1621,7 +1625,7 @@
               border
               class="detailTable"
               ref="table"
-              style="width: 98%; min-height: calc(100vh - 370px)"
+              style="width: 100%; min-height: calc(100vh - 370px)"
             >
               <el-table-column
                 :width="80"
@@ -1637,6 +1641,7 @@
                 label="单位名称"
                 prop="orgName"
                 align="center"
+                width="300"
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
@@ -1654,6 +1659,7 @@
                 label="板块名称"
                 prop="moduleName"
                 align="center"
+                width="200"
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
@@ -1686,6 +1692,7 @@
                 :resizable="false"
                 label="项目性质"
                 prop="projectNature"
+                width="150"
                 align="center"
                 show-overflow-tooltip
               >
@@ -1724,6 +1731,7 @@
                 prop="isAdd"
                 align="center"
                 show-overflow-tooltip
+                width="100"
               >
                 <template slot-scope="scope">
                   否
@@ -1777,7 +1785,7 @@
               border
               class="detailTable"
               ref="table"
-              style="width: 98%; min-height: calc(100vh - 370px)"
+              style="width: 100%; min-height: calc(100vh - 370px)"
             >
               <el-table-column
                 :width="80"
@@ -1793,6 +1801,7 @@
                 label="单位名称"
                 prop="orgName"
                 align="center"
+                width="300"
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
@@ -1810,6 +1819,7 @@
                 label="板块名称"
                 prop="moduleName"
                 align="center"
+                width="200"
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
@@ -1843,6 +1853,7 @@
                 label="项目性质"
                 prop="projectNature"
                 align="center"
+                width="150"
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
@@ -1879,6 +1890,7 @@
                 label="是否为补充"
                 prop="isAdd"
                 align="center"
+                width="100"
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
@@ -1933,7 +1945,7 @@
               border
               class="detailTable"
               ref="table"
-              style="width: 98%; min-height: calc(100vh - 370px)"
+              style="width: 100%; min-height: calc(100vh - 370px)"
             >
               <el-table-column
                 :width="80"
@@ -1949,6 +1961,7 @@
                 label="单位名称"
                 prop="orgName"
                 align="center"
+                width="300"
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
@@ -1966,6 +1979,7 @@
                 label="板块名称"
                 prop="moduleName"
                 align="center"
+                width="200"
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
@@ -1999,6 +2013,7 @@
                 label="项目性质"
                 prop="projectNature"
                 align="center"
+                width="150"
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
@@ -2035,6 +2050,7 @@
                 label="是否为补充"
                 prop="isAdd"
                 align="center"
+                width="100"
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
@@ -2089,7 +2105,7 @@
               border
               class="clothSizeTable"
               ref="table"
-              style="width: 98%; min-height: calc(100vh - 370px)"
+              style="width: 100%; min-height: calc(100vh - 370px)"
             >
               <el-table-column
                 :width="80"
@@ -2105,6 +2121,7 @@
                 label="单位名称"
                 prop="orgName"
                 align="center"
+                width="300"
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
@@ -2122,6 +2139,7 @@
                 label="板块名称"
                 prop="moduleName"
                 align="center"
+                width="200"
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
@@ -2156,6 +2174,7 @@
                 prop="projectNature"
                 align="center"
                 show-overflow-tooltip
+                width="150"
               >
                 <template slot-scope="scope">
                   系统外分包
@@ -2191,6 +2210,7 @@
                 label="是否为补充"
                 prop="isAdd"
                 align="center"
+                width="100"
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
@@ -2368,6 +2388,12 @@ export default {
     // eslint-disable-next-line no-unde
   },
   methods: {
+    //解决新增的时候二级联动清除不了
+    clear(id,name){
+      id='';
+      name='';
+      this.$forceUpdate();
+    },
     //打开附件上传的组件
     openFileUp(url,list){
       this.uploadVisible = true;

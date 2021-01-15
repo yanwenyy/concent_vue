@@ -525,7 +525,7 @@
                 </div>
             </el-tab-pane>
             <el-tab-pane v-if="detailFormBefore.contractInfo.isInSystemUnion==='0'||detailFormBefore.contractInfo.isInSystemSub==='0'" label="合同附属信息">
-              <div class="detailBoxBG">
+              <div class="detailBoxBG htfs">
                 <div  v-if="detailFormBefore.contractInfo.isInSystemUnion==='0'">
                   <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                     <span>系统内其他联合体单位列表: </span>
@@ -542,7 +542,7 @@
                     border
                     class="detailTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -621,7 +621,7 @@
                     border
                     class="detailTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -701,7 +701,7 @@
                     border
                     class="detailTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -780,7 +780,7 @@
                     border
                     class="detailTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -1719,7 +1719,7 @@
               </div>
             </el-tab-pane>
             <el-tab-pane v-if="detailform.contractInfo.isInSystemUnion==='0'||detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isOutSystemUnion==='0'||detailform.contractInfo.isOutSystemSub==='0'" label="合同附属信息">
-              <div class="detailBoxBG">
+              <div class="detailBoxBG htfs">
                 <div  v-if="detailform.contractInfo.isInSystemUnion==='0'">
                   <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                     <span>系统内其他联合体单位列表: </span>
@@ -1750,7 +1750,7 @@
                     border
                     class="detailTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -1938,7 +1938,7 @@
                     border
                     class="detailTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -2126,7 +2126,7 @@
                     border
                     class="detailTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -2314,7 +2314,7 @@
                     border
                     class="detailTable"
                     ref="table"
-                    style="width: 98%; min-height: calc(100vh - 370px)"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
                   >
                     <el-table-column
                       :width="80"
@@ -3159,7 +3159,6 @@
                 message: "保存成功",
                 type: "success",
               });
-              this.$refs[formName].resetFields();
               this.$router.back();
             }
           });
