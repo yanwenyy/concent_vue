@@ -10,6 +10,7 @@
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
         <el-button @click="getData" type="primary" plain>查询</el-button>
+        <el-button @click="Importdata" type="primary" plain>导入</el-button>
         <el-button @click="exportdata" type="primary" plain>导出</el-button>
       </div>
     </div>

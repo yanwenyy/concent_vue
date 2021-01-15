@@ -2,7 +2,7 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="add('')" plain :disabled="trackStatus=='1'" type="primary">跟踪</el-button>
+        <el-button @click="add('')" plain :disabled="trackStatus!=null" type="primary">跟踪</el-button>
         <el-button @click="add('fq')" :disabled="trackStatus!='1'" plain type="primary">放弃跟踪</el-button>
         <el-button @click="add('end')" :disabled="trackStatus!='1'" plain type="primary">结束跟踪</el-button>
       </el-button-group>
@@ -349,7 +349,7 @@
           this.$message.info("请选择一条记录进行登记操作！");
           return false;
         }
-        let p = {actpoint: "add",type:type,instid: this.multipleSelection[0].uuid};
+        let p = {actpoint: "add",type:type,instid: this.multipleSelection[0].uuid,trackStatus:this.trackStatus};
         this.$router.push({
           path: "./track_detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
@@ -366,7 +366,7 @@
 
       // 查看
       rowshow(row) {
-        let p = {actpoint: "look", instid: row.uuid,type:'addfq',end:'addjs'};
+        let p = {actpoint: "look", instid: row.uuid,end:'addjs',trackStatus:row.trackStatus};
         this.$router.push({
           path: "./track_detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},

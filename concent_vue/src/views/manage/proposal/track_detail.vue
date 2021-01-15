@@ -5,23 +5,26 @@
       <div slot="header" class="clearfix">
         <span class="detailSpan"><b>项目信息跟踪</b></span>
         <el-button @click="back" class="detailbutton" >返回</el-button>
-        <el-button v-if="!p.type"
-        type="primary"
-        @click="saveInfo('detailform')"
-        class="detailbutton"
-        >保存1</el-button>
+        <!-- <div class="inline-block" v-if="p.actpoint != 'look'"> -->
+          <el-button v-if="!p.type&&p.actpoint != 'look'"
+          type="primary"
+          @click="saveInfo('detailform')"
+          class="detailbutton"
+          >保存1</el-button>
 
-        <el-button v-if="p.type == 'fq'"
-        type="primary"
-        @click="saveInfofq('detailform')"
-        class="detailbutton"
-        >保存2</el-button>
+          <el-button v-if="p.type == 'fq'&&p.actpoint != 'look'"
+          type="primary"
+          @click="saveInfofq('detailform')"
+          class="detailbutton"
+          >保存2</el-button>
 
-        <el-button v-if="p.type == 'end'"
-        type="primary"
-        @click="saveInfoend('detailform')"
-        class="detailbutton"
-        >保存3</el-button>
+          <el-button v-if="p.type == 'end'&&p.actpoint != 'look'"
+          type="primary"
+          @click="saveInfoend('detailform')"
+          class="detailbutton"
+          >保存3</el-button>
+        <!-- </div> -->
+
         <el-button v-show="p.actpoint != 'look'" @click="submit" class="detailbutton">提交</el-button>
       </div>
       <div class="detailBox">
@@ -496,7 +499,7 @@
               />
             </el-form-item>
 
-            <div v-if="p.type&&!p.actpoint == 'look'" >
+            <div v-if="p.type||(!p.type&&p.trackStatus !=1&&p.trackStatus !=null)" >
               <el-form-item class="formItem"
                 label="项目跟踪负责人:"
                 prop="topInfoOrg.projectTrackResponPerson"
@@ -690,7 +693,7 @@
           </el-table>
         </div>
 
-          <div  v-if="p.type&&!p.actpoint == 'look'">
+          <div  v-if="p.type||(!p.type&&p.trackStatus !=1&&p.trackStatus !=null)">
             <p  class="detail-title" style="overflow: hidden;margin-right:30px" >
               <span>标段信息: </span>
               <el-button
@@ -799,9 +802,12 @@
               </el-table-column>
             </el-table>
           </div>
-        <el-divider content-position="left" class="detailDivider" >跟踪信息</el-divider>
 
-            <div  v-show="p.actpoint == 'look' || p.type==''">
+          <div>
+        <el-divider content-position="left" class="detailDivider" >跟踪信息</el-divider>
+<!-- v-if="(p.trackStatus !=2 && p.trackStatus !=3)||p.type==''" -->
+            <div v-if="(!p.type&&p.actpoint!='look')||(p.actpoint=='look'&&p.trackStatus !=2 && p.trackStatus !=3)">
+
               <el-form-item class="formItem"
                 label="项目跟踪负责人:"
                 prop="topInfoOrg.projectTrackResponPerson"
@@ -865,7 +871,8 @@
               </el-form-item>
             </div>
 
-            <div v-if="p.type == 'fq'">
+            <div v-if="p.type == 'fq'||p.trackStatus ==2">
+
             <el-form-item class="neirong" label="放弃原因:" style="width: 100%"
               prop="topInfoOrg.reason"
                 :rules="{
@@ -874,6 +881,7 @@
                   trigger: 'blur',
                 }">
               <el-input
+              :disabled="p.trackStatus ==2"
                 type="textarea"
                 clearable
                 placeholder="请输入"
@@ -881,31 +889,31 @@
               />
             </el-form-item>
           </div>
-          <el-row v-if="p.type == 'end'">
+          <el-row v-if="p.type == 'end'||p.trackStatus ==3">
             <p class="detail-title">
               <span><span v-if="detailform.topInfor.isMajorProject=='0'" class="red-star">*</span>项目总结附件: </span>
               <el-upload
                 class="upload-demo detailUpload"
-                :action="'/api/contract/topInfo/CommonFiles/bidInfo/01/uploadFile'"
+                :action="'/api/contract/topInfo/CommonFiles/topInfoTrack/01/uploadFile'"
                 :on-success="handleChange"
                 :on-error="handleChange"
                 :on-remove="handleRemove1"
                 :show-file-list="false"
-                :file-list="detailform.bidInfo_01"
+                :file-list="detailform.topInfoTrack_01"
                 :disabled="p.actpoint === 'look'"
                 multiple
               >
                 <el-button
                   size="small"
                   type="primary"
-                  v-show="p.actpoint != 'look'"
-                  :disabled=" p.actpoint === 'look'">点击上传
+                  v-show="p.actpoint != 'look'||p.trackStatus !=3">点击上传
+
                   </el-button>
                   </el-upload>
                 </p>
 
             <el-table
-              :data="detailform.bidInfo_01"
+              :data="detailform.topInfoTrack_01"
               :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -943,6 +951,7 @@
                 <template slot-scope="scope">
                   {{ (scope.row.fileSize / 1024).toFixed(2) }}
                 </template>
+
               </el-table-column>
               <el-table-column
                 align="center"
@@ -974,7 +983,7 @@
               </el-table-column>
             </el-table>
           </el-row>
-            <div v-if="!p.type||p.actpoint == 'look'">
+            <div v-if="!p.type&& p.trackStatus !=2&&p.trackStatus !=3 ">
             <p  class="detail-title" style="overflow: hidden;margin-right:30px">
               <span>标段信息: </span>
               <el-button
@@ -1029,7 +1038,7 @@
                     <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                     <el-input
                       clearable
-                      :disabled="p.actpoint === 'look'||scope.row.uuid!=''||scope.row.uuid!=null"
+                      :disabled="scope.row.uuid!=null"
                       v-model="scope.row.sectionName"
                     ></el-input>
                   </el-form-item>
@@ -1052,7 +1061,7 @@
                       <el-input
                         v-model="scope.row.projectScale"
                         clearable
-                        :disabled="p.actpoint === 'look'||scope.row.uuid!=''||scope.row.uuid!=null"
+                        :disabled="scope.row.uuid!=null"
                       >
                         <template slot="prepend">¥</template>
                         <template slot="append">(万元)</template>
@@ -1075,13 +1084,14 @@
                 width="80">
                 <template slot-scope="scope">
                   <el-link
-                    :disabled="scope.row.uuid!=''||scope.row.uuid!==null"
+                    :disabled="scope.row.uuid!=null"
                     :underline="false"
                     @click="del(scope.$index,scope.row,detailform.topInfoSectionList,'bd')"
                     type="warning">删除</el-link>
                 </template>
               </el-table-column>
             </el-table>
+            </div>
             </div>
         </el-form>
       </div>
@@ -1134,7 +1144,7 @@
           topInfoSiteList: [],
           topInfoSectionList: [],
           value1: [],
-          bidInfo_01: [],
+          topInfoTrack_01: [],
         },
         xqprojectType: [],//工程类别二级
         emergingMarketTwo:[],//新兴市场二级
@@ -1216,6 +1226,7 @@
       // })()
       // }
       // this.$store.commit("setCategory", 'projectDomainType');
+      console.log(this.p.trackStatus)
       this.id=this.p.instid;
       if (this.p.actpoint === "edit"||this.id) {
         this.getDetail();
@@ -1248,7 +1259,7 @@
           type: "success",
           duration: 1500,
           onClose: () => {
-            this.detailform.bidInfo_01.push(response.data);
+            this.detailform.topInfoTrack_01.push(response.data);
             console.log(fileList);
           },
         });
@@ -1264,7 +1275,7 @@
         })
         .then((res) => {
           if (res.data.code === 200) {
-            this.detailform.bidInfo_01.splice(index, 1);
+            this.detailform.topInfoTrack_01.splice(index, 1);
           }
         });
     },
@@ -1370,7 +1381,7 @@
 
       //跟踪接口
       saveInfo(formName) {
-        // if(this.detailform.topInfor.isMajorProject=='0'&&this.detailform.bidInfo_01==''){
+        // if(this.detailform.topInfor.isMajorProject=='0'&&this.detailform.topInfoTrack_01==''){
         //   this.$message.error("重大项目必须上传项目总结附件");
         // }
         var topInforCapitalList = [];
@@ -1414,7 +1425,7 @@
 
 // 放弃跟踪接口
             saveInfofq(formName) {
-        // if(this.detailform.topInfor.isMajorProject=='0'&&this.detailform.bidInfo_01==''){
+        // if(this.detailform.topInfor.isMajorProject=='0'&&this.detailform.topInfoTrack_01==''){
         //   this.$message.error("重大项目必须上传项目总结附件");
         // }
         var topInforCapitalList = [];
@@ -1457,7 +1468,7 @@
 
 // 结束跟踪接口
             saveInfoend(formName) {
-        if(this.detailform.topInfor.isMajorProject=='0'&&this.detailform.bidInfo_01==''){
+        if(this.detailform.topInfor.isMajorProject=='0'&&this.detailform.topInfoTrack_01==''){
           this.$message.error("重大项目必须上传项目总结附件");
         }
         var topInforCapitalList = [];
@@ -1580,7 +1591,7 @@
               topInfoSiteList: datas.topInfoSiteList||[],
               topInfoSectionList: datas.topInfoSectionList||[],
               value1:[],
-              bidInfo_01: datas.bidInfo_01||[],
+              topInfoTrack_01: datas.topInfoTrack_01||[],
             }
             datas.topInforCapitalList.forEach((item)=>{
               this.detailform.value1.push(item.capitalId)
