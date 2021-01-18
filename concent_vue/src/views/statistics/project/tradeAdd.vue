@@ -54,7 +54,7 @@
                 v-model="detailForm.project.contractNumber"/>
             </el-form-item>
             <el-form-item
-              label="合同金额:"
+              label="合同金额(万元):"
               prop="project.contractMoney"
               style="width:32.5%;">
               <el-input
@@ -99,13 +99,13 @@
               style="width: 32.5%">
               <el-date-picker
                 :disabled="p.actpoint === 'look'"
-                v-model="detailForm.project.ocontractSignTime"
+                v-model="detailForm.project.ocontractStartTime"
                 type="date"
                 value-format="timestamp"
                 placeholder="选择日期时间"/>
             </el-form-item>
             <el-form-item
-              label="合同开始时间:"
+              label="合同结束时间:"
               prop="project.ocontractEndTime"
               style="width: 32.5%">
               <el-date-picker
@@ -120,9 +120,6 @@
             <el-form-item
               label="合同所属板块:"
               prop="project.ocontractModel"
-              :rules="{
-                required: true, message: '此项不能为空', trigger: 'blur'
-              }"
               style="width: 32.5%">
               <el-select
                 :disabled="p.actpoint === 'look'"
@@ -137,57 +134,6 @@
                   v-for="(item, index) in wumoveType"/>
               </el-select>
             </el-form-item>
-          </el-row>
-
-          <el-row>
-            <el-form-item
-              label="签约总金额(万元):"
-              prop="amountSignup"
-              style="width:32.5%;">
-              <el-input
-                clearable
-                placeholder="请输入"
-                :disabled="p.actpoint === 'look'"
-                v-model="detailForm.project.amountSignup">
-                <template slot="prepend">¥</template>
-                <template slot="append">(万元)</template>
-              </el-input>
-            </el-form-item>
-            <el-form-item
-              label="我方份额(万元):"
-              prop="amountWe"
-              style="width:32.5%;">
-              <el-input
-                clearable
-                placeholder="请输入"
-                :disabled="p.actpoint === 'look'"
-                v-model="detailForm.project.amountWe">
-                <template slot="prepend">¥</template>
-                <template slot="append">(万元)</template>
-              </el-input>
-            </el-form-item>
-          </el-row>
-          <el-row>
-            <el-form-item
-              label="是否海外合同:"
-              prop="isOverseasContract"
-              style="width:32.5%;">
-              <el-select
-                clearable
-                filterable
-                :disabled="p.actpoint === 'look'"
-                placeholder="请选择"
-                v-model="detailForm.project.isOverseasContract">
-                <el-option
-                  :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in yesOrNo"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-          </el-row>
-          <el-row>
             <el-form-item
               label="项目状态:"
               prop="project.projectStatusId"
@@ -210,23 +156,6 @@
               </el-select>
             </el-form-item>
             <el-form-item
-              label="是否为年度合同:"
-              prop="isAnnualContract"
-              style="width:32.5%;">
-              <el-select
-                filterable
-                clearable
-                :disabled="p.actpoint === 'look'"
-                placeholder="请选择"
-                v-model="detailForm.project.isAnnualContract">
-                <el-option
-                  :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in yesOrNo"/>
-              </el-select>
-            </el-form-item>
-            <el-form-item
               label="签约单位:"
               prop="amountCompanyName"
               style="width:32.5%;">
@@ -235,6 +164,94 @@
                 :disabled="p.actpoint === 'look'"
                 placeholder="请输入"
                 v-model="detailForm.project.amountCompanyName"/>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item
+              label="预期收益率:"
+              prop="projectExpectedReturn"
+              style="width:32.5%;">
+              <el-input
+                clearable
+                :disabled="p.actpoint === 'look'"
+                placeholder="请输入"
+                v-model="detailForm.project.projectExpectedReturn"/>
+            </el-form-item>
+            <el-form-item
+              label="收益额:"
+              prop="projectYieid"
+              style="width:32.5%;">
+              <el-input
+                clearable
+                :disabled="p.actpoint === 'look'"
+                placeholder="请输入"
+                v-model="detailForm.project.projectYieid"/>
+            </el-form-item>
+            <el-form-item
+              label="系统内外:"
+              prop="isSystemIn"
+              style="width:32.5%;">
+              <el-select
+                clearable
+                filterable
+                :disabled="p.actpoint === 'look'"
+                placeholder="请选择"
+                v-model="detailForm.project.isSystemIn">
+                <el-option
+                  :key="index"
+                  :label="item.label"
+                  :value="item.value"
+                  v-for="(item, index) in inOut"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item
+              label="路内路外:"
+              prop="isRoadIn"
+              style="width:32.5%;">
+              <el-select
+                clearable
+                filterable
+                :disabled="p.actpoint === 'look'"
+                placeholder="请选择"
+                v-model="detailForm.project.isRoadIn">
+                <el-option
+                  :key="index"
+                  :label="item.label"
+                  :value="item.value"
+                  v-for="(item, index) in inOutRoad"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="是否框架协议:"
+              prop="isFrameIn"
+              style="width:32.5%;">
+              <el-select
+                clearable
+                filterable
+                :disabled="p.actpoint === 'look'"
+                placeholder="请选择"
+                v-model="detailForm.project.isFrameIn">
+                <el-option
+                  :key="index"
+                  :label="item.label"
+                  :value="item.value"
+                  v-for="(item, index) in yesOrNo"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="所属单位:"
+              prop="companyBelongName"
+              style="width:32.5%;">
+              <el-input
+                clearable
+                :disabled="p.actpoint === 'look'"
+                placeholder="请输入"
+                v-model="detailForm.project.companyBelongName"/>
             </el-form-item>
           </el-row>
           <el-row>
@@ -272,15 +289,6 @@
                   :value="item.id"
                   v-for="(item, index) in emergingMarketTwo"/>
               </el-select>
-            </el-form-item>
-            <el-form-item
-              label="所属单位:"
-              prop="project.companyBelongName"
-              style="width:32.5%;">
-              <el-input
-                disabled
-                placeholder="请输入"
-                v-model="detailForm.project.companyBelongName"/>
             </el-form-item>
           </el-row>
           <el-row>
@@ -391,6 +399,7 @@
               </el-select>
             </el-form-item>
           </el-row>
+
           <el-row>
             <el-form-item
               label="推送人:"
@@ -437,6 +446,14 @@
           { label: '是', value: 0 },
           { label: '否', value: 1 }
         ],
+        inOut: [
+          { label: '系统内', value: 0 },
+          { label: '系统外', value: 1 }
+        ],
+        inOutRoad: [
+          { label: '路内', value: 0 },
+          { label: '路外', value: 1 }
+        ],
         detailForm: {
           project: {
             commonFilesList: [], // 文件列表
@@ -453,16 +470,17 @@
             contractNumber: '',
             contractMoney: '',
             supplierAddress: '', // 供方地点
-            amountSignup: '',
-            amountWe: '',
-            bcPlateTypeId: '',
             ocontractSignTime: '',
             ocontractStartTime: '',
             ocontractEndTime: '',
             ocontractModel: '', // 合同所属板块
-            isOverseasContract: '',
+            projectExpectedReturn: '', // 1
+            projectYieid: '', // 2
+            isSystemIn: '', // 3
+            isRoadIn: '', // 4
+            isFrameIn: '', // 5
+            companyBelongName: '', // 6
             projectStatusId: '',
-            isAnnualContract: '',
             amountCompanyName: '',
             marketFirstId: '',
             marketSecondId: '',
@@ -471,17 +489,11 @@
             architectureTypeId: '',
             houseTypeId: '',
             fieldId: '',
-            companyBelongName: '股份公司',
             projectPusher: '',
             projectPusherPhone: ''
           }
         },
-        rules: {
-          project: {
-            projectName: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
-            contractNumber: [{ required: true, message: '此项不能为空', trigger: 'blur' }]
-          }
-        },
+        rules: {},
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
       }
     },
@@ -568,7 +580,7 @@
             this.$http
               .post(
                 '/api/statistics/StatisticsProject/detail/save',
-                JSON.stringify(this.detailForm),
+                JSON.stringify(this.detailForm.project),
                 { useJson: true }
               )
               .then((res) => {
@@ -578,7 +590,7 @@
                     type: 'success'
                   })
                   this.$router.push({
-                    path: '/statistics/project/estateList'
+                    path: '/statistics/project/tradeList'
                   })
                 } else {
                   console.log('error submit!')
@@ -599,8 +611,7 @@
           .post('/api/statistics/StatisticsProject/detail/entityInfo', data)
           .then((res) => {
             if (res.data.code === 200) {
-              this.detailForm.project = res.data.data.project
-              // this.detailForm.project.topInfoSiteList = res.data.data.topInfoSiteList
+              this.detailForm.project = res.data.data
               this.getShowTwo()
             }
           })

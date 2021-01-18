@@ -1075,7 +1075,7 @@
             this.$http
               .post(
                 '/api/statistics/StatisticsProject/detail/save',
-                JSON.stringify(this.detailForm),
+                JSON.stringify(this.detailForm.project),
                 { useJson: true }
               )
               .then((res) => {
@@ -1113,8 +1113,7 @@
           .post('/api/statistics/StatisticsProject/detail/entityInfo', data)
           .then((res) => {
             if (res.data.code === 200) {
-              this.detailForm.project = res.data.data.project
-              // this.detailForm.topInfoSiteList = res.data.data.topInfoSiteList
+              this.detailForm.project = res.data.data
               this.getShowTwo()
             }
           })

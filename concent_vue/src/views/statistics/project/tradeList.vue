@@ -125,12 +125,12 @@
         <el-table-column
           :width="150"
           align="center"
-          label="工程合同额(万元)"
-          prop="contractAmountEngine"
+          label="合同金额(万元)"
+          prop="contractMoney"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>工程合同额(万元)</span>
+            <span>合同金额(万元)</span>
             <div>
               <el-input style=" width: 100%" v-model="searchform.contractAmountEngine" size="mini"/>
             </div>
@@ -201,13 +201,14 @@
         searchform: {
           current: 1,
           size: 10,
-          companyBelongName: '',
-          projectPusher: '',
-          projectPusherPhone: '',
           projectModuleId: '510ba0d79593418493eb1a11ea4e7af4', // 物资贸易
-          projectName: '',
-          contractAmountEngine: '',
-          projectStatusId: ''
+          projectName: '', // 项目名称
+          contractNumber: '', // 合同号
+          companyBelongName: '', // 所属单位
+          contractMoney: '', // 合同金额
+          projectStatusId: '',
+          projectPusher: '',
+          projectPusherPhone: ''
         },
         menus: [],
         multipleSelection: [],
@@ -349,13 +350,14 @@
         this.searchform = {
           current: 1,
           size: 10,
-          companyBelongName: '',
-          projectPusher: '',
-          projectPusherPhone: '',
           projectModuleId: '510ba0d79593418493eb1a11ea4e7af4', // 物资贸易
-          projectName: '',
+          projectName: '', // 项目名称
+          contractNumber: '', // 合同号
+          companyBelongName: '', // 所属单位
           contractAmountEngine: '',
-          projectStatusId: ''
+          projectStatusId: '',
+          projectPusher: '',
+          projectPusherPhone: ''
         }
         this.getData()
       },
