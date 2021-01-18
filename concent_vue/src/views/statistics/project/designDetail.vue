@@ -13,7 +13,7 @@
       </div>
     </el-card>
     <el-card class="box-card">
-      <div class="detailBox">
+      <div class="detailBoxBG" style="height: calc(100vh - 196px)">
         <el-form
           :model="detailForm"
           :rules="rules"
@@ -1135,11 +1135,6 @@
     }
   }
 </script>
-<style>
-  .el-main{
-    overflow: hidden;
-  }
-</style>
 <style lang="scss" scoped>
   .gcform {
     > > > .el-form-item__error {
@@ -1149,7 +1144,9 @@
       text-align: right;
       top: 0%;
     }
-
+    >>>.el-main{
+      overflow: hidden;
+    }
     > > > .el-form-item__label:before {
       position: initial;
       left: -10px;
