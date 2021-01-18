@@ -23,7 +23,7 @@
     <!--      show-checkbox-->
     <span class="custom-tree-node" slot-scope="{ node, data }">
             <span>
-                <i :class="data.icon"></i>{{ node.label }}
+                <i :class="data.icon" style="margin-right: 5px" ></i>{{ node.label }}
             </span>
         </span>
     </el-tree>
@@ -31,13 +31,16 @@
     <div style="display: inline-block;width:83%;vertical-align: top;padding-left: 4px;" >
       <div style="width: 100%; overflow: hidden;margin-top: 10px;">
           <el-button-group style="float: left">
-            <el-button @click="add" class="detailbutton" >新增</el-button>
-            <el-button @click="editItem" class="detailbutton" >修改</el-button>
-            <el-button @click="remove" class="detailbutton"  >删除</el-button>
-            <el-button @click="searchformReset" class="detailbutton" >刷新</el-button>
+            <el-button @click="add" plain type="primary">新增</el-button>
+            <el-button @click="editItem" plain type="primary">修改</el-button>
+            <el-button @click="remove" plain  type="primary">删除</el-button>
+            <el-button @click="searchformReset" plain type="primary">刷新</el-button>
           </el-button-group>
         </div>
-      <el-table :data="itemList"
+      <el-table :data="page.records"
+                class="tableStyle"
+                :max-height="$tableHeight"
+                :height="$tableHeight"
               :header-cell-style="{
                   'text-align': 'center',
                   'background-color': 'whitesmoke',
@@ -57,21 +60,30 @@
         <el-table-column show-overflow-tooltip
                          type="index" label="序号" width="55" align="center">
         </el-table-column>
-        <el-table-column prop="vname" label="统计名称" width="160">
+        <el-table-column prop="vname" label="统计名称" width="160" show-overflow-tooltip>
         </el-table-column>
-        <el-table-column prop="vjldw" label="计量单位" width="120" align="center" :formatter="vjldwFormatter">
+        <el-table-column prop="vjldw" label="计量单位" width="120" align="center" :formatter="vjldwFormatter" show-overflow-tooltip>
         </el-table-column>
-      <el-table-column prop="vprojecttype" label="工程（行业）类别" :formatter="vprojecttypeFormatter">
+      <el-table-column prop="vprojecttype" label="工程（行业）类别" :formatter="vprojecttypeFormatter" show-overflow-tooltip >
         </el-table-column>
-      <el-table-column prop="vtype" label="使用设置" width="90" align="center" :formatter="vtypeFormatter">
+      <el-table-column prop="vtype" label="使用设置" width="90" align="center" :formatter="vtypeFormatter" show-overflow-tooltip>
         </el-table-column>
-      <el-table-column prop="veditable" label="是否填报" width="90" align="center" :formatter="veditableFormatter">
+      <el-table-column prop="veditable" label="是否填报" width="90" align="center" :formatter="veditableFormatter" show-overflow-tooltip>
         </el-table-column>
-      <el-table-column prop="vdisable" label="是否隐藏" width="90" align="center" :formatter="vdisableFormatter">
+      <el-table-column prop="vdisable" label="是否隐藏" width="90" align="center" :formatter="vdisableFormatter" show-overflow-tooltip>
         </el-table-column>
       </el-table>
+     <el-pagination
+       :current-page="page.current"
+       :page-size="page.size"
+       :page-sizes="[10, 50, 100]"
+       :total="page.total"
+       @current-change="handleCurrentChange"
+       @size-change="handleSizeChange"
+       layout="total, sizes, prev, pager, next, jumper"
+     ></el-pagination>
     </div>
-    <el-dialog title="新增统计项" :visible.sync="dialogResult"
+    <el-dialog :title="dialogtitle" :visible.sync="dialogResult"
     width="30%">
       <el-form :model="itemform">
         <el-form-item label="统计名称"  prop="vname">
@@ -102,6 +114,13 @@
            filterable
            placeholder="请选择"
            size="mini"
+           @change="
+                  getName(
+                    itemform.vprojecttypes,
+                    projectDomainType,
+                    'detailName'
+                  )
+                "
            v-model="itemform.vprojecttypes"
          >
             <el-option
@@ -122,12 +141,28 @@
           <el-radio v-model="itemform.vtype" label="1" >仅月报</el-radio>
         </el-form-item>
         <el-form-item label="是否填报"  prop="veditable">
-          <el-radio v-model="itemform.veditable" label="1" >是</el-radio>
-          <el-radio v-model="itemform.veditable" label="0" >否</el-radio>
+        <el-switch
+          class="inline-formitem-switch"
+          v-model="itemform.veditable"
+          active-color="#409EFF"
+          inactive-color="#ddd"
+          active-value="1"
+          inactive-value="0">
+            </el-switch>
+<!--          <el-radio v-model="itemform.veditable" label="1" >是</el-radio>-->
+<!--          <el-radio v-model="itemform.veditable" label="0" >否</el-radio>-->
         </el-form-item>
          <el-form-item label="是否隐藏"  prop="vdisable">
-          <el-radio v-model="itemform.vdisable" label="1" >是</el-radio>
-          <el-radio v-model="itemform.vdisable" label="0" >否</el-radio>
+         <el-switch
+           class="inline-formitem-switch"
+           v-model="itemform.vdisable"
+           active-color="#409EFF"
+           inactive-color="#ddd"
+           active-value="1"
+           inactive-value="0">
+            </el-switch>
+<!--          <el-radio v-model="itemform.vdisable" label="1" >是</el-radio>-->
+<!--          <el-radio v-model="itemform.vdisable" label="0" >否</el-radio>-->
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -149,6 +184,7 @@ export default {
         isLeaf: 'vleaf',
         icon:'icon'
       },
+      dialogtitle:'',
       parentid: '',
       radio: '0',
       page: {current: 1, size: 10, total: 0, records: []},
@@ -179,6 +215,7 @@ export default {
           vdisable: ''
 
       },
+
       menus: [],
       multipleSelection: [],
       orgTree: [],
@@ -212,6 +249,16 @@ export default {
 
   },
   methods: {
+    //获取下拉框id和name的公共方法
+    getName(id, list, name) {
+      if(id){
+        this.$forceUpdate()
+        // this.itemform.vprojecttypes[name] = list.find(
+        //   (item) => item.detailCode == id
+        // ).detailName;
+        console.log(this.itemform);
+      }
+    },
     vdisableFormatter(row, column){
       var str="";
       if(row.vdisable=="1")
@@ -305,7 +352,9 @@ export default {
       console.log(data, checked, indeterminate);
     },
     handleNodeClick(data,node) {
-      this.getData(node,this.resolve)
+      console.log(data);
+      this.getTableData(data)
+      //this.getData(node,this.resolve)
     },
     loadNode(node, resolve) {
       this.getData(node,resolve)
@@ -352,14 +401,6 @@ export default {
               for(let i = 0; i < this.$refs.tree.store._getAllNodes().length; i++){
                 this.$refs.tree.store._getAllNodes()[i].expanded = false;
               }
-              // var nodeall = this.$refs.tree.store.root;
-              // for (let i = 0; i < nodeall.childNodes.length; i++) {
-              //   node.childNodes[i].expanded = false;
-              //   // 遍历子节点
-              //   if (node.childNodes[i].childNodes.length > 0) {
-              //     this.changeTreeNodeStatus(node.childNodes[i])
-              //   }
-              // }
               this.loadNode(this.node, this.resolve)
 
           }
@@ -414,21 +455,27 @@ export default {
       this.showinput = false
     },
     add() {
+      this.dialogtitle="新增统计项";
+      this.itemform= {};
       this.dialogResult=true;
 
     },
     editItem() {
+      if(this.multipleSelection.length==0)
+      {
+        this.$message.info("请选择统计项进行修改！");
+        return;
+      }
       if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
         this.$message.info("请选择统计项进行修改！");
         return;
       }
+      this.dialogtitle="修改统计项";
       this.dialogResult=true;
+      this.$forceUpdate();
       console.log(this.multipleSelection[0]);
       //是否有资审信息判断
-      if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
-        this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
-        return;
-      }
+
       var item = this.multipleSelection[0];
       item.vprojecttypes = item.vprojecttype.split(",");
 
@@ -526,12 +573,22 @@ export default {
       //alert(JSON.stringify(val))
       this.multipleSelection = val
     },
+    getTableData(val){
+      this.$http
+        .post(
+          '/api/statistics/bp/BpTjx/list/loadPageData',
+          val
+        )
+        .then(res => {
+          this.page = res.data.data;
+        });
+    },
     getData(node,resolve) {
       this.node = node;
       this.resolve = resolve;
       if (node.level === 0) {
 
-        return resolve([{ vname: '统计项',uuid:"" ,icon:'el-icon-folder'}]);
+        return resolve([{ vname: '统计项',uuid:"" ,icon:'el-icon-folder-opened'}]);
       }
       setTimeout(() => {
         //console.log(node);
@@ -541,6 +598,7 @@ export default {
             {"parentid":node.data.uuid}
           )
           .then(res => {
+            this.getTableData(node.data)
             //this.page = res.data.data
             this.parentid = node.data.uuid;
             const data = [];
@@ -704,5 +762,13 @@ export default {
 {
   width: auto;
 }
-
+>>>.el-tree-node:focus>.el-tree-node__content {
+  background-color: #409EFF;
+  color: #FFFFFF;
+}
+//.el-table .cell.el-tooltip
+//{
+//  white-space: nowrap;
+//  min-width: 50px;
+//}
 </style>

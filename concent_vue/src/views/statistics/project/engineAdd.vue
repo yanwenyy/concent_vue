@@ -8,8 +8,8 @@
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'edit'"><b>工程承包项目修改</b></span>
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'look'"><b>工程承包项目查看</b></span>
         <el-button @click="back" class="detailbutton">返回</el-button>
-        <el-button class="detailbutton">保存</el-button>
-        <el-button type="primary" @click="submitForm('detailForm')" class="detailbutton">提交</el-button>
+        <el-button type="primary" @click="submitForm('detailForm')" class="detailbutton">保存</el-button>
+        <el-button class="detailbutton">提交</el-button>
       </div>
     </el-card>
     <el-card class="box-card">
@@ -363,7 +363,7 @@
               label="项目所在地"
               style="width: 32.5%"
             >
-              <el-input v-model="detailForm.topInfoSiteList[0].path" placeholder="项目所在地" :disabled="p.actpoint === 'look'" clearable>
+              <el-input v-model="detailForm.project.topInfoSiteList[0].path" placeholder="项目所在地" :disabled="p.actpoint === 'look'" clearable>
                 <el-button slot="append" :disabled="p.actpoint === 'look'" icon="el-icon-search"  @click="selectPosition()"></el-button>
               </el-input>
             </el-form-item>
@@ -590,7 +590,10 @@
                 :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
-                v-model="detailForm.project.valueAddedTax"/>
+                v-model="detailForm.project.valueAddedTax">
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
             </el-form-item>
             <el-form-item
               label="实际投资额(万元):"
@@ -832,12 +835,12 @@
               v-show="p.actpoint !== 'look'"
               size="small"
               type="primary"
-              @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','fileList')">
+              @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','commonFilesList')">
               点击上传
             </el-button>
           </p>
           <el-table
-            :data="detailForm.project.fileList"
+            :data="detailForm.project.commonFilesList"
             :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
             align="center"
             border
@@ -882,7 +885,6 @@
         </el-form>
       </div>
     </el-card>
-    <!--<company-tree v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>-->
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
     <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
   </div>
@@ -910,7 +912,7 @@
         options1: [{ label: '测试所在地', value: 'testabcd' }],
         detailForm: {
           project: {
-            fileList: [], // 文件列表
+            commonFilesList: [], // 文件列表
             projectName: '', // 项目名称(中文)
             projectForeginName: '', // 项目名称(外文)
             fatherProjectId: '', // 父项目名称
@@ -968,15 +970,15 @@
             isEscrow: '', // 是否代管
             realInvest: '', // 实际投资额(万元)
             engineSurvey: '', // 工程概况(最多700字)
-            projectRemark: '' // 备注(最多2000字)
-          },
-          topInfoSiteList: [
-            {
-              path: '',
-              placeId: '',
-              uuid: ''
-            }
-          ]
+            projectRemark: '', // 备注(最多2000字)
+            topInfoSiteList: [
+              {
+                path: '',
+                placeId: '',
+                uuid: ''
+              }
+            ]
+          }
         },
         rules: {
           project: {
@@ -1068,10 +1070,10 @@
           )
           .then((res) => {
             if (res.data.code === 200) {
-              this.detailForm.project.fileList.splice(index, 1)
+              this.detailForm.project.commonFilesList.splice(index, 1)
             }
           })
-        console.log(this.detailForm.project.fileList)
+        console.log(this.detailForm.project.commonFilesList)
       },
       // 打开附件上传的组件
       openFileUp(url, list) {
@@ -1082,6 +1084,7 @@
       },
       // 获取上传的附件列表
       getUpInfo(data) {
+        console.log(data, '111')
         this.$forceUpdate()
         this.detailForm.project[data.list] = this.detailForm.project[data.list].concat(data.fileList)
         this.uploadVisible = false
@@ -1096,8 +1099,8 @@
       // 获取项目地点的值
       getPositionTree(data) {
         this.treeStatas = false
-        this.detailForm.topInfoSiteList[0].placeId = data.id
-        this.detailForm.topInfoSiteList[0].path = data.fullDetailName
+        this.detailForm.project.topInfoSiteList[0].placeId = data.id
+        this.detailForm.project.topInfoSiteList[0].path = data.fullDetailName
       },
       resetFuDai(id, list, name) {
         this.detailForm.project.fatherProjectId = ''
@@ -1227,27 +1230,6 @@
           this.$refs.infoDw.init(type, list)
         })
       },
-      // 获取所在地的值
-      getDwInfo(data) {
-        console.log(data)
-        let id = []
-        let name = []
-        if (data) {
-          data.forEach((item) => {
-            id.push(item.id)
-            name.push(item.detailName)
-          })
-        }
-        if (data.type === '项目所在地') {
-          this.detailForm.topInfoSiteList.ffid = id.join(',')
-          this.detailForm.topInfoSiteList.ffName = name.join(',')
-        }
-        // else if(data.type=="使用资质单位"){
-        //   this.detailform.contractInfo.qualityOrgIds=id.join(",");
-        //   this.detailform.contractInfo.qualityOrgNames=name.join(",");
-        // }
-        this.DwVisible = false
-      },
       getShow() {
         let data = { topInfoId: this.p.uuid }
         this.$http
@@ -1255,7 +1237,7 @@
           .then((res) => {
             if (res.data.code === 200) {
               this.detailForm.project = res.data.data.project
-              this.detailForm.topInfoSiteList = res.data.data.topInfoSiteList
+              // this.detailForm.project.topInfoSiteList = res.data.data.topInfoSiteList
               this.getShowTwo()
             }
           })

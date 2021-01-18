@@ -7,11 +7,10 @@
 
 <!--   style="height: calc(100% - 60px); border: 1px solid #eee"-->
   <div style="display: inline-block;width: 16%;vertical-align: top;overflow: auto; border-right: 1px solid #DCDFE6" >
-  <div style="padding: 10px;display: inline-block">
-  <span>工程行业类别</span>
+  <div style="padding: 10px;">
   <el-select
     filterable
-    placeholder="请选择"
+    placeholder="工程行业类别"
     size="mini"
     v-model="itemform.vprojecttypes"
   >
@@ -46,10 +45,21 @@
   </div>
     <div style="display: inline-block;width:83%;vertical-align: top" >
       <div style="width: 100%; overflow: hidden;margin-top: 10px;">
-      <div style="display: inline-block">
-        <span>统计项名称：</span><span>统计项名称内容</span>
-        <span>计量单位：</span><span>计量单位内容</span>
-        <span>上报排除项：</span><span>上报排除项内容</span>
+      <div style="display: inline-block;width: 100%">
+        <div style="display: inline-block;height: auto">
+          <span style="background: whitesmoke; border: #DCDFE6 1px solid; padding: 5px">统计项名称：</span><span
+            style="width: 200px;margin-left: 5px">{{
+              selectItem.vname }}</span>
+          <span style="margin-left: 20px;background: whitesmoke; border: #DCDFE6 1px solid; padding: 5px">计量单位：
+          </span><span style="width: 200px;margin-left: 5px" >{{ selectItem.vjldwFormatter
+            }}</span>
+          <span  style="margin-left: 20px;background: whitesmoke; border: #DCDFE6 1px solid; padding: 5px">上报排除项：
+          </span><span style="margin-left: 5px">{{ selectItem.vsbpc }}</span>
+        </div>
+        <div style="display: inline-block;float:right">
+          <el-input  placeholder="请输入统计项名称" ></el-input>
+          <el-button @click="add" class="detailbutton" >查询</el-button>
+        </div>
       </div>
 <!--          <el-button-group style="float: left">-->
 <!--            <el-button @click="add" class="detailbutton" >新增</el-button>-->
@@ -200,6 +210,27 @@ export default {
         vdisable: ''
 
       },
+      selectItem: {
+        uuid:'',
+        vname: '',
+        vjldw:'',
+        vprojecttype:'',
+        vprojecttypes:[],
+        vleaf:'',
+        vparentid:'',
+        vxh:'',
+        vsbpc:'',
+        venabled:'',
+        vcode: '',
+        nnamelength: '',
+        vtype: '',
+        veditable: '',
+        vhjtjx: '',
+        voptional:'',
+        valtername:'',
+        vdisable: ''
+
+      },
       menus: [],
       multipleSelection: [],
       orgTree: [],
@@ -292,6 +323,7 @@ export default {
       }
 
     },
+
     vjldwFormatter: function(row, column) {
       //console.log(this.measureUnit);
       var str="";
@@ -326,7 +358,19 @@ export default {
       console.log(data, checked, indeterminate);
     },
     handleNodeClick(data,node) {
-      this.getData(node,this.resolve)
+      //this.getData(node,this.resolve)
+      this.selectItem = data;
+      var str="";
+      this.measureUnit.forEach((item)=> {
+
+        //console.log(row);
+        if(data.vjldw==item.detailCode)
+        {
+          str= item.detailName;
+        }
+
+      })
+      this.selectItem.vjldwFormatter = str;
     },
     loadNode(node, resolve) {
       this.getData(node,resolve)
@@ -693,6 +737,16 @@ export default {
 .el-table__row {
   cursor: pointer;
 }
+.el-input
+{
+  width: 300px;
+  margin-right: 10px;
+}
+>>>.el-input .el-input__inner{
+  width: 300px;
+  height: 32px !important;
+  line-height: 32px !important;
+}
 >>>.el-table td, .el-table th
 {
   padding:5px 0px;
@@ -724,6 +778,11 @@ export default {
 >>>.el-form-item__label
 {
   width: auto;
+
+}
+span{
+  font-size: 14px;
+  color: #4d4d4d;
 }
 
 </style>

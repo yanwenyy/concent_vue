@@ -8,8 +8,8 @@
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'edit'"><b>勘察设计项目修改</b></span>
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'look'"><b>勘察设计项目查看</b></span>
         <el-button @click="back" class="detailbutton">返回</el-button>
-        <el-button class="detailbutton">保存</el-button>
-        <el-button type="primary" @click="submitForm('detailForm')" class="detailbutton">提交</el-button>
+        <el-button class="detailbutton" type="primary" @click="submitForm('detailForm')">保存</el-button>
+        <el-button class="detailbutton">提交</el-button>
       </div>
     </el-card>
     <el-card class="box-card">
@@ -319,24 +319,14 @@
               </el-select>
             </el-form-item>
             <el-form-item
-              label="初始签订数量:"
-              prop="project.signedNumber"
+              label="实物工程量:"
+              prop="project.physicalQuantity"
               style="width: 32.5%">
               <el-input
                 :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
-                v-model="detailForm.project.signedNumber"/>
-            </el-form-item>
-            <el-form-item
-              label="工程合同数量:"
-              prop="project.contractCount"
-              style="width: 32.5%">
-              <el-input
-                :disabled="p.actpoint === 'look'"
-                clearable
-                placeholder="请输入"
-                v-model="detailForm.project.contractCount"/>
+                v-model="detailForm.project.physicalQuantity"/>
             </el-form-item>
           </el-row>
           <el-row>
@@ -363,7 +353,7 @@
               label="项目所在地"
               style="width: 32.5%"
             >
-              <el-input v-model="detailForm.topInfoSiteList[0].path" :disabled="p.actpoint === 'look'" placeholder="项目所在地" clearable>
+              <el-input v-model="detailForm.project.topInfoSiteList[0].path" :disabled="p.actpoint === 'look'" placeholder="项目所在地" clearable>
                 <el-button slot="append" icon="el-icon-search" :disabled="p.actpoint === 'look'" @click="selectPosition()"></el-button>
               </el-input>
             </el-form-item>
@@ -523,16 +513,6 @@
             </el-form-item>
           </el-row>
           <!--勘察设计里才有业务板块和实物工程量，先注释掉-->
-          <!--<el-form-item-->
-          <!--label="实物工程量:"-->
-          <!--prop="physicalQuantity"-->
-          <!--style="width: 32.5%">-->
-          <!--<el-input-->
-          <!--:disabled="p.actpoint === 'look'"-->
-          <!--clearable-->
-          <!--placeholder="请输入"-->
-          <!--v-model="detailForm.project.physicalQuantity"/>-->
-          <!--</el-form-item>-->
           <!--<el-row>-->
           <!--<el-form-item-->
           <!--label="业务板块:"-->
@@ -552,7 +532,6 @@
           <!--</el-select>-->
           <!--</el-form-item>-->
           <!--</el-row>-->
-          <!--初始合同额-->
           <el-row>
             <el-form-item
               label="初始合同额(万元):"
@@ -620,7 +599,10 @@
                 :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
-                v-model="detailForm.project.valueAddedTax"/>
+                v-model="detailForm.project.valueAddedTax">
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
             </el-form-item>
             <el-form-item
               label="实际投资额(万元):"
@@ -746,12 +728,12 @@
               v-show="p.actpoint !== 'look'"
               size="small"
               type="primary"
-              @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','fileList')">
+              @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','commonFilesList')">
               点击上传
             </el-button>
           </p>
           <el-table
-            :data="detailForm.fileList"
+            :data="detailForm.commonFilesList"
             :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
             align="center"
             border
@@ -821,7 +803,7 @@
         value1: '',
         options1: [{ label: '测试所在地', value: 'testabcd' }],
         detailForm: {
-          fileList: [],
+          commonFilesList: [],
           project: {
             projectName: '', // 项目名称(中文)
             projectForeginName: '', // 项目名称(外文)
@@ -861,23 +843,21 @@
             isOutputTax: '', // 上报产值是否含税
             unitId: '', // 计量单位
             physicalQuantity: '', // 实物工程量
-            signedNumber: '', // 初始签订数量
-            contractCount: '', // 工程合同数量
             contractStartTime: '', // 合同开工日期
             contractEndTime: '', // 合同竣工日期
             contractSignTime: '', // 合同签订日期
             isTrusteeship: '', // 是否托管
             isEscrow: '', // 是否代管
             realInvest: '', // 实际投资额(万元)
-            projectRemark: '' // 备注(最多600字)
-          },
-          topInfoSiteList: [
-            {
-              path: '',
-              placeId: '',
-              uuid: ''
-            }
-          ]
+            projectRemark: '', // 备注(最多600字)
+            topInfoSiteList: [
+              {
+                path: '',
+                placeId: '',
+                uuid: ''
+              }
+            ]
+          }
         },
         rules: {
           project: {
@@ -904,7 +884,8 @@
             contractAmountChange: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
             valueAddedTax: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
             companyBuiltName: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
-            marketFirstId: [{ required: true, message: '此项不能为空', trigger: 'blur' }]
+            marketFirstId: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
+            physicalQuantity: [{ required: true, message: '此项不能为空', trigger: 'blur' }]
           }
         },
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
@@ -969,10 +950,10 @@
           )
           .then((res) => {
             if (res.data.code === 200) {
-              this.detailForm.fileList.splice(index, 1)
+              this.detailForm.commonFilesList.splice(index, 1)
             }
           })
-        console.log(this.detailForm.fileList)
+        console.log(this.detailForm.commonFilesList)
       },
       // 打开附件上传的组件
       openFileUp(url, list) {
@@ -997,8 +978,8 @@
       // 获取项目地点的值
       getPositionTree(data) {
         this.treeStatas = false
-        this.detailForm.topInfoSiteList[0].placeId = data.id
-        this.detailForm.topInfoSiteList[0].path = data.fullDetailName
+        this.detailForm.project.topInfoSiteList[0].placeId = data.id
+        this.detailForm.project.topInfoSiteList[0].path = data.fullDetailName
       },
       resetFuDai(id, list, name) {
         this.detailForm.project.fatherProjectId = ''
@@ -1128,23 +1109,6 @@
           this.$refs.infoDw.init(type, list)
         })
       },
-      // 获取所在地的值
-      getDwInfo(data) {
-        console.log(data)
-        let id = []
-        let name = []
-        if (data) {
-          data.forEach((item) => {
-            id.push(item.id)
-            name.push(item.detailName)
-          })
-        }
-        if (data.type === '项目所在地') {
-          this.detailForm.topInfoSiteList.ffid = id.join(',')
-          this.detailForm.topInfoSiteList.ffName = name.join(',')
-        }
-        this.DwVisible = false
-      },
       getShow() {
         let data = { topInfoId: this.p.uuid }
         this.$http
@@ -1152,7 +1116,7 @@
           .then((res) => {
             if (res.data.code === 200) {
               this.detailForm.project = res.data.data.project
-              this.detailForm.topInfoSiteList = res.data.data.topInfoSiteList
+              // this.detailForm.topInfoSiteList = res.data.data.topInfoSiteList
               this.getShowTwo()
             }
           })
