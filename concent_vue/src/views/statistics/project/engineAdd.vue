@@ -361,6 +361,10 @@
             <!--所在地、使用资质单位暂无-->
             <el-form-item
               label="项目所在地"
+              prop="project.topInfoSiteList[0].path"
+              :rules="{
+                required: true, message: '此项不能为空', trigger: 'blur'
+              }"
               style="width: 32.5%"
             >
               <el-input v-model="detailForm.project.topInfoSiteList[0].path" placeholder="项目所在地"
@@ -1261,9 +1265,6 @@
   }
 </script>
 <style lang="scss" scoped>
-  > > > .el-main {
-    overflow: hidden !important;
-  }
   .gcform {
     > > > .el-form-item__error {
       padding-top: 0px;
