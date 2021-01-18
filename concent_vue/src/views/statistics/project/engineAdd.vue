@@ -2,17 +2,15 @@
 
 <template>
   <div style="position: relative">
-    <el-card>
+    <el-card class="box-card">
       <div class="clearfix el-card__header">
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'add'"><b>工程承包项目新增</b></span>
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'edit'"><b>工程承包项目修改</b></span>
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'look'"><b>工程承包项目查看</b></span>
         <el-button @click="back" class="detailbutton">返回</el-button>
-        <el-button type="primary" @click="submitForm('detailForm')" class="detail-back-tab detailbutton save-btn">保存</el-button>
-        <el-button class="detailbutton">提交</el-button>
+        <el-button v-if="p.actpoint !== 'look'" type="primary" @click="submitForm('detailForm')" class="detailbutton">保存</el-button>
+        <el-button v-if="p.actpoint !== 'look'" class="detailbutton">提交</el-button>
       </div>
-    </el-card>
-    <el-card class="box-card">
       <div class="detailBoxBG" style="height: calc(100vh - 196px)">
         <el-form
           :model="detailForm"
@@ -1266,6 +1264,7 @@
 </script>
 <style lang="scss" scoped>
   .gcform {
+    margin-top: 10px;
     > > > .el-form-item__error {
       padding-top: 0px;
       width: 95%;

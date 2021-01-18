@@ -1,15 +1,15 @@
 <!--房地产项目登记-->
 <template>
   <div>
-    <el-card>
-      <div class="clearfix el-card__header">
-        <span style="color: #2a2a7d;line-height: 32px"><b>房地产项目详情</b></span>
-        <el-button @click="back" class="detailbutton">返回</el-button>
-        <el-button @click="submitForm('detailForm')" type="primary" class="detailbutton">保存</el-button>
-        <el-button class="detailbutton">提交</el-button>
-      </div>
-    </el-card>
     <el-card class="box-card">
+      <div slot="header" class="clearfix">
+        <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'add'"><b>房地产项目新增</b></span>
+        <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'edit'"><b>房地产项目修改</b></span>
+        <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'look'"><b>房地产项目查看</b></span>
+        <el-button @click="back" class="detailbutton">返回</el-button>
+        <el-button v-if="p.actpoint !== 'look'" @click="submitForm('detailForm')" type="primary" class="detailbutton">保存</el-button>
+        <el-button v-if="p.actpoint !== 'look'" class="detailbutton">提交</el-button>
+      </div>
       <div class="detailBoxBG" style="height: calc(100vh - 196px)">
         <el-form
           :inline="false"
@@ -26,6 +26,7 @@
               }"
               style="width: 32.5%">
               <el-input
+                :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.projectName"/>
@@ -50,6 +51,7 @@
               style="width:32.5%;">
               <el-input
                 clearable
+                :disabled="p.actpoint === 'look'"
                 placeholder="请输入"
                 v-model="detailForm.project.projectLandArea"/>
             </el-form-item>
@@ -62,6 +64,7 @@
               <el-input
                 clearable
                 placeholder="请输入"
+                :disabled="p.actpoint === 'look'"
                 v-model="detailForm.project.contractNumber"/>
             </el-form-item>
             <el-form-item
@@ -71,6 +74,7 @@
               <el-input
                 clearable
                 placeholder="请输入"
+                :disabled="p.actpoint === 'look'"
                 v-model="detailForm.project.amountSignup">
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
@@ -83,6 +87,7 @@
               <el-input
                 clearable
                 placeholder="请输入"
+                :disabled="p.actpoint === 'look'"
                 v-model="detailForm.project.amountWe">
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
@@ -95,6 +100,7 @@
               prop="ocontractSignTime"
               style="width: 32.5%">
               <el-date-picker
+                :disabled="p.actpoint === 'look'"
                 v-model="detailForm.project.ocontractSignTime"
                 type="date"
                 value-format="timestamp"
@@ -107,6 +113,7 @@
               <el-select
                 clearable
                 filterable
+                :disabled="p.actpoint === 'look'"
                 placeholder="请选择"
                 v-model="detailForm.project.isOverseasContract">
                 <el-option
@@ -130,6 +137,7 @@
                 filterable
                 clearable
                 placeholder="请选择"
+                :disabled="p.actpoint === 'look'"
                 @change="getName(detailForm.project.projectStatusId, projectStatus, 'projectStatusName')"
                 v-model="detailForm.project.projectStatusId">
                 <el-option
@@ -146,6 +154,7 @@
               <el-select
                 filterable
                 clearable
+                :disabled="p.actpoint === 'look'"
                 placeholder="请选择"
                 v-model="detailForm.project.isAnnualContract">
                 <el-option
@@ -161,6 +170,7 @@
               style="width:32.5%;">
               <el-input
                 clearable
+                :disabled="p.actpoint === 'look'"
                 placeholder="请输入"
                 v-model="detailForm.project.amountCompanyName"/>
             </el-form-item>
@@ -173,6 +183,7 @@
               <el-select
                 clearable
                 filterable
+                :disabled="p.actpoint === 'look'"
                 placeholder="请选择"
                 @change="getMarketTwo"
                 v-model="detailForm.project.marketFirstId">
@@ -190,6 +201,7 @@
               <el-select
                 filterable
                 clearable
+                :disabled="p.actpoint === 'look'"
                 placeholder="请选择"
                 v-model="detailForm.project.marketSecondId">
                 <el-option
@@ -325,6 +337,7 @@
               <el-input
                 clearable
                 placeholder="请输入"
+                :disabled="p.actpoint === 'look'"
                 v-model="detailForm.project.projectPusher"/>
             </el-form-item>
             <el-form-item
@@ -334,6 +347,7 @@
               <el-input
                 clearable
                 placeholder="请输入"
+                :disabled="p.actpoint === 'look'"
                 v-model="detailForm.project.projectPusherPhone"/>
             </el-form-item>
           </el-row>
@@ -536,6 +550,7 @@
 </script>
 <style lang="scss" scoped>
   .gcform {
+    margin-top: 10px;
     > > > .el-form-item__error {
       padding-top: 0px;
       width: 95%;
