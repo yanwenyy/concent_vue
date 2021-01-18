@@ -1032,6 +1032,15 @@ export default {
                     "defaultpage": true
                   },
                   {
+                    "name": "国标库新增",
+                    "path": "/boq/dataStandards/nationalStandard/detail",
+                    "component": "/boq/dataStandards/nationalStandard/detail",
+                    "iconCls": "el-icon-switch-button",
+                    "menushow": false,
+                    "leaf": true,
+                    "defaultpage": true
+                  },
+                  {
                     "name": "知识库",
                     "path": "/boq/dataStandards/ordinaryScience",
                     "component": "",

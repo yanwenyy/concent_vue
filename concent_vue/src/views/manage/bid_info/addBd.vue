@@ -273,14 +273,21 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                v-model="scope.row.orgName"
+                v-model="scope.row.orgId"
+                  @change="
+                  getBdName(
+                    scope.row.orgId,
+                    detailForm.dataList,
+                    scope.$index
+                  )
+                "
                 :disabled="type === 'look'"
 
               >
                 <el-option
                   :key="index"
                   :label="item.detailName"
-                  :value="item.detailName"
+                  :value="item.id"
                   v-for="(item, index) in nameList"
                 ></el-option>
               </el-select>
@@ -354,13 +361,20 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                v-model="scope.row.orgName"
+                v-model="scope.row.orgId"
+                  @change="
+                  getBdName(
+                    scope.row.orgId,
+                    detailForm.dataList2,
+                    scope.$index
+                  )
+                "
                 :disabled="type === 'look'"
               >
                 <el-option
                   :key="index"
                   :label="item.detailName"
-                  :value="item.detailName"
+                  :value="item.id"
                   v-for="(item, index) in nameList"
                 ></el-option>
               </el-select>
@@ -488,6 +502,16 @@ import { isMoney } from '@/utils/validate'
       },
     },
     methods: {
+      //获取标段名字
+      getBdName(id, list, index) {
+        console.log(id,list,index)
+        if(id){
+          this.$forceUpdate()
+          list[index].orgName=this.nameList.find(
+            (item) => item.id == id
+        ).detailName;
+        }
+      },
     close(){
         this.$refs['detailForm'].clearValidate();
         this.visible = false;
