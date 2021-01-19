@@ -247,7 +247,7 @@
         }).then(() => {
           this.$http
           .post(
-            "/api/contract/contract/ContractInfo/list/delete",
+            "/api/contract/contract/ContractInfo/list/deleteChangeRecordIds",
             {ids: uuids}
           )
           .then((res) => {
