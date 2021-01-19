@@ -23,7 +23,7 @@
             }"
             >
               <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.inforName" class="input-with-select">
-                <el-button slot="append" icon="el-icon-search" @click="searchName"></el-button>
+                <el-button :disabled="detailform.contractInfo.contractType=='2'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
               </el-input>
             </el-form-item>
             <el-form-item
@@ -50,7 +50,7 @@
                 }"
             >
               <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.contractName" class="input-with-select">
-                <el-button slot="append" icon="el-icon-search" @click="searchName"></el-button>
+                <el-button :disabled="detailform.contractInfo.contractType!='2'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
               </el-input>
             </el-form-item>
             <el-form-item
@@ -1435,7 +1435,7 @@
 
               </el-table-column>
 
-              <el-table-column align="center" width="200" :resizable="false" label="项目副经理" prop="deputyProjectManager	" show-overflow-tooltip>
+              <el-table-column align="center" width="200" :resizable="false" label="项目副经理" prop="deputyProjectManager"  show-overflow-tooltip>
 
               </el-table-column>
 
@@ -1600,7 +1600,7 @@
               <span>系统内其他联合体单位列表: </span>
               <el-button
                 v-show="p.actpoint != 'look'"
-                @click="addfs('nlht',1,1)"
+                @click="addfs('nlht',1,detailform.contractInfo.contractType)"
 
                 style="
                   width: 70px;
@@ -1734,7 +1734,7 @@
                 width="100"
               >
                 <template slot-scope="scope">
-                  否
+                  {{scope.row.isAdd=='1'?'否':'是'}}
                 </template>
               </el-table-column>
               <el-table-column
@@ -1760,7 +1760,7 @@
               <span>系统内分包单位列表: </span>
               <el-button
                 v-show="p.actpoint != 'look'"
-                @click="addfs('nfb',2,1)"
+                @click="addfs('nfb',2,detailform.contractInfo.contractType)"
 
                 style="
                   width: 70px;
@@ -1894,7 +1894,7 @@
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  否
+                  {{scope.row.isAdd=='1'?'否':'是'}}
                 </template>
               </el-table-column>
               <el-table-column
@@ -1920,7 +1920,7 @@
               <span>系统外其他联合体单位列表: </span>
               <el-button
                 v-show="p.actpoint != 'look'"
-                @click="addfs('wlht',3,1)"
+                @click="addfs('wlht',3,detailform.contractInfo.contractType)"
 
                 style="
                   width: 70px;
@@ -2054,7 +2054,7 @@
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  否
+                  {{scope.row.isAdd=='1'?'否':'是'}}
                 </template>
               </el-table-column>
               <el-table-column
@@ -2080,7 +2080,7 @@
               <span>系统外分包单位列表: </span>
               <el-button
                 v-show="p.actpoint != 'look'"
-                @click="addfs('wfb',4,1)"
+                @click="addfs('wfb',4,detailform.contractInfo.contractType)"
 
                 style="
                   width: 70px;
@@ -2214,7 +2214,7 @@
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  否
+                  {{scope.row.isAdd=='1'?'否':'是'}}
                 </template>
               </el-table-column>
               <el-table-column
@@ -2380,6 +2380,13 @@ export default {
     this.id=this.p.instid;
     if (this.p.actpoint === "edit"||this.id) {
       this.getDetail();
+    }
+    if(this.p.actpoint=='add'){
+      if(this.p.type=='bq'){
+        this.detailform.contractInfo.contractType="2"
+      }else{
+        this.detailform.contractInfo.contractType="1"
+      }
     }
     this.$store.dispatch("getConfig", {});
     this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
@@ -2711,15 +2718,16 @@ export default {
     searchName() {
       this.infoCSVisible = true;
       this.$nextTick(() => {
-        this.$refs.infoCS.init(this.detailform.contractInfo.moduleId);
+        this.$refs.infoCS.init(this.detailform.contractInfo.moduleId,this.detailform.contractInfo.contractType);
       })
     },
     //项目名称查询回来的数据
     goAddDetail(data){
-      this.$http
-        .post("/api/contract/topInfo/TopInfor/detail/entityInfoByIdForContract", {uuid :data.uuid})
-        .then((res) => {
-        var datas=res.data.data;
+      if(data.type=='1'){//项目名称查找回来的信息
+        this.$http
+          .post("/api/contract/topInfo/TopInfor/detail/entityInfoByIdForContract", {uuid :data.data.uuid})
+          .then((res) => {
+          var datas=res.data.data;
         this.detailform.searchProject=true;
         var _con={};
         this.getTwo(datas.topInfor.enginTypeFirstId);
@@ -2739,22 +2747,51 @@ export default {
         this.detailform.contractInfoSectionList=[];
         for(var i in datas.bidInfoSectionBOList){
           var bidInfoSection=datas.bidInfoSectionBOList[i].bidInfoSection,
-              bidInfoSectionOrgList=datas.bidInfoSectionBOList[i].bidInfoSectionOrgList;
+            bidInfoSectionOrgList=datas.bidInfoSectionBOList[i].bidInfoSectionOrgList;
           bidInfoSection.uuid='';
           for(var k in bidInfoSection.bidInfoSectionOrgList){
             bidInfoSection.bidInfoSectionOrgList[k].uuid='';
           }
-          bidInfoSection.bidInfoSectionOrgList=bidInfoSectionOrgList;
+          bidInfoSection.contractInfoSectionOrgList=bidInfoSectionOrgList;
           this.detailform.contractInfoSectionList.push(bidInfoSection);
         }
-
         for(var i in datas.topInfoSiteList){
           datas.topInfoSiteList[i].uuid='';
         }
         this.detailform.topInfoSiteList=datas.topInfoSiteList;
       });
-      this.$forceUpdate();
-      this.infoCSVisible=false;
+        this.$forceUpdate();
+        this.infoCSVisible=false;
+      }else{//合同名称查找回来的信息
+        this.$http
+          .post("/api/contract/contract/ContractInfo/detail/entityInfo", {id :data.data.uuid})
+          .then((res) => {
+          var datas=res.data.data;
+          this.detailform.contractInfo.supplyContractId=data.data.uuid;
+          var _con={};
+          this.getTwo(datas.contractInfo.enginTypeFirstId);
+          this.getTwoSC(datas.contractInfo.marketFirstNameId);
+          this.getTwoXZ(datas.contractInfo.projectNatureFirstId);
+            for(var i in this.detailform.contractInfo){
+              // i!='isImport'
+              _con[i]=JSON.parse(JSON.stringify(this.detailform.contractInfo[i]));
+            }
+            for(var i in datas.contractInfo){
+              // i!='isImport'
+              if(datas.contractInfo[i]&&i!='uuid'&&i!='contractAmount'&&i!='crccCash'){
+                _con[i]=JSON.parse(JSON.stringify(datas.contractInfo[i]));
+              }
+            }
+            this.detailform.contractInfo=_con;
+            for(var i in datas.topInfoSiteList){
+              datas.topInfoSiteList[i].uuid='';
+            }
+            this.detailform.topInfoSiteList=datas.topInfoSiteList;
+        });
+        this.$forceUpdate();
+        this.infoCSVisible=false;
+      }
+
     },
     //金额过滤
     getMoney(value){

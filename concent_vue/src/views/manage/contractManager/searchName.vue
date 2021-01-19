@@ -2,7 +2,7 @@
   <el-dialog
     :visible.sync="visible"
     :append-to-body="true">
-    <div>
+    <div v-if="contractType=='1'">
       <el-form :inline="true" :model="searchform" @keyup.enter.native="init()">
         <el-form-item label="项目名称:">
           <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
@@ -64,6 +64,74 @@
         layout="total, sizes, prev, pager, next, jumper">
       </el-pagination>
     </div>
+    <div v-if="contractType=='2'">
+      <el-form :inline="true" :model="searchform2" @keyup.enter.native="init()">
+        <el-form-item label="合同名称:">
+          <el-input v-model="searchform2.contractName" placeholder="合同名称" clearable></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="init()">查询</el-button>
+        </el-form-item>
+      </el-form>
+      <el-table
+        :data="dataList"
+        border
+        v-loading="dataListLoading"
+        highlight-current-row
+        @current-change="handleCurrentChange"
+        :header-cell-style="{
+          'text-align': 'center',
+          'background-color': 'whitesmoke',
+        }"
+        style="width: 100%;">
+        <el-table-column
+          type="index"
+          header-align="center"
+          align="center"
+          width="80"
+          label="ID">
+        </el-table-column>
+        <el-table-column
+          :width="500"
+          prop="contractName"
+          show-overflow-tooltip
+          label="合同名称">
+        </el-table-column>
+        <el-table-column
+          prop="contractNo"
+          header-align="center"
+          align="center"
+          label="合同号">
+        </el-table-column>
+        <el-table-column
+          prop="constructionOrg"
+          header-align="center"
+          align="center"
+          label="填报单位">
+        </el-table-column>
+        <el-table-column
+          prop="noticeTypeName"
+          header-align="center"
+          align="center"
+          label="录入时间">
+        </el-table-column>
+        <el-table-column
+          prop="noticeTypeName"
+          header-align="center"
+          align="center"
+          label="填报人">
+        </el-table-column>
+      </el-table>
+      <el-pagination
+        @size-change="sizeChangeHandle"
+        @current-change="currentChangeHandle"
+        :current-page="pageIndex"
+        :page-sizes="[10, 20, 50, 100]"
+        :page-size="pageSize"
+        :total="totalPage"
+        layout="total, sizes, prev, pager, next, jumper">
+      </el-pagination>
+    </div>
     <div slot="footer" class="dialog-footer">
       <el-button @click="visible = false">取消</el-button>
       <el-button type="primary" @click="sub()">确定</el-button>
@@ -79,6 +147,11 @@
         searchform: {
           inforName: '',
         },
+        searchform2: {
+          contractName:'',
+          changeStatus:'0',
+        },
+        contractType:'',
         dataList: [],
         pageIndex: 1,
         pageSize: 10,
@@ -95,16 +168,30 @@
       //选中数据
       sub() {
         this.visible = false;
-        this.$emit('refreshDataList', this.currentRow)
+        var data={
+          data:this.currentRow,
+          type:this.contractType
+        };
+        this.$emit('refreshDataList', data)
       },
       // 初始化
-      init(id) {
+      init(id,type) {
         this.visible = true;
         this.searchform.moduleId=id;
+        this.searchform2.moduleId=id;
+        this.contractType=type;
+        var url='',_data={};
+        if(this.contractType=='1'){
+          url="/api/contract/topInfo/TopInfor/list/loadPageDataForContract";
+          _data=this.searchform;
+        }else{
+          url="/api/contract/contract/ContractInfo/list/loadPageData";
+          _data=this.searchform2;
+        }
         this.$http
           .post(
-            "/api/contract/topInfo/TopInfor/list/loadPageDataForContract",
-            this.searchform,
+            url,
+            _data,
             {isLoading: false}
           )
           .then((res) => {
