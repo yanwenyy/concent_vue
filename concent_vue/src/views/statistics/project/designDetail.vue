@@ -8,8 +8,8 @@
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'edit'"><b>勘察设计项目修改</b></span>
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'look'"><b>勘察设计项目查看</b></span>
         <el-button @click="back" class="detailbutton">返回</el-button>
-        <el-button class="detailbutton" type="primary" @click="submitForm('detailForm')">保存</el-button>
-        <el-button class="detailbutton">提交</el-button>
+        <el-button v-if="p.actpoint !== 'look'" @click="submitForm('detailForm')" type="primary" class="detailbutton">保存</el-button>
+        <el-button v-if="p.actpoint !== 'look'" class="detailbutton">提交</el-button>
       </div>
       <div class="detailBoxBG" style="height: calc(100vh - 196px)">
         <el-form
@@ -402,7 +402,7 @@
                 }:{}"
               style="width: 32.5%">
               <el-select
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'"
                 filterable
                 clearable
                 @change="getName(detailForm.project.marketSecondId, emergingMarketTwo, 'marketSecondName')"
@@ -1123,6 +1123,7 @@
       if (this.p.actpoint === 'look' || this.p.actpoint === 'edit') {
         this.getShow()
       }
+      console.log(this.p)
       // this.datas = datas
       // console.log(this.datas)
       this.$store.dispatch('getConfig', {})

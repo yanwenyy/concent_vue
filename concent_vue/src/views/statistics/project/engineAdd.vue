@@ -418,7 +418,7 @@
                 }:{}"
               style="width: 32.5%">
               <el-select
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'"
                 filterable
                 clearable
                 @change="getName(detailForm.project.marketSecondId, emergingMarketTwo, 'marketSecondName')"

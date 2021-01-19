@@ -123,14 +123,14 @@
         <el-table-column
           :width="150"
           align="center"
-          label="工程合同额(万元)"
-          prop="contractAmountEngine"
+          label="合同金额(万元)"
+          prop="amountSignup"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>工程合同额(万元)</span>
+            <span>合同金额(万元)</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.contractAmountEngine" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.amountSignup" size="mini"/>
             </div>
           </template>
         </el-table-column>
@@ -234,7 +234,7 @@
           projectPusherPhone: '',
           projectModuleId: '510ba0d79593418493eb1a11ea4e7af6', // 房地产
           projectName: '',
-          contractAmountEngine: '',
+          amountSignup: '',
           projectStatusId: ''
         },
         menus: [],
@@ -384,7 +384,7 @@
           projectPusherPhone: '',
           projectModuleId: '510ba0d79593418493eb1a11ea4e7af6', // 房地产
           projectName: '',
-          contractAmountEngine: '',
+          amountSignup: '',
           projectStatusId: ''
         }
         this.getData()

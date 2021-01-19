@@ -32,6 +32,27 @@
                 v-model="detailForm.project.projectName"/>
             </el-form-item>
             <el-form-item
+              label="外文名称:"
+              style="width: 32.5%">
+              <el-input
+                :disabled="p.actpoint === 'look'"
+                clearable
+                placeholder="请输入"
+                v-model="detailForm.project.projectForeginName"/>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item
+              label="建设用地面积(万平方米):"
+              prop="projectLandArea"
+              style="width:32.5%;">
+              <el-input
+                clearable
+                :disabled="p.actpoint === 'look'"
+                placeholder="请输入"
+                v-model="detailForm.project.projectLandArea"/>
+            </el-form-item>
+            <el-form-item
               label="项目详细地点"
               style="width: 32.5%"
               prop="project.topInfoSiteList[0].path"
@@ -45,16 +66,6 @@
                            @click="selectPosition()"></el-button>
               </el-input>
             </el-form-item>
-            <el-form-item
-              label="建设用地面积(万平方米):"
-              prop="projectLandArea"
-              style="width:32.5%;">
-              <el-input
-                clearable
-                :disabled="p.actpoint === 'look'"
-                placeholder="请输入"
-                v-model="detailForm.project.projectLandArea"/>
-            </el-form-item>
           </el-row>
           <el-row>
             <el-form-item
@@ -67,6 +78,33 @@
                 :disabled="p.actpoint === 'look'"
                 v-model="detailForm.project.contractNumber"/>
             </el-form-item>
+            <el-form-item
+              label="合同签订时间:"
+              prop="ocontractSignTime"
+              style="width: 32.5%">
+              <el-date-picker
+                :disabled="p.actpoint === 'look'"
+                v-model="detailForm.project.ocontractSignTime"
+                type="date"
+                value-format="timestamp"
+                placeholder="选择日期时间"/>
+            </el-form-item>
+            <el-form-item
+              label="是否海外合同:"
+              prop="isOverseasContract"
+              class="inline-formitem"
+              style="width:32.5%;">
+              <el-switch
+                :disabled="p.actpoint === 'look'"
+                class="inline-formitem-switch"
+                v-model="detailForm.project.isOverseasContract"
+                active-color="#409EFF"
+                inactive-color="#ddd"
+                active-value="0"
+                inactive-value="1"/>
+            </el-form-item>
+          </el-row>
+          <el-row>
             <el-form-item
               label="签约总金额(万元):"
               prop="amountSignup"
@@ -93,36 +131,19 @@
                 <template slot="append">(万元)</template>
               </el-input>
             </el-form-item>
-          </el-row>
-          <el-row>
             <el-form-item
-              label="合同签订时间:"
-              prop="ocontractSignTime"
-              style="width: 32.5%">
-              <el-date-picker
-                :disabled="p.actpoint === 'look'"
-                v-model="detailForm.project.ocontractSignTime"
-                type="date"
-                value-format="timestamp"
-                placeholder="选择日期时间"/>
-            </el-form-item>
-            <el-form-item
-              label="是否海外合同:"
-              prop="isOverseasContract"
+              label="是否为年度合同:"
+              prop="isAnnualContract"
+              class="inline-formitem"
               style="width:32.5%;">
-              <el-select
-                clearable
-                filterable
+              <el-switch
                 :disabled="p.actpoint === 'look'"
-                placeholder="请选择"
-                v-model="detailForm.project.isOverseasContract">
-                <el-option
-                  :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in yesOrNo"
-                ></el-option>
-              </el-select>
+                class="inline-formitem-switch"
+                v-model="detailForm.project.isAnnualContract"
+                active-color="#409EFF"
+                inactive-color="#ddd"
+                active-value="0"
+                inactive-value="1"/>
             </el-form-item>
           </el-row>
           <el-row>
@@ -148,22 +169,20 @@
               </el-select>
             </el-form-item>
             <el-form-item
-              label="是否为年度合同:"
-              prop="isAnnualContract"
-              style="width:32.5%;">
-              <el-select
-                filterable
-                clearable
+              label="增值税(万元):"
+              prop="project.valueAddedTax"
+              style="width: 32.5%">
+              <el-input
                 :disabled="p.actpoint === 'look'"
-                placeholder="请选择"
-                v-model="detailForm.project.isAnnualContract">
-                <el-option
-                  :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in yesOrNo"/>
-              </el-select>
+                clearable
+                placeholder="请输入"
+                v-model="detailForm.project.valueAddedTax">
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
             </el-form-item>
+          </el-row>
+          <el-row>
             <el-form-item
               label="签约单位:"
               prop="amountCompanyName"
@@ -173,6 +192,15 @@
                 :disabled="p.actpoint === 'look'"
                 placeholder="请输入"
                 v-model="detailForm.project.amountCompanyName"/>
+            </el-form-item>
+            <el-form-item
+              label="所属单位:"
+              prop="project.companyBelongName"
+              style="width:32.5%;">
+              <el-input
+                disabled
+                placeholder="请输入"
+                v-model="detailForm.project.companyBelongName"/>
             </el-form-item>
           </el-row>
           <el-row>
@@ -201,7 +229,7 @@
               <el-select
                 filterable
                 clearable
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'"
                 placeholder="请选择"
                 v-model="detailForm.project.marketSecondId">
                 <el-option
@@ -210,15 +238,6 @@
                   :value="item.id"
                   v-for="(item, index) in emergingMarketTwo"/>
               </el-select>
-            </el-form-item>
-            <el-form-item
-              label="所属单位:"
-              prop="project.companyBelongName"
-              style="width:32.5%;">
-              <el-input
-                disabled
-                placeholder="请输入"
-                v-model="detailForm.project.companyBelongName"/>
             </el-form-item>
           </el-row>
           <el-row>
@@ -387,6 +406,8 @@
             ],
             projectModuleId: '510ba0d79593418493eb1a11ea4e7af6', // 项目板块
             projectName: '',
+            projectForeginName: '',
+            valueAddedTax: '',
             projectLandArea: '',
             contractNumber: '',
             amountSignup: '',
@@ -492,6 +513,7 @@
         }
       },
       submitForm(formName) {
+        console.log(this.detailForm)
         this.$refs[formName].validate((valid) => {
           console.log(this.detailForm, formName, valid)
           if (valid) {
