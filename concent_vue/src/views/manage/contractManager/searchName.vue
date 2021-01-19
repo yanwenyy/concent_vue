@@ -150,6 +150,7 @@
         searchform2: {
           contractName:'',
           changeStatus:'0',
+          contractType:'1'
         },
         contractType:'',
         dataList: [],
