@@ -208,7 +208,7 @@
                     />
                   </el-form-item>
                   <el-form-item
-                    label="我方份额(万元)"
+                    label="初始我方份额(万元)"
                   >
                     <el-input
                       :disabled="true"
@@ -216,6 +216,18 @@
                       placeholder=""
                       size="mini"
                       v-model="detailFormBefore.contractInfo.ourAmount"
+                    >
+                      <template slot="prepend">¥</template>
+                      <template slot="append">(万元)</template>
+                    </el-input>
+                  </el-form-item>
+                  <el-form-item
+                    v-if="detailFormBefore.contractInfo.contractType!='2'"
+                    label="我方份额含补充(万元)"
+                  >
+                    <el-input
+                      :disabled="true"
+                      v-model="detailFormBefore.contractInfo.ourAmountSupply"
                     >
                       <template slot="prepend">¥</template>
                       <template slot="append">(万元)</template>
@@ -1369,7 +1381,7 @@
             }"
                 >
                   <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.inforName" class="input-with-select">
-                    <el-button slot="append" icon="el-icon-search" @click="searchName"></el-button>
+                    <!--<el-button :disabled="detailform.contractInfo.contractType=='2'" slot="append" icon="el-icon-search" @click="searchName"></el-button>-->
                   </el-input>
                 </el-form-item>
                 <el-form-item
@@ -1396,7 +1408,7 @@
                 }"
                 >
                   <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.contractName" class="input-with-select">
-                    <el-button slot="append" icon="el-icon-search" @click="searchName"></el-button>
+                    <!--<el-button :disabled="detailform.contractInfo.contractType!='2'" slot="append" icon="el-icon-search" @click="searchName"></el-button>-->
                   </el-input>
                 </el-form-item>
                 <el-form-item
@@ -1453,7 +1465,7 @@
                     clearable
                     filterable
                     placeholder="请选择"
-
+                    @clear="clear(detailform.contractInfo.enginTypeSecondId,detailform.contractInfo.enginTypeSecondName)"
                     @change="
                 getName(
                   detailform.contractInfo.enginTypeSecondId,
@@ -1712,13 +1724,25 @@
                   </el-input>
                 </el-form-item>
                 <el-form-item
-                  label="我方份额(万元)"
+                  label="初始我方份额(万元)"
                   prop="contractInfo.ourAmount"
                   :rules="rules.contractAmount"
                 >
                   <el-input
                     :disabled="true"
                     v-model="detailform.contractInfo.ourAmount"
+                  >
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-form-item>
+                <el-form-item
+                  v-if="detailform.contractInfo.contractType!='2'"
+                  label="我方份额含补充(万元)"
+                >
+                  <el-input
+                    :disabled="true"
+                    v-model="detailform.contractInfo.ourAmountSupply"
                   >
                     <template slot="prepend">¥</template>
                     <template slot="append">(万元)</template>
@@ -1950,7 +1974,7 @@
                     filterable
                     clearable
                     placeholder="请选择"
-
+                    @clear="clear(detailform.contractInfo.marketSecondId,detailform.contractInfo.marketSecondName)"
                     @change="
                 getName(
                   detailform.contractInfo.marketSecondId,
@@ -2150,7 +2174,7 @@
                     clearable
                     filterable
                     placeholder="请选择"
-
+                    @clear="clear(detailform.contractInfo.projectNatureSecondId,detailform.contractInfo.projectNaturetSecondName)"
                     @change="
                 getName(
                   detailform.contractInfo.projectNatureSecondId,
@@ -2781,7 +2805,7 @@
 
                   </el-table-column>
 
-                  <el-table-column align="center" width="200" :resizable="false" label="项目副经理" prop="deputyProjectManager	" show-overflow-tooltip>
+                  <el-table-column align="center" width="200" :resizable="false" label="项目副经理" prop="deputyProjectManager"  show-overflow-tooltip>
 
                   </el-table-column>
 
@@ -4169,50 +4193,84 @@
       searchName() {
         this.infoCSVisible = true;
         this.$nextTick(() => {
-          this.$refs.infoCS.init(this.detailform.contractInfo.moduleId);
+          this.$refs.infoCS.init(this.detailform.contractInfo.moduleId,this.detailform.contractInfo.contractType);
       })
       },
       //项目名称查询回来的数据
       goAddDetail(data){
-        this.$http
-          .post("/api/contract/topInfo/TopInfor/detail/entityInfoByIdForContract", {uuid :data.uuid})
-          .then((res) => {
-          var datas=res.data.data;
-        this.detailform.searchProject=true;
-        var _con={};
-        this.getTwo(datas.topInfor.enginTypeFirstId);
-        this.getTwoSC(datas.topInfor.marketFirstNameId);
-        this.getTwoXZ(datas.topInfor.projectNatureFirstId);
-        for(var i in this.detailform.contractInfo){
-          // i!='isImport'
-          _con[i]=JSON.parse(JSON.stringify(this.detailform.contractInfo[i]));
-        }
-        for(var i in datas.topInfor){
-          // i!='isImport'
-          if(datas.topInfor[i]&&i!='uuid'){
-            _con[i]=JSON.parse(JSON.stringify(datas.topInfor[i]));
+        if(data.type=='1'){//项目名称查找回来的信息
+          this.$http
+            .post("/api/contract/topInfo/TopInfor/detail/entityInfoByIdForContract", {uuid :data.data.uuid})
+            .then((res) => {
+            var datas=res.data.data;
+          this.detailform.searchProject=true;
+          var _con={};
+          this.getTwo(datas.topInfor.enginTypeFirstId);
+          this.getTwoSC(datas.topInfor.marketFirstNameId);
+          this.getTwoXZ(datas.topInfor.projectNatureFirstId);
+          for(var i in this.detailform.contractInfo){
+            // i!='isImport'
+            _con[i]=JSON.parse(JSON.stringify(this.detailform.contractInfo[i]));
           }
-        }
-        this.detailform.contractInfo=_con;
-        this.detailform.contractInfoSectionList=[];
-        for(var i in datas.bidInfoSectionBOList){
-          var bidInfoSection=datas.bidInfoSectionBOList[i].bidInfoSection,
-            bidInfoSectionOrgList=datas.bidInfoSectionBOList[i].bidInfoSectionOrgList;
-          bidInfoSection.uuid='';
-          for(var k in bidInfoSection.bidInfoSectionOrgList){
-            bidInfoSection.bidInfoSectionOrgList[k].uuid='';
+          for(var i in datas.topInfor){
+            // i!='isImport'
+            if(datas.topInfor[i]&&i!='uuid'){
+              _con[i]=JSON.parse(JSON.stringify(datas.topInfor[i]));
+            }
           }
-          bidInfoSection.bidInfoSectionOrgList=bidInfoSectionOrgList;
-          this.detailform.contractInfoSectionList.push(bidInfoSection);
+          this.detailform.contractInfo=_con;
+          this.detailform.contractInfoSectionList=[];
+          for(var i in datas.bidInfoSectionBOList){
+            var bidInfoSection=datas.bidInfoSectionBOList[i].bidInfoSection,
+              bidInfoSectionOrgList=datas.bidInfoSectionBOList[i].bidInfoSectionOrgList;
+            bidInfoSection.uuid='';
+            for(var k in bidInfoSection.bidInfoSectionOrgList){
+              bidInfoSection.bidInfoSectionOrgList[k].uuid='';
+            }
+            bidInfoSection.contractInfoSectionOrgList=bidInfoSectionOrgList;
+            this.detailform.contractInfoSectionList.push(bidInfoSection);
+          }
+          for(var i in datas.topInfoSiteList){
+            datas.topInfoSiteList[i].uuid='';
+          }
+          this.detailform.topInfoSiteList=datas.topInfoSiteList;
+        });
+          this.$forceUpdate();
+          this.infoCSVisible=false;
+        }else{//合同名称查找回来的信息
+          this.$http
+            .post("/api/contract/contract/ContractInfo/detail/entityInfo", {id :data.data.uuid})
+            .then((res) => {
+            var datas=res.data.data;
+          this.detailform.contractInfo.supplyContractId=data.data.uuid;
+          var _con={};
+          this.getTwo(datas.contractInfo.enginTypeFirstId);
+          this.getTwoSC(datas.contractInfo.marketFirstNameId);
+          this.getTwoXZ(datas.contractInfo.projectNatureFirstId);
+          for(var i in this.detailform.contractInfo){
+            // i!='isImport'
+            _con[i]=JSON.parse(JSON.stringify(this.detailform.contractInfo[i]));
+          }
+          for(var i in datas.contractInfo){
+            // i!='isImport'
+            if(datas.contractInfo[i]&&i!='contractType'&&i!='uuid'&&i!='contractAmount'&&i!='crccCash'&&i!='ourAmount'&&i!='outSystemAmount'&&i!='valueAddedTax'&&i!='designTempPrice'&&i!='unAllocatedFee'&&i!='selfCash'){
+              _con[i]=JSON.parse(JSON.stringify(datas.contractInfo[i]));
+            }
+          }
+          this.detailform.contractInfo=_con;
+          this.detailform.cdmc=datas.contractInfo.siteNameId&&datas.contractInfo.siteNameId.split(",");
+          this.detailform.zplx=datas.contractInfo.otherAssemblyTypeId&&datas.contractInfo.otherAssemblyTypeId.split(",");
+          this.detailform.jzlx=datas.contractInfo.otherBuildingTypeId&&datas.contractInfo.otherBuildingTypeId.split(",");
+          this.detailform.jzjglx=datas.contractInfo.otherBuildingStructureTypeId&&datas.contractInfo.otherBuildingStructureTypeId.split(",");
+          for(var i in datas.topInfoSiteList){
+            datas.topInfoSiteList[i].uuid='';
+          }
+          this.detailform.topInfoSiteList=datas.topInfoSiteList;
+        });
+          this.$forceUpdate();
+          this.infoCSVisible=false;
         }
 
-        for(var i in datas.topInfoSiteList){
-          datas.topInfoSiteList[i].uuid='';
-        }
-        this.detailform.topInfoSiteList=datas.topInfoSiteList;
-      });
-        this.$forceUpdate();
-        this.infoCSVisible=false;
       },
       //金额过滤
       getMoney(value){

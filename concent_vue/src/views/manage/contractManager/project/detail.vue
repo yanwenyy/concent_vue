@@ -366,7 +366,7 @@
               </el-input>
             </el-form-item>
             <el-form-item
-              label="我方份额(万元)"
+              label="初始我方份额(万元)"
               prop="contractInfo.ourAmount"
               :rules="rules.contractAmount"
             >
@@ -378,6 +378,18 @@
                 <template slot="append">(万元)</template>
               </el-input>
             </el-form-item>
+            <el-form-item
+              v-if="detailform.contractInfo.contractType!='2'"
+              label="我方份额含补充(万元)"
+            >
+            <el-input
+              :disabled="true"
+              v-model="detailform.contractInfo.ourAmountSupply"
+            >
+              <template slot="prepend">¥</template>
+              <template slot="append">(万元)</template>
+            </el-input>
+          </el-form-item>
             <el-form-item
               label="系统外份额(万元)"
               prop="contractInfo.outSystemAmount"
@@ -2778,11 +2790,15 @@ export default {
             }
             for(var i in datas.contractInfo){
               // i!='isImport'
-              if(datas.contractInfo[i]&&i!='uuid'&&i!='contractAmount'&&i!='crccCash'){
+              if(datas.contractInfo[i]&&i!='contractType'&&i!='uuid'&&i!='contractAmount'&&i!='crccCash'&&i!='ourAmount'&&i!='outSystemAmount'&&i!='valueAddedTax'&&i!='designTempPrice'&&i!='unAllocatedFee'&&i!='selfCash'){
                 _con[i]=JSON.parse(JSON.stringify(datas.contractInfo[i]));
               }
             }
             this.detailform.contractInfo=_con;
+            this.detailform.cdmc=datas.contractInfo.siteNameId&&datas.contractInfo.siteNameId.split(",");
+            this.detailform.zplx=datas.contractInfo.otherAssemblyTypeId&&datas.contractInfo.otherAssemblyTypeId.split(",");
+            this.detailform.jzlx=datas.contractInfo.otherBuildingTypeId&&datas.contractInfo.otherBuildingTypeId.split(",");
+            this.detailform.jzjglx=datas.contractInfo.otherBuildingStructureTypeId&&datas.contractInfo.otherBuildingStructureTypeId.split(",");
             for(var i in datas.topInfoSiteList){
               datas.topInfoSiteList[i].uuid='';
             }

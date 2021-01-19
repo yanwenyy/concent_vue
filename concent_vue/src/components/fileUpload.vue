@@ -17,7 +17,7 @@
       <el-button size="small" type="primary">选择文件</el-button>
     </el-upload>
     <div class="btn-group">
-      <el-button @click="dialogVisible = false">取 消</el-button>
+      <el-button @click="close">取 消</el-button>
       <el-button @click="sub"  type="primary">确定</el-button>
     </div>
 
@@ -40,6 +40,10 @@
 
       },
       methods: {
+        close(){
+          this.dialogVisible = false;
+          this.$refs.fileList1.clearFiles();
+        },
         sub(){
           console.log(this.fileList1)
           var data={
@@ -56,7 +60,7 @@
             this.$emit('refreshBD',data);
             this.dialogVisible = false;
             this.$refs.fileList1.clearFiles();
-          }
+        }
         },
         init(url,list){
           this.fileList1=[];

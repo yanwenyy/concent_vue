@@ -2,7 +2,8 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="add" type="primary" plain>新增</el-button>
+        <el-button @click="add()" type="primary" plain >新增</el-button>
+        <el-button @click="add('bq')" type="primary" plain >新增补签</el-button>
         <el-button @click="totop" type="primary" plain>修改</el-button>
         <el-button type="primary" plain>提交</el-button>
         <el-button @click="remove" type="primary" plain>删除</el-button>
@@ -257,8 +258,8 @@ export default {
       });
 
     },
-    add() {
-      let p = { actpoint: "add" };
+    add(type) {
+      let p = { actpoint: "add" ,type:type};
       this.$router.push({
         path: "./detail/",
         query: { p: this.$utils.encrypt(JSON.stringify(p)) },

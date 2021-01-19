@@ -139,7 +139,7 @@
                     </el-input>
                   </el-form-item>
                   <el-form-item
-                    label="我方份额(万元):"
+                    label="初始我方份额(万元)"
                   >
                     <el-input
                       :disabled="true"
@@ -147,6 +147,18 @@
                       placeholder=""
                       size="mini"
                       v-model="detailFormBefore.contractInfo.ourAmount"
+                    >
+                      <template slot="prepend">¥</template>
+                      <template slot="append">(万元)</template>
+                    </el-input>
+                  </el-form-item>
+                  <el-form-item
+                    v-if="detailFormBefore.contractInfo.contractType!='2'"
+                    label="我方份额含补充(万元)"
+                  >
+                    <el-input
+                      :disabled="true"
+                      v-model="detailFormBefore.contractInfo.ourAmountSupply"
                     >
                       <template slot="prepend">¥</template>
                       <template slot="append">(万元)</template>
@@ -952,13 +964,16 @@
            required: true, message: '此项不能为空', trigger: 'blur'
         }"
                 >
-                  <el-input
-                    :disabled="p.actpoint === 'look'"
-                    clearable
-                    placeholder="请输入"
-                    size="mini"
-                    v-model="detailform.contractInfo.contractName"
-                  />
+                  <!--<el-input-->
+                  <!--:disabled="p.actpoint === 'look'"-->
+                  <!--clearable-->
+                  <!--placeholder="请输入"-->
+                  <!--size="mini"-->
+                  <!--v-model="detailform.contractInfo.contractName"-->
+                  <!--/>-->
+                  <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.contractName" class="input-with-select">
+                    <el-button :disabled="detailform.contractInfo.contractType!='2'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
+                  </el-input>
                 </el-form-item>
                 <el-form-item
                   label="合同名称(外文):"
@@ -1003,7 +1018,7 @@
                     @change="
                   getName(
                     detailform.contractInfo.tradeContractCategoryId,
-                    emergingMarketTwo,
+                    wumoveType,
                     'tradeContractCategory'
                   )
                 "
@@ -1013,7 +1028,7 @@
                       :key="index"
                       :label="item.detailName"
                       :value="item.id"
-                      v-for="(item, index) in emergingMarketTwo"
+                      v-for="(item, index) in wumoveType"
                     ></el-option>
                   </el-select>
                 </el-form-item>
@@ -1131,10 +1146,9 @@
                   </el-input>
                 </el-form-item>
                 <el-form-item
-                  label="我方份额(万元):"
+                  label="初始我方份额(万元):"
                   prop="contractInfo.ourAmount"
                   :rules="rules.contractAmount"
-
                 >
                   <el-input
                     :disabled="true"
@@ -1142,6 +1156,18 @@
                     placeholder=""
                     size="mini"
                     v-model="detailform.contractInfo.ourAmount"
+                  >
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-form-item>
+                <el-form-item
+                  v-if="detailform.contractInfo.contractType!='2'"
+                  label="我方份额含补充(万元)"
+                >
+                  <el-input
+                    :disabled="true"
+                    v-model="detailform.contractInfo.ourAmountSupply"
                   >
                     <template slot="prepend">¥</template>
                     <template slot="append">(万元)</template>
@@ -1314,7 +1340,6 @@
                   <!--</el-select>-->
                 </el-form-item>
                 <br>
-                <br>
                 <el-form-item
                   label="新兴市场类别(一级):"
                   prop="contractInfo.marketFirstNameId"
@@ -1356,6 +1381,7 @@
                     clearable
                     placeholder="请选择"
                     size="mini"
+                    @clear="clear(detailform.contractInfo.marketSecondId,detailform.contractInfo.marketSecondName)"
                     @change="
               getName(
                 detailform.contractInfo.marketSecondId,
@@ -1766,6 +1792,7 @@
                     prop="subjectMatterYear"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                     <template slot-scope="scope">
                       <el-date-picker
@@ -1784,6 +1811,7 @@
                     prop="subjectMatterMonth"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                     <template slot-scope="scope">
                       <el-date-picker
@@ -1795,7 +1823,7 @@
                       <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                     </template>
                   </el-table-column>
-                  <el-table-column  class="listTabel"  align="center" :resizable="false" label="标的物名称" prop="subjectMatterName" show-overflow-tooltip>
+                  <el-table-column width="200"  class="listTabel"  align="center" :resizable="false" label="标的物名称" prop="subjectMatterName" show-overflow-tooltip>
                     <template slot-scope="scope">
                       <el-form-item
                         class="tabelformItem"
@@ -1816,7 +1844,7 @@
                     </template>
                   </el-table-column>
 
-                  <el-table-column :resizable="false" label="标的物数量" prop="subjectMatterNo" show-overflow-tooltip>
+                  <el-table-column width="150" :resizable="false" label="标的物数量" prop="subjectMatterNo" show-overflow-tooltip>
                     <template slot-scope="scope">
                       <el-form-item
                         class="tabelformItem"
@@ -1837,7 +1865,7 @@
                     </template>
                   </el-table-column>
 
-                  <el-table-column :resizable="false" label="标的物单位" prop="subjectMatterUnit" show-overflow-tooltip>
+                  <el-table-column width="150" :resizable="false" label="标的物单位" prop="subjectMatterUnit" show-overflow-tooltip>
                     <template slot-scope="scope">
                       <el-form-item
                         class="tabelformItem"
@@ -3439,6 +3467,9 @@
   };
 </script>
 <style lang="scss" scoped>
+  .detailTable .el-input-group{
+    margin-top: 5px !important;
+  }
   .detailBoxBG{
     max-height:calc(100vh - 232px)!important;
   }

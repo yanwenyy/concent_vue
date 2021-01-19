@@ -50,5 +50,5 @@ export  function isMoney(s) {
   // s=s.replace(/[^\d.]/g,'');
   // s=s.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3');
   // return s;
-  return /^\d+(\.\d{0,4})?$/.test(s)
+  return /(^\d{0,8})+(\.\d{0,4})?$/.test(s)
 }

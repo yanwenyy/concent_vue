@@ -96,14 +96,26 @@
                     </el-input>
                   </el-form-item>
                   <el-form-item
-                    label="我方份额（万元）:"
+                    label="初始我方份额(万元)"
                   >
                     <el-input
-                      disabled
+                      :disabled="true"
                       clearable
                       placeholder=""
                       size="mini"
                       v-model="detailFormBefore.contractInfo.ourAmount"
+                    >
+                      <template slot="prepend">¥</template>
+                      <template slot="append">(万元)</template>
+                    </el-input>
+                  </el-form-item>
+                  <el-form-item
+                    v-if="detailFormBefore.contractInfo.contractType!='2'"
+                    label="我方份额含补充(万元)"
+                  >
+                    <el-input
+                      :disabled="true"
+                      v-model="detailFormBefore.contractInfo.ourAmountSupply"
                     >
                       <template slot="prepend">¥</template>
                       <template slot="append">(万元)</template>
@@ -953,17 +965,25 @@
                   </el-input>
                 </el-form-item>
                 <el-form-item
-                  label="我方份额（万元）:"
+                  label="初始我方份额(万元)"
                   prop="contractInfo.ourAmount"
-                  :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
+                  :rules="rules.contractAmount"
                 >
                   <el-input
                     :disabled="true"
-                    clearable
-                    placeholder=""
                     v-model="detailform.contractInfo.ourAmount"
+                  >
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-form-item>
+                <el-form-item
+                  v-if="detailform.contractInfo.contractType!='2'"
+                  label="我方份额含补充(万元)"
+                >
+                  <el-input
+                    :disabled="true"
+                    v-model="detailform.contractInfo.ourAmountSupply"
                   >
                     <template slot="prepend">¥</template>
                     <template slot="append">(万元)</template>

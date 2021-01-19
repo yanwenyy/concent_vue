@@ -503,6 +503,15 @@ export default {
                     "menushow": true,
                     "leaf": true,
                     "defaultpage": true
+                  },
+                  {
+                    "name": "合同金额修改",
+                    "path": "/manage/contractManager/moneyEdit/list",
+                    "component": "/manage/contractManager/moneyEdit/list",
+                    "iconCls": "el-icon-search",
+                    "menushow": true,
+                    "leaf": true,
+                    "defaultpage": true
                   }
                   ]
                 },
