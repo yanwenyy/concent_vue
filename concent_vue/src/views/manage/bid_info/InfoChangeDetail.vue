@@ -1388,10 +1388,9 @@
 
                 <el-table-column
                   align="center"
-                  :resizable="false"
-                  fixed="right"
+
+
                   label="操作"
-                  show-overflow-tooltip
                   v-if="p.actpoint!=='look'"
                   width="60"
                 >
@@ -2164,7 +2163,7 @@ export default {
             value1:[],
             nblht:[],
           };
-            //内部联合体回显
+            //变更后内部联合体回显
             var id=[],name=[];
             afterData.bidInfoInnerOrgList.forEach((item)=>{
               id.push(item.innerOrgId);
@@ -2172,6 +2171,14 @@ export default {
             });
             this.detailform.bidInfo.innerOrgId=id.join(",");
             this.detailform.bidInfo.innerOrgName=name.join(",");
+             //变更前内部联合体回显
+            var id2=[],name2=[];
+            beforData.bidInfoInnerOrgList.forEach((item)=>{
+              id2.push(item.innerOrgId);
+              name2.push(item.innerOrgName);
+            });
+            this.detailFormBefore.bidInfo.innerOrgId=id2.join(",");
+            this.detailFormBefore.bidInfo.innerOrgName=name2.join(",");
           //  beforData.bidInfoInnerOrgList.forEach((item)=>{
           //   this.detailFormBefore.value1.push(item.innerOrgId)
           //   });

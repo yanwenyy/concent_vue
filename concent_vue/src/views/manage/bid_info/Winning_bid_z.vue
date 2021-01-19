@@ -709,6 +709,8 @@ export default {
         })
         .then((res) => {
           var datas = res.data.data;
+          this.zbForm.dataList=[];
+          this.zbForm.dataList2=[];
           this.zbType = "add";
           this.bdName = list || [];
           this.isBidRates = isBidRates;

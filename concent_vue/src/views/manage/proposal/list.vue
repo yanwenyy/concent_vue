@@ -13,7 +13,7 @@
         <!-- <el-button @click="Importdata" type="primary" plain>导入</el-button> -->
         <el-upload
                 class="upload-demo detailUpload"
-                :action="'/api/contract/topInfo/CommonFiles/bidInfo/01/uploadFile'"
+                :action="'/api/contract/topInfo/TopInfor/list/importExcel'"
                 :on-success="handleChange"
                 :on-error="handleChange"
                 :show-file-list="false"

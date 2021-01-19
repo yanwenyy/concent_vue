@@ -1,897 +1,631 @@
-<!-- 其他项目管理 -->
+<!--其他项目登记-->
 <template>
   <div>
-    <el-card>
-          <div slot="header" class="clearfix">
-        <span style="color: #2a2a7d"><b>其他项目新增</b></span>
-        <el-button style="float: right; padding: 10px 20px ;border:1px solid #ddd;color: black;position:fixe" type="text">返回</el-button>
-      </div>
-      </el-card>
     <el-card class="box-card">
-
-
-      <div style="height:900px">
-    <el-form
-      :inline="false"
-      :model="detailform"
-      :rules="detailformrules"
-      class="gcform"
-      ref="detailform"
-      style="background: white;"
-    >
-     <!-- <div style="width: 100%; overflow: hidden">
-      <el-button-group style="float: left">
-        <el-button type="primary" plain>返回上一级</el-button>
-        <el-button type="primary" plain>保存</el-button>
-        <el-button type="primary" plain>提交</el-button>
-      </el-button-group>
-    </div>
-    <p></p> -->
-    <el-row>
-      <el-form-item
-        label="项目名称:"
-        prop="clothSize.bcPlateTypeId"
-        style="width:33%;"
-          :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
-      >
-        <el-input
-          clearable
-          placeholder="请输入"
-          size="mini"
-          v-model="detailform.clothSize.bcPlateTypeId"
-         />
-      </el-form-item>
-
+      <div slot="header" class="clearfix">
+        <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'add'"><b>其他项目新增</b></span>
+        <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'edit'"><b>其他项目修改</b></span>
+        <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'look'"><b>其他项目查看</b></span>
+        <el-button @click="back" class="detailbutton">返回</el-button>
+        <el-button v-if="p.actpoint !== 'look'" @click="submitForm('detailForm')" type="primary" class="detailbutton">保存</el-button>
+        <el-button v-if="p.actpoint !== 'look'" class="detailbutton">提交</el-button>
+      </div>
+      <div class="detailBoxBG" style="height: calc(100vh - 196px)">
+        <el-form
+          :inline="false"
+          :model="detailForm"
+          class="gcform"
+          ref="detailForm"
+          style="background: white">
+          <el-row>
             <el-form-item
-        label="签约单位:"
-        prop="clothSize.bcPlateTypeId"
-        style="width:33%;"
-      >
-        <el-input
-          clearable
-          placeholder="请输入"
-          size="mini"
-          v-model="detailform.clothSize.bcPlateTypeId"
-         />
-      </el-form-item>
-
-                 <el-form-item
-                 label="合同号 :"
-                 prop="clothSize.bcPlateTypeId"
-                 style="width:33%;">
-                  <el-input
-                  clearable
-                  placeholder="请输入"
-                  size="mini"
-                  v-model="detailform.clothSize.bcPlateTypeId"
-                />
-                 </el-form-item>
-     </el-row>
-
-        <el-row>
-      <el-form-item
-        label="合同金额（万元）:"
-
-        prop="clothSize.bcPlateTypeId"
-        style="width:33%;"
-      >
-        <el-input
-          clearable
-          placeholder="请输入"
-          size="mini"
-          v-model="detailform.clothSize.bcPlateTypeId"
-         />
-      </el-form-item>
-
-            <el-form-item
-        label="我方份额（万元）:"
-        prop="clothSize.bcPlateTypeId"
-        style="width:33%;"
-
-      >
-        <el-input
-          clearable
-          placeholder="请输入"
-          size="mini"
-          v-model="detailform.clothSize.bcPlateTypeId"
-         />
-      </el-form-item>
-
-       <el-form-item
-            label="项目地点:"
-            prop="clothSize.bcTypeId"
-            required
-            size="mini"
-            style="width:33%;"
-          >
-            <el-cascader
-            v-model="value"
-            :options="options"
-            @change="handleChange">
-            </el-cascader>
-         </el-form-item>
-
-    </el-row>
-
-      <el-row>
-
-         <el-form-item
-              label="所属单位:"
-              prop="clothSize.bcPlateTypeId"
-              style="width:33%;"
-
-            >
-              <el-input
-                clearable
-                placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
-              />
-            </el-form-item>
-
-      <el-form-item
-        label="合同签定日期:"
-        prop="clothSize.bcPlateTypeId"
-        style="width:33%;"
-      >
-      <el-date-picker
-        v-model="value1"
-        type="datetime"
-        size="mini"
-        placeholder="选择日期时间">
-     </el-date-picker>
-      </el-form-item>
-
-          <el-form-item
-              label="项目状态:"
-              prop="clothSize.bcPlateTypeId"
-              style="width:33%;"
+              label="项目名称:"
+              prop="project.projectName"
               :rules="{
-            required: true, message: '此项不能为空', trigger: 'blur'
-          }"
-            >
-              <el-input
-                clearable
-                placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
-              />
-            </el-form-item>
-
-    </el-row>
-
-      <el-row>
-
-        <el-form-item
-        label="是否年度项目:"
-        prop="clothSize.bcTypeId"
-
-        style="width:33%;"
-      >
-        <el-select
-          :disabled="p.actpoint==='look'"
-          @change="chg"
-          clearable
-          filterable
-          placeholder="请选择"
-          size="mini"
-          v-model="detailform.clothSize.bcTypeId"
-        >
-          <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options1"></el-option>
-        </el-select>
-      </el-form-item>
-
-      <el-form-item
-        label="新兴市场类别（一级）:"
-        prop="clothSize.bcTypeId"
-
-        style="width:33%;"
-      >
-        <el-select
-          :disabled="p.actpoint==='look'"
-          @change="chg"
-          clearable
-          filterable
-          placeholder="请选择"
-          size="mini"
-          v-model="detailform.clothSize.bcTypeId"
-        >
-          <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options1"></el-option>
-        </el-select>
-      </el-form-item>
-
-
-
-          <el-form-item
-            label="新兴市场类别（二级）:"
-            prop="clothSize.bcTypeId"
-
-            style="width:33%;"
-          >
-            <el-select
-              :disabled="p.actpoint==='look'"
-              @change="chg"
-              clearable
-              filterable
-              placeholder="请选择"
-              size="mini"
-              v-model="detailform.clothSize.bcTypeId"
-            >
-              <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options1"></el-option>
-            </el-select>
-          </el-form-item>
-
-       </el-row>
-
-      <el-row>
-
-     <el-form-item
-        label="业务类别:"
-        prop="clothSize.bcTypeId"
-
-        style="width:33%;"
-      >
-        <el-select
-          :disabled="p.actpoint==='look'"
-          @change="chg"
-          clearable
-          filterable
-          placeholder="请选择"
-          size="mini"
-          v-model="detailform.clothSize.bcTypeId"
-        >
-          <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options1"></el-option>
-        </el-select>
-      </el-form-item>
-
-       <el-form-item
-        label="增值税（万元）:"
-        prop="clothSize.bcPlateTypeId"
-        style="width:33%;"
-
-      >
-        <el-input
-          clearable
-          placeholder="请输入"
-          size="mini"
-          v-model="detailform.clothSize.bcPlateTypeId"
-         />
-      </el-form-item>
-
-      <el-form-item
-        label="推送人 :"
-        prop="clothSize.bcTypeId"
-
-        style="width:33%;"
-      >
-       <el-input
-          clearable
-          placeholder="请输入"
-          size="mini"
-          v-model="detailform.clothSize.bcPlateTypeId"
-         />
-      </el-form-item>
-
-      </el-row>
-
-    <el-row>
-      <el-form-item
-        label="联系方式:"
-         style="width:33%;"
-        prop="clothSize.bcPlateTypeId"
-
-      >
-        <el-input
-          clearable
-          placeholder="请输入"
-          size="mini"
-          v-model="detailform.clothSize.bcPlateTypeId"
-         />
-      </el-form-item>
-  <!-- `checked` 为 true 或 false -->
-
-    <el-form-item
-    style="margin-top:30px;"
-    >
-            <el-checkbox v-model="checked">填报产值反写合同额</el-checkbox>
-    </el-form-item>
-    </el-row>
-      <el-row>
-            <el-form-item
-            class="neirong"
-              label="项目内容(最多1000字):"
-              prop="clothSize.bcPlateTypeId"
-              style="width: 33%"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
+                required: true, message: '此项不能为空', trigger: 'blur'
               }"
-            >
-              <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
+              style="width: 32.5%">
               <el-input
+                :disabled="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
-                size="mini"
-                v-model="detailform.clothSize.bcPlateTypeId"
-              />
+                v-model="detailForm.project.projectName"/>
+            </el-form-item>
+            <el-form-item
+              label="外文名称:"
+              style="width: 32.5%">
+              <el-input
+                :disabled="p.actpoint === 'look'"
+                clearable
+                placeholder="请输入"
+                v-model="detailForm.project.projectForeginName"/>
             </el-form-item>
           </el-row>
-    </el-form>
+          <el-row>
+            <el-form-item
+              label="合同号:"
+              prop="project.contractNumber"
+              style="width:32.5%;">
+              <el-input
+                clearable
+                placeholder="请输入"
+                :disabled="p.actpoint === 'look'"
+                v-model="detailForm.project.contractNumber"/>
+            </el-form-item>
+            <el-form-item
+              label="合同签订时间:"
+              prop="ocontractSignTime"
+              style="width: 32.5%">
+              <el-date-picker
+                :disabled="p.actpoint === 'look'"
+                v-model="detailForm.project.ocontractSignTime"
+                type="date"
+                value-format="timestamp"
+                placeholder="选择日期时间"/>
+            </el-form-item>
+            <el-form-item
+              label="是否为年度合同:"
+              prop="isAnnualContract"
+              class="inline-formitem"
+              style="width:32.5%;">
+              <el-switch
+                :disabled="p.actpoint === 'look'"
+                class="inline-formitem-switch"
+                v-model="detailForm.project.isAnnualContract"
+                active-color="#409EFF"
+                inactive-color="#ddd"
+                active-value="0"
+                inactive-value="1"/>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item
+              label="合同金额(万元):"
+              prop="contractMoney"
+              style="width:32.5%;">
+              <el-input
+                clearable
+                placeholder="请输入"
+                :disabled="p.actpoint === 'look'"
+                v-model="detailForm.project.contractMoney">
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+              label="我方份额(万元):"
+              prop="amountWe"
+              style="width:32.5%;">
+              <el-input
+                clearable
+                placeholder="请输入"
+                :disabled="p.actpoint === 'look'"
+                v-model="detailForm.project.amountWe">
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item
+              label="业务类别:"
+              prop="categorySecondId"
+              style="width: 32.5%">
+              <el-select
+                filterable
+                clearable
+                :disabled="p.actpoint === 'look'"
+                placeholder="请选择"
+                @change="getName(detailForm.project.categoryFirstId, other, 'categoryFirstName')"
+                v-model="detailForm.project.categoryFirstId">
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in other"/>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="增值税(万元):"
+              prop="project.valueAddedTax"
+              style="width: 32.5%">
+              <el-input
+                :disabled="p.actpoint === 'look'"
+                clearable
+                placeholder="请输入"
+                v-model="detailForm.project.valueAddedTax">
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item
+              label="项目状态:"
+              prop="project.projectStatusId"
+              :rules="{
+                required: true, message: '此项不能为空', trigger: 'blur'
+              }"
+              style="width:32.5%;">
+              <el-select
+                filterable
+                clearable
+                placeholder="请选择"
+                :disabled="p.actpoint === 'look'"
+                @change="getName(detailForm.project.projectStatusId, projectStatus, 'projectStatusName')"
+                v-model="detailForm.project.projectStatusId">
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectStatus"/>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="项目详细地点"
+              style="width: 32.5%"
+              prop="project.topInfoSiteList[0].path"
+              :rules="{
+                required: true, message: '此项不能为空', trigger: 'blur'
+              }"
+            >
+              <el-input v-model="detailForm.project.topInfoSiteList[0].path" placeholder="项目所在地"
+                        :disabled="p.actpoint === 'look'" clearable>
+                <el-button slot="append" :disabled="p.actpoint === 'look'" icon="el-icon-search"
+                           @click="selectPosition()"></el-button>
+              </el-input>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item
+              label="签约单位:"
+              prop="amountCompanyName"
+              style="width:32.5%;">
+              <el-input
+                clearable
+                :disabled="p.actpoint === 'look'"
+                placeholder="请输入"
+                v-model="detailForm.project.amountCompanyName"/>
+            </el-form-item>
+            <el-form-item
+              label="所属单位:"
+              prop="project.companyBelongName"
+              style="width:32.5%;">
+              <el-input
+                disabled
+                placeholder="请输入"
+                v-model="detailForm.project.companyBelongName"/>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item
+              label="新兴市场类别(一级):"
+              prop="marketFirstId"
+              style="width: 32.5%">
+              <el-select
+                clearable
+                filterable
+                :disabled="p.actpoint === 'look'"
+                placeholder="请选择"
+                @change="getMarketTwo"
+                v-model="detailForm.project.marketFirstId">
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in emergingMarket"/>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="新兴市场类别(二级):"
+              prop="marketSecondId"
+              style="width: 32.5%">
+              <el-select
+                filterable
+                clearable
+                :disabled="p.actpoint === 'look'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'"
+                placeholder="请选择"
+                v-model="detailForm.project.marketSecondId">
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in emergingMarketTwo"/>
+              </el-select>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item
+              v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
+              label="装配率(%):"
+              prop="project.assemblyRate"
+              :rules="{
+                required: true, message: '此项不能为空', trigger: 'blur'
+              }"
+              style="width: 32.5%">
+              <el-input
+                :disabled="p.actpoint === 'look'"
+                clearable
+                placeholder="请输入"
+                v-model="detailForm.project.assemblyRate"/>
+            </el-form-item>
+            <el-form-item
+              v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
+              label="装配类型:"
+              prop="project.assemblyTypeId"
+              :rules="{
+                required: true, message: '此项不能为空', trigger: 'blur'
+              }"
+              style="width: 32.5%">
+              <el-select
+                :disabled="p.actpoint === 'look'"
+                filterable
+                clearable
+                @change="getName(detailForm.project.assemblyTypeId, assemblyType, 'assemblyTypeName')"
+                placeholder="请选择"
+                v-model="detailForm.project.assemblyTypeId">
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in assemblyType"/>
+              </el-select>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item
+              v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
+              label="建筑类型:"
+              prop="project.architectureTypeId"
+              :rules="{
+                required: true, message: '此项不能为空', trigger: 'blur'
+              }"
+              style="width: 32.5%">
+              <el-select
+                :disabled="p.actpoint === 'look'"
+                filterable
+                clearable
+                @change="getName(detailForm.project.architectureTypeId, architecturalType, 'architectureTypeName')"
+                placeholder="请选择"
+                v-model="detailForm.project.architectureTypeId">
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in architecturalType"/>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
+              label="房屋结构类型:"
+              prop="project.houseTypeId"
+              :rules="{
+                required: true, message: '此项不能为空', trigger: 'blur'
+              }"
+              style="width: 32.5%">
+              <el-select
+                :disabled="p.actpoint === 'look'"
+                filterable
+                clearable
+                @change="getName(detailForm.project.houseTypeId, buildingStructure, 'houseTypeName')"
+                placeholder="请选择"
+                v-model="detailForm.project.houseTypeId">
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in buildingStructure"/>
+              </el-select>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item
+              v-if="detailForm.project.marketFirstId === '50cd5e9992ac4653920fac8c1f2eb2e3'"
+              label="场地名称:"
+              prop="project.fieldId"
+              :rules="{
+                required: true, message: '此项不能为空', trigger: 'blur'
+              }"
+              style="width: 32.5%">
+              <el-select
+                :disabled="p.actpoint === 'look'"
+                filterable
+                clearable
+                @change="getName(detailForm.project.fieldId, siteName, 'fieldName')"
+                placeholder="请选择"
+                v-model="detailForm.project.fieldId">
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in siteName"/>
+              </el-select>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item
+              label="推送人:"
+              prop="project.projectPusher"
+              style="width:32.5%;">
+              <el-input
+                clearable
+                placeholder="请输入"
+                :disabled="p.actpoint === 'look'"
+                v-model="detailForm.project.projectPusher"/>
+            </el-form-item>
+            <el-form-item
+              label="联系方式:"
+              prop="project.projectPusherPhone"
+              style="width:32.5%;">
+              <el-input
+                clearable
+                placeholder="请输入"
+                :disabled="p.actpoint === 'look'"
+                v-model="detailForm.project.projectPusherPhone"/>
+            </el-form-item>
+            <el-form-item
+              label="是否填报产值反写合同额:"
+              prop="reportOutputValue"
+              class="inline-formitem"
+              style="width:32.5%;">
+              <el-switch
+                :disabled="p.actpoint === 'look'"
+                class="inline-formitem-switch"
+                v-model="detailForm.project.reportOutputValue"
+                active-color="#409EFF"
+                inactive-color="#ddd"
+                active-value="0"
+                inactive-value="1"/>
+            </el-form-item>
+          </el-row>
+          <!--备注(最多2000字)-->
+          <el-row>
+            <el-form-item
+              class="neirong"
+              label="备注(最多2000字):"
+              prop="project.projectRemark">
+              <el-input
+                :disabled="p.actpoint === 'look'"
+                type="textarea"
+                placeholder="请输入"
+                v-model="detailForm.project.projectRemark"/>
+            </el-form-item>
+          </el-row>
+        </el-form>
       </div>
-
     </el-card>
+    <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
   </div>
 </template>
 
 <script>
-export default {
-  name: '详情',
-  data() {
-    return {
-            pickerOptions: {
-          shortcuts: [{
-            text: '今天',
-            onClick(picker) {
-              picker.$emit('pick', new Date());
-            }
-          }, {
-            text: '昨天',
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit('pick', date);
-            }
-          }, {
-            text: '一周前',
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit('pick', date);
-            }
-          }]
+  import Tree from '@/components/tree'
+
+  export default {
+    name: 'estateMode',
+    components: {
+      Tree
+    },
+    data() {
+      return {
+        switchvalue: true,
+        treeStatas: false,
+        emergingMarketTwo: [],
+        bizTypeCodeTwo: [],
+        yesOrNo: [
+          { label: '是', value: 0 },
+          { label: '否', value: 1 }
+        ],
+        detailForm: {
+          project: {
+            commonFilesList: [], // 文件列表
+            topInfoSiteList: [
+              {
+                path: '',
+                placeId: '',
+                uuid: ''
+              }
+            ],
+            projectModuleId: '510ba0d79593419493eb1a11ed3e7df4', // 项目板块
+            projectName: '',
+            projectForeginName: '',
+            valueAddedTax: '',
+            contractNumber: '',
+            contractMoney: '',
+            amountWe: '',
+            ocontractSignTime: '',
+            categoryFirstId: '', // 业务类别（一级）
+            projectStatusId: '',
+            isAnnualContract: '',
+            reportOutputValue: '',
+            amountCompanyName: '',
+            marketFirstId: '',
+            marketSecondId: '',
+            assemblyRate: '',
+            assemblyTypeId: '',
+            architectureTypeId: '',
+            houseTypeId: '',
+            fieldId: '',
+            companyBelongName: '股份公司',
+            projectPusher: '',
+            projectRemark: '',
+            projectPusherPhone: ''
+          }
         },
-        value1: '',
-        value2: '',
-        value3: '',
-      options1:[{label:"值",value:'111'}],
-
-       value: [],
-               options: [{
-          value: 'zhinan',
-          label: '指南',
-          children: [{
-            value: 'shejiyuanze',
-            label: '设计原则',
-            children: [{
-              value: 'yizhi',
-              label: '一致'
-            }, {
-              value: 'fankui',
-              label: '反馈'
-            }, {
-              value: 'xiaolv',
-              label: '效率'
-            }, {
-              value: 'kekong',
-              label: '可控'
-            }]
-          }, {
-            value: 'daohang',
-            label: '导航',
-            children: [{
-              value: 'cexiangdaohang',
-              label: '侧向导航'
-            }, {
-              value: 'dingbudaohang',
-              label: '顶部导航'
-            }]
-          }]
-        }, {
-          value: 'zujian',
-          label: '组件',
-          children: [{
-            value: 'basic',
-            label: 'Basic',
-            children: [{
-              value: 'layout',
-              label: 'Layout 布局'
-            }, {
-              value: 'color',
-              label: 'Color 色彩'
-            }, {
-              value: 'typography',
-              label: 'Typography 字体'
-            }, {
-              value: 'icon',
-              label: 'Icon 图标'
-            }, {
-              value: 'button',
-              label: 'Button 按钮'
-            }]
-          }, {
-            value: 'form',
-            label: 'Form',
-            children: [{
-              value: 'radio',
-              label: 'Radio 单选框'
-            }, {
-              value: 'checkbox',
-              label: 'Checkbox 多选框'
-            }, {
-              value: 'input',
-              label: 'Input 输入框'
-            }, {
-              value: 'input-number',
-              label: 'InputNumber 计数器'
-            }, {
-              value: 'select',
-              label: 'Select 选择器'
-            }, {
-              value: 'cascader',
-              label: 'Cascader 级联选择器'
-            }, {
-              value: 'switch',
-              label: 'Switch 开关'
-            }, {
-              value: 'slider',
-              label: 'Slider 滑块'
-            }, {
-              value: 'time-picker',
-              label: 'TimePicker 时间选择器'
-            }, {
-              value: 'date-picker',
-              label: 'DatePicker 日期选择器'
-            }, {
-              value: 'datetime-picker',
-              label: 'DateTimePicker 日期时间选择器'
-            }, {
-              value: 'upload',
-              label: 'Upload 上传'
-            }, {
-              value: 'rate',
-              label: 'Rate 评分'
-            }, {
-              value: 'form',
-              label: 'Form 表单'
-            }]
-          }, {
-            value: 'data',
-            label: 'Data',
-            children: [{
-              value: 'table',
-              label: 'Table 表格'
-            }, {
-              value: 'tag',
-              label: 'Tag 标签'
-            }, {
-              value: 'progress',
-              label: 'Progress 进度条'
-            }, {
-              value: 'tree',
-              label: 'Tree 树形控件'
-            }, {
-              value: 'pagination',
-              label: 'Pagination 分页'
-            }, {
-              value: 'badge',
-              label: 'Badge 标记'
-            }]
-          }, {
-            value: 'notice',
-            label: 'Notice',
-            children: [{
-              value: 'alert',
-              label: 'Alert 警告'
-            }, {
-              value: 'loading',
-              label: 'Loading 加载'
-            }, {
-              value: 'message',
-              label: 'Message 消息提示'
-            }, {
-              value: 'message-box',
-              label: 'MessageBox 弹框'
-            }, {
-              value: 'notification',
-              label: 'Notification 通知'
-            }]
-          }, {
-            value: 'navigation',
-            label: 'Navigation',
-            children: [{
-              value: 'menu',
-              label: 'NavMenu 导航菜单'
-            }, {
-              value: 'tabs',
-              label: 'Tabs 标签页'
-            }, {
-              value: 'breadcrumb',
-              label: 'Breadcrumb 面包屑'
-            }, {
-              value: 'dropdown',
-              label: 'Dropdown 下拉菜单'
-            }, {
-              value: 'steps',
-              label: 'Steps 步骤条'
-            }]
-          }, {
-            value: 'others',
-            label: 'Others',
-            children: [{
-              value: 'dialog',
-              label: 'Dialog 对话框'
-            }, {
-              value: 'tooltip',
-              label: 'Tooltip 文字提示'
-            }, {
-              value: 'popover',
-              label: 'Popover 弹出框'
-            }, {
-              value: 'card',
-              label: 'Card 卡片'
-            }, {
-              value: 'carousel',
-              label: 'Carousel 走马灯'
-            }, {
-              value: 'collapse',
-              label: 'Collapse 折叠面板'
-            }]
-          }]
-        }, {
-          value: 'ziyuan',
-          label: '资源',
-          children: [{
-            value: 'axure',
-            label: 'Axure Components'
-          }, {
-            value: 'sketch',
-            label: 'Sketch Templates'
-          }, {
-            value: 'jiaohu',
-            label: '组件交互文档'
-          }]
-        }],
-         methods: {
-      handleChange(value) {
-        console.log(value);
-      }
-    },
-
-    //  fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
-
-      detailform: {
-        'clothSize': {
-          'id': '',
-          'bcTypeId': '',
-          'bcStyleId': '',
-          'bcPlateTypeId': '',
-          'bcTypeName': '',
-          'bcStyleName': '',
-          'bcPlateTypeName': '',
-          'isDelete': 0,
-          'createTime': '',
-          'createUserId': 0,
-          'createUserName': '',
-          'createOrgId': 0,
-          'createOrgName': ''
+        rules: {
+          project: {
+            projectName: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
+            contractNumber: [{ required: true, message: '此项不能为空', trigger: 'blur' }]
+          }
         },
-        'clothSizePartList': [
-
-        ]
+        p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
+      }
+    },
+    computed: {
+      projectStatus() {
+        return this.$store.state.projectStatus
       },
-
-      p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
-
+      emergingMarket() {
+        return this.$store.state.category.emergingMarket
+      },
+      assemblyType() {
+        return this.$store.state.assemblyType
+      },
+      architecturalType() {
+        return this.$store.state.architecturalType
+      },
+      buildingStructure() {
+        return this.$store.state.buildingStructure
+      },
+      siteName() {
+        return this.$store.state.siteName
+      },
+      other() {
+        return this.$store.state.other
+      }
+    },
+    methods: {
+      // 选择项目地点
+      selectPosition() {
+        this.treeStatas = true
+        this.$nextTick(() => {
+          this.$refs.addOrUpdate.init()
+        })
+      },
+      // 获取项目地点的值
+      getPositionTree(data) {
+        this.treeStatas = false
+        this.detailForm.project.topInfoSiteList[0].placeId = data.id
+        this.detailForm.project.topInfoSiteList[0].path = data.fullDetailName
+      },
+      getName(id, list, name) {
+        if (id) {
+          this.$forceUpdate()
+          this.detailForm.project[name] = list.find(
+            (item) => item.id === id
+          ).detailName
+          console.log(this.detailForm)
+        }
+      },
+      getShowTwo() {
+        this.emergingMarket.find((item) => {
+          if (item.id === this.detailForm.project.marketFirstId) {
+            this.emergingMarketTwo = item.children
+          }
+        })
+      },
+      getMarketTwo(id) {
+        this.detailForm.project.marketSecondId = ''
+        this.detailForm.project.marketSecondName = ''
+        this.detailForm.project.assemblyRate = ''
+        this.detailForm.project.assemblyTypeId = ''
+        this.detailForm.project.assemblyTypeName = ''
+        this.detailForm.project.architectureTypeId = ''
+        this.detailForm.project.architectureTypeName = ''
+        this.detailForm.project.houseTypeId = ''
+        this.detailForm.project.houseTypeName = ''
+        this.detailForm.project.fieldId = ''
+        this.detailForm.project.fieldName = ''
+        this.emergingMarketTwo = []
+        if (id !== '') {
+          this.emergingMarket.find(
+            (item) => {
+              if (item.id === id) {
+                this.detailForm.project.marketFirstName = item.detailName
+                this.emergingMarketTwo = item.children
+              }
+            }
+          )
+        }
+      },
+      submitForm(formName) {
+        console.log(this.detailForm)
+        this.$refs[formName].validate((valid) => {
+          console.log(this.detailForm, formName, valid)
+          if (valid) {
+            this.$http
+              .post(
+                '/api/statistics/StatisticsProject/detail/save',
+                JSON.stringify(this.detailForm.project),
+                { useJson: true }
+              )
+              .then((res) => {
+                if (res.data.code === 200) {
+                  this.$message({
+                    message: '保存成功',
+                    type: 'success'
+                  })
+                  this.$router.push({
+                    path: '/statistics/project/otherList'
+                  })
+                } else {
+                  console.log('error submit!')
+                }
+              })
+          } else {
+            console.log('error submit!')
+            return false
+          }
+        })
+      },
+      back() {
+        this.$router.back()
+      },
+      getShow() {
+        let data = { topInfoId: this.p.uuid }
+        this.$http
+          .post('/api/statistics/StatisticsProject/detail/entityInfo', data)
+          .then((res) => {
+            if (res.data.code === 200) {
+              this.detailForm.project = res.data.data
+              this.getShowTwo()
+            }
+          })
+      }
+    },
+    mounted() {
+      if (this.p.actpoint === 'look' || this.p.actpoint === 'edit') {
+        this.getShow()
+      }
+      this.$store.dispatch('getConfig', {})
+      this.$store.dispatch('getCategory', { name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3' })
+      this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
+      this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
     }
-  },
-  computed: {
-
-  },
-  methods: {
-
-          handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePreview(file) {
-        console.log(file);
-      },
-      handleExceed(files, fileList) {
-        this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-      },
-
-     beforeRemove(file, fileList) {
-        return this.$confirm(`确定移除 ${ file.name }？`);
-      },
-
-    pageGo() {
-      this.searchParam.current = this.current
-      this.getuserlist()
-    },
-    showinputchg() {},
-    partchg(row) {
-      row.showinput = false
-    },
-
-    chg(val) {
-      this.errorMsg = Math.random()
-      this.errorMsg0 = Math.random()
-      this.$nextTick(() => {
-        this.errorMsg = ''
-        this.errorMsg0 = ''
-      })
-      this.detailform.clothSize.bcStyleId = ''
-      this.detailform.clothSize.bcPlateTypeId = ''
-      this.options1.forEach((item) => {
-        if (val === item.value) {
-          this.options2 = item.children
-        }
-      })
-    },
-    chg1() {
-      this.errorMsg = Math.random()
-      this.errorMsg0 = Math.random()
-      this.$nextTick(() => {
-        this.errorMsg = ''
-        this.errorMsg0 = ''
-      })
-      if (this.detailform.clothSize.bcStyleId === '') {
-        this.detailform.clothSize.bcPlateTypeId = ''
-      }
-      if (this.detailform.clothSize.bcTypeId === '') {
-        this.$message.error('请先选择样衣类型！')
-      }
-    },
-    chg2() {
-      this.errorMsg = Math.random()
-      this.errorMsg0 = Math.random()
-      this.$nextTick(() => {
-        this.errorMsg = ''
-        this.errorMsg0 = ''
-      })
-      if (this.detailform.clothSize.bcStyleId === '') {
-        this.detailform.clothSize.bcPlateTypeId = ''
-        this.$message.error('请先选择款式类型！')
-      }
-    },
-
-    del(index) {
-      console.log(index)
-      var _self = this
-      // this.$utils.isdel(function() {
-      _self.detailform.clothSizePartList.splice(index, 1)
-      // })
-    },
-
-    show(type) {
-      this.type = type
-      if (type === 'add') {
-        this.resetinfo()
-        this.title = '新增'
-        this.detailform.clothSizePartList.push(this.sizeform)
-      // this.dialogVisibleAdd = true
-      }
-    },
-    resetinfo() {
-      this.sizeform = {
-        'id': '',
-        'part': '',
-        showinput: true
-
-      }
-    },
-    handleClose(done) {
-      this.resetform('form')
-      done()
-    },
-    resetform(formName) {
-      this.$refs[formName].resetFields()
-    },
-    carry(formName) {
-      if ([...new Set(this.detailform.clothSizePartList.map(item => item.part))].length < this.detailform.clothSizePartList.length) {
-        this.$message.error('部位填写重复')
-        return
-      }
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.$http
-            .post(
-              '/api/contract/basicConfig/ClothSize/detail/save',
-              JSON.stringify(this.detailform), {useJson: true}
-            )
-            .then(res => {
-              if (res.data.code === 0) {
-                this.$message({
-                  message: '保存成功',
-                  type: 'success'
-                })
-                this.$refs[formName].resetFields()
-              }
-              if (res.data.code === 10) {
-                this.errorMsg = Math.random()
-                this.errorMsg0 = Math.random()
-                this.$nextTick(() => {
-                  this.errorMsg = res.data.msg
-                  this.errorMsg0 = ' '
-                })
-              }
-            })
-        } else {
-          this.$message.error('请添加必填项')
-          return false
-        }
-      })
-    },
-    submitForm(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.$http
-            .post(
-              '/api/contract/basicConfig/ClothSize/detail/save',
-              JSON.stringify(this.detailform), {useJson: true}
-            )
-            .then(res => {
-              if (res.data.code === 0) {
-                this.$message({
-                  message: '保存成功',
-                  type: 'success'
-                })
-              }
-            })
-        } else {
-          console.log('error submit!')
-          return false
-        }
-      })
-    },
-    sure() {
-      console.log(this.sizeform)
-      this.$refs['sizeform'].validate(valid => {
-        if (valid) {
-          this.detailform.clothSizePartList.push(this.sizeform)
-          this.dialogVisibleAdd = false
-        } else {
-          console.log('error submit!')
-          return false
-        }
-      })
-    },
-
-
-    // 加载列表
-    getDetail() {
-
-    },
-
-    handleSelectionChange(val) {
-      this.multipleSelection = val
-    }
-
-  },
-  mounted() {
-    // eslint-disable-next-line no-unde
-      this.getDetail()
   }
-}
 </script>
 <style lang="scss" scoped>
-.gcform {
-  margin-top: 10px;
-  .el-form-item__label:before {
-    position: initial;
-    left: -10px;
-  }
-  .el-form-item__error {
-    padding-top: 0px;
-    width: 95%;
-    text-align: left;
-    margin-left: 0;
-    margin: right;
-    text-align: right;
-    top:0%
-  }
-  .el-form-item {
+  .gcform {
+    margin-top: 10px;
+    > > > .el-form-item__error {
+      padding-top: 0px;
+      width: 95%;
+      margin-left: 0;
+      text-align: right;
+      top: 0%;
+    }
 
-  }
-  .detailformfooter1 {
-    margin-top: 5px;
-    width: 100%;
-    .el-button {
-      margin: 0 30px;
-      width: 140px;
-      height: 42px;
-      font-size: 18px;
-      font-family: Microsoft YaHei;
+    > > > .el-form-item__label:before {
+      position: initial;
+      left: -10px;
     }
-    .el-button--primary {
-      background: #5c8bfa;
+
+    > > > .inline-formitem {
+      margin-top: 30px;
     }
-    .el-button--default {
-      border: 1px solid #5c8bfa;
-      color: #5c8bfa;
+
+    .el-form-item {
+      float: left;
+      margin-bottom: 0;
+      margin-right: 0.5%;
+
+      .el-input {
+        width: 95%;
+      }
+
+      .el-select {
+        width: 95%;
+      }
     }
   }
-  .errorMsg .el-form-item__label {
-    color: red;
-  }
-  .el-input {
-    width: 300px;
-  }
-  .el-input .el-input_inner {
-    width: 300px;
-    height: 500px;
-  }
-}
-.el-input .el-input_inner {
-  width: 300px;
-  height: 500px;
-}
-.el-table thead.is-group th {
-  background: #fff;
-}
-.clothSizeTable {
-  td {
-    padding: 0;
-  }
-  .el-form-item__content {
-    height: 60px;
-    .el-form-item__error {
-      top: 42px;
-    }
-  }
-}
-.text {
-  font-size: 14px;
-}
-
-.item {
-  margin-bottom: 18px;
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-.clearfix:after {
-  clear: both;
-}
-.el-card__body {
-
-  // height: 400px;
-// border: 1px solid black;
-// height: 200px;
-}
-.el-input--mini .el-input__inner{
-  height: 40px;
-  width: 100%;
-}
-.gcform .el-input{
-  width: 95%;
-}
-.neirong{
-  width: 100% !important;
-}
-.gcform .el-form-item{
-  margin-bottom: 0px;
-}
-.neirong .el-input--mini .el-input__inner{
-height: 100px;
-}
-.detail_bottom{
-  margin: 50px 0 0 0;
-  border: 1px solid #ddd;
-}
-.el-card, .el-message{
-  overflow: hidden;
-}
-.el-scrollbar__wrap.default-scrollbar__wrap{
-  overflow: hidden;
-}
-.el-card.is-always-shadow, .el-card.is-hover-shadow:focus, .el-card.is-hover-shadow:hover{
-  overflow: auto ;
-  // height: 500px ;
-}
 </style>

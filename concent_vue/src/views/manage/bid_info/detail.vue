@@ -6,7 +6,6 @@
         <el-button @click="back" class="detailbutton">返回</el-button>
         <el-button
           v-if="p.actpoint != 'look' && p.actpoint !== 'searchLook'"
-
           type="primary"
           @click="saveInfo('detailform')"
           class="detailbutton"
@@ -1215,7 +1214,8 @@ export default {
     nullToStr(data) {
       // console.log('1111111',data)
       for (let x in data) {
-        if (data[x] === null) {
+        // if (data[x] === null&&x !='topInfoTrack_01'){
+        if (data[x] === null){
           // 如果是null 把直接内容转为 ''
           data[x] = "";
         } else {

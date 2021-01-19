@@ -19,6 +19,7 @@ const state = {
   projectNature:[],//项目性质类别
   projectProperties:[],//项目性质类别概况
   bizTypeCode:[],//业务类别
+  material:[],//物流物资
   taxType:[],//纳税类型
   authCode:[],//权限类别
   supLevel:[],//名录类型
@@ -41,6 +42,8 @@ const state = {
   emergingMarket:[],//新兴市场
   customernatureCode:[],//客户性质
   cooperation:[],//框架合作协议
+  operation:[],//运营维管
+  other:[],//其他
   qwe:[],//qwe
   stage:[],//商务阶段
   plantype:[],//计划类型
@@ -149,6 +152,9 @@ const mutations = {
       case 'bizTypeCode':
         state.bizTypeCode=item.sysCategoryDetailList;
         break;
+      case 'material':
+        state.material=item.sysCategoryDetailList;
+        break;
       case 'taxType':
         state.taxType=item.sysCategoryDetailList;
         break;
@@ -214,6 +220,12 @@ const mutations = {
         break;
       case 'cooperation':
         state.cooperation=item.sysCategoryDetailList;
+        break;
+      case 'operation':
+        state.operation=item.sysCategoryDetailList;
+        break;
+      case 'other':
+        state.other=item.sysCategoryDetailList;
         break;
       case 'qwe':
         state.qwe=item.sysCategoryDetailList;
@@ -320,6 +332,9 @@ const mutations = {
       case 'bizTypeCode':
         state.bizTypeCode=item.sysCategoryDetailList;
         break;
+      case 'material':
+        state.material=item.sysCategoryDetailList;
+        break;
       case 'taxType':
         state.taxType=item.sysCategoryDetailList;
         break;
@@ -385,6 +400,12 @@ const mutations = {
         break;
       case 'cooperation':
         state.cooperation=item.sysCategoryDetailList;
+        break;
+      case 'operation':
+        state.operation=item.sysCategoryDetailList;
+        break;
+      case 'other':
+        state.other=item.sysCategoryDetailList;
         break;
       case 'qwe':
         state.qwe=item.sysCategoryDetailList;

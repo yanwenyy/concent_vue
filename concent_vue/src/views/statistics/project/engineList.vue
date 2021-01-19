@@ -134,14 +134,14 @@
         <el-table-column
           :width="150"
           align="center"
-          label="签约总金额(万元)"
-          prop="amountSignup"
+          label="工程合同额(万元)"
+          prop="contractAmountEngine"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>合同金额(万元)</span>
+            <span>工程合同额(万元)</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.amountSignup" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.contractAmountEngine" size="mini"/>
             </div>
           </template>
         </el-table-column>
@@ -379,7 +379,7 @@
           projectName: '',
           projectTypeFirstId: '',
           projectTypeSecondId: '',
-          amountSignup: '',
+          contractAmountEngine: '',
           companyBuiltName: '',
           projectNatureFirstId: '',
           projectNatureSecondId: '',
@@ -534,7 +534,7 @@
           projectName: '',
           projectTypeFirstId: '',
           projectTypeSecondId: '',
-          amountSignup: '',
+          contractAmountEngine: '',
           companyBuiltName: '',
           projectNatureFirstId: '',
           projectNatureSecondId: '',
