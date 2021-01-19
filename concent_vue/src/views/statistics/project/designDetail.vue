@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <el-card>
+    <el-card class="box-card">
       <div class="clearfix el-card__header">
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'add'"><b>勘察设计项目新增</b></span>
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'edit'"><b>勘察设计项目修改</b></span>
@@ -11,9 +11,7 @@
         <el-button class="detailbutton" type="primary" @click="submitForm('detailForm')">保存</el-button>
         <el-button class="detailbutton">提交</el-button>
       </div>
-    </el-card>
-    <el-card class="box-card">
-      <div class="detailBox">
+      <div class="detailBoxBG" style="height: calc(100vh - 196px)">
         <el-form
           :model="detailForm"
           :rules="rules"
@@ -733,7 +731,7 @@
             </el-button>
           </p>
           <el-table
-            :data="detailForm.commonFilesList"
+            :data="detailForm.project.commonFilesList"
             :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
             align="center"
             border
@@ -803,8 +801,8 @@
         value1: '',
         options1: [{ label: '测试所在地', value: 'testabcd' }],
         detailForm: {
-          commonFilesList: [],
           project: {
+            commonFilesList: [],
             projectName: '', // 项目名称(中文)
             projectForeginName: '', // 项目名称(外文)
             fatherProjectId: '', // 父项目名称
@@ -950,10 +948,10 @@
           )
           .then((res) => {
             if (res.data.code === 200) {
-              this.detailForm.commonFilesList.splice(index, 1)
+              this.detailForm.project.commonFilesList.splice(index, 1)
             }
           })
-        console.log(this.detailForm.commonFilesList)
+        console.log(this.detailForm.project.commonFilesList)
       },
       // 打开附件上传的组件
       openFileUp(url, list) {
@@ -965,7 +963,7 @@
       // 获取上传的附件列表
       getUpInfo(data) {
         this.$forceUpdate()
-        this.detailForm[data.list] = this.detailForm[data.list].concat(data.fileList)
+        this.detailForm.project[data.list] = this.detailForm.project[data.list].concat(data.fileList)
         this.uploadVisible = false
       },
       // 选择项目地点
@@ -1077,7 +1075,7 @@
             this.$http
               .post(
                 '/api/statistics/StatisticsProject/detail/save',
-                JSON.stringify(this.detailForm),
+                JSON.stringify(this.detailForm.project),
                 { useJson: true }
               )
               .then((res) => {
@@ -1115,8 +1113,7 @@
           .post('/api/statistics/StatisticsProject/detail/entityInfo', data)
           .then((res) => {
             if (res.data.code === 200) {
-              this.detailForm.project = res.data.data.project
-              // this.detailForm.topInfoSiteList = res.data.data.topInfoSiteList
+              this.detailForm.project = res.data.data
               this.getShowTwo()
             }
           })
@@ -1135,13 +1132,9 @@
     }
   }
 </script>
-<style>
-  .el-main{
-    overflow: hidden;
-  }
-</style>
 <style lang="scss" scoped>
   .gcform {
+    margin-top: 10px;
     > > > .el-form-item__error {
       padding-top: 0px;
       width: 95%;
@@ -1149,7 +1142,9 @@
       text-align: right;
       top: 0%;
     }
-
+    >>>.el-main{
+      overflow: hidden;
+    }
     > > > .el-form-item__label:before {
       position: initial;
       left: -10px;

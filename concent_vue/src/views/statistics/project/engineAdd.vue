@@ -2,18 +2,16 @@
 
 <template>
   <div style="position: relative">
-    <el-card>
+    <el-card class="box-card">
       <div class="clearfix el-card__header">
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'add'"><b>工程承包项目新增</b></span>
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'edit'"><b>工程承包项目修改</b></span>
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'look'"><b>工程承包项目查看</b></span>
         <el-button @click="back" class="detailbutton">返回</el-button>
-        <el-button type="primary" @click="submitForm('detailForm')" class="detailbutton">保存</el-button>
-        <el-button class="detailbutton">提交</el-button>
+        <el-button v-if="p.actpoint !== 'look'" type="primary" @click="submitForm('detailForm')" class="detailbutton">保存</el-button>
+        <el-button v-if="p.actpoint !== 'look'" class="detailbutton">提交</el-button>
       </div>
-    </el-card>
-    <el-card class="box-card">
-      <div class="detailBox">
+      <div class="detailBoxBG" style="height: calc(100vh - 196px)">
         <el-form
           :model="detailForm"
           :rules="rules"
@@ -135,8 +133,8 @@
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.investmentContract">
-                  <template slot="prepend">¥</template>
-                  <template slot="append">(万元)</template>
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
               </el-input>
             </el-form-item>
           </el-row>
@@ -361,10 +359,16 @@
             <!--所在地、使用资质单位暂无-->
             <el-form-item
               label="项目所在地"
+              prop="project.topInfoSiteList[0].path"
+              :rules="{
+                required: true, message: '此项不能为空', trigger: 'blur'
+              }"
               style="width: 32.5%"
             >
-              <el-input v-model="detailForm.project.topInfoSiteList[0].path" placeholder="项目所在地" :disabled="p.actpoint === 'look'" clearable>
-                <el-button slot="append" :disabled="p.actpoint === 'look'" icon="el-icon-search"  @click="selectPosition()"></el-button>
+              <el-input v-model="detailForm.project.topInfoSiteList[0].path" placeholder="项目所在地"
+                        :disabled="p.actpoint === 'look'" clearable>
+                <el-button slot="append" :disabled="p.actpoint === 'look'" icon="el-icon-search"
+                           @click="selectPosition()"></el-button>
               </el-input>
             </el-form-item>
             <el-form-item
@@ -855,16 +859,18 @@
               show-overflow-tooltip
               type="index"
             ></el-table-column>
-            <el-table-column align="center"  :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+            <el-table-column align="center" :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
 
             </el-table-column>
 
-            <el-table-column align="center" width="200" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip>
+            <el-table-column align="center" width="200" :resizable="false" label="大小(KB)" prop="fileSize"
+                             show-overflow-tooltip>
               <template slot-scope="scope">
                 {{(scope.row.fileSize/1024).toFixed(2)}}
               </template>
             </el-table-column>
-            <el-table-column align="center" width="100" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+            <el-table-column align="center" width="100" :resizable="false" label="类型" prop="fileType"
+                             show-overflow-tooltip>
 
             </el-table-column>
 
@@ -1066,7 +1072,7 @@
         this.$http
           .post(
             '/api/contract/topInfo/CommonFiles/list/delete',
-            {ids: [file.uuid]}
+            { ids: [file.uuid] }
           )
           .then((res) => {
             if (res.data.code === 200) {
@@ -1198,7 +1204,7 @@
             this.$http
               .post(
                 '/api/statistics/StatisticsProject/detail/save',
-                JSON.stringify(this.detailForm),
+                JSON.stringify(this.detailForm.project),
                 { useJson: true }
               )
               .then((res) => {
@@ -1236,8 +1242,7 @@
           .post('/api/statistics/StatisticsProject/detail/entityInfo', data)
           .then((res) => {
             if (res.data.code === 200) {
-              this.detailForm.project = res.data.data.project
-              // this.detailForm.project.topInfoSiteList = res.data.data.topInfoSiteList
+              this.detailForm.project = res.data.data
               this.getShowTwo()
             }
           })
@@ -1256,13 +1261,9 @@
     }
   }
 </script>
-<style>
-  .el-main{
-    overflow: hidden;
-  }
-</style>
 <style lang="scss" scoped>
   .gcform {
+    margin-top: 10px;
     > > > .el-form-item__error {
       padding-top: 0px;
       width: 95%;
@@ -1275,13 +1276,16 @@
       position: initial;
       left: -10px;
     }
-    >>>.inline-formitem {
+
+    > > > .inline-formitem {
       margin-top: 30px;
     }
+
     .el-form-item {
       float: left;
       margin-bottom: 0;
       margin-right: 0.5%;
+
       .el-input {
         width: 95%;
       }
