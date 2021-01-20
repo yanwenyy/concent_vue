@@ -52,7 +52,6 @@
         highlight-current-row
         ref="table"
         stripe
-        style="width: 100%"
         tooltip-effect="dark"
       >
         <el-table-column
@@ -336,5 +335,15 @@
   >>>.el-input--mini .el-input__inner{
     height: auto;
     line-height: inherit;
+  }
+  @media (min-width: 1300px) and (max-width: 1500px) {
+    .tableStyle{
+      max-height: calc(100vh - 250px)!important;
+      min-height: calc(100vh - 250px)!important;
+    }
+    /*.table-div{*/
+      /*max-height: calc(100vh - 180px)!important;*/
+      /*overflow: hidden;*/
+    /*}*/
   }
 </style>

@@ -8,7 +8,7 @@
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'look'"><b>工业制造项目查看</b></span>
         <el-button @click="back" class="detailbutton">返回</el-button>
         <el-button v-if="p.actpoint !== 'look'" type="primary" @click="submitForm('detailForm')" class="detailbutton">保存</el-button>
-        <el-button v-if="p.actpoint !== 'look'" @click="submit" class="detailbutton">提交</el-button>
+        <el-button v-if="p.actpoint !== 'look'" @click="submitForm('detailForm', 'submit')" class="detailbutton">提交</el-button>
       </div>
       <div class="detailBoxBG" style="height: calc(100vh - 196px)">
         <el-form
@@ -79,6 +79,7 @@
               style="width:32.5%;">
               <el-input
                 clearable
+                type="number"
                 placeholder="请输入"
                 :disabled="p.actpoint === 'look'"
                 v-model="detailForm.project.contractMoney">
@@ -111,6 +112,7 @@
               style="width:32.5%;">
               <el-input
                 clearable
+                type="number"
                 placeholder="请输入"
                 :disabled="p.actpoint === 'look'"
                 v-model="detailForm.project.contractAmountSupplement">
@@ -162,6 +164,7 @@
               <el-input
                 :disabled="p.actpoint === 'look'"
                 clearable
+                type="number"
                 placeholder="请输入"
                 v-model="detailForm.project.valueAddedTax">
                 <template slot="prepend">¥</template>
@@ -267,6 +270,7 @@
               style="width:32.5%;">
               <el-input
                 clearable
+                type="number"
                 :disabled="p.actpoint === 'look'"
                 placeholder="请输入"
                 v-model="detailForm.project.ocontractAmountTotal">
@@ -324,6 +328,7 @@
               <el-input
                 :disabled="p.actpoint === 'look'"
                 clearable
+                type="number"
                 placeholder="请输入"
                 v-model="detailForm.project.assemblyRate"/>
             </el-form-item>
@@ -434,6 +439,7 @@
             <el-form-item
               label="联系方式:"
               prop="project.projectPusherPhone"
+              :rules="{ pattern: /^1[3456789]\d{9}$/, message: '请填写正确的联系方式', trigger: 'blur'}"
               style="width:32.5%;">
               <el-input
                 clearable
@@ -641,11 +647,17 @@
                     })
                   }
                 } else {
-                  console.log('error submit!')
+                  this.$message({
+                    message: '保存失败',
+                    type: 'error'
+                  })
                 }
               })
           } else {
-            console.log('error submit!')
+            this.$message({
+              message: '请填写必填项',
+              type: 'error'
+            })
             return false
           }
         })
@@ -653,25 +665,24 @@
       // 提交
       submit() {
         const id = this.p.uuid || this.uuid
-        if (!id) {
-          this.submitForm('detailForm', 'submit')
-        } else {
-          this.$http
-            .post('/api/statistics/StatisticsProject/detail/projectSubmitById', { projectId: id })
-            .then((res) => {
-              if (res.data.code === 200) {
-                this.$message({
-                  message: '提交成功',
-                  type: 'success'
-                })
-                this.$router.push({
-                  path: '/statistics/project/manufactureList'
-                })
-              } else {
-                console.log('error submit!')
-              }
-            })
-        }
+        this.$http
+          .post('/api/statistics/StatisticsProject/detail/projectSubmitById', { projectId: id })
+          .then((res) => {
+            if (res.data.code === 200) {
+              this.$message({
+                message: '提交成功',
+                type: 'success'
+              })
+              this.$router.push({
+                path: '/statistics/project/manufactureList'
+              })
+            } else {
+              this.$message({
+                message: '提交失败',
+                type: 'error'
+              })
+            }
+          })
       },
       back() {
         this.$router.back()
@@ -706,6 +717,14 @@
   }
 </script>
 <style lang="scss" scoped>
+  > > > input::-webkit-outer-spin-button,
+  > > > input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+  > > > input[type="number"] {
+    -moz-appearance: textfield;
+  }
   .gcform {
     margin-top: 10px;
     .neirong {
