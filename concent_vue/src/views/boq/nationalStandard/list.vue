@@ -335,14 +335,21 @@
         this.searchform.current = 1;
         this.getData();
       },
-      searchformReset() {
-        // this.$refs["searchform"].resetFields();
-        this.searchform.Name = "";
-        this.searchform.enginTypeFirstId = "";
-        this.searchform.constructionOrg = "";
-        this.searchform.noticeTypeId = "";
+       searchformReset() {
+      //   // this.$refs["searchform"].resetFields();
+      this.searchform= {
+        current: 1,
+        size: 10,
+        year: "",
+        name: "",
+        childName: "",
+        standrardId: "",
+        implementationTime: "",
+        underCentralizedUnit: "",
+        titanic: "",
+      }
         this.getData();
-      },
+       },
       // 列表选项数据
       handleSelectionChange(val) {
         this.multipleSelection = val;

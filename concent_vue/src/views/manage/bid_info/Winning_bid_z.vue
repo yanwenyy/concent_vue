@@ -941,8 +941,9 @@ export default {
   cursor: pointer;
 }
 >>> .el-dialog {
-  width: 70% !important;
-  /* overflow: auto; */
+    width: 80% !important;
+    position: fixed;
+    left: 10%;
 }
 >>> .el-dialog__body {
   height: 500px;

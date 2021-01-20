@@ -24,7 +24,19 @@
 
         <br>
         <el-form-item label="计量单位:" class="list-item">
-          <el-input v-model="detailForm.nationalStandardSchedule.measuringUnit" placeholder="计量单位" clearable :disabled="type === 'look'"></el-input>
+          <el-select
+                :disabled="type === 'look'"
+                filterable
+                clearable
+                placeholder="请选择"
+                v-model="detailForm.nationalStandardSchedule.measuringUnit">
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in unit"/>
+              </el-select>
+          <!-- <el-input v-model="detailForm.nationalStandardSchedule.measuringUnit" placeholder="计量单位" clearable :disabled="type === 'look'"></el-input> -->
         </el-form-item>
 
         <el-form-item label="项目划分特征:" class="list-item">
@@ -111,7 +123,7 @@ import { isMoney } from '@/utils/validate'
         DwVisible:false,//选择单位弹框状态
         detailForm: {
           nationalStandardSchedule:{},
-
+          unitId: '', // 计量单位
         },
         type:'',
         index:'',
@@ -134,6 +146,9 @@ import { isMoney } from '@/utils/validate'
 
     },
     computed:{
+      unit() {
+        return this.$store.state.unit
+      },
     },
     methods: {
       //获取标段名字

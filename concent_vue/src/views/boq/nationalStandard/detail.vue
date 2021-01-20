@@ -52,12 +52,7 @@
           <br>
           <el-form-item
               label="标准号:"
-              prop="boqNationalStandard.standrardId"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
+
             >
               <el-input
                 :disabled="p.actpoint === 'look'"
@@ -106,11 +101,12 @@
 
           <el-form-item
             label="归口单位:"
-            prop="boqNationalStandard.underCentralizedUnit"
-            :rules="{
-              message: '此项不能为空',
-              trigger: 'blur',
-            }"
+              prop="boqNationalStandard.underCentralizedUnit"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
           >
             <el-input
               :disabled="p.actpoint === 'look'"
@@ -124,11 +120,12 @@
             prop="boqNationalStandard.engineeringType"
           >
             <el-select
+              collapse-tags
               :disabled="p.actpoint === 'look'"
               clearable
               filterable
               placeholder="请选择"
-
+              multiple
               v-model="detailform.boqNationalStandard.engineeringType"
             >
               <el-option
@@ -216,7 +213,7 @@
         </div>
        </el-collapse-item>
         <el-collapse-item name="2">
-          <template slot="title"><p class="title_head">标段信息</p></template>
+          <template slot="title"><p class="title_head">工程量清单计量规则</p></template>
 
               <el-button-group style="float: left">
               <el-button
@@ -240,12 +237,12 @@
                 type="primary"
               >删除</el-button>
 
-              <el-button
+              <!-- <el-button
                 v-show="p.actpoint != 'look'"
                 @click="add('bd')"
                 plain
                 type="primary"
-              >刷新</el-button>
+              >刷新</el-button> -->
               </el-button-group>
 
           <div style="float: right">
@@ -260,12 +257,13 @@
                 v-show="p.actpoint != 'look'"
               >
                 <el-button
+                class="small_size"
                   type="primary"
                   plain
                   >导入
                   </el-button>
                   </el-upload>
-        <el-button @click="exportdata" type="primary" plain v-show="p.actpoint != 'look'">导出</el-button>
+        <el-button @click="exportdata" type="primary" plain v-show="p.actpoint != 'look'" class="small_size">导出</el-button>
 
 </div>
 
@@ -351,6 +349,7 @@
             </el-table-column>
 
             <el-table-column
+            class="long-tooltip"
               :resizable="false"
               label="工程（工作）内容"
               prop="nationalStandardSchedule.projectContent"
@@ -358,6 +357,11 @@
               align="center"
               :width="180"
             >
+            <!-- <template slot-scope="scope">
+                <el-tooltip popper-class="tooltip-class" :content="String(scope.row.nationalStandardSchedule.projectContent)" placement="bottom" effect="dark">
+                  <span>{{scope.row.nationalStandardSchedule.projectContent}}</span>
+                </el-tooltip>
+            </template> -->
             </el-table-column>
 
             <el-table-column
@@ -429,8 +433,9 @@ import AddBd  from "./addBd";
         detailform: {
           boqNationalStandard:{},
           nationalStandardScheduleBOList:[],
+          syfw:[],
         },
-        activeNames: ['1'],
+        activeNames: ['1','2'],
         xqprojectType: [],//工程类别二级
         emergingMarketTwo:[],//新兴市场二级
         projectNatureTwo:[],//项目性质二级
@@ -492,6 +497,26 @@ import AddBd  from "./addBd";
       // eslint-disable-next-line no-unde
     },
     methods: {
+      //多选传参
+       //复选下拉框框获取name
+    getMultipleName(valueList,list,id,name){
+      var _id=[],_name=[];
+      list.forEach((item)=>{
+        if(valueList.indexOf(item.id)!=-1){
+        _id.push(item.id);
+        _name.push(item.detailName)
+      }
+    });
+      this.detailform.contractInfo[id]=_id.join(",");
+      this.detailform.contractInfo[name]=_name.join(",");
+      // console.log(this.detailform.contractInfo[id])
+    },
+      // engineeringType(){
+      //   if(label=="适用范围:"){
+      //      this.detailform.contractInfo.engineeringType=id.join(",");
+      //     this.detailform.contractInfo.engineeringType=name.join(",");
+      //   }
+      // },
       //导出函数
       exportdata(){},
           //上传附件
@@ -575,8 +600,7 @@ import AddBd  from "./addBd";
       },
 
       saveInfo(formName) {
-
-
+        this.detailform.boqNationalStandard.engineeringType=this.detailform.boqNationalStandard.engineeringType.join(",");
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
@@ -666,7 +690,7 @@ import AddBd  from "./addBd";
               boqNationalStandard: datas.boqNationalStandard,
               nationalStandardScheduleBOList: datas.nationalStandardScheduleBOList,
             }
-
+            this.detailform.boqNationalStandard.engineeringType=this.detailform.boqNationalStandard.engineeringType?this.detailform.boqNationalStandard.engineeringType.split(","):[];
           });
       },
 
@@ -885,7 +909,6 @@ import AddBd  from "./addBd";
   }
   >>>.el-table__header{
   width: 100%!important;
-  margin: 15px 0 0 0;
   }
   >>>.el-table .cell, .el-table--border td:first-child .cell, .el-table--border th:first-child .cell {
     padding-left: 10px;
@@ -897,5 +920,12 @@ import AddBd  from "./addBd";
 // >>>.neirong{
 //    width: 100% !important;
 // }
+>>>.gcform{
+  margin: 0 !important;
+}
+.small_size{
+  font-size: 12px;
+}
+
 </style>
 

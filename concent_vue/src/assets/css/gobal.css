@@ -642,5 +642,9 @@ pre {
 .inline-block{
   display: inline-block;
 }
+.el-tooltip__popper {
+  max-width: 80% !important;
+
+}
 /**/
 
