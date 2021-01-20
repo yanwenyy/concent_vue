@@ -7,8 +7,8 @@
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'edit'"><b>其他项目修改</b></span>
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'look'"><b>其他项目查看</b></span>
         <el-button @click="back" class="detailbutton">返回</el-button>
-        <el-button v-if="p.actpoint !== 'look'" @click="submitForm('detailForm')" type="primary" class="detailbutton">保存</el-button>
-        <el-button v-if="p.actpoint !== 'look'" class="detailbutton">提交</el-button>
+        <el-button v-if="p.actpoint !== 'look'" type="primary" @click="submitForm('detailForm')" class="detailbutton">保存</el-button>
+        <el-button v-if="p.actpoint !== 'look'" @click="submit" class="detailbutton">提交</el-button>
       </div>
       <div class="detailBoxBG" style="height: calc(100vh - 196px)">
         <el-form
@@ -166,10 +166,10 @@
               style="width: 32.5%"
               prop="project.topInfoSiteList[0].path"
               :rules="{
-                required: true, message: '此项不能为空', trigger: 'blur'
+                required: true, message: '此项不能为空', trigger: 'change'
               }"
             >
-              <el-input v-model="detailForm.project.topInfoSiteList[0].path" placeholder="项目所在地"
+              <el-input v-model="detailForm.project.topInfoSiteList[0].path" placeholder="项目详细地点"
                         :disabled="p.actpoint === 'look'" clearable>
                 <el-button slot="append" :disabled="p.actpoint === 'look'" icon="el-icon-search"
                            @click="selectPosition()"></el-button>
@@ -383,6 +383,7 @@
             <el-form-item
               class="neirong"
               label="备注(最多2000字):"
+              :rules="{ min: 0, max: 2000, message: '最多输入2000字', trigger: 'blur' }"
               prop="project.projectRemark">
               <el-input
                 :disabled="p.actpoint === 'look'"
@@ -408,6 +409,7 @@
     },
     data() {
       return {
+        uuid: null,
         switchvalue: true,
         treeStatas: false,
         emergingMarketTwo: [],
@@ -538,10 +540,9 @@
           )
         }
       },
-      submitForm(formName) {
-        console.log(this.detailForm)
+      // 保存
+      submitForm(formName, type) {
         this.$refs[formName].validate((valid) => {
-          console.log(this.detailForm, formName, valid)
           if (valid) {
             this.$http
               .post(
@@ -551,13 +552,18 @@
               )
               .then((res) => {
                 if (res.data.code === 200) {
-                  this.$message({
-                    message: '保存成功',
-                    type: 'success'
-                  })
-                  this.$router.push({
-                    path: '/statistics/project/otherList'
-                  })
+                  if (type && type === 'submit') {
+                    this.uuid = res.data.data.uuid
+                    this.submit()
+                  } else {
+                    this.$message({
+                      message: '保存成功',
+                      type: 'success'
+                    })
+                    this.$router.push({
+                      path: '/statistics/project/otherList'
+                    })
+                  }
                 } else {
                   console.log('error submit!')
                 }
@@ -567,6 +573,29 @@
             return false
           }
         })
+      },
+      // 提交
+      submit() {
+        const id = this.p.uuid || this.uuid
+        if (!id) {
+          this.submitForm('detailForm', 'submit')
+        } else {
+          this.$http
+            .post('/api/statistics/StatisticsProject/detail/projectSubmitById', { projectId: id })
+            .then((res) => {
+              if (res.data.code === 200) {
+                this.$message({
+                  message: '提交成功',
+                  type: 'success'
+                })
+                this.$router.push({
+                  path: '/statistics/project/otherList'
+                })
+              } else {
+                console.log('error submit!')
+              }
+            })
+        }
       },
       back() {
         this.$router.back()
@@ -597,6 +626,11 @@
 <style lang="scss" scoped>
   .gcform {
     margin-top: 10px;
+    .neirong {
+      > > > .el-form-item__error {
+        top: 4%!important;
+      }
+    }
     > > > .el-form-item__error {
       padding-top: 0px;
       width: 95%;

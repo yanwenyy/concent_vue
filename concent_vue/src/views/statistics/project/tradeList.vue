@@ -154,6 +154,33 @@
         <el-table-column
           :width="150"
           align="center"
+          label="状态"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+            <span> {{ scope.row.projectStatus=='0'?'已提交':'未提交'}} </span>
+          </template>
+          <template slot="header" slot-scope="scope">
+            <span>状态</span>
+            <div>
+              <el-select
+                filterable
+                clearable
+                size="mini"
+                placeholder="请选择"
+                v-model="searchform.projectStatus">
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectStatusType"/>
+              </el-select>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
           label="推送人"
           prop="projectPusher"
           show-overflow-tooltip
@@ -210,7 +237,7 @@
         projectTypeTwo: [], // 工程类别(二级)
         projectNatureTwo: [], // 项目性质(二级)
         yesOrNo: [{ id: 0, detailName: '是' }, { id: 1, detailName: '否' }],
-        sousuo: '',
+        projectStatusType: [{ id: 0, detailName: '已提交' }, { id: 1, detailName: '未提交' }],
         page: { current: 1, size: 10, total: 0, records: [] },
         searchform: {
           current: 1,
@@ -221,6 +248,7 @@
           companyBelongName: '', // 所属单位
           contractMoney: '', // 合同金额
           contractFirstParty: '', // 客户名称
+          projectStatus: '',
           projectStatusId: '',
           projectPusher: '',
           projectPusherPhone: ''
@@ -371,6 +399,7 @@
           companyBelongName: '', // 所属单位
           contractMoney: '',
           contractFirstParty: '',
+          projectStatus: '',
           projectStatusId: '',
           projectPusher: '',
           projectPusherPhone: ''
