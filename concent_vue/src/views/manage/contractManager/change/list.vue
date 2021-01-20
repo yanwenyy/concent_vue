@@ -10,7 +10,7 @@
       <div style="float: right;">
         <el-form class="search-form" :inline="true" :model="searchFrom" @keyup.enter.native="init()">
           <el-form-item label="合同名称:">
-            <el-input  class="list-search-picker" v-model="searchFrom.contractName" placeholder="项目名称" clearable></el-input>
+            <el-input  class="list-search-picker" v-model="searchFrom.contractName" placeholder="合同名称" clearable></el-input>
           </el-form-item>
           <el-form-item
             label="审核状态:"
@@ -291,7 +291,10 @@
         this.getData();
       },
       searchFromReset() {
-        this.$refs["searchFrom"].resetFields();
+        // this.$refs["searchFrom"].resetFields();
+        this.searchFrom.contractName = "";
+        this.searchFrom.state = "";
+        this.getData();
       },
       // 列表选项数据
       handleSelectionChange(val) {
