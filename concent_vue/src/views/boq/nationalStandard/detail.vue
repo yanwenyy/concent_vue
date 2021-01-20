@@ -120,7 +120,7 @@
             prop="boqNationalStandard.engineeringType"
           >
             <el-select
-              collapse-tags
+              class="multiple-sel"
               :disabled="p.actpoint === 'look'"
               clearable
               filterable
@@ -278,6 +278,7 @@
                 color: 'rgba(0,0,0,1)',
               }"
               @select="handleSelectionChange"
+            :header-cell-class-name="cellClass"
               align="center"
               border
               class="detailTable"
@@ -636,12 +637,19 @@ import AddBd  from "./addBd";
         // });
       },
       del(index,item,list,type) {
+        console.log(this.multipleSelection.length)
+      if (this.multipleSelection.length != 1) {
+        this.$message.info("请选择一条记录进行删除操作！");
+        return false;
+      }
+
         var i='';
         this.detailform.nationalStandardScheduleBOList.forEach((item,index)=>{
           if(item.nationalStandardSchedule.uuid==this.selectIndex.nationalStandardSchedule.uuid){
             i=index;
           }
         })
+
         if(this.selectIndex.nationalStandardSchedule.uuid){
           this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
             confirmButtonText: '确定',
@@ -664,8 +672,7 @@ import AddBd  from "./addBd";
         }else{
           this.detailform.nationalStandardScheduleBOList.splice(i, 1);
         }
-        // var _self = this;
-        // _self.detailform.topInfoSectionList.splice(index, 1);
+
       },
       //新增标段和地点
     add(type) {
@@ -738,10 +745,25 @@ import AddBd  from "./addBd";
         this.multipleSelection = val;
         this.selectIndex=row;
       },
+      cellClass(row){
+            console.log(row)
+            if (row.columnIndex === 0) {
+                return 'DisableSelection'
+            }
+      },
     },
   };
 </script>
 <style lang="scss" scoped>
+.el-table .DisableSelection .cell .el-checkbox__inner{
+  display: none;
+  position: relative;
+}
+.el-table .DisableSelection .cell:before{
+  content: "";
+  position: absolute;
+  // right: 11px;
+}
   .btn-group{
     text-align: center;
     margin-top: 20px;
@@ -926,6 +948,17 @@ import AddBd  from "./addBd";
 .small_size{
   font-size: 12px;
 }
-
+>>>.el-table__row{
+  height: 50px !important;
+}
+>>>.el-table__header-wrapper  .el-checkbox{//找到表头那一行，然后把里面的复选框隐藏掉
+  display:none
+}
+>>>.el-table--border, .el-table--group{
+  border: 0px !important;
+}
+>>>.el-table__header{
+  margin: 20px 0 0 0px;
+}
 </style>
 
