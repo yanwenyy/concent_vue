@@ -71,6 +71,7 @@
 <br>
         <el-form-item label="开标日期:" class="list-item">
           <el-date-picker
+            width="100%"
             filterable
             clearable
             type="date"
@@ -650,6 +651,9 @@ import { isMoney } from '@/utils/validate'
   }
 </script>
 <style scoped>
+>>>.el-date-editor{
+  width: 100%!important;
+}
 .bdClass >>>.el-dialog{
     height: 70vh!important;
   }

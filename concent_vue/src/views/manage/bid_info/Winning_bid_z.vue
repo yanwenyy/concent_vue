@@ -245,6 +245,7 @@
 <br>
         <el-form-item label="开标日期:" class="list-item">
           <el-date-picker
+            width="100%"
             filterable
             clearable
             type="date"
@@ -541,6 +542,7 @@
     v-if="zbForm.bidInfoSection.isWinBid==='1'">
       <el-date-picker
       :disabled="zbType=='look'"
+      width="100%"
       v-model="zbForm.bidInfoSection.bidTime"
       type="date"
       value-format="timestamp"
@@ -932,6 +934,9 @@ export default {
 };
 </script>
 <style scoped>
+.el-date-editor{
+  width: 100%!important;
+}
 .el-table__row {
   cursor: pointer;
 }

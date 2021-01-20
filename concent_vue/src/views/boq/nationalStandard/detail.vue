@@ -10,22 +10,22 @@
         <el-button v-show="p.actpoint != 'look'" @click="submit" class="detailbutton">提交</el-button>
       </div>
       <div class="detailBox">
-
-      <el-collapse v-model="activeNames" @change="handleChange">
-        <el-collapse-item name="1">
-              <template slot="title"><p class="title_head">基本信息</p></template>
-
-          <div class="padding">
-        <el-form
+ <el-form
           :inline="false"
           :model="detailform"
           :rules="rules"
           class="gcform"
           ref="detailform"
         >
+      <el-collapse v-model="activeNames">
+        <el-collapse-item name="1">
+              <template slot="title"><p class="title_head">基本信息</p></template>
+
+          <div class="padding">
+
           <el-form-item
             label="国标名称:"
-            prop="topInfor.inforName"
+            prop="boqNationalStandard.name"
             :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -36,8 +36,9 @@
               :disabled="p.actpoint === 'look'"
               clearable
 
-              v-model="detailform.topInfor.inforName"/>
+              v-model="detailform.boqNationalStandard.name"/>
           </el-form-item>
+
           <el-form-item
             label="子名称:"
           >
@@ -45,13 +46,13 @@
               :disabled="p.actpoint === 'look'"
               clearable
 
-              v-model="detailform.topInfor.inforNameForeign"/>
+              v-model="detailform.boqNationalStandard.childName"/>
           </el-form-item>
 
           <br>
           <el-form-item
               label="标准号:"
-              prop="topInfor.constructionOrg"
+              prop="boqNationalStandard.standrardId"
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -62,12 +63,12 @@
                 :disabled="p.actpoint === 'look'"
                 clearable
 
-                v-model="detailform.topInfor.constructionOrg"
+                v-model="detailform.boqNationalStandard.standrardId"
               />
             </el-form-item>
           <el-form-item
             label="文号:"
-            prop="topInfor.designOrg"
+            prop="boqNationalStandard.titanic"
             :rules="{
                 message: '此项不能为空',
                 trigger: 'blur',
@@ -77,13 +78,13 @@
               clearable
               :disabled="p.actpoint === 'look'"
 
-              v-model="detailform.topInfor.designOrg"
+              v-model="detailform.boqNationalStandard.titanic"
             />
           </el-form-item>
           <br>
           <el-form-item
           label="实施日期:"
-          prop="topInfor.planBidTime"
+          prop="boqNationalStandard.implementationTime"
           :rules="{
               required: true,
               message: '此项不能为空',
@@ -97,7 +98,7 @@
             clearable
             type="date"
             value-format="timestamp"
-            v-model="detailform.topInfor.planBidTime"
+            v-model="detailform.boqNationalStandard.implementationTime"
 
           >
           </el-date-picker>
@@ -105,7 +106,7 @@
 
           <el-form-item
             label="归口单位:"
-            prop="topInfor.bidAgentCompany"
+            prop="boqNationalStandard.underCentralizedUnit"
             :rules="{
               message: '此项不能为空',
               trigger: 'blur',
@@ -114,22 +115,21 @@
             <el-input
               :disabled="p.actpoint === 'look'"
 
-              v-model="detailform.topInfor.bidAgentCompany"
+              v-model="detailform.boqNationalStandard.underCentralizedUnit"
             />
           </el-form-item>
         <br>
           <el-form-item
             label="适用范围:"
-            prop="topInfor.enginTypeFirstId"
+            prop="boqNationalStandard.engineeringType"
           >
             <el-select
               :disabled="p.actpoint === 'look'"
               clearable
               filterable
               placeholder="请选择"
-              @change="getTwo"
 
-              v-model="detailform.topInfor.enginTypeFirstId"
+              v-model="detailform.boqNationalStandard.engineeringType"
             >
               <el-option
                 :key="index"
@@ -143,7 +143,7 @@
           <el-form-item
             class="inline-formitem"
             label="是否启用情景状态:"
-            prop="topInfor.isMajorProject"
+            prop="boqNationalStandard.isUseSceneState"
             :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -153,7 +153,7 @@
             <el-switch
               :disabled="p.actpoint === 'look'"
               class="inline-formitem-switch"
-              v-model="detailform.topInfor.isMajorProject"
+              v-model="detailform.boqNationalStandard.isUseSceneState"
               active-color="#409EFF"
               inactive-color="#ddd"
               active-value="0"
@@ -166,8 +166,8 @@
               <el-form-item
                 class="neirong"
                 label="标准简介:"
-                prop="topInfor.inforContent"
-                style="width: 100%"
+                prop="boqNationalStandard.instructions"
+                style="width: 100% !important"
               >
                 <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                 <el-input
@@ -175,7 +175,7 @@
                   type="textarea"
                   clearable
                   placeholder="请输入"
-                  v-model="detailform.topInfor.inforContent"
+                  v-model="detailform.boqNationalStandard.instructions"
                 />
               </el-form-item>
             </div>
@@ -183,8 +183,8 @@
               <el-form-item
                 class="neirong"
                 label="编码说明:"
-                prop="topInfor.inforContent"
-                style="width: 100%"
+                prop="boqNationalStandard.codeInstructions"
+                style="width: 100% !important"
               >
                 <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                 <el-input
@@ -192,7 +192,7 @@
                   type="textarea"
                   clearable
                   placeholder="请输入"
-                  v-model="detailform.topInfor.inforContent"
+                  v-model="detailform.boqNationalStandard.codeInstructions"
                 />
               </el-form-item>
             </div>
@@ -200,20 +200,19 @@
               <el-form-item
                 class="neirong"
                 label="备注:"
-                prop="topInfor.inforContent"
-                style="width: 100%"
+                prop="boqNationalStandard.remarks"
+                style="width: 100% !important"
               >
-                <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                 <el-input
                   :disabled="p.actpoint === 'look'"
                   type="textarea"
                   clearable
                   placeholder="请输入"
-                  v-model="detailform.topInfor.inforContent"
+                  v-model="detailform.boqNationalStandard.remarks"
                 />
               </el-form-item>
             </div>
-        </el-form>
+
         </div>
        </el-collapse-item>
         <el-collapse-item name="2">
@@ -222,21 +221,21 @@
               <el-button-group style="float: left">
               <el-button
                 v-show="p.actpoint != 'look'"
-                @click="add('bd')"
+                @click="openBd('add')"
                 plain
                 type="primary"
               >新增</el-button>
 
               <el-button
                 v-show="p.actpoint != 'look'"
-                @click="add('bd')"
+                @click="openBd('edit')"
                 plain
                 type="primary"
               >修改</el-button>
 
               <el-button
                 v-show="p.actpoint != 'look'"
-                @click="add('bd')"
+                @click="del"
                 plain
                 type="primary"
               >删除</el-button>
@@ -250,9 +249,6 @@
               </el-button-group>
 
           <div style="float: right">
-        <!-- <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-        <el-button @click="getData" type="primary" plain>查询</el-button> -->
-        <!-- <el-button @click="Importdata" type="primary" plain>导入</el-button> -->
         <el-upload
                 class="upload-demo detailUpload"
                 :action="'/api/contract/topInfo/CommonFiles/bidInfo/01/uploadFile'"
@@ -261,6 +257,7 @@
                 :show-file-list="false"
                 accept=".xls,.xlsx"
                 multiple
+                v-show="p.actpoint != 'look'"
               >
                 <el-button
                   type="primary"
@@ -268,31 +265,33 @@
                   >导入
                   </el-button>
                   </el-upload>
-        <el-button @click="exportdata" type="primary" plain>导出</el-button>
+        <el-button @click="exportdata" type="primary" plain v-show="p.actpoint != 'look'">导出</el-button>
 
 </div>
-        <div class="padding">
-        <el-form
-          :inline="false"
-          :model="detailform"
-          :rules="rules"
-          class="gcform"
-          ref="detailform"
-        >
+
+
             <el-table
-              :data="detailform.topInfoSectionList"
+              :key="key"
+              @row-dblclick="openBd2"
+              :data="detailform.nationalStandardScheduleBOList"
               :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
                 color: 'rgba(0,0,0,1)',
               }"
-              @selection-change="handleSelectionChange"
+              @select="handleSelectionChange"
               align="center"
               border
               class="detailTable"
               ref="table"
-              style="width: 98%;"
+              style="width: 100%; min-height: calc(100vh - 370px)"
             >
+              <el-table-column
+                :width="50"
+                align="center"
+                show-overflow-tooltip
+                type="selection"
+              ></el-table-column>
               <el-table-column
                 :width="80"
                 align="center"
@@ -304,7 +303,7 @@
             <el-table-column
               :resizable="false"
               label="编码"
-              prop="bidInfoSection.sectionName"
+              prop="nationalStandardSchedule.code"
               show-overflow-tooltip
               align="center"
               :width="180"
@@ -314,7 +313,7 @@
             <el-table-column
               :resizable="false"
               label="项目名称"
-              prop="bidInfoSection.sectionName"
+              prop="nationalStandardSchedule.projectName"
               show-overflow-tooltip
               align="center"
               :width="180"
@@ -324,7 +323,7 @@
             <el-table-column
               :resizable="false"
               label="计量单位"
-              prop="bidInfoSection.sectionName"
+              prop="nationalStandardSchedule.measuringUnit"
               show-overflow-tooltip
               align="center"
               :width="180"
@@ -334,7 +333,7 @@
             <el-table-column
               :resizable="false"
               label="项目划分特征"
-              prop="bidInfoSection.sectionName"
+              prop="nationalStandardSchedule.projectDivFeatures"
               show-overflow-tooltip
               align="center"
               :width="180"
@@ -344,7 +343,7 @@
             <el-table-column
               :resizable="false"
               label="工程量计算规则"
-              prop="bidInfoSection.sectionName"
+              prop="nationalStandardSchedule.quantityCalRules"
               show-overflow-tooltip
               align="center"
               :width="180"
@@ -354,7 +353,7 @@
             <el-table-column
               :resizable="false"
               label="工程（工作）内容"
-              prop="bidInfoSection.sectionName"
+              prop="nationalStandardSchedule.projectContent"
               show-overflow-tooltip
               align="center"
               :width="180"
@@ -364,7 +363,7 @@
             <el-table-column
               :resizable="false"
               label="附注"
-              prop="bidInfoSection.sectionName"
+              prop="nationalStandardSchedule.remarks"
               show-overflow-tooltip
               align="center"
               :width="180"
@@ -372,23 +371,25 @@
             </el-table-column>
             </el-table>
 
-        </el-form>
-        </div>
+
 
        </el-collapse-item>
       </el-collapse>
 
+        </el-form>
     </div>
 
 
 
 
     </el-card>
+     <add-bd v-if="BDCSVisible" ref="infoBD" @refreshBD="getBdInfo"></add-bd>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
   </div>
 </template>
 
 <script>
+import AddBd  from "./addBd";
   import Tree from '@/components/tree'
   import FileUpload from '@/components/fileUpload'
   import { isMoney, isMobile} from '@/utils/validate'
@@ -417,18 +418,17 @@
       }
       return {
         maxMoney:1000000,
+        selectIndex:'',
         id:'',
         key: 0,
+         BDCSVisible: false, //标段新增弹框状态
         treeStatas: false,
         positionIndex: '',//缓存当前的选中的项目地点的index
         options2: [],
         options: [],
         detailform: {
-          topInfor: {},
-          topInfoOrg: {},
-          topInfoSiteList: [],
-          topInfoSectionList: [],
-          value1: [],
+          boqNationalStandard:{},
+          nationalStandardScheduleBOList:[],
         },
         activeNames: ['1'],
         xqprojectType: [],//工程类别二级
@@ -458,59 +458,15 @@
     },
     components: {
       Tree,
-      FileUpload
+      FileUpload,
+      AddBd,
     },
     computed: {
       projectDomainType() {
-        // console.log(this.$store.state.category.projectDomainType)
         return this.$store.state.category.projectDomainType;
-      },
-      emergingMarket() {
-        // console.log(this.$store.state.category.emergingMarket)
-        return this.$store.state.category.emergingMarket;
-      },
-      projectNature(){
-        return this.$store.state.category.projectNature;
-      },
-      certificationType(){
-        return this.$store.state.certificationType;
-      },
-      bizCode() {
-        return this.$store.state.bizCode;
-      },
-      projectPlate(){
-        return this.$store.state.projectPlate;
-      },
-      bulletinType() {
-        return this.$store.state.bulletinType;
-      },
-      projectModel() {
-        return this.$store.state.projectModel;
-      },
-      amountSource() {
-        return this.$store.state.amountSource;
-      },
-      // yesOrNo() {
-      //   return this.$store.state.yesOrNo;
-      // },
-      position() {
-        return this.$store.state.position;
-      },
-      probability() {
-        return this.$store.state.probability;
-      },
-      railwayLine() {
-        return this.$store.state.railwayLine;
       },
     },
     mounted() {
-      // window.onresize = () => {
-      //   return (() => {
-      //     window.screenWidth = document.body.clientWidth
-      //   console.log( window.screenWidth)
-      // })()
-      // }
-      // this.$store.commit("setCategory", 'projectDomainType');
       this.id=this.p.instid;
       if (this.p.actpoint === "edit"||this.id) {
         this.getDetail();
@@ -536,6 +492,24 @@
       // eslint-disable-next-line no-unde
     },
     methods: {
+      //导出函数
+      exportdata(){},
+          //上传附件
+    handleChange(response, file, fileList) {
+      if (response && response.code === 200) {
+        this.$message({
+          message: "上传成功",
+          type: "success",
+          duration: 1500,
+          onClose: () => {
+            this.detailform.bidInfo_01.push(response.data);
+            // console.log(fileList);
+          },
+        });
+      } else {
+        this.$message.error(response.msg);
+      }
+    },
       //解决新增的时候二级联动清除不了
       clear(id,name){
         id='';
@@ -566,6 +540,18 @@
         });
         this.key = this.key + 1;
       },
+    //获取新增的标段
+    getBdInfo(data) {
+      console.log(data);
+      if (data.type == "add") {
+        this.detailform.nationalStandardScheduleBOList.push(data);
+      } else if (data.type == "edit") {
+        this.detailform.nationalStandardScheduleBOList[data.index] = data;
+      }
+      console.log(this.detailform.nationalStandardScheduleBOList);
+      this.BDCSVisible = false;
+      this.key = this.key + 1;
+    },
       //选择项目地点
       selectPosition() {
         this.treeStatas = true;
@@ -576,51 +562,7 @@
       },
       submit() {
       },
-      //工程类别二级
-      getTwo(id) {
-        this.detailform.topInfor.enginTypeSecondId='';
-        this.xqprojectType=[];
-        if(id!=''){
-          this.projectDomainType.find(
-            (item) => {
-              if (item.id == id) {
-                this.detailform.topInfor.enginTypeFirstName = item.detailName;
-                this.xqprojectType = item.children;
-              }
-            }
-          )
-        }
-      },
-      //新兴市场二级
-      getTwoSC(id) {
-        this.detailform.topInfor.marketSecondId='';
-        this.emergingMarketTwo=[];
-        if(id!=''){
-          this.emergingMarket.find(
-            (item)=>{
-              if (item.id == id) {
-                this.detailform.topInfor.marketFirstName = item.detailName;
-                this.emergingMarketTwo = item.children;
-              }
-            }
-          )
-        }
-      },
-      //项目性质二级
-      getTwoXZ(id){
-        this.detailform.topInfor.projectNatureSecondId='';
-        this.projectNatureTwo=[];
-        if(id!=''){
-          this.projectNature.find(
-            (item)=>{
-            if (item.id == id) {
-            this.detailform.topInfor.projectNatureFirstName = item.detailName;
-            this.projectNatureTwo = item.children;
-          }
-        }
-        )
-        }
-      },
+
       //获取下拉框id和name的公共方法
       getName(id, list, name) {
         if(id){
@@ -631,34 +573,16 @@
           console.log(this.detailform.topInfor[name]);
         }
       },
-      //获取下拉框id和name的公共方法
-      getNameZb(id, list, name) {
-        if(id){
-          this.$forceUpdate()
-          this.detailform.topInfoOrg[name] = list.find(
-            (item) => item.id == id
-        ).detailName;
-          console.log(this.detailform.topInfoOrg[name]);
-        }
-      },
+
       saveInfo(formName) {
 
-        var topInforCapitalList = [];
-        this.amountSource.forEach((item) => {
-          if (this.detailform.value1&&this.detailform.value1.indexOf(item.id) != -1) {
-            var v = {
-              capitalId: item.id,
-              capitalName: item.detailName,
-            };
-            topInforCapitalList.push(v);
-          }
-        });
-        this.detailform.topInforCapitalList=topInforCapitalList;
+
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
               .post(
-                "/api/contract/topInfo/TopInfor/detail/saveOrUpdate",
+                "/api/contract/boq/BoqNationalStandard/detail/save",
+
                 JSON.stringify(this.detailform),
                 {useJson: true}
               )
@@ -668,10 +592,7 @@
                     message: "保存成功",
                     type: "success",
                   });
-                  this.$refs[formName].resetFields();
-                  this.$router.push({
-                    path: "/manage/proposal/list",
-                  });
+                  this.$router.back();
                 }
               });
           } else {
@@ -691,8 +612,13 @@
         // });
       },
       del(index,item,list,type) {
-        console.log(index);
-        if(item.uuid&&type=='bd'){
+        var i='';
+        this.detailform.nationalStandardScheduleBOList.forEach((item,index)=>{
+          if(item.nationalStandardSchedule.uuid==this.selectIndex.nationalStandardSchedule.uuid){
+            i=index;
+          }
+        })
+        if(this.selectIndex.nationalStandardSchedule.uuid){
           this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
@@ -700,75 +626,93 @@
           }).then(() => {
             this.$http
               .post(
-                "/api/contract/topInfo/TopInfoSection/list/delete",
-                {ids: [item.uuid]}
+                "/api/contract/boq/BoqNationalStandard/list/delete",
+                {ids: [this.selectIndex.nationalStandardSchedule.uuid]}
               )
               .then((res) => {
                 if (res.data && res.data.code === 200) {
-                  list.splice(index, 1);
-                  console.log(list)
+                  this.detailform.nationalStandardScheduleBOList.splice(i, 1);
                 } else {
                   this.$message.error(data.msg)
                 }
               });
           }).catch(() => {})
         }else{
-          list.splice(index, 1);
+          this.detailform.nationalStandardScheduleBOList.splice(i, 1);
         }
         // var _self = this;
         // _self.detailform.topInfoSectionList.splice(index, 1);
       },
       //新增标段和地点
-      add(type) {
-        var v = {};
-        if (type == 'dd') {
-          v = {
-            country: '',
-            ffid: '',
-            path: '',
-            contractAmount: '',
-            isMain: ''
-          }
-          this.detailform.topInfoSiteList.push(v);
-        } else {
-          v = {
-            sectionName: '',
-            projectScale: '',
-          }
-          this.detailform.topInfoSectionList.push(v);
-        }
-      },
-      resetinfo() {
-        this.sizeform = {
-          id: "",
-          part: "",
-          showinput: true,
-        };
-      },
+    add(type) {
+      var v = {
+        nationalStandardSchedule: {},
+      };
+      v = {
+        riskFee: "",
+      };
+      this.detailform.nationalStandardScheduleBOList.push(v);
+      console.log(v);
+    },
+
       // 加载列表
       getDetail() {
         this.$http
-          .post("/api/contract/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.id})
+          .post("/api/contract/boq/BoqNationalStandard/detail/entityInfo", {id:this.id})
           .then((res) => {
             var datas=res.data.data;
-            this.getTwo(datas.topInfor.enginTypeFirstId);
-            this.getTwoSC(datas.topInfor.marketFirstNameId);
-            this.getTwoXZ(datas.topInfor.projectNatureFirstId);
+
             this.detailform={
-              topInfor: datas.topInfor,
-              topInfoOrg: datas.topInfoOrg,
-              topInfoSiteList: datas.topInfoSiteList,
-              topInfoSectionList: datas.topInfoSectionList,
-              value1:[],
+              boqNationalStandard: datas.boqNationalStandard,
+              nationalStandardScheduleBOList: datas.nationalStandardScheduleBOList,
             }
-            datas.topInforCapitalList.forEach((item)=>{
-              this.detailform.value1.push(item.capitalId)
-            });
+
           });
       },
 
-      handleSelectionChange(val) {
+          //打开标段弹框
+    openBd(type, detail, index) {
+      var i='';
+      if(type=='edit'){
+        if (this.multipleSelection.length !== 1) {
+          this.$message.info("请选择一条记录进行查看操作！");
+          return false;
+        };
+        // selectIndex
+        this.detailform.nationalStandardScheduleBOList.forEach((item,index)=>{
+          if(item.nationalStandardSchedule.uuid==this.selectIndex.nationalStandardSchedule.uuid){
+            i=index;
+          }
+        })
+      }
+      this.BDCSVisible = true;
+      this.$nextTick(() => {
+         // this.detailform.topInforBO.topInfoSectionList,
+        //  this.detailform.bidInfo.isBidRates
+        this.$refs.infoBD.init(
+          this.detailform.nationalStandardScheduleBOList,
+          '',
+          type,
+          this.selectIndex,
+          i
+        );
+      });
+    },
+    openBd2(row) {
+      this.BDCSVisible = true;
+      this.$nextTick(() => {
+        this.$refs.infoBD.init(
+          this.detailform.nationalStandardScheduleBOList,
+          '',
+          "look",
+          row
+        );
+      });
+    },
+
+      handleSelectionChange(val,row) {
         this.multipleSelection = val;
+        this.selectIndex=row;
       },
     },
   };
@@ -791,7 +735,7 @@
       text-align: right;
       top: 0%;
     }
-    >.el-form-item,>>>.formItem{
+    >>>.el-form-item,>>>.formItem{
 
       display: inline-block;
       width: 32.5%!important;
@@ -922,8 +866,9 @@
 
   >>>.el-collapse-item__header{
     color: #0a469d !important;
-    height: 20px;
-    background: #ebf0f9 !important;
+    height: 30px;
+    background:#f8fafd !important;
+    margin: 10px;
   }
   .detailBox{
     padding: 0px !important;
@@ -934,5 +879,23 @@
   .title_head{
     margin: 0 0 0 10px;
   }
+  >>>.el-table__body, .el-table__footer, .el-table__header{
+    width: 100%!important;
+    height: 40px;
+  }
+  >>>.el-table__header{
+  width: 100%!important;
+  margin: 15px 0 0 0;
+  }
+  >>>.el-table .cell, .el-table--border td:first-child .cell, .el-table--border th:first-child .cell {
+    padding-left: 10px;
+    margin: auto;
+}
+>>>.el-collapse-item__wrap{
+  padding: 0px 10px;
+}
+// >>>.neirong{
+//    width: 100% !important;
+// }
 </style>
 

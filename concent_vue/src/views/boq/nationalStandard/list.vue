@@ -59,10 +59,11 @@
           show-overflow-tooltip
           type="index"
         ></el-table-column>
+
         <el-table-column
           :width="500"
           label="国标名称"
-          prop="inforName"
+          prop="name"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -71,13 +72,10 @@
               <el-input
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchform.inforName"
+                v-model="searchform.name"
                 size="mini"
               />
             </div>
-          </template>
-          <template slot-scope="scope">
-              <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
           </template>
         </el-table-column>
 
@@ -85,7 +83,7 @@
           :width="300"
           align="center"
           label="子名称"
-          prop="constructionOrg"
+          prop="childName"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -94,7 +92,7 @@
               <el-input
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchform.constructionOrg"
+                v-model="searchform.childName"
                 size="mini"
               />
             </div>
@@ -105,7 +103,7 @@
           :width="150"
           align="center"
           label="标准号"
-          prop="noticeTypeName"
+          prop="standrardId"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -114,7 +112,7 @@
               <el-input
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchform.constructionOrg"
+                v-model="searchform.standrardId"
                 size="mini"
               />
             </div>
@@ -125,7 +123,7 @@
           :width="150"
           align="center"
           label="文号"
-          prop="noticeTypeName"
+          prop="titanic"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -134,7 +132,7 @@
               <el-input
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchform.constructionOrg"
+                v-model="searchform.titanic"
                 size="mini"
               />
             </div>
@@ -146,7 +144,7 @@
           :width="180"
           align="center"
           label="实施日期"
-          prop="state"
+          prop="implementationTime"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -158,14 +156,13 @@
                 clearable
                 type="date"
                 value-format="timestamp"
-                v-model="searchform.planBidTime"
-
+                v-model="searchform.implementationTime"
               >
               </el-date-picker>
             </div>
           </template>
           <template slot-scope="scope">{{
-            scope.row.planBidTime | dateformat
+            scope.row.implementationTime | dateformat
             }}</template>
         </el-table-column>
 
@@ -173,7 +170,7 @@
           :width="150"
           align="center"
           label="归口单位"
-          prop="noticeTypeName"
+          prop="underCentralizedUnit"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -182,7 +179,7 @@
               <el-input
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchform.constructionOrg"
+                v-model="searchform.underCentralizedUnit"
                 size="mini"
               />
             </div>
@@ -272,7 +269,7 @@
           this.$message.info("请选择一条记录进行查看操作！");
           return false;
         }
-        let p = {actpoint: "edit", instid: this.multipleSelection[0].topOrgId};
+        let p = {actpoint: "edit", instid: this.multipleSelection[0].uuid};
         this.$router.push({
           path: "./detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
@@ -281,7 +278,7 @@
       },
       // 查看
       rowshow(row) {
-        let p = {actpoint: "look", instid: row.topOrgId};
+        let p = {actpoint: "look", instid: row.uuid};
         this.$router.push({
           path: "./detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
@@ -295,7 +292,7 @@
         }
         let uuids = []
         this.multipleSelection.forEach((item) => {
-          uuids.push(item.topOrgId)
+          uuids.push(item.uuid)
         });
         this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
           confirmButtonText: '确定',
@@ -304,7 +301,7 @@
         }).then(() => {
           this.$http
           .post(
-            "/api/contract/topInfo/TopInfor/list/delete",
+            "/api/contract/boq/BoqNationalStandard/list/delete",
             {ids: uuids}
           )
           .then((res) => {
@@ -340,7 +337,7 @@
       },
       searchformReset() {
         // this.$refs["searchform"].resetFields();
-        this.searchform.inforName = "";
+        this.searchform.Name = "";
         this.searchform.enginTypeFirstId = "";
         this.searchform.constructionOrg = "";
         this.searchform.noticeTypeId = "";
@@ -354,7 +351,8 @@
       getData() {
         this.$http
           .post(
-            "/api/contract/topInfo/TopInfor/list/loadPageDataForReg",
+            "/api/contract/boq/BoqNationalStandard/list/loadPageData",
+
             this.searchform
           )
           .then((res) => {
