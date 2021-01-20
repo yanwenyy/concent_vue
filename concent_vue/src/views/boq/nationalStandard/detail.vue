@@ -762,7 +762,7 @@ import AddBd  from "./addBd";
     >>>.el-form-item,>>>.formItem{
 
       display: inline-block;
-      width: 32.5%!important;
+      width: 33%!important;
     }
     .detailformfooter1 {
       margin-top: 5px;

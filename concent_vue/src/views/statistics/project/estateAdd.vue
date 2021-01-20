@@ -7,8 +7,8 @@
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'edit'"><b>房地产项目修改</b></span>
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'look'"><b>房地产项目查看</b></span>
         <el-button @click="back" class="detailbutton">返回</el-button>
-        <el-button v-if="p.actpoint !== 'look'" @click="submitForm('detailForm')" type="primary" class="detailbutton">保存</el-button>
-        <el-button v-if="p.actpoint !== 'look'" class="detailbutton">提交</el-button>
+        <el-button v-if="p.actpoint !== 'look'" type="primary" @click="submitForm('detailForm')" class="detailbutton">保存</el-button>
+        <el-button v-if="p.actpoint !== 'look'" @click="submit" class="detailbutton">提交</el-button>
       </div>
       <div class="detailBoxBG" style="height: calc(100vh - 196px)">
         <el-form
@@ -387,6 +387,7 @@
     },
     data() {
       return {
+        uuid: null,
         switchvalue: true,
         treeStatas: false,
         emergingMarketTwo: [],
@@ -512,10 +513,9 @@
           )
         }
       },
-      submitForm(formName) {
-        console.log(this.detailForm)
+      // 保存
+      submitForm(formName, type) {
         this.$refs[formName].validate((valid) => {
-          console.log(this.detailForm, formName, valid)
           if (valid) {
             this.$http
               .post(
@@ -525,13 +525,18 @@
               )
               .then((res) => {
                 if (res.data.code === 200) {
-                  this.$message({
-                    message: '保存成功',
-                    type: 'success'
-                  })
-                  this.$router.push({
-                    path: '/statistics/project/estateList'
-                  })
+                  if (type && type === 'submit') {
+                    this.uuid = res.data.data.uuid
+                    this.submit()
+                  } else {
+                    this.$message({
+                      message: '保存成功',
+                      type: 'success'
+                    })
+                    this.$router.push({
+                      path: '/statistics/project/estateList'
+                    })
+                  }
                 } else {
                   console.log('error submit!')
                 }
@@ -541,6 +546,29 @@
             return false
           }
         })
+      },
+      // 提交
+      submit() {
+        const id = this.p.uuid || this.uuid
+        if (!id) {
+          this.submitForm('detailForm', 'submit')
+        } else {
+          this.$http
+            .post('/api/statistics/StatisticsProject/detail/projectSubmitById', { projectId: id })
+            .then((res) => {
+              if (res.data.code === 200) {
+                this.$message({
+                  message: '提交成功',
+                  type: 'success'
+                })
+                this.$router.push({
+                  path: '/statistics/project/estateList'
+                })
+              } else {
+                console.log('error submit!')
+              }
+            })
+        }
       },
       back() {
         this.$router.back()

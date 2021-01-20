@@ -9,7 +9,7 @@
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'look'"><b>工程承包项目查看</b></span>
         <el-button @click="back" class="detailbutton">返回</el-button>
         <el-button v-if="p.actpoint !== 'look'" type="primary" @click="submitForm('detailForm')" class="detailbutton">保存</el-button>
-        <el-button v-if="p.actpoint !== 'look'" class="detailbutton">提交</el-button>
+        <el-button v-if="p.actpoint !== 'look'" @click="submit" class="detailbutton">提交</el-button>
       </div>
       <div class="detailBoxBG" style="height: calc(100vh - 196px)">
         <el-form
@@ -356,12 +356,12 @@
                   v-for="(item, index) in projectStatus"/>
               </el-select>
             </el-form-item>
-            <!--所在地、使用资质单位暂无-->
+            <!--所在地-->
             <el-form-item
               label="项目所在地"
               prop="project.topInfoSiteList[0].path"
               :rules="{
-                required: true, message: '此项不能为空', trigger: 'blur'
+                required: true, message: '此项不能为空', trigger: 'change'
               }"
               style="width: 32.5%"
             >
@@ -373,20 +373,13 @@
             </el-form-item>
             <el-form-item
               label="签约/使用资质单位:"
-              prop="project.companyId"
+              prop="project.companyName"
               style="width: 32.5%">
-              <el-select
+              <el-input
                 :disabled="p.actpoint === 'look'"
-                filterable
                 clearable
-                placeholder="请选择"
-                v-model="detailForm.project.companyId">
-                <el-option
-                  :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options1"/>
-              </el-select>
+                placeholder="请输入"
+                v-model="detailForm.project.companyName"/>
             </el-form-item>
           </el-row>
           <!--新兴市场(一级)-->
@@ -907,6 +900,7 @@
     },
     data() {
       return {
+        uuid: null,
         DwVisible: false,
         treeStatas: false,
         uploadVisible: false,
@@ -914,7 +908,6 @@
         projectTypeTwo: [], // 工程类别二级
         projectNatureTwo: [], // 项目性质二级
         isOutputTax: [{ label: '是' }, { label: '否' }], // 上报产值是否含税
-        value1: '',
         options1: [{ label: '测试所在地', value: 'testabcd' }],
         detailForm: {
           project: {
@@ -926,7 +919,7 @@
             projectNatureId: '', // 项目性质
             projectNatureFirstId: '', // 项目性质(一级)
             projectNatureSecondId: '', // 项目性质(二级)
-            companyId: '', // 签约/使用资质单位
+            // companyId: '', // 签约/使用资质单位
             companyName: '', // 签约/使用资质名称
             companyBuiltName: '', // 承建单位
             railwayId: '', // 所属铁路局
@@ -1011,7 +1004,9 @@
             contractAmountChange: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
             valueAddedTax: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
             companyBuiltName: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
-            marketFirstId: [{ required: true, message: '此项不能为空', trigger: 'blur' }]
+            marketFirstId: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
+            engineSurvey: [{ min: 0, max: 700, message: '最多输入2000字', trigger: 'blur' }],
+            projectRemark: [{ min: 0, max: 2000, message: '最多输入2000字', trigger: 'blur' }]
           }
         },
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
@@ -1090,7 +1085,6 @@
       },
       // 获取上传的附件列表
       getUpInfo(data) {
-        console.log(data, '111')
         this.$forceUpdate()
         this.detailForm.project[data.list] = this.detailForm.project[data.list].concat(data.fileList)
         this.uploadVisible = false
@@ -1197,9 +1191,9 @@
           )
         }
       },
-      submitForm(formName) {
+      // 保存
+      submitForm(formName, type) {
         this.$refs[formName].validate((valid) => {
-          console.log(this.detailForm, formName, valid)
           if (valid) {
             this.$http
               .post(
@@ -1209,13 +1203,18 @@
               )
               .then((res) => {
                 if (res.data.code === 200) {
-                  this.$message({
-                    message: '保存成功',
-                    type: 'success'
-                  })
-                  this.$router.push({
-                    path: '/statistics/project/engineList'
-                  })
+                  if (type && type === 'submit') {
+                    this.uuid = res.data.data.uuid
+                    this.submit()
+                  } else {
+                    this.$message({
+                      message: '保存成功',
+                      type: 'success'
+                    })
+                    this.$router.push({
+                      path: '/statistics/project/engineList'
+                    })
+                  }
                 } else {
                   console.log('error submit!')
                 }
@@ -1225,6 +1224,29 @@
             return false
           }
         })
+      },
+      // 提交
+      submit() {
+        const id = this.p.uuid || this.uuid
+        if (!id) {
+          this.submitForm('detailForm', 'submit')
+        } else {
+          this.$http
+            .post('/api/statistics/StatisticsProject/detail/projectSubmitById', { projectId: id })
+            .then((res) => {
+              if (res.data.code === 200) {
+                this.$message({
+                  message: '提交成功',
+                  type: 'success'
+                })
+                this.$router.push({
+                  path: '/statistics/project/engineList'
+                })
+              } else {
+                console.log('error submit!')
+              }
+            })
+        }
       },
       back() {
         this.$router.back()
@@ -1264,6 +1286,11 @@
 <style lang="scss" scoped>
   .gcform {
     margin-top: 10px;
+    .neirong {
+      > > > .el-form-item__error {
+        top: 4%!important;
+      }
+    }
     > > > .el-form-item__error {
       padding-top: 0px;
       width: 95%;

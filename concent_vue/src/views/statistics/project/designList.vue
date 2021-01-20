@@ -318,9 +318,11 @@
           :width="150"
           align="center"
           label="状态"
-          prop="projectStatusName"
           show-overflow-tooltip
         >
+          <template slot-scope="scope">
+            <span> {{ scope.row.projectStatus=='0'?'已提交':'未提交'}} </span>
+          </template>
           <template slot="header" slot-scope="scope">
             <span>状态</span>
             <div>
@@ -329,7 +331,7 @@
                 clearable
                 size="mini"
                 placeholder="请选择"
-                v-model="searchform.projectStatusId">
+                v-model="searchform.projectStatus">
                 <el-option
                   :key="index"
                   :label="item.detailName"
@@ -369,7 +371,7 @@
         projectTypeTwo: [], // 工程类别(二级)
         projectNatureTwo: [], // 项目性质(二级)
         yesOrNo: [{ id: 0, detailName: '是' }, { id: 1, detailName: '否' }],
-        sousuo: '',
+        projectStatus: [{ id: 0, detailName: '已提交' }, { id: 1, detailName: '未提交' }],
         page: { current: 1, size: 10, total: 0, records: [] },
         searchform: {
           current: 1,
@@ -386,7 +388,7 @@
           projectTypeId: '',
           isConsortion: '',
           createTime: '',
-          projectStatusId: '',
+          projectStatus: '',
           projectLocation: ''
         },
         menus: [],
@@ -403,9 +405,6 @@
       },
       projectType() {
         return this.$store.state.projectType
-      },
-      projectStatus() {
-        return this.$store.state.projectStatus
       }
     },
     methods: {
@@ -541,7 +540,7 @@
           projectTypeId: '',
           isConsortion: '',
           createTime: '',
-          projectStatusId: '',
+          projectStatus: '',
           projectLocation: ''
         }
         this.getData()

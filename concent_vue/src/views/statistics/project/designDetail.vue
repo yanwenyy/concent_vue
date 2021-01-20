@@ -8,8 +8,10 @@
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'edit'"><b>勘察设计项目修改</b></span>
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'look'"><b>勘察设计项目查看</b></span>
         <el-button @click="back" class="detailbutton">返回</el-button>
-        <el-button v-if="p.actpoint !== 'look'" @click="submitForm('detailForm')" type="primary" class="detailbutton">保存</el-button>
-        <el-button v-if="p.actpoint !== 'look'" class="detailbutton">提交</el-button>
+        <el-button v-if="p.actpoint !== 'look'" type="primary" @click="submitForm('detailForm')" class="detailbutton">
+          保存
+        </el-button>
+        <el-button v-if="p.actpoint !== 'look'" @click="submit" class="detailbutton">提交</el-button>
       </div>
       <div class="detailBoxBG" style="height: calc(100vh - 196px)">
         <el-form
@@ -349,28 +351,47 @@
             <!--所在地、使用资质单位暂无-->
             <el-form-item
               label="项目所在地"
+              prop="project.topInfoSiteList[0].path"
+              :rules="{
+                required: true, message: '此项不能为空', trigger: 'change'
+              }"
               style="width: 32.5%"
             >
-              <el-input v-model="detailForm.project.topInfoSiteList[0].path" :disabled="p.actpoint === 'look'" placeholder="项目所在地" clearable>
-                <el-button slot="append" icon="el-icon-search" :disabled="p.actpoint === 'look'" @click="selectPosition()"></el-button>
+              <el-input v-model="detailForm.project.topInfoSiteList[0].path" placeholder="项目所在地"
+                        :disabled="p.actpoint === 'look'" clearable>
+                <el-button slot="append" :disabled="p.actpoint === 'look'" icon="el-icon-search"
+                           @click="selectPosition()"></el-button>
               </el-input>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item
+              label="业务类别:"
+              prop="categorySecondId"
+              style="width: 32.5%">
+              <el-select
+                filterable
+                clearable
+                :disabled="p.actpoint === 'look'"
+                placeholder="请选择"
+                @change="getName(detailForm.project.categorySecondId, bizTypeCodeTwo, 'categorySecondName')"
+                v-model="detailForm.project.categorySecondId">
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in bizTypeCodeTwo"/>
+              </el-select>
             </el-form-item>
             <el-form-item
               label="签约/使用资质单位:"
-              prop="project.companyId"
+              prop="project.companyName"
               style="width: 32.5%">
-              <el-select
+              <el-input
                 :disabled="p.actpoint === 'look'"
-                filterable
                 clearable
-                placeholder="请选择"
-                v-model="detailForm.project.companyId">
-                <el-option
-                  :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options1"/>
-              </el-select>
+                placeholder="请输入"
+                v-model="detailForm.project.companyName"/>
             </el-form-item>
           </el-row>
           <!--新兴市场(一级)-->
@@ -510,26 +531,6 @@
               </el-select>
             </el-form-item>
           </el-row>
-          <!--勘察设计里才有业务板块和实物工程量，先注释掉-->
-          <!--<el-row>-->
-          <!--<el-form-item-->
-          <!--label="业务板块:"-->
-          <!--prop="businessId"-->
-          <!--style="width: 32.5%">-->
-          <!--<el-select-->
-          <!--:disabled="p.actpoint === 'look'"-->
-          <!--filterable-->
-          <!--clearable-->
-          <!--placeholder="请选择"-->
-          <!--v-model="detailForm.project.businessId">-->
-          <!--<el-option-->
-          <!--:key="index"-->
-          <!--:label="item.detailName"-->
-          <!--:value="item.id"-->
-          <!--v-for="(item, index) in bizCode"/>-->
-          <!--</el-select>-->
-          <!--</el-form-item>-->
-          <!--</el-row>-->
           <el-row>
             <el-form-item
               label="初始合同额(万元):"
@@ -706,11 +707,11 @@
                 inactive-value="1"/>
             </el-form-item>
           </el-row>
-          <!--备注(最多600字)-->
+          <!--备注(最多2000字)-->
           <el-row>
             <el-form-item
               class="neirong"
-              label="备注(最多600字):"
+              label="备注(最多2000字):"
               prop="project.projectRemark">
               <el-input
                 :disabled="p.actpoint === 'look'"
@@ -746,16 +747,18 @@
               show-overflow-tooltip
               type="index"
             ></el-table-column>
-            <el-table-column align="center"  :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+            <el-table-column align="center" :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
 
             </el-table-column>
 
-            <el-table-column align="center" width="200" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip>
+            <el-table-column align="center" width="200" :resizable="false" label="大小(KB)" prop="fileSize"
+                             show-overflow-tooltip>
               <template slot-scope="scope">
                 {{(scope.row.fileSize/1024).toFixed(2)}}
               </template>
             </el-table-column>
-            <el-table-column align="center" width="100" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+            <el-table-column align="center" width="100" :resizable="false" label="类型" prop="fileType"
+                             show-overflow-tooltip>
 
             </el-table-column>
 
@@ -784,6 +787,7 @@
 <script>
   import Tree from '@/components/tree'
   import FileUpload from '@/components/fileUpload'
+
   export default {
     name: 'InvestMode',
     components: {
@@ -791,12 +795,14 @@
     },
     data() {
       return {
+        uuid: null,
         DwVisible: false,
         treeStatas: false,
         uploadVisible: false,
         emergingMarketTwo: [], // 新兴市场二级类别
         projectTypeTwo: [], // 工程类别二级
         projectNatureTwo: [], // 项目性质二级
+        bizTypeCodeTwo: [], // 业务类别二级
         isOutputTax: [{ label: '是' }, { label: '否' }], // 上报产值是否含税
         value1: '',
         options1: [{ label: '测试所在地', value: 'testabcd' }],
@@ -810,7 +816,7 @@
             projectNatureId: '', // 项目性质
             projectNatureFirstId: '', // 项目性质(一级)
             projectNatureSecondId: '', // 项目性质(二级)
-            companyId: '', // 签约/使用资质单位
+            // companyId: '', // 签约/使用资质单位
             companyName: '', // 签约/使用资质名称
             companyBuiltName: '', // 承建单位
             railwayId: '', // 所属铁路局
@@ -818,7 +824,8 @@
             projectTypeSecondId: '', // 工程类别（二级）
             projectLineId: '', // 所属线路ID
             projectModuleId: 'f6823a41e9354b81a1512155a5565aeb', // 项目板块
-            businessId: '', // 业务板块
+            categoryFirstId: '0f333a962655480c8ef668a8ce129d41', // 业务类别（一级）
+            categorySecondId: '', // 业务类别二级
             isConsortion: '', // 是否联合体项目
             projectTypeId: '', // 项目类型
             projectStatusId: '', // 项目状态
@@ -847,7 +854,7 @@
             isTrusteeship: '', // 是否托管
             isEscrow: '', // 是否代管
             realInvest: '', // 实际投资额(万元)
-            projectRemark: '', // 备注(最多600字)
+            projectRemark: '', // 备注(最多2000字)
             topInfoSiteList: [
               {
                 path: '',
@@ -883,7 +890,8 @@
             valueAddedTax: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
             companyBuiltName: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
             marketFirstId: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
-            physicalQuantity: [{ required: true, message: '此项不能为空', trigger: 'blur' }]
+            physicalQuantity: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
+            projectRemark: [{ min: 0, max: 2000, message: '最多输入2000字', trigger: 'blur' }]
           }
         },
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
@@ -937,6 +945,9 @@
       },
       projectNature() {
         return this.$store.state.category.projectNature
+      },
+      bizTypeCode() {
+        return this.$store.state.bizTypeCode
       }
     },
     methods: {
@@ -944,7 +955,7 @@
         this.$http
           .post(
             '/api/contract/topInfo/CommonFiles/list/delete',
-            {ids: [file.uuid]}
+            { ids: [file.uuid] }
           )
           .then((res) => {
             if (res.data.code === 200) {
@@ -1068,9 +1079,9 @@
           )
         }
       },
-      submitForm(formName) {
+      // 保存
+      submitForm(formName, type) {
         this.$refs[formName].validate((valid) => {
-          console.log(this.detailForm, formName, valid)
           if (valid) {
             this.$http
               .post(
@@ -1080,13 +1091,18 @@
               )
               .then((res) => {
                 if (res.data.code === 200) {
-                  this.$message({
-                    message: '保存成功',
-                    type: 'success'
-                  })
-                  this.$router.push({
-                    path: '/statistics/project/designList'
-                  })
+                  if (type && type === 'submit') {
+                    this.uuid = res.data.data.uuid
+                    this.submit()
+                  } else {
+                    this.$message({
+                      message: '保存成功',
+                      type: 'success'
+                    })
+                    this.$router.push({
+                      path: '/statistics/project/designList'
+                    })
+                  }
                 } else {
                   console.log('error submit!')
                 }
@@ -1096,6 +1112,29 @@
             return false
           }
         })
+      },
+      // 提交
+      submit() {
+        const id = this.p.uuid || this.uuid
+        if (!id) {
+          this.submitForm('detailForm', 'submit')
+        } else {
+          this.$http
+            .post('/api/statistics/StatisticsProject/detail/projectSubmitById', { projectId: id })
+            .then((res) => {
+              if (res.data.code === 200) {
+                this.$message({
+                  message: '提交成功',
+                  type: 'success'
+                })
+                this.$router.push({
+                  path: '/statistics/project/designList'
+                })
+              } else {
+                console.log('error submit!')
+              }
+            })
+        }
       },
       back() {
         this.$router.back()
@@ -1120,22 +1159,32 @@
       }
     },
     mounted() {
-      if (this.p.actpoint === 'look' || this.p.actpoint === 'edit') {
-        this.getShow()
-      }
-      console.log(this.p)
-      // this.datas = datas
-      // console.log(this.datas)
       this.$store.dispatch('getConfig', {})
       this.$store.dispatch('getCategory', { name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3' })
       this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
+      if (this.p.actpoint === 'look' || this.p.actpoint === 'edit') {
+        this.getShow()
+      }
+      // 业务类别数据格式不对，已处理
+      this.bizTypeCode.find((item) => {
+        if (item.parentDetailId === this.detailForm.project.categoryFirstId) {
+          this.bizTypeCodeTwo.push(item)
+        }
+      })
     }
   }
 </script>
 <style lang="scss" scoped>
   .gcform {
     margin-top: 10px;
+
+    .neirong {
+      > > > .el-form-item__error {
+        top: 4%!important;
+      }
+    }
+
     > > > .el-form-item__error {
       padding-top: 0px;
       width: 95%;
@@ -1143,20 +1192,25 @@
       text-align: right;
       top: 0%;
     }
-    >>>.el-main{
+
+    > > > .el-main {
       overflow: hidden;
     }
+
     > > > .el-form-item__label:before {
       position: initial;
       left: -10px;
     }
-    >>>.inline-formitem {
+
+    > > > .inline-formitem {
       margin-top: 30px;
     }
+
     .el-form-item {
       float: left;
       margin-bottom: 0;
       margin-right: 0.5%;
+
       .el-input {
         width: 95%;
       }
