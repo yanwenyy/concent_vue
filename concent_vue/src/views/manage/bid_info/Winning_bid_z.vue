@@ -938,8 +938,12 @@ export default {
 >>> .el-dialog {
   width: 70% !important;
   height: 80%;
-  overflow: auto;
+  overflow: hidden;
   /* overflow: auto; */
+}
+>>> .el-dialog__body {
+  height: 70%;
+  overflow: auto;
 }
 >>>.el-dialog__wrapper{
   height: 100vh!important;
@@ -948,10 +952,7 @@ export default {
   padding: 0;
   margin: 0;
 }
-/*>>> .el-dialog__body {*/
-  /*height: 80%;*/
-  /*overflow: auto;*/
-/*}*/
+
 .list-item{
   width: 32%;
 }
