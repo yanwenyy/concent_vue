@@ -8,7 +8,7 @@
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'look'"><b>房地产项目查看</b></span>
         <el-button @click="back" class="detailbutton">返回</el-button>
         <el-button v-if="p.actpoint !== 'look'" type="primary" @click="submitForm('detailForm')" class="detailbutton">保存</el-button>
-        <el-button v-if="p.actpoint !== 'look'" @click="submit" class="detailbutton">提交</el-button>
+        <el-button v-if="p.actpoint !== 'look'" @click="submitForm('detailForm', 'submit')" class="detailbutton">提交</el-button>
       </div>
       <div class="detailBoxBG" style="height: calc(100vh - 196px)">
         <el-form
@@ -50,6 +50,7 @@
                 clearable
                 :disabled="p.actpoint === 'look'"
                 placeholder="请输入"
+                type="number"
                 v-model="detailForm.project.projectLandArea"/>
             </el-form-item>
             <el-form-item
@@ -57,7 +58,7 @@
               style="width: 32.5%"
               prop="project.topInfoSiteList[0].path"
               :rules="{
-                required: true, message: '此项不能为空', trigger: 'blur'
+                required: true, message: '此项不能为空', trigger: 'change'
               }"
             >
               <el-input v-model="detailForm.project.topInfoSiteList[0].path" placeholder="项目所在地"
@@ -111,6 +112,7 @@
               style="width:32.5%;">
               <el-input
                 clearable
+                type="number"
                 placeholder="请输入"
                 :disabled="p.actpoint === 'look'"
                 v-model="detailForm.project.amountSignup">
@@ -124,6 +126,7 @@
               style="width:32.5%;">
               <el-input
                 clearable
+                type="number"
                 placeholder="请输入"
                 :disabled="p.actpoint === 'look'"
                 v-model="detailForm.project.amountWe">
@@ -175,6 +178,7 @@
               <el-input
                 :disabled="p.actpoint === 'look'"
                 clearable
+                type="number"
                 placeholder="请输入"
                 v-model="detailForm.project.valueAddedTax">
                 <template slot="prepend">¥</template>
@@ -252,6 +256,7 @@
               <el-input
                 :disabled="p.actpoint === 'look'"
                 clearable
+                type="number"
                 placeholder="请输入"
                 v-model="detailForm.project.assemblyRate"/>
             </el-form-item>
@@ -362,6 +367,7 @@
             <el-form-item
               label="联系方式:"
               prop="project.projectPusherPhone"
+              :rules="{ pattern: /^1[3456789]\d{9}$/, message: '请填写正确的联系方式', trigger: 'blur'}"
               style="width:32.5%;">
               <el-input
                 clearable
@@ -371,6 +377,7 @@
             </el-form-item>
           </el-row>
         </el-form>
+        <!--!(/^1[3456789]\d{9}$/.test(phone))-->
       </div>
     </el-card>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
@@ -538,11 +545,17 @@
                     })
                   }
                 } else {
-                  console.log('error submit!')
+                  this.$message({
+                    message: '保存失败',
+                    type: 'error'
+                  })
                 }
               })
           } else {
-            console.log('error submit!')
+            this.$message({
+              message: '请填写必填项',
+              type: 'error'
+            })
             return false
           }
         })
@@ -550,25 +563,24 @@
       // 提交
       submit() {
         const id = this.p.uuid || this.uuid
-        if (!id) {
-          this.submitForm('detailForm', 'submit')
-        } else {
-          this.$http
-            .post('/api/statistics/StatisticsProject/detail/projectSubmitById', { projectId: id })
-            .then((res) => {
-              if (res.data.code === 200) {
-                this.$message({
-                  message: '提交成功',
-                  type: 'success'
-                })
-                this.$router.push({
-                  path: '/statistics/project/estateList'
-                })
-              } else {
-                console.log('error submit!')
-              }
-            })
-        }
+        this.$http
+          .post('/api/statistics/StatisticsProject/detail/projectSubmitById', { projectId: id })
+          .then((res) => {
+            if (res.data.code === 200) {
+              this.$message({
+                message: '提交成功',
+                type: 'success'
+              })
+              this.$router.push({
+                path: '/statistics/project/estateList'
+              })
+            } else {
+              this.$message({
+                message: '提交失败',
+                type: 'error'
+              })
+            }
+          })
       },
       back() {
         this.$router.back()
@@ -586,17 +598,25 @@
       }
     },
     mounted() {
-      if (this.p.actpoint === 'look' || this.p.actpoint === 'edit') {
-        this.getShow()
-      }
       this.$store.dispatch('getConfig', {})
       this.$store.dispatch('getCategory', { name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3' })
       this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
+      if (this.p.actpoint === 'look' || this.p.actpoint === 'edit') {
+        this.getShow()
+      }
     }
   }
 </script>
 <style lang="scss" scoped>
+  > > > input::-webkit-outer-spin-button,
+  > > > input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+  > > > input[type="number"] {
+    -moz-appearance: textfield;
+  }
   .gcform {
     margin-top: 10px;
     > > > .el-form-item__error {
