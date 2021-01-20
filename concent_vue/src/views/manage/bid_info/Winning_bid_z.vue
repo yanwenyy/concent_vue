@@ -23,7 +23,6 @@
         highlight-current-row
         ref="table"
         stripe
-        style="width: 100%"
         tooltip-effect="dark"
       >
         <el-table-column
@@ -172,7 +171,7 @@
 
       </el-table>
     </div>
-        <el-pagination
+    <el-pagination
         :current-page="page.current"
         :page-size="page.size"
         :page-sizes="[10, 50, 100]"
@@ -181,11 +180,9 @@
         @size-change="handleSizeChange"
         layout="total, sizes, prev, pager, next, jumper">
       </el-pagination>
-      <info-change-search v-if="infoCSVisible" ref="infoCS" @refreshDataList="goAddDetail"></info-change-search>
-
-  <el-dialog title="中标结果登记" :visible.sync="dialogFormVisible" >
-
-        <div>
+    <info-change-search v-if="infoCSVisible" ref="infoCS" @refreshDataList="goAddDetail"></info-change-search>
+    <el-dialog title="中标结果登记" :visible.sync="dialogFormVisible" >
+      <div>
       <el-form :inline="true" :model="zbForm" :rules="rules" ref="zbForm" @keyup.enter.native="init()"  class="gcform">
         <el-form-item label="标段名称:" class="list-item" >
           <el-select
@@ -610,14 +607,12 @@
               </el-table>
 </el-form>
     </el-form>
-</div>
-  <div slot="footer" class="dialog-footer">
-    <el-button @click="dialogFormVisible = false">取 消</el-button>
-    <el-button v-show="zbType=='add'" type="primary" @click="saveInfo('zbForm')">确 定</el-button>
-  </div>
-
-</el-dialog>
-
+      </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button v-show="zbType=='add'" type="primary" @click="saveInfo('zbForm')">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -942,12 +937,21 @@ export default {
 }
 >>> .el-dialog {
   width: 70% !important;
+  height: 80%;
+  overflow: auto;
   /* overflow: auto; */
 }
->>> .el-dialog__body {
-  height: 500px;
-  overflow: auto;
+>>>.el-dialog__wrapper{
+  height: 100vh!important;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
 }
+/*>>> .el-dialog__body {*/
+  /*height: 80%;*/
+  /*overflow: auto;*/
+/*}*/
 .list-item{
   width: 32%;
 }
@@ -961,8 +965,8 @@ export default {
 >>>.list-item_textarea{
   width:100%;
 }
->>>.el-pagination__editor.el-input .el-input__inner{
-  width: auto;
-}
+/*>>>.el-pagination__editor.el-input .el-input__inner{*/
+  /*width: auto;*/
+/*}*/
 
 </style>
