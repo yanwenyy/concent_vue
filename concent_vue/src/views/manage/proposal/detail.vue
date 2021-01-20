@@ -661,8 +661,17 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <el-radio v-model="scope.row.isMain" label="1">是</el-radio>
-                <el-radio v-model="scope.row.isMain" label="0">否</el-radio>
+                <el-switch
+                  :disabled="p.actpoint === 'look'"
+                  class="inline-formitem-switch"
+                  v-model="scope.row.isMain"
+                  active-color="#409EFF"
+                  inactive-color="#ddd"
+                  active-value="1"
+                  inactive-value="0"
+                  @change="setMain(scope.$index,detailform.topInfoSiteList)"
+                >
+                </el-switch>
                 <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
               </template>
             </el-table-column>
@@ -948,6 +957,16 @@
       // eslint-disable-next-line no-unde
     },
     methods: {
+      //设置主地点
+      setMain(i,list){
+        list.forEach((item,index)=>{
+          if(index==i){
+          item.isMain="1"
+        }else{
+          item.isMain="0"
+        }
+      });
+      },
       //解决新增的时候二级联动清除不了
       clear(id,name){
         id='';

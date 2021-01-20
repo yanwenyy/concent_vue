@@ -642,5 +642,11 @@ pre {
 .inline-block{
   display: inline-block;
 }
+.add-group{
+  float: left;
+}
+.add-group-btn{
+  margin-bottom: 5px;
+}
 /**/
 

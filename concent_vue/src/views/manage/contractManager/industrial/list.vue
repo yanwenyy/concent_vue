@@ -2,8 +2,16 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="add()" type="primary" plain >新增</el-button>
-        <el-button @click="add('bq')" type="primary" plain >新增补签</el-button>
+        <el-popover
+          class="detail-back-tab add-group"
+          placement="bottom-start"
+          width="auto"
+          trigger="click">
+          <el-button class="add-group-btn" @click="add()" type="primary" plain >新签合同</el-button>
+          <br>
+          <el-button class="add-group-btn" @click="add('bq')" type="primary" plain >新签补充合同</el-button>
+          <el-button slot="reference"  type="primary" plain >新增</el-button>
+        </el-popover>
         <el-button @click="totop" type="primary" plain>修改</el-button>
         <el-button type="primary" plain>提交</el-button>
         <el-button @click="remove" type="primary" plain>删除</el-button>
