@@ -161,11 +161,11 @@
           <el-row>
             <el-form-item
               label="合同签约时间:"
-              prop="ocontractSignTime"
+              prop="contractSignTime"
               style="width: 32.5%">
               <el-date-picker
                 :disabled="p.actpoint === 'look'"
-                v-model="detailForm.project.ocontractSignTime"
+                v-model="detailForm.project.contractSignTime"
                 type="date"
                 value-format="timestamp"
                 placeholder="选择日期时间"/>
@@ -451,7 +451,7 @@
             otherPartyName: '', // 对方名称
             amountSignup: '',
             amountWe: '',
-            ocontractSignTime: '',
+            contractSignTime: '',
             contractValidity: '', // 合同有效期
             categoryFirstId: '41829bce85db42c1be8f5e763678b855', // 业务类别（一级）
             categorySecondId: '', // 业务类别二级

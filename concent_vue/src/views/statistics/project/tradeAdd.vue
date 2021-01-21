@@ -150,11 +150,11 @@
             </el-form-item>
             <el-form-item
               label="合同签订时间:"
-              prop="project.ocontractSignTime"
+              prop="project.contractSignTime"
               style="width: 32.5%">
               <el-date-picker
                 :disabled="p.actpoint === 'look'"
-                v-model="detailForm.project.ocontractSignTime"
+                v-model="detailForm.project.contractSignTime"
                 type="date"
                 value-format="timestamp"
                 placeholder="选择日期时间"/>
@@ -538,7 +538,7 @@
             contractMoney: '',
             supplierAddress: '', // 供方地点
             categoryFirstId: '', // 业务类别（一级）
-            ocontractSignTime: '',
+            contractSignTime: '',
             ocontractStartTime: '',
             ocontractEndTime: '',
             valueAddedTax: '', // 增值税
