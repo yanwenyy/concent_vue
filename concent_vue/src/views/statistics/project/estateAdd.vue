@@ -7,8 +7,11 @@
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'edit'"><b>房地产项目修改</b></span>
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'look'"><b>房地产项目查看</b></span>
         <el-button @click="back" class="detailbutton">返回</el-button>
-        <el-button v-if="p.actpoint !== 'look'" type="primary" @click="submitForm('detailForm')" class="detailbutton">保存</el-button>
-        <el-button v-if="p.actpoint !== 'look'" @click="submitForm('detailForm', 'submit')" class="detailbutton">提交</el-button>
+        <el-button v-if="p.actpoint !== 'look'" type="primary" @click="submitForm('detailForm')" class="detailbutton">
+          保存
+        </el-button>
+        <el-button v-if="p.actpoint !== 'look'" @click="submitForm('detailForm', 'submit')" class="detailbutton">提交
+        </el-button>
       </div>
       <div class="detailBoxBG" style="height: calc(100vh - 196px)">
         <el-form
@@ -44,13 +47,13 @@
           <el-row>
             <el-form-item
               label="建设用地面积(万平方米):"
-              prop="projectLandArea"
+              prop="project.projectLandArea"
+              :rules="rules.project.isNumber"
               style="width:32.5%;">
               <el-input
                 clearable
                 :disabled="p.actpoint === 'look'"
                 placeholder="请输入"
-                type="number"
                 v-model="detailForm.project.projectLandArea"/>
             </el-form-item>
             <el-form-item
@@ -108,11 +111,11 @@
           <el-row>
             <el-form-item
               label="签约总金额(万元):"
-              prop="amountSignup"
+              prop="project.amountSignup"
+              :rules="rules.project.isMoney"
               style="width:32.5%;">
               <el-input
                 clearable
-                type="number"
                 placeholder="请输入"
                 :disabled="p.actpoint === 'look'"
                 v-model="detailForm.project.amountSignup">
@@ -122,11 +125,11 @@
             </el-form-item>
             <el-form-item
               label="我方份额(万元):"
-              prop="amountWe"
+              prop="project.amountWe"
+              :rules="rules.project.isMoney"
               style="width:32.5%;">
               <el-input
                 clearable
-                type="number"
                 placeholder="请输入"
                 :disabled="p.actpoint === 'look'"
                 v-model="detailForm.project.amountWe">
@@ -174,11 +177,11 @@
             <el-form-item
               label="增值税(万元):"
               prop="project.valueAddedTax"
+              :rules="rules.project.isNumber"
               style="width: 32.5%">
               <el-input
                 :disabled="p.actpoint === 'look'"
                 clearable
-                type="number"
                 placeholder="请输入"
                 v-model="detailForm.project.valueAddedTax">
                 <template slot="prepend">¥</template>
@@ -249,16 +252,15 @@
               v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
               label="装配率(%):"
               prop="project.assemblyRate"
-              :rules="{
-                required: true, message: '此项不能为空', trigger: 'blur'
-              }"
+              :rules="rules.project.isPercent"
               style="width: 32.5%">
               <el-input
                 :disabled="p.actpoint === 'look'"
                 clearable
-                type="number"
                 placeholder="请输入"
-                v-model="detailForm.project.assemblyRate"/>
+                v-model="detailForm.project.assemblyRate">
+                <template slot="append">%</template>
+              </el-input>
             </el-form-item>
             <el-form-item
               v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
@@ -367,7 +369,7 @@
             <el-form-item
               label="联系方式:"
               prop="project.projectPusherPhone"
-              :rules="{ pattern: /^1[3456789]\d{9}$/, message: '请填写正确的联系方式', trigger: 'blur'}"
+              :rules="rules.project.isMobile"
               style="width:32.5%;">
               <el-input
                 clearable
@@ -376,8 +378,142 @@
                 v-model="detailForm.project.projectPusherPhone"/>
             </el-form-item>
           </el-row>
+          <div>
+            <p class="detail-title" style="overflow:hidden;margin-right:30px">
+              <span>产品信息:</span>
+              <el-button
+                v-if="p.actpoint !== 'look'"
+                @click="addProduct()"
+                class="upload-demo detailUpload detatil-flie-btn"
+                type="primary">
+                新增
+              </el-button>
+            </p>
+            <el-table
+              :data="detailForm.project.productInfoList"
+              :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+              align="center"
+              border
+              class="detailTable"
+              ref="table"
+              style="width: 100%;"
+            >
+              <el-table-column
+                :width="80"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"/>
+              <el-table-column
+                :resizable="false"
+                label="产品名称"
+                align="center"
+                prop="productName"
+                min-width="300"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <!--:prop="'project.productInfoList[' + scope.$index + '].productName'"-->
+                  <!--:rules="{required: true, message: '此项不能为空', trigger: 'blur'}"-->
+                  <el-form-item>
+                    <el-input
+                      v-model="scope.row.productName"
+                      clearable
+                      :disabled="p.actpoint === 'look'"/>
+                  </el-form-item>
+                </template>
+              </el-table-column>
+              <el-table-column
+                :resizable="false"
+                label="规格型号"
+                width="200"
+                align="center"
+                prop="specificationAndModel"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.specificationAndModel"/>
+                </template>
+              </el-table-column>
+              <el-table-column
+                :resizable="false"
+                label="产品数量"
+                width="150"
+                align="center"
+                prop="productQuantity"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.productQuantity"/>
+                </template>
+              </el-table-column>
+              <el-table-column
+                :resizable="false"
+                label="产品单位"
+                width="150"
+                align="center"
+                prop="productUnit"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'"
+                    v-model="scope.row.productUnit"/>
+                </template>
+              </el-table-column>
+              <el-table-column
+                :resizable="false"
+                label="总金额(万元)"
+                align="center"
+                prop="productTotalPrice"
+                width="300"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-form-item class="tabelForm"
+                                :prop="'project.productInfoList[' + scope.$index + '].productTotalPrice'"
+                                :rules="rules.project.isMustMoney">
+                    <el-input
+                      v-model="scope.row.productTotalPrice"
+                      clearable
+                      :disabled="p.actpoint === 'look'"
+                    >
+                      <template slot="prepend">¥</template>
+                      <template slot="append">(万元)</template>
+                    </el-input>
+                  </el-form-item>
+                </template>
+              </el-table-column>
+              <el-table-column
+                v-if="p.actpoint !== 'look'"
+                :resizable="false"
+                fixed="right"
+                label="操作"
+                align="center"
+                show-overflow-tooltip
+                width="80">
+                <template slot-scope="scope">
+                  <el-link
+                    :underline="false"
+                    @click="del(scope.$index,scope.row,detailForm.project.productInfoList)"
+                    type="warning">删除
+                  </el-link>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
         </el-form>
-        <!--!(/^1[3456789]\d{9}$/.test(phone))-->
       </div>
     </el-card>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
@@ -386,6 +522,7 @@
 
 <script>
   import Tree from '@/components/tree'
+  import { isMoney, isMobile } from '@/utils/validate'
 
   export default {
     name: 'estateMode',
@@ -393,17 +530,59 @@
       Tree
     },
     data() {
+      const validateMoney = (rule, value, callback) => {
+        if (value === '') {
+          callback()
+        } else if (!isMoney(value)) {
+          callback(new Error('请输入正确的金额格式'))
+        } else {
+          callback()
+        }
+      }
+      const validateMustMoney = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('此项不能为空'))
+        } else if (!isMoney(value)) {
+          callback(new Error('请输入正确的金额格式'))
+        } else {
+          callback()
+        }
+      }
+      const validateNumber = (rule, value, callback) => {
+        if (value === '') {
+          callback()
+        } else if (!isMoney(value)) {
+          callback(new Error('请输入正确的数字格式'))
+        } else {
+          callback()
+        }
+      }
+      const validateMobile = (rule, value, callback) => {
+        if (value === '') {
+          callback()
+        } else if (!isMobile(value)) {
+          callback(new Error('请输入正确的手机号'))
+        } else {
+          callback()
+        }
+      }
+      const validatePercent = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('此项不能为空'))
+        } else if (!isMoney(value) || value < 0 || value > 100) {
+          callback(new Error('请输入正确的装配率百分比'))
+        } else {
+          callback()
+        }
+      }
       return {
         uuid: null,
         switchvalue: true,
         treeStatas: false,
         emergingMarketTwo: [],
-        yesOrNo: [
-          { label: '是', value: 0 },
-          { label: '否', value: 1 }
-        ],
         detailForm: {
           project: {
+            productInfoList: [], // 标的列表
             commonFilesList: [], // 文件列表
             topInfoSiteList: [
               {
@@ -440,7 +619,12 @@
         rules: {
           project: {
             projectName: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
-            contractNumber: [{ required: true, message: '此项不能为空', trigger: 'blur' }]
+            contractNumber: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
+            isMoney: [{ validator: validateMoney, trigger: ['blur', 'change'] }],
+            isMustMoney: [{ required: true, validator: validateMustMoney, trigger: ['blur', 'change'] }],
+            isMobile: [{ validator: validateMobile, trigger: ['blur', 'change'] }],
+            isPercent: [{ required: true, validator: validatePercent, trigger: ['blur', 'change'] }],
+            isNumber: [{ validator: validateNumber, trigger: ['blur', 'change'] }]
           }
         },
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
@@ -467,6 +651,19 @@
       }
     },
     methods: {
+      addProduct() {
+        let v = {
+          productName: '',
+          specificationAndModel: '',
+          productQuantity: '',
+          productUnit: '',
+          productTotalPrice: ''
+        }
+        this.detailForm.project.productInfoList.push(v)
+      },
+      del(index, item, list) {
+        list.splice(index, 1)
+      },
       // 选择项目地点
       selectPosition() {
         this.treeStatas = true
@@ -609,16 +806,9 @@
   }
 </script>
 <style lang="scss" scoped>
-  > > > input::-webkit-outer-spin-button,
-  > > > input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-  }
-
-  > > > input[type="number"] {
-    -moz-appearance: textfield;
-  }
   .gcform {
     margin-top: 10px;
+
     > > > .el-form-item__error {
       padding-top: 0px;
       width: 95%;

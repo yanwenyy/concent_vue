@@ -21,9 +21,7 @@
             <el-form-item
               label="项目名称:"
               prop="project.projectName"
-              :rules="{
-                required: true, message: '此项不能为空', trigger: 'blur'
-              }"
+              :rules="rules.project.must"
               style="width: 32.5%">
               <el-input
                 :disabled="p.actpoint === 'look'"
@@ -84,10 +82,10 @@
             <el-form-item
               label="合同金额(万元):"
               prop="project.contractMoney"
+              :rules="rules.project.isMoney"
               style="width:32.5%;">
               <el-input
                 clearable
-                type="number"
                 placeholder="请输入"
                 :disabled="p.actpoint === 'look'"
                 v-model="detailForm.project.contractMoney">
@@ -100,9 +98,7 @@
             <el-form-item
               label="项目状态:"
               prop="project.projectStatusId"
-              :rules="{
-                required: true, message: '此项不能为空', trigger: 'blur'
-              }"
+              :rules="rules.project.must"
               style="width:32.5%;">
               <el-select
                 filterable
@@ -121,11 +117,11 @@
             <el-form-item
               label="增值税(万元):"
               prop="project.valueAddedTax"
+              :rules="rules.project.isMoney"
               style="width: 32.5%">
               <el-input
                 :disabled="p.actpoint === 'look'"
                 clearable
-                type="number"
                 placeholder="请输入"
                 v-model="detailForm.project.valueAddedTax">
                 <template slot="prepend">¥</template>
@@ -138,9 +134,7 @@
               label="供方地点"
               style="width: 32.5%"
               prop="project.supplierAddress"
-              :rules="{
-                required: true, message: '此项不能为空', trigger: 'change'
-              }"
+              :rules="rules.project.must"
             >
               <el-input v-model="detailForm.project.supplierAddress" placeholder="供方地点"
                         :disabled="p.actpoint === 'look'" clearable>
@@ -209,22 +203,22 @@
           <el-row>
             <el-form-item
               label="预期收益率:"
-              prop="projectExpectedReturn"
+              prop="project.projectExpectedReturn"
+              :rules="rules.project.isNumber"
               style="width:32.5%;">
               <el-input
                 clearable
-                type="number"
                 :disabled="p.actpoint === 'look'"
                 placeholder="请输入"
                 v-model="detailForm.project.projectExpectedReturn"/>
             </el-form-item>
             <el-form-item
               label="收益额:"
-              prop="projectYieid"
+              prop="project.projectYieid"
+              :rules="rules.project.isNumber"
               style="width:32.5%;">
               <el-input
                 clearable
-                type="number"
                 :disabled="p.actpoint === 'look'"
                 placeholder="请输入"
                 v-model="detailForm.project.projectYieid"/>
@@ -344,24 +338,21 @@
               v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
               label="装配率(%):"
               prop="project.assemblyRate"
-              :rules="{
-                required: true, message: '此项不能为空', trigger: 'blur'
-              }"
+              :rules="rules.project.isPercent"
               style="width: 32.5%">
               <el-input
                 :disabled="p.actpoint === 'look'"
                 clearable
-                type="number"
                 placeholder="请输入"
-                v-model="detailForm.project.assemblyRate"/>
+                v-model="detailForm.project.assemblyRate">
+                <template slot="append">%</template>
+              </el-input>
             </el-form-item>
             <el-form-item
               v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
               label="装配类型:"
               prop="project.assemblyTypeId"
-              :rules="{
-                required: true, message: '此项不能为空', trigger: 'blur'
-              }"
+              :rules="rules.project.must"
               style="width: 32.5%">
               <el-select
                 :disabled="p.actpoint === 'look'"
@@ -383,9 +374,7 @@
               v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
               label="建筑类型:"
               prop="project.architectureTypeId"
-              :rules="{
-                required: true, message: '此项不能为空', trigger: 'blur'
-              }"
+              :rules="rules.project.must"
               style="width: 32.5%">
               <el-select
                 :disabled="p.actpoint === 'look'"
@@ -405,9 +394,7 @@
               v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
               label="房屋结构类型:"
               prop="project.houseTypeId"
-              :rules="{
-                required: true, message: '此项不能为空', trigger: 'blur'
-              }"
+              :rules="rules.project.must"
               style="width: 32.5%">
               <el-select
                 :disabled="p.actpoint === 'look'"
@@ -429,9 +416,7 @@
               v-if="detailForm.project.marketFirstId === '50cd5e9992ac4653920fac8c1f2eb2e3'"
               label="场地名称:"
               prop="project.fieldId"
-              :rules="{
-                required: true, message: '此项不能为空', trigger: 'blur'
-              }"
+              :rules="rules.project.must"
               style="width: 32.5%">
               <el-select
                 :disabled="p.actpoint === 'look'"
@@ -463,7 +448,7 @@
             <el-form-item
               label="联系方式:"
               prop="project.projectPusherPhone"
-              :rules="{ pattern: /^1[3456789]\d{9}$/, message: '请填写正确的联系方式', trigger: 'blur'}"
+              :rules="rules.project.isMobile"
               style="width:32.5%;">
               <el-input
                 clearable
@@ -495,6 +480,7 @@
 
 <script>
   import Tree from '@/components/tree'
+  import { isMoney, isMobile } from '@/utils/validate'
 
   export default {
     name: 'estateMode',
@@ -502,16 +488,57 @@
       Tree
     },
     data() {
+      const validateMoney = (rule, value, callback) => {
+        if (value === '') {
+          callback()
+        } else if (!isMoney(value)) {
+          callback(new Error('请输入正确的金额格式'))
+        } else {
+          callback()
+        }
+      }
+      const validateMustMoney = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('此项不能为空'))
+        } else if (!isMoney(value)) {
+          callback(new Error('请输入正确的金额格式'))
+        } else {
+          callback()
+        }
+      }
+      const validateNumber = (rule, value, callback) => {
+        if (value === '') {
+          callback()
+        } else if (!isMoney(value)) {
+          callback(new Error('请输入正确的数字格式'))
+        } else {
+          callback()
+        }
+      }
+      const validateMobile = (rule, value, callback) => {
+        if (value === '') {
+          callback()
+        } else if (!isMobile(value)) {
+          callback(new Error('请输入正确的手机号'))
+        } else {
+          callback()
+        }
+      }
+      const validatePercent = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('此项不能为空'))
+        } else if (!isMoney(value) || value < 0 || value > 100) {
+          callback(new Error('请输入正确的装配率百分比'))
+        } else {
+          callback()
+        }
+      }
       return {
         uuid: null,
         switchvalue: true,
         treeStatas: false,
         emergingMarketTwo: [],
         bizTypeCodeTwo: [],
-        yesOrNo: [
-          { label: '是', value: '0' },
-          { label: '否', value: '1' }
-        ],
         inOut: [
           { label: '系统内', value: '0' },
           { label: '系统外', value: '1' }
@@ -563,7 +590,16 @@
             projectPusherPhone: ''
           }
         },
-        rules: {},
+        rules: {
+          project: {
+            must: [{ required: true, message: '此项不能为空', trigger: ['blur', 'change'] }],
+            isMoney: [{ validator: validateMoney, trigger: ['blur', 'change'] }],
+            isMustMoney: [{ required: true, validator: validateMustMoney, trigger: ['blur', 'change'] }],
+            isMobile: [{ validator: validateMobile, trigger: ['blur', 'change'] }],
+            isPercent: [{ required: true, validator: validatePercent, trigger: ['blur', 'change'] }],
+            isNumber: [{ validator: validateNumber, trigger: ['blur', 'change'] }]
+          }
+        },
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
       }
     },
@@ -735,14 +771,6 @@
   }
 </script>
 <style lang="scss" scoped>
-  > > > input::-webkit-outer-spin-button,
-  > > > input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-  }
-
-  > > > input[type="number"] {
-    -moz-appearance: textfield;
-  }
   .gcform {
     margin-top: 10px;
     .neirong {
