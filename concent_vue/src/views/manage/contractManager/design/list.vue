@@ -10,7 +10,7 @@
           <el-button class="add-group-btn" @click="add()" type="primary" plain >新签合同</el-button>
           <br>
           <el-button class="add-group-btn" @click="add('bq')" type="primary" plain >新签补充合同</el-button>
-          <el-button slot="reference"  type="primary" plain >新增</el-button>
+          <el-button class="new-add-btn" slot="reference"  type="primary" plain >新增</el-button>
         </el-popover>
         <el-button @click="totop" type="primary" plain>修改</el-button>
         <el-button type="primary" plain>提交</el-button>

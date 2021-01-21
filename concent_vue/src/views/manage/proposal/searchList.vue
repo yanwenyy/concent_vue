@@ -225,7 +225,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          :width="150"
+          :width="300"
           align="center"
           label="登记时间(审核通过时间)"
           prop="createTime"

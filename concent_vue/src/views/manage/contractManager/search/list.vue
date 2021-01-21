@@ -326,7 +326,7 @@
         >
         </el-table-column>
         <el-table-column
-          :width="150"
+          :width="300"
           align="center"
           label="共同承揽单位已阅状态"
           prop="createOrgName"
@@ -334,7 +334,7 @@
         >
         </el-table-column>
         <el-table-column
-          :width="150"
+          :width="300"
           align="center"
           label="签约单位(使用资质单位)"
           prop="signOrgName"
