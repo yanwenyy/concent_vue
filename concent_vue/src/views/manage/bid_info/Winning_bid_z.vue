@@ -922,6 +922,13 @@ export default {
     // list通用方法结束
   },
   created() {
+       window.onresize = () => {
+        return (() => {
+          window.screenWidth = document.body.clientWidth
+        console.log( window.screenWidth)
+      })()
+      }
+
     // this.getMenus();
     // this.getOrgTree();
     this.getData();
@@ -936,7 +943,7 @@ export default {
   cursor: pointer;
 }
 >>> .el-dialog {
-  width: 70% !important;
+  width: 80% !important;
   height: 80%;
   overflow: hidden;
   /* overflow: auto; */
@@ -969,5 +976,30 @@ export default {
 /* >>>.el-pagination__editor.el-input .el-input__inner{
   width: auto;
 } */
+>>>.dialog-footer {
+    padding-top: 14px;
+    margin: 0;
+    text-align: center;
+    background-color: #fafafa;
+}
+/* >>>.el-dialog__header{
+  display: none;
+} */
 
+  @media (min-width: 1200px) and (max-width: 1500px) {
+    >>>.el-dialog__body{
+      height: 65%!important;
+      overflow: auto;
+
+    }
+     >>>.el-form-item__label{
+        width: 365px;
+      }
+  }
+  @media (min-width: 1500px) and (max-width: 2000px) {
+    >>>.el-dialog__body{
+      height: 73%!important;
+      overflow: auto;
+    }
+  }
 </style>

@@ -7,18 +7,36 @@
     :append-to-body="true">
     <el-card>
       <div class="clearfix el-card__header">
-        <span style="color: #2a2a7d;line-height: 32px"><b>标段信息</b></span>
+        <span style="color: #2a2a7d;line-height: 32px"><b>工程量清单计量规则</b></span>
         <el-button @click="close" style="float: right;">返回</el-button>
       </div>
     </el-card>
     <div style="height: calc(100% - 50px);overflow: auto;padding: 0 50px;">
       <el-form :inline="true" :model="detailForm" :rules="rules" ref="detailForm" @keyup.enter.native="init()"  class="gcform">
 
-        <el-form-item label="编码:" class="list-item">
-          <el-input v-model="detailForm.nationalStandardSchedule.code" placeholder="编码" clearable :disabled="type === 'look'"></el-input>
+          <el-form-item label="编码:" class="list-item"
+            prop="nationalStandardSchedule.code"
+            :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }">
+          <el-input
+          v-model="detailForm.nationalStandardSchedule.code"
+          placeholder="编码"
+          clearable
+          :disabled="type === 'look'"
+          ></el-input>
         </el-form-item>
 
-        <el-form-item label="项目名称:" class="list-item">
+        <el-form-item label="项目名称:" class="list-item"
+          prop="projectName"
+            :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+        >
           <el-input v-model="detailForm.nationalStandardSchedule.projectName	" placeholder="项目名称" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
 

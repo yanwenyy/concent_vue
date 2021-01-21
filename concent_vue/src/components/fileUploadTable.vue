@@ -249,4 +249,7 @@
 {
   padding:5px 0px;
 }
+>>>.el-dialog__body{
+  width: auto !important;
+}
 </style>
