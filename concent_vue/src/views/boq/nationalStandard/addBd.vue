@@ -12,15 +12,21 @@
       </div>
     </el-card>
     <div style="height: calc(100% - 50px);overflow: auto;padding: 0 50px;">
-      <el-form :inline="true" :model="detailForm" :rules="rules" ref="detailForm" @keyup.enter.native="init()"  class="gcform">
+      <el-form :inline="true" :model="detailForm" :rules="rules" ref="detailForm"  class="gcform">
 
           <el-form-item label="编码:" class="list-item"
             prop="nationalStandardSchedule.code"
             :rules="{
-              required: true,
-              message: '此项不能为空',
-              trigger: 'blur',
-            }">
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }">
+               <!-- <template slot="header">
+                    <p>
+                      <span class="red-star">*</span>
+                      编码
+                    </p>
+                  </template> -->
           <el-input
           v-model="detailForm.nationalStandardSchedule.code"
           placeholder="编码"
@@ -331,14 +337,14 @@ p{
   left: 10%;
   width: 80%;
 }
-/* @media (min-width: 1300px) and (max-width: 1400px) {
+@media (min-width: 1300px) and (max-width: 1400px) {
   .xmbk-item .el-form-item__error{
     top:-20px!important;
   }
-} */
+}
 .gcform >>>.el-form-item__error {
     top: -20px!important;
-    right:80px;
+    right:10px;
     text-align: right;
 }
 .tabelForm >>>.el-form-item__error {
@@ -348,5 +354,12 @@ p{
 }
 >>>.el-table .cell.el-tooltip{
 padding: 10px 10px;
+}
+
+ >>>.el-form-item__label{
+   padding-left:10px;
+ }
+>>>.el-form-item__label:before{
+   left:0px;
 }
 </style>

@@ -16,11 +16,11 @@
                 :on-remove="handleRemove"
                 multiple
               >
-              <el-button size="small"
-                         type="primary">点击上传</el-button>
+              <el-button size="small" type="primary" class="dialog_but">点击上传</el-button>
+
             </el-upload>
     </div>
-    <div style="height: 400px">
+    <div class="dialog_body">
       <el-table
         :data="detailform.commonFilesList"
         :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
@@ -83,6 +83,10 @@
               </el-table>
 
     </div>
+        <div slot="footer" class="dialog-footer">
+      <el-button @click="close">取消</el-button>
+      <el-button type="primary" @click="sub()">确定</el-button>
+    </div>
   </el-dialog>
 </template>
 
@@ -114,6 +118,7 @@
       }
     },
     mounted() {
+
       //json方法引入数据
       // this.$http.get('/static/jsonData/position.json', { isLoading: false }).then(res =>{
       //   // console.log(res.data.data);
@@ -125,8 +130,44 @@
       //console.log(datas)
     },
     methods: {
+      // 取消
+      close(){
+        this.dialogVisible=false;
+        // this.$refs['detailForm'].clearValidate();
+        // this.visible = false;
+      },
+      //选中数据
+      sub() {
+         this.$http
+              .post(
+                "/api/contract/archives/ArchivesInfo/detail/saveBo",
+                JSON.stringify(this.detailform),
+                {useJson: true}
+              )
+              .then((res) => {
+              if (res.data.code === 200) {
+              this.$message({
+                message: "保存成功",
+                type: "success",
+              });
+              this.$emit('getPosition');
+            }
+          });
+        // this.detailform.commonFilesList = list;
+        // this.detailForm.type=this.type;
+        // if(this.type=='edit'){
+        //   this.detailForm.index=this.index;
+        // }
+        //   this.$refs.detailForm.validate((valid) => {
+        //   if (valid) {
+        //     this.visible = false;
+        //     this.$emit('refreshBD', this.detailForm);
+        //   }
+        // });
+      },
+
       UploadUrl:function(){
-        return '/api/contract/topInfo/CommonFiles/'+this.selectbusinessId+'/archives/05/uploadFileByBusinessId';
+        return '/api/contract/topInfo/CommonFiles/archives/05/uploadFile';
       },
       handleSizeChange(val) {
         this.searchform.size = val
@@ -145,11 +186,11 @@
             duration: 1500,
             onClose: () => {
               if(response.data.uuid!=null) {
-                var list =[];
-                this.detailform.commonFilesList = list;
+                // var list =[];
+                // this.detailform.commonFilesList = list;
                 var commonFile = {
                   uuid: response.data.uuid,
-                  businessId: response.data.businessId,
+                  businessId: this.selectbusinessId,
                   businessType: response.data.businessType,
                   businessCode: response.data.businessCode,
                   fileName: response.data.fileName,
@@ -249,7 +290,16 @@
 {
   padding:5px 0px;
 }
->>>.el-dialog__body{
-  width: auto !important;
+>>>.dialog_body{
+  height: auto !important;
+}
+>>>.dialog_but{
+  margin: 0 0 15px 0;
+}
+.dialog-footer{
+  padding-top: 14px;
+  margin:0;
+  text-align: center;
+  background-color: #fafafa;
 }
 </style>
