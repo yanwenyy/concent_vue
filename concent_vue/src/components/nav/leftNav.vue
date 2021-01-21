@@ -1,14 +1,9 @@
 <template>
   <!--左侧导航-->
   <aside :class="{showSidebar:!this.$store.state.collapsed}">
-    <!--展开折叠开关-->
-     <div @click.prevent="collapse" class="collapse-bar">
-      <i class="el-icon-d-arrow-left" title="收起" v-show="this.$store.state.collapsed"></i>
-      <i class="el-icon-d-arrow-right" title="展开" v-show="!this.$store.state.collapsed"></i>
-    </div>
-
     <!--导航菜单-->
     <el-menu
+      class="left-tab"
       :collapse="!this.$store.state.collapsed"
       :default-active="this.$route.path"
       :unique-opened="true"
@@ -52,46 +47,13 @@
         </template>
       </template>
     </el-menu>
+    <!--展开折叠开关-->
+    <div @click.prevent="collapse" class="collapse-bar">
+      <i class="el-icon-more" title="收起" v-show="this.$store.state.collapsed"></i>
+      <i class="el-icon-more-outline" title="展开" v-show="!this.$store.state.collapsed"></i>
+    </div>
   </aside>
 </template>
-
-<style>
-.el-menu {
-  border-right: none;
-}
-.collapse-bar {
-  background-color: #f3f3f3;
-  border-color: #e0e0e0;
-  border-style: solid;
-  border-width: 0 0 1px;
-  text-align: center;
-  padding: 3px 0;
-  position: relative;
-  text-align: center;
-  height: 20px;
-}
-.collapse-bar::before {
-  content: '';
-  display: block;
-  height: 0;
-  border-top: 1px solid;
-  border-color: inherit;
-  position: absolute;
-  left: 15px;
-  right: 15px;
-  top: 13px;
-}
-.collapse-bar i {
-  border-radius: 100%;
-  border-color: #bbb;
-  color: #aaa;
-  background-color: #fff;
-  position: relative;
-  border: 1px solid;
-  cursor: pointer;
-}
-</style>
-
 <script>
 export default {
   data() {
@@ -144,3 +106,58 @@ export default {
   }
 }
 </script>
+<style scoped>
+  .left-tab{
+    max-height: calc(100vh - 168px)!important;
+    /*margin-bottom: 60px;*/
+    overflow: auto;
+  }
+  >>>.el-submenu__title{
+    padding: 0 10px!important;
+    font-size: 13px!important;
+  }
+  >>>.el-menu-item{
+    padding: 0 15px!important;
+    min-width: 0;
+    font-size: 13px!important;
+  }
+  .el-menu {
+    border-right: none;
+  }
+  .collapse-bar {
+    width: 100%;
+    background-color: #fff;
+    border-color: #e0e0e0;
+    border-style: solid;
+    border-width: 0 0 1px;
+    text-align: center;
+    padding: 3px 0;
+    height: 60px;
+    /*line-height: 40px;*/
+    vertical-align: top;
+    position: absolute;
+    bottom:0;
+  }
+  /*.collapse-bar::before {*/
+    /*content: '';*/
+    /*display: block;*/
+    /*height: 0;*/
+    /*border-top: 1px solid;*/
+    /*border-color: inherit;*/
+    /*position: absolute;*/
+    /*left: 15px;*/
+    /*right: 15px;*/
+    /*top: 13px;*/
+  /*}*/
+  .collapse-bar i {
+    /*border-radius: 100%;*/
+    /*border-color: #bbb;*/
+    /*color: #aaa;*/
+    /*background-color: #fff;*/
+    position: relative;
+    /*border: 1px solid;*/
+    cursor: pointer;
+    font-size: 28px;
+    color:#666;
+  }
+</style>

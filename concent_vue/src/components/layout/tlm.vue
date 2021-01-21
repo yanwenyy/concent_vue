@@ -4,7 +4,7 @@
       <top></top>
     </el-header>
     <div :class="el_container_style" style="width: 100%; height: calc(100% - 68px);margin-top:8px;">
-      <div style="width:100%;height:45px;box-sizing:border-box;padding:0 20px;">
+      <div style="width:100%;height:40px;box-sizing:border-box;">
         <el-menu
         :default-active="defaultActiveIndex"
         :router="true"
@@ -17,7 +17,6 @@
         <template v-for="(route) in this.$store.state.route[0].children">
           <el-menu-item
             :index="route.path"
-            style="font-size:15px;padding:0 6px;font-weight: 1000;"
             v-bind:key="route.name"
             v-if="route.menushow"
           >{{route.name}}</el-menu-item>
@@ -130,9 +129,25 @@ export default {
 </script>
 
 <style>
+  .el-main{
+    padding: 10px!important;
+  }
+  .el-menu-demo{
+    margin-left: 40px!important;
+  }
+  .el-menu-demo>li{
+    height: 40px!important;
+    line-height: 40px!important;
+    font-size: 14px!important;
+    font-weight: normal;
+    width: auto!important;
+    padding: 0 20px!important;
+  }
 .el_container_style_true #el-leftnav-scrollbar,
 .el_container_style_true #el-leftnav {
-  width: 200px;
+  position: relative;
+  width: 160px;
+  height: calc(100vh - 108px)!important;
   transition: width 0.5s;
   -moz-transition: width 0.5s;
   -webkit-transition: width 0.5s;
