@@ -651,5 +651,10 @@ pre {
 .add-group-btn{
   margin-bottom: 5px;
 }
+.add-group .new-add-btn{
+  border-top-right-radius: 0!important;
+  border-bottom-right-radius: 0!important;
+  border-right:none!important;
+}
 /**/
 

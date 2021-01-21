@@ -2741,6 +2741,7 @@ export default {
           .then((res) => {
           var datas=res.data.data;
         this.detailform.searchProject=true;
+        this.detailform.contractInfo.topInforId=data.data.uuid;
         var _con={};
         this.getTwo(datas.topInfor.enginTypeFirstId);
         this.getTwoSC(datas.topInfor.marketFirstNameId);
@@ -2902,11 +2903,17 @@ export default {
     saveInfo(formName) {
 
       this.detailform.commonFilesList=this.detailform.fileList1.concat(this.detailform.fileList2).concat(this.detailform.fileList3)
+      var url='';
+      if(this.detailform.searchProject==true&&this.p.actpoint === "edit"){
+        url='/api/contract/contract/ContractInfo/detail/update';
+      }else{
+        url='/api/contract/contract/ContractInfo/detail/saveOrUpdate';
+      }
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$http
             .post(
-              "/api/contract/contract/ContractInfo/detail/saveOrUpdate",
+              url,
               JSON.stringify(this.detailform),
               {useJson: true}
             )

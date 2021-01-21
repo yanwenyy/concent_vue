@@ -428,7 +428,9 @@
         DwVisible:false,//选择单位弹框状态
         page: {current: 1, size: 10, total: 0, records: []},
         searchform: {
-
+          current: 1,
+          size: 10,
+          changeStatus:'0',
         },
         moneyform:{
           contractInfoAdjustLogList:[],
@@ -631,7 +633,9 @@
       searchformReset() {
         // this.$refs["searchform"].resetFields();
         this.searchform={
-
+          current: 1,
+          size: 10,
+          changeStatus:'0',
         }
         this.getData();
       },
