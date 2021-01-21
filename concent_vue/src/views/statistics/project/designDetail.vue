@@ -127,11 +127,11 @@
               v-if="detailForm.project.projectNatureFirstId === '7031076e7a5f4225b1a89f31ee017802'"
               label="投资合同总额(万元):"
               prop="project.investmentContract"
+              :rules="rules.project.isMustMoney"
               style="width: 32.5%">
               <el-input
                 :disabled="p.actpoint === 'look'"
                 clearable
-                type="number"
                 placeholder="请输入"
                 v-model="detailForm.project.investmentContract">
                 <template slot="prepend">¥</template>
@@ -320,11 +320,11 @@
             <el-form-item
               label="实物工程量:"
               prop="project.physicalQuantity"
+              :rules="rules.project.physicalQuantity"
               style="width: 32.5%">
               <el-input
                 :disabled="p.actpoint === 'look'"
                 clearable
-                type="number"
                 placeholder="请输入"
                 v-model="detailForm.project.physicalQuantity"/>
             </el-form-item>
@@ -443,13 +443,15 @@
               v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
               label="装配率(%):"
               prop="project.assemblyRate"
+              :rules="rules.project.isPercent"
               style="width: 32.5%">
               <el-input
                 :disabled="p.actpoint === 'look'"
                 clearable
-                type="number"
                 placeholder="请输入"
-                v-model="detailForm.project.assemblyRate"/>
+                v-model="detailForm.project.assemblyRate">
+                <template slot="append">%</template>
+              </el-input>
             </el-form-item>
             <el-form-item
               v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
@@ -536,11 +538,11 @@
             <el-form-item
               label="初始合同额(万元):"
               prop="project.contractAmountInitial"
+              :rules="rules.project.isMustMoney"
               style="width: 32.5%">
               <el-input
                 :disabled="p.actpoint === 'look'"
                 clearable
-                type="number"
                 placeholder="请输入"
                 v-model="detailForm.project.contractAmountInitial">
                 <template slot="prepend">¥</template>
@@ -550,11 +552,11 @@
             <el-form-item
               label="工程合同额(万元):"
               prop="project.contractAmountEngine"
+              :rules="rules.project.isMustMoney"
               style="width: 32.5%">
               <el-input
                 :disabled="p.actpoint === 'look'"
                 clearable
-                type="number"
                 placeholder="请输入"
                 v-model="detailForm.project.contractAmountEngine">
                 <template slot="prepend">¥</template>
@@ -567,11 +569,11 @@
             <el-form-item
               label="合同额增减(万元):"
               prop="project.contractAmountChange"
+              :rules="rules.project.isMustMoney"
               style="width: 32.5%">
               <el-input
                 :disabled="p.actpoint === 'look'"
                 clearable
-                type="number"
                 placeholder="请输入"
                 v-model="detailForm.project.contractAmountChange">
                 <template slot="prepend">¥</template>
@@ -581,11 +583,11 @@
             <el-form-item
               label="合同总额(万元):"
               prop="project.contractAmountTotal"
+              :rules="rules.project.isMoney"
               style="width: 32.5%">
               <el-input
                 :disabled="p.actpoint === 'look'"
                 clearable
-                type="number"
                 placeholder="请输入"
                 v-model="detailForm.project.contractAmountTotal">
                 <template slot="prepend">¥</template>
@@ -598,11 +600,11 @@
             <el-form-item
               label="增值税(万元):"
               prop="project.valueAddedTax"
+              :rules="rules.project.isMustMoney"
               style="width: 32.5%">
               <el-input
                 :disabled="p.actpoint === 'look'"
                 clearable
-                type="number"
                 placeholder="请输入"
                 v-model="detailForm.project.valueAddedTax">
                 <template slot="prepend">¥</template>
@@ -612,11 +614,11 @@
             <el-form-item
               label="实际投资额(万元):"
               prop="project.realInvest"
+              :rules="rules.project.isMoney"
               style="width: 32.5%">
               <el-input
                 :disabled="p.actpoint === 'look'"
                 clearable
-                type="number"
                 placeholder="请输入"
                 v-model="detailForm.project.realInvest">
                 <template slot="prepend">¥</template>
@@ -794,6 +796,7 @@
 <script>
   import Tree from '@/components/tree'
   import FileUpload from '@/components/fileUpload'
+  import { isMoney, isMobile } from '@/utils/validate'
 
   export default {
     name: 'InvestMode',
@@ -801,6 +804,51 @@
       Tree, FileUpload
     },
     data() {
+      const validateMoney = (rule, value, callback) => {
+        if (value === '') {
+          callback()
+        } else if (!isMoney(value)) {
+          callback(new Error('请输入正确的金额格式'))
+        } else {
+          callback()
+        }
+      }
+      const validateMustMoney = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('此项不能为空'))
+        } else if (!isMoney(value)) {
+          callback(new Error('请输入正确的金额格式'))
+        } else {
+          callback()
+        }
+      }
+      const validateNumber = (rule, value, callback) => {
+        if (value === '') {
+          callback()
+        } else if (!isMoney(value)) {
+          callback(new Error('请输入正确的数字格式'))
+        } else {
+          callback()
+        }
+      }
+      const validateMobile = (rule, value, callback) => {
+        if (value === '') {
+          callback()
+        } else if (!isMobile(value)) {
+          callback(new Error('请输入正确的手机号'))
+        } else {
+          callback()
+        }
+      }
+      const validatePercent = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('此项不能为空'))
+        } else if (!isMoney(value) || value < 0 || value > 100) {
+          callback(new Error('请输入正确的装配率百分比'))
+        } else {
+          callback()
+        }
+      }
       return {
         uuid: null,
         DwVisible: false,
@@ -810,8 +858,6 @@
         projectTypeTwo: [], // 工程类别二级
         projectNatureTwo: [], // 项目性质二级
         bizTypeCodeTwo: [], // 业务类别二级
-        isOutputTax: [{ label: '是' }, { label: '否' }], // 上报产值是否含税
-        value1: '',
         options1: [{ label: '测试所在地', value: 'testabcd' }],
         detailForm: {
           project: {
@@ -898,7 +944,12 @@
             companyBuiltName: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
             marketFirstId: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
             physicalQuantity: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
-            projectRemark: [{ min: 0, max: 2000, message: '最多输入2000字', trigger: 'blur' }]
+            projectRemark: [{ min: 0, max: 2000, message: '最多输入2000字', trigger: 'blur' }],
+            isMoney: [{ validator: validateMoney, trigger: ['blur', 'change'] }],
+            isMustMoney: [{ required: true, validator: validateMustMoney, trigger: ['blur', 'change'] }],
+            isMobile: [{ validator: validateMobile, trigger: ['blur', 'change'] }],
+            isPercent: [{ required: true, validator: validatePercent, trigger: ['blur', 'change'] }],
+            isNumber: [{ validator: validateNumber, trigger: ['blur', 'change'] }]
           }
         },
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
@@ -1188,14 +1239,6 @@
   }
 </script>
 <style lang="scss" scoped>
-  > > > input::-webkit-outer-spin-button,
-  > > > input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-  }
-
-  > > > input[type="number"] {
-    -moz-appearance: textfield;
-  }
   .gcform {
     margin-top: 10px;
 
