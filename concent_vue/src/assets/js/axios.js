@@ -15,7 +15,8 @@ function startLoading() {
   loading = Vue.prototype.$loading({
     lock: true,
     // text: "努力加载中...",
-    background: 'rgba(0,0,0,0.3)',
+    // background: 'rgba(0,0,0,0.3)',
+    background:'transparent',
     customClass: 'loadingIcon',
     target: document.querySelector(".loading-area") // 设置加载动画区域
   });
@@ -72,7 +73,7 @@ axios.interceptors.request.use(
       axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8'
       config.headers = {
         'Authorization':
-          "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiZGV0YWlscyI6eyJzdWIiOiJocnwzMzA1OTciLCJwb3N0TmFtZSI6ImphdmHlt6XnqIvluIgyIiwicG9zdFBhdGgiOiLkuK3pk4Hlu7rnvZHnu5zkv6Hmga_np5HmioDmnInpmZAx5YWs5Y-4IiwicG9zdENvZGUiOiIwMDAwMTAwMDAxMDAwMDc3NzAwMTk5MDAzIiwiaWQiOiIzMzA1OTciLCJ1c2VyTmFtZSI6IumrmOmqniIsInBvc3RzIjpbeyJ0eXBlIjozLCJpZCI6Mjg2NzA0LCJuYW1lIjoiamF2YeW3peeoi-W4iDIiLCJjb2RlIjoiMDAwMDEwMDAwMTAwMDA3NzcwMDE5OTAwMyIsIm9yZGVyIjoxNSwibWFpblBvc2l0aW9uIjp0cnVlLCJwcm92aWRlcklkIjoiaHIiLCJwYXRoIjoi6IKh5Lu95YWs5Y-45Lit6ZOB5bu6572R57uc5L-h5oGv56eR5oqA566h55CG5bqU55So5LqL5Lia6YOoamF2YeW3peeoi-W4iDIiLCJ6dXpoaWJpYW5tYSI6IjAwMDAxMDAwMDEwMDAwNzc3MDAxOTkwMDMiLCJqaWFuY2hlbmciOiJqYXZh5bel56iL5biIMiIsInp1emhpbHVqaW5nIjoi5Lit6ZOB5bu6572R57uc5L-h5oGv56eR5oqA5pyJ6ZmQMeWFrOWPuCJ9XX0sImV4cCI6MTYxMTIzMDk3MH0.9oh2gDwLqP9j_MzISKIX96hFq3UqB4RAu-in8Ac6aaMQ1xUBDZ7XLWfjjgW68VbGsfLHlXsI3MHqbj934DQIlA",
+          "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiZGV0YWlscyI6eyJzdWIiOiJocnwzMzA1OTciLCJwb3N0TmFtZSI6ImphdmHlt6XnqIvluIgyIiwicG9zdFBhdGgiOiLkuK3pk4Hlu7rnvZHnu5zkv6Hmga_np5HmioDmnInpmZAx5YWs5Y-4IiwicG9zdENvZGUiOiIwMDAwMTAwMDAxMDAwMDc3NzAwMTk5MDAzIiwiaWQiOiIzMzA1OTciLCJ1c2VyTmFtZSI6IumrmOmqniIsInBvc3RzIjpbeyJ0eXBlIjozLCJpZCI6Mjg2NzA0LCJuYW1lIjoiamF2YeW3peeoi-W4iDIiLCJjb2RlIjoiMDAwMDEwMDAwMTAwMDA3NzcwMDE5OTAwMyIsIm9yZGVyIjoxNSwibWFpblBvc2l0aW9uIjp0cnVlLCJwcm92aWRlcklkIjoiaHIiLCJwYXRoIjoi6IKh5Lu95YWs5Y-45Lit6ZOB5bu6572R57uc5L-h5oGv56eR5oqA566h55CG5bqU55So5LqL5Lia6YOoamF2YeW3peeoi-W4iDIiLCJ6dXpoaWJpYW5tYSI6IjAwMDAxMDAwMDEwMDAwNzc3MDAxOTkwMDMiLCJqaWFuY2hlbmciOiJqYXZh5bel56iL5biIMiIsInp1emhpbHVqaW5nIjoi5Lit6ZOB5bu6572R57uc5L-h5oGv56eR5oqA5pyJ6ZmQMeWFrOWPuCJ9XX0sImV4cCI6MTYxMTIzMjk1M30.xiu7NU_2mH7wnHqRALN_YVlgzF8fXkhQd5rbitFPinPCXWpziYkNvChYpcrYVl7zG7sqSUPb-Lrmbxf3WWy5Tw",
          "Content-Type": "application/json; charset = utf-8",
          "dataSource": "bdmp"
       };

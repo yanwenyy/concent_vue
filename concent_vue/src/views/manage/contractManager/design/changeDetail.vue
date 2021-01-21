@@ -2216,7 +2216,6 @@
                     <el-table-column
                       align="center"
                       :resizable="false"
-                      fixed="right"
                       label="操作"
                       show-overflow-tooltip
                       v-if="p.actpoint!=='look'"
@@ -2280,8 +2279,8 @@
                   </el-table-column>
 
                   <el-table-column
+                    align="center"
                     :resizable="false"
-                    fixed="right"
                     label="操作"
                     show-overflow-tooltip
                     v-if="p.actpoint!=='look'"
@@ -3778,7 +3777,7 @@
       getBdName(id, list, index) {
         if(id){
           this.$forceUpdate()
-          list[index].moduleName=this.nameList.find(
+          list[index].moduleName=this.projectPlate.find(
             (item) => item.id == id
         ).detailName;
         }

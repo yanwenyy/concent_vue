@@ -603,7 +603,7 @@
           }).then(() => {
             this.$http
             .post(
-              "/api/contract/contract/ContractInfo/list/deleteSubjectMatter",
+              "/api/contract/contract/ContractInfo/list/deleteInfoAdjustLog",
               {ids: [item.uuid]}
             )
             .then((res) => {
@@ -654,10 +654,10 @@
       //新增金额
       addXs(){
         var v={
-          markDate:'',
-          groupAdjustAmount:'',
-          stockAdjustAmount:'',
-          remarks:'',
+          markDate:"",
+          groupAdjustAmount:"",
+          stockAdjustAmount:"",
+          remarks:"",
           contractInfoId:this.contractInfoId
         };
         this.moneyform.contractInfoAdjustLogList.push(v);

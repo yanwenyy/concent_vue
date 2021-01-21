@@ -1811,8 +1811,10 @@ export default {
     },
     //解决新增的时候二级联动清除不了
     clear(id,name){
-      id='';
-      name='';
+      // id='';
+      // name='';
+      this.detailform.contractInfo[id]='';
+      this.detailform.contractInfo[name]='';
       this.$forceUpdate();
     },
     //打开附件上传的组件
@@ -1832,7 +1834,7 @@ export default {
     getBdName(id, list, index) {
       if(id){
         this.$forceUpdate()
-        list[index].moduleName=this.nameList.find(
+        list[index].moduleName=this.projectPlate.find(
           (item) => item.id == id
       ).detailName;
       }

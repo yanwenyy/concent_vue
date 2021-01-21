@@ -2712,7 +2712,7 @@
       getBdName(id, list, index) {
         if(id){
           this.$forceUpdate()
-          list[index].moduleName=this.nameList.find(
+          list[index].moduleName=this.projectPlate.find(
             (item) => item.id == id
         ).detailName;
         }

@@ -436,6 +436,9 @@
   };
 </script>
 <style scoped>
+  .queryForm>.el-button{
+    margin-top: 5px;
+  }
   >>>.el-form-item__label{
     width: auto;
   }

@@ -444,6 +444,7 @@ pre {
   color: #0a469d !important;
   border: 1px solid #08459c !important;
   width: auto;
+  margin-left: 0;
 }
 .el-button--primary:hover {
   background: #0a469d !important;

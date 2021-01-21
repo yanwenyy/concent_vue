@@ -34,7 +34,7 @@
         </template>
       </el-menu>
       </div>
-      <div  style="position:relatve;width:100%;height:100%;background:#F7F9FA;;box-sizing:border-box;padding:1px 0 60px;">
+      <div  style="position:relatve;width:100%;height:100%;background:#F7F9FA;;box-sizing:border-box;padding:1px 0 40px;">
         <div style="height:calc(100%);background:white;display:flex;">
       <el-scrollbar
         :class="tlm_height"
@@ -164,6 +164,7 @@ export default {
 .el_container_style_false #el-leftnav-scrollbar,
 .el_container_style_false #el-leftnav {
   width: 64px;
+  height: calc(100vh - 108px)!important;
   transition: width 0.3s;
   -moz-transition: width 0.3s;
   -webkit-transition: width 0.3s;
@@ -182,14 +183,19 @@ export default {
 .tlm_height_FF {
   height: calc(100%);
 }
+.el-tlm-main{
+  width: 100%;
+  position: relative;
+}
 .el-breadcrumb{
   margin: 15px 0 0px 0px;
-  position: fixed;
 }
-.block{
-
-  position: fixed;
-}
+/*.block{*/
+  /*position: absolute;*/
+  /*bottom:0px;*/
+  /*left: 10px;*/
+  /*width: auto;*/
+/*}*/
 .el-pagination{
   float: right;
   margin: 10px 0px 0 0px;
