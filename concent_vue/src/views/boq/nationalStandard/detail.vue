@@ -306,6 +306,7 @@
               show-overflow-tooltip
               align="center"
               :width="180"
+
             >
             </el-table-column>
 
@@ -960,5 +961,6 @@ import AddBd  from "./addBd";
 >>>.el-table__header{
   margin: 20px 0 0 0px;
 }
+
 </style>
 

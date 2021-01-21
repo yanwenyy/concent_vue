@@ -139,6 +139,7 @@
            show-overflow-tooltip>
          <template slot-scope="scope">
           <el-button plain
+                    class="analysis_btn"
                      type="primary"
                      @click="selectUploadTable(scope.row.uuid)">上传附件</el-button>
         </template>
@@ -157,6 +158,7 @@
           show-overflow-tooltip>
         <template slot-scope="scope">
           <el-button plain
+          class="analysis_btn"
                      type="primary"
                      @click="selectOrgTable(scope.row.uuid)">选择范围</el-button>
         </template>
@@ -275,7 +277,7 @@
 import orgTable from '@/components/orgTable'
 import uploadTable from '@/components/fileUploadTable'
 export default {
-  name: "月度分析列表",
+  // name: "月度分析列表",
   components: {
     uploadTable,
     orgTable
@@ -370,7 +372,7 @@ export default {
 
     selectUploadTable(val){
       this.uploadTableStatus = true;
-      console.log(val);
+      // console.log(val);
       this.$nextTick(() => {
         this.$refs.addOrUpdate.init(val,"1")
       })
@@ -384,7 +386,7 @@ export default {
     },
     getOrgTable(data)
     {
-      console.log(data)
+      // console.log(data)
       this.orgTableStatus = false;
       this.getData();
       var resultStr = [];
@@ -397,12 +399,12 @@ export default {
 
       // this.detailform.verifyOrgLists=resultStr;
       // alert(this.detailform.verifyOrgLists);
-      console.log(this.detailform.verifyOrgLists)
+      // console.log(this.detailform.verifyOrgLists)
       // this.key = this.key + 1;
     },
     getUploadTable(data) {
 
-      console.log(data)
+      // console.log(data)
       this.uploadTableStatus = false;
       this.getData();
     },
@@ -452,7 +454,7 @@ export default {
 
               });
           }
-          console.log(JSON.stringify(this.page));
+          // console.log(JSON.stringify(this.page));
         })
 
 
@@ -501,7 +503,7 @@ export default {
 
     },
     editItem() {
-      console.log(JSON.stringify(this.multipleSelection[0].uuid));
+      // console.log(JSON.stringify(this.multipleSelection[0].uuid));
       if(this.multipleSelection.length>1)
       {
         this.$message.info("请选择一条信息进行修改！");
@@ -525,7 +527,7 @@ export default {
       this.detailform.reportYear = this.multipleSelection[0].reportYear;
       this.detailform.createOrgName = this.multipleSelection[0].createOrgName;
       this.detailform.createUserName = this.multipleSelection[0].createUserName;
-      console.log(this.detailform)
+      // console.log(this.detailform)
       this.$http
         .post(
           "/api/contract/archives/ArchivesInfo/detail/saveItem",
@@ -580,7 +582,7 @@ export default {
         this.searchform.selectYear = date.getFullYear()
       }
 
-      console.log(JSON.stringify(this.searchform));
+      // console.log(JSON.stringify(this.searchform));
 
       this.$http
         .post(
@@ -589,8 +591,8 @@ export default {
         )
         .then(res => {
           this.page = res.data.data
-          console.log(this.searchform);
-          console.log(JSON.stringify(this.page));
+          // console.log(this.searchform);
+          // console.log(JSON.stringify(this.page));
         })
     },
 
@@ -627,4 +629,15 @@ export default {
 {
   padding:5px 0px;
 }
+/* .el-button--primary.is-plain{
+  width: 100%;
+  text-align: center;
+} */
+>>>.analysis_btn{
+  padding: 0px;
+  width: 80% !important;
+  text-align: center;
+  height: 90% !important;
+}
+
 </style>
