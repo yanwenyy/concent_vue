@@ -50,6 +50,7 @@
     <div style="margin-top: 0px">
       <el-table
         ref="table"
+        class="tableStyle"
         :max-height="$tableHeight"
         :height="$tableHeight"
         :data="page.records"

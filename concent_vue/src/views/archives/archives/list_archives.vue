@@ -17,6 +17,7 @@
     <div style="margin-top: 10px">
       <el-table
         ref="table"
+        class="tableStyle"
         :max-height="$tableHeight"
         :height="$tableHeight"
         :data="page.records"
@@ -26,7 +27,6 @@
         }"
         border
         highlight-current-row
-        stripe
         style="width: 100%"
         tooltip-effect="dark"
         @row-click="rowshow"
@@ -120,7 +120,7 @@
         </el-table-column>
 
         <el-table-column
-          :width="150"
+
           align="center"
           label="备注"
           prop="remarks"

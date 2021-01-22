@@ -109,7 +109,7 @@
                   @change="
                   getName(
                     detailform.contractInfo.enginTypeFirstId,
-                    xqprojectType,
+                    emergingMarket,
                     'enginTypeFirstName'
                   )
                 "
@@ -865,7 +865,7 @@
                   show-overflow-tooltip
                   type="index"></el-table-column>
 
-                <el-table-column  class="listTabel" :resizable="false" label="产品名称" prop="productId" show-overflow-tooltip>
+                <el-table-column width="150"  class="listTabel" :resizable="false" label="产品名称" prop="productId" show-overflow-tooltip>
                   <template slot-scope="scope">
                     <el-form-item
                       class="tabelForm"

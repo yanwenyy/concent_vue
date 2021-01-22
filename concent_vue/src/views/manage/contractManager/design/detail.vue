@@ -985,6 +985,7 @@
               <p>
                 <span>中标通知书: </span>
                 <el-button
+                  class="detatil-flie-btn"
                   v-show="p.actpoint !== 'look'"
                   size="small"
                   type="primary"
@@ -1003,6 +1004,7 @@
                 <!--&gt;-->
                   <!--<el-button size="small" type="primary">点击上传</el-button>-->
                 <!--</el-upload>-->
+              <p>
                 <el-table
                   :data="detailform.fileList1"
                   :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
@@ -1047,9 +1049,10 @@
                     </template>
                   </el-table-column>
                 </el-table>
-              <p>
+
                 <span>合同附件: </span>
                 <el-button
+                  class="detatil-flie-btn"
                   v-show="p.actpoint !== 'look'"
                   size="small"
                   type="primary"
@@ -1220,7 +1223,7 @@
 
                 </el-table-column>
 
-                <el-table-column align="center" width="200" :resizable="false" label="项目副经理" prop="deputyProjectManager" show-overflow-tooltip>
+                <el-table-column align="center" width="200" :resizable="false" label="项目副经理" prop="deputyProjectManager"  show-overflow-tooltip>
 
                 </el-table-column>
 

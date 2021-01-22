@@ -117,9 +117,11 @@ export default {
     font-size: 13px!important;
   }
   >>>.el-menu-item{
-    padding: 0 15px!important;
+    padding: 0 0 0 20px!important;
     min-width: 0;
     font-size: 13px!important;
+    height: 40px!important;
+    line-height: 40px!important;
   }
   .el-menu {
     border-right: none;

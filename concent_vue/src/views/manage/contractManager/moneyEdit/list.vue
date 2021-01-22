@@ -233,7 +233,7 @@
           width="150"
         >
           <template slot-scope="scope">
-            <el-link :underline="false" type="warning" @click="editMoney(scope.row)">金额调整</el-link>
+            <el-link :underline="false" type="warning" @click="editMoney(scope.row)">金额调整<i class="el-icon-edit"></i></el-link>
           </template>
         </el-table-column>
         <el-table-column
@@ -383,7 +383,7 @@
               <el-form-item
                 class="tabelformItem"
                 :prop="'contractInfoAdjustLogList.'+scope.$index+'.groupAdjustAmount'"
-                :rules="scope.row.stockAdjustAmount!=''&&scope.row.groupAdjustAmount==''?'':rules.contractAmount"
+                :rules="scope.row.stockAdjustAmount!=''&&scope.row.groupAdjustAmount==''?{}:rules.contractAmount"
                 label-width="0"
 
               >
@@ -403,7 +403,7 @@
               <el-form-item
                 class="tabelformItem"
                 :prop="'contractInfoAdjustLogList.'+scope.$index+'.stockAdjustAmount'"
-                :rules="scope.row.groupAdjustAmount!=''&&scope.row.stockAdjustAmount==''?'':rules.contractAmount"
+                :rules="scope.row.groupAdjustAmount!=''&&scope.row.stockAdjustAmount==''?{}:rules.contractAmount"
                 label-width="0"
 
               >

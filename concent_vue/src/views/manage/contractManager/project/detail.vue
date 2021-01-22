@@ -1447,7 +1447,7 @@
 
               </el-table-column>
 
-              <el-table-column align="center" width="200" :resizable="false" label="项目副经理" prop="deputyProjectManager"  show-overflow-tooltip>
+              <el-table-column align="center" width="200" :resizable="false" label="项目副经理" prop="deputyProjectManager" show-overflow-tooltip>
 
               </el-table-column>
 

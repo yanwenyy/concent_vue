@@ -446,6 +446,9 @@ pre {
   width: auto;
   margin-left: 0;
 }
+.el-button--primary.is-plain i{
+  margin-left: 5px;
+}
 .el-button--primary:hover {
   background: #0a469d !important;
   color: #ebf0f9 !important;

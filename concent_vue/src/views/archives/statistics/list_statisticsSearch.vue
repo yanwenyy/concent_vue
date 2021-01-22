@@ -84,7 +84,6 @@
         border
         highlight-current-row
         ref="table"
-        stripe
         style="width: 100%"
         tooltip-effect="dark"
       >
@@ -180,7 +179,6 @@
         </el-table-column>
 
         <el-table-column
-          :width="150"
           align="center"
           label="备注"
           prop="remarks"

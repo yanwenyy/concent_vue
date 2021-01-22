@@ -411,6 +411,7 @@
                     />
                   </el-form-item>
                   <el-form-item
+                    class="inline-formitem"
                     label="是否为系统内的采购:"
 
                   >
@@ -451,6 +452,7 @@
                     </el-date-picker>
                   </el-form-item>
                   <el-form-item
+                    class="inline-formitem"
                     label="是否区域经营机构承揽:"
 
                   >
@@ -545,7 +547,7 @@
                       show-overflow-tooltip
                       type="index"></el-table-column>
 
-                    <el-table-column align="center"  class="listTabel" :resizable="false" label="产品名称" prop="productName" show-overflow-tooltip>
+                    <el-table-column width="150" align="center"  class="listTabel" :resizable="false" label="产品名称" prop="productName" show-overflow-tooltip>
 
                     </el-table-column>
 
@@ -995,7 +997,7 @@
                     @change="
                   getName(
                     detailform.contractInfo.enginTypeFirstId,
-                    xqprojectType,
+                    emergingMarket,
                     'enginTypeFirstName'
                   )
                 "
@@ -1748,7 +1750,7 @@
                     show-overflow-tooltip
                     type="index"></el-table-column>
 
-                  <el-table-column  class="listTabel" :resizable="false" label="产品名称" prop="productId" show-overflow-tooltip>
+                  <el-table-column  width="150"  class="listTabel" :resizable="false" label="产品名称" prop="productId" show-overflow-tooltip>
                     <template slot-scope="scope">
                       <el-form-item
                         class="tabelForm"

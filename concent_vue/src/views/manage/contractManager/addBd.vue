@@ -74,6 +74,16 @@
           <el-form-item label="成本负责人:" class="list-item">
             <el-input v-model="detailForm.costOwner" placeholder="成本负责人" clearable></el-input>
           </el-form-item>
+          <el-form-item label="其他未列出单位(单位与单位之间用英文逗号隔开):" >
+            <el-input
+              class="textarea_qt"
+              v-model="detailForm.otherUnitsNotListed"
+              placeholder="其他未列出单位(单位与单位之间用英文逗号隔开)"
+              clearable
+              :disabled="type === 'look'"
+              :autosize="{ minRows: 2, maxRows: 4}"
+              type="textarea"></el-input>
+          </el-form-item>
           <div class="list-title">
             其他投标单位(系统内):
             <el-button
