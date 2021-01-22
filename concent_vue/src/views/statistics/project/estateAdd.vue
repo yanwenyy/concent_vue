@@ -378,141 +378,6 @@
                 v-model="detailForm.project.projectPusherPhone"/>
             </el-form-item>
           </el-row>
-          <div>
-            <p class="detail-title" style="overflow:hidden;margin-right:30px">
-              <span>产品信息:</span>
-              <el-button
-                v-if="p.actpoint !== 'look'"
-                @click="addProduct()"
-                class="upload-demo detailUpload detatil-flie-btn"
-                type="primary">
-                新增
-              </el-button>
-            </p>
-            <el-table
-              :data="detailForm.project.productInfoList"
-              :header-cell-style="{
-                'text-align': 'center',
-                'background-color': 'rgba(246,248,252,1)',
-                color: 'rgba(0,0,0,1)',
-              }"
-              align="center"
-              border
-              class="detailTable"
-              ref="table"
-              style="width: 100%;"
-            >
-              <el-table-column
-                :width="80"
-                align="center"
-                label="序号"
-                show-overflow-tooltip
-                type="index"/>
-              <el-table-column
-                :resizable="false"
-                label="产品名称"
-                align="center"
-                prop="productName"
-                min-width="300"
-                show-overflow-tooltip
-              >
-                <template slot-scope="scope">
-                  <!--:prop="'project.productInfoList[' + scope.$index + '].productName'"-->
-                  <!--:rules="{required: true, message: '此项不能为空', trigger: 'blur'}"-->
-                  <el-form-item>
-                    <el-input
-                      v-model="scope.row.productName"
-                      clearable
-                      :disabled="p.actpoint === 'look'"/>
-                  </el-form-item>
-                </template>
-              </el-table-column>
-              <el-table-column
-                :resizable="false"
-                label="规格型号"
-                width="200"
-                align="center"
-                prop="specificationAndModel"
-                show-overflow-tooltip
-              >
-                <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.specificationAndModel"/>
-                </template>
-              </el-table-column>
-              <el-table-column
-                :resizable="false"
-                label="产品数量"
-                width="150"
-                align="center"
-                prop="productQuantity"
-                show-overflow-tooltip
-              >
-                <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.productQuantity"/>
-                </template>
-              </el-table-column>
-              <el-table-column
-                :resizable="false"
-                label="产品单位"
-                width="150"
-                align="center"
-                prop="productUnit"
-                show-overflow-tooltip
-              >
-                <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.productUnit"/>
-                </template>
-              </el-table-column>
-              <el-table-column
-                :resizable="false"
-                label="总金额(万元)"
-                align="center"
-                prop="productTotalPrice"
-                width="300"
-                show-overflow-tooltip
-              >
-                <template slot-scope="scope">
-                  <el-form-item class="tabelForm"
-                                :prop="'project.productInfoList[' + scope.$index + '].productTotalPrice'"
-                                :rules="rules.project.isMustMoney">
-                    <el-input
-                      v-model="scope.row.productTotalPrice"
-                      clearable
-                      :disabled="p.actpoint === 'look'"
-                    >
-                      <template slot="prepend">¥</template>
-                      <template slot="append">(万元)</template>
-                    </el-input>
-                  </el-form-item>
-                </template>
-              </el-table-column>
-              <el-table-column
-                v-if="p.actpoint !== 'look'"
-                :resizable="false"
-                fixed="right"
-                label="操作"
-                align="center"
-                show-overflow-tooltip
-                width="80">
-                <template slot-scope="scope">
-                  <el-link
-                    :underline="false"
-                    @click="del(scope.$index,scope.row,detailForm.project.productInfoList)"
-                    type="warning">删除
-                  </el-link>
-                </template>
-              </el-table-column>
-            </el-table>
-          </div>
         </el-form>
       </div>
     </el-card>
@@ -582,7 +447,8 @@
         emergingMarketTwo: [],
         detailForm: {
           project: {
-            productInfoList: [], // 标的列表
+            infoProductList: [], // 产品列表
+            infoSubjectMatterList: [], // 标的信息
             commonFilesList: [], // 文件列表
             topInfoSiteList: [
               {
@@ -651,19 +517,6 @@
       }
     },
     methods: {
-      addProduct() {
-        let v = {
-          productName: '',
-          specificationAndModel: '',
-          productQuantity: '',
-          productUnit: '',
-          productTotalPrice: ''
-        }
-        this.detailForm.project.productInfoList.push(v)
-      },
-      del(index, item, list) {
-        list.splice(index, 1)
-      },
       // 选择项目地点
       selectPosition() {
         this.treeStatas = true
@@ -750,7 +603,7 @@
               })
           } else {
             this.$message({
-              message: '请填写必填项',
+              message: '请正确填写信息',
               type: 'error'
             })
             return false
@@ -789,6 +642,12 @@
           .then((res) => {
             if (res.data.code === 200) {
               this.detailForm.project = res.data.data
+              if (!res.data.data.infoProductList) {
+                this.detailForm.project.infoProductList = []
+              }
+              if (!res.data.data.infoSubjectMatterList) {
+                this.detailForm.project.infoSubjectMatterList = []
+              }
               this.getShowTwo()
             }
           })

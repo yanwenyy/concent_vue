@@ -449,7 +449,7 @@
       add() {
         let p = { actpoint: 'add' }
         this.$router.push({
-          path: './designDetail/',
+          path: './designAdd/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
         })
       },
@@ -487,7 +487,7 @@
         }
         let p = { actpoint: 'edit', uuid: this.multipleSelection[0].uuid }
         this.$router.push({
-          path: './designDetail/',
+          path: './designAdd/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
         })
       },
@@ -495,7 +495,7 @@
       rowShow(row) {
         let p = { actpoint: 'look', uuid: row.uuid }
         this.$router.push({
-          path: './designDetail/',
+          path: './designAdd/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
         })
       },
@@ -507,7 +507,7 @@
         }
         let p = { actpoint: 'look', uuid: this.multipleSelection[0].uuid }
         this.$router.push({
-          path: './designDetail/',
+          path: './designAdd/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
         })
       },

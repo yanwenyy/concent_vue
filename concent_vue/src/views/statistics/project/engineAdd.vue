@@ -1,17 +1,20 @@
 <!--工程承包项目登记-->
 
 <template>
-  <div style="position: relative">
+  <div>
     <el-card class="box-card">
       <div class="clearfix el-card__header">
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'add'"><b>工程承包项目新增</b></span>
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'edit'"><b>工程承包项目修改</b></span>
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'look'"><b>工程承包项目查看</b></span>
         <el-button @click="back" class="detailbutton">返回</el-button>
-        <el-button v-if="p.actpoint !== 'look'" type="primary" @click="submitForm('detailForm')" class="detailbutton">保存</el-button>
-        <el-button v-if="p.actpoint !== 'look'" @click="submitForm('detailForm', 'submit')" class="detailbutton">提交</el-button>
+        <el-button v-if="p.actpoint !== 'look'" type="primary" @click="submitForm('detailForm')" class="detailbutton">
+          保存
+        </el-button>
+        <el-button v-if="p.actpoint !== 'look'" @click="submitForm('detailForm', 'submit')" class="detailbutton">提交
+        </el-button>
       </div>
-      <div class="detailBoxBG" style="height: calc(100vh - 196px)">
+      <div class="detailBoxBG">
         <el-form
           :model="detailForm"
           :rules="rules"
@@ -970,6 +973,8 @@
         options1: [{ label: '测试所在地', value: 'testabcd' }],
         detailForm: {
           project: {
+            infoProductList: [], // 产品列表
+            infoSubjectMatterList: [], // 标的信息
             commonFilesList: [], // 文件列表
             projectName: '', // 项目名称(中文)
             projectForeginName: '', // 项目名称(外文)
@@ -1288,7 +1293,7 @@
               })
           } else {
             this.$message({
-              message: '请填写必填项',
+              message: '请正确填写信息',
               type: 'error'
             })
             return false
@@ -1334,6 +1339,12 @@
           .then((res) => {
             if (res.data.code === 200) {
               this.detailForm.project = res.data.data
+              if (!res.data.data.infoProductList) {
+                this.detailForm.project.infoProductList = []
+              }
+              if (!res.data.data.infoSubjectMatterList) {
+                this.detailForm.project.infoSubjectMatterList = []
+              }
               this.getShowTwo()
             }
           })
@@ -1351,6 +1362,12 @@
   }
 </script>
 <style lang="scss" scoped>
+  > > > .el-tlm-main{
+    .block {
+      display: none !important;
+    }
+  }
+
   .gcform {
     margin-top: 10px;
 
@@ -1366,6 +1383,10 @@
       margin-left: 0;
       text-align: right;
       top: 0%;
+    }
+
+    > > > .el-main {
+      overflow: hidden;
     }
 
     > > > .el-form-item__label:before {
