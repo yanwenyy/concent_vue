@@ -1,12 +1,13 @@
 <template>
   <div class="tableStyle" :max-height="$tableHeight" :height="$tableHeight">
-    <!--   style="height: calc(100% - 60px); border: 1px solid #eee"-->
+      <!-- style="height: calc(100% - 60px); border: 1px solid #eee" -->
     <div
       style="
         display: inline-block;
         width: 16%;
         vertical-align: top;
         overflow: auto;
+        border: 1px solid #eee
       "
     >
       <!--  style="background-color: rgb(238, 241, 246);height: 100%;overflow: auto"-->
@@ -48,19 +49,20 @@
           >
         </el-button-group>
       </div>
+      <div style="margin-top: 10px">
       <el-table
-        :data="page.records"
-        class="tableStyle"
-        :max-height="$tableHeight"
-        :height="$tableHeight"
-        :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
-        highlight-current-row
-        ref="table"
-        stripe
-        border
-        style="width: 100%; margin-top: 10px"
-        tooltip-effect="dark"
-        @selection-change="handleSelectionChange"
+      class="tableStyle"
+      :data="page.records"
+      :max-height="$tableHeight"
+      :height="$tableHeight"
+      :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
+      highlight-current-row
+      ref="table"
+      stripe
+      border
+      style="width: 100%;"
+      tooltip-effect="dark"
+      @selection-change="handleSelectionChange"
       >
         <el-table-column
           :width="50"
@@ -72,7 +74,7 @@
           show-overflow-tooltip
           type="index"
           label="序号"
-          width="55"
+          :width="70"
           align="center"
         >
         </el-table-column>
@@ -127,6 +129,7 @@
         >
         </el-table-column>
       </el-table>
+      </div>
     </div>
     <el-pagination
       :current-page="page.current"
@@ -697,8 +700,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .el-tree {
-  height: calc(100vh - 223px) !important;
-  max-height: calc(100vh - 223px) !important;
+  // height: calc(100vh - 223px) !important;
+  // max-height: calc(100vh - 223px) !important;
 }
 .gcform {
   margin-top: 10px;
@@ -786,12 +789,14 @@ export default {
   background-color: #409eff;
   color: #ffffff;
 }
-//.el-table .cell.el-tooltip
-//{
-//  white-space: nowrap;
-//  min-width: 50px;
-//}
 >>> .el-breadcrumb {
   margin: -100px 0 0 0 !important;
+}
+// >>>.el-tree-node__content{
+//   background: #eee !important;
+// }
+>>>.el-table .cell.el-tooltip{
+    height: 42px;
+    padding: 9px;
 }
 </style>

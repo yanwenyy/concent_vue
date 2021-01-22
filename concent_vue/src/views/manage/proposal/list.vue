@@ -250,7 +250,7 @@
               <el-input
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchform.importFileRecordId"
+                v-model="searchform.importFileRecordName"
                 size="mini"
               />
             </div>
@@ -452,6 +452,13 @@
       },
       // 查询
       getData() {
+        if(this.searchform.importFileRecordName!=''){
+          if(this.searchform.importFileRecordName=='是'){
+            this.searchform.importFileRecordId='1';
+          }else if(this.searchform.importFileRecordName=='否'){
+            this.searchform.importFileRecordId=null;
+          }
+        }
         this.$http
           .post(
             "/api/contract/topInfo/TopInfor/list/loadPageDataForReg",
