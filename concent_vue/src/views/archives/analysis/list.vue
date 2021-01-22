@@ -60,7 +60,6 @@
         }"
         border
         highlight-current-row
-        stripe
         style="width: 100%"
         tooltip-effect="dark"
         @selection-change="handleSelectionChange"

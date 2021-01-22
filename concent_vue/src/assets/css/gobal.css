@@ -447,7 +447,7 @@ pre {
   margin-left: 0;
 }
 .el-button--primary.is-plain i{
-  margin-left: 5px;
+  margin-right: 5px;
 }
 .el-button--primary:hover {
   background: #0a469d !important;
@@ -481,7 +481,7 @@ pre {
   padding: 9px 0;
 }
 .detailTable td {
-      padding: 0 0 !important;
+  padding: 0 0 !important;
 }
 .detailTable th{
   padding: 8px 0 !important;
@@ -652,6 +652,10 @@ pre {
 .add-group {
   float: left;
 }
+.new-add-group{
+  min-width: 100px;
+  padding: 5px 0;
+}
 .add-group-btn{
   margin-bottom: 5px;
 }
@@ -659,6 +663,17 @@ pre {
   border-top-right-radius: 0!important;
   border-bottom-right-radius: 0!important;
   border-right:none!important;
+}
+.add-li{
+  font-size: 14px;
+  height: 40px;
+  line-height: 40px;
+  cursor: pointer;
+  padding: 0 20px;
+}
+.add-li:hover{
+  background: #ebf0f9;
+  color:#0a469d;
 }
 /**/
 

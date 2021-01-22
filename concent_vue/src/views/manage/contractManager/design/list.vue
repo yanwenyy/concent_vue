@@ -6,10 +6,15 @@
           class="detail-back-tab add-group"
           placement="bottom-start"
           width="auto"
+          popper-class="new-add-group"
           trigger="click">
-          <el-button class="add-group-btn" @click="add()" type="primary" plain >新签合同</el-button>
-          <br>
-          <el-button class="add-group-btn" @click="add('bq')" type="primary" plain >新签补充合同</el-button>
+          <div>
+            <div class="add-li" @click="add()">新签合同</div>
+            <div class="add-li" @click="add('bq')">新签补充合同</div>
+          </div>
+          <!--<el-button class="add-group-btn" @click="add()" type="primary" plain >新签合同</el-button>-->
+          <!--<br>-->
+          <!--<el-button class="add-group-btn" @click="add('bq')" type="primary" plain >新签补充合同</el-button>-->
           <el-button class="new-add-btn" slot="reference"  type="primary" plain >新增</el-button>
         </el-popover>
         <el-button @click="totop" type="primary" plain>修改</el-button>
@@ -39,7 +44,6 @@
         border
         highlight-current-row
         ref="table"
-        stripe
         style="width: 100%"
         tooltip-effect="dark"
       >
