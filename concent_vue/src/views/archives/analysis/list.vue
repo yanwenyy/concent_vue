@@ -124,7 +124,7 @@
         <el-table-column
           :width="150"
           align="center"
-          filter-multiple="true"
+          :filter-multiple="true"
           label="提交时间"
           prop="submitTime"
           show-overflow-tooltip
@@ -640,5 +640,10 @@ export default {
   text-align: center;
   height: 90% !important;
 }
-
+  @media (min-width: 1300px) and (max-width: 1500px) {
+    .tableStyle{
+      max-height: calc(100vh - 250px)!important;
+      min-height: calc(100vh - 250px)!important;
+    }
+  }
 </style>

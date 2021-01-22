@@ -4,10 +4,12 @@
     title="附件列表"
     :visible.sync="dialogVisible"
     @close="result"
+
   >
 
-    <div>
+    <div >
       <el-table
+
         :data="detailform.commonFilesList"
         :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
         @selection-change="handleSelectionChange"
@@ -41,6 +43,7 @@
                 </el-table-column>
 
                 <el-table-column
+                 :disabled="type === 'look'"
                   align="center"
                   prop="isDisplay"
                   :resizable="false"

@@ -1,12 +1,12 @@
 <template>
   <div  class="tableStyle"
-        style="border: 1px solid #DCDFE6"
+
         :max-height="$tableHeight"
         :height="$tableHeight">
 
 
 <!--   style="height: calc(100% - 60px); border: 1px solid #eee"-->
-  <div style="display: inline-block;width: 16%;vertical-align: top;overflow: auto; border-right: 1px solid #DCDFE6" >
+  <div style="display: inline-block;width: 16%;vertical-align: top;overflow: auto" >
 <!--  style="background-color: rgb(238, 241, 246);height: 100%;overflow: auto"-->
     <el-tree
       :props="props"
@@ -73,6 +73,8 @@
       <el-table-column prop="vdisable" label="是否隐藏" width="90" align="center" :formatter="vdisableFormatter" show-overflow-tooltip>
         </el-table-column>
       </el-table>
+
+    </div>
      <el-pagination
        :current-page="page.current"
        :page-size="page.size"
@@ -82,7 +84,7 @@
        @size-change="handleSizeChange"
        layout="total, sizes, prev, pager, next, jumper"
      ></el-pagination>
-    </div>
+
     <el-dialog :title="dialogtitle" :visible.sync="dialogResult"
     width="30%">
       <el-form :model="itemform">
@@ -752,7 +754,7 @@ export default {
   //background-color: green;
 
   .el-container {
-    height: calc(100% - 60px); border: 1px solid #eee
+    height: calc(100% - 60px);
   }
 }
 .detailbutton{
@@ -771,4 +773,7 @@ export default {
 //  white-space: nowrap;
 //  min-width: 50px;
 //}
+>>>.el-breadcrumb {
+  margin: -100px 0 0 0 !important;
+}
 </style>

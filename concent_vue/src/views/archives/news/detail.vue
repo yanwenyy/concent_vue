@@ -64,7 +64,7 @@
               ></el-option>
             </el-select>
           </el-form-item>
-           <el-form-item  label="范围选择:" v-show="p.actpoint != 'look'">
+           <el-form-item  label="范围选择:" :disabled="p.actpoint != 'look'">
              <el-button size="small"
                         type="primary"
                         @click="selectOrgTable(detailform.archivesInfo.uuid)">点击选择</el-button>
@@ -78,7 +78,7 @@
                 >
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-input
-                    :readonly="p.actpoint === 'look'"
+                    :disabled="p.actpoint === 'look'"
                     type="textarea"
                     placeholder="请输入"
                     size="mini"
@@ -182,7 +182,7 @@
 <script>
 import orgTable from '@/components/orgTable'
 export default {
-  name: '详情',
+  // name: '详情',
   components: {
     orgTable
   },
