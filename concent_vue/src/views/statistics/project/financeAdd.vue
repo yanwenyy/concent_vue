@@ -470,6 +470,8 @@
         bizTypeCodeTwo: [],
         detailForm: {
           project: {
+            infoProductList: [], // 产品列表
+            infoSubjectMatterList: [], // 标的信息
             commonFilesList: [], // 文件列表
             topInfoSiteList: [
               {
@@ -630,7 +632,7 @@
               })
           } else {
             this.$message({
-              message: '请填写必填项',
+              message: '请正确填写信息',
               type: 'error'
             })
             return false
@@ -669,6 +671,12 @@
           .then((res) => {
             if (res.data.code === 200) {
               this.detailForm.project = res.data.data
+              if (!res.data.data.infoProductList) {
+                this.detailForm.project.infoProductList = []
+              }
+              if (!res.data.data.infoSubjectMatterList) {
+                this.detailForm.project.infoSubjectMatterList = []
+              }
               this.getShowTwo()
             }
           })
