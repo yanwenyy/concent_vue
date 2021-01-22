@@ -659,7 +659,7 @@
           </el-row>
 
           <p class="detail-title" style="overflow: hidden; margin-right: 30px">
-            <span>标段信息: </span>
+            <span>标段信息:</span>
             <!-- @click="add('bd')" -->
             <el-button
               v-show="p.actpoint != 'look' && p.actpoint !== 'searchLook'"
@@ -711,7 +711,7 @@
               show-overflow-tooltip
               align="center"
               :width="180"
-              v-if="detailform.bidInfo.isBidRates === '1'"
+              v-if="detailform.bidInfo.isBidRates === '1'||detailform.bidInfo.isBidRates ==''"
             >
             </el-table-column>
 
@@ -722,7 +722,7 @@
               show-overflow-tooltip
               align="center"
               :width="180"
-              v-if="detailform.bidInfo.isBidRates === '1'"
+              v-if="detailform.bidInfo.isBidRates === '1'||detailform.bidInfo.isBidRates ==''"
             >
             </el-table-column>
 
@@ -733,7 +733,7 @@
               show-overflow-tooltip
               align="center"
               :width="180"
-              v-if="detailform.bidInfo.isBidRates === '1'"
+              v-if="detailform.bidInfo.isBidRates === '1'||detailform.bidInfo.isBidRates ==''"
             >
             </el-table-column>
 
@@ -765,7 +765,7 @@
               show-overflow-tooltip
               align="center"
               :width="180"
-              v-if="detailform.bidInfo.isBidRates === '1'"
+              v-if="detailform.bidInfo.isBidRates === '1'||detailform.bidInfo.isBidRates ==''"
             >
             </el-table-column>
 

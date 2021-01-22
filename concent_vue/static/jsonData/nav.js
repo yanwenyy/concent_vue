@@ -253,7 +253,7 @@ export default {
                     "name": "中标结果登记",
                     "path": "/manage/bid_info/Winning_bid_z",
                     "component": "/manage/bid_info/Winning_bid_z",
-                    "iconCls": "el-icon-switch-button",
+                    "iconCls": "el-icon-document-checked",
                     "menushow": true,
                     "leaf": true,
                     "defaultpage":  true
@@ -968,7 +968,7 @@ export default {
                   "name": "统计指标",
                   "path": "/statistics/bp",
                   "component": "/router",
-                  "iconCls": "el-icon-printer",
+                  "iconCls": "el-icon-data-line",
                   "menushow": true,
                   "leaf": false,
                   "defaultpage": false,
@@ -977,7 +977,7 @@ export default {
                       "name": "统计项管理",
                       "path": "/statistics/bp/listAll",
                       "component": "/statistics/bp/listAll",
-                      "iconCls": "el-icon-notebook-2",
+                      "iconCls": "el-icon-reading",
                       "menushow": true,
                       "leaf": true,
                       "defaultpage": false
@@ -986,7 +986,7 @@ export default {
                       "name": "本单位统计项",
                       "path": "/statistics/bp/listCompany",
                       "component": "/statistics/bp/listCompany",
-                      "iconCls": "el-icon-receiving",
+                      "iconCls": "el-icon-office-building",
                       "menushow": true,
                       "leaf": true,
                       "defaultpage": false
@@ -1008,7 +1008,7 @@ export default {
                 "name": "数据标准",
                 "path": "/boq/dataStandards",
                 "component": "/router",
-                "iconCls": "el-icon-printer",
+                "iconCls": "el-icon-data-analysis",
                 "menushow": true,
                 "leaf": false,
                 "defaultpage": false,
@@ -1035,7 +1035,7 @@ export default {
                     "name": "国标库",
                     "path": "/boq/nationalStandard/list",
                     "component": "/boq/nationalStandard/list",
-                    "iconCls": "el-icon-switch-button",
+                    "iconCls": "el-icon-folder-opened",
                     "menushow": true,
                     "leaf": true,
                     "defaultpage": true

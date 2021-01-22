@@ -5,28 +5,35 @@
         <el-button @click="add" plain type="primary">新增<i class="el-icon-plus"></i></el-button>
         <el-button @click="totop" plain type="primary">修改<i class="el-icon-edit"></i></el-button>
         <el-button @click="remove" type="primary" plain>删除<i class="el-icon-delete"></i></el-button>
-        <el-button @click="searchformReset" type="primary" plain>刷新<i class="el-icon-refresh-left"></i></el-button>
+        <!-- <el-button @click="searchformReset" type="primary" plain>刷新<i class="el-icon-refresh-left"></i></el-button> -->
+
+
+        <el-upload
+              style="float:left"
+              class="upload-demo detailUpload detail-back-tab add-group "
+              :action="'/api/contract/topInfo/TopInfor/list/importExcel'"
+              :on-success="handleChange"
+              :on-error="handleChange"
+              :show-file-list="false"
+              accept=".xls,.xlsx"
+              multiple
+            >
+              <el-button
+                type="primary"
+                plain
+                class="new-add-btn"
+                >导入
+                <i class="el-icon-document-add"></i>
+                </el-button>
+        </el-upload>
+        <el-button @click="exportdata" type="primary" plain>导出<i class="el-icon-document "></i></el-button>
       </el-button-group>
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
         <el-button @click="getData" type="primary" plain>查询</el-button>
         <!-- <el-button @click="Importdata" type="primary" plain>导入</el-button> -->
-        <el-upload
-                class="upload-demo detailUpload"
-                :action="'/api/contract/topInfo/TopInfor/list/importExcel'"
-                :on-success="handleChange"
-                :on-error="handleChange"
-                :show-file-list="false"
-                accept=".xls,.xlsx"
-                multiple
-              >
-                <el-button
-                  type="primary"
-                  plain
-                  >导入
-                  </el-button>
-                  </el-upload>
-        <el-button @click="exportdata" type="primary" plain>导出</el-button>
+
+
       </div>
     </div>
 
@@ -220,7 +227,30 @@
               <el-input
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="sousuo"
+                v-model="searchform.flowStatus"
+                size="mini"
+              />
+            </div>
+          </template>
+        </el-table-column>
+
+        <el-table-column
+          :width="150"
+          align="center"
+          label="是否导入"
+          prop="importFileRecordId"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+             {{scope.row.importFileRecordId==1?'是':'否'}}
+          </template>
+          <template slot="header" slot-scope="scope">
+            <span>是否导入</span>
+            <div>
+              <el-input
+                class="list-search-picker"
+                style=" width: 100%"
+                v-model="searchform.importFileRecordId"
                 size="mini"
               />
             </div>
@@ -409,10 +439,11 @@
       },
       searchformReset() {
         // this.$refs["searchform"].resetFields();
-        this.searchform.inforName = "";
-        this.searchform.enginTypeFirstId = "";
-        this.searchform.constructionOrg = "";
-        this.searchform.noticeTypeId = "";
+        // this.searchform.inforName = "";
+        // this.searchform.enginTypeFirstId = "";
+        // this.searchform.constructionOrg = "";
+        // this.searchform.noticeTypeId = "";
+        this.searchform={};
         this.getData();
       },
       // 列表选项数据

@@ -253,7 +253,30 @@
 
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="sousuo"
+                v-model="searchform.flowStatus"
+                size="mini"
+              />
+            </div>
+          </template>
+        </el-table-column>
+
+        <el-table-column
+          :width="150"
+          align="center"
+          label="是否导入"
+          prop="importFileRecordId"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+             {{scope.row.importFileRecordId==1?'是':'否'}}
+          </template>
+          <template slot="header" slot-scope="scope">
+            <span>是否导入</span>
+            <div>
+              <el-input
+                class="list-search-picker"
+                style=" width: 100%"
+                v-model="searchform.importFileRecordId"
                 size="mini"
               />
             </div>

@@ -263,7 +263,7 @@
           <el-pagination
         :current-page="page.current"
         :page-size="page.size"
-        :page-sizes="[10, 50, 100]"
+        :page-sizes="[20, 50, 100]"
         :total="page.total"
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
@@ -300,7 +300,7 @@ export default {
       sousuo: "",
       searchform: {
         current: 1,
-        size: 10,
+        size: 20,
         year: "",
         name: "",
         ptype: "",

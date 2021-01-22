@@ -504,7 +504,7 @@
 
 
           <p class="detail-title" style="overflow: hidden；">
-            <span style="float: left">标段信息: </span>
+            <span style="float: left">标段信息:</span>
           </p>
           <el-table
           :key="key"
@@ -536,6 +536,7 @@
               label="标段名称"
               prop="bidInfoSection.sectionName"
               align="center"
+              :width="180"
               show-overflow-tooltip
             >
             </el-table-column>
@@ -547,8 +548,9 @@
               prop="bidInfoSection.riskFee"
               show-overflow-tooltip
               :width="180"
-              v-if="detailform.bidInfo.isBidRates==='1'"
+              v-if="detailFormBefore.bidInfo.isBidRates==='1'||detailFormBefore.bidInfo.isBidRates ==null"
             >
+
             </el-table-column>
 
             <el-table-column
@@ -557,7 +559,8 @@
               prop="bidInfoSection.safetyCost"
               show-overflow-tooltip
               align="center"
-              v-if="detailform.bidInfo.isBidRates==='1'"
+              :width="180"
+              v-if="detailFormBefore.bidInfo.isBidRates==='1'||detailFormBefore.bidInfo.isBidRates ==null"
             >
             </el-table-column>
 
@@ -568,7 +571,7 @@
               show-overflow-tooltip
               align="center"
               :width="180"
-              v-if="detailform.bidInfo.isBidRates==='1'"
+              v-if="detailFormBefore.bidInfo.isBidRates==='1'||detailFormBefore.bidInfo.isBidRates ==null"
             >
             </el-table-column>
 
@@ -589,7 +592,7 @@
               show-overflow-tooltip
               align="center"
               :width="180"
-              v-if="detailform.bidInfo.isBidRates==='0'"
+              v-if="detailFormBefore.bidInfo.isBidRates==='0'"
             >
 
             </el-table-column>
@@ -601,7 +604,7 @@
               show-overflow-tooltip
               align="center"
               :width="180"
-              v-if="detailform.bidInfo.isBidRates==='1'"
+              v-if="detailFormBefore.bidInfo.isBidRates==='1'||detailFormBefore.bidInfo.isBidRates ==null"
             >
             </el-table-column>
 
@@ -1460,7 +1463,7 @@
                 show-overflow-tooltip
                 align="center"
                 :width="180"
-                v-if="detailform.bidInfo.isBidRates==='1'"
+                v-if="detailform.bidInfo.isBidRates==='1'||detailform.bidInfo.isBidRates ==''"
               >
               </el-table-column>
 
@@ -1471,7 +1474,7 @@
                 show-overflow-tooltip
                 align="center"
                 :width="180"
-                v-if="detailform.bidInfo.isBidRates==='1'"
+                v-if="detailform.bidInfo.isBidRates==='1'||detailform.bidInfo.isBidRates ==''"
               >
               </el-table-column>
 
@@ -1482,7 +1485,7 @@
                 show-overflow-tooltip
                 align="center"
                 :width="180"
-                v-if="detailform.bidInfo.isBidRates==='1'"
+                v-if="detailform.bidInfo.isBidRates==='1'||detailform.bidInfo.isBidRates ==''"
               >
               </el-table-column>
 
@@ -1515,7 +1518,7 @@
                 show-overflow-tooltip
                 align="center"
                 :width="180"
-                v-if="detailform.bidInfo.isBidRates==='1'"
+                v-if="detailform.bidInfo.isBidRates==='1'||detailform.bidInfo.isBidRates ==''"
               >
               </el-table-column>
 

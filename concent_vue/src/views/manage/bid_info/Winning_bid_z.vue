@@ -313,7 +313,7 @@
                       v-model="zbForm.bidInfoSection.riskFee"
                       clearable
                       placeholder="风险费(万元)"
-                      disabled=
+                      disabled
                     >
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>

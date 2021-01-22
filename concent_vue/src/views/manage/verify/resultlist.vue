@@ -2,7 +2,7 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="verifyResultEdit" plain type="primary">资审结果登记</el-button>
+        <el-button @click="verifyResultEdit()" plain type="primary">资审结果登记</el-button>
       </el-button-group>
     </div>
     <div style="margin-top: 10px">
@@ -39,16 +39,19 @@
         </el-table-column>
 
         <el-table-column
-          :width="300"
+          :width="500"
           label="项目名称"
           prop="inforName"
           show-overflow-tooltip
         >
-
           <template slot-scope="scope">
-            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
+            <span>项目名称</span>
+          </template>
+          <template slot-scope="scope">
+          <span class="blue pointer" @click="verifyResultEdit(scope.row,'look')">{{scope.row.inforName}}</span>
           </template>
         </el-table-column>
+
         <el-table-column
           :width="150"
           align="center"
@@ -102,7 +105,7 @@
           align="center"
           label="状态"
           prop="verify.uuid"
-          filter-multiple="true"
+          :filter-multiple="true"
           show-overflow-tooltip
         >
 
@@ -155,8 +158,9 @@
          <el-switch
            active-text="通过"
            v-model="resultform.verifySection.verifyResult"
-           active-value="true"
+           :active-value="true"
            inactive-value="false"
+          :disabled="type=='look'"
          >
             </el-switch>
         </el-form-item>
@@ -165,7 +169,8 @@
             value-format="timestamp"
             v-model="resultform.verifySection.verifyResultTime"
             type="date"
-            placeholder="选择日期">
+            placeholder="选择日期"
+            :disabled="type=='look'">
           </el-date-picker>
         </el-form-item>
         <div
@@ -179,8 +184,9 @@
            :on-error="handleChange"
            :on-remove="handleRemove"
            multiple
+
          >
-              <el-button size="small" type="primary">点击上传</el-button>
+              <el-button size="small" type="primary" v-if="type!='look'">点击上传</el-button>
             </el-upload>
         </p>
         </div>
@@ -234,9 +240,11 @@
                   label="操作"
                   show-overflow-tooltip
                   :width="80"
+                  v-if="type!='look'"
                 >
                   <template slot-scope="scope">
                     <el-link :underline="false"
+
                              @click="handleRemove(scope.row,scope.$index)"
                              type="warning">删除</el-link>
                   </template>
@@ -245,8 +253,8 @@
 
     </div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogResult = false">取 消</el-button>
-        <el-button type="primary" @click="saveVerifyResult">确 定</el-button>
+        <el-button @click="dialogResult = false,type=''">取 消</el-button>
+        <el-button type="primary" @click="saveVerifyResult" v-if="type!='look'">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -255,7 +263,7 @@
 
 <script>
 export default {
-  name: "标段通过信息录入",
+  // name: "标段通过信息录入",
   data() {
     return {
       radio: '0',
@@ -273,7 +281,9 @@ export default {
         status: '',
         username: '',
         saleTime: ''
+
       },
+      type:'',
       menus: [],
       multipleSelection: [],
       orgTree: [],
@@ -300,27 +310,56 @@ export default {
     }
   },
   methods: {
-    // UploadUrl:function(){
-    //   return '/api/contract/topInfo/CommonFiles/'+this.multipleSelection[0].verify.sectionId+'/verify/02/uploadFileByBusinessId';
+    //     rowshow() {
+    //   if (this.multipleSelection.length > 0) {
+    //     this.dialogResult = true;
+    //     console.log(this.multipleSelection[0].verifySectionId)
+    //     this.$http
+    //       .post(
+    //         '/api/contract/topInfo/Verify/detail/entitySectionInfo',
+    //         {"id":this.multipleSelection[0].verifySectionId}
+    //       )
+    //       .then(res => {
+    //         this.resultform = res.data.data;
+    //         console.log(JSON.stringify(this.resultform));
+    //         this.type = "look";
+    //       })
+    //   }
     // },
-    verifyResultEdit() {
-      if (this.multipleSelection.length > 0) {
-        this.dialogResult = true;
-        console.log(this.multipleSelection[0].verifySectionId)
-        this.$http
-          .post(
-            '/api/contract/topInfo/Verify/detail/entitySectionInfo',
-            {"id":this.multipleSelection[0].verifySectionId}
-          )
-          .then(res => {
-            this.resultform = res.data.data
-            console.log(JSON.stringify(this.resultform))
-            //this.getData();
-          })
 
-      } else {
-        this.$message.info("请选择列表中的项目！");
+    verifyResultEdit(row,type) {
+      if(row){
+        this.type=type;
+         this.dialogResult = true;
+         this.$http
+            .post(
+              '/api/contract/topInfo/Verify/detail/entitySectionInfo',
+              {"id":row.verifySectionId}
+            )
+            .then(res => {
+              this.resultform = res.data.data;
+            })
+      }else{
+        if (this.multipleSelection.length ==1) {
+                this.dialogResult = true;
+                // console.log(this.multipleSelection[0].verifySectionId)
+                this.$http
+                  .post(
+                    '/api/contract/topInfo/Verify/detail/entitySectionInfo',
+                    {"id":this.multipleSelection[0].verifySectionId}
+                  )
+                  .then(res => {
+                    this.resultform = res.data.data;
+                    // console.log(JSON.stringify(this.resultform));
+
+                    //this.getData();
+                  })
+
+              } else {
+                this.$message.info("请选择一条内容进行操作！");
+              }
       }
+
     },
     saveVerifyResult() {
       this.dialogResult = false
@@ -386,7 +425,7 @@ export default {
           }
 
         });
-      console.log(this.resultform.commonFilesList)
+      // console.log(this.resultform.commonFilesList)
     },
     //上传附件
     handleChange(response, file, fileList){
@@ -396,9 +435,6 @@ export default {
           type: 'success',
           duration: 1500,
           onClose: () => {
-            console.log(response.data)
-            console.log( JSON.stringify(this.resultform.commonFilesList))
-            console.log( JSON.stringify(this.resultform))
             if(response.data.uuid!=null) {
 
               var commonFile = {
@@ -429,7 +465,7 @@ export default {
 
             }
             //this.resultform.commonFilesList.push(response.data);
-            console.log( JSON.stringify(this.resultform.commonFilesList))
+            // console.log( JSON.stringify(this.resultform.commonFilesList))
           }
         })
       } else {
@@ -452,7 +488,7 @@ export default {
     },
 
     remove() {
-      console.log(JSON.stringify(this.multipleSelection[0].uuid));
+      // console.log(JSON.stringify(this.multipleSelection[0].uuid));
       if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
         this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
         return;
@@ -532,7 +568,7 @@ export default {
     getData() {
 
 
-      console.log(JSON.stringify(this.searchform));
+      // console.log(JSON.stringify(this.searchform));
       this.$http
         .post(
           '/api/contract/topInfo/Verify/list/loadPageDataForFlowStatus',
