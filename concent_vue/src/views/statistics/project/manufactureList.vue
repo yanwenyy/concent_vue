@@ -7,7 +7,7 @@
         <el-button @click="add" type="primary" plain>新增</el-button>
         <el-button @click="edit" type="primary" plain>修改</el-button>
         <el-button @click="del" type="primary" plain>删除</el-button>
-        <!--<el-button @click="show" type="primary" plain>查看详细设置</el-button>-->
+        <el-button @click="editState" type="primary" plain>批量修改项目状态</el-button>
       </el-button-group>
       <div style="float: right;">
         <el-button
@@ -37,7 +37,6 @@
         border
         highlight-current-row
         ref="table"
-        stripe
         style="width: 100%"
         tooltip-effect="dark"
       >
@@ -220,23 +219,24 @@
       ></el-pagination>
     </div>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
+    <State ref="stateUpdate" :data="projectStatus" @resetState="getData"></State>
   </div>
 </template>
 
 <script>
   import Tree from '@/components/tree'
+  import State from '@/components/state'
 
   export default {
     name: 'proposal-list-look',
     components: {
-      Tree
+      Tree, State
     },
     data() {
       return {
         treeStatas: false,
         projectTypeTwo: [], // 工程类别(二级)
         projectNatureTwo: [], // 项目性质(二级)
-        yesOrNo: [{ id: 0, detailName: '是' }, { id: 1, detailName: '否' }],
         projectStatusType: [{ id: 0, detailName: '已提交' }, { id: 1, detailName: '未提交' }],
         page: { current: 1, size: 10, total: 0, records: [] },
         searchform: {
@@ -273,6 +273,22 @@
       }
     },
     methods: {
+      // 批量修改项目状态
+      editState() {
+        if (this.multipleSelection.length < 1) {
+          this.$message.info('请选择至少一条记录进行修改操作！')
+          return false
+        }
+        let uuids = []
+        this.multipleSelection.forEach((item) => {
+          uuids.push(item.uuid)
+        })
+        const _this = this.$refs.stateUpdate
+        _this.dialog = true
+        _this.ids = uuids
+        _this.newStatusId = ''
+        _this.newStatusName = ''
+      },
       selectPosition() {
         this.treeStatas = true
         this.$nextTick(() => {

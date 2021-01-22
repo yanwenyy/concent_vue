@@ -1,3 +1,5 @@
+<!--工程承包项目-->
+
 <template>
   <div>
     <div style="width: 100%; overflow: hidden">
@@ -35,7 +37,6 @@
         border
         highlight-current-row
         ref="table"
-        stripe
         style="width: 100%"
         tooltip-effect="dark"
       >

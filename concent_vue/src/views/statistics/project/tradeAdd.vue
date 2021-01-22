@@ -489,7 +489,7 @@
     },
     data() {
       const validateMoney = (rule, value, callback) => {
-        if (value === '') {
+        if (!value || value === '') {
           callback()
         } else if (!isMoney(value)) {
           callback(new Error('请输入正确的金额格式'))
@@ -507,7 +507,7 @@
         }
       }
       const validateNumber = (rule, value, callback) => {
-        if (value === '') {
+        if (!value || value === '') {
           callback()
         } else if (!isMoney(value)) {
           callback(new Error('请输入正确的数字格式'))
@@ -516,7 +516,7 @@
         }
       }
       const validateMobile = (rule, value, callback) => {
-        if (value === '') {
+        if (!value || value === '') {
           callback()
         } else if (!isMobile(value)) {
           callback(new Error('请输入正确的手机号'))
