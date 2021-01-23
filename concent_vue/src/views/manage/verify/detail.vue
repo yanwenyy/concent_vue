@@ -408,28 +408,6 @@
             placeholder="选择日期">
           </el-date-picker>
         </el-form-item>
-
-          <el-form-item
-         label="递交资格预审申请文件日期:"
-         prop="verify.subTime"
-
-         :rules="{
-          required: true, message: '此项不能为空', trigger: 'blur'
-        }"
-       >
-
-          <el-date-picker
-            clearable
-            :readonly="p.actpoint === 'look'"
-            value-format="timestamp"
-            v-model="detailform.verify.subTime"
-            align="right"
-            type="date"
-            placeholder="选择日期">
-          </el-date-picker>
-
-        </el-form-item>
-
         <el-form-item
           label="资审文件发售截止日期:"
           prop="verify.saleTime"
@@ -447,7 +425,23 @@
             type="date"
             placeholder="选择日期">
           </el-date-picker>
+        </el-form-item>
+        <el-form-item
+         label="递交资格预审申请文件日期:"
+         prop="verify.subTime"
 
+         :rules="{
+          required: true, message: '此项不能为空', trigger: 'blur'
+        }">
+          <el-date-picker
+            clearable
+            :readonly="p.actpoint === 'look'"
+            value-format="timestamp"
+            v-model="detailform.verify.subTime"
+            align="right"
+            type="date"
+            placeholder="选择日期">
+          </el-date-picker>
         </el-form-item>
           <br>
          <el-form-item
@@ -463,26 +457,19 @@
            v-model="detailform.verify.isCoalitionBid"
            active-value="是"
            inactive-value="否"
-         >
-            </el-switch>
-      </el-form-item>
-
-
-        <el-form-item v-show='detailform.verify.isCoalitionBid=="是"'
-                      label="内部联合体单位:"
-                      :disabled="p.actpoint === 'look'"
-        >
-          <el-input v-model="detailform.verifyOrgLists" placeholder="内部联合体单位">
-            <el-button slot="append" icon="el-icon-search"  @click="selectOrg()"></el-button>
+         />
+        </el-form-item>
+        <el-form-item  label="内部联合体单位:">
+          <el-input v-model="detailform.verifyOrgLists" placeholder="内部联合体单位"  :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否'">
+            <el-button slot="append" icon="el-icon-search"  @click="selectOrg()"  :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否'"></el-button>
           </el-input>
         </el-form-item>
 
-        <el-form-item v-show='detailform.verify.isCoalitionBid=="是"'
-                      label="外部联合体单位:"
-        >
+        <el-form-item label="外部联合体单位:" >
           <el-input
             placeholder=""
             size="mini"
+            :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否'"
             v-model="detailform.verify.outOrg"
           />
 
