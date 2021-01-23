@@ -591,7 +591,7 @@
                 <template slot-scope="scope">
                   <el-link
                     :underline="false"
-                    @click="del(scope.$index,scope.row,detailForm.project.infoProductList)"
+                    @click="del(scope.$index,scope.row,detailForm.project.infoSubjectMatterList)"
                     type="warning">删除
                   </el-link>
                 </template>
@@ -783,7 +783,7 @@
             this.$http
               .post(
                 '/api/statistics/StatisticsProject/detail/deleteBySubId',
-                { productId: item.uuid }
+                { subjectId: item.uuid }
               )
               .then((res) => {
                 if (res.data && res.data.code === 200) {
