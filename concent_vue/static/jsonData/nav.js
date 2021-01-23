@@ -799,10 +799,19 @@ export default {
                 },
                 {
                   "name": "项目信息变更",
-                  "path": "/statistics/project/bg",
-                  "component": "/statistics/project/bg",
+                  "path": "/statistics/project/changeList",
+                  "component": "/statistics/project/changeList",
                   "iconCls": "el-icon-edit-outline",
                   "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "项目信息变更",
+                  "path": "/statistics/project/changeAdd",
+                  "component": "/statistics/project/changeAdd",
+                  "iconCls": "el-icon-edit-outline",
+                  "menushow": false,
                   "leaf": true,
                   "defaultpage": false
                 },

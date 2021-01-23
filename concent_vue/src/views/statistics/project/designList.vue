@@ -66,7 +66,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          :width="200"
+          :min-width="200"
           align="center"
           label="项目名称"
           prop="projectName"

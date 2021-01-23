@@ -392,7 +392,7 @@
 
 <script>
   import Tree from '@/components/tree'
-  import { isMoney, isMobile } from '@/utils/validate'
+  import { isMoney, isMobile, isPhone } from '@/utils/validate'
 
   export default {
     name: 'estateMode',
@@ -430,8 +430,8 @@
       const validateMobile = (rule, value, callback) => {
         if (!value || value === '') {
           callback()
-        } else if (!isMobile(value)) {
-          callback(new Error('请输入正确的手机号'))
+        } else if (!isMobile(value) && !isPhone(value)) {
+          callback(new Error('请输入正确的联系方式'))
         } else {
           callback()
         }
@@ -464,6 +464,7 @@
               }
             ],
             projectModuleId: '510ba0d79593419493eb1a11ed3e7df4', // 项目板块
+            projectModuleName: '其它', // 项目板块
             projectName: '',
             projectForeginName: '',
             valueAddedTax: '',
@@ -647,9 +648,9 @@
         this.$router.back()
       },
       getShow() {
-        let data = { topInfoId: this.p.uuid }
+        let params = { topInfoId: this.p.uuid }
         this.$http
-          .post('/api/statistics/StatisticsProject/detail/entityInfo', data)
+          .post('/api/statistics/StatisticsProject/detail/entityInfo', params)
           .then((res) => {
             if (res.data.code === 200) {
               this.detailForm.project = res.data.data
