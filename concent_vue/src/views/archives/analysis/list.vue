@@ -618,10 +618,6 @@ export default {
 {
   width: 100%;
 }
->>>.el-table td, .el-table th
-{
-  padding:5px 0px;
-}
 /* .el-button--primary.is-plain{
   width: 100%;
   text-align: center;

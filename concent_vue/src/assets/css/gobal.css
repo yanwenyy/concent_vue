@@ -501,13 +501,14 @@ pre {
 }
 .detailBox{
   overflow: scroll;
-  max-height:calc(100vh - 195px)!important;
-  min-height:calc(100vh - 195px)!important;
+  max-height:calc(100vh - 175px)!important;
+  min-height:calc(100vh - 175px)!important;
   padding:0 100px;
 }
 .detailBoxBG{
   overflow: scroll;
-  max-height:calc(100vh - 190px)!important;
+  max-height:calc(100vh - 170px)!important;
+  min-height:calc(100vh - 170px)!important;
   padding:0 100px;
 }
 .gcform{
@@ -647,6 +648,13 @@ pre {
 }
 .detailTable .el-input-group{
   margin-top:-5px;
+}
+.input-el-input-group{
+  margin-top: 5px!important;
+  /*padding-top: 15px!important;*/
+}
+.tabelForm-dete{
+  margin-top: 5px!important;
 }
 .htfs{
   padding: 0 20px!important;

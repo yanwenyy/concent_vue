@@ -123,7 +123,7 @@
 
                     </el-table-column>
 
-                    <el-table-column align="center" :resizable="false" label="大小" prop="fileSize" width="120" show-overflow-tooltip>
+                    <el-table-column align="center" :resizable="false" label="大小(KB)" prop="fileSize" width="120" show-overflow-tooltip>
                                   <template slot-scope="scope">
                                     {{(scope.row.fileSize/1024).toFixed(2)}}
                                   </template>

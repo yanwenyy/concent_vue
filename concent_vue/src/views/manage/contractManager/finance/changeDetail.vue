@@ -1626,6 +1626,7 @@
                     >
                       <template slot-scope="scope">
                         <el-date-picker
+                          class="tabelForm-dete"
                           :disabled="p.actpoint === 'look'"
                           v-model="scope.row.salesPerforYear"
                           type="year"
@@ -1646,6 +1647,7 @@
                     >
                       <template slot-scope="scope">
                         <el-date-picker
+                          class="tabelForm-dete"
                           :disabled="p.actpoint === 'look'"
                           v-model="scope.row.salesPerforMonth"
                           type="month"
@@ -3435,6 +3437,8 @@
   .el-table--border {
     min-height: auto !important;
   }
-
+  .detailTable >>>.el-input-group{
+    margin-top: 0;
+  }
 </style>
 

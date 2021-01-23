@@ -360,7 +360,7 @@
           >
             <template slot-scope="scope">
               <el-form-item
-                class="tabelformItem"
+                class="tabelForm tabelformItem"
                 :prop="'contractInfoAdjustLogList.'+scope.$index+'.markDate'"
                 :rules="{
                   required: true, message: '此项不能为空', trigger: 'blur'
@@ -381,7 +381,7 @@
           <el-table-column width="400" :resizable="false" label="集团调整(万元)" prop="groupAdjustAmount" show-overflow-tooltip>
             <template slot-scope="scope">
               <el-form-item
-                class="tabelformItem"
+                class="tabelForm"
                 :prop="'contractInfoAdjustLogList.'+scope.$index+'.groupAdjustAmount'"
                 :rules="scope.row.stockAdjustAmount!=''&&scope.row.groupAdjustAmount==''?{}:rules.contractAmount"
                 label-width="0"
@@ -401,7 +401,7 @@
           <el-table-column width="400" :resizable="false" label="股份调整(万元)" prop="stockAdjustAmount" show-overflow-tooltip>
             <template slot-scope="scope">
               <el-form-item
-                class="tabelformItem"
+                class="tabelForm"
                 :prop="'contractInfoAdjustLogList.'+scope.$index+'.stockAdjustAmount'"
                 :rules="scope.row.groupAdjustAmount!=''&&scope.row.stockAdjustAmount==''?{}:rules.contractAmount"
                 label-width="0"
@@ -421,7 +421,7 @@
           <el-table-column width="300"  class="listTabel"  align="center" :resizable="false" label="备注信息" prop="remarks" show-overflow-tooltip>
             <template slot-scope="scope">
               <el-form-item
-                class="tabelformItem"
+                class="tabelForm"
                 :prop="'contractInfoAdjustLogList.'+scope.$index+'.remarks'"
                 :rules="{
                   required: true, message: '此项不能为空', trigger: 'change'
@@ -879,5 +879,17 @@
   }
   .detailTable >>>.el-form-item{
     margin-bottom: 0;
+  }
+  >>>.el-form-item__label:before {
+    position: initial;
+    left: -10px;
+  }
+  >>>.el-form-item__error {
+    padding-top: 0px;
+    width: 95%;
+    margin-left: 0;
+    text-align: right;
+    top: 0%;
+    right: 0!important;
   }
 </style>

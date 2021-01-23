@@ -34,7 +34,7 @@
     </div>
 
 
-    <div style="margin-top: 0px">
+    <div style="margin-top: 10px">
       <el-table
         ref="table"
         :data="page.records"
@@ -175,7 +175,7 @@
       <el-pagination
         :current-page="page.current"
         :page-size="page.size"
-        :page-sizes="[10, 50, 100]"
+        :page-sizes="[20, 50, 100]"
         :total="page.total"
         layout="total, sizes, prev, pager, next, jumper"
         @current-change="handleCurrentChange"
@@ -223,7 +223,7 @@ export default {
       page: {current: 1, size: 10, total: 0, records: []},
       searchform: {
         current: 1,
-        size: 10,
+        size: 20,
         uuid: '',
         name: '',
         archivesTypeId: '',
@@ -455,7 +455,6 @@ export default {
         )
         .then(res => {
           this.page = res.data.data
-          console.log(JSON.stringify(this.page));
         })
     },
 

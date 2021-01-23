@@ -265,7 +265,7 @@
                 @selection-change="handleSelectionChange"
                 align="center"
                 border
-                class="clothSizeTable"
+                class="detailTable"
                 ref="table"
                 style="width: 98%; min-height: calc(100vh - 370px)"
               >
@@ -346,7 +346,7 @@
                 @selection-change="handleSelectionChange"
                 align="center"
                 border
-                class="clothSizeTable"
+                class="detailTable"
                 ref="table"
                 style="width: 98%; min-height: calc(100vh - 370px)"
               >
@@ -1020,7 +1020,7 @@
                 @selection-change="handleSelectionChange"
                 align="center"
                 border
-                class="clothSizeTable detailTable"
+                class="detailTable detailTable"
                 ref="table"
                 style="width: 98%; min-height: calc(100vh - 370px)"
               >
@@ -1134,9 +1134,9 @@
                 @selection-change="handleSelectionChange"
                 align="center"
                 border
-                class="clothSizeTable detailTable"
+                class="detailTable"
                 ref="table"
-                style="width: 98%; min-height: calc(100vh - 370px)"
+                style="width: 100%; min-height: calc(100vh - 370px)"
               >
                 <el-table-column
                   :width="80"
@@ -1186,6 +1186,7 @@
                   align="center"
                   prop="projectScale"
                   width="350"
+
                 >
                   <template slot-scope="scope">
                     <el-form-item class="tabelForm" :prop="'topInfoSectionList.' + scope.$index + '.projectScale'" :rules='rules.contractAmount'>
@@ -1195,6 +1196,7 @@
                           v-model="scope.row.projectScale"
                           clearable
                           :disabled="p.actpoint === 'look'"
+                          class="input-el-input-group"
                         >
                           <template slot="prepend">¥</template>
                           <template slot="append">(万元)</template>
@@ -1736,7 +1738,7 @@
     background: #fff;
   }
 
-  .clothSizeTable {
+  .detailTable {
     /*td {*/
     /*padding: 0;*/
     /*}*/
