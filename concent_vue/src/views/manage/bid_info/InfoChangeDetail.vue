@@ -328,6 +328,7 @@
                   ></el-option>
                 </el-select>
           </el-form-item>
+          <br>
 
           <el-form-item label="招标公告发布日期:"
           class="formItem"
@@ -346,12 +347,16 @@
               </el-date-picker>
           </el-form-item>
 
-          <el-form-item label="内部联合体单位:"
-              v-if="detailFormBefore.bidInfo.isCoalitionBid==='0'">
-          <el-input disabled  placeholder="请输入内容" v-model="detailFormBefore.bidInfo.innerOrgName" class="input-with-select">
-          </el-input>
+          <el-form-item label="招标文件发售截止日期:">
+                <el-date-picker
+                  disabled
+                  value-format="timestamp"
+                  filterable
+                  clearable
+                  v-model="detailform.bidInfo.saleTime"
+                >
+                </el-date-picker>
           </el-form-item>
-<br>
 
           <el-form-item label="投标截止日期:"
            :rules="{
@@ -367,25 +372,6 @@
                   v-model="detailFormBefore.bidInfo.endTime"
                 >
                 </el-date-picker>
-          </el-form-item>
-
-          <el-form-item label="招标文件发售截止日期:">
-                <el-date-picker
-                  disabled
-                  value-format="timestamp"
-                  filterable
-                  clearable
-                  v-model="detailform.bidInfo.saleTime"
-                >
-                </el-date-picker>
-          </el-form-item>
-
-          <el-form-item label="外部联合体单位:"
-              v-if="detailFormBefore.bidInfo.isCoalitionBid==='0'">
-            <el-input
-              v-model="detailFormBefore.bidInfo.outOrg"
-              disabled
-            ></el-input>
           </el-form-item>
 <br>
 
@@ -423,8 +409,22 @@
               active-value="0"
               inactive-value="1"
               disabled
+
             >
             </el-switch>
+          </el-form-item>
+<br>
+
+          <el-form-item label="内部联合体单位:">
+          <el-input disabled  placeholder="请输入内容" v-model="detailFormBefore.bidInfo.innerOrgName" class="input-with-select">
+          </el-input>
+          </el-form-item>
+
+          <el-form-item label="外部联合体单位:">
+            <el-input
+              v-model="detailFormBefore.bidInfo.outOrg"
+              disabled
+            ></el-input>
           </el-form-item>
 </div>
 
@@ -1185,6 +1185,7 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
+              <br>
 
             <el-form-item
             class="formItem"
@@ -1206,45 +1207,6 @@
               </el-date-picker>
             </el-form-item>
 
-              <el-form-item label="内部联合体单位:"
-              v-if="detailform.bidInfo.isCoalitionBid==='0'"
-              class="formItem"
-              >
-              <el-input  placeholder="请输入内容" v-model="detailform.bidInfo.innerOrgName" class="input-with-select" :disabled="p.actpoint === 'look'">
-                <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('内部联合体单位',detailform.bidInfo.innerOrgId)" ></el-button>
-              </el-input>
-              <!-- <el-select
-                :disabled="p.actpoint === 'look'"
-                filterable
-                clearable
-                multiple
-                placeholder="请选择"
-                v-model="detailform.value1"
-              >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in amountSource"
-                ></el-option>
-              </el-select> -->
-            </el-form-item>
-            <br>
-
-              <el-form-item
-                label="投标截止日期:"
-                prop="bidInfo.endTime"
-              >
-                <el-date-picker
-                  :disabled="p.actpoint === 'look'"
-                  value-format="timestamp"
-                  clearable
-                  filterable
-                  v-model="detailFormBefore.bidInfo.endTime"
-                >
-                </el-date-picker>
-              </el-form-item>
-
               <el-form-item
               class="formItem"
               label="招标文件发售截止日期"
@@ -1260,28 +1222,25 @@
                 </el-date-picker>
               </el-form-item>
 
-            <el-form-item class="formItem"
-            v-if="detailform.bidInfo.isCoalitionBid==='0'"
-                label="外部联合体单位:"
+              <el-form-item
+                label="投标截止日期:"
+                prop="bidInfo.endTime"
               >
-                <el-input
+                <el-date-picker
                   :disabled="p.actpoint === 'look'"
+                  value-format="timestamp"
                   clearable
-                  placeholder=""
-                  v-model="detailform.bidInfo.outOrg"
-                />
+                  filterable
+                  v-model="detailFormBefore.bidInfo.endTime"
+                >
+                </el-date-picker>
               </el-form-item>
-<br>
+              <br>
+
               <el-form-item
               class="inline-formitem formItem"
                 label="是否为费率招标:"
                 prop="bidInfo.isBidRates">
-                <!-- :rules="{
-                  required: true,
-                  message: '此项不能为空',
-                  trigger: 'blur',
-                }" -->
-
               <el-switch
               class="inline-formitem-switch"
               v-model="detailform.bidInfo.isBidRates"
@@ -1292,7 +1251,6 @@
               :disabled="p.actpoint === 'look'"
             >
             </el-switch>
-
               </el-form-item>
 
               <el-form-item
@@ -1313,9 +1271,32 @@
               active-value="0"
               inactive-value="1"
               :disabled="p.actpoint === 'look'"
+              @change="detailform.bidInfo.isCoalitionBid=='1'?(detailform.bidInfo.innerOrgName='',detailform.bidInfo.outOrg=''):''"
             >
             </el-switch>
               </el-form-item>
+              <br>
+              <el-form-item label="内部联合体单位:"
+              class="formItem"
+              >
+              <el-input v-model="detailform.bidInfo.innerOrgName" class="input-with-select"
+              :disabled="p.actpoint === 'look'|| detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''">
+                <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('内部联合体单位',detailform.bidInfo.innerOrgId)" ></el-button>
+              </el-input>
+            </el-form-item>
+
+            <el-form-item class="formItem"
+                label="外部联合体单位:"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'|| detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''"
+                  clearable
+                  placeholder=""
+                  v-model="detailform.bidInfo.outOrg"
+                />
+              </el-form-item>
+
+
 
 
             </div>

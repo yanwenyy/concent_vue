@@ -447,7 +447,6 @@
          <el-form-item
            label="是否联合体投标:"
            prop="verify.isCoalitionBid"
-
            :rules="{
                   required: true, message: '此项不能为空', trigger: 'blur'
                 }"
@@ -457,11 +456,13 @@
            v-model="detailform.verify.isCoalitionBid"
            active-value="是"
            inactive-value="否"
+           @change="detailform.verify.isCoalitionBid=='否'?(detailform.verifyOrgLists='',detailform.verify.outOrg=''):''"
          />
         </el-form-item>
         <el-form-item  label="内部联合体单位:">
-          <el-input v-model="detailform.verifyOrgLists" placeholder="内部联合体单位"  :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否'">
-            <el-button slot="append" icon="el-icon-search"  @click="selectOrg()"  :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否'"></el-button>
+          <el-input v-model="detailform.verifyOrgLists"
+          :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否' || detailform.verify.isCoalitionBid==null">
+            <el-button slot="append" icon="el-icon-search"  @click="selectOrg()"  :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否'|| detailform.verify.isCoalitionBid==null"></el-button>
           </el-input>
         </el-form-item>
 
@@ -469,7 +470,7 @@
           <el-input
             placeholder=""
             size="mini"
-            :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否'"
+            :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否' || detailform.verify.isCoalitionBid==null"
             v-model="detailform.verify.outOrg"
           />
 
