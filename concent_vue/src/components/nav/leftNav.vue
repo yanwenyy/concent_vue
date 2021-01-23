@@ -134,7 +134,7 @@ export default {
     border-width: 0 0 1px;
     text-align: center;
     padding: 3px 0;
-    height: 60px;
+    height: 40px;
     /*line-height: 40px;*/
     vertical-align: top;
     position: absolute;

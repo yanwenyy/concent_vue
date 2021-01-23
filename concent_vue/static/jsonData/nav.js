@@ -517,7 +517,7 @@ export default {
                 },
                 {
                   "name": "新签年计划",
-                  "path": "/manage/proposal",
+                  "path": "/manage/plan",
                   "component": "/router",
                   "iconCls": "el-icon-document-remove",
                   "menushow": true,
