@@ -53,7 +53,7 @@ export default {
                       "iconCls": "el-icon-notebook-2",
                       "menushow": false,
                       "leaf": true,
-                      "defaultpage": true
+                      "defaultpage": false
                     },
                     {
                     "name": "项目信息跟踪",
@@ -62,7 +62,7 @@ export default {
                     "iconCls": "el-icon-aim",
                     "menushow": true,
                     "leaf": true,
-                    "defaultpage": true
+                    "defaultpage": false
                   },
                   {
                     "name": "项目信息跟踪详情",
@@ -70,7 +70,7 @@ export default {
                     "component": "/manage/proposal/track_detail",
                     "menushow": false,
                     "leaf": true,
-                    "defaultpage": true
+                    "defaultpage": false
                   },
                     {
                       "name": "项目信息变更",
@@ -79,7 +79,7 @@ export default {
                       "iconCls": "el-icon-edit-outline",
                       "menushow": true,
                       "leaf": true,
-                      "defaultpage": true
+                      "defaultpage": false
                     },
                     {
                       "name": "项目信息变更",
@@ -97,7 +97,7 @@ export default {
                       "iconCls": "el-icon-search",
                       "menushow": true,
                       "leaf": true,
-                      "defaultpage": true
+                      "defaultpage": false
                     },
                   ]
                 },
@@ -193,7 +193,7 @@ export default {
                   "iconCls": "el-icon-collection",
                   "menushow": true,
                   "leaf": false,
-                  "defaultpage": true,
+                  "defaultpage": false,
                   "children": [
                     {
                       "name": "投标信息登记",
@@ -267,7 +267,7 @@ export default {
                   "iconCls": "el-icon-receiving",
                   "menushow": true,
                   "leaf": false,
-                  "defaultpage": true,
+                  "defaultpage": false,
                   "children": [
                     {
                       "name": "工程承包合同",
@@ -521,7 +521,7 @@ export default {
                   "iconCls": "el-icon-document-remove",
                   "menushow": true,
                   "leaf": false,
-                  "defaultpage": true,
+                  "defaultpage": false,
                   "children": [
                     {
                       "name": "工程公司上报",
