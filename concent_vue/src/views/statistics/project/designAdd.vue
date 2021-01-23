@@ -320,7 +320,7 @@
             <el-form-item
               label="实物工程量:"
               prop="project.physicalQuantity"
-              :rules="rules.project.physicalQuantity"
+              :rules="rules.project.isNumber"
               style="width: 32.5%">
               <el-input
                 :disabled="p.actpoint === 'look'"
@@ -416,10 +416,11 @@
             </el-form-item>
             <el-form-item
               label="新兴市场类别(二级):"
+              prop="project.marketSecondId"
               :rules="detailForm.project.marketFirstId&&emergingMarketTwo?{
                   required: true,
                   message: '此项不能为空',
-                  trigger: 'blur',
+                  trigger: ['blur','change']
                 }:{}"
               style="width: 32.5%">
               <el-select
@@ -796,7 +797,7 @@
 <script>
   import Tree from '@/components/tree'
   import FileUpload from '@/components/fileUpload'
-  import { isMoney, isMobile } from '@/utils/validate'
+  import { isMoney, isMobile, isPhone } from '@/utils/validate'
 
   export default {
     name: 'InvestMode',
@@ -834,8 +835,8 @@
       const validateMobile = (rule, value, callback) => {
         if (!value || value === '') {
           callback()
-        } else if (!isMobile(value)) {
-          callback(new Error('请输入正确的手机号'))
+        } else if (!isMobile(value) && !isPhone(value)) {
+          callback(new Error('请输入正确的联系方式'))
         } else {
           callback()
         }
@@ -879,6 +880,7 @@
             projectTypeSecondId: '', // 工程类别（二级）
             projectLineId: '', // 所属线路ID
             projectModuleId: 'f6823a41e9354b81a1512155a5565aeb', // 项目板块
+            projectModuleName: '勘察设计咨询', // 项目板块
             categoryFirstId: '0f333a962655480c8ef668a8ce129d41', // 业务类别（一级）
             categorySecondId: '', // 业务类别二级
             isConsortion: '', // 是否联合体项目
@@ -1212,9 +1214,9 @@
         })
       },
       getShow() {
-        let data = { topInfoId: this.p.uuid }
+        let params = { topInfoId: this.p.uuid }
         this.$http
-          .post('/api/statistics/StatisticsProject/detail/entityInfo', data)
+          .post('/api/statistics/StatisticsProject/detail/entityInfo', params)
           .then((res) => {
             if (res.data.code === 200) {
               this.detailForm.project = res.data.data

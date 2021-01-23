@@ -410,12 +410,15 @@
             </el-form-item>
             <el-form-item
               label="新兴市场类别(二级):"
+              prop="project.marketSecondId"
               :rules="detailForm.project.marketFirstId&&emergingMarketTwo?{
                   required: true,
                   message: '此项不能为空',
-                  trigger: 'blur',
+                  trigger: ['blur','change']
                 }:{}"
               style="width: 32.5%">
+              <!--multiple-->
+              <!--collapse-tags-->
               <el-select
                 :disabled="p.actpoint === 'look'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'"
                 filterable
@@ -908,7 +911,7 @@
 <script>
   import Tree from '@/components/tree'
   import FileUpload from '@/components/fileUpload'
-  import { isMoney, isMobile } from '@/utils/validate'
+  import { isMoney, isMobile, isPhone } from '@/utils/validate'
   // import datas from '@/utils/position'
   export default {
     name: 'InvestMode',
@@ -946,8 +949,8 @@
       const validateMobile = (rule, value, callback) => {
         if (!value || value === '') {
           callback()
-        } else if (!isMobile(value)) {
-          callback(new Error('请输入正确的手机号'))
+        } else if (!isMobile(value) && !isPhone(value)) {
+          callback(new Error('请输入正确的联系方式'))
         } else {
           callback()
         }
@@ -991,6 +994,7 @@
             projectTypeSecondId: '', // 工程类别（二级）
             projectLineId: '', // 所属线路ID
             projectModuleId: '7f4fcba4255b43a8babf15afd6c04a53', // 项目板块
+            projectModuleName: '工程承包', // 项目板块
             businessId: '', // 业务板块
             isConsortion: '', // 是否联合体项目
             projectTypeId: '', // 项目类型
@@ -1333,9 +1337,9 @@
         })
       },
       getShow() {
-        let data = { topInfoId: this.p.uuid }
+        let params = { topInfoId: this.p.uuid }
         this.$http
-          .post('/api/statistics/StatisticsProject/detail/entityInfo', data)
+          .post('/api/statistics/StatisticsProject/detail/entityInfo', params)
           .then((res) => {
             if (res.data.code === 200) {
               this.detailForm.project = res.data.data

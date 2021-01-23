@@ -64,8 +64,9 @@
           })
           return
         }
+        const params = {ids: this.ids.toString(), newStatusName: this.newStatusName, newStatusId: this.newStatusId}
         this.$http
-          .post('/api/statistics/StatisticsProject/detail/updateProjectName', {ids: this.ids, newStatusName: this.newStatusName, newStatusId: this.newStatusId})
+          .post('/api/statistics/StatisticsProject/detail/updateProjectName', params)
           .then(res => {
             if (res.data.code === 200) {
               this.$message({
