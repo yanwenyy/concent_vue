@@ -124,7 +124,7 @@ export default {
                       "name": "资审结果登记",
                       "path": "/manage/verify/resultlist",
                       "component": "/manage/verify/resultlist",
-                      "iconCls": "el-icon-notebook-2",
+                      "iconCls": "el-icon-document-checked",
                       "menushow": true,
                       "leaf": true,
                       "defaultpage": true
@@ -273,7 +273,7 @@ export default {
                       "name": "工程承包合同",
                       "path": "/manage/contractManager/project/list",
                       "component": "/manage/contractManager/project/list",
-                      "iconCls": "el-icon-notebook-2",
+                      "iconCls": "el-icon-school",
                       "menushow": true,
                       "leaf": true,
                       "defaultpage": true
@@ -309,7 +309,7 @@ export default {
                     "name": "房地产合同",
                     "path": "/manage/contractManager/house/list",
                     "component": "/manage/contractManager/house/list",
-                    "iconCls": "el-icon-notebook-2",
+                    "iconCls": "el-icon-office-building",
                     "menushow": true,
                     "leaf": true,
                     "defaultpage": true
@@ -327,7 +327,7 @@ export default {
                     "name": "物资贸易合同",
                     "path": "/manage/contractManager/trade/list",
                     "component": "/manage/contractManager/trade/list",
-                    "iconCls": "el-icon-notebook-2",
+                    "iconCls": "el-icon-truck",
                     "menushow": true,
                     "leaf": true,
                     "defaultpage": true
@@ -345,7 +345,7 @@ export default {
                     "name": "工业制造合同",
                     "path": "/manage/contractManager/industrial/list",
                     "component": "/manage/contractManager/industrial/list",
-                    "iconCls": "el-icon-notebook-2",
+                    "iconCls": "el-icon-cpu",
                     "menushow": true,
                     "leaf": true,
                     "defaultpage": true
@@ -363,7 +363,7 @@ export default {
                     "name": "金融保险合同",
                     "path": "/manage/contractManager/finance/list",
                     "component": "/manage/contractManager/finance/list",
-                    "iconCls": "el-icon-notebook-2",
+                    "iconCls": "el-icon-money",
                     "menushow": true,
                     "leaf": true,
                     "defaultpage": true
@@ -381,7 +381,7 @@ export default {
                     "name": "运营维管合同",
                     "path": "/manage/contractManager/operate/list",
                     "component": "/manage/contractManager/operate/list",
-                    "iconCls": "el-icon-notebook-2",
+                    "iconCls": "el-icon-setting",
                     "menushow": true,
                     "leaf": true,
                     "defaultpage": true
@@ -399,7 +399,7 @@ export default {
                     "name": "其他合同",
                     "path": "/manage/contractManager/other/list",
                     "component": "/manage/contractManager/other/list",
-                    "iconCls": "el-icon-notebook-2",
+                    "iconCls": "el-icon-coin",
                     "menushow": true,
                     "leaf": true,
                     "defaultpage": true
@@ -507,7 +507,7 @@ export default {
                     "name": "合同金额修改",
                     "path": "/manage/contractManager/moneyEdit/list",
                     "component": "/manage/contractManager/moneyEdit/list",
-                    "iconCls": "el-icon-search",
+                    "iconCls": "el-icon-edit",
                     "menushow": true,
                     "leaf": true,
                     "defaultpage": true
@@ -630,7 +630,7 @@ export default {
                   "component": "/router",
                   "iconCls": "el-icon-printer",
                   "menushow": true,
-                  "leaf": true,
+                  "leaf": false,
                   "defaultpage": false
                 }
               ]
@@ -657,7 +657,7 @@ export default {
                   "name": "工程承包项目",
                   "path": "/statistics/project/engineList",
                   "component": "/statistics/project/engineList",
-                  "iconCls": "el-icon-notebook-2",
+                  "iconCls": "el-icon-school",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": true
@@ -692,7 +692,7 @@ export default {
                   "name": "房地产项目",
                   "path": "/statistics/project/estateList",
                   "component": "/statistics/project/estateList",
-                  "iconCls": "el-icon-notebook-2",
+                  "iconCls": "el-icon-office-building",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": false
@@ -710,7 +710,7 @@ export default {
                   "name": "物资贸易项目",
                   "path": "/statistics/project/tradeList",
                   "component": "/statistics/project/tradeList",
-                  "iconCls": "el-icon-notebook-2",
+                  "iconCls": "el-icon-truck",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": false
@@ -728,7 +728,7 @@ export default {
                   "name": "工业制造项目",
                   "path": "/statistics/project/manufactureList",
                   "component": "/statistics/project/manufactureList",
-                  "iconCls": "el-icon-notebook-2",
+                  "iconCls": "el-icon-cpu",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": false
@@ -747,7 +747,7 @@ export default {
                   "name": "金融保险项目",
                   "path": "/statistics/project/financeList",
                   "component": "/statistics/project/financeList",
-                  "iconCls": "el-icon-notebook-2",
+                  "iconCls": "el-icon-money",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": false
@@ -765,7 +765,7 @@ export default {
                   "name": "运营维管项目",
                   "path": "/statistics/project/maintenanceList",
                   "component": "/statistics/project/maintenanceList",
-                  "iconCls": "el-icon-notebook-2",
+                  "iconCls": "el-icon-setting",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": false
@@ -783,7 +783,7 @@ export default {
                   "name": "其他项目",
                   "path": "/statistics/project/otherList",
                   "component": "/statistics/project/otherList",
-                  "iconCls": "el-icon-notebook-2",
+                  "iconCls": "el-icon-coin",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": false
