@@ -677,6 +677,9 @@
   }
 </script>
 <style lang="scss" scoped>
+  .el-card__header{
+    padding: 3px 20px !important;
+  }
   .gcform {
     margin-top: 10px;
     .neirong {
