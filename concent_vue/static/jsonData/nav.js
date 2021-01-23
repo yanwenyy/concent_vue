@@ -121,6 +121,15 @@ export default {
                       "defaultpage": true
                     },
                     {
+                      "name": "资审结果登记",
+                      "path": "/manage/verify/resultlist",
+                      "component": "/manage/verify/resultlist",
+                      "iconCls": "el-icon-notebook-2",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": true
+                    },
+                    {
                       "name": "资格预审登记审核",
                       "path": "/manage/verify/list_WorkFlow",
                       "component": "/manage/verify/list_WorkFlow",
@@ -173,15 +182,6 @@ export default {
                       "menushow": false,
                       "leaf": true,
                       "defaultpage": false
-                    },
-                    {
-                      "name": "资审结果登记",
-                      "path": "/manage/verify/resultlist",
-                      "component": "/manage/verify/resultlist",
-                      "iconCls": "el-icon-notebook-2",
-                      "menushow": true,
-                      "leaf": true,
-                      "defaultpage": true
                     }
                   ]
                 },
@@ -203,6 +203,15 @@ export default {
                       "menushow": true,
                       "leaf": true,
                       "defaultpage": true
+                    },
+                    {
+                      "name": "中标结果登记",
+                      "path": "/manage/bid_info/Winning_bid_z",
+                      "component": "/manage/bid_info/Winning_bid_z",
+                      "iconCls": "el-icon-document-checked",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage":  true
                     },
                     {
                       "name": "投标登记新增",
@@ -249,16 +258,6 @@ export default {
                       "leaf": true,
                       "defaultpage":  true
                   },
-                  {
-                    "name": "中标结果登记",
-                    "path": "/manage/bid_info/Winning_bid_z",
-                    "component": "/manage/bid_info/Winning_bid_z",
-                    "iconCls": "el-icon-document-checked",
-                    "menushow": true,
-                    "leaf": true,
-                    "defaultpage":  true
-                },
-
                   ]
                 },
                 {
