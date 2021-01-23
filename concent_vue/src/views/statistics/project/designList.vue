@@ -344,7 +344,7 @@
       <el-pagination
         :current-page="page.current"
         :page-size="page.size"
-        :page-sizes="[10, 50, 100]"
+        :page-sizes="[20, 50, 100]"
         :total="page.total"
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
@@ -371,10 +371,10 @@
         projectNatureTwo: [], // 项目性质(二级)
         yesOrNo: [{ id: 0, detailName: '是' }, { id: 1, detailName: '否' }],
         projectStatus: [{ id: 0, detailName: '已提交' }, { id: 1, detailName: '未提交' }],
-        page: { current: 1, size: 10, total: 0, records: [] },
+        page: { current: 1, size: 20, total: 0, records: [] },
         searchform: {
           current: 1,
-          size: 10,
+          size: 20,
           projectModuleId: 'f6823a41e9354b81a1512155a5565aeb', // 勘察设计
           projectOmit: '',
           projectName: '',
@@ -526,7 +526,7 @@
       searchformReset() {
         this.searchform = {
           current: 1,
-          size: 10,
+          size: 20,
           projectModuleId: 'f6823a41e9354b81a1512155a5565aeb', // 勘察设计
           projectOmit: '',
           projectName: '',

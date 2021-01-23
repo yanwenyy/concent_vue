@@ -346,7 +346,7 @@
       <el-pagination
         :current-page="page.current"
         :page-size="page.size"
-        :page-sizes="[10, 50, 100]"
+        :page-sizes="[20, 50, 100]"
         :total="page.total"
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
@@ -374,10 +374,10 @@
         yesOrNo: [{ id: 0, detailName: '是' }, { id: 1, detailName: '否' }],
         projectStatus: [{ id: 0, detailName: '已提交' }, { id: 1, detailName: '未提交' }],
         sousuo: '',
-        page: { current: 1, size: 10, total: 0, records: [] },
+        page: { current: 1, size: 20, total: 0, records: [] },
         searchform: {
           current: 1,
-          size: 10,
+          size: 20,
           projectModuleId: '7f4fcba4255b43a8babf15afd6c04a53', // 工程承包
           projectOmit: '',
           projectName: '',
@@ -529,7 +529,7 @@
       searchformReset() {
         this.searchform = {
           current: 1,
-          size: 10,
+          size: 20,
           projectModuleId: '7f4fcba4255b43a8babf15afd6c04a53', // 工程承包
           projectOmit: '',
           projectName: '',
