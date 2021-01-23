@@ -30,7 +30,6 @@
         border
         highlight-current-row
         ref="table"
-        stripe
         tooltip-effect="dark"
       >
         <el-table-column

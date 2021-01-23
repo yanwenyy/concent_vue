@@ -901,7 +901,7 @@
                   </template>
                 </el-table-column>
 
-                <el-table-column :resizable="false" label="标的物数量" prop="subjectMatterNo" show-overflow-tooltip>
+                <el-table-column  width="150" :resizable="false" label="标的物数量" prop="subjectMatterNo" show-overflow-tooltip>
                   <template slot-scope="scope">
                     <el-form-item
                       class="tabelformItem"
@@ -2393,5 +2393,18 @@ export default {
   }
   .detailUpload{
     display: inline-block;
+  }
+  .gcform {
+    >>>.el-form-item__label:before {
+      position: initial;
+      left: -10px;
+    }
+    >>>.el-form-item__error {
+      padding-top: 0px!important;
+      width: 95%;
+      margin-left: 0;
+      text-align: right;
+      top: 0!important;
+    }
   }
 </style>

@@ -192,7 +192,6 @@
         border
         highlight-current-row
         ref="table"
-        stripe
         tooltip-effect="dark"
       >
         <el-table-column
@@ -326,6 +325,7 @@
         class="detatil-flie-btn"
         type="primary"
       >新增</el-button>
+      <span class="notice"> 注:金额应长度小于等于8位数字且保留小数点后四位数字</span>
       <el-form
         :inline="false"
         :model="moneyform"
@@ -356,7 +356,7 @@
             label="标记日期"
             prop="markDate"
             align="center"
-            width="150"
+            width="180"
           >
             <template slot-scope="scope">
               <el-form-item
@@ -674,15 +674,35 @@
           if (res.data.code === 200) {
             var datas=res.data.data;
             this.moneyform={
-              contractInfoAdjustLogList:datas.contractInfoAdjustLogList||[],
+              contractInfoAdjustLogList:this.nullToStr(datas.contractInfoAdjustLogList)||[],
               subStatus:true,
             };
             this.dialogVisible=true;
           }
         });
-
-
-
+      },
+      //null转空字符串
+      nullToStr(data) {
+        // console.log('1111111',data)
+        for (let x in data) {
+          if (data[x] === null){
+            // 如果是null 把直接内容转为 ''
+            data[x] = "";
+          } else {
+            if (Array.isArray(data[x])) {
+              // 是数组遍历数组 递归继续处理
+              data[x] = data[x].map((z) => {
+                return this.nullToStr(z);
+            });
+            }
+            if (typeof data[x] === "object") {
+              // 是json 递归继续处理
+              data[x] = this.nullToStr(data[x]);
+            }
+          }
+        }
+        //  console.log('2222222',data)
+        return data;
       },
       //打开单位弹框
       addDw(type,list){
@@ -837,7 +857,7 @@
   .el-table__row {
     cursor: pointer;
   }
-  >>>.el-dialog__header{
+  .bdClass >>>.el-dialog__header{
     padding: 0!important;
   }
   >>>.el-dialog__body{
@@ -845,5 +865,16 @@
   }
   >>>.dialog-footer{
     text-align: center!important;
+  }
+  .detatil-flie-btn{
+    margin-bottom: 10px;
+  }
+  >>>.tabelformItem .el-date-editor{
+    width: 100% !important;
+  }
+  .notice{
+    color:orange;
+    display: inline-block;
+    margin-left: 10px;
   }
 </style>

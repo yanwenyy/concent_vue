@@ -1853,7 +1853,6 @@
                   <el-table-column
                     :resizable="false"
                     align="center"
-                    fixed="right"
                     label="操作"
                     show-overflow-tooltip
                     v-if="p.actpoint!=='look'"
@@ -3384,6 +3383,9 @@
   };
 </script>
 <style lang="scss" scoped>
+  .detailTable .el-input-group{
+    margin-top:5px!important;
+  }
   .detailBoxBG{
     max-height:calc(100vh - 232px)!important;
   }

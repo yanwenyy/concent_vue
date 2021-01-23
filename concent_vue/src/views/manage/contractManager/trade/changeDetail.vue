@@ -2833,6 +2833,9 @@
       projectPlate(){
         return this.$store.state.projectPlate;
       },
+      wumoveType(){
+        return this.$store.state.wumoveType;//所属类别
+      }
     },
     mounted() {
       var list=datas[0].children;
@@ -2860,6 +2863,18 @@
       // eslint-disable-next-line no-unde
     },
     methods: {
+      //新增标的物
+      addXs(){
+        var v={
+          subjectMatterYear:'',
+          subjectMatterMonth:'',
+          subjectMatterName:'',
+          subjectMatterUnit:'',
+          subjectMatterNo:'',
+          totalPrice	:'',
+        };
+        this.detailform.contractInfoSubjectMatterList.push(v);
+      },
       //打开附件上传的组件
       openFileUp(url,list){
         this.uploadVisible = true;

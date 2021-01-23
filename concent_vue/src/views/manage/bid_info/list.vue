@@ -32,7 +32,6 @@
         border
         highlight-current-row
         ref="table"
-        stripe
         style="width: 100%"
         tooltip-effect="dark"
       >
