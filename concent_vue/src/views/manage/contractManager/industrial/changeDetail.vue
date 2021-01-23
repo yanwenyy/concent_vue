@@ -1826,7 +1826,7 @@
                     </template>
                   </el-table-column>
 
-                  <el-table-column :resizable="false" label="规格型号" prop="specificationAndModel" show-overflow-tooltip>
+                  <el-table-column width="150" :resizable="false" label="规格型号" prop="specificationAndModel" show-overflow-tooltip>
                     <template slot-scope="scope">
                       <el-form-item
                         class="tabelForm"
@@ -1842,7 +1842,7 @@
                     </template>
                   </el-table-column>
 
-                  <el-table-column :resizable="false" label="产品数量" prop="productQuantity" show-overflow-tooltip>
+                  <el-table-column width="150" :resizable="false" label="产品数量" prop="productQuantity" show-overflow-tooltip>
                     <template slot-scope="scope">
                       <el-form-item
                         class="tabelForm"

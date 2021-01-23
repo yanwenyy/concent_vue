@@ -873,7 +873,7 @@
             { required: true,validator: validateMoney, trigger: 'change' }
           ],
           phone: [
-            { required: true,validator: validatePhone, trigger: 'change' }
+            { required: true,validator: validatePhone, trigger: 'blur' }
           ]
         },//表单验证规则
       };

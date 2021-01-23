@@ -622,12 +622,12 @@ export default {
   width: 100%;
   text-align: center;
 } */
->>>.analysis_btn{
-  padding: 0px;
-  width: 80% !important;
-  text-align: center;
-  height: 90% !important;
-}
+/*>>>.analysis_btn{*/
+  /*padding: 0px;*/
+  /*width: 80% !important;*/
+  /*text-align: center;*/
+  /*!*height: 90% !important;*!*/
+/*}*/
   @media (min-width: 1300px) and (max-width: 1500px) {
     .tableStyle{
       max-height: calc(100vh - 250px)!important;

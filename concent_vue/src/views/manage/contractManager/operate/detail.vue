@@ -341,12 +341,12 @@
                   size="mini"
                   @clear="clear(detailform.contractInfo.marketSecondId,detailform.contractInfo.marketSecondName)"
                   @change="
-              getName(
-                detailform.contractInfo.marketSecondId,
-                emergingMarketTwo,
-                'marketSecondName'
-              )
-            "
+                    getName(
+                      detailform.contractInfo.marketSecondId,
+                      emergingMarketTwo,
+                      'marketSecondName'
+                    )
+                  "
                   v-model="detailform.contractInfo.marketSecondId"
                 >
                   <el-option

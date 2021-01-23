@@ -1829,6 +1829,7 @@
                   >
                     <template slot-scope="scope">
                       <el-date-picker
+                        class="tabelForm-dete"
                         v-model="scope.row.subjectMatterYear"
                         type="year"
                         placeholder="选择年">
@@ -1848,6 +1849,7 @@
                   >
                     <template slot-scope="scope">
                       <el-date-picker
+                        class="tabelForm-dete"
                         v-model="scope.row.subjectMatterMonth"
                         type="month"
                         format="MM"
@@ -1859,7 +1861,7 @@
                   <el-table-column width="200"  class="listTabel"  align="center" :resizable="false" label="标的物名称" prop="subjectMatterName" show-overflow-tooltip>
                     <template slot-scope="scope">
                       <el-form-item
-                        class="tabelformItem"
+                        class="tabelformItem tabelForm"
                         :prop="'contractInfoSubjectMatterList.'+scope.$index+'.subjectMatterName'"
                         :rules="{
                   required: true, message: '此项不能为空', trigger: 'blur'
@@ -1880,7 +1882,7 @@
                   <el-table-column  width="150" :resizable="false" label="标的物数量" prop="subjectMatterNo" show-overflow-tooltip>
                     <template slot-scope="scope">
                       <el-form-item
-                        class="tabelformItem"
+                        class="tabelformItem tabelForm"
                         :prop="'contractInfoSubjectMatterList.'+scope.$index+'.subjectMatterNo'"
                         :rules="{
                   required: true, message: '此项不能为空', trigger: 'blur'
@@ -1901,7 +1903,7 @@
                   <el-table-column width="150" :resizable="false" label="标的物单位" prop="subjectMatterUnit" show-overflow-tooltip>
                     <template slot-scope="scope">
                       <el-form-item
-                        class="tabelformItem"
+                        class="tabelformItem tabelForm"
                         :prop="'contractInfoSubjectMatterList.'+scope.$index+'.subjectMatterUnit'"
                         :rules="{
                   required: true, message: '此项不能为空', trigger: 'blur'
@@ -1922,7 +1924,7 @@
                   <el-table-column width="400" :resizable="false" label="总价(万元)" prop="totalPrice" show-overflow-tooltip>
                     <template slot-scope="scope">
                       <el-form-item
-                        class="tabelformItem"
+                        class="tabelForm"
                         :prop="'contractInfoSubjectMatterList.'+scope.$index+'.totalPrice'"
                         :rules="rules.contractAmount"
                         label-width="0"
@@ -3698,6 +3700,11 @@
   .el-table--border {
     min-height: auto !important;
   }
-
+  .detailTable >>>.el-input-group{
+    margin-top: 0;
+  }
+  .tabelForm-dete{
+    margin-top: 15px!important;
+  }
 </style>
 
