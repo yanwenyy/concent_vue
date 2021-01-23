@@ -36,7 +36,7 @@
         </el-form-item>
 
         <el-form-item label="项目名称:" class="list-item"
-          prop="projectName"
+          prop="nationalStandardSchedule.projectName"
             :rules="{
               required: true,
               message: '此项不能为空',

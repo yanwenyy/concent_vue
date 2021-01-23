@@ -466,7 +466,7 @@
                 :disabled="zbType === 'look'"
                 clearable
                 placeholder="中标公示网站"
-                v-model="zbForm.bidInfoSection.bidAnnouncementWebsite"
+                v-model="zbForm.bidInfoSection.bidNoticeWebsite"
               />
             </el-form-item>
 

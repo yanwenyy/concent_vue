@@ -6,7 +6,7 @@
 
 
 <!--   style="height: calc(100% - 60px); border: 1px solid #eee"-->
-  <div style="display: inline-block;width: 16%;vertical-align: top;overflow: auto; border-right: 1px solid #DCDFE6" >
+  <div style="display: inline-block;vertical-align: top;overflow: auto; border-right: 1px solid #DCDFE6" >
   <div style="padding: 10px;">
   <el-select
     filterable
@@ -22,7 +22,8 @@
             ></el-option>
           </el-select>
   </div>
-<!--  style="background-color: rgb(238, 241, 246);height: 100%;overflow: auto"-->
+  <el-button  class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo">保存</el-button>
+
     <el-tree
       :props="props"
       lazy
@@ -43,7 +44,7 @@
         </span>
     </el-tree>
   </div>
-    <div style="display: inline-block;width:83%;vertical-align: top" >
+    <div style="display: inline-block;width:81%;vertical-align: top" >
       <div style="width: 100%; overflow: hidden;margin-top: 10px;">
       <div style="display: inline-block;width: 100%">
         <div style="display: inline-block;height: auto">
@@ -743,7 +744,7 @@ export default {
   margin-right: 10px;
 }
 >>>.el-input .el-input__inner{
-  width: 300px;
+  width: 100%;
   height: 32px !important;
   line-height: 32px !important;
 }

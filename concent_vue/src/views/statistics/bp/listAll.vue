@@ -82,6 +82,7 @@
           prop="vname"
           label="统计名称"
           width="160"
+
           show-overflow-tooltip
         >
         </el-table-column>
@@ -89,6 +90,7 @@
           prop="vjldw"
           label="计量单位"
           width="120"
+
           align="center"
           :formatter="vjldwFormatter"
           show-overflow-tooltip
@@ -97,6 +99,7 @@
         <el-table-column
           prop="vprojecttype"
           label="工程（行业）类别"
+
           :formatter="vprojecttypeFormatter"
           show-overflow-tooltip
         >
@@ -138,19 +141,19 @@
       :total="page.total"
       @current-change="handleCurrentChange"
       @size-change="handleSizeChange"
-      layout="total, sizes, prev, pager, next, jumper"
-    ></el-pagination>
+      layout="total, sizes, prev, pager, next, jumper">
+    </el-pagination>
 
     <el-dialog :title="dialogtitle" :visible.sync="dialogResult" width="30%">
       <el-form :model="itemform">
-        <el-form-item label="统计名称" prop="vname">
-          <el-input placeholder="" size="mini" v-model="itemform.vname" />
+        <el-form-item label="统计名称" prop="vname" >
+          <el-input placeholder="" class="bp_height"  v-model="itemform.vname" />
         </el-form-item>
         <el-form-item label="计量单位" prop="vjldw">
           <el-select
             filterable
             placeholder="请选择"
-            size="mini"
+            class="bp_height"
             v-model="itemform.vjldw"
           >
             <el-option
@@ -166,7 +169,7 @@
             multiple
             filterable
             placeholder="请选择"
-            size="mini"
+            class="bp_height"
             @change="
               getName(itemform.vprojecttypes, projectDomainType, 'detailName')
             "
@@ -239,6 +242,15 @@ export default {
       radio: "0",
       page: { current: 1, size: 10, total: 0, records: [] },
       showinput: false,
+      searchform: {
+        current: 1,
+        size: 10,
+        year: "",
+        name: "",
+        ptype: "",
+        orgid: "",
+        orgname: "",
+      },
       sousuo: "",
       itemTreeList: [],
       itemList: [],
@@ -459,7 +471,6 @@ export default {
             this.detailform.fileList2.splice(index, 1);
           }
         });
-      console.log(this.detailform.fileList1);
     },
     //上传附件
     handleChange(response, file, fileList) {
@@ -577,15 +588,18 @@ export default {
     show() {}, // list通用方法开始
     handleSizeChange(val) {
       this.searchform.size = val;
-      this.getData();
+      // this.getData();
+      this.getData(this.node, this.resolve);
     },
     handleCurrentChange(val) {
       this.searchform.current = val;
-      this.getData();
+      // this.getData();
+      this.getData(this.node, this.resolve);
     },
     searchformSubmit() {
       this.searchform.current = 1;
-      this.getData();
+      // this.getData();
+      this.getData(this.node, this.resolve);
     },
     searchformReset() {
       // this.$refs['searchform'].resetFields()
@@ -621,6 +635,8 @@ export default {
             parentid: node.data.uuid,
           })
           .then((res) => {
+            node.data.current=this.searchform.current;
+            node.data.size=this.searchform.size;
             this.getTableData(node.data);
             //this.page = res.data.data
             this.parentid = node.data.uuid;
@@ -652,7 +668,7 @@ export default {
             // });
             resolve(data);
           });
-      }, 500);
+      });
     },
     getMenus() {
       this.$http
@@ -700,7 +716,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .el-tree {
-  // height: calc(100vh - 223px) !important;
+  font-size:13px !important;
+  height: calc(100vh - 193px) !important;
   // max-height: calc(100vh - 223px) !important;
 }
 .gcform {
@@ -788,6 +805,7 @@ export default {
 >>> .el-tree-node:focus > .el-tree-node__content {
   background-color: #409eff;
   color: #ffffff;
+  font-size: 13px!important;
 }
 >>> .el-breadcrumb {
   margin: -100px 0 0 0 !important;
@@ -798,5 +816,11 @@ export default {
 >>>.el-table .cell.el-tooltip{
     height: 42px;
     padding: 9px;
+}
+// .bp_height{
+//   height: 32px!important;
+// }
+>>>.el-input__inner{
+  height: 32px!important;
 }
 </style>

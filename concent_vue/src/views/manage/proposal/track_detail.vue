@@ -1754,5 +1754,8 @@
 >>>.el-form-item__error {
     margin: -6px 0px 0 20px;
 }
+// >>>.el-form-item__content{
+//   margin-top: -15px!important;
+// }
 </style>
 

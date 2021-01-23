@@ -259,7 +259,7 @@
 
       </el-table>
     </div>
-          <el-pagination
+      <el-pagination
         :current-page="page.current"
         :page-size="page.size"
         :page-sizes="[20, 50, 100]"
