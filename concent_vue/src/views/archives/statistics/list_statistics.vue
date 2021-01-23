@@ -330,8 +330,4 @@ export default {
   width: auto;
   margin-bottom: 5px !important;
 }
->>>.el-table td, .el-table th
-{
-  padding:5px 0px;
-}
 </style>

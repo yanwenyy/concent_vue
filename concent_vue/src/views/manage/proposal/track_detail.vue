@@ -765,6 +765,7 @@
                     <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                     <el-tooltip popper-class="tooltip-class" :content="String(scope.row.projectScale)" placement="bottom" :disabled="p.actpoint !== 'look'" effect="dark">
                       <el-input
+                        class="input-el-input-group"
                         v-model="scope.row.projectScale"
                         clearable
                         :disabled="p.type =='fq' || p.type =='end'||p.actpoint === 'look'"
@@ -1055,6 +1056,7 @@
                     <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                     <el-tooltip popper-class="tooltip-class" :content="String(scope.row.projectScale)" placement="bottom" :disabled="p.actpoint !== 'look'" effect="dark">
                       <el-input
+                        class="input-el-input-group"
                         v-model="scope.row.projectScale"
                         clearable
                         :disabled="scope.row.uuid!=null"

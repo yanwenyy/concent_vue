@@ -648,6 +648,13 @@ pre {
 .detailTable .el-input-group{
   margin-top:-5px;
 }
+.input-el-input-group{
+  margin-top: 5px!important;
+  /*padding-top: 15px!important;*/
+}
+.tabelForm-dete{
+  margin-top: 5px!important;
+}
 .htfs{
   padding: 0 20px!important;
 }
