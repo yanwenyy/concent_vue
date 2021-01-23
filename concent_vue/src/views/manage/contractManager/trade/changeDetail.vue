@@ -462,6 +462,21 @@
                   </el-form-item>
                   <div>
                     <el-form-item
+                      class="neirong not-error"
+                      label="中标公示网站"
+                    >
+                      <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
+                      <el-input
+                        disabled
+                        type="textarea"
+                        clearable
+                        placeholder="请输入"
+                        v-model="detailFormBefore.contractInfo.bidNoticeWebsite"
+                      />
+                    </el-form-item>
+                  </div>
+                  <div>
+                    <el-form-item
                       class="neirong"
                       label="项目内容(最多600字):"
 
@@ -1346,7 +1361,7 @@
                   :rules="{
             required: true,
             message: '此项不能为空',
-            trigger: 'blur',
+            trigger: 'change',
           }"
                 >
                   <el-select
@@ -1372,7 +1387,7 @@
                   :rules="detailform.contractInfo.marketFirstNameId&&emergingMarketTwo?{
                 required: true,
                 message: '此项不能为空',
-                trigger: 'blur',
+                trigger: 'change',
               }:{}"
                 >
                   <el-select
@@ -1638,6 +1653,24 @@
                 </el-form-item>
                 <div>
                   <el-form-item
+                    class="neirong not-error"
+                    label="中标公示网站"
+                    prop="contractInfo.bidNoticeWebsite"
+                    :rules="rules.bidNoticeWebsite"
+                  >
+                    <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
+                    <el-input
+                      :disabled="p.actpoint === 'look'"
+                      type="textarea"
+                      clearable
+                      placeholder="请输入"
+
+                      v-model="detailform.contractInfo.bidNoticeWebsite"
+                    />
+                  </el-form-item>
+                </div>
+                <div>
+                  <el-form-item
                     class="neirong"
                     label="项目内容(最多600字):"
 
@@ -1844,7 +1877,7 @@
                     </template>
                   </el-table-column>
 
-                  <el-table-column width="150" :resizable="false" label="标的物数量" prop="subjectMatterNo" show-overflow-tooltip>
+                  <el-table-column  width="150" :resizable="false" label="标的物数量" prop="subjectMatterNo" show-overflow-tooltip>
                     <template slot-scope="scope">
                       <el-form-item
                         class="tabelformItem"
@@ -2703,7 +2736,7 @@
 
 <script>
   import Tree from '@/components/tree'
-  import { isMoney } from '@/utils/validate'
+  import { isMoney ,isURL } from '@/utils/validate'
   import SearchName from '../searchName'
   import AddBd from '../addBd'
   import CompanyTree from '../companyTree'
@@ -2717,6 +2750,14 @@
           callback(new Error('不能为空'))
         }else if (!isMoney(value)) {
           callback(new Error('请输入正确的金额格式'))
+        } else {
+          callback()
+        }
+      };
+      var validateUrl = (rule, value, callback) => {
+        // console.log(value)
+        if (value!=''&&value&&!isURL(value)) {
+          callback(new Error('请输入正确的网址格式'))
         } else {
           callback()
         }
@@ -2789,6 +2830,9 @@
         rules:{
           contractAmount: [
             { required: true,validator: validateMoney, trigger: 'change' }
+          ],
+          bidNoticeWebsite:[
+            { required: true,validator: validateUrl, trigger: 'change' }
           ]
         },//表单验证规则
       };

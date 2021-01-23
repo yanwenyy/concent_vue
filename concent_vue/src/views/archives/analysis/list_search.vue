@@ -484,5 +484,7 @@ export default {
 {
   padding:5px 0px;
 }
-
+.queryForm >>>.el-form-item__label,.queryForm >>>.el-form-item__content{
+  line-height: 30px;
+}
 </style>

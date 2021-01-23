@@ -873,8 +873,11 @@
     width: 100% !important;
   }
   .notice{
-    color:orange;
+    color:#999;
     display: inline-block;
     margin-left: 10px;
+  }
+  .detailTable >>>.el-form-item{
+    margin-bottom: 0;
   }
 </style>

@@ -3,7 +3,7 @@
     :visible.sync="visible"
     :append-to-body="true">
     <div v-if="contractType=='1'">
-      <el-form :inline="true" :model="searchform" @keyup.enter.native="init()">
+      <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="init()">
         <el-form-item label="项目名称:">
           <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
         </el-form-item>
@@ -65,7 +65,7 @@
       </el-pagination>
     </div>
     <div v-if="contractType=='2'">
-      <el-form :inline="true" :model="searchform2" @keyup.enter.native="init()">
+      <el-form  class="queryForm" :inline="true" :model="searchform2" @keyup.enter.native="init()">
         <el-form-item label="合同名称:">
           <el-input v-model="searchform2.contractName" placeholder="合同名称" clearable></el-input>
         </el-form-item>

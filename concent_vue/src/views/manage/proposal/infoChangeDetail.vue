@@ -766,7 +766,7 @@
                     :disabled="p.actpoint === 'look'"
                     clearable
                     placeholder=""
-
+                    @input="detailform.topInfor.investment>=maxMoney?detailform.topInfor.isMajorProject='0':detailform.topInfor.isMajorProject='1'"
                     v-model="detailform.topInfor.investment"
                   >
                     <template slot="prepend">¥</template>

@@ -1,53 +1,26 @@
 <template>
   <div>
     <div style="width: 100%; overflow: hidden">
-
-      <el-form :inline="true"
-               :model="searchform"
-               @keyup.enter.native="getData()"
-               class="gcform">
-          <el-row>
-           <el-button plain
-                      type="primary"
-                      @click="add">新增</el-button>
-            <el-button plain
-                   type="primary"
-                   @click="editItem">修改</el-button>
-
-            <el-button plain
-                       type="primary"
-                       @click="sumbitFrom">提交</el-button>
-            <el-form-item label="填报年度:">
-<!--            <el-select-->
-<!--              placeholder="请选择"-->
-<!--              size="mini"-->
-<!--              v-model="searchform.selectYear"-->
-<!--            >-->
-<!--          <el-option-->
-<!--            :key="index"-->
-<!--            :label="item.detailName"-->
-<!--            :value="item.id"-->
-<!--            v-for="(item, index) in years"-->
-<!--          ></el-option>-->
-<!--        </el-select>-->
-
+      <el-button-group style="float: left">
+        <el-button plain type="primary" @click="add">新增</el-button>
+        <el-button plain type="primary" @click="editItem">修改</el-button>
+        <el-button plain type="primary" @click="sumbitFrom">提交</el-button>
+      </el-button-group>
+      <div style="float: right">
+        <el-form class="search-form" :inline="true" :model="searchFrom" @keyup.enter.native="init()">
+          <el-form-item label="填报年度:">
             <el-date-picker
-              v-model="searchform.selectYears"
-              type="year"
-              value-format="yyyy">
+            v-model="searchform.selectYears"
+            type="year"
+            value-format="yyyy">
             </el-date-picker>
           </el-form-item>
-          <el-button @click="getData"
-                     type="primary"
-                     plain>查询</el-button>
-
-
-      </el-row>
         </el-form>
+        <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
+        <el-button @click="getData" type="primary" plain>查询</el-button>
+      </div>
     </div>
-
-
-    <div style="margin-top: 0px">
+    <div style="margin-top: 10px">
       <el-table
         ref="table"
         class="tableStyle"
@@ -204,7 +177,7 @@
       <el-pagination
         :current-page="page.current"
         :page-size="page.size"
-        :page-sizes="[12, 50, 100]"
+        :page-sizes="[20, 50, 100]"
         :total="page.total"
         layout="total, sizes, prev, pager, next, jumper"
         @current-change="handleCurrentChange"
@@ -267,7 +240,7 @@
         <el-button type="primary" @click="saveEditResult">确 定</el-button>
       </div>
     </el-dialog>
-<uploadTable v-if="uploadTableStatus" ref="addOrUpdate" @getPosition="getUploadTable"></uploadTable>
+  <uploadTable v-if="uploadTableStatus" ref="addOrUpdate" @getPosition="getUploadTable"></uploadTable>
   <orgTable v-if="orgTableStatus" ref="addOrUpdate1" @getPosition="getOrgTable"></orgTable>
   </div>
 
@@ -287,7 +260,7 @@ export default {
       page: {current: 1, size: 12, total: 0, records: []},
       searchform: {
         current: 1,
-        size: 10,
+        size: 20,
         uuid: '',
         name: '',
         archivesTypeId: '',
@@ -604,6 +577,26 @@ export default {
 }
 </script>
 <style scoped>
+  .search-form >>>.el-form-item{
+    margin-bottom: 0;
+  }
+  .search-form >>>.el-input__icon{
+    line-height: 30px;
+  }
+  .search-form >>>.el-input__inner{
+    height: 30px;
+    line-height: 30px;
+  }
+  .search-form >>>.el-form-item__content,.search-form >>>.el-form-item__label,.search-form >>>.el-date-editor{
+    line-height: 30px;
+  }
+  .search-form{
+    display: inline-block;
+    float: left;
+  }
+  >>>.search-form .el-form-item__label{
+    width:auto;
+  }
 .gcform .el-form-item{
   width: auto;
   margin-bottom: 5px !important;

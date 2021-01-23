@@ -16,6 +16,7 @@
     <el-form
       :inline="false"
       :model="detailform"
+      :rules="rules"
       class="gcform"
       ref="detailform"
     >
@@ -603,6 +604,7 @@
         @cell-click="selectOrg1"
         :row-class-name="tableRowClassName"
         border
+        class="detailTable"
         ref="table"
         style="width: 98%;margin-bottom: 20px "
       >
@@ -667,15 +669,22 @@
           width="260">
 
           <template slot-scope="scope" >
-          <el-input
-            :disabled="p.actpoint === 'look'"
-            placeholder=""
-            size="mini"
-            v-model="scope.row.verifySection.investmentReckon"
-          >
-          <template slot="prepend">¥</template>
-                    <template slot="append">(万元)</template>
-          </el-input>
+            <el-form-item class="tabelForm" :prop="'verifySectionList.' + scope.$index + '.verifySection.investmentReckon'" :rules='rules.contractAmount'>
+              <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+              <el-tooltip popper-class="tooltip-class" :content="String(scope.row.verifySection.investmentReckon)" placement="bottom" :disabled="p.actpoint !== 'look'" effect="dark">
+                <el-input
+                  :disabled="p.actpoint === 'look'"
+                  placeholder=""
+                  size="mini"
+                  v-model="scope.row.verifySection.investmentReckon"
+                >
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-tooltip>
+
+            </el-form-item>
+
           </template>
         </el-table-column>
         <el-table-column
@@ -689,15 +698,22 @@
           width="260">
 
           <template slot-scope="scope" >
-           <el-input
-             :disabled="p.actpoint === 'look'"
-             placeholder=""
-             size="mini"
-             v-model="scope.row.verifySection.jananInvestment"
-           >
-          <template slot="prepend">¥</template>
-                    <template slot="append">(万元)</template>
-          </el-input>
+            <el-form-item class="tabelForm" :prop="'verifySectionList.' + scope.$index + '.verifySection.jananInvestment'" :rules='rules.contractAmount'>
+              <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+              <el-tooltip popper-class="tooltip-class" :content="String(scope.row.verifySection.jananInvestment)" placement="bottom" :disabled="p.actpoint !== 'look'" effect="dark">
+                <el-input
+                  :disabled="p.actpoint === 'look'"
+                  placeholder=""
+                  size="mini"
+                  v-model="scope.row.verifySection.jananInvestment"
+                >
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-tooltip>
+
+            </el-form-item>
+
           </template>
         </el-table-column>
         <el-table-column
@@ -796,6 +812,7 @@
 
 <script>
 import TreeOrg from '@/components/treeOrg'
+import { isMoney } from '@/utils/validate'
 export default {
 
   name: '详情',
@@ -803,6 +820,16 @@ export default {
     TreeOrg
   },
   data() {
+    var validateMoney = (rule, value, callback) => {
+      // console.log(value)
+      if(value===''){
+        callback(new Error('不能为空'))
+      }else if (!isMoney(value)) {
+        callback(new Error('请输入正确的金额格式'))
+      } else {
+        callback()
+      }
+    }
     return {
       maxMoney:1000000,
       treeOrgStatas: false,
@@ -853,7 +880,12 @@ export default {
       myVerifySection:{},
       myVerifySection1:{},
       multipleSelection:[],
-      multipleSelection1:[]
+      multipleSelection1:[],
+      rules:{
+        contractAmount: [
+          { required: true,validator: validateMoney, trigger: 'change' }
+        ]
+      },//表单验证规则
     }
   },
   computed: {
@@ -877,7 +909,7 @@ export default {
         this.detailform.topInfor[name] = list.find(
           (item) => item.id == id
         ).detailName;
-        console.log(this.detailform.topInfor[name]);
+        // console.log(this.detailform.topInfor[name]);
       }
     },
     back() {
@@ -894,8 +926,6 @@ export default {
          //alert(valid);
         if (valid) {
           //alert(JSON.stringify(this.detailform));
-          console.log(JSON.stringify(this.detailform));
-          console.log(this.detailform.verifySectionList);
           this.detailform.verify.flowStatus="0";
           this.$http
             .post(
@@ -985,14 +1015,13 @@ export default {
     },
     selectOrg(){
       this.treeOrgStatas = true;
-      console.log(this.positionIndex);
       this.$nextTick(() => {
         this.$refs.addOrUpdate.init()
       })
     },
     getTreeOrg(data) {
 
-      console.log(data)
+      // console.log(data)
       this.treeStatas = false;
       this.detailform.verifyOrgList=[];
       var resultStr = "";

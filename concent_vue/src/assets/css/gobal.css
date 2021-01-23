@@ -446,7 +446,7 @@ pre {
   width: auto;
   margin-left: 0;
 }
-.el-button--primary.is-plain i{
+.el-button--primary.is-plain i,.el-button--info.is-plain i{
   margin-right: 5px;
 }
 .el-button--primary:hover {
@@ -514,10 +514,14 @@ pre {
   background: white;
   width:calc(100% - 4px)!important;
 }
-.gcform .el-input-group__append button.el-button:hover{
-  background-color: #F5F7FA!important;
-  border: 1px solid #DCDFE6;
-}
+/*.gcform .el-input-group__append button.el-button:hover{*/
+  /*background-color: #F5F7FA!important;*/
+  /*!*border: 1px solid #DCDFE6;*!*/
+  /*border: none;*/
+  /*width: 99%;*/
+  /*height: 99%;*/
+  /*box-sizing: border-box;*/
+/*}*/
 .tabelForm{
   width: 100%!important;
   padding-top: 15px !important;
@@ -678,6 +682,9 @@ pre {
 .add-li:hover{
   background: #ebf0f9;
   color:#0a469d;
+}
+.not-error .el-form-item__label:before{
+  content: ''!important;
 }
 /**/
 

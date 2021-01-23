@@ -5,91 +5,90 @@
                :model="searchform"
                @keyup.enter.native="getData()"
                class="queryForm">
-      <el-form-item label="档案名称:">
-        <el-input v-model="searchform.name"
-                  placeholder="请输入档案名称"
-                  clearable></el-input>
-      </el-form-item>
-      <el-form-item label="所属单位:">
-        <el-input v-model="searchform.createOrgName"
-                  placeholder="选择单位"
-                  clearable></el-input>
-      </el-form-item>
-      <el-form-item label="填报时间:">
-        <el-date-picker
-          v-model="searchform.reportTime"
-          type="daterange"
-          @change="searchform.selectTimeTypeReportTime='01'"
-          value-format="timestamp"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="登记时间:">
+        <el-form-item label="档案名称:">
+          <el-input v-model="searchform.name"
+                    placeholder="请输入档案名称"
+                    clearable></el-input>
+        </el-form-item>
+        <!--<el-form-item label="所属单位:">-->
+          <!--<el-input v-model="searchform.createOrgName"-->
+                    <!--placeholder="选择单位"-->
+                    <!--clearable></el-input>-->
+        <!--</el-form-item>-->
+        <el-form-item
+          label="是否发布:"
+        >
+          <el-select
+            clearable
+            filterable
+            placeholder="请选择"
+            size="mini"
+            v-model="searchform.isShare"
+          >
+            <el-option
+              :key="index"
+              :label="item.detailName"
+              :value="item.id"
+              v-for="(item, index) in isShare"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          label="档案类型:"
+        >
+          <el-select
+            filterable
+            placeholder="请选择"
+            size="mini"
+            v-model="searchform.archivesTypeId"
+          >
+            <el-option
+              :key="index"
+              :label="item.detailName"
+              :value="item.id"
+              v-for="(item, index) in archivesType"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          label="填报人:"
+        >
+          <el-input v-model="searchform.createUserName"
+                    placeholder="填报人姓名"
+                    clearable></el-input>
+        </el-form-item>
+        <el-form-item label="填报时间:">
           <el-date-picker
-            v-model="searchform.createTime"
-            @change="searchform.selectTimeTypeCreateTime='01'"
+            v-model="searchform.reportTime"
             type="daterange"
+            @change="searchform.selectTimeTypeReportTime='01'"
             value-format="timestamp"
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期">
           </el-date-picker>
         </el-form-item>
-      <el-form-item
-        label="是否发布:"
-      >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          size="mini"
-          v-model="searchform.isShare"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in isShare"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="档案类型:"
-      >
-        <el-select
-          filterable
-          placeholder="请选择"
-          size="mini"
-          v-model="searchform.archivesTypeId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in archivesType"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="填报人:"
-      >
-        <el-input v-model="searchform.createUserName"
-                  placeholder="填报人姓名"
-                  clearable></el-input>
-      </el-form-item>
-      <el-button @click="searchformReset"
-                 type="info"
-                 plain
-                 style="color:black;background:none">重置</el-button>
-      <el-button @click="getData"
-                 type="primary"
-                 plain>查询</el-button>
-      <el-button @click="exportdata"
-                 type="primary"
-                 plain>导出</el-button>
-
+        <el-form-item label="登记时间:">
+            <el-date-picker
+              v-model="searchform.createTime"
+              @change="searchform.selectTimeTypeCreateTime='01'"
+              type="daterange"
+              value-format="timestamp"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期">
+            </el-date-picker>
+          </el-form-item>
+        <el-button @click="searchformReset"
+                   type="info"
+                   plain
+                   style="color:black;background:none">重置</el-button>
+        <el-button @click="getData"
+                   type="primary"
+                   plain>查询</el-button>
+        <el-button @click="exportdata"
+                   type="primary"
+                   plain>导出</el-button>
     </el-form>
     </div>
 

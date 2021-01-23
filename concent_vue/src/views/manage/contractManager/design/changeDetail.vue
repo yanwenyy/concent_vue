@@ -229,6 +229,7 @@
                   </el-form-item>
                   <br>
                   <el-form-item
+                    class="inline-formitem"
                     label="是否为系统内联合体:"
                   >
                     <el-switch
@@ -243,6 +244,7 @@
                     </el-switch>
                   </el-form-item>
                   <el-form-item
+                    class="inline-formitem"
                     label="是否含系统内分包:"
                   >
                     <el-switch
@@ -274,6 +276,7 @@
                   </el-form-item>
                   <br>
                   <el-form-item
+                    class="inline-formitem"
                     label="是否为系统外联合体:"
                   >
                     <el-switch
@@ -288,6 +291,7 @@
                     </el-switch>
                   </el-form-item>
                   <el-form-item
+                    class="inline-formitem"
                     label="是否含系统外分包:"
                   >
                     <el-switch
@@ -567,6 +571,21 @@
                       placeholder="请输入"
                     />
                   </el-form-item>
+                  <div>
+                    <el-form-item
+                      class="neirong not-error"
+                      label="中标公示网站"
+                    >
+                      <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
+                      <el-input
+                        disabled
+                        type="textarea"
+                        clearable
+                        placeholder="请输入"
+                        v-model="detailFormBefore.contractInfo.bidNoticeWebsite"
+                      />
+                    </el-form-item>
+                  </div>
                   <div>
                     <el-form-item
                       class="neirong"
@@ -2132,6 +2151,24 @@
                 </el-form-item>
                 <div>
                   <el-form-item
+                    class="neirong not-error"
+                    label="中标公示网站"
+                    prop="contractInfo.bidNoticeWebsite"
+                    :rules="rules.bidNoticeWebsite"
+                  >
+                    <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
+                    <el-input
+                      :disabled="p.actpoint === 'look'"
+                      type="textarea"
+                      clearable
+                      placeholder="请输入"
+
+                      v-model="detailform.contractInfo.bidNoticeWebsite"
+                    />
+                  </el-form-item>
+                </div>
+                <div>
+                  <el-form-item
                     class="neirong"
                     label="项目内容(最多600字):"
 
@@ -2184,7 +2221,7 @@
                   <!--&gt;-->
                   <!--<el-button size="small" type="primary">点击上传</el-button>-->
                   <!--</el-upload>-->
-                <p>
+                </p>
                   <el-table
                     :data="detailform.fileList1"
                     :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
@@ -2228,15 +2265,17 @@
                       </template>
                     </el-table-column>
                   </el-table>
+                  <p>
+                    <span>合同附件: </span>
+                    <el-button
+                      v-show="p.actpoint !== 'look'"
+                      size="small"
+                      type="primary"
+                      @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','fileList2')">
+                      点击上传
+                    </el-button>
+                  </p>
 
-                  <span>合同附件: </span>
-                  <el-button
-                    v-show="p.actpoint !== 'look'"
-                    size="small"
-                    type="primary"
-                    @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','fileList2')">
-                    点击上传
-                  </el-button>
                   <!--<el-upload-->
                   <!--v-show="p.actpoint != 'look'"-->
                   <!--class="upload-demo detailUpload detatil-flie-btn"-->
@@ -2249,7 +2288,6 @@
                   <!--&gt;-->
                   <!--<el-button size="small" type="primary">点击上传</el-button>-->
                   <!--</el-upload>-->
-                </p>
                 <el-table
                   :data="detailform.fileList2"
                   :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
@@ -3328,7 +3366,7 @@
 
 <script>
   import Tree from '@/components/tree'
-  import { isMoney } from '@/utils/validate'
+  import { isMoney ,isURL} from '@/utils/validate'
   import SearchName from '../searchName'
   import AddBd from '../addBd'
   import CompanyTree from '../companyTree'
@@ -3342,6 +3380,14 @@
           callback(new Error('不能为空'))
         }else if (!isMoney(value)) {
           callback(new Error('请输入正确的金额格式'))
+        } else {
+          callback()
+        }
+      };
+      var validateUrl = (rule, value, callback) => {
+        // console.log(value)
+        if (value!=''&&value&&!isURL(value)) {
+          callback(new Error('请输入正确的网址格式'))
         } else {
           callback()
         }
@@ -3410,6 +3456,9 @@
         rules:{
           contractAmount: [
             { required: true,validator: validateMoney, trigger: 'change' }
+          ],
+          bidNoticeWebsite:[
+            { required: true,validator: validateUrl, trigger: 'change' }
           ]
         },//表单验证规则
       };

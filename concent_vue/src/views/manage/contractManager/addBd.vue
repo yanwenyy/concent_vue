@@ -16,19 +16,34 @@
             <el-input v-model="detailForm.sectionName" placeholder="标段名称" clearable></el-input>
           </el-form-item>
           <el-form-item label="风险费(万元):" class="list-item">
-            <el-input v-model="detailForm.riskFee" placeholder="风险费(万元)" clearable></el-input>
+            <el-input v-model="detailForm.riskFee" placeholder="风险费(万元)" clearable>
+              <template slot="prepend">¥</template>
+              <template slot="append">(万元)</template>
+            </el-input>
           </el-form-item>
           <el-form-item label="安全费(万元):" class="list-item">
-            <el-input v-model="detailForm.safetyCost" placeholder="安全费(万元)" clearable></el-input>
+            <el-input v-model="detailForm.safetyCost" placeholder="安全费(万元)" clearable>
+              <template slot="prepend">¥</template>
+              <template slot="append">(万元)</template>
+            </el-input>
           </el-form-item>
           <el-form-item label="投标限价(万元):" class="list-item">
-            <el-input v-model="detailForm.biddingPriceLimit" placeholder="投标限价(万元)" clearable></el-input>
+            <el-input v-model="detailForm.biddingPriceLimit" placeholder="投标限价(万元)" clearable>
+              <template slot="prepend">¥</template>
+              <template slot="append">(万元)</template>
+            </el-input>
           </el-form-item>
           <el-form-item label="投标保证金(万元):" class="list-item">
-            <el-input v-model="detailForm.tenderSecurity" placeholder="投标保证金(万元)" clearable></el-input>
+            <el-input v-model="detailForm.tenderSecurity" placeholder="投标保证金(万元)" clearable>
+              <template slot="prepend">¥</template>
+              <template slot="append">(万元)</template>
+            </el-input>
           </el-form-item>
           <el-form-item label="投标价(万元):" class="list-item">
-            <el-input v-model="detailForm.bidPrice" placeholder="投标价(万元)" clearable></el-input>
+            <el-input v-model="detailForm.bidPrice" placeholder="投标价(万元)" clearable>
+              <template slot="prepend">¥</template>
+              <template slot="append">(万元)</template>
+            </el-input>
           </el-form-item>
           <el-form-item label="投标费率(百分比):" class="list-item">
             <el-input v-model="detailForm.tenderRate" placeholder="投标费率(百分比)" clearable></el-input>

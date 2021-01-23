@@ -28,11 +28,9 @@
         <el-button @click="exportdata" type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>
       </el-button-group>
       <div style="float: right">
-        <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-        <el-button @click="getData" type="primary" plain>查询</el-button>
+        <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
+        <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
         <!-- <el-button @click="Importdata" type="primary" plain>导入</el-button> -->
-
-
       </div>
     </div>
 
@@ -505,5 +503,8 @@
 <style scoped>
   .el-table__row {
     cursor: pointer;
+  }
+  .add-group .new-add-btn{
+    border-radius: 0;
   }
 </style>

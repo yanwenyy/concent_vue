@@ -479,6 +479,21 @@
                   </el-form-item>
                   <div>
                     <el-form-item
+                      class="neirong not-error"
+                      label="中标公示网站"
+                    >
+                      <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
+                      <el-input
+                        disabled
+                        type="textarea"
+                        clearable
+                        placeholder="请输入"
+                        v-model="detailFormBefore.contractInfo.bidNoticeWebsite"
+                      />
+                    </el-form-item>
+                  </div>
+                  <div>
+                    <el-form-item
                       class="neirong"
                       label="备注(最多600字):"
                       style="width: 33%"
@@ -913,13 +928,16 @@
            required: true, message: '此项不能为空', trigger: 'blur'
         }"
                 >
-                  <el-input
-                    :disabled="p.actpoint === 'look'"
-                    clearable
-                    placeholder="请输入"
+                  <!--<el-input-->
+                  <!--:disabled="p.actpoint === 'look'"-->
+                  <!--clearable-->
+                  <!--placeholder="请输入"-->
 
-                    v-model="detailform.contractInfo.contractName"
-                  />
+                  <!--v-model="detailform.contractInfo.contractName"-->
+                  <!--/>-->
+                  <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.contractName" class="input-with-select">
+                    <el-button :disabled="detailform.contractInfo.contractType!='2'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
+                  </el-input>
                 </el-form-item>
                 <el-form-item
                   label="合同名称(外文):"
@@ -1073,12 +1091,15 @@
                   </el-input>
                 </el-form-item>
                 <el-form-item
-                  label="初始我方份额(万元)"
+                  label="初始我方份额(万元):"
                   prop="contractInfo.ourAmount"
                   :rules="rules.contractAmount"
                 >
                   <el-input
                     :disabled="true"
+                    clearable
+                    placeholder=""
+                    size="mini"
                     v-model="detailform.contractInfo.ourAmount"
                   >
                     <template slot="prepend">¥</template>
@@ -1309,7 +1330,7 @@
                     filterable
                     clearable
                     placeholder="请选择"
-
+                    @clear="clear(detailform.contractInfo.marketSecondId,detailform.contractInfo.marketSecondName)"
                     @change="
               getName(
                 detailform.contractInfo.marketSecondId,
@@ -1637,7 +1658,24 @@
                   />
                 </el-form-item>
 
+                <div>
+                  <el-form-item
+                    class="neirong not-error"
+                    label="中标公示网站"
+                    prop="contractInfo.bidNoticeWebsite"
+                    :rules="rules.bidNoticeWebsite"
+                  >
+                    <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
+                    <el-input
+                      :disabled="p.actpoint === 'look'"
+                      type="textarea"
+                      clearable
+                      placeholder="请输入"
 
+                      v-model="detailform.contractInfo.bidNoticeWebsite"
+                    />
+                  </el-form-item>
+                </div>
                 <div>
                   <el-form-item
                     class="neirong"
@@ -1720,7 +1758,7 @@
                   </el-table-column>
                 </el-table>
                 <p style="overflow: hidden">
-                  <span>产品信息: </span>
+                  <span >产品信息: </span>
                   <el-button
                     v-show="p.actpoint != 'look'"
                     @click="addXs()"
@@ -1750,7 +1788,7 @@
                     show-overflow-tooltip
                     type="index"></el-table-column>
 
-                  <el-table-column  width="150"  class="listTabel" :resizable="false" label="产品名称" prop="productId" show-overflow-tooltip>
+                  <el-table-column width="150"  class="listTabel" :resizable="false" label="产品名称" prop="productId" show-overflow-tooltip>
                     <template slot-scope="scope">
                       <el-form-item
                         class="tabelForm"
@@ -2636,7 +2674,7 @@
 
 <script>
   import Tree from '@/components/tree'
-  import { isMoney } from '@/utils/validate'
+  import { isMoney ,isURL} from '@/utils/validate'
   import SearchName from '../searchName'
   import AddBd from '../addBd'
   import CompanyTree from '../companyTree'
@@ -2650,6 +2688,14 @@
           callback(new Error('不能为空'))
         }else if (!isMoney(value)) {
           callback(new Error('请输入正确的金额格式'))
+        } else {
+          callback()
+        }
+      };
+      var validateUrl = (rule, value, callback) => {
+        // console.log(value)
+        if (value!=''&&value&&!isURL(value)) {
+          callback(new Error('请输入正确的网址格式'))
         } else {
           callback()
         }
@@ -2716,6 +2762,9 @@
         rules:{
           contractAmount: [
             { required: true,validator: validateMoney, trigger: 'change' }
+          ],
+          bidNoticeWebsite:[
+            { required: true,validator: validateUrl, trigger: 'change' }
           ]
         },//表单验证规则
       };
@@ -2777,6 +2826,18 @@
       // eslint-disable-next-line no-unde
     },
     methods: {
+      //新增产品信息
+      addXs(){
+        var v={
+          productName:'',
+          productId:'',
+          specificationAndModel:'',
+          productQuantity:'',
+          productUnit:'',
+          productTotalPrice	:'',
+        };
+        this.detailform.contractInfoProductInformtList.push(v);
+      },
       //打开附件上传的组件
       openFileUp(url,list){
         this.uploadVisible = true;

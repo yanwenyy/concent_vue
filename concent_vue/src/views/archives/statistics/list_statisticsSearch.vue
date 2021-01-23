@@ -9,11 +9,11 @@
                   placeholder="请输入统计分析名称"
                   clearable></el-input>
       </el-form-item>
-      <el-form-item label="所属单位:">
-        <el-input v-model="searchform.createOrgName"
-                  placeholder="选择单位"
-                  clearable></el-input>
-      </el-form-item>
+      <!--<el-form-item label="所属单位:">-->
+        <!--<el-input v-model="searchform.createOrgName"-->
+                  <!--placeholder="选择单位"-->
+                  <!--clearable></el-input>-->
+      <!--</el-form-item>-->
       <el-form-item label="填报月度:">
         <el-date-picker
           v-model="searchform.reportTime"
@@ -22,17 +22,7 @@
           value-format="timestamp">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="登记时间:">
-          <el-date-picker
-            v-model="searchform.createTime"
-            @change="searchform.selectTimeTypeCreateTime='01'"
-            type="daterange"
-            value-format="timestamp"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期">
-          </el-date-picker>
-        </el-form-item>
+
       <el-form-item
         label="是否发布:"
       >
@@ -59,6 +49,17 @@
                   placeholder="填报人姓名"
                   clearable></el-input>
       </el-form-item>
+        <el-form-item label="登记时间:">
+          <el-date-picker
+            v-model="searchform.createTime"
+            @change="searchform.selectTimeTypeCreateTime='01'"
+            type="daterange"
+            value-format="timestamp"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期">
+          </el-date-picker>
+        </el-form-item>
       <el-button @click="searchformReset"
                  type="info"
                  plain

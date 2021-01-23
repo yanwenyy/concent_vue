@@ -357,7 +357,7 @@
                 clearable
                 placeholder=""
                 v-model="detailform.topInfor.investment"
-                @input="detailform.topInfor.investment>maxMoney?detailform.topInfor.isMajorProject='0':detailform.topInfor.isMajorProject='1'"
+                @input="detailform.topInfor.investment>=maxMoney?detailform.topInfor.isMajorProject='0':detailform.topInfor.isMajorProject='1'"
               >
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>

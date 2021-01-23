@@ -4,9 +4,8 @@
     title="附件列表"
     :visible.sync="dialogVisible"
     @close="result"
-
+    custom-class="range"
   >
-
     <div >
       <el-table
 
@@ -580,4 +579,14 @@
 {
   padding:5px 0px;
 }
+  .el-dialog__wrapper{
+    width: 100%!important;
+    height: 100%!important;
+    padding: 0!important;
+    margin: 0!important;
+    box-sizing: border-box;
+  }
+  >>>.range{
+    margin-bottom: 30px!important;
+  }
 </style>

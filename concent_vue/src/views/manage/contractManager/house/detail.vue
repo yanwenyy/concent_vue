@@ -626,6 +626,24 @@
                   v-model="detailform.contractInfo.createOrgName"
                 />
               </el-form-item>
+              <div>
+                <el-form-item
+                  class="neirong not-error"
+                  label="中标公示网站"
+                  prop="contractInfo.bidNoticeWebsite"
+                  :rules="rules.bidNoticeWebsite"
+                >
+                  <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
+                  <el-input
+                    :disabled="p.actpoint === 'look'"
+                    type="textarea"
+                    clearable
+                    placeholder="请输入"
+
+                    v-model="detailform.contractInfo.bidNoticeWebsite"
+                  />
+                </el-form-item>
+              </div>
               <p><span >证明文件: </span>
                 <el-button
                   v-show="p.actpoint !== 'look'"
@@ -1547,7 +1565,7 @@
 <script>
   import Tree from '@/components/tree'
   import CompanyTree from '../companyTree'
-  import { isMoney } from '@/utils/validate'
+  import { isMoney ,isURL} from '@/utils/validate'
   import FileUpload from '@/components/fileUpload'
   import SearchName from '../searchName'
 export default {
@@ -1558,6 +1576,14 @@ export default {
         callback(new Error('不能为空'))
       }else if (!isMoney(value)) {
         callback(new Error('请输入正确的金额格式'))
+      } else {
+        callback()
+      }
+    };
+    var validateUrl = (rule, value, callback) => {
+      // console.log(value)
+      if (value!=''&&value&&!isURL(value)) {
+        callback(new Error('请输入正确的网址格式'))
       } else {
         callback()
       }
@@ -1603,6 +1629,9 @@ export default {
       rules:{
         contractAmount: [
           { required: true,validator: validateMoney, trigger: 'change' }
+        ],
+        bidNoticeWebsite:[
+          { required: true,validator: validateUrl, trigger: 'change' }
         ]
       },//表单验证规则
     }
