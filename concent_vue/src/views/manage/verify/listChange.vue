@@ -211,7 +211,7 @@ export default {
       //     query: {p: this.$utils.encrypt(JSON.stringify(p))},
       //   });
       // }
-      console.log(JSON.stringify(data));
+      // console.log(JSON.stringify(data));
       //alert(JSON.stringify(this.multipleSelection[0]));
       let p = { actpoint: 'add',instid: data.inforid, topinfoid:data.tiouuid}
       //alert(JSON.stringify(p));
@@ -230,13 +230,13 @@ export default {
     },
     add(){
       this.dialogResult = true
-      console.log(this.positionIndex);
+      console.log(this.dialogResult);
       this.$nextTick(() => {
         this.$refs.verifyChange.init()
       })
     },
     editItem() {
-      console.log(JSON.stringify(this.multipleSelection[0]));
+      // console.log(JSON.stringify(this.multipleSelection[0]));
       //是否有资审信息判断
       if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
         this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
@@ -307,7 +307,7 @@ export default {
       this.multipleSelection = val
     },
     getData() {
-      console.log(JSON.stringify(this.searchform));
+      // console.log(JSON.stringify(this.searchform));
       if(this.searchform.saleTime!="")
       {
         var date = new Date(this.searchform.saleTime);
@@ -315,7 +315,7 @@ export default {
         this.searchform.saleTime=time1;
       }
 
-      console.log(JSON.stringify(this.searchform));
+      // console.log(JSON.stringify(this.searchform));
       this.$http
         .post(
           '/api/contract/topInfo/Verify/list/loadPageDataForIsChange',

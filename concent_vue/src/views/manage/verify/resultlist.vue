@@ -217,7 +217,7 @@
                 </el-table-column>
 
                 <el-table-column align="center" :resizable="false"
-                                 label="大小"
+                                 label="大小(KB)"
                                  prop="fileSize"
                                  :width="120"
                                  show-overflow-tooltip>

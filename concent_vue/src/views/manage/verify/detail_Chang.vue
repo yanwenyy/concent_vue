@@ -389,9 +389,10 @@
                 ></el-option>
               </el-select>
             </el-form-item>
+              <br>
         <el-form-item
-          label="资审文件发售截止日期:"
-          prop="verify.saleTime"
+          label="资格预审公告发布日期:"
+          prop="verify.publishTime"
 
           :rules="{
           required: true, message: '此项不能为空', trigger: 'blur'
@@ -399,25 +400,15 @@
         >
           <el-date-picker
             disabled
+
             value-format="timestamp"
-            v-model="detailformBefore.verify.saleTime"
+            v-model="detailformBefore.verify.publishTime"
             align="right"
             type="date"
             placeholder="选择日期">
           </el-date-picker>
-
         </el-form-item>
 
-        <el-form-item v-show='detailformBefore.verify.isCoalitionBid=="是"'
-                      label="内部联合体单位:"
-                      :disabled="p.actpoint === 'look'"
-        >
-
-          <el-input disabled v-model="detailformBefore.verifyOrgLists" placeholder="内部联合体单位">
-            <el-button slot="append" icon="el-icon-search"  @click="selectOrg()"></el-button>
-          </el-input>
-        </el-form-item>
-       <br>
        <el-form-item
          label="递交资格预审申请文件日期:"
          prop="verify.subTime"
@@ -438,9 +429,10 @@
           </el-date-picker>
 
         </el-form-item>
+
         <el-form-item
-          label="资格预审公告发布日期:"
-          prop="verify.publishTime"
+          label="资审文件发售截止日期:"
+          prop="verify.saleTime"
 
           :rules="{
           required: true, message: '此项不能为空', trigger: 'blur'
@@ -448,27 +440,16 @@
         >
           <el-date-picker
             disabled
-
             value-format="timestamp"
-            v-model="detailformBefore.verify.publishTime"
+            v-model="detailformBefore.verify.saleTime"
             align="right"
             type="date"
             placeholder="选择日期">
           </el-date-picker>
-        </el-form-item>
-
-        <el-form-item v-show='detailformBefore.verify.isCoalitionBid=="是"'
-                      label="外部联合体单位:"
-        >
-          <el-input
-            disabled
-            placeholder=""
-            size="mini"
-            v-model="detailformBefore.verify.outOrg"
-          />
 
         </el-form-item>
-<br>
+        <br>
+
          <el-form-item
            label="是否联合体投标:"
            prop="verify.isCoalitionBid"
@@ -484,17 +465,30 @@
             inactive-value="否"
           >
             </el-switch>
-<!--       <el-radio-group v-model="detailformBefore.verify.isCoalitionBid" >-->
-<!--                  <el-radio :disabled="p.actpoint === 'look'"  v-for="(item, index) in coalitionBid" :label="item.id" :key="index">{{item.detailName}}</el-radio>-->
-<!--                </el-radio-group>-->
 
-       <!--        <el-input-->
-       <!--          clearable-->
-       <!--          :readonly="p.actpoint === 'look'"-->
-       <!--          size="mini"-->
-       <!--          v-model="detailform.verify.isCoalitionBid"-->
-       <!--        />-->
       </el-form-item>
+        <el-form-item v-show='detailformBefore.verify.isCoalitionBid=="是"'
+                      label="内部联合体单位:"
+                      :disabled="p.actpoint === 'look'"
+        >
+
+          <el-input disabled v-model="detailformBefore.verifyOrgLists" placeholder="内部联合体单位">
+            <el-button slot="append" icon="el-icon-search"  @click="selectOrg()"></el-button>
+          </el-input>
+        </el-form-item>
+
+        <el-form-item v-show='detailformBefore.verify.isCoalitionBid=="是"'
+                      label="外部联合体单位:"
+        >
+          <el-input
+            disabled
+            placeholder=""
+            size="mini"
+            v-model="detailformBefore.verify.outOrg"
+          />
+
+        </el-form-item>
+
               <div>
                 <el-form-item
                   class="neirong"
@@ -542,7 +536,7 @@
 
                             </el-table-column>
 
-                            <el-table-column align="center" :resizable="false" label="大小" :width="120" prop="fileSize"
+                            <el-table-column align="center" :resizable="false" label="大小(KB)" :width="120" prop="fileSize"
                                               show-overflow-tooltip>
                               <template slot-scope="scope">
                                 {{(scope.row.fileSize/1024).toFixed(2)}}
@@ -584,7 +578,7 @@
                   label="标段名"
                   prop="verifySection.sectionName"
                   align="center"
-                  min-width="260"
+                  min-width="500"
                   show-overflow-tooltip
                 >
                 </el-table-column>
@@ -596,7 +590,7 @@
                   prop="verifySectionOrgNameType01"
                   show-overflow-tooltip
                   v-show="p.actpoint != 'look'"
-                  width="160">
+                  width="500">
 
           <template slot-scope="scope" v-show="p.actpoint != 'look'">
             <span  >
@@ -612,7 +606,7 @@
           prop="verifySectionOrgNameType02"
           show-overflow-tooltip
           v-show="p.actpoint != 'look'"
-          width="160">
+          width="500">
 
           <template slot-scope="scope" v-show="p.actpoint != 'look'">
 
@@ -988,7 +982,7 @@
               </el-form-item>
 
               <el-form-item  class="formItem"  label="联系电话:"
-                             :rules="{
+                  :rules="{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
@@ -1002,7 +996,7 @@
               </el-form-item>
 
             <el-form-item  label="预计中标概率:"
-                           :rules="{
+              :rules="{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
@@ -1054,57 +1048,8 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-        <el-form-item
-          label="资审文件发售截止日期:"
-          prop="verify.saleTime"
+            <br>
 
-          :rules="{
-          required: true, message: '此项不能为空', trigger: 'blur'
-        }"
-        >
-          <el-date-picker
-            clearable
-            :disabled="p.actpoint === 'look'"
-            value-format="timestamp"
-            v-model="detailformAfter.verify.saleTime"
-            align="right"
-            type="date"
-            placeholder="选择日期">
-          </el-date-picker>
-
-        </el-form-item>
-
-        <el-form-item v-show='detailformAfter.verify.isCoalitionBid=="是"'
-                      label="内部联合体单位:"
-                      :disabled="p.actpoint === 'look'"
-        >
-
-          <el-input :disabled="p.actpoint === 'look'" v-model="detailformAfter.verifyOrgLists" placeholder="内部联合体单位">
-            <el-button  :disabled="p.actpoint === 'look'" slot="append" icon="el-icon-search"
-                        @click="selectOrg()"></el-button>
-          </el-input>
-        </el-form-item>
-       <br>
-       <el-form-item
-         label="递交资格预审申请文件日期:"
-         prop="verify.subTime"
-
-         :rules="{
-          required: true, message: '此项不能为空', trigger: 'blur'
-        }"
-       >
-
-          <el-date-picker
-            clearable
-            :disabled="p.actpoint === 'look'"
-            value-format="timestamp"
-            v-model="detailformAfter.verify.subTime"
-            align="right"
-            type="date"
-            placeholder="选择日期">
-          </el-date-picker>
-
-        </el-form-item>
         <el-form-item
           label="资格预审公告发布日期:"
           prop="verify.publishTime"
@@ -1124,18 +1069,47 @@
           </el-date-picker>
         </el-form-item>
 
-        <el-form-item v-show='detailformAfter.verify.isCoalitionBid=="是"'
-                      label="外部联合体单位:"
-        >
-          <el-input
-            placeholder=""
+        <el-form-item
+         label="递交资格预审申请文件日期:"
+         prop="verify.subTime"
+
+         :rules="{
+          required: true, message: '此项不能为空', trigger: 'blur'
+        }"
+       >
+
+          <el-date-picker
+            clearable
             :disabled="p.actpoint === 'look'"
-            size="mini"
-            v-model="detailformAfter.verify.outOrg"
-          />
+            value-format="timestamp"
+            v-model="detailformAfter.verify.subTime"
+            align="right"
+            type="date"
+            placeholder="选择日期">
+          </el-date-picker>
 
         </el-form-item>
-<br>
+
+        <el-form-item
+          label="资审文件发售截止日期:"
+          prop="verify.saleTime"
+
+          :rules="{
+          required: true, message: '此项不能为空', trigger: 'blur'
+        }"
+        >
+          <el-date-picker
+            clearable
+            :disabled="p.actpoint === 'look'"
+            value-format="timestamp"
+            v-model="detailformAfter.verify.saleTime"
+            align="right"
+            type="date"
+            placeholder="选择日期">
+          </el-date-picker>
+
+        </el-form-item>
+          <br>
          <el-form-item
            label="是否联合体投标:"
            prop="verify.isCoalitionBid"
@@ -1150,17 +1124,28 @@
            inactive-value="否"
          >
             </el-switch>
-<!--       <el-radio-group v-model="detailformAfter.verify.isCoalitionBid" >-->
-<!--                  <el-radio :disabled="p.actpoint === 'look'"  v-for="(item, index) in coalitionBid" :label="item.id" :key="index">{{item.detailName}}</el-radio>-->
-<!--                </el-radio-group>-->
-
-       <!--        <el-input-->
-       <!--          clearable-->
-       <!--          :readonly="p.actpoint === 'look'"-->
-       <!--          size="mini"-->
-       <!--          v-model="detailform.verify.isCoalitionBid"-->
-       <!--        />-->
       </el-form-item>
+        <el-form-item v-show='detailformAfter.verify.isCoalitionBid=="是"'
+                      label="内部联合体单位:"
+                      :disabled="p.actpoint === 'look'"
+        >
+
+          <el-input :disabled="p.actpoint === 'look'" v-model="detailformAfter.verifyOrgLists" placeholder="内部联合体单位">
+            <el-button  :disabled="p.actpoint === 'look'" slot="append" icon="el-icon-search"
+                        @click="selectOrg()"></el-button>
+          </el-input>
+        </el-form-item>
+
+        <el-form-item v-show='detailformAfter.verify.isCoalitionBid=="是"' label="外部联合体单位:">
+          <el-input
+            placeholder=""
+            :disabled="p.actpoint === 'look'"
+            size="mini"
+            v-model="detailformAfter.verify.outOrg"
+          />
+
+        </el-form-item>
+
               <div>
                 <el-form-item
                   class="neirong"
@@ -1221,7 +1206,7 @@
 
                             </el-table-column>
 
-                            <el-table-column align="center" :resizable="false" label="大小" :width="120" prop="fileSize"
+                            <el-table-column align="center" :resizable="false" label="大小(KB)" :width="120" prop="fileSize"
                                               show-overflow-tooltip>
                               <template slot-scope="scope">
                                 {{(scope.row.fileSize/1024).toFixed(2)}}
@@ -1284,7 +1269,7 @@
                   label="标段名"
                   prop="verifySection.sectionName"
                   align="center"
-                  min-width="260"
+                  min-width="500"
                   show-overflow-tooltip
                 >
 
@@ -1297,7 +1282,7 @@
                   prop="verifySectionOrgNameType01"
                   show-overflow-tooltip
                   v-show="p.actpoint != 'look'"
-                  width="160">
+                  width="500">
 
           <template slot-scope="scope" v-show="p.actpoint != 'look'">
             <span  >
@@ -1313,7 +1298,7 @@
           prop="verifySectionOrgNameType02"
           show-overflow-tooltip
           v-show="p.actpoint != 'look'"
-          width="160">
+          width="500">
 
           <template slot-scope="scope" v-show="p.actpoint != 'look'">
 

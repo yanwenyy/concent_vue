@@ -389,56 +389,7 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-        <el-form-item
-          label="资审文件发售截止日期:"
-          prop="verify.saleTime"
-
-          :rules="{
-          required: true, message: '此项不能为空', trigger: 'blur'
-        }"
-        >
-          <el-date-picker
-            clearable
-            :readonly="p.actpoint === 'look'"
-            value-format="timestamp"
-            v-model="detailform.verify.saleTime"
-            align="right"
-            type="date"
-            placeholder="选择日期">
-          </el-date-picker>
-
-        </el-form-item>
-
-        <el-form-item v-show='detailform.verify.isCoalitionBid=="是"'
-                      label="内部联合体单位:"
-                      :disabled="p.actpoint === 'look'"
-        >
-
-          <el-input v-model="detailform.verifyOrgLists" placeholder="内部联合体单位">
-            <el-button slot="append" icon="el-icon-search"  @click="selectOrg()"></el-button>
-          </el-input>
-        </el-form-item>
-       <br>
-       <el-form-item
-         label="递交资格预审申请文件日期:"
-         prop="verify.subTime"
-
-         :rules="{
-          required: true, message: '此项不能为空', trigger: 'blur'
-        }"
-       >
-
-          <el-date-picker
-            clearable
-            :readonly="p.actpoint === 'look'"
-            value-format="timestamp"
-            v-model="detailform.verify.subTime"
-            align="right"
-            type="date"
-            placeholder="选择日期">
-          </el-date-picker>
-
-        </el-form-item>
+            <br>
         <el-form-item
           label="资格预审公告发布日期:"
           prop="verify.publishTime"
@@ -457,18 +408,42 @@
             placeholder="选择日期">
           </el-date-picker>
         </el-form-item>
+        <el-form-item
+          label="资审文件发售截止日期:"
+          prop="verify.saleTime"
 
-        <el-form-item v-show='detailform.verify.isCoalitionBid=="是"'
-                      label="外部联合体单位:"
+          :rules="{
+          required: true, message: '此项不能为空', trigger: 'blur'
+        }"
         >
-          <el-input
-            placeholder=""
-            size="mini"
-            v-model="detailform.verify.outOrg"
-          />
-
+          <el-date-picker
+            clearable
+            :readonly="p.actpoint === 'look'"
+            value-format="timestamp"
+            v-model="detailform.verify.saleTime"
+            align="right"
+            type="date"
+            placeholder="选择日期">
+          </el-date-picker>
         </el-form-item>
-<br>
+        <el-form-item
+         label="递交资格预审申请文件日期:"
+         prop="verify.subTime"
+
+         :rules="{
+          required: true, message: '此项不能为空', trigger: 'blur'
+        }">
+          <el-date-picker
+            clearable
+            :readonly="p.actpoint === 'look'"
+            value-format="timestamp"
+            v-model="detailform.verify.subTime"
+            align="right"
+            type="date"
+            placeholder="选择日期">
+          </el-date-picker>
+        </el-form-item>
+          <br>
          <el-form-item
            label="是否联合体投标:"
            prop="verify.isCoalitionBid"
@@ -482,19 +457,24 @@
            v-model="detailform.verify.isCoalitionBid"
            active-value="是"
            inactive-value="否"
-         >
-            </el-switch>
-<!--       <el-radio-group v-model="detailform.verify.isCoalitionBid" >-->
-<!--                  <el-radio :disabled="p.actpoint === 'look'"  v-for="(item, index) in coalitionBid" :label="item.id" :key="index">{{item.detailName}}</el-radio>-->
-<!--                </el-radio-group>-->
+         />
+        </el-form-item>
+        <el-form-item  label="内部联合体单位:">
+          <el-input v-model="detailform.verifyOrgLists" placeholder="内部联合体单位"  :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否'">
+            <el-button slot="append" icon="el-icon-search"  @click="selectOrg()"  :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否'"></el-button>
+          </el-input>
+        </el-form-item>
 
-       <!--        <el-input-->
-       <!--          clearable-->
-       <!--          :readonly="p.actpoint === 'look'"-->
-       <!--          size="mini"-->
-       <!--          v-model="detailform.verify.isCoalitionBid"-->
-       <!--        />-->
-      </el-form-item>
+        <el-form-item label="外部联合体单位:" >
+          <el-input
+            placeholder=""
+            size="mini"
+            :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否'"
+            v-model="detailform.verify.outOrg"
+          />
+
+        </el-form-item>
+
 <!-- 下拉 -->
 
 
@@ -535,7 +515,7 @@
                 :on-remove="handleRemove"
                 multiple
               >
-              <el-button size="small" type="primary">点击上传</el-button>
+              <el-button type="primary">点击上传</el-button>
             </el-upload>
             </p>
             </div>
@@ -561,7 +541,7 @@
 
                 </el-table-column>
 
-                <el-table-column align="center" :resizable="false" label="大小" prop="fileSize" width="120" show-overflow-tooltip>
+                <el-table-column align="center" :resizable="false" label="大小(KB)" prop="fileSize" width="120" show-overflow-tooltip>
                   <template slot-scope="scope">
                     {{(scope.row.fileSize/1024).toFixed(2)}}
                   </template>
@@ -585,13 +565,13 @@
     </div>
 <p class="detail-title" style="overflow: hidden;margin-right:30px">
      <span  >标段信息: </span>   <el-button
-       @click="dialogTopInfoSection = true"
+       @click="dialogTopInfoSection=true"
        v-show="p.actpoint != 'look'"
-            size="mini"
        class="detatil-flie-btn"
             type="primary"
           >新增</el-button>
 </p>
+       <!-- && dialogTopInfoSection. == []   &&checked-->
 
       <el-table
         :data="detailform.verifySectionList"
@@ -622,7 +602,7 @@
           :resizable="false"
           label="标段名"
           prop="verifySection.sectionName"
-          min-width="260"
+          min-width="500"
           show-overflow-tooltip
         >
         </el-table-column>
@@ -634,7 +614,7 @@
           prop="verifySectionOrgNameType01"
           show-overflow-tooltip
           v-show="p.actpoint != 'look'"
-          width="160">
+          width="500">
 
           <template slot-scope="scope" v-show="p.actpoint != 'look'">
             <span  >
@@ -650,7 +630,7 @@
           prop="verifySectionOrgNameType02"
           show-overflow-tooltip
           v-show="p.actpoint != 'look'"
-          width="160">
+          width="500">
 
           <template slot-scope="scope" v-show="p.actpoint != 'look'">
 
@@ -866,6 +846,7 @@ export default {
         topInfoSiteList: [],
         topInfoSectionList: [],
       },
+      checked:false,
       dialogTopInfoSection:false,
       coalitionBid:[
         {
@@ -1029,7 +1010,7 @@ export default {
 
         var verifyOrg={ orgId:item.name,orgName:item.name};
         this.detailform.verifyOrgList.push(verifyOrg)
-        resultStr+=item.name+",";
+        resultStr+=item.name+"，";
       });
       this.detailform.verifyOrgLists =resultStr.substring(0,resultStr.length-1);
       // this.detailform.verifyOrgLists=resultStr;
@@ -1049,7 +1030,7 @@ export default {
 
         var VerifySectionOrg={ orgId:item.name,orgName:item.name,orgType:"01"};
         this.myVerifySection.verifySectionOrgList.push(VerifySectionOrg)
-        resultStr+=item.name+",";
+        resultStr+=item.name+"，";
       });
        this.detailform.verifySectionList[this.myVerifySection.index].verifySectionOrgNameType01 =resultStr.substring(0,resultStr.length-1);
        this.detailform.verifySectionList[this.myVerifySection.index].verifySectionOrgListType01=this.myVerifySection.verifySectionOrgList;
@@ -1069,7 +1050,7 @@ export default {
 
         var VerifySectionOrg={ orgId:item.name,orgName:item.name,orgType:"02"};
         this.myVerifySection1.verifySectionOrgList.push(VerifySectionOrg)
-        resultStr+=item.name+",";
+        resultStr+=item.name+"，";
       });
       this.detailform.verifySectionList[this.myVerifySection1.index].verifySectionOrgNameType02
         =resultStr.substring(0,resultStr.length-1);
