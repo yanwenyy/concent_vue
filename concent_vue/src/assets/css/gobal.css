@@ -501,13 +501,14 @@ pre {
 }
 .detailBox{
   overflow: scroll;
-  max-height:calc(100vh - 195px)!important;
-  min-height:calc(100vh - 195px)!important;
+  max-height:calc(100vh - 175px)!important;
+  min-height:calc(100vh - 175px)!important;
   padding:0 100px;
 }
 .detailBoxBG{
   overflow: scroll;
-  max-height:calc(100vh - 190px)!important;
+  max-height:calc(100vh - 170px)!important;
+  min-height:calc(100vh - 170px)!important;
   padding:0 100px;
 }
 .gcform{
