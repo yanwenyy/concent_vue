@@ -162,7 +162,7 @@
           <el-input v-model="detailForm.bidInfoSection.deputyProjectManager	" placeholder="项目副经理" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
 
-        <el-form-item v-if="isBidRates=='1'||isBidRates!=null" label="风险费(万元):" class="list-item"  prop="bidInfoSection.riskFee"  :rules="rules.contractAmount">
+        <el-form-item v-if="isBidRates=='1'||isBidRates==''" label="风险费(万元):" class="list-item"  prop="bidInfoSection.riskFee"  :rules="rules.contractAmount">
                 <el-input
                       v-model="detailForm.bidInfoSection.riskFee"
                       clearable
@@ -183,7 +183,7 @@
           <el-input v-model="detailForm.bidInfoSection.personInChargeOfSafety" placeholder="安全负责人" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
 
-        <el-form-item v-if="isBidRates=='1'||isBidRates!=null" label="安全费(万元):" class="list-item"  prop="bidInfoSection.safetyCost"  :rules="rules.contractAmount">
+        <el-form-item v-if="isBidRates=='1'||isBidRates==''" label="安全费(万元):" class="list-item"  prop="bidInfoSection.safetyCost"  :rules="rules.contractAmount">
                 <el-input
                     v-model="detailForm.bidInfoSection.safetyCost"
                     clearable
@@ -205,7 +205,7 @@
           <el-input v-model="detailForm.bidInfoSection.costOwner" placeholder="成本负责人" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
 
-        <el-form-item v-if="isBidRates=='1'||isBidRates!=null" label="投标限价(万元):" class="list-item" prop="bidInfoSection.biddingPriceLimit"  :rules="rules.contractAmount">
+        <el-form-item v-if="isBidRates=='1'||isBidRates==''" label="投标限价(万元):" class="list-item" prop="bidInfoSection.biddingPriceLimit"  :rules="rules.contractAmount">
                 <el-input
                     v-model="detailForm.bidInfoSection.biddingPriceLimit"
                     clearable

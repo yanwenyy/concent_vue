@@ -457,7 +457,20 @@
         <!-- <el-option label="待操作" :value="null"></el-option> -->
 
       <!-- </el-select> -->
+
     </el-form-item>
+          <el-form-item
+              class="list-item"
+              label="中标公示网站:"
+            >
+              <el-input
+                :disabled="zbType === 'look'"
+                clearable
+                placeholder="中标公示网站"
+                v-model="zbForm.bidInfoSection.bidAnnouncementWebsite"
+              />
+            </el-form-item>
+
            <el-form-item
            label="是否系统外单位中标:"
             class="inline-formitem formItem"
