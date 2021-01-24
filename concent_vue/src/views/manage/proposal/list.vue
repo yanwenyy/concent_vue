@@ -276,7 +276,7 @@
     <el-pagination
       :current-page="page.current"
       :page-size="page.size"
-      :page-sizes="[10, 50, 100]"
+      :page-sizes="[20, 50, 100]"
       :total="page.total"
       @current-change="handleCurrentChange"
       @size-change="handleSizeChange"
@@ -291,10 +291,12 @@
     name: "proposal-list-look",
     data() {
       return {
-        page: {current: 1, size: 10, total: 0, records: []},
+        page: {current: 1, size: 20, total: 0, records: []},
         showinput: false,
         sousuo: "",
         searchform: {
+          current: 1,
+          size: 20,
           orgid: "",
           orgname: "",
           inforName: "",

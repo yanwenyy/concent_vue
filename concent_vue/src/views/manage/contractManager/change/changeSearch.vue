@@ -117,7 +117,7 @@
           moduleId: '',
           changeStatus:'0',
           current: 1,
-          size: 10,
+          size: 20,
         },
         lxList:[
           {
@@ -155,7 +155,7 @@
         ],
         dataList: [],
         pageIndex: 1,
-        pageSize: 10,
+        pagesize: 20,
         totalPage: 0,
         dataListLoading: false,
         dataListSelections: [],
