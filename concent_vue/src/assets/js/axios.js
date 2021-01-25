@@ -68,7 +68,7 @@ axios.interceptors.request.use(
         "Content-Type": "application/x-www-form-urlencoded"
       };
     }
-    if (config.url.indexOf("jsonapi") > -1||config.url.indexOf("api") > -1) {
+    if (config.url.indexOf("jsonapi") > -1) {
       // config.headers=['dataSource'] = 'bdmp'
       axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8'
       config.headers = {
@@ -84,6 +84,13 @@ axios.interceptors.request.use(
       }
 
       config.headers['Content-Type'] = 'application/json'
+    }
+    if(config.url.indexOf("api") > -1){
+      config.headers = {
+        'Authorization':
+          sessionStorage.getItem("token"),
+        "Content-Type": "application/x-www-form-urlencoded"
+      };
     }
     // console.log(config);
     if (config.isLoading !== false) {

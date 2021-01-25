@@ -3,8 +3,8 @@
     <el-button v-show="p.actpoint != 'look'" class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform')">保存</el-button>
     <el-button v-show="p.actpoint != 'look'" class="detail-back-tab detailbutton sub-btn" @click="submit">提交</el-button>
     <el-button class="detail-back-tab" @click="back" type="text">返回</el-button>
-    <el-tabs type="border-card">
-      <el-tab-pane label="变更前">
+    <el-tabs type="border-card" v-model="activeName">
+      <el-tab-pane label="变更前" name="before">
         <el-form
           :inline="false"
           class="gcform"
@@ -865,7 +865,7 @@
           </el-tabs>
         </el-form>
       </el-tab-pane>
-      <el-tab-pane label="变更后">
+      <el-tab-pane label="变更后" name="after">
         <el-form
           :inline="false"
           :model="detailform"
@@ -2643,6 +2643,7 @@
         }
       }
       return {
+        activeName:"after",
         id:'',
         key: 0,
         treeStatas: false,
