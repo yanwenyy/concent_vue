@@ -53,6 +53,7 @@
                 >
                   <template slot-scope="scope">
                    <el-switch
+                     :disabled="type=='look'"
                      v-model="scope.row.isDisplay"
                      @change="handleChange(scope.row,scope.$index)"
                      active-value="可见"
@@ -83,6 +84,7 @@
           orgName:'',
           isDisplay:''
         },
+        type:'',
         detailform:{
           commonFilesList:[
             {
@@ -513,8 +515,9 @@
 
         //console.log(this.detailform.commonFilesList)
       },
-      init(val) {
+      init(val,type) {
         this.selectId = val;
+        this.type=type;
         this.dialogVisible = true;
         this.loadData();
       },

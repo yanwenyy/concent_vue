@@ -1452,6 +1452,7 @@
                 >
                   <template slot-scope="scope">
                     <el-input
+                      class="input-el-input-group"
                       clearable
                       :disabled="p.actpoint === 'look'"
                       v-model="scope.row.orgName"
@@ -1470,6 +1471,7 @@
                 >
                   <template slot-scope="scope">
                     <el-select
+                      class="input-el-input-group"
                       :disabled="p.actpoint === 'look'"
                       clearable
                       filterable
@@ -1518,6 +1520,7 @@
                     <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.unionContractInfoAttachList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                       <el-input
+                        class="group-no-padding"
                         @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.unionContractInfoAttachList,'nlht')"
                         v-model="scope.row.contractAmount"
                         clearable
@@ -1540,7 +1543,17 @@
                   width="100"
                 >
                   <template slot-scope="scope">
-                    否
+                    <el-switch
+                      :disabled="p.actpoint === 'look'"
+                      class="inline-formitem-switch"
+                      v-model="scope.row.isAdd"
+                      active-color="#409EFF"
+                      inactive-color="#ddd"
+                      active-value="0"
+                      inactive-value="1"
+                    >
+                    </el-switch>
+                    <!--{{scope.row.isAdd=='1'?'否':'是'}}-->
                   </template>
                 </el-table-column>
                 <el-table-column
@@ -1612,6 +1625,7 @@
                 >
                   <template slot-scope="scope">
                     <el-input
+                      class="input-el-input-group"
                       clearable
                       :disabled="p.actpoint === 'look'"
                       v-model="scope.row.orgName"
@@ -1630,6 +1644,7 @@
                 >
                   <template slot-scope="scope">
                     <el-select
+                      class="input-el-input-group"
                       :disabled="p.actpoint === 'look'"
                       clearable
                       filterable
@@ -1678,6 +1693,7 @@
                     <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.innerContractInfoAttachList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                       <el-input
+                        class="group-no-padding"
                         @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.innerContractInfoAttachList,'nfb')"
                         v-model="scope.row.contractAmount"
                         clearable
@@ -1700,7 +1716,16 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    否
+                    <el-switch
+                      :disabled="p.actpoint === 'look'"
+                      class="inline-formitem-switch"
+                      v-model="scope.row.isAdd"
+                      active-color="#409EFF"
+                      inactive-color="#ddd"
+                      active-value="0"
+                      inactive-value="1"
+                    >
+                    </el-switch>
                   </template>
                 </el-table-column>
                 <el-table-column
@@ -1772,6 +1797,7 @@
                 >
                   <template slot-scope="scope">
                     <el-input
+                      class="input-el-input-group"
                       clearable
                       :disabled="p.actpoint === 'look'"
                       v-model="scope.row.orgName"
@@ -1790,6 +1816,7 @@
                 >
                   <template slot-scope="scope">
                     <el-select
+                      class="input-el-input-group"
                       :disabled="p.actpoint === 'look'"
                       clearable
                       filterable
@@ -1838,6 +1865,7 @@
                     <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.outUnionContractInfoAttachList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                       <el-input
+                        class="group-no-padding"
                         @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.outUnionContractInfoAttachList,'wlht')"
                         v-model="scope.row.contractAmount"
                         clearable
@@ -1860,7 +1888,16 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    否
+                    <el-switch
+                      :disabled="p.actpoint === 'look'"
+                      class="inline-formitem-switch"
+                      v-model="scope.row.isAdd"
+                      active-color="#409EFF"
+                      inactive-color="#ddd"
+                      active-value="0"
+                      inactive-value="1"
+                    >
+                    </el-switch>
                   </template>
                 </el-table-column>
                 <el-table-column
@@ -1932,6 +1969,7 @@
                 >
                   <template slot-scope="scope">
                     <el-input
+                      class="input-el-input-group"
                       clearable
                       :disabled="p.actpoint === 'look'"
                       v-model="scope.row.orgName"
@@ -1950,6 +1988,7 @@
                 >
                   <template slot-scope="scope">
                     <el-select
+                      class="input-el-input-group"
                       :disabled="p.actpoint === 'look'"
                       clearable
                       filterable
@@ -1998,6 +2037,7 @@
                     <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.outContractInfoAttachList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                       <el-input
+                        class="group-no-padding"
                         @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.outContractInfoAttachList,'wfb')"
                         v-model="scope.row.contractAmount"
                         clearable
@@ -2020,7 +2060,16 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    否
+                    <el-switch
+                      :disabled="p.actpoint === 'look'"
+                      class="inline-formitem-switch"
+                      v-model="scope.row.isAdd"
+                      active-color="#409EFF"
+                      inactive-color="#ddd"
+                      active-value="0"
+                      inactive-value="1"
+                    >
+                    </el-switch>
                   </template>
                 </el-table-column>
                 <el-table-column

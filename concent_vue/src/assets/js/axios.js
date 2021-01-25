@@ -68,12 +68,12 @@ axios.interceptors.request.use(
         "Content-Type": "application/x-www-form-urlencoded"
       };
     }
-    if (config.url.indexOf("jsonapi") > -1) {
+    if (config.url.indexOf("jsonapi") > -1||config.url.indexOf("api") > -1) {
       // config.headers=['dataSource'] = 'bdmp'
       axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8'
       config.headers = {
         'Authorization':
-          "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiZGV0YWlscyI6eyJzdWIiOiJocnwzMzA1OTciLCJwb3N0TmFtZSI6ImphdmHlt6XnqIvluIgyIiwicG9zdFBhdGgiOiLkuK3pk4Hlu7rnvZHnu5zkv6Hmga_np5HmioDmnInpmZAx5YWs5Y-4IiwicG9zdENvZGUiOiIwMDAwMTAwMDAxMDAwMDc3NzAwMTk5MDAzIiwiaWQiOiIzMzA1OTciLCJ1c2VyTmFtZSI6IumrmOmqniIsInBvc3RzIjpbeyJ0eXBlIjozLCJpZCI6Mjg2NzA0LCJuYW1lIjoiamF2YeW3peeoi-W4iDIiLCJjb2RlIjoiMDAwMDEwMDAwMTAwMDA3NzcwMDE5OTAwMyIsIm9yZGVyIjoxNSwibWFpblBvc2l0aW9uIjp0cnVlLCJwcm92aWRlcklkIjoiaHIiLCJwYXRoIjoi6IKh5Lu95YWs5Y-45Lit6ZOB5bu6572R57uc5L-h5oGv56eR5oqAamF2YeW3peeoi-W4iDIiLCJ6dXpoaWJpYW5tYSI6IjAwMDAxMDAwMDEwMDAwNzc3MDAxOTkwMDMiLCJqaWFuY2hlbmciOiJqYXZh5bel56iL5biIMiIsInp1emhpbHVqaW5nIjoi5Lit6ZOB5bu6572R57uc5L-h5oGv56eR5oqA5pyJ6ZmQMeWFrOWPuCJ9XX0sImV4cCI6MTYxMTU1NjI3NH0.Kd8QolpbRwab8VXos2BlCpzeknPXVlUnSIopXTq9gmdFBDDVZ8bkXfFiOca8lzpEHMXG8wtxuthNVxMSKIgBeA",
+          sessionStorage.getItem("token"),
          "Content-Type": "application/json; charset = utf-8",
          "dataSource": "bdmp"
       };
@@ -123,6 +123,20 @@ axios.interceptors.response.use(
       setTimeout(function() {
         window.location.href = localStorage.getItem("outUrl");
       }, 3000);
+    }
+    //token过期时的弹框
+    if (response.data.message!=null&&(response.data.message.indexOf("已过期") != -1||response.data.message.indexOf("格式错误") != -1)) {
+        Vue.prototype.$prompt('请输入token', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+        }).then(({ value }) => {
+          sessionStorage.setItem("token",value);
+          window.location.reload();
+          return false;
+        }).catch(() => {
+
+        });
+      return false;
     }
     if (response.data.code === -1) {
       Vue.prototype.$message.error("操作失败");
