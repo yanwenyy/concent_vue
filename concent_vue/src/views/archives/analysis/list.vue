@@ -260,7 +260,7 @@ export default {
       page: {current: 1, size: 12, total: 0, records: []},
       searchform: {
         current: 1,
-        size: 20,
+        size: 12,
         uuid: '',
         name: '',
         archivesTypeId: '',

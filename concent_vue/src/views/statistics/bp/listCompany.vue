@@ -183,7 +183,7 @@ export default {
       },
       parentid: '',
       radio: '0',
-      page: {current: 1, size: 10, total: 0, records: []},
+      page: {current: 1, size: 20, total: 0, records: []},
       showinput: false,
       sousuo: "",
       itemTreeList:[],

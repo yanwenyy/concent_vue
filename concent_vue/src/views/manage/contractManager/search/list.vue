@@ -399,7 +399,7 @@
     <el-pagination
       :current-page="page.current"
       :page-size="page.size"
-      :page-sizes="[10, 50, 100]"
+      :page-sizes="[20, 50, 100]"
       :total="page.total"
       @current-change="handleCurrentChange"
       @size-change="handleSizeChange"
@@ -425,10 +425,10 @@
         contractInfoId:"",//合同id
         treeStatas: false,
         DwVisible:false,//选择单位弹框状态
-        page: {current: 1, size: 10, total: 0, records: []},
+        page: {current: 1, size: 20, total: 0, records: []},
         searchform: {
           current: 1,
-          size: 10,
+          size: 20,
           changeStatus:'0',
         },
         moneyform:{
@@ -633,7 +633,7 @@
         // this.$refs["searchform"].resetFields();
         this.searchform={
           current: 1,
-          size: 10,
+          size: 20,
           changeStatus:'0',
         }
         this.getData();

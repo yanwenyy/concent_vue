@@ -294,7 +294,7 @@ export default {
           resource: '',
           desc: ''
         },
-      page: { current: 1, size: 10, total: 0, records: [] },
+      page: { current: 1, size: 20, total: 0, records: [] },
       showinput: false,
       sousuo: "",
       searchform: {
@@ -492,7 +492,7 @@ export default {
       // this.$refs["searchform"].resetFields();
         this.searchform= {
         current: 1,
-        size: 10,
+        size: 20,
         year: "",
         name: "",
         ptype: "",

@@ -45,12 +45,12 @@ export default {
       readList: [],
       projectList: [],
       activeName: 'first',
-      page: { current: 1, size: 10, total: 0, records: [] },
-      page1: { current: 1, size: 10, total: 0, records: [] },
-      page2: { current: 1, size: 10, total: 0, records: [] },
-      page3: { current: 1, size: 10, total: 0, records: [] },
-      page5: { current: 1, size: 10, total: 0, records: [] },
-      page6: { current: 1, size: 10, total: 0, records: [] }
+      page: { current: 1, size: 20, total: 0, records: [] },
+      page1: { current: 1, size: 20, total: 0, records: [] },
+      page2: { current: 1, size: 20, total: 0, records: [] },
+      page3: { current: 1, size: 20, total: 0, records: [] },
+      page5: { current: 1, size: 20, total: 0, records: [] },
+      page6: { current: 1, size: 20, total: 0, records: [] }
     }
   },
   created() {
