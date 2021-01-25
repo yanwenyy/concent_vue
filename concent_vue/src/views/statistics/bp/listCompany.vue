@@ -6,8 +6,8 @@
 
 
 <!--   style="height: calc(100% - 60px); border: 1px solid #eee"-->
-  <div style="display: inline-block;vertical-align: top;overflow: auto; border-right: 1px solid #DCDFE6" >
-  <div style="padding: 10px;">
+  <div style="display: inline-block;vertical-align: top;overflow: auto; border-right: 1px solid #DCDFE6;width:14%" >
+  <div style="position:relative">
   <el-select
     filterable
     placeholder="工程行业类别"
@@ -21,9 +21,8 @@
               v-for="(item, index) in projectDomainType"
             ></el-option>
           </el-select>
-  </div>
-  <el-button  class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo">保存</el-button>
-
+  <el-button  class="detail-back-tab detailbutton save-btn"  @click="saveInfo">保存</el-button>
+</div>
     <el-tree
       :props="props"
       lazy
@@ -44,22 +43,25 @@
         </span>
     </el-tree>
   </div>
-    <div style="display: inline-block;width:81%;vertical-align: top" >
+    <div style="display: inline-block;width:85%;vertical-align: top" >
       <div style="width: 100%; overflow: hidden;margin-top: 10px;">
       <div style="display: inline-block;width: 100%">
         <div style="display: inline-block;height: auto">
-          <span style="background: whitesmoke; border: #DCDFE6 1px solid; padding: 5px">统计项名称：</span><span
-            style="width: 200px;margin-left: 5px">{{
-              selectItem.vname }}</span>
-          <span style="margin-left: 20px;background: whitesmoke; border: #DCDFE6 1px solid; padding: 5px">计量单位：
-          </span><span style="width: 200px;margin-left: 5px" >{{ selectItem.vjldwFormatter
-            }}</span>
-          <span  style="margin-left: 20px;background: whitesmoke; border: #DCDFE6 1px solid; padding: 5px">上报排除项：
-          </span><span style="margin-left: 5px">{{ selectItem.vsbpc }}</span>
+          <span style="padding: 5px">统计项名称：</span>
+          <el-input v-model="selectItem.vname" disabled></el-input>
+          <!-- <span>{{selectItem.vname }}</span> -->
+
+          <span style="padding: 5px">计量单位：</span>
+          <el-input v-model="selectItem.vjldwFormatter" disabled></el-input>
+          <!-- <span>{{ selectItem.vjldwFormatter}}</span> -->
+
+          <span style="padding: 5px">上报排除项：</span>
+          <el-input v-model="selectItem.vsbpc" disabled></el-input>
+          <!-- <span >{{ selectItem.vsbpc }}</span> -->
         </div>
         <div style="display: inline-block;float:right">
-          <el-input  placeholder="请输入统计项名称" ></el-input>
-          <el-button @click="add" class="detailbutton" >查询</el-button>
+          <!-- <el-input  placeholder="请输入统计项名称" ></el-input> -->
+          <el-button @click="getData" class="detailbutton" type="primary">查询</el-button>
         </div>
       </div>
 <!--          <el-button-group style="float: left">-->
@@ -76,8 +78,9 @@
                 }"
                 highlight-current-row
                 ref="table"
-                stripe
-                style="width: 100%;margin-top: 10px"
+                border
+                class="tableStyle"
+                style="width: 100%x;margin-top:10px"
                 tooltip-effect="dark"
                 @selection-change="handleSelectionChange">
       <el-table-column
@@ -86,87 +89,58 @@
         show-overflow-tooltip
         type="selection"
       ></el-table-column>
-        <el-table-column show-overflow-tooltip
-                         type="index" label="序号" width="55" align="center">
+        <el-table-column show-overflow-tooltip type="index" label="序号" width="55" align="center">
+
         </el-table-column>
-        <el-table-column prop="vname" label="统计名称" width="160">
+        <el-table-column prop="vname" label="统计名称" >
+          <template slot="header" slot-scope="scope">
+            <span>统计名称</span>
+            <div>
+              <el-input
+                style=" width: 100%"
+                v-model="selectItem.vname"
+                size="mini"/>
+            </div>
+          </template>
+              <!-- <div>
+              <el-input
+                style=" width: 100%"
+                v-model="selectItem.vname"
+                size="mini"/>
+            </div> -->
         </el-table-column>
-        <el-table-column prop="vjldw" label="计量单位" width="120" align="center" :formatter="vjldwFormatter">
-        </el-table-column>
+        <!-- <el-table-column prop="vjldw" label="计量单位" width="120" align="center" :formatter="vjldwFormatter">
+        </el-table-column> -->
       <el-table-column prop="vprojecttype" label="工程（行业）类别" :formatter="vprojecttypeFormatter">
+          <template slot="header" slot-scope="scope">
+            <span>工程（行业）类别</span>
+            <div>
+              <el-input
+                style=" width: 100%"
+                v-model="itemform.vprojecttypes"
+                size="mini"/>
+            </div>
+          </template>
         </el-table-column>
-      <el-table-column prop="vtype" label="使用设置" width="90" align="center" :formatter="vtypeFormatter">
+      <!-- <el-table-column prop="vtype" label="使用设置" width="90" align="center" :formatter="vtypeFormatter">
         </el-table-column>
       <el-table-column prop="veditable" label="是否填报" width="90" align="center" :formatter="veditableFormatter">
         </el-table-column>
       <el-table-column prop="vdisable" label="是否隐藏" width="90" align="center" :formatter="vdisableFormatter">
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
     </div>
-    <el-dialog title="新增统计项" :visible.sync="dialogResult"
-               width="30%">
-      <el-form :model="itemform">
-        <el-form-item label="统计名称"  prop="vname">
-          <el-input
-            placeholder=""
-            size="mini"
-            v-model="itemform.vname"
-          />
-        </el-form-item>
-        <el-form-item label="计量单位"  prop="vjldw">
-          <el-select
-            filterable
-            placeholder="请选择"
-            size="mini"
-            v-model="itemform.vjldw"
-          >
-            <el-option
-              :key="index"
-              :label="item.detailName"
-              :value="item.detailCode"
-              v-for="(item, index) in measureUnit"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-         <el-form-item label="工程（行业）类别"  prop="vprojecttypes">
-         <el-select
-           multiple
-           filterable
-           placeholder="请选择"
-           size="mini"
-           v-model="itemform.vprojecttypes"
-         >
-            <el-option
-              :key="index"
-              :label="item.detailName"
-              :value="item.detailCode"
-              v-for="(item, index) in projectDomainType"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="使用设置"  prop="vtype">
-<!--         <el-radio-group class="detail-radio-group" v-model="itemform.vtype"  @change="getName(itemform.vtype,-->
-<!--         this.vtype, 'moduleName')">-->
-<!--             <el-radio   v-for="(item, index) in this.vtype" :label="item.id" :key="index">{{item.detailName}}</el-radio>-->
-<!--         </el-radio-group>-->
-          <el-radio v-model="itemform.vtype" label="0" >全部</el-radio>
-          <el-radio v-model="itemform.vtype" label="2" >仅年报</el-radio>
-          <el-radio v-model="itemform.vtype" label="1" >仅月报</el-radio>
-        </el-form-item>
-        <el-form-item label="是否填报"  prop="veditable">
-          <el-radio v-model="itemform.veditable" label="1" >是</el-radio>
-          <el-radio v-model="itemform.veditable" label="0" >否</el-radio>
-        </el-form-item>
-         <el-form-item label="是否隐藏"  prop="vdisable">
-          <el-radio v-model="itemform.vdisable" label="1" >是</el-radio>
-          <el-radio v-model="itemform.vdisable" label="0" >否</el-radio>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogResult = false">取 消</el-button>
-        <el-button type="primary" @click="saveVerifyResult">确 定</el-button>
-      </div>
-    </el-dialog>
+
+    <el-pagination
+      :current-page="page.current"
+      :page-size="page.size"
+      :page-sizes="[20, 50, 100]"
+      :total="page.total"
+      @current-change="handleCurrentChange"
+      @size-change="handleSizeChange"
+      layout="total, sizes, prev, pager, next, jumper">
+    </el-pagination>
+
   </div>
 
 </template>
@@ -190,6 +164,15 @@ export default {
       itemList:[],
       node:{},
       resolve:{},
+      searchform: {
+        current: 1,
+        size: 20,
+        year: "",
+        name: "",
+        ptype: "",
+        orgid: "",
+        orgname: "",
+      },
       itemform: {
         uuid:'',
         vname: '',
@@ -265,6 +248,23 @@ export default {
 
   },
   methods: {
+    // 查讯
+        getData() {
+        this.$http
+          .post(
+            "/api/statistics/bp/BpTjx/list/loadPageData",
+
+            this.searchform
+          )
+          .then((res) => {
+            this.page = res.data.data;
+          });
+      },
+    saveInfo(){
+      var list=this.$refs.tree.getCheckedNodes();
+
+      console.log(list)
+    },
     vdisableFormatter(row, column){
       var str="";
       if(row.vdisable=="1")
@@ -683,6 +683,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.save-btn{
+  position:absolute;
+  top:0!important;
+  right:-5px!important;
+}
 .el-tree{
   height:calc(100vh - 223px)!important;
   max-height:calc(100vh - 223px)!important;
@@ -735,8 +740,9 @@ export default {
   }
 }
 
-.el-table__row {
+>>>.el-table__row {
   cursor: pointer;
+  height: 40px!important;
 }
 .el-input
 {
@@ -785,5 +791,11 @@ span{
   font-size: 14px;
   color: #4d4d4d;
 }
-
+// >>>.el-tree{
+//   width: 15% !important;
+//   margin: 0 0 0 0;
+// }
+>>>.el-tree-node__content{
+  height: 40px !important;
+}
 </style>

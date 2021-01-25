@@ -58,7 +58,6 @@
       :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
       highlight-current-row
       ref="table"
-      stripe
       border
       style="width: 100%;"
       tooltip-effect="dark"
@@ -813,14 +812,20 @@ export default {
 // >>>.el-tree-node__content{
 //   background: #eee !important;
 // }
->>>.el-table .cell.el-tooltip{
-    height: 42px;
-    padding: 9px;
-}
-// .bp_height{
-//   height: 32px!important;
+// >>>.el-table .cell.el-tooltip{
+//     height: 31px;
+//     padding: 9px;
 // }
+.bp_height{
+  height: 40px!important;
+}
 >>>.el-input__inner{
   height: 32px!important;
+}
+>>>.el-tree-node__content{
+  height: 40px !important;
+}
+>>>.el-table__row{
+  height: 40px !important;
 }
 </style>
