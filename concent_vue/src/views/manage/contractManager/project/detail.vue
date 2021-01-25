@@ -1563,6 +1563,7 @@
                   <el-form-item class="tabelForm" :prop="'topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
                     <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                     <el-input
+                      class="group-no-padding"
                       clearable
                       :disabled="p.actpoint === 'look'"
                       v-model="scope.row.contractAmount"
@@ -2321,7 +2322,8 @@ export default {
         commonFilesList: [],
         contractInfo: {
           moduleId:'7f4fcba4255b43a8babf15afd6c04a53',
-          moduleName:'工程承包'
+          moduleName:'工程承包',
+          marketSecondId:''
         },
         contractInfoAttachBO: {
           innerContractInfoAttachList:[],

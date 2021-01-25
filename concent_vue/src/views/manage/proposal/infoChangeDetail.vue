@@ -1270,7 +1270,9 @@
           value1: [],
         },
         detailFormBefore:{
-          topInfor: {},
+          topInfor: {
+            marketSecondId:''
+          },
           topInfoOrg: {},
           topInfoSiteList: [],
           topInfoSectionList: [],

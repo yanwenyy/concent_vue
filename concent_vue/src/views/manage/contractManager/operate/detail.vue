@@ -330,15 +330,15 @@
                 :rules="detailform.contractInfo.marketFirstNameId&&emergingMarketTwo?{
                 required: true,
                 message: '此项不能为空',
-                trigger: 'change',
+                trigger: ['blur','change']
               }:{}"
               >
+
                 <el-select
                   :disabled="p.actpoint === 'look'"
                   filterable
                   clearable
                   placeholder="请选择"
-                  size="mini"
                   @clear="clear(detailform.contractInfo.marketSecondId,detailform.contractInfo.marketSecondName)"
                   @change="
                     getName(
@@ -1625,7 +1625,8 @@
         detailform: {
           contractInfo: {
             moduleId:'510ba0d79593418493eb1a11ed4e7df4',
-            moduleName:'运营维管'
+            moduleName:'运营维管',
+            marketSecondId:''
           },
           commonFilesList: [],
           contractInfoHouseSalesList:[],
@@ -2048,8 +2049,9 @@
       //新兴市场二级
       getTwoSC(id) {
         this.detailform.contractInfo.marketSecondId='';
+        this.detailform.contractInfo.marketSecondName='';
         this.emergingMarketTwo=[];
-        if(id!=''){
+        if(id!==''){
           this.emergingMarket.find(
             (item)=>{
             if (item.id == id) {

@@ -1684,7 +1684,8 @@ export default {
       detailform: {
         contractInfo: {
           moduleId:'510ba0d79593418493eb1a11ed3e7df4',
-          moduleName:'工业制造'
+          moduleName:'工业制造',
+          marketSecondId:''
         },
         commonFilesList: [],
         contractInfoProductInformtList:[],

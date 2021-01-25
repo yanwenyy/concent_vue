@@ -2933,6 +2933,7 @@
                       <el-form-item class="tabelForm" :prop="'topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
                         <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                         <el-input
+                          class="group-no-padding"
                           clearable
                           :disabled="p.actpoint === 'look'"
                           v-model="scope.row.contractAmount"

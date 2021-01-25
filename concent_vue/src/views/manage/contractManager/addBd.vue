@@ -15,31 +15,31 @@
           <el-form-item label="标段名称:" class="list-item">
             <el-input v-model="detailForm.sectionName" placeholder="标段名称" clearable></el-input>
           </el-form-item>
-          <el-form-item label="风险费(万元):" class="list-item">
+          <el-form-item prop="riskFee" :rules="rules.contractAmount"  label="风险费(万元):" class="list-item">
             <el-input v-model="detailForm.riskFee" placeholder="风险费(万元)" clearable>
               <template slot="prepend">¥</template>
               <template slot="append">(万元)</template>
             </el-input>
           </el-form-item>
-          <el-form-item label="安全费(万元):" class="list-item">
+          <el-form-item prop="safetyCost" :rules="rules.contractAmount" label="安全费(万元):" class="list-item">
             <el-input v-model="detailForm.safetyCost" placeholder="安全费(万元)" clearable>
               <template slot="prepend">¥</template>
               <template slot="append">(万元)</template>
             </el-input>
           </el-form-item>
-          <el-form-item label="投标限价(万元):" class="list-item">
+          <el-form-item prop="biddingPriceLimit" :rules="rules.contractAmount" label="投标限价(万元):" class="list-item">
             <el-input v-model="detailForm.biddingPriceLimit" placeholder="投标限价(万元)" clearable>
               <template slot="prepend">¥</template>
               <template slot="append">(万元)</template>
             </el-input>
           </el-form-item>
-          <el-form-item label="投标保证金(万元):" class="list-item">
+          <el-form-item prop="tenderSecurity" :rules="rules.contractAmount" label="投标保证金(万元):" class="list-item">
             <el-input v-model="detailForm.tenderSecurity" placeholder="投标保证金(万元)" clearable>
               <template slot="prepend">¥</template>
               <template slot="append">(万元)</template>
             </el-input>
           </el-form-item>
-          <el-form-item label="投标价(万元):" class="list-item">
+          <el-form-item prop="bidPrice" :rules="rules.contractAmount" label="投标价(万元):" class="list-item">
             <el-input v-model="detailForm.bidPrice" placeholder="投标价(万元)" clearable>
               <template slot="prepend">¥</template>
               <template slot="append">(万元)</template>
@@ -109,6 +109,7 @@
             >新增</el-button >
           </div>
           <el-table
+            class="detailTable"
             :data="detailForm.dataList"
             border
             v-loading="dataListLoading"
@@ -125,12 +126,14 @@
               label="ID">
             </el-table-column>
             <el-table-column
+              class="bdList"
               :width="500"
               prop="inforName"
               show-overflow-tooltip
               label="其他投标单位(系统内)">
               <template slot-scope="scope">
                 <el-select
+                  class="tabelForm-dete"
                   clearable
                   filterable
                   placeholder="请选择"
@@ -153,12 +156,19 @@
               </template>
             </el-table-column>
             <el-table-column
+              class="bdList"
               prop="enginTypeSecondName"
               header-align="center"
               align="center"
               label="投标价">
               <template slot-scope="scope">
-                <el-input type="text" v-model="scope.row.bidAmount"></el-input>
+                <el-form-item class="tabelForm" :prop="'dataList.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
+                  <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                  <el-input type="text" v-model="scope.row.bidAmount">
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-form-item>
               </template>
             </el-table-column>
             <el-table-column
@@ -185,6 +195,7 @@
           </div>
           <el-table
             :data="detailForm.dataList2"
+            class="detailTable"
             border
             v-loading="dataListLoading"
             :header-cell-style="{
@@ -206,6 +217,7 @@
               label="其他投标单位(系统外)">
               <template slot-scope="scope">
                 <el-select
+                  class="tabelForm-dete"
                   clearable
                   filterable
                   placeholder="请选择"
@@ -233,7 +245,14 @@
               align="center"
               label="投标价">
               <template slot-scope="scope">
-                <el-input type="text" v-model="scope.row.bidAmount"></el-input>
+                <el-form-item class="tabelForm" :prop="'dataList2.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
+                  <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                  <el-input type="text" v-model="scope.row.bidAmount">
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-form-item>
+
               </template>
             </el-table-column>
             <el-table-column
@@ -374,14 +393,19 @@
       },
       //选中数据
       sub() {
-        var contractInfoSectionOrgList=this.detailForm.dataList.concat(this.detailForm.dataList2);
-        this.detailForm.contractInfoSectionOrgList=contractInfoSectionOrgList;
-        this.visible = false;
-        this.detailForm.type=this.type;
-        if(this.type=='edit'){
-          this.detailForm.index=this.index;
-        }
-        this.$emit('refreshBD', this.detailForm)
+        this.$refs.detailForm.validate((valid) => {
+          if (valid) {
+            var contractInfoSectionOrgList=this.detailForm.dataList.concat(this.detailForm.dataList2);
+            this.detailForm.contractInfoSectionOrgList=contractInfoSectionOrgList;
+            this.visible = false;
+            this.detailForm.type=this.type;
+            if(this.type=='edit'){
+              this.detailForm.index=this.index;
+            }
+            this.$emit('refreshBD', this.detailForm)
+          }
+        });
+
       },
       // 初始化
       init(type,detail,index) {
@@ -560,4 +584,13 @@
     right:80px;
     text-align: right;
   }
+  .detailTable >>>.el-input-group{
+    margin-top: 0;
+  }
+  .tabelForm-dete{
+    margin-top: 10px!important;
+  }
+  /*.bdList{*/
+    /*padding: 20px 0 0 0!important;*/
+  /*}*/
 </style>

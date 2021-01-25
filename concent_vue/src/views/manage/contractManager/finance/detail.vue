@@ -1551,7 +1551,8 @@ export default {
       detailform: {
         contractInfo: {
           moduleId:'510ba0d79593418493eb1a11ea4e7df4',
-          moduleName:'金融保险'
+          moduleName:'金融保险',
+          marketSecondId:''
         },
         commonFilesList: [],
         contractInfoHouseSalesList:[],
