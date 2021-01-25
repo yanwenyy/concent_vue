@@ -120,7 +120,7 @@
           :width="150"
           align="center"
           label="填报单位"
-          prop="createOrgId"
+          prop="createOrgName"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -129,7 +129,7 @@
               <el-input
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchFrom.createOrgId"
+                v-model="searchFrom.createOrgName"
                 size="mini"
               />
             </div>
@@ -220,7 +220,7 @@
               <el-input
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchFrom.id"
+                v-model="searchFrom.flowStatus"
                 size="mini"
               />
             </div>

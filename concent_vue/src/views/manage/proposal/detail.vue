@@ -847,7 +847,9 @@
         options2: [],
         options: [],
         detailform: {
-          topInfor: {},
+          topInfor: {
+            marketSecondId:''
+          },
           topInfoOrg: {},
           topInfoSiteList: [],
           topInfoSectionList: [],

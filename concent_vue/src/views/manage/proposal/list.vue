@@ -442,7 +442,10 @@
         // this.searchform.enginTypeFirstId = "";
         // this.searchform.constructionOrg = "";
         // this.searchform.noticeTypeId = "";
-        this.searchform={};
+        this.searchform={
+          current: 1,
+          size: 20
+        };
         this.getData();
       },
       // 列表选项数据

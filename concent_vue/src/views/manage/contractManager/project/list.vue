@@ -122,7 +122,7 @@
           :width="150"
           align="center"
           label="填报单位"
-          prop="createOrgId"
+          prop="createOrgName"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -131,7 +131,7 @@
               <el-input
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchFrom.createOrgId"
+                v-model="searchFrom.createOrgName"
                 size="mini"
               />
             </div>
@@ -243,7 +243,7 @@
               <el-input
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchFrom.id"
+                v-model="searchFrom.flowStatus"
                 size="mini"
               />
             </div>
@@ -371,7 +371,13 @@ export default {
       this.getData();
     },
     searchformReset() {
-      this.$refs["searchFrom"].resetFields();
+      this.searchFrom={
+          current: 1,
+          size: 20,
+          changeStatus:'0',
+          moduleId:'7f4fcba4255b43a8babf15afd6c04a53'
+      };
+      this.getData();
     },
     // 列表选项数据
     handleSelectionChange(val) {

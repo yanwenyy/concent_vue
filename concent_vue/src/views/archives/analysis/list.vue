@@ -257,10 +257,10 @@ export default {
   },
   data() {
     return {
-      page: {current: 1, size: 12, total: 0, records: []},
+      page: {current: 1, size: 20, total: 0, records: []},
       searchform: {
         current: 1,
-        size: 12,
+        size: 20,
         uuid: '',
         name: '',
         archivesTypeId: '',
@@ -537,7 +537,13 @@ export default {
       this.searchform.current = 1
       this.getData()
     },
-
+    searchformReset() {
+      this.searchform={
+        current: 1,
+        size: 20
+      };
+      this.getData();
+    },
     // 列表选项数据
     handleSelectionChange(val) {
       //alert(JSON.stringify(val))

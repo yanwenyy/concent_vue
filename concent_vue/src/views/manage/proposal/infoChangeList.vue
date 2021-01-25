@@ -388,6 +388,8 @@
       searchformReset() {
         // this.$refs["searchform"].resetFields();
         this.searchform={
+          current: 1,
+          size: 20,
           orgid: "",
           orgname: "",
           inforName: "",

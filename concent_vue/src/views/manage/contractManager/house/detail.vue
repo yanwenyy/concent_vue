@@ -1599,7 +1599,8 @@ export default {
       detailform: {
         contractInfo: {
           moduleId:'510ba0d79593418493eb1a11ea4e7af6',
-          moduleName:'房地产开发'
+          moduleName:'房地产开发',
+          marketSecondId:''
         },
         commonFilesList: [],
         contractInfoHouseSalesList:[],
