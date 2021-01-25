@@ -565,4 +565,7 @@ export default {
 .el-table__row {
   cursor: pointer;
 }
+>>>.el-button--info.is-plain{
+  margin-top:5px
+}
 </style>

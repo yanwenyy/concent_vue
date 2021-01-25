@@ -273,7 +273,7 @@ export default {
       this.orgTableStatus = true;
       console.log(val);
       this.$nextTick(() => {
-        this.$refs.addOrUpdate1.init(val)
+        this.$refs.addOrUpdate1.init(val,this.p.actpoint)
       })
     },
     back() {

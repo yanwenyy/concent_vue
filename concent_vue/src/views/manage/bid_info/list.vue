@@ -151,7 +151,7 @@
           }}</template> -->
           <template slot="header" slot-scope="scope">
             <span>公告类型</span>
-            <div>
+
               <el-select
               class="list-search-picker"
               clearable
@@ -167,7 +167,7 @@
                 v-for="(item, index) in bulletinType"
               ></el-option>
             </el-select>
-            </div>
+
           </template>
         </el-table-column>
 
@@ -498,6 +498,8 @@ export default {
         ptype: "",
         orgid: "",
         orgname: "",
+        enginTypeFirstName:"",
+        enginTypeSecondName:""
       }
 
         this.getData();

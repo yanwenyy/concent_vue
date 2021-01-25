@@ -7,6 +7,11 @@
         <el-button @click="remove" type="primary" plain>删除</el-button>
         <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
       </el-button-group>
+            <div style="float: right">
+        <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
+        <el-button @click="getData" type="primary" plain >查询</el-button>
+        <el-button @click="" type="primary" plain >导出</el-button>
+      </div>
     </div>
     <div style="margin-top: 10px">
       <el-table
@@ -37,44 +42,105 @@
           label="序号"
           show-overflow-tooltip
           type="index"
+          fixed
         >
 
         </el-table-column>
 
         <el-table-column
-          :width="300"
+          :width="500"
           label="项目名称"
           prop="inforName"
           show-overflow-tooltip
+          fixed
         >
-
+          <template slot="header" slot-scope="scope">
+            <span>项目名称</span>
+            <div>
+              <el-input
+                style=" width: 100%"
+                v-model="searchform.inforName"
+                size="mini"/>
+            </div>
+          </template>
           <template slot-scope="scope">
             <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
           </template>
         </el-table-column>
         <el-table-column
-          :width="150"
+          :width="200"
           align="center"
-          label="工程类别"
-          prop="topInfor.enginTypeFirstName"
+          label="工程类别(一级)"
+          prop="enginTypeFirstName"
           show-overflow-tooltip
         >
+          <template slot="header" slot-scope="scope">
+            <span>工程类别(一级)</span>
+            <el-select
+              clearable
+              filterable
+              placeholder="请选择"
+              @change="getTwo"
+              size="mini"
+              v-model="searchform.enginTypeFirstName"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.id"
+                v-for="(item, index) in projectDomainType"
+              ></el-option>
+            </el-select>
 
-          <template slot-scope="scope">
+          </template>
+          <!-- <template slot-scope="scope">
             {{ scope.row.enginTypeFirstName }}
+          </template> -->
+        </el-table-column>
+
+                <el-table-column
+          :width="200"
+          align="center"
+          label="工程类别(二级)"
+          prop="enginTypeSecondName"
+          show-overflow-tooltip>
+          <template slot="header" slot-scope="scope">
+            <span>工程类别(二级)</span>
+            <el-select
+              clearable
+              filterable
+              placeholder="请选择工程类别(一级)"
+              size="mini"
+              v-model="searchform.enginTypeSecondName"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.id"
+                v-for="(item, index) in xqprojectType"
+              ></el-option>
+            </el-select>
+
           </template>
         </el-table-column>
+
         <el-table-column
-          :width="150"
+          :width="300"
           align="center"
           label="建设单位"
-          prop="topInfor.constructionOrg"
+          prop="constructionOrg"
           show-overflow-tooltip
         >
-
-          <template slot-scope="scope">
-            {{ scope.row.constructionOrg }}
+          <template slot="header" slot-scope="scope">
+            <span>建设单位</span>
+            <div>
+              <el-input
+                style=" width: 100%"
+                v-model="searchform.constructionOrg"
+                size="mini"/>
+            </div>
           </template>
+
         </el-table-column>
         <el-table-column
           :width="150"
@@ -83,7 +149,26 @@
           prop="topInfor.noticeTypeName"
           show-overflow-tooltip
         >
-
+          <template slot="header" slot-scope="scope">
+            <span>公告类型</span>
+            <div>
+              <el-select
+              class="list-search-picker"
+              clearable
+              filterable
+              placeholder="请选择"
+              size="mini"
+              v-model="searchform.noticeTypeName"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.id"
+                v-for="(item, index) in bulletinType"
+              ></el-option>
+            </el-select>
+            </div>
+          </template>
           <template slot-scope="scope">
             {{ scope.row.noticeTypeName }}
           </template>
@@ -95,7 +180,18 @@
           prop="verify.saleTime"
           show-overflow-tooltip
         >
-
+          <template slot="header" slot-scope="scope">
+            <span>资审文件发售截止日期</span>
+            <div>
+              <el-date-picker
+              style=" width: 100%"
+              v-model="searchform.saleTime"
+              size="mini"
+              value-format="timestamp"
+              >
+              </el-date-picker>
+            </div>
+          </template>
           <template slot-scope="scope">
             {{ scope.row.saleTime | dateformat }}
           </template>
@@ -103,28 +199,47 @@
         <el-table-column
           :width="150"
           align="center"
-          label="状态"
-          prop="verify.uuid"
-          filter-multiple="true"
+          label="资格预审结果"
+          prop="verify.flowStatus"
+
           show-overflow-tooltip
         >
-
           <template slot-scope="scope">
+              <!-- {{scope.row.uuid==null?'未通过':'通过'}} -->
+              {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'待审核':scope.row.flowStatus==3?'审核通过':'其他'}}
+          </template>
+
+          <template slot="header" slot-scope="scope">
+            <span>资格预审结果</span>
+            <div>
+              <el-input
+                style=" width: 100%"
+                v-model="searchform.flowStatus"
+                size="mini"/>
+            </div>
+          </template>
+           <!-- <template slot-scope="scope">
             <el-tag v-if="scope.row.uuid===null" type="warning">未进行资审申请</el-tag>
             <el-tag v-else type="success">已进行资审申请</el-tag>
-          </template>
+          </template> -->
         </el-table-column>
         <el-table-column
           :width="150"
           align="center"
           label="填报人"
-          prop="verify.createUserName"
+          prop="createUserName"
           show-overflow-tooltip
         >
-
-          <template slot-scope="scope">
-            {{ scope.row.createUserName }}
+          <template slot="header" slot-scope="scope">
+            <span>填报人</span>
+            <div>
+              <el-input
+                style=" width: 100%"
+                v-model="searchform.createUserName"
+                size="mini"/>
+            </div>
           </template>
+
         </el-table-column>
         <el-table-column
           :width="150"
@@ -136,7 +251,18 @@
           <!-- <template slot-scope="scope">{{
             scope.row.createtime | dateformat
           }}</template> -->
-
+          <template slot="header" slot-scope="scope">
+            <span>填报时间</span>
+            <div>
+            <el-date-picker
+              style=" width: 100%"
+              v-model="searchform.createTime"
+              size="mini"
+              value-format="timestamp"
+              >
+              </el-date-picker>
+            </div>
+          </template>
           <template slot-scope="scope">
             {{ scope.row.createTime | dateformat }}
           </template>
@@ -211,6 +337,7 @@ export default {
         username: '',
         saleTime: ''
       },
+      xqprojectType:[],//工程二级列表
       menus: [],
       multipleSelection: [],
       orgTree: [],
@@ -224,7 +351,30 @@ export default {
 
     }
   },
+      computed: {
+        projectDomainType() {
+    // console.log(this.$store.state.category["projectDomainType"])
+    return this.$store.state.category.projectDomainType;
+  },
+        bulletinType() {
+    return this.$store.state.bulletinType;
+      },
+},
   methods: {
+      //工程类别二级
+      getTwo(id) {
+        this.searchform.enginTypeSecondId='';
+        this.xqprojectType =[];
+        if(id!=''){
+          this.projectDomainType.find(
+            (item) => {
+            if (item.id == id) {
+            this.xqprojectType = item.children;
+          }
+        }
+        )
+        }
+      },
     verifyResultEdit() {
       if (this.multipleSelection.length > 0) {
         this.dialogResult = true;
@@ -504,9 +654,10 @@ export default {
   created() {
     //this.getMenus()
     //this.getOrgTree()
-    this.getData()
-  }
-}
+    this.getData();
+    this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
+  },
+};
 </script>
 <style scoped>
 .el-table__row {
