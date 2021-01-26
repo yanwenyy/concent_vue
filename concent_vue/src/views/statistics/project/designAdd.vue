@@ -11,7 +11,7 @@
         <el-button v-if="p.actpoint !== 'look'" type="primary" @click="submitForm('detailForm')" class="detailbutton">保存</el-button>
         <el-button v-if="p.actpoint !== 'look'" @click="submitForm('detailForm', 'submit')" class="detailbutton">提交</el-button>
       </div>
-      <div class="detailBoxBG" style="height: calc(100vh - 196px)">
+      <div class="detailBox">
         <el-form
           :model="detailForm"
           :rules="rules"
@@ -167,6 +167,20 @@
                   v-for="(item, index) in railwayBureau"/>
               </el-select>
             </el-form-item>
+            <el-form-item
+              label="是否代局指:"
+              class="inline-formitem"
+              prop="project.isBureauIndex"
+              style="width: 32.5%">
+              <el-switch
+                :disabled="p.actpoint === 'look'"
+                class="inline-formitem-switch"
+                v-model="detailForm.project.isBureauIndex"
+                active-color="#409EFF"
+                inactive-color="#ddd"
+                active-value="0"
+                inactive-value="1"/>
+            </el-form-item>
           </el-row>
           <!--工程类别(一级)-->
           <el-row>
@@ -246,56 +260,32 @@
               </el-select>
             </el-form-item>
             <el-form-item
-              label="项目类型:"
-              prop="project.projectTypeId"
+              label="业务类别:"
+              prop="categorySecondId"
               style="width: 32.5%">
               <el-select
-                :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
+                :disabled="p.actpoint === 'look'"
                 placeholder="请选择"
-                @change="resetFuDai(detailForm.project.projectTypeId, projectType, 'projectTypeName')"
-                v-model="detailForm.project.projectTypeId">
+                @change="getName(detailForm.project.categorySecondId, bizTypeCodeTwo, 'categorySecondName')"
+                v-model="detailForm.project.categorySecondId">
                 <el-option
                   :key="index"
                   :label="item.detailName"
                   :value="item.id"
-                  v-for="(item, index) in projectType"/>
+                  v-for="(item, index) in bizTypeCodeTwo"/>
               </el-select>
             </el-form-item>
-            <!--父项目暂无-->
             <el-form-item
-              v-if="detailForm.project.projectTypeId==='22038e576c2242d5acc93f6c3c8e48ad'"
-              label="父项目名称:"
-              prop="project.fatherProjectId"
+              label="签约/使用资质单位:"
+              prop="project.companyName"
               style="width: 32.5%">
-              <el-select
+              <el-input
                 :disabled="p.actpoint === 'look'"
                 clearable
-                filterable
-                placeholder="请选择"
-                v-model="detailForm.project.fatherProjectId">
-                <el-option
-                  :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options1"/>
-              </el-select>
-            </el-form-item>
-            <el-form-item
-              v-if="detailForm.project.projectTypeId===''||detailForm.project.projectTypeId==='625a3ee0728a4f45b792d022b8bb36d9'"
-              label="是否代局指:"
-              class="inline-formitem"
-              prop="project.isBureauIndex"
-              style="width: 32.5%">
-              <el-switch
-                :disabled="p.actpoint === 'look'"
-                class="inline-formitem-switch"
-                v-model="detailForm.project.isBureauIndex"
-                active-color="#409EFF"
-                inactive-color="#ddd"
-                active-value="0"
-                inactive-value="1"/>
+                placeholder="请输入"
+                v-model="detailForm.project.companyName"/>
             </el-form-item>
           </el-row>
           <el-row>
@@ -362,36 +352,6 @@
                 <el-button slot="append" :disabled="p.actpoint === 'look'" icon="el-icon-search"
                            @click="selectPosition()"></el-button>
               </el-input>
-            </el-form-item>
-          </el-row>
-          <el-row>
-            <el-form-item
-              label="业务类别:"
-              prop="categorySecondId"
-              style="width: 32.5%">
-              <el-select
-                filterable
-                clearable
-                :disabled="p.actpoint === 'look'"
-                placeholder="请选择"
-                @change="getName(detailForm.project.categorySecondId, bizTypeCodeTwo, 'categorySecondName')"
-                v-model="detailForm.project.categorySecondId">
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in bizTypeCodeTwo"/>
-              </el-select>
-            </el-form-item>
-            <el-form-item
-              label="签约/使用资质单位:"
-              prop="project.companyName"
-              style="width: 32.5%">
-              <el-input
-                :disabled="p.actpoint === 'look'"
-                clearable
-                placeholder="请输入"
-                v-model="detailForm.project.companyName"/>
             </el-form-item>
           </el-row>
           <!--新兴市场(一级)-->
@@ -867,7 +827,6 @@
             commonFilesList: [],
             projectName: '', // 项目名称(中文)
             projectForeginName: '', // 项目名称(外文)
-            fatherProjectId: '', // 父项目名称
             projectOmit: '', // 项目简称
             projectNatureId: '', // 项目性质
             projectNatureFirstId: '', // 项目性质(一级)
@@ -884,7 +843,6 @@
             categoryFirstId: '0f333a962655480c8ef668a8ce129d41', // 业务类别（一级）
             categorySecondId: '', // 业务类别二级
             isConsortion: '', // 是否联合体项目
-            projectTypeId: '', // 项目类型
             projectStatusId: '', // 项目状态
             projectLocationId: '', // 项目所在地
             investmentModelId: '', // 投资模式
@@ -1051,11 +1009,6 @@
         this.treeStatas = false
         this.detailForm.project.topInfoSiteList[0].placeId = data.id
         this.detailForm.project.topInfoSiteList[0].path = data.fullDetailName
-      },
-      resetFuDai(id, list, name) {
-        this.detailForm.project.fatherProjectId = ''
-        this.detailForm.project.isBureauIndex = ''
-        this.getName(id, list, name)
       },
       getName(id, list, name) {
         if (id) {
@@ -1249,9 +1202,6 @@
   }
 </script>
 <style lang="scss" scoped>
-  .el-card__header{
-    padding: 3px 20px !important;
-  }
   .gcform {
     margin-top: 10px;
 

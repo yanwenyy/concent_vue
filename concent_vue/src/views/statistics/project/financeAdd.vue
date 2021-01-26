@@ -10,7 +10,7 @@
         <el-button v-if="p.actpoint !== 'look'" type="primary" @click="submitForm('detailForm')" class="detailbutton">保存</el-button>
         <el-button v-if="p.actpoint !== 'look'" @click="submitForm('detailForm', 'submit')" class="detailbutton">提交</el-button>
       </div>
-      <div class="detailBoxBG" style="height: calc(100vh - 196px)">
+      <div class="detailBox">
         <el-form
           :inline="false"
           :model="detailForm"
@@ -701,9 +701,6 @@
   }
 </script>
 <style lang="scss" scoped>
-  .el-card__header{
-    padding: 3px 20px !important;
-  }
   .gcform {
     margin-top: 10px;
     > > > .el-form-item__error {

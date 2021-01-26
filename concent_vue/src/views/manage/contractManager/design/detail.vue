@@ -175,17 +175,17 @@
                 :rules="{
                 required: true,
                 message: '此项不能为空',
-                trigger: 'blur',
+                trigger:['blur','change'],
               }"
               >
-                <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.qualityOrgNames" class="input-with-select">
+                <el-input clearable :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.qualityOrgNames" class="input-with-select">
                   <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('使用资质单位',detailform.contractInfo.qualityOrgIds)" ></el-button>
                 </el-input>
               </el-form-item>
               <el-form-item
                 label="施工单位:"
               >
-                <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.buildOrgNames" class="input-with-select">
+                <el-input clearable :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.buildOrgNames" class="input-with-select">
                   <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('施工单位',detailform.contractInfo.buildOrgIds)" ></el-button>
                 </el-input>
               </el-form-item>
@@ -2148,7 +2148,8 @@
           contractInfo: {
             moduleId:'f6823a41e9354b81a1512155a5565aeb',
             moduleName:'勘察设计咨询',
-            marketSecondId:''
+            marketSecondId:'',
+            qualityOrgNames:''
           },
           contractInfoAttachBO: {
             innerContractInfoAttachList:[],

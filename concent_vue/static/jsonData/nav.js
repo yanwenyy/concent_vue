@@ -841,6 +841,15 @@ export default {
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": false
+                },
+                {
+                  "name": "项目信息变更",
+                  "path": "/statistics/project/change/engineDetail",
+                  "component": "/statistics/project/change/engineDetail",
+                  "iconCls": "el-icon-search",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
                 }
                 ]
               },

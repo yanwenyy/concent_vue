@@ -197,17 +197,17 @@
               :rules="{
                   required: true,
                   message: '此项不能为空',
-                  trigger: 'change',
+                  trigger: ['blur','change'],
                 }"
             >
-              <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.qualityOrgNames" class="input-with-select">
+              <el-input clearable :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.qualityOrgNames" class="input-with-select">
                 <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('使用资质单位',detailform.contractInfo.qualityOrgIds)" ></el-button>
               </el-input>
             </el-form-item>
             <el-form-item
               label="施工单位"
             >
-              <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.buildOrgNames" class="input-with-select">
+              <el-input clearable :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.buildOrgNames" class="input-with-select">
                 <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('施工单位',detailform.contractInfo.buildOrgIds)" ></el-button>
               </el-input>
             </el-form-item>
@@ -2372,7 +2372,8 @@ export default {
         contractInfo: {
           moduleId:'7f4fcba4255b43a8babf15afd6c04a53',
           moduleName:'工程承包',
-          marketSecondId:''
+          marketSecondId:'',
+          qualityOrgNames:'',
         },
         contractInfoAttachBO: {
           innerContractInfoAttachList:[],
@@ -2754,7 +2755,7 @@ export default {
     },
     //获取单位的值
     getDwInfo(data){
-      console.log(data);
+      this.$forceUpdate();
       var id=[],name=[];
       if(data){
         data.forEach((item)=>{
