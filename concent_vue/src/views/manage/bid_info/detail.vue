@@ -47,11 +47,6 @@
 
           <el-form-item
             label="外文名称:"
-            :rules="{
-              required: true,
-              message: '此项不能为空',
-              trigger: 'blur',
-            }"
           >
             <el-input
               disabled

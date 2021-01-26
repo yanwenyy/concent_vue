@@ -33,13 +33,7 @@
                 v-model="detailform.topInfor.inforName"/>
             </el-form-item>
 
-            <el-form-item  label="外文名称:"
-                           :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
+            <el-form-item  label="外文名称:">
               <el-input
                 disabled
                 clearable
@@ -654,6 +648,7 @@
               <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
               <el-tooltip popper-class="tooltip-class" :content="String(scope.row.verifySection.investmentReckon)" placement="bottom" :disabled="p.actpoint !== 'look'" effect="dark">
                 <el-input
+                  class="group-no-padding"
                   :disabled="p.actpoint === 'look'"
                   placeholder=""
                   size="mini"
@@ -683,6 +678,7 @@
               <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
               <el-tooltip popper-class="tooltip-class" :content="String(scope.row.verifySection.jananInvestment)" placement="bottom" :disabled="p.actpoint !== 'look'" effect="dark">
                 <el-input
+                class="group-no-padding"
                   :disabled="p.actpoint === 'look'"
                   placeholder=""
                   size="mini"

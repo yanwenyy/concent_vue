@@ -50,7 +50,7 @@
           <span class="blue pointer" @click="verifyResultEdit(scope.row,'look')">{{scope.row.inforName}}</span>
           </template>
         </el-table-column>
-
+<!--
         <el-table-column
           :width="150"
           align="center"
@@ -62,6 +62,24 @@
           <template slot-scope="scope">
             {{ scope.row.enginTypeFirstName }}
           </template>
+        </el-table-column> -->
+
+        <el-table-column
+          :width="150"
+          align="center"
+          label="工程类别(一级)"
+          prop="enginTypeFirstName"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+
+        <el-table-column
+          :width="150"
+          align="center"
+          label="工程类别(二级)"
+          prop="enginTypeSecondName"
+          show-overflow-tooltip
+        >
         </el-table-column>
         <el-table-column
           :width="150"
@@ -102,16 +120,18 @@
         <el-table-column
           :width="150"
           align="center"
-          label="状态"
-          prop="verify.uuid"
+          label="资格预审结果"
+          prop="uuid"
           :filter-multiple="true"
           show-overflow-tooltip
         >
-
           <template slot-scope="scope">
+            <span> {{scope.row.uuid==null?'未通过':'通过'}}</span>
+          </template>
+          <!-- <template slot-scope="scope">
             <el-tag v-if="scope.row.uuid===null" type="warning">未进行资审申请</el-tag>
             <el-tag v-else type="success">已进行资审申请</el-tag>
-          </template>
+          </template> -->
         </el-table-column>
         <el-table-column
           :width="150"
@@ -120,7 +140,6 @@
           prop="verify.createUserName"
           show-overflow-tooltip
         >
-
           <template slot-scope="scope">
             {{ scope.row.createUserName }}
           </template>

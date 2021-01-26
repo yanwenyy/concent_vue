@@ -654,4 +654,10 @@
   position: initial;
   left: -10px;
 }
+>>>.el-table--scrollable-x .el-table__body-wrapper{
+  min-height: 600px!important;
+}
+>>>.el-button--info.is-plain{
+  margin-top:5px
+}
 </style>
