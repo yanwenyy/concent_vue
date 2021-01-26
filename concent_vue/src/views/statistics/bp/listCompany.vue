@@ -23,9 +23,10 @@
 
             ></el-option>
           </el-select>
-  <el-button  class="detail-back-tab detailbutton save-btn"  @click="saveInfo">保存</el-button>
+  <!-- <el-button  class="detail-back-tab detailbutton save-btn"  @click="saveInfo">保存</el-button> -->
 </div>
     <el-tree
+      :key="key"
       :props="props"
       lazy
       ref="tree"
@@ -33,7 +34,7 @@
       node-key="uuid"
       :load="loadNode"
       show-checkbox
-      @check-change="handleCheckChange"
+      @check="handleCheckChange"
       @node-click="handleNodeClick"
       @node-expand="handleNodeExpand"
       @node-collapse = "handleNodeCollapse">
@@ -66,7 +67,7 @@
           </div>
         </div>
         <div class="cx">
-          <el-button @click="getData" type="primary">查询</el-button>
+          <el-button @click="getList" type="primary">查询</el-button>
           <!-- <el-input  placeholder="请输入统计项名称" ></el-input> -->
 
         </div>
@@ -182,6 +183,7 @@ export default {
         isLeaf: 'vleaf',
         icon:'icon'
       },
+      key:0,
       parentid: '',
       radio: '0',
       page: {current: 1, size: 20, total: 0, records: []},
@@ -275,10 +277,12 @@ export default {
   methods: {
     // 点击下拉框调用
     engineer(){
-      this.$http
-            .post(
-              "/api/statistics/bp/BpTjx/list/loadPageDataByProjectType",{id: this.itemform.vprojecttypes}
-            )
+      this.key+=1;
+      // this.$http
+      //       .post(
+      //         "/api/statistics/bp/BpTjx/list/loadPageDataByProjectType",{id: this.itemform.vprojecttypes}
+      //       )
+      this.getData(this.node,this.resolve);
     },
 //     async allmedia() {
 //     let res = await fetch('/api/statistics/bp/BpTjx/list/loadPageDataByProjectType');
@@ -286,8 +290,10 @@ export default {
 //         this.options.push({name:element.detailName,code:element.detailCode});
 //      })
 //  },
+
+
     // 查讯
-        getData() {
+        getList() {
         this.$http
           .post(
             "/api/statistics/bp/BpTjx/list/loadPageData",
@@ -298,6 +304,7 @@ export default {
             this.page = res.data.data;
           });
       },
+
     saveInfo(){
       var list=this.$refs.tree.getCheckedNodes();
     },
@@ -385,13 +392,19 @@ export default {
 
 
     },
-    handleCheckChange(data, checked, indeterminate) {
+    // 树节点保存
+    handleCheckChange(data, checked) {
       var ids=this.$refs.tree.getCheckedKeys();
-      console.log(ids)
+      ids.forEach((item,index)=>{
+        if(item==''){
+          ids.splice(index,1)
+        }
+      })
        this.$http
           .post(
-            "/api/statistics/bp/BpTjx/detail/save",
-            {ids:ids}
+            "/api/statistics/bp/BpGdwtjxsz/detail/save",
+             JSON.stringify({ids:ids,projectType:this.itemform.vprojecttypes}),
+            {useJson: true}
           )
           .then((res) => {
             console.log(res.data)
@@ -637,7 +650,7 @@ export default {
         this.$http
           .post(
             '/api/statistics/bp/BpTjx/list/getBpTjxListByParentId',
-            {"parentid":node.data.uuid}
+            {"parentid":node.data.uuid,'projectType':this.itemform.vprojecttypes}
           )
           .then(res => {
             //this.page = res.data.data
