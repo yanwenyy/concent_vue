@@ -183,13 +183,13 @@
           :width="150"
           align="center"
           label="资格预审结果"
-          prop="verify.uuid"
+          prop="verify.flowStatus"
           :filter-multiple="true"
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{scope.row.uuid==null?'未通过':'通过'}}
-             <!-- {{scope.row.flowStatus==0?'未申请审核':scope.row.flowStatus==1?'审核中':scope.row.flowStatus==2?'通过审核':'其他'}} -->
+            <!-- {{scope.row.uuid==null?'未通过':'通过'}} -->
+             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'通过审核':'其他情况'}}
           </template>
          <template slot="header" slot-scope="scope">
             <span>资格预审结果</span>
@@ -421,6 +421,11 @@ export default {
       this.searchform.status = "";
       this.searchform.username = "";
       this.searchform.saleTime = "";
+      this.searchform.enginTypeSecondName="";
+      this.searchform.flowStatus="";
+      this.searchform.createUserName="";
+      this.searchform.createTime="";
+
       this.getData();
     },
     // 列表选项数据

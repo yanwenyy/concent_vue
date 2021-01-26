@@ -13,12 +13,14 @@
     placeholder="工程行业类别"
     size="mini"
     v-model="itemform.vprojecttypes"
+    @change="engineer"
   >
             <el-option
               :key="index"
               :label="item.detailName"
-              :value="item.detailCode"
+              :value="item.id"
               v-for="(item, index) in projectDomainType"
+
             ></el-option>
           </el-select>
   <el-button  class="detail-back-tab detailbutton save-btn"  @click="saveInfo">保存</el-button>
@@ -46,22 +48,27 @@
     <div style="display: inline-block;width:85%;vertical-align: top" >
       <div style="width: 100%; overflow: hidden;margin-top: 10px;">
       <div style="display: inline-block;width: 100%">
-        <div style="display: inline-block;height: auto">
+        <div style="display: inline-block;height: auto;width: 90%">
+          <div class="small">
           <span style="padding: 5px">统计项名称：</span>
           <el-input v-model="selectItem.vname" disabled></el-input>
           <!-- <span>{{selectItem.vname }}</span> -->
-
+          </div>
+          <div class="small">
           <span style="padding: 5px">计量单位：</span>
           <el-input v-model="selectItem.vjldwFormatter" disabled></el-input>
           <!-- <span>{{ selectItem.vjldwFormatter}}</span> -->
-
+          </div>
+          <div class="small">
           <span style="padding: 5px">上报排除项：</span>
           <el-input v-model="selectItem.vsbpc" disabled></el-input>
           <!-- <span >{{ selectItem.vsbpc }}</span> -->
+          </div>
         </div>
-        <div style="display: inline-block;float:right">
+        <div class="cx">
+          <el-button @click="getData" type="primary">查询</el-button>
           <!-- <el-input  placeholder="请输入统计项名称" ></el-input> -->
-          <el-button @click="getData" class="detailbutton" type="primary">查询</el-button>
+
         </div>
       </div>
 <!--          <el-button-group style="float: left">-->
@@ -92,13 +99,13 @@
         <el-table-column show-overflow-tooltip type="index" label="序号" width="55" align="center">
 
         </el-table-column>
-        <el-table-column prop="vname" label="统计名称" >
+        <el-table-column prop="vname" label="统计项名称" >
           <template slot="header" slot-scope="scope">
-            <span>统计名称</span>
+            <span>统计项名称</span>
             <div>
               <el-input
                 style=" width: 100%"
-                v-model="selectItem.vname"
+                v-model="searchform.vname"
                 size="mini"/>
             </div>
           </template>
@@ -115,10 +122,23 @@
           <template slot="header" slot-scope="scope">
             <span>工程（行业）类别</span>
             <div>
-              <el-input
+               <el-select
+                filterable
+                placeholder="工程行业类别"
+                v-model="searchform.vprojecttypes"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectDomainType"
+
+                ></el-option>
+          </el-select>
+              <!-- <el-input
                 style=" width: 100%"
-                v-model="itemform.vprojecttypes"
-                size="mini"/>
+                v-model="searchform.vprojecttypes"
+                size="mini"/> -->
             </div>
           </template>
         </el-table-column>
@@ -150,6 +170,13 @@ export default {
   name: "proposal-list-look",
   data() {
     return {
+      form:{
+            code:'',
+            name:''
+        },
+        value:'',
+        options: [],
+
       props: {
         label: 'vname',
         isLeaf: 'vleaf',
@@ -238,16 +265,27 @@ export default {
       return this.$store.state.unit
     },
     measureUnit () {
-      console.log(this.$store.state.measureUnit)
       return this.$store.state.measureUnit
     },
     projectDomainType(){
-      console.log(this.$store.state.category.projectDomainType)
       return this.$store.state.category.projectDomainType;
     },
 
   },
   methods: {
+    // 点击下拉框调用
+    engineer(){
+      this.$http
+            .post(
+              "/api/statistics/bp/BpTjx/list/loadPageDataByProjectType",{id: this.itemform.vprojecttypes}
+            )
+    },
+//     async allmedia() {
+//     let res = await fetch('/api/statistics/bp/BpTjx/list/loadPageDataByProjectType');
+//     res.result.forEach(element => {
+//         this.options.push({name:element.detailName,code:element.detailCode});
+//      })
+//  },
     // 查讯
         getData() {
         this.$http
@@ -262,8 +300,6 @@ export default {
       },
     saveInfo(){
       var list=this.$refs.tree.getCheckedNodes();
-
-      console.log(list)
     },
     vdisableFormatter(row, column){
       var str="";
@@ -307,7 +343,6 @@ export default {
       if(row.vprojecttype!=null)
       {
         var strs=row.vprojecttype.split(",");
-        console.log(this.projectDomainType);
         strs.forEach((itemstr)=> {
           this.projectDomainType.forEach((item)=> {
             //console.log(row);
@@ -318,7 +353,6 @@ export default {
 
           })
         });
-        console.log(str);
         str=str.substring(0,str.length-2);
         return str;
       }
@@ -326,11 +360,9 @@ export default {
     },
 
     vjldwFormatter: function(row, column) {
-      //console.log(this.measureUnit);
       var str="";
       this.measureUnit.forEach((item)=> {
 
-        //console.log(row);
         if(row.vjldw==item.detailCode)
         {
           str= item.detailName;
@@ -340,7 +372,6 @@ export default {
       return str;
     },
     handleNodeExpand(data,note){
-      console.log(note);
       if(data.vleaf!="1")
       {
         data.icon='el-icon-folder-opened';
@@ -355,8 +386,16 @@ export default {
 
     },
     handleCheckChange(data, checked, indeterminate) {
-
-      console.log(data, checked, indeterminate);
+      var ids=this.$refs.tree.getCheckedKeys();
+      console.log(ids)
+       this.$http
+          .post(
+            "/api/statistics/bp/BpTjx/detail/save",
+            {ids:ids}
+          )
+          .then((res) => {
+            console.log(res.data)
+          });
     },
     handleNodeClick(data,node) {
       //this.getData(node,this.resolve)
@@ -364,7 +403,6 @@ export default {
       var str="";
       this.measureUnit.forEach((item)=> {
 
-        //console.log(row);
         if(data.vjldw==item.detailCode)
         {
           str= item.detailName;
@@ -372,6 +410,7 @@ export default {
 
       })
       this.selectItem.vjldwFormatter = str;
+      // this.searchform.vname=data.vname;
     },
     loadNode(node, resolve) {
       this.getData(node,resolve)
@@ -396,8 +435,7 @@ export default {
       this.itemform.vxh='0';
       this.itemform.vprojecttype=str;
       this.itemform.vparentid =this.node.data.uuid;
-      console.log(this.node);
-      console.log(this.itemform);
+
       //return;
       // this.itemform.vName =
       // alert(JSON.stringify(this.multipleSelection[0]))
@@ -409,7 +447,6 @@ export default {
           { useJson: true }
         )
         .then(res => {
-          console.log(res);
           if (res.data.code === 200) {
             this.$message({
               message: "保存成功",
@@ -458,7 +495,6 @@ export default {
           }
 
         });
-      console.log(this.detailform.fileList1)
     },
     //上传附件
     handleChange(response, file, fileList){
@@ -489,7 +525,6 @@ export default {
         return;
       }
       this.dialogResult=true;
-      console.log(this.multipleSelection[0]);
       //是否有资审信息判断
       if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
         this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
@@ -518,7 +553,6 @@ export default {
     },
 
     remove() {
-      //console.log(JSON.stringify(this.multipleSelection[0].uuid));
       if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
         this.$message.info("请选择统计项进行删除！");
         return;
@@ -600,7 +634,6 @@ export default {
         return resolve([{ vname: '统计项',uuid:"" ,icon:'el-icon-folder'}]);
       }
       setTimeout(() => {
-        //console.log(node);
         this.$http
           .post(
             '/api/statistics/bp/BpTjx/list/getBpTjxListByParentId',
@@ -610,10 +643,8 @@ export default {
             //this.page = res.data.data
             this.parentid = node.data.uuid;
             const data = [];
-            //console.log(res.data.data);
             var itemDatas = res.data.data;
             itemDatas.forEach((item)=> {
-              console.log(item);
               if (item.vleaf == "1") {
                 item.icon = 'el-icon-document';
               } else {
@@ -797,5 +828,13 @@ span{
 // }
 >>>.el-tree-node__content{
   height: 40px !important;
+}
+.small{
+  width: 33%;
+  display: inline-block;
+}
+.cx{
+  // margin: 10px 0 0 0;
+  float: right;
 }
 </style>

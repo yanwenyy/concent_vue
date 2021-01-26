@@ -226,14 +226,18 @@
           :width="150"
           align="center"
           label="状态"
-          prop="verify.uuid"
+          prop="verify.flowStatus"
           filter-multiple="true"
           show-overflow-tooltip
         >
           <template slot-scope="scope">
+            <!-- {{scope.row.uuid==null?'未通过':'通过'}} -->
+             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'通过审核':'其他情况'}}
+          </template>
+          <!-- <template slot-scope="scope">
             <el-tag  v-if="scope.row.uuid===null" type="warning">未进行资审申请</el-tag>
             <el-tag  v-else type="success">已进行资审申请</el-tag>
-          </template>
+          </template> -->
         </el-table-column>
         <el-table-column
           :width="150"

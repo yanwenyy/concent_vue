@@ -456,7 +456,11 @@
         <el-form-item  label="内部联合体单位:">
           <el-input v-model="detailform.verifyOrgLists"
           :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否' || detailform.verify.isCoalitionBid==null">
-            <el-button slot="append" icon="el-icon-search"  @click="selectOrg()"  :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否'|| detailform.verify.isCoalitionBid==null"></el-button>
+            <el-button slot="append" icon="el-icon-search"  @click="selectOrg()"
+
+            v-if="p.actpoint != 'look' && detailform.verify.isCoalitionBid != '否' && detailform.verify.isCoalitionBid != null"
+            ></el-button>
+            <!-- :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否'|| detailform.verify.isCoalitionBid==null" -->
           </el-input>
         </el-form-item>
 

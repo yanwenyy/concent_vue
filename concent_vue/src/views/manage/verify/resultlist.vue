@@ -125,6 +125,9 @@
           :filter-multiple="true"
           show-overflow-tooltip
         >
+          <!-- <template slot-scope="scope">
+             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'通过审核':'其他情况'}}
+          </template> -->
           <template slot-scope="scope">
             <span> {{scope.row.uuid==null?'未通过':'通过'}}</span>
           </template>

@@ -206,7 +206,7 @@
         >
           <template slot-scope="scope">
               <!-- {{scope.row.uuid==null?'未通过':'通过'}} -->
-              {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'待审核':scope.row.flowStatus==3?'审核通过':'其他'}}
+              {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'待审核':scope.row.flowStatus==3?'审核通过':'其他情况'}}
           </template>
 
           <template slot="header" slot-scope="scope">

@@ -404,6 +404,13 @@
         this.searchform.enginTypeFirstId = "";
         this.searchform.constructionOrg = "";
         this.searchform.noticeTypeId = "";
+        this.searchform.enginTypeFirstName = "";
+        this.searchform.enginTypeSecondName = "";
+        this.searchform.noticeTypeName = "";
+        this.searchform.endTime = "";
+        this.searchform.createUserName = "";
+        this.searchform.ccrCreateTime = "";
+        this.searchform.flowStatus = "";
         this.getData();
       },
       // 列表选项数据

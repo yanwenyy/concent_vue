@@ -493,8 +493,10 @@
                 v-model="detailform.bidInfo.innerOrgName"
                 class="input-with-select"
               >
+                                <!-- :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''" -->
+
                 <el-button
-                  :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''"
+                  v-if="p.actpoint != 'look' && p.actpoint != 'searchLook' && detailform.bidInfo.isCoalitionBid != '1' &&detailform.bidInfo.isCoalitionBid != ''"
                   slot="append"
                   icon="el-icon-circle-plus-outline"
                   @click="

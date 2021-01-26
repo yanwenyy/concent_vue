@@ -1271,9 +1271,12 @@
               <el-form-item label="内部联合体单位:"
               class="formItem"
               >
+
               <el-input v-model="detailform.bidInfo.innerOrgName" class="input-with-select"
               :disabled="p.actpoint === 'look'|| detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''">
-                <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('内部联合体单位',detailform.bidInfo.innerOrgId)" ></el-button>
+                <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('内部联合体单位',detailform.bidInfo.innerOrgId)"
+                 v-if="p.actpoint != 'look'&& detailform.bidInfo.isCoalitionBid != '1' && detailform.bidInfo.isCoalitionBid != ''"
+                ></el-button>
               </el-input>
             </el-form-item>
 

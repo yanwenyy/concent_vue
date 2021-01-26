@@ -403,7 +403,7 @@ export default {
         }
         let p = {actpoint: "addk", instid: this.multipleSelection[0].uuid};
         this.$router.push({
-          path: "./Winning_bid/",
+          path: "./Winning_bidKB/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
     },

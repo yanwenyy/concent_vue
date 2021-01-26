@@ -251,12 +251,12 @@ export default {
                     },
                     {
                       "name": "开标结果登记",
-                      "path": "/manage/bid_info/Winning_bid",
-                      "component": "/manage/bid_info/Winning_bid",
+                      "path": "/manage/bid_info/Winning_bidKB",
+                      "component": "/manage/bid_info/Winning_bidKB",
                       "iconCls": "el-icon-switch-button",
                       "menushow": false,
-                      "leaf": true,
-                      "defaultpage":  true
+                      "leaf": false,
+                      "defaultpage":  false
                   },
                   ]
                 },
@@ -1092,7 +1092,7 @@ export default {
                   "name": "档案文件录入",
                   "path": "/archives/archives/list_archives",
                   "component": "/archives/archives/list_archives",
-                  "iconCls": "el-icon-printer",
+                  "iconCls": "el-icon-edit",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": true
@@ -1110,7 +1110,7 @@ export default {
                   "name": "档案文件查询",
                   "path": "/archives/archives/list_archivesSearch",
                   "component": "/archives/archives/list_archivesSearch",
-                  "iconCls": "el-icon-printer",
+                  "iconCls": "el-icon-search",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": true
@@ -1119,7 +1119,7 @@ export default {
                   "name": "统计分析录入",
                   "path": "/archives/statistics/list_statistics",
                   "component": "/archives/statistics/list_statistics",
-                  "iconCls": "el-icon-printer",
+                  "iconCls": "el-icon-edit",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": true
@@ -1137,7 +1137,7 @@ export default {
                   "name": "统计分析查询",
                   "path": "/archives/statistics/list_statisticsSearch",
                   "component": "/archives/statistics/list_statisticsSearch",
-                  "iconCls": "el-icon-printer",
+                  "iconCls": "el-icon-search",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": true
@@ -1146,7 +1146,7 @@ export default {
                   "name": "月度分析录入",
                   "path": "/archives/analysis/list",
                   "component": "/archives/analysis/list",
-                  "iconCls": "el-icon-printer",
+                  "iconCls": "el-icon-edit",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": true
@@ -1164,7 +1164,7 @@ export default {
                   "name": "月度分析查询",
                   "path": "/archives/analysis/list_search",
                   "component": "/archives/analysis/list_search",
-                  "iconCls": "el-icon-printer",
+                  "iconCls": "el-icon-search",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": true
@@ -1174,7 +1174,7 @@ export default {
                   "name": "消息信息录入",
                   "path": "/archives/news/list",
                   "component": "/archives/news/list",
-                  "iconCls": "el-icon-printer",
+                  "iconCls": "el-icon-edit",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": true
@@ -1192,7 +1192,7 @@ export default {
                   "name": "消息信息查询",
                   "path": "/archives/news/list_search",
                   "component": "/archives/news/list_search",
-                  "iconCls": "el-icon-printer",
+                  "iconCls": "el-icon-search",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": true
