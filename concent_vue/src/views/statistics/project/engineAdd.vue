@@ -14,7 +14,7 @@
         <el-button v-if="p.actpoint !== 'look'" @click="submitForm('detailForm', 'submit')" class="detailbutton">提交
         </el-button>
       </div>
-      <div class="detailBoxBG">
+      <div class="detailBox">
         <el-form
           :model="detailForm"
           :rules="rules"
@@ -1366,9 +1366,6 @@
   }
 </script>
 <style lang="scss" scoped>
-  .el-card__header{
-    padding: 3px 20px !important;
-  }
   .gcform {
     margin-top: 10px;
 
