@@ -14,7 +14,7 @@
         lazy
         :props="defaultProps"
         :highlight-current="true"
-        node-key="id"
+        node-key="code"
         :default-checked-keys="list"
         >
       </el-tree>
@@ -39,7 +39,7 @@
         defaultProps: {
           children: 'children',
           label: 'name',
-          isLeaf: 'leaf'
+          // isLeaf: 'leaf'
         },
         notSelect:['0','1','01','02','03','04','05','06','101','102','103','105','106','108']
       };
@@ -108,7 +108,12 @@
         }
       },
       getCheckedNodes() {
-        var data=this.$refs.tree.getCheckedNodes();
+        var list=this.$refs.tree.getCheckedNodes();
+        list.forEach((item)=>{
+          item.detailName=item.name;
+          item.id=item.code;
+        })
+        var data=list;
         data.type=this.type;
         // console.log(this.$refs.tree.getCheckedNodes());
         this.$emit('refreshBD',data)

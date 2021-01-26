@@ -623,10 +623,10 @@
                 :rules="{
                 required: true,
                 message: '此项不能为空',
-                trigger: 'change',
+                trigger: ['blur','change'],
               }"
               >
-                <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.qualityOrgNames" class="input-with-select">
+                <el-input clearable :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.qualityOrgNames" class="input-with-select">
                   <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('使用资质单位',detailform.contractInfo.qualityOrgIds)" ></el-button>
                 </el-input>
               </el-form-item>
@@ -1734,7 +1734,8 @@ export default {
         contractInfo: {
           moduleId:'510ba0d79593418493eb1a11ed3e7df4',
           moduleName:'工业制造',
-          marketSecondId:''
+          marketSecondId:'',
+          qualityOrgNames:''
         },
         commonFilesList: [],
         contractInfoProductInformtList:[],

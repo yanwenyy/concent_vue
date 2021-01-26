@@ -527,10 +527,10 @@
                 label="签约单位（使用资质单位）:"
                 prop="contractInfo.signOrgName"
                 :rules="{
-      required: true, message: '此项不能为空', trigger: 'change'
+      required: true, message: '此项不能为空', trigger:['blur','change']
     }"
               >
-                <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.signOrgName" class="input-with-select">
+                <el-input clearable :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.signOrgName" class="input-with-select">
                   <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('签约单位',detailform.contractInfo.signOrgId)" ></el-button>
                 </el-input>
               </el-form-item>
@@ -1601,7 +1601,8 @@ export default {
         contractInfo: {
           moduleId:'510ba0d79593418493eb1a11ea4e7df4',
           moduleName:'金融保险',
-          marketSecondId:''
+          marketSecondId:'',
+          signOrgName:''
         },
         commonFilesList: [],
         contractInfoHouseSalesList:[],
