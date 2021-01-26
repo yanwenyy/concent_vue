@@ -1013,6 +1013,8 @@
       //工程类别二级
       getTwo(id) {
         this.detailform.topInfor.enginTypeSecondId='';
+        this.detailform.topInfor.enginTypeSecondName='';
+        this.detailform.topInfor.enginTypeFirstName='';
         this.xqprojectType=[];
         if(id!=''){
           this.projectDomainType.find(
@@ -1028,6 +1030,8 @@
       //新兴市场二级
       getTwoSC(id) {
         this.detailform.topInfor.marketSecondId='';
+        this.detailform.topInfor.marketSecondName='';
+        this.detailform.topInfor.marketFirstName='';
         this.emergingMarketTwo=[];
         if(id!=''){
           this.emergingMarket.find(
@@ -1043,6 +1047,8 @@
       //项目性质二级
       getTwoXZ(id){
         this.detailform.topInfor.projectNatureSecondId='';
+        this.detailform.topInfor.projectNatureSecondName='';
+        this.detailform.topInfor.projectNatureFirstName='';
         this.projectNatureTwo=[];
         if(id!=''){
           this.projectNature.find(

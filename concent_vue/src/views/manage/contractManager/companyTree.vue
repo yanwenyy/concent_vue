@@ -5,11 +5,13 @@
     width="30%"
   >
     <div class="tree-div">
+      <!--:data="datas"-->
       <el-tree
         ref="tree"
         show-checkbox
         :check-strictly="true"
-        :data="datas"
+        :load="loadNode"
+        lazy
         :props="defaultProps"
         :highlight-current="true"
         node-key="id"
@@ -33,9 +35,11 @@
         datas: [],
         list:[],
         dialogVisible:true,
+        userInfo:{},
         defaultProps: {
           children: 'children',
-          label: 'detailName'
+          label: 'name',
+          isLeaf: 'leaf'
         },
         notSelect:['0','1','01','02','03','04','05','06','101','102','103','105','106','108']
       };
@@ -49,9 +53,46 @@
 
       //js方法引入数据
       this.datas=datas;
-      // console.log(datas)
+
+      //获取用户信息
+      this.$http
+        .get(
+          '/jsonapi/System/system/v1.0/userinfo',
+        )
+        .then(res => {
+          this.userInfo= res.data.data;
+      })
     },
     methods: {
+      loadNode(node, resolve) {
+          if (node.level === 0) {
+            this.getFrist(resolve)
+          }
+        if (node.level >= 1) {
+          // 注意！把resolve传到你自己的异步中去
+          this.getChildren(node, resolve);
+        }
+      },
+      getFrist(resolve){
+        this.$http
+          .get(
+            '/jsonapi/System/system/hr/orglist',
+          )
+          .then(res => {
+            var datas= res.data.data;
+            resolve(datas);
+         })
+      },
+      getChildren(node, resolve){
+        this.$http
+          .get(
+            '/jsonapi/System/system/supmanage/org/v1.0/tree/'+node.data.code+'/'+this.userInfo.currentPostCode+'?type=orgAuth',
+          )
+          .then(res => {
+              var datas= res.data.data;
+              resolve(datas);
+          })
+      },
       init(type,list){
         this.dialogVisible = true;
         this.type=type;
