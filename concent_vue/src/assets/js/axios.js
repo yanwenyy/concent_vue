@@ -86,11 +86,12 @@ axios.interceptors.request.use(
       config.headers['Content-Type'] = 'application/json'
     }
     if(config.url.indexOf("api") > -1){
-      config.headers = {
-        'Authorization':
-          sessionStorage.getItem("token"),
-        "Content-Type": "application/x-www-form-urlencoded"
-      };
+      config.headers['Authorization']=sessionStorage.getItem("token");
+      // config.headers = {
+      //   'Authorization':
+      //     sessionStorage.getItem("token"),
+      //   "Content-Type": "application/x-www-form-urlencoded"
+      // };
     }
     // console.log(config);
     if (config.isLoading !== false) {

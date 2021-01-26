@@ -2458,7 +2458,6 @@ export default {
     },
   },
   mounted() {
-    console.log(sessionStorage.getItem("Authorization"))
     var list=datas[0].children;
     list.forEach((item)=>{
       item.children.forEach((i)=>{
