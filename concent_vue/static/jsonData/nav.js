@@ -835,8 +835,8 @@ export default {
                 },
                 {
                   "name": "项目信息查询",
-                  "path": "/statistics/project/hb",
-                  "component": "/statistics/project/hb2",
+                  "path": "/statistics/project/searchList",
+                  "component": "/statistics/project/searchList",
                   "iconCls": "el-icon-search",
                   "menushow": true,
                   "leaf": true,
