@@ -78,6 +78,7 @@ const state = {
   messageCount: [],
   categoryHc:[],
   category:{},//一级大类
+  pubCustomers:[],//客户名称
 }
 
 const getters = {
@@ -86,6 +87,9 @@ const getters = {
   },
   getCategory(state){
     return state.category
+  },
+  getPubCustomers(state){
+    return state.pubCustomers
   }
 
 }
@@ -472,6 +476,33 @@ const mutations = {
     }else{
       state.category=JSON.parse(sessionStorage.getItem('category'));
     }
+  },
+  setPubCustomers(state,data){
+    state.pubCustomers=JSON.parse(sessionStorage.getItem('pubCustomers'))||[];
+
+    if(state.pubCustomers== null||state.pubCustomers==''){
+      Vue.prototype.$http
+        .post(
+          "/jsonapi/Customer/customer/queryPassCustomerList",
+          JSON.stringify({
+            'current':'1',
+            'size':'1000000'
+          }),
+          {useJson: true}
+        )
+        .then((res) => {
+          var pubCustomers=res.data.data.customers;
+          pubCustomers.forEach((item)=>{
+            item.value=item.customerName;
+
+          });
+          state.pubCustomers = pubCustomers;
+          sessionStorage.setItem('pubCustomers',JSON.stringify(state.pubCustomers));
+          state.pubCustomers=JSON.parse(sessionStorage.getItem('pubCustomers'));
+      })
+    }else{
+      state.pubCustomers=JSON.parse(sessionStorage.getItem('pubCustomers'));
+    }
   }
 }
 
@@ -488,6 +519,9 @@ const actions = {
   },
   getCategory({ commit }, data){
     commit('setCategory', data)
+  },
+  getPubCustomers({ commit }, data){
+    commit('setPubCustomers', data)
   }
 }
 export default new Vuex.Store({

@@ -58,7 +58,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{ scope.row.reportTime | dateformat }}
+            {{ scope.row.reportTime | monthdateformat }}
           </template>
         </el-table-column>
 
@@ -186,7 +186,7 @@
     </div>
      <el-dialog title="选择填报年份" :visible.sync="dialogAdd"
                 width="30%">
-      <el-form :model="resultform">
+      <el-form :model="resultform" class="queryForm">
         <el-form-item
           prop="year">
         <el-date-picker

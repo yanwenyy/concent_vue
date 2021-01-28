@@ -92,6 +92,7 @@
               </el-select>
             </el-form-item>
             <el-form-item
+              v-if="detailForm.project.projectNatureSecondId === 'd4b6c373a60246a8a5166ddb0bf46c21' || detailForm.project.projectNatureSecondId === '7369abc48e264096a37783de01b0d4cc'"
               label="是否为联合体:"
               prop="project.isConsortion"
               class="inline-formitem"
@@ -540,6 +541,7 @@
               style="width: 32.5%">
               <el-input
                 :disabled="p.actpoint === 'look'"
+                @change="getCount"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.contractAmountInitial">
@@ -554,6 +556,7 @@
               style="width: 32.5%">
               <el-input
                 :disabled="p.actpoint === 'look'"
+                @change="getCount"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.contractAmountEngine">
@@ -567,10 +570,9 @@
             <el-form-item
               label="合同额增减(万元):"
               prop="project.contractAmountChange"
-              :rules="rules.project.isMustMoney"
               style="width: 32.5%">
               <el-input
-                :disabled="p.actpoint === 'look'"
+                disabled
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.contractAmountChange">
@@ -596,20 +598,6 @@
           <!--增值税-->
           <el-row>
             <el-form-item
-              label="增值税(万元):"
-              prop="project.valueAddedTax"
-              :rules="rules.project.isMustMoney"
-              style="width: 32.5%">
-              <el-input
-                :disabled="p.actpoint === 'look'"
-                clearable
-                placeholder="请输入"
-                v-model="detailForm.project.valueAddedTax">
-                <template slot="prepend">¥</template>
-                <template slot="append">(万元)</template>
-              </el-input>
-            </el-form-item>
-            <el-form-item
               label="实际投资额(万元):"
               prop="project.realInvest"
               :rules="rules.project.isMoney"
@@ -624,12 +612,27 @@
               </el-input>
             </el-form-item>
             <el-form-item
+              label="增值税(万元):"
+              prop="project.valueAddedTax"
+              :rules="rules.project.isMustMoney"
+              style="width: 32.5%">
+              <el-input
+                :disabled="p.actpoint === 'look'"
+                clearable
+                placeholder="请输入"
+                @change="getOutputTax"
+                v-model="detailForm.project.valueAddedTax">
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+            <el-form-item
               label="上报产值是否含税:"
               prop="project.isOutputTax"
               class="inline-formitem"
               style="width: 32.5%">
               <el-switch
-                :disabled="p.actpoint === 'look'"
+                disabled
                 class="inline-formitem-switch"
                 v-model="detailForm.project.isOutputTax"
                 active-color="#409EFF"
@@ -1136,6 +1139,18 @@
       }
     },
     methods: {
+      // 工程合同额-初始合同额=合同额增减
+      getCount() {
+        this.detailForm.project.contractAmountChange = this.detailForm.project.contractAmountEngine - this.detailForm.project.contractAmountInitial
+      },
+      // 增值税改变，上报产值是否含税联动
+      getOutputTax() {
+        if (this.detailForm.project.valueAddedTax && this.detailForm.project.valueAddedTax !== '0') {
+          this.detailForm.project.isOutputTax = '0'
+        } else {
+          this.detailForm.project.isOutputTax = '1'
+        }
+      },
       handleRemove(file, index) {
         this.$http
           .post(

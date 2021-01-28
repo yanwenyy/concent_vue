@@ -300,6 +300,8 @@
           url = './change/engineDetail/'
         } else if (id === '510ba0d79593419493eb1a11ed3e7df4') {
           url = './change/engineDetail/'
+        } else {
+          url = './change/engineDetail/'
         }
         return url
       },
@@ -378,23 +380,29 @@
           this.$message.info('请选择一条记录进行查看操作！')
           return false
         }
+        let url = this.getRoute(this.multipleSelection[0].projectModuleId)
         let p = {
           actpoint: 'edit',
           afterId: this.multipleSelection[0].afterId,
-          beforeId: this.multipleSelection[0].beforeId
+          beforeId: this.multipleSelection[0].beforeId,
+          uuid: this.multipleSelection[0].uuid
         }
         this.$router.push({
-          path: './changeAdd/',
+          path: url,
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
         })
       },
       // 查看
       rowShow(row) {
-        let p = { actpoint: 'look', afterId: row.afterId, beforeId: row.beforeId }
-        this.$router.push({
-          path: './changeAdd/',
-          query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-        })
+        console.log(row)
+        if (row.afterId && row.beforeId && row.uuid) {
+          let url = this.getRoute(row.projectModuleId)
+          let p = { actpoint: 'look', afterId: row.afterId, beforeId: row.beforeId, uuid: row.uuid }
+          this.$router.push({
+            path: url,
+            query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+          })
+        }
       },
       // 列表选项数据
       handleSelectionChange(val) {

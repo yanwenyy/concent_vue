@@ -124,7 +124,7 @@
           if (this.$route.path.split('').filter(i => i === '/').length === 2) {
             // 默认第一层不显示breadcrumb
             this.breadcrumb = false
-          } else if (this.$route.path.split('/')[3].indexOf('Add') > -1) {
+          } else if (this.$route.path.split('/')[3].indexOf('Add') > -1 || this.$route.path.split('/')[4].indexOf('Detail') > -1) {
             // 计统详情页不显示breadcrumb
             this.breadcrumb = false
           } else {

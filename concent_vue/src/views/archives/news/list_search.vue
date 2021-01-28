@@ -284,7 +284,7 @@ export default {
     },
     statusFormat: (value)=> {
 
-      return value == "1" ? "是" :"否";
+      return value == "1" ? "是" :value == "0" ? "否" :"";
       // return statusW
     },
   },
@@ -483,4 +483,7 @@ export default {
 .el-table__row {
   cursor: pointer;
 }
+  .queryForm >>>.el-button{
+    margin-top: 5px;
+  }
 </style>

@@ -55,14 +55,16 @@
         </el-table-column>
       </el-table>
       <el-pagination
-        @size-change="sizeChangeHandle"
-        @current-change="currentChangeHandle"
-        :current-page="pageIndex"
-        :page-sizes="[10, 20, 50, 100]"
-        :page-size="pageSize"
-        :total="totalPage"
-        layout="total, sizes, prev, pager, next, jumper">
-      </el-pagination>
+        :current-page="page.current"
+        :page-size="page.size"
+        :page-sizes="[20, 50, 100]"
+        :total="page.total"
+        @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"
+        layout="total, sizes, prev, pager, next, jumper"
+        style="margin-top: 5px"
+        v-if="page.total !== 0"
+      ></el-pagination>
     </div>
     <div v-if="contractType=='2'">
       <el-form  class="queryForm" :inline="true" :model="searchform2" @keyup.enter.native="init()">
@@ -123,14 +125,16 @@
         </el-table-column>
       </el-table>
       <el-pagination
-        @size-change="sizeChangeHandle"
-        @current-change="currentChangeHandle"
-        :current-page="pageIndex"
-        :page-sizes="[ 20, 50, 100]"
-        :page-size="pageSize"
-        :total="totalPage"
-        layout="total, sizes, prev, pager, next, jumper">
-      </el-pagination>
+        :current-page="page.current"
+        :page-size="page.size"
+        :page-sizes="[20, 50, 100]"
+        :total="page.total"
+        @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"
+        layout="total, sizes, prev, pager, next, jumper"
+        style="margin-top: 5px"
+        v-if="page.total !== 0"
+      ></el-pagination>
     </div>
     <div slot="footer" class="dialog-footer">
       <el-button @click="visible = false">取消</el-button>
@@ -143,6 +147,7 @@
   export default {
     data() {
       return {
+        page: { current: 1, size: 20, total: 0, records: [] },
         visible: false,
         searchform: {
           inforName: '',
@@ -150,7 +155,9 @@
         searchform2: {
           contractName:'',
           changeStatus:'0',
-          contractType:'1'
+          contractType:'1',
+          current: 1,
+          size: 20,
         },
         contractType:'',
         dataList: [],
@@ -197,26 +204,26 @@
           )
           .then((res) => {
           var datas = res.data.data;
-        if (res.data && res.data.code === 200) {
-          this.dataList = datas.records;
-          this.totalPage = datas.total
-        } else {
-          this.dataList = []
-          this.totalPage = 0
-        }
-        this.dataListLoading = false
+          if (res.data && res.data.code === 200) {
+            this.dataList = datas.records;
+            this.page = datas
+          } else {
+            this.dataList = []
+          }
+          this.dataListLoading = false
       });
       },
-      // 每页数
-      sizeChangeHandle(val) {
-        this.pageSize = val
-        this.pageIndex = 1
-        this.init()
+      handleSizeChange(val) {
+        this.searchFrom.size = val;
+        this.getData();
       },
-      // 当前页
-      currentChangeHandle(val) {
-        this.pageIndex = val
-        this.init()
+      handleCurrentChange(val) {
+        this.searchFrom.current = val;
+        this.getData();
+      },
+      searchFromSubmit() {
+        this.searchFrom.current = 1;
+        this.getData();
       },
       // 单选
       handleCurrentChange(val) {
