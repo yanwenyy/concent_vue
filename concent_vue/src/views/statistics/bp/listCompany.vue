@@ -52,17 +52,17 @@
         <div style="display: inline-block;height: auto;width: 90%">
           <div class="small">
           <span style="padding: 5px">统计项名称：</span>
-          <el-input v-model="selectItem.vname" disabled></el-input>
+          <el-input v-model="selectItem.vname" disabled style="width:70%"></el-input>
           <!-- <span>{{selectItem.vname }}</span> -->
           </div>
           <div class="small">
-          <span style="padding: 5px">计量单位：</span>
-          <el-input v-model="selectItem.vjldwFormatter" disabled></el-input>
+          <span style="padding: 5px"> &nbsp;计量单位：</span>
+          <el-input v-model="selectItem.vjldwFormatter" disabled style="width:70%"></el-input>
           <!-- <span>{{ selectItem.vjldwFormatter}}</span> -->
           </div>
           <div class="small">
           <span style="padding: 5px">上报排除项：</span>
-          <el-input v-model="selectItem.vsbpc" disabled></el-input>
+          <el-input v-model="selectItem.vsbpc" disabled style="width:70%"></el-input>
           <!-- <span >{{ selectItem.vsbpc }}</span> -->
           </div>
         </div>
@@ -774,7 +774,7 @@ export default {
 }
 .el-input
 {
-  width: 300px;
+  width: 100%;
   margin-right: 10px;
 }
 >>>.el-input .el-input__inner{
@@ -831,7 +831,9 @@ span{
   display: inline-block;
 }
 .cx{
-  margin: 20px 0 0 0;
+  // margin: 20px 0 0 0;
   float: right;
 }
+
+
 </style>

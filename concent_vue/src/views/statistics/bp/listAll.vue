@@ -154,6 +154,9 @@
             placeholder="请选择"
             class="bp_height"
             v-model="itemform.vjldw"
+            @change="
+              getName(itemform.vjldw, measureUnit, 'vjldwName')
+            "
           >
             <el-option
               :key="index"
@@ -163,15 +166,12 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="工程（行业）类别" prop="vprojecttypes">
+        <el-form-item label="工程（行业）类别" prop="vprojecttypes" style="">
           <el-select
             multiple
             filterable
             placeholder="请选择"
-            class="bp_height"
-            @change="
-              getName(itemform.vprojecttypes, projectDomainType, 'detailName')
-            "
+            class="bp_height multiple-sel"
             v-model="itemform.vprojecttypes"
           >
             <el-option
@@ -182,6 +182,21 @@
             ></el-option>
           </el-select>
         </el-form-item>
+
+        <el-form-item label="所属汇总指标" prop="vjldw">
+          <el-input v-model="itemform.vtype"
+            placeholder="所属汇总指标"
+            clearable
+          >
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="tjx=true"
+          ></el-button>
+          </el-input>
+
+        </el-form-item>
+
         <el-form-item label="使用设置" prop="vtype">
           <!--         <el-radio-group class="detail-radio-group" v-model="itemform.vtype"  @change="getName(itemform.vtype,-->
           <!--         this.vtype, 'moduleName')">-->
@@ -223,6 +238,35 @@
         <el-button type="primary" @click="saveVerifyResult">确 定</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog
+        title="提示"
+        :visible.sync="tjx"
+        width="30%"
+       >
+        <div>
+        <el-tree
+            :props="props"
+            lazy
+            ref="tree"
+            :default-expanded-keys="['']"
+            node-key="uuid"
+            :load="loadNode"
+            @node-click="setTjx"
+          >
+        <span class="custom-tree-node" slot-scope="{ node, data }">
+          <span>
+            <i :class="data.icon" style="margin-right: 5px"></i>{{ node.label }}
+          </span>
+        </span>
+      </el-tree>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="tjx = false">取 消</el-button>
+          <el-button type="primary" @click="tjx = false">确 定</el-button>
+        </span>
+</el-dialog>
+
   </div>
 </template>
 
@@ -236,6 +280,7 @@ export default {
         isLeaf: "vleaf",
         icon: "icon",
       },
+      tjx:false,
       dialogtitle: "",
       parentid: "",
       radio: "0",
@@ -274,6 +319,7 @@ export default {
         voptional: "",
         valtername: "",
         vdisable: "",
+        hzidId:'',//汇总指标id,假的,需改
       },
 
       menus: [],
@@ -309,12 +355,24 @@ export default {
     },
   },
   methods: {
+
+      //设置统计项汇总指标
+      setTjx(obj,node,data){
+        // console.log(obj,node,data);
+        this.itemform.hzidId=obj.uuid;
+        this.tjx = false
+
+      },
     //获取下拉框id和name的公共方法
     getName(id, list, name) {
       if (id) {
         this.$forceUpdate();
+        this.itemform[name] = list.find(
+            (item) => item.id == id
+          ).detailName;
       }
     },
+
     vdisableFormatter(row, column) {
       var str = "";
       if (row.vdisable == "1") {
@@ -363,7 +421,7 @@ export default {
       }
     },
     vjldwFormatter: function (row, column) {
-      //console.log(this.measureUnit);
+      // console.log(this.measureUnit);
       var str = "";
       this.measureUnit.forEach((item) => {
         //console.log(row);

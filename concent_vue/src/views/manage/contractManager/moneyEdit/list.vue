@@ -372,7 +372,7 @@
                   v-model="scope.row.markDate"
                   type="date"
                   value-format="timestamp"
-                  placeholder="选择年">
+                  placeholder="选择日期">
                 </el-date-picker>
               </el-form-item>
             </template>

@@ -239,7 +239,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-             {{scope.row.importFileRecordId==1?'是':'否'}}
+             {{scope.row.importFileRecordId==1?'是':scope.row.importFileRecordId==0?'否':"其他"}}
           </template>
           <template slot="header" slot-scope="scope">
             <span>是否导入</span>
@@ -458,7 +458,7 @@
           if(this.searchform.importFileRecordName=='是'){
             this.searchform.importFileRecordId='1';
           }else if(this.searchform.importFileRecordName=='否'){
-            this.searchform.importFileRecordId=null;
+            this.searchform.importFileRecordId='0';
           }
         }
         this.$http

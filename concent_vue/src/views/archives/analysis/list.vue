@@ -209,7 +209,8 @@
 <!--        </el-select>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogAdd = false">取 消</el-button>
+        <el-button @click="dialogAdd = false,resultform.year=''">取 消</el-button>
+
         <el-button type="primary" @click="saveResult">确 定</el-button>
       </div>
     </el-dialog>
@@ -532,6 +533,7 @@ export default {
     handleCurrentChange(val) {
       this.searchform.current = val
       this.getData()
+
     },
     searchformSubmit() {
       this.searchform.current = 1

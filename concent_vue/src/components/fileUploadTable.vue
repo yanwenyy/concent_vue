@@ -46,7 +46,7 @@
                 </el-table-column>
 
                 <el-table-column :resizable="false"
-                                 label="大小"
+                                 label="大小(KB)"
                                  prop="fileSize"
                                  align="center"
                                  :width="120"
