@@ -699,5 +699,8 @@ pre {
 .not-error .el-form-item__label:before{
   content: ''!important;
 }
+.el-autocomplete{
+  width: 100% !important;
+}
 /**/
 

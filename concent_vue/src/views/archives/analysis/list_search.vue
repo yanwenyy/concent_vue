@@ -69,7 +69,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{ scope.row.reportTime | dateformat }}
+            {{ scope.row.reportTime | monthdateformat }}
           </template>
         </el-table-column>
 
@@ -445,9 +445,7 @@ export default {
         var date = new Date();
         this.searchform.selectYear = date.getFullYear();
       }
-      this.searchform.isShare = 1;
-
-      console.log(JSON.stringify(this.searchform));
+      // this.searchform.isShare = 1;
       this.$http
         .post(
           '/api/contract/archives/ArchivesInfo/list/loadPageDataByAnalysis',

@@ -272,12 +272,18 @@
                 trigger: 'blur',
               }"
             >
-              <el-input
-                :disabled="p.actpoint === 'look'"
-                clearable
+              <!--<el-input-->
+                <!--:disabled="p.actpoint === 'look'"-->
+                <!--clearable-->
 
+                <!--v-model="detailform.topInfor.constructionOrg"-->
+              <!--/>-->
+              <el-autocomplete
+                :disabled="p.actpoint === 'look'"
                 v-model="detailform.topInfor.constructionOrg"
-              />
+                :fetch-suggestions="querySearchAsync"
+                placeholder="请输入内容"
+              ></el-autocomplete>
             </el-form-item>
           <el-form-item
             label="设计单位:"
@@ -287,12 +293,18 @@
                 trigger: 'blur',
               }"
           >
-            <el-input
-              clearable
-              :disabled="p.actpoint === 'look'"
+            <!--<el-input-->
+              <!--clearable-->
+              <!--:disabled="p.actpoint === 'look'"-->
 
+              <!--v-model="detailform.topInfor.designOrg"-->
+            <!--/>-->
+            <el-autocomplete
+              :disabled="p.actpoint === 'look'"
               v-model="detailform.topInfor.designOrg"
-            />
+              :fetch-suggestions="querySearchAsync"
+              placeholder="请输入内容"
+            ></el-autocomplete>
           </el-form-item>
           <br>
           <el-form-item
@@ -839,6 +851,7 @@
         }
       }
       return {
+        timeout:  null,
         maxMoney:1000000,
         id:'',
         key: 0,
@@ -926,6 +939,9 @@
       railwayLine() {
         return this.$store.state.railwayLine;
       },
+      pubCustomers() {//客户名称
+        return this.$store.state.pubCustomers;
+      }
     },
     mounted() {
       // window.onresize = () => {
@@ -953,13 +969,28 @@
         }]
       }
       this.$store.dispatch("getConfig", {});
-
+      this.$store.dispatch("getPubCustomers", {});
       this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
       this.$store.dispatch('getCategory', {name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3'});
       this.$store.dispatch('getCategory', {name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72'});
       // eslint-disable-next-line no-unde
     },
     methods: {
+      //建设单位搜索
+      querySearchAsync(queryString, cb) {
+        var restaurants = this.pubCustomers;
+        var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
+
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+          cb(results);
+      }, 500 * Math.random());
+      },
+      createStateFilter(queryString) {
+        return (restaurants) => {
+          return (restaurants.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+        };
+      },
       //设置主地点
       setMain(i,list){
         list.forEach((item,index)=>{
