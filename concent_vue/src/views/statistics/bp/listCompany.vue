@@ -308,42 +308,42 @@ export default {
     saveInfo(){
       var list=this.$refs.tree.getCheckedNodes();
     },
-    vdisableFormatter(row, column){
-      var str="";
-      if(row.vdisable=="1")
-      {
-        str="是";
-      }else
-      {
-        str="否";
-      }
-      return str;
-    },
-    veditableFormatter(row, column){
-      var str="";
-      if(row.veditable=="1")
-      {
-        str="是";
-      }else
-      {
-        str="否";
-      }
-      return str;
-    },
-    vtypeFormatter(row, column){
-      var str="";
-      if(row.vtype=="0")
-      {
-        str="全部";
-      }else if(row.vtype=="1")
-      {
-        str="仅月报";
-      }else if(row.vtype=="2")
-      {
-        str="仅年报";
-      }
-      return str;
-    },
+    // vdisableFormatter(row, column){
+    //   var str="";
+    //   if(row.vdisable=="1")
+    //   {
+    //     str="是";
+    //   }else
+    //   {
+    //     str="否";
+    //   }
+    //   return str;
+    // },
+    // veditableFormatter(row, column){
+    //   var str="";
+    //   if(row.veditable=="1")
+    //   {
+    //     str="是";
+    //   }else
+    //   {
+    //     str="否";
+    //   }
+    //   return str;
+    // },
+    // vtypeFormatter(row, column){
+    //   var str="";
+    //   if(row.vtype=="0")
+    //   {
+    //     str="全部";
+    //   }else if(row.vtype=="1")
+    //   {
+    //     str="仅月报";
+    //   }else if(row.vtype=="2")
+    //   {
+    //     str="仅年报";
+    //   }
+    //   return str;
+    // },
     vprojecttypeFormatter(row, column)
     {
       var str="";
@@ -394,21 +394,53 @@ export default {
     },
     // 树节点保存
     handleCheckChange(data, checked) {
-      var ids=this.$refs.tree.getCheckedKeys();
-      ids.forEach((item,index)=>{
-        if(item==''){
-          ids.splice(index,1)
-        }
-      })
-       this.$http
+      console.log(data,checked)
+      // console.log(checked.checkedKeys.indexOf(data.uuid))
+      var ifChecked=checked.checkedKeys.indexOf(data.uuid);
+      if(ifChecked!=-1){
+        this.$http
           .post(
             "/api/statistics/bp/BpGdwtjxsz/detail/save",
-             JSON.stringify({ids:ids,projectType:this.itemform.vprojecttypes}),
+             JSON.stringify({ids:[data.uuid],projectType:this.itemform.vprojecttypes,vcode:data.vcode}),
             {useJson: true}
           )
           .then((res) => {
-            console.log(res.data)
+          //      this.$http
+          //         .post(
+          //           "/api/statistics/bp/BpGdwtjxsz/list/deleteById",
+          //         {ids:data.uuid,projectId:this.itemform.vprojecttypes},
+
+          //         )
+          //         .then((res) => {
+          //           // console.log(res.data)
+          //         });
           });
+      }else{
+        this.$http
+          .post(
+            "/api/statistics/bp/BpGdwtjxsz/list/deleteById",
+          {ids:data.uuid,projectId:this.itemform.vprojecttypes},
+
+          )
+          .then((res) => {
+            // console.log(res.data)
+          });
+      }
+      // var ids=this.$refs.tree.getCheckedKeys();
+      // ids.forEach((item,index)=>{
+      //   if(item==''){
+      //     ids.splice(index,1)
+      //   }
+      // })
+      //  this.$http
+      //     .post(
+      //       "/api/statistics/bp/BpGdwtjxsz/detail/save",
+      //        JSON.stringify({ids:ids,projectType:this.itemform.vprojecttypes}),
+      //       {useJson: true}
+      //     )
+      //     .then((res) => {
+      //       console.log(res.data)
+      //     });
     },
     handleNodeClick(data,node) {
       //this.getData(node,this.resolve)
@@ -428,131 +460,77 @@ export default {
     loadNode(node, resolve) {
       this.getData(node,resolve)
     },
-    verifyResultEdit() {
-      if (this.multipleSelection.length > 0) {
-        this.dialogResult = true;
-        //alert(JSON.stringify(this.multipleSelection[0]));
 
-      } else {
-        this.$message.info("请选择列表中的项目！");
-      }
-    },
-    saveVerifyResult() {
-      this.dialogResult = false
-      var str = "";
-      this.itemform.vprojecttypes.forEach((item)=> {
-        str +=item+",";
-      });
-      str=str.substring(0,str.length-1);
-      //排序
-      this.itemform.vxh='0';
-      this.itemform.vprojecttype=str;
-      this.itemform.vparentid =this.node.data.uuid;
+    // selectFile()
+    // {
+    //   this.$http
+    //     .post(
+    //       "/api/contract/topInfo/CommonFiles/list/delete",
+    //       {ids:[file.response.data.uuid]},
+    //     )
+    //     .then((res) => {
+    //       if (res.data.code === 200) {
+    //         this.fileList=fileList;
+    //       }
+    //     });
+    // },
+    // handleRemove(file,index) {
+    //   this.$http
+    //     .post(
+    //       "/api/statistics/bp/BpTjx/list/delete",
+    //       {ids:[file.uuid]},
+    //     )
+    //     .then((res) => {
+    //       if (res.data.code === 200) {
+    //         this.detailform.fileList2.splice(index,1);
+    //       }
 
-      //return;
-      // this.itemform.vName =
-      // alert(JSON.stringify(this.multipleSelection[0]))
-      this.$http
-        .post(
-          '/api/statistics/bp/BpTjx/detail/save',
-          JSON.stringify(this.itemform),
-          // this.itemform,
-          { useJson: true }
-        )
-        .then(res => {
-          if (res.data.code === 200) {
-            this.$message({
-              message: "保存成功",
-              type: "success",
-            });
-            for(let i = 0; i < this.$refs.tree.store._getAllNodes().length; i++){
-              this.$refs.tree.store._getAllNodes()[i].expanded = false;
-            }
-            // var nodeall = this.$refs.tree.store.root;
-            // for (let i = 0; i < nodeall.childNodes.length; i++) {
-            //   node.childNodes[i].expanded = false;
-            //   // 遍历子节点
-            //   if (node.childNodes[i].childNodes.length > 0) {
-            //     this.changeTreeNodeStatus(node.childNodes[i])
-            //   }
-            // }
-            this.loadNode(this.node, this.resolve)
-
-          }
-          //this.getData();
-
-        })
-    },
-    selectFile()
-    {
-      this.$http
-        .post(
-          "/api/contract/topInfo/CommonFiles/list/delete",
-          {ids:[file.response.data.uuid]},
-        )
-        .then((res) => {
-          if (res.data.code === 200) {
-            this.fileList=fileList;
-          }
-        });
-    },
-    handleRemove(file,index) {
-      this.$http
-        .post(
-          "/api/statistics/bp/BpTjx/list/delete",
-          {ids:[file.uuid]},
-        )
-        .then((res) => {
-          if (res.data.code === 200) {
-            this.detailform.fileList2.splice(index,1);
-          }
-
-        });
-    },
+    //     });
+    // },
     //上传附件
-    handleChange(response, file, fileList){
-      if (response && response.code === 200) {
-        this.$message({
-          message: '上传成功',
-          type: 'success',
-          duration: 1500,
-          onClose: () => {
-            this.detailform.fileList.push(response.data);
-          }
-        })
-      } else {
-        this.$message.error(response.msg)
-      }
-    },
+    // handleChange(response, file, fileList){
+    //   if (response && response.code === 200) {
+    //     this.$message({
+    //       message: '上传成功',
+    //       type: 'success',
+    //       duration: 1500,
+    //       onClose: () => {
+    //         this.detailform.fileList.push(response.data);
+    //       }
+    //     })
+    //   } else {
+    //     this.$message.error(response.msg)
+    //   }
+    // },
 
-    search() {
-      this.showinput = false
-    },
-    add() {
-      this.dialogResult=true;
+    // search() {
+    //   this.showinput = false
+    // },
+    // add() {
+    //   this.dialogResult=true;
 
-    },
-    editItem() {
-      if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
-        this.$message.info("请选择统计项进行修改！");
-        return;
-      }
-      this.dialogResult=true;
-      //是否有资审信息判断
-      if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
-        this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
-        return;
-      }
-      var item = this.multipleSelection[0];
-      item.vprojecttypes = item.vprojecttype.split(",");
+    // },
+    // editItem() {
+    //   if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
+    //     this.$message.info("请选择统计项进行修改！");
+    //     return;
+    //   }
+    //   this.dialogResult=true;
+    //   //是否有资审信息判断
+    //   if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
+    //     this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
+    //     return;
+    //   }
+    //   var item = this.multipleSelection[0];
+    //   item.vprojecttypes = item.vprojecttype.split(",");
 
-      this.itemform = item;
-      //是否在审核流程中判断
-      //是否在变更流程中判断
+    //   this.itemform = item;
+    //   //是否在审核流程中判断
+    //   //是否在变更流程中判断
 
-      //alert(JSON.stringify(p));
+    //   //alert(JSON.stringify(p));
 
-    },
+    // },
     changeTreeNodeStatus (node) {
       node.expanded = false
       for (let i = 0; i < node.childNodes.length; i++) {
@@ -565,56 +543,57 @@ export default {
       }
     },
 
-    remove() {
-      if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
-        this.$message.info("请选择统计项进行删除！");
-        return;
-      }
-      let uuids = []
-      this.multipleSelection.forEach((item) => {
-        if (item.uuid != null) {
-          uuids.push(item.uuid);
-        }
+    // remove() {
+    //   if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
+    //     this.$message.info("请选择统计项进行删除！");
+    //     return;
+    //   }
+    //   let uuids = []
+    //   this.multipleSelection.forEach((item) => {
+    //     if (item.uuid != null) {
+    //       uuids.push(item.uuid);
+    //     }
 
-      })
-      this.$confirm('此操作将永久删除该统计项, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        // this.$message({
-        //   type: 'success',
-        //   message: '删除成功!'
-        // });
-        this.$http
-          .post(
-            '/api/statistics/bp/BpTjx/list/delete',
-            {ids: uuids}
-          )
-          .then(res => {
-            //this.$refs.tree.store.root
-            //var nodeall = this.$refs.tree.store.root;
-            for(let i = 0; i < this.$refs.tree.store._getAllNodes().length; i++){
-              this.$refs.tree.store._getAllNodes()[i].expanded = false;
-            }
+    //   })
+    //   this.$confirm('此操作将永久删除该统计项, 是否继续?', '提示', {
+    //     confirmButtonText: '确定',
+    //     cancelButtonText: '取消',
+    //     type: 'warning'
+    //   }).then(() => {
+    //     // this.$message({
+    //     //   type: 'success',
+    //     //   message: '删除成功!'
+    //     // });
+    //     this.$http
+    //       .post(
+    //         '/api/statistics/bp/BpTjx/list/delete',
+    //         {ids: uuids}
+    //       )
+    //       .then(res => {
+    //         //this.$refs.tree.store.root
+    //         //var nodeall = this.$refs.tree.store.root;
+    //         for(let i = 0; i < this.$refs.tree.store._getAllNodes().length; i++){
+    //           this.$refs.tree.store._getAllNodes()[i].expanded = false;
+    //         }
 
-            this.loadNode(this.node, this.resolve)
-          })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });
-      });
+    //         this.loadNode(this.node, this.resolve)
+    //       })
+    //   }).catch(() => {
+    //     this.$message({
+    //       type: 'info',
+    //       message: '已取消删除'
+    //     });
+    //   });
 
-    },
+    // },
     // 查看
-    rowshow(row) {
+    // rowshow(row) {
 
-    },
-    show() {
+    // },
+    // show() {
 
-    }, // list通用方法开始
+    // },
+    // list通用方法开始
     handleSizeChange(val) {
       this.searchform.size = val
       this.getData()
@@ -623,17 +602,17 @@ export default {
       this.searchform.current = val
       this.getData()
     },
-    searchformSubmit() {
-      this.searchform.current = 1
-      this.getData()
-    },
-    searchformReset() {
-      // this.$refs['searchform'].resetFields()
-      for(let i = 0; i < this.$refs.tree.store._getAllNodes().length; i++){
-        this.$refs.tree.store._getAllNodes()[i].expanded = false;
-      }
-      this.getData(this.node,this.resolve);
-    },
+    // searchformSubmit() {
+    //   this.searchform.current = 1
+    //   this.getData()
+    // },
+    // searchformReset() {
+    //   // this.$refs['searchform'].resetFields()
+    //   for(let i = 0; i < this.$refs.tree.store._getAllNodes().length; i++){
+    //     this.$refs.tree.store._getAllNodes()[i].expanded = false;
+    //   }
+    //   this.getData(this.node,this.resolve);
+    // },
     // 列表选项数据
     handleSelectionChange(val) {
       //alert(JSON.stringify(val))
@@ -647,9 +626,10 @@ export default {
         return resolve([{ vname: '统计项',uuid:"" ,icon:'el-icon-folder'}]);
       }
       setTimeout(() => {
-        this.$http
+        if(this.itemform.vprojecttypes!=''){
+           this.$http
           .post(
-            '/api/statistics/bp/BpTjx/list/getBpTjxListByParentId',
+            '/api/statistics/bp/BpTjx/list/getBpTjxListByParentId1',
             {"parentid":node.data.uuid,'projectType':this.itemform.vprojecttypes}
           )
           .then(res => {
@@ -682,17 +662,21 @@ export default {
             // });
             resolve(data);
           })
+        }else{
+          resolve('');
+        }
+
       }, 500);
     },
-    getMenus() {
-      this.$http
-        .post('api/base/loadcascader', {typecode: 'XMLX'})
-        .then(res => {
-          if (res.data.code === 0) {
-            this.menus = res.data.data
-          }
-        })
-    },
+    // getMenus() {
+    //   this.$http
+    //     .post('api/base/loadcascader', {typecode: 'XMLX'})
+    //     .then(res => {
+    //       if (res.data.code === 0) {
+    //         this.menus = res.data.data
+    //       }
+    //     })
+    // },
     currentMenu(selVal) {
       let selMenuObj = this.menus.filter(item => item.value === selVal)
       this.searchform.menu = selMenuObj[0].label
@@ -843,11 +827,11 @@ span{
   height: 40px !important;
 }
 .small{
-  width: 33%;
+  width: 29%;
   display: inline-block;
 }
 .cx{
-  // margin: 10px 0 0 0;
+  margin: 20px 0 0 0;
   float: right;
 }
 </style>

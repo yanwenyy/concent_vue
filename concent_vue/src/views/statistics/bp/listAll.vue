@@ -302,11 +302,9 @@ export default {
       return this.$store.state.unit;
     },
     measureUnit() {
-      console.log(this.$store.state.measureUnit);
       return this.$store.state.measureUnit;
     },
     projectDomainType() {
-      console.log(this.$store.state.category.projectDomainType);
       return this.$store.state.category.projectDomainType;
     },
   },
@@ -315,10 +313,6 @@ export default {
     getName(id, list, name) {
       if (id) {
         this.$forceUpdate();
-        // this.itemform.vprojecttypes[name] = list.find(
-        //   (item) => item.detailCode == id
-        // ).detailName;
-        console.log(this.itemform);
       }
     },
     vdisableFormatter(row, column) {
@@ -354,7 +348,7 @@ export default {
       var str = "";
       if (row.vprojecttype != null) {
         var strs = row.vprojecttype.split(",");
-        console.log(this.projectDomainType);
+        // console.log(this.projectDomainType);
         strs.forEach((itemstr) => {
           this.projectDomainType.forEach((item) => {
             //console.log(row);
@@ -363,7 +357,7 @@ export default {
             }
           });
         });
-        console.log(str);
+        // console.log(str);
         str = str.substring(0, str.length - 2);
         return str;
       }
@@ -380,7 +374,7 @@ export default {
       return str;
     },
     handleNodeExpand(data, note) {
-      console.log(note);
+      // console.log(note);
       if (data.vleaf != "1") {
         data.icon = "";
       }
@@ -391,10 +385,10 @@ export default {
       }
     },
     handleCheckChange(data, checked, indeterminate) {
-      console.log(data, checked, indeterminate);
+      // console.log(data, checked, indeterminate);
     },
     handleNodeClick(data, node) {
-      console.log(data);
+      // console.log(data);
       this.getTableData(data);
       //this.getData(node,this.resolve)
     },
@@ -420,11 +414,6 @@ export default {
       this.itemform.vxh = "0";
       this.itemform.vprojecttype = str;
       this.itemform.vparentid = this.node.data.uuid;
-      console.log(this.node);
-      console.log(this.itemform);
-      //return;
-      // this.itemform.vName =
-      // alert(JSON.stringify(this.multipleSelection[0]))
       this.$http
         .post(
           "/api/statistics/bp/BpTjx/detail/save",
@@ -433,7 +422,6 @@ export default {
           { useJson: true }
         )
         .then((res) => {
-          console.log(res);
           if (res.data.code === 200) {
             this.$message({
               message: "保存成功",
@@ -510,7 +498,6 @@ export default {
       this.dialogtitle = "修改统计项";
       this.dialogResult = true;
       this.$forceUpdate();
-      console.log(this.multipleSelection[0]);
       //是否有资审信息判断
 
       var item = this.multipleSelection[0];
@@ -643,7 +630,6 @@ export default {
             //console.log(res.data.data);
             var itemDatas = res.data.data;
             itemDatas.forEach((item) => {
-              console.log(item);
               if (item.vleaf == "1") {
                 item.icon = "";
               } else {
