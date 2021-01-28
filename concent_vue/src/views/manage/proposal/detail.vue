@@ -988,7 +988,7 @@
       },
       createStateFilter(queryString) {
         return (restaurants) => {
-          return (restaurants.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+          return (restaurants.value.toLowerCase().indexOf(queryString.toLowerCase()) != -1);
         };
       },
       //设置主地点
