@@ -2,10 +2,10 @@
 
 <template>
   <div style="position: relative">
-    <el-button v-show="p.actpoint != 'look'" class="detail-back-tab detailbutton save-btn" type="primary"
-               @click="saveInfo('detailform')">保存
+    <el-button v-show="p.actpoint !== 'look'" class="detail-back-tab detailbutton save-btn" type="primary"
+               @click="saveInfo('detailForm')">保存
     </el-button>
-    <el-button v-show="p.actpoint != 'look'" class="detail-back-tab detailbutton sub-btn" @click="submit">提交</el-button>
+    <el-button v-show="p.actpoint !== 'look'" class="detail-back-tab detailbutton sub-btn" @click="submit">提交</el-button>
     <el-button class="detail-back-tab detailbutton" @click="back" type="text">返回</el-button>
     <el-tabs type="border-card">
       <el-tab-pane label="变更后">
@@ -87,6 +87,7 @@
                 </el-select>
               </el-form-item>
               <el-form-item
+                v-if="detailForm.project.projectNatureSecondId === 'd4b6c373a60246a8a5166ddb0bf46c21' || detailForm.project.projectNatureSecondId === '7369abc48e264096a37783de01b0d4cc'"
                 label="是否为联合体:"
                 prop="project.isConsortion"
                 class="inline-formitem"
@@ -536,6 +537,7 @@
                 <el-input
                   :disabled="p.actpoint === 'look'"
                   clearable
+                  @change="getCount"
                   placeholder="请输入"
                   v-model="detailForm.project.contractAmountInitial">
                   <template slot="prepend">¥</template>
@@ -550,6 +552,7 @@
                 <el-input
                   :disabled="p.actpoint === 'look'"
                   clearable
+                  @change="getCount"
                   placeholder="请输入"
                   v-model="detailForm.project.contractAmountEngine">
                   <template slot="prepend">¥</template>
@@ -557,15 +560,13 @@
                 </el-input>
               </el-form-item>
             </el-row>
-            <!--合同总额(万元)-->
             <el-row>
               <el-form-item
                 label="合同额增减(万元):"
                 prop="project.contractAmountChange"
-                :rules="rules.project.isMustMoney"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  disabled
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.contractAmountChange">
@@ -591,20 +592,6 @@
             <!--增值税-->
             <el-row>
               <el-form-item
-                label="增值税(万元):"
-                prop="project.valueAddedTax"
-                :rules="rules.project.isMustMoney"
-                style="width: 32.5%">
-                <el-input
-                  :disabled="p.actpoint === 'look'"
-                  clearable
-                  placeholder="请输入"
-                  v-model="detailForm.project.valueAddedTax">
-                  <template slot="prepend">¥</template>
-                  <template slot="append">(万元)</template>
-                </el-input>
-              </el-form-item>
-              <el-form-item
                 label="实际投资额(万元):"
                 prop="project.realInvest"
                 :rules="rules.project.isMoney"
@@ -619,12 +606,27 @@
                 </el-input>
               </el-form-item>
               <el-form-item
+                label="增值税(万元):"
+                prop="project.valueAddedTax"
+                :rules="rules.project.isMustMoney"
+                style="width: 32.5%">
+                <el-input
+                  :disabled="p.actpoint === 'look'"
+                  clearable
+                  @change="getOutputTax"
+                  placeholder="请输入"
+                  v-model="detailForm.project.valueAddedTax">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
                 label="上报产值是否含税:"
                 prop="project.isOutputTax"
                 class="inline-formitem"
                 style="width: 32.5%">
                 <el-switch
-                  :disabled="p.actpoint === 'look'"
+                  disabled
                   class="inline-formitem-switch"
                   v-model="detailForm.project.isOutputTax"
                   active-color="#409EFF"
@@ -963,6 +965,7 @@
                 </el-select>
               </el-form-item>
               <el-form-item
+                v-if="showDetailForm.project.projectNatureSecondId === 'd4b6c373a60246a8a5166ddb0bf46c21' || showDetailForm.project.projectNatureSecondId === '7369abc48e264096a37783de01b0d4cc'"
                 label="是否为联合体:"
                 class="inline-formitem"
                 style="width: 32.5%">
@@ -1700,6 +1703,7 @@
         options1: [{ label: '测试所在地', value: 'testabcd' }],
         detailForm: {
           project: {
+            afterId: '',
             infoProductList: [], // 产品列表
             infoSubjectMatterList: [], // 标的信息
             commonFilesList: [], // 文件列表
@@ -1773,6 +1777,7 @@
         },
         showDetailForm: {
           project: {
+            beforeId: '',
             infoProductList: [], // 产品列表
             infoSubjectMatterList: [], // 标的信息
             commonFilesList: [], // 文件列表
@@ -1949,6 +1954,18 @@
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
     },
     methods: {
+      // 工程合同额-初始合同额=合同额增减
+      getCount() {
+        this.detailForm.project.contractAmountChange = this.detailForm.project.contractAmountEngine - this.detailForm.project.contractAmountInitial
+      },
+      // 增值税改变，上报产值是否含税联动
+      getOutputTax() {
+        if (this.detailForm.project.valueAddedTax && this.detailForm.project.valueAddedTax !== '0') {
+          this.detailForm.project.isOutputTax = '0'
+        } else {
+          this.detailForm.project.isOutputTax = '1'
+        }
+      },
       handleRemove(file, index) {
         this.$http
           .post(
@@ -2080,8 +2097,40 @@
       back() {
         this.$router.back()
       },
-      saveInfo() {
-        console.log('saveInfo')
+      saveInfo(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            let params = {afterProjectBo: {project: this.detailForm.project}, beforeProjectBo: {project: this.showDetailForm.project}}
+            this.$http
+              .post(
+                '/api/statistics/StatisticsProject/detail/saveChangeRecord',
+                JSON.stringify(params),
+                { useJson: true }
+              )
+              .then((res) => {
+                if (res.data.code === 200) {
+                  this.$message({
+                    message: '保存成功',
+                    type: 'success'
+                  })
+                  this.$router.push({
+                    path: '/statistics/project/changeList'
+                  })
+                } else {
+                  this.$message({
+                    message: '保存失败',
+                    type: 'error'
+                  })
+                }
+              })
+          } else {
+            this.$message({
+              message: '请正确填写信息',
+              type: 'error'
+            })
+            return false
+          }
+        })
       },
       submit() {
         console.log('submit')
@@ -2093,65 +2142,31 @@
           this.$refs.infoDw.init(type, list)
         })
       },
-      getShow() {
-        let params = { topInfoId: this.p.uuid }
+      // 修改和查看时的时候详情
+      getDetail() {
         this.$http
-          .post('/api/statistics/StatisticsProject/detail/entityInfo', params)
+          .post('/api/statistics/StatisticsProject/detail/entityInfoByBeforeAndAfterId', {
+            beforeId: this.p.beforeId,
+            afterId: this.p.afterId,
+            uuid: this.p.uuid
+          })
           .then((res) => {
             if (res.data.code === 200) {
-              this.detailForm.project = res.data.data
-              if (!res.data.data.infoProductList) {
-                this.detailForm.project.infoProductList = []
-              }
-              if (!res.data.data.infoSubjectMatterList) {
-                this.detailForm.project.infoSubjectMatterList = []
-              }
+              let data = res.data.data
+              data.forEach(item => {
+                if (item.project.changeStatus == '1') {
+                  this.showDetailForm.project = JSON.parse(JSON.stringify(item.project))
+                  this.showDetailForm.project.beforeId = this.p.beforeId
+                  this.showDetailForm.project.afterId = this.p.afterId
+                } else if (item.project.changeStatus == '2') {
+                  this.detailForm.project = item.project
+                  this.detailForm.project.beforeId = this.p.beforeId
+                  this.detailForm.project.afterId = this.p.afterId
+                }
+              })
               this.getShowTwo()
             }
           })
-      },
-      // 修改的时候详情
-      getDetail() {
-        this.$http
-          .post("/api/contract/topInfo/TopInfor/detail/entityInfoByBeforeAndAfterId", {
-            beforeId: this.id,
-            afterId: this.afterId
-          })
-          .then((res) => {
-            var datas = res.data.data;
-            var beforData = [], afterData = [];
-            if (datas[0].topInfoOrg.changeStatus == 1) {
-              beforData = datas[0];
-              afterData = datas[1];
-            } else {
-              beforData = datas[1];
-              afterData = datas[0];
-            }
-            this.getTwo(afterData.topInfor.enginTypeFirstId);
-            this.getTwoSC(afterData.topInfor.marketFirstNameId);
-            this.getTwoXZ(afterData.topInfor.projectNatureFirstId);
-            // afterData.topInforCapitalList.forEach((item)=>{
-            //   this.value1.push(item.capitalId);
-            // });
-            console.log(afterData)
-            this.detailform = {
-              topInfor: afterData.topInfor,
-              topInfoOrg: afterData.topInfoOrg,
-              topInfoSiteList: afterData.topInfoSiteList,
-              topInfoSectionList: afterData.topInfoSectionList,
-              value1: [],
-            };
-            afterData.topInforCapitalList.forEach((item) => {
-              this.detailform.value1.push(item.capitalId)
-            });
-            this.detailFormBefore = {
-              capitalName: beforData.capitalName,
-              topInfor: beforData.topInfor,
-              topInfoOrg: beforData.topInfoOrg,
-              topInfoSiteList: beforData.topInfoSiteList,
-              topInfoSectionList: beforData.topInfoSectionList
-            }
-          });
       },
       // 新增的时候详情
       getAddDetail() {
