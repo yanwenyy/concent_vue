@@ -753,9 +753,9 @@
       <el-tab-pane label="变更前">
         <div class="detailBoxBG">
           <el-form
-            :model="detailForm"
+            :model="showDetailForm"
             class="gcform"
-            ref="detailForm">
+            ref="showDetailForm">
             <!--项目名称-->
             <el-row>
               <el-form-item
@@ -1924,6 +1924,9 @@
                   this.detailForm.project = item.project
                   this.detailForm.project.beforeId = this.p.beforeId
                   this.detailForm.project.afterId = this.p.afterId
+                  if (!this.detailForm.project.projectSubContractList) {
+                    this.detailForm.project.projectSubContractList = []
+                  }
                 }
               })
               this.getShowTwo()
@@ -1945,6 +1948,9 @@
               }
               if (!res.data.data.infoSubjectMatterList) {
                 this.detailForm.project.infoSubjectMatterList = []
+              }
+              if (!res.data.data.projectSubContractList) {
+                this.detailForm.project.projectSubContractList = []
               }
               this.getShowTwo()
             }

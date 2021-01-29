@@ -963,7 +963,7 @@
                     filterable
                     clearable
                     placeholder="请选择"
-                    @change="getName(scope.row.projectTypeId, projectType, 'projectTypeName')"
+                    @change="getName2(scope.row.projectTypeId, projectType, 'projectTypeName', scope.$index)"
                     v-model="scope.row.projectTypeId">
                     <el-option
                       :key="index"
@@ -977,7 +977,7 @@
                 :resizable="false"
                 label="项目名称"
                 align="center"
-                prop="productName"
+                prop="projectName"
                 min-width="200"
                 show-overflow-tooltip
               >
@@ -986,7 +986,7 @@
                   <!--:rules="{required: true, message: '此项不能为空', trigger: 'blur'}"-->
                   <el-form-item>
                     <el-input
-                      v-model="scope.row.productName"
+                      v-model="scope.row.projectName"
                       clearable
                       :disabled="p.actpoint === 'look'"/>
                   </el-form-item>
@@ -1370,7 +1370,13 @@
           this.detailForm.project[name] = list.find(
             (item) => item.id === id
           ).detailName
-          console.log(this.detailForm)
+        }
+      },
+      getName2(id, list, name, index) {
+        if (id) {
+          this.detailForm.project.projectSubContractList[index][name] = list.find(
+            (item) => item.id === id
+          ).detailName
         }
       },
       getShowTwo() {

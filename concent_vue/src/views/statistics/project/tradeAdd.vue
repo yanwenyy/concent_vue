@@ -327,6 +327,7 @@
                 clearable
                 :disabled="p.actpoint === 'look'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'"
                 placeholder="请选择"
+                @change="getName(detailForm.project.marketSecondId, emergingMarketTwo, 'marketSecondName')"
                 v-model="detailForm.project.marketSecondId">
                 <el-option
                   :key="index"
@@ -680,13 +681,7 @@
             infoProductList: [], // 产品列表
             infoSubjectMatterList: [], // 标的信息
             commonFilesList: [], // 文件列表
-            topInfoSiteList: [
-              {
-                path: '',
-                placeId: '',
-                uuid: ''
-              }
-            ],
+            topInfoSiteList: [], // 项目所在地
             projectModuleId: '510ba0d79593418493eb1a11ea4e7af4', // 项目板块
             projectModuleName: '物资贸易', // 项目板块
             projectName: '',

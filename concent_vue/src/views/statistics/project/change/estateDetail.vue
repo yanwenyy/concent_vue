@@ -1,0 +1,1092 @@
+<!--勘察设计项目变更-->
+
+<template>
+  <div style="position: relative">
+    <el-button v-show="p.actpoint !== 'look'" class="detail-back-tab detailbutton save-btn" type="primary"
+               @click="saveInfo('detailForm')">保存
+    </el-button>
+    <el-button v-show="p.actpoint !== 'look'" class="detail-back-tab detailbutton sub-btn" @click="submit">提交</el-button>
+    <el-button class="detail-back-tab detailbutton" @click="back" type="text">返回</el-button>
+    <el-tabs type="border-card">
+      <el-tab-pane label="变更后">
+        <div class="detailBoxBG">
+          <el-form
+            :inline="false"
+            :model="detailForm"
+            class="gcform"
+            ref="detailForm"
+            style="background: white">
+            <el-row>
+              <el-form-item
+                label="项目名称:"
+                prop="project.projectName"
+                :rules="{
+                required: true, message: '此项不能为空', trigger: 'blur'
+              }"
+                style="width: 32.5%">
+                <el-input
+                  :disabled="p.actpoint === 'look'"
+                  clearable
+                  placeholder="请输入"
+                  v-model="detailForm.project.projectName"/>
+              </el-form-item>
+              <el-form-item
+                label="外文名称:"
+                style="width: 32.5%">
+                <el-input
+                  :disabled="p.actpoint === 'look'"
+                  clearable
+                  placeholder="请输入"
+                  v-model="detailForm.project.projectForeginName"/>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                label="建设用地面积(万平方米):"
+                prop="project.projectLandArea"
+                :rules="rules.project.isNumber"
+                style="width:32.5%;">
+                <el-input
+                  clearable
+                  :disabled="p.actpoint === 'look'"
+                  placeholder="请输入"
+                  v-model="detailForm.project.projectLandArea"/>
+              </el-form-item>
+              <el-form-item
+                label="项目详细地点"
+                style="width: 32.5%"
+                prop="project.topInfoSiteList[0].path"
+                :rules="{
+                required: true, message: '此项不能为空', trigger: 'change'
+              }"
+              >
+                <el-input v-model="detailForm.project.topInfoSiteList[0].path" placeholder="项目所在地"
+                          :disabled="p.actpoint === 'look'" clearable>
+                  <el-button slot="append" :disabled="p.actpoint === 'look'" icon="el-icon-search"
+                             @click="selectPosition()"></el-button>
+                </el-input>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                label="合同号:"
+                prop="project.contractNumber"
+                style="width:32.5%;">
+                <el-input
+                  clearable
+                  placeholder="请输入"
+                  :disabled="p.actpoint === 'look'"
+                  v-model="detailForm.project.contractNumber"/>
+              </el-form-item>
+              <el-form-item
+                label="合同签订时间:"
+                prop="contractSignTime"
+                style="width: 32.5%">
+                <el-date-picker
+                  :disabled="p.actpoint === 'look'"
+                  v-model="detailForm.project.contractSignTime"
+                  type="date"
+                  value-format="timestamp"
+                  placeholder="选择日期时间"/>
+              </el-form-item>
+              <el-form-item
+                label="是否海外合同:"
+                prop="isOverseasContract"
+                class="inline-formitem"
+                style="width:32.5%;">
+                <el-switch
+                  :disabled="p.actpoint === 'look'"
+                  class="inline-formitem-switch"
+                  v-model="detailForm.project.isOverseasContract"
+                  active-color="#409EFF"
+                  inactive-color="#ddd"
+                  active-value="0"
+                  inactive-value="1"/>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                label="签约总金额(万元):"
+                prop="project.amountSignup"
+                :rules="rules.project.isMoney"
+                style="width:32.5%;">
+                <el-input
+                  clearable
+                  placeholder="请输入"
+                  :disabled="p.actpoint === 'look'"
+                  v-model="detailForm.project.amountSignup">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                label="我方份额(万元):"
+                prop="project.amountWe"
+                :rules="rules.project.isMoney"
+                style="width:32.5%;">
+                <el-input
+                  clearable
+                  placeholder="请输入"
+                  :disabled="p.actpoint === 'look'"
+                  v-model="detailForm.project.amountWe">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                label="是否为年度合同:"
+                prop="isAnnualContract"
+                class="inline-formitem"
+                style="width:32.5%;">
+                <el-switch
+                  :disabled="p.actpoint === 'look'"
+                  class="inline-formitem-switch"
+                  v-model="detailForm.project.isAnnualContract"
+                  active-color="#409EFF"
+                  inactive-color="#ddd"
+                  active-value="0"
+                  inactive-value="1"/>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                label="项目状态:"
+                prop="project.projectStatusId"
+                :rules="{
+                required: true, message: '此项不能为空', trigger: 'blur'
+              }"
+                style="width:32.5%;">
+                <el-select
+                  filterable
+                  clearable
+                  placeholder="请选择"
+                  :disabled="p.actpoint === 'look'"
+                  @change="getName(detailForm.project.projectStatusId, projectStatus, 'projectStatusName')"
+                  v-model="detailForm.project.projectStatusId">
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in projectStatus"/>
+                </el-select>
+              </el-form-item>
+              <el-form-item
+                label="增值税(万元):"
+                prop="project.valueAddedTax"
+                :rules="rules.project.isNumber"
+                style="width: 32.5%">
+                <el-input
+                  :disabled="p.actpoint === 'look'"
+                  clearable
+                  placeholder="请输入"
+                  v-model="detailForm.project.valueAddedTax">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                label="签约单位:"
+                prop="amountCompanyName"
+                style="width:32.5%;">
+                <el-input
+                  clearable
+                  :disabled="p.actpoint === 'look'"
+                  placeholder="请输入"
+                  v-model="detailForm.project.amountCompanyName"/>
+              </el-form-item>
+              <el-form-item
+                label="所属单位:"
+                prop="project.companyBelongName"
+                style="width:32.5%;">
+                <el-input
+                  disabled
+                  placeholder="请输入"
+                  v-model="detailForm.project.companyBelongName"/>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                label="新兴市场类别(一级):"
+                prop="marketFirstId"
+                style="width: 32.5%">
+                <el-select
+                  clearable
+                  filterable
+                  :disabled="p.actpoint === 'look'"
+                  placeholder="请选择"
+                  @change="getMarketTwo"
+                  v-model="detailForm.project.marketFirstId">
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in emergingMarket"/>
+                </el-select>
+              </el-form-item>
+              <el-form-item
+                label="新兴市场类别(二级):"
+                prop="marketSecondId"
+                style="width: 32.5%">
+                <el-select
+                  filterable
+                  clearable
+                  :disabled="p.actpoint === 'look'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'"
+                  placeholder="请选择"
+                  @change="getName(detailForm.project.marketSecondId, emergingMarketTwo, 'marketSecondName')"
+                  v-model="detailForm.project.marketSecondId">
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in emergingMarketTwo"/>
+                </el-select>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
+                label="装配率(%):"
+                prop="project.assemblyRate"
+                :rules="rules.project.isPercent"
+                style="width: 32.5%">
+                <el-input
+                  :disabled="p.actpoint === 'look'"
+                  clearable
+                  placeholder="请输入"
+                  v-model="detailForm.project.assemblyRate">
+                  <template slot="append">%</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
+                label="装配类型:"
+                prop="project.assemblyTypeId"
+                :rules="{
+                required: true, message: '此项不能为空', trigger: 'blur'
+              }"
+                style="width: 32.5%">
+                <el-select
+                  :disabled="p.actpoint === 'look'"
+                  filterable
+                  clearable
+                  @change="getName(detailForm.project.assemblyTypeId, assemblyType, 'assemblyTypeName')"
+                  placeholder="请选择"
+                  v-model="detailForm.project.assemblyTypeId">
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in assemblyType"/>
+                </el-select>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
+                label="建筑类型:"
+                prop="project.architectureTypeId"
+                :rules="{
+                required: true, message: '此项不能为空', trigger: 'blur'
+              }"
+                style="width: 32.5%">
+                <el-select
+                  :disabled="p.actpoint === 'look'"
+                  filterable
+                  clearable
+                  @change="getName(detailForm.project.architectureTypeId, architecturalType, 'architectureTypeName')"
+                  placeholder="请选择"
+                  v-model="detailForm.project.architectureTypeId">
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in architecturalType"/>
+                </el-select>
+              </el-form-item>
+              <el-form-item
+                v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
+                label="房屋结构类型:"
+                prop="project.houseTypeId"
+                :rules="{
+                required: true, message: '此项不能为空', trigger: 'blur'
+              }"
+                style="width: 32.5%">
+                <el-select
+                  :disabled="p.actpoint === 'look'"
+                  filterable
+                  clearable
+                  @change="getName(detailForm.project.houseTypeId, buildingStructure, 'houseTypeName')"
+                  placeholder="请选择"
+                  v-model="detailForm.project.houseTypeId">
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in buildingStructure"/>
+                </el-select>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                v-if="detailForm.project.marketFirstId === '50cd5e9992ac4653920fac8c1f2eb2e3'"
+                label="场地名称:"
+                prop="project.fieldId"
+                :rules="{
+                required: true, message: '此项不能为空', trigger: 'blur'
+              }"
+                style="width: 32.5%">
+                <el-select
+                  :disabled="p.actpoint === 'look'"
+                  filterable
+                  clearable
+                  @change="getName(detailForm.project.fieldId, siteName, 'fieldName')"
+                  placeholder="请选择"
+                  v-model="detailForm.project.fieldId">
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in siteName"/>
+                </el-select>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                label="推送人:"
+                prop="project.projectPusher"
+                style="width:32.5%;">
+                <el-input
+                  clearable
+                  placeholder="请输入"
+                  :disabled="p.actpoint === 'look'"
+                  v-model="detailForm.project.projectPusher"/>
+              </el-form-item>
+              <el-form-item
+                label="联系方式:"
+                prop="project.projectPusherPhone"
+                :rules="rules.project.isMobile"
+                style="width:32.5%;">
+                <el-input
+                  clearable
+                  placeholder="请输入"
+                  :disabled="p.actpoint === 'look'"
+                  v-model="detailForm.project.projectPusherPhone"/>
+              </el-form-item>
+            </el-row>
+          </el-form>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="变更前">
+        <div class="detailBoxBG">
+          <el-form
+            :inline="false"
+            :model="showDetailForm"
+            class="gcform"
+            ref="showDetailForm"
+            style="background: white">
+            <el-row>
+              <el-form-item
+                label="项目名称:"
+                style="width: 32.5%">
+                <el-input
+                  disabled
+                  clearable
+                  placeholder="请输入"
+                  v-model="showDetailForm.project.projectName"/>
+              </el-form-item>
+              <el-form-item
+                label="外文名称:"
+                style="width: 32.5%">
+                <el-input
+                  disabled
+                  clearable
+                  placeholder="请输入"
+                  v-model="showDetailForm.project.projectForeginName"/>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                label="建设用地面积(万平方米):"
+                style="width:32.5%;">
+                <el-input
+                  clearable
+                  disabled
+                  placeholder="请输入"
+                  v-model="showDetailForm.project.projectLandArea"/>
+              </el-form-item>
+              <el-form-item
+                label="项目详细地点"
+                style="width: 32.5%">
+                <el-input v-model="showDetailForm.project.topInfoSiteList[0].path" placeholder="项目所在地" disabled>
+                  <el-button slot="append" disabled icon="el-icon-search" @click="selectPosition()"></el-button>
+                </el-input>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                label="合同号:"
+                style="width:32.5%;">
+                <el-input
+                  clearable
+                  disabled
+                  placeholder="请输入"
+                  v-model="showDetailForm.project.contractNumber"/>
+              </el-form-item>
+              <el-form-item
+                label="合同签订时间:"
+                prop="contractSignTime"
+                style="width: 32.5%">
+                <el-date-picker
+                  disabled
+                  v-model="showDetailForm.project.contractSignTime"
+                  type="date"
+                  value-format="timestamp"
+                  placeholder="选择日期时间"/>
+              </el-form-item>
+              <el-form-item
+                label="是否海外合同:"
+                prop="isOverseasContract"
+                class="inline-formitem"
+                style="width:32.5%;">
+                <el-switch
+                  disabled
+                  class="inline-formitem-switch"
+                  v-model="showDetailForm.project.isOverseasContract"
+                  active-color="#409EFF"
+                  inactive-color="#ddd"
+                  active-value="0"
+                  inactive-value="1"/>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                label="签约总金额(万元):"
+                style="width:32.5%;">
+                <el-input
+                  clearable
+                  placeholder="请输入"
+                  disabled
+                  v-model="showDetailForm.project.amountSignup">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                label="我方份额(万元):"
+                style="width:32.5%;">
+                <el-input
+                  clearable
+                  placeholder="请输入"
+                  disabled
+                  v-model="showDetailForm.project.amountWe">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                label="是否为年度合同:"
+                prop="isAnnualContract"
+                class="inline-formitem"
+                style="width:32.5%;">
+                <el-switch
+                  disabled
+                  class="inline-formitem-switch"
+                  v-model="showDetailForm.project.isAnnualContract"
+                  active-color="#409EFF"
+                  inactive-color="#ddd"
+                  active-value="0"
+                  inactive-value="1"/>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                label="项目状态:"
+                style="width:32.5%;">
+                <el-select
+                  filterable
+                  clearable
+                  placeholder="请选择"
+                  disabled
+                  v-model="showDetailForm.project.projectStatusId">
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in projectStatus"/>
+                </el-select>
+              </el-form-item>
+              <el-form-item
+                label="增值税(万元):"
+                style="width: 32.5%">
+                <el-input
+                  disabled
+                  clearable
+                  placeholder="请输入"
+                  v-model="showDetailForm.project.valueAddedTax">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                label="签约单位:"
+                prop="amountCompanyName"
+                style="width:32.5%;">
+                <el-input
+                  clearable
+                  disabled
+                  placeholder="请输入"
+                  v-model="showDetailForm.project.amountCompanyName"/>
+              </el-form-item>
+              <el-form-item
+                label="所属单位:"
+                style="width:32.5%;">
+                <el-input
+                  disabled
+                  placeholder="请输入"
+                  v-model="showDetailForm.project.companyBelongName"/>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                label="新兴市场类别(一级):"
+                prop="marketFirstId"
+                style="width: 32.5%">
+                <el-select
+                  clearable
+                  filterable
+                  disabled
+                  placeholder="请选择"
+                  v-model="showDetailForm.project.marketFirstId">
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in emergingMarket"/>
+                </el-select>
+              </el-form-item>
+              <el-form-item
+                label="新兴市场类别(二级):"
+                prop="marketSecondId"
+                style="width: 32.5%">
+                <el-select
+                  filterable
+                  clearable
+                  disabled
+                  placeholder="请选择"
+                  v-model="showDetailForm.project.marketSecondName">
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in emergingMarketTwo"/>
+                </el-select>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                v-if="showDetailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
+                label="装配率(%):"
+                style="width: 32.5%">
+                <el-input
+                  disabled
+                  clearable
+                  placeholder="请输入"
+                  v-model="showDetailForm.project.assemblyRate">
+                  <template slot="append">%</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                v-if="showDetailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
+                label="装配类型:"
+                style="width: 32.5%">
+                <el-select
+                  disabled
+                  filterable
+                  clearable
+                  placeholder="请选择"
+                  v-model="showDetailForm.project.assemblyTypeName">
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in assemblyType"/>
+                </el-select>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                v-if="showDetailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
+                label="建筑类型:"
+                style="width: 32.5%">
+                <el-select
+                  disabled
+                  filterable
+                  clearable
+                  placeholder="请选择"
+                  v-model="showDetailForm.project.architectureTypeName">
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in architecturalType"/>
+                </el-select>
+              </el-form-item>
+              <el-form-item
+                v-if="showDetailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
+                label="房屋结构类型:"
+                style="width: 32.5%">
+                <el-select
+                  disabled
+                  filterable
+                  clearable
+                  placeholder="请选择"
+                  v-model="showDetailForm.project.houseTypeName">
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in buildingStructure"/>
+                </el-select>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                v-if="showDetailForm.project.marketFirstId === '50cd5e9992ac4653920fac8c1f2eb2e3'"
+                label="场地名称:"
+                style="width: 32.5%">
+                <el-select
+                  disabled
+                  filterable
+                  clearable
+                  placeholder="请选择"
+                  v-model="showDetailForm.project.fieldName">
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in siteName"/>
+                </el-select>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                label="推送人:"
+                style="width:32.5%;">
+                <el-input
+                  clearable
+                  placeholder="请输入"
+                  disabled
+                  v-model="showDetailForm.project.projectPusher"/>
+              </el-form-item>
+              <el-form-item
+                label="联系方式:"
+                style="width:32.5%;">
+                <el-input
+                  disabled
+                  clearable
+                  placeholder="请输入"
+                  v-model="showDetailForm.project.projectPusherPhone"/>
+              </el-form-item>
+            </el-row>
+          </el-form>
+        </div>
+      </el-tab-pane>
+    </el-tabs>
+    <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
+  </div>
+</template>
+
+<script>
+  import Tree from '@/components/tree'
+  import { isMoney, isMobile, isPhone } from '@/utils/validate'
+
+  export default {
+    name: 'change',
+    components: {
+      Tree
+    },
+    data() {
+      const validateMoney = (rule, value, callback) => {
+        if (!value || value === '') {
+          callback()
+        } else if (!isMoney(value)) {
+          callback(new Error('请输入正确的金额格式'))
+        } else {
+          callback()
+        }
+      }
+      const validateMustMoney = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('此项不能为空'))
+        } else if (!isMoney(value)) {
+          callback(new Error('请输入正确的金额格式'))
+        } else {
+          callback()
+        }
+      }
+      const validateNumber = (rule, value, callback) => {
+        if (!value || value === '') {
+          callback()
+        } else if (!isMoney(value)) {
+          callback(new Error('请输入正确的数字格式'))
+        } else {
+          callback()
+        }
+      }
+      const validateMobile = (rule, value, callback) => {
+        if (!value || value === '') {
+          callback()
+        } else if (!isMobile(value) && !isPhone(value)) {
+          callback(new Error('请输入正确的联系方式'))
+        } else {
+          callback()
+        }
+      }
+      const validatePercent = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('此项不能为空'))
+        } else if (!isMoney(value) || value < 0 || value > 100) {
+          callback(new Error('请输入正确的装配率百分比'))
+        } else {
+          callback()
+        }
+      }
+      return {
+        uuid: null,
+        switchvalue: true,
+        treeStatas: false,
+        emergingMarketTwo: [],
+        detailForm: {
+          project: {
+            projectSubContractList: [], // 分包列表
+            infoProductList: [], // 产品列表
+            infoSubjectMatterList: [], // 标的信息
+            commonFilesList: [], // 文件列表
+            topInfoSiteList: [
+              {
+                path: '',
+                placeId: '',
+                uuid: ''
+              }
+            ],
+            projectModuleId: '510ba0d79593418493eb1a11ea4e7af6', // 项目板块
+            projectModuleName: '房地产开发', // 项目板块
+            projectName: '',
+            projectForeginName: '',
+            valueAddedTax: '',
+            projectLandArea: '',
+            contractNumber: '',
+            amountSignup: '',
+            amountWe: '',
+            contractSignTime: '',
+            isOverseasContract: '',
+            projectStatusId: '',
+            isAnnualContract: '',
+            amountCompanyName: '',
+            marketFirstId: '',
+            marketSecondId: '',
+            assemblyRate: '',
+            assemblyTypeId: '',
+            architectureTypeId: '',
+            houseTypeId: '',
+            fieldId: '',
+            companyBelongName: '股份公司',
+            projectPusher: '',
+            projectPusherPhone: ''
+          }
+        },
+        showDetailForm: {
+          project: {
+            projectSubContractList: [], // 分包列表
+            infoProductList: [], // 产品列表
+            infoSubjectMatterList: [], // 标的信息
+            commonFilesList: [], // 文件列表
+            topInfoSiteList: [
+              {
+                path: '',
+                placeId: '',
+                uuid: ''
+              }
+            ],
+            projectModuleId: '510ba0d79593418493eb1a11ea4e7af6', // 项目板块
+            projectModuleName: '房地产开发', // 项目板块
+            projectName: '',
+            projectForeginName: '',
+            valueAddedTax: '',
+            projectLandArea: '',
+            contractNumber: '',
+            amountSignup: '',
+            amountWe: '',
+            contractSignTime: '',
+            isOverseasContract: '',
+            projectStatusId: '',
+            isAnnualContract: '',
+            amountCompanyName: '',
+            marketFirstId: '',
+            marketSecondId: '',
+            assemblyRate: '',
+            assemblyTypeId: '',
+            architectureTypeId: '',
+            houseTypeId: '',
+            fieldId: '',
+            companyBelongName: '股份公司',
+            projectPusher: '',
+            projectPusherPhone: ''
+          }
+        },
+        rules: {
+          project: {
+            projectName: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
+            contractNumber: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
+            isMoney: [{ validator: validateMoney, trigger: ['blur', 'change'] }],
+            isMustMoney: [{ required: true, validator: validateMustMoney, trigger: ['blur', 'change'] }],
+            isMobile: [{ validator: validateMobile, trigger: ['blur', 'change'] }],
+            isPercent: [{ required: true, validator: validatePercent, trigger: ['blur', 'change'] }],
+            isNumber: [{ validator: validateNumber, trigger: ['blur', 'change'] }]
+          }
+        },
+        p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
+      }
+    },
+    computed: {
+      projectStatus() {
+        return this.$store.state.projectStatus
+      },
+      emergingMarket() {
+        return this.$store.state.category.emergingMarket
+      },
+      assemblyType() {
+        return this.$store.state.assemblyType
+      },
+      architecturalType() {
+        return this.$store.state.architecturalType
+      },
+      buildingStructure() {
+        return this.$store.state.buildingStructure
+      },
+      siteName() {
+        return this.$store.state.siteName
+      }
+    },
+    mounted() {
+      this.$store.dispatch('getConfig', {})
+      this.$store.dispatch('getCategory', { name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3' })
+      this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
+      this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
+      if (this.p.actpoint === 'edit' || this.p.actpoint === 'look') {
+        this.getDetail()
+      }
+      if (this.p.actpoint === 'add') {
+        this.getAddDetail()
+      }
+    },
+    methods: {
+      // 选择项目地点
+      selectPosition() {
+        this.treeStatas = true
+        this.$nextTick(() => {
+          this.$refs.addOrUpdate.init()
+        })
+      },
+      // 获取项目地点的值
+      getPositionTree(data) {
+        this.treeStatas = false
+        this.detailForm.project.topInfoSiteList[0].placeId = data.id
+        this.detailForm.project.topInfoSiteList[0].path = data.fullDetailName
+      },
+      getName(id, list, name) {
+        if (id) {
+          this.$forceUpdate()
+          this.detailForm.project[name] = list.find(
+            (item) => item.id === id
+          ).detailName
+          console.log(this.detailForm)
+        }
+      },
+      getShowTwo() {
+        this.emergingMarket.find((item) => {
+          if (item.id === this.detailForm.project.marketFirstId) {
+            this.emergingMarketTwo = item.children
+          }
+        })
+      },
+      getMarketTwo(id) {
+        this.detailForm.project.marketSecondId = ''
+        this.detailForm.project.marketSecondName = ''
+        this.detailForm.project.assemblyRate = ''
+        this.detailForm.project.assemblyTypeId = ''
+        this.detailForm.project.assemblyTypeName = ''
+        this.detailForm.project.architectureTypeId = ''
+        this.detailForm.project.architectureTypeName = ''
+        this.detailForm.project.houseTypeId = ''
+        this.detailForm.project.houseTypeName = ''
+        this.detailForm.project.fieldId = ''
+        this.detailForm.project.fieldName = ''
+        this.emergingMarketTwo = []
+        if (id !== '') {
+          this.emergingMarket.find(
+            (item) => {
+              if (item.id === id) {
+                this.detailForm.project.marketFirstName = item.detailName
+                this.emergingMarketTwo = item.children
+              }
+            }
+          )
+        }
+      },
+      back() {
+        this.$router.back()
+      },
+      saveInfo(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            let params = {afterProjectBo: {project: this.detailForm.project}, beforeProjectBo: {project: this.showDetailForm.project}}
+            this.$http
+              .post(
+                '/api/statistics/StatisticsProject/detail/saveChangeRecord',
+                JSON.stringify(params),
+                { useJson: true }
+              )
+              .then((res) => {
+                if (res.data.code === 200) {
+                  this.$message({
+                    message: '保存成功',
+                    type: 'success'
+                  })
+                  this.$router.push({
+                    path: '/statistics/project/changeList'
+                  })
+                } else {
+                  this.$message({
+                    message: '保存失败',
+                    type: 'error'
+                  })
+                }
+              })
+          } else {
+            this.$message({
+              message: '请正确填写信息',
+              type: 'error'
+            })
+            return false
+          }
+        })
+      },
+      submit() {
+        console.log('submit')
+      },
+      // 修改和查看时的时候详情
+      getDetail() {
+        this.$http
+          .post('/api/statistics/StatisticsProject/detail/entityInfoByBeforeAndAfterId', {
+            beforeId: this.p.beforeId,
+            afterId: this.p.afterId,
+            uuid: this.p.uuid
+          })
+          .then((res) => {
+            if (res.data.code === 200) {
+              let data = res.data.data
+              data.forEach(item => {
+                if (item.project.changeStatus == '1') {
+                  this.showDetailForm.project = JSON.parse(JSON.stringify(item.project))
+                  this.showDetailForm.project.beforeId = this.p.beforeId
+                  this.showDetailForm.project.afterId = this.p.afterId
+                } else if (item.project.changeStatus == '2') {
+                  this.detailForm.project = item.project
+                  this.detailForm.project.beforeId = this.p.beforeId
+                  this.detailForm.project.afterId = this.p.afterId
+                  if (!this.detailForm.project.projectSubContractList) {
+                    this.detailForm.project.projectSubContractList = []
+                  }
+                }
+              })
+              this.getShowTwo()
+            }
+          })
+      },
+      // 新增的时候详情
+      getAddDetail() {
+        console.log('新增')
+        let params = { topInfoId: this.p.uuid }
+        this.$http
+          .post('/api/statistics/StatisticsProject/detail/entityInfo', params)
+          .then((res) => {
+            if (res.data.code === 200) {
+              this.detailForm.project = res.data.data
+              this.showDetailForm.project = JSON.parse(JSON.stringify(res.data.data))
+              if (!res.data.data.infoProductList) {
+                this.detailForm.project.infoProductList = []
+              }
+              if (!res.data.data.infoSubjectMatterList) {
+                this.detailForm.project.infoSubjectMatterList = []
+              }
+              if (!res.data.data.projectSubContractList) {
+                this.detailForm.project.projectSubContractList = []
+              }
+              this.getShowTwo()
+            }
+          })
+      }
+    }
+  }
+</script>
+<style lang="scss" scoped>
+  .detail-back-tab{
+    padding: 10px 20px ;
+    border:1px solid #ddd;
+    color: black;
+    position: absolute;
+    top:1px;
+    right:15px;
+    z-index: 999999999;
+    background: #fff;
+  }
+  .gcform {
+    margin-top: 10px;
+
+    .neirong {
+      > > > .el-form-item__error {
+        top: 4% !important;
+      }
+    }
+
+    > > > .el-form-item__error {
+      padding-top: 0px;
+      width: 95%;
+      margin-left: 0;
+      text-align: right;
+      top: 0%;
+    }
+
+    > > > .el-main {
+      overflow: hidden;
+    }
+
+    > > > .el-form-item__label:before {
+      position: initial;
+      left: -10px;
+    }
+
+    > > > .inline-formitem {
+      margin-top: 30px;
+    }
+
+    .el-form-item {
+      float: left;
+      margin-bottom: 0;
+      margin-right: 0.5%;
+
+      .el-input {
+        width: 95%;
+      }
+
+      .el-select {
+        width: 95%;
+      }
+    }
+  }
+</style>
