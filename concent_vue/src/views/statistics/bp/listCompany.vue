@@ -7,11 +7,11 @@
 
 <!--   style="height: calc(100% - 60px); border: 1px solid #eee"-->
   <div style="display: inline-block;vertical-align: top;overflow: auto; border-right: 1px solid #DCDFE6;width:14%" >
-  <div style="position:relative;">
+  <div style="position:relative;margin:10px">
   <el-select
-  style="height:42px"
+    style="height:42px"
     filterable
-    placeholder="工程行业类别"
+    placeholder="请选择工程(行业)类别"
     size="mini"
     v-model="itemform.vprojecttypes"
     @change="engineer"
@@ -43,7 +43,7 @@
     <!--      show-checkbox-->
     <span class="custom-tree-node" slot-scope="{ node, data }">
             <span>
-                <i :class="data.icon"></i>{{ node.label }}
+                <i :class="data.icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ node.label }}
             </span>
         </span>
     </el-tree>
@@ -54,17 +54,17 @@
         <div style="display: inline-block;height: auto;width: 90%">
           <div class="small">
           <span style="padding: 5px">统计项名称：</span>
-          <el-input v-model="selectItem.vname" disabled style="width:70%"></el-input>
+          <el-input v-model="selectItem.vname" disabled style="width:55%"></el-input>
           <!-- <span>{{selectItem.vname }}</span> -->
           </div>
           <div class="small">
           <span style="padding: 5px"> &nbsp;计量单位：</span>
-          <el-input v-model="selectItem.vjldwFormatter" disabled style="width:70%"></el-input>
+          <el-input v-model="selectItem.vjldwFormatter" disabled style="width:55%"></el-input>
           <!-- <span>{{ selectItem.vjldwFormatter}}</span> -->
           </div>
           <div class="small">
           <span style="padding: 5px">上报排除项：</span>
-          <el-input v-model="selectItem.vsbpc" disabled style="width:70%"></el-input>
+          <el-input v-model="selectItem.vsbpc" disabled style="width:55%"></el-input>
           <!-- <span >{{ selectItem.vsbpc }}</span> -->
           </div>
         </div>

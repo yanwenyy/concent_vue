@@ -327,6 +327,7 @@
                 clearable
                 :disabled="p.actpoint === 'look'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'"
                 placeholder="请选择"
+                @change="getName(detailForm.project.marketSecondId, emergingMarketTwo, 'marketSecondName')"
                 v-model="detailForm.project.marketSecondId">
                 <el-option
                   :key="index"
@@ -515,7 +516,7 @@
                 <template slot-scope="scope">
                   <!--:prop="'project.productInfoList[' + scope.$index + '].productName'"-->
                   <!--:rules="{required: true, message: '此项不能为空', trigger: 'blur'}"-->
-                  <el-form-item>
+                  <el-form-item class="tabelForm">
                     <el-input
                       v-model="scope.row.subjectMatterName"
                       clearable
@@ -532,7 +533,7 @@
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  <el-form-item class="top0"
+                  <el-form-item class="tabelForm"
                                 :prop="'project.infoSubjectMatterList[' + scope.$index + '].subjectMatterNo'"
                                 :rules="rules.project.isNumber">
                     <el-input
@@ -551,10 +552,12 @@
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.subjectMatterUnit"/>
+                  <el-form-item class="tabelForm">
+                    <el-input
+                      clearable
+                      :disabled="p.actpoint === 'look'"
+                      v-model="scope.row.subjectMatterUnit"/>
+                  </el-form-item>
                 </template>
               </el-table-column>
               <el-table-column
@@ -570,6 +573,7 @@
                                 :prop="'project.infoSubjectMatterList[' + scope.$index + '].totalPrice'"
                                 :rules="rules.project.isMustMoney">
                     <el-input
+                      class="group-no-padding"
                       v-model="scope.row.totalPrice"
                       clearable
                       :disabled="p.actpoint === 'look'"
@@ -680,13 +684,7 @@
             infoProductList: [], // 产品列表
             infoSubjectMatterList: [], // 标的信息
             commonFilesList: [], // 文件列表
-            topInfoSiteList: [
-              {
-                path: '',
-                placeId: '',
-                uuid: ''
-              }
-            ],
+            topInfoSiteList: [], // 项目所在地
             projectModuleId: '510ba0d79593418493eb1a11ea4e7af4', // 项目板块
             projectModuleName: '物资贸易', // 项目板块
             projectName: '',
@@ -952,16 +950,12 @@
 <style lang="scss" scoped>
   .gcform {
     margin-top: 10px;
-
+    .group-no-padding{
+      vertical-align: middle;
+    }
     .neirong {
       > > > .el-form-item__error {
         top: 4% !important;
-      }
-    }
-
-    .top0 {
-      > > > .el-form-item__error {
-        top: -18% !important;
       }
     }
 

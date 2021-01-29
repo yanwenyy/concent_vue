@@ -184,9 +184,10 @@
         </el-form-item>
 
         <el-form-item label="所属汇总指标" prop="vjldw">
-          <el-input v-model="itemform.vtype"
-            placeholder="所属汇总指标"
-            clearable
+          <el-input
+          v-model="itemform.sumTargetName"
+          placeholder="所属汇总指标"
+          clearable
           >
           <el-button
             slot="append"
@@ -247,6 +248,7 @@
        >
         <div>
         <el-tree
+            :key="tjxKey"
             :props="props"
             lazy
             ref="tree"
@@ -254,7 +256,6 @@
             node-key="uuid"
             :load="loadNode1"
             @node-click="setTjx"
-
           >
         <span class="custom-tree-node" slot-scope="{ node, data }">
           <span>
@@ -282,6 +283,7 @@ export default {
         isLeaf: "vleaf",
         icon: "icon",
       },
+      tjxKey:0,
       tjx:false,
       dialogtitle: "",
       parentid: "",
@@ -322,7 +324,8 @@ export default {
         voptional: "",
         valtername: "",
         vdisable: "",
-        hzidId:'',//汇总指标id,假的,需改
+        sumTarget:'',//汇总指标id
+        sumTargetName:'',
       },
 
       menus: [],
@@ -360,7 +363,8 @@ export default {
   methods: {
       //打开统计项汇总指标
       openhzzb(){
-        this.tjx = true
+        this.tjx = true;
+        this.tjxKey+=1;
       // this.$http
       //   .post(
       //     "/api/statistics/bp/BpTjx/detail/save",
@@ -372,11 +376,12 @@ export default {
       //
       //   });
     },
-      loadNode1(){
+      loadNode1(node, resolve){
         this.getData1(node, resolve);
       },
 
     getData1(node, resolve) {
+      // console.log(node)
       this.node = node;
       this.resolve = resolve;
       if (node.level === 0) {
@@ -385,20 +390,22 @@ export default {
         ]);
       }
       setTimeout(() => {
-        //console.log(node);
         this.$http
-          .post("/api/statistics/bp/BpTjx/list/getBpTjxListByParentId", {
-            parentid: node.data.uuid,
+          .post("/api/statistics/bp/BpTjx/list/getBpTjxListUpdateByUuid", {
+            uuid : node.data.uuid||this.itemform.vparentid,
           })
           .then((res) => {
-            resolve(data);
+            var datas=res.data.data;
+            resolve(datas);
+
           });
       });
     },
 
       //设置统计项汇总指标
       setTjx(obj,node,data){
-        this.itemform.hzidId=obj.uuid;
+        this.itemform.sumTarget=obj.uuid;
+        this.itemform.sumTargetName=obj.vname;
         this.tjx = false
 
       },
@@ -910,5 +917,9 @@ export default {
 }
 >>>.el-table__row{
   height: 40px !important;
+}
+>>>.el-dialog__body{
+  height: 500px !important;
+  overflow: auto;
 }
 </style>

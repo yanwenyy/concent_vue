@@ -286,8 +286,10 @@
          >
             </el-switch>
         </el-form-item>
-        <el-form-item label="通过时间"  prop="verifyResultTime">
+        <!-- <br> -->
+        <el-form-item label="通过时间"  prop="verifyResultTime" class="tgsj">
           <el-date-picker
+
             disabled
             value-format="timestamp"
             v-model="resultform.verifySection.verifyResultTime"
@@ -663,5 +665,8 @@
 }
 >>>.el-button--info.is-plain{
   margin-top:5px
+}
+>>>.mydialog .tgsj{
+  width: 50% !important;
 }
 </style>
