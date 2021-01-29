@@ -117,7 +117,7 @@
         <br>
           <el-form-item
             label="适用范围:"
-            prop="boqNationalStandard.engineeringType"
+            prop="boqNationalStandard.engineeringType1"
           >
             <el-select
               class="multiple-sel"
@@ -126,7 +126,7 @@
               filterable
               placeholder="请选择"
               multiple
-              v-model="detailform.boqNationalStandard.engineeringType"
+              v-model="detailform.boqNationalStandard.engineeringType1"
             >
               <el-option
                 :key="index"
@@ -602,7 +602,7 @@ import AddBd  from "./addBd";
       },
 
       saveInfo(formName) {
-        this.detailform.boqNationalStandard.engineeringType=this.detailform.boqNationalStandard.engineeringType.join(",");
+        this.detailform.boqNationalStandard.engineeringType=this.detailform.boqNationalStandard.engineeringType1.join(",");
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
@@ -698,7 +698,7 @@ import AddBd  from "./addBd";
               boqNationalStandard: datas.boqNationalStandard,
               nationalStandardScheduleBOList: datas.nationalStandardScheduleBOList,
             }
-            this.detailform.boqNationalStandard.engineeringType=this.detailform.boqNationalStandard.engineeringType?this.detailform.boqNationalStandard.engineeringType.split(","):[];
+            this.detailform.boqNationalStandard.engineeringType1=this.detailform.boqNationalStandard.engineeringType?this.detailform.boqNationalStandard.engineeringType.split(","):[];
           });
       },
 

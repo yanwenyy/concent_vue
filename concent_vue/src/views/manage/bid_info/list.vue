@@ -158,7 +158,7 @@
               filterable
               placeholder="请选择"
               size="mini"
-              v-model="searchform.noticeTypeName"
+              v-model="searchform.noticeTypeId"
             >
               <el-option
                 :key="index"
@@ -318,12 +318,11 @@ export default {
       InfoChangeSearch
     },
     computed: {
-        projectDomainType() {
-    // console.log(this.$store.state.category["projectDomainType"])
-    return this.$store.state.category.projectDomainType;
-  },
-        bulletinType() {
-    return this.$store.state.bulletinType;
+    projectDomainType() {
+        return this.$store.state.category.projectDomainType;
+    },
+    bulletinType() {
+        return this.$store.state.bulletinType;
       },
 },
   methods: {
