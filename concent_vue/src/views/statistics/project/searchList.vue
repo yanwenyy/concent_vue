@@ -518,7 +518,7 @@
         >
         </el-table-column>
         <el-table-column
-          :width="150"
+          :min-width="200"
           align="center"
           label="备注"
           prop="projectRemark"

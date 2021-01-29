@@ -453,6 +453,7 @@
         bizTypeCodeTwo: [],
         detailForm: {
           project: {
+            projectSubContractList: [], // 产品列表
             infoProductList: [], // 产品列表
             infoSubjectMatterList: [], // 标的信息
             commonFilesList: [], // 文件列表
@@ -659,6 +660,9 @@
               }
               if (!res.data.data.infoSubjectMatterList) {
                 this.detailForm.project.infoSubjectMatterList = []
+              }
+              if (!res.data.data.projectSubContractList) {
+                this.detailForm.project.projectSubContractList = []
               }
               this.getShowTwo()
             }
