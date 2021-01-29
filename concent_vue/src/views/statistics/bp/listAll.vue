@@ -142,7 +142,7 @@
       @size-change="handleSizeChange"
       layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
-
+<!-- 新增统计项的弹框 -->
     <el-dialog :title="dialogtitle" :visible.sync="dialogResult" width="30%">
       <el-form :model="itemform">
         <el-form-item label="统计名称" prop="vname" >
@@ -191,7 +191,7 @@
           <el-button
             slot="append"
             icon="el-icon-search"
-            @click="tjx=true"
+            @click="openhzzb"
           ></el-button>
           </el-input>
 
@@ -239,8 +239,9 @@
       </div>
     </el-dialog>
 
+<!-- 所属汇总指标的弹框 -->
     <el-dialog
-        title="提示"
+        title="所属汇总指标"
         :visible.sync="tjx"
         width="30%"
        >
@@ -251,8 +252,9 @@
             ref="tree"
             :default-expanded-keys="['']"
             node-key="uuid"
-            :load="loadNode"
+            :load="loadNode1"
             @node-click="setTjx"
+
           >
         <span class="custom-tree-node" slot-scope="{ node, data }">
           <span>
@@ -300,6 +302,7 @@ export default {
       itemList: [],
       node: {},
       resolve: {},
+
       itemform: {
         uuid: "",
         vname: "",
@@ -355,10 +358,46 @@ export default {
     },
   },
   methods: {
+      //打开统计项汇总指标
+      openhzzb(){
+        this.tjx = true
+      // this.$http
+      //   .post(
+      //     "/api/statistics/bp/BpTjx/detail/save",
+      //     JSON.stringify(this.itemform),
+      //     // this.itemform,
+      //     { useJson: true }
+      //   )
+      //   .then((res) => {
+      //
+      //   });
+    },
+      loadNode1(){
+        this.getData1(node, resolve);
+      },
+
+    getData1(node, resolve) {
+      this.node = node;
+      this.resolve = resolve;
+      if (node.level === 0) {
+        return resolve([
+          { vname: "统计项", uuid: "",},
+        ]);
+      }
+      setTimeout(() => {
+        //console.log(node);
+        this.$http
+          .post("/api/statistics/bp/BpTjx/list/getBpTjxListByParentId", {
+            parentid: node.data.uuid,
+          })
+          .then((res) => {
+            resolve(data);
+          });
+      });
+    },
 
       //设置统计项汇总指标
       setTjx(obj,node,data){
-        // console.log(obj,node,data);
         this.itemform.hzidId=obj.uuid;
         this.tjx = false
 
@@ -567,17 +606,17 @@ export default {
 
       //alert(JSON.stringify(p));
     },
-    changeTreeNodeStatus(node) {
-      node.expanded = false;
-      for (let i = 0; i < node.childNodes.length; i++) {
-        // 改变节点的自身expanded状态
-        node.childNodes[i].expanded = false;
-        // 遍历子节点
-        if (node.childNodes[i].childNodes.length > 0) {
-          this.changeTreeNodeStatus(node.childNodes[i]);
-        }
-      }
-    },
+    // changeTreeNodeStatus(node) {
+    //   node.expanded = false;
+    //   for (let i = 0; i < node.childNodes.length; i++) {
+    //     // 改变节点的自身expanded状态
+    //     node.childNodes[i].expanded = false;
+    //     // 遍历子节点
+    //     if (node.childNodes[i].childNodes.length > 0) {
+    //       this.changeTreeNodeStatus(node.childNodes[i]);
+    //     }
+    //   }
+    // },
 
     remove() {
       //console.log(JSON.stringify(this.multipleSelection[0].uuid));

@@ -7,8 +7,9 @@
 
 <!--   style="height: calc(100% - 60px); border: 1px solid #eee"-->
   <div style="display: inline-block;vertical-align: top;overflow: auto; border-right: 1px solid #DCDFE6;width:14%" >
-  <div style="position:relative">
+  <div style="position:relative;">
   <el-select
+  style="height:42px"
     filterable
     placeholder="工程行业类别"
     size="mini"
@@ -34,6 +35,7 @@
       node-key="uuid"
       :load="loadNode"
       show-checkbox
+      :default-checked-keys="checkedList"
       @check="handleCheckChange"
       @node-click="handleNodeClick"
       @node-expand="handleNodeExpand"
@@ -91,13 +93,13 @@
                 style="width: 100%x;margin-top:10px"
                 tooltip-effect="dark"
                 @selection-change="handleSelectionChange">
-      <el-table-column
+      <!-- <el-table-column
         :width="50"
         align="center"
         show-overflow-tooltip
         type="selection"
-      ></el-table-column>
-        <el-table-column show-overflow-tooltip type="index" label="序号" width="55" align="center">
+      ></el-table-column> -->
+        <el-table-column show-overflow-tooltip type="index" label="序号" width="60" align="center">
 
         </el-table-column>
         <el-table-column prop="vname" label="统计项名称" >
@@ -136,19 +138,10 @@
 
                 ></el-option>
           </el-select>
-              <!-- <el-input
-                style=" width: 100%"
-                v-model="searchform.vprojecttypes"
-                size="mini"/> -->
             </div>
           </template>
         </el-table-column>
-      <!-- <el-table-column prop="vtype" label="使用设置" width="90" align="center" :formatter="vtypeFormatter">
-        </el-table-column>
-      <el-table-column prop="veditable" label="是否填报" width="90" align="center" :formatter="veditableFormatter">
-        </el-table-column>
-      <el-table-column prop="vdisable" label="是否隐藏" width="90" align="center" :formatter="vdisableFormatter">
-        </el-table-column> -->
+
       </el-table>
     </div>
 
@@ -171,6 +164,7 @@ export default {
   name: "proposal-list-look",
   data() {
     return {
+      checkedList:[],//tree默认勾选数组
       form:{
             code:'',
             name:''
@@ -284,66 +278,23 @@ export default {
       //       )
       this.getData(this.node,this.resolve);
     },
-//     async allmedia() {
-//     let res = await fetch('/api/statistics/bp/BpTjx/list/loadPageDataByProjectType');
-//     res.result.forEach(element => {
-//         this.options.push({name:element.detailName,code:element.detailCode});
-//      })
-//  },
-
-
     // 查讯
         getList() {
         this.$http
           .post(
-            "/api/statistics/bp/BpTjx/list/loadPageData",
+            "/api/statistics/bp/BpGdwtjxsz/list/getBpGdwtjxszList",
 
             this.searchform
           )
           .then((res) => {
-            this.page = res.data.data;
+            this.page= res.data.data;
           });
       },
 
     saveInfo(){
       var list=this.$refs.tree.getCheckedNodes();
     },
-    // vdisableFormatter(row, column){
-    //   var str="";
-    //   if(row.vdisable=="1")
-    //   {
-    //     str="是";
-    //   }else
-    //   {
-    //     str="否";
-    //   }
-    //   return str;
-    // },
-    // veditableFormatter(row, column){
-    //   var str="";
-    //   if(row.veditable=="1")
-    //   {
-    //     str="是";
-    //   }else
-    //   {
-    //     str="否";
-    //   }
-    //   return str;
-    // },
-    // vtypeFormatter(row, column){
-    //   var str="";
-    //   if(row.vtype=="0")
-    //   {
-    //     str="全部";
-    //   }else if(row.vtype=="1")
-    //   {
-    //     str="仅月报";
-    //   }else if(row.vtype=="2")
-    //   {
-    //     str="仅年报";
-    //   }
-    //   return str;
-    // },
+
     vprojecttypeFormatter(row, column)
     {
       var str="";
@@ -423,24 +374,9 @@ export default {
 
           )
           .then((res) => {
-            // console.log(res.data)
           });
       }
-      // var ids=this.$refs.tree.getCheckedKeys();
-      // ids.forEach((item,index)=>{
-      //   if(item==''){
-      //     ids.splice(index,1)
-      //   }
-      // })
-      //  this.$http
-      //     .post(
-      //       "/api/statistics/bp/BpGdwtjxsz/detail/save",
-      //        JSON.stringify({ids:ids,projectType:this.itemform.vprojecttypes}),
-      //       {useJson: true}
-      //     )
-      //     .then((res) => {
-      //       console.log(res.data)
-      //     });
+
     },
     handleNodeClick(data,node) {
       //this.getData(node,this.resolve)
@@ -461,76 +397,7 @@ export default {
       this.getData(node,resolve)
     },
 
-    // selectFile()
-    // {
-    //   this.$http
-    //     .post(
-    //       "/api/contract/topInfo/CommonFiles/list/delete",
-    //       {ids:[file.response.data.uuid]},
-    //     )
-    //     .then((res) => {
-    //       if (res.data.code === 200) {
-    //         this.fileList=fileList;
-    //       }
-    //     });
-    // },
-    // handleRemove(file,index) {
-    //   this.$http
-    //     .post(
-    //       "/api/statistics/bp/BpTjx/list/delete",
-    //       {ids:[file.uuid]},
-    //     )
-    //     .then((res) => {
-    //       if (res.data.code === 200) {
-    //         this.detailform.fileList2.splice(index,1);
-    //       }
 
-    //     });
-    // },
-    //上传附件
-    // handleChange(response, file, fileList){
-    //   if (response && response.code === 200) {
-    //     this.$message({
-    //       message: '上传成功',
-    //       type: 'success',
-    //       duration: 1500,
-    //       onClose: () => {
-    //         this.detailform.fileList.push(response.data);
-    //       }
-    //     })
-    //   } else {
-    //     this.$message.error(response.msg)
-    //   }
-    // },
-
-    // search() {
-    //   this.showinput = false
-    // },
-    // add() {
-    //   this.dialogResult=true;
-
-    // },
-    // editItem() {
-    //   if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
-    //     this.$message.info("请选择统计项进行修改！");
-    //     return;
-    //   }
-    //   this.dialogResult=true;
-    //   //是否有资审信息判断
-    //   if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
-    //     this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
-    //     return;
-    //   }
-    //   var item = this.multipleSelection[0];
-    //   item.vprojecttypes = item.vprojecttype.split(",");
-
-    //   this.itemform = item;
-    //   //是否在审核流程中判断
-    //   //是否在变更流程中判断
-
-    //   //alert(JSON.stringify(p));
-
-    // },
     changeTreeNodeStatus (node) {
       node.expanded = false
       for (let i = 0; i < node.childNodes.length; i++) {
@@ -543,56 +410,7 @@ export default {
       }
     },
 
-    // remove() {
-    //   if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
-    //     this.$message.info("请选择统计项进行删除！");
-    //     return;
-    //   }
-    //   let uuids = []
-    //   this.multipleSelection.forEach((item) => {
-    //     if (item.uuid != null) {
-    //       uuids.push(item.uuid);
-    //     }
 
-    //   })
-    //   this.$confirm('此操作将永久删除该统计项, 是否继续?', '提示', {
-    //     confirmButtonText: '确定',
-    //     cancelButtonText: '取消',
-    //     type: 'warning'
-    //   }).then(() => {
-    //     // this.$message({
-    //     //   type: 'success',
-    //     //   message: '删除成功!'
-    //     // });
-    //     this.$http
-    //       .post(
-    //         '/api/statistics/bp/BpTjx/list/delete',
-    //         {ids: uuids}
-    //       )
-    //       .then(res => {
-    //         //this.$refs.tree.store.root
-    //         //var nodeall = this.$refs.tree.store.root;
-    //         for(let i = 0; i < this.$refs.tree.store._getAllNodes().length; i++){
-    //           this.$refs.tree.store._getAllNodes()[i].expanded = false;
-    //         }
-
-    //         this.loadNode(this.node, this.resolve)
-    //       })
-    //   }).catch(() => {
-    //     this.$message({
-    //       type: 'info',
-    //       message: '已取消删除'
-    //     });
-    //   });
-
-    // },
-    // 查看
-    // rowshow(row) {
-
-    // },
-    // show() {
-
-    // },
     // list通用方法开始
     handleSizeChange(val) {
       this.searchform.size = val
@@ -602,17 +420,7 @@ export default {
       this.searchform.current = val
       this.getData()
     },
-    // searchformSubmit() {
-    //   this.searchform.current = 1
-    //   this.getData()
-    // },
-    // searchformReset() {
-    //   // this.$refs['searchform'].resetFields()
-    //   for(let i = 0; i < this.$refs.tree.store._getAllNodes().length; i++){
-    //     this.$refs.tree.store._getAllNodes()[i].expanded = false;
-    //   }
-    //   this.getData(this.node,this.resolve);
-    // },
+
     // 列表选项数据
     handleSelectionChange(val) {
       //alert(JSON.stringify(val))
@@ -622,9 +430,21 @@ export default {
       this.node = node;
       this.resolve = resolve;
       if (node.level === 0) {
-
         return resolve([{ vname: '统计项',uuid:"" ,icon:'el-icon-folder'}]);
       }
+      this.$http
+        .post(
+          "/api/statistics/bp/BpGdwtjxsz/list/getBpGdwtjxszList",
+        {'projectType':this.itemform.vprojecttypes}
+        )
+        .then((res) => {
+          var datas=res.data.data,list=[];
+          datas.forEach((item)=>{
+            list.push(item.vtjxid)
+          })
+          this.checkedList= list;
+          console.log(this.checkedList)
+        });
       setTimeout(() => {
         if(this.itemform.vprojecttypes!=''){
            this.$http
@@ -633,6 +453,7 @@ export default {
             {"parentid":node.data.uuid,'projectType':this.itemform.vprojecttypes}
           )
           .then(res => {
+
             //this.page = res.data.data
             this.parentid = node.data.uuid;
             const data = [];
@@ -834,6 +655,4 @@ span{
   // margin: 20px 0 0 0;
   float: right;
 }
-
-
 </style>
