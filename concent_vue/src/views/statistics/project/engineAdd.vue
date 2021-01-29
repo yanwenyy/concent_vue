@@ -903,6 +903,165 @@
               </template>
             </el-table-column>
           </el-table>
+          <!--分包承建单位-->
+          <div v-if="detailForm.project.projectNatureSecondId === 'd4b6c373a60246a8a5166ddb0bf46c21' || detailForm.project.projectNatureSecondId === '7369abc48e264096a37783de01b0d4cc'">
+            <p class="detail-title" style="overflow:hidden;margin-right:30px">
+              <span>分包承建单位信息:</span>
+              <el-button
+                v-if="p.actpoint !== 'look'"
+                @click="addProduct()"
+                class="upload-demo detailUpload detatil-flie-btn"
+                type="primary">
+                新增
+              </el-button>
+            </p>
+            <el-table
+              :data="detailForm.project.projectSubContractList"
+              :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+              align="center"
+              border
+              class="detailTable"
+              ref="table"
+              style="width: 100%;"
+            >
+              <el-table-column
+                :width="80"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"/>
+              <el-table-column
+                :resizable="false"
+                label="承建单位"
+                width="200"
+                align="center"
+                prop="subContractName"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-form-item class="tabelForm">
+                    <el-input
+                      clearable
+                      :disabled="p.actpoint === 'look'"
+                      v-model="scope.row.subContractName"/>
+                  </el-form-item>
+                </template>
+              </el-table-column>
+              <el-table-column
+                :resizable="false"
+                label="项目类型"
+                width="200"
+                align="center"
+                prop="projectTypeId"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-form-item class="tabelForm">
+                    <el-select
+                      :disabled="p.actpoint === 'look'"
+                      filterable
+                      clearable
+                      placeholder="请选择"
+                      @change="getName2(scope.row.projectTypeId, projectType, 'projectTypeName', scope.$index)"
+                      v-model="scope.row.projectTypeId">
+                      <el-option
+                        :key="index"
+                        :label="item.detailName"
+                        :value="item.id"
+                        v-for="(item, index) in projectType"/>
+                    </el-select>
+                  </el-form-item>
+                </template>
+              </el-table-column>
+              <el-table-column
+                :resizable="false"
+                label="项目名称"
+                align="center"
+                prop="projectName"
+                min-width="200"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <!--:prop="'project.productInfoList[' + scope.$index + '].productName'"-->
+                  <!--:rules="{required: true, message: '此项不能为空', trigger: 'blur'}"-->
+                  <el-form-item class="tabelForm">
+                    <el-input
+                      v-model="scope.row.projectName"
+                      clearable
+                      :disabled="p.actpoint === 'look'"/>
+                  </el-form-item>
+                </template>
+              </el-table-column>
+              <el-table-column
+                :resizable="false"
+                label="初始合同额(万元)"
+                align="center"
+                prop="contractAmountInitial"
+                width="300"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-form-item class="tabelForm"
+                                :prop="'project.projectSubContractList[' + scope.$index + '].contractAmountInitial'"
+                                :rules="rules.project.isMustMoney">
+                    <el-input
+                      class="group-no-padding"
+                      v-model="scope.row.contractAmountInitial"
+                      clearable
+                      :disabled="p.actpoint === 'look'"
+                    >
+                      <template slot="prepend">¥</template>
+                      <template slot="append">(万元)</template>
+                    </el-input>
+                  </el-form-item>
+                </template>
+              </el-table-column>
+              <el-table-column
+                :resizable="false"
+                label="工程合同额(万元)"
+                align="center"
+                prop="contractAmountInitial"
+                width="300"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-form-item class="tabelForm"
+                                :prop="'project.projectSubContractList[' + scope.$index + '].contractAmountEngine'"
+                                :rules="rules.project.isMustMoney">
+                    <el-input
+                      class="group-no-padding"
+                      v-model="scope.row.contractAmountEngine"
+                      clearable
+                      :disabled="p.actpoint === 'look'"
+                    >
+                      <template slot="prepend">¥</template>
+                      <template slot="append">(万元)</template>
+                    </el-input>
+                  </el-form-item>
+                </template>
+              </el-table-column>
+              <el-table-column
+                v-if="p.actpoint !== 'look'"
+                :resizable="false"
+                fixed="right"
+                label="操作"
+                align="center"
+                show-overflow-tooltip
+                width="80">
+                <template slot-scope="scope">
+                  <el-link
+                    :underline="false"
+                    @click="del(scope.$index,scope.row,detailForm.project.projectSubContractList)"
+                    type="warning">删除
+                  </el-link>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
         </el-form>
       </div>
     </el-card>
@@ -979,6 +1138,7 @@
         options1: [{ label: '测试所在地', value: 'testabcd' }],
         detailForm: {
           project: {
+            projectSubContractList: [], // 分包字段
             infoProductList: [], // 产品列表
             infoSubjectMatterList: [], // 标的信息
             commonFilesList: [], // 文件列表
@@ -1139,6 +1299,21 @@
       }
     },
     methods: {
+      addProduct() {
+        let v = {
+          uuid: '', // ID新增为空，但必须传
+          subContractName: '', // 承包单位名称
+          projectName: '', // 项目名称
+          projectTypeId: '', // 项目类型ID
+          projectTypeName: '', // 项目类型名称
+          contractAmountInitial: '', // 初始合同额
+          contractAmountEngine: '' // 工程合同额
+        }
+        this.detailForm.project.projectSubContractList.push(v)
+      },
+      del(index, item, list) {
+        list.splice(index, 1)
+      },
       // 工程合同额-初始合同额=合同额增减
       getCount() {
         this.detailForm.project.contractAmountChange = this.detailForm.project.contractAmountEngine - this.detailForm.project.contractAmountInitial
@@ -1201,7 +1376,13 @@
           this.detailForm.project[name] = list.find(
             (item) => item.id === id
           ).detailName
-          console.log(this.detailForm)
+        }
+      },
+      getName2(id, list, name, index) {
+        if (id) {
+          this.detailForm.project.projectSubContractList[index][name] = list.find(
+            (item) => item.id === id
+          ).detailName
         }
       },
       getShowTwo() {
@@ -1364,6 +1545,12 @@
               if (!res.data.data.infoSubjectMatterList) {
                 this.detailForm.project.infoSubjectMatterList = []
               }
+              if (!res.data.data.projectSubContractList) {
+                this.detailForm.project.projectSubContractList = []
+              }
+              if (res.data.data.topInfoSiteList.length < 1) {
+                this.detailForm.project.topInfoSiteList = [{ path: '', placeId: '', uuid: '' }]
+              }
               this.getShowTwo()
             }
           })
@@ -1383,7 +1570,9 @@
 <style lang="scss" scoped>
   .gcform {
     margin-top: 10px;
-
+    .group-no-padding{
+      vertical-align: middle;
+    }
     .neirong {
       > > > .el-form-item__error {
         top: 4% !important;

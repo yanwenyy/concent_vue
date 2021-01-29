@@ -287,21 +287,21 @@
         if (id === '7f4fcba4255b43a8babf15afd6c04a53') {
           url = './change/engineDetail/'
         } else if (id === 'f6823a41e9354b81a1512155a5565aeb') {
-          url = './change/engineDetail/'
+          url = './change/designDetail/'
         } else if (id === '510ba0d79593418493eb1a11ea4e7af6') {
-          url = './change/engineDetail/'
+          url = './change/estateDetail/'
         } else if (id === '510ba0d79593418493eb1a11ea4e7af4') {
-          url = './change/engineDetail/'
+          url = './change/tradeDetail/'
         } else if (id === '510ba0d79593418493eb1a11ed3e7df4') {
-          url = './change/engineDetail/'
+          url = './change/manufactureDetail/'
         } else if (id === '510ba0d79593418493eb1a11ea4e7df4') {
-          url = './change/engineDetail/'
+          url = './change/financeDetail/'
         } else if (id === '510ba0d79593418493eb1a11ed4e7df4') {
-          url = './change/engineDetail/'
+          url = './change/maintenanceDetail/'
         } else if (id === '510ba0d79593419493eb1a11ed3e7df4') {
-          url = './change/engineDetail/'
+          url = './change/otherDetail/'
         } else {
-          url = './change/engineDetail/'
+          url = './404'
         }
         return url
       },

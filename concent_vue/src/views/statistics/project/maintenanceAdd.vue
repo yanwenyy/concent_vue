@@ -224,6 +224,7 @@
                 clearable
                 :disabled="p.actpoint === 'look'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'"
                 placeholder="请选择"
+                @change="getName(detailForm.project.marketSecondId, emergingMarketTwo, 'marketSecondName')"
                 v-model="detailForm.project.marketSecondId">
                 <el-option
                   :key="index"
@@ -441,6 +442,7 @@
         bizTypeCodeTwo: [],
         detailForm: {
           project: {
+            projectSubContractList: [], // 分包字段
             infoProductList: [], // 产品列表
             infoSubjectMatterList: [], // 标的信息
             commonFilesList: [], // 文件列表
@@ -646,6 +648,9 @@
               }
               if (!res.data.data.infoSubjectMatterList) {
                 this.detailForm.project.infoSubjectMatterList = []
+              }
+              if (!res.data.data.projectSubContractList) {
+                this.detailForm.project.projectSubContractList = []
               }
               this.getShowTwo()
             }

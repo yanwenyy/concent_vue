@@ -860,7 +860,70 @@ export default {
                   "menushow": false,
                   "leaf": true,
                   "defaultpage": false
-                }
+                },
+                {
+                  "name": "项目信息变更",
+                  "path": "/statistics/project/change/designDetail",
+                  "component": "/statistics/project/change/designDetail",
+                  "iconCls": "el-icon-search",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "项目信息变更",
+                  "path": "/statistics/project/change/estateDetail",
+                  "component": "/statistics/project/change/estateDetail",
+                  "iconCls": "el-icon-search",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "项目信息变更",
+                  "path": "/statistics/project/change/financeDetail",
+                  "component": "/statistics/project/change/financeDetail",
+                  "iconCls": "el-icon-search",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "项目信息变更",
+                  "path": "/statistics/project/change/maintenanceDetail",
+                  "component": "/statistics/project/change/maintenanceDetail",
+                  "iconCls": "el-icon-search",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "项目信息变更",
+                  "path": "/statistics/project/change/manufactureDetail",
+                  "component": "/statistics/project/change/manufactureDetail",
+                  "iconCls": "el-icon-search",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "项目信息变更",
+                  "path": "/statistics/project/change/otherDetail",
+                  "component": "/statistics/project/change/otherDetail",
+                  "iconCls": "el-icon-search",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "项目信息变更",
+                  "path": "/statistics/project/change/tradeDetail",
+                  "component": "/statistics/project/change/tradeDetail",
+                  "iconCls": "el-icon-search",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
                 ]
               },
               {

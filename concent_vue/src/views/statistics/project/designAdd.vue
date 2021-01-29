@@ -822,9 +822,9 @@
         projectTypeTwo: [], // 工程类别二级
         projectNatureTwo: [], // 项目性质二级
         bizTypeCodeTwo: [], // 业务类别二级
-        options1: [{ label: '测试所在地', value: 'testabcd' }],
         detailForm: {
           project: {
+            projectSubContractList: [], // 分包承建
             infoProductList: [], // 产品列表
             infoSubjectMatterList: [], // 标的信息
             commonFilesList: [],
@@ -1193,6 +1193,9 @@
               }
               if (!res.data.data.infoSubjectMatterList) {
                 this.detailForm.project.infoSubjectMatterList = []
+              }
+              if (!res.data.data.projectSubContractList) {
+                this.detailForm.project.projectSubContractList = []
               }
               this.getShowTwo()
             }
