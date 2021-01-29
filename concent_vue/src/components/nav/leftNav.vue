@@ -112,6 +112,7 @@ export default {
     /*margin-bottom: 60px;*/
     overflow: auto;
   }
+
   >>>.el-submenu__title{
     padding: 0 10px!important;
     font-size: 13px!important;
@@ -161,5 +162,8 @@ export default {
     cursor: pointer;
     font-size: 28px;
     color:#666;
+  }
+  .left-tab>li{
+    padding-left: 0!important;
   }
 </style>

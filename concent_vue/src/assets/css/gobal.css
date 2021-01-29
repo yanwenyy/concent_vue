@@ -702,5 +702,14 @@ pre {
 .el-autocomplete{
   width: 100% !important;
 }
+.gclqd{
+  padding: 0!important;
+  max-height: calc(100vh - 170px)!important;
+  min-height: calc(100vh - 170px)!important;
+}
+.gclqd .el-tabs--border-card{
+  border: none;
+  box-shadow: none;
+}
 /**/
 

@@ -29,6 +29,15 @@ export default {
               "defaultpage": false,
               "children": [
                 {
+                  "name": "首页",
+                  "path": "/manage/home/home",
+                  "component": "/manage/home/home",
+                  "iconCls": "el-icon-s-home",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
                   "name": "信息管理",
                   "path": "/manage/proposal",
                   "component": "/router",
@@ -64,14 +73,14 @@ export default {
                     "leaf": true,
                     "defaultpage": false
                   },
-                  {
+                    {
                     "name": "项目信息跟踪详情",
                     "path": "/manage/proposal/track_detail",
                     "component": "/manage/proposal/track_detail",
                     "menushow": false,
                     "leaf": true,
                     "defaultpage": false
-                  },
+                    },
                     {
                       "name": "项目信息变更",
                       "path": "/manage/proposal/infoChangeList",
@@ -99,6 +108,7 @@ export default {
                       "leaf": true,
                       "defaultpage": false
                     },
+
                   ]
                 },
 

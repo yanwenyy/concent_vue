@@ -23,7 +23,7 @@
             }"
             >
               <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.inforName" class="input-with-select">
-                <el-button :disabled="detailform.contractInfo.contractType=='2'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
+                <el-button v-if="detailform.contractInfo.contractType!='2'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
               </el-input>
             </el-form-item>
             <el-form-item
@@ -50,7 +50,7 @@
                 }"
             >
               <el-input :disabled="p.actpoint === 'look'" placeholder="请输入内容" v-model="detailform.contractInfo.contractName" class="input-with-select">
-                <el-button :disabled="detailform.contractInfo.contractType!='2'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
+                <el-button v-if="detailform.contractInfo.contractType=='2'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
               </el-input>
             </el-form-item>
             <el-form-item
@@ -2315,6 +2315,1266 @@
               </el-table-column>
             </el-table>
           </div>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="工程量清单">
+        <div class="detailBoxBG gclqd">
+          <el-tabs type="border-card">
+            <el-tab-pane label="电气工程">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <span>电气工程列表: </span>
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                    >
+                  <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目编码"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称描述"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="计量单位"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程量"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="暂估价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="给排水工程">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <span>给排水工程列表: </span>
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目编码"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称描述"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="计量单位"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程量"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="暂估价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="基坑支护工程">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <span>基坑支护工程列表: </span>
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目编码"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称描述"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="计量单位"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程量"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="暂估价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="建筑工程">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <span>建筑工程列表: </span>
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目编码"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称描述"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="计量单位"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程量"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="暂估价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="空调水工程">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <span>空调水工程列表: </span>
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目编码"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称描述"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="计量单位"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程量"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="暂估价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="弱电工程">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <span>弱电列表: </span>
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目编码"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称描述"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="计量单位"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程量"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="暂估价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="通风空调工程">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <span>通风空调列表: </span>
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目编码"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称描述"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="计量单位"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程量"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="暂估价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="土方工程">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <span>土方工程列表: </span>
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目编码"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称描述"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="计量单位"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程量"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="暂估价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="消防电工程">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <span>消防电工程列表: </span>
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目编码"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称描述"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="计量单位"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程量"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="暂估价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="消防工程">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <span>消防工程列表: </span>
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目编码"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称描述"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="计量单位"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程量"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="暂估价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="装饰工程">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <span>装饰工程列表: </span>
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目编码"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称描述"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="计量单位"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程量"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="暂估价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+
+                </el-table>
+              </div>
+            </el-tab-pane>
+          </el-tabs>
         </div>
       </el-tab-pane>
     </el-tabs>
