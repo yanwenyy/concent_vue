@@ -133,7 +133,7 @@ axios.interceptors.response.use(
       }, 3000);
     }
     //token过期时的弹框
-    if (response.data.message!=null&&(response.data.message.indexOf("已过期") != -1||response.data.message.indexOf("格式错误") != -1)) {
+    if (response.data.message!=null&&(response.data.message.indexOf("已过期") != -1||response.data.message.indexOf("格式错误") != -1||response.data.message.indexOf("token信息异常") != -1)) {
         Vue.prototype.$prompt('请输入token', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -144,6 +144,19 @@ axios.interceptors.response.use(
         }).catch(() => {
 
         });
+      return false;
+    }
+    if (response.data.msg!=null&&(response.data.msg.indexOf("已过期") != -1||response.data.msg.indexOf("格式错误") != -1||response.data.msg.indexOf("token信息异常") != -1)) {
+      Vue.prototype.$prompt('请输入token', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+      }).then(({ value }) => {
+        sessionStorage.setItem("token",value);
+      window.location.reload();
+      return false;
+    }).catch(() => {
+
+      });
       return false;
     }
     if (response.data.code === -1) {

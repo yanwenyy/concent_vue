@@ -35,6 +35,15 @@ export default {
                   "iconCls": "el-icon-s-home",
                   "menushow": true,
                   "leaf": true,
+                  "defaultpage": false,
+                },
+                {
+                  "name": "待办已办列表",
+                  "path": "/manage/home/taskList",
+                  "component": "/manage/home/taskList",
+                  "iconCls": "el-icon-notebook-2",
+                  "menushow": false,
+                  "leaf": true,
                   "defaultpage": false
                 },
                 {

@@ -5,8 +5,11 @@
       <div slot="header" class="clearfix">
         <span class="detailSpan"><b>信息管理详情</b></span>
         <el-button @click="back" class="detailbutton" >返回</el-button>
-        <el-button v-show="p.actpoint != 'look'" type="primary" @click="saveInfo('detailform')" class="detailbutton">保存</el-button>
-        <el-button v-show="p.actpoint != 'look'" @click="submit" class="detailbutton">提交</el-button>
+        <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="saveInfo('detailform','save')" class="detailbutton">保存</el-button>
+        <el-button v-show="p.actpoint == 'add'||detailform.topInfor.flowStatus==1" @click="saveInfo('detailform','sub')" class="detailbutton">提交</el-button>
+        <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton" @click="operation('back')"  type="warning">驳回</el-button>
+        <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton" @click="operation('complete')"  type="success">通过</el-button>
+        <el-button v-show="p.actpoint == 'task'&&p.task.edit==true" @click="operation('recall')" class="detailbutton" type="danger">撤销</el-button>
       </div>
       <div class="detailBox">
         <el-form
@@ -976,6 +979,24 @@
       // eslint-disable-next-line no-unde
     },
     methods: {
+      //流程操作
+      operation(type){
+        this.$http
+          .post(
+            '/api/contract/topInfo/TopInfor/process/'+type,
+            JSON.stringify(this.p.task),
+            {useJson: true}
+          )
+          .then((res) => {
+          if (res.data.code === 200) {
+          this.$message({
+            message: "操作成功",
+            type: "success",
+          });
+          this.$router.back()
+        }
+        });
+      },
       //建设单位搜索
       querySearchAsync(queryString, cb) {
         var restaurants = this.pubCustomers;
@@ -1112,8 +1133,13 @@
           console.log(this.detailform.topInfoOrg[name]);
         }
       },
-      saveInfo(formName) {
-
+      saveInfo(formName,type) {
+        var url='';
+        if(type=='save'){
+          url="/api/contract/topInfo/TopInfor/detail/saveOrUpdate"
+        }else{
+          url="/api/contract/topInfo/TopInfor/process/start"
+        }
         var topInforCapitalList = [];
         this.amountSource.forEach((item) => {
           if (this.detailform.value1&&this.detailform.value1.indexOf(item.id) != -1) {
@@ -1129,7 +1155,7 @@
           if (valid) {
             this.$http
               .post(
-                "/api/contract/topInfo/TopInfor/detail/saveOrUpdate",
+                url,
                 JSON.stringify(this.detailform),
                 {useJson: true}
               )

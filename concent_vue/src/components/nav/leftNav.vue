@@ -114,7 +114,7 @@ export default {
   }
 
   >>>.el-submenu__title{
-    padding: 0 10px!important;
+    padding: 0!important;
     font-size: 13px!important;
   }
   >>>.el-menu-item{
@@ -164,6 +164,6 @@ export default {
     color:#666;
   }
   .left-tab>li{
-    padding-left: 0!important;
+    padding-left: 10px!important;
   }
 </style>
