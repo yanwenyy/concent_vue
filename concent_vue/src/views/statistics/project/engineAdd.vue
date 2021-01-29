@@ -943,10 +943,12 @@
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'"
-                    v-model="scope.row.subContractName"/>
+                  <el-form-item class="tabelForm">
+                    <el-input
+                      clearable
+                      :disabled="p.actpoint === 'look'"
+                      v-model="scope.row.subContractName"/>
+                  </el-form-item>
                 </template>
               </el-table-column>
               <el-table-column
@@ -958,19 +960,21 @@
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  <el-select
-                    :disabled="p.actpoint === 'look'"
-                    filterable
-                    clearable
-                    placeholder="请选择"
-                    @change="getName2(scope.row.projectTypeId, projectType, 'projectTypeName', scope.$index)"
-                    v-model="scope.row.projectTypeId">
-                    <el-option
-                      :key="index"
-                      :label="item.detailName"
-                      :value="item.id"
-                      v-for="(item, index) in projectType"/>
-                  </el-select>
+                  <el-form-item class="tabelForm">
+                    <el-select
+                      :disabled="p.actpoint === 'look'"
+                      filterable
+                      clearable
+                      placeholder="请选择"
+                      @change="getName2(scope.row.projectTypeId, projectType, 'projectTypeName', scope.$index)"
+                      v-model="scope.row.projectTypeId">
+                      <el-option
+                        :key="index"
+                        :label="item.detailName"
+                        :value="item.id"
+                        v-for="(item, index) in projectType"/>
+                    </el-select>
+                  </el-form-item>
                 </template>
               </el-table-column>
               <el-table-column
@@ -984,7 +988,7 @@
                 <template slot-scope="scope">
                   <!--:prop="'project.productInfoList[' + scope.$index + '].productName'"-->
                   <!--:rules="{required: true, message: '此项不能为空', trigger: 'blur'}"-->
-                  <el-form-item>
+                  <el-form-item class="tabelForm">
                     <el-input
                       v-model="scope.row.projectName"
                       clearable
@@ -1005,6 +1009,7 @@
                                 :prop="'project.projectSubContractList[' + scope.$index + '].contractAmountInitial'"
                                 :rules="rules.project.isMustMoney">
                     <el-input
+                      class="group-no-padding"
                       v-model="scope.row.contractAmountInitial"
                       clearable
                       :disabled="p.actpoint === 'look'"
@@ -1028,6 +1033,7 @@
                                 :prop="'project.projectSubContractList[' + scope.$index + '].contractAmountEngine'"
                                 :rules="rules.project.isMustMoney">
                     <el-input
+                      class="group-no-padding"
                       v-model="scope.row.contractAmountEngine"
                       clearable
                       :disabled="p.actpoint === 'look'"
@@ -1564,7 +1570,9 @@
 <style lang="scss" scoped>
   .gcform {
     margin-top: 10px;
-
+    .group-no-padding{
+      vertical-align: middle;
+    }
     .neirong {
       > > > .el-form-item__error {
         top: 4% !important;

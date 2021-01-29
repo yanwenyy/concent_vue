@@ -512,7 +512,7 @@
                   <template slot-scope="scope">
                     <!--:prop="'project.productInfoList[' + scope.$index + '].productName'"-->
                     <!--:rules="{required: true, message: '此项不能为空', trigger: 'blur'}"-->
-                    <el-form-item>
+                    <el-form-item class="tabelForm">
                       <el-input
                         v-model="scope.row.subjectMatterName"
                         clearable
@@ -529,7 +529,7 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <el-form-item class="top0"
+                    <el-form-item class="tabelForm"
                                   :prop="'project.infoSubjectMatterList[' + scope.$index + '].subjectMatterNo'"
                                   :rules="rules.project.isNumber">
                       <el-input
@@ -548,10 +548,12 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <el-input
-                      clearable
-                      :disabled="p.actpoint === 'look'"
-                      v-model="scope.row.subjectMatterUnit"/>
+                    <el-form-item class="tabelForm">
+                      <el-input
+                        clearable
+                        :disabled="p.actpoint === 'look'"
+                        v-model="scope.row.subjectMatterUnit"/>
+                    </el-form-item>
                   </template>
                 </el-table-column>
                 <el-table-column
@@ -567,6 +569,7 @@
                                   :prop="'project.infoSubjectMatterList[' + scope.$index + '].totalPrice'"
                                   :rules="rules.project.isMustMoney">
                       <el-input
+                        class="group-no-padding"
                         v-model="scope.row.totalPrice"
                         clearable
                         :disabled="p.actpoint === 'look'"
@@ -1053,7 +1056,7 @@
                   <template slot-scope="scope">
                     <!--:prop="'project.productInfoList[' + scope.$index + '].productName'"-->
                     <!--:rules="{required: true, message: '此项不能为空', trigger: 'blur'}"-->
-                    <el-form-item>
+                    <el-form-item class="tabelForm">
                       <el-input
                         v-model="scope.row.subjectMatterName"
                         clearable
@@ -1070,7 +1073,7 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <el-form-item class="top0">
+                    <el-form-item class="tabelForm">
                       <el-input
                         clearable
                         disabled
@@ -1087,10 +1090,12 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <el-input
-                      clearable
-                      disabled
-                      v-model="scope.row.subjectMatterUnit"/>
+                    <el-form-item class="tabelForm">
+                      <el-input
+                        clearable
+                        disabled
+                        v-model="scope.row.subjectMatterUnit"/>
+                    </el-form-item>
                   </template>
                 </el-table-column>
                 <el-table-column
@@ -1104,6 +1109,7 @@
                   <template slot-scope="scope">
                     <el-form-item class="tabelForm">
                       <el-input
+                        class="group-no-padding"
                         v-model="scope.row.totalPrice"
                         clearable
                         disabled
@@ -1527,7 +1533,9 @@
   }
   .gcform {
     margin-top: 10px;
-
+    .group-no-padding{
+      vertical-align: middle;
+    }
     .neirong {
       > > > .el-form-item__error {
         top: 4% !important;
