@@ -907,6 +907,13 @@
                 type="primary">
                 新增
               </el-button>
+              <el-button
+                v-if="p.actpoint !== 'look'"
+                @click="addSeparate()"
+                class="upload-demo detailUpload detatil-flie-btn"
+                type="primary">
+                选择分包
+              </el-button>
             </p>
             <el-table
               :data="detailForm.project.projectSubContractList"
@@ -1060,6 +1067,7 @@
     </el-card>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
     <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
+    <Separate-Dialog v-if="infoCSVisible" ref="infoCS" @refreshDataList="goSeparate"></Separate-Dialog>
   </div>
 </template>
 
@@ -1067,11 +1075,12 @@
   import Tree from '@/components/tree'
   import FileUpload from '@/components/fileUpload'
   import { isMoney, isMobile, isPhone } from '@/utils/validate'
+  import SeparateDialog from '@/components/separateDialog'
   // import datas from '@/utils/position'
   export default {
     name: 'InvestMode',
     components: {
-      Tree, FileUpload
+      Tree, FileUpload, SeparateDialog
     },
     data() {
       const validateMoney = (rule, value, callback) => {
@@ -1122,6 +1131,7 @@
       return {
         uuid: null,
         DwVisible: false,
+        infoCSVisible: false,
         treeStatas: false,
         uploadVisible: false,
         emergingMarketTwo: [], // 新兴市场二级类别
@@ -1291,6 +1301,25 @@
       }
     },
     methods: {
+      goSeparate(data) {
+        console.log(data)
+        let v = {
+          uuid: data.uuid, // ID新增为空，但必须传
+          subContractName: data.companyBuiltName, // 承包单位名称
+          projectName: data.projectName, // 项目名称
+          projectTypeId: data.projectTypeId, // 项目类型ID
+          projectTypeName: data.projectTypeName, // 项目类型名称
+          contractAmountInitial: data.contractAmountInitial, // 初始合同额
+          contractAmountEngine: data.contractAmountEngine // 工程合同额
+        }
+        this.detailForm.project.projectSubContractList.push(v)
+      },
+      addSeparate() {
+        this.infoCSVisible = true
+        this.$nextTick(() => {
+          this.$refs.infoCS.init()
+        })
+      },
       addProduct() {
         let v = {
           uuid: '', // ID新增为空，但必须传
@@ -1304,7 +1333,31 @@
         this.detailForm.project.projectSubContractList.push(v)
       },
       del(index, item, list) {
-        list.splice(index, 1)
+        console.log(index, item, list)
+        if (item.uuid && item.uuid !== '') {
+          this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$http
+              .post(
+                '/api/statistics/StatisticsProject/detail/deleteProjectFb',
+                { projectFbId: item.uuid }
+              )
+              .then((res) => {
+                if (res.data && res.data.code === 200) {
+                  list.splice(index, 1)
+                  console.log(list)
+                } else {
+                  this.$message.error('删除失败')
+                }
+              })
+          }).catch(() => {
+          })
+        } else {
+          list.splice(index, 1)
+        }
       },
       // 工程合同额-初始合同额=合同额增减
       getCount() {
