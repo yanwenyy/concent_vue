@@ -172,7 +172,6 @@
           align="center"
           label="状态"
           prop="flowStatus"
-          fixed="right"
           show-overflow-tooltip
         >
           <!-- <template slot-scope="scope">{{

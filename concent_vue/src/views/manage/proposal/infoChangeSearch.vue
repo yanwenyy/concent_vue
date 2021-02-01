@@ -139,6 +139,7 @@
           enginTypeSecondId: '',
           current: 1,
           size: 20,
+          flowStatus:'3'
         },
         xqprojectType:[],
         dataList: [],

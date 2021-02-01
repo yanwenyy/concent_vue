@@ -59,6 +59,7 @@
         label="消息类型:"
       >
         <el-select
+          clearable
           filterable
           placeholder="请选择"
           size="mini"

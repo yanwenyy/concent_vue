@@ -34,7 +34,7 @@
         </template>
       </el-menu> -->
     </el-col>
-    <!-- <el-col :span="2" style="line-height: 20px; margin-top: 18px">
+    <div class="inline-block userName-div">
       <el-dropdown>
         <span class="el-dropdown-link" style="cursor: pointer;">
           <i class="iconfont icon-user"></i>
@@ -43,14 +43,14 @@
           <i class="el-icon-caret-bottom"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item @click.native="msg" divided>
-            消息
-            <el-badge :max="10" :value="num" class="item" v-if="num>0"></el-badge>
-          </el-dropdown-item>
-          <el-dropdown-item @click.native="logout" divided>退出登录</el-dropdown-item>
+          <!--<el-dropdown-item @click.native="msg" divided>-->
+            <!--消息-->
+            <!--<el-badge :max="10" :value="num" class="item" v-if="num>0"></el-badge>-->
+          <!--</el-dropdown-item>-->
+          <!--<el-dropdown-item @click.native="logout" divided>退出登录</el-dropdown-item>-->
         </el-dropdown-menu>
       </el-dropdown>
-    </el-col> -->
+    </div>
   </el-row>
 </template>
 <script>
@@ -191,13 +191,16 @@ export default {
     //     }, 2000)
     //   }
     // })
-    // this.$http.post('/api/contract/resource/getUsersBaseInfo').then(res => {
-    //   if (res.data.code === 0) {
-    //     this.username = res.data.data.userName
-    //     this.userdata = res.data.data
-    //     localStorage.setItem('username',this.username)
-    //   }
-    // })
+    this.$http
+      .get(
+        '/jsonapi/System/system/v1.0/userinfo',
+      )
+      .then(res => {
+        console.log(res.data.data.username)
+      this.username = res.data.data.username
+      this.userdata = res.data.data
+      localStorage.setItem('username',this.username)
+    })
     this.getNum()
   },
   beforeDestroy() {
@@ -217,6 +220,14 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+  .userName-div{
+    float: right;
+    color:#fff;
+    margin-right: 20px;
+  }
+  >>>.el-dropdown{
+    color:#fff;
+  }
 .heaaderclass{
   height: 68px;
   background: url('../../../static/images/daohang.png') no-repeat;

@@ -2116,7 +2116,7 @@ export default {
           }
         });
         } else {
-          this.$message.error("请添加必填项");
+          this.$message.error("请添加必填项和正确的数据格式");
       return false;
     }
     });

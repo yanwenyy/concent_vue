@@ -6,10 +6,10 @@
         <span class="detailSpan"><b>信息管理详情</b></span>
         <el-button @click="back" class="detailbutton" >返回</el-button>
         <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="saveInfo('detailform','save')" class="detailbutton">保存</el-button>
-        <el-button v-show="p.actpoint == 'add'||detailform.topInfor.flowStatus==1" @click="saveInfo('detailform','sub')" class="detailbutton">提交</el-button>
+        <el-button v-show="p.actpoint == 'add'||detailform.topInfoOrg.flowStatus==1" @click="saveInfo('detailform','sub')" class="detailbutton">提交</el-button>
         <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton" @click="operation('back')"  type="warning">驳回</el-button>
         <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton" @click="operation('complete')"  type="success">通过</el-button>
-        <el-button v-show="p.actpoint == 'task'&&p.task.edit==true" @click="operation('recall')" class="detailbutton" type="danger">撤销</el-button>
+        <!--<el-button v-show="p.actpoint == 'task'&&p.task.edit==true" @click="operation('recall')" class="detailbutton" type="danger">撤销</el-button>-->
       </div>
       <div class="detailBox">
         <el-form
@@ -266,13 +266,154 @@
             </el-select>
           </el-form-item>
           <br>
+          <div class="div-item">
+            <el-form-item
+              label="装配率(%)"
+              prop="topInfor.otherAssemblyRate"
+              :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'blur',
+                }"
+              v-if="detailform.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'"
+
+                v-model="detailform.topInfor.otherAssemblyRate"
+              />
+            </el-form-item>
+            <el-form-item
+              label="装配类型"
+              prop="zplx"
+              :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'blur',
+                }"
+              v-if="detailform.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
+            >
+              <el-select
+                class="multiple-sel"
+                :disabled="p.actpoint === 'look'"
+                multiple
+                @change="getMultipleName(detailform.zplx,assemblyType,'otherAssemblyTypeId','otherAssemblyType')"
+                clearable
+                filterable
+                placeholder="请选择"
+
+                v-model="detailform.zplx"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in assemblyType"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </div>
+          <div class="div-item">
+            <el-form-item
+              label="建筑类型"
+              prop="jzlx"
+              :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+              v-if="detailform.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
+            >
+              <el-select
+                class="multiple-sel"
+                :disabled="p.actpoint === 'look'"
+                multiple
+                @change="getMultipleName(detailform.jzlx,architecturalType,'otherBuildingTypeId','otherBuildingType')"
+                clearable
+                filterable
+                placeholder="请选择"
+
+                v-model="detailform.jzlx"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in architecturalType"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="建筑结构类型"
+              prop="jzjglx"
+              :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+              v-if="detailform.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
+            >
+              <el-select
+                class="multiple-sel"
+                :disabled="p.actpoint === 'look'"
+                multiple
+                @change="getMultipleName(detailform.jzjglx,buildingStructure,'otherBuildingStructureTypeId','otherBuildingStructureType')"
+                clearable
+                filterable
+                placeholder="请选择"
+
+                v-model="detailform.jzjglx"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in buildingStructure"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="场地名称"
+              prop="cdmc"
+              :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+              v-if="detailform.topInfor.marketFirstNameId=='50cd5e9992ac4653920fac8c1f2eb2e3'"
+
+            >
+              <el-select
+                class="multiple-sel"
+                :disabled="p.actpoint === 'look'"
+                multiple
+                clearable
+                filterable
+                placeholder="请选择"
+
+                v-model="detailform.cdmc"
+                @change="getMultipleName(detailform.cdmc,siteName,'siteNameId','siteName')"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in siteName"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </div>
           <el-form-item
               label="建设单位:"
               prop="topInfor.constructionOrg"
               :rules="{
                 required: true,
                 message: '此项不能为空',
-                trigger: 'blur',
+                trigger: ['blur','change'],
               }"
             >
               <!--<el-input-->
@@ -654,6 +795,7 @@
                   <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                   <el-tooltip popper-class="tooltip-class" :content="String(scope.row.contractAmount)" placement="bottom" :disabled="p.actpoint !== 'look'" effect="dark">
                     <el-input
+                      class="input-el-input-group"
                       clearable
                       :disabled="p.actpoint === 'look'"
                       v-model="scope.row.contractAmount"
@@ -864,12 +1006,17 @@
         options: [],
         detailform: {
           topInfor: {
-            marketSecondId:''
+            marketSecondId:'',
+            constructionOrg:''
           },
           topInfoOrg: {},
           topInfoSiteList: [],
           topInfoSectionList: [],
           value1: [],
+          zplx:[],//装配类型
+          jzlx:[],//建筑类型
+          jzjglx:[],//建筑结构类型
+          cdmc:[],//场地名称
         },
         xqprojectType: [],//工程类别二级
         emergingMarketTwo:[],//新兴市场二级
@@ -944,7 +1091,19 @@
       },
       pubCustomers() {//客户名称
         return this.$store.state.pubCustomers;
-      }
+      },
+      assemblyType(){
+        return this.$store.state.assemblyType;//装配类型
+      },
+      architecturalType(){
+        return this.$store.state.architecturalType;//建筑类型
+      },
+      buildingStructure(){
+        return this.$store.state.buildingStructure;//建筑结构类型
+      },
+      siteName(){
+        return this.$store.state.siteName;//场地名称
+      },
     },
     mounted() {
       // window.onresize = () => {
@@ -979,6 +1138,18 @@
       // eslint-disable-next-line no-unde
     },
     methods: {
+      //复选下拉框框获取name
+      getMultipleName(valueList,list,id,name){
+        var _id=[],_name=[];
+        list.forEach((item)=>{
+          if(valueList.indexOf(item.id)!=-1){
+          _id.push(item.id);
+          _name.push(item.detailName)
+        }
+      });
+        this.detailform.topInfor[id]=_id.join(",");
+        this.detailform.topInfor[name]=_name.join(",");
+      },
       //流程操作
       operation(type){
         this.$http
@@ -1004,6 +1175,7 @@
 
         clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
+          this.$forceUpdate();
           cb(results);
       }, 500 * Math.random());
       },
@@ -1248,16 +1420,24 @@
           .post("/api/contract/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.id})
           .then((res) => {
             var datas=res.data.data;
-            this.getTwo(datas.topInfor.enginTypeFirstId);
-            this.getTwoSC(datas.topInfor.marketFirstNameId);
-            this.getTwoXZ(datas.topInfor.projectNatureFirstId);
+            this.getTwo(datas.topInfor.enginTypeFirstId||'');
+            this.getTwoSC(datas.topInfor.marketFirstNameId||'');
+            this.getTwoXZ(datas.topInfor.projectNatureFirstId||'');
             this.detailform={
               topInfor: datas.topInfor,
               topInfoOrg: datas.topInfoOrg,
               topInfoSiteList: datas.topInfoSiteList,
               topInfoSectionList: datas.topInfoSectionList,
               value1:[],
+              zplx:[],//装配类型
+              jzlx:[],//建筑类型
+              jzjglx:[],//建筑结构类型
+              cdmc:[],//场地名称
             }
+            this.detailform.cdmc=datas.topInfor.siteNameId&&datas.topInfor.siteNameId.split(",");
+            this.detailform.zplx=datas.topInfor.otherAssemblyTypeId&&datas.topInfor.otherAssemblyTypeId.split(",");
+            this.detailform.jzlx=datas.topInfor.otherBuildingTypeId&&datas.topInfor.otherBuildingTypeId.split(",");
+            this.detailform.jzjglx=datas.topInfor.otherBuildingStructureTypeId&&datas.topInfor.otherBuildingStructureTypeId.split(",");
             datas.topInforCapitalList.forEach((item)=>{
               this.detailform.value1.push(item.capitalId)
             });
@@ -1290,6 +1470,10 @@
     }
     >.el-form-item,>>>.formItem{
 
+      display: inline-block;
+      width: 32.5%!important;
+    }
+    .div-item >>>.el-form-item{
       display: inline-block;
       width: 32.5%!important;
     }
