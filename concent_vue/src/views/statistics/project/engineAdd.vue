@@ -271,20 +271,13 @@
             <el-form-item
               v-if="detailForm.project.projectTypeId==='22038e576c2242d5acc93f6c3c8e48ad'"
               label="父项目名称:"
-              prop="project.fatherProjectId"
+              prop="project.fatherProjectName"
               style="width: 32.5%">
-              <el-select
+              <el-input
                 :disabled="p.actpoint === 'look'"
                 clearable
-                filterable
-                placeholder="请选择"
-                v-model="detailForm.project.fatherProjectId">
-                <el-option
-                  :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options1"/>
-              </el-select>
+                placeholder="请输入"
+                v-model="detailForm.project.fatherProjectName"/>
             </el-form-item>
             <el-form-item
               v-if="detailForm.project.projectTypeId===''||detailForm.project.projectTypeId==='625a3ee0728a4f45b792d022b8bb36d9'"
@@ -1144,7 +1137,7 @@
             commonFilesList: [], // 文件列表
             projectName: '', // 项目名称(中文)
             projectForeginName: '', // 项目名称(外文)
-            fatherProjectId: '', // 父项目名称
+            fatherProjectName: '', // 父项目名称
             projectOmit: '', // 项目简称
             projectNatureId: '', // 项目性质
             projectNatureFirstId: '', // 项目性质(一级)
@@ -1223,7 +1216,6 @@
             projectLineId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
             projectModuleId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
             projectTypeId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
-            fatherProjectId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
             projectStatusId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
             assemblyRate: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
             assemblyTypeId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
@@ -1366,7 +1358,7 @@
         this.detailForm.project.topInfoSiteList[0].path = data.fullDetailName
       },
       resetFuDai(id, list, name) {
-        this.detailForm.project.fatherProjectId = ''
+        this.detailForm.project.fatherProjectName = ''
         this.detailForm.project.isBureauIndex = ''
         this.getName(id, list, name)
       },
