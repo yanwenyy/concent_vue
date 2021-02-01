@@ -271,20 +271,13 @@
             <el-form-item
               v-if="detailForm.project.projectTypeId==='22038e576c2242d5acc93f6c3c8e48ad'"
               label="父项目名称:"
-              prop="project.fatherProjectId"
+              prop="project.fatherProjectName"
               style="width: 32.5%">
-              <el-select
+              <el-input
                 :disabled="p.actpoint === 'look'"
                 clearable
-                filterable
-                placeholder="请选择"
-                v-model="detailForm.project.fatherProjectId">
-                <el-option
-                  :key="index"
-                  :label="item.label"
-                  :value="item.value"
-                  v-for="(item, index) in options1"/>
-              </el-select>
+                placeholder="请输入"
+                v-model="detailForm.project.fatherProjectName"/>
             </el-form-item>
             <el-form-item
               v-if="detailForm.project.projectTypeId===''||detailForm.project.projectTypeId==='625a3ee0728a4f45b792d022b8bb36d9'"
@@ -914,6 +907,13 @@
                 type="primary">
                 新增
               </el-button>
+              <el-button
+                v-if="p.actpoint !== 'look'"
+                @click="addSeparate()"
+                class="upload-demo detailUpload detatil-flie-btn"
+                type="primary">
+                选择分包
+              </el-button>
             </p>
             <el-table
               :data="detailForm.project.projectSubContractList"
@@ -1067,6 +1067,7 @@
     </el-card>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
     <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
+    <Separate-Dialog v-if="infoCSVisible" ref="infoCS" @refreshDataList="goSeparate"></Separate-Dialog>
   </div>
 </template>
 
@@ -1074,11 +1075,12 @@
   import Tree from '@/components/tree'
   import FileUpload from '@/components/fileUpload'
   import { isMoney, isMobile, isPhone } from '@/utils/validate'
+  import SeparateDialog from '@/components/separateDialog'
   // import datas from '@/utils/position'
   export default {
     name: 'InvestMode',
     components: {
-      Tree, FileUpload
+      Tree, FileUpload, SeparateDialog
     },
     data() {
       const validateMoney = (rule, value, callback) => {
@@ -1129,6 +1131,7 @@
       return {
         uuid: null,
         DwVisible: false,
+        infoCSVisible: false,
         treeStatas: false,
         uploadVisible: false,
         emergingMarketTwo: [], // 新兴市场二级类别
@@ -1144,7 +1147,7 @@
             commonFilesList: [], // 文件列表
             projectName: '', // 项目名称(中文)
             projectForeginName: '', // 项目名称(外文)
-            fatherProjectId: '', // 父项目名称
+            fatherProjectName: '', // 父项目名称
             projectOmit: '', // 项目简称
             projectNatureId: '', // 项目性质
             projectNatureFirstId: '', // 项目性质(一级)
@@ -1223,7 +1226,6 @@
             projectLineId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
             projectModuleId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
             projectTypeId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
-            fatherProjectId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
             projectStatusId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
             assemblyRate: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
             assemblyTypeId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
@@ -1299,6 +1301,25 @@
       }
     },
     methods: {
+      goSeparate(data) {
+        console.log(data)
+        let v = {
+          uuid: data.uuid, // ID新增为空，但必须传
+          subContractName: data.companyBuiltName, // 承包单位名称
+          projectName: data.projectName, // 项目名称
+          projectTypeId: data.projectTypeId, // 项目类型ID
+          projectTypeName: data.projectTypeName, // 项目类型名称
+          contractAmountInitial: data.contractAmountInitial, // 初始合同额
+          contractAmountEngine: data.contractAmountEngine // 工程合同额
+        }
+        this.detailForm.project.projectSubContractList.push(v)
+      },
+      addSeparate() {
+        this.infoCSVisible = true
+        this.$nextTick(() => {
+          this.$refs.infoCS.init()
+        })
+      },
       addProduct() {
         let v = {
           uuid: '', // ID新增为空，但必须传
@@ -1312,7 +1333,31 @@
         this.detailForm.project.projectSubContractList.push(v)
       },
       del(index, item, list) {
-        list.splice(index, 1)
+        console.log(index, item, list)
+        if (item.uuid && item.uuid !== '') {
+          this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$http
+              .post(
+                '/api/statistics/StatisticsProject/detail/deleteProjectFb',
+                { projectFbId: item.uuid }
+              )
+              .then((res) => {
+                if (res.data && res.data.code === 200) {
+                  list.splice(index, 1)
+                  console.log(list)
+                } else {
+                  this.$message.error('删除失败')
+                }
+              })
+          }).catch(() => {
+          })
+        } else {
+          list.splice(index, 1)
+        }
       },
       // 工程合同额-初始合同额=合同额增减
       getCount() {
@@ -1366,7 +1411,7 @@
         this.detailForm.project.topInfoSiteList[0].path = data.fullDetailName
       },
       resetFuDai(id, list, name) {
-        this.detailForm.project.fatherProjectId = ''
+        this.detailForm.project.fatherProjectName = ''
         this.detailForm.project.isBureauIndex = ''
         this.getName(id, list, name)
       },

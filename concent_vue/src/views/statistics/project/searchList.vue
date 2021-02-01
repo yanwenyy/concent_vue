@@ -630,7 +630,7 @@
         } else if (id === '510ba0d79593418493eb1a11ea4e7af6') {
           url = './estateAdd/'
         } else if (id === '510ba0d79593418493eb1a11ea4e7af4') {
-          url = './tradeList/'
+          url = './tradeAdd/'
         } else if (id === '510ba0d79593418493eb1a11ed3e7df4') {
           url = './manufactureAdd/'
         } else if (id === '510ba0d79593418493eb1a11ea4e7df4') {
