@@ -215,7 +215,7 @@
       rowshow(row) {
         let p = {actpoint: "task", task: row,instid:row.businessId};
         this.$router.push({
-          path: "../proposal/detail",
+          path: this.$utils.getUrl[row.businessType],
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       },

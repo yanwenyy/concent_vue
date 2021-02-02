@@ -2,12 +2,12 @@
   <div style="position: relative">
     <el-button @click="back" class="detailbutton detail-back-tab" >返回</el-button>
     <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="saveInfo('detailform','save')" class="detailbutton detail-back-tab save-btn">保存</el-button>
-    <el-button v-show="p.actpoint != 'look'&&(p.actpoint == 'add'||detailform.topInfoOrg.flowStatus==1)" @click="saveInfo('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.topInfoOrg.flowStatus==1)" @click="saveInfo('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab" @click="operation('back')"  type="warning">驳回</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab" @click="operation('complete')"  type="success">通过</el-button>
     <!--<el-button v-show="p.actpoint == 'task'&&p.task.edit==true" @click="operation('recall')" class="detailbutton" type="danger">撤销</el-button>-->
-    <el-tabs type="border-card">
-      <el-tab-pane label="信息管理详情" name="before">
+    <el-tabs type="border-card" >
+      <el-tab-pane label="信息管理详情">
         <div class="detailBox">
           <el-form
             :inline="false"
@@ -960,62 +960,8 @@
           </el-form>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="审批流程" name="after">
-        <div class="detailBox">
-          <el-steps :active="2" align-center>
-            <el-step title="客户申请" description="这是一段很长很长很长的描述性文字"></el-step>
-            <el-step title="项目经理审批" description="这是一段很长很长很长的描述性文字"></el-step>
-            <el-step title="公司领导审批" description="这是一段很长很长很长的描述性文字"></el-step>
-            <el-step title="结束" description="这是一段很长很长很长的描述性文字"></el-step>
-          </el-steps>
-          <!--<el-table-->
-            <!--class="tableStyle"-->
-            <!--:max-height="$tableHeight"-->
-            <!--:height="$tableHeight"-->
-            <!--:data="page.records"-->
-            <!--:header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"-->
-            <!--border-->
-            <!--highlight-current-row-->
-            <!--ref="table"-->
-            <!--tooltip-effect="dark"-->
-          <!--&gt;-->
-            <!--<el-table-column-->
-              <!--align="center"-->
-              <!--label="审批环节"-->
-              <!--prop="inforName"-->
-              <!--show-overflow-tooltip-->
-            <!--&gt;-->
-            <!--</el-table-column>-->
-            <!--<el-table-column-->
-              <!--align="center"-->
-              <!--label="审批人"-->
-              <!--prop="enginTypeFirstName"-->
-              <!--show-overflow-tooltip-->
-            <!--&gt;-->
-            <!--</el-table-column>-->
-            <!--<el-table-column-->
-              <!--align="center"-->
-              <!--label="审批时间"-->
-              <!--prop="enginTypeSecondName"-->
-              <!--show-overflow-tooltip-->
-            <!--&gt;-->
-            <!--</el-table-column>-->
-            <!--<el-table-column-->
-              <!--align="center"-->
-              <!--label="审批意见"-->
-              <!--prop="constructionOrg"-->
-              <!--show-overflow-tooltip-->
-            <!--&gt;-->
-            <!--</el-table-column>-->
-            <!--<el-table-column-->
-              <!--align="center"-->
-              <!--label="审批类型"-->
-              <!--prop="noticeTypeName"-->
-              <!--show-overflow-tooltip-->
-            <!--&gt;-->
-            <!--</el-table-column>-->
-          <!--</el-table>-->
-        </div>
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'">
+        <Audit-Process :task="p.task"></Audit-Process>
       </el-tab-pane>
     </el-tabs>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
@@ -1026,6 +972,7 @@
   import Tree from '@/components/tree'
   import FileUpload from '@/components/fileUpload'
   import { isMoney, isMobile} from '@/utils/validate'
+  import AuditProcess from '@/components/auditProcess'
   export default {
     // name: "详情",
     data() {
@@ -1072,7 +1019,6 @@
           jzjglx:[],//建筑结构类型
           cdmc:[],//场地名称
         },
-        histroy:{},//审批历史记录
         xqprojectType: [],//工程类别二级
         emergingMarketTwo:[],//新兴市场二级
         projectNatureTwo:[],//项目性质二级
@@ -1100,7 +1046,8 @@
     },
     components: {
       Tree,
-      FileUpload
+      FileUpload,
+      AuditProcess
     },
     computed: {
       projectDomainType() {
@@ -1161,7 +1108,6 @@
       },
     },
     mounted() {
-      this.getHistroy();
       // window.onresize = () => {
       //   return (() => {
       //     window.screenWidth = document.body.clientWidth
@@ -1194,20 +1140,6 @@
       // eslint-disable-next-line no-unde
     },
     methods: {
-      //审批历史记录
-      getHistroy(){
-        var task=this.p.task;
-        this.$http
-          .post(
-            "/jsonapi/Workflow/process/record",
-            {businessId:task.businessId,businessType:task.businessType},
-            {useJson: true,isLoading:false}
-          )
-          .then((res) => {
-          this.histroy = res.data.data;
-          console.log(this.histroy)
-      });
-      },
       //复选下拉框框获取name
       getMultipleName(valueList,list,id,name){
         var _id=[],_name=[];

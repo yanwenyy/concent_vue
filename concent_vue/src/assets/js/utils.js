@@ -228,5 +228,14 @@ export default {
         return _const.state[k].name
       }
     }
+  },
+  //首页代办任务跳转
+  getUrl:{
+    'contract_project_new':'/manage/proposal/detail',
+    'contract_project_change':'/manage/proposal/infoChangeDetail',
+    'contract_qual_new':'/manage/verify/detail',
+    'contract_qual_change':'/manage/verify/detail_Chang',
+    'contract_bid_new':'/manage/bid_info/detail',
+    'contract_bid_change':'/manage/bid_info/InfoChangeDetail',
   }
 }
