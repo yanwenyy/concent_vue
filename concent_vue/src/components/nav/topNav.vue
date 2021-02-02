@@ -199,7 +199,8 @@ export default {
         console.log(res.data.data.username)
       this.username = res.data.data.username
       this.userdata = res.data.data
-      localStorage.setItem('username',this.username)
+      localStorage.setItem('username',this.username);
+      sessionStorage.setItem('userdata',JSON.stringify(this.userdata));
     })
     this.getNum()
   },
