@@ -14,6 +14,10 @@ import moment from 'moment'
 import App from './App'
 import './assets/icon/iconfont.css'
 import router from './router'
+
+import { message } from '@/utils/resetMessage.js'
+Vue.use(ElementUI)
+Vue.prototype.$message = message
 // import VueSocketio from 'vue-socket.io'
 // import socketio from 'socket.io-client'
 /* eslint-disable no-new */
@@ -76,7 +80,7 @@ Vue.filter('stateTranslate', function(code) {
 Vue.filter('datetoMonth', function(date) {
     return utils.datetoMonth(date)
 })
-Vue.use(ElementUI)
+// Vue.use(ElementUI)
 
 new Vue({
     el: '#app',
