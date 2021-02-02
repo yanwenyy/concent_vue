@@ -1,7 +1,7 @@
 <template>
   <div class="detailBox">
     <el-steps :active="histroy.step" align-center finish-status="success">
-      <el-step v-for="item in histroy.img" :title="item.nodeName" :description="item.nodeUsers&&item.nodeUsers[0].authInfo"></el-step>
+      <el-step v-for="(item,index) in histroy.img" :key="index" :title="item.nodeName" :description="item.nodeUsers&&item.nodeUsers[0].authInfo"></el-step>
     </el-steps>
     <el-table
     :data="histroy.list"
