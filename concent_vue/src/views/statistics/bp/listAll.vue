@@ -183,7 +183,7 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="所属汇总指标" prop="vjldw">
+        <el-form-item label="所属汇总指标" prop="sumTarget">
           <el-input
           v-model="itemform.sumTargetName"
           placeholder="所属汇总指标"
@@ -391,8 +391,9 @@ export default {
       }
       setTimeout(() => {
         this.$http
-          .post("/api/statistics/bp/BpTjx/list/getBpTjxListUpdateByUuid", {
-            uuid : node.data.uuid||this.itemform.vparentid,
+          .post("/api/statistics/bp/BpTjx/list/getBpTjxListUpdateByParentId", {
+
+            parentId:node.data.uuid||this.itemform.vparentid,
           })
           .then((res) => {
             var datas=res.data.data;
@@ -406,6 +407,7 @@ export default {
       setTjx(obj,node,data){
         this.itemform.sumTarget=obj.uuid;
         this.itemform.sumTargetName=obj.vname;
+        this.itemform.vparentid=obj.vparentid;
         this.tjx = false
 
       },
@@ -517,7 +519,7 @@ export default {
       //排序
       this.itemform.vxh = "0";
       this.itemform.vprojecttype = str;
-      this.itemform.vparentid = this.node.data.uuid;
+      // this.itemform.uuid = this.node.data.uuid;
       this.$http
         .post(
           "/api/statistics/bp/BpTjx/detail/save",

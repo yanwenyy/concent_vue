@@ -1179,7 +1179,7 @@ export default {
         //alert(valid);
         if (valid) {
           //alert(JSON.stringify(this.detailform));
-          console.log(JSON.stringify(this.detailform));
+          // console.log(JSON.stringify(this.detailform));
           this.detailform.verify.flowStatus="1";
           this.$http
             .post(
