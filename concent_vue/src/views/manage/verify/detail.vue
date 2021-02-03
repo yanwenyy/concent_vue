@@ -6,8 +6,29 @@
         <el-button
           class="detailbutton"
           @click="back">返回</el-button>
-       <el-button class="detailbutton" type="primary" @click="saveInfo('detailform')" v-show="p.actpoint != 'look'">保存</el-button>
-      <el-button class="detailbutton"  @click="submitForm('detailform')" v-show="p.actpoint != 'look'">提交</el-button>
+        <el-button
+        class="detailbutton"
+        type="primary"
+        @click="saveInfo('detailform','save')"
+        v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
+        >保存</el-button>
+        <el-button
+        class="detailbutton"
+        @click="saveInfo('detailform','sub')"
+        v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.verify.flowStatus==1)"
+        >提交</el-button>
+        <el-button
+        v-show="p.actpoint == 'task'&&p.task.edit==false"
+        class="detailbutton"
+        @click="operation('back')"
+        type="warning"
+        >驳回</el-button>
+        <el-button
+        v-show="p.actpoint == 'task'&&p.task.edit==false"
+        class="detailbutton"
+        @click="operation('complete')"
+        type="success"
+        >通过</el-button>
       </div>
 
 
@@ -440,11 +461,12 @@
           <br>
          <el-form-item
            label="是否联合体投标:"
-           prop="verify.isCoalitionBid"
+
+         >
+                    <!-- prop="verify.isCoalitionBid"
            :rules="{
                   required: true, message: '此项不能为空', trigger: 'blur'
-                }"
-         >
+                }" -->
          <el-switch
            :disabled="p.actpoint === 'look'"
            v-model="detailform.verify.isCoalitionBid"
@@ -796,7 +818,7 @@ import TreeOrg from '@/components/treeOrg'
 import { isMoney } from '@/utils/validate'
 export default {
 
-  name: '详情',
+  // name: '详情',
   components: {
     TreeOrg
   },
@@ -884,6 +906,24 @@ export default {
 
   },
   methods: {
+      //流程操作
+      operation(type){
+        this.$http
+          .post(
+            '/api/contract/topInfo/Verify/process/'+type,
+            JSON.stringify(this.p.task),
+            {useJson: true}
+          )
+          .then((res) => {
+          if (res.data.code === 200) {
+          this.$message({
+            message: "操作成功",
+            type: "success",
+          });
+          this.$router.back()
+        }
+        });
+      },
 //获取下拉框id和name的公共方法
     getName(id, list, name) {
       if(id){
@@ -900,19 +940,26 @@ export default {
       //   path: "/manage/proposal/list",
       // });
     },
-    saveInfo(formName){
+    saveInfo(formName,type){
       //alert(formName);
         //alert(this.$refs.formName.validate())
+        var url='';
+        if(type=='save'){
+          url="/api/contract/topInfo/Verify/detail/saveOrUpdate"
+        }else{
+          url="/api/contract/topInfo/Verify/process/start"
+        }
 
        this.$refs[formName].validate((valid) => {
          //alert(valid);
         if (valid) {
           //alert(JSON.stringify(this.detailform));
           this.detailform.verify.flowStatus="0";
+           var obj = Object.assign(this.detailform, this.detailform1);
           this.$http
             .post(
-              "/api/contract/topInfo/Verify/detail/saveOrUpdate",
-              JSON.stringify(this.detailform),
+              url,
+              JSON.stringify(obj),
               { useJson: true }
             )
             .then((res) => {
@@ -1181,10 +1228,11 @@ export default {
           //alert(JSON.stringify(this.detailform));
           // console.log(JSON.stringify(this.detailform));
           this.detailform.verify.flowStatus="1";
+          var obj = Object.assign(this.detailform, this.detailform1);
           this.$http
             .post(
               "/api/contract/topInfo/Verify/detail/saveOrUpdate",
-              JSON.stringify(this.detailform),
+              JSON.stringify(obj),
               { useJson: true }
             )
             .then((res) => {
@@ -1284,20 +1332,26 @@ export default {
 
     // 加载列表
     getDetail() {
-
-
-      //alert(this.p.topinfoid);
       this.$http
         .post(
           '/api/contract/topInfo/Verify/detail/entityInfo',
           // '/api' + this.$route.path.substr(0, this.$route.path.length - 1),
-          {"id":this.p.topinfoid}
+          {"id":this.p.task?this.p.instid.split("-")[1]:this.p.topinfoid}
         )
         .then(res => {
-          this.detailform = res.data.data
-
-          console.log( JSON.stringify(this.detailform.verifySectionList))
-          console.log( JSON.stringify(this.detailform.topInfor))
+          this.detailform = res.data.data;
+          var datas=res.data.data;
+           this.detailform={
+            'verify':datas.verify||{},
+            'topInfor': datas.topInfor||{},
+            'sectionStr':datas.sectionStr||'',
+            'verifySectionList':datas.verifySectionList||[],
+            'verifyOrgList': datas.verifyOrgList||[],
+            verifyOrgLists:datas.verifyOrgLists,
+            commonFilesList:datas.commonFilesList||[],
+          };
+          // console.log( JSON.stringify(this.detailform.verifySectionList))
+          // console.log( JSON.stringify(this.detailform.topInfor))
         })
          //alert(JSON.stringify(this.p))
       // this.detailform.Verify.contactMode = this.p.selectrow.contactMode;
@@ -1312,7 +1366,7 @@ export default {
    getTopInforDetail() {
 
     this.$http
-      .post("/api/contract/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.p.topinfoid})
+      .post("/api/contract/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.p.task?this.p.instid.split("-")[1]:this.p.topinfoid})
       .then((res1) => {
         var datas=res1.data.data;
         // this.getTwo(datas.topInfor.enginTypeFirstId);
