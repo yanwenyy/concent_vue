@@ -322,7 +322,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            <span> {{ scope.row.projectStatus=='0'?'已提交':'未提交'}} </span>
+            <span> {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':''}}</span>
           </template>
           <template slot="header" slot-scope="scope">
             <span>状态</span>
@@ -332,12 +332,12 @@
                 clearable
                 size="mini"
                 placeholder="请选择"
-                v-model="searchform.projectStatus">
+                v-model="searchform.flowStatus">
                 <el-option
                   :key="index"
                   :label="item.detailName"
                   :value="item.id"
-                  v-for="(item, index) in projectStatus"/>
+                  v-for="(item, index) in flowStatus"/>
               </el-select>
             </div>
           </template>
@@ -372,7 +372,7 @@
         projectTypeTwo: [], // 工程类别(二级)
         projectNatureTwo: [], // 项目性质(二级)
         yesOrNo: [{ id: 0, detailName: '是' }, { id: 1, detailName: '否' }],
-        projectStatus: [{ id: 0, detailName: '已提交' }, { id: 1, detailName: '未提交' }],
+        flowStatus: [{ id: 1, detailName: '草稿' }, { id: 2, detailName: '审核中' }, { id: 3, detailName: '审核通过' }, { id: 4, detailName: '审核退回' }],
         sousuo: '',
         page: { current: 1, size: 20, total: 0, records: [] },
         searchform: {
@@ -390,7 +390,7 @@
           projectTypeId: '',
           isConsortion: '',
           createTime: '',
-          projectStatus: '',
+          flowStatus: '',
           projectLocation: ''
         },
         menus: [],
@@ -542,7 +542,7 @@
           projectTypeId: '',
           isConsortion: '',
           createTime: '',
-          projectStatus: '',
+          flowStatus: '',
           projectLocation: ''
         }
         this.getData()

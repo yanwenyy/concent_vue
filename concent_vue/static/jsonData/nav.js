@@ -663,6 +663,24 @@ export default {
               "leaf": false,
               "defaultpage": false,
               "children": [
+                {
+                  "name": "首页",
+                  "path": "/statistics/home/home",
+                  "component": "/statistics/home/home",
+                  "iconCls": "el-icon-s-home",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                },
+                {
+                  "name": "待办已办列表",
+                  "path": "/statistics/home/taskList",
+                  "component": "/statistics/home/taskList",
+                  "iconCls": "el-icon-notebook-2",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
               {
               "name": "项目管理",
               "path": "/statistics/project",

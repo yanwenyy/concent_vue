@@ -13,6 +13,12 @@
         </el-button>
         <el-button v-if="p.actpoint !== 'look'" @click="submitForm('detailForm', 'submit')" class="detailbutton">提交
         </el-button>
+
+          <el-button v-if="p.actpoint === 'look'" type="primary" @click="pass('detailForm')" class="detailbutton">
+          通过
+        </el-button>
+        <el-button v-if="p.actpoint === 'look'" @click="back('detailForm', 'submit')" class="detailbutton">驳回
+        </el-button>
       </div>
       <div class="detailBox">
         <el-form
@@ -1549,7 +1555,8 @@
       submit() {
         const id = this.p.uuid || this.uuid
         this.$http
-          .post('/api/statistics/StatisticsProject/detail/projectSubmitById', { projectId: id })
+          .post('/api/statistics/StatisticsProject/process/start', 
+          JSON.stringify(this.detailForm.project),{ useJson: true })
           .then((res) => {
             if (res.data.code === 200) {
               this.$message({

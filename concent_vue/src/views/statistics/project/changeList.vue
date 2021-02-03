@@ -201,7 +201,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            <span> {{ scope.row.projectStatus=='0'?'已提交':'未提交'}} </span>
+                <span> {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':''}}</span>
           </template>
           <template slot="header" slot-scope="scope">
             <span>状态</span>
@@ -211,7 +211,7 @@
                 clearable
                 size="mini"
                 placeholder="请选择"
-                v-model="searchform.projectStatus">
+                v-model="searchform.flowStatus">
                 <el-option
                   :key="index"
                   :label="item.detailName"
@@ -254,7 +254,7 @@
         infoCSVisible: true,
         projectTypeTwo: [], // 工程类别(二级)
         projectNatureTwo: [], // 项目性质(二级)
-        projectStatusType: [{ id: 0, detailName: '已提交' }, { id: 1, detailName: '未提交' }],
+        projectStatusType:[{ id: 1, detailName: '草稿' }, { id: 2, detailName: '审核中' }, { id: 3, detailName: '审核通过' }, { id: 4, detailName: '审核退回' }],
         page: { current: 1, size: 20, total: 0, records: [] },
         searchform: {
           current: 1,
@@ -266,7 +266,7 @@
           projectTypeSecondId: '', // 工程类别(二级)
           projectLocation: '', // 项目所在地
           createTime: '', // 创建时间
-          projectStatus: '' // 状态
+          flowStatus: '' // 状态
         },
         menus: [],
         multipleSelection: [],
@@ -431,7 +431,7 @@
           projectTypeSecondId: '', // 工程类别(二级)
           projectLocation: '', // 项目所在地
           createTime: '', // 创建时间
-          projectStatus: '' // 状态
+          flowStatus: '' // 状态
         }
         this.getData()
       },

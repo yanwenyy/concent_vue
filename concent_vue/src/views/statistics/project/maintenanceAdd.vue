@@ -615,7 +615,8 @@
       submit() {
         const id = this.p.uuid || this.uuid
         this.$http
-          .post('/api/statistics/StatisticsProject/detail/projectSubmitById', { projectId: id })
+          .post('/api/statistics/StatisticsProject/process/start', 
+          JSON.stringify(this.detailForm.project),{ useJson: true })
           .then((res) => {
             if (res.data.code === 200) {
               this.$message({
