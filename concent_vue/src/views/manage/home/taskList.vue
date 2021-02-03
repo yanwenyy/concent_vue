@@ -215,8 +215,20 @@
       rowshow(row) {
         let p = {actpoint: "task", task: row,instid:row.businessId};
         var url='';
-        if(row.businessType=='contract_contract_new'||row.businessType=='contract_contract_change'||row.businessType=='project_project_new'||row.businessType=='project_project_change'){
-          url=this.$utils.getUrl[row.businessType+"@"+row.businessId];
+        if(row.businessType=='contract_contract_new'){
+          this.$http
+            .post("/api/contract/contract/ContractInfo/detail/entityInfo", {id:row.businessId})
+            .then((res) => {
+            var datas=res.data.data;
+            url=this.$utils.getUrl[row.businessType+"@"+datas.contractInfo.moduleId];
+          });
+        }else if(row.businessType=='contract_contract_change'){
+          this.$http
+            .post("/api/contract/contract/ContractInfo/detail/entityInfoByBeforeAndAfterId", {uuid:row.businessId})
+            .then((res) => {
+            var datas=res.data.data;
+            url=this.$utils.getUrl[row.businessType+"@"+datas[0].contractInfo.moduleId];
+          });
         }else{
           url=this.$utils.getUrl[row.businessType];
         }
