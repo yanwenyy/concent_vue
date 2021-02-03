@@ -2,9 +2,12 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary">登记</el-button>
-        <el-button @click="editItem" plain type="primary">修改</el-button>
-        <el-button @click="remove" type="primary" plain>删除</el-button>
+        <el-button @click="add" :disabled="flowStatus!=1&&flowStatus!=null" plain type="primary" >登记</el-button>
+        <el-button @click="editItem"
+        :disabled="flowStatus==2 || flowStatus==3"
+        plain type="primary"
+        >修改</el-button>
+        <el-button @click="remove" :disabled="flowStatus!=1&&flowStatus!=4" type="primary" plain>删除</el-button>
         <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
       </el-button-group>
             <div style="float: right">
@@ -24,6 +27,7 @@
         }"
         @row-click="rowshow"
         @selection-change="handleSelectionChange"
+        @select="rowSelect"
         border
         highlight-current-row
         ref="table"
@@ -206,7 +210,7 @@
         >
           <template slot-scope="scope">
               <!-- {{scope.row.uuid==null?'未通过':'通过'}} -->
-              {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'待审核':scope.row.flowStatus==3?'审核通过':'其他情况'}}
+              {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
           </template>
 
           <template slot="header" slot-scope="scope">
@@ -322,6 +326,7 @@ export default {
   name: "proposal-list-look",
   data() {
     return {
+      flowStatus:'',
       radio: '0',
       page: {current: 1, size: 20, total: 0, records: []},
       showinput: false,
@@ -361,6 +366,14 @@ export default {
       },
 },
   methods: {
+      //行选择的时候
+      rowSelect(selection, row){
+        if(selection.indexOf(row)!=-1){
+          this.flowStatus=row.flowStatus;
+        }else{
+          this.flowStatus='';
+        }
+      },
       //工程类别二级
       getTwo(id) {
         this.searchform.enginTypeSecondId='';
@@ -476,10 +489,10 @@ export default {
         this.$message.info("请选择未登记资审信息的项目进行资审登记！");
         return;
       }
-      if (this.multipleSelection[0].uuid != null) {
-        this.$message.info("当前登记的项目信息已经添加的资审信息！");
-        return;
-      }
+      // if (this.multipleSelection[0].uuid != null) {
+      //   this.$message.info("当前登记的项目信息已经添加的资审信息！");
+      //   return;
+      // }
       //alert(JSON.stringify(this.multipleSelection[0]));
       let p = {actpoint: 'add', instid: this.multipleSelection[0].inforid, topinfoid: this.multipleSelection[0].tiouuid}
       //alert(JSON.stringify(p));

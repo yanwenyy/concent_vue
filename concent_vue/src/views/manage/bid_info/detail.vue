@@ -7,16 +7,30 @@
         <el-button
           v-if="p.actpoint != 'look' && p.actpoint !== 'searchLook'"
           type="primary"
-          @click="saveInfo('detailform')"
+          @click="saveInfo('detailform','save')"
           class="detailbutton"
           >保存</el-button
         >
         <el-button
-          v-if="p.actpoint != 'look' && p.actpoint !== 'searchLook'"
-          @click="saveInfo('detailform')"
-
+        v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.bidInfo.flowStatus==1)"
+          @click="saveInfo('detailform','sub')"
           class="detailbutton"
           >提交</el-button>
+<!-- v-if="p.actpoint != 'look' && p.actpoint !== 'searchLook'" -->
+        <el-button
+           v-show="p.actpoint == 'task'&&p.task.edit==false"
+           class="detailbutton"
+           @click="operation('back')"
+           type="warning"
+           >驳回</el-button>
+
+        <el-button
+            v-show="p.actpoint == 'task'&&p.task.edit==false"
+            class="detailbutton"
+            @click="operation('complete')"
+            type="success"
+            >通过</el-button>
+        <!--<el-button v-show="p.actpoint == 'task'&&p.task.edit==true" @click="operation('recall')" class="detailbutton" type="danger">撤销</el-button>-->
       </div>
 
       <div class="detailBox">
@@ -1063,6 +1077,25 @@ export default {
     // }
   },
   methods: {
+      //流程操作
+      operation(type){
+        this.$http
+          .post(
+            '/api/contract/topInfo/BidInfo/process/'+type,
+            JSON.stringify(this.p.task),
+            {useJson: true}
+          )
+          .then((res) => {
+          if (res.data.code === 200) {
+          this.$message({
+            message: "操作成功",
+            type: "success",
+          });
+          this.$router.back()
+        }
+        });
+      },
+
     //打开单位弹框
     addDw(type, list) {
       this.DwVisible = true;
@@ -1229,7 +1262,7 @@ export default {
         console.log(this.detailform.topInfor[name]);
       }
     },
-    saveInfo(formName) {
+    saveInfo(formName,type) {
       // var bidInfoInnerOrgList = [];
       // //内部联合体单位
       // this.amountSource.forEach((item) => {
@@ -1242,13 +1275,19 @@ export default {
       //   }
       // });
       // this.detailform.bidInfoInnerOrgList=bidInfoInnerOrgList;
+      var url='';
+        if(type=='save'){
+          url="/api/contract/topInfo/BidInfo/detail/saveOrUpdate"
+        }else{
+          url="/api/contract/topInfo/BidInfo/process/start"
+        }
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // this.detailform.bidInfo_02=[];
           // this.detailform.srcId='';
           this.$http
             .post(
-              "/api/contract/topInfo/BidInfo/detail/saveOrUpdate",
+              url,
               JSON.stringify(this.detailform),
               { useJson: true }
             )
