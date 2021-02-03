@@ -1,37 +1,34 @@
 <template>
-  <div >
-        <el-card class="box-card">
-      <div slot="header" class="clearfix" >
-        <span class="detailSpan"><b>资审管理详情</b></span>
-        <el-button
-          class="detailbutton"
-          @click="back">返回</el-button>
-        <el-button
-        class="detailbutton"
-        type="primary"
-        @click="saveInfo('detailform','save')"
-        v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
-        >保存</el-button>
-        <el-button
-        class="detailbutton"
-        @click="saveInfo('detailform','sub')"
-        v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.verify.flowStatus==1)"
-        >提交</el-button>
-        <el-button
-        v-show="p.actpoint == 'task'&&p.task.edit==false"
-        class="detailbutton"
-        @click="operation('back')"
-        type="warning"
-        >驳回</el-button>
-        <el-button
-        v-show="p.actpoint == 'task'&&p.task.edit==false"
-        class="detailbutton"
-        @click="operation('complete')"
-        type="success"
-        >通过</el-button>
-      </div>
+  <div style="position: relative">
+          <el-button
+            class="detailbutton detail-back-tab"
+            @click="back">返回</el-button>
+          <el-button
+            class="detailbutton detail-back-tab save-btn"
+            type="primary"
+            @click="saveInfo('detailform','save')"
+            v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
+          >保存</el-button>
+          <el-button
+            class="detailbutton detail-back-tab sub-btn"
+            @click="saveInfo('detailform','sub')"
+            v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.verify.flowStatus==1)"
+          >提交</el-button>
+          <el-button
+            v-show="p.actpoint == 'task'&&p.task.edit==false"
+            class="detailbutton detail-back-tab bh"
+            @click="operation('back')"
+            type="warning"
+          >驳回</el-button>
+          <el-button
+            v-show="p.actpoint == 'task'&&p.task.edit==false"
+            class="detailbutton detail-back-tab tg"
+            @click="operation('complete')"
+            type="success"
+          >通过</el-button>
 
-
+    <el-tabs type="border-card" >
+      <el-tab-pane label="资审管理详情">
       <div class="detailBox">
        <el-divider content-position="left" class="detailDivider">项目前期信息</el-divider>
     <el-form
@@ -742,8 +739,11 @@
     </el-form>
 
     </div>
-</el-card>
-
+    </el-tab-pane>
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'">
+        <Audit-Process :task="p.task"></Audit-Process>
+      </el-tab-pane>
+    </el-tabs>
     <el-dialog title="前期项目标段列表" :visible.sync="dialogTopInfoSection">
     <el-table
       :data="detailform1.topInfoSectionList"
@@ -807,20 +807,24 @@
     <el-button type="primary" @click="addSection()">确 定</el-button>
   </span>
     </el-dialog>
+
     <TreeOrg v-if="treeOrgStatas" ref="addOrUpdate" @getPosition="getTreeOrg"></TreeOrg>
     <TreeOrg v-if="treeOrgStatas1" ref="addOrUpdate1" @getPosition="getTreeOrg1"></TreeOrg>
    <TreeOrg v-if="treeOrgStatas2" ref="addOrUpdate2" @getPosition="getTreeOrg2"></TreeOrg>
   </div>
+
 </template>
 
 <script>
 import TreeOrg from '@/components/treeOrg'
 import { isMoney } from '@/utils/validate'
+import AuditProcess from '@/components/auditProcess'
 export default {
 
   // name: '详情',
   components: {
-    TreeOrg
+    TreeOrg,
+    AuditProcess
   },
   data() {
     var validateMoney = (rule, value, callback) => {
@@ -1403,7 +1407,26 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-
+  /*按钮样式*/
+  .detail-back-tab{
+  padding: 10px 20px ;
+  border:1px solid #ddd;
+  color: black;
+  position: absolute;
+  top:1px;
+  right:15px;
+  z-index: 999999999;
+  background: #fff;
+  }
+  .save-btn{
+  right: 95px;
+  background: #409EFF;
+  color:#fff;
+  }
+  .sub-btn{
+  right: 175px;
+  }
+  /**/
 .btn-group{
   text-align: center;
   margin-top: 20px;

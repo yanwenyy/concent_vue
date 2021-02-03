@@ -986,6 +986,9 @@
       </div>
     </el-card>
     <add-bd v-if="BDCSVisible" ref="infoBD" @refreshBD="getBdInfo"></add-bd>
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'">
+        <Audit-Process :task="p.task"></Audit-Process>
+      </el-tab-pane>
     <company-tree
       v-if="DwVisible"
       ref="infoDw"
@@ -998,6 +1001,7 @@
 import { isMoney } from "@/utils/validate";
 import AddBd from "./addBd";
 import CompanyTree from "../contractManager/companyTree";
+import AuditProcess from '@/components/auditProcess'
 export default {
   data() {
     var validateMoney = (rule, value, callback) => {
@@ -1052,6 +1056,7 @@ export default {
   components: {
     AddBd,
     CompanyTree,
+    AuditProcess
   },
   computed: {
     bidType() {
