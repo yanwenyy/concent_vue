@@ -12,7 +12,7 @@
           <el-button
             class="detailbutton detail-back-tab sub-btn"
             @click="saveInfo('detailform','sub')"
-            v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.verify.flowStatus==1)"
+            v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.verify.flowStatus==1||detailform.verify.flowStatus==4)"
           >提交</el-button>
           <el-button
             v-show="p.actpoint == 'task'&&p.task.edit==false"
@@ -994,49 +994,6 @@ export default {
     partchg(row) {
       row.showinput = false
     },
-
-    chg(val) {
-      this.errorMsg = Math.random()
-      this.errorMsg0 = Math.random()
-      this.$nextTick(() => {
-        this.errorMsg = ''
-        this.errorMsg0 = ''
-      })
-      this.detailform.clothSize.bcStyleId = ''
-      this.detailform.clothSize.bcPlateTypeId = ''
-      this.options1.forEach((item) => {
-        if (val === item.value) {
-          this.options2 = item.children
-        }
-      })
-    },
-    chg1() {
-      this.errorMsg = Math.random()
-      this.errorMsg0 = Math.random()
-      this.$nextTick(() => {
-        this.errorMsg = ''
-        this.errorMsg0 = ''
-      })
-      if (this.detailform.clothSize.bcStyleId === '') {
-        this.detailform.clothSize.bcPlateTypeId = ''
-      }
-      if (this.detailform.clothSize.bcTypeId === '') {
-        this.$message.error('请先选择样衣类型！')
-      }
-    },
-    chg2() {
-      this.errorMsg = Math.random()
-      this.errorMsg0 = Math.random()
-      this.$nextTick(() => {
-        this.errorMsg = ''
-        this.errorMsg0 = ''
-      })
-      if (this.detailform.clothSize.bcStyleId === '') {
-        this.detailform.clothSize.bcPlateTypeId = ''
-        this.$message.error('请先选择款式类型！')
-      }
-    },
-
 
     del(index,item,list,type) {
       console.log(index);

@@ -1,12 +1,16 @@
 <template>
 <div style="position: relative">
-  <el-button class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform')" v-if="p.actpoint!='look'">保存</el-button>
+  <!-- <el-button class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform')" v-if="p.actpoint!='look'">保存</el-button>
   <el-button class="detail-back-tab detailbutton sub-btn" @click="submit" v-if="p.actpoint!='look'">提交</el-button>
-  <el-button class="detail-back-tab detailbutton" @click="back"  type="text">返回</el-button>
+  <el-button class="detail-back-tab detailbutton" @click="back"  type="text">返回</el-button> -->
+    <el-button v-show="p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.bidInfo.flowStatus==1)" @click="saveInfo('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform','save')">保存</el-button>
+    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
+    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
+    <el-button  class="detail-back-tab detailbutton" @click="back" type="text">返回</el-button>
 
-
-  <el-tabs type="border-card">
-    <el-tab-pane label="变更前">
+  <el-tabs type="border-card" v-model="activeName">
+    <el-tab-pane label="变更前" name="before">
 
       <div class="detailBoxBG">
         <el-divider content-position="left" class="detailDivider">项目前期信息</el-divider>
@@ -829,7 +833,7 @@
     </el-tab-pane>
 
 
-    <el-tab-pane label="变更后">
+    <el-tab-pane label="变更后" name="after">
 
         <div class="detailBoxBG">
           <el-divider content-position="left" class="detailDivider">项目前期信息</el-divider>
@@ -1712,6 +1716,9 @@
       <add-bd  v-if="BDCSVisible" ref="infoBD" @refreshBD="getBdInfo"></add-bd>
        <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
     </el-tab-pane>
+    <el-tab-pane label="审批流程" name="lc" v-if="p.actpoint == 'task'">
+        <Audit-Process :task="p.task"></Audit-Process>
+    </el-tab-pane>
   </el-tabs>
 </div>
 </template>
@@ -1721,10 +1728,12 @@ import CompanyTree from '../contractManager/companyTree'
 import AddBd from './addBd'
 import Tree from "@/components/tree";
 import { isMoney } from "@/utils/validate";
+import AuditProcess from '@/components/auditProcess'
 export default {
   // name: "详情",
   data() {
     return {
+      activeName:"after",
       key:0,
        BDCSVisible:false,//标段新增弹框状态
        DwVisible:false,//选择单位弹框状态
@@ -1783,7 +1792,8 @@ export default {
   components: {
     Tree,
     AddBd,
-    CompanyTree
+    CompanyTree,
+    AuditProcess
   },
   computed: {
     projectDomainType() {
@@ -1851,6 +1861,24 @@ export default {
     // eslint-disable-next-line no-unde
   },
   methods: {
+          //流程操作
+      operation(type){
+        this.$http
+          .post(
+            '/api/contract/topInfo/BidInfo/changeProcess/'+type,
+            JSON.stringify(this.p.task),
+            {useJson: true}
+          )
+          .then((res) => {
+          if (res.data.code === 200) {
+          this.$message({
+            message: "操作成功",
+            type: "success",
+          });
+          this.$router.back()
+        }
+      });
+      },
     //打开单位弹框
     addDw(type,list){
       this.DwVisible = true;
@@ -1972,7 +2000,6 @@ export default {
         this.$refs.addOrUpdate.init();
       });
     },
-    submit() {},
     //工程类别二级
     getTwo(id) {
       if (id != "") {
@@ -2008,7 +2035,7 @@ export default {
         console.log(this.detailform.topInfor[name]);
       }
     },
-    saveInfo(formName) {
+    saveInfo(formName,type) {
       // var bidInfoInnerOrgList = [];
       //   //内部联合体单位
       //   this.amountSource.forEach((item) => {
@@ -2022,12 +2049,18 @@ export default {
       //   });
       // this.detailform.bidInfoInnerOrgList=bidInfoInnerOrgList;
       this.detailform.srcId = this.id;
+      var url='';
+        if(type=='save'){
+          url=`/api/contract/topInfo/BidInfo/detail/${this.p.actpoint === "add"? "saveChangeRecord": "updateChangeRecord"}`
+        }else{
+          url="/api/contract/topInfo/BidInfo/changeProcess/start"
+        }
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$http
             .post(
-              `/api/contract/topInfo/BidInfo/detail/${this.p.actpoint === "add"? "saveChangeRecord": "updateChangeRecord"
-              }`,
+              // `/api/contract/topInfo/BidInfo/detail/${this.p.actpoint === "add"? "saveChangeRecord": "updateChangeRecord"}`,
+              url,
               JSON.stringify(this.detailform),
               { useJson: true }
             )

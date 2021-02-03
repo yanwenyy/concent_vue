@@ -888,4 +888,7 @@ export default {
   >>>.el-dialog__body{
     padding-top: 0px;
   }
+  >>>.el-table__row{
+  height: 42px !important;
+}
 </style>

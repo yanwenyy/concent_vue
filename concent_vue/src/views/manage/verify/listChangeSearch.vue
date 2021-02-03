@@ -99,7 +99,7 @@
           align="center"
           label="状态"
           prop="verify.uuid"
-          filter-multiple="true"
+          :filter-multiple="true"
           show-overflow-tooltip
         >
 

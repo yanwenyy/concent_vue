@@ -1,19 +1,45 @@
 <!--资审变更列表-->
 <template>
  <div style="position: relative">
- <el-button  class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailformAfter')"
-             v-show="p.actpoint != 'look'">保存
- </el-button>
-    <el-button  class="detail-back-tab detailbutton sub-btn" v-show="p.actpoint != 'look'">提交</el-button>
+  <!-- <el-button
+ class="detail-back-tab detailbutton sub-btn"
+ @click="saveInfo('detailform','sub')"
+ v-show="p.actpoint != 'look'||p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.topInfor.flowStatus==1)"
+ >提交</el-button>
+
+ <el-button
+ class="detail-back-tab detailbutton save-btn"
+ type="primary"
+ @click="saveInfo('detailformAfter')"
+ v-show="p.actpoint != 'look'"
+ >保存</el-button>
+
+  <el-button
+  v-show="p.actpoint == 'task'&&p.task.edit==false"
+  class="detailbutton detail-back-tab bh"
+  @click="operation('back')"
+  type="warning">驳回</el-button>
+
+  <el-button
+  v-show="p.actpoint == 'task'&&p.task.edit==false"
+  class="detailbutton detail-back-tab tg"
+  @click="operation('complete')"
+  type="success">通过</el-button>
  <el-button
    class="detail-back-tab detailbutton"
-   @click="back">返回</el-button>
-  <el-tabs type="border-card">
-    <el-tab-pane label="资审原信息">
-      <div>
-        <el-card class="box-card">
+   @click="back">返回</el-button> -->
 
-          <div class="detailBox">
+<!-- ||detailform.verify.flowStatus==1 -->
+       <el-button v-show="p.actpoint != 'task'&&(p.actpoint == 'add')" @click="saveInfo('detailformAfter','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailformAfter','save')">保存</el-button>
+    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
+    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
+    <el-button  class="detail-back-tab detailbutton" @click="back" type="text">返回</el-button>
+
+  <el-tabs type="border-card" v-model="activeName">
+    <el-tab-pane label="变更前" name="before">
+
+          <div class="detailBoxBG">
             <el-form
               :inline="false"
               :model="detailformBefore"
@@ -445,14 +471,14 @@
 
 
         <br>
-
-         <el-form-item
-           label="是否联合体投标:"
-           prop="verify.isCoalitionBid"
+         <!-- prop="verify.isCoalitionBid"
 
            :rules="{
                   required: true, message: '此项不能为空', trigger: 'blur'
-                }"
+                }" -->
+         <el-form-item
+           label="是否联合体投标:"
+
          >
           <el-switch
             disabled
@@ -653,14 +679,11 @@
             </el-form>
 
           </div>
-        </el-card>
-      </div>
+
+
     </el-tab-pane>
-    <el-tab-pane label="资审变更信息">
-
-        <el-card class="box-card">
-
-          <div class="detailBox">
+    <el-tab-pane label="变更后" name="after">
+          <div class="detailBoxBG">
             <el-form
               :inline="false"
               :model="detailformAfter"
@@ -1097,12 +1120,13 @@
 
 
           <br>
-         <el-form-item
-           label="是否联合体投标:"
-           prop="verify.isCoalitionBid"
+                    <!-- prop="verify.isCoalitionBid"
            :rules="{
                   required: true, message: '此项不能为空', trigger: 'blur'
-                }"
+                }" -->
+         <el-form-item
+           label="是否联合体投标:"
+
          >
          <el-switch :disabled="p.actpoint === 'look'"
            v-model="detailformAfter.verify.isCoalitionBid"
@@ -1357,7 +1381,6 @@
             </el-form>
 
           </div>
-        </el-card>
 <!--        <div class="btn-group" v-show="p.actpoint != 'look'">-->
 <!--          <el-button type="primary" @click="saveInfo('detailformAfter')">保存</el-button>-->
 <!--        </div>-->
@@ -1411,18 +1434,25 @@
       <TreeOrg v-if="treeOrgStatas1" ref="addOrUpdate1" @getPosition="getTreeOrg1"></TreeOrg>
     <TreeOrg v-if="treeOrgStatas2" ref="addOrUpdate2" @getPosition="getTreeOrg2"></TreeOrg>
     </el-tab-pane>
+    <el-tab-pane label="审批流程" name="lc" v-if="p.actpoint == 'task'">
+        <Audit-Process :task="p.task"></Audit-Process>
+    </el-tab-pane>
   </el-tabs>
  </div>
 </template>
 
 <script>
 import TreeOrg from '@/components/treeOrg'
+import AuditProcess from '@/components/auditProcess'
 export default {
-  name: '详情',components: {
-    TreeOrg
+  // name: '详情',
+  components: {
+    TreeOrg,
+    AuditProcess
   },
   data() {
     return {
+      activeName:"after",
       maxMoney:1000000,
       treeOrgStatas: false,
       treeOrgStatas1: false,
@@ -1505,7 +1535,24 @@ export default {
 
   },
   methods: {
-
+      //流程操作
+      operation(type){
+        this.$http
+          .post(
+            '/api/contract/topInfo/Verify/changeProcess/'+type,
+            JSON.stringify(this.p.task),
+            {useJson: true}
+          )
+          .then((res) => {
+          if (res.data.code === 200) {
+          this.$message({
+            message: "操作成功",
+            type: "success",
+          });
+          this.$router.back()
+        }
+      });
+      },
     selectOrg(){
       this.treeOrgStatas = true;
       console.log(this.positionIndex);
@@ -1608,10 +1655,16 @@ export default {
       //   path: "/manage/proposal/list",
       // });
     },
-    saveInfo(formName) {
+    saveInfo(formName,type) {
       //alert(formName);
       //alert(this.$refs.formName.validate())
 
+        var url='';
+        if(type=='save'){
+          url= "/api/contract/topInfo/Verify/detail/saveChange"
+        }else{
+          url="/api/contract/topInfo/Verify/changeProcess/start"
+        }
       this.$refs[formName].validate((valid) => {
         //alert(valid);
         if (valid) {
@@ -1620,7 +1673,8 @@ export default {
           this.detailformAfter.verify.flowStatus = "0";
           this.$http
             .post(
-              "/api/contract/topInfo/Verify/detail/saveChange",
+              // "/api/contract/topInfo/Verify/detail/saveChange",
+              url,
               JSON.stringify(this.detailformAfter),
               {useJson: true}
             )

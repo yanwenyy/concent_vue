@@ -669,4 +669,7 @@
 >>>.mydialog .tgsj{
   width: 50% !important;
 }
+>>>.el-table__row{
+  height: 42px !important;
+}
 </style>
