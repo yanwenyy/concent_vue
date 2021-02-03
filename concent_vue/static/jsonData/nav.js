@@ -663,406 +663,406 @@ export default {
               "leaf": false,
               "defaultpage": false,
               "children": [
-              {
-              "name": "项目管理",
-              "path": "/statistics/project",
-              "component": "/router",
-              "iconCls": "el-icon-coin",
-              "menushow": true,
-              "leaf": false,
-              "defaultpage": true,
-              "children": [
                 {
-                  "name": "工程承包项目",
-                  "path": "/statistics/project/engineList",
-                  "component": "/statistics/project/engineList",
-                  "iconCls": "el-icon-school",
-                  "menushow": true,
-                  "leaf": true,
-                  "defaultpage": true
-                }, {
-                  "name": "工程承包项目",
-                  "path": "/statistics/project/engineAdd",
-                  "component": "/statistics/project/engineAdd",
-                  "iconCls": "el-icon-switch-button",
-                  "menushow": false,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "勘察设计项目",
-                  "path": "/statistics/project/designList",
-                  "component": "/statistics/project/designList",
-                  "iconCls": "el-icon-notebook-2",
-                  "menushow": true,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "勘察设计项目",
-                  "path": "/statistics/project/designAdd",
-                  "component": "/statistics/project/designAdd",
-                  "iconCls": "el-icon-switch-button",
-                  "menushow": false,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "房地产项目",
-                  "path": "/statistics/project/estateList",
-                  "component": "/statistics/project/estateList",
-                  "iconCls": "el-icon-office-building",
-                  "menushow": true,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "房地产项目",
-                  "path": "/statistics/project/estateAdd",
-                  "component": "/statistics/project/estateAdd",
-                  "iconCls": "el-icon-notebook-2",
-                  "menushow": false,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "物资贸易项目",
-                  "path": "/statistics/project/tradeList",
-                  "component": "/statistics/project/tradeList",
-                  "iconCls": "el-icon-truck",
-                  "menushow": true,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "物资贸易项目",
-                  "path": "/statistics/project/tradeAdd",
-                  "component": "/statistics/project/tradeAdd",
-                  "iconCls": "el-icon-notebook-2",
-                  "menushow": false,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "工业制造项目",
-                  "path": "/statistics/project/manufactureList",
-                  "component": "/statistics/project/manufactureList",
-                  "iconCls": "el-icon-cpu",
-                  "menushow": true,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                ,
-                {
-                  "name": "工业制造项目",
-                  "path": "/statistics/project/manufactureAdd",
-                  "component": "/statistics/project/manufactureAdd",
-                  "iconCls": "el-icon-notebook-2",
-                  "menushow": false,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "金融保险项目",
-                  "path": "/statistics/project/financeList",
-                  "component": "/statistics/project/financeList",
-                  "iconCls": "el-icon-money",
-                  "menushow": true,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "金融保险项目",
-                  "path": "/statistics/project/financeAdd",
-                  "component": "/statistics/project/financeAdd",
-                  "iconCls": "el-icon-notebook-2",
-                  "menushow": false,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "运营维管项目",
-                  "path": "/statistics/project/maintenanceList",
-                  "component": "/statistics/project/maintenanceList",
-                  "iconCls": "el-icon-setting",
-                  "menushow": true,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "运营维管项目",
-                  "path": "/statistics/project/maintenanceAdd",
-                  "component": "/statistics/project/maintenanceAdd",
-                  "iconCls": "el-icon-notebook-2",
-                  "menushow": false,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "其他项目",
-                  "path": "/statistics/project/otherList",
-                  "component": "/statistics/project/otherList",
-                  "iconCls": "el-icon-coin",
-                  "menushow": true,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "其他项目",
-                  "path": "/statistics/project/otherAdd",
-                  "component": "/statistics/project/otherAdd",
-                  "iconCls": "el-icon-notebook-2",
-                  "menushow": false,
-                  "leaf": false,
-                  "defaultpage": false
-                },
-                {
-                  "name": "项目信息变更",
-                  "path": "/statistics/project/changeList",
-                  "component": "/statistics/project/changeList",
-                  "iconCls": "el-icon-edit-outline",
-                  "menushow": true,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "项目信息变更",
-                  "path": "/statistics/project/changeAdd",
-                  "component": "/statistics/project/changeAdd",
-                  "iconCls": "el-icon-edit-outline",
-                  "menushow": false,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "项目信息合并",
-                  "path": "/statistics/project/hb",
-                  "component": "/statistics/project/hb",
-                  "iconCls": "el-icon-connection",
-                  "menushow": true,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "项目信息移动",
-                  "path": "/statistics/project/hb",
-                  "component": "/statistics/project/hb1",
-                  "iconCls": "el-icon-rank",
-                  "menushow": true,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "项目信息查询",
-                  "path": "/statistics/project/searchList",
-                  "component": "/statistics/project/searchList",
-                  "iconCls": "el-icon-search",
-                  "menushow": true,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "项目信息变更",
-                  "path": "/statistics/project/change/engineDetail",
-                  "component": "/statistics/project/change/engineDetail",
-                  "iconCls": "el-icon-search",
-                  "menushow": false,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "项目信息变更",
-                  "path": "/statistics/project/change/designDetail",
-                  "component": "/statistics/project/change/designDetail",
-                  "iconCls": "el-icon-search",
-                  "menushow": false,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "项目信息变更",
-                  "path": "/statistics/project/change/estateDetail",
-                  "component": "/statistics/project/change/estateDetail",
-                  "iconCls": "el-icon-search",
-                  "menushow": false,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "项目信息变更",
-                  "path": "/statistics/project/change/financeDetail",
-                  "component": "/statistics/project/change/financeDetail",
-                  "iconCls": "el-icon-search",
-                  "menushow": false,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "项目信息变更",
-                  "path": "/statistics/project/change/maintenanceDetail",
-                  "component": "/statistics/project/change/maintenanceDetail",
-                  "iconCls": "el-icon-search",
-                  "menushow": false,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "项目信息变更",
-                  "path": "/statistics/project/change/manufactureDetail",
-                  "component": "/statistics/project/change/manufactureDetail",
-                  "iconCls": "el-icon-search",
-                  "menushow": false,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "项目信息变更",
-                  "path": "/statistics/project/change/otherDetail",
-                  "component": "/statistics/project/change/otherDetail",
-                  "iconCls": "el-icon-search",
-                  "menushow": false,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                {
-                  "name": "项目信息变更",
-                  "path": "/statistics/project/change/tradeDetail",
-                  "component": "/statistics/project/change/tradeDetail",
-                  "iconCls": "el-icon-search",
-                  "menushow": false,
-                  "leaf": true,
-                  "defaultpage": false
-                },
-                ]
-              },
-              {
-                "name": "产值年计划",
-                "path": "/statistics/plan",
+                "name": "项目管理",
+                "path": "/statistics/project",
                 "component": "/router",
-                "iconCls": "el-icon-printer",
+                "iconCls": "el-icon-coin",
                 "menushow": true,
                 "leaf": false,
-                "defaultpage": false,
+                "defaultpage": true,
                 "children": [
                   {
-                    "name": "项目部上报",
-                    "path": "/statistics/plan/01-1",
-                    "component": "/statistics/plan/01-1",
+                    "name": "工程承包项目",
+                    "path": "/statistics/project/engineList",
+                    "component": "/statistics/project/engineList",
+                    "iconCls": "el-icon-school",
+                    "menushow": true,
+                    "leaf": true,
+                    "defaultpage": true
+                  }, {
+                    "name": "工程承包项目",
+                    "path": "/statistics/project/engineAdd",
+                    "component": "/statistics/project/engineAdd",
+                    "iconCls": "el-icon-switch-button",
+                    "menushow": false,
+                    "leaf": true,
+                    "defaultpage": false
+                  },
+                  {
+                    "name": "勘察设计项目",
+                    "path": "/statistics/project/designList",
+                    "component": "/statistics/project/designList",
                     "iconCls": "el-icon-notebook-2",
                     "menushow": true,
                     "leaf": true,
                     "defaultpage": false
                   },
                   {
-                    "name": "工程公司汇总",
-                    "path": "/statistics/plan/02-1",
-                    "component": "/statistics/plan/02-1",
-                    "iconCls": "el-icon-receiving",
+                    "name": "勘察设计项目",
+                    "path": "/statistics/project/designAdd",
+                    "component": "/statistics/project/designAdd",
+                    "iconCls": "el-icon-switch-button",
+                    "menushow": false,
+                    "leaf": true,
+                    "defaultpage": false
+                  },
+                  {
+                    "name": "房地产项目",
+                    "path": "/statistics/project/estateList",
+                    "component": "/statistics/project/estateList",
+                    "iconCls": "el-icon-office-building",
                     "menushow": true,
                     "leaf": true,
                     "defaultpage": false
                   },
                   {
-                    "name": "工程公司上报",
-                    "path": "/statistics/plan/01",
-                    "component": "/statistics/plan/01",
+                    "name": "房地产项目",
+                    "path": "/statistics/project/estateAdd",
+                    "component": "/statistics/project/estateAdd",
                     "iconCls": "el-icon-notebook-2",
+                    "menushow": false,
+                    "leaf": true,
+                    "defaultpage": false
+                  },
+                  {
+                    "name": "物资贸易项目",
+                    "path": "/statistics/project/tradeList",
+                    "component": "/statistics/project/tradeList",
+                    "iconCls": "el-icon-truck",
                     "menushow": true,
                     "leaf": true,
                     "defaultpage": false
                   },
                   {
-                    "name": "集团公司汇总",
-                    "path": "/statistics/plan/02",
-                    "component": "/statistics/plan/02",
-                    "iconCls": "el-icon-receiving",
-                    "menushow": true,
-                    "leaf": true,
-                    "defaultpage": false
-                  },
-                  {
-                    "name": "集团公司上报",
-                    "path": "/statistics/plan/03",
-                    "component": "/statistics/plan/03",
+                    "name": "物资贸易项目",
+                    "path": "/statistics/project/tradeAdd",
+                    "component": "/statistics/project/tradeAdd",
                     "iconCls": "el-icon-notebook-2",
+                    "menushow": false,
+                    "leaf": true,
+                    "defaultpage": false
+                  },
+                  {
+                    "name": "工业制造项目",
+                    "path": "/statistics/project/manufactureList",
+                    "component": "/statistics/project/manufactureList",
+                    "iconCls": "el-icon-cpu",
+                    "menushow": true,
+                    "leaf": true,
+                    "defaultpage": false
+                  },
+                  ,
+                  {
+                    "name": "工业制造项目",
+                    "path": "/statistics/project/manufactureAdd",
+                    "component": "/statistics/project/manufactureAdd",
+                    "iconCls": "el-icon-notebook-2",
+                    "menushow": false,
+                    "leaf": true,
+                    "defaultpage": false
+                  },
+                  {
+                    "name": "金融保险项目",
+                    "path": "/statistics/project/financeList",
+                    "component": "/statistics/project/financeList",
+                    "iconCls": "el-icon-money",
                     "menushow": true,
                     "leaf": true,
                     "defaultpage": false
                   },
                   {
-                    "name": "股份公司汇总",
-                    "path": "/statistics/plan/04",
-                    "component": "/statistics/plan/04",
-                    "iconCls": "el-icon-receiving",
+                    "name": "金融保险项目",
+                    "path": "/statistics/project/financeAdd",
+                    "component": "/statistics/project/financeAdd",
+                    "iconCls": "el-icon-notebook-2",
+                    "menushow": false,
+                    "leaf": true,
+                    "defaultpage": false
+                  },
+                  {
+                    "name": "运营维管项目",
+                    "path": "/statistics/project/maintenanceList",
+                    "component": "/statistics/project/maintenanceList",
+                    "iconCls": "el-icon-setting",
                     "menushow": true,
                     "leaf": true,
                     "defaultpage": false
                   },
                   {
-                    "name": "下级上报查询",
-                    "path": "/statistics/plan/05",
-                    "component": "/statistics/plan/05",
-                    "iconCls": "el-icon-search",
+                    "name": "运营维管项目",
+                    "path": "/statistics/project/maintenanceAdd",
+                    "component": "/statistics/project/maintenanceAdd",
+                    "iconCls": "el-icon-notebook-2",
+                    "menushow": false,
+                    "leaf": true,
+                    "defaultpage": false
+                  },
+                  {
+                    "name": "其他项目",
+                    "path": "/statistics/project/otherList",
+                    "component": "/statistics/project/otherList",
+                    "iconCls": "el-icon-coin",
                     "menushow": true,
                     "leaf": true,
                     "defaultpage": false
                   },
                   {
-                    "name": "股份公司调整",
-                    "path": "/statistics/plan/06",
-                    "component": "/statistics/plan/06",
+                    "name": "其他项目",
+                    "path": "/statistics/project/otherAdd",
+                    "component": "/statistics/project/otherAdd",
+                    "iconCls": "el-icon-notebook-2",
+                    "menushow": false,
+                    "leaf": false,
+                    "defaultpage": false
+                  },
+                  {
+                    "name": "项目信息变更",
+                    "path": "/statistics/project/changeList",
+                    "component": "/statistics/project/changeList",
                     "iconCls": "el-icon-edit-outline",
                     "menushow": true,
                     "leaf": true,
                     "defaultpage": false
                   },
                   {
-                    "name": "集团公司调整",
-                    "path": "/statistics/plan/07",
-                    "component": "/statistics/plan/07",
+                    "name": "项目信息变更",
+                    "path": "/statistics/project/changeAdd",
+                    "component": "/statistics/project/changeAdd",
                     "iconCls": "el-icon-edit-outline",
+                    "menushow": false,
+                    "leaf": true,
+                    "defaultpage": false
+                  },
+                  {
+                    "name": "项目信息合并",
+                    "path": "/statistics/project/hb",
+                    "component": "/statistics/project/hb",
+                    "iconCls": "el-icon-connection",
                     "menushow": true,
                     "leaf": true,
                     "defaultpage": false
                   },
                   {
-                    "name": "股份公司下达",
-                    "path": "/statistics/plan/08",
-                    "component": "/statistics/plan/08",
-                    "iconCls": "el-icon-finished",
+                    "name": "项目信息移动",
+                    "path": "/statistics/project/hb",
+                    "component": "/statistics/project/hb1",
+                    "iconCls": "el-icon-rank",
                     "menushow": true,
                     "leaf": true,
                     "defaultpage": false
                   },
                   {
-                    "name": "集团公司下达",
-                    "path": "/statistics/plan/09",
-                    "component": "/statistics/plan/09",
-                    "iconCls": "el-icon-finished",
-                    "menushow": true,
-                    "leaf": true,
-                    "defaultpage": false
-                  },
-                  {
-                    "name": "上级下达查看",
-                    "path": "/statistics/plan/10",
-                    "component": "/statistics/plan/10",
+                    "name": "项目信息查询",
+                    "path": "/statistics/project/searchList",
+                    "component": "/statistics/project/searchList",
                     "iconCls": "el-icon-search",
                     "menushow": true,
                     "leaf": true,
                     "defaultpage": false
                   },
                   {
-                    "name": "下级下达查看",
-                    "path": "/statistics/plan/11",
-                    "component": "/statistics/plan/11",
+                    "name": "项目信息变更",
+                    "path": "/statistics/project/change/engineDetail",
+                    "component": "/statistics/project/change/engineDetail",
                     "iconCls": "el-icon-search",
-                    "menushow": true,
+                    "menushow": false,
                     "leaf": true,
                     "defaultpage": false
-                  }
-                ]
-              },
+                  },
+                  {
+                    "name": "项目信息变更",
+                    "path": "/statistics/project/change/designDetail",
+                    "component": "/statistics/project/change/designDetail",
+                    "iconCls": "el-icon-search",
+                    "menushow": false,
+                    "leaf": true,
+                    "defaultpage": false
+                  },
+                  {
+                    "name": "项目信息变更",
+                    "path": "/statistics/project/change/estateDetail",
+                    "component": "/statistics/project/change/estateDetail",
+                    "iconCls": "el-icon-search",
+                    "menushow": false,
+                    "leaf": true,
+                    "defaultpage": false
+                  },
+                  {
+                    "name": "项目信息变更",
+                    "path": "/statistics/project/change/financeDetail",
+                    "component": "/statistics/project/change/financeDetail",
+                    "iconCls": "el-icon-search",
+                    "menushow": false,
+                    "leaf": true,
+                    "defaultpage": false
+                  },
+                  {
+                    "name": "项目信息变更",
+                    "path": "/statistics/project/change/maintenanceDetail",
+                    "component": "/statistics/project/change/maintenanceDetail",
+                    "iconCls": "el-icon-search",
+                    "menushow": false,
+                    "leaf": true,
+                    "defaultpage": false
+                  },
+                  {
+                    "name": "项目信息变更",
+                    "path": "/statistics/project/change/manufactureDetail",
+                    "component": "/statistics/project/change/manufactureDetail",
+                    "iconCls": "el-icon-search",
+                    "menushow": false,
+                    "leaf": true,
+                    "defaultpage": false
+                  },
+                  {
+                    "name": "项目信息变更",
+                    "path": "/statistics/project/change/otherDetail",
+                    "component": "/statistics/project/change/otherDetail",
+                    "iconCls": "el-icon-search",
+                    "menushow": false,
+                    "leaf": true,
+                    "defaultpage": false
+                  },
+                  {
+                    "name": "项目信息变更",
+                    "path": "/statistics/project/change/tradeDetail",
+                    "component": "/statistics/project/change/tradeDetail",
+                    "iconCls": "el-icon-search",
+                    "menushow": false,
+                    "leaf": true,
+                    "defaultpage": false
+                  },
+                  ]
+                },
+                {
+                  "name": "产值年计划",
+                  "path": "/statistics/plan",
+                  "component": "/router",
+                  "iconCls": "el-icon-printer",
+                  "menushow": true,
+                  "leaf": false,
+                  "defaultpage": false,
+                  "children": [
+                    {
+                      "name": "项目部上报",
+                      "path": "/statistics/plan/01-1",
+                      "component": "/statistics/plan/01-1",
+                      "iconCls": "el-icon-notebook-2",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "工程公司汇总",
+                      "path": "/statistics/plan/02-1",
+                      "component": "/statistics/plan/02-1",
+                      "iconCls": "el-icon-receiving",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "工程公司上报",
+                      "path": "/statistics/plan/01",
+                      "component": "/statistics/plan/01",
+                      "iconCls": "el-icon-notebook-2",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "集团公司汇总",
+                      "path": "/statistics/plan/02",
+                      "component": "/statistics/plan/02",
+                      "iconCls": "el-icon-receiving",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "集团公司上报",
+                      "path": "/statistics/plan/03",
+                      "component": "/statistics/plan/03",
+                      "iconCls": "el-icon-notebook-2",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "股份公司汇总",
+                      "path": "/statistics/plan/04",
+                      "component": "/statistics/plan/04",
+                      "iconCls": "el-icon-receiving",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "下级上报查询",
+                      "path": "/statistics/plan/05",
+                      "component": "/statistics/plan/05",
+                      "iconCls": "el-icon-search",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "股份公司调整",
+                      "path": "/statistics/plan/06",
+                      "component": "/statistics/plan/06",
+                      "iconCls": "el-icon-edit-outline",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "集团公司调整",
+                      "path": "/statistics/plan/07",
+                      "component": "/statistics/plan/07",
+                      "iconCls": "el-icon-edit-outline",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "股份公司下达",
+                      "path": "/statistics/plan/08",
+                      "component": "/statistics/plan/08",
+                      "iconCls": "el-icon-finished",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "集团公司下达",
+                      "path": "/statistics/plan/09",
+                      "component": "/statistics/plan/09",
+                      "iconCls": "el-icon-finished",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "上级下达查看",
+                      "path": "/statistics/plan/10",
+                      "component": "/statistics/plan/10",
+                      "iconCls": "el-icon-search",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": false
+                    },
+                    {
+                      "name": "下级下达查看",
+                      "path": "/statistics/plan/11",
+                      "component": "/statistics/plan/11",
+                      "iconCls": "el-icon-search",
+                      "menushow": true,
+                      "leaf": true,
+                      "defaultpage": false
+                    }
+                  ]
+                },
                 {
                   "name": "统计指标",
                   "path": "/statistics/bp",
@@ -1089,6 +1089,53 @@ export default {
                       "menushow": true,
                       "leaf": true,
                       "defaultpage": false
+                    }
+                  ]
+                },
+                {
+                  'name': '项目月报计划',
+                  'path': '/statistics/plan',
+                  'component': '/router',
+                  'iconCls': 'el-icon-time',
+                  'menushow': true,
+                  'leaf': false,
+                  'defaultpage': false,
+                  'children': [
+                    {
+                      'name': '总设计量',
+                      'path': '/statistics/plan/proTjxAllList',
+                      'component': '/statistics/plan/proTjxAllList',
+                      'iconCls': 'el-icon-reading',
+                      'menushow': true,
+                      'leaf': true,
+                      'defaultpage': false
+                    },
+                    {
+                      'name': '总设计量详情',
+                      'path': '/statistics/plan/proTjxDetail',
+                      'component': '/statistics/plan/proTjxDetail',
+                      'iconCls': 'el-icon-switch-button',
+                      'menushow': false,
+                      'leaf': true,
+                      'defaultpage': false
+                    },
+                    {
+                      'name': '年计划',
+                      'path': '/statistics/plan/listYear',
+                      'component': '/statistics/plan/listYear',
+                      'iconCls': 'el-icon-office-building',
+                      'menushow': true,
+                      'leaf': true,
+                      'defaultpage': false
+                    },
+                    {
+                      'name': '月计划',
+                      'path': '/statistics/plan/listMonth',
+                      'component': '/statistics/plan/listMonth',
+                      'iconCls': 'el-icon-office-building',
+                      'menushow': true,
+                      'leaf': true,
+                      'defaultpage': false
                     }
                   ]
                 }

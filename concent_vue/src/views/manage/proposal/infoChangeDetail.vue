@@ -1,7 +1,9 @@
 <template>
   <div style="position: relative">
-    <el-button v-show="p.actpoint != 'look'" class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform')">保存</el-button>
-    <el-button v-show="p.actpoint != 'look'" class="detail-back-tab detailbutton sub-btn" @click="submit">提交</el-button>
+    <el-button v-show="p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.topInfor.flowStatus==1)" @click="saveInfo('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform','save')">保存</el-button>
+    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
+    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
     <el-button  class="detail-back-tab detailbutton" @click="back" type="text">返回</el-button>
     <el-tabs type="border-card" v-model="activeName">
       <el-tab-pane label="变更前" name="before">
@@ -1264,6 +1266,7 @@
         options2: [],
         options: [],
         detailform: {
+          changeRecordUuid:'',
           topInfor: {},
           topInfoOrg: {},
           topInfoSiteList: [],
@@ -1350,7 +1353,7 @@
     mounted() {
       // this.$store.commit("setCategory", 'projectDomainType');
       this.id=this.p.instid,this.afterId=this.p.afterId;
-      if (this.p.actpoint === "edit"||this.p.actpoint === "look") {
+      if (this.p.actpoint === "edit"||this.p.actpoint === "look"||this.p.actpoint === "task") {
         this.getDetail();
       }
       if(this.p.actpoint === "add"){
@@ -1363,6 +1366,24 @@
       // eslint-disable-next-line no-unde
     },
     methods: {
+      //流程操作
+      operation(type){
+        this.$http
+          .post(
+            '/api/contract/topInfo/TopInfor/changeProcess/'+type,
+            JSON.stringify(this.p.task),
+            {useJson: true}
+          )
+          .then((res) => {
+          if (res.data.code === 200) {
+          this.$message({
+            message: "操作成功",
+            type: "success",
+          });
+          this.$router.back()
+        }
+      });
+      },
       //设置主地点
       setMain(i,list){
         list.forEach((item,index)=>{
@@ -1472,7 +1493,7 @@
           console.log(this.detailform.topInfoOrg[name]);
         }
       },
-      saveInfo(formName) {
+      saveInfo(formName,type) {
 
         var topInforCapitalList = [];
         this.amountSource.forEach((item) => {
@@ -1486,11 +1507,17 @@
       });
         this.detailform.topInforCapitalList=topInforCapitalList;
         this.detailform.srcId=this.id;
+        var url='';
+        if(type=='save'){
+          url=`/api/contract/topInfo/TopInfor/detail/${this.p.actpoint === "add"?'saveChangeRecord':'updateChangeRecord'}`
+        }else{
+          url="/api/contract/topInfo/TopInfor/changeProcess/start"
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
               .post(
-                `/api/contract/topInfo/TopInfor/detail/${this.p.actpoint === "add"?'saveChangeRecord':'updateChangeRecord'}`,
+                url,
                 JSON.stringify(this.detailform),
                 {useJson: true}
               )
@@ -1579,7 +1606,7 @@
       // 修改的时候详情
       getDetail() {
         this.$http
-          .post("/api/contract/topInfo/TopInfor/detail/entityInfoByBeforeAndAfterId", {beforeId:this.id,afterId:this.afterId})
+          .post("/api/contract/topInfo/TopInfor/detail/entityInfoBychangeRecordUuid", {beforeId:this.id,afterId:this.afterId,uuid:this.p.task?this.p.instid:this.p.uuid})
           .then((res) => {
           var datas=res.data.data;
           var beforData=[],afterData=[];
@@ -1590,14 +1617,15 @@
           beforData=datas[1];
           afterData=datas[0];
         }
-        this.getTwo(afterData.topInfor.enginTypeFirstId);
-        this.getTwoSC(afterData.topInfor.marketFirstNameId);
-        this.getTwoXZ(afterData.topInfor.projectNatureFirstId);
+        this.getTwo(afterData.topInfor.enginTypeFirstId||'');
+        this.getTwoSC(afterData.topInfor.marketFirstNameId||'');
+        this.getTwoXZ(afterData.topInfor.projectNatureFirstId||'');
         // afterData.topInforCapitalList.forEach((item)=>{
         //   this.value1.push(item.capitalId);
         // });
         console.log(afterData)
         this.detailform={
+          changeRecordUuid:afterData.changeRecordUuid,
           topInfor: afterData.topInfor,
           topInfoOrg: afterData.topInfoOrg,
           topInfoSiteList: afterData.topInfoSiteList,
@@ -1623,11 +1651,12 @@
             .post("/api/contract/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.id})
             .then((res) => {
             var datas=res.data.data;
-          this.getTwo(datas.topInfor.enginTypeFirstId);
-          this.getTwoSC(datas.topInfor.marketFirstNameId);
-          this.getTwoXZ(datas.topInfor.projectNatureFirstId);
+          this.getTwo(datas.topInfor.enginTypeFirstId||'');
+          this.getTwoSC(datas.topInfor.marketFirstNameId||'');
+          this.getTwoXZ(datas.topInfor.projectNatureFirstId||'');
 
           this.detailform={
+            changeRecordUuid:datas.changeRecordUuid,
             topInfor: datas.topInfor,
             topInfoOrg: datas.topInfoOrg,
             topInfoSiteList: datas.topInfoSiteList,
