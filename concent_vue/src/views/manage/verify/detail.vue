@@ -31,7 +31,8 @@
         >通过</el-button>
       </div>
 
-
+    <el-tabs type="border-card" >
+      <el-tab-pane label="信息管理详情">
       <div class="detailBox">
        <el-divider content-position="left" class="detailDivider">项目前期信息</el-divider>
     <el-form
@@ -742,6 +743,11 @@
     </el-form>
 
     </div>
+    </el-tab-pane>
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'">
+        <Audit-Process :task="p.task"></Audit-Process>
+      </el-tab-pane>
+    </el-tabs>
 </el-card>
 
     <el-dialog title="前期项目标段列表" :visible.sync="dialogTopInfoSection">
@@ -807,20 +813,28 @@
     <el-button type="primary" @click="addSection()">确 定</el-button>
   </span>
     </el-dialog>
+
     <TreeOrg v-if="treeOrgStatas" ref="addOrUpdate" @getPosition="getTreeOrg"></TreeOrg>
     <TreeOrg v-if="treeOrgStatas1" ref="addOrUpdate1" @getPosition="getTreeOrg1"></TreeOrg>
    <TreeOrg v-if="treeOrgStatas2" ref="addOrUpdate2" @getPosition="getTreeOrg2"></TreeOrg>
+    <!-- 审批流程 -->
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'">
+      <Audit-Process :task="p.task"></Audit-Process>
+      </el-tab-pane>
   </div>
+
 </template>
 
 <script>
 import TreeOrg from '@/components/treeOrg'
 import { isMoney } from '@/utils/validate'
+import AuditProcess from '@/components/auditProcess'
 export default {
 
   // name: '详情',
   components: {
-    TreeOrg
+    TreeOrg,
+    AuditProcess
   },
   data() {
     var validateMoney = (rule, value, callback) => {
