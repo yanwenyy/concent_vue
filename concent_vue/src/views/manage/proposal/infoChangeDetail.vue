@@ -1234,6 +1234,9 @@
 
         <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
       </el-tab-pane>
+      <el-tab-pane label="审批流程" name="lc" v-if="p.actpoint == 'task'">
+        <Audit-Process :task="p.task"></Audit-Process>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -1241,6 +1244,7 @@
 <script>
   import Tree from '@/components/tree'
   import { isMoney } from '@/utils/validate'
+  import AuditProcess from '@/components/auditProcess'
   export default {
     // name: "详情",
     data() {
@@ -1306,6 +1310,7 @@
     },
     components: {
       Tree,
+      AuditProcess
     },
     computed: {
       projectDomainType() {

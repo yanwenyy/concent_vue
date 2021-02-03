@@ -1407,7 +1407,26 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-
+  /*按钮样式*/
+  .detail-back-tab{
+  padding: 10px 20px ;
+  border:1px solid #ddd;
+  color: black;
+  position: absolute;
+  top:1px;
+  right:15px;
+  z-index: 999999999;
+  background: #fff;
+  }
+  .save-btn{
+  right: 95px;
+  background: #409EFF;
+  color:#fff;
+  }
+  .sub-btn{
+  right: 175px;
+  }
+  /**/
 .btn-group{
   text-align: center;
   margin-top: 20px;
