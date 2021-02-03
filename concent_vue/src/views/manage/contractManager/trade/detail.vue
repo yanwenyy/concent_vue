@@ -1,7 +1,9 @@
 <template>
   <div style="position: relative">
-    <el-button v-show="p.actpoint != 'look'" class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform')">保存</el-button>
-    <el-button v-show="p.actpoint != 'look'" class="detail-back-tab detailbutton sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="saveInfo('detailform','save')" class="detailbutton detail-back-tab save-btn">保存</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.contractInfo.flowStatus==1||detailform.contractInfo.flowStatus==4)" @click="saveInfo('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
+    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
     <el-button class="detail-back-tab" @click="back" type="text">返回</el-button>
     <el-form
       :inline="false"
@@ -1703,6 +1705,9 @@
             </div>
           </div>
         </el-tab-pane>
+        <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'">
+          <Audit-Process :task="p.task"></Audit-Process>
+        </el-tab-pane>
       </el-tabs>
 
     </el-form>
@@ -1717,6 +1722,7 @@
   import { isMoney,isURL } from '@/utils/validate'
   import FileUpload from '@/components/fileUpload'
   import SearchName from '../searchName'
+  import AuditProcess from '@/components/auditProcess'
 export default {
   data() {
     var validateMoney = (rule, value, callback) => {
@@ -1821,9 +1827,28 @@ export default {
   components: {
     CompanyTree,
     FileUpload,
-    SearchName
+    SearchName,
+    AuditProcess
   },
   methods: {
+    //流程操作
+    operation(type){
+      this.$http
+        .post(
+          '/api/contract/contract/ContractInfo/process/'+type,
+          JSON.stringify(this.p.task),
+          {useJson: true}
+        )
+        .then((res) => {
+        if (res.data.code === 200) {
+        this.$message({
+          message: "操作成功",
+          type: "success",
+        });
+        this.$router.back()
+      }
+    });
+    },
     // 搜索名字
     searchName() {
       this.infoCSVisible = true;
@@ -2225,7 +2250,13 @@ export default {
     resetform(formName) {
       this.$refs[formName].resetFields()
     },
-    saveInfo(formName) {
+    saveInfo(formName,type) {
+      var url='';
+      if(type=='save'){
+        url='/api/contract/contract/ContractInfo/detail/saveOrUpdate';
+      }else{
+        url='/api/contract/contract/ContractInfo/process/start';
+      }
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$http

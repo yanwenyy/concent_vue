@@ -181,10 +181,21 @@
     methods: {
       //撤回
       withdraw(val){
-        console.log(val)
+        var url='';
+        if(val.businessType=='contract_project_new'){
+          url='/api/contract/topInfo/TopInfor/process/recall'
+        }else  if(val.businessType=='contract_project_change'){
+          url='/api/contract/topInfo/TopInfor/changeProcess/recall'
+        }else  if(val.businessType=='contract_contract_new'){
+          url='/api/contract/contract/ContractInfo/process/recall'
+        }else  if(val.businessType=='contract_qual_new'){
+          url='/api/contract/topInfo/Verify/process/recall'
+        }else  if(val.businessType=='contract_bid_new'){
+          url='/api/contract/topInfo/BidInfo/process/recall'
+        }
         this.$http
           .post(
-            '/api/contract/topInfo/TopInfor/process/recall',
+              url,
               JSON.stringify(val),
               {useJson: true}
           )
@@ -220,18 +231,23 @@
             .post("/api/contract/contract/ContractInfo/detail/entityInfo", {id:row.businessId})
             .then((res) => {
             var datas=res.data.data;
-            url=this.$utils.getUrl[row.businessType+"@"+datas.contractInfo.moduleId];
-          });
+          url=this.$utils.getUrl[row.businessType+"@"+datas.contractInfo.moduleId];
+          this.urlGO(p,url)
+        });
         }else if(row.businessType=='contract_contract_change'){
           this.$http
             .post("/api/contract/contract/ContractInfo/detail/entityInfoByBeforeAndAfterId", {uuid:row.businessId})
             .then((res) => {
             var datas=res.data.data;
-            url=this.$utils.getUrl[row.businessType+"@"+datas[0].contractInfo.moduleId];
-          });
+          url=this.$utils.getUrl[row.businessType+"@"+datas[0].contractInfo.moduleId];
+          this.urlGO(p,url)
+        });
         }else{
           url=this.$utils.getUrl[row.businessType];
+          this.urlGO(p,url)
         }
+      },
+      urlGO(p,url){
         this.$router.push({
           path: url,
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
