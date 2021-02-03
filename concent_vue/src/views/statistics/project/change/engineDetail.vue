@@ -2,10 +2,23 @@
 
 <template>
   <div style="position: relative">
-    <el-button v-show="p.actpoint !== 'look'" class="detail-back-tab detailbutton save-btn" type="primary"
-               @click="saveInfo('detailForm')">保存
-    </el-button>
-    <el-button v-show="p.actpoint !== 'look'" class="detail-back-tab detailbutton sub-btn" @click="submit">提交</el-button>
+      <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="saveInfo('detailForm','save')" class="detailbutton">
+          保存
+        </el-button>
+        <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailForm.project.flowStatus==1||detailForm.project.flowStatus==4)" @click="saveInfo('detailForm','sub')" class="detailbutton">提交
+        </el-button>
+        <el-button
+            v-show="p.actpoint == 'task'&&p.task.edit==false"
+            class="detailbutton detail-back-tab bh"
+            @click="operation('back')"
+            type="warning"
+          >驳回</el-button>
+          <el-button
+            v-show="p.actpoint == 'task'&&p.task.edit==false"
+            class="detailbutton detail-back-tab tg"
+            @click="operation('complete')"
+            type="success"
+          >通过</el-button>
     <el-button class="detail-back-tab detailbutton" @click="back" type="text">返回</el-button>
     <el-tabs type="border-card">
       <el-tab-pane label="变更后">
@@ -2223,7 +2236,7 @@
     },
     mounted() {
       // this.uuid = this.p.uuid, this.afterId = this.p.afterId;
-      if (this.p.actpoint === 'edit' || this.p.actpoint === 'look') {
+      if (this.p.actpoint === 'edit' || this.p.actpoint === 'look' || this.p.actpoint === 'task') {
         this.getDetail()
       }
       if (this.p.actpoint === 'add') {
@@ -2235,6 +2248,24 @@
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
     },
     methods: {
+        //流程操作
+      operation(type){
+        this.$http
+          .post(
+            '/api/statistics/StatisticsProject/changeProcess/'+type,
+            JSON.stringify(this.p.task),
+            {useJson: true}
+          )
+          .then((res) => {
+          if (res.data.code === 200) {
+          this.$message({
+            message: "操作成功",
+            type: "success",
+          });
+          this.$router.back()
+        }
+        });
+      },
       addProduct() {
         let v = {
           uuid: '', // ID新增为空，但必须传
@@ -2393,13 +2424,21 @@
       back() {
         this.$router.back()
       },
-      saveInfo(formName) {
+      saveInfo(formName, type) {
+
+        var url='';
+        if(type=='save'){
+          url="/api/statistics/StatisticsProject/detail/saveChangeRecord"
+        }else{
+          url="/api/statistics/StatisticsProject/changeProcess/start"
+        }
+
         this.$refs[formName].validate((valid) => {
           if (valid) {
             let params = {afterProjectBo: {project: this.detailForm.project}, beforeProjectBo: {project: this.showDetailForm.project}}
             this.$http
               .post(
-                '/api/statistics/StatisticsProject/detail/saveChangeRecord',
+                url,
                 JSON.stringify(params),
                 { useJson: true }
               )
@@ -2428,9 +2467,7 @@
           }
         })
       },
-      submit() {
-        console.log('submit')
-      },
+      
       // 打开单位弹框
       addDw(type, list) {
         this.DwVisible = true

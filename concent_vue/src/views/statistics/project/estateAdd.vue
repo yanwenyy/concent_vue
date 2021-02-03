@@ -11,7 +11,7 @@
          <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="submitForm('detailForm','save')" class="detailbutton">
           保存
         </el-button>
-        <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailForm.project.flowStatus==1)" @click="submitForm('detailForm','sub')" class="detailbutton">提交
+        <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailForm.project.flowStatus==1||detailForm.project.flowStatus==4)" @click="submitForm('detailForm','sub')" class="detailbutton">提交
         </el-button>
         <el-button
             v-show="p.actpoint == 'task'&&p.task.edit==false"
