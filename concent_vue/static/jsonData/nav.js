@@ -664,6 +664,186 @@ export default {
               "defaultpage": false,
               "children": [
                 {
+                  "name": "首页",
+                  "path": "/statistics/home/home",
+                  "component": "/statistics/home/home",
+                  "iconCls": "el-icon-s-home",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                },
+                {
+                  "name": "待办已办列表",
+                  "path": "/statistics/home/taskList",
+                  "component": "/statistics/home/taskList",
+                  "iconCls": "el-icon-notebook-2",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+              {
+              "name": "项目管理",
+              "path": "/statistics/project",
+              "component": "/router",
+              "iconCls": "el-icon-coin",
+              "menushow": true,
+              "leaf": false,
+              "defaultpage": true,
+              "children": [
+                {
+                  "name": "工程承包项目",
+                  "path": "/statistics/project/engineList",
+                  "component": "/statistics/project/engineList",
+                  "iconCls": "el-icon-school",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": true
+                }, {
+                  "name": "工程承包项目",
+                  "path": "/statistics/project/engineAdd",
+                  "component": "/statistics/project/engineAdd",
+                  "iconCls": "el-icon-switch-button",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "勘察设计项目",
+                  "path": "/statistics/project/designList",
+                  "component": "/statistics/project/designList",
+                  "iconCls": "el-icon-notebook-2",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "勘察设计项目",
+                  "path": "/statistics/project/designAdd",
+                  "component": "/statistics/project/designAdd",
+                  "iconCls": "el-icon-switch-button",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "房地产项目",
+                  "path": "/statistics/project/estateList",
+                  "component": "/statistics/project/estateList",
+                  "iconCls": "el-icon-office-building",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "房地产项目",
+                  "path": "/statistics/project/estateAdd",
+                  "component": "/statistics/project/estateAdd",
+                  "iconCls": "el-icon-notebook-2",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "物资贸易项目",
+                  "path": "/statistics/project/tradeList",
+                  "component": "/statistics/project/tradeList",
+                  "iconCls": "el-icon-truck",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "物资贸易项目",
+                  "path": "/statistics/project/tradeAdd",
+                  "component": "/statistics/project/tradeAdd",
+                  "iconCls": "el-icon-notebook-2",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "工业制造项目",
+                  "path": "/statistics/project/manufactureList",
+                  "component": "/statistics/project/manufactureList",
+                  "iconCls": "el-icon-cpu",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                ,
+                {
+                  "name": "工业制造项目",
+                  "path": "/statistics/project/manufactureAdd",
+                  "component": "/statistics/project/manufactureAdd",
+                  "iconCls": "el-icon-notebook-2",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "金融保险项目",
+                  "path": "/statistics/project/financeList",
+                  "component": "/statistics/project/financeList",
+                  "iconCls": "el-icon-money",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "金融保险项目",
+                  "path": "/statistics/project/financeAdd",
+                  "component": "/statistics/project/financeAdd",
+                  "iconCls": "el-icon-notebook-2",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "运营维管项目",
+                  "path": "/statistics/project/maintenanceList",
+                  "component": "/statistics/project/maintenanceList",
+                  "iconCls": "el-icon-setting",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "运营维管项目",
+                  "path": "/statistics/project/maintenanceAdd",
+                  "component": "/statistics/project/maintenanceAdd",
+                  "iconCls": "el-icon-notebook-2",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "其他项目",
+                  "path": "/statistics/project/otherList",
+                  "component": "/statistics/project/otherList",
+                  "iconCls": "el-icon-coin",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "其他项目",
+                  "path": "/statistics/project/otherAdd",
+                  "component": "/statistics/project/otherAdd",
+                  "iconCls": "el-icon-notebook-2",
+                  "menushow": false,
+                  "leaf": false,
+                  "defaultpage": false
+                },
+                {
+                  "name": "项目信息变更",
+                  "path": "/statistics/project/changeList",
+                  "component": "/statistics/project/changeList",
+                  "iconCls": "el-icon-edit-outline",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
                 "name": "项目管理",
                 "path": "/statistics/project",
                 "component": "/router",

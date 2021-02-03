@@ -157,7 +157,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            <span> {{ scope.row.projectStatus=='0'?'已提交':'未提交'}} </span>
+              <span> {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':''}}</span>
           </template>
           <template slot="header" slot-scope="scope">
             <span>状态</span>
@@ -167,7 +167,7 @@
                 clearable
                 size="mini"
                 placeholder="请选择"
-                v-model="searchform.projectStatus">
+                v-model="searchform.flowStatus">
                 <el-option
                   :key="index"
                   :label="item.detailName"
@@ -219,7 +219,7 @@
       ></el-pagination>
     </div>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
-    <State ref="stateUpdate" :data="projectStatus" @resetState="getData"></State>
+    <State ref="stateUpdate" :data="flowStatus" @resetState="getData"></State>
   </div>
 </template>
 
@@ -237,7 +237,7 @@
         treeStatas: false,
         projectTypeTwo: [], // 工程类别(二级)
         projectNatureTwo: [], // 项目性质(二级)
-        projectStatusType: [{ id: 0, detailName: '已提交' }, { id: 1, detailName: '未提交' }],
+        projectStatusType:[{ id: 1, detailName: '草稿' }, { id: 2, detailName: '审核中' }, { id: 3, detailName: '审核通过' }, { id: 4, detailName: '审核退回' }],
         page: { current: 1, size: 20, total: 0, records: [] },
         searchform: {
           current: 1,
@@ -249,7 +249,7 @@
           projectModuleId: '510ba0d79593419493eb1a11ed3e7df4', // 其他
           projectName: '',
           contractMoney: '',
-          projectStatus: '',
+          flowStatus: '',
           projectStatusId: ''
         },
         menus: [],
@@ -268,7 +268,7 @@
         return this.$store.state.projectType
       },
       projectStatus() {
-        return this.$store.state.projectStatus
+        return this.$store.state.flowStatus
       }
     },
     methods: {
@@ -415,7 +415,7 @@
           projectModuleId: '510ba0d79593419493eb1a11ed3e7df4', // 其他
           projectName: '',
           contractMoney: '',
-          projectStatus: '',
+          flowStatus: '',
           projectStatusId: ''
         }
         this.getData()
