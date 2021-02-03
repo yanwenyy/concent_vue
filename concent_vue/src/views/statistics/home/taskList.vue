@@ -214,8 +214,27 @@
       // 查看
       rowshow(row) {
         let p = {actpoint: "task", task: row,instid:row.businessId};
+          var url='';
+      if(row.businessType=='project_project_new'){
+        this.$http
+          .post("/api/statistics/StatisticsProject/detail/entityInfo", {topInfoId:row.businessId})
+          .then((res) => {
+          var datas=res.data.data;
+          url=this.$utils.getUrl[row.businessType+"@"+datas.projectModuleId];
+      });
+      }else if(row.businessType=='project_project_change'){
+        this.$http
+          .post("/api/statistics/StatisticsProject/detail/entityInfoByBeforeAndAfterId", {uuid:row.businessId})
+          .then((res) => {
+          var datas=res.data.data;
+          url=this.$utils.getUrl[row.businessType+"@"+datas[0].project.projectModuleId];
+      });
+      }else{
+        url=this.$utils.getUrl[row.businessType];
+      }
+        console.log(url)
         this.$router.push({
-          path: this.$utils.getUrl[row.businessType],
+          path: url,
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       },

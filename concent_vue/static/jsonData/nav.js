@@ -29,6 +29,24 @@ export default {
               "defaultpage": false,
               "children": [
                 {
+                  "name": "首页",
+                  "path": "/manage/home/home",
+                  "component": "/manage/home/home",
+                  "iconCls": "el-icon-s-home",
+                  "menushow": true,
+                  "leaf": true,
+                  "defaultpage": false,
+                },
+                {
+                  "name": "待办已办列表",
+                  "path": "/manage/home/taskList",
+                  "component": "/manage/home/taskList",
+                  "iconCls": "el-icon-notebook-2",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
                   "name": "信息管理",
                   "path": "/manage/proposal",
                   "component": "/router",
@@ -64,14 +82,14 @@ export default {
                     "leaf": true,
                     "defaultpage": false
                   },
-                  {
+                    {
                     "name": "项目信息跟踪详情",
                     "path": "/manage/proposal/track_detail",
                     "component": "/manage/proposal/track_detail",
                     "menushow": false,
                     "leaf": true,
                     "defaultpage": false
-                  },
+                    },
                     {
                       "name": "项目信息变更",
                       "path": "/manage/proposal/infoChangeList",
@@ -99,6 +117,7 @@ export default {
                       "leaf": true,
                       "defaultpage": false
                     },
+
                   ]
                 },
 
@@ -251,12 +270,12 @@ export default {
                     },
                     {
                       "name": "开标结果登记",
-                      "path": "/manage/bid_info/Winning_bid",
-                      "component": "/manage/bid_info/Winning_bid",
+                      "path": "/manage/bid_info/Winning_bidKB",
+                      "component": "/manage/bid_info/Winning_bidKB",
                       "iconCls": "el-icon-switch-button",
                       "menushow": false,
-                      "leaf": true,
-                      "defaultpage":  true
+                      "leaf": false,
+                      "defaultpage":  false
                   },
                   ]
                 },
@@ -644,15 +663,15 @@ export default {
               "leaf": false,
               "defaultpage": false,
               "children": [
-                {
-                  "name": "首页",
-                  "path": "/statistics/home/home",
-                  "component": "/statistics/home/home",
-                  "iconCls": "el-icon-s-home",
-                  "menushow": true,
-                  "leaf": true,
-                  "defaultpage": false,
-                },
+              {
+                    "name": "首页",
+                    "path": "/statistics/home/home",
+                    "component": "/statistics/home/home",
+                    "iconCls": "el-icon-s-home",
+                    "menushow": true,
+                    "leaf": true,
+                    "defaultpage": false,
+                },
                 {
                   "name": "待办已办列表",
                   "path": "/statistics/home/taskList",
@@ -853,13 +872,85 @@ export default {
                 },
                 {
                   "name": "项目信息查询",
-                  "path": "/statistics/project/hb",
-                  "component": "/statistics/project/hb2",
+                  "path": "/statistics/project/searchList",
+                  "component": "/statistics/project/searchList",
                   "iconCls": "el-icon-search",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": false
-                }
+                },
+                {
+                  "name": "项目信息变更",
+                  "path": "/statistics/project/change/engineDetail",
+                  "component": "/statistics/project/change/engineDetail",
+                  "iconCls": "el-icon-search",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "项目信息变更",
+                  "path": "/statistics/project/change/designDetail",
+                  "component": "/statistics/project/change/designDetail",
+                  "iconCls": "el-icon-search",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "项目信息变更",
+                  "path": "/statistics/project/change/estateDetail",
+                  "component": "/statistics/project/change/estateDetail",
+                  "iconCls": "el-icon-search",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "项目信息变更",
+                  "path": "/statistics/project/change/financeDetail",
+                  "component": "/statistics/project/change/financeDetail",
+                  "iconCls": "el-icon-search",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "项目信息变更",
+                  "path": "/statistics/project/change/maintenanceDetail",
+                  "component": "/statistics/project/change/maintenanceDetail",
+                  "iconCls": "el-icon-search",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "项目信息变更",
+                  "path": "/statistics/project/change/manufactureDetail",
+                  "component": "/statistics/project/change/manufactureDetail",
+                  "iconCls": "el-icon-search",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "项目信息变更",
+                  "path": "/statistics/project/change/otherDetail",
+                  "component": "/statistics/project/change/otherDetail",
+                  "iconCls": "el-icon-search",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
+                {
+                  "name": "项目信息变更",
+                  "path": "/statistics/project/change/tradeDetail",
+                  "component": "/statistics/project/change/tradeDetail",
+                  "iconCls": "el-icon-search",
+                  "menushow": false,
+                  "leaf": true,
+                  "defaultpage": false
+                },
                 ]
               },
               {
@@ -1110,7 +1201,7 @@ export default {
                   "name": "档案文件录入",
                   "path": "/archives/archives/list_archives",
                   "component": "/archives/archives/list_archives",
-                  "iconCls": "el-icon-printer",
+                  "iconCls": "el-icon-edit",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": true
@@ -1128,7 +1219,7 @@ export default {
                   "name": "档案文件查询",
                   "path": "/archives/archives/list_archivesSearch",
                   "component": "/archives/archives/list_archivesSearch",
-                  "iconCls": "el-icon-printer",
+                  "iconCls": "el-icon-search",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": true
@@ -1137,7 +1228,7 @@ export default {
                   "name": "统计分析录入",
                   "path": "/archives/statistics/list_statistics",
                   "component": "/archives/statistics/list_statistics",
-                  "iconCls": "el-icon-printer",
+                  "iconCls": "el-icon-edit",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": true
@@ -1155,7 +1246,7 @@ export default {
                   "name": "统计分析查询",
                   "path": "/archives/statistics/list_statisticsSearch",
                   "component": "/archives/statistics/list_statisticsSearch",
-                  "iconCls": "el-icon-printer",
+                  "iconCls": "el-icon-search",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": true
@@ -1164,7 +1255,7 @@ export default {
                   "name": "月度分析录入",
                   "path": "/archives/analysis/list",
                   "component": "/archives/analysis/list",
-                  "iconCls": "el-icon-printer",
+                  "iconCls": "el-icon-edit",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": true
@@ -1182,7 +1273,7 @@ export default {
                   "name": "月度分析查询",
                   "path": "/archives/analysis/list_search",
                   "component": "/archives/analysis/list_search",
-                  "iconCls": "el-icon-printer",
+                  "iconCls": "el-icon-search",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": true
@@ -1192,7 +1283,7 @@ export default {
                   "name": "消息信息录入",
                   "path": "/archives/news/list",
                   "component": "/archives/news/list",
-                  "iconCls": "el-icon-printer",
+                  "iconCls": "el-icon-edit",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": true
@@ -1210,7 +1301,7 @@ export default {
                   "name": "消息信息查询",
                   "path": "/archives/news/list_search",
                   "component": "/archives/news/list_search",
-                  "iconCls": "el-icon-printer",
+                  "iconCls": "el-icon-search",
                   "menushow": true,
                   "leaf": true,
                   "defaultpage": true
