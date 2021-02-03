@@ -6,12 +6,25 @@
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'add'"><b>物资贸易项目新增</b></span>
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'edit'"><b>物资贸易项目修改</b></span>
         <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'look'"><b>物资贸易项目查看</b></span>
+        <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'task'"><b>物资贸易项目审核</b></span>
         <el-button @click="back" class="detailbutton">返回</el-button>
-        <el-button v-if="p.actpoint !== 'look'" type="primary" @click="submitForm('detailForm')" class="detailbutton">
+        <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="submitForm('detailForm','save')" class="detailbutton">
           保存
         </el-button>
-        <el-button v-if="p.actpoint !== 'look'" @click="submitForm('detailForm', 'submit')" class="detailbutton">提交
+        <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailForm.project.flowStatus==1)" @click="submitForm('detailForm','sub')" class="detailbutton">提交
         </el-button>
+        <el-button
+            v-show="p.actpoint == 'task'&&p.task.edit==false"
+            class="detailbutton detail-back-tab bh"
+            @click="operation('back')"
+            type="warning"
+          >驳回</el-button>
+          <el-button
+            v-show="p.actpoint == 'task'&&p.task.edit==false"
+            class="detailbutton detail-back-tab tg"
+            @click="operation('complete')"
+            type="success"
+          >通过</el-button>
       </div>
       <div class="detailBox">
         <el-form
@@ -759,6 +772,24 @@
       }
     },
     methods: {
+      //流程操作
+      operation(type){
+        this.$http
+          .post(
+            '/api/statistics/StatisticsProject/process/'+type,
+            JSON.stringify(this.p.task),
+            {useJson: true}
+          )
+          .then((res) => {
+          if (res.data.code === 200) {
+          this.$message({
+            message: "操作成功",
+            type: "success",
+          });
+          this.$router.back()
+        }
+        });
+      },
       addProduct() {
         let v = {
           uuid: '', // ID新增为空，但必须传
@@ -852,28 +883,29 @@
       },
       // 保存
       submitForm(formName, type) {
+         var url='';
+        if(type=='save'){
+          url="/api/statistics/StatisticsProject/detail/save"
+        }else{
+          url="/api/statistics/StatisticsProject/process/start"
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
               .post(
-                '/api/statistics/StatisticsProject/detail/save',
+                url,
                 JSON.stringify(this.detailForm.project),
                 { useJson: true }
               )
               .then((res) => {
                 if (res.data.code === 200) {
-                  if (type && type === 'submit') {
-                    this.uuid = res.data.data.uuid
-                    this.submit()
-                  } else {
-                    this.$message({
+                  this.$message({
                       message: '保存成功',
                       type: 'success'
                     })
                     this.$router.push({
                       path: '/statistics/project/tradeList'
                     })
-                  }
                 } else {
                   this.$message({
                     message: '保存失败',
@@ -917,7 +949,7 @@
         this.$router.back()
       },
       getShow() {
-        let params = { topInfoId: this.p.uuid }
+        let params = { topInfoId: this.p.uuid  ||this.p.instid}
         this.$http
           .post('/api/statistics/StatisticsProject/detail/entityInfo', params)
           .then((res) => {
@@ -942,7 +974,7 @@
       this.$store.dispatch('getCategory', { name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3' })
       this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
-      if (this.p.actpoint === 'look' || this.p.actpoint === 'edit') {
+      if (this.p.actpoint === 'look' || this.p.actpoint === 'edit' || this.p.actpoint === 'task') {
         this.getShow()
       }
     }
