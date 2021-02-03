@@ -221,6 +221,7 @@
           .then((res) => {
           var datas=res.data.data;
           url=this.$utils.getUrl[row.businessType+"@"+datas.projectModuleId];
+          this.urlGO(p,url)
       });
       }else if(row.businessType=='project_project_change'){
         this.$http
@@ -228,11 +229,15 @@
           .then((res) => {
           var datas=res.data.data;
           url=this.$utils.getUrl[row.businessType+"@"+datas[0].project.projectModuleId];
+          this.urlGO(p,url)
       });
       }else{
         url=this.$utils.getUrl[row.businessType];
+        this.urlGO(p,url)
       }
-        console.log(url)
+      
+      },
+      urlGO(p,url){
         this.$router.push({
           path: url,
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
