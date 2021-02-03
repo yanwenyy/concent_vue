@@ -13,6 +13,7 @@
         </el-button>
         <el-button v-if="p.actpoint !== 'look'" @click="submitForm('detailForm', 'submit')" class="detailbutton">提交
         </el-button>
+        
       </div>
       <div class="detailBox">
         <el-form
@@ -1301,6 +1302,7 @@
       }
     },
     methods: {
+  
       goSeparate(data) {
         console.log(data)
         let v = {
