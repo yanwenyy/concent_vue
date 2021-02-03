@@ -326,7 +326,7 @@
           this.$message.info("请选择一条记录进行修改操作！");
           return false;
         }
-        let p = {actpoint: "edit", instid: this.multipleSelection[0].beforeId,afterId:this.multipleSelection[0].afterId};
+        let p = {actpoint: "edit", instid: this.multipleSelection[0].beforeId,afterId:this.multipleSelection[0].afterId,uuid:this.multipleSelection[0].uuid};
         this.$router.push({
           path: "./infoChangeDetail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
