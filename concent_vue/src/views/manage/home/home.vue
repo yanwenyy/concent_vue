@@ -227,8 +227,14 @@
     // 查看
     rowshow(row) {
       let p = {actpoint: "task", task: row,instid:row.businessId};
+      var url='';
+      if(row.businessType=='contract_contract_new'||row.businessType=='contract_contract_change'||row.businessType=='project_project_new'||row.businessType=='project_project_change'){
+        url=this.$utils.getUrl[row.businessType+"@"+row.businessId];
+      }else{
+        url=this.$utils.getUrl[row.businessType];
+      }
       this.$router.push({
-        path: this.$utils.getUrl[row.businessType],
+        path: url,
         query: {p: this.$utils.encrypt(JSON.stringify(p))},
       });
     },
