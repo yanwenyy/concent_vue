@@ -1,7 +1,9 @@
 <template>
   <div style="position: relative">
-    <el-button v-show="p.actpoint != 'look'" class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform')">保存</el-button>
-    <el-button v-show="p.actpoint != 'look'" class="detail-back-tab detailbutton sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="saveInfo('detailform','save')" class="detailbutton detail-back-tab save-btn">保存</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.contractInfo.flowStatus==1||detailform.contractInfo.flowStatus==4)" @click="saveInfo('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
+    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
     <el-button class="detail-back-tab" @click="back" type="text">返回</el-button>
     <el-form
       :inline="false"
@@ -3577,6 +3579,9 @@
           </el-tabs>
         </div>
       </el-tab-pane>
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'">
+        <Audit-Process :task="p.task"></Audit-Process>
+      </el-tab-pane>
     </el-tabs>
     </el-form>
     <search-name  v-if="infoCSVisible" ref="infoCS" @refreshDataList="goAddDetail"></search-name>
@@ -3595,6 +3600,7 @@
   import CompanyTree from '../companyTree'
   import datas from '@/utils/position'
   import FileUpload from '@/components/fileUpload'
+  import AuditProcess from '@/components/auditProcess'
 export default {
   data() {
     var validateMoney = (rule, value, callback) => {
@@ -3682,7 +3688,8 @@ export default {
     SearchName,
     AddBd,
     CompanyTree,
-    FileUpload
+    FileUpload,
+    AuditProcess
   },
   computed: {
     projectDomainType() {
@@ -3731,7 +3738,7 @@ export default {
     })
     // this.$store.commit("setCategory", 'projectDomainType');
     this.id=this.p.instid;
-    if (this.p.actpoint === "edit"||this.id) {
+    if (this.p.actpoint === "edit"||this.id||this.p.actpoint === "task") {
       this.getDetail();
     }
     if(this.p.actpoint=='add'){
@@ -3748,6 +3755,24 @@ export default {
     // eslint-disable-next-line no-unde
   },
   methods: {
+    //流程操作
+    operation(type){
+      this.$http
+        .post(
+          '/api/contract/contract/ContractInfo/process/'+type,
+          JSON.stringify(this.p.task),
+          {useJson: true}
+        )
+        .then((res) => {
+        if (res.data.code === 200) {
+        this.$message({
+          message: "操作成功",
+          type: "success",
+        });
+        this.$router.back()
+      }
+    });
+    },
     //解决新增的时候二级联动清除不了
     clear(id,name){
       // id='';
@@ -4243,14 +4268,18 @@ export default {
         console.log(this.detailform.contractInfo[name]);
       }
     },
-    saveInfo(formName) {
+    saveInfo(formName,type) {
 
       this.detailform.commonFilesList=this.detailform.fileList1.concat(this.detailform.fileList2).concat(this.detailform.fileList3)
       var url='';
       if(this.detailform.searchProject==true&&this.p.actpoint === "edit"){
         url='/api/contract/contract/ContractInfo/detail/update';
       }else{
-        url='/api/contract/contract/ContractInfo/detail/saveOrUpdate';
+        if(type=='save'){
+          url='/api/contract/contract/ContractInfo/detail/saveOrUpdate';
+        }else{
+          url='/api/contract/contract/ContractInfo/process/start';
+        }
       }
       this.$refs[formName].validate((valid) => {
         if (valid) {

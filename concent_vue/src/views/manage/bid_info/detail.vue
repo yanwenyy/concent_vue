@@ -1,38 +1,38 @@
 <template>
-  <div>
-    <el-card class="box-card">
+  <div  style="position: relative">
       <div slot="header" class="clearfix">
-        <span class="detailSpan"><b>投标信息维护</b></span>
-        <el-button @click="back" class="detailbutton">返回</el-button>
+        <el-button @click="back" class="detailbutton detail-back-tab">返回</el-button>
         <el-button
-          v-if="p.actpoint != 'look' && p.actpoint !== 'searchLook'"
+          v-if="p.actpoint != 'look' && p.actpoint !== 'searchLook'&&p.actpoint != 'task'"
           type="primary"
           @click="saveInfo('detailform','save')"
-          class="detailbutton"
+          class="detailbutton detail-back-tab save-btn"
           >保存</el-button
         >
         <el-button
-        v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.bidInfo.flowStatus==1)"
+        v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.bidInfo.flowStatus==1||detailform.topInfoOrg.flowStatus==4)"
           @click="saveInfo('detailform','sub')"
-          class="detailbutton"
+          class="detailbutton detail-back-tab sub-btn"
           >提交</el-button>
 <!-- v-if="p.actpoint != 'look' && p.actpoint !== 'searchLook'" -->
         <el-button
            v-show="p.actpoint == 'task'&&p.task.edit==false"
-           class="detailbutton"
+           class="detailbutton detail-back-tab bh"
            @click="operation('back')"
            type="warning"
            >驳回</el-button>
 
         <el-button
             v-show="p.actpoint == 'task'&&p.task.edit==false"
-            class="detailbutton"
+            class="detailbutton detail-back-tab tg"
             @click="operation('complete')"
             type="success"
             >通过</el-button>
         <!--<el-button v-show="p.actpoint == 'task'&&p.task.edit==true" @click="operation('recall')" class="detailbutton" type="danger">撤销</el-button>-->
       </div>
 
+    <el-tabs type="border-card" >
+      <el-tab-pane label="投标管理详情">
       <div class="detailBox">
         <el-divider content-position="left" class="detailDivider"
           >项目前期信息</el-divider
@@ -984,16 +984,18 @@
           </el-table>
         </el-form>
       </div>
-    </el-card>
-    <add-bd v-if="BDCSVisible" ref="infoBD" @refreshBD="getBdInfo"></add-bd>
+</el-tab-pane>
       <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'">
         <Audit-Process :task="p.task"></Audit-Process>
       </el-tab-pane>
+      </el-tabs>
+    <add-bd v-if="BDCSVisible" ref="infoBD" @refreshBD="getBdInfo"></add-bd>
     <company-tree
       v-if="DwVisible"
       ref="infoDw"
       @refreshBD="getDwInfo"
     ></company-tree>
+
   </div>
 </template>
 
@@ -1391,7 +1393,7 @@ export default {
       } else {
         var q =
           this.p.actpoint === "edit" ||
-          (this.p.actpoint === "look" && this.p.flowStatus != null)
+          (this.p.actpoint === "look" && this.p.flowStatus != null)||this.p.actpoint === "task"
             ? { id: this.id }
             : { topInfoOrgId: this.id };
         url = "/api/contract/topInfo/BidInfo/detail/entityInfo";
@@ -1439,6 +1441,26 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+ /*按钮样式*/
+  .detail-back-tab{
+  padding: 10px 20px ;
+  border:1px solid #ddd;
+  color: black;
+  position: absolute;
+  top:1px;
+  right:15px;
+  z-index: 999999999;
+  background: #fff;
+  }
+  .save-btn{
+  right: 95px;
+  background: #409EFF;
+  color:#fff;
+  }
+  .sub-btn{
+  right: 175px;
+  }
+  /**/
 .btn-group {
   text-align: center;
   margin-top: 20px;

@@ -351,7 +351,7 @@ export default {
     },
     add(){
       this.dialogResult = true
-      console.log(this.dialogResult);
+      // console.log(this.dialogResult);
       this.$nextTick(() => {
         this.$refs.verifyChange.init()
       })
@@ -505,5 +505,8 @@ export default {
 }
 .gcform >>>.el-form-item {
   margin-bottom: 5px !important;
+}
+>>>.el-table__row{
+  height: 42px !important;
 }
 </style>

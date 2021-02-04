@@ -115,7 +115,7 @@
         @current-change="currentChangeHandle"
         :current-page="pageIndex"
         :page-sizes="[10, 20, 50, 100]"
-        :page-size="pageSize"
+        :page-size="page.size"
         :total="totalPage"
         layout="total, sizes, prev, pager, next, jumper">
       </el-pagination>
@@ -131,11 +131,14 @@
   export default {
     data() {
       return {
+         page: { current: 1, size: 20, total: 0, records: [] },
         visible: false,
         searchform: {
           inforName: '',
           enginTypeFirstId: '',
-          enginTypeSecondId: ''
+          enginTypeSecondId: '',
+          current: 1,
+          size: 20,
         },
         xqprojectType:[],
         dataList: [],
