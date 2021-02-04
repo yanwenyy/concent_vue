@@ -2,10 +2,10 @@
 
 <template>
   <div style="position: relative">
-      <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="saveInfo('detailForm','save')" class="detailbutton">
+      <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="saveInfo('detailForm','save')" class="detailbutton detail-back-tab save-btn">
           保存
         </el-button>
-        <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailForm.project.flowStatus==1||detailForm.project.flowStatus==4)" @click="saveInfo('detailForm','sub')" class="detailbutton">提交
+        <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailForm.project.flowStatus==1||detailForm.project.flowStatus==4)" @click="saveInfo('detailForm','sub')" class="detailbutton detail-back-tab sub-btn">提交
         </el-button>
         <el-button
             v-show="p.actpoint == 'task'&&p.task.edit==false"
@@ -2534,6 +2534,7 @@
   }
 </script>
 <style lang="scss" scoped>
+
   .detail-back-tab{
     padding: 10px 20px ;
     border:1px solid #ddd;
@@ -2590,4 +2591,24 @@
       }
     }
   }
+  /*按钮样式*/
+  .detail-back-tab{
+  padding: 10px 20px ;
+  border:1px solid #ddd;
+  color: black;
+  position: absolute;
+  top:1px;
+  right:15px;
+  z-index: 999999999;
+  background: #fff;
+  }
+  .save-btn{
+  right: 95px;
+  background: #409EFF;
+  color:#fff;
+  }
+  .sub-btn{
+  right: 175px;
+  }
+  /**/
 </style>
