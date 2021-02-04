@@ -2482,7 +2482,7 @@
           {
             beforeId: this.p.beforeId,
             afterId: this.p.afterId,
-            uuid:this.p.task?this.p.instid:this.p.uuid
+            uuid:this.p.actpoint==='task'?this.p.instid:this.p.uuid
           })
           .then((res) => {
             if (res.data.code === 200) {
