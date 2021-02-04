@@ -3,7 +3,7 @@
   <!-- <el-button class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform')" v-if="p.actpoint!='look'">保存</el-button>
   <el-button class="detail-back-tab detailbutton sub-btn" @click="submit" v-if="p.actpoint!='look'">提交</el-button>
   <el-button class="detail-back-tab detailbutton" @click="back"  type="text">返回</el-button> -->
-    <el-button v-show="p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.bidInfo.flowStatus==1)" @click="saveInfo('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.bidInfo.flowStatus==1||detailform.bidInfo.flowStatus==4)" @click="saveInfo('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
     <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform','save')">保存</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
@@ -1167,7 +1167,7 @@
               <el-form-item label="招标方式:"
               class="formItem">
                 <el-select
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   filterable
                   clearable
                   placeholder="请选择"
@@ -1194,7 +1194,7 @@
               }"
             >
               <el-date-picker
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 filterable
                 clearable
                 value-format="timestamp"
@@ -1209,7 +1209,7 @@
               prop="saleTime"
               >
                 <el-date-picker
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   value-format="timestamp"
                   filterable
                   clearable
@@ -1223,7 +1223,7 @@
                 prop="bidInfo.endTime"
               >
                 <el-date-picker
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   value-format="timestamp"
                   clearable
                   filterable
@@ -1244,7 +1244,7 @@
               inactive-color="#ddd"
               active-value="0"
               inactive-value="1"
-              :disabled="p.actpoint === 'look'"
+              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
             >
             </el-switch>
               </el-form-item>
@@ -1266,7 +1266,7 @@
               inactive-color="#ddd"
               active-value="0"
               inactive-value="1"
-              :disabled="p.actpoint === 'look'"
+              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
               @change="detailform.bidInfo.isCoalitionBid=='1'?(detailform.bidInfo.innerOrgName='',detailform.bidInfo.outOrg=''):''"
             >
             </el-switch>
@@ -1277,7 +1277,7 @@
               >
 
               <el-input v-model="detailform.bidInfo.innerOrgName" class="input-with-select"
-              :disabled="p.actpoint === 'look'|| detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''">
+              :disabled="p.actpoint === 'look'|| detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'">
                 <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('内部联合体单位',detailform.bidInfo.innerOrgId)"
                  v-if="p.actpoint != 'look'&& detailform.bidInfo.isCoalitionBid != '1' && detailform.bidInfo.isCoalitionBid != ''"
                 ></el-button>
@@ -1288,7 +1288,7 @@
                 label="外部联合体单位:"
               >
                 <el-input
-                  :disabled="p.actpoint === 'look'|| detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''"
+                  :disabled="p.actpoint === 'look'|| detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"
                   clearable
                   placeholder=""
                   v-model="detailform.bidInfo.outOrg"
@@ -1312,7 +1312,7 @@
                 }" -->
 
                 <el-input
-                :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   type="textarea"
                   clearable
                   placeholder="请输入"
@@ -2142,6 +2142,7 @@ export default {
         .post("/api/contract/topInfo/BidInfo/detail/entityInfoByBeforeAndAfterId", {
           beforeId: this.id,
           afterId: this.afterId,
+          uuid:this.p.task?this.p.instid:this.p.uuid
         })
         .then((res) => {
           var datas = res.data.data;

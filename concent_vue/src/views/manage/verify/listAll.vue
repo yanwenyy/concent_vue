@@ -3,10 +3,12 @@
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
         <el-button @click="add" :disabled="flowStatus!=1&&flowStatus!=null" plain type="primary" >登记</el-button>
+
         <el-button @click="editItem"
         :disabled="flowStatus==2 || flowStatus==3"
         plain type="primary"
         >修改</el-button>
+
         <el-button @click="remove" :disabled="flowStatus!=1&&flowStatus!=4" type="primary" plain>删除</el-button>
         <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
       </el-button-group>
@@ -502,7 +504,7 @@ export default {
       })
     },
     editItem() {
-      console.log(JSON.stringify(this.multipleSelection[0].uuid));
+      // console.log(JSON.stringify(this.multipleSelection[0].uuid));
       //是否有资审信息判断
       if (this.multipleSelection[0].uuid == "" || this.multipleSelection[0].uuid == null) {
         this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
@@ -613,6 +615,7 @@ export default {
       this.searchform.saleTime = "";
       this.getData();
     },
+
     // 列表选项数据
     handleSelectionChange(val) {
       //alert(JSON.stringify(val))

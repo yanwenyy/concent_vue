@@ -30,7 +30,7 @@
    @click="back">返回</el-button> -->
 
 <!-- ||detailform.verify.flowStatus==1 -->
-       <el-button v-show="p.actpoint != 'task'&&(p.actpoint == 'add')" @click="saveInfo('detailformAfter','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint != 'task'&&(p.actpoint == 'add'||detailformAfter.verify.flowStatus==1||detailformAfter.verify.flowStatus==4)" @click="saveInfo('detailformAfter','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
     <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailformAfter','save')">保存</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
@@ -1042,7 +1042,7 @@
                    class="formItem"
                  >
               <el-select
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 filterable
                 clearable
                 placeholder="请选择"
@@ -1068,7 +1068,7 @@
         >
           <el-date-picker
             clearable
-            :disabled="p.actpoint === 'look'"
+            :disabled="p.actpoint === 'look'||p.actpoint=='task'"
             value-format="timestamp"
             v-model="detailformAfter.verify.publishTime"
             align="right"
@@ -1087,7 +1087,7 @@
         >
           <el-date-picker
             clearable
-            :disabled="p.actpoint === 'look'"
+            :disabled="p.actpoint === 'look'||p.actpoint=='task'"
             value-format="timestamp"
             v-model="detailformAfter.verify.saleTime"
             align="right"
@@ -1108,7 +1108,7 @@
 
           <el-date-picker
             clearable
-            :disabled="p.actpoint === 'look'"
+            :disabled="p.actpoint === 'look'||p.actpoint=='task'"
             value-format="timestamp"
             v-model="detailformAfter.verify.subTime"
             align="right"
@@ -1128,7 +1128,8 @@
            label="是否联合体投标:"
 
          >
-         <el-switch :disabled="p.actpoint === 'look'"
+         <el-switch
+         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
            v-model="detailformAfter.verify.isCoalitionBid"
            active-value="是"
            inactive-value="否"
@@ -1137,7 +1138,7 @@
             </el-switch>
       </el-form-item>
         <el-form-item label="内部联合体单位:">
-          <el-input :disabled="p.actpoint === 'look'|| detailformAfter.verify.isCoalitionBid=='否' || detailformAfter.verify.isCoalitionBid==null" v-model="detailformAfter.verifyOrgLists">
+          <el-input :disabled="p.actpoint === 'look'|| detailformAfter.verify.isCoalitionBid=='否' || detailformAfter.verify.isCoalitionBid==null||p.actpoint=='task'" v-model="detailformAfter.verifyOrgLists">
             <el-button
             v-if="p.actpoint != 'look' && detailformAfter.verify.isCoalitionBid != '否' && detailformAfter.verify.isCoalitionBid!=null"
             slot="append" icon="el-icon-search" @click="selectOrg()"></el-button>
@@ -1148,7 +1149,7 @@
         <el-form-item  label="外部联合体单位:">
           <el-input
             placeholder=""
-            :disabled="p.actpoint === 'look'|| detailformAfter.verify.isCoalitionBid=='否' || detailformAfter.verify.isCoalitionBid==null"
+            :disabled="p.actpoint === 'look'|| detailformAfter.verify.isCoalitionBid=='否' || detailformAfter.verify.isCoalitionBid==null||p.actpoint=='task'"
             size="mini"
             v-model="detailformAfter.verify.outOrg"
           />
@@ -1169,7 +1170,7 @@
                 >
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-input
-                    :disabled="p.actpoint === 'look'"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     clearable
                     placeholder="请输入"
                     type="textarea"
@@ -1849,7 +1850,8 @@ export default {
           .post(
             '/api/contract/topInfo/Verify/detail/entityInfoChange',
             // '/api' + this.$route.path.substr(0, this.$route.path.length - 1),
-            {"id": this.p.topinfoid}
+            // {"id": this.p.topinfoid}
+             {"id": this.p.task?this.p.instid.split("-")[1]:this.p.topinfoid}
           )
           .then(res => {
             var data = res.data.data;
@@ -1874,7 +1876,9 @@ export default {
     getTopInforDetail() {
 
       this.$http
-        .post("/api/contract/topInfo/TopInfor/detail/entityInfo", {topOrgId: this.p.topinfoid})
+        .post("/api/contract/topInfo/TopInfor/detail/entityInfo",
+        // {topOrgId: this.p.topinfoid})
+        {topOrgId: this.p.task?this.p.instid.split("-")[1]:this.p.topinfoid})
         .then((res1) => {
           var datas = res1.data.data;
           this.detailform1 = {
@@ -1910,6 +1914,7 @@ export default {
     //alert(2);
     //this.$store.dispatch('getConfig', { })
     // eslint-disable-next-line no-unde
+    console.log(this.p)
     this.getDetail()
     this.getTopInforDetail();
 

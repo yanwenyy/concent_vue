@@ -387,7 +387,7 @@
          class="formItem"
        >
               <el-select
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 filterable
                 clearable
                 placeholder="请选择"
@@ -412,7 +412,7 @@
         >
           <el-date-picker
             clearable
-            :readonly="p.actpoint === 'look'"
+            :disabled="p.actpoint === 'look'||p.actpoint=='task'"
             value-format="timestamp"
             v-model="detailform.verify.publishTime"
             align="right"
@@ -430,7 +430,7 @@
         >
           <el-date-picker
             clearable
-            :readonly="p.actpoint === 'look'"
+            :disabled="p.actpoint === 'look'||p.actpoint=='task'"
             value-format="timestamp"
             v-model="detailform.verify.saleTime"
             align="right"
@@ -447,7 +447,7 @@
         }">
           <el-date-picker
             clearable
-            :readonly="p.actpoint === 'look'"
+            :disabled="p.actpoint === 'look'||p.actpoint=='task'"
             value-format="timestamp"
             v-model="detailform.verify.subTime"
             align="right"
@@ -465,7 +465,7 @@
                   required: true, message: '此项不能为空', trigger: 'blur'
                 }" -->
          <el-switch
-           :disabled="p.actpoint === 'look'"
+           :disabled="p.actpoint === 'look'||p.actpoint=='task'"
            v-model="detailform.verify.isCoalitionBid"
            active-value="是"
            inactive-value="否"
@@ -487,7 +487,7 @@
           <el-input
             placeholder=""
             size="mini"
-            :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否' || detailform.verify.isCoalitionBid==null"
+            :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否' || detailform.verify.isCoalitionBid==null||p.actpoint=='task'"
             v-model="detailform.verify.outOrg"
           />
 
@@ -512,7 +512,7 @@
             >
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-input
-                :readonly="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
                 placeholder="请输入"
                 type="textarea"

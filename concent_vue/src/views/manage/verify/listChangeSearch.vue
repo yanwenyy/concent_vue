@@ -196,8 +196,22 @@ export default {
     }
   },
   methods: {
+    //复选下拉框框获取name
+    getMultipleName(valueList, list, id, name) {
+      var _id = [],
+        _name = [];
+      list.forEach((item) => {
+        if (valueList.indexOf(item.id) != -1) {
+          _id.push(item.id);
+          _name.push(item.detailName);
+        }
+      });
+      this.detailform.bidInfo[id] = _id.join(",");
+      this.detailform.bidInfo[name] = _name.join(",");
+      // console.log(this.detailform.bidInfo[id]);
+    },
     sub(){
-      if(this.currentRow.length>1)
+      if(this.currentRow.length!=1)
       {
         this.$message.info('请选择一条资审信息进行变更！')
         return false

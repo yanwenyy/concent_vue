@@ -10,7 +10,7 @@
           >保存</el-button
         >
         <el-button
-        v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.bidInfo.flowStatus==1||detailform.topInfoOrg.flowStatus==4)"
+        v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.bidInfo.flowStatus==1||detailform.bidInfo.flowStatus==4)"
           @click="saveInfo('detailform','sub')"
           class="detailbutton detail-back-tab sub-btn"
           >提交</el-button>
@@ -177,8 +177,146 @@
             >
             </el-input>
           </el-form-item>
-          <br />
+          <br/>
+            <!-- <div class="div-item">
+              <el-form-item
+                label="装配率(%)"
+                prop="topInfor.otherAssemblyRate"
+                :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'blur',
+                }"
+                v-if="detailform.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+              >
+                <el-input
+                  disabled
+                  v-model="detailform.topInfor.otherAssemblyRate"
+                />
+              </el-form-item>
+              <el-form-item
+                label="装配类型"
+                prop="zplx"
+                :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'blur',
+                }"
+                v-if="detailform.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
 
+              >
+                <el-select
+                  class="multiple-sel"
+                  :disabled="p.actpoint === 'look'"
+                  multiple
+                  @change="getMultipleName(detailform.zplx,assemblyType,'otherAssemblyTypeId','otherAssemblyType')"
+                  clearable
+                  filterable
+                  placeholder="请选择"
+
+                  v-model="detailform.zplx"
+                >
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in assemblyType"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+            <div class="div-item">
+              <el-form-item
+                label="建筑类型"
+                prop="jzlx"
+                :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+                v-if="detailform.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
+              >
+                <el-select
+                  class="multiple-sel"
+                  :disabled="p.actpoint === 'look'"
+                  multiple
+                  @change="getMultipleName(detailform.jzlx,architecturalType,'otherBuildingTypeId','otherBuildingType')"
+                  clearable
+                  filterable
+                  placeholder="请选择"
+
+                  v-model="detailform.jzlx"
+                >
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in architecturalType"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item
+                label="建筑结构类型"
+                prop="jzjglx"
+                :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+                v-if="detailform.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
+              >
+                <el-select
+                  class="multiple-sel"
+                  :disabled="p.actpoint === 'look'"
+                  multiple
+                  @change="getMultipleName(detailform.jzjglx,buildingStructure,'otherBuildingStructureTypeId','otherBuildingStructureType')"
+                  clearable
+                  filterable
+                  placeholder="请选择"
+
+                  v-model="detailform.jzjglx"
+                >
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in buildingStructure"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item
+                label="场地名称"
+                prop="cdmc"
+                :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+                v-if="detailform.topInfor.marketFirstNameId=='50cd5e9992ac4653920fac8c1f2eb2e3'"
+
+              >
+                <el-select
+                  class="multiple-sel"
+                  :disabled="p.actpoint === 'look'"
+                  multiple
+                  clearable
+                  filterable
+                  placeholder="请选择"
+
+                  v-model="detailform.cdmc"
+                  @change="getMultipleName(detailform.cdmc,siteName,'siteNameId','siteName')"
+                >
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in siteName"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </div> -->
           <el-form-item
             label="建设单位:"
             :rules="{
@@ -399,7 +537,7 @@
             <el-divider content-position="left" class="detailDivider">投标信息</el-divider>
             <el-form-item label="招标方式:" class="formItem">
               <el-select
-                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'"
+                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint=='task'"
                 filterable
                 clearable
                 placeholder="请选择"
@@ -426,7 +564,7 @@
               }"
             >
               <el-date-picker
-                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'"
+                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint=='task'"
                 filterable
                 clearable
                 value-format="timestamp"
@@ -437,7 +575,7 @@
 
               <el-form-item class="formItem" label="招标文件发售截止日期">
               <el-date-picker
-                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'"
+                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint=='task'"
                 value-format="timestamp"
                 filterable
                 clearable
@@ -452,7 +590,7 @@
               prop="bidInfo.endTime"
             >
               <el-date-picker
-                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'"
+                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint=='task'"
                 value-format="timestamp"
                 clearable
                 filterable
@@ -474,7 +612,7 @@
                 inactive-color="#ddd"
                 active-value="0"
                 inactive-value="1"
-                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'"
+                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint=='task'"
               >
               </el-switch>
             </el-form-item>
@@ -491,7 +629,7 @@
                 inactive-color="#ddd"
                 active-value="0"
                 inactive-value="1"
-                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'"
+                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint=='task'"
                 @change="detailform.bidInfo.isCoalitionBid=='1'?(detailform.bidInfo.innerOrgName='',detailform.bidInfo.outOrg=''):''"
               >
               </el-switch>
@@ -502,7 +640,7 @@
               class="formItem1"
             >
               <el-input
-                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''"
+                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"
                 placeholder="请输入内容"
                 v-model="detailform.bidInfo.innerOrgName"
                 class="input-with-select"
@@ -510,7 +648,7 @@
                                 <!-- :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''" -->
 
                 <el-button
-                  v-if="p.actpoint != 'look' && p.actpoint != 'searchLook' && detailform.bidInfo.isCoalitionBid != '1' &&detailform.bidInfo.isCoalitionBid != ''"
+                  v-if="p.actpoint != 'look' && p.actpoint != 'searchLook' && detailform.bidInfo.isCoalitionBid != '1' &&detailform.bidInfo.isCoalitionBid != ''||p.actpoint=='task'"
                   slot="append"
                   icon="el-icon-circle-plus-outline"
                   @click="
@@ -525,7 +663,7 @@
               label="外部联合体单位:"
             >
               <el-input
-                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''"
+                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"
                 clearable
                 placeholder="外部联合体单位"
                 v-model="detailform.bidInfo.outOrg"
@@ -542,7 +680,7 @@
               style="width: 100%"
             >
               <el-input
-                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'"
+                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint=='task'"
                 type="textarea"
                 clearable
                 placeholder="请输入"
@@ -1145,7 +1283,7 @@ export default {
       });
       this.detailform.bidInfo[id] = _id.join(",");
       this.detailform.bidInfo[name] = _name.join(",");
-      console.log(this.detailform.bidInfo[id]);
+      // console.log(this.detailform.bidInfo[id]);
     },
     // 上传删除
     handleRemove1(file, index) {

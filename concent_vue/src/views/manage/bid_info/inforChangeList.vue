@@ -232,7 +232,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':'审核通过'}}
+            {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
           </template>
           <template slot="header" slot-scope="scope">
             <span>状态</span>
@@ -323,7 +323,7 @@
           this.$message.info("请选择一条记录进行修改操作！");
           return false;
         }
-        let p = {actpoint: "edit", instid: this.multipleSelection[0].beforeId,afterId:this.multipleSelection[0].afterId};
+        let p = {actpoint: "edit", instid: this.multipleSelection[0].beforeId,afterId:this.multipleSelection[0].afterId,uuid:this.multipleSelection[0].uuid};
         this.$router.push({
           path: "./InfoChangeDetail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},

@@ -3,7 +3,7 @@
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
         <el-button @click="add" plain type="primary">新增</el-button>
-        <el-button @click="editItem" plain type="primary">修改</el-button>
+        <el-button :disabled="flowStatus==2 || flowStatus==3" @click="editItem" plain type="primary">修改</el-button>
         <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
       </el-button-group>
       <div style="float: right">
@@ -29,6 +29,7 @@
         ref="table"
         style="width: 100%"
         tooltip-effect="dark"
+         @select="rowSelect"
       >
         <el-table-column
           :width="50"
@@ -283,6 +284,7 @@ export default {
         username: '',
         saleTime: ''
       },
+      flowStatus:'',
       xqprojectType:[],
       menus: [],
       multipleSelection: [],
@@ -308,6 +310,14 @@ export default {
       }
     },
   methods: {
+    //行选择的时候
+      rowSelect(selection, row){
+        if(selection.indexOf(row)!=-1){
+          this.flowStatus=row.flowStatus;
+        }else{
+          this.flowStatus='';
+        }
+      },
       //工程类别二级
       getTwo(id) {
         this.searchform.enginTypeSecondId='';
@@ -334,12 +344,15 @@ export default {
       // }
       // console.log(JSON.stringify(data));
       //alert(JSON.stringify(this.multipleSelection[0]));
-      let p = { actpoint: 'add',instid: data.inforid, topinfoid:data.tiouuid}
-      //alert(JSON.stringify(p));
-      this.$router.push({
-        path: './detail_Chang/',
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-      })
+      if(data){
+        let p = { actpoint: 'add',instid: data.inforid, topinfoid:data.tiouuid}
+        //alert(JSON.stringify(p));
+        this.$router.push({
+          path: './detail_Chang/',
+          query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+        })
+      }
+
     },
     handleChange(){},
     statusFormat(row,column){
