@@ -385,7 +385,7 @@
           actpoint: 'edit',
           afterId: this.multipleSelection[0].afterId,
           beforeId: this.multipleSelection[0].beforeId,
-          uuid: this.multipleSelection[0].uuid
+          uuid: this.multipleSelection[0].recordUuid
         }
         this.$router.push({
           path: url,
@@ -397,7 +397,7 @@
         console.log(row)
         if (row.afterId && row.beforeId && row.uuid) {
           let url = this.getRoute(row.projectModuleId)
-          let p = { actpoint: 'look', afterId: row.afterId, beforeId: row.beforeId, uuid: row.uuid }
+          let p = { actpoint: 'look', afterId: row.afterId, beforeId: row.beforeId, uuid: row.recordUuid }
           this.$router.push({
             path: url,
             query: { p: this.$utils.encrypt(JSON.stringify(p)) }

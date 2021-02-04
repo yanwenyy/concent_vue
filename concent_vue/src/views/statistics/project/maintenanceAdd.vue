@@ -16,13 +16,13 @@
         <el-button
             v-show="p.actpoint == 'task'&&p.task.edit==false"
             class="detailbutton detail-back-tab bh"
-            @click="operation('back')"
+            @click="operation2('back')"
             type="warning"
           >驳回</el-button>
           <el-button
             v-show="p.actpoint == 'task'&&p.task.edit==false"
             class="detailbutton detail-back-tab tg"
-            @click="operation('complete')"
+            @click="operation2('complete')"
             type="success"
           >通过</el-button>
       </div>
@@ -535,7 +535,7 @@
     },
     methods: {
       //流程操作
-      operation(type){
+      operation2(type){
         this.$http
           .post(
             '/api/statistics/StatisticsProject/process/'+type,
