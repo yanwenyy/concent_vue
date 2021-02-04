@@ -182,9 +182,15 @@
       //撤回
       withdraw(val){
         console.log(val)
+        var url='';
+        if(val.businessType=='project_project_new'){
+          url='/api/statistics/StatisticsProject/process/recall'
+        }else  if(val.businessType=='project_project_change'){
+          url='/api/statistics/StatisticsProject/changeProcess/recall'
+        }
         this.$http
           .post(
-            '/api/contract/topInfo/TopInfor/process/recall',
+              url,
               JSON.stringify(val),
               {useJson: true}
           )

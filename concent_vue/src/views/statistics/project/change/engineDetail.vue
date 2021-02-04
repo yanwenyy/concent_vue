@@ -2478,10 +2478,11 @@
       // 修改和查看时的时候详情
       getDetail() {
         this.$http
-          .post('/api/statistics/StatisticsProject/detail/entityInfoByBeforeAndAfterId', {
+          .post('/api/statistics/StatisticsProject/detail/entityInfoByBeforeAndAfterId', 
+          {
             beforeId: this.p.beforeId,
             afterId: this.p.afterId,
-            uuid: this.p.uuid
+            uuid:this.p.task?this.p.instid:this.p.uuid
           })
           .then((res) => {
             if (res.data.code === 200) {
