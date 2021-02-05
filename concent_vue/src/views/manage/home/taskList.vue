@@ -170,7 +170,7 @@
         page: {current: 1, size: 20, total: 0, records: []},
         searchform: {
           current: 1,
-          size: 10,
+          size: 20,
           sorts:[],
           condition:{
             systemSource:'contract'
@@ -192,6 +192,12 @@
           url='/api/contract/topInfo/Verify/process/recall'
         }else  if(val.businessType=='contract_bid_new'){
           url='/api/contract/topInfo/BidInfo/process/recall'
+        }else  if(val.businessType=='contract_qual_change'){
+          url='/api/contract/topInfo/Verify/changeProcess/recall'
+        }else  if(val.businessType=='contract_bid_change'){
+          url='/api/contract/topInfo/BidInfo/changeProcess/recall'
+        }else  if(val.businessType=='contract_contract_change'){
+          url='/api/contract/contract/ContractInfo/changeProcess/recall'
         }
         this.$http
           .post(

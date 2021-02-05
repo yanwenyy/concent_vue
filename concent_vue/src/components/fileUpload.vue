@@ -8,6 +8,7 @@
       ref="fileList1"
       class="upload-demo"
       :action="url"
+      :headers="{'Authorization':Authorization}"
       :on-success="handleChange"
       :on-error="handleChange"
       :on-remove="handleRemove"
@@ -28,6 +29,7 @@
     export default {
       data() {
         return {
+          Authorization:sessionStorage.getItem("token"),
           url:'',
           list:'',
           fileList1: [],

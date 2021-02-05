@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    title="选择地点"
+    title="选择单位"
     :visible.sync="dialogVisible"
     width="30%"
   >
