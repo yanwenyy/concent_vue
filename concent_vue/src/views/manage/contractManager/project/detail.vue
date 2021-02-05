@@ -1679,11 +1679,18 @@
               >
                 <template slot-scope="scope">
                   <el-input
-                    class="input-el-input-group"
                     clearable
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     v-model="scope.row.orgName"
-                  ></el-input>
+                    class="input-el-input-group">
+                    <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,detailform.contractInfoAttachBO.unionContractInfoAttachList)" ></el-button>
+                  </el-input>
+                  <!--<el-input-->
+                    <!--class="input-el-input-group"-->
+                    <!--clearable-->
+                    <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                    <!--v-model="scope.row.orgName"-->
+                  <!--&gt;</el-input>-->
                   <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                 </template>
               </el-table-column>
@@ -3579,8 +3586,8 @@
           </el-tabs>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'">
-        <Audit-Process :task="p.task"></Audit-Process>
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
+        <Audit-Process :task="p.task||{businessId:p.instid,businessType:' contract_contract_new'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>
     </el-form>
@@ -4032,10 +4039,10 @@ export default {
       }
     },
     //打开单位弹框
-    addDw(type,list){
+    addDw(type,list,ifChek){
       this.DwVisible = true;
       this.$nextTick(() => {
-        this.$refs.infoDw.init(type,list);
+        this.$refs.infoDw.init(type,list,ifChek);
       })
     },
     //获取单位的值
@@ -4276,13 +4283,17 @@ export default {
 
       this.detailform.commonFilesList=this.detailform.fileList1.concat(this.detailform.fileList2).concat(this.detailform.fileList3)
       var url='';
-      if(this.detailform.searchProject==true&&this.p.actpoint === "edit"){
+      if(this.detailform.searchProject==true&&(this.p.actpoint === "edit")){
         url='/api/contract/contract/ContractInfo/detail/update';
       }else{
         if(type=='save'){
           url='/api/contract/contract/ContractInfo/detail/saveOrUpdate';
         }else{
-          url='/api/contract/contract/ContractInfo/process/start';
+          if(this.detailform.searchProject==true){
+            url='/api/contract/contract/ContractInfo/updateProcess/start';
+          }else{
+            url='/api/contract/contract/ContractInfo/process/start';
+          }
         }
       }
       this.$refs[formName].validate((valid) => {

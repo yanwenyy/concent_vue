@@ -335,7 +335,7 @@
       },
       // 查看
       rowshow(row) {
-        let p = {actpoint: "look", instid: row.beforeId,afterId:row.afterId,uuid:this.multipleSelection[0].uuid};
+        let p = {actpoint: "look", instid: row.beforeId,afterId:row.afterId,uuid:row.uuid};
         this.$router.push({
           path: "./infoChangeDetail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},

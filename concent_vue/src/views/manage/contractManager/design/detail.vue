@@ -2095,8 +2095,8 @@
             </div>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'">
-          <Audit-Process :task="p.task"></Audit-Process>
+        <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
+          <Audit-Process :task="p.task||{businessId:p.instid,businessType:' contract_contract_new'}"></Audit-Process>
         </el-tab-pane>
       </el-tabs>
 
@@ -2699,7 +2699,11 @@
           if(type=='save'){
             url='/api/contract/contract/ContractInfo/detail/saveOrUpdate';
           }else{
-            url='/api/contract/contract/ContractInfo/process/start';
+            if(this.detailform.searchProject==true){
+              url='/api/contract/contract/ContractInfo/updateProcess/start';
+            }else{
+              url='/api/contract/contract/ContractInfo/process/start';
+            }
           }
         }
         this.$refs[formName].validate((valid) => {

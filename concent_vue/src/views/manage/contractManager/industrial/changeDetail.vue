@@ -1,7 +1,9 @@
 <template>
   <div style="position: relative">
-    <el-button v-show="p.actpoint != 'look'" class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform')">保存</el-button>
-    <el-button v-show="p.actpoint != 'look'" class="detail-back-tab detailbutton sub-btn" @click="submit">提交</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="saveInfo('detailform','save')" class="detailbutton detail-back-tab save-btn">保存</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.contractInfo.flowStatus==1||detailform.contractInfo.flowStatus==4)" @click="saveInfo('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
+    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
     <el-button class="detail-back-tab" @click="back" type="text">返回</el-button>
     <el-tabs type="border-card" v-model="activeName">
       <el-tab-pane label="变更前" name="before">
@@ -2716,6 +2718,9 @@
         <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
         <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
       </el-tab-pane>
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
+        <Audit-Process :task="p.task||{businessId:p.uuid,businessType:' contract_contract_change'}"></Audit-Process>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -2728,6 +2733,7 @@
   import CompanyTree from '../companyTree'
   import datas from '@/utils/position'
   import FileUpload from '@/components/fileUpload'
+  import AuditProcess from '@/components/auditProcess'
   export default {
     // name: "详情",
     data() {
@@ -2823,7 +2829,8 @@
       SearchName,
       AddBd,
       CompanyTree,
-      FileUpload
+      FileUpload,
+      AuditProcess
     },
     computed: {
       emergingMarket() {
@@ -2862,7 +2869,7 @@
     })
       // this.$store.commit("setCategory", 'projectDomainType');
       this.id=this.p.instid,this.afterId=this.p.afterId;
-      if (this.p.actpoint === "edit"||this.p.actpoint === "look") {
+      if (this.p.actpoint === "edit"||this.p.actpoint === "look"||this.p.actpoint === "task") {
         this.getDetail();
       }
       if(this.p.actpoint === "add"){
@@ -2875,6 +2882,24 @@
       // eslint-disable-next-line no-unde
     },
     methods: {
+      //流程操作
+      operation(type){
+        this.$http
+          .post(
+            '/api/contract/contract/ContractInfo/changeProcess/'+type,
+            JSON.stringify(this.p.task),
+            {useJson: true}
+          )
+          .then((res) => {
+          if (res.data.code === 200) {
+          this.$message({
+            message: "操作成功",
+            type: "success",
+          });
+          this.$router.back()
+        }
+      });
+      },
       //新增产品信息
       addXs(){
         var v={
@@ -3389,8 +3414,14 @@
       handleSelectionChange(val) {
         this.multipleSelection = val;
       },
-      saveInfo(formName) {
+      saveInfo(formName,type) {
         this.detailform.srcId=this.id;
+        var url='';
+        if(type=='save'){
+          url=`/api/contract/contract/ContractInfo/detail/${this.p.actpoint === "add"?'saveChangeRecord':'saveOrUpdate'}`;
+        }else{
+          url='/api/contract/contract/ContractInfo/changeProcess/start';
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             var datas=this.p.actpoint === "add"?{
@@ -3399,7 +3430,7 @@
             }:this.detailform;
             this.$http
               .post(
-                `/api/contract/contract/ContractInfo/detail/${this.p.actpoint === "add"?'saveChangeRecord':'saveOrUpdate'}`,
+                url,
                 JSON.stringify(datas),
                 {useJson: true}
               )
@@ -3420,7 +3451,7 @@
       },
       getDetail() {
         this.$http
-          .post("/api/contract/contract/ContractInfo/detail/entityInfoByBeforeAndAfterId", {beforeId:this.id,afterId:this.afterId})
+          .post("/api/contract/contract/ContractInfo/detail/entityInfoByBeforeAndAfterId", {beforeId:this.id,afterId:this.afterId,uuid:this.p.task?this.p.instid:this.p.uuid})
           .then((res) => {
           var datas=res.data.data;
         var beforData=[],afterData=[];

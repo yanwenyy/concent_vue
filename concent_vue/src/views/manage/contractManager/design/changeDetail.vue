@@ -3412,8 +3412,8 @@
         <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
         <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
       </el-tab-pane>
-      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'">
-        <Audit-Process :task="p.task"></Audit-Process>
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
+        <Audit-Process :task="p.task||{businessId:p.uuid,businessType:' contract_contract_change'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -3575,7 +3575,7 @@
     })
       // this.$store.commit("setCategory", 'projectDomainType');
       this.id=this.p.instid,this.afterId=this.p.afterId;
-      if (this.p.actpoint === "edit"||this.p.actpoint === "look") {
+      if (this.p.actpoint === "edit"||this.p.actpoint === "look"||this.p.actpoint === "task") {
         this.getDetail();
       }
       if(this.p.actpoint === "add"){
@@ -4194,7 +4194,7 @@
       },
       getDetail() {
         this.$http
-          .post("/api/contract/contract/ContractInfo/detail/entityInfoByBeforeAndAfterId", {beforeId:this.id,afterId:this.afterId})
+          .post("/api/contract/contract/ContractInfo/detail/entityInfoByBeforeAndAfterId", {beforeId:this.id,afterId:this.afterId,uuid:this.p.task?this.p.instid:this.p.uuid})
           .then((res) => {
           var datas=res.data.data;
         var beforData=[],afterData=[];

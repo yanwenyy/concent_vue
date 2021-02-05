@@ -1603,8 +1603,8 @@
             </div>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'">
-          <Audit-Process :task="p.task"></Audit-Process>
+        <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
+          <Audit-Process :task="p.task||{businessId:p.instid,businessType:' contract_contract_new'}"></Audit-Process>
         </el-tab-pane>
       </el-tabs>
 

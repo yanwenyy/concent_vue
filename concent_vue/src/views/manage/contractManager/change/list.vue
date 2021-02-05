@@ -269,7 +269,7 @@
       },
       // 查看
       rowshow(row) {
-        let p = {actpoint: "look", instid: row.beforeId,afterId:row.afterId};
+        let p = {actpoint: "look", instid: row.beforeId,afterId:row.afterId,uuid:row.uuid};
         var url=this.getUrl(row.moduleId);
         this.$router.push({
           path: url,
