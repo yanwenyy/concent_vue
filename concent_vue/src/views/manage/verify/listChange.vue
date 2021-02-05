@@ -394,7 +394,8 @@ export default {
       let p = {
         actpoint: 'look',
         instid: row.uuid,
-        topinfoid: row.topInfoOrgId
+        topinfoid: row.topInfoOrgId,
+        uuid:row.topInfoOrgId
       }
       //alert(JSON.stringify(p));
       this.$router.push({

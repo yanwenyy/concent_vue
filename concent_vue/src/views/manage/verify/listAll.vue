@@ -574,7 +574,7 @@ export default {
       //   return;
       // }
       //alert(JSON.stringify(this.multipleSelection[0]));
-      let p = {actpoint: 'look', instid: row.inforid, topinfoid: row.tiouuid}
+      let p = {actpoint: 'look', instid: row.inforid, topinfoid: row.tiouuid,uuid:row.topInfoOrgId}
       //alert(JSON.stringify(p));
       this.$router.push({
         path: './detail/',

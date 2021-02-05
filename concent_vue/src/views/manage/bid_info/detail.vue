@@ -177,8 +177,9 @@
             >
             </el-input>
           </el-form-item>
-          <br/>
-            <!-- <div class="div-item">
+          <br>
+
+            <div class="div-item">
               <el-form-item
                 label="装配率(%)"
                 prop="topInfor.otherAssemblyRate"
@@ -187,136 +188,82 @@
                   message: '此项不能为空',
                   trigger: 'blur',
                 }"
-                v-if="detailform.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+                v-if="detailform.topInforBO.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
               >
                 <el-input
                   disabled
-                  v-model="detailform.topInfor.otherAssemblyRate"
+                  v-model="detailform.topInforBO.topInfor.otherAssemblyRate"
                 />
               </el-form-item>
               <el-form-item
                 label="装配类型"
-                prop="zplx"
+                prop="otherAssemblyType"
                 :rules="{
                   required: true,
                   message: '此项不能为空',
                   trigger: 'blur',
                 }"
-                v-if="detailform.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+                v-if="detailform.topInforBO.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
 
               >
-                <el-select
-                  class="multiple-sel"
-                  :disabled="p.actpoint === 'look'"
-                  multiple
-                  @change="getMultipleName(detailform.zplx,assemblyType,'otherAssemblyTypeId','otherAssemblyType')"
-                  clearable
-                  filterable
-                  placeholder="请选择"
-
-                  v-model="detailform.zplx"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in assemblyType"
-                  ></el-option>
-                </el-select>
+              <el-input
+                  disabled
+                  v-model="detailform.topInforBO.topInfor.otherAssemblyType"
+                />
               </el-form-item>
             </div>
+
             <div class="div-item">
               <el-form-item
                 label="建筑类型"
-                prop="jzlx"
+                prop="otherBuildingType"
                 :rules="{
               required: true,
               message: '此项不能为空',
               trigger: 'blur',
             }"
-                v-if="detailform.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+                v-if="detailform.topInforBO.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
 
               >
-                <el-select
-                  class="multiple-sel"
-                  :disabled="p.actpoint === 'look'"
-                  multiple
-                  @change="getMultipleName(detailform.jzlx,architecturalType,'otherBuildingTypeId','otherBuildingType')"
-                  clearable
-                  filterable
-                  placeholder="请选择"
-
-                  v-model="detailform.jzlx"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in architecturalType"
-                  ></el-option>
-                </el-select>
+              <el-input
+                  disabled
+                  v-model="detailform.topInforBO.topInfor.otherBuildingType"
+                />
               </el-form-item>
+
               <el-form-item
                 label="建筑结构类型"
-                prop="jzjglx"
+                prop="otherBuildingStructureType"
                 :rules="{
               required: true,
               message: '此项不能为空',
               trigger: 'blur',
             }"
-                v-if="detailform.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+                v-if="detailform.topInforBO.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
 
               >
-                <el-select
-                  class="multiple-sel"
-                  :disabled="p.actpoint === 'look'"
-                  multiple
-                  @change="getMultipleName(detailform.jzjglx,buildingStructure,'otherBuildingStructureTypeId','otherBuildingStructureType')"
-                  clearable
-                  filterable
-                  placeholder="请选择"
-
-                  v-model="detailform.jzjglx"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in buildingStructure"
-                  ></el-option>
-                </el-select>
+                <el-input
+                  disabled
+                  v-model="detailform.topInforBO.topInfor.otherBuildingStructureType"
+                />
               </el-form-item>
               <el-form-item
                 label="场地名称"
-                prop="cdmc"
+                prop="siteName"
                 :rules="{
               required: true,
               message: '此项不能为空',
               trigger: 'blur',
             }"
-                v-if="detailform.topInfor.marketFirstNameId=='50cd5e9992ac4653920fac8c1f2eb2e3'"
-
+                v-if="detailform.topInforBO.topInfor.marketFirstNameId=='50cd5e9992ac4653920fac8c1f2eb2e3'"
               >
-                <el-select
-                  class="multiple-sel"
-                  :disabled="p.actpoint === 'look'"
-                  multiple
-                  clearable
-                  filterable
-                  placeholder="请选择"
-
-                  v-model="detailform.cdmc"
-                  @change="getMultipleName(detailform.cdmc,siteName,'siteNameId','siteName')"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in siteName"
-                  ></el-option>
-                </el-select>
+                <el-input
+                  disabled
+                  v-model="detailform.topInforBO.topInfor.siteName"
+                />
               </el-form-item>
-            </div> -->
+            </div>
+
           <el-form-item
             label="建设单位:"
             :rules="{
@@ -1123,8 +1070,8 @@
         </el-form>
       </div>
 </el-tab-pane>
-      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'">
-        <Audit-Process :task="p.task"></Audit-Process>
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
+        <Audit-Process :task="p.task||{businessId:p.uuid,businessType:'contract_bid_new'}"></Audit-Process>
       </el-tab-pane>
       </el-tabs>
     <add-bd v-if="BDCSVisible" ref="infoBD" @refreshBD="getBdInfo"></add-bd>
@@ -1579,6 +1526,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+    .div-item >>>.el-form-item{
+      display: inline-block;
+      width: 32.5%!important;
+    }
  /*按钮样式*/
   .detail-back-tab{
   padding: 10px 20px ;

@@ -1435,8 +1435,8 @@
       <TreeOrg v-if="treeOrgStatas1" ref="addOrUpdate1" @getPosition="getTreeOrg1"></TreeOrg>
     <TreeOrg v-if="treeOrgStatas2" ref="addOrUpdate2" @getPosition="getTreeOrg2"></TreeOrg>
     </el-tab-pane>
-    <el-tab-pane label="审批流程" name="lc" v-if="p.actpoint == 'task'">
-        <Audit-Process :task="p.task"></Audit-Process>
+    <el-tab-pane label="审批流程" name="lc" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
+        <Audit-Process :task="p.task||{businessId:p.uuid,businessType:'contract_qual_change'}"></Audit-Process>
     </el-tab-pane>
   </el-tabs>
  </div>
