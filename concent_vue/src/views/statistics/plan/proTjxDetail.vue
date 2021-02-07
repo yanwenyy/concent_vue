@@ -1,16 +1,44 @@
 <!--详情-->
 <template>
   <div>
-    <el-collapse value="projectInfo">
-      <el-collapse-item title="项目信息" name="projectInfo">
-        <template slot="title">
-          <i class="header-icon el-icon-collection"></i>项目信息
-        </template>
-        <div>项目名称：<span style="color:#0a469d !important;margin-right: 50px;">{{projectName}}</span>计划类型：<span style="color:#0a469d !important;">{{planTypeName}}</span></div>
-      </el-collapse-item>
-    </el-collapse>
+    <el-card class="box-card">
+      <div class="clearfix el-card__header">
+        <span style="color: #2a2a7d;line-height: 32px">
+          <b>项目计划</b>
+          <span style="color:#0a469d !important;margin-left: 20px;margin-right: 20px;font-size:14px;">{{projectName}}</span>
+          <span style="color:#0a469d !important;font-size:14px;margin-right: 20px;">{{planTypeName}}</span>
+          <span v-show="planType === 2" style="color:#0a469d !important;font-size:14px;">{{p.planInfo.planProjectTjx.planYear}}年</span>
+          <span v-show="planType === 1" style="color:#0a469d !important;font-size:14px;">{{p.planInfo.planProjectTjx.planYear}}年{{p.planInfo.planProjectTjx.planMonth}}月</span>
+        </span>
 
-    <div style="width: 100%; overflow: hidden;margin-top:10px;">
+        <span v-if="projectStatus !== '1'" >
+          <el-button @click="back" class="detailbutton" >返回</el-button>
+          <el-button @click="save" class="detailbutton" type="primary" >保存</el-button>
+          <el-button @click="submit" class="detailbutton" >提交</el-button>
+        </span>
+        <span v-else >
+          <el-button @click="rollback" class="detailbutton detail-back-tab bh" type="warning">回退</el-button>
+          <el-button @click="back" class="detailbutton" plain>返回</el-button>
+        </span>
+
+        <!--<el-button @click="back" class="detailbutton">返回</el-button>
+        <el-button type="primary" @click="submitForm('detailForm','save')" class="detailbutton">
+          保存
+        </el-button>
+        <el-button class="detailbutton">提交
+        </el-button>
+        <el-button
+          class="detailbutton detail-back-tab bh"
+          type="warning"
+        >驳回</el-button>
+        <el-button
+          class="detailbutton detail-back-tab tg"
+          type="success"
+        >通过</el-button>-->
+      </div>
+    </el-card>
+
+    <!-- <div style="width: 100%; overflow: hidden;margin-top:10px;">
       <el-button-group v-if="projectStatus !== '1'" style="float: left">
         <el-button icon="el-icon-success" @click="submit" type="primary" plain>提交</el-button>
         <el-button icon="el-icon-folder-checked" @click="save" type="primary" plain>保存</el-button>
@@ -20,7 +48,7 @@
         <el-button icon="el-icon-refresh-left" @click="back" type="primary" plain>返回</el-button>
         <el-button icon="el-icon-s-custom" @click="rollback" type="primary" plain>回退</el-button>
       </el-button-group>
-    </div>
+    </div>-->
 
     <div style="margin-top: 10px">
       <el-table
