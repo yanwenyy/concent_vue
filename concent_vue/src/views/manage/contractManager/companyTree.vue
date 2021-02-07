@@ -28,6 +28,7 @@
         :props="defaultProps"
         :highlight-current="true"
         node-key="code"
+        @node-click="handleNodeClick"
       >
       </el-tree>
     </div>
@@ -125,7 +126,10 @@
         // console.log(data);
         if(this.notSelect.indexOf(data.detailCode)=='-1'){
           this.dialogVisible = false;
-          this.$emit('getPosition',data)
+          data.type=this.type;
+          data.index=this.index;
+          data.tableList=this.tableList;
+          this.$emit('refreshBD',data)
         }
       },
       getCheckedNodes() {

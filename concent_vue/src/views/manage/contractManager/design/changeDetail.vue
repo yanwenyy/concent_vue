@@ -2653,11 +2653,18 @@
                     >
                       <template slot-scope="scope">
                         <el-input
-                          class="input-el-input-group"
                           clearable
                           :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                           v-model="scope.row.orgName"
-                        ></el-input>
+                          class="input-el-input-group">
+                          <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'unionContractInfoAttachList')" ></el-button>
+                        </el-input>
+                        <!--<el-input-->
+                        <!--class="input-el-input-group"-->
+                        <!--clearable-->
+                        <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                        <!--v-model="scope.row.orgName"-->
+                        <!--&gt;</el-input>-->
                         <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                       </template>
                     </el-table-column>
@@ -2853,11 +2860,18 @@
                     >
                       <template slot-scope="scope">
                         <el-input
-                          class="input-el-input-group"
                           clearable
                           :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                           v-model="scope.row.orgName"
-                        ></el-input>
+                          class="input-el-input-group">
+                          <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'innerContractInfoAttachList')" ></el-button>
+                        </el-input>
+                        <!--<el-input-->
+                        <!--class="input-el-input-group"-->
+                        <!--clearable-->
+                        <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                        <!--v-model="scope.row.orgName"-->
+                        <!--&gt;</el-input>-->
                         <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                       </template>
                     </el-table-column>
@@ -3053,11 +3067,18 @@
                     >
                       <template slot-scope="scope">
                         <el-input
-                          class="input-el-input-group"
                           clearable
                           :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                           v-model="scope.row.orgName"
-                        ></el-input>
+                          class="input-el-input-group">
+                          <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outUnionContractInfoAttachList')" ></el-button>
+                        </el-input>
+                        <!--<el-input-->
+                        <!--class="input-el-input-group"-->
+                        <!--clearable-->
+                        <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                        <!--v-model="scope.row.orgName"-->
+                        <!--&gt;</el-input>-->
                         <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                       </template>
                     </el-table-column>
@@ -3253,11 +3274,18 @@
                     >
                       <template slot-scope="scope">
                         <el-input
-                          class="input-el-input-group"
                           clearable
                           :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                           v-model="scope.row.orgName"
-                        ></el-input>
+                          class="input-el-input-group">
+                          <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outContractInfoAttachList')" ></el-button>
+                        </el-input>
+                        <!--<el-input-->
+                        <!--class="input-el-input-group"-->
+                        <!--clearable-->
+                        <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                        <!--v-model="scope.row.orgName"-->
+                        <!--&gt;</el-input>-->
                         <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                       </template>
                     </el-table-column>
@@ -3847,17 +3875,17 @@
         }
       },
       //打开单位弹框
-      addDw(type,list){
+      addDw(type,list,ifChek,index,tableList){
         this.DwVisible = true;
         this.$nextTick(() => {
-          this.$refs.infoDw.init(type,list);
+          this.$refs.infoDw.init(type,list,ifChek,index,tableList);
       })
       },
       //获取单位的值
       getDwInfo(data){
         console.log(data);
         var id=[],name=[];
-        if(data){
+        if(data&&data.type!='单位名称'){
           data.forEach((item)=>{
             id.push(item.id);
           name.push(item.detailName);
@@ -3869,6 +3897,11 @@
         }else if(data.type=="使用资质单位"){
           this.detailform.contractInfo.qualityOrgIds=id.join(",");
           this.detailform.contractInfo.qualityOrgNames=name.join(",");
+        }else if(data.type=='单位名称'){
+          this.detailform.contractInfoAttachBO[data.tableList][data.index].orgId=data.code;
+          this.detailform.contractInfoAttachBO[data.tableList][data.index].orgName=data.name;
+          this.$set(this.detailform.contractInfoAttachBO[data.tableList][data.index],this.detailform.contractInfoAttachBO[data.tableList][data.index]);
+
         }
         this.DwVisible=false;
       },

@@ -1627,705 +1627,726 @@
         </div>
       </el-tab-pane>
       <el-tab-pane v-if="detailform.contractInfo.isInSystemUnion==='0'||detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isOutSystemUnion==='0'||detailform.contractInfo.isOutSystemSub==='0'" label="合同附属信息">
-        <div class="detailBoxBG htfs">
-          <div  v-if="detailform.contractInfo.isInSystemUnion==='0'">
-            <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
-              <span>系统内其他联合体单位列表: </span>
-              <el-button
-                v-show="p.actpoint != 'look'"
-                @click="addfs('nlht',1,1)"
 
-                style="
+      </el-tab-pane><div class="detailBoxBG htfs">
+      <div  v-if="detailform.contractInfo.isInSystemUnion==='0'">
+        <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+          <span>系统内其他联合体单位列表: </span>
+          <el-button
+            v-show="p.actpoint != 'look'"
+            @click="addfs('nlht',1,1)"
+
+            style="
                   width: 70px;
                   height: 32px;
                   background: #5c8bfa;
                   font-size: 16px;
                 "
-                type="primary"
-              >新增
-              </el-button
-              >
-            </p>
-            <el-table
-              :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
-              :header-cell-style="{
+            type="primary"
+          >新增
+          </el-button
+          >
+        </p>
+        <el-table
+          :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+          :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
                 color: 'rgba(0,0,0,1)',
               }"
-              @selection-change="handleSelectionChange"
-              align="center"
-              border
-              class="detailTable"
-              ref="table"
-              style="width: 100%; min-height: calc(100vh - 370px)"
-            >
-              <el-table-column
-                :width="80"
-                align="center"
-                label="序号"
-                show-overflow-tooltip
-                type="index"
-              ></el-table-column>
+          @selection-change="handleSelectionChange"
+          align="center"
+          border
+          class="detailTable"
+          ref="table"
+          style="width: 100%; min-height: calc(100vh - 370px)"
+        >
+          <el-table-column
+            :width="80"
+            align="center"
+            label="序号"
+            show-overflow-tooltip
+            type="index"
+          ></el-table-column>
 
-              <el-table-column
-                class="listTabel"
-                :resizable="false"
-                label="单位名称"
-                prop="orgName"
-                align="center"
-                width="300"
-                show-overflow-tooltip
-              >
-                <template slot-scope="scope">
-                  <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    v-model="scope.row.orgName"
-                    class="input-el-input-group">
-                    <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,detailform.contractInfoAttachBO.unionContractInfoAttachList)" ></el-button>
-                  </el-input>
-                  <!--<el-input-->
-                    <!--class="input-el-input-group"-->
-                    <!--clearable-->
-                    <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
-                    <!--v-model="scope.row.orgName"-->
-                  <!--&gt;</el-input>-->
-                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                </template>
-              </el-table-column>
-              <el-table-column
-                class="listTabel"
-                :resizable="false"
-                label="板块名称"
-                prop="moduleName"
-                align="center"
-                width="200"
-                show-overflow-tooltip
-              >
-                <template slot-scope="scope">
-                  <el-select
-                    class="input-el-input-group"
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-                    filterable
-                    placeholder="请选择"
-                    size="mini"
-                    v-model="scope.row.moduleId"
-                    @change="
+          <el-table-column
+            class="listTabel"
+            :resizable="false"
+            label="单位名称"
+            prop="orgName"
+            align="center"
+            width="300"
+            show-overflow-tooltip
+          >
+            <template slot-scope="scope">
+              <el-input
+                clearable
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                v-model="scope.row.orgName"
+                class="input-el-input-group">
+                <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'unionContractInfoAttachList')" ></el-button>
+              </el-input>
+              <!--<el-input-->
+              <!--class="input-el-input-group"-->
+              <!--clearable-->
+              <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+              <!--v-model="scope.row.orgName"-->
+              <!--&gt;</el-input>-->
+              <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+            </template>
+          </el-table-column>
+          <el-table-column
+            class="listTabel"
+            :resizable="false"
+            label="板块名称"
+            prop="moduleName"
+            align="center"
+            width="200"
+            show-overflow-tooltip
+          >
+            <template slot-scope="scope">
+              <el-select
+                class="input-el-input-group"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="scope.row.moduleId"
+                @change="
                     getBdName(
                       scope.row.moduleId,
                       detailform.contractInfoAttachBO.unionContractInfoAttachList,
                       scope.$index
                     )
                   "
-                  >
-                    <el-option
-                      :key="index"
-                      :label="item.detailName"
-                      :value="item.id"
-                      v-for="(item, index) in projectPlate"
-                    ></el-option>
-                  </el-select>
-                </template>
-              </el-table-column>
-              <el-table-column
-                class="listTabel"
-                :resizable="false"
-                label="项目性质"
-                prop="projectNature"
-                width="150"
-                align="center"
-                show-overflow-tooltip
               >
-                <template slot-scope="scope">
-                  系统内联合体
-                </template>
-              </el-table-column>
-              <el-table-column
-                :resizable="false"
-                label="各方份额(万元)"
-                align="center"
-                prop="contractAmount"
-                width="400"
-                show-overflow-tooltip
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectPlate"
+                ></el-option>
+              </el-select>
+            </template>
+          </el-table-column>
+          <el-table-column
+            class="listTabel"
+            :resizable="false"
+            label="项目性质"
+            prop="projectNature"
+            width="150"
+            align="center"
+            show-overflow-tooltip
+          >
+            <template slot-scope="scope">
+              系统内联合体
+            </template>
+          </el-table-column>
+          <el-table-column
+            :resizable="false"
+            label="各方份额(万元)"
+            align="center"
+            prop="contractAmount"
+            width="400"
+            show-overflow-tooltip
+          >
+            <template slot-scope="scope">
+              <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.unionContractInfoAttachList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
+                <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                <el-input
+                  class="group-no-padding"
+                  @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.unionContractInfoAttachList,'nlht')"
+                  v-model="scope.row.contractAmount"
+                  clearable
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                >
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+            </template>
+          </el-table-column>
+          <el-table-column
+            class="listTabel"
+            :resizable="false"
+            label="是否为补充"
+            prop="isAdd"
+            align="center"
+            show-overflow-tooltip
+            width="100"
+          >
+            <template slot-scope="scope">
+              <el-switch
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                class="inline-formitem-switch"
+                v-model="scope.row.isAdd"
+                active-color="#409EFF"
+                inactive-color="#ddd"
+                active-value="0"
+                inactive-value="1"
               >
-                <template slot-scope="scope">
-                  <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.unionContractInfoAttachList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
-                    <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                    <el-input
-                      class="group-no-padding"
-                      @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.unionContractInfoAttachList,'nlht')"
-                      v-model="scope.row.contractAmount"
-                      clearable
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    >
-                      <template slot="prepend">¥</template>
-                      <template slot="append">(万元)</template>
-                    </el-input>
-                  </el-form-item>
-                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                </template>
-              </el-table-column>
-              <el-table-column
-                class="listTabel"
-                :resizable="false"
-                label="是否为补充"
-                prop="isAdd"
-                align="center"
-                show-overflow-tooltip
-                width="100"
-              >
-                <template slot-scope="scope">
-                  <el-switch
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    class="inline-formitem-switch"
-                    v-model="scope.row.isAdd"
-                    active-color="#409EFF"
-                    inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"
-                  >
-                  </el-switch>
-                  <!--{{scope.row.isAdd=='1'?'否':'是'}}-->
-                </template>
-              </el-table-column>
-              <el-table-column
-                v-show="!p.actpoint === 'look'"
-                :resizable="false"
-                label="操作"
-                align="center"
-                show-overflow-tooltip
-                v-if="p.actpoint !== 'look'"
-                width="80">
-                <template slot-scope="scope">
-                  <el-link
-                    :underline="false"
-                    @click="del(scope.$index,scope.row,detailform.contractInfoAttachBO.unionContractInfoAttachList,'lht')"
-                    type="warning">删除
-                  </el-link>
-                </template>
-              </el-table-column>
-            </el-table>
-          </div>
-          <div  v-if="detailform.contractInfo.isInSystemSub==='0'">
-            <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
-              <span>系统内分包单位列表: </span>
-              <el-button
-                v-show="p.actpoint != 'look'"
-                @click="addfs('nfb',2,1)"
+              </el-switch>
+              <!--{{scope.row.isAdd=='1'?'否':'是'}}-->
+            </template>
+          </el-table-column>
+          <el-table-column
+            v-show="!p.actpoint === 'look'"
+            :resizable="false"
+            label="操作"
+            align="center"
+            show-overflow-tooltip
+            v-if="p.actpoint !== 'look'"
+            width="80">
+            <template slot-scope="scope">
+              <el-link
+                :underline="false"
+                @click="del(scope.$index,scope.row,detailform.contractInfoAttachBO.unionContractInfoAttachList,'lht')"
+                type="warning">删除
+              </el-link>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+      <div  v-if="detailform.contractInfo.isInSystemSub==='0'">
+        <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+          <span>系统内分包单位列表: </span>
+          <el-button
+            v-show="p.actpoint != 'look'"
+            @click="addfs('nfb',2,1)"
 
-                style="
+            style="
                   width: 70px;
                   height: 32px;
                   background: #5c8bfa;
                   font-size: 16px;
                 "
-                type="primary"
-              >新增
-              </el-button
-              >
-            </p>
-            <el-table
-              :data="detailform.contractInfoAttachBO.innerContractInfoAttachList"
-              :header-cell-style="{
+            type="primary"
+          >新增
+          </el-button
+          >
+        </p>
+        <el-table
+          :data="detailform.contractInfoAttachBO.innerContractInfoAttachList"
+          :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
                 color: 'rgba(0,0,0,1)',
               }"
-              @selection-change="handleSelectionChange"
-              align="center"
-              border
-              class="detailTable"
-              ref="table"
-              style="width: 100%; min-height: calc(100vh - 370px)"
-            >
-              <el-table-column
-                :width="80"
-                align="center"
-                label="序号"
-                show-overflow-tooltip
-                type="index"
-              ></el-table-column>
+          @selection-change="handleSelectionChange"
+          align="center"
+          border
+          class="detailTable"
+          ref="table"
+          style="width: 100%; min-height: calc(100vh - 370px)"
+        >
+          <el-table-column
+            :width="80"
+            align="center"
+            label="序号"
+            show-overflow-tooltip
+            type="index"
+          ></el-table-column>
 
-              <el-table-column
-                class="listTabel"
-                :resizable="false"
-                label="单位名称"
-                prop="orgName"
-                align="center"
-                width="300"
-                show-overflow-tooltip
-              >
-                <template slot-scope="scope">
-                  <el-input
-                    class="input-el-input-group"
-                    clearable
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    v-model="scope.row.orgName"
-                  ></el-input>
-                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                </template>
-              </el-table-column>
-              <el-table-column
-                class="listTabel"
-                :resizable="false"
-                label="板块名称"
-                prop="moduleName"
-                align="center"
-                width="200"
-                show-overflow-tooltip
-              >
-                <template slot-scope="scope">
-                  <el-select
-                    class="input-el-input-group"
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-                    filterable
-                    placeholder="请选择"
-                    size="mini"
-                    v-model="scope.row.moduleId"
-                    @change="
+          <el-table-column
+            class="listTabel"
+            :resizable="false"
+            label="单位名称"
+            prop="orgName"
+            align="center"
+            width="300"
+            show-overflow-tooltip
+          >
+            <template slot-scope="scope">
+              <el-input
+                clearable
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                v-model="scope.row.orgName"
+                class="input-el-input-group">
+                <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'innerContractInfoAttachList')" ></el-button>
+              </el-input>
+              <!--<el-input-->
+              <!--class="input-el-input-group"-->
+              <!--clearable-->
+              <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+              <!--v-model="scope.row.orgName"-->
+              <!--&gt;</el-input>-->
+              <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+            </template>
+          </el-table-column>
+          <el-table-column
+            class="listTabel"
+            :resizable="false"
+            label="板块名称"
+            prop="moduleName"
+            align="center"
+            width="200"
+            show-overflow-tooltip
+          >
+            <template slot-scope="scope">
+              <el-select
+                class="input-el-input-group"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="scope.row.moduleId"
+                @change="
                     getBdName(
                       scope.row.moduleId,
                       detailform.contractInfoAttachBO.innerContractInfoAttachList,
                       scope.$index
                     )
                   "
-                  >
-                    <el-option
-                      :key="index"
-                      :label="item.detailName"
-                      :value="item.id"
-                      v-for="(item, index) in projectPlate"
-                    ></el-option>
-                  </el-select>
-                </template>
-              </el-table-column>
-              <el-table-column
-                class="listTabel"
-                :resizable="false"
-                label="项目性质"
-                prop="projectNature"
-                align="center"
-                width="150"
-                show-overflow-tooltip
               >
-                <template slot-scope="scope">
-                  系统内分包
-                </template>
-              </el-table-column>
-              <el-table-column
-                :resizable="false"
-                label="各方份额(万元)"
-                align="center"
-                prop="contractAmount"
-                width="400"
-                show-overflow-tooltip
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectPlate"
+                ></el-option>
+              </el-select>
+            </template>
+          </el-table-column>
+          <el-table-column
+            class="listTabel"
+            :resizable="false"
+            label="项目性质"
+            prop="projectNature"
+            align="center"
+            width="150"
+            show-overflow-tooltip
+          >
+            <template slot-scope="scope">
+              系统内分包
+            </template>
+          </el-table-column>
+          <el-table-column
+            :resizable="false"
+            label="各方份额(万元)"
+            align="center"
+            prop="contractAmount"
+            width="400"
+            show-overflow-tooltip
+          >
+            <template slot-scope="scope">
+              <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.innerContractInfoAttachList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
+                <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                <el-input
+                  class="group-no-padding"
+                  @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.innerContractInfoAttachList,'nfb')"
+                  v-model="scope.row.contractAmount"
+                  clearable
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                >
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+            </template>
+          </el-table-column>
+          <el-table-column
+            class="listTabel"
+            :resizable="false"
+            label="是否为补充"
+            prop="isAdd"
+            align="center"
+            width="100"
+            show-overflow-tooltip
+          >
+            <template slot-scope="scope">
+              <el-switch
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                class="inline-formitem-switch"
+                v-model="scope.row.isAdd"
+                active-color="#409EFF"
+                inactive-color="#ddd"
+                active-value="0"
+                inactive-value="1"
               >
-                <template slot-scope="scope">
-                  <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.innerContractInfoAttachList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
-                    <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                    <el-input
-                      class="group-no-padding"
-                      @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.innerContractInfoAttachList,'nfb')"
-                      v-model="scope.row.contractAmount"
-                      clearable
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    >
-                      <template slot="prepend">¥</template>
-                      <template slot="append">(万元)</template>
-                    </el-input>
-                  </el-form-item>
-                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                </template>
-              </el-table-column>
-              <el-table-column
-                class="listTabel"
-                :resizable="false"
-                label="是否为补充"
-                prop="isAdd"
-                align="center"
-                width="100"
-                show-overflow-tooltip
-              >
-                <template slot-scope="scope">
-                  <el-switch
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    class="inline-formitem-switch"
-                    v-model="scope.row.isAdd"
-                    active-color="#409EFF"
-                    inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"
-                  >
-                  </el-switch>
-                </template>
-              </el-table-column>
-              <el-table-column
-                v-show="!p.actpoint === 'look'"
-                :resizable="false"
-                label="操作"
-                align="center"
-                show-overflow-tooltip
-                v-if="p.actpoint !== 'look'"
-                width="80">
-                <template slot-scope="scope">
-                  <el-link
-                    :underline="false"
-                    @click="del(scope.$index,scope.row,detailform.contractInfoAttachBO.innerContractInfoAttachList,'fb')"
-                    type="warning">删除
-                  </el-link>
-                </template>
-              </el-table-column>
-            </el-table>
-          </div>
-          <div  v-if="detailform.contractInfo.isOutSystemUnion==='0'">
-            <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
-              <span>系统外其他联合体单位列表: </span>
-              <el-button
-                v-show="p.actpoint != 'look'"
-                @click="addfs('wlht',3,1)"
+              </el-switch>
+            </template>
+          </el-table-column>
+          <el-table-column
+            v-show="!p.actpoint === 'look'"
+            :resizable="false"
+            label="操作"
+            align="center"
+            show-overflow-tooltip
+            v-if="p.actpoint !== 'look'"
+            width="80">
+            <template slot-scope="scope">
+              <el-link
+                :underline="false"
+                @click="del(scope.$index,scope.row,detailform.contractInfoAttachBO.innerContractInfoAttachList,'fb')"
+                type="warning">删除
+              </el-link>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+      <div  v-if="detailform.contractInfo.isOutSystemUnion==='0'">
+        <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+          <span>系统外其他联合体单位列表: </span>
+          <el-button
+            v-show="p.actpoint != 'look'"
+            @click="addfs('wlht',3,1)"
 
-                style="
+            style="
                   width: 70px;
                   height: 32px;
                   background: #5c8bfa;
                   font-size: 16px;
                 "
-                type="primary"
-              >新增
-              </el-button
-              >
-            </p>
-            <el-table
-              :data="detailform.contractInfoAttachBO.outUnionContractInfoAttachList"
-              :header-cell-style="{
+            type="primary"
+          >新增
+          </el-button
+          >
+        </p>
+        <el-table
+          :data="detailform.contractInfoAttachBO.outUnionContractInfoAttachList"
+          :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
                 color: 'rgba(0,0,0,1)',
               }"
-              @selection-change="handleSelectionChange"
-              align="center"
-              border
-              class="detailTable"
-              ref="table"
-              style="width: 100%; min-height: calc(100vh - 370px)"
-            >
-              <el-table-column
-                :width="80"
-                align="center"
-                label="序号"
-                show-overflow-tooltip
-                type="index"
-              ></el-table-column>
+          @selection-change="handleSelectionChange"
+          align="center"
+          border
+          class="detailTable"
+          ref="table"
+          style="width: 100%; min-height: calc(100vh - 370px)"
+        >
+          <el-table-column
+            :width="80"
+            align="center"
+            label="序号"
+            show-overflow-tooltip
+            type="index"
+          ></el-table-column>
 
-              <el-table-column
-                class="listTabel"
-                :resizable="false"
-                label="单位名称"
-                prop="orgName"
-                align="center"
-                width="300"
-                show-overflow-tooltip
-              >
-                <template slot-scope="scope">
-                  <el-input
-                    class="input-el-input-group"
-                    clearable
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    v-model="scope.row.orgName"
-                  ></el-input>
-                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                </template>
-              </el-table-column>
-              <el-table-column
-                class="listTabel"
-                :resizable="false"
-                label="板块名称"
-                prop="moduleName"
-                align="center"
-                width="200"
-                show-overflow-tooltip
-              >
-                <template slot-scope="scope">
-                  <el-select
-                    class="input-el-input-group"
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-                    filterable
-                    placeholder="请选择"
-                    size="mini"
-                    v-model="scope.row.moduleId"
-                    @change="
+          <el-table-column
+            class="listTabel"
+            :resizable="false"
+            label="单位名称"
+            prop="orgName"
+            align="center"
+            width="300"
+            show-overflow-tooltip
+          >
+            <template slot-scope="scope">
+              <el-input
+                clearable
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                v-model="scope.row.orgName"
+                class="input-el-input-group">
+                <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outUnionContractInfoAttachList')" ></el-button>
+              </el-input>
+              <!--<el-input-->
+              <!--class="input-el-input-group"-->
+              <!--clearable-->
+              <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+              <!--v-model="scope.row.orgName"-->
+              <!--&gt;</el-input>-->
+              <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+            </template>
+          </el-table-column>
+          <el-table-column
+            class="listTabel"
+            :resizable="false"
+            label="板块名称"
+            prop="moduleName"
+            align="center"
+            width="200"
+            show-overflow-tooltip
+          >
+            <template slot-scope="scope">
+              <el-select
+                class="input-el-input-group"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="scope.row.moduleId"
+                @change="
                     getBdName(
                       scope.row.moduleId,
                       detailform.contractInfoAttachBO.outUnionContractInfoAttachList,
                       scope.$index
                     )
                   "
-                  >
-                    <el-option
-                      :key="index"
-                      :label="item.detailName"
-                      :value="item.id"
-                      v-for="(item, index) in projectPlate"
-                    ></el-option>
-                  </el-select>
-                </template>
-              </el-table-column>
-              <el-table-column
-                class="listTabel"
-                :resizable="false"
-                label="项目性质"
-                prop="projectNature"
-                align="center"
-                width="150"
-                show-overflow-tooltip
               >
-                <template slot-scope="scope">
-                  系统外联合体
-                </template>
-              </el-table-column>
-              <el-table-column
-                :resizable="false"
-                label="各方份额(万元)"
-                align="center"
-                prop="contractAmount"
-                width="400"
-                show-overflow-tooltip
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectPlate"
+                ></el-option>
+              </el-select>
+            </template>
+          </el-table-column>
+          <el-table-column
+            class="listTabel"
+            :resizable="false"
+            label="项目性质"
+            prop="projectNature"
+            align="center"
+            width="150"
+            show-overflow-tooltip
+          >
+            <template slot-scope="scope">
+              系统外联合体
+            </template>
+          </el-table-column>
+          <el-table-column
+            :resizable="false"
+            label="各方份额(万元)"
+            align="center"
+            prop="contractAmount"
+            width="400"
+            show-overflow-tooltip
+          >
+            <template slot-scope="scope">
+              <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.outUnionContractInfoAttachList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
+                <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                <el-input
+                  class="group-no-padding"
+                  @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.outUnionContractInfoAttachList,'wlht')"
+                  v-model="scope.row.contractAmount"
+                  clearable
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                >
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+            </template>
+          </el-table-column>
+          <el-table-column
+            class="listTabel"
+            :resizable="false"
+            label="是否为补充"
+            prop="isAdd"
+            align="center"
+            width="100"
+            show-overflow-tooltip
+          >
+            <template slot-scope="scope">
+              <el-switch
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                class="inline-formitem-switch"
+                v-model="scope.row.isAdd"
+                active-color="#409EFF"
+                inactive-color="#ddd"
+                active-value="0"
+                inactive-value="1"
               >
-                <template slot-scope="scope">
-                  <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.outUnionContractInfoAttachList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
-                    <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                    <el-input
-                      class="group-no-padding"
-                      @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.outUnionContractInfoAttachList,'wlht')"
-                      v-model="scope.row.contractAmount"
-                      clearable
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    >
-                      <template slot="prepend">¥</template>
-                      <template slot="append">(万元)</template>
-                    </el-input>
-                  </el-form-item>
-                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                </template>
-              </el-table-column>
-              <el-table-column
-                class="listTabel"
-                :resizable="false"
-                label="是否为补充"
-                prop="isAdd"
-                align="center"
-                width="100"
-                show-overflow-tooltip
-              >
-                <template slot-scope="scope">
-                  <el-switch
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    class="inline-formitem-switch"
-                    v-model="scope.row.isAdd"
-                    active-color="#409EFF"
-                    inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"
-                  >
-                  </el-switch>
-                </template>
-              </el-table-column>
-              <el-table-column
-                v-show="!p.actpoint === 'look'"
-                :resizable="false"
-                label="操作"
-                align="center"
-                show-overflow-tooltip
-                v-if="p.actpoint !== 'look'"
-                width="80">
-                <template slot-scope="scope">
-                  <el-link
-                    :underline="false"
-                    @click="del(scope.$index,scope.row,detailform.contractInfoAttachBO.outUnionContractInfoAttachList,'lht')"
-                    type="warning">删除
-                  </el-link>
-                </template>
-              </el-table-column>
-            </el-table>
-          </div>
-          <div  v-if="detailform.contractInfo.isOutSystemSub==='0'">
-            <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
-              <span>系统外分包单位列表: </span>
-              <el-button
-                v-show="p.actpoint != 'look'"
-                @click="addfs('wfb',4,1)"
+              </el-switch>
+            </template>
+          </el-table-column>
+          <el-table-column
+            v-show="!p.actpoint === 'look'"
+            :resizable="false"
+            label="操作"
+            align="center"
+            show-overflow-tooltip
+            v-if="p.actpoint !== 'look'"
+            width="80">
+            <template slot-scope="scope">
+              <el-link
+                :underline="false"
+                @click="del(scope.$index,scope.row,detailform.contractInfoAttachBO.outUnionContractInfoAttachList,'lht')"
+                type="warning">删除
+              </el-link>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+      <div  v-if="detailform.contractInfo.isOutSystemSub==='0'">
+        <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+          <span>系统外分包单位列表: </span>
+          <el-button
+            v-show="p.actpoint != 'look'"
+            @click="addfs('wfb',4,1)"
 
-                style="
+            style="
                   width: 70px;
                   height: 32px;
                   background: #5c8bfa;
                   font-size: 16px;
                 "
-                type="primary"
-              >新增
-              </el-button
-              >
-            </p>
-            <el-table
-              :data="detailform.contractInfoAttachBO.outContractInfoAttachList"
-              :header-cell-style="{
+            type="primary"
+          >新增
+          </el-button
+          >
+        </p>
+        <el-table
+          :data="detailform.contractInfoAttachBO.outContractInfoAttachList"
+          :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
                 color: 'rgba(0,0,0,1)',
               }"
-              @selection-change="handleSelectionChange"
-              align="center"
-              border
-              class="clothSizeTable"
-              ref="table"
-              style="width: 100%; min-height: calc(100vh - 370px)"
-            >
-              <el-table-column
-                :width="80"
-                align="center"
-                label="序号"
-                show-overflow-tooltip
-                type="index"
-              ></el-table-column>
+          @selection-change="handleSelectionChange"
+          align="center"
+          border
+          class="clothSizeTable"
+          ref="table"
+          style="width: 100%; min-height: calc(100vh - 370px)"
+        >
+          <el-table-column
+            :width="80"
+            align="center"
+            label="序号"
+            show-overflow-tooltip
+            type="index"
+          ></el-table-column>
 
-              <el-table-column
-                class="listTabel"
-                :resizable="false"
-                label="单位名称"
-                prop="orgName"
-                align="center"
-                width="300"
-                show-overflow-tooltip
-              >
-                <template slot-scope="scope">
-                  <el-input
-                    class="input-el-input-group"
-                    clearable
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    v-model="scope.row.orgName"
-                  ></el-input>
-                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                </template>
-              </el-table-column>
-              <el-table-column
-                class="listTabel"
-                :resizable="false"
-                label="板块名称"
-                prop="moduleName"
-                align="center"
-                width="200"
-                show-overflow-tooltip
-              >
-                <template slot-scope="scope">
-                  <el-select
-                    class="input-el-input-group"
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-                    filterable
-                    placeholder="请选择"
-                    size="mini"
-                    v-model="scope.row.moduleId"
-                    @change="
+          <el-table-column
+            class="listTabel"
+            :resizable="false"
+            label="单位名称"
+            prop="orgName"
+            align="center"
+            width="300"
+            show-overflow-tooltip
+          >
+            <template slot-scope="scope">
+              <el-input
+                clearable
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                v-model="scope.row.orgName"
+                class="input-el-input-group">
+                <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outContractInfoAttachList')" ></el-button>
+              </el-input>
+              <!--<el-input-->
+              <!--class="input-el-input-group"-->
+              <!--clearable-->
+              <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+              <!--v-model="scope.row.orgName"-->
+              <!--&gt;</el-input>-->
+              <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+            </template>
+          </el-table-column>
+          <el-table-column
+            class="listTabel"
+            :resizable="false"
+            label="板块名称"
+            prop="moduleName"
+            align="center"
+            width="200"
+            show-overflow-tooltip
+          >
+            <template slot-scope="scope">
+              <el-select
+                class="input-el-input-group"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="scope.row.moduleId"
+                @change="
                     getBdName(
                       scope.row.moduleId,
                       detailform.contractInfoAttachBO.outContractInfoAttachList,
                       scope.$index
                     )
                   "
-                  >
-                    <el-option
-                      :key="index"
-                      :label="item.detailName"
-                      :value="item.id"
-                      v-for="(item, index) in projectPlate"
-                    ></el-option>
-                  </el-select>
-                </template>
-              </el-table-column>
-              <el-table-column
-                class="listTabel"
-                :resizable="false"
-                label="项目性质"
-                prop="projectNature"
-                align="center"
-                show-overflow-tooltip
-                width="150"
               >
-                <template slot-scope="scope">
-                  系统外分包
-                </template>
-              </el-table-column>
-              <el-table-column
-                :resizable="false"
-                label="各方份额(万元)"
-                align="center"
-                prop="contractAmount"
-                width="400"
-                show-overflow-tooltip
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectPlate"
+                ></el-option>
+              </el-select>
+            </template>
+          </el-table-column>
+          <el-table-column
+            class="listTabel"
+            :resizable="false"
+            label="项目性质"
+            prop="projectNature"
+            align="center"
+            show-overflow-tooltip
+            width="150"
+          >
+            <template slot-scope="scope">
+              系统外分包
+            </template>
+          </el-table-column>
+          <el-table-column
+            :resizable="false"
+            label="各方份额(万元)"
+            align="center"
+            prop="contractAmount"
+            width="400"
+            show-overflow-tooltip
+          >
+            <template slot-scope="scope">
+              <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.outContractInfoAttachList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
+                <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                <el-input
+                  class="group-no-padding"
+                  @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.outContractInfoAttachList,'wfb')"
+                  v-model="scope.row.contractAmount"
+                  clearable
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                >
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+            </template>
+          </el-table-column>
+          <el-table-column
+            class="listTabel"
+            :resizable="false"
+            label="是否为补充"
+            prop="isAdd"
+            align="center"
+            width="100"
+            show-overflow-tooltip
+          >
+            <template slot-scope="scope">
+              <el-switch
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                class="inline-formitem-switch"
+                v-model="scope.row.isAdd"
+                active-color="#409EFF"
+                inactive-color="#ddd"
+                active-value="0"
+                inactive-value="1"
               >
-                <template slot-scope="scope">
-                  <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.outContractInfoAttachList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
-                    <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                    <el-input
-                      class="group-no-padding"
-                      @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.outContractInfoAttachList,'wfb')"
-                      v-model="scope.row.contractAmount"
-                      clearable
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    >
-                      <template slot="prepend">¥</template>
-                      <template slot="append">(万元)</template>
-                    </el-input>
-                  </el-form-item>
-                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                </template>
-              </el-table-column>
-              <el-table-column
-                class="listTabel"
-                :resizable="false"
-                label="是否为补充"
-                prop="isAdd"
-                align="center"
-                width="100"
-                show-overflow-tooltip
-              >
-                <template slot-scope="scope">
-                  <el-switch
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    class="inline-formitem-switch"
-                    v-model="scope.row.isAdd"
-                    active-color="#409EFF"
-                    inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"
-                  >
-                  </el-switch>
-                </template>
-              </el-table-column>
-              <el-table-column
-                v-show="!p.actpoint === 'look'"
-                :resizable="false"
-                label="操作"
-                align="center"
-                show-overflow-tooltip
-                v-if="p.actpoint !== 'look'"
-                width="80">
-                <template slot-scope="scope">
-                  <el-link
-                    :underline="false"
-                    @click="del(scope.$index,scope.row,detailform.contractInfoAttachBO.outContractInfoAttachList,'fb')"
-                    type="warning">删除
-                  </el-link>
-                </template>
-              </el-table-column>
-            </el-table>
-          </div>
-        </div>
-      </el-tab-pane>
+              </el-switch>
+            </template>
+          </el-table-column>
+          <el-table-column
+            v-show="!p.actpoint === 'look'"
+            :resizable="false"
+            label="操作"
+            align="center"
+            show-overflow-tooltip
+            v-if="p.actpoint !== 'look'"
+            width="80">
+            <template slot-scope="scope">
+              <el-link
+                :underline="false"
+                @click="del(scope.$index,scope.row,detailform.contractInfoAttachBO.outContractInfoAttachList,'fb')"
+                type="warning">删除
+              </el-link>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+    </div>
       <el-tab-pane label="工程量清单">
         <div class="detailBoxBG gclqd">
           <el-tabs type="border-card">
@@ -4039,17 +4060,17 @@ export default {
       }
     },
     //打开单位弹框
-    addDw(type,list,ifChek){
+    addDw(type,list,ifChek,index,tableList){
       this.DwVisible = true;
       this.$nextTick(() => {
-        this.$refs.infoDw.init(type,list,ifChek);
+        this.$refs.infoDw.init(type,list,ifChek,index,tableList);
       })
     },
     //获取单位的值
     getDwInfo(data){
       this.$forceUpdate();
       var id=[],name=[];
-      if(data){
+      if(data&&data.type!='单位名称'){
         data.forEach((item)=>{
           id.push(item.id);
           name.push(item.detailName);
@@ -4061,6 +4082,11 @@ export default {
       }else if(data.type=="使用资质单位"){
         this.detailform.contractInfo.qualityOrgIds=id.join(",");
         this.detailform.contractInfo.qualityOrgNames=name.join(",");
+      }else if(data.type=='单位名称'){
+        this.detailform.contractInfoAttachBO[data.tableList][data.index].orgId=data.code;
+        this.detailform.contractInfoAttachBO[data.tableList][data.index].orgName=data.name;
+        this.$set(this.detailform.contractInfoAttachBO[data.tableList][data.index],this.detailform.contractInfoAttachBO[data.tableList][data.index]);
+
       }
       this.DwVisible=false;
     },
