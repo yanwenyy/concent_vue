@@ -1,10 +1,10 @@
 <template>
   <el-dialog
-    title="选择地点"
+    title="选择单位"
     :visible.sync="dialogVisible"
     width="30%"
   >
-    <div class="tree-div">
+    <div class="tree-div" v-if="ifChek==true">
       <!--:data="datas"-->
       <el-tree
         ref="tree"
@@ -17,6 +17,18 @@
         node-key="code"
         :default-checked-keys="list"
         >
+      </el-tree>
+    </div>
+    <div class="tree-div" v-if="ifChek==false">
+      <!--:data="datas"-->
+      <el-tree
+        ref="tree"
+        :load="loadNode"
+        lazy
+        :props="defaultProps"
+        :highlight-current="true"
+        node-key="code"
+      >
       </el-tree>
     </div>
     <div style="text-align: center">
@@ -35,6 +47,7 @@
         datas: [],
         list:[],
         dialogVisible:true,
+        ifChek:true,
         userInfo:{},
         defaultProps: {
           children: 'children',
@@ -93,10 +106,18 @@
               resolve(datas);
           })
       },
-      init(type,list){
+      init(type,list,ifChek,index,tableList){
+        //type使用组件的名称,
+        // list组织树默认勾选的id,
+        // ifChek是否可多选
+        //index table使用组件时的下标
+        //tableList tabel使用组件时的list
         this.dialogVisible = true;
+        this.ifChek=ifChek!=undefined?ifChek:true;
         this.type=type;
-        if(list){
+        this.index=index;
+        this.tableList=tableList;
+        if(list&&list!=''){
           this.list=list.split(",")
         }
       },
@@ -115,6 +136,8 @@
         })
         var data=list;
         data.type=this.type;
+        data.index=this.index;
+        data.tableList=this.tableList;
         // console.log(this.$refs.tree.getCheckedNodes());
         this.$emit('refreshBD',data)
       },

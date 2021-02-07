@@ -26,7 +26,7 @@
               }"
             >
               <el-input
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
                 v-model="detailform.topInfor.inforName"/>
@@ -35,7 +35,7 @@
               label="外文名称:"
             >
               <el-input
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
                 v-model="detailform.topInfor.inforNameForeign"/>
@@ -53,7 +53,7 @@
               }"
               >
                 <!--<el-select-->
-                <!--:disabled="p.actpoint === 'look'"-->
+                <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
                 <!--clearable-->
                 <!--filterable-->
                 <!--style="width: 100%"-->
@@ -73,7 +73,7 @@
                 <!--</el-select>-->
                 <template>
                   <el-radio-group class="detail-radio-group" v-model="detailform.topInfor.moduleId"  @change="getName(detailform.topInfor.moduleId, projectPlate, 'moduleName')">
-                    <el-radio :disabled="p.actpoint === 'look'"  v-for="(item, index) in projectPlate" :label="item.id" :key="index">{{item.detailName}}</el-radio>
+                    <el-radio :disabled="p.actpoint === 'look'||p.actpoint=='task'"  v-for="(item, index) in projectPlate" :label="item.id" :key="index">{{item.detailName}}</el-radio>
                   </el-radio-group>
                 </template>
               </el-form-item>
@@ -83,7 +83,7 @@
               prop="topInfor.enginTypeFirstId"
             >
               <el-select
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
                 filterable
                 placeholder="请选择"
@@ -104,7 +104,7 @@
               prop="topInfor.enginTypeSecondId"
             >
               <el-select
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
                 filterable
                 placeholder="请选择"
@@ -132,7 +132,7 @@
               prop="topInfor.belongLineId"
             >
               <el-select
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 filterable
                 clearable
                 placeholder="请选择或直接填写所属现路"
@@ -160,7 +160,7 @@
               prop="topInfor.projectNatureFirstId"
             >
               <el-select
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
                 filterable
                 placeholder="请选择"
@@ -181,7 +181,7 @@
               prop="topInfor.projectNatureSecondId"
             >
               <el-select
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
                 filterable
                 placeholder="请选择"
@@ -214,7 +214,7 @@
               }"
             >
               <el-select
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 filterable
                 clearable
                 placeholder="请选择"
@@ -240,7 +240,7 @@
               }:{}"
             >
               <el-select
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 filterable
                 clearable
                 placeholder="请选择"
@@ -276,7 +276,7 @@
 
               >
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
 
                   v-model="detailform.topInfor.otherAssemblyRate"
                 />
@@ -294,7 +294,7 @@
               >
                 <el-select
                   class="multiple-sel"
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   multiple
                   @change="getMultipleName(detailform.zplx,assemblyType,'otherAssemblyTypeId','otherAssemblyType')"
                   clearable
@@ -326,7 +326,7 @@
               >
                 <el-select
                   class="multiple-sel"
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   multiple
                   @change="getMultipleName(detailform.jzlx,architecturalType,'otherBuildingTypeId','otherBuildingType')"
                   clearable
@@ -356,7 +356,7 @@
               >
                 <el-select
                   class="multiple-sel"
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   multiple
                   @change="getMultipleName(detailform.jzjglx,buildingStructure,'otherBuildingStructureTypeId','otherBuildingStructureType')"
                   clearable
@@ -386,7 +386,7 @@
               >
                 <el-select
                   class="multiple-sel"
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   multiple
                   clearable
                   filterable
@@ -414,13 +414,13 @@
               }"
             >
               <!--<el-input-->
-              <!--:disabled="p.actpoint === 'look'"-->
+              <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
               <!--clearable-->
 
               <!--v-model="detailform.topInfor.constructionOrg"-->
               <!--/>-->
               <el-autocomplete
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 v-model="detailform.topInfor.constructionOrg"
                 :fetch-suggestions="querySearchAsync"
                 placeholder="请输入内容"
@@ -436,12 +436,12 @@
             >
               <!--<el-input-->
               <!--clearable-->
-              <!--:disabled="p.actpoint === 'look'"-->
+              <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
 
               <!--v-model="detailform.topInfor.designOrg"-->
               <!--/>-->
               <el-autocomplete
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 v-model="detailform.topInfor.designOrg"
                 :fetch-suggestions="querySearchAsync"
                 placeholder="请输入内容"
@@ -458,7 +458,7 @@
             }"
             >
               <el-input
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
                 v-model="detailform.topInfor.bidPerson"
@@ -473,7 +473,7 @@
             }"
             >
               <el-input
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
 
                 v-model="detailform.topInfor.bidAgentCompany"
               />
@@ -489,7 +489,7 @@
 
             >
               <el-date-picker
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 filterable
                 clearable
                 type="date"
@@ -506,7 +506,7 @@
             >
               <el-tooltip popper-class="tooltip-class" :content="String(detailform.topInfor.investment)" placement="bottom" :disabled="p.actpoint !== 'look'" effect="dark">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
                   placeholder=""
                   v-model="detailform.topInfor.investment"
@@ -525,7 +525,7 @@
             >
               <el-select
                 class="multiple-sel"
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 filterable
                 clearable
                 multiple
@@ -552,7 +552,7 @@
               }"
             >
               <!--<el-select-->
-              <!--:disabled="p.actpoint === 'look'"-->
+              <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
               <!--filterable-->
               <!--clearable-->
               <!--placeholder="请选择"-->
@@ -567,7 +567,7 @@
               <!--&gt;</el-option>-->
               <!--</el-select>-->
               <el-switch
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 class="inline-formitem-switch"
                 v-model="detailform.topInfor.isMajorProject"
                 active-color="#409EFF"
@@ -587,7 +587,7 @@
             }"
             >
               <el-select
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
                 filterable
                 placeholder="请选择"
@@ -620,7 +620,7 @@
                 v-model="detailform.topInfor.noticeTypeName=='资审公告'?detailform.topInfor.verifyTypeName='资格预审':detailform.topInfor.noticeTypeName=='招标公告'?detailform.topInfor.verifyTypeName='资格后审':detailform.topInfor.noticeTypeName=='竞争性谈判'?detailform.topInfor.verifyTypeName='竞争性谈判':detailform.topInfor.verifyTypeName=''"
               />
               <!--<el-select-->
-              <!--:disabled="p.actpoint === 'look'"-->
+              <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
               <!--clearable-->
               <!--filterable-->
               <!--placeholder="请选择"-->
@@ -650,7 +650,7 @@
               <el-input
                 clearable
                 placeholder=""
-                :disabled="p.actpoint === 'look'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 v-model="detailform.topInfor.majorProjectExplain"
               />
             </el-form-item>
@@ -665,7 +665,7 @@
                 }"
               >
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
                   placeholder=""
 
@@ -678,7 +678,7 @@
                              :rules="rules.phone"
               >
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
                   placeholder=""
 
@@ -695,7 +695,7 @@
               }"
               >
                 <el-select
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   filterable
                   clearable
                   placeholder="请选择"
@@ -727,7 +727,7 @@
               >
                 <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   type="textarea"
                   clearable
                   placeholder="请输入"
@@ -794,7 +794,7 @@
                       <el-input
                         class="input-el-input-group"
                         clearable
-                        :disabled="p.actpoint === 'look'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         v-model="scope.row.contractAmount"
                       >
                         <template slot="prepend">¥</template>
@@ -816,7 +816,7 @@
               >
                 <template slot-scope="scope">
                   <el-switch
-                    :disabled="p.actpoint === 'look'"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     class="inline-formitem-switch"
                     v-model="scope.row.isMain"
                     active-color="#409EFF"
@@ -903,7 +903,7 @@
                     <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                     <el-input
                       clearable
-                      :disabled="p.actpoint === 'look'"
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                       v-model="scope.row.sectionName"
                     ></el-input>
                   </el-form-item>
@@ -926,7 +926,7 @@
                         class="input-el-input-group"
                         v-model="scope.row.projectScale"
                         clearable
-                        :disabled="p.actpoint === 'look'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                       >
                         <template slot="prepend">¥</template>
                         <template slot="append">(万元)</template>
@@ -960,8 +960,8 @@
           </el-form>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'">
-        <Audit-Process :task="p.task"></Audit-Process>
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
+        <Audit-Process :task="p.task||{businessId:p.instid,businessType:' contract_project_new'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>

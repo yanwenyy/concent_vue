@@ -259,7 +259,7 @@
           this.$message.info("请选择一条记录进行查看操作！");
           return false;
         }
-        let p = {actpoint: "edit", instid: this.multipleSelection[0].beforeId,afterId:this.multipleSelection[0].afterId};
+        let p = {actpoint: "edit", instid: this.multipleSelection[0].beforeId,afterId:this.multipleSelection[0].afterId,uuid:this.multipleSelection[0].uuid};
         var url=this.getUrl(this.multipleSelection[0].moduleId);
         this.$router.push({
           path: url,
@@ -269,7 +269,7 @@
       },
       // 查看
       rowshow(row) {
-        let p = {actpoint: "look", instid: row.beforeId,afterId:row.afterId};
+        let p = {actpoint: "look", instid: row.beforeId,afterId:row.afterId,uuid:row.uuid};
         var url=this.getUrl(row.moduleId);
         this.$router.push({
           path: url,
