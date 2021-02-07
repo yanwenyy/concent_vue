@@ -9,7 +9,7 @@
         <el-button @click="searchformSubmit" type="primary" plain>刷新</el-button>
         <el-button @click="back" type="primary" plain>返回</el-button>
       </el-button-group>
-      <label style="margin-left: 10px;line-height: 32px;font-size: 15px;">项目名称：{{p.projectName}}</label>
+      <!--<label style="margin-left: 10px;line-height: 32px;font-size: 15px;">项目名称：{{p.projectName}}</label>-->
     </div>
 
     <div style="margin-top: 10px">
