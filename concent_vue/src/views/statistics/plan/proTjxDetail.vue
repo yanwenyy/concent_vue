@@ -12,12 +12,12 @@
 
     <div style="width: 100%; overflow: hidden;margin-top:10px;">
       <el-button-group v-if="projectStatus !== '1'" style="float: left">
-        <el-button icon="el-icon-folder-checked" @click="save" type="primary" plain>暂存</el-button>
         <el-button icon="el-icon-success" @click="submit" type="primary" plain>提交</el-button>
-        <el-button icon="el-icon-refresh-left" @click="back" type="primary" plain>返回上一页</el-button>
+        <el-button icon="el-icon-folder-checked" @click="save" type="primary" plain>保存</el-button>
+        <el-button icon="el-icon-refresh-left" @click="back" type="primary" plain>返回</el-button>
       </el-button-group>
       <el-button-group v-else style="float: left">
-        <el-button icon="el-icon-refresh-left" @click="back" type="primary" plain>返回上一页</el-button>
+        <el-button icon="el-icon-refresh-left" @click="back" type="primary" plain>返回</el-button>
         <el-button icon="el-icon-s-custom" @click="rollback" type="primary" plain>回退</el-button>
       </el-button-group>
     </div>
@@ -75,7 +75,7 @@
             <div v-if="scope.row.veditable === '1' && scope.row.venabled === '1' && projectStatus !== '1' ">
               <el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')"/>
             </div>
-            <div v-else-if="projectStatus !== '1' " style="text-align: right">{{sumCount(scope.row)}}</div>
+            <div v-else-if="projectStatus !== '1' " style="text-align: right">{{sonCount(scope.row)}}</div>
             <div v-else>{{scope.row.value}}</div>
           </template>
         </el-table-column>
@@ -126,22 +126,20 @@
           return vnameClass
         }
       },
-      sumCount () {
+      sonCount () {
         return (rowData) => {
-          // console.log('this.data.map(row => row.value)' + rowData.uuid, this.data.map(row => row.value))
           var bb = []
           for (var i in this.data.map(row => row.value)) {
             if (this.data.map(row => row.value)[i] && this.data.map(row => row.sumTarget)[i] === rowData.uuid) {
               bb.push(this.data.map(row => row.value)[i])
             }
           }
-          // + (rowData.value.value === '' ? 0 : parseFloat(rowData.value.value))
           return (bb.reduce((acc, cur) => (parseFloat(cur) + acc), 0) === 0 ? '' : bb.reduce((acc, cur) => (parseFloat(cur) + acc), 0))
         }
       }
     },
     methods: {
-      // 暂存
+      // 保存
       save() {
         let planId = ''
         if (this.data.length > 0) {
@@ -156,7 +154,7 @@
             .then(res => {
               if (res.data.code === 200) {
                 this.$message({
-                  message: '暂存成功',
+                  message: '保存成功',
                   duration: 1000,
                   type: 'success',
                   onClose: () => { this.$router.back() }
