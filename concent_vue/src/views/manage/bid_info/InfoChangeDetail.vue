@@ -123,6 +123,93 @@
           </el-form-item>
           <br>
 
+            <div class="div-item">
+              <el-form-item
+                label="装配率(%):"
+
+                :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'blur',
+                }"
+                v-if="detailFormBefore.topInforBO.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+              >
+                <el-input
+                  disabled
+                  v-model="detailFormBefore.topInforBO.topInfor.otherAssemblyRate"
+                />
+              </el-form-item>
+
+              <el-form-item
+                label="装配类型:"
+
+                :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'blur',
+                }"
+                v-if="detailFormBefore.topInforBO.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
+              >
+              <el-input
+                  disabled
+                  v-model="detailFormBefore.topInforBO.topInfor.otherAssemblyType"
+                />
+              </el-form-item>
+            </div>
+
+            <div class="div-item">
+              <el-form-item
+                label="建筑类型:"
+
+                :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+                v-if="detailFormBefore.topInforBO.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
+              >
+              <el-input
+                  disabled
+                  v-model="detailFormBefore.topInforBO.topInfor.otherBuildingType"
+                />
+              </el-form-item>
+
+              <el-form-item
+                label="建筑结构类型:"
+
+                :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+                v-if="detailFormBefore.topInforBO.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
+              >
+                <el-input
+                  disabled
+                  v-model="detailFormBefore.topInforBO.topInfor.otherBuildingStructureType"
+                />
+              </el-form-item>
+
+              <el-form-item
+                label="场地名称:"
+
+                :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+                v-if="detailFormBefore.topInforBO.topInfor.marketFirstNameId=='50cd5e9992ac4653920fac8c1f2eb2e3'"
+              >
+                <el-input
+                  disabled
+                  v-model="detailFormBefore.topInforBO.topInfor.siteName"
+                />
+              </el-form-item>
+            </div>
+
           <el-form-item label="建设单位:"
            :rules="{
                 required: true,
@@ -965,6 +1052,93 @@
             </el-form-item>
             <br>
 
+            <div class="div-item">
+              <el-form-item
+                label="装配率(%):"
+
+                :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'blur',
+                }"
+                v-if="detailform.topInforBO.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+              >
+                <el-input
+                  disabled
+                  v-model="detailform.topInforBO.topInfor.otherAssemblyRate"
+                />
+              </el-form-item>
+
+              <el-form-item
+                label="装配类型:"
+
+                :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'blur',
+                }"
+                v-if="detailform.topInforBO.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
+              >
+              <el-input
+                  disabled
+                  v-model="detailform.topInforBO.topInfor.otherAssemblyType"
+                />
+              </el-form-item>
+            </div>
+
+            <div class="div-item">
+              <el-form-item
+                label="建筑类型:"
+
+                :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+                v-if="detailform.topInforBO.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
+              >
+              <el-input
+                  disabled
+                  v-model="detailform.topInforBO.topInfor.otherBuildingType"
+                />
+              </el-form-item>
+
+              <el-form-item
+                label="建筑结构类型:"
+
+                :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+                v-if="detailform.topInforBO.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
+              >
+                <el-input
+                  disabled
+                  v-model="detailform.topInforBO.topInfor.otherBuildingStructureType"
+                />
+              </el-form-item>
+
+              <el-form-item
+                label="场地名称:"
+
+                :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+                v-if="detailform.topInforBO.topInfor.marketFirstNameId=='50cd5e9992ac4653920fac8c1f2eb2e3'"
+              >
+                <el-input
+                  disabled
+                  v-model="detailform.topInforBO.topInfor.siteName"
+                />
+              </el-form-item>
+            </div>
+
             <el-form-item  label="建设单位:"
               :rules="{
                 required: true,
@@ -1716,8 +1890,8 @@
       <add-bd  v-if="BDCSVisible" ref="infoBD" @refreshBD="getBdInfo"></add-bd>
        <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
     </el-tab-pane>
-    <el-tab-pane label="审批流程" name="lc" v-if="p.actpoint == 'task'">
-        <Audit-Process :task="p.task"></Audit-Process>
+    <el-tab-pane label="审批流程" name="lc" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
+        <Audit-Process :task="p.task||{businessId:p.uuid,businessType:'contract_bid_change'}"></Audit-Process>
     </el-tab-pane>
   </el-tabs>
 </div>
@@ -2250,6 +2424,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+    .div-item >>>.el-form-item{
+      display: inline-block;
+      width: 32.5%!important;
+    }
 >>>.gcform .el-form-item__error{
   margin: 0 0 0 365px;
 }
