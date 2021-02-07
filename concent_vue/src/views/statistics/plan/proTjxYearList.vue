@@ -1,4 +1,4 @@
-<!--总设计量-->
+<!--年计划-->
 
 <template>
   <div>
@@ -7,12 +7,12 @@
         placement="top"
         trigger="hover">
         <span style="font-size: 12px;">双击列表行填报更方便。<label @click="doNotPopover(1)" style="color:#67c23a;cursor:pointer;">不再提示</label></span>
-        <el-button slot="reference" style="float: left;margin-right: 5px" icon="el-icon-edit" @click="edit" type="primary" plain>填报总设计量</el-button>
+        <el-button slot="reference" style="float: left;margin-right: 5px" icon="el-icon-edit" @click="edit" type="primary" plain>填报年计划</el-button>
       </el-popover>
-      <el-button v-else style="float: left;margin-right: 5px" icon="el-icon-edit" @click="edit" type="primary" plain>填报总设计量</el-button>
-      <el-button-group style="float: left">
+      <el-button v-else style="float: left;margin-right: 5px" icon="el-icon-edit" @click="edit" type="primary" plain>填报年计划</el-button>
+      <!-- <el-button-group style="float: left">
         <el-button icon="el-icon-delete" @click="del" type="primary" plain>删除</el-button>
-      </el-button-group>
+      </el-button-group>-->
 
       <div style="float: right;">
         <el-button
@@ -43,6 +43,7 @@
           'text-align': 'center',
           'background-color': 'whitesmoke'
         }"
+        :row-class-name="tableRowClassName"
         @row-dblclick="rowEdit"
         @selection-change="handleSelectionChange"
         border
@@ -58,12 +59,35 @@
           type="selection"
         ></el-table-column>
         <el-table-column
-          :width="70"
+          :width="50"
           align="center"
           label="序号"
           show-overflow-tooltip
           type="index"
+          :index="computeTableIndex"
         ></el-table-column>
+        <el-table-column
+          :width="110"
+          align="left"
+          label="计划年份"
+          show-overflow-tooltip
+        >
+          <template  slot-scope="scope">
+            <div @dblclick.stop>
+              <el-select
+                @change="handleYearChange(scope.row.projectId,$event)"
+                size="mini"
+                placeholder="请选择"
+                v-model="currentYears[computeTableIndex(scope.$index)]">
+                <el-option
+                  :key="index"
+                  :label="item+'年'"
+                  :value="item"
+                  v-for="(item, index) in arrYear"/>
+              </el-select>
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column
           :width="250"
           align="left"
@@ -85,6 +109,9 @@
           prop="projectName"
           show-overflow-tooltip
         >
+          <template slot-scope="scope">
+            <span @click="toListYear(scope.row)" style="cursor: pointer;text-decoration:underline;color:#3c75ff;">{{scope.row.projectName}}</span>
+          </template>
           <template slot="header" slot-scope="scope">
             <span>项目名称</span>
             <div>
@@ -159,36 +186,6 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-          :width="100"
-          align="center"
-          label="状态"
-          show-overflow-tooltip
-        >
-          <template slot-scope="scope">
-            <span v-if="scope.row.status=='0'" style="color:#909399;">未提交</span>
-            <span v-else-if="scope.row.status=='1'" style="color:#67c23a;">已提交</span>
-            <span v-else>未填报</span>
-          </template>
-          <template slot="header" slot-scope="scope">
-            <span>状态</span>
-            <div>
-              <el-select
-                filterable
-                clearable
-                size="mini"
-                @change="searchformSubmit"
-                placeholder="请选择"
-                v-model="searchform.status">
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in status"/>
-              </el-select>
-            </div>
-          </template>
-        </el-table-column>
       </el-table>
       <el-pagination
         :current-page="page.current"
@@ -213,7 +210,9 @@
     data() {
       return {
         projectTypeTwo: [], // 工程类别(二级)
-        status: [{ id: 1, detailName: '已提交' }, { id: 0, detailName: '未提交' }, {id: 2, detailName: '未填报'}],
+        arrYear: [],
+        currentYears: [],
+        selectYears: [],
         page: { current: 1, size: 20, total: 0, records: [] },
         searchform: {
           current: 1,
@@ -231,7 +230,8 @@
           createTime: '',
           projectStatus: '',
           projectLocation: '',
-          planType: '3'
+          planType: '2',
+          planYear: new Date().getFullYear()
         },
         proNameHover: false,
         projectName: '请选择项目',
@@ -249,17 +249,9 @@
       handleSelectionChange(val) {
         this.multipleSelection = val
       },
-      // 新增
-      add() {
-        if (this.multipleSelection.length !== 1) {
-          this.$message.info('请选择一个项目进行新增操作！')
-          return false
-        }
-        let p = {actpoint: 'add', planInfo: {planId: this.multipleSelection[0].uuid, projectName: this.multipleSelection[0].projectName, planType: 3, planTypeName: '开累计划'}}
-        this.$router.push({
-          path: './proTjxDetail/',
-          query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-        })
+      handleYearChange(projectId, val) {
+        this.selectYears.push({projectId: projectId, year: val})
+        this.$forceUpdate()
       },
       // 删除
       del() {
@@ -315,6 +307,12 @@
           this.$message.info('请选择一条记录进行查看操作！')
           return false
         }
+        var currentYear = this.currentYears[this.multipleSelection[0].index]
+        this.selectYears.forEach((item) => {
+          if (this.multipleSelection[0].projectId === item.projectId) {
+            currentYear = item.year
+          }
+        })
         let planId = this.multipleSelection[0].uuid
         let status = this.multipleSelection[0].status
         let projectName = this.multipleSelection[0].projectName
@@ -323,7 +321,7 @@
         if (planId == null || planId === '') {
           status = '0'
         }
-        let p = {actpoint: 'edit', planInfo: {planId: planId, projectName: projectName, planTypeName: '开累计划', projectStatus: status, planProjectTjx: {projectId: projectId, projecttypeCode: projecttypeCode, planType: 3}}}
+        let p = {actpoint: 'edit', planInfo: {planId: planId, projectName: projectName, planTypeName: '年计划', projectStatus: status, planProjectTjx: {projectId: projectId, planYear: currentYear, planType: 2, projecttypeCode: projecttypeCode}}}
         this.$router.push({
           path: './proTjxDetail/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
@@ -331,11 +329,17 @@
       },
       // 双击事件
       rowEdit(row) {
+        var currentYear = this.currentYears[row.index]
+        this.selectYears.forEach((item) => {
+          if (row.projectId === item.projectId) {
+            currentYear = item.year
+          }
+        })
         let status = row.status
         if (row.uuid == null || row.uuid === '' || status !== '1') {
           status = '0'
         }
-        let p = {actpoint: 'edit', planInfo: {planId: row.uuid, projectName: row.projectName, planTypeName: '开累计划', projectStatus: status, planProjectTjx: {projectId: row.projectId, projecttypeCode: row.projecttypeCode, planType: 3}}}
+        let p = {actpoint: 'edit', planInfo: {planId: row.uuid, projectName: row.projectName, planTypeName: '年计划', projectStatus: status, planProjectTjx: {projectId: row.projectId, planYear: currentYear, planType: 2, projecttypeCode: row.projecttypeCode}}}
         this.$router.push({
           path: './proTjxDetail/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
@@ -370,7 +374,8 @@
           createTime: '',
           projectStatus: '',
           projectLocation: '',
-          planType: '3'
+          planType: '2',
+          planYear: new Date().getFullYear()
         }
         this.getData()
       },
@@ -380,6 +385,10 @@
           .post('/api/statistics/PlanProjectTjx/list/loadPageTjxAllData', this.searchform)
           .then(res => {
             this.page = res.data.data
+            for (var i = 1; i <= this.page.total; i++) {
+              let val = new Date().getFullYear()
+              this.currentYears.push(val)
+            }
           })
       },
       // 不再提示
@@ -408,9 +417,36 @@
           )
         }
         this.searchformSubmit()
+      },
+      // 获取2013年至今的年份数组
+      getArrYear() {
+        let myDate = new Date()
+        let thisYear = myDate.getFullYear() // 获取当年年份
+        let Section = thisYear - 2013 // 声明一个变量 获得当前年份至想获取年份差
+        var arrYear = [] // 声明一个空数组 把遍历出的年份添加到数组里
+        for (var i = 0; i <= Section; i++) {
+          arrYear.push(thisYear--)
+        }
+        this.arrYear = arrYear.reverse()
+      },
+      // 叠加序号
+      computeTableIndex(index) {
+        return (this.page.current - 1) * this.page.size + index + 1
+      },
+      // 表序号
+      tableRowClassName({row, rowIndex}) {
+        row.index = this.computeTableIndex(rowIndex)
+      },
+      toListYear(row) {
+        let p = {projectId: row.projectId, projectName: row.projectName}
+        this.$router.push({
+          path: './listYear/',
+          query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+        })
       }
     },
     created() {
+      this.getArrYear()
       this.getData()
       let promptVal = localStorage.getItem('isPrompt')
       if (promptVal != null && promptVal !== '') {
@@ -435,11 +471,5 @@
   }
 </script>
 <style scoped>
-  .pro_name {
-    color:#000;
-  }
-  .pro_name_hover{
-    color: #fd9b08!important;
-    font-weight: bold;
-  }
+
 </style>

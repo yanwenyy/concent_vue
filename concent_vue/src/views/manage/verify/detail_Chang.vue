@@ -168,6 +168,61 @@
             </el-form-item>
             <br>
 
+            <div class="div-item">
+              <el-form-item
+                label="装配率(%)"
+                v-if="detailformBefore.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+              >
+                <el-input
+                  disabled
+                  v-model="detailformBefore.topInfor.otherAssemblyRate"
+                />
+              </el-form-item>
+
+              <el-form-item
+                label="装配类型"
+                v-if="detailformBefore.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
+              >
+              <el-input
+                  disabled
+                  v-model="detailformBefore.topInfor.otherAssemblyType"
+                />
+              </el-form-item>
+
+            </div>
+
+            <div class="div-item">
+              <el-form-item
+                label="建筑类型"
+                v-if="detailformBefore.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+              >
+              <el-input
+                  disabled
+                  v-model="detailformBefore.topInfor.otherBuildingType"
+                />
+              </el-form-item>
+
+              <el-form-item
+                label="建筑结构类型"
+                v-if="detailformBefore.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+              >
+                <el-input
+                  disabled
+                  v-model="detailformBefore.topInfor.otherBuildingStructureType"
+                />
+              </el-form-item>
+
+              <el-form-item
+                label="场地名称"
+                v-if="detailformBefore.topInfor.marketFirstNameId=='50cd5e9992ac4653920fac8c1f2eb2e3'"
+              >
+                <el-input
+                  disabled
+                  v-model="detailformBefore.topInfor.siteName"
+                />
+              </el-form-item>
+            </div>
 
             <el-form-item  label="建设单位:"
                            :rules="{
@@ -814,6 +869,61 @@
             </el-form-item>
             <br>
 
+              <div class="div-item">
+              <el-form-item
+                label="装配率(%)"
+                v-if="detailformAfter.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+              >
+                <el-input
+                  disabled
+                  v-model="detailformAfter.topInfor.otherAssemblyRate"
+                />
+              </el-form-item>
+
+              <el-form-item
+                label="装配类型"
+                v-if="detailformAfter.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
+              >
+              <el-input
+                  disabled
+                  v-model="detailformAfter.topInfor.otherAssemblyType"
+                />
+              </el-form-item>
+
+            </div>
+
+            <div class="div-item">
+              <el-form-item
+                label="建筑类型"
+                v-if="detailformAfter.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+              >
+              <el-input
+                  disabled
+                  v-model="detailformAfter.topInfor.otherBuildingType"
+                />
+              </el-form-item>
+
+              <el-form-item
+                label="建筑结构类型"
+                v-if="detailformAfter.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+              >
+                <el-input
+                  disabled
+                  v-model="detailformAfter.topInfor.otherBuildingStructureType"
+                />
+              </el-form-item>
+
+              <el-form-item
+                label="场地名称"
+                v-if="detailformAfter.topInfor.marketFirstNameId=='50cd5e9992ac4653920fac8c1f2eb2e3'"
+              >
+                <el-input
+                  disabled
+                  v-model="detailformAfter.topInfor.siteName"
+                />
+              </el-form-item>
+            </div>
 
             <el-form-item  label="建设单位:"
                            :rules="{
@@ -1922,6 +2032,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+    .div-item >>>.el-form-item{
+      display: inline-block;
+      width: 32.5%!important;
+    }
 .detail-back-tab{
   padding: 10px 20px ;
   border:1px solid #ddd;

@@ -181,8 +181,7 @@
 
             <div class="div-item">
               <el-form-item
-                label="装配率(%)"
-                prop="topInfor.otherAssemblyRate"
+                label="装配率(%):"
                 :rules="{
                   required: true,
                   message: '此项不能为空',
@@ -195,9 +194,10 @@
                   v-model="detailform.topInforBO.topInfor.otherAssemblyRate"
                 />
               </el-form-item>
+
               <el-form-item
-                label="装配类型"
-                prop="otherAssemblyType"
+                label="装配类型:"
+
                 :rules="{
                   required: true,
                   message: '此项不能为空',
@@ -215,8 +215,8 @@
 
             <div class="div-item">
               <el-form-item
-                label="建筑类型"
-                prop="otherBuildingType"
+                label="建筑类型:"
+
                 :rules="{
               required: true,
               message: '此项不能为空',
@@ -232,8 +232,8 @@
               </el-form-item>
 
               <el-form-item
-                label="建筑结构类型"
-                prop="otherBuildingStructureType"
+                label="建筑结构类型:"
+
                 :rules="{
               required: true,
               message: '此项不能为空',
@@ -247,9 +247,10 @@
                   v-model="detailform.topInforBO.topInfor.otherBuildingStructureType"
                 />
               </el-form-item>
+
               <el-form-item
-                label="场地名称"
-                prop="siteName"
+                label="场地名称:"
+
                 :rules="{
               required: true,
               message: '此项不能为空',

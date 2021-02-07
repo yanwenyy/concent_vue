@@ -61,8 +61,14 @@
           <div>
             <el-form-item label="项目板块:" class="inline-formitem">
               <template>
-                <el-radio-group class="detail-radio-group" disabled v-model="detailform.topInfor.moduleId" @change="getName(detailform.topInfor.moduleId, projectPlate, 'moduleName')">
-                  <el-radio v-for="(item, index) in projectPlate" :label="item.id" :key="index">{{item.detailName}}</el-radio>
+                <el-radio-group
+                class="detail-radio-group"
+                disabled
+                v-model="detailform.topInfor.moduleId"
+                >
+                  <el-radio
+                  v-for="(item, index) in projectPlate"
+                  :label="item.id" :key="index">{{item.detailName}}</el-radio>
                 </el-radio-group>
               </template>
             </el-form-item>
@@ -162,11 +168,6 @@
             <div class="div-item">
               <el-form-item
                 label="装配率(%)"
-                :rules="{
-                  required: true,
-                  message: '此项不能为空',
-                  trigger: 'blur',
-                }"
                 v-if="detailform.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
               >
                 <el-input
@@ -174,13 +175,9 @@
                   v-model="detailform.topInfor.otherAssemblyRate"
                 />
               </el-form-item>
+
               <el-form-item
                 label="装配类型"
-                :rules="{
-                  required: true,
-                  message: '此项不能为空',
-                  trigger: 'blur',
-                }"
                 v-if="detailform.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
 
               >
@@ -189,18 +186,13 @@
                   v-model="detailform.topInfor.otherAssemblyType"
                 />
               </el-form-item>
+
             </div>
 
             <div class="div-item">
               <el-form-item
                 label="建筑类型"
-                :rules="{
-              required: true,
-              message: '此项不能为空',
-              trigger: 'blur',
-            }"
                 v-if="detailform.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
-
               >
               <el-input
                   disabled
@@ -210,28 +202,16 @@
 
               <el-form-item
                 label="建筑结构类型"
-                prop="otherBuildingStructureType"
-                :rules="{
-              required: true,
-              message: '此项不能为空',
-              trigger: 'blur',
-            }"
                 v-if="detailform.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
-
               >
                 <el-input
                   disabled
                   v-model="detailform.topInfor.otherBuildingStructureType"
                 />
               </el-form-item>
+
               <el-form-item
                 label="场地名称"
-                prop="siteName"
-                :rules="{
-              required: true,
-              message: '此项不能为空',
-              trigger: 'blur',
-            }"
                 v-if="detailform.topInfor.marketFirstNameId=='50cd5e9992ac4653920fac8c1f2eb2e3'"
               >
                 <el-input
@@ -243,7 +223,7 @@
 
 
             <el-form-item  label="建设单位:"
-                           :rules="{
+                :rules="{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
@@ -335,7 +315,7 @@
               <el-input
                 disabled
                 placeholder="请选择"
-                v-model="detailform.capitalName"
+                v-model="detailform.topInfor.capitalName"
               >
               </el-input>
             </el-form-item>
