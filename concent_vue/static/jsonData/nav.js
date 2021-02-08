@@ -1172,6 +1172,70 @@ export default {
                   'leaf': true
                 }
               ]
+            },
+            {
+              'name': '工程月报',
+              'path': '/statistics/reportMonth',
+              'component': '/router',
+              'iconCls': 'el-icon-time',
+              'menushow': true,
+              'leaf': false,
+              'defaultpage': false,
+              'children': [
+                {
+                  'name': '项目部月报',
+                  'path': '/statistics/reportMonth/listAll',
+                  'component': '/statistics/reportMonth/listAll',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '项目部月报二级list',
+                  'path': '/statistics/reportMonth/reportMList',
+                  'component': '/statistics/reportMonth/reportMList',
+                  'iconCls': 'el-icon-switch-button',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '项目部月报详情',
+                  'path': '/statistics/reportMonth/reportMDetail',
+                  'component': '/statistics/reportMonth/reportMDetail',
+                  'iconCls': 'el-icon-switch-button',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '上报截止日期',
+                  'path': '/statistics/reportMonth/reportEndDate',
+                  'component': '/statistics/reportMonth/reportEndDate',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '公司月报(自揽)',
+                  'path': '/statistics/reportMonth/companyMList',
+                  'component': '/statistics/reportMonth/companyMList',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '公司月报(自揽)详情',
+                  'path': '/statistics/reportMonth/companyMDetail',
+                  'component': '/statistics/reportMonth/companyMDetail',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': false,
+                  'leaf': true
+                }
+              ]
             }
           ]
         },
