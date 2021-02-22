@@ -3,7 +3,11 @@
 <template>
   <div>
     <div style="width: 100%; overflow: hidden">
-      <div style="float: right;">
+      <el-button-group style="float: left">
+        <el-button @click="searchformSubmit" type="primary" plain>查询</el-button>
+        <el-button  @click="add" type="primary" plain>新增</el-button>
+        <el-button @click="edit" type="primary" plain>修改</el-button>
+        <el-button @click="del" type="primary" plain>删除</el-button>
         <el-button
           @click="searchformReset"
           type="info"
@@ -11,8 +15,17 @@
           style="color:black;background:none">
           重置
         </el-button>
-        <el-button @click="searchformSubmit" type="primary" plain>查询</el-button>
-      </div>
+
+      </el-button-group>
+    <!--  <div style="float: right;">
+        <el-button
+          @click="searchformReset"
+          type="info"
+          plain
+          style="color:black;background:none">
+          重置
+        </el-button>
+      </div>-->
     </div>
 
     <div style="margin-top: 10px">
@@ -238,6 +251,39 @@
       }
     },
     methods: {
+      //新增
+      add(){
+      /*  if(!this.form1.year || !this.form1.month) {
+          this.show = true
+          return false
+        }*/
+
+        var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/companyMonthlyReportEntityInfo'
+        var params = {}
+        params.projectId = '7ccea0f4843911ea8bd27927a4b81ba7'
+        params.createOrgCode ='0000100001'
+        params.fillDate = '1577836800000'
+        params.createOrgName= '十一局一公司'
+        this.$http.post(
+            url,
+            JSON.stringify(params),
+            {useJson: true}
+        ).then((res) => {
+          debugger
+          if (res.data.code === 200) {
+
+          }else if(res.data.code === 400){
+            this.$message({
+              message: "该单位已在本月创建过月报请尝试修改或于下月再进行尝试"
+            })
+            this.getData()
+          }else{
+            this.$message({
+              message: "创建失败"
+            })
+          }
+        })
+      },
       // 查看
       rowShow(row) {
         let p = { actpoint: 'look', uuid: row.uuid }
