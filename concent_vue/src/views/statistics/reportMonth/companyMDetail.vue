@@ -1,275 +1,276 @@
 <!--项目部月报详情-->
 <template>
   <div style="position: relative">
-<!--    <el-collapse value="projectInfo">
-      <el-collapse-item title="项目信息" name="projectInfo">
-        <template slot="title">
-          <i class="header-icon el-icon-collection"></i>项目信息
-        </template>
-        <div>项目名称：<span style="color:#0a469d !important;margin-right: 50px;">{{projectName}}</span></div>
-      </el-collapse-item>
-    </el-collapse>
-
--->
-      <div style="margin-top: 9px;color: red;position: absolute;top: 1px;right: 279px;z-index: 999999999;font-size: 15px;">项目名称：<span style="color: red !important;margin-right: 50px;">{{projectName}}</span></div>
       <el-button  @click="save" type="primary"  class="detailbutton detail-back-tab" style="float: left; margin-right: 185px;"plain>保存</el-button>
       <el-button  @click="submit" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>
       <el-button  @click="back" type="primary"  class="detailbutton detail-back-tab " plain>返回</el-button>
-     <el-tabs type="border-card" v-model="activeName">
-     <el-tab-pane label="整体进度" name="ztjd">
-          <div class="detailBox">
-            <el-form
-              :inline="false"
-              :model="dataReport"
-              class="gcform"
-            >
-              <el-form-item
-                label="报表年月:"
-              ><el-input v-model="dataReport.fillDate" disabled ></el-input>
-              </el-form-item>
-              <el-form-item
-                label="所属单位:"
-              ><el-input v-model="dataReport.createOrgName" disabled></el-input>
-              </el-form-item>
-              <el-form-item
-                  label="项目名称:"
-                ><el-input v-model="dataReport.reportProjectName" disabled></el-input>
-                </el-form-item>
-              <div>
+    <el-tabs type="border-card" v-model="activeName">
+      <el-tab-pane label="整体进度" name="ztjd">
+        <div class="detailBox">
+          <el-form
+            :inline="false"
+            :model="dataReport"
+            class="gcform"
+          >
+            <el-form-item
+              label="报表年月:"
+            ><el-input v-model="dataReport.fillDate" disabled ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="所属单位:"
+            ><el-input v-model="dataReport.createOrgName" disabled></el-input>
+            </el-form-item>
+            <el-form-item
+              label="项目名称:"
+            ><el-input v-model="dataReport.reportProjectName" disabled></el-input>
+            </el-form-item>
+            <div>
               <el-form-item
                 label="本月计划:"
               ><el-input v-model="dataReport.thisPlan" type="textarea" ></el-input>
               </el-form-item>
-              </div>
-                <div>
-                <el-form-item
-                  label="完成情况:"
-                ><el-input v-model="dataReport.finishedPlan" type="textarea" ></el-input>
-                </el-form-item>
-                </div>
-                 <div>
-                 <el-form-item
-                  label="下月计划:"
-                ><el-input v-model="dataReport.nextPlan" type="textarea" ></el-input>
-                </el-form-item>
-                </div>
-            </el-form>
-              </div>
-           </el-tab-pane>
-         <el-tab-pane label="产物及实物工程量" name="cwjswgcl">
-            <div class="detailBoxBG">
-             <el-table
-                    class="tableStyle"
-                    :max-height="$tableHeight"
-                    :height="$tableHeight"
-                    :data="data"
-                    :header-cell-style="{
+            </div>
+            <div>
+              <el-form-item
+                label="完成情况:"
+              ><el-input v-model="dataReport.finishedPlan" type="textarea" ></el-input>
+              </el-form-item>
+            </div>
+            <div>
+              <el-form-item
+                label="下月计划:"
+              ><el-input v-model="dataReport.nextPlan" type="textarea" ></el-input>
+              </el-form-item>
+            </div>
+          </el-form>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="产物及实物工程量" name="cwjswgcl">
+        <div class="detailBoxBG">
+          <el-table
+            class="tableStyle"
+            :max-height="$tableHeight"
+            :height="$tableHeight"
+            :data="data"
+            :key="key"
+            :header-cell-style="{
                       'text-align': 'center',
                       'background-color': 'whitesmoke'
                     }"
-                    border
-                    highlight-current-row
-                    ref="table"
-                    style="width: 100%"
-                    cell-style="padding:5px 0"
-                    tooltip-effect="dark"
-                  >
-                    <el-table-column
-                      :width="50"
-                      align="center"
-                      label="序号"
-                      show-overflow-tooltip
-                      type="index"
-                    ></el-table-column>
-                    <el-table-column
-                      :width="250"
-                      align="left"
-                      label="统计项名称"
-                      show-overflow-tooltip
-                    >
-                      <template slot-scope="scope">
-                        <div :class="vnameMarginLeft(scope.row.tjxCode,scope.row.veditable)">{{scope.row.tjxName}}</div>
-                      </template>
-                    </el-table-column>
-                    <el-table-column
-                      :width="90"
-                      align="center"
-                      prop="jldw"
-                      label="计量单位"
-                      show-overflow-tooltip
-                    >
-                      <template slot-scope="scope">
-                        <div>{{scope.row.jldw}}</div>
-                      </template>
-                    </el-table-column>
-                    <el-table-column
-                      :width="150"
-                      align="center"
-                      label="本月完成"
-                      show-overflow-tooltip
-                    >
-                      <template slot-scope="scope">
-                       <!-- <div>{{scope.row.monthValue}}</div>-->
-                        <div v-if="scope.row.veditable === '1'">
-                          <el-input v-model="scope.row.monthValue" @input="scope.row.value = scope.row.monthValue.replace(/[^\-?\d.]/g,'','')"/>
-                        </div>
-                        <div v-else>{{scope.row.monthValue}}</div>
-                      </template>
-                    </el-table-column>
-                   <el-table-column
-                     :width="150"
-                     align="center"
-                     label="本月计划"
-                     show-overflow-tooltip
-                   >
-                     <template slot-scope="scope">
-                       <div>{{scope.row.monthPlan}}</div>
-                     </template>
-                   </el-table-column>
-                   <el-table-column
-                     :width="150"
-                     align="center"
-                     label="本月%"
-                     show-overflow-tooltip
-                   >
-                     <template slot-scope="scope">
-                       <div></div>
-                     </template>
-                   </el-table-column>
-                   <el-table-column
-                     :width="150"
-                     align="center"
-                     label="本年完成"
-                     show-overflow-tooltip
-                   >
-                     <template slot-scope="scope">
-                      <div>{{scope.row.yearValue}}</div>
-                      <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
-                     </template>
-                   </el-table-column>
-                   <el-table-column
-                     :width="150"
-                     align="center"
-                     label="本年计划"
-                     show-overflow-tooltip
-                   >
-                     <template slot-scope="scope">
-                       <div>{{scope.row.yearPlan}}</div>
-                     </template>
-                   </el-table-column>
-                   <el-table-column
-                     :width="150"
-                     align="center"
-                     label="本年%"
-                     show-overflow-tooltip
-                   >
-                     <template slot-scope="scope">
-                       <div></div>
-                     </template>
-                   </el-table-column>
-               <el-table-column
-                 :width="150"
-                 align="center"
-                 label="开累完成"
-                 show-overflow-tooltip
-               >
-                 <template slot-scope="scope">
-                   <div>{{scope.row.totalValue}}</div>
-                 </template>
-               </el-table-column>
-               <el-table-column
-                 :width="150"
-                 align="center"
-                 label="开累计划"
-                 show-overflow-tooltip
-               >
-                 <template slot-scope="scope">
-                   <div>{{scope.row.totalPlan}}</div>
-                 </template>
-               </el-table-column>
-               <el-table-column
-                 :width="150"
-                 align="center"
-                 label="开累%"
-                 show-overflow-tooltip
-               >
-                 <template slot-scope="scope">
-                   <div></div>
-                 </template>
-               </el-table-column>
-                  </el-table>
-           </div>
-        </el-tab-pane>
-        <el-tab-pane label="下月计划" name="xyjh">
-            <div class="detailBoxBG">
-              <el-table
-                class="tableStyle"
-                :max-height="$tableHeight"
-                :height="$tableHeight"
-                :data="nextData"
-                :header-cell-style="{
+            border
+            highlight-current-row
+            ref="table"
+            style="width: 100%"
+            cell-style="padding:5px 0"
+            tooltip-effect="dark"
+          >
+            <el-table-column
+              :width="50"
+              align="center"
+              label="序号"
+              show-overflow-tooltip
+              type="index"
+            ></el-table-column>
+            <el-table-column
+              :width="250"
+              align="left"
+              label="统计项名称"
+              show-overflow-tooltip
+            >
+              <template slot-scope="scope">
+                <div :class="vnameMarginLeft(scope.row.tjxCode,scope.row.veditable)">{{scope.row.tjxName}}</div>
+                <!--                        <div :class="scope.row.tjxCode.length>3&&scope.row.tjxCode.length<6?'':''">{{scope.row.tjxName}}</div>-->
+              </template>
+            </el-table-column>
+            <el-table-column
+              :width="90"
+              align="center"
+              prop="jldw"
+              label="计量单位"
+              show-overflow-tooltip
+            >
+              <template slot-scope="scope">
+                <div>{{scope.row.jldw}}</div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              :width="150"
+              align="center"
+              label="本月完成"
+              show-overflow-tooltip
+            >
+              <template slot-scope="scope">
+                 <div>{{scope.row.monthValue}}</div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              :width="150"
+              align="center"
+              label="本月计划"
+              show-overflow-tooltip
+            >
+              <template slot-scope="scope">
+                <div>{{scope.row.monthPlan}}</div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              :width="150"
+              align="center"
+              label="本月%"
+              show-overflow-tooltip
+            >
+              <template slot-scope="scope">
+                <div v-if="scope.row.monthPlan&&scope.row.monthValue">{{Math.round(scope.row.monthPlan /scope.row.monthValue) / 100+"%"}}
+                </div>
+                <div v-if="scope.row.monthRate!=null">{{scope.row.monthRate+"%"}}
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              :width="150"
+              align="center"
+              label="本年完成"
+              show-overflow-tooltip
+            >
+              <template slot-scope="scope">
+                <div>{{scope.row.yearValue}}</div>
+                <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
+              </template>
+            </el-table-column>
+            <el-table-column
+              :width="150"
+              align="center"
+              label="本年计划"
+              show-overflow-tooltip
+            >
+              <template slot-scope="scope">
+                <div>{{scope.row.yearPlan}}</div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              :width="150"
+              align="center"
+              label="本年%"
+              show-overflow-tooltip
+            >
+              <template slot-scope="scope">
+                <div v-if="scope.row.yearPlan&&scope.row.yearValue">{{Math.round(scope.row.yearPlan /scope.row.yearValue) / 100+"%"}}
+                </div>
+                <div v-if="scope.row.yearRate!=null">{{scope.row.yearRate+"%"}}
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              :width="150"
+              align="center"
+              label="开累完成"
+              show-overflow-tooltip
+            >
+              <template slot-scope="scope">
+                <div>{{scope.row.totalValue}}</div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              :width="150"
+              align="center"
+              label="开累计划"
+              show-overflow-tooltip
+            >
+              <template slot-scope="scope">
+                <div>{{scope.row.totalPlan}}</div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              :width="150"
+              align="center"
+              label="开累%"
+              show-overflow-tooltip
+            >
+              <template slot-scope="scope">
+                <div v-if="scope.row.totalPlan&&scope.row.totalValue">{{Math.round(scope.row.totalPlan /scope.row.totalValue) / 100+"%"}}
+                </div>
+                <div v-if="scope.row.totalRate!=null">{{scope.row.totalRate+"%"}}
+                </div>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="下月计划" name="xyjh">
+        <div class="detailBoxBG">
+          <el-table
+            class="tableStyle"
+            :max-height="$tableHeight"
+            :height="$tableHeight"
+            :data="nextData"
+            :header-cell-style="{
                     'text-align': 'center',
                     'background-color': 'whitesmoke'
                   }"
-                border
-                highlight-current-row
-                ref="table"
-                style="width: 100%"
-                cell-style="padding:5px 0"
-                tooltip-effect="dark"
-              >
-                <el-table-column
-                  :width="50"
-                  align="center"
-                  label="序号"
-                  show-overflow-tooltip
-                  type="index"
-                ></el-table-column>
-                <el-table-column
-                  :width="250"
-                  align="left"
-                  label="统计项名称"
-                  show-overflow-tooltip
-                >
-                  <template slot-scope="scope">
-                    <div :class="vnameMarginLeft(scope.row.tjxCode,scope.row.veditable)">{{scope.row.tjxName}}</div>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  :width="90"
-                  align="center"
-                  prop="jldw"
-                  label="计量单位"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
+            border
+            highlight-current-row
+            ref="table"
+            style="width: 100%"
+            cell-style="padding:5px 0"
+            tooltip-effect="dark"
+          >
+            <el-table-column
+              :width="50"
+              align="center"
+              label="序号"
+              show-overflow-tooltip
+              type="index"
+            ></el-table-column>
+            <el-table-column
+              :width="250"
+              align="left"
+              label="统计项名称"
+              show-overflow-tooltip
+            >
+              <template slot-scope="scope">
+                <div :class="vnameMarginLeft(scope.row.tjxCode,scope.row.veditable)">{{scope.row.tjxName}}</div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              :width="90"
+              align="center"
+              prop="jldw"
+              label="计量单位"
+              show-overflow-tooltip
+            >
+            </el-table-column>
 
-                <el-table-column
-                  :width="150"
-                  align="center"
-                  label="计划"
-                  show-overflow-tooltip
-                >
-                  <template slot-scope="scope">
-                    <div v-if="scope.row.veditable === '1'">
-                      <el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')"/>
-                    </div>
-                    <div v-else>{{scope.row.value}}</div>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  :width="400"
-                  align="center"
-                  label=""
-                ></el-table-column>
-              </el-table>
-           </div>
-         </el-tab-pane>
-         <el-tab-pane label="流程查看" name="lcjh">
-             <div class="detailBoxBG">
-            </div>
-         </el-tab-pane>
-          </el-tabs>
+            <el-table-column
+              :width="150"
+              align="center"
+              label="计划"
+              show-overflow-tooltip
+            >
+              <template slot-scope="scope">
+                <div v-if="scope.row.veditable === '1'">
+                  <el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')" @blur="getPlanYear(data,scope.$index,scope.row.sumTarget)"/>
+                </div>
+                <!--                    <div v-else-if="projectStatus !== '2' " style="text-align: right">{{sumCount(scope.row)}}</div>-->
+                <div v-else>{{scope.row.value}}</div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              :width="400"
+              align="center"
+              label=""
+            ></el-table-column>
+          </el-table>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="项目概况" name="xmgk">
+        <div class="detailBoxBG">
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="流程查看" name="lcjh">
+        <div class="detailBoxBG">
+        </div>
+      </el-tab-pane>
+    </el-tabs>
     </div>
 </template>
 
@@ -313,19 +314,6 @@
             }
           }
           return vnameClass
-        }
-      },
-      sumCount () {
-        return (rowData) => {
-          // console.log('this.data.map(row => row.value)' + rowData.uuid, this.data.map(row => row.value))
-          var bb = []
-          for (var i in this.data.map(row => row.value)) {
-            if (this.data.map(row => row.value)[i] && this.data.map(row => row.sumTarget)[i] === rowData.uuid) {
-              bb.push(this.data.map(row => row.value)[i])
-            }
-          }
-          // + (rowData.value.value === '' ? 0 : parseFloat(rowData.value.value))
-          return (bb.reduce((acc, cur) => (parseFloat(cur) + acc), 0) === 0 ? '' : bb.reduce((acc, cur) => (parseFloat(cur) + acc), 0))
         }
       }
     },
@@ -394,9 +382,11 @@
         this.$http
           .post('/api/statistics/projectMonthlyReport/Projectreport/detail/queryMonthReportEntityInfo', JSON.stringify({
             projectId: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectId,
-            uuid: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).uuid,
+            uuid: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectreportuuid,
             fillDate: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).fillDate,
-            createOrgCode: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).orgCode
+            createOrgCode: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).orgCode,
+            createOrgType: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).createOrgType,
+            reportType: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportType
           }), {useJson: true})
           .then(res => {
             this.data = res.data.data.projectReportDetaiList

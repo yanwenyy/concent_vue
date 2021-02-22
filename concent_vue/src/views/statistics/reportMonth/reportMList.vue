@@ -76,7 +76,7 @@
                  class="list-search-picker"
                  filterable
                  clearable
-                 type="date"
+                 type="month"
                  value-format="yyyy-MM"
                  v-model="searchform.fillDate"
                >
@@ -84,7 +84,7 @@
              </div>
            </template>
            <template slot-scope="scope">{{
-             scope.row.fillDate | dateformat
+             scope.row.fillDate | monthdateformat
              }}</template>
           </el-table-column>
         <el-table-column
@@ -358,7 +358,7 @@
           this.form1 = JSON.parse(JSON.stringify(this.multipleSelection[0]))
           let mList = {projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,uuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).uuid,
             fillDate:JSON.parse(JSON.stringify(this.multipleSelection[0])).fillDate,orgCode:JSON.parse(JSON.stringify(this.multipleSelection[0])).createOrgCode,
-            projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).status
+            projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).status,projectName:this.multipleSelection[0].reportProjectName
           }
           this.$router.push({
             path: '../reportMDetail/',
