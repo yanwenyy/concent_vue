@@ -13,6 +13,7 @@
               class="upload-demo detailUpload detail-back-tab add-group "
               :action="'/api/contract/topInfo/TopInfor/list/importExcel'"
               :on-success="handleChange"
+              :headers="{'Authorization':Authorization}"
               :on-error="handleChange"
               :show-file-list="false"
               accept=".xls,.xlsx"
@@ -306,6 +307,7 @@
     name: "proposal-list-look",
     data() {
       return {
+          Authorization:sessionStorage.getItem("token"),
         page: {current: 1, size: 20, total: 0, records: []},
         showinput: false,
         sousuo: "",
