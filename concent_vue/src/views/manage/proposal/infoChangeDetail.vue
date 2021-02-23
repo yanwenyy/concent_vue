@@ -1523,7 +1523,11 @@
             this.$http
               .post(
                 url,
-                JSON.stringify(this.detailform),
+                // JSON.stringify(this.detailform),
+                {
+                  'afterTopInforBO':this.detailform,
+                  'beforeTopInforBO':this.detailFormBefore
+                },
                 {useJson: true}
               )
               .then((res) => {
@@ -1630,6 +1634,7 @@
         // });
         console.log(afterData)
         this.detailform={
+          afterId: afterData.afterId,
           changeRecordUuid:afterData.changeRecordUuid,
           topInfor: afterData.topInfor,
           topInfoOrg: afterData.topInfoOrg,
@@ -1656,9 +1661,9 @@
             .post("/api/contract/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.id})
             .then((res) => {
             var datas=res.data.data;
-          this.getTwo(datas.topInfor.enginTypeFirstId||'');
-          this.getTwoSC(datas.topInfor.marketFirstNameId||'');
-          this.getTwoXZ(datas.topInfor.projectNatureFirstId||'');
+          // this.getTwo(datas.topInfor.enginTypeFirstId||'');
+          // this.getTwoSC(datas.topInfor.marketFirstNameId||'');
+          // this.getTwoXZ(datas.topInfor.projectNatureFirstId||'');
 
           this.detailform={
             changeRecordUuid:datas.changeRecordUuid,
