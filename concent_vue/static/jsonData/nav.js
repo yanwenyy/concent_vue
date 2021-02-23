@@ -1163,6 +1163,7 @@ export default {
                   'leaf': true,
                   'defaultpage': false
                 },
+
                 {
                   'name': '月计划列表',
                   'path': '/statistics/plan/listMonth',
