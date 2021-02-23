@@ -1627,729 +1627,2739 @@
         </div>
       </el-tab-pane>
       <el-tab-pane v-if="detailform.contractInfo.isInSystemUnion==='0'||detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isOutSystemUnion==='0'||detailform.contractInfo.isOutSystemSub==='0'" label="合同附属信息">
+        <div class="detailBoxBG htfs">
+          <div  v-if="detailform.contractInfo.isInSystemUnion==='0'">
+            <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+              <span>系统内其他联合体单位列表: </span>
+              <el-button
+                v-show="p.actpoint != 'look'"
+                @click="addfs('nlht',1,1)"
 
-      </el-tab-pane><div class="detailBoxBG htfs">
-      <div  v-if="detailform.contractInfo.isInSystemUnion==='0'">
-        <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
-          <span>系统内其他联合体单位列表: </span>
-          <el-button
-            v-show="p.actpoint != 'look'"
-            @click="addfs('nlht',1,1)"
-
-            style="
+                style="
                   width: 70px;
                   height: 32px;
                   background: #5c8bfa;
                   font-size: 16px;
                 "
-            type="primary"
-          >新增
-          </el-button
-          >
-        </p>
-        <el-table
-          :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
-          :header-cell-style="{
+                type="primary"
+              >新增
+              </el-button
+              >
+            </p>
+            <el-table
+              :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+              :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
                 color: 'rgba(0,0,0,1)',
               }"
-          @selection-change="handleSelectionChange"
-          align="center"
-          border
-          class="detailTable"
-          ref="table"
-          style="width: 100%; min-height: calc(100vh - 370px)"
-        >
-          <el-table-column
-            :width="80"
-            align="center"
-            label="序号"
-            show-overflow-tooltip
-            type="index"
-          ></el-table-column>
+              @selection-change="handleSelectionChange"
+              align="center"
+              border
+              class="detailTable"
+              ref="table"
+              style="width: 100%; min-height: calc(100vh - 370px)"
+            >
+              <el-table-column
+                :width="80"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
 
-          <el-table-column
-            class="listTabel"
-            :resizable="false"
-            label="单位名称"
-            prop="orgName"
-            align="center"
-            width="300"
-            show-overflow-tooltip
-          >
-            <template slot-scope="scope">
-              <el-input
-                clearable
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                v-model="scope.row.orgName"
-                class="input-el-input-group">
-                <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'unionContractInfoAttachList')" ></el-button>
-              </el-input>
-              <!--<el-input-->
-              <!--class="input-el-input-group"-->
-              <!--clearable-->
-              <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
-              <!--v-model="scope.row.orgName"-->
-              <!--&gt;</el-input>-->
-              <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-            </template>
-          </el-table-column>
-          <el-table-column
-            class="listTabel"
-            :resizable="false"
-            label="板块名称"
-            prop="moduleName"
-            align="center"
-            width="200"
-            show-overflow-tooltip
-          >
-            <template slot-scope="scope">
-              <el-select
-                class="input-el-input-group"
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                clearable
-                filterable
-                placeholder="请选择"
-                size="mini"
-                v-model="scope.row.moduleId"
-                @change="
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="单位名称"
+                prop="orgName"
+                align="center"
+                width="300"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    v-model="scope.row.orgName"
+                    class="input-el-input-group">
+                    <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'unionContractInfoAttachList')" ></el-button>
+                  </el-input>
+                  <!--<el-input-->
+                  <!--class="input-el-input-group"-->
+                  <!--clearable-->
+                  <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                  <!--v-model="scope.row.orgName"-->
+                  <!--&gt;</el-input>-->
+                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                </template>
+              </el-table-column>
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="板块名称"
+                prop="moduleName"
+                align="center"
+                width="200"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-select
+                    class="input-el-input-group"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+                    filterable
+                    placeholder="请选择"
+                    size="mini"
+                    v-model="scope.row.moduleId"
+                    @change="
                     getBdName(
                       scope.row.moduleId,
                       detailform.contractInfoAttachBO.unionContractInfoAttachList,
                       scope.$index
                     )
                   "
+                  >
+                    <el-option
+                      :key="index"
+                      :label="item.detailName"
+                      :value="item.id"
+                      v-for="(item, index) in projectPlate"
+                    ></el-option>
+                  </el-select>
+                </template>
+              </el-table-column>
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="项目性质"
+                prop="projectNature"
+                width="150"
+                align="center"
+                show-overflow-tooltip
               >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in projectPlate"
-                ></el-option>
-              </el-select>
-            </template>
-          </el-table-column>
-          <el-table-column
-            class="listTabel"
-            :resizable="false"
-            label="项目性质"
-            prop="projectNature"
-            width="150"
-            align="center"
-            show-overflow-tooltip
-          >
-            <template slot-scope="scope">
-              系统内联合体
-            </template>
-          </el-table-column>
-          <el-table-column
-            :resizable="false"
-            label="各方份额(万元)"
-            align="center"
-            prop="contractAmount"
-            width="400"
-            show-overflow-tooltip
-          >
-            <template slot-scope="scope">
-              <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.unionContractInfoAttachList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
-                <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                <el-input
-                  class="group-no-padding"
-                  @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.unionContractInfoAttachList,'nlht')"
-                  v-model="scope.row.contractAmount"
-                  clearable
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                >
-                  <template slot="prepend">¥</template>
-                  <template slot="append">(万元)</template>
-                </el-input>
-              </el-form-item>
-              <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-            </template>
-          </el-table-column>
-          <el-table-column
-            class="listTabel"
-            :resizable="false"
-            label="是否为补充"
-            prop="isAdd"
-            align="center"
-            show-overflow-tooltip
-            width="100"
-          >
-            <template slot-scope="scope">
-              <el-switch
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                class="inline-formitem-switch"
-                v-model="scope.row.isAdd"
-                active-color="#409EFF"
-                inactive-color="#ddd"
-                active-value="0"
-                inactive-value="1"
+                <template slot-scope="scope">
+                  系统内联合体
+                </template>
+              </el-table-column>
+              <el-table-column
+                :resizable="false"
+                label="各方份额(万元)"
+                align="center"
+                prop="contractAmount"
+                width="400"
+                show-overflow-tooltip
               >
-              </el-switch>
-              <!--{{scope.row.isAdd=='1'?'否':'是'}}-->
-            </template>
-          </el-table-column>
-          <el-table-column
-            v-show="!p.actpoint === 'look'"
-            :resizable="false"
-            label="操作"
-            align="center"
-            show-overflow-tooltip
-            v-if="p.actpoint !== 'look'"
-            width="80">
-            <template slot-scope="scope">
-              <el-link
-                :underline="false"
-                @click="del(scope.$index,scope.row,detailform.contractInfoAttachBO.unionContractInfoAttachList,'lht')"
-                type="warning">删除
-              </el-link>
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
-      <div  v-if="detailform.contractInfo.isInSystemSub==='0'">
-        <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
-          <span>系统内分包单位列表: </span>
-          <el-button
-            v-show="p.actpoint != 'look'"
-            @click="addfs('nfb',2,1)"
+                <template slot-scope="scope">
+                  <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.unionContractInfoAttachList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
+                    <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                    <el-input
+                      class="group-no-padding"
+                      @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.unionContractInfoAttachList,'nlht')"
+                      v-model="scope.row.contractAmount"
+                      clearable
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    >
+                      <template slot="prepend">¥</template>
+                      <template slot="append">(万元)</template>
+                    </el-input>
+                  </el-form-item>
+                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                </template>
+              </el-table-column>
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="是否为补充"
+                prop="isAdd"
+                align="center"
+                show-overflow-tooltip
+                width="100"
+              >
+                <template slot-scope="scope">
+                  <el-switch
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    class="inline-formitem-switch"
+                    v-model="scope.row.isAdd"
+                    active-color="#409EFF"
+                    inactive-color="#ddd"
+                    active-value="0"
+                    inactive-value="1"
+                  >
+                  </el-switch>
+                  <!--{{scope.row.isAdd=='1'?'否':'是'}}-->
+                </template>
+              </el-table-column>
+              <el-table-column
+                v-show="!p.actpoint === 'look'"
+                :resizable="false"
+                label="操作"
+                align="center"
+                show-overflow-tooltip
+                v-if="p.actpoint !== 'look'"
+                width="80">
+                <template slot-scope="scope">
+                  <el-link
+                    :underline="false"
+                    @click="del(scope.$index,scope.row,detailform.contractInfoAttachBO.unionContractInfoAttachList,'lht')"
+                    type="warning">删除
+                  </el-link>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+          <div  v-if="detailform.contractInfo.isInSystemSub==='0'">
+            <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+              <span>系统内分包单位列表: </span>
+              <el-button
+                v-show="p.actpoint != 'look'"
+                @click="addfs('nfb',2,1)"
 
-            style="
+                style="
                   width: 70px;
                   height: 32px;
                   background: #5c8bfa;
                   font-size: 16px;
                 "
-            type="primary"
-          >新增
-          </el-button
-          >
-        </p>
-        <el-table
-          :data="detailform.contractInfoAttachBO.innerContractInfoAttachList"
-          :header-cell-style="{
+                type="primary"
+              >新增
+              </el-button
+              >
+            </p>
+            <el-table
+              :data="detailform.contractInfoAttachBO.innerContractInfoAttachList"
+              :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
                 color: 'rgba(0,0,0,1)',
               }"
-          @selection-change="handleSelectionChange"
-          align="center"
-          border
-          class="detailTable"
-          ref="table"
-          style="width: 100%; min-height: calc(100vh - 370px)"
-        >
-          <el-table-column
-            :width="80"
-            align="center"
-            label="序号"
-            show-overflow-tooltip
-            type="index"
-          ></el-table-column>
+              @selection-change="handleSelectionChange"
+              align="center"
+              border
+              class="detailTable"
+              ref="table"
+              style="width: 100%; min-height: calc(100vh - 370px)"
+            >
+              <el-table-column
+                :width="80"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
 
-          <el-table-column
-            class="listTabel"
-            :resizable="false"
-            label="单位名称"
-            prop="orgName"
-            align="center"
-            width="300"
-            show-overflow-tooltip
-          >
-            <template slot-scope="scope">
-              <el-input
-                clearable
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                v-model="scope.row.orgName"
-                class="input-el-input-group">
-                <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'innerContractInfoAttachList')" ></el-button>
-              </el-input>
-              <!--<el-input-->
-              <!--class="input-el-input-group"-->
-              <!--clearable-->
-              <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
-              <!--v-model="scope.row.orgName"-->
-              <!--&gt;</el-input>-->
-              <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-            </template>
-          </el-table-column>
-          <el-table-column
-            class="listTabel"
-            :resizable="false"
-            label="板块名称"
-            prop="moduleName"
-            align="center"
-            width="200"
-            show-overflow-tooltip
-          >
-            <template slot-scope="scope">
-              <el-select
-                class="input-el-input-group"
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                clearable
-                filterable
-                placeholder="请选择"
-                size="mini"
-                v-model="scope.row.moduleId"
-                @change="
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="单位名称"
+                prop="orgName"
+                align="center"
+                width="300"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    v-model="scope.row.orgName"
+                    class="input-el-input-group">
+                    <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'innerContractInfoAttachList')" ></el-button>
+                  </el-input>
+                  <!--<el-input-->
+                  <!--class="input-el-input-group"-->
+                  <!--clearable-->
+                  <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                  <!--v-model="scope.row.orgName"-->
+                  <!--&gt;</el-input>-->
+                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                </template>
+              </el-table-column>
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="板块名称"
+                prop="moduleName"
+                align="center"
+                width="200"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-select
+                    class="input-el-input-group"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+                    filterable
+                    placeholder="请选择"
+                    size="mini"
+                    v-model="scope.row.moduleId"
+                    @change="
                     getBdName(
                       scope.row.moduleId,
                       detailform.contractInfoAttachBO.innerContractInfoAttachList,
                       scope.$index
                     )
                   "
+                  >
+                    <el-option
+                      :key="index"
+                      :label="item.detailName"
+                      :value="item.id"
+                      v-for="(item, index) in projectPlate"
+                    ></el-option>
+                  </el-select>
+                </template>
+              </el-table-column>
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="项目性质"
+                prop="projectNature"
+                align="center"
+                width="150"
+                show-overflow-tooltip
               >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in projectPlate"
-                ></el-option>
-              </el-select>
-            </template>
-          </el-table-column>
-          <el-table-column
-            class="listTabel"
-            :resizable="false"
-            label="项目性质"
-            prop="projectNature"
-            align="center"
-            width="150"
-            show-overflow-tooltip
-          >
-            <template slot-scope="scope">
-              系统内分包
-            </template>
-          </el-table-column>
-          <el-table-column
-            :resizable="false"
-            label="各方份额(万元)"
-            align="center"
-            prop="contractAmount"
-            width="400"
-            show-overflow-tooltip
-          >
-            <template slot-scope="scope">
-              <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.innerContractInfoAttachList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
-                <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                <el-input
-                  class="group-no-padding"
-                  @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.innerContractInfoAttachList,'nfb')"
-                  v-model="scope.row.contractAmount"
-                  clearable
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                >
-                  <template slot="prepend">¥</template>
-                  <template slot="append">(万元)</template>
-                </el-input>
-              </el-form-item>
-              <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-            </template>
-          </el-table-column>
-          <el-table-column
-            class="listTabel"
-            :resizable="false"
-            label="是否为补充"
-            prop="isAdd"
-            align="center"
-            width="100"
-            show-overflow-tooltip
-          >
-            <template slot-scope="scope">
-              <el-switch
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                class="inline-formitem-switch"
-                v-model="scope.row.isAdd"
-                active-color="#409EFF"
-                inactive-color="#ddd"
-                active-value="0"
-                inactive-value="1"
+                <template slot-scope="scope">
+                  系统内分包
+                </template>
+              </el-table-column>
+              <el-table-column
+                :resizable="false"
+                label="各方份额(万元)"
+                align="center"
+                prop="contractAmount"
+                width="400"
+                show-overflow-tooltip
               >
-              </el-switch>
-            </template>
-          </el-table-column>
-          <el-table-column
-            v-show="!p.actpoint === 'look'"
-            :resizable="false"
-            label="操作"
-            align="center"
-            show-overflow-tooltip
-            v-if="p.actpoint !== 'look'"
-            width="80">
-            <template slot-scope="scope">
-              <el-link
-                :underline="false"
-                @click="del(scope.$index,scope.row,detailform.contractInfoAttachBO.innerContractInfoAttachList,'fb')"
-                type="warning">删除
-              </el-link>
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
-      <div  v-if="detailform.contractInfo.isOutSystemUnion==='0'">
-        <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
-          <span>系统外其他联合体单位列表: </span>
-          <el-button
-            v-show="p.actpoint != 'look'"
-            @click="addfs('wlht',3,1)"
+                <template slot-scope="scope">
+                  <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.innerContractInfoAttachList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
+                    <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                    <el-input
+                      class="group-no-padding"
+                      @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.innerContractInfoAttachList,'nfb')"
+                      v-model="scope.row.contractAmount"
+                      clearable
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    >
+                      <template slot="prepend">¥</template>
+                      <template slot="append">(万元)</template>
+                    </el-input>
+                  </el-form-item>
+                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                </template>
+              </el-table-column>
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="是否为补充"
+                prop="isAdd"
+                align="center"
+                width="100"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-switch
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    class="inline-formitem-switch"
+                    v-model="scope.row.isAdd"
+                    active-color="#409EFF"
+                    inactive-color="#ddd"
+                    active-value="0"
+                    inactive-value="1"
+                  >
+                  </el-switch>
+                </template>
+              </el-table-column>
+              <el-table-column
+                v-show="!p.actpoint === 'look'"
+                :resizable="false"
+                label="操作"
+                align="center"
+                show-overflow-tooltip
+                v-if="p.actpoint !== 'look'"
+                width="80">
+                <template slot-scope="scope">
+                  <el-link
+                    :underline="false"
+                    @click="del(scope.$index,scope.row,detailform.contractInfoAttachBO.innerContractInfoAttachList,'fb')"
+                    type="warning">删除
+                  </el-link>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+          <div  v-if="detailform.contractInfo.isOutSystemUnion==='0'">
+            <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+              <span>系统外其他联合体单位列表: </span>
+              <el-button
+                v-show="p.actpoint != 'look'"
+                @click="addfs('wlht',3,1)"
 
-            style="
+                style="
                   width: 70px;
                   height: 32px;
                   background: #5c8bfa;
                   font-size: 16px;
                 "
-            type="primary"
-          >新增
-          </el-button
-          >
-        </p>
-        <el-table
-          :data="detailform.contractInfoAttachBO.outUnionContractInfoAttachList"
-          :header-cell-style="{
+                type="primary"
+              >新增
+              </el-button
+              >
+            </p>
+            <el-table
+              :data="detailform.contractInfoAttachBO.outUnionContractInfoAttachList"
+              :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
                 color: 'rgba(0,0,0,1)',
               }"
-          @selection-change="handleSelectionChange"
-          align="center"
-          border
-          class="detailTable"
-          ref="table"
-          style="width: 100%; min-height: calc(100vh - 370px)"
-        >
-          <el-table-column
-            :width="80"
-            align="center"
-            label="序号"
-            show-overflow-tooltip
-            type="index"
-          ></el-table-column>
+              @selection-change="handleSelectionChange"
+              align="center"
+              border
+              class="detailTable"
+              ref="table"
+              style="width: 100%; min-height: calc(100vh - 370px)"
+            >
+              <el-table-column
+                :width="80"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
 
-          <el-table-column
-            class="listTabel"
-            :resizable="false"
-            label="单位名称"
-            prop="orgName"
-            align="center"
-            width="300"
-            show-overflow-tooltip
-          >
-            <template slot-scope="scope">
-              <el-input
-                clearable
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                v-model="scope.row.orgName"
-                class="input-el-input-group">
-                <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outUnionContractInfoAttachList')" ></el-button>
-              </el-input>
-              <!--<el-input-->
-              <!--class="input-el-input-group"-->
-              <!--clearable-->
-              <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
-              <!--v-model="scope.row.orgName"-->
-              <!--&gt;</el-input>-->
-              <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-            </template>
-          </el-table-column>
-          <el-table-column
-            class="listTabel"
-            :resizable="false"
-            label="板块名称"
-            prop="moduleName"
-            align="center"
-            width="200"
-            show-overflow-tooltip
-          >
-            <template slot-scope="scope">
-              <el-select
-                class="input-el-input-group"
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                clearable
-                filterable
-                placeholder="请选择"
-                size="mini"
-                v-model="scope.row.moduleId"
-                @change="
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="单位名称"
+                prop="orgName"
+                align="center"
+                width="300"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    v-model="scope.row.orgName"
+                    class="input-el-input-group">
+                    <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outUnionContractInfoAttachList')" ></el-button>
+                  </el-input>
+                  <!--<el-input-->
+                  <!--class="input-el-input-group"-->
+                  <!--clearable-->
+                  <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                  <!--v-model="scope.row.orgName"-->
+                  <!--&gt;</el-input>-->
+                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                </template>
+              </el-table-column>
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="板块名称"
+                prop="moduleName"
+                align="center"
+                width="200"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-select
+                    class="input-el-input-group"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+                    filterable
+                    placeholder="请选择"
+                    size="mini"
+                    v-model="scope.row.moduleId"
+                    @change="
                     getBdName(
                       scope.row.moduleId,
                       detailform.contractInfoAttachBO.outUnionContractInfoAttachList,
                       scope.$index
                     )
                   "
+                  >
+                    <el-option
+                      :key="index"
+                      :label="item.detailName"
+                      :value="item.id"
+                      v-for="(item, index) in projectPlate"
+                    ></el-option>
+                  </el-select>
+                </template>
+              </el-table-column>
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="项目性质"
+                prop="projectNature"
+                align="center"
+                width="150"
+                show-overflow-tooltip
               >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in projectPlate"
-                ></el-option>
-              </el-select>
-            </template>
-          </el-table-column>
-          <el-table-column
-            class="listTabel"
-            :resizable="false"
-            label="项目性质"
-            prop="projectNature"
-            align="center"
-            width="150"
-            show-overflow-tooltip
-          >
-            <template slot-scope="scope">
-              系统外联合体
-            </template>
-          </el-table-column>
-          <el-table-column
-            :resizable="false"
-            label="各方份额(万元)"
-            align="center"
-            prop="contractAmount"
-            width="400"
-            show-overflow-tooltip
-          >
-            <template slot-scope="scope">
-              <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.outUnionContractInfoAttachList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
-                <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                <el-input
-                  class="group-no-padding"
-                  @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.outUnionContractInfoAttachList,'wlht')"
-                  v-model="scope.row.contractAmount"
-                  clearable
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                >
-                  <template slot="prepend">¥</template>
-                  <template slot="append">(万元)</template>
-                </el-input>
-              </el-form-item>
-              <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-            </template>
-          </el-table-column>
-          <el-table-column
-            class="listTabel"
-            :resizable="false"
-            label="是否为补充"
-            prop="isAdd"
-            align="center"
-            width="100"
-            show-overflow-tooltip
-          >
-            <template slot-scope="scope">
-              <el-switch
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                class="inline-formitem-switch"
-                v-model="scope.row.isAdd"
-                active-color="#409EFF"
-                inactive-color="#ddd"
-                active-value="0"
-                inactive-value="1"
+                <template slot-scope="scope">
+                  系统外联合体
+                </template>
+              </el-table-column>
+              <el-table-column
+                :resizable="false"
+                label="各方份额(万元)"
+                align="center"
+                prop="contractAmount"
+                width="400"
+                show-overflow-tooltip
               >
-              </el-switch>
-            </template>
-          </el-table-column>
-          <el-table-column
-            v-show="!p.actpoint === 'look'"
-            :resizable="false"
-            label="操作"
-            align="center"
-            show-overflow-tooltip
-            v-if="p.actpoint !== 'look'"
-            width="80">
-            <template slot-scope="scope">
-              <el-link
-                :underline="false"
-                @click="del(scope.$index,scope.row,detailform.contractInfoAttachBO.outUnionContractInfoAttachList,'lht')"
-                type="warning">删除
-              </el-link>
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
-      <div  v-if="detailform.contractInfo.isOutSystemSub==='0'">
-        <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
-          <span>系统外分包单位列表: </span>
-          <el-button
-            v-show="p.actpoint != 'look'"
-            @click="addfs('wfb',4,1)"
+                <template slot-scope="scope">
+                  <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.outUnionContractInfoAttachList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
+                    <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                    <el-input
+                      class="group-no-padding"
+                      @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.outUnionContractInfoAttachList,'wlht')"
+                      v-model="scope.row.contractAmount"
+                      clearable
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    >
+                      <template slot="prepend">¥</template>
+                      <template slot="append">(万元)</template>
+                    </el-input>
+                  </el-form-item>
+                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                </template>
+              </el-table-column>
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="是否为补充"
+                prop="isAdd"
+                align="center"
+                width="100"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-switch
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    class="inline-formitem-switch"
+                    v-model="scope.row.isAdd"
+                    active-color="#409EFF"
+                    inactive-color="#ddd"
+                    active-value="0"
+                    inactive-value="1"
+                  >
+                  </el-switch>
+                </template>
+              </el-table-column>
+              <el-table-column
+                v-show="!p.actpoint === 'look'"
+                :resizable="false"
+                label="操作"
+                align="center"
+                show-overflow-tooltip
+                v-if="p.actpoint !== 'look'"
+                width="80">
+                <template slot-scope="scope">
+                  <el-link
+                    :underline="false"
+                    @click="del(scope.$index,scope.row,detailform.contractInfoAttachBO.outUnionContractInfoAttachList,'lht')"
+                    type="warning">删除
+                  </el-link>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+          <div  v-if="detailform.contractInfo.isOutSystemSub==='0'">
+            <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+              <span>系统外分包单位列表: </span>
+              <el-button
+                v-show="p.actpoint != 'look'"
+                @click="addfs('wfb',4,1)"
 
-            style="
+                style="
                   width: 70px;
                   height: 32px;
                   background: #5c8bfa;
                   font-size: 16px;
                 "
-            type="primary"
-          >新增
-          </el-button
-          >
-        </p>
-        <el-table
-          :data="detailform.contractInfoAttachBO.outContractInfoAttachList"
-          :header-cell-style="{
+                type="primary"
+              >新增
+              </el-button
+              >
+            </p>
+            <el-table
+              :data="detailform.contractInfoAttachBO.outContractInfoAttachList"
+              :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
                 color: 'rgba(0,0,0,1)',
               }"
-          @selection-change="handleSelectionChange"
-          align="center"
-          border
-          class="clothSizeTable"
-          ref="table"
-          style="width: 100%; min-height: calc(100vh - 370px)"
-        >
-          <el-table-column
-            :width="80"
-            align="center"
-            label="序号"
-            show-overflow-tooltip
-            type="index"
-          ></el-table-column>
+              @selection-change="handleSelectionChange"
+              align="center"
+              border
+              class="clothSizeTable"
+              ref="table"
+              style="width: 100%; min-height: calc(100vh - 370px)"
+            >
+              <el-table-column
+                :width="80"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
 
-          <el-table-column
-            class="listTabel"
-            :resizable="false"
-            label="单位名称"
-            prop="orgName"
-            align="center"
-            width="300"
-            show-overflow-tooltip
-          >
-            <template slot-scope="scope">
-              <el-input
-                clearable
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                v-model="scope.row.orgName"
-                class="input-el-input-group">
-                <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outContractInfoAttachList')" ></el-button>
-              </el-input>
-              <!--<el-input-->
-              <!--class="input-el-input-group"-->
-              <!--clearable-->
-              <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
-              <!--v-model="scope.row.orgName"-->
-              <!--&gt;</el-input>-->
-              <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-            </template>
-          </el-table-column>
-          <el-table-column
-            class="listTabel"
-            :resizable="false"
-            label="板块名称"
-            prop="moduleName"
-            align="center"
-            width="200"
-            show-overflow-tooltip
-          >
-            <template slot-scope="scope">
-              <el-select
-                class="input-el-input-group"
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                clearable
-                filterable
-                placeholder="请选择"
-                size="mini"
-                v-model="scope.row.moduleId"
-                @change="
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="单位名称"
+                prop="orgName"
+                align="center"
+                width="300"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    v-model="scope.row.orgName"
+                    class="input-el-input-group">
+                    <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outContractInfoAttachList')" ></el-button>
+                  </el-input>
+                  <!--<el-input-->
+                  <!--class="input-el-input-group"-->
+                  <!--clearable-->
+                  <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                  <!--v-model="scope.row.orgName"-->
+                  <!--&gt;</el-input>-->
+                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                </template>
+              </el-table-column>
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="板块名称"
+                prop="moduleName"
+                align="center"
+                width="200"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-select
+                    class="input-el-input-group"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+                    filterable
+                    placeholder="请选择"
+                    size="mini"
+                    v-model="scope.row.moduleId"
+                    @change="
                     getBdName(
                       scope.row.moduleId,
                       detailform.contractInfoAttachBO.outContractInfoAttachList,
                       scope.$index
                     )
                   "
+                  >
+                    <el-option
+                      :key="index"
+                      :label="item.detailName"
+                      :value="item.id"
+                      v-for="(item, index) in projectPlate"
+                    ></el-option>
+                  </el-select>
+                </template>
+              </el-table-column>
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="项目性质"
+                prop="projectNature"
+                align="center"
+                show-overflow-tooltip
+                width="150"
               >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in projectPlate"
-                ></el-option>
-              </el-select>
-            </template>
-          </el-table-column>
-          <el-table-column
-            class="listTabel"
-            :resizable="false"
-            label="项目性质"
-            prop="projectNature"
-            align="center"
-            show-overflow-tooltip
-            width="150"
-          >
-            <template slot-scope="scope">
-              系统外分包
-            </template>
-          </el-table-column>
-          <el-table-column
-            :resizable="false"
-            label="各方份额(万元)"
-            align="center"
-            prop="contractAmount"
-            width="400"
-            show-overflow-tooltip
-          >
-            <template slot-scope="scope">
-              <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.outContractInfoAttachList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
-                <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                <el-input
-                  class="group-no-padding"
-                  @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.outContractInfoAttachList,'wfb')"
-                  v-model="scope.row.contractAmount"
-                  clearable
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                >
-                  <template slot="prepend">¥</template>
-                  <template slot="append">(万元)</template>
-                </el-input>
-              </el-form-item>
-              <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-            </template>
-          </el-table-column>
-          <el-table-column
-            class="listTabel"
-            :resizable="false"
-            label="是否为补充"
-            prop="isAdd"
-            align="center"
-            width="100"
-            show-overflow-tooltip
-          >
-            <template slot-scope="scope">
-              <el-switch
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                class="inline-formitem-switch"
-                v-model="scope.row.isAdd"
-                active-color="#409EFF"
-                inactive-color="#ddd"
-                active-value="0"
-                inactive-value="1"
+                <template slot-scope="scope">
+                  系统外分包
+                </template>
+              </el-table-column>
+              <el-table-column
+                :resizable="false"
+                label="各方份额(万元)"
+                align="center"
+                prop="contractAmount"
+                width="400"
+                show-overflow-tooltip
               >
-              </el-switch>
-            </template>
-          </el-table-column>
-          <el-table-column
-            v-show="!p.actpoint === 'look'"
-            :resizable="false"
-            label="操作"
-            align="center"
-            show-overflow-tooltip
-            v-if="p.actpoint !== 'look'"
-            width="80">
-            <template slot-scope="scope">
-              <el-link
-                :underline="false"
-                @click="del(scope.$index,scope.row,detailform.contractInfoAttachBO.outContractInfoAttachList,'fb')"
-                type="warning">删除
-              </el-link>
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
-    </div>
-      <el-tab-pane label="工程量清单">
+                <template slot-scope="scope">
+                  <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.outContractInfoAttachList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
+                    <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                    <el-input
+                      class="group-no-padding"
+                      @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.outContractInfoAttachList,'wfb')"
+                      v-model="scope.row.contractAmount"
+                      clearable
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    >
+                      <template slot="prepend">¥</template>
+                      <template slot="append">(万元)</template>
+                    </el-input>
+                  </el-form-item>
+                  <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                </template>
+              </el-table-column>
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="是否为补充"
+                prop="isAdd"
+                align="center"
+                width="100"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-switch
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    class="inline-formitem-switch"
+                    v-model="scope.row.isAdd"
+                    active-color="#409EFF"
+                    inactive-color="#ddd"
+                    active-value="0"
+                    inactive-value="1"
+                  >
+                  </el-switch>
+                </template>
+              </el-table-column>
+              <el-table-column
+                v-show="!p.actpoint === 'look'"
+                :resizable="false"
+                label="操作"
+                align="center"
+                show-overflow-tooltip
+                v-if="p.actpoint !== 'look'"
+                width="80">
+                <template slot-scope="scope">
+                  <el-link
+                    :underline="false"
+                    @click="del(scope.$index,scope.row,detailform.contractInfoAttachBO.outContractInfoAttachList,'fb')"
+                    type="warning">删除
+                  </el-link>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="工程量清单" v-if="p.actpoint != 'add'" @click="getGCL">
         <div class="detailBoxBG gclqd">
-          <el-tabs type="border-card">
+          <el-tabs @tab-click="getRailwayList" v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'" type="border-card">
+            <el-tab-pane label="第一章">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="编码"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="节号"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="名称"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="计量单位"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程量"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="第二章">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="编码"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="节号"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="名称"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="计量单位"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程量"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="第三章">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="编码"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="节号"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="名称"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="计量单位"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程量"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="第四章">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="编码"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="节号"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="名称"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="计量单位"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程量"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="第五章">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="编码"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="节号"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="名称"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="计量单位"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程量"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="第六章">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="编码"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="节号"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="名称"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="计量单位"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程量"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="第七章">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="编码"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="节号"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="名称"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="计量单位"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程量"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="第八章">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="编码"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="节号"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="名称"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="计量单位"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程量"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="第九章">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="编码"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="节号"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="名称"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="计量单位"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程量"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="第十章">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="编码"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="节号"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="名称"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="计量单位"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程量"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="第十一章">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="编码"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="节号"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="名称"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="计量单位"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程量"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-tab-pane>
+          </el-tabs>
+          <el-tabs v-if="detailform.contractInfo.enginTypeFirstId=='24ebba9f2f3447579d0086209aff6ecd'" type="border-card">
+            <el-tab-pane label="第100章">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="子目号"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="子目名称"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="单位"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="数量"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="第200章">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="子目号"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="子目名称"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="单位"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="数量"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="第300章">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="子目号"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="子目名称"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="单位"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="数量"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="第400章">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="子目号"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="子目名称"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="单位"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="数量"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="第500章">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="子目号"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="子目名称"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="单位"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="数量"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="第600章">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="子目号"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="子目名称"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="单位"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="数量"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="第700章">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="子目号"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="子目名称"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="单位"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="数量"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-tab-pane>
+          </el-tabs>
+          <el-tabs v-if="detailform.contractInfo.enginTypeFirstId=='f6f5188458ab4c5ba1e0bc12a9a4188b'" type="border-card">
+            <el-tab-pane label="城市轨道工程">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="暂估价"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="人工费"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="材料费"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="设备费"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="施工机具使用费"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="企业管理费"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="风险费"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="利润"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="规费"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="税金"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-tab-pane>
+          </el-tabs>
+          <el-tabs v-if="detailform.contractInfo.enginTypeFirstId=='0f16c387f17b402db45c4de58e1cf8b4'" type="border-card">
+            <el-tab-pane label="市政工程">
+              <div class="htfs">
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <el-upload
+                    v-show="p.actpoint != 'look'"
+                    class="upload-demo detailUpload detatil-flie-btn"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :on-success="handleChange1"
+                    :on-error="handleChange1"
+                    :on-remove="handleRemove1"
+                    :show-file-list="false"
+                    multiple
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
+                  </el-upload>
+                </p>
+                <el-table
+                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目分类"
+                    prop="orgName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目编码"
+                    prop="moduleName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称"
+                    prop="projectNature"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="项目特征"
+                    align="center"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="计量单位"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程量"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="综合单价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="暂估价"
+                    prop="isAdd"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+
+                </el-table>
+              </div>
+            </el-tab-pane>
+          </el-tabs>
+          <el-tabs v-if="detailform.contractInfo.enginTypeFirstId=='193b4d4003d04899a1d09c8d5f7877fe'" type="border-card">
             <el-tab-pane label="电气工程">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
@@ -2363,8 +4373,8 @@
                     :on-remove="handleRemove1"
                     :show-file-list="false"
                     multiple
-                    >
-                  <el-button size="small" type="primary">导入</el-button>
+                  >
+                    <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
                 </p>
                 <el-table
@@ -3783,6 +5793,19 @@ export default {
     // eslint-disable-next-line no-unde
   },
   methods: {
+    //获取铁路工程量清单列表
+    getRailwayList(tab, event){
+      var id=event.target.getAttribute('id');
+      console.log(tab, event.target.getAttribute('id'));
+      this.$http
+        .post(
+          "/api/contract/BoqWorkAmountList/list/loadRailwayPageData",
+          {"contractInfoId":this.detailform.contractInfo.uuid}
+        )
+        .then((res) => {
+        console.log(res)
+    });
+    },
     //流程操作
     operation(type){
       this.$http
