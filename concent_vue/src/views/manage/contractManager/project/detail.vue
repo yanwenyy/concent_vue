@@ -2347,10 +2347,10 @@
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="工程量清单" v-if="p.actpoint != 'add'" @click="getGCL">
+      <el-tab-pane label="工程量清单" v-if="p.actpoint != 'add'">
         <div class="detailBoxBG gclqd">
-          <el-tabs @tab-click="getRailwayList" v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'" type="border-card">
-            <el-tab-pane label="第一章">
+          <el-tabs v-model="gclName" @tab-click="getRailwayList" v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'" type="border-card">
+            <el-tab-pane name="0" label="第一章">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <el-upload
@@ -2367,7 +2367,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -2392,7 +2392,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="编码"
-                    prop="orgName"
+                    prop="boqCode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2401,7 +2401,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="节号"
-                    prop="moduleName"
+                    prop="sectionNo"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2410,7 +2410,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="名称"
-                    prop="projectNature"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2419,7 +2419,7 @@
                     :resizable="false"
                     label="计量单位"
                     align="center"
-                    prop="contractAmount"
+                    prop="measureUnit"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -2427,7 +2427,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程量"
-                    prop="isAdd"
+                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2435,8 +2435,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="isAdd"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2444,16 +2444,28 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="isAdd"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="第二章">
+            <el-tab-pane name="1" label="第二章">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <el-upload
@@ -2470,7 +2482,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -2495,7 +2507,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="编码"
-                    prop="orgName"
+                    prop="boqCode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2504,7 +2516,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="节号"
-                    prop="moduleName"
+                    prop="sectionNo"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2513,7 +2525,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="名称"
-                    prop="projectNature"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2522,7 +2534,7 @@
                     :resizable="false"
                     label="计量单位"
                     align="center"
-                    prop="contractAmount"
+                    prop="measureUnit"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -2530,7 +2542,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程量"
-                    prop="isAdd"
+                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2538,8 +2550,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="isAdd"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2547,16 +2559,28 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="isAdd"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="第三章">
+            <el-tab-pane name="2" label="第三章">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <el-upload
@@ -2573,7 +2597,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -2598,7 +2622,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="编码"
-                    prop="orgName"
+                    prop="boqCode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2607,7 +2631,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="节号"
-                    prop="moduleName"
+                    prop="sectionNo"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2616,7 +2640,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="名称"
-                    prop="projectNature"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2625,7 +2649,7 @@
                     :resizable="false"
                     label="计量单位"
                     align="center"
-                    prop="contractAmount"
+                    prop="measureUnit"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -2633,7 +2657,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程量"
-                    prop="isAdd"
+                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2641,8 +2665,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="isAdd"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2650,16 +2674,28 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="isAdd"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="第四章">
+            <el-tab-pane name="3" label="第四章">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <el-upload
@@ -2676,7 +2712,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -2701,7 +2737,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="编码"
-                    prop="orgName"
+                    prop="boqCode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2710,7 +2746,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="节号"
-                    prop="moduleName"
+                    prop="sectionNo"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2719,7 +2755,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="名称"
-                    prop="projectNature"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2728,7 +2764,7 @@
                     :resizable="false"
                     label="计量单位"
                     align="center"
-                    prop="contractAmount"
+                    prop="measureUnit"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -2736,7 +2772,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程量"
-                    prop="isAdd"
+                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2744,8 +2780,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="isAdd"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2753,16 +2789,28 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="isAdd"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="第五章">
+            <el-tab-pane name="4" label="第五章">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <el-upload
@@ -2779,7 +2827,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -2804,7 +2852,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="编码"
-                    prop="orgName"
+                    prop="boqCode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2813,7 +2861,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="节号"
-                    prop="moduleName"
+                    prop="sectionNo"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2822,7 +2870,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="名称"
-                    prop="projectNature"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2831,7 +2879,7 @@
                     :resizable="false"
                     label="计量单位"
                     align="center"
-                    prop="contractAmount"
+                    prop="measureUnit"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -2839,7 +2887,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程量"
-                    prop="isAdd"
+                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2847,8 +2895,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="isAdd"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2856,16 +2904,28 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="isAdd"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="第六章">
+            <el-tab-pane name="5" label="第六章">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <el-upload
@@ -2882,7 +2942,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -2907,7 +2967,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="编码"
-                    prop="orgName"
+                    prop="boqCode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2916,7 +2976,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="节号"
-                    prop="moduleName"
+                    prop="sectionNo"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2925,7 +2985,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="名称"
-                    prop="projectNature"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2934,7 +2994,7 @@
                     :resizable="false"
                     label="计量单位"
                     align="center"
-                    prop="contractAmount"
+                    prop="measureUnit"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -2942,7 +3002,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程量"
-                    prop="isAdd"
+                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2950,8 +3010,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="isAdd"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2959,16 +3019,28 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="isAdd"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="第七章">
+            <el-tab-pane name="6" label="第七章">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <el-upload
@@ -2985,7 +3057,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -3010,7 +3082,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="编码"
-                    prop="orgName"
+                    prop="boqCode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3019,7 +3091,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="节号"
-                    prop="moduleName"
+                    prop="sectionNo"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3028,7 +3100,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="名称"
-                    prop="projectNature"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3037,7 +3109,7 @@
                     :resizable="false"
                     label="计量单位"
                     align="center"
-                    prop="contractAmount"
+                    prop="measureUnit"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -3045,7 +3117,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程量"
-                    prop="isAdd"
+                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3053,8 +3125,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="isAdd"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3062,16 +3134,28 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="isAdd"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="第八章">
+            <el-tab-pane name="7" label="第八章">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <el-upload
@@ -3088,7 +3172,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -3113,7 +3197,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="编码"
-                    prop="orgName"
+                    prop="boqCode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3122,7 +3206,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="节号"
-                    prop="moduleName"
+                    prop="sectionNo"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3131,7 +3215,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="名称"
-                    prop="projectNature"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3140,7 +3224,7 @@
                     :resizable="false"
                     label="计量单位"
                     align="center"
-                    prop="contractAmount"
+                    prop="measureUnit"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -3148,7 +3232,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程量"
-                    prop="isAdd"
+                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3156,8 +3240,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="isAdd"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3165,16 +3249,28 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="isAdd"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="第九章">
+            <el-tab-pane name="8" label="第九章">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <el-upload
@@ -3191,7 +3287,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -3216,7 +3312,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="编码"
-                    prop="orgName"
+                    prop="boqCode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3225,7 +3321,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="节号"
-                    prop="moduleName"
+                    prop="sectionNo"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3234,7 +3330,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="名称"
-                    prop="projectNature"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3243,7 +3339,7 @@
                     :resizable="false"
                     label="计量单位"
                     align="center"
-                    prop="contractAmount"
+                    prop="measureUnit"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -3251,7 +3347,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程量"
-                    prop="isAdd"
+                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3259,8 +3355,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="isAdd"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3268,16 +3364,28 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="isAdd"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="第十章">
+            <el-tab-pane name="9" label="第十章">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <el-upload
@@ -3294,7 +3402,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -3319,7 +3427,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="编码"
-                    prop="orgName"
+                    prop="boqCode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3328,7 +3436,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="节号"
-                    prop="moduleName"
+                    prop="sectionNo"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3337,7 +3445,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="名称"
-                    prop="projectNature"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3346,7 +3454,7 @@
                     :resizable="false"
                     label="计量单位"
                     align="center"
-                    prop="contractAmount"
+                    prop="measureUnit"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -3354,7 +3462,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程量"
-                    prop="isAdd"
+                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3362,8 +3470,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="isAdd"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3371,16 +3479,28 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="isAdd"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="第十一章">
+            <el-tab-pane name="10" label="第十一章">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <el-upload
@@ -3397,7 +3517,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -3422,7 +3542,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="编码"
-                    prop="orgName"
+                    prop="boqCode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3431,7 +3551,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="节号"
-                    prop="moduleName"
+                    prop="sectionNo"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3440,7 +3560,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="名称"
-                    prop="projectNature"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3449,7 +3569,7 @@
                     :resizable="false"
                     label="计量单位"
                     align="center"
-                    prop="contractAmount"
+                    prop="measureUnit"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -3457,7 +3577,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程量"
-                    prop="isAdd"
+                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3465,8 +3585,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="isAdd"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3474,18 +3594,30 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="isAdd"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
           </el-tabs>
-          <el-tabs v-if="detailform.contractInfo.enginTypeFirstId=='24ebba9f2f3447579d0086209aff6ecd'" type="border-card">
-            <el-tab-pane label="第100章">
+          <el-tabs v-model="gclName" @tab-click="getHighwayList" v-if="detailform.contractInfo.enginTypeFirstId=='24ebba9f2f3447579d0086209aff6ecd'" type="border-card">
+            <el-tab-pane name="0" label="第100章">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <el-upload
@@ -3502,7 +3634,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -3527,7 +3659,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="子目号"
-                    prop="orgName"
+                    prop="itemNo"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3536,7 +3668,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="子目名称"
-                    prop="moduleName"
+                    prop="itemName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3545,7 +3677,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="单位"
-                    prop="projectNature"
+                    prop="measureUnit"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3554,23 +3686,35 @@
                     :resizable="false"
                     label="数量"
                     align="center"
-                    prop="contractAmount"
+                    prop="amount"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="单价"
-                    prop="isAdd"
+                    label="单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="第200章">
+            <el-tab-pane name="1" label="第200章">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <el-upload
@@ -3587,7 +3731,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -3612,7 +3756,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="子目号"
-                    prop="orgName"
+                    prop="itemNo"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3621,7 +3765,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="子目名称"
-                    prop="moduleName"
+                    prop="itemName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3630,7 +3774,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="单位"
-                    prop="projectNature"
+                    prop="measureUnit"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3639,23 +3783,35 @@
                     :resizable="false"
                     label="数量"
                     align="center"
-                    prop="contractAmount"
+                    prop="amount"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="单价"
-                    prop="isAdd"
+                    label="单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="第300章">
+            <el-tab-pane name="2" label="第300章">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
 
@@ -3673,7 +3829,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -3698,7 +3854,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="子目号"
-                    prop="orgName"
+                    prop="itemNo"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3707,7 +3863,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="子目名称"
-                    prop="moduleName"
+                    prop="itemName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3716,7 +3872,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="单位"
-                    prop="projectNature"
+                    prop="measureUnit"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3725,23 +3881,35 @@
                     :resizable="false"
                     label="数量"
                     align="center"
-                    prop="contractAmount"
+                    prop="amount"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="单价"
-                    prop="isAdd"
+                    label="单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="第400章">
+            <el-tab-pane name="3" label="第400章">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
 
@@ -3759,7 +3927,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -3784,7 +3952,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="子目号"
-                    prop="orgName"
+                    prop="itemNo"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3793,7 +3961,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="子目名称"
-                    prop="moduleName"
+                    prop="itemName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3802,7 +3970,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="单位"
-                    prop="projectNature"
+                    prop="measureUnit"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3811,23 +3979,35 @@
                     :resizable="false"
                     label="数量"
                     align="center"
-                    prop="contractAmount"
+                    prop="amount"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="单价"
-                    prop="isAdd"
+                    label="单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="第500章">
+            <el-tab-pane name="4" label="第500章">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
 
@@ -3845,7 +4025,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -3870,7 +4050,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="子目号"
-                    prop="orgName"
+                    prop="itemNo"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3879,7 +4059,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="子目名称"
-                    prop="moduleName"
+                    prop="itemName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3888,7 +4068,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="单位"
-                    prop="projectNature"
+                    prop="measureUnit"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3897,23 +4077,35 @@
                     :resizable="false"
                     label="数量"
                     align="center"
-                    prop="contractAmount"
+                    prop="amount"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="单价"
-                    prop="isAdd"
+                    label="单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="第600章">
+            <el-tab-pane name="5" label="第600章">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
 
@@ -3931,7 +4123,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -3956,7 +4148,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="子目号"
-                    prop="orgName"
+                    prop="itemNo"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3965,7 +4157,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="子目名称"
-                    prop="moduleName"
+                    prop="itemName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3974,7 +4166,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="单位"
-                    prop="projectNature"
+                    prop="measureUnit"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -3983,23 +4175,35 @@
                     :resizable="false"
                     label="数量"
                     align="center"
-                    prop="contractAmount"
+                    prop="amount"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="单价"
-                    prop="isAdd"
+                    label="单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="第700章">
+            <el-tab-pane name="6" label="第700章">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <el-upload
@@ -4016,7 +4220,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -4041,7 +4245,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="子目号"
-                    prop="orgName"
+                    prop="itemNo"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4050,7 +4254,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="子目名称"
-                    prop="moduleName"
+                    prop="itemName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4059,7 +4263,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="单位"
-                    prop="projectNature"
+                    prop="measureUnit"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4068,25 +4272,37 @@
                     :resizable="false"
                     label="数量"
                     align="center"
-                    prop="contractAmount"
+                    prop="amount"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="单价"
-                    prop="isAdd"
+                    label="单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
           </el-tabs>
-          <el-tabs v-if="detailform.contractInfo.enginTypeFirstId=='f6f5188458ab4c5ba1e0bc12a9a4188b'" type="border-card">
-            <el-tab-pane label="城市轨道工程">
+          <el-tabs v-model="gclName" @tab-click="getRailList" v-if="detailform.contractInfo.enginTypeFirstId=='f6f5188458ab4c5ba1e0bc12a9a4188b'" type="border-card">
+            <el-tab-pane name="0" label="城市轨道工程">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <el-upload
@@ -4103,7 +4319,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -4127,8 +4343,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="orgName"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4136,8 +4352,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="moduleName"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4145,8 +4361,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="暂估价"
-                    prop="projectNature"
+                    label="暂估价(元)"
+                    prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4155,7 +4371,7 @@
                     :resizable="false"
                     label="人工费"
                     align="center"
-                    prop="contractAmount"
+                    prop="laborCost"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -4163,7 +4379,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="材料费"
-                    prop="isAdd"
+                    prop="materialCost"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4172,7 +4388,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="设备费"
-                    prop="isAdd"
+                    prop="deviceCost"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4181,7 +4397,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="施工机具使用费"
-                    prop="isAdd"
+                    prop="toolUsedCost"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4190,7 +4406,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="企业管理费"
-                    prop="isAdd"
+                    prop="busiManagerCost"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4199,7 +4415,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="风险费"
-                    prop="isAdd"
+                    prop="riskCost"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4208,7 +4424,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="利润"
-                    prop="isAdd"
+                    prop="profit"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4217,7 +4433,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="规费"
-                    prop="isAdd"
+                    prop="fees"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4226,17 +4442,29 @@
                     class="listTabel"
                     :resizable="false"
                     label="税金"
-                    prop="isAdd"
+                    prop="taxes"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
           </el-tabs>
-          <el-tabs v-if="detailform.contractInfo.enginTypeFirstId=='0f16c387f17b402db45c4de58e1cf8b4'" type="border-card">
-            <el-tab-pane label="市政工程">
+          <el-tabs v-model="gclName" @tab-click="getMunicipal" v-if="detailform.contractInfo.enginTypeFirstId=='0f16c387f17b402db45c4de58e1cf8b4'" type="border-card">
+            <el-tab-pane name="0" label="市政工程">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <el-upload
@@ -4253,7 +4481,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -4278,7 +4506,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目分类"
-                    prop="orgName"
+                    prop="projectType"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4287,7 +4515,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目编码"
-                    prop="moduleName"
+                    prop="projectCode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4296,7 +4524,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称"
-                    prop="projectNature"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4305,7 +4533,7 @@
                     :resizable="false"
                     label="项目特征"
                     align="center"
-                    prop="contractAmount"
+                    prop="projectProp"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -4313,7 +4541,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="计量单位"
-                    prop="isAdd"
+                    prop="measureUnit"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4322,7 +4550,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程量"
-                    prop="isAdd"
+                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4330,8 +4558,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="isAdd"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4339,8 +4567,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="isAdd"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4348,19 +4576,31 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="暂估价"
-                    prop="isAdd"
+                    label="暂估价(元)"
+                    prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
 
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
           </el-tabs>
-          <el-tabs v-if="detailform.contractInfo.enginTypeFirstId=='193b4d4003d04899a1d09c8d5f7877fe'" type="border-card">
-            <el-tab-pane label="电气工程">
+          <el-tabs v-model="gclName" @tab-click="getHouseList" v-if="detailform.contractInfo.enginTypeFirstId=='193b4d4003d04899a1d09c8d5f7877fe'" type="border-card">
+            <el-tab-pane name="0" label="电气工程">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <span>电气工程列表: </span>
@@ -4378,7 +4618,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -4403,7 +4643,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目编码"
-                    prop="orgName"
+                    prop="projectCode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4412,7 +4652,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称"
-                    prop="moduleName"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4421,7 +4661,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称描述"
-                    prop="projectNature"
+                    prop="projectProp"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4430,7 +4670,7 @@
                     :resizable="false"
                     label="计量单位"
                     align="center"
-                    prop="contractAmount"
+                    prop="measureUnit"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -4438,7 +4678,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程量"
-                    prop="isAdd"
+                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4446,8 +4686,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="isAdd"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4455,8 +4695,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="isAdd"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4464,17 +4704,29 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="暂估价"
-                    prop="isAdd"
+                    label="暂估价(元)"
+                    prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
 
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="给排水工程">
+            <el-tab-pane name="1" label="给排水工程">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <span>给排水工程列表: </span>
@@ -4492,7 +4744,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -4517,7 +4769,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目编码"
-                    prop="orgName"
+                    prop="projectCode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4526,7 +4778,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称"
-                    prop="moduleName"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4535,7 +4787,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称描述"
-                    prop="projectNature"
+                    prop="projectProp"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4544,7 +4796,7 @@
                     :resizable="false"
                     label="计量单位"
                     align="center"
-                    prop="contractAmount"
+                    prop="measureUnit"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -4552,7 +4804,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程量"
-                    prop="isAdd"
+                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4560,8 +4812,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="isAdd"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4569,8 +4821,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="isAdd"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4578,17 +4830,29 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="暂估价"
-                    prop="isAdd"
+                    label="暂估价(元)"
+                    prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
 
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="基坑支护工程">
+            <el-tab-pane name="2" label="基坑支护工程">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <span>基坑支护工程列表: </span>
@@ -4606,7 +4870,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -4631,7 +4895,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目编码"
-                    prop="orgName"
+                    prop="projectCode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4640,7 +4904,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称"
-                    prop="moduleName"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4649,7 +4913,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称描述"
-                    prop="projectNature"
+                    prop="projectProp"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4658,7 +4922,7 @@
                     :resizable="false"
                     label="计量单位"
                     align="center"
-                    prop="contractAmount"
+                    prop="measureUnit"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -4666,7 +4930,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程量"
-                    prop="isAdd"
+                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4674,8 +4938,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="isAdd"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4683,8 +4947,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="isAdd"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4692,17 +4956,29 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="暂估价"
-                    prop="isAdd"
+                    label="暂估价(元)"
+                    prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
 
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="建筑工程">
+            <el-tab-pane name="3" label="建筑工程">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <span>建筑工程列表: </span>
@@ -4720,7 +4996,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -4745,7 +5021,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目编码"
-                    prop="orgName"
+                    prop="projectCode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4754,7 +5030,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称"
-                    prop="moduleName"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4763,7 +5039,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称描述"
-                    prop="projectNature"
+                    prop="projectProp"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4772,7 +5048,7 @@
                     :resizable="false"
                     label="计量单位"
                     align="center"
-                    prop="contractAmount"
+                    prop="measureUnit"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -4780,7 +5056,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程量"
-                    prop="isAdd"
+                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4788,8 +5064,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="isAdd"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4797,8 +5073,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="isAdd"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4806,17 +5082,29 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="暂估价"
-                    prop="isAdd"
+                    label="暂估价(元)"
+                    prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
 
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="空调水工程">
+            <el-tab-pane name="4" label="空调水工程">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <span>空调水工程列表: </span>
@@ -4834,7 +5122,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -4859,7 +5147,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目编码"
-                    prop="orgName"
+                    prop="projectCode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4868,7 +5156,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称"
-                    prop="moduleName"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4877,7 +5165,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称描述"
-                    prop="projectNature"
+                    prop="projectProp"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4886,7 +5174,7 @@
                     :resizable="false"
                     label="计量单位"
                     align="center"
-                    prop="contractAmount"
+                    prop="measureUnit"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -4894,7 +5182,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程量"
-                    prop="isAdd"
+                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4902,8 +5190,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="isAdd"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4911,8 +5199,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="isAdd"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4920,17 +5208,29 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="暂估价"
-                    prop="isAdd"
+                    label="暂估价(元)"
+                    prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
 
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="弱电工程">
+            <el-tab-pane name="5" label="弱电工程">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <span>弱电列表: </span>
@@ -4948,7 +5248,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -4973,7 +5273,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目编码"
-                    prop="orgName"
+                    prop="projectCode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4982,7 +5282,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称"
-                    prop="moduleName"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -4991,7 +5291,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称描述"
-                    prop="projectNature"
+                    prop="projectProp"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5000,7 +5300,7 @@
                     :resizable="false"
                     label="计量单位"
                     align="center"
-                    prop="contractAmount"
+                    prop="measureUnit"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -5008,7 +5308,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程量"
-                    prop="isAdd"
+                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5016,8 +5316,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="isAdd"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5025,8 +5325,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="isAdd"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5034,17 +5334,29 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="暂估价"
-                    prop="isAdd"
+                    label="暂估价(元)"
+                    prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
 
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="通风空调工程">
+            <el-tab-pane name="6" label="通风空调工程">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <span>通风空调列表: </span>
@@ -5062,7 +5374,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -5087,7 +5399,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目编码"
-                    prop="orgName"
+                    prop="projectCode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5096,7 +5408,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称"
-                    prop="moduleName"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5105,7 +5417,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称描述"
-                    prop="projectNature"
+                    prop="projectProp"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5114,7 +5426,7 @@
                     :resizable="false"
                     label="计量单位"
                     align="center"
-                    prop="contractAmount"
+                    prop="measureUnit"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -5122,7 +5434,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程量"
-                    prop="isAdd"
+                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5130,8 +5442,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="isAdd"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5139,8 +5451,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="isAdd"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5148,17 +5460,29 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="暂估价"
-                    prop="isAdd"
+                    label="暂估价(元)"
+                    prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
 
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="土方工程">
+            <el-tab-pane name="7" label="土方工程">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <span>土方工程列表: </span>
@@ -5176,7 +5500,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -5201,7 +5525,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目编码"
-                    prop="orgName"
+                    prop="projectCode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5210,7 +5534,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称"
-                    prop="moduleName"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5219,7 +5543,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称描述"
-                    prop="projectNature"
+                    prop="projectProp"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5228,7 +5552,7 @@
                     :resizable="false"
                     label="计量单位"
                     align="center"
-                    prop="contractAmount"
+                    prop="measureUnit"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -5236,7 +5560,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程量"
-                    prop="isAdd"
+                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5244,8 +5568,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="isAdd"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5253,8 +5577,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="isAdd"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5262,17 +5586,29 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="暂估价"
-                    prop="isAdd"
+                    label="暂估价(元)"
+                    prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
 
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="消防电工程">
+            <el-tab-pane name="8" label="消防电工程">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <span>消防电工程列表: </span>
@@ -5290,7 +5626,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -5315,7 +5651,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目编码"
-                    prop="orgName"
+                    prop="projectCode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5324,7 +5660,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称"
-                    prop="moduleName"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5333,7 +5669,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称描述"
-                    prop="projectNature"
+                    prop="projectProp"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5342,7 +5678,7 @@
                     :resizable="false"
                     label="计量单位"
                     align="center"
-                    prop="contractAmount"
+                    prop="measureUnit"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -5350,7 +5686,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程量"
-                    prop="isAdd"
+                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5358,8 +5694,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="isAdd"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5367,8 +5703,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="isAdd"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5376,17 +5712,29 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="暂估价"
-                    prop="isAdd"
+                    label="暂估价(元)"
+                    prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
 
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="消防工程">
+            <el-tab-pane name="9" label="消防工程">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <span>消防工程列表: </span>
@@ -5404,7 +5752,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -5429,7 +5777,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目编码"
-                    prop="orgName"
+                    prop="projectCode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5438,7 +5786,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称"
-                    prop="moduleName"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5447,7 +5795,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称描述"
-                    prop="projectNature"
+                    prop="projectProp"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5456,7 +5804,7 @@
                     :resizable="false"
                     label="计量单位"
                     align="center"
-                    prop="contractAmount"
+                    prop="measureUnit"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -5464,7 +5812,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程量"
-                    prop="isAdd"
+                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5472,8 +5820,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="isAdd"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5481,8 +5829,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="isAdd"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5490,17 +5838,29 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="暂估价"
-                    prop="isAdd"
+                    label="暂估价(元)"
+                    prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
 
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="装饰工程">
+            <el-tab-pane name="10" label="装饰工程">
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                   <span>装饰工程列表: </span>
@@ -5518,7 +5878,7 @@
                   </el-upload>
                 </p>
                 <el-table
-                  :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
+                  :data="gclList"
                   :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -5543,7 +5903,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目编码"
-                    prop="orgName"
+                    prop="projectCode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5552,7 +5912,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称"
-                    prop="moduleName"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5561,7 +5921,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称描述"
-                    prop="projectNature"
+                    prop="projectProp"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5570,7 +5930,7 @@
                     :resizable="false"
                     label="计量单位"
                     align="center"
-                    prop="contractAmount"
+                    prop="measureUnit"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -5578,7 +5938,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程量"
-                    prop="isAdd"
+                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5586,8 +5946,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="综合单价"
-                    prop="isAdd"
+                    label="综合单价(元)"
+                    prop="singlePrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5595,8 +5955,8 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合价"
-                    prop="isAdd"
+                    label="合价(元)"
+                    prop="sumPrice"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -5604,14 +5964,26 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="暂估价"
-                    prop="isAdd"
+                    label="暂估价(元)"
+                    prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
                   >
                   </el-table-column>
 
                 </el-table>
+                <el-pagination
+                  class="gcl-pagination"
+                  :current-page="gcl_current"
+                  :page-size="gcl_size"
+                  :page-sizes="[20, 50, 100]"
+                  :total="gcl_total"
+                  @current-change="handleCurrentChange"
+                  @size-change="handleSizeChange"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  style="margin-top: 5px"
+                  v-if="gcl_total !== 0"
+                ></el-pagination>
               </div>
             </el-tab-pane>
           </el-tabs>
@@ -5660,6 +6032,11 @@ export default {
       }
     }
     return {
+      gclList:[],//工程量清单列表
+      gclName:'0',
+      gcl_current:1,
+      gcl_size:20,
+      gcl_total:0,
       id:'',
       key: 0,
       treeStatas: false,
@@ -5793,17 +6170,154 @@ export default {
     // eslint-disable-next-line no-unde
   },
   methods: {
+    //工程量清单页码改变
+    handleSizeChange(val) {
+      this.gcl_size = val;
+      this.getGclList(this.detailform.contractInfo.enginTypeFirstId,this.SectionTableName);
+    },
+    handleCurrentChange(val) {
+      this.gcl_current = val;
+      this.getGclList(this.detailform.contractInfo.enginTypeFirstId,this.SectionTableName);
+    },
+    //判断调用哪个工程量清单列表
+    getGclList(id,SectionTableName){
+      if(id=='17ff5c08d36b41ea8f2dc2e9d3029cac'){
+        this.getRailwayList('','',SectionTableName);
+      }else if(id=='24ebba9f2f3447579d0086209aff6ecd'){
+        this.getHighwayList('','',SectionTableName);
+      }else if(id=='f6f5188458ab4c5ba1e0bc12a9a4188b'){
+        this.getRailList();
+      }else if(id=='0f16c387f17b402db45c4de58e1cf8b4'){
+        this.getMunicipal();
+      }else if(id=='193b4d4003d04899a1d09c8d5f7877fe'){
+        this.getHouseList('','',SectionTableName);
+      }
+    },
     //获取铁路工程量清单列表
-    getRailwayList(tab, event){
-      var id=event.target.getAttribute('id');
-      console.log(tab, event.target.getAttribute('id'));
+    getRailwayList(tab, event,SectionTableName){
+      this.SectionTableName='';
+      var id=event?event.target.getAttribute('id'):'tab-0';
+      id=Number(id.split("-")[1])+1;
+      this.SectionTableName=SectionTableName?SectionTableName:'BOQ_WORKAL_RAILWAY_'+id;
+      if(!SectionTableName){
+        this.gcl_current = 1;
+      }
       this.$http
         .post(
           "/api/contract/BoqWorkAmountList/list/loadRailwayPageData",
-          {"contractInfoId":this.detailform.contractInfo.uuid}
+          {
+            "contractInfoId":this.detailform.contractInfo.uuid,
+            'SectionTableName':this.SectionTableName,
+            "size":this.gcl_size,
+            "current":this.gcl_current
+          }
         )
         .then((res) => {
-        console.log(res)
+        this.gclList=res.data.data.records;
+        this.gcl_total=res.data.data.total;
+      });
+    },
+    //获取公路工程量清单列表
+    getHighwayList(tab, event,SectionTableName){
+      this.SectionTableName='';
+      var id=event?event.target.getAttribute('id'):'tab-0';
+      id=Number(id.split("-")[1])+1;
+      this.SectionTableName=SectionTableName?SectionTableName:'BOQ_WORKAL_ROAD_'+id+"00";
+      if(!SectionTableName){
+        this.gcl_current = 1;
+      }
+      this.$http
+        .post(
+          "/api/contract/BoqWorkAmountList/list/loadRoadPageData",
+          {
+            "contractInfoId":this.detailform.contractInfo.uuid,
+            'SectionTableName':this.SectionTableName,
+            "size":this.gcl_size,
+            "current":this.gcl_current
+          }
+        )
+        .then((res) => {
+        this.gclList=res.data.data.records;
+      this.gcl_total=res.data.data.total;
+    });
+    },
+    //获取轨道交通工程量清单列表
+    getRailList(tab, event){
+      this.SectionTableName='';
+      var id=event?event.target.getAttribute('id'):'tab-0';
+      id=Number(id.split("-")[1])+1;
+      this.SectionTableName='BOQ_WORKAL_RAILPATH';
+      this.$http
+        .post(
+          "/api/contract/BoqWorkAmountList/list/loadRailpathPageData",
+          {
+            "contractInfoId":this.detailform.contractInfo.uuid,
+            'SectionTableName':this.SectionTableName,
+            "size":this.gcl_size,
+            "current":this.gcl_current
+          }
+        )
+        .then((res) => {
+        this.gclList=res.data.data.records;
+      this.gcl_total=res.data.data.total;
+    });
+    },
+    //获取市政工程量清单列表
+    getMunicipal(tab, event){
+      this.SectionTableName='';
+      var id=event?event.target.getAttribute('id'):'tab-0';
+      id=Number(id.split("-")[1])+1;
+      this.SectionTableName='BOQ_WORKAL_GOV';
+      this.$http
+        .post(
+          "/api/contract/BoqWorkAmountList/list/loadGovPageData",
+          {
+            "contractInfoId":this.detailform.contractInfo.uuid,
+            'SectionTableName':this.SectionTableName,
+            "size":this.gcl_size,
+            "current":this.gcl_current
+          }
+        )
+        .then((res) => {
+        this.gclList=res.data.data.records;
+        this.gcl_total=res.data.data.total;
+    });
+    },
+    //获取房建工程量清单列表
+    getHouseList(tab, event,SectionTableName){
+      this.SectionTableName='';
+      var id=event?event.target.getAttribute('id'):'tab-0';
+      id=Number(id.split("-")[1])+1;
+      var nameList={
+        '1':'ELEC',
+        '2':'RUNWATER',
+        '3':'PITSUP',
+        '4':'BUILD',
+        '5':'AIRWATER',
+        '6':'WEAKELEC',
+        '7':'VENT',
+        '8':'EARTH',
+        '9':'FIREELEC',
+        '10':'FIRE',
+        '11':'DECORATE',
+      };
+      this.SectionTableName=SectionTableName?SectionTableName:'BOQ_WORKAL_HOUSEBUILD_'+nameList[id];
+      if(!SectionTableName){
+        this.gcl_current = 1;
+      }
+      this.$http
+        .post(
+          "/api/contract/BoqWorkAmountList/list/loadHouseBuildPageData",
+          {
+            "contractInfoId":this.detailform.contractInfo.uuid,
+            'SectionTableName':this.SectionTableName,
+            "size":this.gcl_size,
+            "current":this.gcl_current
+          }
+        )
+        .then((res) => {
+        this.gclList=res.data.data.records;
+        this.gcl_total=res.data.data.total;
     });
     },
     //流程操作
@@ -6277,6 +6791,13 @@ export default {
       this.detailform.contractInfo.enginTypeSecondId='';
       this.xqprojectType=[];
       if(id!=''){
+        //加载工程量清单
+        if(this.p.actpoint !== "add"){
+          this.gcl_current=1;
+          this.gcl_size=20;
+          this.gclName='0';
+         this.getGclList(id)
+        }
         this.projectDomainType.find(
           (item) => {
           if (item.id == id) {
@@ -6482,9 +7003,7 @@ export default {
         .post("/api/contract/contract/ContractInfo/detail/entityInfo", {id:this.id})
         .then((res) => {
         var datas=res.data.data;
-          this.getTwo(datas.contractInfo.enginTypeFirstId);
-          this.getTwoSC(datas.contractInfo.marketFirstNameId);
-          this.getTwoXZ(datas.contractInfo.projectNatureFirstId);
+
           datas.commonFilesList.forEach((item) => {
             if(item.businessCode=='01'){
                fileList1.push(item)
@@ -6508,6 +7027,9 @@ export default {
             jzjglx:[],//建筑结构类型
             cdmc:[],//场地名称
           }
+      this.getTwo(datas.contractInfo.enginTypeFirstId);
+      this.getTwoSC(datas.contractInfo.marketFirstNameId);
+      this.getTwoXZ(datas.contractInfo.projectNatureFirstId);
       this.detailform.cdmc=datas.contractInfo.siteNameId&&datas.contractInfo.siteNameId.split(",");
       this.detailform.zplx=datas.contractInfo.otherAssemblyTypeId&&datas.contractInfo.otherAssemblyTypeId.split(",");
       this.detailform.jzlx=datas.contractInfo.otherBuildingTypeId&&datas.contractInfo.otherBuildingTypeId.split(",");
@@ -6695,5 +7217,14 @@ export default {
   }
   .detailUpload{
     display: inline-block;
+  }
+  >>>.gcl-pagination{
+    margin: 20px 0!important;
+  }
+  >>>.gcl-pagination .el-input{
+    width: auto!important;
+  }
+  >>>.gcl-pagination .el-select{
+    width: 100px!important;
   }
 </style>
