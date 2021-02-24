@@ -331,16 +331,16 @@
 
       },
 
-    rowshow(row) {
-      var id=row.flowStatus==null?row.topInfoOrgId:row.uuid;
-      let p = { actpoint: "look", instid: id ,flowStatus:row.flowStatus,uuid:row.uuid};
-      this.$router.push({
-        path: "./detail/",
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) },
-      });
-    },
+    // rowshow(row) {
+    //   var id=row.flowStatus==null?row.topInfoOrgId:row.uuid;
+    //   let p = { actpoint: "look", instid: id ,flowStatus:row.flowStatus,uuid:row.uuid};
+    //   this.$router.push({
+    //     path: "./detail/",
+    //     query: { p: this.$utils.encrypt(JSON.stringify(p)) },
+    //   });
+    // },
       rowshow(row) {
-        let p = {actpoint: "look", instid: row.beforeId,afterId:row.afterId};
+        let p = {actpoint: "look", instid: row.beforeId,afterId:row.afterId,uuid:row.uuid};
         this.$router.push({
           path: "./InfoChangeDetail",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},

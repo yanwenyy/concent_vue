@@ -2016,7 +2016,7 @@ export default {
     // this.$store.commit("setCategory", 'projectDomainType');
     (this.id = this.p.instid), (this.afterId = this.p.afterId);
     this.uuid=this.p.uuid;
-    if (this.p.actpoint === "edit" || this.p.actpoint === "look") {
+    if (this.p.actpoint === "edit" || this.p.actpoint === "look"||this.p.actpoint === "task") {
       this.getDetail();
     }
     if (this.p.actpoint === "add") {
