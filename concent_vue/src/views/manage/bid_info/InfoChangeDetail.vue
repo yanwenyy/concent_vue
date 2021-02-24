@@ -2235,7 +2235,11 @@ export default {
             .post(
               // `/api/contract/topInfo/BidInfo/detail/${this.p.actpoint === "add"? "saveChangeRecord": "updateChangeRecord"}`,
               url,
-              JSON.stringify(this.detailform),
+              //JSON.stringify(this.detailform),
+                {
+                    'afterBidInfoBO':this.detailform,
+                    'beforeBidInfoBO':this.detailFormBefore
+                },
               { useJson: true }
             )
             .then((res) => {
@@ -2331,7 +2335,9 @@ export default {
           }
           // console.log(afterData);
           this.detailform = {
-             bidInfo: afterData.bidInfo,
+            bidInfo: afterData.bidInfo,
+            afterId: afterData.afterId,
+            changeRecordUuid:afterData.changeRecordUuid,
             bidInfoInnerOrgList: afterData.bidInfoInnerOrgList,
             bidInfoSectionList: afterData.bidInfoSectionList,
             bidInfo_01: afterData.bidInfo_01||[],
