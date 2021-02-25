@@ -14,11 +14,11 @@
                    type="primary" plain>删除</el-button>
         <el-button @click="batchT"
                    type="primary" plain>未上报批量填0</el-button>
-        <el-button @click="searchformReset"
+      <!--  <el-button @click="searchformReset"
                    type="info" plain
                    style="color:black;background:none">
           重置
-        </el-button>
+        </el-button>-->
 
       </el-button-group>
     <!--  <div style="float: right;">
@@ -201,7 +201,7 @@
                          prop="status" show-overflow-tooltip
         >
           <template slot-scope="scope">
-             {{scope.row.status==2?'已上报':'未上报'}}
+             {{scope.row.status==1?'已上报':'未上报'}}
           </template>
           <template slot="header"
                     slot-scope="scope">
@@ -259,7 +259,7 @@
         userdata:{},
         treeStatas: false,
         showTqDialog:false,
-        addTitle:'请注意!!!!!!',
+        addTitle:'请注意',
         page: { current: 1, size: 20, total: 0, records: [] },
         searchform: {
           createOrgCode: '',
@@ -276,7 +276,7 @@
         flowStatusList:[
           {
             detailName:'已上报',
-            id:'2'
+            id:'1'
           },
           {
             detailName:'未上报',
@@ -317,10 +317,11 @@
         //判断是否存在未上报的数据，如果存在就提示，不存在就创建
         if(this.data.length>0){
           for (var i=0; i < this.data.length; i++) {
-            if(this.data[i].status !='1'){
-              this.$message({
-                message: '该单位下存在未提交的月报,请提交该单位下所有项目月报后再进行尝试'
-              });
+            if(this.data[i].status !='1' && this.data[i].projectId!=this.userdata.managerOrgId){
+              this.$message.info('该单位下存在未提交的月报,请提交该单位下所有项目月报后再进行尝试！')
+              return false;
+            }else if(this.data[i].projectId==this.userdata.managerOrgId){
+              this.$message.info('该单位已在本月创建过月报请尝试修改或下月再进行尝试！')
               return false;
             };
           };
@@ -334,6 +335,7 @@
             JSON.stringify(params),
             {useJson: true}
         ).then((res) => {
+          debugger
           if (res.data.code === 200) {
             this.getData();
           }else if(res.data.code === 400){
@@ -362,7 +364,82 @@
       },
       //未上报批量填0点击是
       submit(){
+        var date = new Date(this.searchform.fillDate);
+        var y = date.getFullYear();
+        var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+        var time=y + '-' + m;
+        var time1 = new Date(time);
+        var time2 = time1.getTime();
+        this.searchform.fillDate= time2;
+        let tableData = {
+          prjAndPrjReportAndDetailList:this.data,
+          fillDateVo:this.searchform.fillDate,
+          reportTypeVo:"1"
+        }
+        var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/batchUpdateValue'
+        this.$http.post(
+            url,
+            JSON.stringify(tableData),
+            {useJson: true}
+        ).then((res) => {
+          debugger
+          if (res.data.code === 200) {
+            this.showTqDialog=false;
+            this.$message({
+              message: "批量上传成功"
+            })
+            this.getData()
+          }else{
+            this.$message({
+              message: "批量处理失败"
+            })
+          }
+        })
+      },
+      // 删除
+      del() {
+        if (this.multipleSelection.length < 1) {
+          this.$message.info('请选择一条记录进行删除操作！')
+          return false
+        }
+        let uuids = []
+        this.multipleSelection.forEach((item) => {
+          debugger
+          let a=this.userdata.managerOrgId;
+          if(item.projectId==this.userdata.managerOrgId){
+            if(item.status=='1'){
+            this.$message.info('未上报的不允许编辑！')
+            return false
+            }else{
+              uuids.push(item.projectreportuuid);
+              this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+              }).then(() => {
+                this.$http
+                    .post(
+                        '/api/statistics/projectMonthlyReport/Projectreport/list/delete',
+                        { ids: uuids }
+                    )
+                    .then((res) => {
+                      if (res.data.code === 200) {
+                        this.getData()
+                      }else if(res.data.code === 400){
 
+                      }else{
+
+                      }
+
+                    })
+              }).catch(() => {
+              })
+            }
+          }else{
+            this.$message.info('无权删除下级单位月报！')
+            return false
+          }
+        })
       },
       //点击否
       closeAdd() {
@@ -381,6 +458,28 @@
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
         });
       },
+      //编辑
+      edit() {
+        if (this.multipleSelection.length == 0) {
+          this.$message.info("请选择需要编辑的数据", "提示")
+          return false
+        }
+        if (this.multipleSelection.length >1) {
+          this.$message.info("请选择一条数据，进行编辑", "提示")
+          return false
+        }
+        this.type = 'edit'
+        debugger;
+        this.form1 = JSON.parse(JSON.stringify(this.multipleSelection[0]));
+        let mList = {projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,projectreportuuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectreportuuid,
+          fillDate:JSON.parse(JSON.stringify(this.multipleSelection[0])).fillDate,orgCode:JSON.parse(JSON.stringify(this.multipleSelection[0])).createOrgCode,
+          projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).status,projectName:this.multipleSelection[0].projectName
+        }
+        this.$router.push({
+          path: './companyMDetail/',
+          query: {mList: this.$utils.encrypt(JSON.stringify(mList))}
+        });
+      },
       handleSizeChange(val) {
         this.searchform.size = val;
         this.getData();
@@ -390,8 +489,13 @@
         this.getData();
       },
       searchformSubmit() {
+        debugger
         this.searchform.current = 1;
-        var time1 = new Date(this.searchform.fillDate);
+        var date = new Date(this.searchform.fillDate);
+        var y = date.getFullYear();
+        var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+        var time=y + '-' + m;
+        var time1 = new Date(time);
         var time2 = time1.getTime();
         this.searchform.fillDate= time2;
         this.getData();
@@ -425,6 +529,13 @@
       },
       // 获取分页数据
       getData() {
+        var date = new Date(this.searchform.fillDate);
+        var y = date.getFullYear();
+        var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+        var time=y + '-' + m;
+        var time1 = new Date(time);
+        var time2 = time1.getTime();
+        this.searchform.fillDate= time2;
         this.$http
             .post('/api/statistics/projectMonthlyReport/Projectreport/list/companyMonthlyReportList', this.searchform)
             .then(res => {

@@ -1,11 +1,11 @@
 <!--项目部月报详情-->
 <template>
   <div style="position: relative">
-      <el-button  @click="save" type="primary"  class="detailbutton detail-back-tab" style="float: left; margin-right: 185px;"plain>保存</el-button>
-      <el-button  @click="submit" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>
+      <!--<el-button  @click="save" v-if="dataReport.status!='1'" type="primary"  class="detailbutton detail-back-tab" style="float: left; margin-right: 185px;"plain>保存</el-button>-->
+      <el-button  @click="submit" v-if="dataReport.status!='1'" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>
       <el-button  @click="back" type="primary"  class="detailbutton detail-back-tab " plain>返回</el-button>
     <el-tabs type="border-card" v-model="activeName">
-      <el-tab-pane label="整体进度" name="ztjd">
+      <el-tab-pane v-if="projectList.uuid!=''&& projectList.uuid!=null" label="整体进度" name="ztjd">
         <div class="detailBox">
           <el-form
             :inline="false"
@@ -22,7 +22,13 @@
             </el-form-item>
             <el-form-item
               label="项目名称:"
-            ><el-input v-model="dataReport.reportProjectName" disabled></el-input>
+            >
+              <div v-if="dataReport.reportProjectName==''">
+                <el-input v-model="dataReport.reportProjectName" disabled></el-input>
+              </div>
+              <div v-else>
+                <el-input v-model="projectName" disabled></el-input>
+              </div>
             </el-form-item>
             <div>
               <el-form-item
@@ -196,7 +202,7 @@
           </el-table>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="下月计划" name="xyjh">
+      <el-tab-pane label="下月计划" v-if="projectList.uuid!=''&& projectList.uuid!=null" name="xyjh">
         <div class="detailBoxBG">
           <el-table
             class="tableStyle"
@@ -262,14 +268,141 @@
           </el-table>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="项目概况" name="xmgk">
+      <el-tab-pane label="项目概况" v-if="projectList.uuid!=''&& projectList.uuid!=null" name="xmgk">
         <div class="detailBoxBG">
+          <el-form
+            :inline="false"
+            :model="projectList"
+            class="gcform"
+          >
+            <el-form-item
+              label="项目名称:"
+            ><el-input v-model="projectList.projectName" disabled ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="板块:"
+            ><el-input v-model="projectList.projectPlate" disabled></el-input>
+            </el-form-item>
+            <el-form-item
+              label="项目类型:"
+            >
+                <el-input v-model="projectList.projectType" disabled></el-input>
+            </el-form-item>
+            <el-form-item
+              label="承建单位:"
+            ><el-input v-model="projectList.companyBuiltName" disabled ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="项目简称:"
+            ><el-input v-model="projectList.projectOmit" disabled ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="工程行业类别:"
+            ><el-input v-model="projectList.projectName" disabled ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="所属铁路局:"
+            ><el-input v-model="projectList.railwayName" disabled ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="项目状态:"
+            ><el-input v-model="projectList.projectStatus" disabled ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="项目所在地:"
+            ><el-input v-model="projectList.projectLocation" disabled ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="初始合同额(万元):"
+            ><el-input v-model="projectList.contractAmountInitial" disabled ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="工程合同额(万元):"
+            ><el-input v-model="projectList.contractAmountEngine" disabled ></el-input>
+            </el-form-item>
+        <!--    <el-form-item
+              label="合同额增减(万元):"
+            ><el-input v-model="projectList.projectName" disabled ></el-input>
+            </el-form-item>-->
+            <el-form-item
+              label="计量单位:"
+            ><el-input v-model="projectList.unitName" disabled ></el-input>
+            </el-form-item>
+           <!-- <el-form-item
+              label="初始签订数量:"
+            ><el-input v-model="projectList.projectName" disabled ></el-input>
+            </el-form-item>-->
+            <el-form-item
+              label="工程合同数量:"
+            ><el-input v-model="projectList.contractCount" disabled ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="合同竣工日期:"
+            ><el-input v-model="projectList.contractEndTime| dateformat" disabled ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="合同签订日期:"
+            ><el-input v-model="projectList.projectName| dateformat" disabled ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="实际开工日期:"
+            ><el-input v-model="projectList.realStartTime| dateformat" disabled ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="实际竣工日期:"
+            ><el-input v-model="projectList.realEndTime | dateformat" disabled ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="竣工产值:"
+            ><el-input v-model="projectList.completedOutputValue" disabled ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="建设单位:"
+            ><el-input v-model="projectList.companyBuild" disabled ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="设计单位:"
+            ><el-input v-model="projectList.companyDesign" disabled ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="监理单位:"
+            ><el-input v-model="projectList.companySupervisor" disabled ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="工程标段:"
+            ><el-input v-model="projectList.projectBidSection" disabled ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="项目经理:"
+            ><el-input v-model="projectList.projectManagerName" disabled ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="起讫地点(标段):"
+            ><el-input v-model="projectList.beginAddress" disabled ></el-input>
+            </el-form-item>
+            <div>
+            <el-form-item
+              label="工程概况(最多700字):"
+            ><el-input v-model="projectList.engineSurvey" type="textarea"disabled ></el-input>
+            </el-form-item>
+            </div>
+            <div>
+            <el-form-item
+              label="备 注(最多200字):"
+            ><el-input v-model="projectList.projectRemark" type="textarea" disabled ></el-input>
+            </el-form-item>
+            </div>
+       <!--     <el-form-item
+              label="相关附件(最大10 MB):"
+            ><el-input v-model="projectList.projectName" disabled ></el-input>
+            </el-form-item>-->
+          </el-form>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="流程查看" name="lcjh">
+      <!--<el-tab-pane label="流程查看" name="lcjh">
         <div class="detailBoxBG">
         </div>
-      </el-tab-pane>
+      </el-tab-pane>-->
     </el-tabs>
     </div>
 </template>
@@ -282,6 +415,7 @@
     data() {
       return {
         data:[],
+        projectList:{},
         dataReport:{
         },
         nextData:[],
@@ -392,6 +526,7 @@
             this.data = res.data.data.projectReportDetaiList
             this.dataReport=res.data.data.projectreport
             this.nextData=res.data.data.planPrjTjxDetailList
+            this.projectList=res.data.data.projectList||{}
             console.log('data', this.data)
             // this.reportVo=this.data;
           })
