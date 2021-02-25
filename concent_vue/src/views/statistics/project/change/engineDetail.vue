@@ -981,16 +981,16 @@
                   :resizable="false"
                   label="项目名称"
                   align="center"
-                  prop="productName"
+                  prop="projectName"
                   min-width="200"
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <!--:prop="'project.productInfoList[' + scope.$index + '].productName'"-->
+                    <!--:prop="'project.productInfoList[' + scope.$index + '].projectName'"-->
                     <!--:rules="{required: true, message: '此项不能为空', trigger: 'blur'}"-->
                     <el-form-item class="tabelForm">
                       <el-input
-                        v-model="scope.row.productName"
+                        v-model="scope.row.projectName"
                         clearable
                         :disabled="p.actpoint === 'look'"/>
                     </el-form-item>
@@ -1861,16 +1861,16 @@
                   :resizable="false"
                   label="项目名称"
                   align="center"
-                  prop="productName"
+                  prop="projectName"
                   min-width="200"
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <!--:prop="'project.productInfoList[' + scope.$index + '].productName'"-->
+                    <!--:prop="'project.productInfoList[' + scope.$index + '].projectName'"-->
                     <!--:rules="{required: true, message: '此项不能为空', trigger: 'blur'}"-->
                     <el-form-item class="tabelForm">
                       <el-input
-                        v-model="scope.row.productName"
+                        v-model="scope.row.projectName"
                         clearable
                         disabled/>
                     </el-form-item>
