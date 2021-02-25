@@ -122,7 +122,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-             {{scope.row.state==1?'变更中':scope.row.state==2?'待审核':scope.row.state==3?'退回':''}}
+             {{scope.row.state==1?'草稿':scope.row.state==2?'审核中':scope.row.state==3?'审核通过':scope.row.state==4?'审核退回':''}}
           </template>
         </el-table-column>
         <el-table-column

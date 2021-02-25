@@ -4193,14 +4193,14 @@
         this.detailform.srcId=this.id;
         var url='';
         if(type=='save'){
-          url=`/api/contract/contract/ContractInfo/detail/${this.p.actpoint === "add"?'saveChangeRecord':'saveOrUpdate'}`;
+          url=`/api/contract/contract/ContractInfo/detail/${this.p.actpoint === "add"?'saveChangeRecord':'updateChangeRecord'}`;
         }else{
           url='/api/contract/contract/ContractInfo/changeProcess/start';
         }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.detailform.commonFilesList=this.detailform.fileList1.concat(this.detailform.fileList2);
-            var datas=this.p.actpoint === "add"?{
+            var datas=this.p.actpoint === "add"||(type!='save'&&this.detailform.contractInfo.flowStatus==1||this.detailform.contractInfo.flowStatus==4)?{
               'afterContractInfoBO':this.detailform,
               'beforeContractInfoBO':this.detailFormBefore
             }:this.detailform;
@@ -4260,6 +4260,7 @@
         //   this.value1.push(item.capitalId);
         // });
         this.detailform={
+          changeRecordUuid:afterData.changeRecordUuid,
           commonFilesList: afterData.commonFilesList,
           contractInfo: afterData.contractInfo,
           contractInfoAttachBO: afterData.contractInfoAttachBO,
