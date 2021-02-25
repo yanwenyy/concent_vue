@@ -2016,7 +2016,7 @@ export default {
     // this.$store.commit("setCategory", 'projectDomainType');
     (this.id = this.p.instid), (this.afterId = this.p.afterId);
     this.uuid=this.p.uuid;
-    if (this.p.actpoint === "edit" || this.p.actpoint === "look") {
+    if (this.p.actpoint === "edit" || this.p.actpoint === "look"||this.p.actpoint === "task") {
       this.getDetail();
     }
     if (this.p.actpoint === "add") {
@@ -2235,7 +2235,11 @@ export default {
             .post(
               // `/api/contract/topInfo/BidInfo/detail/${this.p.actpoint === "add"? "saveChangeRecord": "updateChangeRecord"}`,
               url,
-              JSON.stringify(this.detailform),
+              //JSON.stringify(this.detailform),
+                {
+                    'afterBidInfoBO':this.detailform,
+                    'beforeBidInfoBO':this.detailFormBefore
+                },
               { useJson: true }
             )
             .then((res) => {
@@ -2331,7 +2335,9 @@ export default {
           }
           // console.log(afterData);
           this.detailform = {
-             bidInfo: afterData.bidInfo,
+            bidInfo: afterData.bidInfo,
+            afterId: afterData.afterId,
+            changeRecordUuid:afterData.changeRecordUuid,
             bidInfoInnerOrgList: afterData.bidInfoInnerOrgList,
             bidInfoSectionList: afterData.bidInfoSectionList,
             bidInfo_01: afterData.bidInfo_01||[],
