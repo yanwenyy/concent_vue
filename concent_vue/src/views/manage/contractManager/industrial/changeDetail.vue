@@ -1770,6 +1770,7 @@
                 </p>
 
                 <el-table
+                  :row-class-name="tableRowClassName"
                   :data="detailform.contractInfoProductInformtList"
                   :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
 
@@ -1927,6 +1928,7 @@
                     >
                   </p>
                   <el-table
+                    :row-class-name="tableRowClassName"
                     :data="detailform.contractInfoAttachBO.unionContractInfoAttachList"
                     :header-cell-style="{
                 'text-align': 'center',
@@ -2134,6 +2136,7 @@
                     >
                   </p>
                   <el-table
+                    :row-class-name="tableRowClassName"
                     :data="detailform.contractInfoAttachBO.innerContractInfoAttachList"
                     :header-cell-style="{
                 'text-align': 'center',
@@ -2341,6 +2344,7 @@
                     >
                   </p>
                   <el-table
+                    :row-class-name="tableRowClassName"
                     :data="detailform.contractInfoAttachBO.outUnionContractInfoAttachList"
                     :header-cell-style="{
                 'text-align': 'center',
@@ -2548,6 +2552,7 @@
                     >
                   </p>
                   <el-table
+                    :row-class-name="tableRowClassName"
                     :data="detailform.contractInfoAttachBO.outContractInfoAttachList"
                     :header-cell-style="{
                 'text-align': 'center',
@@ -2910,6 +2915,12 @@
       // eslint-disable-next-line no-unde
     },
     methods: {
+      tableRowClassName: function (row, index) {
+        if (row.row.isDelete=='1') {
+          return 'hidden-row';
+        }
+        return '';
+      },
       //流程操作
       operation(type){
         this.$http
@@ -2937,6 +2948,7 @@
           productQuantity:'',
           productUnit:'',
           productTotalPrice	:'',
+          isDelete:'0'
         };
         this.detailform.contractInfoProductInformtList.push(v);
       },
@@ -3350,45 +3362,35 @@
       },
       del(index,item,list,type) {
         console.log(index);
-        if(item.uuid&&type=='bd'){
+        if(type=='cpxx'){
           this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            this.$http
-            .post(
-              "/api/contract/contract/ContractInfo/list/deleteSection",
-              {ids: [item.uuid]}
-            )
-            .then((res) => {
-            if (res.data && res.data.code === 200) {
-            list.splice(index, 1);
-            console.log(list)
-          } else {
-            this.$message.error(data.msg)
-          }
-        });
+            list[index].isDelete=1;
         }).catch(() => {})
-        }else if(item.uuid&&(type=='lht'||type=='fb')){
+        // }else if(item.uuid&&(type=='lht'||type=='fb')){
+        }else if(type=='lht'||type=='fb'){
           this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            this.$http
-            .post(
-              "/api/contract/contract/ContractInfo/list/deleteAttach",
-              {ids: [item.uuid]}
-            )
-            .then((res) => {
-            if (res.data && res.data.code === 200) {
-            list.splice(index, 1);
-            this.getOurAmount()
-          } else {
-            this.$message.error(data.msg)
-          }
-        });
+            list[index].isDelete=1;
+        //     this.$http
+        //     .post(
+        //       "/api/contract/contract/ContractInfo/list/deleteAttach",
+        //       {ids: [item.uuid]}
+        //     )
+        //     .then((res) => {
+        //     if (res.data && res.data.code === 200) {
+        //     list.splice(index, 1);
+        //     this.getOurAmount()
+        //   } else {
+        //     this.$message.error(data.msg)
+        //   }
+        // });
         }).catch(() => {})
         }else{
           list.splice(index, 1);
@@ -3425,7 +3427,8 @@
           contractInfoId:'',
           projectNature:projectNature,
           contractAmount:'',
-          isAdd:isAdd
+          isAdd:isAdd,
+          isDelete:'0'
         }
         if(type=='nlht'){
           this.detailform.contractInfoAttachBO.unionContractInfoAttachList.push(v);

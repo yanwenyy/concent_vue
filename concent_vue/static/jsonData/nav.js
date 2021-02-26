@@ -1235,9 +1235,55 @@ export default {
                   'iconCls': 'el-icon-office-building',
                   'menushow': false,
                   'leaf': true
+                },
+                {
+                  'name': '公司月报(工区)',
+                  'path': '/statistics/reportMonth/companyMgqList',
+                  'component': '/statistics/reportMonth/companyMgqList',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '公司月报(工区)详情',
+                  'path': '/statistics/reportMonth/companyMgqDetail',
+                  'component': '/statistics/reportMonth/companyMgqDetail',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': false,
+                  'leaf': true
                 }
               ]
-            }
+            },
+            {
+              'name': '非工程月报',
+              'path': '/statistics/notEMReport',
+              'component': '/router',
+              'iconCls': 'el-icon-time',
+              'menushow': true,
+              'leaf': false,
+              'defaultpage': false,
+              'children': [
+                {
+                  'name': '月报填报',
+                  'path': '/statistics/notEMReport/list',
+                  'component': '/statistics/notEMReport/list',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '月报填报详情',
+                  'path': '/statistics/notEMReport/detail',
+                  'component': '/statistics/notEMReport/detail',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+              ]
+            },
           ]
         },
         {

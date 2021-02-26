@@ -726,5 +726,8 @@ pre {
   color:#fff!important;
   border: none!important;
 }
+.el-table .hidden-row{
+  display: none!important;
+}
 /**/
 

@@ -1127,6 +1127,7 @@
                 >
               </p>
               <el-table
+                :row-class-name="tableRowClassName"
                 :data="detailform.topInfoSectionList"
                 :header-cell-style="{
                 'text-align': 'center',
@@ -1371,6 +1372,13 @@
       // eslint-disable-next-line no-unde
     },
     methods: {
+      //隐藏标段信息某些行
+      tableRowClassName: function (row, index) {
+        if (row.row.isDelete=='1') {
+          return 'hidden-row';
+        }
+        return '';
+      },
       //流程操作
       operation(type){
         this.$http
@@ -1559,25 +1567,28 @@
       },
       del(index,item,list,type) {
         console.log(index);
-        if(item.uuid&&type=='bd'){
+        // if(item.uuid&&type=='bd'){
+        if(type=='bd'){
           this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            this.$http
-            .post(
-              "/api/contract/topInfo/TopInfoSection/list/delete",
-              {ids: [item.uuid]}
-            )
-            .then((res) => {
-            if (res.data && res.data.code === 200) {
-            list.splice(index, 1);
+            list[index].isDelete=1;
             console.log(list)
-          } else {
-            this.$message.error(data.msg)
-          }
-        });
+            // this.$http
+            // .post(
+            //   "/api/contract/topInfo/TopInfoSection/list/delete",
+            //   {ids: [item.uuid]}
+            // )
+            // .then((res) => {
+            // if (res.data && res.data.code === 200) {
+            // list.splice(index, 1);
+            // console.log(list)
+            // } else {
+            //   this.$message.error(data.msg)
+            // }
+          //});
         }).catch(() => {})
         }else{
           list.splice(index, 1);
@@ -1594,13 +1605,14 @@
             ffid: '',
             path: '',
             contractAmount: '',
-            isMain: ''
+            isMain: '',
           }
           this.detailform.topInfoSiteList.push(v);
         } else {
           v = {
             sectionName: '',
             projectScale: '',
+            isDelete:'0'
           }
           this.detailform.topInfoSectionList.push(v);
         }
@@ -1661,9 +1673,9 @@
             .post("/api/contract/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.id})
             .then((res) => {
             var datas=res.data.data;
-          // this.getTwo(datas.topInfor.enginTypeFirstId||'');
-          // this.getTwoSC(datas.topInfor.marketFirstNameId||'');
-          // this.getTwoXZ(datas.topInfor.projectNatureFirstId||'');
+          this.getTwo(datas.topInfor.enginTypeFirstId||'');
+          this.getTwoSC(datas.topInfor.marketFirstNameId||'');
+          this.getTwoXZ(datas.topInfor.projectNatureFirstId||'');
 
           this.detailform={
             changeRecordUuid:datas.changeRecordUuid,
@@ -1870,6 +1882,5 @@
   .el-table--border {
     min-height: auto !important;
   }
-
 </style>
 
