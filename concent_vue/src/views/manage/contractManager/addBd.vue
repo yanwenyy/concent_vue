@@ -305,7 +305,8 @@
         visible: false,
         detailForm: {
           dataList: [],
-          dataList2: []
+          dataList2: [],
+          isDelete: "0"
         },
         type:'',
         index:'',
@@ -430,7 +431,8 @@
         }else{
           this.detailForm={
             dataList: [],
-            dataList2: []
+            dataList2: [],
+            isDelete: '0'
           };
         }
       },
