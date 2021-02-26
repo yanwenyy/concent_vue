@@ -1772,7 +1772,7 @@ export default {
 
         var url='';
         if(type=='save'){
-          url= "/api/contract/topInfo/Verify/detail/saveChange"
+          url=`/api/contract/topInfo/Verify/detail/${this.p.actpoint === "add"? "saveChange": "updateChangeRecord"}`
         }else{
           url="/api/contract/topInfo/Verify/changeProcess/start"
         }
@@ -1786,7 +1786,11 @@ export default {
             .post(
               // "/api/contract/topInfo/Verify/detail/saveChange",
               url,
-              JSON.stringify(this.detailformAfter),
+              //JSON.stringify(this.detailformAfter),
+                {
+                    'afterVerifyBO':this.detailformAfter,
+                    'beforeVerifyBO':this.detailformBefore
+                },
               {useJson: true}
             )
             .then((res) => {
