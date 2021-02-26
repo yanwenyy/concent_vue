@@ -349,7 +349,7 @@
             if(this.data[i].status !='1' && this.data[i].projectId!=this.userdata.managerOrgId){
               this.$message.info('该单位下存在未提交的月报,请提交该单位下所有项目月报后再进行尝试！')
               return false;
-            }else if(this.data[i].projectId==this.userdata.managerOrgId){
+            }else if(this.data[i].projectId==this.userdata.managerOrgId && this.data[i].reportType=='2'){
               this.$message.info('该单位已在本月创建过月报请尝试修改或下月再进行尝试！')
               return false;
             };

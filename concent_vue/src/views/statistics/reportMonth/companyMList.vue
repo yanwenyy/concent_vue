@@ -349,7 +349,7 @@
             if(this.data[i].status !='1' && this.data[i].projectId!=this.userdata.managerOrgId){
               this.$message.info('该单位下存在未提交的月报,请提交该单位下所有项目月报后再进行尝试！')
               return false;
-            }else if(this.data[i].projectId==this.userdata.managerOrgId){
+            }else if(this.data[i].projectId==this.userdata.managerOrgId && this.data[i].reportType=='1'){
               this.$message.info('该单位已在本月创建过月报请尝试修改或下月再进行尝试！')
               return false;
             };
@@ -437,7 +437,7 @@
         this.multipleSelection.forEach((item) => {
           let a=this.userdata.managerOrgId;
           if(item.projectId==this.userdata.managerOrgId){
-            if(item.status!='0'){
+            if(item.status!='0'&&item.status!=null){
             this.$message.info('只允许删除未上报的数据！')
             return false
             }else{

@@ -508,7 +508,6 @@
       },
       // 获取数据
       getData() {
-      debugger
         this.$http
             .post('/api/statistics/projectMonthlyReport/Projectreport/detail/queryMonthReportEntityInfo', JSON.stringify({
               projectId: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectId,
