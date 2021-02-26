@@ -1,4 +1,4 @@
-<!--工程月报-公司月报自揽或工区-->
+<!--工程月报-公司月报工区-->
 
 <template>
   <div>
@@ -270,8 +270,7 @@
           createUserId: '',
           createUserName: '',
           projectTypeName:'',
-          fillDate:'',
-          yearDate:'',
+          fillDate:''
         },
         data:[],
         flowStatusList:[
@@ -330,7 +329,7 @@
         var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/companyMonthlyReportEntityInfo';
         var params = {};
         params.fillDate = this.searchform.fillDate;
-        params.reportType='1';
+        params.reportType='2';
         this.$http.post(
             url,
             JSON.stringify(params),
@@ -377,7 +376,7 @@
         let tableData = {
           prjAndPrjReportAndDetailList:this.data,
           fillDateVo:this.searchform.fillDate,
-          reportTypeVo:"1"
+          reportTypeVo:"2"
         }
         var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/batchUpdateValue'
         this.$http.post(
@@ -501,7 +500,6 @@
         var time1 = new Date(time);
         var time2 = time1.getTime();
         this.searchform.fillDate= time2;
-         this.searchform.yearDate= y;
         this.getData();
       },
       searchformReset() {
@@ -540,7 +538,6 @@
         var time1 = new Date(time);
         var time2 = time1.getTime();
         this.searchform.fillDate= time2;
-        this.searchform.yearDate=y;
         this.$http
             .post('/api/statistics/projectMonthlyReport/Projectreport/list/companyMonthlyReportList', this.searchform)
             .then(res => {

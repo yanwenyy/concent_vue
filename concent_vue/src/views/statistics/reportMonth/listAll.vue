@@ -326,6 +326,13 @@
       },
       // 获取分页数据
       getData() {
+        var date = new Date();
+        var y = date.getFullYear();
+        var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+        var time=y + '-' + m;
+        var time1 = new Date(time);
+        var time2 = time1.getTime();
+        this.searchform.fillDate= time2;
         this.$http
           .post('/api/statistics/projectMonthlyReport/Projectreport/list/projectDeptList', this.searchform)
           .then(res => {
@@ -333,7 +340,7 @@
           })
       },
       rowShow(row){
-            let mList = {projectId: row.projectId, orgCode: row.createOrgCode,projectName:row.projectOmit}
+            let mList = {projectId: row.projectId, orgCode: row.createOrgCode,projectName:row.projectName}
               this.$router.push({
                     path: './reportMList/',
                     query: {mList: this.$utils.encrypt(JSON.stringify(mList))}
