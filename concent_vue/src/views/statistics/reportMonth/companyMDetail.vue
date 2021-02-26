@@ -253,11 +253,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div v-if="scope.row.veditable === '1'">
-                  <el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')" @blur="getPlanYear(data,scope.$index,scope.row.sumTarget)"/>
-                </div>
-                <!--                    <div v-else-if="projectStatus !== '2' " style="text-align: right">{{sumCount(scope.row)}}</div>-->
-                <div v-else>{{scope.row.value}}</div>
+                <div >{{scope.row.value}}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -298,7 +294,7 @@
             </el-form-item>
             <el-form-item
               label="工程行业类别:"
-            ><el-input v-model="projectList.projectName" disabled ></el-input>
+            ><el-input v-model="projectList.projectTypeSecond" disabled ></el-input>
             </el-form-item>
             <el-form-item
               label="所属铁路局:"
@@ -528,6 +524,11 @@
             this.nextData=res.data.data.planPrjTjxDetailList
             this.projectList=res.data.data.projectList||{}
             console.log('data', this.data)
+            if(this.projectList.uuid!=''&& this.projectList.uuid!=null){
+              this.activeName="ztjd"
+            }else{
+              this.activeName="cwjswgcl"
+            }
             // this.reportVo=this.data;
           })
       }

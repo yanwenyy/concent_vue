@@ -14,22 +14,22 @@
                    type="primary" plain>删除</el-button>
         <el-button @click="batchT"
                    type="primary" plain>未上报批量填0</el-button>
-      <!--  <el-button @click="searchformReset"
-                   type="info" plain
-                   style="color:black;background:none">
-          重置
-        </el-button>-->
+        <!--  <el-button @click="searchformReset"
+                     type="info" plain
+                     style="color:black;background:none">
+            重置
+          </el-button>-->
 
       </el-button-group>
-    <!--  <div style="float: right;">
-        <el-button
-          @click="searchformReset"
-          type="info"
-          plain
-          style="color:black;background:none">
-          重置
-        </el-button>
-      </div>-->
+      <!--  <div style="float: right;">
+          <el-button
+            @click="searchformReset"
+            type="info"
+            plain
+            style="color:black;background:none">
+            重置
+          </el-button>
+        </div>-->
     </div>
 
     <div style="margin-top: 10px">
@@ -119,6 +119,23 @@
                         size="mini"/>
             </div>
           </template>
+          <template slot="header"
+                    slot-scope="scope">
+            <span>项目状态</span>
+            <div>
+              <el-select class="list-search-picker" clearable filterable
+                         placeholder="请选择"
+                         size="mini"
+                         v-model="searchform.projectStatusName"
+              >
+                <el-option :key="index"
+                           :label="item.detailPrjStaName"
+                           :value="item.id"
+                           v-for="(item, index) in flowStatusNameList"
+                ></el-option>
+              </el-select>
+            </div>
+          </template>
         </el-table-column>
         <el-table-column :width="150"
                          align="center"
@@ -181,20 +198,20 @@
             </div>
           </template>
         </el-table-column>
-      <!--  <el-table-column
-          :width="150"
-          align="center"
-          label="所属单位"
-          prop="createOrgName"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>所属单位</span>
-            <div>
-              <el-input style=" width: 100%" v-model="searchform.createOrgName" size="mini"/>
-            </div>
-          </template>
-        </el-table-column>-->
+        <!--  <el-table-column
+            :width="150"
+            align="center"
+            label="所属单位"
+            prop="createOrgName"
+            show-overflow-tooltip
+          >
+            <template slot="header" slot-scope="scope">
+              <span>所属单位</span>
+              <div>
+                <el-input style=" width: 100%" v-model="searchform.createOrgName" size="mini"/>
+              </div>
+            </template>
+          </el-table-column>-->
         <el-table-column :width="150"
                          align="center"
                          label="状态"
@@ -225,9 +242,9 @@
       <el-dialog :title="addTitle" :visible.sync="showTqDialog" append-to-body @close="closeAdd">
         <div>
           <div>
-          此操作将为当月所有未上报的项目月报创建当月完成值为0的月报并提交。
-          如果项目已经创建了当月月报 则直接提交。
-          确认批量填充?
+            此操作将为当月所有未上报的项目月报创建当月完成值为0的月报并提交。
+            如果项目已经创建了当月月报 则直接提交。
+            确认批量填充?
           </div>
           <div style="text-align:right;margin-top:10px">
             <el-button @click="submit" type="primary">是</el-button>
@@ -256,6 +273,7 @@
     },
     data() {
       return {
+        data:{},
         userdata:{},
         treeStatas: false,
         showTqDialog:false,
@@ -270,7 +288,8 @@
           createUserId: '',
           createUserName: '',
           projectTypeName:'',
-          fillDate:''
+          fillDate:'',
+          reportType:'2',
         },
         data:[],
         flowStatusList:[
@@ -280,7 +299,17 @@
           },
           {
             detailName:'未上报',
-            id:'0'
+            id:''
+          }
+        ],
+        flowStatusNameList:[
+          {
+            detailPrjStaName:'在建',
+            id:'在建'
+          },
+          {
+            detailPrjStaName:'竣工未结算',
+            id:'竣工未结算'
           }
         ],
         menus: [],
@@ -310,9 +339,9 @@
         var time=y + '-' + m;
         var time1 = new Date(time);
         var time2 = time1.getTime();
-      this.searchform.fillDate= time2;
+        this.searchform.fillDate= time2;
       },
-        //新增
+      //新增
       add(){
         //判断是否存在未上报的数据，如果存在就提示，不存在就创建
         if(this.data.length>0){
@@ -330,6 +359,7 @@
         var params = {};
         params.fillDate = this.searchform.fillDate;
         params.reportType='2';
+        params.status=='0';
         this.$http.post(
             url,
             JSON.stringify(params),
@@ -384,7 +414,6 @@
             JSON.stringify(tableData),
             {useJson: true}
         ).then((res) => {
-          debugger
           if (res.data.code === 200) {
             this.showTqDialog=false;
             this.$message({
@@ -406,12 +435,11 @@
         }
         let uuids = []
         this.multipleSelection.forEach((item) => {
-          debugger
           let a=this.userdata.managerOrgId;
           if(item.projectId==this.userdata.managerOrgId){
-            if(item.status=='1'){
-            this.$message.info('未上报的不允许编辑！')
-            return false
+            if(item.status!='0'){
+              this.$message.info('只允许删除未上报的数据！')
+              return false
             }else{
               uuids.push(item.projectreportuuid);
               this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
@@ -470,17 +498,22 @@
           this.$message.info("请选择一条数据，进行编辑", "提示")
           return false
         }
-        this.type = 'edit'
-        debugger;
-        this.form1 = JSON.parse(JSON.stringify(this.multipleSelection[0]));
-        let mList = {projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,projectreportuuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectreportuuid,
-          fillDate:JSON.parse(JSON.stringify(this.multipleSelection[0])).fillDate,orgCode:JSON.parse(JSON.stringify(this.multipleSelection[0])).createOrgCode,
-          projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).status,projectName:this.multipleSelection[0].projectName
+        if((this.multipleSelection[0].status==''||this.multipleSelection[0].status==null) && this.multipleSelection[0].projectId!=this.userdata.managerOrgId){
+          this.$message.info("该项目月报还未进行创建，无法进行操作", "提示")
+          return false
+        }else{
+          this.type = 'edit'
+          this.form1 = JSON.parse(JSON.stringify(this.multipleSelection[0]));
+          let mList = {projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,projectreportuuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectreportuuid,
+            fillDate:JSON.parse(JSON.stringify(this.multipleSelection[0])).fillDate,orgCode:JSON.parse(JSON.stringify(this.multipleSelection[0])).createOrgCode,
+            projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).status,projectName:this.multipleSelection[0].projectName
+          }
+          this.$router.push({
+            path: './companyMDetail/',
+            query: {mList: this.$utils.encrypt(JSON.stringify(mList))}
+          });
         }
-        this.$router.push({
-          path: './companyMDetail/',
-          query: {mList: this.$utils.encrypt(JSON.stringify(mList))}
-        });
+
       },
       handleSizeChange(val) {
         this.searchform.size = val;
@@ -491,7 +524,6 @@
         this.getData();
       },
       searchformSubmit() {
-        debugger
         this.searchform.current = 1;
         var date = new Date(this.searchform.fillDate);
         var y = date.getFullYear();
@@ -521,7 +553,8 @@
           projectStatusName:'',
           projectName:'',
           projectOmit:'',
-          projectId:''
+          projectId:'',
+          reportType:'2',
         };
         this.getData();
       },
@@ -548,12 +581,16 @@
         let mList = {projectId: row.projectId, orgCode: row.createOrgCode,projectName:row.projectName,createOrgId:row.createOrgId,createOrgName:row.createOrgName,
           fillDate:row.fillDate,projectreportuuid:row.projectreportuuid,reportType:row.reportType,createOrgType:row.createOrgType
         };
-        this.$router.push({
-          path: './companyMDetail/',
-          query: {mList: this.$utils.encrypt(JSON.stringify(mList))}
-        });
+        if((row.status==''||row.status==null) && row.projectId!=this.userdata.managerOrgId){
+          this.$message.info("该项目月报还未进行创建，无法进行操作", "提示")
+          return false
+        }else{
+          this.$router.push({
+            path: './companyMDetail/',
+            query: {mList: this.$utils.encrypt(JSON.stringify(mList))}
+          });
 
-      }
+        }}
     },
     created() {
       this.getData();

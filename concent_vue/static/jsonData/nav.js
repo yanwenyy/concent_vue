@@ -1235,6 +1235,23 @@ export default {
                   'iconCls': 'el-icon-office-building',
                   'menushow': false,
                   'leaf': true
+                },
+                {
+                  'name': '公司月报(工区)',
+                  'path': '/statistics/reportMonth/companyMgqList',
+                  'component': '/statistics/reportMonth/companyMgqList',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '公司月报(工区)详情',
+                  'path': '/statistics/reportMonth/companyMgqDetail',
+                  'component': '/statistics/reportMonth/companyMgqDetail',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': false,
+                  'leaf': true
                 }
               ]
             },

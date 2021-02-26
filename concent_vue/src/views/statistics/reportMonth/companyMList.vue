@@ -119,6 +119,23 @@
                         size="mini"/>
             </div>
           </template>
+          <template slot="header"
+                    slot-scope="scope">
+            <span>项目状态</span>
+            <div>
+              <el-select class="list-search-picker" clearable filterable
+                         placeholder="请选择"
+                         size="mini"
+                         v-model="searchform.projectStatusName"
+              >
+                <el-option :key="index"
+                           :label="item.detailPrjStaName"
+                           :value="item.id"
+                           v-for="(item, index) in flowStatusNameList"
+                ></el-option>
+              </el-select>
+            </div>
+          </template>
         </el-table-column>
         <el-table-column :width="150"
                          align="center"
@@ -256,6 +273,7 @@
     },
     data() {
       return {
+        data:{},
         userdata:{},
         treeStatas: false,
         showTqDialog:false,
@@ -271,7 +289,7 @@
           createUserName: '',
           projectTypeName:'',
           fillDate:'',
-          yearDate:'',
+          reportType:'1',
         },
         data:[],
         flowStatusList:[
@@ -281,7 +299,17 @@
           },
           {
             detailName:'未上报',
-            id:'0'
+            id:''
+          }
+        ],
+        flowStatusNameList:[
+          {
+            detailPrjStaName:'在建',
+            id:'在建'
+          },
+          {
+            detailPrjStaName:'竣工未结算',
+            id:'竣工未结算'
           }
         ],
         menus: [],
@@ -331,6 +359,7 @@
         var params = {};
         params.fillDate = this.searchform.fillDate;
         params.reportType='1';
+        params.status=='0';
         this.$http.post(
             url,
             JSON.stringify(params),
@@ -385,7 +414,6 @@
             JSON.stringify(tableData),
             {useJson: true}
         ).then((res) => {
-          debugger
           if (res.data.code === 200) {
             this.showTqDialog=false;
             this.$message({
@@ -407,11 +435,10 @@
         }
         let uuids = []
         this.multipleSelection.forEach((item) => {
-          debugger
           let a=this.userdata.managerOrgId;
           if(item.projectId==this.userdata.managerOrgId){
-            if(item.status=='1'){
-            this.$message.info('未上报的不允许编辑！')
+            if(item.status!='0'){
+            this.$message.info('只允许删除未上报的数据！')
             return false
             }else{
               uuids.push(item.projectreportuuid);
@@ -471,17 +498,22 @@
           this.$message.info("请选择一条数据，进行编辑", "提示")
           return false
         }
-        this.type = 'edit'
-        debugger;
-        this.form1 = JSON.parse(JSON.stringify(this.multipleSelection[0]));
-        let mList = {projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,projectreportuuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectreportuuid,
-          fillDate:JSON.parse(JSON.stringify(this.multipleSelection[0])).fillDate,orgCode:JSON.parse(JSON.stringify(this.multipleSelection[0])).createOrgCode,
-          projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).status,projectName:this.multipleSelection[0].projectName
-        }
-        this.$router.push({
-          path: './companyMDetail/',
-          query: {mList: this.$utils.encrypt(JSON.stringify(mList))}
-        });
+          if((this.multipleSelection[0].status==''||this.multipleSelection[0].status==null) && this.multipleSelection[0].projectId!=this.userdata.managerOrgId){
+            this.$message.info("该项目月报还未进行创建，无法进行操作", "提示")
+            return false
+          }else{
+            this.type = 'edit'
+            this.form1 = JSON.parse(JSON.stringify(this.multipleSelection[0]));
+            let mList = {projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,projectreportuuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectreportuuid,
+              fillDate:JSON.parse(JSON.stringify(this.multipleSelection[0])).fillDate,orgCode:JSON.parse(JSON.stringify(this.multipleSelection[0])).createOrgCode,
+              projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).status,projectName:this.multipleSelection[0].projectName
+            }
+            this.$router.push({
+              path: './companyMDetail/',
+              query: {mList: this.$utils.encrypt(JSON.stringify(mList))}
+            });
+          }
+
       },
       handleSizeChange(val) {
         this.searchform.size = val;
@@ -492,7 +524,6 @@
         this.getData();
       },
       searchformSubmit() {
-        debugger
         this.searchform.current = 1;
         var date = new Date(this.searchform.fillDate);
         var y = date.getFullYear();
@@ -501,7 +532,6 @@
         var time1 = new Date(time);
         var time2 = time1.getTime();
         this.searchform.fillDate= time2;
-         this.searchform.yearDate= y;
         this.getData();
       },
       searchformReset() {
@@ -523,7 +553,8 @@
           projectStatusName:'',
           projectName:'',
           projectOmit:'',
-          projectId:''
+          projectId:'',
+          reportType:'1',
         };
         this.getData();
       },
@@ -540,7 +571,6 @@
         var time1 = new Date(time);
         var time2 = time1.getTime();
         this.searchform.fillDate= time2;
-        this.searchform.yearDate=y;
         this.$http
             .post('/api/statistics/projectMonthlyReport/Projectreport/list/companyMonthlyReportList', this.searchform)
             .then(res => {
@@ -551,12 +581,16 @@
         let mList = {projectId: row.projectId, orgCode: row.createOrgCode,projectName:row.projectName,createOrgId:row.createOrgId,createOrgName:row.createOrgName,
           fillDate:row.fillDate,projectreportuuid:row.projectreportuuid,reportType:row.reportType,createOrgType:row.createOrgType
         };
+        if((row.status==''||row.status==null) && row.projectId!=this.userdata.managerOrgId){
+          this.$message.info("该项目月报还未进行创建，无法进行操作", "提示")
+          return false
+        }else{
         this.$router.push({
           path: './companyMDetail/',
           query: {mList: this.$utils.encrypt(JSON.stringify(mList))}
         });
 
-      }
+      }}
     },
     created() {
       this.getData();

@@ -1,9 +1,9 @@
 <!--公司月报工区详情-->
 <template>
   <div style="position: relative">
-      <!--<el-button  @click="save" v-if="dataReport.status!='1'" type="primary"  class="detailbutton detail-back-tab" style="float: left; margin-right: 185px;"plain>保存</el-button>-->
-      <el-button  @click="submit" v-if="dataReport.status!='1'" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>
-      <el-button  @click="back" type="primary"  class="detailbutton detail-back-tab " plain>返回</el-button>
+    <!--<el-button  @click="save" v-if="dataReport.status!='1'" type="primary"  class="detailbutton detail-back-tab" style="float: left; margin-right: 185px;"plain>保存</el-button>-->
+    <el-button  @click="submit" v-if="dataReport.status!='1'" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>
+    <el-button  @click="back" type="primary"  class="detailbutton detail-back-tab " plain>返回</el-button>
     <el-tabs type="border-card" v-model="activeName">
       <el-tab-pane v-if="projectList.uuid!=''&& projectList.uuid!=null" label="整体进度" name="ztjd">
         <div class="detailBox">
@@ -106,7 +106,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                 <div>{{scope.row.monthValue}}</div>
+                <div>{{scope.row.monthValue}}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -253,11 +253,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div v-if="scope.row.veditable === '1'">
-                  <el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')" @blur="getPlanYear(data,scope.$index,scope.row.sumTarget)"/>
-                </div>
-                <!--                    <div v-else-if="projectStatus !== '2' " style="text-align: right">{{sumCount(scope.row)}}</div>-->
-                <div v-else>{{scope.row.value}}</div>
+                <div >{{scope.row.value}}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -286,7 +282,7 @@
             <el-form-item
               label="项目类型:"
             >
-                <el-input v-model="projectList.projectType" disabled></el-input>
+              <el-input v-model="projectList.projectType" disabled></el-input>
             </el-form-item>
             <el-form-item
               label="承建单位:"
@@ -298,7 +294,7 @@
             </el-form-item>
             <el-form-item
               label="工程行业类别:"
-            ><el-input v-model="projectList.projectName" disabled ></el-input>
+            ><el-input v-model="projectList.projectTypeSecond" disabled ></el-input>
             </el-form-item>
             <el-form-item
               label="所属铁路局:"
@@ -320,18 +316,18 @@
               label="工程合同额(万元):"
             ><el-input v-model="projectList.contractAmountEngine" disabled ></el-input>
             </el-form-item>
-        <!--    <el-form-item
-              label="合同额增减(万元):"
-            ><el-input v-model="projectList.projectName" disabled ></el-input>
-            </el-form-item>-->
+            <!--    <el-form-item
+                  label="合同额增减(万元):"
+                ><el-input v-model="projectList.projectName" disabled ></el-input>
+                </el-form-item>-->
             <el-form-item
               label="计量单位:"
             ><el-input v-model="projectList.unitName" disabled ></el-input>
             </el-form-item>
-           <!-- <el-form-item
-              label="初始签订数量:"
-            ><el-input v-model="projectList.projectName" disabled ></el-input>
-            </el-form-item>-->
+            <!-- <el-form-item
+               label="初始签订数量:"
+             ><el-input v-model="projectList.projectName" disabled ></el-input>
+             </el-form-item>-->
             <el-form-item
               label="工程合同数量:"
             ><el-input v-model="projectList.contractCount" disabled ></el-input>
@@ -381,21 +377,21 @@
             ><el-input v-model="projectList.beginAddress" disabled ></el-input>
             </el-form-item>
             <div>
-            <el-form-item
-              label="工程概况(最多700字):"
-            ><el-input v-model="projectList.engineSurvey" type="textarea"disabled ></el-input>
-            </el-form-item>
+              <el-form-item
+                label="工程概况(最多700字):"
+              ><el-input v-model="projectList.engineSurvey" type="textarea"disabled ></el-input>
+              </el-form-item>
             </div>
             <div>
-            <el-form-item
-              label="备 注(最多200字):"
-            ><el-input v-model="projectList.projectRemark" type="textarea" disabled ></el-input>
-            </el-form-item>
+              <el-form-item
+                label="备 注(最多200字):"
+              ><el-input v-model="projectList.projectRemark" type="textarea" disabled ></el-input>
+              </el-form-item>
             </div>
-       <!--     <el-form-item
-              label="相关附件(最大10 MB):"
-            ><el-input v-model="projectList.projectName" disabled ></el-input>
-            </el-form-item>-->
+            <!--     <el-form-item
+                   label="相关附件(最大10 MB):"
+                 ><el-input v-model="projectList.projectName" disabled ></el-input>
+                 </el-form-item>-->
           </el-form>
         </div>
       </el-tab-pane>
@@ -404,7 +400,7 @@
         </div>
       </el-tab-pane>-->
     </el-tabs>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -455,12 +451,12 @@
       // 保存
       save() {
         this.dataReport.status="1"
-          let tableData = {
-            projectReportDetaiList:this.data,
-            projectreport:this.dataReport,
-            planPrjTjxDetailList:this.nextData
-          }
-          this.$http
+        let tableData = {
+          projectReportDetaiList:this.data,
+          projectreport:this.dataReport,
+          planPrjTjxDetailList:this.nextData
+        }
+        this.$http
             .post('/api/statistics/projectMonthlyReport/Projectreport/detail/saveOrUpdate', JSON.stringify(tableData), {useJson: true})
             .then(res => {
               if (res.data.code === 200) {
@@ -480,7 +476,7 @@
           projectreport:this.dataReport,
           planPrjTjxDetailList:this.nextData
         }
-          this.$http
+        this.$http
             .post('/api/statistics/projectMonthlyReport/Projectreport/detail/saveOrUpdate', JSON.stringify(tableData), {useJson: true})
             .then(res => {
               if (res.data.code === 200) {
@@ -493,43 +489,48 @@
               }
             })
       },
-  /*    rollback() {
-        this.$http
-          .post('/api/statistics/PlanProjectTjx/detail/save', JSON.stringify({uuid: this.p.planInfo.planId, status: 0}), {useJson: true})
-          .then(res => {
-            if (res.data.code === 200) {
-              this.$message({
-                message: '回退成功',
-                duration: 1000,
-                onClose: () => { this.$router.back() }
+      /*    rollback() {
+            this.$http
+              .post('/api/statistics/PlanProjectTjx/detail/save', JSON.stringify({uuid: this.p.planInfo.planId, status: 0}), {useJson: true})
+              .then(res => {
+                if (res.data.code === 200) {
+                  this.$message({
+                    message: '回退成功',
+                    duration: 1000,
+                    onClose: () => { this.$router.back() }
+                  })
+                }
               })
-            }
-          })
-      },*/
+          },*/
       // 返回上一页
       back() {
         this.$router.back()
       },
       // 获取数据
       getData() {
-        debugger
+      debugger
         this.$http
-          .post('/api/statistics/projectMonthlyReport/Projectreport/detail/queryMonthReportEntityInfo', JSON.stringify({
-            projectId: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectId,
-            uuid: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectreportuuid,
-            fillDate: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).fillDate,
-            createOrgCode: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).orgCode,
-            createOrgType: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).createOrgType,
-            reportType: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportType
-          }), {useJson: true})
-          .then(res => {
-            this.data = res.data.data.projectReportDetaiList
-            this.dataReport=res.data.data.projectreport
-            this.nextData=res.data.data.planPrjTjxDetailList
-            this.projectList=res.data.data.projectList||{}
-            console.log('data', this.data)
-            // this.reportVo=this.data;
-          })
+            .post('/api/statistics/projectMonthlyReport/Projectreport/detail/queryMonthReportEntityInfo', JSON.stringify({
+              projectId: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectId,
+              uuid: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectreportuuid,
+              fillDate: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).fillDate,
+              createOrgCode: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).orgCode,
+              createOrgType: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).createOrgType,
+              reportType: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportType
+            }), {useJson: true})
+            .then(res => {
+              this.data = res.data.data.projectReportDetaiList
+              this.dataReport=res.data.data.projectreport
+              this.nextData=res.data.data.planPrjTjxDetailList
+              this.projectList=res.data.data.projectList||{}
+              console.log('data', this.data)
+              if(this.projectList.uuid!=''&& this.projectList.uuid!=null){
+                this.activeName="ztjd"
+              }else{
+                this.activeName="cwjswgcl"
+              }
+              // this.reportVo=this.data;
+            })
       }
     },
     created() {
@@ -564,55 +565,55 @@
     margin-top: 20px;
   }
   .gcform {
-     margin-top: 10px;
-     >>>.el-form-item__label:before {
-       position: initial;
-       left: -10px;
-     }
-     >>>.el-form-item__error {
-       padding-top: 0px;
-       width: 95%;
-       margin-left: 0;
-       text-align: right;
-       top: 0%;
-     }
-   >.el-form-item,>>>.formItem{
+    margin-top: 10px;
+    >>>.el-form-item__label:before {
+      position: initial;
+      left: -10px;
+    }
+    >>>.el-form-item__error {
+      padding-top: 0px;
+      width: 95%;
+      margin-left: 0;
+      text-align: right;
+      top: 0%;
+    }
+    >.el-form-item,>>>.formItem{
 
-         display: inline-block;
-         width: 32.5%!important;
-       }
-  .div-item >>>.el-form-item{
-       display: inline-block;
-       width: 32.5%!important;
-     }
-     .detailformfooter1 {
-       margin-top: 5px;
-       width: 100%;
-       .el-button {
-         margin: 0 30px;
-         width: 140px;
-         height: 42px;
-         font-size: 18px;
-         font-family: Microsoft YaHei;
-       }
-       .el-button--primary {
-         background: #5c8bfa;
-       }
-       .el-button--default {
-         border: 1px solid #5c8bfa;
-         color: #5c8bfa;
-       }
-     }
-     .errorMsg >>>.el-form-item__label {
-       color: red;
-     }
-     >>>.el-input {
-       width: 300px;
-     }
-     >>>.el-input >>>.el-input_inner {
-       width: 300px;
-       height: 500px;
-     }
+      display: inline-block;
+      width: 32.5%!important;
+    }
+    .div-item >>>.el-form-item{
+      display: inline-block;
+      width: 32.5%!important;
+    }
+    .detailformfooter1 {
+      margin-top: 5px;
+      width: 100%;
+      .el-button {
+        margin: 0 30px;
+        width: 140px;
+        height: 42px;
+        font-size: 18px;
+        font-family: Microsoft YaHei;
+      }
+      .el-button--primary {
+        background: #5c8bfa;
+      }
+      .el-button--default {
+        border: 1px solid #5c8bfa;
+        color: #5c8bfa;
+      }
+    }
+    .errorMsg >>>.el-form-item__label {
+      color: red;
+    }
+    >>>.el-input {
+      width: 300px;
+    }
+    >>>.el-input >>>.el-input_inner {
+      width: 300px;
+      height: 500px;
+    }
   }
 
   .el-input .el-input_inner {
@@ -648,12 +649,12 @@
     // height: 200px;
   }
 
-/*  >>>.el-input--mini .el-input__inner {
-    height: 40px;
-    width: 100%;
-    box-sizing: border-box;
-    // margin: 10px 0 0 10px;
-  }*/
+  /*  >>>.el-input--mini .el-input__inner {
+      height: 40px;
+      width: 100%;
+      box-sizing: border-box;
+      // margin: 10px 0 0 10px;
+    }*/
 
   .gcform >>>.el-input {
     width: 95%;

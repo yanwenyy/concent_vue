@@ -90,6 +90,23 @@
               <el-input style=" width: 100%" v-model="searchform.projectStatusName" size="mini"/>
             </div>
           </template>
+           <template slot="header"
+                     slot-scope="scope">
+             <span>项目状态</span>
+             <div>
+               <el-select class="list-search-picker" clearable filterable
+                          placeholder="请选择"
+                          size="mini"
+                          v-model="searchform.projectStatusName"
+               >
+                 <el-option :key="index"
+                            :label="item.detailPrjStaName"
+                            :value="item.id"
+                            v-for="(item, index) in flowStatusNameList"
+                 ></el-option>
+               </el-select>
+             </div>
+           </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -235,6 +252,16 @@
       return {
         userdata:{},
         treeStatas: false,
+          flowStatusNameList:[
+        {
+          detailPrjStaName:'在建',
+          id:'在建'
+        },
+        {
+          detailPrjStaName:'竣工未结算',
+          id:'竣工未结算'
+        }
+      ],
         page: { current: 1, size: 20, total: 0, records: [] },
         searchform: {
           current: 1,
