@@ -1284,6 +1284,35 @@ export default {
                 },
               ]
             },
+            {
+              'name': '季/年报表',
+              'path': '/statistics/quarterlyReport',
+              'component': '/router',
+              'iconCls': 'el-icon-time',
+              'menushow': true,
+              'leaf': false,
+              'defaultpage': false,
+              'children': [
+                {
+                  'name': '季报填报',
+                  'path': '/statistics/quarterlyReport/list',
+                  'component': '/statistics/quarterlyReport/list',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '季报填报详情',
+                  'path': '/statistics/quarterlyReport/detail',
+                  'component': '/statistics/quarterlyReport/detail',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+              ]
+            },
           ]
         },
         {
