@@ -587,16 +587,23 @@
 
             <p class="detail-title"><span  class="uploadSpan">附件: </span>
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
-              <el-upload v-show="p.actpoint != 'look'"
-                class="upload-demo detailUpload"
-                :action="'/api/contract/topInfo/CommonFiles/verify/01/uploadFile'"
-                :on-success="handleChange"
-                :on-error="handleChange"
-                :on-remove="handleRemove"
-                multiple
-              >
-              <el-button type="primary">点击上传</el-button>
-            </el-upload>
+              <el-button
+                v-show="p.actpoint !== 'look'"
+                size="small"
+                type="primary"
+                @click="openFileUp('/api/contract/topInfo/CommonFiles/verify/01/uploadFile','commonFilesList')">
+                点击上传
+              </el-button>
+              <!--<el-upload v-show="p.actpoint != 'look'"-->
+                <!--class="upload-demo detailUpload"-->
+                <!--:action="'/api/contract/topInfo/CommonFiles/verify/01/uploadFile'"-->
+                <!--:on-success="handleChange"-->
+                <!--:on-error="handleChange"-->
+                <!--:on-remove="handleRemove"-->
+                <!--multiple-->
+              <!--&gt;-->
+              <!--<el-button type="primary">点击上传</el-button>-->
+            <!--</el-upload>-->
             </p>
             </div>
     <div>
@@ -873,6 +880,7 @@
     <TreeOrg v-if="treeOrgStatas" ref="addOrUpdate" @getPosition="getTreeOrg"></TreeOrg>
     <TreeOrg v-if="treeOrgStatas1" ref="addOrUpdate1" @getPosition="getTreeOrg1"></TreeOrg>
    <TreeOrg v-if="treeOrgStatas2" ref="addOrUpdate2" @getPosition="getTreeOrg2"></TreeOrg>
+    <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
   </div>
 
 </template>
@@ -881,12 +889,14 @@
 import TreeOrg from '@/components/treeOrg'
 import { isMoney } from '@/utils/validate'
 import AuditProcess from '@/components/auditProcess'
+import FileUpload from '@/components/fileUpload'
 export default {
 
   // name: '详情',
   components: {
     TreeOrg,
-    AuditProcess
+    AuditProcess,
+    FileUpload
   },
   data() {
     var validateMoney = (rule, value, callback) => {
@@ -900,6 +910,7 @@ export default {
       }
     }
     return {
+      uploadVisible:false,//上传附件组件状态
       maxMoney:1000000,
       treeOrgStatas: false,
       treeOrgStatas1: false,
@@ -972,6 +983,19 @@ export default {
 
   },
   methods: {
+      //打开附件上传的组件
+      openFileUp(url,list){
+        this.uploadVisible = true;
+        this.$nextTick(() => {
+          this.$refs.infoUp.init(url,list);
+      })
+      },
+      //获取上传的附件列表
+      getUpInfo(data){
+        this.$forceUpdate();
+        this.detailform[data.list]=this.detailform[data.list].concat(data.fileList);
+        this.uploadVisible = false;
+      },
       //流程操作
       operation(type){
         this.$http

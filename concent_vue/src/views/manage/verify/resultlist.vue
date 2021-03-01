@@ -199,6 +199,7 @@
         <p class="detail-title"><span class="uploadSpan">附件: </span>
           <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
          <el-upload
+           :headers="{'Authorization':Authorization}"
            class="upload-demo detailUpload"
            :action="'/api/contract/topInfo/CommonFiles/verify/02/uploadFile'"
            :on-success="handleChange"
@@ -287,6 +288,7 @@ export default {
   // name: "标段通过信息录入",
   data() {
     return {
+      Authorization:sessionStorage.getItem("token"),
       radio: '0',
       page: {current: 1, size: 20, total: 0, records: []},
       showinput: false,

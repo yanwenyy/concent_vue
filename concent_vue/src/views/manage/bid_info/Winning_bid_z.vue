@@ -566,6 +566,7 @@
                 v-show="zbType=='add'"
                   class="upload-demo detailUpload"
                   :action="'/api/contract/topInfo/CommonFiles/bidInfo/03/uploadFile'"
+                :headers="{'Authorization':Authorization}"
                   :on-success="handleChange"
                   :on-error="handleChange"
                   :on-remove="handleRemove"
@@ -644,6 +645,7 @@ export default {
       }
     };
     return {
+      Authorization:sessionStorage.getItem("token"),
       key: 0,
       isWinBid: "",
       dialogFormVisible: false,

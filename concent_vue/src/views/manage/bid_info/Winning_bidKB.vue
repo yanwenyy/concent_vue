@@ -519,19 +519,26 @@
 
              <el-row>
                 <p class="detail-title"><span >开标记录（最大10MB）: </span>
-                <el-upload
-                  class="upload-demo detailUpload"
-                  :action="'/api/contract/topInfo/CommonFiles/bidInfo/02/uploadFile'"
-                  :on-success="handleChange"
-                  :on-error="handleChange"
-                  :on-remove="handleRemove"
-                  :show-file-list="false"
-                  :file-list="detailform.bidInfo_02"
-                  :disabled="p.actpoint === 'look'"
-                  multiple
-                >
-                  <el-button size="small" type="primary">点击上传</el-button>
-                </el-upload>
+                  <el-button
+                    v-show="p.actpoint !== 'look'"
+                    size="small"
+                    type="primary"
+                    @click="openFileUp('/api/contract/topInfo/CommonFiles/bidInfo/02/uploadFile','bidInfo_02')">
+                    点击上传
+                  </el-button>
+                <!--<el-upload-->
+                  <!--class="upload-demo detailUpload"-->
+                  <!--:action="'/api/contract/topInfo/CommonFiles/bidInfo/02/uploadFile'"-->
+                  <!--:on-success="handleChange"-->
+                  <!--:on-error="handleChange"-->
+                  <!--:on-remove="handleRemove"-->
+                  <!--:show-file-list="false"-->
+                  <!--:file-list="detailform.bidInfo_02"-->
+                  <!--:disabled="p.actpoint === 'look'"-->
+                  <!--multiple-->
+                <!--&gt;-->
+                  <!--<el-button size="small" type="primary">点击上传</el-button>-->
+                <!--</el-upload>-->
               </p>
 
               <el-table
@@ -936,6 +943,7 @@
     </el-card>
     <add-bd  v-if="BDCSVisible" ref="infoBD" @refreshBD="getBdInfo"></add-bd>
     <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
+    <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
   </div>
 
 </template>
@@ -944,6 +952,7 @@
 import { isMoney } from '@/utils/validate'
 import CompanyTree from '../contractManager/companyTree'
 import AddBd from './addBd'
+import FileUpload from '@/components/fileUpload'
 export default {
   data() {
       var validateMoney = (rule, value, callback) => {
@@ -956,6 +965,7 @@ export default {
       }
     }
     return {
+      uploadVisible:false,//上传附件组件状态
       maxMoney:1000000,
       key:0,
       BDCSVisible:false,//标段新增弹框状态
@@ -994,7 +1004,8 @@ export default {
   },
     components: {
     AddBd,
-    CompanyTree
+    CompanyTree,
+      FileUpload
   },
   computed: {
       bidType() {
@@ -1012,6 +1023,19 @@ export default {
 
   },
   methods: {
+    //打开附件上传的组件
+    openFileUp(url,list){
+      this.uploadVisible = true;
+      this.$nextTick(() => {
+        this.$refs.infoUp.init(url,list);
+    })
+    },
+    //获取上传的附件列表
+    getUpInfo(data){
+      this.$forceUpdate();
+      this.detailform[data.list]=this.detailform[data.list].concat(data.fileList);
+      this.uploadVisible = false;
+    },
     //打开单位弹框
     addDw(type,list){
       this.DwVisible = true;
