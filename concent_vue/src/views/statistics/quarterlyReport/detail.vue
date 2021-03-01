@@ -1,5 +1,6 @@
 <template>
   <div style="position: relative">
+    <div class="tabs-header-copy"></div>
     <el-button @click="back" class="detailbutton detail-back-tab" >返回</el-button>
     <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="saveInfo('detailform','save')" class="detailbutton detail-back-tab save-btn">保存</el-button>
     <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.topInfoOrg.flowStatus==1||detailform.topInfoOrg.flowStatus==4)" @click="saveInfo('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
@@ -59,7 +60,7 @@
                 v-model="detailform.topInfor.inforNameForeign"/>
             </el-form-item>
             <el-form-item
-              label="工程监理:"
+              label="自行完成施工产值(万元):"
             >
               <el-input
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -68,7 +69,7 @@
                 v-model="detailform.topInfor.inforNameForeign"/>
             </el-form-item>
             <el-form-item
-              label="技术咨询与转让:"
+              label="分包出去工程的产值(万元):"
             >
               <el-input
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -77,7 +78,7 @@
                 v-model="detailform.topInfor.inforNameForeign"/>
             </el-form-item>
             <el-form-item
-              label="其他:"
+              label="从建设单位以外承揽工程完成的产值(万元):"
             >
               <el-input
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -85,1977 +86,2675 @@
 
                 v-model="detailform.topInfor.inforNameForeign"/>
             </el-form-item>
+            <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                <span>三、施工产值(万元): <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/> </span>
+            </p>
+            <el-form-item
+              label="其中:装饰装修产值(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="其中:在外省完成的产值(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="建筑工程产值(万元)"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="安装工程产值(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="设备工器具产值(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="其他产值(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                <span>1、 按类别分</span>
+            </p>
+            <el-form-item
+              label="铁路(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="公路(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="房建(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="市政(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="城轨(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="铁路四电(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="水利(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="电力(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="机场(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="矿山(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="港口与航道(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="其他(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+              <span>2、按地域分</span>
+            </p>
+            <el-form-item
+              label="北京市(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="天津市(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="河北省(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="山西省(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="内蒙古自治区(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="辽宁省(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="吉林省(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="黑龙江省(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="上海市(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="江苏省(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="浙江省(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="安徽省(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="福建省(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="江西省(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="山东省(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="河南省(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="湖北省(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="湖南省(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="广东省(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="广西壮族自治区(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="海南省(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="重庆市(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="四川省(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="贵州省(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="云南省(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="西藏自治区(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="陕西省(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="甘肃省(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="青海省(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="宁夏(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="新疆(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="澳门(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="台湾省(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="香港(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="海外(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                <span>四、竣工产值(万元): <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/> </span>
+            </p>
+            <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                <span>五、房屋施工面积(平方米):<el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/> </span>
+            </p>
+            <el-form-item
+              label="其中:本年新开工面积(平方米):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="其中:实行投标承包面积(平方米):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                <span>六、主要建筑材料消耗量 </span>
+            </p>
+            <div class="row-three">
+              <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                <span>(一)实物量 </span>
+              </p>
+              <el-form-item
+                label="钢材*(吨):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="木材*(立方米):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="平板玻璃*(平方米):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="平板玻璃*(平方米):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="平板玻璃*(重量箱):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="铝材*(吨):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+            </div>
+            <div class="row-three">
+            <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+              <span>(二)价值量 </span>
+            </p>
+            <el-form-item
+              label="钢材*(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="木材*(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="水泥*(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="平板玻璃*(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="铝材*(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+          </div>
+            <br>
+            <div class="row-three">
+              <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                <span>七、从事建筑业活动的从业人员 </span>
+              </p>
+              <el-form-item
+                label="平均人数(人):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="期末人数(人):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="其中:工程技术人员(人):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="其中:一级建造师(人):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="其中:现场施工人员*(人):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="其中:持证上岗人员*(人):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+            </div>
+            <div class="row-three">
+              <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                <span>八、年末自有机械设备情况</span>
+              </p>
+              <el-form-item
+                label="总台数*(台):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="其中:施工机械设备总台数(台):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="总功率*(千瓦):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="其中:施工机械设备总功率(千瓦):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="净值*(万元):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="其中:施工机械设备净值(万元):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+            </div>
           </el-form>
         </div>
       </el-tab-pane>
       <el-tab-pane label="季报生产经营JB1表(境内)">
-        <el-tabs type="border-card">
-          <el-tab-pane label="产值">
-            <div class="detailBox">
-              <el-form
-                :inline="false"
-                :model="detailform"
-                :rules="rules"
-                class="gcform"
-                ref="detailform"
-              >
-                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
-                  <span>合计:</span>
-                </p>
-                <el-form-item
-                  label="工业总产值(万元):"
-                  prop="topInfor.inforName"
-                  :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
+        <div class="detailBox">
+          <el-form
+            :inline="false"
+            :model="detailform"
+            :rules="rules"
+            class="gcform"
+            ref="detailform"
+          >
+            <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+              <span>一 、建筑业合同情况</span>
+            </p>
+            <el-form-item
+              label="签订的合同额(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
 
-                    v-model="detailform.topInfor.inforName"/>
-                </el-form-item>
-                <el-form-item
-                  label="工业总产值年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
+                v-model="detailform.topInfor.inforName"/>
+            </el-form-item>
+            <el-form-item
+              label="上年结转合同额(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
 
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="装备制造(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="本年新签合同额(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
 
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="装备制造年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+              <span>二、承包工程完成情况 </span>
+            </p>
+            <el-form-item
+              label="直接从建设单位承揽工程完成的产值小计(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
 
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="预构件(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="直接从建设单位承揽工程完成的产值小计(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
 
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="预构件年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="自行完成施工产值(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
 
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="其他工业产品(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="分包出去工程的产值(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
 
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="其他工业产品年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="从建设单位以外承揽工程完成的产值(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
 
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
-                  <span>境内数据: </span>
-                </p>
-                <el-form-item
-                  label="工业总产值(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                <span>三、施工产值(万元): <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
 
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="工业总产值年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
+                  v-model="detailform.topInfor.inforNameForeign"/> </span>
+            </p>
+            <el-form-item
+              label="其中:装饰装修产值(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
 
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="装备制造(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="其中:在外省完成的产值(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
 
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="装备制造年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="建筑工程产值(万元)"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
 
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="预构件(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="安装工程产值(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
 
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="预构件年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="设备工器具产值(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
 
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="其他工业产品(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <el-form-item
+              label="其他产值(万元):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
 
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="其他工业产品年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
 
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
-                  <span>境外数据: </span>
-                </p>
-                <el-form-item
-                  label="工业总产值(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="工业总产值年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="装备制造(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="装备制造年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="预构件(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="预构件年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="其他工业产品(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="其他工业产品年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-              </el-form>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="主要项目管理">
-            <div class="table-div">
-              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
-                <el-form-item label="项目名称:">
-                  <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
-                </el-form-item>
-                <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-                <el-button @click="getData" type="primary" plain>查询</el-button>
-                <el-button @click="exportdata" type="primary" plain>导出</el-button>
-              </el-form>
-              <el-table
-                :data="[]"
-                :header-cell-style="{
-                'text-align': 'center',
-                'background-color': 'rgba(246,248,252,1)',
-                color: 'rgba(0,0,0,1)',
-              }"
-                @selection-change="handleSelectionChange"
-                align="center"
-                border
-                class="detailTable"
-                ref="table"
-                style="width: 100%; min-height: calc(100vh - 370px)"
-              >
-                <el-table-column
-                  label="项目信息"
-                >
-                  <el-table-column
-                    :width="80"
-                    align="center"
-                    label="序号"
-                    show-overflow-tooltip
-                    type="index"
-                  ></el-table-column>
-
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="项目名称"
-                    prop="projectCode"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="合同号"
-                    prop="projectName"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="所属单位"
-                    prop="projectProp"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    :resizable="false"
-                    label="境/内外"
-                    align="center"
-                    prop="measureUnit"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="项目内容"
-                    prop="workAmount"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="推送人"
-                    prop="singlePrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="联系方式"
-                    prop="sumPrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="合同额"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="剩余合同额"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                    width="150"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="上报产值是否含增值税"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                    width="200"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="税额"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                </el-table-column>
-                <el-table-column
-                  label="本月完成"
-                >
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="工业总产值"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                    width="150"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="装备制造"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="预购件"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="其他工业产品"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                    width="150"
-                  >
-                  </el-table-column>
-                </el-table-column>
-              </el-table>
-            </div>
-          </el-tab-pane>
-        </el-tabs>
+          </el-form>
+        </div>
       </el-tab-pane>
       <el-tab-pane label="季报房建完成JB2表">
-        <el-tabs type="border-card">
-          <el-tab-pane label="产值">
-            <div class="detailBox">
-              <el-form
-                :inline="false"
-                :model="detailform"
-                :rules="rules"
-                class="gcform"
-                ref="detailform"
-              >
-                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
-                  <span>合计:</span>
-                </p>
-                <el-form-item
-                  label="物资贸易产值(万元):"
-                  prop="topInfor.inforName"
-                  :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforName"/>
-                </el-form-item>
-                <el-form-item
-                  label="物资贸易产值年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
-                  <span>境内数据: </span>
-                </p>
-                <el-form-item
-                  label="物资贸易产值(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="物资贸易产值年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
-                  <span>境外数据: </span>
-                </p>
-                <el-form-item
-                  label="物资贸易产值(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="物资贸易产值年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-              </el-form>
+        <div class="detailBox">
+          <el-form
+            :inline="false"
+            :model="detailform"
+            :rules="rules"
+            class="gcform"
+            ref="detailform"
+          >
+            <div class="row-four">
+              <div class="four-name">指标名称</div>
+              <div class="four-name">房屋建筑施工面积(平方米)</div>
+              <div class="four-name">房屋建筑竣工面积(平方米)</div>
+              <div class="four-name">房屋竣工价值(万元)</div>
             </div>
-          </el-tab-pane>
-          <el-tab-pane label="主要项目管理">
-            <div class="table-div">
-              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
-                <el-form-item label="项目名称:">
-                  <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
-                </el-form-item>
-                <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-                <el-button @click="getData" type="primary" plain>查询</el-button>
-                <el-button @click="exportdata" type="primary" plain>导出</el-button>
-              </el-form>
-              <el-table
-                :data="[]"
-                :header-cell-style="{
-                'text-align': 'center',
-                'background-color': 'rgba(246,248,252,1)',
-                color: 'rgba(0,0,0,1)',
-              }"
-                @selection-change="handleSelectionChange"
-                align="center"
-                border
-                class="detailTable"
-                ref="table"
-                style="width: 100%; min-height: calc(100vh - 370px)"
-              >
-                <el-table-column
-                  label="项目信息"
-                >
-                  <el-table-column
-                    :width="80"
-                    align="center"
-                    label="序号"
-                    show-overflow-tooltip
-                    type="index"
-                  ></el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="合同编号"
-                    prop="projectName"
-                    align="center"
-                    show-overflow-tooltip
-                    width="150"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="项目名称"
-                    prop="projectCode"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
+            <div class="row-four">
+              <div class="four-name">合计：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
 
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="所属单位"
-                    prop="projectProp"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="项目内容"
-                    prop="projectProp"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    :resizable="false"
-                    label="境/内外"
-                    align="center"
-                    prop="measureUnit"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="推送人"
-                    prop="workAmount"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="联系方式"
-                    prop="sumPrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="合同额"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="剩余合同额"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                    width="150"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="上报产值是否含增值税"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                    width="200"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="税额"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                </el-table-column>
-                <el-table-column
-                  label="本月完成"
-                >
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="物资贸易产值"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                    width="150"
-                  >
-                  </el-table-column>
-                </el-table-column>
-              </el-table>
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
             </div>
-          </el-tab-pane>
-        </el-tabs>
+            <div class="row-four">
+              <div class="four-name">1、住宅房屋：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">（1）商厦房屋（批发和零售用房）：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">（2）宾馆用房屋（住宿用房）：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">（3）餐饮用房屋（餐饮用房）：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">（4）商务会展用房屋：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">（5）其他商业及服务用房屋（居民服务业用房）：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">3、办公用房屋：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">4、科研、教育、医疗用房屋：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">（1）科学研究用房屋：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">（2）教育用房屋：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">（3）医疗用房屋（卫生医疗用房）：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">5、文化、体育、娱乐用房屋：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">6、厂房及建筑物：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">其中：厂房：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">7、仓库：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">8、其他未列明的房屋建筑物：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">9、铁路工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">10、铁路四电：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">11、公路工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">12、城市轨道：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">13、市政工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">14、电力工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">15、水利工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">16、机场工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">17、矿山工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+            <div class="four-name">18、港口与航道工程：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforName"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforName"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforName"/>
+            </el-form-item>
+          </div>
+            <div class="row-four">
+              <div class="four-name">19、其它工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+          </el-form>
+        </div>
       </el-tab-pane>
       <el-tab-pane label="季报房建完成JB2表(境内)">
-        <el-tabs type="border-card">
-          <el-tab-pane label="产值">
-            <div class="detailBox">
-              <el-form
-                :inline="false"
-                :model="detailform"
-                :rules="rules"
-                class="gcform"
-                ref="detailform"
-              >
-                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
-                  <span>合计:</span>
-                </p>
-                <el-form-item
-                  label="房地产营业收入(万元):"
-                  prop="topInfor.inforName"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforName"/>
-                </el-form-item>
-                <el-form-item
-                  label="房地产营业收入年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="表内营收(万元)::"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="表内营收年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="表外权益(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="表外权益年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="表外非权益(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="表外非权益年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
-                  <span>境内数据: </span>
-                </p>
-                <el-form-item
-                  label="房地产营业收入(万元):"
-                  prop="topInfor.inforName"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforName"/>
-                </el-form-item>
-                <el-form-item
-                  label="房地产营业收入年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="表内营收(万元)::"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="表内营收年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="表外权益(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="表外权益年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="表外非权益(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="表外非权益年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
-                  <span>境外数据: </span>
-                </p>
-                <el-form-item
-                  label="房地产营业收入(万元):"
-                  prop="topInfor.inforName"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforName"/>
-                </el-form-item>
-                <el-form-item
-                  label="房地产营业收入年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="表内营收(万元)::"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="表内营收年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="表外权益(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="表外权益年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="表外非权益(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="表外非权益年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-              </el-form>
+        <div class="detailBox">
+          <el-form
+            :inline="false"
+            :model="detailform"
+            :rules="rules"
+            class="gcform"
+            ref="detailform"
+          >
+            <div class="row-four">
+              <div class="four-name">指标名称</div>
+              <div class="four-name">房屋建筑施工面积(平方米)</div>
+              <div class="four-name">房屋建筑竣工面积(平方米)</div>
+              <div class="four-name">房屋竣工价值(万元)</div>
             </div>
-          </el-tab-pane>
-          <el-tab-pane label="主要项目管理">
-            <div class="table-div">
-              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
-                <el-form-item label="项目名称:">
-                  <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
-                </el-form-item>
-                <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-                <el-button @click="getData" type="primary" plain>查询</el-button>
-                <el-button @click="exportdata" type="primary" plain>导出</el-button>
-              </el-form>
-              <el-table
-                :data="[]"
-                :header-cell-style="{
-                'text-align': 'center',
-                'background-color': 'rgba(246,248,252,1)',
-                color: 'rgba(0,0,0,1)',
-              }"
-                @selection-change="handleSelectionChange"
-                align="center"
-                border
-                class="detailTable"
-                ref="table"
-                style="width: 100%; min-height: calc(100vh - 370px)"
-              >
-                <el-table-column
-                  label="项目信息"
-                >
-                  <el-table-column
-                    :width="80"
-                    align="center"
-                    label="序号"
-                    show-overflow-tooltip
-                    type="index"
-                  ></el-table-column>
+            <div class="row-four">
+              <div class="four-name">合计：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
 
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="项目名称"
-                    prop="projectCode"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="合同号"
-                    prop="projectName"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="所属单位"
-                    prop="projectProp"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    :resizable="false"
-                    label="境/内外"
-                    align="center"
-                    prop="measureUnit"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="项目内容"
-                    prop="workAmount"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="推送人"
-                    prop="singlePrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="联系方式"
-                    prop="sumPrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="合同额"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="剩余合同额"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                    width="150"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="上报产值是否含增值税"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                    width="200"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="税额"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                </el-table-column>
-                <el-table-column
-                  label="本月完成"
-                >
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="房地产营业收入"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                    width="150"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="表内营收"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="表外权益"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="表外非权益"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                    width="150"
-                  >
-                  </el-table-column>
-                </el-table-column>
-              </el-table>
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
             </div>
-          </el-tab-pane>
-        </el-tabs>
+            <div class="row-four">
+              <div class="four-name">1、住宅房屋：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">（1）商厦房屋（批发和零售用房）：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">（2）宾馆用房屋（住宿用房）：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">（3）餐饮用房屋（餐饮用房）：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">（4）商务会展用房屋：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">（5）其他商业及服务用房屋（居民服务业用房）：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">3、办公用房屋：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">4、科研、教育、医疗用房屋：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">（1）科学研究用房屋：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">（2）教育用房屋：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">（3）医疗用房屋（卫生医疗用房）：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">5、文化、体育、娱乐用房屋：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">6、厂房及建筑物：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">其中：厂房：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">7、仓库：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">8、其他未列明的房屋建筑物：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">9、铁路工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">10、铁路四电：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">11、公路工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">12、城市轨道：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">13、市政工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">14、电力工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">15、水利工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">16、机场工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">17、矿山工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">18、港口与航道工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">19、其它工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforName"/>
+              </el-form-item>
+            </div>
+          </el-form>
+        </div>
       </el-tab-pane>
       <el-tab-pane label="季报从业人员JB3表">
-        <el-tabs type="border-card">
-          <el-tab-pane label="产值">
-            <div class="detailBox">
-              <el-form
-                :inline="false"
-                :model="detailform"
-                :rules="rules"
-                class="gcform"
-                ref="detailform"
+        <div class="detailBox">
+          <el-form
+            :inline="false"
+            :model="detailform"
+            :rules="rules"
+            class="gcform"
+            ref="detailform"
+          >
+            <div class="row-three">
+              <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                <span>一 ﹑从业人员 </span>
+              </p>
+              <el-form-item
+                label="从业人员期末人数(人):"
               >
-                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
-                  <span>合计:</span>
-                </p>
-                <el-form-item
-                  label="合计(万元):"
-                  prop="topInfor.inforName"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
 
-                    v-model="detailform.topInfor.inforName"/>
-                </el-form-item>
-                <el-form-item
-                  label="合计年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="金融收入(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="金融收入年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="保险收入(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="保险收入年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="其他金融收入(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="其他金融收入年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
-                  <span>境内数据: </span>
-                </p>
-                <el-form-item
-                  label="合计(万元):"
-                  prop="topInfor.inforName"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforName"/>
-                </el-form-item>
-                <el-form-item
-                  label="合计年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="金融收入(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="金融收入年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="保险收入(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="保险收入年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="其他金融收入(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="其他金融收入年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
-                  <span>境外数据: </span>
-                </p>
-                <el-form-item
-                  label="合计(万元):"
-                  prop="topInfor.inforName"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforName"/>
-                </el-form-item>
-                <el-form-item
-                  label="合计年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="金融收入(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="金融收入年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="保险收入(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="保险收入年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="其他金融收入(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="其他金融收入年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-              </el-form>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="主要项目管理">
-            <div class="table-div">
-              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
-                <el-form-item label="项目名称:">
-                  <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
-                </el-form-item>
-                <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-                <el-button @click="getData" type="primary" plain>查询</el-button>
-                <el-button @click="exportdata" type="primary" plain>导出</el-button>
-              </el-form>
-              <el-table
-                :data="[]"
-                :header-cell-style="{
-                'text-align': 'center',
-                'background-color': 'rgba(246,248,252,1)',
-                color: 'rgba(0,0,0,1)',
-              }"
-                @selection-change="handleSelectionChange"
-                align="center"
-                border
-                class="detailTable"
-                ref="table"
-                style="width: 100%; min-height: calc(100vh - 370px)"
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="其中：女性(人):"
               >
-                <el-table-column
-                  label="项目信息"
-                >
-                  <el-table-column
-                    :width="80"
-                    align="center"
-                    label="序号"
-                    show-overflow-tooltip
-                    type="index"
-                  ></el-table-column>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
 
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="项目名称"
-                    prop="projectCode"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="合同号"
-                    prop="projectName"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="所属单位"
-                    prop="projectProp"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    :resizable="false"
-                    label="境/内外"
-                    align="center"
-                    prop="measureUnit"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="推送人"
-                    prop="singlePrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="联系方式"
-                    prop="sumPrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="合同额"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="剩余合同额"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                    width="150"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="上报产值是否含增值税"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                    width="200"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="税额"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                </el-table-column>
-                <el-table-column
-                  label="本月完成"
-                >
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="金融收入"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="保险收入"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="其他金融收入"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                    width="150"
-                  >
-                  </el-table-column>
-                </el-table-column>
-              </el-table>
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                <span>按人员类型分 </span>
+              </p>
+              <el-form-item
+                label="在岗职工(人):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="劳务派遣人员(人):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="其他从业人员(人):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                <span>从业人员平均人数(人): </span>
+              </p>
+              <el-form-item
+                label="在岗职工(人):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="劳务派遣人员(人):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="其他从业人员(人):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
             </div>
-          </el-tab-pane>
-        </el-tabs>
+            <div class="row-three">
+              <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                <span>二﹑工资总额</span>
+              </p>
+              <el-form-item
+                label="从业人员工资总额(千元):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="在岗职工(千元):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="劳务派遣人员(千元):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="其他从业人员(千元):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+            </div>
+          </el-form>
+        </div>
       </el-tab-pane>
       <el-tab-pane label="季报财务状况JB4表">
-        <el-tabs type="border-card">
-          <el-tab-pane label="产值">
-            <div class="detailBox">
-              <el-form
-                :inline="false"
-                :model="detailform"
-                :rules="rules"
-                class="gcform"
-                ref="detailform"
+        <div class="detailBox">
+          <el-form
+            :inline="false"
+            :model="detailform"
+            :rules="rules"
+            class="gcform"
+            ref="detailform"
+          >
+            <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+              <span>指标名称(单位：千元)</span>
+            </p>
+            <el-form-item
+              label="一 、年初存货:"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforName"/>
+            </el-form-item>
+            <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+              <span>二﹑资产负债</span>
+            </p>
+            <div class="row-three">
+              <el-form-item
+                label="流动资产合计:"
               >
-                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
-                  <span>合计:</span>
-                </p>
-                <el-form-item
-                  label="合计(万元):"
-                  prop="topInfor.inforName"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
 
-                    v-model="detailform.topInfor.inforName"/>
-                </el-form-item>
-                <el-form-item
-                  label="合计年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="工程运营维管(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="工程运营维管年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="信息化运营维管(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="信息化运营维管年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="物业管理(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="物业管理年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="其他运营维管(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="其他运营维管年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
-                  <span>境内数据: </span>
-                </p>
-                <el-form-item
-                  label="合计(万元):"
-                  prop="topInfor.inforName"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforName"/>
-                </el-form-item>
-                <el-form-item
-                  label="合计年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="工程运营维管(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="工程运营维管年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="信息化运营维管(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="信息化运营维管年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="物业管理(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="物业管理年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="其他运营维管(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="其他运营维管年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
-                  <span>境外数据: </span>
-                </p>
-                <el-form-item
-                  label="合计(万元):"
-                  prop="topInfor.inforName"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforName"/>
-                </el-form-item>
-                <el-form-item
-                  label="合计年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="工程运营维管(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="工程运营维管年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="信息化运营维管(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="信息化运营维管年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="物业管理(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="物业管理年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="其他运营维管(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-                <el-form-item
-                  label="其他运营维管年累(万元):"
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
-                </el-form-item>
-              </el-form>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="主要项目管理">
-            <div class="table-div">
-              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
-                <el-form-item label="项目名称:">
-                  <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
-                </el-form-item>
-                <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-                <el-button @click="getData" type="primary" plain>查询</el-button>
-                <el-button @click="exportdata" type="primary" plain>导出</el-button>
-              </el-form>
-              <el-table
-                :data="[]"
-                :header-cell-style="{
-                'text-align': 'center',
-                'background-color': 'rgba(246,248,252,1)',
-                color: 'rgba(0,0,0,1)',
-              }"
-                @selection-change="handleSelectionChange"
-                align="center"
-                border
-                class="detailTable"
-                ref="table"
-                style="width: 100%; min-height: calc(100vh - 370px)"
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="其中：应收工程款:"
               >
-                <el-table-column
-                  label="项目信息"
-                >
-                  <el-table-column
-                    :width="80"
-                    align="center"
-                    label="序号"
-                    show-overflow-tooltip
-                    type="index"
-                  ></el-table-column>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
 
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="项目名称"
-                    prop="projectCode"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="合同号"
-                    prop="projectName"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="所属单位"
-                    prop="projectProp"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    :resizable="false"
-                    label="境/内外"
-                    align="center"
-                    prop="measureUnit"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="推送人"
-                    prop="singlePrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="联系方式"
-                    prop="sumPrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="合同额"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="剩余合同额"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                    width="150"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="上报产值是否含增值税"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                    width="200"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="税额"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                </el-table-column>
-                <el-table-column
-                  label="本月完成"
-                >
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="工程运营维管"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                    width="150"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="信息化运营维管"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                    width="150"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="物业管理"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="其他运营收入"
-                    prop="tempPrice"
-                    align="center"
-                    show-overflow-tooltip
-                    width="150"
-                  >
-                  </el-table-column>
-                </el-table-column>
-              </el-table>
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="其中：竣工工程:"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="存货:"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
             </div>
-          </el-tab-pane>
-        </el-tabs>
+            <div class="row-three">
+              <el-form-item
+                label="资产总计:"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="负债合计:"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+            </div>
+            <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+              <span>三﹑损益及分配</span>
+            </p>
+            <div class="row-three">
+              <el-form-item
+                label="营业收入:"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="其中：主营业务收入:"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="营业成本:"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="其中：主营业务成本:"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="营业税金及附加:"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="其中：主营业务税金及附加:"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="其他业务利润:"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="利润总额:"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+            </div>
+            <div class="row-three">
+              <el-form-item
+                label="销售费用:"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="管理费用:"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="其中：税金:"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="差旅费:"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="工会经费:"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="财务费用:"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+              <el-form-item
+                label="营业利润:"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/>
+              </el-form-item>
+            </div>
+            <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                <span>四、人工成本</span>
+            </p>
+            <el-form-item
+              label="应付职工薪酬(本年贷方累计发生额):"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+
+                v-model="detailform.topInfor.inforNameForeign"/>
+            </el-form-item>
+            <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                <span>五、土地和固定资产支出: <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.topInfor.inforNameForeign"/> </span>
+            </p>
+          </el-form>
+        </div>
       </el-tab-pane>
       <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
         <Audit-Process :task="p.task||{businessId:p.instid,businessType:' contract_project_new'}"></Audit-Process>
@@ -2592,9 +3291,26 @@
       display: inline-block;
       width: 32.5%!important;
     }
-    .row-one >>>.el-form-item{
+    .row-three{
       display: inline-block;
       width: 32.5%!important;
+      vertical-align: top;
+    }
+    .row-three >>>.el-form-item{
+      display: inline-block;
+      width: 100%!important;
+    }
+    .row-four{
+      margin-top: 10px;
+    }
+    .row-four>div{
+      display: inline-block;
+      width: 24%!important;
+      margin-right: 0.5%;
+      vertical-align: top;
+    }
+    .row-four >>>.el-input{
+      width: 100%!important;
     }
     .div-item >>>.el-form-item{
       display: inline-block;
@@ -2724,7 +3440,7 @@
     min-height: auto !important;
   }
   .table-div{
-    padding: 10px;
+    padding: 20px;
     width: 100%;
     box-sizing: border-box;
   }
@@ -2737,6 +3453,26 @@
   .queryForm >>>.el-input--mini .el-input__inner{
     height: auto;
     line-height: inherit;
+  }
+  .detail-title >>>.el-input{
+    width: 32.5%!important;
+    display: inline-block;
+  }
+  .tabs-header-copy{
+    width: 99%;
+    height: 38px;
+    background-color: #F5F7FA;
+    border-bottom: 1px solid #E4E7ED;
+    margin: 0;
+    position: absolute;
+    top:2px;
+    right: 3px;
+  }
+  >>>.el-tabs__header{
+    width: 77%;
+  }
+  .detailBox{
+    padding-top: 20px;
   }
 </style>
 
