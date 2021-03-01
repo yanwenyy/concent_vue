@@ -4,8 +4,8 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="searchformSubmit"
-                   type="primary" plain>查询</el-button>
+       <!-- <el-button @click="searchformSubmit"
+                   type="primary" plain>查询</el-button>-->
         <el-button @click="add"
                    type="primary" plain>新增</el-button>
         <el-button @click="edit"
@@ -30,6 +30,9 @@
             重置
           </el-button>
         </div>-->
+      <div style="float: right;">
+        <el-button @click="searchformSubmit" type="primary" plain>查询</el-button>
+      </div>
     </div>
 
     <div style="margin-top: 10px">

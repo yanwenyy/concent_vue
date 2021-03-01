@@ -4,8 +4,8 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="searchformSubmit"
-                   type="primary" plain>查询</el-button>
+     <!--   <el-button @click="searchformSubmit"
+                   type="primary" plain>查询</el-button>-->
         <el-button @click="add"
                    type="primary" plain>新增</el-button>
         <el-button @click="edit"
@@ -21,15 +21,9 @@
         </el-button>-->
 
       </el-button-group>
-    <!--  <div style="float: right;">
-        <el-button
-          @click="searchformReset"
-          type="info"
-          plain
-          style="color:black;background:none">
-          重置
-        </el-button>
-      </div>-->
+      <div style="float: right;">
+        <el-button @click="searchformSubmit" type="primary" plain>查询</el-button>
+      </div>
     </div>
 
     <div style="margin-top: 10px">
@@ -75,6 +69,7 @@
             <div>
               <el-date-picker class="list-search-picker" filterable clearable
                               type="month"
+                              @change="queryList"
                               v-model="searchform.fillDate"
               >
               </el-date-picker>
@@ -524,6 +519,17 @@
         this.getData();
       },
       searchformSubmit() {
+        this.searchform.current = 1;
+        var date = new Date(this.searchform.fillDate);
+        var y = date.getFullYear();
+        var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+        var time=y + '-' + m;
+        var time1 = new Date(time);
+        var time2 = time1.getTime();
+        this.searchform.fillDate= time2;
+        this.getData();
+      },
+      queryList(){
         this.searchform.current = 1;
         var date = new Date(this.searchform.fillDate);
         var y = date.getFullYear();
