@@ -639,24 +639,31 @@
           <el-row>
             <p class="detail-title">
               <span>附件: </span>
-              <el-upload
-                class="upload-demo detailUpload"
-                :action="'/api/contract/topInfo/CommonFiles/bidInfo/01/uploadFile'"
-                :on-success="handleChange"
-                :on-error="handleChange"
-                :on-remove="handleRemove"
-                :show-file-list="false"
-                :file-list="detailform.bidInfo_01"
-                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'"
-                multiple
-              >
-                <el-button
-                  size="small"
-                  type="primary"
-                  v-show="p.actpoint != 'look' && p.actpoint !== 'searchLook'"
-                  :disabled=" p.actpoint === 'look' || p.actpoint === 'searchLook'">点击上传
-                  </el-button>
-                  </el-upload>
+              <el-button
+                v-show="p.actpoint != 'look' && p.actpoint !== 'searchLook'"
+                size="small"
+                type="primary"
+                @click="openFileUp('/api/contract/topInfo/CommonFiles/bidInfo/01/uploadFile','bidInfo_01')">
+                点击上传
+              </el-button>
+              <!--<el-upload-->
+                <!--class="upload-demo detailUpload"-->
+                <!--:action="'/api/contract/topInfo/CommonFiles/bidInfo/01/uploadFile'"-->
+                <!--:on-success="handleChange"-->
+                <!--:on-error="handleChange"-->
+                <!--:on-remove="handleRemove"-->
+                <!--:show-file-list="false"-->
+                <!--:file-list="detailform.bidInfo_01"-->
+                <!--:disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'"-->
+                <!--multiple-->
+              <!--&gt;-->
+                <!--<el-button-->
+                  <!--size="small"-->
+                  <!--type="primary"-->
+                  <!--v-show="p.actpoint != 'look' && p.actpoint !== 'searchLook'"-->
+                  <!--:disabled=" p.actpoint === 'look' || p.actpoint === 'searchLook'">点击上传-->
+                  <!--</el-button>-->
+                  <!--</el-upload>-->
                 </p>
 
             <el-table
@@ -1081,7 +1088,7 @@
       ref="infoDw"
       @refreshBD="getDwInfo"
     ></company-tree>
-
+    <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
   </div>
 </template>
 
@@ -1090,6 +1097,7 @@ import { isMoney } from "@/utils/validate";
 import AddBd from "./addBd";
 import CompanyTree from "../contractManager/companyTree";
 import AuditProcess from '@/components/auditProcess'
+import FileUpload from '@/components/fileUpload'
 export default {
   data() {
     var validateMoney = (rule, value, callback) => {
@@ -1102,6 +1110,7 @@ export default {
       }
     };
     return {
+      uploadVisible:false,//上传附件组件状态
       maxMoney: 1000000,
       key: 0,
       BDCSVisible: false, //标段新增弹框状态
@@ -1144,7 +1153,8 @@ export default {
   components: {
     AddBd,
     CompanyTree,
-    AuditProcess
+    AuditProcess,
+    FileUpload
   },
   computed: {
     bidType() {
@@ -1170,6 +1180,19 @@ export default {
     // }
   },
   methods: {
+    //打开附件上传的组件
+    openFileUp(url,list){
+      this.uploadVisible = true;
+      this.$nextTick(() => {
+        this.$refs.infoUp.init(url,list);
+    })
+    },
+    //获取上传的附件列表
+    getUpInfo(data){
+      this.$forceUpdate();
+      this.detailform[data.list]=this.detailform[data.list].concat(data.fileList);
+      this.uploadVisible = false;
+    },
       //流程操作
       operation(type){
         this.$http
