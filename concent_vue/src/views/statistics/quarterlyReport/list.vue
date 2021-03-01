@@ -5,9 +5,19 @@
         <el-form-item label="填报年月:">
           <el-date-picker
             v-model="searchform.month"
-            type="month"
-            placeholder="选择月">
+            type="year"
+            placeholder="选择年">
           </el-date-picker>
+        </el-form-item>
+        <el-form-item label="季度:">
+          <el-select v-model="searchform.month" placeholder="请选择">
+            <el-option
+              v-for="(item,index) in 4"
+              :key="index"
+              :label="item"
+              :value="item">
+            </el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <el-button-group style="float: left">
@@ -69,19 +79,24 @@
             </div>
           </template>
           <!--<template slot-scope="scope">-->
-            <!--<span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>-->
+          <!--<span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>-->
           <!--</template>-->
         </el-table-column>
         <el-table-column
           :width="200"
           align="center"
-          label="年月"
-          prop="enginTypeFirstName"
+          label="年份"
+          prop="reportYear"
           show-overflow-tooltip
         >
-          <template slot-scope="scope">
-             {{scope.row.reportYear+"-"+scope.row.reportMonth}}
-          </template>
+        </el-table-column>
+        <el-table-column
+          :width="200"
+          align="center"
+          label="季度"
+          prop="reportYear"
+          show-overflow-tooltip
+        >
         </el-table-column>
         <el-table-column
           :width="200"
@@ -117,58 +132,6 @@
               <!--/>-->
             </div>
           </template>
-        </el-table-column>
-        <el-table-column
-          :width="180"
-          align="center"
-          label="创建时间"
-          prop="createTime"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>创建时间</span>
-            <div>
-              <el-date-picker
-                class="list-search-picker"
-                filterable
-                clearable
-                type="date"
-                value-format="timestamp"
-                v-model="searchform.createTime"
-
-              >
-              </el-date-picker>
-            </div>
-          </template>
-          <template slot-scope="scope">{{
-            scope.row.createTime | dateformat
-            }}</template>
-        </el-table-column>
-        <el-table-column
-          :width="180"
-          align="center"
-          label="审核通过时间"
-          prop="state"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>审核通过时间</span>
-            <div>
-              <el-date-picker
-                class="list-search-picker"
-                filterable
-                clearable
-                type="date"
-                value-format="timestamp"
-                v-model="searchform.planBidTime"
-
-              >
-              </el-date-picker>
-            </div>
-          </template>
-          <template slot-scope="scope">{{
-            scope.row.auditDate | dateformat
-            }}</template>
         </el-table-column>
       </el-table>
     </div>
@@ -352,7 +315,7 @@
       },
     },
     created() {
-      this.getData();
+      // this.getData();
     },
   };
 </script>
@@ -384,7 +347,7 @@
     height: auto;
     line-height: inherit;
   }
-  >>>.el-icon-date{
+  >>>.el-icon-date,>>>.el-icon-arrow-up{
     line-height: 30px;
   }
 </style>
