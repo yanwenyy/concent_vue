@@ -338,7 +338,6 @@
         params.createOrgType = this.userdata.managerOrgType;
         params.createUserId =this.userdata.id;
          params.createOrgCode =this.userdata.createOrgCode;
-         debugger
         if(this.type == 'edit') {
           params.uuid = this.form1.uuid;
         }
@@ -427,7 +426,6 @@
         this.getData()
       },
       searchformSubmit() {
-      debugger
         this.searchform.current = 1;
       if (this.searchform.createTime != "") {
             var date = new Date(this.searchform.createTime);

@@ -72,7 +72,7 @@
                     highlight-current-row
                     ref="table"
                     style="width: 100%"
-                    cell-style="padding:5px 0"
+
                     tooltip-effect="dark"
                   >
                     <el-table-column
@@ -228,7 +228,7 @@
                 highlight-current-row
                 ref="table"
                 style="width: 100%"
-                cell-style="padding:5px 0"
+
                 tooltip-effect="dark"
               >
                 <el-table-column
@@ -265,7 +265,7 @@
                 >
                   <template slot-scope="scope">
                     <div v-if="scope.row.veditable === '1'">
-                      <el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')" @blur="getPlanYear(data,scope.$index,scope.row.sumTarget)"/>
+                      <el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')" @blur="getNextPlanYear(nextData,scope.$index,scope.row.sumTarget)"/>
                     </div>
 <!--                    <div v-else-if="projectStatus !== '2' " style="text-align: right">{{sumCount(scope.row)}}</div>-->
                     <div v-else>{{scope.row.value}}</div>
@@ -402,6 +402,19 @@
           }
         });
         this.data.forEach((item,i)=>{
+          if(item.tjxId==list[index].sumTarget){
+            item.value=num;
+          }
+        });
+      },
+      getNextPlanYear(list,index,code){
+        var num=0;
+        list.forEach((item,i)=>{
+          if(item.sumTarget==code) {
+            num= Number(item.value)+num;
+          }
+        });
+        this.nextData.forEach((item,i)=>{
           if(item.tjxId==list[index].sumTarget){
             item.value=num;
           }

@@ -183,18 +183,18 @@
               <div>
                 <table>
                    <tr>
-                    <td><span style="color: red;font-weight:bold">*</span>填报年份:</td>
+                    <td><span style="color: red;font-weight:bold">*</span>填报时间:</td>
                     <td style="width:70%;text-align:left;padding:10px">
                        <el-date-picker
                             v-model="form1.year"
-                            type="year"
-                             format="yyyy"
-                             value-format="yyyy"
-                            placeholder="填报年份">
+                            type="month"
+                            format="yyyy-MM"
+                            value-format="yyyy-MM"
+                            placeholder="填报时间">
                           </el-date-picker>
                     </td>
                       </tr>
-                       <tr>
+                   <!--    <tr>
                             <td><span style="color: red;font-weight:bold">*</span>填报月:</td>
                             <td style="width:70%;text-align:left;padding:10px">
                                <el-date-picker
@@ -205,7 +205,7 @@
                                     placeholder="填报月">
                                   </el-date-picker>
                             </td>
-                      </tr>
+                      </tr>-->
                     </table>
                   </div>
                   <div style="text-align:right;margin-top:10px">
@@ -235,8 +235,7 @@
         showYMDialog:false,
         addTitle:'选择填报年月',
         form1:{
-        year:'',
-        month:''
+        year:''
         },
         mList: JSON.parse(this.$utils.decrypt(this.$route.query.mList)),
         projectName: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectName,
@@ -295,17 +294,28 @@
         },
       //提交
       submit() {
-        if(!this.form1.year || !this.form1.month) {
+        if(!this.form1.year) {
           this.show = true
           return false
         }
-         let times=this.form1.year+'-'+this.form1.month
+        //console.log("shijian"+new Date(this.form1.year).getTime());
+        var sj=new Date(this.form1.year).getTime();
+        //判断当前年月是否创建
+        if(this.page.records.length>0){
+          for (var i=0; i < this.page.records.length; i++) {
+            if(this.page.records[i].fillDate==sj){
+              this.$message.info('当前年月已创建,请重新选择时间！')
+              return false;
+            }
+          };
+        }
         var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/entityInfoByProjectReport'
         var params = {}
         params.projectId = JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectId
         params.createOrgCode =JSON.parse(this.$utils.decrypt(this.$route.query.mList)).orgCode
         params.reportProjectName =JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectName
-         params.fillDate = new Date(times).getTime()
+         params.fillDate = sj
+        params.status='1'
        this.$http.post(
         url,
         JSON.stringify(params),
@@ -342,7 +352,7 @@
             }
             this.show = false
             this.showYMDialog = false
-            this.query()
+            //this.query()
           },
         //编辑
         edit() {
@@ -393,7 +403,6 @@
       },
       // 查看
       rowShow(row) {
-      debugger
         let mList = { actpoint: 'look', projectId: row.projectId,uuid:row.uuid,fillDate:row.fillDate,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.status }
         this.$router.push({
           path: '../reportMDetail/',
@@ -421,7 +430,6 @@
         this.getData()
       },
       searchformSubmit() {
-      debugger
         this.searchform.current = 1
         this.getData()
       },
@@ -458,12 +466,13 @@
           .then(res => {
             this.page = res.data.data
           })
+      },
+      // 返回上一页
+      back() {
+        this.$router.back()
       }
     },
-    // 返回上一页
-    back() {
-      this.$router.back()
-    },
+
     created() {
       this.getData()
        console.log(this.mList)
