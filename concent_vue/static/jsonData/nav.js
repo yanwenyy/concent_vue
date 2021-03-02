@@ -1261,6 +1261,15 @@ export default {
                   'iconCls': 'el-icon-office-building',
                   'menushow': false,
                   'leaf': true
+                },
+                {
+                  'name': '集团公司月报',
+                  'path': '/statistics/reportMonth/jTList',
+                  'component': '/statistics/reportMonth/jTList',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
                 }
               ]
             },

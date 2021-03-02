@@ -362,7 +362,7 @@
         var params = {};
         params.fillDate = this.searchform.fillDate;
         params.reportType='2';
-        params.status=='0';
+        params.status='0';
         this.$http.post(
             url,
             JSON.stringify(params),
