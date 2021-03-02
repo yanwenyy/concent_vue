@@ -652,7 +652,16 @@ export default {
               'menushow': true,
               'leaf': false,
               'defaultpage': false
-            }
+            },
+            {
+              'name': '报表管理',
+              'path': '/manage/plan/report',
+              'component': '/manage/plan/report/list',
+              'iconCls': 'el-icon-coin',
+              'menushow': true,
+              'leaf': true,
+              'defaultpage': false
+            },
           ]
         },
         {
