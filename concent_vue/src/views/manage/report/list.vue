@@ -87,14 +87,20 @@
         >
           <template slot="header" slot-scope="scope">
             <span>报表类型</span>
-            <div>
-              <el-input
-                class="list-search-picker"
-                style=" width: 100%"
-                v-model="searchform.reportType"
-                size="mini"
-              />
-            </div>
+            <el-select
+              clearable
+              filterable
+              placeholder="请选择"
+              size="mini"
+              v-model="searchform.reportType"
+            >
+              <el-option label="在建项目报表" value="01"></el-option>
+              <el-option label="竣工项目报表" value="02"></el-option>
+              <el-option label="年度报表" value="03"></el-option>
+              <el-option label="季度报表" value="04"></el-option>
+              <el-option label="勘察设计报表" value="05"></el-option>
+              <el-option label="产值报表" value="06"></el-option>
+            </el-select>
           </template>
           <template slot-scope="scope">
              {{scope.row.reportType=='01'?'在建项目报表':scope.row.reportType=='02'?'竣工项目报表':scope.row.reportType=='03'
@@ -111,19 +117,25 @@
         >
           <template slot="header" slot-scope="scope">
             <span>报表层级</span>
-            <div>
-              <el-input
-                class="list-search-picker"
-                style=" width: 100%"
-                v-model="searchform.reportHierarchy"
-                size="mini"
-              />
-            </div>
+            <el-select
+              clearable
+              filterable
+              placeholder="请选择"
+              size="mini"
+              v-model="searchform.reportHierarchyId"
+            >
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
           </template>
-          <template slot-scope="scope">
-             {{scope.row.enableStatus==11?'股份公司':scope.row.enableStatus==12?'集团公司':scope.row.enableStatus==13?'工程公司,局指挥部':scope.row.enableStatus==18?'分公司'
-            :scope.row.enableStatus==17?'项目部':scope.row.enableStatus==14?'部门':scope.row.enableStatus==16?'项目节点':scope.row.enableStatus==24?'区域指挥部':'其它'}}
-          </template>
+<!--          <template slot-scope="scope">-->
+<!--             {{scope.row.enableStatus=='11'?'股份公司':scope.row.enableStatus=='12'?'集团公司':scope.row.enableStatus=='13'?'工程公司,局指挥部':scope.row.enableStatus=='18'?'分公司'-->
+<!--            :scope.row.enableStatus=='17'?'项目部':scope.row.enableStatus=='14'?'部门':scope.row.enableStatus=='16'?'项目节点':scope.row.enableStatus=='24'?'区域指挥部':'其它'}}-->
+<!--          </template>-->
         </el-table-column>
 
         <el-table-column
@@ -135,14 +147,16 @@
         >
           <template slot="header" slot-scope="scope">
             <span>状态</span>
-            <div>
-              <el-input
-                class="list-search-picker"
-                style=" width: 100%"
-                v-model="searchform.enableStatus"
-                size="mini"
-              />
-            </div>
+            <el-select
+              clearable
+              filterable
+              placeholder="请选择"
+              size="mini"
+              v-model="searchform.enableStatus"
+            >
+              <el-option label="启用" value="1"></el-option>
+              <el-option label="禁用" value="0"></el-option>
+            </el-select>
           </template>
           <template slot-scope="scope">
              {{scope.row.enableStatus==0?'禁用':scope.row.enableStatus==1?'启用':'其它'}}
@@ -165,14 +179,19 @@
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',}">
+<!--          :disabled="type=='look'"-->
+<!--          查看时不让编辑-->
           <el-input
+            :disabled="type=='look'"
             v-model="form.reportName"
             size="mini"
           />
         </el-form-item>
 
         <el-form-item label="报表类型:" :label-width="formLabelWidth">
-          <el-select v-model="form.reportType" placeholder="请选择报表类型" size="mini" :rules="{
+          <el-select v-model="form.reportType" placeholder="请选择报表类型" size="mini"
+                     :disabled="type=='look'"
+                     :rules="{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',}">
@@ -186,7 +205,13 @@
         </el-form-item>
 
         <el-form-item label="报表层级:" prop="value1" :label-width="formLabelWidth" size="mini">
-          <el-select v-model="reportHeyComb" multiple placeholder="请选择报表层级" filterable clearable>
+          <el-select v-model="form.reportHeyComb"
+                     @change="getMultipleName(form.reportHeyComb,options,'reportHierarchyId','reportHierarchy')"
+                     multiple
+                     placeholder="请选择报表层级"
+                     :disabled="type=='look'"
+                     filterable
+                     clearable>
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -196,7 +221,8 @@
           </el-select>
           </el-form-item>
         <el-form-item label="启用状态:" :label-width="formLabelWidth">
-          <el-select v-model="form.enableStatus" placeholder="请选择启用状态" size="mini">
+          <el-select v-model="form.enableStatus" placeholder="请选择启用状态" size="mini"
+                     :disabled="type=='look'">
             <el-option label="启用" value="1"></el-option>
             <el-option label="禁用" value="0"></el-option>
           </el-select>
@@ -204,13 +230,14 @@
 
         <el-form-item label="排序码:" :label-width="formLabelWidth">
           <el-input
+            :disabled="type=='look'"
             v-model="form.reportSort"
             size="mini"
           />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="save()">保 存</el-button>
+        <el-button :disabled="type=='look'"  type="primary" @click="save()">保 存</el-button>
         <el-button @click="dialogResult = false">关 闭</el-button>
       </div>
     </el-dialog>
@@ -232,6 +259,7 @@
           reportName: "",
           reportType: "",
           reportHierarchy: "",
+          reportHierarchyId:"",
           reportSort: "",
           enableStatus:"",
           constructionOrg: "",
@@ -241,8 +269,11 @@
               reportName: "",
               reportType: "",
               reportHierarchy: "",
+              reportHierarchyId:"",
               reportSort: "",
               enableStatus:"",
+              reportHeyComb: [],
+              reportHeyCombId:[],
           },
           options: [{
               value: '11',
@@ -270,13 +301,12 @@
               label: '区域指挥部'
           },
           ],
-        reportHeyComb: [],
         menus: [],
         multipleSelection: [],
         orgTree: [],
         dialogResult: false,
-        formLabelWidth: '120px'
-
+        formLabelWidth: '120px',
+        type:'',
       };
     },
     computed: {
@@ -292,6 +322,20 @@
       },
     },
     methods: {
+        //复选下拉框框获取name
+        getMultipleName(valueList,list,id,name){
+            var _id=[],_name=[];
+            list.forEach((item)=>{
+                if(valueList.indexOf(item.value)!=-1){
+                    _id.push(item.value);
+                    _name.push(item.label)
+                }
+            });
+            this.form[id]=_id.join(",");
+            this.form[name]=_name.join(",");
+            /*console.log(this.form[name])
+            console.log(this.form[id])*/
+        },
           //上传附件
     handleChange(response, file, fileList) {
       if (response && response.code === 200) {
@@ -325,7 +369,8 @@
                 .post(
                     "/api/contract/ReportManage/detail/save",
                     JSON.stringify({
-                        reportHeyComb:this.reportHeyComb,
+                        reportHeyComb:this.form.reportHierarchy.split(","),
+                        reportHeyCombId:this.form.reportHeyComb,
                         reportManage:this.form
                     }),
                     {useJson: true}
@@ -338,9 +383,14 @@
                         });
                         //清空输入框
                         this.form={
-                            standardName: "",
-                            nearName: "",
-                            sortNo: "",
+                            reportName: "",
+                            reportType: "",
+                            reportHierarchy: "",
+                            reportHierarchyId:"",
+                            reportSort: "",
+                            enableStatus: "",
+                            reportHeyComb: [],
+                            reportHeyCombId:[],
                             uuid:''
                         };
                         //关闭dialog对话框
@@ -359,40 +409,60 @@
         },
       // 增加
         add() {
+            this.type='add';
             this.dialogResult=true;
             this.form={
-                /*code: "",
-                parentId: "",
-                feature:"",
-                name: "",
-                unit: "",
-                sortNo: "",
-                uuid:''*/
+                reportName: "",
+                reportType: "",
+                reportHierarchy:"",
+                reportHierarchyId:"",
+                enableStatus: "",
+                reportSort: "",
+                reportHeyComb: [],
+                reportHeyCombId:[],
+                uuid:''
             }
         },
       // 修改
         totop() {
+            this.type='edit';
             if (this.multipleSelection.length !== 1 ||this.multipleSelection.length>1) {
                 this.$message.info("请选择一条记录进行查看操作！");
                 return false;
             }
             var list= this.multipleSelection[0];
+            console.log(list)
             this.form={
-                standardName: list.standardName,
-                nearName: list.nearName,
-                sortNo:list.sortNo,
-                uuid:list.uuid
+                reportName: list.reportName,
+                reportType: list.reportType,
+                reportHierarchy:list.reportHierarchy,
+                reportHierarchyId:list.reportHierarchyId,
+                reportSort:list.reportSort,
+                enableStatus:list.enableStatus,
+                uuid:list.uuid,
+                reportHeyComb:list.reportHierarchyId?list.reportHierarchyId.split(","):[],
             };
             this.dialogResult = true;
 
         },
         // 查看
         rowshow(row) {
-            let p = {actpoint: "look", instid: row.topOrgId};
-            this.$router.push({
-                path: "./detail/",
-                query: {p: this.$utils.encrypt(JSON.stringify(p))},
-            });
+            this.type='look';
+            this.$http
+                .post("/api/contract/ReportManage/detail/entityInfo", {
+                    id: row.uuid,
+                })
+                .then((res) => {
+                    var datas = res.data.data;
+                    this.form.reportName = datas.reportName;
+                    this.form.reportType = datas.reportType;
+                    // this.form.reportHeyComb = datas.reportHeyComb;
+                    this.form.reportHeyCombId = datas.reportHeyCombId;
+                    this.form.enableStatus = datas.enableStatus;
+                    this.form.reportSort = datas.reportSort;
+                    this.dialogResult = true;
+                    this.form.reportHeyComb=datas.reportHierarchyId?datas.reportHierarchyId.split(","):[];
+                });
         },
         // 删除
         remove() {
@@ -456,10 +526,12 @@
       this.searchform= {
         current: 1,
         size: 20,
-        year: "",
-        name: "",
-        childName: "",
-        standrardId: "",
+        reportName: "",
+        reportType: "",
+        reportHierarchy: "",
+        reportHierarchyId:"",
+        reportSort: "",
+        enableStatus:"",
         implementationTime: "",
         underCentralizedUnit: "",
         titanic: "",
@@ -475,7 +547,6 @@
         this.$http
           .post(
             "/api/contract/ReportManage/list/loadPageData",
-
             this.searchform
           )
           .then((res) => {

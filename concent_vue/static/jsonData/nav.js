@@ -655,8 +655,8 @@ export default {
             },
             {
               'name': '报表管理',
-              'path': '/manage/plan/report',
-              'component': '/manage/plan/report/list',
+              'path': '/manage/report/list',
+              'component': '/manage/report/list',
               'iconCls': 'el-icon-coin',
               'menushow': true,
               'leaf': true,
