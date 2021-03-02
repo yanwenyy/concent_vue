@@ -90,7 +90,7 @@
                 ref="table"
                 border
                 class="tableStyle"
-                style="width: 100%x;margin-top:10px"
+                style="width: 100%;margin-top:10px"
                 tooltip-effect="dark"
                 @selection-change="handleSelectionChange">
       <!-- <el-table-column
@@ -349,6 +349,7 @@ export default {
       // console.log(checked.checkedKeys.indexOf(data.uuid))
       var ifChecked=checked.checkedKeys.indexOf(data.uuid);
       if(ifChecked!=-1){
+          //debugger
         this.$http
           .post(
             "/api/statistics/bp/BpGdwtjxsz/detail/save",
