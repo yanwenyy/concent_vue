@@ -317,7 +317,6 @@
         this.getData()
       },
       searchformSubmit() {
-      debugger
         this.searchform.current = 1
         this.getData()
       },

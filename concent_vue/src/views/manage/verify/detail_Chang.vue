@@ -1292,16 +1292,23 @@
               <div>
                 <p class="detail-title"><span  class="uploadSpan">附件: </span>
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
-                  <el-upload
-                    class="upload-demo detailUpload"
-                    :action="'/api/contract/topInfo/CommonFiles/verify/01/uploadFile'"
-                    :on-success="handleChange"
-                    :on-error="handleChange"
-                    :on-remove="handleRemove"
-                    multiple
-                  >
-              <el-button size="small" type="primary" v-show="p.actpoint != 'look'">点击上传</el-button>
-            </el-upload>
+                  <el-button
+                    v-show="p.actpoint !== 'look'"
+                    size="small"
+                    type="primary"
+                    @click="openFileUp('/api/contract/topInfo/CommonFiles/verify/01/uploadFile','commonFilesList')">
+                    点击上传
+                  </el-button>
+                  <!--<el-upload-->
+                    <!--class="upload-demo detailUpload"-->
+                    <!--:action="'/api/contract/topInfo/CommonFiles/verify/01/uploadFile'"-->
+                    <!--:on-success="handleChange"-->
+                    <!--:on-error="handleChange"-->
+                    <!--:on-remove="handleRemove"-->
+                    <!--multiple-->
+                  <!--&gt;-->
+              <!--<el-button size="small" type="primary" v-show="p.actpoint != 'look'">点击上传</el-button>-->
+            <!--</el-upload>-->
                 </p>
               </div>
                <div>
@@ -1544,6 +1551,7 @@
       <TreeOrg v-if="treeOrgStatas" ref="addOrUpdate" @getPosition="getTreeOrg"></TreeOrg>
       <TreeOrg v-if="treeOrgStatas1" ref="addOrUpdate1" @getPosition="getTreeOrg1"></TreeOrg>
     <TreeOrg v-if="treeOrgStatas2" ref="addOrUpdate2" @getPosition="getTreeOrg2"></TreeOrg>
+      <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
     </el-tab-pane>
     <el-tab-pane label="审批流程" name="lc" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
         <Audit-Process :task="p.task||{businessId:p.uuid,businessType:'contract_qual_change'}"></Audit-Process>
@@ -1555,14 +1563,17 @@
 <script>
 import TreeOrg from '@/components/treeOrg'
 import AuditProcess from '@/components/auditProcess'
+import FileUpload from '@/components/fileUpload'
 export default {
   // name: '详情',
   components: {
     TreeOrg,
-    AuditProcess
+    AuditProcess,
+    FileUpload
   },
   data() {
     return {
+      uploadVisible:false,//上传附件组件状态
       activeName:"after",
       maxMoney:1000000,
       treeOrgStatas: false,
@@ -1646,6 +1657,19 @@ export default {
 
   },
   methods: {
+    //打开附件上传的组件
+    openFileUp(url,list){
+      this.uploadVisible = true;
+      this.$nextTick(() => {
+        this.$refs.infoUp.init(url,list);
+    })
+    },
+    //获取上传的附件列表
+    getUpInfo(data){
+      this.$forceUpdate();
+      this.detailformAfter[data.list]=this.detailformAfter[data.list].concat(data.fileList);
+      this.uploadVisible = false;
+    },
       //流程操作
       operation(type){
         this.$http

@@ -8,365 +8,381 @@
     <!--<el-button v-show="p.actpoint == 'task'&&p.task.edit==true" @click="operation('recall')" class="detailbutton" type="danger">撤销</el-button>-->
     <el-tabs type="border-card" >
       <el-tab-pane label="勘察设计板块">
-        <div class="table-div">
-          <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
-            <el-form-item label="项目简称:">
-              <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
-            </el-form-item>
-            <el-form-item
-              label="工程类别(一级):"
-            >
-              <el-select
-                clearable
-                filterable
-                placeholder="请选择"
-                @change="getTwo"
-                size="mini"
-                v-model="searchform.enginTypeFirstId"
+        <el-tabs type="border-card">
+          <el-tab-pane label="产值">
+            <div class="detailBox">
+              <el-form
+                :inline="false"
+                :model="detailform"
+                :rules="rules"
+                class="gcform"
+                ref="detailform"
               >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in projectDomainType"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item
-              label="工程类别(二级):"
-            >
-              <el-select
-                clearable
-                filterable
-                placeholder="请选择工程类别(一级)"
-                size="mini"
-                v-model="searchform.enginTypeSecondId"
-              >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in xqprojectType"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item
-              label="项目状态:"
-            >
-              <el-select
-                clearable
-                filterable
-                placeholder="请选择"
-                size="mini"
-                v-model="searchform.flowStatus"
-              >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in projectStatus"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item
-              label="业务板块:"
-            >
-              <el-select
-                clearable
-                filterable
-                placeholder="请选择"
-                size="mini"
-                v-model="searchform.flowStatus"
-              >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in projectStatus"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-            <el-button @click="getData" type="primary" plain>查询</el-button>
-            <el-button @click="exportdata" type="primary" plain>导出</el-button>
-          </el-form>
-          <el-table
-            :data="[]"
-            :header-cell-style="{
+                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                  <span>当月: </span>
+                </p>
+                <el-form-item
+                  label="合计:"
+                  prop="topInfor.inforName"
+                  :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforName"/>
+                </el-form-item>
+                <el-form-item
+                  label="其中勘察设计:"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="工程监理:"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="技术咨询与转让:"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="其他:"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                  <span>当年: </span>
+                </p>
+                <el-form-item
+                  label="合计:"
+                  prop="topInfor.inforName"
+                  :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforName"/>
+                </el-form-item>
+                <el-form-item
+                  label="其中勘察设计:"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="工程监理:"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="技术咨询与转让:"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="其他:"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+              </el-form>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="主要项目管理">
+            <div class="table-div">
+              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+                <el-form-item label="项目简称:">
+                  <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
+                </el-form-item>
+                <el-form-item
+                  label="工程类别(一级):"
+                >
+                  <el-select
+                    clearable
+                    filterable
+                    placeholder="请选择"
+                    @change="getTwo"
+                    size="mini"
+                    v-model="searchform.enginTypeFirstId"
+                  >
+                    <el-option
+                      :key="index"
+                      :label="item.detailName"
+                      :value="item.id"
+                      v-for="(item, index) in projectDomainType"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item
+                  label="工程类别(二级):"
+                >
+                  <el-select
+                    clearable
+                    filterable
+                    placeholder="请选择工程类别(一级)"
+                    size="mini"
+                    v-model="searchform.enginTypeSecondId"
+                  >
+                    <el-option
+                      :key="index"
+                      :label="item.detailName"
+                      :value="item.id"
+                      v-for="(item, index) in xqprojectType"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item
+                  label="项目状态:"
+                >
+                  <el-select
+                    clearable
+                    filterable
+                    placeholder="请选择"
+                    size="mini"
+                    v-model="searchform.flowStatus"
+                  >
+                    <el-option
+                      :key="index"
+                      :label="item.detailName"
+                      :value="item.id"
+                      v-for="(item, index) in projectStatus"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item
+                  label="业务板块:"
+                >
+                  <el-select
+                    clearable
+                    filterable
+                    placeholder="请选择"
+                    size="mini"
+                    v-model="searchform.flowStatus"
+                  >
+                    <el-option
+                      :key="index"
+                      :label="item.detailName"
+                      :value="item.id"
+                      v-for="(item, index) in projectStatus"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
+                <el-button @click="getData" type="primary" plain>查询</el-button>
+                <el-button @click="exportdata" type="primary" plain>导出</el-button>
+              </el-form>
+              <el-table
+                :data="[]"
+                :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
                 color: 'rgba(0,0,0,1)',
               }"
-            @selection-change="handleSelectionChange"
-            align="center"
-            border
-            class="detailTable"
-            ref="table"
-            style="width: 100%; min-height: calc(100vh - 370px)"
-          >
-            <el-table-column
-              :width="80"
-              align="center"
-              label="序号"
-              show-overflow-tooltip
-              type="index"
-            ></el-table-column>
+                @selection-change="handleSelectionChange"
+                align="center"
+                border
+                class="detailTable"
+                ref="table"
+                style="width: 100%; min-height: calc(100vh - 370px)"
+              >
+                <el-table-column
+                  :width="80"
+                  align="center"
+                  label="序号"
+                  show-overflow-tooltip
+                  type="index"
+                ></el-table-column>
 
-            <el-table-column
-              class="listTabel"
-              :resizable="false"
-              label="单位名称"
-              prop="projectCode"
-              align="center"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              class="listTabel"
-              :resizable="false"
-              label="项目简称"
-              prop="projectName"
-              align="center"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              class="listTabel"
-              :resizable="false"
-              label="项目名称"
-              prop="projectProp"
-              align="center"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              :resizable="false"
-              label="工程合同额"
-              align="center"
-              prop="measureUnit"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              class="listTabel"
-              :resizable="false"
-              label="年初进度%"
-              prop="workAmount"
-              align="center"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              class="listTabel"
-              :resizable="false"
-              label="月初进度%"
-              prop="singlePrice"
-              align="center"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              class="listTabel"
-              :resizable="false"
-              label="上月进度%"
-              prop="sumPrice"
-              align="center"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              class="listTabel"
-              :resizable="false"
-              label="月末进度%"
-              prop="tempPrice"
-              align="center"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              class="listTabel"
-              :resizable="false"
-              label="本月产值(万元)"
-              prop="tempPrice"
-              align="center"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              class="listTabel"
-              :resizable="false"
-              label="本年产值(万元)"
-              prop="tempPrice"
-              align="center"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              class="listTabel"
-              :resizable="false"
-              label="实物工程量"
-              prop="tempPrice"
-              align="center"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              class="listTabel"
-              :resizable="false"
-              label="计量单位"
-              prop="tempPrice"
-              align="center"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              class="listTabel"
-              :resizable="false"
-              label="本月完成(万元)"
-              prop="tempPrice"
-              align="center"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              class="listTabel"
-              :resizable="false"
-              label="本年完成(万元)"
-              prop="tempPrice"
-              align="center"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              class="listTabel"
-              :resizable="false"
-              label="备注"
-              prop="tempPrice"
-              align="center"
-              show-overflow-tooltip
-            >
-            </el-table-column>
+                <el-table-column
+                  class="listTabel"
+                  :resizable="false"
+                  label="单位名称"
+                  prop="projectCode"
+                  align="center"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  class="listTabel"
+                  :resizable="false"
+                  label="项目简称"
+                  prop="projectName"
+                  align="center"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  class="listTabel"
+                  :resizable="false"
+                  label="项目名称"
+                  prop="projectProp"
+                  align="center"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  :resizable="false"
+                  label="工程合同额"
+                  align="center"
+                  prop="measureUnit"
+                  show-overflow-tooltip
+                  width="150"
+                >
+                </el-table-column>
+                <el-table-column
+                  class="listTabel"
+                  :resizable="false"
+                  label="年初进度%"
+                  prop="workAmount"
+                  align="center"
+                  show-overflow-tooltip
+                  width="150"
+                >
+                </el-table-column>
+                <el-table-column
+                  class="listTabel"
+                  :resizable="false"
+                  label="月初进度%"
+                  prop="singlePrice"
+                  align="center"
+                  show-overflow-tooltip
+                  width="150"
+                >
+                </el-table-column>
+                <el-table-column
+                  class="listTabel"
+                  :resizable="false"
+                  label="上月进度%"
+                  prop="sumPrice"
+                  align="center"
+                  show-overflow-tooltip
+                  width="150"
+                >
+                </el-table-column>
+                <el-table-column
+                  class="listTabel"
+                  :resizable="false"
+                  label="月末进度%"
+                  prop="tempPrice"
+                  align="center"
+                  show-overflow-tooltip
+                  width="150"
+                >
+                </el-table-column>
+                <el-table-column
+                  class="listTabel"
+                  :resizable="false"
+                  label="本月产值(万元)"
+                  prop="tempPrice"
+                  align="center"
+                  show-overflow-tooltip
+                  width="150"
+                >
+                </el-table-column>
+                <el-table-column
+                  class="listTabel"
+                  :resizable="false"
+                  label="本年产值(万元)"
+                  prop="tempPrice"
+                  align="center"
+                  show-overflow-tooltip
+                  width="150"
+                >
+                </el-table-column>
+                <el-table-column
+                  class="listTabel"
+                  :resizable="false"
+                  label="实物工程量"
+                  prop="tempPrice"
+                  align="center"
+                  show-overflow-tooltip
+                  width="150"
+                >
+                </el-table-column>
+                <el-table-column
+                  class="listTabel"
+                  :resizable="false"
+                  label="计量单位"
+                  prop="tempPrice"
+                  align="center"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  class="listTabel"
+                  :resizable="false"
+                  label="本月完成(万元)"
+                  prop="tempPrice"
+                  align="center"
+                  show-overflow-tooltip
+                  width="150"
+                >
+                </el-table-column>
+                <el-table-column
+                  class="listTabel"
+                  :resizable="false"
+                  label="本年完成(万元)"
+                  prop="tempPrice"
+                  align="center"
+                  show-overflow-tooltip
+                  width="150"
+                >
+                </el-table-column>
+                <el-table-column
+                  class="listTabel"
+                  :resizable="false"
+                  label="备注"
+                  prop="tempPrice"
+                  align="center"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
 
-          </el-table>
-        </div>
-        <div class="detailBox">
-          <el-form
-            :inline="false"
-            :model="detailform"
-            :rules="rules"
-            class="gcform"
-            ref="detailform"
-          >
-            <p  class="detail-title" style="overflow: hidden;margin-right:30px">
-              <span>当月: </span>
-            </p>
-            <el-form-item
-              label="合计:"
-              prop="topInfor.inforName"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                clearable
-
-                v-model="detailform.topInfor.inforName"/>
-            </el-form-item>
-            <el-form-item
-              label="其中勘察设计:"
-            >
-              <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                clearable
-
-                v-model="detailform.topInfor.inforNameForeign"/>
-            </el-form-item>
-            <el-form-item
-              label="工程监理:"
-            >
-              <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                clearable
-
-                v-model="detailform.topInfor.inforNameForeign"/>
-            </el-form-item>
-            <el-form-item
-              label="技术咨询与转让:"
-            >
-              <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                clearable
-
-                v-model="detailform.topInfor.inforNameForeign"/>
-            </el-form-item>
-            <el-form-item
-              label="其他:"
-            >
-              <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                clearable
-
-                v-model="detailform.topInfor.inforNameForeign"/>
-            </el-form-item>
-            <p  class="detail-title" style="overflow: hidden;margin-right:30px">
-              <span>当年: </span>
-            </p>
-            <el-form-item
-              label="合计:"
-              prop="topInfor.inforName"
-              :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                clearable
-
-                v-model="detailform.topInfor.inforName"/>
-            </el-form-item>
-            <el-form-item
-              label="其中勘察设计:"
-            >
-              <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                clearable
-
-                v-model="detailform.topInfor.inforNameForeign"/>
-            </el-form-item>
-            <el-form-item
-              label="工程监理:"
-            >
-              <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                clearable
-
-                v-model="detailform.topInfor.inforNameForeign"/>
-            </el-form-item>
-            <el-form-item
-              label="技术咨询与转让:"
-            >
-              <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                clearable
-
-                v-model="detailform.topInfor.inforNameForeign"/>
-            </el-form-item>
-            <el-form-item
-              label="其他:"
-            >
-              <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                clearable
-
-                v-model="detailform.topInfor.inforNameForeign"/>
-            </el-form-item>
-          </el-form>
-        </div>
+              </el-table>
+            </div>
+          </el-tab-pane>
+        </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="工业制造板块">
         <el-tabs type="border-card">
@@ -726,6 +742,7 @@
                     prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -735,6 +752,7 @@
                     prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
+                    width="200"
                   >
                   </el-table-column>
                   <el-table-column
@@ -757,6 +775,7 @@
                     prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -784,6 +803,7 @@
                     prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                 </el-table-column>
@@ -912,10 +932,11 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
-                    label="合同编号号"
+                    label="合同编号"
                     prop="projectName"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -988,6 +1009,7 @@
                     prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -997,6 +1019,7 @@
                     prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
+                    width="200"
                   >
                   </el-table-column>
                   <el-table-column
@@ -1019,6 +1042,7 @@
                     prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                 </el-table-column>
@@ -1382,6 +1406,7 @@
                     prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -1391,6 +1416,7 @@
                     prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
+                    width="200"
                   >
                   </el-table-column>
                   <el-table-column
@@ -1413,6 +1439,7 @@
                     prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -1437,6 +1464,1530 @@
                     class="listTabel"
                     :resizable="false"
                     label="表外非权益"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                    width="150"
+                  >
+                  </el-table-column>
+                </el-table-column>
+              </el-table>
+            </div>
+          </el-tab-pane>
+        </el-tabs>
+      </el-tab-pane>
+      <el-tab-pane label="金融保险">
+        <el-tabs type="border-card">
+          <el-tab-pane label="产值">
+            <div class="detailBox">
+              <el-form
+                :inline="false"
+                :model="detailform"
+                :rules="rules"
+                class="gcform"
+                ref="detailform"
+              >
+                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                  <span>合计:</span>
+                </p>
+                <el-form-item
+                  label="合计(万元):"
+                  prop="topInfor.inforName"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforName"/>
+                </el-form-item>
+                <el-form-item
+                  label="合计年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="金融收入(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="金融收入年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="保险收入(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="保险收入年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="其他金融收入(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="其他金融收入年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                  <span>境内数据: </span>
+                </p>
+                <el-form-item
+                  label="合计(万元):"
+                  prop="topInfor.inforName"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforName"/>
+                </el-form-item>
+                <el-form-item
+                  label="合计年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="金融收入(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="金融收入年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="保险收入(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="保险收入年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="其他金融收入(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="其他金融收入年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                  <span>境外数据: </span>
+                </p>
+                <el-form-item
+                  label="合计(万元):"
+                  prop="topInfor.inforName"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforName"/>
+                </el-form-item>
+                <el-form-item
+                  label="合计年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="金融收入(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="金融收入年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="保险收入(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="保险收入年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="其他金融收入(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="其他金融收入年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+              </el-form>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="主要项目管理">
+            <div class="table-div">
+              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+                <el-form-item label="项目名称:">
+                  <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
+                </el-form-item>
+                <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
+                <el-button @click="getData" type="primary" plain>查询</el-button>
+                <el-button @click="exportdata" type="primary" plain>导出</el-button>
+              </el-form>
+              <el-table
+                :data="[]"
+                :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                @selection-change="handleSelectionChange"
+                align="center"
+                border
+                class="detailTable"
+                ref="table"
+                style="width: 100%; min-height: calc(100vh - 370px)"
+              >
+                <el-table-column
+                  label="项目信息"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称"
+                    prop="projectCode"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合同号"
+                    prop="projectName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="所属单位"
+                    prop="projectProp"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="境/内外"
+                    align="center"
+                    prop="measureUnit"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="推送人"
+                    prop="singlePrice"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="联系方式"
+                    prop="sumPrice"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合同额"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="剩余合同额"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                    width="150"
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="上报产值是否含增值税"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                    width="200"
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="税额"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table-column>
+                <el-table-column
+                  label="本月完成"
+                >
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="金融收入"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="保险收入"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="其他金融收入"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                    width="150"
+                  >
+                  </el-table-column>
+                </el-table-column>
+              </el-table>
+            </div>
+          </el-tab-pane>
+        </el-tabs>
+      </el-tab-pane>
+      <el-tab-pane label="运营维管">
+        <el-tabs type="border-card">
+          <el-tab-pane label="产值">
+            <div class="detailBox">
+              <el-form
+                :inline="false"
+                :model="detailform"
+                :rules="rules"
+                class="gcform"
+                ref="detailform"
+              >
+                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                  <span>合计:</span>
+                </p>
+                <el-form-item
+                  label="合计(万元):"
+                  prop="topInfor.inforName"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforName"/>
+                </el-form-item>
+                <el-form-item
+                  label="合计年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="工程运营维管(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="工程运营维管年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="信息化运营维管(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="信息化运营维管年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="物业管理(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="物业管理年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="其他运营维管(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="其他运营维管年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                  <span>境内数据: </span>
+                </p>
+                <el-form-item
+                  label="合计(万元):"
+                  prop="topInfor.inforName"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforName"/>
+                </el-form-item>
+                <el-form-item
+                  label="合计年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="工程运营维管(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="工程运营维管年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="信息化运营维管(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="信息化运营维管年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="物业管理(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="物业管理年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="其他运营维管(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="其他运营维管年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                  <span>境外数据: </span>
+                </p>
+                <el-form-item
+                  label="合计(万元):"
+                  prop="topInfor.inforName"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforName"/>
+                </el-form-item>
+                <el-form-item
+                  label="合计年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="工程运营维管(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="工程运营维管年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="信息化运营维管(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="信息化运营维管年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="物业管理(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="物业管理年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="其他运营维管(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="其他运营维管年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+              </el-form>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="主要项目管理">
+            <div class="table-div">
+              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+                <el-form-item label="项目名称:">
+                  <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
+                </el-form-item>
+                <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
+                <el-button @click="getData" type="primary" plain>查询</el-button>
+                <el-button @click="exportdata" type="primary" plain>导出</el-button>
+              </el-form>
+              <el-table
+                :data="[]"
+                :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                @selection-change="handleSelectionChange"
+                align="center"
+                border
+                class="detailTable"
+                ref="table"
+                style="width: 100%; min-height: calc(100vh - 370px)"
+              >
+                <el-table-column
+                  label="项目信息"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称"
+                    prop="projectCode"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合同号"
+                    prop="projectName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="所属单位"
+                    prop="projectProp"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="境/内外"
+                    align="center"
+                    prop="measureUnit"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="推送人"
+                    prop="singlePrice"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="联系方式"
+                    prop="sumPrice"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合同额"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="剩余合同额"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                    width="150"
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="上报产值是否含增值税"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                    width="200"
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="税额"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table-column>
+                <el-table-column
+                  label="本月完成"
+                >
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工程运营维管"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                    width="150"
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="信息化运营维管"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                    width="150"
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="物业管理"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="其他运营收入"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                    width="150"
+                  >
+                  </el-table-column>
+                </el-table-column>
+              </el-table>
+            </div>
+          </el-tab-pane>
+        </el-tabs>
+      </el-tab-pane>
+      <el-tab-pane label="其他产值板块">
+        <el-tabs type="border-card">
+          <el-tab-pane label="产值">
+            <div class="detailBox">
+              <el-form
+                :inline="false"
+                :model="detailform"
+                :rules="rules"
+                class="gcform"
+                ref="detailform"
+              >
+                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                  <span>合计:</span>
+                </p>
+                <el-form-item
+                  label="合计(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="合计年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="设备租赁(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="设备租赁年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="房屋租赁(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="房屋租赁年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="交通运输(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="交通运输年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="住宿餐饮(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="住宿餐饮年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="教育培训(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="教育培训年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="信息化建设(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="信息化建设年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="其它项目(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="其它项目年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                  <span>境内数据: </span>
+                </p>
+                <el-form-item
+                  label="合计(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="合计年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="设备租赁(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="设备租赁年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="房屋租赁(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="房屋租赁年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="交通运输(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="交通运输年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="住宿餐饮(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="住宿餐饮年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="教育培训(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="教育培训年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="信息化建设(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="信息化建设年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="其它项目(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="其它项目年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                  <span>境外数据: </span>
+                </p>
+                <el-form-item
+                  label="合计(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="合计年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="设备租赁(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="设备租赁年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="房屋租赁(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="房屋租赁年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="交通运输(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="交通运输年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="住宿餐饮(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="住宿餐饮年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="教育培训(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="教育培训年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="信息化建设(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="信息化建设年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="其它项目(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+                <el-form-item
+                  label="其它项目年累(万元):"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.topInfor.inforNameForeign"/>
+                </el-form-item>
+              </el-form>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="主要项目管理">
+            <div class="table-div">
+              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+                <el-form-item label="项目名称:">
+                  <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
+                </el-form-item>
+                <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
+                <el-button @click="getData" type="primary" plain>查询</el-button>
+                <el-button @click="exportdata" type="primary" plain>导出</el-button>
+              </el-form>
+              <el-table
+                :data="[]"
+                :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                @selection-change="handleSelectionChange"
+                align="center"
+                border
+                class="detailTable"
+                ref="table"
+                style="width: 100%; min-height: calc(100vh - 370px)"
+              >
+                <el-table-column
+                  label="项目信息"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="项目名称"
+                    prop="projectCode"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合同号"
+                    prop="projectName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="所属单位"
+                    prop="projectProp"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="境/内外"
+                    align="center"
+                    prop="measureUnit"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="推送人"
+                    prop="singlePrice"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="联系方式"
+                    prop="sumPrice"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合同额"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="剩余合同额"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                    width="150"
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="上报产值是否含增值税"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                    width="200"
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="税额"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table-column>
+                <el-table-column
+                  label="本月完成"
+                >
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="设备租赁"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="交通运输"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="住宿餐饮"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="教育培训"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="信息化建设"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                    width="150"
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="其它项目"
                     prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
@@ -2111,7 +3662,7 @@
     min-height: auto !important;
   }
   .table-div{
-    padding: 20px;
+    padding: 10px;
     width: 100%;
     box-sizing: border-box;
   }
