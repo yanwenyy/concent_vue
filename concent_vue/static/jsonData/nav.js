@@ -1270,6 +1270,14 @@ export default {
                   'menushow': true,
                   'leaf': true,
                   'defaultpage': false
+                },
+                {
+                  'name': '集团公司月报二级页面',
+                  'path': '/statistics/reportMonth/jTMList',
+                  'component': '/statistics/reportMonth/jTMList',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': false,
+                  'leaf': true
                 }
               ]
             },

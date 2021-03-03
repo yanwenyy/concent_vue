@@ -1,15 +1,15 @@
 <template>
   <div>
     <div style="width: 100%; overflow: hidden">
-      <el-form class="search-form" :inline="true" :model="searchform" @keyup.enter.native="init()">
+      <!--<el-form class="search-form" :inline="true" :model="searchform" @keyup.enter.native="init()">
         <el-form-item label="填报年月:">
           <el-date-picker
-            v-model="searchform.month"
+            v-model="searchform.fillDate"
             type="month"
             placeholder="选择月">
           </el-date-picker>
         </el-form-item>
-      </el-form>
+      </el-form>-->
       <el-button-group style="float: left">
         <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>新增</el-button>
         <el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
@@ -124,7 +124,7 @@
                 filterable
                 placeholder="请选择"
                 size="mini"
-                v-model="searchform.stauts"
+                v-model="searchform.status"
               >
                 <el-option
                   :key="index"
@@ -139,6 +139,10 @@
               <!--v-model="searchform.flowStatus"-->
               <!--size="mini"-->
               <!--/>-->
+            </div>
+          </template>
+          <template slot-scope="scope">
+            <div>{{scope.row.status==1?'草稿':scope.row.status==2?'审核中':scope.row.status==3?'审核通过':scope.row.status==4?'审核退回':'未创建'}}
             </div>
           </template>
         </el-table-column>
@@ -202,7 +206,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            <span @onclick="queryGsXq" class="blue pointer" v-if="scope.row.createOrgType=='13'">
+            <span class="blue pointer" v-if="scope.row.createOrgType=='13'">
             查看详细
            </span>
           </template>
@@ -215,12 +219,13 @@
 <script>
   export default {
     // inject:['reload'],
-    name: "proposal-list-look",
+    //name: "proposal-list-look",
     data() {
       return {
         Authorization:sessionStorage.getItem("token"),
         page: {current: 1, size: 20, total: 0, records: []},
         tableData: [],
+        userdata:{},
         showinput: false,
         sousuo: "",
         searchform: {
@@ -287,16 +292,68 @@
         this.getData();
       },
       //查询项目详细列表
-      queryGsXq(){
-
-      },
+  /*    queryGsXq(){
+        debugger
+        let p = {actpoint: "look", params: row};
+        if(row.createOrgType=='12'||row.createOrgType=='11'){
+          this.$router.push({
+            path: "./reportMDetail/",
+            query: {p: this.$utils.encrypt(JSON.stringify(p))},
+          });
+        }else{
+        this.$router.push({
+          path: "./reportMList/",
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        });}
+      },*/
       // 增加
       add() {
-        let p = {actpoint: "add"};
-        this.$router.push({
-          path: "./detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
+      debugger
+        if (this.multipleSelection.length !== 1) {
+          this.$message.info("请选择一条记录进行创建操作！");
+          return false;
+        }
+        if (this.multipleSelection[0].createOrgCode==this.userdata.managerOrgCode && (this.multipleSelection[0].status!='' && this.multipleSelection[0].status!=null)) {
+          this.$message.info("本单位月报已经创建！");
+          return false;
+        }
+        if(this.multipleSelection[0].createOrgCode!=this.userdata.managerOrgCode){
+          this.$message.info("无权操作下级单位月报！");
+          return false;
+        }
+        //判断是否存在未上报的数据，如果存在就提示，不存在就创建
+        if(this.tableData.length>0){
+          for (var i=0; i < this.tableData.length; i++) {
+            if((this.tableData[i].status ==''||this.tableData[i].status ==null) && this.tableData[i].projectId!=this.tableData.managerOrgId){
+              this.$message.info('该单位下存在未提交的月报,请提交该单位下所有项目月报后再进行尝试！')
+              return false;
+            }
+          };
+        }
+        if (this.multipleSelection[0].createOrgCode==this.userdata.managerOrgCode && (this.multipleSelection[0].status==''||this.multipleSelection[0].status==null)) {
+          var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/companyMonthlyReportEntityInfo';
+        var params =  this.multipleSelection[0];
+        this.$http.post(
+            url,
+            JSON.stringify(params),
+            {useJson: true}
+        ).then((res) => {
+          if (res.data.code === 200) {
+            this.$message({
+              message: '创建成功'
+            });
+            this.getData();
+          }else if(res.data.code === 400){
+            this.$message({
+              message: '该单位已在本月创建过月报请尝试修改或于下月再进行尝试'
+            });
+            this.getData();
+          }else{
+            this.$message({
+              message: '创建失败'
+            });
+          }
+        });}
       },
       // 修改
       totop() {
@@ -317,11 +374,22 @@
       },
       // 查看
       rowshow(row) {
-        let p = {actpoint: "look", instid: row.topOrgId};
-        this.$router.push({
-          path: "./detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
+        debugger
+        let mList = {actpoint: "look", params: row};
+        if(row.status==''||row.status==null){
+          this.$message.info("该项目月报还未完成上报,无法查看");
+          return false;
+        }else{
+        if(row.createOrgType=='12'||row.createOrgType=='11'){
+          this.$router.push({
+            path: "./companyMDetail/",
+            query: {mList: this.$utils.encrypt(JSON.stringify(mList))},
+          });
+        }else{
+          this.$router.push({
+            path: "./jTMList/",
+            query: {mList: this.$utils.encrypt(JSON.stringify(mList))},
+          });}}
       },
       // 删除
       remove() {
@@ -427,6 +495,7 @@
       this.getData();
       let that = this;
       that.getdatatime();
+      this.userdata=JSON.parse(sessionStorage.getItem('userdata'))
     },
   };
 </script>

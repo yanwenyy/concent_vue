@@ -213,7 +213,8 @@
                          prop="status" show-overflow-tooltip
         >
           <template slot-scope="scope">
-             {{scope.row.status==1?'已上报':'未上报'}}
+               <div>{{scope.row.status==1?'草稿':scope.row.status==2?'审核中':scope.row.status==3?'审核通过':scope.row.status==4?'审核退回':'未创建'}}
+          </div>
           </template>
           <template slot="header"
                     slot-scope="scope">
@@ -289,11 +290,23 @@
         data:[],
         flowStatusList:[
           {
-            detailName:'已上报',
+            detailName:"草稿",
             id:'1'
           },
           {
-            detailName:'未上报',
+            detailName:"审核中",
+            id:'2'
+          },
+          {
+            detailName:"审核通过",
+            id:'3'
+          },
+          {
+            detailName:"审核驳回",
+            id:'4'
+          },
+          {
+            detailName:"未创建",
             id:''
           }
         ],
@@ -341,7 +354,7 @@
         //判断是否存在未上报的数据，如果存在就提示，不存在就创建
         if(this.data.length>0){
           for (var i=0; i < this.data.length; i++) {
-            if(this.data[i].status !='1' && this.data[i].projectId!=this.userdata.managerOrgId){
+            if((this.data[i].status ==''||this.data[i].status ==null) && this.data[i].projectId!=this.userdata.managerOrgId){
               this.$message.info('该单位下存在未提交的月报,请提交该单位下所有项目月报后再进行尝试！')
               return false;
             }else if(this.data[i].projectId==this.userdata.managerOrgId && this.data[i].reportType=='1'){
@@ -354,7 +367,7 @@
         var params = {};
         params.fillDate = this.searchform.fillDate;
         params.reportType='1';
-        params.status='0';
+        params.status='1'
         this.$http.post(
             url,
             JSON.stringify(params),
@@ -432,7 +445,7 @@
         this.multipleSelection.forEach((item) => {
           let a=this.userdata.managerOrgId;
           if(item.projectId==this.userdata.managerOrgId){
-            if(item.status!='0'&&item.status!=null){
+            if(item.status!='1'&&item.status!=null){
             this.$message.info('只允许删除未上报的数据！')
             return false
             }else{
