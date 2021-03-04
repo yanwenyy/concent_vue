@@ -149,10 +149,10 @@
             <el-form-item
               label="供方地点"
               style="width: 32.5%"
-              prop="project.supplierAddress"
+              prop="project.topInfoSiteList[0].path"
               :rules="rules.project.must"
             >
-              <el-input v-model="detailForm.project.supplierAddress" placeholder="供方地点"
+              <el-input v-model="detailForm.project.topInfoSiteList[0].path" placeholder="供方地点"
                         :disabled="p.actpoint === 'look'" clearable>
                 <el-button slot="append" :disabled="p.actpoint === 'look'" icon="el-icon-search"
                            @click="selectPosition()"></el-button>
@@ -697,7 +697,13 @@
             infoProductList: [], // 产品列表
             infoSubjectMatterList: [], // 标的信息
             commonFilesList: [], // 文件列表
-            topInfoSiteList: [], // 项目所在地
+            topInfoSiteList: [ // 项目所在地
+              {
+                path: '',
+                placeId: '',
+                uuid: ''
+              }
+            ], 
             projectModuleId: '510ba0d79593418493eb1a11ea4e7af4', // 项目板块
             projectModuleName: '物资贸易', // 项目板块
             projectName: '',
@@ -839,7 +845,9 @@
       // 获取项目地点的值
       getPositionTree(data) {
         this.treeStatas = false
-        this.detailForm.project.supplierAddress = data.fullDetailName
+        //this.detailForm.project.supplierAddress = data.fullDetailName
+        this.detailForm.project.topInfoSiteList[0].placeId = data.id
+        this.detailForm.project.topInfoSiteList[0].path = data.fullDetailName
       },
       getName(id, list, name) {
         if (id) {
