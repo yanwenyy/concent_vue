@@ -188,10 +188,10 @@
             <el-form-item
               label="供方地点"
               style="width: 32.5%"
-              prop="project.supplierAddress"
+              prop="project.topInfoSiteList[0].path"
               :rules="rules.project.must"
             >
-              <el-input v-model="detailForm.project.supplierAddress" placeholder="供方地点"
+              <el-input v-model="detailForm.project.topInfoSiteList[0].path" placeholder="供方地点"
                         :disabled="p.actpoint === 'look'" clearable>
                 <el-button slot="append" :disabled="p.actpoint === 'look'" icon="el-icon-search"
                            @click="selectPosition()"></el-button>
@@ -689,8 +689,7 @@
             projectSubContractList: [], // 分包字段
             infoProductList: [], // 产品列表
             infoSubjectMatterList: [], // 标的信息
-            commonFilesList: [], // 文件列表
-            topInfoSiteList: [],
+            commonFilesList: [], // 文件列表 
             projectModuleId: '510ba0d79593418493eb1a11ed3e7df4', // 项目板块
             projectModuleName: '工业制造', // 项目板块
             projectName: '',
@@ -722,7 +721,14 @@
             fieldId: '',
             projectPusher: '',
             projectRemark: '',
-            projectPusherPhone: ''
+            projectPusherPhone: '',
+            topInfoSiteList: [
+              {
+                path: '',
+                placeId: '',
+                uuid: ''
+              }
+            ]
           }
         },
         rules: {
@@ -833,7 +839,9 @@
       // 获取项目地点的值
       getPositionTree(data) {
         this.treeStatas = false
-        this.detailForm.project.supplierAddress = data.fullDetailName
+        //this.detailForm.project.supplierAddress = data.fullDetailName
+        this.detailForm.project.topInfoSiteList[0].placeId = data.id
+        this.detailForm.project.topInfoSiteList[0].path = data.fullDetailName
       },
       getName(id, list, name) {
         if (id) {
