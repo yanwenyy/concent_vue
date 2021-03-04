@@ -1,33 +1,15 @@
 <template>
-<!-- 国标库 -->
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary">新增</el-button>
+       <!-- <el-button @click="add" plain type="primary">新增</el-button>
         <el-button @click="totop" plain type="primary">修改</el-button>
-        <el-button @click="remove" type="primary" plain>删除</el-button>
+        <el-button @click="remove" type="primary" plain>删除</el-button>-->
         <!-- <el-button @click="searchformReset" type="primary" plain>刷新</el-button> -->
       </el-button-group>
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
         <el-button @click="getData" type="primary" plain>查询</el-button>
-        <!-- <el-button @click="Importdata" type="primary" plain>导入</el-button> -->
-        <!-- <el-upload
-                class="upload-demo detailUpload"
-                :action="'/api/contract/topInfo/CommonFiles/bidInfo/01/uploadFile'"
-                :on-success="handleChange"
-                :on-error="handleChange"
-                :show-file-list="false"
-                accept=".xls,.xlsx"
-                multiple
-              >
-                <el-button
-                  type="primary"
-                  plain
-                  >导入
-                  </el-button>
-                  </el-upload> -->
-        <!-- <el-button @click="exportdata" type="primary" plain>导出</el-button> -->
       </div>
     </div>
 
@@ -77,94 +59,6 @@
             </div>
           </template>
         </el-table-column>
-
-        <el-table-column
-          :width="150"
-          align="center"
-          label="报表类型"
-          prop="reportType"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>报表类型</span>
-            <el-select
-              clearable
-              filterable
-              placeholder="请选择"
-              size="mini"
-              v-model="searchform.reportType"
-            >
-              <el-option label="在建项目报表" value="01"></el-option>
-              <el-option label="竣工项目报表" value="02"></el-option>
-              <el-option label="年度报表" value="03"></el-option>
-              <el-option label="季度报表" value="04"></el-option>
-              <el-option label="勘察设计报表" value="05"></el-option>
-              <el-option label="产值报表" value="06"></el-option>
-              <el-option label="股份公司报表" value="07"></el-option>
-              <el-option label="新签报表" value="08"></el-option>
-            </el-select>
-          </template>
-          <template slot-scope="scope">
-             {{scope.row.reportType=='01'?'在建项目报表':scope.row.reportType=='02'?'竣工项目报表':scope.row.reportType=='03'
-            ?'年度报表':scope.row.reportType=='04'?'季度报表':scope.row.reportType=='05'?'勘察设计报表':scope.row.reportType=='06'?'产值报表':scope.row.reportType=='08'?'新签报表':
-            scope.row.reportType=='07'?'股份公司报表':'其它'}}
-          </template>
-        </el-table-column>
-
-        <el-table-column
-          :width="300"
-          align="center"
-          label="报表层级"
-          prop="reportHierarchy"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>报表层级</span>
-            <el-select
-              clearable
-              filterable
-              placeholder="请选择"
-              size="mini"
-              v-model="searchform.reportHierarchyId"
-            >
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </template>
-<!--          <template slot-scope="scope">-->
-<!--             {{scope.row.enableStatus=='11'?'股份公司':scope.row.enableStatus=='12'?'集团公司':scope.row.enableStatus=='13'?'工程公司,局指挥部':scope.row.enableStatus=='18'?'分公司'-->
-<!--            :scope.row.enableStatus=='17'?'项目部':scope.row.enableStatus=='14'?'部门':scope.row.enableStatus=='16'?'项目节点':scope.row.enableStatus=='24'?'区域指挥部':'其它'}}-->
-<!--          </template>-->
-        </el-table-column>
-
-        <el-table-column
-          :width="150"
-          align="center"
-          label="状态"
-          prop="enableStatus"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>状态</span>
-            <el-select
-              clearable
-              filterable
-              placeholder="请选择"
-              size="mini"
-              v-model="searchform.enableStatus"
-            >
-              <el-option label="启用" value="1"></el-option>
-              <el-option label="禁用" value="0"></el-option>
-            </el-select>
-          </template>
-          <template slot-scope="scope">
-             {{scope.row.enableStatus==0?'禁用':scope.row.enableStatus==1?'启用':'其它'}}
-          </template>
-        </el-table-column>
       </el-table>
     </div>
     <el-pagination
@@ -206,7 +100,6 @@
             <el-option label="产值报表" value="06"></el-option>
             <el-option label="股份公司报表" value="07"></el-option>
             <el-option label="新签报表" value="08"></el-option>
-
           </el-select>
         </el-form-item>
 
@@ -263,7 +156,7 @@
           current: 1,
           size: 20,
           reportName: "",
-          reportType: "",
+          reportType: "02",
           reportHierarchy: "",
           reportHierarchyId:"",
           reportSort: "",
