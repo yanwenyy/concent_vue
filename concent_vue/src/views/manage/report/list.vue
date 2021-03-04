@@ -100,6 +100,7 @@
               <el-option label="季度报表" value="04"></el-option>
               <el-option label="勘察设计报表" value="05"></el-option>
               <el-option label="产值报表" value="06"></el-option>
+              <el-option label="新签报表" value="08"></el-option>
             </el-select>
           </template>
           <template slot-scope="scope">
@@ -201,6 +202,7 @@
             <el-option label="季度报表" value="04"></el-option>
             <el-option label="勘察设计报表" value="05"></el-option>
             <el-option label="产值报表" value="06"></el-option>
+            <el-option label="新签报表" value="08"></el-option>
           </el-select>
         </el-form-item>
 
