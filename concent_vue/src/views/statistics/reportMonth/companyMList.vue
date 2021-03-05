@@ -61,7 +61,7 @@
         <el-table-column :min-width="200"
                          align="center"
                          label="填报年月"
-                         prop="fillDate" show-overflow-tooltip
+                         prop="yearDateS" show-overflow-tooltip
         >
           <template slot="header"
                     slot-scope="scope">
@@ -70,19 +70,19 @@
               <el-date-picker class="list-search-picker" filterable clearable
                               type="month"
                               @change="queryList"
-                              v-model="searchform.fillDate"
+                              v-model="searchform.yearDateS"
               >
               </el-date-picker>
             </div>
           </template>
           <template slot-scope="scope">
             <!-- <div>{{scope.row.monthValue}}</div>-->
-            <div v-if="scope.row.fillDate != null">
+            <div v-if="scope.row.reportYear != null && scope.row.reportMonth != null">
               {{
-              scope.row.fillDate | monthdateformat
+              scope.row.reportYear+"-"+scope.row.reportMonth
               }}
             </div>
-            <div v-else>{{searchform.fillDate | monthdateformat}}</div>
+            <div v-else>{{searchform.yearDateS}}</div>
           </template>
         </el-table-column>
         <el-table-column :min-width="200"
@@ -284,8 +284,9 @@
           createUserId: '',
           createUserName: '',
           projectTypeName:'',
-          fillDate:'',
+          //fillDate:'',
           reportType:'1',
+          yearDateS:''
         },
         data:[],
         flowStatusList:[
@@ -345,9 +346,7 @@
         var y = date.getFullYear();
         var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
         var time=y + '-' + m;
-        var time1 = new Date(time);
-        var time2 = time1.getTime();
-      this.searchform.fillDate= time2;
+      this.searchform.yearDateS= time;
       },
         //新增
       add(){
@@ -365,7 +364,9 @@
         }
         var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/companyMonthlyReportEntityInfo';
         var params = {};
-        params.fillDate = this.searchform.fillDate;
+        //params.fillDate = this.searchform.fillDate;
+        params.reportYear=this.searchform.yearDateS.split("-")[0];
+        params.reportMonth=this.searchform.yearDateS.split("-")[1];
         params.reportType='1';
         params.status='1'
         this.$http.post(
@@ -404,16 +405,10 @@
       },
       //未上报批量填0点击是
       submit(){
-        var date = new Date(this.searchform.fillDate);
-        var y = date.getFullYear();
-        var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
-        var time=y + '-' + m;
-        var time1 = new Date(time);
-        var time2 = time1.getTime();
-        this.searchform.fillDate= time2;
         let tableData = {
           prjAndPrjReportAndDetailList:this.data,
-          fillDateVo:this.searchform.fillDate,
+          yearVo:this.searchform.yearDateS.split("-")[0],
+          monthVo:this.searchform.yearDateS.split("-")[1],
           reportTypeVo:"1"
         }
         var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/batchUpdateValue'
@@ -513,7 +508,7 @@
             this.type = 'edit'
             this.form1 = JSON.parse(JSON.stringify(this.multipleSelection[0]));
             let mList = {projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,projectreportuuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectreportuuid,
-              fillDate:JSON.parse(JSON.stringify(this.multipleSelection[0])).fillDate,orgCode:JSON.parse(JSON.stringify(this.multipleSelection[0])).createOrgCode,
+              reportYear:JSON.parse(JSON.stringify(this.multipleSelection[0])).reportYear,reportMonth:JSON.parse(JSON.stringify(this.multipleSelection[0])).reportMonth,orgCode:JSON.parse(JSON.stringify(this.multipleSelection[0])).createOrgCode,
               projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).status,projectName:this.multipleSelection[0].projectName
             }
             this.$router.push({
@@ -533,24 +528,14 @@
       },
       searchformSubmit() {
         this.searchform.current = 1;
-        var date = new Date(this.searchform.fillDate);
-        var y = date.getFullYear();
-        var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
-        var time=y + '-' + m;
-        var time1 = new Date(time);
-        var time2 = time1.getTime();
-        this.searchform.fillDate= time2;
+        this.searchform.reportYear= this.searchform.yearDateS.split("-")[0];
+        this.searchform.reportMonth= this.searchform.yearDateS.split("-")[1];
         this.getData();
       },
       queryList(){
         this.searchform.current = 1;
-        var date = new Date(this.searchform.fillDate);
-        var y = date.getFullYear();
-        var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
-        var time=y + '-' + m;
-        var time1 = new Date(time);
-        var time2 = time1.getTime();
-        this.searchform.fillDate= time2;
+        this.searchform.reportYear= this.searchform.yearDateS.split("-")[0];
+        this.searchform.reportMonth= this.searchform.yearDateS.split("-")[1];
         this.getData();
       },
       searchformReset() {
@@ -583,13 +568,8 @@
       },
       // 获取分页数据
       getData() {
-        var date = new Date(this.searchform.fillDate);
-        var y = date.getFullYear();
-        var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
-        var time=y + '-' + m;
-        var time1 = new Date(time);
-        var time2 = time1.getTime();
-        this.searchform.fillDate= time2;
+        this.searchform.reportYear= this.searchform.yearDateS.split("-")[0];
+        this.searchform.reportMonth= this.searchform.yearDateS.split("-")[1];
         this.$http
             .post('/api/statistics/projectMonthlyReport/Projectreport/list/companyMonthlyReportList', this.searchform)
             .then(res => {
@@ -598,7 +578,7 @@
       },
       rowShow(row){
         let mList = {projectId: row.projectId, orgCode: row.createOrgCode,projectName:row.projectName,createOrgId:row.createOrgId,createOrgName:row.createOrgName,
-          fillDate:row.fillDate,projectreportuuid:row.projectreportuuid,reportType:row.reportType,createOrgType:row.createOrgType
+          reportYear:row.reportYear,reportMonth:row.reportMonth,projectreportuuid:row.projectreportuuid,reportType:row.reportType,createOrgType:row.createOrgType
         };
         if((row.status==''||row.status==null) && row.projectId!=this.userdata.managerOrgId){
           this.$message.info("该项目月报还未进行创建，无法进行操作", "提示")
@@ -612,9 +592,9 @@
       }}
     },
     created() {
-      this.getData();
       let that = this;
       that.getdatatime();
+      this.getData();
       console.log(JSON.parse(sessionStorage.getItem('userdata')));
       this.userdata=JSON.parse(sessionStorage.getItem('userdata'));
     }

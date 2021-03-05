@@ -14,7 +14,7 @@
           >
             <el-form-item
               label="报表年月:"
-            ><el-input v-model="dataReport.fillDate" disabled ></el-input>
+            ><el-input v-model="dataReport.yearDateS" disabled ></el-input>
             </el-form-item>
             <el-form-item
               label="所属单位:"
@@ -415,7 +415,7 @@
         dataReport:{
         },
         nextData:[],
-        fillDate:'',
+        yearDateS:'',
         activeName:"ztjd",
         mList: JSON.parse(this.$utils.decrypt(this.$route.query.mList)),
         proNameHover: false,
@@ -508,18 +508,13 @@
       },
       // 获取数据
       getData() {
+        var datas=JSON.parse(this.$utils.decrypt(this.$route.query.mList));
         this.$http
-            .post('/api/statistics/projectMonthlyReport/Projectreport/detail/queryMonthReportEntityInfo', JSON.stringify({
-              projectId: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectId,
-              uuid: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectreportuuid,
-              fillDate: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).fillDate,
-              createOrgCode: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).orgCode,
-              createOrgType: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).createOrgType,
-              reportType: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportType
-            }), {useJson: true})
+            .post('/api/statistics/projectMonthlyReport/Projectreport/detail/queryMonthReportEntityInfo', datas.params, {useJson: true})
             .then(res => {
               this.data = res.data.data.projectReportDetaiList
               this.dataReport=res.data.data.projectreport
+              this.dataReport.yearDateS=this.dataReport.reportYear+"-"+this.dataReport.reportMonth
               this.nextData=res.data.data.planPrjTjxDetailList
               this.projectList=res.data.data.projectList||{}
               console.log('data', this.data)

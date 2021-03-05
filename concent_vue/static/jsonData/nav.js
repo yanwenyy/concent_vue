@@ -1278,6 +1278,14 @@ export default {
                   'iconCls': 'el-icon-office-building',
                   'menushow': false,
                   'leaf': true
+                },
+                {
+                  'name': '集团公司月报详情页面',
+                  'path': '/statistics/reportMonth/jTMDetail',
+                  'component': '/statistics/reportMonth/jTMDetail',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': false,
+                  'leaf': true
                 }
               ]
             },

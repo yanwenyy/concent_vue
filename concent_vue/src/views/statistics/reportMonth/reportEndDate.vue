@@ -171,6 +171,15 @@
             </el-date-picker>
             </div>
           </template>
+          <template slot-scope="scope">
+            <!-- <div>{{scope.row.monthValue}}</div>-->
+            <div>
+              {{
+              scope.row.createTime | monthdateformat
+              }}
+            </div>
+
+          </template>
         </el-table-column>
       </el-table>
       <el-pagination

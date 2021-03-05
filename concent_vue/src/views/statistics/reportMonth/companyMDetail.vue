@@ -14,7 +14,7 @@
           >
             <el-form-item
               label="报表年月:"
-            ><el-input v-model="dataReport.fillDate" disabled ></el-input>
+            ><el-input v-model="dataReport.yearDateS" disabled ></el-input>
             </el-form-item>
             <el-form-item
               label="所属单位:"
@@ -415,7 +415,7 @@
         dataReport:{
         },
         nextData:[],
-        fillDate:'',
+        yearDateS:'',
         activeName:"ztjd",
         mList: JSON.parse(this.$utils.decrypt(this.$route.query.mList)),
         proNameHover: false,
@@ -512,7 +512,8 @@
           .post('/api/statistics/projectMonthlyReport/Projectreport/detail/queryMonthReportEntityInfo', JSON.stringify({
             projectId: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectId,
             uuid: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectreportuuid,
-            fillDate: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).fillDate,
+            reportYear: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportYear,
+            reportMonth: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportMonth,
             createOrgCode: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).orgCode,
             createOrgType: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).createOrgType,
             reportType: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportType
@@ -522,6 +523,7 @@
             this.dataReport=res.data.data.projectreport
             this.nextData=res.data.data.planPrjTjxDetailList
             this.projectList=res.data.data.projectList||{}
+            this.dataReport.yearDateS=this.dataReport.reportYear+"-"+this.dataReport.reportMonth
             console.log('data', this.data)
             if(this.projectList.uuid!=''&& this.projectList.uuid!=null){
               this.activeName="ztjd"

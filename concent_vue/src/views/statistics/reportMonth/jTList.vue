@@ -11,7 +11,7 @@
         </el-form-item>
       </el-form>-->
       <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>新增</el-button>
+        <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>创建</el-button>
         <el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
         <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
       </el-button-group>
@@ -37,6 +37,8 @@
         highlight-current-row
         ref="table"
         tooltip-effect="dark"
+        lazy
+        :load="load"
       >
         <el-table-column
           :width="50"
@@ -92,19 +94,19 @@
               <el-date-picker class="list-search-picker" filterable clearable
                               type="month"
                               @change="queryList"
-                              v-model="searchform.fillDate"
+                              v-model="searchform.yearDateS"
               >
               </el-date-picker>
             </div>
           </template>
           <template slot-scope="scope">
             <!-- <div>{{scope.row.monthValue}}</div>-->
-            <div v-if="scope.row.fillDate != null">
+            <div v-if="scope.row.reportYear != null && scope.row.reportMonth != null ">
               {{
-              scope.row.fillDate | monthdateformat
+              scope.row.reportYear+"-"+scope.row.reportMonth
               }}
             </div>
-            <div v-else>{{searchform.fillDate | monthdateformat}}</div>
+            <div v-else>{{searchform.yearDateS}}</div>
           </template>
         </el-table-column>
         <el-table-column
@@ -206,7 +208,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            <span class="blue pointer" v-if="scope.row.createOrgType=='13'">
+            <span @click="queryGsXq(scope.row)"   class="blue pointer" v-if="scope.row.createOrgType=='13'">
             查看详细
            </span>
           </template>
@@ -232,7 +234,7 @@
           createOrgName: "",
           status: "",
           createTime: "",
-          fillDate: "",
+          yearDateS: "",
         },
         menus: [],
         multipleSelection: [],
@@ -268,44 +270,48 @@
     methods: {
       exportdata() {
       },
+      load(tree, treeNode, resolve) {
+        tree.reportYear= this.searchform.yearDateS.split("-")[0];
+        tree.reportMonth= this.searchform.yearDateS.split("-")[1];
+        setTimeout(() => {
+          this.$http
+              .post(
+                  "/api/statistics/projectMonthlyReport/Projectreport/list/jtClickQueryEntInfo",
+                  tree
+              )
+              .then((res) => {
+                var datas=res.data.data.list
+                resolve(datas)
+              });
+
+        }, 1000)
+      },
       getdatatime(){//默认显示今天
         var date = new Date();
         var y = date.getFullYear();
         var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
         var time=y + '-' + m;
-        var time1 = new Date(time);
-        var time2 = time1.getTime();
-        this.searchform.fillDate= time2;
+        this.searchform.yearDateS= time;
       },
       search() {
         this.showinput = false;
       },
       queryList(){
         this.searchform.current = 1;
-        var date = new Date(this.searchform.fillDate);
-        var y = date.getFullYear();
-        var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
-        var time=y + '-' + m;
-        var time1 = new Date(time);
-        var time2 = time1.getTime();
-        this.searchform.fillDate= time2;
+        this.searchform.current = 1;
+        this.searchform.reportYear= this.searchform.yearDateS.split("-")[0];
+        this.searchform.reportMonth= this.searchform.yearDateS.split("-")[1];
         this.getData();
       },
       //查询项目详细列表
-  /*    queryGsXq(){
+      queryGsXq(row){
         debugger
-        let p = {actpoint: "look", params: row};
-        if(row.createOrgType=='12'||row.createOrgType=='11'){
-          this.$router.push({
-            path: "./reportMDetail/",
-            query: {p: this.$utils.encrypt(JSON.stringify(p))},
-          });
-        }else{
+        let mList = row;
         this.$router.push({
           path: "./reportMList/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });}
-      },*/
+          query: {p: this.$utils.encrypt(JSON.stringify(mList))},
+        });
+      },
       // 增加
       add() {
       debugger
@@ -322,16 +328,16 @@
           return false;
         }
         //判断是否存在未上报的数据，如果存在就提示，不存在就创建
-        if(this.tableData.length>0){
+     /*   if(this.tableData.length>0){
           for (var i=0; i < this.tableData.length; i++) {
             if((this.tableData[i].status ==''||this.tableData[i].status ==null) && this.tableData[i].projectId!=this.tableData.managerOrgId){
               this.$message.info('该单位下存在未提交的月报,请提交该单位下所有项目月报后再进行尝试！')
               return false;
             }
           };
-        }
+        }*/
         if (this.multipleSelection[0].createOrgCode==this.userdata.managerOrgCode && (this.multipleSelection[0].status==''||this.multipleSelection[0].status==null)) {
-          var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/companyMonthlyReportEntityInfo';
+          var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/jtReportEntityInfo';
         var params =  this.multipleSelection[0];
         this.$http.post(
             url,
@@ -365,10 +371,10 @@
           this.$message.info("此条数据不可修改！");
           return false;
         }
-        let p = {actpoint: "edit", instid: this.multipleSelection[0].topOrgId};
+        let mList = {actpoint: "edit", instid: this.multipleSelection[0]};
         this.$router.push({
-          path: "./detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+          path: "./jTMDetail/",
+          query: {p: this.$utils.encrypt(JSON.stringify(mList))},
         });
 
       },
@@ -380,16 +386,11 @@
           this.$message.info("该项目月报还未完成上报,无法查看");
           return false;
         }else{
-        if(row.createOrgType=='12'||row.createOrgType=='11'){
           this.$router.push({
-            path: "./companyMDetail/",
+            path: "./jTMDetail/",
             query: {mList: this.$utils.encrypt(JSON.stringify(mList))},
           });
-        }else{
-          this.$router.push({
-            path: "./jTMList/",
-            query: {mList: this.$utils.encrypt(JSON.stringify(mList))},
-          });}}
+        }
       },
       // 删除
       remove() {
@@ -467,20 +468,8 @@
       },
       // 查询
       getData() {
-      /*  if(this.searchform.importFileRecordName!=''){
-          if(this.searchform.importFileRecordName=='是'){
-            this.searchform.importFileRecordId='1';
-          }else if(this.searchform.importFileRecordName=='否'){
-            this.searchform.importFileRecordId='0';
-          }
-        }*/
-        var date = new Date(this.searchform.fillDate);
-        var y = date.getFullYear();
-        var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
-        var time=y + '-' + m;
-        var time1 = new Date(time);
-        var time2 = time1.getTime();
-        this.searchform.fillDate= time2;
+        this.searchform.reportYear= this.searchform.yearDateS.split("-")[0];
+        this.searchform.reportMonth= this.searchform.yearDateS.split("-")[1];
         this.$http
           .post(
             "/api/statistics/projectMonthlyReport/Projectreport/list/jtQueryEntInfo",
@@ -492,9 +481,9 @@
       },
     },
     created() {
-      this.getData();
       let that = this;
       that.getdatatime();
+      this.getData();
       this.userdata=JSON.parse(sessionStorage.getItem('userdata'))
     },
   };
