@@ -25,7 +25,7 @@
             >
               <el-form-item
                 label="报表年月:"
-              ><el-input v-model="dataReport.fillDate" disabled ></el-input>
+              ><el-input v-model="dataReport.yearDateS" disabled ></el-input>
               </el-form-item>
               <el-form-item
                 label="所属单位:"
@@ -299,7 +299,7 @@
         dataReport:{
         },
         nextData:[],
-        fillDate:'',
+        yearDateS:'',
         activeName:"ztjd",
         mList: JSON.parse(this.$utils.decrypt(this.$route.query.mList)),
         proNameHover: false,
@@ -463,12 +463,14 @@
           .post('/api/statistics/projectMonthlyReport/Projectreport/detail/queryMonthReportEntityInfo', JSON.stringify({
             projectId: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectId,
             uuid: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).uuid,
-            fillDate: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).fillDate,
+            reportYear: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportYear,
+            reportMonth:JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportMonth,
             createOrgCode: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).orgCode
           }), {useJson: true})
           .then(res => {
             this.data = res.data.data.projectReportDetaiList
             this.dataReport=res.data.data.projectreport
+            this.dataReport.yearDateS=this.dataReport.reportYear+"-"+this.dataReport.reportMonth
             this.nextData=res.data.data.planPrjTjxDetailList
             console.log('data', this.data)
             // this.reportVo=this.data;

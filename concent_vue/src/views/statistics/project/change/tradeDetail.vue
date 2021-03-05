@@ -145,10 +145,10 @@
               <el-form-item
                 label="供方地点"
                 style="width: 32.5%"
-                prop="project.supplierAddress"
+                prop="project.topInfoSiteList[0].path"
                 :rules="rules.project.must"
               >
-                <el-input v-model="detailForm.project.supplierAddress" placeholder="供方地点"
+                <el-input v-model="detailForm.project.topInfoSiteList[0].path" placeholder="供方地点"
                           :disabled="p.actpoint === 'look'" clearable>
                   <el-button slot="append" :disabled="p.actpoint === 'look'" icon="el-icon-search"
                              @click="selectPosition()"></el-button>

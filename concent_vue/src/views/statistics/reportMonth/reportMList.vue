@@ -66,7 +66,7 @@
               :min-width="200"
               align="center"
               label="月报日期"
-              prop="fillDate"
+              prop="yearDateS"
               show-overflow-tooltip
             >
            <template slot="header" slot-scope="scope">
@@ -78,13 +78,13 @@
                  clearable
                  type="month"
                  value-format="yyyy-MM"
-                 v-model="searchform.fillDate"
+                 v-model="searchform.yearDateS"
                >
                </el-date-picker>
              </div>
            </template>
            <template slot-scope="scope">{{
-             scope.row.fillDate | monthdateformat
+             scope.row.reportYear+"-"+scope.row.reportMonth
              }}</template>
           </el-table-column>
         <el-table-column
@@ -298,12 +298,13 @@
           this.show = true
           return false
         }
+       var years =this.form1.year.split("-");
         //console.log("shijian"+new Date(this.form1.year).getTime());
-        var sj=new Date(this.form1.year).getTime();
+       // var sj=new Date(this.form1.year).getTime();
         //判断当前年月是否创建
         if(this.page.records.length>0){
           for (var i=0; i < this.page.records.length; i++) {
-            if(this.page.records[i].fillDate==sj){
+            if((this.page.records[i].reportYear+"-"+this.page.records[i].reportMonth)==this.form1.year){
               this.$message.info('当前年月已创建,请重新选择时间！')
               return false;
             }
@@ -314,7 +315,8 @@
         params.projectId = JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectId
         params.createOrgCode =JSON.parse(this.$utils.decrypt(this.$route.query.mList)).orgCode
         params.reportProjectName =JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectName
-         params.fillDate = sj
+        params.reportYear = years[0]
+        params.reportMonth = years[1]
         params.status='1'
        this.$http.post(
         url,
@@ -403,7 +405,7 @@
       },
       // 查看
       rowShow(row) {
-        let mList = { actpoint: 'look', projectId: row.projectId,uuid:row.uuid,fillDate:row.fillDate,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.status }
+        let mList = { actpoint: 'look', projectId: row.projectId,uuid:row.uuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.status }
         this.$router.push({
           path: '../reportMDetail/',
           query: { mList: this.$utils.encrypt(JSON.stringify(mList)) }
@@ -431,6 +433,11 @@
       },
       searchformSubmit() {
         this.searchform.current = 1
+        var shijian=this.searchform.yearDateS;
+        var y=shijian.split("-")[0];
+        var m =shijian.split("-")[1];
+        this.searchform.reportYear=y;
+        this.searchform.reportMonth=m;
         this.getData()
       },
       searchformReset() {
@@ -449,7 +456,8 @@
           status:'',
           reportProjectName:'',
           uuid:'',
-          fillDate:''
+          fillDate:'',
+          yearDates:''
 
         }
         this.getData()

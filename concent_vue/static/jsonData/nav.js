@@ -646,17 +646,17 @@ export default {
             },
             {
               'name': '新签报表',
-              'path': '/manage/plan/bb',
-              'component': '/router',
-              'iconCls': 'el-icon-printer',
+              'path': '/manage/xinqian/list',
+              'component': '/manage/xinqian/list',
+              'iconCls': 'el-icon-edit-outline',
               'menushow': true,
-              'leaf': false,
+              'leaf': true,
               'defaultpage': false
             },
             {
               'name': '报表管理',
-              'path': '/manage/plan/report',
-              'component': '/manage/plan/report/list',
+              'path': '/manage/report/list',
+              'component': '/manage/report/list',
               'iconCls': 'el-icon-coin',
               'menushow': true,
               'leaf': true,
@@ -1261,6 +1261,31 @@ export default {
                   'iconCls': 'el-icon-office-building',
                   'menushow': false,
                   'leaf': true
+                },
+                {
+                  'name': '集团公司月报',
+                  'path': '/statistics/reportMonth/jTList',
+                  'component': '/statistics/reportMonth/jTList',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '集团公司月报二级页面',
+                  'path': '/statistics/reportMonth/jTMList',
+                  'component': '/statistics/reportMonth/jTMList',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': false,
+                  'leaf': true
+                },
+                {
+                  'name': '集团公司月报详情页面',
+                  'path': '/statistics/reportMonth/jTMDetail',
+                  'component': '/statistics/reportMonth/jTMDetail',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': false,
+                  'leaf': true
                 }
               ]
             },
@@ -1321,6 +1346,80 @@ export default {
                   'defaultpage': false
                 },
               ]
+            },
+            {
+              'name': '计统报表',
+              'path': '/statistics/report',
+              'component': '/router',
+              'iconCls': 'el-icon-document-copy',
+              'menushow': true,
+              'leaf': false,
+              'defaultpage': false,
+              'children': [
+                {
+                  'name': '在建项目报表',
+                  'path': '/statistics/report/list1',
+                  'component': '/statistics/report/list1',
+                  'iconCls': 'el-icon-notebook-1',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '勘察设计报表',
+                  'path': '/statistics/report/list2',
+                  'component': '/statistics/report/list2',
+                  'iconCls': 'el-icon-notebook-2',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '竣工设计报表',
+                  'path': '/statistics/report/list3',
+                  'component': '/statistics/report/list3',
+                  'iconCls': 'el-icon-collection',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '计划统计报表',
+                  'path': '/statistics/report/list4',
+                  'component': '/statistics/report/list4',
+                  'iconCls': 'el-icon-files',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '季度报表',
+                  'path': '/statistics/report/list5',
+                  'component': '/statistics/report/list5',
+                  'iconCls': 'el-icon-tickets',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '年度报表',
+                  'path': '/statistics/report/list6',
+                  'component': '/statistics/report/list6',
+                  'iconCls': 'el-icon-document',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '股份公司报表',
+                  'path': '/statistics/report/list7',
+                  'component': '/statistics/report/list7',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                ]
             },
           ]
         },

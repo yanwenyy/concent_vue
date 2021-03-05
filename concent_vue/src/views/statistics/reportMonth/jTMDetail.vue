@@ -1,8 +1,8 @@
-<!--公司月报自揽详情-->
+<!--集团月报详情-->
 <template>
   <div style="position: relative">
     <!--<el-button  @click="save" v-if="dataReport.status!='1'" type="primary"  class="detailbutton detail-back-tab" style="float: left; margin-right: 185px;"plain>保存</el-button>-->
-    <el-button  @click="submit" v-if="dataReport.status=='1'" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>
+    <el-button  @click="submit" v-if="dataReport.status!='1'" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>
     <el-button  @click="back" type="primary"  class="detailbutton detail-back-tab " plain>返回</el-button>
     <el-tabs type="border-card" v-model="activeName">
       <el-tab-pane v-if="projectList.uuid!=''&& projectList.uuid!=null" label="整体进度" name="ztjd">
@@ -508,22 +508,15 @@
       },
       // 获取数据
       getData() {
+        var datas=JSON.parse(this.$utils.decrypt(this.$route.query.mList));
         this.$http
-            .post('/api/statistics/projectMonthlyReport/Projectreport/detail/queryMonthReportEntityInfo', JSON.stringify({
-              projectId: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectId,
-              uuid: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectreportuuid,
-              reportYear: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportYear,
-              reportMonth: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportMonth,
-              createOrgCode: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).orgCode,
-              createOrgType: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).createOrgType,
-              reportType: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportType
-            }), {useJson: true})
+            .post('/api/statistics/projectMonthlyReport/Projectreport/detail/queryMonthReportEntityInfo', datas.params, {useJson: true})
             .then(res => {
               this.data = res.data.data.projectReportDetaiList
               this.dataReport=res.data.data.projectreport
+              this.dataReport.yearDateS=this.dataReport.reportYear+"-"+this.dataReport.reportMonth
               this.nextData=res.data.data.planPrjTjxDetailList
               this.projectList=res.data.data.projectList||{}
-              this.dataReport.yearDateS=this.dataReport.reportYear+"-"+this.dataReport.reportMonth
               console.log('data', this.data)
               if(this.projectList.uuid!=''&& this.projectList.uuid!=null){
                 this.activeName="ztjd"
