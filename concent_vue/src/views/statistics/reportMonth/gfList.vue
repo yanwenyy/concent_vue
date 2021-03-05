@@ -1,22 +1,7 @@
 <template>
   <div>
     <div style="width: 100%; overflow: hidden">
-      <!--<el-form class="search-form" :inline="true" :model="searchform" @keyup.enter.native="init()">
-        <el-form-item label="填报年月:">
-          <el-date-picker
-            v-model="searchform.fillDate"
-            type="month"
-            placeholder="选择月">
-          </el-date-picker>
-        </el-form-item>
-      </el-form>-->
-      <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>创建</el-button>
-        <el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
-        <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
-      </el-button-group>
       <div style="float: right">
-        <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
         <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
         <!-- <el-button @click="Importdata" type="primary" plain>导入</el-button> -->
       </div>
@@ -311,78 +296,9 @@
           query: {mList: this.$utils.encrypt(JSON.stringify(mList))},
         });
       },
-      // 增加
-      add() {
-      debugger
-        if (this.multipleSelection.length !== 1) {
-          this.$message.info("请选择一条记录进行创建操作！");
-          return false;
-        }
-        if (this.multipleSelection[0].createOrgCode==this.userdata.managerOrgCode && (this.multipleSelection[0].status!='' && this.multipleSelection[0].status!=null)) {
-          this.$message.info("本单位月报已经创建！");
-          return false;
-        }
-        if(this.multipleSelection[0].createOrgCode!=this.userdata.managerOrgCode){
-          this.$message.info("无权操作下级单位月报！");
-          return false;
-        }
-        //判断是否存在未上报的数据，如果存在就提示，不存在就创建
-        if(this.tableData.length>0){
-          for (var i=0; i < this.tableData.length; i++) {
-            if((this.tableData[i].status ==''||this.tableData[i].status ==null) && this.tableData[i].projectId!=this.tableData.managerOrgId){
-              this.$message.info('该单位下存在未提交的月报,请提交该单位下所有项目月报后再进行尝试！')
-              return false;
-            }
-          };
-        }
-        if (this.multipleSelection[0].createOrgCode==this.userdata.managerOrgCode && (this.multipleSelection[0].status==''||this.multipleSelection[0].status==null)) {
-          var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/jtReportEntityInfo';
-        var params =  this.multipleSelection[0];
-        this.$http.post(
-            url,
-            JSON.stringify(params),
-            {useJson: true}
-        ).then((res) => {
-          if (res.data.code === 200) {
-            this.$message({
-              message: '创建成功'
-            });
-            this.getData();
-          }else if(res.data.code === 400){
-            this.$message({
-              message: '该单位已在本月创建过月报请尝试修改或于下月再进行尝试'
-            });
-            this.getData();
-          }else{
-            this.$message({
-              message: '创建失败'
-            });
-          }
-        });}
-      },
-      // 修改
-      totop() {
-        if (this.multipleSelection.length !== 1) {
-          this.$message.info("请选择一条记录进行查看操作！");
-          return false;
-        }
-         if(this.multipleSelection[0].createOrgCode!=this.userdata.managerOrgCode){
-           this.$message.info("无权操作下级单位数据！");
-           return false;
-        }
-        if (this.multipleSelection[0].createOrgCode==this.userdata.managerOrgCode && (this.multipleSelection[0].status!='' && this.multipleSelection[0].status!=null)){
-          let mList = {actpoint: "edit", params: this.multipleSelection[0]};
-          this.$router.push({
-            path: "./jTMDetail/",
-            query: {mList: this.$utils.encrypt(JSON.stringify(mList))},
-          });
-        }
-
-
-      },
       // 查看
       rowshow(row) {
-        debugger
+      debugger
         let mList = {actpoint: "look", params: row};
         if(row.status==''||row.status==null){
           this.$message.info("该项目月报还未完成上报,无法查看");
@@ -394,52 +310,6 @@
           });
         }
       },
-      // 删除
-      remove() {
-        if (this.multipleSelection.length < 1) {
-          this.$message.info("请选择一条记录进行查看操作！");
-          return false;
-        }
-        let uuids = [],itemStatus=true;
-        this.multipleSelection.forEach((item) => {
-          if(item.createOrgCode==this.userdata.managerOrgCode && (item.status=='1'||item.status!=''|| item.status!=null)){
-            uuids.push(item.uuid);
-          }else{
-          this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
-          return itemStatus=false;
-        }
-      })
-
-        if(itemStatus){
-          this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            this.$http
-            .post(
-               '/api/statistics/projectMonthlyReport/Projectreport/list/delete',{ids: uuids}
-
-            )
-            .then((res) => {
-            this.getData()
-        });
-        }).catch(() => {})
-        }
-
-      },
-/*      // 展示
-      show() {
-        if (this.multipleSelection.length !== 1) {
-          this.$message.info("请选择一条记录进行查看操作！");
-          return false;
-        }
-        let mList = {actpoint: "look", instid: this.multipleSelection[0].uuid};
-        this.$router.push({
-          path: "../detail/",
-          query: {mList: this.$utils.encrypt(JSON.stringify(p))},
-        });
-      }, */
       // list通用方法开始
       handleSizeChange(val) {
         this.searchform.size = val;
@@ -469,13 +339,13 @@
         this.searchform.reportYear= this.searchform.yearDateS.split("-")[0];
         this.searchform.reportMonth= this.searchform.yearDateS.split("-")[1];
         this.$http
-          .post(
-            "/api/statistics/projectMonthlyReport/Projectreport/list/jtQueryEntInfo",
-            this.searchform
-          )
-          .then((res) => {
-          this.tableData = res.data.data;
-      });
+            .post(
+                "/api/statistics/projectMonthlyReport/Projectreport/list/jtQueryEntInfo",
+                this.searchform
+            )
+            .then((res) => {
+              this.tableData = res.data.data;
+            });
       },
     },
     created() {

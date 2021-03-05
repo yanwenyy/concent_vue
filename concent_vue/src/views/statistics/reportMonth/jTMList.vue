@@ -56,7 +56,7 @@
                 filterable
                 clearable
                 type="month"
-                v-model="ybDate"
+                v-model="yearDateS"
                 readonly
                 value-format="yyyy-MM"
               >
@@ -64,7 +64,7 @@
             </div>
           </template>
           <template slot-scope="scope">{{
-            tbny | monthdateformat
+            scope.row.reportYear+"-"+scope.row.reportMonth
             }}</template>
         </el-table-column>
         <el-table-column :min-width="200"
@@ -240,8 +240,7 @@
       return {
         data:{},
         mList: JSON.parse(this.$utils.decrypt(this.$route.query.mList)),
-        tbny:JSON.parse(this.$utils.decrypt(this.$route.query.mList)).params.fillDate,
-        ybDate:'',
+        yearDateS:'',
         userdata:{},
         treeStatas: false,
         page: { current: 1, size: 20, total: 0, records: [] },
@@ -256,6 +255,9 @@
           projectTypeName:'',
           fillDate:'',
           reportType:'',
+          yearDates:'',
+          reportMonth:'',
+          reportYear:''
         },
         data:[],
         flowStatusList:[
@@ -310,26 +312,6 @@
       }
     },
     methods: {
-      // 查看
-      rowShow(row) {
-        let p = { actpoint: 'look', uuid: row.uuid };
-        this.$router.push({
-          path: '',
-          query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-        });
-      },
-      // 选中查看
-      show() {
-        if (this.multipleSelection.length !== 1) {
-          this.$message.info('请选择一条记录进行查看操作!');
-          return false;
-        }
-        let p = { actpoint: 'look', uuid: this.multipleSelection[0].uuid };
-        this.$router.push({
-          path: '',
-          query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-        });
-      },
       handleSizeChange(val) {
         this.searchform.size = val;
         this.getData();
@@ -372,16 +354,16 @@
       },
       // 获取分页数据
       getData() {
-        debugger
         //this.searchform=this.mList.params;
-        this.searchform.createOrgCode=this.mList.params.createOrgCode
-        this.searchform.createOrgId=this.mList.params.createOrgId
-        this.searchform.createOrgName=this.mList.params.createOrgName
-        this.searchform.createOrgType=this.mList.params.createOrgType
-        this.searchform.createUserId=this.mList.params.createUserId
-        this.searchform.createUserName=this.mList.params.createUserName
-        this.searchform.fillDate=this.mList.params.fillDate
-        this.searchform.reportType=this.mList.params.reportType
+        this.searchform.createOrgCode=this.mList.createOrgCode
+        this.searchform.createOrgId=this.mList.createOrgId
+        this.searchform.createOrgName=this.mList.createOrgName
+        this.searchform.createOrgType=this.mList.createOrgType
+        this.searchform.createUserId=this.mList.createUserId
+        this.searchform.createUserName=this.mList.createUserName
+        this.searchform.reportYear=this.mList.reportYear
+        this.searchform.reportMonth=this.mList.reportMonth
+        this.searchform.reportType=this.mList.reportType
         this.$http
             .post('/api/statistics/projectMonthlyReport/Projectreport/list/companyMonthlyReportList', this.searchform)
             .then(res => {
@@ -389,15 +371,13 @@
             });
       },
       rowShow(row){
-        let mList = {projectId: row.projectId, orgCode: row.createOrgCode,projectName:row.projectName,createOrgId:row.createOrgId,createOrgName:row.createOrgName,
-          fillDate:row.fillDate,projectreportuuid:row.projectreportuuid,reportType:row.reportType,createOrgType:row.createOrgType
-        };
+        let mList = {actpoint: "look", params: row};
         if((row.status==''||row.status==null) && row.projectId!=this.userdata.managerOrgId){
           this.$message.info("该项目月报还未进行创建，无法进行操作", "提示")
           return false
         }else{
         this.$router.push({
-          path: './companyMDetail/',
+          path: '../jTMDetail/',
           query: {mList: this.$utils.encrypt(JSON.stringify(mList))}
         });
 
@@ -411,11 +391,6 @@
       this.getData();
       console.log(JSON.parse(sessionStorage.getItem('userdata')));
       this.userdata=JSON.parse(sessionStorage.getItem('userdata'));
-      var date = new Date(this.tbny);
-      var y = date.getFullYear();
-      var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
-      var time=y + '-' + m;
-      this.ybDate=time;
     }
 
   };

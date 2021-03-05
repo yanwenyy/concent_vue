@@ -1286,6 +1286,15 @@ export default {
                   'iconCls': 'el-icon-office-building',
                   'menushow': false,
                   'leaf': true
+                },
+                {
+                  'name': '股份公司月报查看',
+                  'path': '/statistics/reportMonth/gfList',
+                  'component': '/statistics/reportMonth/gfList',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
                 }
               ]
             },
