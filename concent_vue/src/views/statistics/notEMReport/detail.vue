@@ -23,108 +23,76 @@
                 </p>
                 <el-form-item
                   label="合计:"
-                  prop="topInfor.inforName"
-                  :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforName"/>
+                    disabled
+                    :value="(detailform.sumByMon_0.kcsjMonth||0)+(detailform.sumByMon_0.gcjlMonth||0)+(detailform.sumByMon_0.jszxMonth||0)+(detailform.sumByMon_0.qtMonth||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其中勘察设计:"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_0.kcsjMonth"/>
                 </el-form-item>
                 <el-form-item
                   label="工程监理:"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_0.gcjlMonth"/>
                 </el-form-item>
                 <el-form-item
                   label="技术咨询与转让:"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_0.jszxMonth"/>
                 </el-form-item>
                 <el-form-item
                   label="其他:"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_0.qtMonth"/>
                 </el-form-item>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>当年: </span>
                 </p>
                 <el-form-item
                   label="合计:"
-                  prop="topInfor.inforName"
-                  :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforName"/>
+                    disabled
+                    :value="(detailform.sumByMon_0.kcsjMonth||0)+(detailform.sumByMon_0.gcjlMonth||0)+(detailform.sumByMon_0.jszxMonth||0)+(detailform.sumByMon_0.qtMonth||0)+(detailform.sumByYear_0.kcsjMonth||0)+(detailform.sumByYear_0.gcjlMonth||0)+(detailform.sumByYear_0.jszxMonth||0)+(detailform.sumByYear_0.qtMonth||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其中勘察设计:"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByYear_0.kcsjYear"/>
                 </el-form-item>
                 <el-form-item
                   label="工程监理:"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByYear_0.gcjlYear"/>
                 </el-form-item>
                 <el-form-item
                   label="技术咨询与转让:"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByYear_0.jszxYear"/>
                 </el-form-item>
                 <el-form-item
                   label="其他:"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByYear_0.qtYear"/>
                 </el-form-item>
               </el-form>
             </div>
@@ -213,7 +181,7 @@
                 <el-button @click="exportdata" type="primary" plain>导出</el-button>
               </el-form>
               <el-table
-                :data="[]"
+                :data="detailform.kc_list"
                 :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -238,7 +206,7 @@
                   class="listTabel"
                   :resizable="false"
                   label="单位名称"
-                  prop="projectCode"
+                  prop="amountCompanyName"
                   align="center"
                   show-overflow-tooltip
                 >
@@ -247,7 +215,7 @@
                   class="listTabel"
                   :resizable="false"
                   label="项目简称"
-                  prop="projectName"
+                  prop="projectOmit"
                   align="center"
                   show-overflow-tooltip
                 >
@@ -256,7 +224,7 @@
                   class="listTabel"
                   :resizable="false"
                   label="项目名称"
-                  prop="projectProp"
+                  prop="projectName"
                   align="center"
                   show-overflow-tooltip
                 >
@@ -265,7 +233,7 @@
                   :resizable="false"
                   label="工程合同额"
                   align="center"
-                  prop="measureUnit"
+                  prop="contractAmountEngine"
                   show-overflow-tooltip
                   width="150"
                 >
@@ -274,7 +242,7 @@
                   class="listTabel"
                   :resizable="false"
                   label="年初进度%"
-                  prop="workAmount"
+                  prop="yearStart"
                   align="center"
                   show-overflow-tooltip
                   width="150"
@@ -284,7 +252,7 @@
                   class="listTabel"
                   :resizable="false"
                   label="月初进度%"
-                  prop="singlePrice"
+                  prop="monthStart"
                   align="center"
                   show-overflow-tooltip
                   width="150"
@@ -294,7 +262,7 @@
                   class="listTabel"
                   :resizable="false"
                   label="上月进度%"
-                  prop="sumPrice"
+                  prop="monthBefore"
                   align="center"
                   show-overflow-tooltip
                   width="150"
@@ -304,17 +272,24 @@
                   class="listTabel"
                   :resizable="false"
                   label="月末进度%"
-                  prop="tempPrice"
+                  prop="monthValue"
                   align="center"
                   show-overflow-tooltip
                   width="150"
                 >
+                  <template slot-scope="scope">
+                    <el-input
+                      @input="setCcsjYmjd(detailform.kc_list,detailform.sumByMon_0,'categorySecondName',scope.$index)"
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                      clearable
+                      v-model="scope.row.monthValue"/>
+                  </template>
                 </el-table-column>
                 <el-table-column
                   class="listTabel"
                   :resizable="false"
                   label="本月产值(万元)"
-                  prop="tempPrice"
+                  prop="monthFinish"
                   align="center"
                   show-overflow-tooltip
                   width="150"
@@ -324,7 +299,7 @@
                   class="listTabel"
                   :resizable="false"
                   label="本年产值(万元)"
-                  prop="tempPrice"
+                  prop="yearValue"
                   align="center"
                   show-overflow-tooltip
                   width="150"
@@ -334,7 +309,7 @@
                   class="listTabel"
                   :resizable="false"
                   label="实物工程量"
-                  prop="tempPrice"
+                  prop="physicalQuantity"
                   align="center"
                   show-overflow-tooltip
                   width="150"
@@ -344,7 +319,7 @@
                   class="listTabel"
                   :resizable="false"
                   label="计量单位"
-                  prop="tempPrice"
+                  prop="unitName"
                   align="center"
                   show-overflow-tooltip
                 >
@@ -353,7 +328,7 @@
                   class="listTabel"
                   :resizable="false"
                   label="本月完成(万元)"
-                  prop="tempPrice"
+                  prop="monthComplete"
                   align="center"
                   show-overflow-tooltip
                   width="150"
@@ -363,7 +338,7 @@
                   class="listTabel"
                   :resizable="false"
                   label="本年完成(万元)"
-                  prop="tempPrice"
+                  prop="yearComplete"
                   align="center"
                   show-overflow-tooltip
                   width="150"
@@ -373,7 +348,7 @@
                   class="listTabel"
                   :resizable="false"
                   label="备注"
-                  prop="tempPrice"
+                  prop="remark"
                   align="center"
                   show-overflow-tooltip
                 >
@@ -400,81 +375,59 @@
                 </p>
                 <el-form-item
                   label="工业总产值(万元):"
-                  prop="topInfor.inforName"
-                  :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-                >
+                  >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforName"/>
+                    disabled
+                    :value="(detailform.sumByMon_1.industry||0)+(detailform.sumByMon_1.industryHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="工业总产值年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_1.industry||0)+(detailform.sumByMon_1.industryHw||0)+(detailform.sumByYear_1.industry||0)+(detailform.sumByYear_1.industryHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="装备制造(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_1.equipmentManufacturin||0)+(detailform.sumByMon_1.equipmentManufacturinHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="装备制造年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_1.equipmentManufacturin||0)+(detailform.sumByMon_1.equipmentManufacturinHw||0)+(detailform.sumByYear_1.equipmentManufacturin||0)+(detailform.sumByYear_1.equipmentManufacturinHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="预构件(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_1.componentManufacturin||0)+(detailform.sumByMon_1.componentManufacturinHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="预构件年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_1.componentManufacturin||0)+(detailform.sumByMon_1.componentManufacturinHw||0)+(detailform.sumByYear_1.componentManufacturin||0)+(detailform.sumByYear_1.componentManufacturinHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其他工业产品(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_1.otherIndustrayProduct||0)+(detailform.sumByMon_1.otherIndustrayProductHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其他工业产品年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_1.otherIndustrayProduct||0)+(detailform.sumByMon_1.otherIndustrayProductHw||0)+(detailform.sumByYear_1.otherIndustrayProduct||0)+(detailform.sumByYear_1.otherIndustrayProductHw||0)"/>
                 </el-form-item>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境内数据: </span>
@@ -483,73 +436,57 @@
                   label="工业总产值(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_1.industry"/>
                 </el-form-item>
                 <el-form-item
                   label="工业总产值年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_1.industry||0)+(detailform.sumByYear_1.industry||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="装备制造(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_1.equipmentManufacturin"/>
                 </el-form-item>
                 <el-form-item
                   label="装备制造年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_1.equipmentManufacturin||0)+(detailform.sumByYear_1.equipmentManufacturin||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="预构件(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_1.componentManufacturin"/>
                 </el-form-item>
                 <el-form-item
                   label="预构件年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_1.componentManufacturin||0)+(detailform.sumByYear_1.componentManufacturin||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其他工业产品(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_1.otherIndustrayProduct"/>
                 </el-form-item>
                 <el-form-item
                   label="其他工业产品年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_1.otherIndustrayProduct||0)+(detailform.sumByYear_1.otherIndustrayProduct||0)"/>
                 </el-form-item>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境外数据: </span>
@@ -558,73 +495,57 @@
                   label="工业总产值(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_1.industryHw"/>
                 </el-form-item>
                 <el-form-item
                   label="工业总产值年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_1.industryHw||0)+(detailform.sumByYear_1.industryHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="装备制造(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_1.equipmentManufacturinHw"/>
                 </el-form-item>
                 <el-form-item
                   label="装备制造年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_1.equipmentManufacturinHw||0)+(detailform.sumByYear_1.equipmentManufacturinHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="预构件(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_1.componentManufacturinHw"/>
                 </el-form-item>
                 <el-form-item
                   label="预构件年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_1.componentManufacturinHw||0)+(detailform.sumByYear_1.componentManufacturinHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其他工业产品(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_1.otherIndustrayProductHw"/>
                 </el-form-item>
                 <el-form-item
                   label="其他工业产品年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_1.otherIndustrayProductHw||0)+(detailform.sumByYear_1.otherIndustrayProductHw||0)"/>
                 </el-form-item>
               </el-form>
             </div>
@@ -640,7 +561,7 @@
                 <el-button @click="exportdata" type="primary" plain>导出</el-button>
               </el-form>
               <el-table
-                :data="[]"
+                :data="detailform.gy_list"
                 :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -668,15 +589,6 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称"
-                    prop="projectCode"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="合同号"
                     prop="projectName"
                     align="center"
                     show-overflow-tooltip
@@ -685,8 +597,17 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
+                    label="合同号"
+                    prop="contractNumber"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
                     label="所属单位"
-                    prop="projectProp"
+                    prop="companyBelongName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -698,6 +619,9 @@
                     prop="measureUnit"
                     show-overflow-tooltip
                   >
+                    <template slot-scope="scope">
+                      {{scope.row.country=='01'?'境内':'境外'}}
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
@@ -712,7 +636,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="推送人"
-                    prop="singlePrice"
+                    prop="projectPusher"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -721,7 +645,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="联系方式"
-                    prop="sumPrice"
+                    prop="projectPusherPhone"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -730,7 +654,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="合同额"
-                    prop="tempPrice"
+                    prop="contractAmountTotal"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -749,7 +673,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="tempPrice"
+                    prop="isOutputTax"
                     align="center"
                     show-overflow-tooltip
                     width="200"
@@ -759,7 +683,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="税额"
-                    prop="tempPrice"
+                    prop="vat"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -772,20 +696,49 @@
                     class="listTabel"
                     :resizable="false"
                     label="工业总产值"
-                    prop="tempPrice"
+                    prop="industry"
                     align="center"
                     show-overflow-tooltip
                     width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'industry')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.industry"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'industryHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.industryHw"/>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="装备制造"
-                    prop="tempPrice"
+                    prop="equipmentManufacturin"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'equipmentManufacturin')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.equipmentManufacturin"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'equipmentManufacturinHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.equipmentManufacturinHw"/>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
@@ -794,17 +747,46 @@
                     prop="tempPrice"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'componentManufacturin')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.componentManufacturin"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'componentManufacturinHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.componentManufacturinHw"/>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="其他工业产品"
-                    prop="tempPrice"
+                    prop="otherIndustrayProduct"
                     align="center"
                     show-overflow-tooltip
                     width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'otherIndustrayProduct')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.otherIndustrayProduct"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'otherIndustrayProductHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.otherIndustrayProductHw"/>
+                    </template>
                   </el-table-column>
                 </el-table-column>
               </el-table>
@@ -828,27 +810,17 @@
                 </p>
                 <el-form-item
                   label="物资贸易产值(万元):"
-                  prop="topInfor.inforName"
-                  :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-                >
+                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforName"/>
+                    disabled
+                    :value="(detailform.sumByMon_2.materialTrade||0)+(detailform.sumByMon_2.materialTradeHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="物资贸易产值年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_2.materialTrade||0)+(detailform.sumByMon_2.materialTradeHw||0)+(detailform.sumByYear_2.materialTrade||0)+(detailform.sumByYear_2.materialTradeHw||0)"/>
                 </el-form-item>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境内数据: </span>
@@ -857,19 +829,15 @@
                   label="物资贸易产值(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_2.materialTrade"/>
                 </el-form-item>
                 <el-form-item
                   label="物资贸易产值年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_2.materialTrade||0)+(detailform.sumByYear_2.materialTrade||0)"/>
                 </el-form-item>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境外数据: </span>
@@ -878,19 +846,15 @@
                   label="物资贸易产值(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_2.materialTradeHw"/>
                 </el-form-item>
                 <el-form-item
                   label="物资贸易产值年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_2.materialTradeHw||0)+(detailform.sumByYear_2.materialTradeHw||0)"/>
                 </el-form-item>
               </el-form>
             </div>
@@ -906,7 +870,7 @@
                 <el-button @click="exportdata" type="primary" plain>导出</el-button>
               </el-form>
               <el-table
-                :data="[]"
+                :data="detailform.wz_list"
                 :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -933,7 +897,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="合同编号"
-                    prop="projectName"
+                    prop="contractNumber"
                     align="center"
                     show-overflow-tooltip
                     width="150"
@@ -943,7 +907,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称"
-                    prop="projectCode"
+                    prop="projectName	"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -953,7 +917,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="所属单位"
-                    prop="projectProp"
+                    prop="companyBelongName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -962,7 +926,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目内容"
-                    prop="projectProp"
+                    prop="projectContent"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -974,12 +938,15 @@
                     prop="measureUnit"
                     show-overflow-tooltip
                   >
+                    <template slot-scope="scope">
+                      {{scope.row.country=='01'?'境内':'境外'}}
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="推送人"
-                    prop="workAmount"
+                    prop="projectPusher"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -988,7 +955,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="联系方式"
-                    prop="sumPrice"
+                    prop="projectPusherPhone"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -997,7 +964,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="合同额"
-                    prop="tempPrice"
+                    prop="contractAmountTotal"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -1016,7 +983,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="tempPrice"
+                    prop="isOutputTax"
                     align="center"
                     show-overflow-tooltip
                     width="200"
@@ -1026,7 +993,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="税额"
-                    prop="tempPrice"
+                    prop="vat"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -1039,11 +1006,25 @@
                     class="listTabel"
                     :resizable="false"
                     label="物资贸易产值"
-                    prop="tempPrice"
+                    prop="materialTrade"
                     align="center"
                     show-overflow-tooltip
                     width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.wz_list,detailform.sumByMon_2,'materialTrade')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.materialTrade"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.wz_list,detailform.sumByMon_2,'materialTradeHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.materialTradeHw"/>
+                    </template>
                   </el-table-column>
                 </el-table-column>
               </el-table>
@@ -1067,228 +1048,180 @@
                 </p>
                 <el-form-item
                   label="房地产营业收入(万元):"
-                  prop="topInfor.inforName"
+                  prop="sumByMon_3.inforName"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforName"/>
+                    disabled
+                    :value="(detailform.sumByMon_3.realEstateIncome||0)+(detailform.sumByMon_3.realEstateIncomeHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="房地产营业收入年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_3.realEstateIncome||0)+(detailform.sumByMon_3.realEstateIncomeHw||0)+(detailform.sumByYear_3.realEstateIncome||0)+(detailform.sumByYear_3.realEstateIncomeHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="表内营收(万元)::"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_3.inRevenue||0)+(detailform.sumByMon_3.inRevenue||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="表内营收年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_3.inRevenue||0)+(detailform.sumByMon_3.inRevenue||0)+(detailform.sumByYear_3.inRevenue||0)+(detailform.sumByYear_3.inRevenue||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="表外权益(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_3.offRevenue||0)+(detailform.sumByMon_3.offRevenueHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="表外权益年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_3.offRevenue||0)+(detailform.sumByMon_3.offRevenueHw||0)+(detailform.sumByYear_3.offRevenue||0)+(detailform.sumByYear_3.offRevenueHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="表外非权益(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_3.offRevenueNon||0)+(detailform.sumByMon_3.offRevenueNonHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="表外非权益年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_3.offRevenueNon||0)+(detailform.sumByMon_3.offRevenueNonHw||0)+(detailform.sumByYear_3.offRevenueNon||0)+(detailform.sumByYear_3.offRevenueNonHw||0)"/>
                 </el-form-item>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境内数据: </span>
                 </p>
                 <el-form-item
                   label="房地产营业收入(万元):"
-                  prop="topInfor.inforName"
+                  prop="sumByMon_3.inforName"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforName"/>
+                    disabled
+                    v-model="detailform.sumByMon_3.realEstateIncome"/>
                 </el-form-item>
                 <el-form-item
                   label="房地产营业收入年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_3.realEstateIncome||0)+(detailform.sumByYear_3.realEstateIncome||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="表内营收(万元)::"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_3.inRevenue"/>
                 </el-form-item>
                 <el-form-item
                   label="表内营收年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_3.inRevenue||0)+(detailform.sumByYear_3.inRevenue||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="表外权益(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_3.offRevenue"/>
                 </el-form-item>
                 <el-form-item
                   label="表外权益年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_3.offRevenue||0)+(detailform.sumByYear_3.offRevenue||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="表外非权益(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_3.offRevenueNon"/>
                 </el-form-item>
                 <el-form-item
                   label="表外非权益年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_3.offRevenueNon||0)+(detailform.sumByYear_3.offRevenueNon||0)"/>
                 </el-form-item>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境外数据: </span>
                 </p>
                 <el-form-item
                   label="房地产营业收入(万元):"
-                  prop="topInfor.inforName"
+                  prop="sumByMon_3.inforName"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforName"/>
+                    disabled
+                    v-model="detailform.sumByMon_3.realEstateIncomeHw"/>
                 </el-form-item>
                 <el-form-item
                   label="房地产营业收入年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_3.realEstateIncomeHw||0)+(detailform.sumByYear_3.realEstateIncomeHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="表内营收(万元)::"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_3.inRevenueHw"/>
                 </el-form-item>
                 <el-form-item
                   label="表内营收年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_3.inRevenueHw||0)+(detailform.sumByYear_3.inRevenueHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="表外权益(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_3.offRevenueHw"/>
                 </el-form-item>
                 <el-form-item
                   label="表外权益年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_3.offRevenueHw||0)+(detailform.sumByYear_3.offRevenueHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="表外非权益(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_3.offRevenueNonHw"/>
                 </el-form-item>
                 <el-form-item
                   label="表外非权益年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_3.offRevenueNonHw||0)+(detailform.sumByYear_3.offRevenueNonHw||0)"/>
                 </el-form-item>
               </el-form>
             </div>
@@ -1304,7 +1237,7 @@
                 <el-button @click="exportdata" type="primary" plain>导出</el-button>
               </el-form>
               <el-table
-                :data="[]"
+                :data="detailform.fdc_list"
                 :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -1332,15 +1265,6 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称"
-                    prop="projectCode"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="合同号"
                     prop="projectName"
                     align="center"
                     show-overflow-tooltip
@@ -1349,8 +1273,17 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
+                    label="合同号"
+                    prop="contractNumber"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
                     label="所属单位"
-                    prop="projectProp"
+                    prop="companyBelongName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -1362,6 +1295,9 @@
                     prop="measureUnit"
                     show-overflow-tooltip
                   >
+                    <template slot-scope="scope">
+                      {{scope.row.country=='01'?'境内':'境外'}}
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
@@ -1376,7 +1312,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="推送人"
-                    prop="singlePrice"
+                    prop="projectPusher"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -1385,7 +1321,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="联系方式"
-                    prop="sumPrice"
+                    prop="projectPusherPhone"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -1394,7 +1330,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="合同额"
-                    prop="tempPrice"
+                    prop="contractAmountTotal"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -1413,7 +1349,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="tempPrice"
+                    prop="isOutputTax"
                     align="center"
                     show-overflow-tooltip
                     width="200"
@@ -1423,7 +1359,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="税额"
-                    prop="tempPrice"
+                    prop="vat"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -1436,39 +1372,97 @@
                     class="listTabel"
                     :resizable="false"
                     label="房地产营业收入"
-                    prop="tempPrice"
+                    prop="realEstateIncome"
                     align="center"
                     show-overflow-tooltip
                     width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'realEstateIncome')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.realEstateIncome"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'realEstateIncomeHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.realEstateIncomeHw"/>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="表内营收"
-                    prop="tempPrice"
+                    prop="inRevenue"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'inRevenue')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.inRevenue"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'inRevenueHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.inRevenueHw"/>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="表外权益"
-                    prop="tempPrice"
+                    prop="offRevenue"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenue')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.offRevenue"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenueHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.offRevenueHw"/>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="表外非权益"
-                    prop="tempPrice"
+                    prop="offRevenueNon"
                     align="center"
                     show-overflow-tooltip
                     width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenueNon')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.offRevenueNon"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenueNonHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.offRevenueNonHw"/>
+                    </template>
                   </el-table-column>
                 </el-table-column>
               </el-table>
@@ -1492,228 +1486,180 @@
                 </p>
                 <el-form-item
                   label="合计(万元):"
-                  prop="topInfor.inforName"
+                  prop="sumByMon_3.inforName"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforName"/>
+                    disabled
+                    :value="(detailform.sumByMon_4.jnyl||0)+(detailform.sumByMon_4.jwyl||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_4.jnyl||0)+(detailform.sumByMon_4.jwyl||0)+(detailform.sumByMon_4.jnnl||0)+(detailform.sumByMon_4.jwnl||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="金融收入(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_4.financialIncome||0)+(detailform.sumByMon_4.financialIncomeHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="金融收入年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_4.financialIncome||0)+(detailform.sumByMon_4.financialIncomeHw||0)+(detailform.sumByYear_4.financialIncome||0)+(detailform.sumByYear_4.financialIncomeHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="保险收入(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_4.insuranceIncome||0)+(detailform.sumByMon_4.insuranceIncomeHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="保险收入年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_4.insuranceIncome||0)+(detailform.sumByMon_4.insuranceIncomeHw||0)+(detailform.sumByYear_4.insuranceIncome||0)+(detailform.sumByYear_4.insuranceIncomeHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其他金融收入(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_4.otherFinance||0)+(detailform.sumByMon_4.otherFinanceHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其他金融收入年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_4.otherFinance||0)+(detailform.sumByMon_4.otherFinanceHw||0)+(detailform.sumByYear_4.otherFinance||0)+(detailform.sumByYear_4.otherFinanceHw||0)"/>
                 </el-form-item>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境内数据: </span>
                 </p>
                 <el-form-item
                   label="合计(万元):"
-                  prop="topInfor.inforName"
+                  prop="sumByMon_3.inforName"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforName"/>
+                    disabled
+                    v-model="detailform.sumByMon_4.jnyl"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_4.jnyl||0)+(detailform.sumByYear_4.jnnl||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="金融收入(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_4.financialIncome"/>
                 </el-form-item>
                 <el-form-item
                   label="金融收入年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_4.financialIncome||0)+(detailform.sumByYear_4.financialIncome||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="保险收入(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_4.insuranceIncome"/>
                 </el-form-item>
                 <el-form-item
                   label="保险收入年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_4.insuranceIncome||0)+(detailform.sumByYear_4.insuranceIncome||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其他金融收入(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_4.otherFinance"/>
                 </el-form-item>
                 <el-form-item
                   label="其他金融收入年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_4.otherFinance||0)+(detailform.sumByYear_4.otherFinance||0)"/>
                 </el-form-item>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境外数据: </span>
                 </p>
                 <el-form-item
                   label="合计(万元):"
-                  prop="topInfor.inforName"
+                  prop="sumByMon_3.inforName"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforName"/>
+                    disabled
+                    v-model="detailform.sumByMon_4.jwyl"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_4.jwyl||0)+(detailform.sumByYear_4.jwnl||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="金融收入(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_4.financialIncomeHw"/>
                 </el-form-item>
                 <el-form-item
                   label="金融收入年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_4.financialIncomeHw||0)+(detailform.sumByYear_4.financialIncomeHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="保险收入(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_4.insuranceIncomeHw"/>
                 </el-form-item>
                 <el-form-item
                   label="保险收入年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_4.insuranceIncomeHw||0)+(detailform.sumByYear_4.insuranceIncomeHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其他金融收入(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_4.otherFinanceHw"/>
                 </el-form-item>
                 <el-form-item
                   label="其他金融收入年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_4.otherFinanceHw||0)+(detailform.sumByYear_4.otherFinanceHw||0)"/>
                 </el-form-item>
               </el-form>
             </div>
@@ -1729,7 +1675,7 @@
                 <el-button @click="exportdata" type="primary" plain>导出</el-button>
               </el-form>
               <el-table
-                :data="[]"
+                :data="detailform.jrbx_list"
                 :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -1757,15 +1703,6 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称"
-                    prop="projectCode"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="合同号"
                     prop="projectName"
                     align="center"
                     show-overflow-tooltip
@@ -1774,8 +1711,17 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
+                    label="合同号"
+                    prop="contractNumber"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
                     label="所属单位"
-                    prop="projectProp"
+                    prop="companyBelongName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -1787,12 +1733,15 @@
                     prop="measureUnit"
                     show-overflow-tooltip
                   >
+                    <template slot-scope="scope">
+                      {{scope.row.country=='01'?'境内':'境外'}}
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="推送人"
-                    prop="singlePrice"
+                    prop="projectPusher"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -1801,7 +1750,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="联系方式"
-                    prop="sumPrice"
+                    prop="projectPusherPhone"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -1810,7 +1759,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="合同额"
-                    prop="tempPrice"
+                    prop="contractAmountTotal"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -1829,7 +1778,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="tempPrice"
+                    prop="isOutputTax"
                     align="center"
                     show-overflow-tooltip
                     width="200"
@@ -1839,7 +1788,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="税额"
-                    prop="tempPrice"
+                    prop="vat"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -1852,29 +1801,73 @@
                     class="listTabel"
                     :resizable="false"
                     label="金融收入"
-                    prop="tempPrice"
+                    prop="financialIncome"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'financialIncome')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.financialIncome"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'financialIncomeHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.financialIncomeHw"/>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="保险收入"
-                    prop="tempPrice"
+                    prop="insuranceIncome"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'insuranceIncome')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.insuranceIncome"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'insuranceIncomeHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.insuranceIncomeHw"/>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="其他金融收入"
-                    prop="tempPrice"
+                    prop="otherFinance"
                     align="center"
                     show-overflow-tooltip
                     width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'otherFinance')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.otherFinance"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'otherFinanceHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.otherFinanceHw"/>
+                    </template>
                   </el-table-column>
                 </el-table-column>
               </el-table>
@@ -1898,282 +1891,222 @@
                 </p>
                 <el-form-item
                   label="合计(万元):"
-                  prop="topInfor.inforName"
+                  prop="sumByMon_3.inforName"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforName"/>
+                    disabled
+                    :value="(detailform.sumByMon_5.jnyl||0)+(detailform.sumByMon_5.jwyl||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_5.jnyl||0)+(detailform.sumByMon_5.jwyl||0)+(detailform.sumByYear_5.jnnl||0)+(detailform.sumByYear_5.jwnl||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="工程运营维管(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_5.engineeringOperation||0)+(detailform.sumByMon_5.engineeringOperationHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="工程运营维管年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_5.engineeringOperation||0)+(detailform.sumByMon_5.engineeringOperationHw||0)+(detailform.sumByYear_5.engineeringOperation||0)+(detailform.sumByYear_5.engineeringOperationHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="信息化运营维管(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_5.informationOperation||0)+(detailform.sumByMon_5.informationOperationHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="信息化运营维管年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_5.informationOperation||0)+(detailform.sumByMon_5.informationOperationHw||0)+(detailform.sumByYear_5.informationOperation||0)+(detailform.sumByYear_5.informationOperationHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="物业管理(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_5.estateManagement||0)+(detailform.sumByMon_5.estateManagementHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="物业管理年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_5.estateManagement||0)+(detailform.sumByMon_5.estateManagementHw||0)+(detailform.sumByYear_5.estateManagement||0)+(detailform.sumByYear_5.estateManagementHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其他运营维管(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_5.otherOperation||0)+(detailform.sumByMon_5.overseasOtherOperation||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其他运营维管年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_5.otherOperation||0)+(detailform.sumByMon_5.overseasOtherOperation||0)+(detailform.sumByYear_5.otherOperation||0)+(detailform.sumByYear_5.overseasOtherOperation||0)"/>
                 </el-form-item>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境内数据: </span>
                 </p>
                 <el-form-item
                   label="合计(万元):"
-                  prop="topInfor.inforName"
+                  prop="sumByMon_3.inforName"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforName"/>
+                    disabled
+                    v-model="detailform.sumByMon_5.jnyl"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_5.jnyl||0)+(detailform.sumByYear_5.jnnl||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="工程运营维管(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_5.engineeringOperation"/>
                 </el-form-item>
                 <el-form-item
                   label="工程运营维管年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_5.engineeringOperation||0)+(detailform.sumByYear_5.engineeringOperation||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="信息化运营维管(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_5.informationOperation"/>
                 </el-form-item>
                 <el-form-item
                   label="信息化运营维管年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_5.informationOperation||0)+(detailform.sumByYear_5.informationOperation||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="物业管理(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_5.estateManagement"/>
                 </el-form-item>
                 <el-form-item
                   label="物业管理年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_5.estateManagement||0)+(detailform.sumByYear_5.estateManagement||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其他运营维管(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_5.otherOperation"/>
                 </el-form-item>
                 <el-form-item
                   label="其他运营维管年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_5.otherOperation||0)+(detailform.sumByYear_5.otherOperation||0)"/>
                 </el-form-item>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境外数据: </span>
                 </p>
                 <el-form-item
                   label="合计(万元):"
-                  prop="topInfor.inforName"
+                  prop="sumByMon_3.inforName"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforName"/>
+                    disabled
+                    v-model="detailform.sumByMon_5.jwyl"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_5.jwyl||0)+(detailform.sumByYear_5.jwnl||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="工程运营维管(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_5.engineeringOperationHw"/>
                 </el-form-item>
                 <el-form-item
                   label="工程运营维管年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_5.engineeringOperationHw||0)+(detailform.sumByYear_5.engineeringOperationHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="信息化运营维管(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_5.informationOperationHw"/>
                 </el-form-item>
                 <el-form-item
                   label="信息化运营维管年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_5.informationOperationHw||0)+(detailform.sumByYear_5.informationOperationHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="物业管理(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_5.estateManagementHw"/>
                 </el-form-item>
                 <el-form-item
                   label="物业管理年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_5.estateManagementHw||0)+(detailform.sumByYear_5.estateManagementHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其他运营维管(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_5.overseasOtherOperation"/>
                 </el-form-item>
                 <el-form-item
                   label="其他运营维管年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_5.overseasOtherOperation||0)+(detailform.sumByYear_5.overseasOtherOperation||0)"/>
                 </el-form-item>
               </el-form>
             </div>
@@ -2189,7 +2122,7 @@
                 <el-button @click="exportdata" type="primary" plain>导出</el-button>
               </el-form>
               <el-table
-                :data="[]"
+                :data="detailform.yy_list"
                 :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -2217,15 +2150,6 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称"
-                    prop="projectCode"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="合同号"
                     prop="projectName"
                     align="center"
                     show-overflow-tooltip
@@ -2234,8 +2158,17 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
+                    label="合同号"
+                    prop="contractNumber"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
                     label="所属单位"
-                    prop="projectProp"
+                    prop="companyBelongName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2247,12 +2180,15 @@
                     prop="measureUnit"
                     show-overflow-tooltip
                   >
+                    <template slot-scope="scope">
+                      {{scope.row.country=='01'?'境内':'境外'}}
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="推送人"
-                    prop="singlePrice"
+                    prop="projectPusher"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2261,7 +2197,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="联系方式"
-                    prop="sumPrice"
+                    prop="projectPusherPhone"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2270,7 +2206,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="合同额"
-                    prop="tempPrice"
+                    prop="contractAmountTotal"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2289,7 +2225,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="tempPrice"
+                    prop="isOutputTax"
                     align="center"
                     show-overflow-tooltip
                     width="200"
@@ -2299,7 +2235,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="税额"
-                    prop="tempPrice"
+                    prop="vat"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2312,40 +2248,97 @@
                     class="listTabel"
                     :resizable="false"
                     label="工程运营维管"
-                    prop="tempPrice"
+                    prop="engineeringOperation"
                     align="center"
                     show-overflow-tooltip
                     width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'engineeringOperation')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.engineeringOperation"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'engineeringOperationHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.engineeringOperationHw"/>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="信息化运营维管"
-                    prop="tempPrice"
+                    prop="informationOperation"
                     align="center"
                     show-overflow-tooltip
                     width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'informationOperation')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.informationOperation"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'informationOperationHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.informationOperationHw"/>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="物业管理"
-                    prop="tempPrice"
+                    prop="estateManagement"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'estateManagement')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.estateManagement"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'estateManagementHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.estateManagementHw"/>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="其他运营收入"
-                    prop="tempPrice"
+                    prop="otherOperation"
                     align="center"
                     show-overflow-tooltip
                     width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'otherOperation')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.otherOperation"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'overseasOtherOperation')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.overseasOtherOperation"/>
+                    </template>
                   </el-table-column>
                 </el-table-column>
               </el-table>
@@ -2371,145 +2364,113 @@
                   label="合计(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.jnyl||0)+(detailform.sumByMon_6.jwyl||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.jnyl||0)+(detailform.sumByMon_6.jwyl||0)+(detailform.sumByYear_6.jnnl||0)+(detailform.sumByYear_6.jwnl||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="设备租赁(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.equipmentLeasing||0)+(detailform.sumByMon_6.equipmentLeasingHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="设备租赁年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.equipmentLeasing||0)+(detailform.sumByMon_6.equipmentLeasingHw||0)+(detailform.sumByYear_6.equipmentLeasing||0)+(detailform.sumByYear_6.equipmentLeasingHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="房屋租赁(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.leaseHouses||0)+(detailform.sumByMon_6.leaseHousesHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="房屋租赁年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.leaseHouses||0)+(detailform.sumByMon_6.leaseHousesHw||0)+(detailform.sumByYear_6.leaseHouses||0)+(detailform.sumByYear_6.leaseHousesHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="交通运输(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.transportation||0)+(detailform.sumByMon_6.transportationHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="交通运输年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.transportation||0)+(detailform.sumByMon_6.transportationHw||0)+(detailform.sumByYear_6.transportation||0)+(detailform.sumByYear_6.transportationHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="住宿餐饮(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.accommodationCatering||0)+(detailform.sumByMon_6.accommodationCateringHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="住宿餐饮年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.accommodationCatering||0)+(detailform.sumByMon_6.accommodationCateringHw||0)+(detailform.sumByYear_6.accommodationCatering||0)+(detailform.sumByYear_6.accommodationCateringHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="教育培训(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.educationTraining||0)+(detailform.sumByMon_6.educationTrainingHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="教育培训年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.educationTraining||0)+(detailform.sumByMon_6.educationTrainingHw||0)+(detailform.sumByYear_6.educationTraining||0)+(detailform.sumByYear_6.educationTrainingHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="信息化建设(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.informationConstruction||0)+(detailform.sumByMon_6.informationConstructionHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="信息化建设年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.informationConstruction||0)+(detailform.sumByMon_6.informationConstructionHw||0)+(detailform.sumByYear_6.informationConstruction||0)+(detailform.sumByYear_6.informationConstructionHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其它项目(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.other||0)+(detailform.sumByMon_6.otherHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其它项目年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.other||0)+(detailform.sumByMon_6.otherHw||0)+(detailform.sumByYear_6.other||0)+(detailform.sumByYear_6.otherHw||0)"/>
                 </el-form-item>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境内数据: </span>
@@ -2518,145 +2479,113 @@
                   label="合计(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_6.jnyl"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.jnyl||0)+(detailform.sumByYear_6.jnnl||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="设备租赁(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_6.equipmentLeasing"/>
                 </el-form-item>
                 <el-form-item
                   label="设备租赁年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.equipmentLeasing||0)+(detailform.sumByYear_6.equipmentLeasing||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="房屋租赁(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_6.leaseHouses"/>
                 </el-form-item>
                 <el-form-item
                   label="房屋租赁年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.leaseHouses||0)+(detailform.sumByYear_6.leaseHouses||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="交通运输(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_6.transportation"/>
                 </el-form-item>
                 <el-form-item
                   label="交通运输年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.transportation||0)+(detailform.sumByYear_6.transportation||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="住宿餐饮(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_6.accommodationCatering"/>
                 </el-form-item>
                 <el-form-item
                   label="住宿餐饮年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.accommodationCatering||0)+(detailform.sumByYear_6.accommodationCatering||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="教育培训(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_6.educationTraining"/>
                 </el-form-item>
                 <el-form-item
                   label="教育培训年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.educationTraining||0)+(detailform.sumByYear_6.educationTraining||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="信息化建设(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_6.informationConstruction"/>
                 </el-form-item>
                 <el-form-item
                   label="信息化建设年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.informationConstruction||0)+(detailform.sumByYear_6.informationConstruction||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其它项目(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_6.other"/>
                 </el-form-item>
                 <el-form-item
                   label="其它项目年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.other||0)+(detailform.sumByYear_6.other||0)"/>
                 </el-form-item>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境外数据: </span>
@@ -2665,145 +2594,113 @@
                   label="合计(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_6.jwyl"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.jwyl||0)+(detailform.sumByYear_6.jwnl||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="设备租赁(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_6.equipmentLeasingHw"/>
                 </el-form-item>
                 <el-form-item
                   label="设备租赁年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.equipmentLeasingHw||0)+(detailform.sumByYear_6.equipmentLeasingHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="房屋租赁(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_6.leaseHousesHw"/>
                 </el-form-item>
                 <el-form-item
                   label="房屋租赁年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.leaseHousesHw||0)+(detailform.sumByYear_6.leaseHousesHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="交通运输(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_6.transportationHw"/>
                 </el-form-item>
                 <el-form-item
                   label="交通运输年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.transportationHw||0)+(detailform.sumByYear_6.transportationHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="住宿餐饮(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_6.accommodationCateringHw"/>
                 </el-form-item>
                 <el-form-item
                   label="住宿餐饮年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.accommodationCateringHw||0)+(detailform.sumByYear_6.accommodationCateringHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="教育培训(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_6.educationTrainingHw"/>
                 </el-form-item>
                 <el-form-item
                   label="教育培训年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.educationTrainingHw||0)+(detailform.sumByYear_6.educationTrainingHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="信息化建设(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_6.informationConstructionHw"/>
                 </el-form-item>
                 <el-form-item
                   label="信息化建设年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.informationConstructionHw||0)+(detailform.sumByYear_6.informationConstructionHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其它项目(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    v-model="detailform.sumByMon_6.otherHw"/>
                 </el-form-item>
                 <el-form-item
                   label="其它项目年累(万元):"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    v-model="detailform.topInfor.inforNameForeign"/>
+                    disabled
+                    :value="(detailform.sumByMon_6.otherHw||0)+(detailform.sumByYear_6.otherHw||0)"/>
                 </el-form-item>
               </el-form>
             </div>
@@ -2819,7 +2716,7 @@
                 <el-button @click="exportdata" type="primary" plain>导出</el-button>
               </el-form>
               <el-table
-                :data="[]"
+                :data="detailform.qt_list"
                 :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -2847,15 +2744,6 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称"
-                    prop="projectCode"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="合同号"
                     prop="projectName"
                     align="center"
                     show-overflow-tooltip
@@ -2864,8 +2752,17 @@
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
+                    label="合同号"
+                    prop="contractNumber"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
                     label="所属单位"
-                    prop="projectProp"
+                    prop="companyBelongName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2877,12 +2774,15 @@
                     prop="measureUnit"
                     show-overflow-tooltip
                   >
+                    <template slot-scope="scope">
+                      {{scope.row.country=='01'?'境内':'境外'}}
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="推送人"
-                    prop="singlePrice"
+                    prop="projectPusher"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2891,7 +2791,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="联系方式"
-                    prop="sumPrice"
+                    prop="projectPusherPhone"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2900,7 +2800,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="合同额"
-                    prop="tempPrice"
+                    prop="contractAmountTotal"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2919,7 +2819,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="tempPrice"
+                    prop="isOutputTax"
                     align="center"
                     show-overflow-tooltip
                     width="200"
@@ -2929,7 +2829,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="税额"
-                    prop="tempPrice"
+                    prop="vat"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2942,56 +2842,145 @@
                     class="listTabel"
                     :resizable="false"
                     label="设备租赁"
-                    prop="tempPrice"
+                    prop="equipmentLeasing"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'equipmentLeasing')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.equipmentLeasing"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'equipmentLeasingHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.equipmentLeasingHw"/>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="交通运输"
-                    prop="tempPrice"
+                    prop="transportation"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'transportation')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.transportation"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'transportationHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.transportationHw"/>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="住宿餐饮"
-                    prop="tempPrice"
+                    prop="accommodationCatering"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'accommodationCatering')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.accommodationCatering"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'accommodationCateringHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.accommodationCateringHw"/>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="教育培训"
-                    prop="tempPrice"
+                    prop="educationTraining"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'educationTraining')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.educationTraining"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'educationTrainingHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.educationTrainingHw"/>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="信息化建设"
-                    prop="tempPrice"
+                    prop="informationConstruction"
                     align="center"
                     show-overflow-tooltip
                     width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'informationConstruction')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.informationConstruction"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'informationConstructionHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.informationConstructionHw"/>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="其它项目"
-                    prop="tempPrice"
+                    prop="other"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'other')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.other"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'otherHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        v-model="scope.row.otherHw"/>
+                    </template>
                   </el-table-column>
                 </el-table-column>
               </el-table>
@@ -3036,6 +3025,7 @@
         }
       }
       return {
+        projectStatus:[],//项目状态
         timeout:  null,
         maxMoney:1000000,
         id:'',
@@ -3046,18 +3036,27 @@
         options: [],
         searchform:{},
         detailform: {
-          topInfor: {
-            marketSecondId:'',
-            constructionOrg:''
-          },
-          topInfoOrg: {},
-          topInfoSiteList: [],
-          topInfoSectionList: [],
-          value1: [],
-          zplx:[],//装配类型
-          jzlx:[],//建筑类型
-          jzjglx:[],//建筑结构类型
-          cdmc:[],//场地名称
+          fdc_list:[],
+          sumByMon_3:{},
+          sumByYear_3:{},
+          gy_list:[],
+          sumByMon_1:{},
+          sumByYear_1:{},
+          jrbx_list:[],
+          sumByMon_4:{},
+          sumByYear_4:{},
+          kc_list:[],
+          sumByMon_0:{},
+          sumByYear_0:{},
+          qt_list:[],
+          sumByMon_6:{},
+          sumByYear_6:{},
+          wz_list:[],
+          sumByMon_2:{},
+          sumByYear_2:{},
+          yy_list:[],
+          sumByMon_5:{},
+          sumByYear_5:{},
         },
         xqprojectType: [],//工程类别二级
         emergingMarketTwo:[],//新兴市场二级
@@ -3148,39 +3147,47 @@
       },
     },
     mounted() {
-      // window.onresize = () => {
-      //   return (() => {
-      //     window.screenWidth = document.body.clientWidth
-      //   console.log( window.screenWidth)
-      // })()
-      // }
-      // this.$store.commit("setCategory", 'projectDomainType');
+
       this.$store.dispatch("getConfig", {});
       this.$store.dispatch("getPubCustomers", {});
       this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
       this.$store.dispatch('getCategory', {name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3'});
       this.$store.dispatch('getCategory', {name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72'});
       this.id=this.p.instid;
-      if (this.p.actpoint === "edit"||this.id) {
-        this.getDetail();
-      }
-      if (this.p.actpoint === "add") {
-        this.detailform.topInfoSiteList=[{
-          country: '',
-          ffid: '',
-          path: '',
-          contractAmount: '',
-          isMain: ''
-        }];
-        this.detailform.topInfoSectionList=[{
-          sectionName: '',
-          projectScale: '',
-        }]
-      }
-
+      this.getDetail();
       // eslint-disable-next-line no-unde
     },
     methods: {
+      addNum(){
+        this.detailform.sumByMon_1.industry=Number(this.detailform.sumByMon_1.industry||0)+1;
+        this.$forceUpdate();
+      },
+      //勘察设计月末进度
+      setCcsjYmjd(list,obj,name,index){
+        console.log(index)
+      },
+      //修改产值
+      getGyzzCz(list,obj,name){
+      //  list 列表数据 obj 修改哪个对象 name 修改对象里的哪个值
+        var num=0;
+        list.forEach((item)=>{
+          num=num+Number(item[name]||0);
+        })
+        obj[name]=num;
+        this.$forceUpdate();
+      },
+      //重置
+      searchformReset() {
+        this.searchform={
+          current: 1,
+          size: 20
+        };
+        this.getData();
+      },
+      //查询
+      getData(){},
+      //导出
+      exportdata(){},
       //复选下拉框框获取name
       getMultipleName(valueList,list,id,name){
         var _id=[],_name=[];
@@ -3190,8 +3197,8 @@
           _name.push(item.detailName)
         }
       });
-        this.detailform.topInfor[id]=_id.join(",");
-        this.detailform.topInfor[name]=_name.join(",");
+        this.detailform.sumByMon_3[id]=_id.join(",");
+        this.detailform.sumByMon_3[name]=_name.join(",");
       },
       //流程操作
       operation(type){
@@ -3279,15 +3286,15 @@
       },
       //工程类别二级
       getTwo(id) {
-        this.detailform.topInfor.enginTypeSecondId='';
-        this.detailform.topInfor.enginTypeSecondName='';
-        this.detailform.topInfor.enginTypeFirstName='';
+        this.detailform.sumByMon_3.enginTypeSecondId='';
+        this.detailform.sumByMon_3.enginTypeSecondName='';
+        this.detailform.sumByMon_3.enginTypeFirstName='';
         this.xqprojectType=[];
         if(id!=''){
           this.projectDomainType.find(
             (item) => {
             if (item.id == id) {
-            this.detailform.topInfor.enginTypeFirstName = item.detailName;
+            this.detailform.sumByMon_3.enginTypeFirstName = item.detailName;
             this.xqprojectType = item.children;
           }
         }
@@ -3296,15 +3303,15 @@
       },
       //新兴市场二级
       getTwoSC(id) {
-        this.detailform.topInfor.marketSecondId='';
-        this.detailform.topInfor.marketSecondName='';
-        this.detailform.topInfor.marketFirstName='';
+        this.detailform.sumByMon_3.marketSecondId='';
+        this.detailform.sumByMon_3.marketSecondName='';
+        this.detailform.sumByMon_3.marketFirstName='';
         this.emergingMarketTwo=[];
         if(id!=''){
           this.emergingMarket.find(
             (item)=>{
             if (item.id == id) {
-            this.detailform.topInfor.marketFirstName = item.detailName;
+            this.detailform.sumByMon_3.marketFirstName = item.detailName;
             this.emergingMarketTwo = item.children;
           }
         }
@@ -3313,15 +3320,15 @@
       },
       //项目性质二级
       getTwoXZ(id){
-        this.detailform.topInfor.projectNatureSecondId='';
-        this.detailform.topInfor.projectNatureSecondName='';
-        this.detailform.topInfor.projectNatureFirstName='';
+        this.detailform.sumByMon_3.projectNatureSecondId='';
+        this.detailform.sumByMon_3.projectNatureSecondName='';
+        this.detailform.sumByMon_3.projectNatureFirstName='';
         this.projectNatureTwo=[];
         if(id!=''){
           this.projectNature.find(
             (item)=>{
             if (item.id == id) {
-            this.detailform.topInfor.projectNatureFirstName = item.detailName;
+            this.detailform.sumByMon_3.projectNatureFirstName = item.detailName;
             this.projectNatureTwo = item.children;
           }
         }
@@ -3332,10 +3339,10 @@
       getName(id, list, name) {
         if(id){
           this.$forceUpdate();
-          this.detailform.topInfor[name] = list.find(
+          this.detailform.sumByMon_3[name] = list.find(
             (item) => item.id == id
         ).detailName;
-          console.log(this.detailform.topInfor[name]);
+          console.log(this.detailform.sumByMon_3[name]);
         }
       },
       //获取下拉框id和name的公共方法
@@ -3349,41 +3356,21 @@
         }
       },
       saveInfo(formName,type) {
-        var url='';
-        if(type=='save'){
-          url="/api/contract/topInfo/TopInfor/detail/saveOrUpdate"
-        }else{
-          url="/api/contract/topInfo/TopInfor/process/start"
-        }
-        var topInforCapitalList = [];
-        this.amountSource.forEach((item) => {
-          if (this.detailform.value1&&this.detailform.value1.indexOf(item.id) != -1) {
-          var v = {
-            capitalId: item.id,
-            capitalName: item.detailName,
-          };
-          topInforCapitalList.push(v);
-        }
-      });
-        this.detailform.topInforCapitalList=topInforCapitalList;
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
               .post(
-                url,
+                '/api/statistics/unProjectReport/save/batch/addDetail',
                 JSON.stringify(this.detailform),
                 {useJson: true}
               )
               .then((res) => {
               if (res.data.code === 200) {
-              this.$message({
-                message: "保存成功",
-                type: "success",
-              });
-              this.$refs[formName].resetFields();
-              this.$router.push({
-                path: "/manage/proposal/list",
-              });
+                this.$message({
+                  message: "保存成功",
+                  type: "success",
+                });
+                this.back();
             }
           });
           } else {
@@ -3459,34 +3446,34 @@
       },
       // 加载列表
       getDetail() {
+        var data={};
+        if(this.p.actpoint=='add'){
+          data={reportDate: this.p.reportDate}
+        }else if(this.p.actpoint=='edit'){
+          data={reportUuid: this.p.reportUuid,isAdd:'1'}
+        }
         this.$http
-          .post("/api/contract/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.id})
+          .post("/api/statistics/unProjectReport/list/queryAllInfo",data )
           .then((res) => {
           var datas=res.data.data;
-        this.getTwo(datas.topInfor.enginTypeFirstId||'');
-        this.getTwoSC(datas.topInfor.marketFirstNameId||'');
-        this.getTwoXZ(datas.topInfor.projectNatureFirstId||'');
-        this.detailform={
-          topInfor: datas.topInfor,
-          topInfoOrg: datas.topInfoOrg,
-          topInfoSiteList: datas.topInfoSiteList,
-          topInfoSectionList: datas.topInfoSectionList,
-          value1:[],
-          zplx:[],//装配类型
-          jzlx:[],//建筑类型
-          jzjglx:[],//建筑结构类型
-          cdmc:[],//场地名称
-        }
-        this.detailform.cdmc=datas.topInfor.siteNameId&&datas.topInfor.siteNameId.split(",");
-        this.detailform.zplx=datas.topInfor.otherAssemblyTypeId&&datas.topInfor.otherAssemblyTypeId.split(",");
-        this.detailform.jzlx=datas.topInfor.otherBuildingTypeId&&datas.topInfor.otherBuildingTypeId.split(",");
-        this.detailform.jzjglx=datas.topInfor.otherBuildingStructureTypeId&&datas.topInfor.otherBuildingStructureTypeId.split(",");
-        datas.topInforCapitalList.forEach((item)=>{
-          this.detailform.value1.push(item.capitalId)
-      });
-      });
+          this.detailform=datas;
+          this.detailform.sumByMon_0=datas.sumByMon_0||{};
+          this.detailform.sumByYear_0=datas.sumByYear_0||{};
+          this.detailform.sumByMon_1=datas.sumByMon_1||{};
+          this.detailform.sumByYear_1=datas.sumByYear_1||{};
+          this.detailform.sumByMon_2=datas.sumByMon_2||{};
+          this.detailform.sumByYear_2=datas.sumByYear_2||{};
+          this.detailform.sumByMon_3=datas.sumByMon_3||{};
+          this.detailform.sumByYear_3=datas.sumByYear_3||{};
+          this.detailform.sumByMon_4=datas.sumByMon_4||{};
+          this.detailform.sumByYear_4=datas.sumByYear_4||{};
+          this.detailform.sumByMon_5=datas.sumByMon_5||{};
+          this.detailform.sumByYear_5=datas.sumByYear_5||{};
+          this.detailform.sumByMon_6=datas.sumByMon_6||{};
+          this.detailform.sumByYear_6=datas.sumByYear_6||{};
+          this.detailform.statId=this.p.statId;
+        });
       },
-
       handleSelectionChange(val) {
         this.multipleSelection = val;
       },
@@ -3675,6 +3662,12 @@
   .queryForm >>>.el-input--mini .el-input__inner{
     height: auto;
     line-height: inherit;
+  }
+  .detailTable >>>.el-input input{
+    width: 100%;
+    height: 30px;
+    margin: 5px 0;
+    box-sizing: border-box;
   }
 </style>
 

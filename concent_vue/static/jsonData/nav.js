@@ -861,24 +861,24 @@ export default {
                   'leaf': true,
                   'defaultpage': false
                 },
-                {
-                  'name': '项目信息合并',
-                  'path': '/statistics/project/hb',
-                  'component': '/statistics/project/hb',
-                  'iconCls': 'el-icon-connection',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '项目信息移动',
-                  'path': '/statistics/project/hb',
-                  'component': '/statistics/project/hb1',
-                  'iconCls': 'el-icon-rank',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
+                // {
+                //   'name': '项目信息合并',
+                //   'path': '/statistics/project/hb',
+                //   'component': '/statistics/project/hb',
+                //   'iconCls': 'el-icon-connection',
+                //   'menushow': true,
+                //   'leaf': true,
+                //   'defaultpage': false
+                // },
+                // {
+                //   'name': '项目信息移动',
+                //   'path': '/statistics/project/hb',
+                //   'component': '/statistics/project/hb1',
+                //   'iconCls': 'el-icon-rank',
+                //   'menushow': true,
+                //   'leaf': true,
+                //   'defaultpage': false
+                // },
                 {
                   'name': '项目信息查询',
                   'path': '/statistics/project/searchList',
