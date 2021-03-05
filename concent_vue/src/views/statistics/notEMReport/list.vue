@@ -4,8 +4,9 @@
       <el-form class="search-form" :inline="true" :model="searchform" @keyup.enter.native="init()">
         <el-form-item label="填报年月:">
           <el-date-picker
-            v-model="searchform.month"
+            v-model="searchform.reportDate"
             type="month"
+            value-format="yyyy-MM"
             placeholder="选择月">
           </el-date-picker>
         </el-form-item>
@@ -187,6 +188,7 @@
         showinput: false,
         sousuo: "",
         searchform: {
+          reportDate:'',
           createOrgName: "",
           stauts: "",
           createTime: "",
@@ -227,11 +229,25 @@
       },
       // 增加
       add() {
-        let p = {actpoint: "add"};
-        this.$router.push({
-          path: "./detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        this.$http
+          .post(
+            "/api/statistics/unProjectReport/detail/save",
+            JSON.stringify({'reportDate':this.searchform.reportDate}),
+            {useJson: true,isLoading:false}
+          )
+          .then((res) => {
+            var datas=res.data.data;
+            if(datas.isExist=="0"){
+              this.$message.info("该填报年下已有相应的该月份的月报数据 无法创建新的填报记录");
+            }else{
+              let p = {actpoint: "add",reportDate: this.searchform.reportDate,statId:datas.uuid};
+              this.$router.push({
+                path: "./detail/",
+                query: {p: this.$utils.encrypt(JSON.stringify(p))},
+              });
+            }
         });
+
       },
       // 修改
       totop() {
@@ -239,11 +255,11 @@
           this.$message.info("请选择一条记录进行查看操作！");
           return false;
         }
-        if(this.multipleSelection[0].flowStatus=='2'||this.multipleSelection[0].flowStatus=='3'){
-          this.$message.info("此条数据不可修改！");
-          return false;
-        }
-        let p = {actpoint: "edit", instid: this.multipleSelection[0].topOrgId};
+        // if(this.multipleSelection[0].flowStatus=='2'||this.multipleSelection[0].flowStatus=='3'){
+        //   this.$message.info("此条数据不可修改！");
+        //   return false;
+        // }
+        let p = {actpoint: "edit", reportUuid: this.multipleSelection[0].uuid};
         this.$router.push({
           path: "./detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
@@ -353,6 +369,10 @@
     },
     created() {
       this.getData();
+      //获取当前月份
+      var sj=new Date().toLocaleDateString().split('/');
+      sj[1]=sj[1]<10?'0'+sj[1]:sj[1];
+      this.searchform.reportDate=sj[0]+"-"+sj[1];
     },
   };
 </script>
