@@ -25,6 +25,7 @@
 
     <div style="margin-top: 10px">
       <el-table
+        default-expand-all
         row-key="uuid"
         :tree-props="{children: 'chirldList', hasChildren: 'hasChildren'}"
         class="tableStyle"
@@ -38,6 +39,8 @@
         highlight-current-row
         ref="table"
         tooltip-effect="dark"
+        lazy
+        :load="load"
       >
         <el-table-column
           :width="50"
@@ -77,12 +80,9 @@
           :width="200"
           align="center"
           label="年月"
-          prop="enginTypeFirstName"
+          prop="reportDate"
           show-overflow-tooltip
         >
-          <template slot-scope="scope">
-             {{scope.row.reportYear+"-"+scope.row.reportMonth}}
-          </template>
         </el-table-column>
         <el-table-column
           :width="200"
@@ -222,6 +222,21 @@
 
     },
     methods: {
+      load(tree, treeNode, resolve) {
+        setTimeout(() => {
+          this.$http
+          .post(
+            "/api/statistics/unProjectReport/list/checkEntInfo",
+            JSON.stringify(tree),
+            {useJson: true}
+          )
+          .then((res) => {
+            var datas=res.data.data.list
+            resolve(datas)
+          });
+
+        }, 1000)
+      },
       exportdata() {
       },
       search() {
@@ -259,7 +274,7 @@
         //   this.$message.info("此条数据不可修改！");
         //   return false;
         // }
-        let p = {actpoint: "edit", reportUuid: this.multipleSelection[0].uuid};
+        let p = {actpoint: "edit", reportUuid: this.multipleSelection[0].uuid,reportDate: this.multipleSelection[0].reportDate,stauts:this.multipleSelection[0].stauts};
         this.$router.push({
           path: "./detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
@@ -282,12 +297,13 @@
         }
         let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          if(item.flowStatus==1||item.flowStatus==4){
-          uuids.push(item.topOrgId);
-        }else{
-          this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
-          return itemStatus=false;
-        }
+          uuids.push(item.uuid);
+        //   if(item.stauts==1||item.stauts==4){
+        //   uuids.push(item.uuid);
+        // }else{
+        //   this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
+        //   return itemStatus=false;
+        // }
       })
 
         if(itemStatus){
@@ -298,11 +314,16 @@
           }).then(() => {
             this.$http
             .post(
-              "/api/contract/topInfo/TopInfor/list/delete",{ids: uuids}
+              "/api/statistics/unProjectReport/list/delete",{ids: uuids}
 
             )
             .then((res) => {
+            if (res.data && res.data.code == 200) {
             this.getData()
+            } else {
+              this.$message.error(data.message)
+            }
+
         });
         }).catch(() => {})
         }
