@@ -12,8 +12,8 @@
 
 -->
       <div style="margin-top: 9px;color: red;position: absolute;top: 1px;right: 279px;z-index: 999999999;font-size: 15px;">项目名称：<span style="color: red !important;margin-right: 50px;">{{projectName}}</span></div>
-      <el-button  @click="save" type="primary"  class="detailbutton detail-back-tab" style="float: left; margin-right: 185px;"plain>保存</el-button>
-      <el-button  @click="submit" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>
+      <el-button v-if="isCk!='1'" @click="save" type="primary"  class="detailbutton detail-back-tab" style="float: left; margin-right: 185px;"plain>保存</el-button>
+      <el-button v-if="isCk!='1'" @click="submit" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>
       <el-button  @click="back" type="primary"  class="detailbutton detail-back-tab " plain>返回</el-button>
      <el-tabs type="border-card" v-model="activeName">
      <el-tab-pane label="整体进度" name="ztjd">
@@ -38,19 +38,19 @@
               <div>
               <el-form-item
                 label="本月计划:"
-              ><el-input v-model="dataReport.thisPlan" type="textarea" ></el-input>
+              ><el-input  :disabled="isCk=='1'" v-model="dataReport.thisPlan" type="textarea" ></el-input>
               </el-form-item>
               </div>
                 <div>
                 <el-form-item
                   label="完成情况:"
-                ><el-input v-model="dataReport.finishedPlan" type="textarea" ></el-input>
+                ><el-input :disabled="isCk=='1'" v-model="dataReport.finishedPlan" type="textarea" ></el-input>
                 </el-form-item>
                 </div>
                  <div>
                  <el-form-item
                   label="下月计划:"
-                ><el-input v-model="dataReport.nextPlan" type="textarea" ></el-input>
+                ><el-input :disabled="isCk=='1'" v-model="dataReport.nextPlan" type="textarea" ></el-input>
                 </el-form-item>
                 </div>
             </el-form>
@@ -112,7 +112,7 @@
                     >
                       <template slot-scope="scope">
                        <!-- <div>{{scope.row.monthValue}}</div>-->
-                        <div v-if="scope.row.veditable == '1'">
+                        <div v-if="scope.row.veditable == '1' && isCk!='1' ">
                           <el-input v-model="scope.row.monthValue" @input="scope.row.value = scope.row.monthValue.replace(/[^\-?\d.]/g,'','')" @blur="getYear(data,scope.$index,scope.row.sumTarget)"/>
                         </div>
 
@@ -137,7 +137,7 @@
                      show-overflow-tooltip
                    >
                      <template slot-scope="scope">
-                       <div v-if="scope.row.monthPlan&&scope.row.monthValue">{{Math.round(scope.row.monthPlan /scope.row.monthValue) / 100+"%"}}
+                       <div v-if="scope.row.monthPlan && scope.row.monthValue">{{Math.round(scope.row.monthPlan /scope.row.monthValue) / 100+"%"}}
                        </div>
                        <div v-if="scope.row.monthRate!=null">{{scope.row.monthRate+"%"}}
                        </div>
@@ -264,7 +264,7 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <div v-if="scope.row.veditable === '1'">
+                    <div v-if="scope.row.veditable === '1'&& isCk!='1'">
                       <el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')" @blur="getNextPlanYear(nextData,scope.$index,scope.row.sumTarget)"/>
                     </div>
 <!--                    <div v-else-if="projectStatus !== '2' " style="text-align: right">{{sumCount(scope.row)}}</div>-->
@@ -304,6 +304,7 @@
         mList: JSON.parse(this.$utils.decrypt(this.$route.query.mList)),
         proNameHover: false,
         projectName: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectName,
+        isCk:JSON.parse(this.$utils.decrypt(this.$route.query.mList)).isCk,
         projectreport: {},
         projectreportDetaiList: [],
         planPrjTjxDetailList: [],

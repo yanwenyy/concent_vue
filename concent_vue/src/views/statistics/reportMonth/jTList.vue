@@ -39,6 +39,7 @@
         tooltip-effect="dark"
         lazy
         :load="load"
+        default-expand-all
       >
         <el-table-column
           :width="50"
