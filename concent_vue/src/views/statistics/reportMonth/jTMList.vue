@@ -59,6 +59,7 @@
                 v-model="yearDateS"
                 readonly
                 value-format="yyyy-MM"
+                @change="queryList"
               >
               </el-date-picker>
             </div>
@@ -348,6 +349,13 @@
         };
         this.getData();
       },
+    queryList(){
+      this.searchform.current = 1;
+      this.searchform.current = 1;
+      this.searchform.reportYear= this.searchform.yearDateS.split("-")[0];
+      this.searchform.reportMonth= this.searchform.yearDateS.split("-")[1];
+      this.getData();
+    },
       // 列表选项数据
       handleSelectionChange(val) {
         this.multipleSelection = val;

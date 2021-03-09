@@ -44,7 +44,7 @@
           prop="createOrgName"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
+         <!-- <template slot="header" slot-scope="scope">
             <span>填报单位</span>
             <div>
               <el-input
@@ -54,7 +54,7 @@
                 size="mini"
               />
             </div>
-          </template>
+          </template>-->
           <template slot-scope="scope">
             <spam class="blue pointer" v-if="scope.row.reportType != null && scope.row.reportType != ''">
               {{scope.row.createOrgName+"("+(scope.row.reportType==1?'自揽':scope.row.reportType==2?'工区':'')+")"}}
@@ -78,6 +78,7 @@
             <div>
               <el-date-picker class="list-search-picker" filterable clearable
                               type="month"
+                              value-format="yyyy-MM"
                               @change="queryList"
                               v-model="searchform.yearDateS"
               >
@@ -102,7 +103,7 @@
           show-overflow-tooltip
 
         >
-          <template slot="header" slot-scope="scope">
+ <!--         <template slot="header" slot-scope="scope">
             <span>审核状态</span>
             <div>
               <el-select
@@ -120,14 +121,14 @@
                   v-for="(item, index) in flowStatusList"
                 ></el-option>
               </el-select>
-              <!--<el-input-->
-              <!--class="list-search-picker"-->
-              <!--style=" width: 100%"-->
-              <!--v-model="searchform.flowStatus"-->
-              <!--size="mini"-->
-              <!--/>-->
+              &lt;!&ndash;<el-input&ndash;&gt;
+              &lt;!&ndash;class="list-search-picker"&ndash;&gt;
+              &lt;!&ndash;style=" width: 100%"&ndash;&gt;
+              &lt;!&ndash;v-model="searchform.flowStatus"&ndash;&gt;
+              &lt;!&ndash;size="mini"&ndash;&gt;
+              &lt;!&ndash;/>&ndash;&gt;
             </div>
-          </template>
+          </template>-->
           <template slot-scope="scope">
             <div>{{scope.row.status==1?'草稿':scope.row.status==2?'审核中':scope.row.status==3?'审核通过':scope.row.status==4?'审核退回':'未创建'}}
             </div>
@@ -140,7 +141,7 @@
           prop="createTime"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
+       <!--   <template slot="header" slot-scope="scope">
             <span>创建时间</span>
             <div>
               <el-date-picker
@@ -154,7 +155,7 @@
               >
               </el-date-picker>
             </div>
-          </template>
+          </template>-->
           <template slot-scope="scope">{{
             scope.row.createTime | dateformat
             }}</template>
@@ -166,7 +167,7 @@
           prop="state"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
+         <!-- <template slot="header" slot-scope="scope">
             <span>审核通过时间</span>
             <div>
               <el-date-picker
@@ -180,7 +181,7 @@
               >
               </el-date-picker>
             </div>
-          </template>
+          </template>-->
           <template slot-scope="scope">{{
             scope.row.auditDate | dateformat
             }}</template>

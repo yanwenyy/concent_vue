@@ -295,7 +295,18 @@
         page: { current: 1, size: 20, total: 0, records: [] },
         searchform: {
           current: 1,
-          size: 20
+          size: 20,
+          createOrgCode: '',
+          createOrgId: '',
+          createOrgName: '',
+          createOrgType: '',
+          createTime: '',
+          createUserId: '',
+          createUserName: '',
+          endreporttime: '',
+          reportType: '',
+          restrictedobjects:'',
+          standardreporttime:'',
         },
         menus: [],
         multipleSelection: [],
@@ -469,6 +480,7 @@
       },
       // 获取分页数据
       getData() {
+          debugger
         this.$http
           .post('/api/statistics/projectMonthlyReport/ReportEndtime/list/loadPageData', this.searchform)
           .then(res => {

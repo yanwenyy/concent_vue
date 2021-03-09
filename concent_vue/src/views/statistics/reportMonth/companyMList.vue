@@ -69,6 +69,7 @@
             <div>
               <el-date-picker class="list-search-picker" filterable clearable
                               type="month"
+                              value-format="yyyy-MM"
                               @change="queryList"
                               v-model="searchform.yearDateS"
               >
