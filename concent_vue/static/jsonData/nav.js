@@ -1304,6 +1304,15 @@ export default {
                   'menushow': true,
                   'leaf': true,
                   'defaultpage': false
+                },
+                {
+                  'name': '项目月报批量提交',
+                  'path': '/statistics/reportMonth/reportMCommit',
+                  'component': '/statistics/reportMonth/reportMCommit',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
                 }
               ]
             },
