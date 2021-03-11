@@ -2006,6 +2006,7 @@
           item.country = country;
           item.ffid = _data.fullDetailCode;
           item.path = _data.fullDetailName;
+          item.placeId=_data.id;
         }
       });
         this.key = this.key + 1;

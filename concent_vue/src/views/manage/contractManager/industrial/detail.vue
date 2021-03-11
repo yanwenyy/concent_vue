@@ -1959,6 +1959,7 @@ export default {
           this.treeStatas = false;
           this.detailform.contractInfo.path=data.fullDetailCode;
           this.detailform.contractInfo.path=data.fullDetailName;
+          this.detailform.contractInfo.placeId=data.id;
       },
       //选择供货地点
       selectPosition() {

@@ -164,14 +164,14 @@
               <br>
               <el-form-item
                 label="合同生效地点:"
-                prop="contractInfo.insureEffPlace"
+                prop="contractInfo.path"
                 :rules="{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'change',
               }"
               >
-                <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.insureEffPlace" class="input-with-select">
+                <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.path" class="input-with-select">
                   <el-button slot="append" icon="el-icon-circle-plus-outline" @click="selectPosition" ></el-button>
                 </el-input>
               </el-form-item>
@@ -1886,8 +1886,8 @@ export default {
     getPositionTree(data) {
       console.log(data)
       this.treeStatas = false;
-      this.detailform.contractInfo.insureEffPlaceId=data.fullDetailCode;
-      this.detailform.contractInfo.insureEffPlace=data.fullDetailName;
+      this.detailform.contractInfo.placeId=data.fullDetailCode;
+      this.detailform.contractInfo.path=data.fullDetailName;
     },
     //选择项目地点
     selectPosition() {

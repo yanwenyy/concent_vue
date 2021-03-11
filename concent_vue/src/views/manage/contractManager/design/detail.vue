@@ -185,7 +185,7 @@
                 </el-input>
               </el-form-item>
               <el-form-item
-                label="施工单位:"
+                label="参建单位:"
               >
                 <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.buildOrgNames" class="input-with-select">
                   <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('施工单位',detailform.contractInfo.buildOrgIds)" ></el-button>
@@ -2669,6 +2669,7 @@
           item.country = country;
           item.ffid = _data.fullDetailCode;
           item.path = _data.fullDetailName;
+          item.placeId=_data.id;
         }
       });
         this.key = this.key + 1;

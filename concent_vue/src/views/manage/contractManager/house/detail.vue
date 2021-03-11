@@ -1905,6 +1905,7 @@ export default {
       this.treeStatas = false;
       this.detailform.contractInfo.path=data.fullDetailCode;
       this.detailform.contractInfo.path=data.fullDetailName;
+      this.detailform.contractInfo.placeId=data.id;
     },
     //选择项目地点
     selectPosition() {

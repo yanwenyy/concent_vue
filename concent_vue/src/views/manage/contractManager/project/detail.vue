@@ -207,7 +207,7 @@
               </el-input>
             </el-form-item>
             <el-form-item
-              label="施工单位"
+              label="参建单位"
             >
               <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.buildOrgNames" class="input-with-select">
                 <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('施工单位',detailform.contractInfo.buildOrgIds)" ></el-button>
@@ -1629,7 +1629,7 @@
       <el-tab-pane v-if="detailform.contractInfo.isInSystemUnion==='0'||detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isOutSystemUnion==='0'||detailform.contractInfo.isOutSystemSub==='0'" label="合同附属信息">
         <div class="detailBoxBG htfs">
           <div  v-if="detailform.contractInfo.isInSystemUnion==='0'">
-            <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+            <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
               <span>系统内其他联合体单位列表: </span>
               <el-button
                 v-show="p.actpoint != 'look'"
@@ -1809,7 +1809,7 @@
             </el-table>
           </div>
           <div  v-if="detailform.contractInfo.isInSystemSub==='0'">
-            <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+            <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
               <span>系统内分包单位列表: </span>
               <el-button
                 v-show="p.actpoint != 'look'"
@@ -1988,7 +1988,7 @@
             </el-table>
           </div>
           <div  v-if="detailform.contractInfo.isOutSystemUnion==='0'">
-            <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+            <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
               <span>系统外其他联合体单位列表: </span>
               <el-button
                 v-show="p.actpoint != 'look'"
@@ -2167,7 +2167,7 @@
             </el-table>
           </div>
           <div  v-if="detailform.contractInfo.isOutSystemSub==='0'">
-            <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+            <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
               <span>系统外分包单位列表: </span>
               <el-button
                 v-show="p.actpoint != 'look'"
@@ -2352,7 +2352,7 @@
           <el-tabs v-model="gclName" @tab-click="getRailwayList" v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'" type="border-card">
             <el-tab-pane name="0" label="第一章">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
                     v-show="p.actpoint != 'look'"
                     class="upload-demo detailUpload detatil-flie-btn"
@@ -2467,7 +2467,7 @@
             </el-tab-pane>
             <el-tab-pane name="1" label="第二章">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
                     v-show="p.actpoint != 'look'"
                     class="upload-demo detailUpload detatil-flie-btn"
@@ -2582,7 +2582,7 @@
             </el-tab-pane>
             <el-tab-pane name="2" label="第三章">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
                     v-show="p.actpoint != 'look'"
                     class="upload-demo detailUpload detatil-flie-btn"
@@ -2697,7 +2697,7 @@
             </el-tab-pane>
             <el-tab-pane name="3" label="第四章">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden; margin-right: 30px">
                   <el-upload
                     v-show="p.actpoint != 'look'"
                     class="upload-demo detailUpload detatil-flie-btn"
@@ -2812,7 +2812,7 @@
             </el-tab-pane>
             <el-tab-pane name="4" label="第五章">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
                     v-show="p.actpoint != 'look'"
                     class="upload-demo detailUpload detatil-flie-btn"
@@ -2927,7 +2927,7 @@
             </el-tab-pane>
             <el-tab-pane name="5" label="第六章">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
                     v-show="p.actpoint != 'look'"
                     class="upload-demo detailUpload detatil-flie-btn"
@@ -3042,7 +3042,7 @@
             </el-tab-pane>
             <el-tab-pane name="6" label="第七章">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
                     v-show="p.actpoint != 'look'"
                     class="upload-demo detailUpload detatil-flie-btn"
@@ -3157,7 +3157,7 @@
             </el-tab-pane>
             <el-tab-pane name="7" label="第八章">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
                     v-show="p.actpoint != 'look'"
                     class="upload-demo detailUpload detatil-flie-btn"
@@ -3272,7 +3272,7 @@
             </el-tab-pane>
             <el-tab-pane name="8" label="第九章">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
                     v-show="p.actpoint != 'look'"
                     class="upload-demo detailUpload detatil-flie-btn"
@@ -3387,7 +3387,7 @@
             </el-tab-pane>
             <el-tab-pane name="9" label="第十章">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
                     v-show="p.actpoint != 'look'"
                     class="upload-demo detailUpload detatil-flie-btn"
@@ -3502,7 +3502,7 @@
             </el-tab-pane>
             <el-tab-pane name="10" label="第十一章">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
                     v-show="p.actpoint != 'look'"
                     class="upload-demo detailUpload detatil-flie-btn"
@@ -3619,7 +3619,7 @@
           <el-tabs v-model="gclName" @tab-click="getHighwayList" v-if="detailform.contractInfo.enginTypeFirstId=='24ebba9f2f3447579d0086209aff6ecd'" type="border-card">
             <el-tab-pane name="0" label="第100章">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
                     v-show="p.actpoint != 'look'"
                     class="upload-demo detailUpload detatil-flie-btn"
@@ -3716,7 +3716,7 @@
             </el-tab-pane>
             <el-tab-pane name="1" label="第200章">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
                     v-show="p.actpoint != 'look'"
                     class="upload-demo detailUpload detatil-flie-btn"
@@ -3813,7 +3813,7 @@
             </el-tab-pane>
             <el-tab-pane name="2" label="第300章">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
 
                   <el-upload
                     v-show="p.actpoint != 'look'"
@@ -3911,7 +3911,7 @@
             </el-tab-pane>
             <el-tab-pane name="3" label="第400章">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
 
                   <el-upload
                     v-show="p.actpoint != 'look'"
@@ -4009,7 +4009,7 @@
             </el-tab-pane>
             <el-tab-pane name="4" label="第500章">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
 
                   <el-upload
                     v-show="p.actpoint != 'look'"
@@ -4107,7 +4107,7 @@
             </el-tab-pane>
             <el-tab-pane name="5" label="第600章">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
 
                   <el-upload
                     v-show="p.actpoint != 'look'"
@@ -4205,7 +4205,7 @@
             </el-tab-pane>
             <el-tab-pane name="6" label="第700章">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
                     v-show="p.actpoint != 'look'"
                     class="upload-demo detailUpload detatil-flie-btn"
@@ -4304,7 +4304,7 @@
           <el-tabs v-model="gclName" @tab-click="getRailList" v-if="detailform.contractInfo.enginTypeFirstId=='f6f5188458ab4c5ba1e0bc12a9a4188b'" type="border-card">
             <el-tab-pane name="0" label="城市轨道工程">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
                     v-show="p.actpoint != 'look'"
                     class="upload-demo detailUpload detatil-flie-btn"
@@ -4466,7 +4466,7 @@
           <el-tabs v-model="gclName" @tab-click="getMunicipal" v-if="detailform.contractInfo.enginTypeFirstId=='0f16c387f17b402db45c4de58e1cf8b4'" type="border-card">
             <el-tab-pane name="0" label="市政工程">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
                     v-show="p.actpoint != 'look'"
                     class="upload-demo detailUpload detatil-flie-btn"
@@ -4602,7 +4602,7 @@
           <el-tabs v-model="gclName" @tab-click="getHouseList" v-if="detailform.contractInfo.enginTypeFirstId=='193b4d4003d04899a1d09c8d5f7877fe'" type="border-card">
             <el-tab-pane name="0" label="电气工程">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <span>电气工程列表: </span>
                   <el-upload
                     v-show="p.actpoint != 'look'"
@@ -4728,7 +4728,7 @@
             </el-tab-pane>
             <el-tab-pane name="1" label="给排水工程">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <span>给排水工程列表: </span>
                   <el-upload
                     v-show="p.actpoint != 'look'"
@@ -4854,7 +4854,7 @@
             </el-tab-pane>
             <el-tab-pane name="2" label="基坑支护工程">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <span>基坑支护工程列表: </span>
                   <el-upload
                     v-show="p.actpoint != 'look'"
@@ -4980,7 +4980,7 @@
             </el-tab-pane>
             <el-tab-pane name="3" label="建筑工程">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <span>建筑工程列表: </span>
                   <el-upload
                     v-show="p.actpoint != 'look'"
@@ -5106,7 +5106,7 @@
             </el-tab-pane>
             <el-tab-pane name="4" label="空调水工程">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <span>空调水工程列表: </span>
                   <el-upload
                     v-show="p.actpoint != 'look'"
@@ -5232,7 +5232,7 @@
             </el-tab-pane>
             <el-tab-pane name="5" label="弱电工程">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <span>弱电列表: </span>
                   <el-upload
                     v-show="p.actpoint != 'look'"
@@ -5358,7 +5358,7 @@
             </el-tab-pane>
             <el-tab-pane name="6" label="通风空调工程">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <span>通风空调列表: </span>
                   <el-upload
                     v-show="p.actpoint != 'look'"
@@ -5484,7 +5484,7 @@
             </el-tab-pane>
             <el-tab-pane name="7" label="土方工程">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <span>土方工程列表: </span>
                   <el-upload
                     v-show="p.actpoint != 'look'"
@@ -5610,7 +5610,7 @@
             </el-tab-pane>
             <el-tab-pane name="8" label="消防电工程">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <span>消防电工程列表: </span>
                   <el-upload
                     v-show="p.actpoint != 'look'"
@@ -5736,7 +5736,7 @@
             </el-tab-pane>
             <el-tab-pane name="9" label="消防工程">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <span>消防工程列表: </span>
                   <el-upload
                     v-show="p.actpoint != 'look'"
@@ -5862,7 +5862,7 @@
             </el-tab-pane>
             <el-tab-pane name="10" label="装饰工程">
               <div class="htfs">
-                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <span>装饰工程列表: </span>
                   <el-upload
                     v-show="p.actpoint != 'look'"
@@ -6772,6 +6772,8 @@ export default {
         item.country = country;
         item.ffid = _data.fullDetailCode;
         item.path = _data.fullDetailName;
+        item.placeId=_data.id;
+
       }
     });
       this.key = this.key + 1;
@@ -6958,7 +6960,8 @@ export default {
           ffid: '',
           path: '',
           contractAmount: '',
-          isMain: ''
+          isMain: '',
+          placeId:''
         }
         this.detailform.topInfoSiteList.push(v);
       } else {
