@@ -1317,6 +1317,44 @@ export default {
               ]
             },
             {
+              'name': '工程月报(验工计价)',
+              'path': '/statistics/projectCheck',
+              'component': '/router',
+              'iconCls': 'el-icon-time',
+              'menushow': true,
+              'leaf': false,
+              'defaultpage': false,
+              'children': [
+                {
+                  'name': '项目部月报',
+                  'path': '/statistics/projectCheck/listAll',
+                  'component': '/statistics/projectCheck/listAll',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '项目部月报二级list',
+                  'path': '/statistics/projectCheck/reportMList',
+                  'component': '/statistics/projectCheck/reportMList',
+                  'iconCls': 'el-icon-switch-button',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '项目部月报详情',
+                  'path': '/statistics/projectCheck/reportMDetail',
+                  'component': '/statistics/projectCheck/reportMDetail',
+                  'iconCls': 'el-icon-switch-button',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                }
+              ]
+            },
+            {
               'name': '非工程月报',
               'path': '/statistics/notEMReport',
               'component': '/router',

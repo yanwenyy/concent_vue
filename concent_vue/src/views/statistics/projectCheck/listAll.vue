@@ -1,4 +1,4 @@
-<!--工程月报-项目部月报-->
+<!--工程月报验工计价-项目部月报-->
 
 <template>
   <div>
@@ -351,7 +351,7 @@
         //this.searchform.reportYear= y;
         this.searchform.yearDateS=time;
         this.$http
-          .post('/api/statistics/projectMonthlyReport/Projectreport/list/projectDeptList', this.searchform)
+          .post('/api/statistics/Projectcheck/list/projectDeptList', this.searchform)
           .then(res => {
             this.page = res.data.data
           })
