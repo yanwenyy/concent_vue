@@ -5,6 +5,7 @@
         <el-form-item label="年份:">
           <el-date-picker
             v-model="searchform.vyear"
+            value-format="timestamp"
             type="year"
             placeholder="选择年">
           </el-date-picker>
