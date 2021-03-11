@@ -611,7 +611,17 @@
                   inactive-value="1"
                 >
                 </el-switch>
+              </el-form-item><br>
+              <el-form-item
+                label="项目地点:"
+                prop="contractInfo.path"
+
+              >
+                <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.path" class="input-with-select">
+                  <el-button slot="append" icon="el-icon-circle-plus-outline" @click="selectPosition" ></el-button>
+                </el-input>
               </el-form-item>
+
               <div>
                 <el-form-item
                   class="neirong not-error"

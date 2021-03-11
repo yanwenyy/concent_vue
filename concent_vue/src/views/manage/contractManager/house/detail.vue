@@ -538,14 +538,14 @@
               <br>
               <el-form-item
                 label="建设地点:"
-                prop="contractInfo.estateBuildPlace"
+                prop="contractInfo.path"
                 :rules="{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'change',
               }"
               >
-                <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.estateBuildPlace" class="input-with-select">
+                <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.path" class="input-with-select">
                   <el-button slot="append" icon="el-icon-circle-plus-outline" @click="selectPosition" ></el-button>
                 </el-input>
               </el-form-item>
@@ -1903,8 +1903,8 @@ export default {
     getPositionTree(data) {
       console.log(data)
       this.treeStatas = false;
-      this.detailform.contractInfo.estateBuildPlaceId=data.fullDetailCode;
-      this.detailform.contractInfo.estateBuildPlace=data.fullDetailName;
+      this.detailform.contractInfo.path=data.fullDetailCode;
+      this.detailform.contractInfo.path=data.fullDetailName;
     },
     //选择项目地点
     selectPosition() {

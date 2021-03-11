@@ -127,20 +127,23 @@
               <br>
               <el-form-item
                 label="供货地点:"
-                prop="contractInfo.supplyPlace"
+                prop="contractInfo.path"
                 :rules="{
-           required: true, message: '此项不能为空', trigger: 'blur'
-        }"
-
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur'
+                }"
               >
-                <el-input
+               <!-- <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-
                   clearable
                   placeholder=""
                   size="mini"
                   v-model="detailform.contractInfo.supplyPlace"
-                />
+                />-->
+                <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.path" class="input-with-select">
+                  <el-button slot="append" icon="el-icon-circle-plus-outline" @click="selectPosition" ></el-button>
+                </el-input>
               </el-form-item>
               <el-form-item
                 label="使用资质单位:"
@@ -1739,6 +1742,7 @@
       </el-tabs>
 
     </el-form>
+    <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
     <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
     <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
     <search-name  v-if="infoCSVisible" ref="infoCS" @refreshDataList="goAddDetail"></search-name>
@@ -1746,6 +1750,7 @@
 </template>
 
 <script>
+  import Tree from '@/components/tree'
   import CompanyTree from '../companyTree'
   import { isMoney,isURL } from '@/utils/validate'
   import FileUpload from '@/components/fileUpload'
@@ -1772,6 +1777,7 @@ export default {
       }
     }
     return {
+      treeStatas: false,
       DwVisible:false,//选择单位弹框状态
       uploadVisible:false,//上传附件组件状态
       infoCSVisible:false,//项目名称查询的状态
@@ -1853,6 +1859,7 @@ export default {
     }
   },
   components: {
+    Tree,
     CompanyTree,
     FileUpload,
     SearchName,
@@ -1954,6 +1961,29 @@ export default {
       }
 
     },
+
+      //获取供货地点的值
+      getPositionTree(data) {
+          console.log(data)
+          this.treeStatas = false;
+          this.detailform.contractInfo.path=data.fullDetailCode;
+          this.detailform.contractInfo.path=data.fullDetailName;
+      },
+       //选择供货地点
+      selectPosition() {
+          this.treeStatas = true;
+          console.log(this.positionIndex);
+          this.$nextTick(() => {
+              this.$refs.addOrUpdate.init()
+          })
+      },
+      //打开单位弹框
+      addDw(type,list,ifChek,index,tableList){
+          this.DwVisible = true;
+          this.$nextTick(() => {
+              this.$refs.infoDw.init(type,list,ifChek,index,tableList);
+          })
+      },
     //解决新增的时候二级联动清除不了
     clear(id,name){
       // id='';
