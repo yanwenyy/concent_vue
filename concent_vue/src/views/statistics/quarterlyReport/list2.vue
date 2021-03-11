@@ -4,7 +4,7 @@
       <el-form class="search-form" :inline="true" :model="searchform" @keyup.enter.native="init()">
         <el-form-item label="年份:">
           <el-date-picker
-            v-model="searchform.vyear"
+            v-model="searchform.month"
             type="year"
             placeholder="选择年">
           </el-date-picker>
@@ -102,7 +102,7 @@
           :width="200"
           align="center"
           label="审核状态"
-          prop="status"
+          prop="stauts"
           show-overflow-tooltip
 
         >
@@ -154,7 +154,6 @@
           stauts: "",
           createTime: "",
           auditDate: "",
-          vyear:"",
         },
         menus: [],
         multipleSelection: [],
@@ -193,7 +192,7 @@
       add() {
         let p = {actpoint: "add"};
         this.$router.push({
-          path: "./detail/",
+          path: "./detail2/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       },
@@ -207,18 +206,18 @@
           this.$message.info("此条数据不可修改！");
           return false;
         }
-        let p = {actpoint: "edit", instid: this.multipleSelection[0].uuid};
+        let p = {actpoint: "edit", instid: this.multipleSelection[0].topOrgId};
         this.$router.push({
-          path: "./detail/",
+          path: "./detail2/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
 
       },
       // 查看
       rowshow(row) {
-        let p = {actpoint: "look", instid: row.uuid};
+        let p = {actpoint: "look", instid: row.topOrgId};
         this.$router.push({
-          path: "./detail/",
+          path: "./detail2/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       },
@@ -231,7 +230,7 @@
         let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
           if(item.flowStatus==1||item.flowStatus==4){
-          uuids.push(item.uuid);
+          uuids.push(item.topOrgId);
         }else{
           this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
           return itemStatus=false;
@@ -246,7 +245,7 @@
           }).then(() => {
             this.$http
             .post(
-              "/api/statistics/Season/list/delete",{ids: uuids}
+              "/api/contract/topInfo/TopInfor/list/delete",{ids: uuids}
 
             )
             .then((res) => {
@@ -264,7 +263,7 @@
         }
         let p = {actpoint: "look", instid: this.multipleSelection[0].uuid};
         this.$router.push({
-          path: "../detail/",
+          path: "../detail2/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       }, // list通用方法开始
@@ -298,16 +297,16 @@
       },
       // 查询
       getData() {
-        /*if(this.searchform.importFileRecordName!=''){
+        if(this.searchform.importFileRecordName!=''){
           if(this.searchform.importFileRecordName=='是'){
             this.searchform.importFileRecordId='1';
           }else if(this.searchform.importFileRecordName=='否'){
             this.searchform.importFileRecordId='0';
           }
-        }*/
+        }
         this.$http
           .post(
-            "/api/statistics/Season/detail/findByYears",
+            "/api/statistics/unProjectReport/list/loadPageData",
             this.searchform
           )
           .then((res) => {

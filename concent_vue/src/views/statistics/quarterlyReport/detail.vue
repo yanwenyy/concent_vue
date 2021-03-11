@@ -27,7 +27,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforName"/>
+                v-model="detailform.businessDetail.JB1_01_001"/>
             </el-form-item>
             <el-form-item
               label="上年结转合同额(万元):"
@@ -36,7 +36,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_01_002"/>
             </el-form-item>
             <el-form-item
               label="本年新签合同额(万元):"
@@ -45,7 +45,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_01_003"/>
             </el-form-item>
             <p  class="detail-title" style="overflow: hidden;margin-right:30px">
               <span>二、承包工程完成情况 </span>
@@ -57,7 +57,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_02_001"/>
             </el-form-item>
             <el-form-item
               label="自行完成施工产值(万元):"
@@ -66,7 +66,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_02_002"/>
             </el-form-item>
             <el-form-item
               label="分包出去工程的产值(万元):"
@@ -75,7 +75,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_02_003"/>
             </el-form-item>
             <el-form-item
               label="从建设单位以外承揽工程完成的产值(万元):"
@@ -84,14 +84,14 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_02_004"/>
             </el-form-item>
             <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                 <span>三、施工产值(万元): <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/> </span>
+                  v-model="detailform.businessDetail.JB1_03_000"/> </span>
             </p>
             <el-form-item
               label="其中:装饰装修产值(万元):"
@@ -100,7 +100,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_001"/>
             </el-form-item>
             <el-form-item
               label="其中:在外省完成的产值(万元):"
@@ -109,7 +109,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_002"/>
             </el-form-item>
             <el-form-item
               label="建筑工程产值(万元)"
@@ -118,7 +118,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_003"/>
             </el-form-item>
             <el-form-item
               label="安装工程产值(万元):"
@@ -127,7 +127,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_004"/>
             </el-form-item>
             <el-form-item
               label="设备工器具产值(万元):"
@@ -136,7 +136,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_005"/>
             </el-form-item>
             <el-form-item
               label="其他产值(万元):"
@@ -145,7 +145,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_006"/>
             </el-form-item>
             <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                 <span>1、 按类别分</span>
@@ -157,7 +157,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_01_001"/>
             </el-form-item>
             <el-form-item
               label="公路(万元):"
@@ -166,7 +166,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_01_002"/>
             </el-form-item>
             <el-form-item
               label="房建(万元):"
@@ -175,7 +175,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_01_003"/>
             </el-form-item>
             <el-form-item
               label="市政(万元):"
@@ -184,7 +184,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_01_004"/>
             </el-form-item>
             <el-form-item
               label="城轨(万元):"
@@ -193,17 +193,17 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_01_005"/>
             </el-form-item>
-            <el-form-item
+           <!-- <el-form-item
               label="铁路四电(万元):"
             >
               <el-input
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
-            </el-form-item>
+                v-model="detailform.businessDetail."/>
+            </el-form-item>-->
             <el-form-item
               label="水利(万元):"
             >
@@ -211,7 +211,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_01_006"/>
             </el-form-item>
             <el-form-item
               label="电力(万元):"
@@ -220,7 +220,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_01_007"/>
             </el-form-item>
             <el-form-item
               label="机场(万元):"
@@ -229,7 +229,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_01_008"/>
             </el-form-item>
             <el-form-item
               label="矿山(万元):"
@@ -238,7 +238,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_01_009"/>
             </el-form-item>
             <el-form-item
               label="港口与航道(万元):"
@@ -247,7 +247,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_01_010"/>
             </el-form-item>
             <el-form-item
               label="其他(万元):"
@@ -256,7 +256,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_01_011"/>
             </el-form-item>
             <p  class="detail-title" style="overflow: hidden;margin-right:30px">
               <span>2、按地域分</span>
@@ -268,7 +268,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_001"/>
             </el-form-item>
             <el-form-item
               label="天津市(万元):"
@@ -277,7 +277,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_002"/>
             </el-form-item>
             <el-form-item
               label="河北省(万元):"
@@ -286,7 +286,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_003"/>
             </el-form-item>
             <el-form-item
               label="山西省(万元):"
@@ -295,7 +295,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_004"/>
             </el-form-item>
             <el-form-item
               label="内蒙古自治区(万元):"
@@ -304,7 +304,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_005"/>
             </el-form-item>
             <el-form-item
               label="辽宁省(万元):"
@@ -313,7 +313,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_006"/>
             </el-form-item>
             <el-form-item
               label="吉林省(万元):"
@@ -322,7 +322,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_007"/>
             </el-form-item>
             <el-form-item
               label="黑龙江省(万元):"
@@ -331,7 +331,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_008"/>
             </el-form-item>
             <el-form-item
               label="上海市(万元):"
@@ -340,7 +340,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_009"/>
             </el-form-item>
             <el-form-item
               label="江苏省(万元):"
@@ -349,7 +349,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_010"/>
             </el-form-item>
             <el-form-item
               label="浙江省(万元):"
@@ -358,7 +358,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_011"/>
             </el-form-item>
             <el-form-item
               label="安徽省(万元):"
@@ -367,7 +367,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_012"/>
             </el-form-item>
             <el-form-item
               label="福建省(万元):"
@@ -376,7 +376,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_013"/>
             </el-form-item>
             <el-form-item
               label="江西省(万元):"
@@ -385,7 +385,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_014"/>
             </el-form-item>
             <el-form-item
               label="山东省(万元):"
@@ -394,7 +394,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_015"/>
             </el-form-item>
             <el-form-item
               label="河南省(万元):"
@@ -403,7 +403,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_016"/>
             </el-form-item>
             <el-form-item
               label="湖北省(万元):"
@@ -412,7 +412,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_017"/>
             </el-form-item>
             <el-form-item
               label="湖南省(万元):"
@@ -421,7 +421,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_018"/>
             </el-form-item>
             <el-form-item
               label="广东省(万元):"
@@ -430,7 +430,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_019"/>
             </el-form-item>
             <el-form-item
               label="广西壮族自治区(万元):"
@@ -439,7 +439,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_020"/>
             </el-form-item>
             <el-form-item
               label="海南省(万元):"
@@ -448,7 +448,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_021"/>
             </el-form-item>
             <el-form-item
               label="重庆市(万元):"
@@ -457,7 +457,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_022"/>
             </el-form-item>
             <el-form-item
               label="四川省(万元):"
@@ -466,7 +466,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_023"/>
             </el-form-item>
             <el-form-item
               label="贵州省(万元):"
@@ -475,7 +475,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_024"/>
             </el-form-item>
             <el-form-item
               label="云南省(万元):"
@@ -484,7 +484,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_025"/>
             </el-form-item>
             <el-form-item
               label="西藏自治区(万元):"
@@ -493,7 +493,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_026"/>
             </el-form-item>
             <el-form-item
               label="陕西省(万元):"
@@ -502,7 +502,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_027"/>
             </el-form-item>
             <el-form-item
               label="甘肃省(万元):"
@@ -511,7 +511,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_028"/>
             </el-form-item>
             <el-form-item
               label="青海省(万元):"
@@ -520,7 +520,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_029"/>
             </el-form-item>
             <el-form-item
               label="宁夏(万元):"
@@ -529,7 +529,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_030"/>
             </el-form-item>
             <el-form-item
               label="新疆(万元):"
@@ -538,7 +538,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_031"/>
             </el-form-item>
             <el-form-item
               label="澳门(万元):"
@@ -547,7 +547,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_032"/>
             </el-form-item>
             <el-form-item
               label="台湾省(万元):"
@@ -556,7 +556,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_033"/>
             </el-form-item>
             <el-form-item
               label="香港(万元):"
@@ -565,7 +565,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_034"/>
             </el-form-item>
             <el-form-item
               label="海外(万元):"
@@ -574,21 +574,21 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_03_02_035"/>
             </el-form-item>
             <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                 <span>四、竣工产值(万元): <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/> </span>
+                  v-model="detailform.businessDetail.JB1_04_000"/> </span>
             </p>
             <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                 <span>五、房屋施工面积(平方米):<el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/> </span>
+                  v-model="detailform.businessDetail.JB1_05_000"/> </span>
             </p>
             <el-form-item
               label="其中:本年新开工面积(平方米):"
@@ -597,7 +597,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_05_001"/>
             </el-form-item>
             <el-form-item
               label="其中:实行投标承包面积(平方米):"
@@ -606,7 +606,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_05_002"/>
             </el-form-item>
             <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                 <span>六、主要建筑材料消耗量 </span>
@@ -622,7 +622,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.businessDetail.JB1_06_01_001"/>
               </el-form-item>
               <el-form-item
                 label="木材*(立方米):"
@@ -631,7 +631,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.businessDetail.JB1_06_01_002"/>
               </el-form-item>
               <el-form-item
                 label="平板玻璃*(平方米):"
@@ -640,7 +640,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.businessDetail.JB1_06_01_003"/>
               </el-form-item>
               <el-form-item
                 label="平板玻璃*(平方米):"
@@ -649,7 +649,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.businessDetail.JB1_06_01_004"/>
               </el-form-item>
               <el-form-item
                 label="平板玻璃*(重量箱):"
@@ -658,7 +658,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.businessDetail.JB1_06_01_005"/>
               </el-form-item>
               <el-form-item
                 label="铝材*(吨):"
@@ -667,7 +667,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.businessDetail.JB1_06_01_006"/>
               </el-form-item>
             </div>
             <div class="row-three">
@@ -681,7 +681,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_06_02_001"/>
             </el-form-item>
             <el-form-item
               label="木材*(万元):"
@@ -690,7 +690,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_06_02_002"/>
             </el-form-item>
             <el-form-item
               label="水泥*(万元):"
@@ -699,7 +699,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_06_02_003"/>
             </el-form-item>
             <el-form-item
               label="平板玻璃*(万元):"
@@ -708,7 +708,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_06_02_004"/>
             </el-form-item>
             <el-form-item
               label="铝材*(万元):"
@@ -717,7 +717,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessDetail.JB1_06_02_005"/>
             </el-form-item>
           </div>
             <br>
@@ -732,7 +732,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.businessDetail.JB1_07_001"/>
               </el-form-item>
               <el-form-item
                 label="期末人数(人):"
@@ -741,7 +741,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.businessDetail.JB1_07_002"/>
               </el-form-item>
               <el-form-item
                 label="其中:工程技术人员(人):"
@@ -750,7 +750,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.businessDetail.JB1_07_003"/>
               </el-form-item>
               <el-form-item
                 label="其中:一级建造师(人):"
@@ -759,7 +759,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.businessDetail.JB1_07_004"/>
               </el-form-item>
               <el-form-item
                 label="其中:现场施工人员*(人):"
@@ -768,7 +768,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.businessDetail.JB1_07_005"/>
               </el-form-item>
               <el-form-item
                 label="其中:持证上岗人员*(人):"
@@ -777,7 +777,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.businessDetail.JB1_07_006"/>
               </el-form-item>
             </div>
             <div class="row-three">
@@ -791,7 +791,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.businessDetail.JB1_08_001"/>
               </el-form-item>
               <el-form-item
                 label="其中:施工机械设备总台数(台):"
@@ -800,7 +800,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.businessDetail.JB1_08_002"/>
               </el-form-item>
               <el-form-item
                 label="总功率*(千瓦):"
@@ -809,7 +809,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.businessDetail.JB1_08_003"/>
               </el-form-item>
               <el-form-item
                 label="其中:施工机械设备总功率(千瓦):"
@@ -818,7 +818,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.businessDetail.JB1_08_004"/>
               </el-form-item>
               <el-form-item
                 label="净值*(万元):"
@@ -827,7 +827,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.businessDetail.JB1_08_005"/>
               </el-form-item>
               <el-form-item
                 label="其中:施工机械设备净值(万元):"
@@ -836,7 +836,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.businessDetailJB1_08_006"/>
               </el-form-item>
             </div>
           </el-form>
@@ -861,7 +861,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforName"/>
+                v-model="detailform.businessjnDetail.JB1_01_001"/>
             </el-form-item>
             <el-form-item
               label="上年结转合同额(万元):"
@@ -870,7 +870,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessjnDetail.JB1_01_002"/>
             </el-form-item>
             <el-form-item
               label="本年新签合同额(万元):"
@@ -879,7 +879,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessjnDetail.JB1_01_003"/>
             </el-form-item>
             <p  class="detail-title" style="overflow: hidden;margin-right:30px">
               <span>二、承包工程完成情况 </span>
@@ -891,16 +891,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
-            </el-form-item>
-            <el-form-item
-              label="直接从建设单位承揽工程完成的产值小计(万元):"
-            >
-              <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                clearable
-
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessjnDetail.JB1_02_001"/>
             </el-form-item>
             <el-form-item
               label="自行完成施工产值(万元):"
@@ -909,7 +900,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessjnDetail.JB1_02_002"/>
             </el-form-item>
             <el-form-item
               label="分包出去工程的产值(万元):"
@@ -918,7 +909,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessjnDetail.JB1_02_003"/>
             </el-form-item>
             <el-form-item
               label="从建设单位以外承揽工程完成的产值(万元):"
@@ -927,14 +918,14 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessjnDetail.JB1_02_004"/>
             </el-form-item>
             <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                 <span>三、施工产值(万元): <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/> </span>
+                  v-model="detailform.businessjnDetail.JB1_03_000"/> </span>
             </p>
             <el-form-item
               label="其中:装饰装修产值(万元):"
@@ -943,7 +934,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessjnDetail.JB1_03_001"/>
             </el-form-item>
             <el-form-item
               label="其中:在外省完成的产值(万元):"
@@ -952,7 +943,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessjnDetail.JB1_03_002"/>
             </el-form-item>
             <el-form-item
               label="建筑工程产值(万元)"
@@ -961,7 +952,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessjnDetail.JB1_03_003"/>
             </el-form-item>
             <el-form-item
               label="安装工程产值(万元):"
@@ -970,7 +961,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessjnDetail.JB1_03_004"/>
             </el-form-item>
             <el-form-item
               label="设备工器具产值(万元):"
@@ -979,7 +970,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessjnDetail.JB1_03_005"/>
             </el-form-item>
             <el-form-item
               label="其他产值(万元):"
@@ -988,7 +979,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.businessjnDetail.JB1_03_006"/>
             </el-form-item>
 
           </el-form>
@@ -1013,24 +1004,22 @@
               <div class="four-name">合计：</div>
               <el-form-item>
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
+                  disabled
+                  v-model="detailform.buildingDetail.JB2_00_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  disabled
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_00_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  disabled
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_00_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1040,21 +1029,45 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_01_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_01_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_01_value"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">2、商业及服务用房屋：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_02_convalue"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_02_comvalue"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_02_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1064,21 +1077,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_001_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_001_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_001_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1088,21 +1101,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_002_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_002_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_002_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1112,21 +1125,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_003_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_003_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_003_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1136,21 +1149,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_004_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_004_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_004_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1160,21 +1173,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_005_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_005_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_005_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1184,21 +1197,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_03_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_03_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_03_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1208,21 +1221,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1232,21 +1245,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_001_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_001_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_001_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1256,21 +1269,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_002_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_002_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_002_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1280,21 +1293,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_003_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_003_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_003_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1304,21 +1317,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_05_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_05_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_05_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1328,21 +1341,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_06_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_06_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_06_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1352,21 +1365,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_06_001_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_06_001_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_06_001_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1376,21 +1389,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_07_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_07_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_07_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1400,21 +1413,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_08_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_08_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_08_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1424,261 +1437,237 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_09_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_09_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_09_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
-              <div class="four-name">10、铁路四电：</div>
+              <div class="four-name">10、公路工程：</div>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_10_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_10_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">11、公路工程：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_10_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
-              <div class="four-name">12、城市轨道：</div>
+              <div class="four-name">11、城市轨道：</div>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_11_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_11_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">13、市政工程：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_11_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
-              <div class="four-name">14、电力工程：</div>
+              <div class="four-name">12、市政工程：</div>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_12_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_12_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">15、水利工程：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_12_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
-              <div class="four-name">16、机场工程：</div>
+              <div class="four-name">13、电力工程：</div>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_13_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_13_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">17、矿山工程：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_13_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
-            <div class="four-name">18、港口与航道工程：</div>
+              <div class="four-name">14、水利工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_14_convalue"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_14_comvalue"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_14_value"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">15、机场工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_15_convalue"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_15_comvalue"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_15_value"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">16、矿山工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_16_convalue"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_16_comvalue"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_16_value"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+            <div class="four-name">17、港口与航道工程：</div>
             <el-form-item>
               <el-input
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforName"/>
+                v-model="detailform.buildingDetail.JB2_17_convalue"/>
             </el-form-item>
             <el-form-item>
               <el-input
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforName"/>
+                v-model="detailform.buildingDetail.JB2_17_comvalue"/>
             </el-form-item>
             <el-form-item>
               <el-input
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforName"/>
+                v-model="detailform.buildingDetail.JB2_17_value"/>
             </el-form-item>
           </div>
             <div class="row-four">
-              <div class="four-name">19、其它工程：</div>
+              <div class="four-name">18、其它工程：</div>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_18_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_18_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_18_value"/>
               </el-form-item>
             </div>
           </el-form>
@@ -1703,24 +1692,22 @@
               <div class="four-name">合计：</div>
               <el-form-item>
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
+                  disabled
+                  v-model="detailform.buildingDetail.JB2_00_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  disabled
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_00_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  disabled
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_00_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1730,21 +1717,45 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_01_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_01_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_01_value"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">2、商业及服务用房屋：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_02_convalue"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_02_comvalue"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_02_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1754,21 +1765,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_001_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_001_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_001_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1778,21 +1789,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_002_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_002_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_002_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1802,21 +1813,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_003_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_003_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_003_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1826,21 +1837,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_004_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_004_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_004_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1850,21 +1861,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_005_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_005_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_02_005_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1874,21 +1885,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_03_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_03_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_03_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1898,21 +1909,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1922,21 +1933,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_001_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_001_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_001_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1946,21 +1957,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_002_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_002_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_002_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1970,21 +1981,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_003_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_003_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_04_003_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -1994,21 +2005,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_05_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_05_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_05_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -2018,21 +2029,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_06_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_06_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_06_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -2042,21 +2053,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_06_001_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_06_001_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_06_001_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -2066,21 +2077,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_07_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_07_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_07_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -2090,21 +2101,21 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_08_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_08_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_08_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
@@ -2114,261 +2125,237 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_09_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_09_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">10、铁路四电：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_09_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
-              <div class="four-name">11、公路工程：</div>
+              <div class="four-name">10、公路工程：</div>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_10_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_10_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">12、城市轨道：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_10_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
-              <div class="four-name">13、市政工程：</div>
+              <div class="four-name">11、城市轨道：</div>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_11_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_11_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">14、电力工程：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_11_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
-              <div class="four-name">15、水利工程：</div>
+              <div class="four-name">12、市政工程：</div>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_12_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_12_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">16、机场工程：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_12_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
-              <div class="four-name">17、矿山工程：</div>
+              <div class="four-name">13、电力工程：</div>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_13_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_13_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">18、港口与航道工程：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_13_value"/>
               </el-form-item>
             </div>
             <div class="row-four">
-              <div class="four-name">19、其它工程：</div>
+              <div class="four-name">14、水利工程：</div>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_14_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_14_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforName"/>
+                  v-model="detailform.buildingDetail.JB2_14_value"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">15、机场工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_15_convalue"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_15_comvalue"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_15_value"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">16、矿山工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_16_convalue"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_16_comvalue"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_16_value"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">17、港口与航道工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_17_convalue"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_17_comvalue"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_17_value"/>
+              </el-form-item>
+            </div>
+            <div class="row-four">
+              <div class="four-name">18、其它工程：</div>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_18_convalue"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_18_comvalue"/>
+              </el-form-item>
+              <el-form-item>
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+
+                  v-model="detailform.buildingDetail.JB2_18_value"/>
               </el-form-item>
             </div>
           </el-form>
@@ -2394,7 +2381,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.salaryDetail.terminal"/>
               </el-form-item>
               <el-form-item
                 label="其中：女性(人):"
@@ -2403,7 +2390,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.salaryDetail.female"/>
               </el-form-item>
               <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                 <span>按人员类型分 </span>
@@ -2415,7 +2402,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.salaryDetail.terstaff"/>
               </el-form-item>
               <el-form-item
                 label="劳务派遣人员(人):"
@@ -2424,7 +2411,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.salaryDetail.terlabor"/>
               </el-form-item>
               <el-form-item
                 label="其他从业人员(人):"
@@ -2433,7 +2420,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.salaryDetail.terother"/>
               </el-form-item>
               <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                 <span>从业人员平均人数(人): </span>
@@ -2445,7 +2432,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.salaryDetail.averstaff"/>
               </el-form-item>
               <el-form-item
                 label="劳务派遣人员(人):"
@@ -2454,7 +2441,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.salaryDetail.averlabor"/>
               </el-form-item>
               <el-form-item
                 label="其他从业人员(人):"
@@ -2463,7 +2450,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.salaryDetail.averother"/>
               </el-form-item>
             </div>
             <div class="row-three">
@@ -2477,7 +2464,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.salaryDetail.salary"/>
               </el-form-item>
               <el-form-item
                 label="在岗职工(千元):"
@@ -2486,7 +2473,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.salaryDetail.salstaff"/>
               </el-form-item>
               <el-form-item
                 label="劳务派遣人员(千元):"
@@ -2495,7 +2482,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.salaryDetail.sallabor"/>
               </el-form-item>
               <el-form-item
                 label="其他从业人员(千元):"
@@ -2504,7 +2491,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.salaryDetail.salother"/>
               </el-form-item>
             </div>
           </el-form>
@@ -2529,7 +2516,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforName"/>
+                v-model="detailform.financialDetail.yearstock"/>
             </el-form-item>
             <p  class="detail-title" style="overflow: hidden;margin-right:30px">
               <span>二﹑资产负债</span>
@@ -2542,7 +2529,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.financialDetail.ldasset"/>
               </el-form-item>
               <el-form-item
                 label="其中：应收工程款:"
@@ -2551,7 +2538,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.financialDetail.project"/>
               </el-form-item>
               <el-form-item
                 label="其中：竣工工程:"
@@ -2560,7 +2547,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.financialDetail.comproject"/>
               </el-form-item>
               <el-form-item
                 label="存货:"
@@ -2569,7 +2556,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.financialDetail.stock"/>
               </el-form-item>
             </div>
             <div class="row-three">
@@ -2580,7 +2567,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.financialDetail.asset"/>
               </el-form-item>
               <el-form-item
                 label="负债合计:"
@@ -2589,7 +2576,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.financialDetail.debt"/>
               </el-form-item>
             </div>
             <p  class="detail-title" style="overflow: hidden;margin-right:30px">
@@ -2603,7 +2590,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.financialDetail.income"/>
               </el-form-item>
               <el-form-item
                 label="其中：主营业务收入:"
@@ -2612,7 +2599,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.financialDetail.mainincome"/>
               </el-form-item>
               <el-form-item
                 label="营业成本:"
@@ -2621,7 +2608,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.financialDetail.cost"/>
               </el-form-item>
               <el-form-item
                 label="其中：主营业务成本:"
@@ -2630,7 +2617,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.financialDetail.maincost"/>
               </el-form-item>
               <el-form-item
                 label="营业税金及附加:"
@@ -2639,7 +2626,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.financialDetail.tax"/>
               </el-form-item>
               <el-form-item
                 label="其中：主营业务税金及附加:"
@@ -2648,7 +2635,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.financialDetail.maintax"/>
               </el-form-item>
               <el-form-item
                 label="其他业务利润:"
@@ -2657,7 +2644,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.financialDetail.other"/>
               </el-form-item>
               <el-form-item
                 label="利润总额:"
@@ -2666,7 +2653,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.financialDetail.sumprofit"/>
               </el-form-item>
             </div>
             <div class="row-three">
@@ -2677,7 +2664,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.financialDetail.sale"/>
               </el-form-item>
               <el-form-item
                 label="管理费用:"
@@ -2686,7 +2673,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.financialDetail.manage"/>
               </el-form-item>
               <el-form-item
                 label="其中：税金:"
@@ -2695,7 +2682,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.financialDetail.taxmanage"/>
               </el-form-item>
               <el-form-item
                 label="差旅费:"
@@ -2704,7 +2691,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.financialDetail.clmanage"/>
               </el-form-item>
               <el-form-item
                 label="工会经费:"
@@ -2713,7 +2700,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.financialDetail.ghmanage"/>
               </el-form-item>
               <el-form-item
                 label="财务费用:"
@@ -2722,7 +2709,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.financialDetail.financial"/>
               </el-form-item>
               <el-form-item
                 label="营业利润:"
@@ -2731,7 +2718,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/>
+                  v-model="detailform.financialDetail.profit"/>
               </el-form-item>
             </div>
             <p  class="detail-title" style="overflow: hidden;margin-right:30px">
@@ -2744,14 +2731,14 @@
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
 
-                v-model="detailform.topInfor.inforNameForeign"/>
+                v-model="detailform.financialDetail.salary"/>
             </el-form-item>
             <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                 <span>五、土地和固定资产支出: <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
 
-                  v-model="detailform.topInfor.inforNameForeign"/> </span>
+                  v-model="detailform.financialDetail.fixed"/> </span>
             </p>
           </el-form>
         </div>
@@ -2769,6 +2756,7 @@
   import FileUpload from '@/components/fileUpload'
   import { isMoney, isMobile} from '@/utils/validate'
   import AuditProcess from '@/components/auditProcess'
+  import financeDetail from "../project/change/financeDetail";
   export default {
     // name: "详情",
     data() {
@@ -2803,18 +2791,13 @@
         options: [],
         searchform:{},
         detailform: {
-          topInfor: {
-            marketSecondId:'',
-            constructionOrg:''
-          },
-          topInfoOrg: {},
-          topInfoSiteList: [],
-          topInfoSectionList: [],
-          value1: [],
-          zplx:[],//装配类型
-          jzlx:[],//建筑类型
-          jzjglx:[],//建筑结构类型
-          cdmc:[],//场地名称
+            buildingDetail:{},
+            buildingjnDetail:{},
+            businessDetail:{},
+            businessjnDetail:{},
+            financialDetail:{},
+            salaryDetail:{},
+            season:{},
         },
         xqprojectType: [],//工程类别二级
         emergingMarketTwo:[],//新兴市场二级
@@ -3108,9 +3091,9 @@
       saveInfo(formName,type) {
         var url='';
         if(type=='save'){
-          url="/api/contract/topInfo/TopInfor/detail/saveOrUpdate"
+          url="/api/statistics/Season/detail/save"
         }else{
-          url="/api/contract/topInfo/TopInfor/process/start"
+          //url="/api/contract/topInfo/TopInfor/process/start"
         }
         var topInforCapitalList = [];
         this.amountSource.forEach((item) => {
@@ -3122,6 +3105,7 @@
           topInforCapitalList.push(v);
         }
       });
+
         this.detailform.topInforCapitalList=topInforCapitalList;
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -3217,14 +3201,17 @@
       // 加载列表
       getDetail() {
         this.$http
-          .post("/api/contract/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.id})
+          .post("/api/statistics/Season/detail/entityInfo", {uuid:this.id})
           .then((res) => {
           var datas=res.data.data;
-        this.getTwo(datas.topInfor.enginTypeFirstId||'');
+        /*this.getTwo(datas.topInfor.enginTypeFirstId||'');
         this.getTwoSC(datas.topInfor.marketFirstNameId||'');
-        this.getTwoXZ(datas.topInfor.projectNatureFirstId||'');
+        this.getTwoXZ(datas.topInfor.projectNatureFirstId||'');*/
         this.detailform={
-          topInfor: datas.topInfor,
+            financialDetail:datas.financialDetail,
+            salaryDetail:datas.salaryDetail,
+
+         /* topInfor: datas.topInfor,
           topInfoOrg: datas.topInfoOrg,
           topInfoSiteList: datas.topInfoSiteList,
           topInfoSectionList: datas.topInfoSectionList,
@@ -3232,7 +3219,7 @@
           zplx:[],//装配类型
           jzlx:[],//建筑类型
           jzjglx:[],//建筑结构类型
-          cdmc:[],//场地名称
+          cdmc:[],//场地名称*/
         }
         this.detailform.cdmc=datas.topInfor.siteNameId&&datas.topInfor.siteNameId.split(",");
         this.detailform.zplx=datas.topInfor.otherAssemblyTypeId&&datas.topInfor.otherAssemblyTypeId.split(",");

@@ -1352,7 +1352,7 @@ export default {
               'iconCls': 'el-icon-time',
               'menushow': true,
               'leaf': false,
-              'defaultpage': false,
+              'defaultpage': true,
               'children': [
                 {
                   'name': '季报填报',
@@ -1361,7 +1361,7 @@ export default {
                   'iconCls': 'el-icon-reading',
                   'menushow': true,
                   'leaf': true,
-                  'defaultpage': false
+                  'defaultpage': true
                 },
                 {
                   'name': '季报填报详情',
@@ -1372,6 +1372,25 @@ export default {
                   'leaf': true,
                   'defaultpage': false
                 },
+                {
+                  'name': '年报填报',
+                  'path': '/statistics/quarterlyReport/list2',
+                  'component': '/statistics/quarterlyReport/list2',
+                  'iconCls': 'el-icon-notebook-2',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '年报填报详情',
+                  'path': '/statistics/quarterlyReport/detail2',
+                  'component': '/statistics/quarterlyReport/detail2',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+
               ]
             },
             {
