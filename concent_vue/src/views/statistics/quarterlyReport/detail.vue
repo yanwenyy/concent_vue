@@ -3123,7 +3123,7 @@
               });
               this.$refs[formName].resetFields();
               this.$router.push({
-                path: "/manage/proposal/list",
+                path: "/statistics/quarterlyReport/list",
               });
             }
           });
@@ -3201,33 +3201,19 @@
       // 加载列表
       getDetail() {
         this.$http
-          .post("/api/statistics/Season/detail/entityInfo", {uuid:this.id})
+          .post("/api/statistics/Season/detail/entityInfo", {id:this.id})
           .then((res) => {
           var datas=res.data.data;
-        /*this.getTwo(datas.topInfor.enginTypeFirstId||'');
-        this.getTwoSC(datas.topInfor.marketFirstNameId||'');
-        this.getTwoXZ(datas.topInfor.projectNatureFirstId||'');*/
+
         this.detailform={
+            buildingDetailList:datas.buildingDetailList,
+            buildingJnDetailList:datas.buildingJnDetailList,
+            businessDetailMap:datas.businessDetailMap,
+            businessJnDetailMap:datas.businessJnDetailMap,
             financialDetail:datas.financialDetail,
             salaryDetail:datas.salaryDetail,
-
-         /* topInfor: datas.topInfor,
-          topInfoOrg: datas.topInfoOrg,
-          topInfoSiteList: datas.topInfoSiteList,
-          topInfoSectionList: datas.topInfoSectionList,
-          value1:[],
-          zplx:[],//装配类型
-          jzlx:[],//建筑类型
-          jzjglx:[],//建筑结构类型
-          cdmc:[],//场地名称*/
+            season:datas.season,
         }
-        this.detailform.cdmc=datas.topInfor.siteNameId&&datas.topInfor.siteNameId.split(",");
-        this.detailform.zplx=datas.topInfor.otherAssemblyTypeId&&datas.topInfor.otherAssemblyTypeId.split(",");
-        this.detailform.jzlx=datas.topInfor.otherBuildingTypeId&&datas.topInfor.otherBuildingTypeId.split(",");
-        this.detailform.jzjglx=datas.topInfor.otherBuildingStructureTypeId&&datas.topInfor.otherBuildingStructureTypeId.split(",");
-        datas.topInforCapitalList.forEach((item)=>{
-          this.detailform.value1.push(item.capitalId)
-      });
       });
       },
 

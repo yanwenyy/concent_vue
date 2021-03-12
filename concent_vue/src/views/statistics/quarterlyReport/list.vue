@@ -2,14 +2,6 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-form class="search-form" :inline="true" :model="searchform" @keyup.enter.native="init()">
-        <el-form-item label="年份:">
-          <el-date-picker
-            v-model="searchform.vyear"
-            value-format="timestamp"
-            type="year"
-            placeholder="选择年">
-          </el-date-picker>
-        </el-form-item>
       <!--  <el-form-item label="季度:">
           <el-select v-model="searchform.month" placeholder="请选择">
             <el-option
@@ -87,18 +79,31 @@
           :width="200"
           align="center"
           label="年份"
-          prop="reportYear"
+          prop="vyear"
           show-overflow-tooltip
         >
+          <template slot="header" slot-scope="scope">
+            <span>年份</span>
+            <div>
+              <el-date-picker
+                v-model="searchform.year"
+                value-format="yyyy"
+                type="year"
+                placeholder="选择年"
+              size="mini"
+              style="width: 60%">
+              </el-date-picker>
+            </div>
+          </template>
         </el-table-column>
-      <!--  <el-table-column
+        <el-table-column
           :width="200"
           align="center"
           label="季度"
-          prop="reportYear"
+          prop="vseason"
           show-overflow-tooltip
         >
-        </el-table-column>-->
+        </el-table-column>
         <el-table-column
           :width="200"
           align="center"
@@ -155,7 +160,7 @@
           stauts: "",
           createTime: "",
           auditDate: "",
-          vyear:"",
+          year:"",
         },
         menus: [],
         multipleSelection: [],
@@ -192,6 +197,10 @@
       },
       // 增加
       add() {
+          if (this.multipleSelection.length !== 1) {
+              this.$message.info("请选择一条记录进行创建操作！");
+              return false;
+          }
         let p = {actpoint: "add"};
         this.$router.push({
           path: "./detail/",
@@ -231,12 +240,7 @@
         }
         let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          if(item.flowStatus==1||item.flowStatus==4){
           uuids.push(item.uuid);
-        }else{
-          this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
-          return itemStatus=false;
-        }
       })
 
         if(itemStatus){
@@ -282,11 +286,6 @@
         this.getData();
       },
       searchformReset() {
-        // this.$refs["searchform"].resetFields();
-        // this.searchform.inforName = "";
-        // this.searchform.enginTypeFirstId = "";
-        // this.searchform.constructionOrg = "";
-        // this.searchform.noticeTypeId = "";
         this.searchform={
           current: 1,
           size: 20
@@ -299,21 +298,19 @@
       },
       // 查询
       getData() {
-        /*if(this.searchform.importFileRecordName!=''){
-          if(this.searchform.importFileRecordName=='是'){
-            this.searchform.importFileRecordId='1';
-          }else if(this.searchform.importFileRecordName=='否'){
-            this.searchform.importFileRecordId='0';
+        if(this.searchform.year!=''){
+            this.$http
+                .post(
+                    "/api/statistics/Season/detail/findByYears",
+                    this.searchform
+                )
+                .then((res) => {
+                    this.tableData = res.data.data;
+                });
+        }else {
+            this.$message.info("请选择年份进行查询！");
           }
-        }*/
-        this.$http
-          .post(
-            "/api/statistics/Season/detail/findByYears",
-            this.searchform
-          )
-          .then((res) => {
-          this.tableData = res.data.data;
-      });
+
       },
     },
     created() {
