@@ -1,16 +1,6 @@
 <!--项目部月报详情-->
 <template>
   <div style="position: relative">
-<!--    <el-collapse value="projectInfo">
-      <el-collapse-item title="项目信息" name="projectInfo">
-        <template slot="title">
-          <i class="header-icon el-icon-collection"></i>项目信息
-        </template>
-        <div>项目名称：<span style="color:#0a469d !important;margin-right: 50px;">{{projectName}}</span></div>
-      </el-collapse-item>
-    </el-collapse>
-
--->
       <div style="margin-top: 9px;color: red;position: absolute;top: 1px;right: 279px;z-index: 999999999;font-size: 15px;">项目名称：<span style="color: red !important;margin-right: 50px;">{{projectName}}</span></div>
       <el-button v-if="isCk!='1'" @click="save" type="primary"  class="detailbutton detail-back-tab" style="float: left; margin-right: 185px;"plain>保存</el-button>
       <el-button v-if="isCk!='1'" @click="submit" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>
@@ -37,26 +27,79 @@
                 </el-form-item>
               <div>
               <el-form-item
-                label="本月计划:"
+                label="本月备注:"
               ><el-input  :disabled="isCk=='1'" v-model="dataReport.thisPlan" type="textarea" ></el-input>
               </el-form-item>
               </div>
-                <div>
+                <!--<div>
                 <el-form-item
                   label="完成情况:"
                 ><el-input :disabled="isCk=='1'" v-model="dataReport.finishedPlan" type="textarea" ></el-input>
                 </el-form-item>
-                </div>
+                </div>-->
                  <div>
                  <el-form-item
-                  label="下月计划:"
+                  label="上月备注:"
                 ><el-input :disabled="isCk=='1'" v-model="dataReport.nextPlan" type="textarea" ></el-input>
                 </el-form-item>
                 </div>
+              <p>
+                <span>上传附件: </span>
+                <el-button
+                  class="detatil-flie-btn"
+                  size="small"
+                  type="primary"
+                  @click="openFileUp('/api/statistics/projectCheck/CommonFiles/projectCheck/01/uploadFile','fileList')">
+                  点击上传
+                </el-button>
+              </p>
+              <el-table
+                :data="commonFilesList"
+                :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+                @selection-change="handleSelectionChange"
+                align="center"
+                border
+                class="detailTable"
+                ref="table"
+                style="width: 100%;height: auto;"
+              >
+                <el-table-column
+                  :width="55"
+                  align="center"
+                  label="序号"
+                  show-overflow-tooltip
+                  type="index"
+                ></el-table-column>
+                <el-table-column align="center"  :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+
+                </el-table-column>
+
+                <el-table-column align="center" width="200" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    {{(scope.row.fileSize/1024).toFixed(2)}}
+                  </template>
+                </el-table-column>
+                <el-table-column align="center" width="100" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+
+                </el-table-column>
+
+                <el-table-column
+                  align="center"
+                  :resizable="false"
+                  fixed="right"
+                  label="操作"
+                  show-overflow-tooltip
+                  width="80"
+                >
+                  <template slot-scope="scope">
+                    <el-link :underline="false" @click="handleRemove1(scope.row,scope.$index)" type="warning">删除</el-link>
+                  </template>
+                </el-table-column>
+              </el-table>
             </el-form>
               </div>
            </el-tab-pane>
-         <el-tab-pane label="产物及实物工程量" name="cwjswgcl">
+         <el-tab-pane label="产值(验工计价)" name="cwjswgcl">
             <div class="detailBoxBG">
              <el-table
                     class="tableStyle"
@@ -104,49 +147,66 @@
                         <div>{{scope.row.jldw}}</div>
                       </template>
                     </el-table-column>
+                     <el-table-column
+                       :width="150"
+                       align="center"
+                       label="本月计划"
+                       show-overflow-tooltip
+                     >
+                       <template slot-scope="scope">
+                         <div>{{scope.row.monthPlan}}</div>
+                       </template>
+                     </el-table-column>
                     <el-table-column
                       :width="150"
                       align="center"
-                      label="本月完成"
+                      label="本月合计"
                       show-overflow-tooltip
                     >
                       <template slot-scope="scope">
-                       <!-- <div>{{scope.row.monthValue}}</div>-->
-                        <div v-if="scope.row.veditable == '1' && isCk!='1' ">
-                          <el-input v-model="scope.row.monthValue" @input="scope.row.value = scope.row.monthValue.replace(/[^\-?\d.]/g,'','')" @blur="getYear(data,scope.$index,scope.row.sumTarget)"/>
-                        </div>
-
-                       <!-- <div v-else-if="projectStatus != '2' " style="text-align: right">{{sumCount(scope.row)}}</div>-->
-                        <div  v-if="scope.row.veditable != '1'">{{scope.row.monthValue}}</div>
+                       {{scope.row.monthValue}}
                       </template>
                     </el-table-column>
                    <el-table-column
                      :width="150"
                      align="center"
-                     label="本月计划"
+                     label="本月计价额"
                      show-overflow-tooltip
                    >
                      <template slot-scope="scope">
-                       <div>{{scope.row.monthPlan}}</div>
+                       <div v-if="scope.row.veditable == '1' && isCk!='1' ">
+                         <el-input v-model="scope.row.valuationFee" @input="scope.row.value = scope.row.valuationFee.replace(/[^\-?\d.]/g,'','')" @blur="getYear(data,scope.$index,scope.row.sumTarget)"/>
+                       </div>
+                       <div  v-if="scope.row.veditable != '1'">{{scope.row.valuationFee}}</div>
                      </template>
                    </el-table-column>
                    <el-table-column
                      :width="150"
                      align="center"
-                     label="本月%"
+                     label="本月税额"
+                     show-overflow-tooltip
+                   >
+                 <template slot-scope="scope">
+                   <div v-if="scope.row.veditable == '1' && isCk!='1' ">
+                     <el-input v-model="scope.row.taxFee"  @input="scope.row.value = scope.row.taxFee.replace(/[^\-?\d.]/g,'','')" @blur="getYearSe(data,scope.$index,scope.row.sumTarget)"/>
+                   </div>
+                   <div  v-if="scope.row.veditable != '1'">{{scope.row.taxFee}}</div>
+                 </template>
+               </el-table-column>
+                   <el-table-column
+                     :width="150"
+                     align="center"
+                     label="本年计划"
                      show-overflow-tooltip
                    >
                      <template slot-scope="scope">
-                       <div v-if="scope.row.monthPlan && scope.row.monthValue">{{Math.round(scope.row.monthPlan /scope.row.monthValue) / 100+"%"}}
-                       </div>
-                       <div v-if="scope.row.monthRate!=null">{{scope.row.monthRate+"%"}}
-                       </div>
+                       <div>{{scope.row.yearPlan}}</div>
                      </template>
                    </el-table-column>
                    <el-table-column
                      :width="150"
                      align="center"
-                     label="本年完成"
+                     label="本年合计"
                      show-overflow-tooltip
                    >
                      <template slot-scope="scope">
@@ -157,11 +217,23 @@
                    <el-table-column
                      :width="150"
                      align="center"
-                     label="本年计划"
+                     label="本年计价额"
                      show-overflow-tooltip
                    >
                      <template slot-scope="scope">
-                       <div>{{scope.row.yearPlan}}</div>
+                       <div>{{scope.row.yearValuationFee}}</div>
+                       <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
+                     </template>
+                   </el-table-column>
+                   <el-table-column
+                     :width="150"
+                     align="center"
+                     label="本年税额"
+                     show-overflow-tooltip
+                   >
+                     <template slot-scope="scope">
+                       <div>{{scope.row.yearTaxFee}}</div>
+                       <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
                      </template>
                    </el-table-column>
                    <el-table-column
@@ -180,7 +252,17 @@
                <el-table-column
                  :width="150"
                  align="center"
-                 label="开累完成"
+                 label="总设计量"
+                 show-overflow-tooltip
+               >
+                 <template slot-scope="scope">
+                   <div>{{scope.row.totalPlan}}</div>
+                 </template>
+               </el-table-column>
+               <el-table-column
+                 :width="150"
+                 align="center"
+                 label="开累合计"
                  show-overflow-tooltip
                >
                  <template slot-scope="scope">
@@ -190,11 +272,21 @@
                <el-table-column
                  :width="150"
                  align="center"
-                 label="开累计划"
+                 label="开累计价额"
                  show-overflow-tooltip
                >
                  <template slot-scope="scope">
-                   <div>{{scope.row.totalPlan}}</div>
+                   <div>{{scope.row.totalValuationFee}}</div>
+                 </template>
+               </el-table-column>
+               <el-table-column
+                 :width="150"
+                 align="center"
+                 label="开累税额"
+                 show-overflow-tooltip
+               >
+                 <template slot-scope="scope">
+                   <div>{{scope.row.totalTaxFee}}</div>
                  </template>
                </el-table-column>
                <el-table-column
@@ -213,84 +305,21 @@
                   </el-table>
            </div>
         </el-tab-pane>
-        <el-tab-pane label="下月计划" name="xyjh">
-            <div class="detailBoxBG">
-              <el-table
-                class="tableStyle"
-                :max-height="$tableHeight"
-                :height="$tableHeight"
-                :data="nextData"
-                :header-cell-style="{
-                    'text-align': 'center',
-                    'background-color': 'whitesmoke'
-                  }"
-                border
-                highlight-current-row
-                ref="table"
-                style="width: 100%"
-
-                tooltip-effect="dark"
-              >
-                <el-table-column
-                  :width="50"
-                  align="center"
-                  label="序号"
-                  show-overflow-tooltip
-                  type="index"
-                ></el-table-column>
-                <el-table-column
-                  :width="250"
-                  align="left"
-                  label="统计项名称"
-                  show-overflow-tooltip
-                >
-                  <template slot-scope="scope">
-                    <div :class="vnameMarginLeft(scope.row.tjxCode,scope.row.veditable)">{{scope.row.tjxName}}</div>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  :width="90"
-                  align="center"
-                  prop="jldw"
-                  label="计量单位"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-
-                <el-table-column
-                  :width="150"
-                  align="center"
-                  label="计划"
-                  show-overflow-tooltip
-                >
-                  <template slot-scope="scope">
-                    <div v-if="scope.row.veditable === '1'&& isCk!='1'">
-                      <el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')" @blur="getNextPlanYear(nextData,scope.$index,scope.row.sumTarget)"/>
-                    </div>
-<!--                    <div v-else-if="projectStatus !== '2' " style="text-align: right">{{sumCount(scope.row)}}</div>-->
-                    <div v-else>{{scope.row.value}}</div>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  :width="400"
-                  align="center"
-                  label=""
-                ></el-table-column>
-              </el-table>
-           </div>
-         </el-tab-pane>
-         <el-tab-pane label="流程查看" name="lcjh">
+         <!--<el-tab-pane label="流程查看" name="lcjh">
              <div class="detailBoxBG">
             </div>
-         </el-tab-pane>
+         </el-tab-pane>-->
           </el-tabs>
+    <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
     </div>
 </template>
 
 <script>
+  import FileUpload from '@/components/fileUpload'
   export default {
     name: 'reportM-all-detail',
     components: {
+      FileUpload
     },
     data() {
       return {
@@ -298,6 +327,8 @@
         data:[],
         dataReport:{
         },
+        commonFilesList:[],
+        uploadVisible:false,//上传附件组件状态
         nextData:[],
         yearDateS:'',
         activeName:"ztjd",
@@ -305,9 +336,8 @@
         proNameHover: false,
         projectName: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectName,
         isCk:JSON.parse(this.$utils.decrypt(this.$route.query.mList)).isCk,
-        projectreport: {},
-        projectreportDetaiList: [],
-        planPrjTjxDetailList: [],
+        projectcheck: {},
+        tjxDetailList:[],
         projectStatus: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectStatus,
       }
     },
@@ -332,45 +362,65 @@
           return vnameClass
         }
       }
-     /* ,
-      sumCount () {
-        return (rowData) => {
-          // console.log('this.data.map(row => row.value)' + rowData.uuid, this.data.map(row => row.value))
-          var bb = []
-          for (var i in this.data.map(row => row.value)) {
-            if (this.data.map(row => row.value)[i] && this.data.map(row => row.sumTarget)[i] === rowData.uuid) {
-              bb.push(this.data.map(row => row.value)[i])
-            }
-          }
-          // + (rowData.value.value === '' ? 0 : parseFloat(rowData.value.value))
-          return (bb.reduce((acc, cur) => (parseFloat(cur) + acc), 0) === 0 ? '' : bb.reduce((acc, cur) => (parseFloat(cur) + acc), 0))
-        }
-      }*/
     },
     methods: {
-      //设置当年的完成值
+      //设置当月额度，计算计价额
       getYear(list,index,code){
         var num=0;
         var num1=0;
         var num2=0;
-        list[index].yearValue=list[index].oldYearValue?Number(list[index].oldYearValue)+Number(list[index].monthValue):list[index].monthValue;
-        list[index].totalValue=list[index].oldTotalValue?Number(list[index].oldTotalValue)+Number(list[index].monthValue):list[index].monthValue;
+        var num3=0;
+        list[index].yearValuationFee=list[index].oldYearJje?Number(list[index].oldYearJje)+Number(list[index].valuationFee):list[index].valuationFee;
+        list[index].totalValuationFee=list[index].oldTotalJje?Number(list[index].oldTotalJje)+Number(list[index].valuationFee):list[index].valuationFee;
         list[index].yearRate=Math.round(list[index].yearPlan /list[index].yearValue) / 100;
         list[index].monthRate=Math.round(list[index].monthPlan /list[index].monthValue) / 100;
         list[index].totalRate=Math.round(list[index].totalPlan /list[index].totalValue) / 100;
         console.log(list[index])
         list.forEach((item,i)=>{
           if(item.sumTarget==code) {
-            num= Number(item.monthValue)+num;
-            num1=Number(item.yearValue)+num1;
-            num2=Number(item.totalValue)+num2;
+            num= Number(item.valuationFee)+num;
+            num1=Number(item.yearValuationFee)+num1;
+            num2=Number(item.totalValuationFee)+num2;
           }
         });
         this.data.forEach((item,i)=>{
           if(item.tjxId==list[index].sumTarget){
-            item.monthValue=num;
-            item.yearValue=num1;
-            item.totalValue=num2;
+            item.valuationFee=num;
+            item.yearValuationFee=num1;
+            item.totalValuationFee=num2;
+            item.monthValue=item.valuationFee+item.taxFee;
+            item.yearValue=item.yearValuationFee+item.yearTaxFee;
+            item.totalValue=item.totalValuationFee+item.totalTaxFee;
+          }
+        });
+      },
+      //设置当月额度，计算税额
+      getYearSe(list,index,code){
+        var num=0;
+        var num1=0;
+        var num2=0;
+        var num3=0;
+        list[index].yearTaxFee=list[index].oldYearSe?Number(list[index].oldYearSe)+Number(list[index].taxFee):list[index].taxFee;
+        list[index].totalTaxFee=list[index].oldTotalSe?Number(list[index].oldTotalSe)+Number(list[index].taxFee):list[index].taxFee;
+        list[index].yearRate=Math.round(list[index].yearPlan /list[index].yearValue) / 100;
+        list[index].monthRate=Math.round(list[index].monthPlan /list[index].monthValue) / 100;
+        list[index].totalRate=Math.round(list[index].totalPlan /list[index].totalValue) / 100;
+        console.log(list[index])
+        list.forEach((item,i)=>{
+          if(item.sumTarget==code) {
+            num= Number(item.taxFee)+num;
+            num1=Number(item.yearTaxFee)+num1;
+            num2=Number(item.totalTaxFee)+num2;
+          }
+        });
+        this.data.forEach((item,i)=>{
+          if(item.tjxId==list[index].sumTarget){
+            item.taxFee=num;
+            item.yearTaxFee=num1;
+            item.totalTaxFee=num2;
+            item.monthValue=item.valuationFee+item.taxFee;
+            item.yearValue=item.yearValuationFee+item.yearTaxFee;
+            item.totalValue=item.totalValuationFee+item.totalTaxFee;
           }
         });
       },
@@ -378,16 +428,16 @@
       save() {
         this.dataReport.status="1"
           let tableData = {
-            projectReportDetaiList:this.data,
-            projectreport:this.dataReport,
-            planPrjTjxDetailList:this.nextData
+            tjxDetailList:this.data,
+            projectcheck:this.dataReport,
+            commonFilesList:this.commonFilesList,
           }
           this.$http
-            .post('/api/statistics/projectMonthlyReport/Projectreport/detail/saveOrUpdate', JSON.stringify(tableData), {useJson: true})
+            .post('/api/statistics/Projectcheck/detail/saveOrUpdate', JSON.stringify(tableData), {useJson: true})
             .then(res => {
               if (res.data.code === 200) {
                 this.$message({
-                  message: '暂存成功',
+                  message: '保存成功',
                   duration: 1000,
                   type: 'success',
                   onClose: () => { this.$router.back() }
@@ -421,15 +471,27 @@
           }
         });
       },
+      //打开附件上传的组件
+      openFileUp(url,list){
+        this.uploadVisible = true;
+        this.$nextTick(() => {
+          this.$refs.infoUp.init(url,list);
+        })
+      },
+      //获取上传的附件列表
+      getUpInfo(data){
+        this.$forceUpdate();
+        this.dataReport[data.list]=this.dataReport[data.list].concat(data.fileList);
+        this.uploadVisible = false;
+      },
       submit() {
         this.dataReport.status="2"
         let tableData = {
-          projectReportDetaiList:this.data,
-          projectreport:this.dataReport,
-          planPrjTjxDetailList:this.nextData
+          tjxDetailList:this.data,
+          projectcheck:this.dataReport
         }
           this.$http
-            .post('/api/statistics/projectMonthlyReport/Projectreport/detail/saveOrUpdate', JSON.stringify(tableData), {useJson: true})
+            .post('/api/statistics/Projectcheck/detail/saveOrUpdate', JSON.stringify(tableData), {useJson: true})
             .then(res => {
               if (res.data.code === 200) {
                 this.$message({
@@ -441,27 +503,17 @@
               }
             })
       },
-  /*    rollback() {
-        this.$http
-          .post('/api/statistics/PlanProjectTjx/detail/save', JSON.stringify({uuid: this.p.planInfo.planId, status: 0}), {useJson: true})
-          .then(res => {
-            if (res.data.code === 200) {
-              this.$message({
-                message: '回退成功',
-                duration: 1000,
-                onClose: () => { this.$router.back() }
-              })
-            }
-          })
-      },*/
       // 返回上一页
       back() {
         this.$router.back()
       },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
       // 获取数据
       getData() {
         this.$http
-          .post('/api/statistics/projectMonthlyReport/Projectreport/detail/queryMonthReportEntityInfo', JSON.stringify({
+          .post('/api/statistics/Projectcheck/detail/queryEntityInfoDetail', JSON.stringify({
             projectId: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectId,
             uuid: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).uuid,
             reportYear: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportYear,
@@ -469,12 +521,10 @@
             createOrgCode: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).orgCode
           }), {useJson: true})
           .then(res => {
-            this.data = res.data.data.projectReportDetaiList
-            this.dataReport=res.data.data.projectreport
+            this.data = res.data.data.tjxDetailList
+            this.dataReport=res.data.data.projectcheck
             this.dataReport.yearDateS=this.dataReport.reportYear+"-"+this.dataReport.reportMonth
-            this.nextData=res.data.data.planPrjTjxDetailList
-            console.log('data', this.data)
-            // this.reportVo=this.data;
+            this.commonFilesList=res.data.data.commonFilesList
           })
       }
     },
