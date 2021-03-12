@@ -1,4 +1,4 @@
-<!--项目部月报详情-->
+<!--工程月报验工计价详情-->
 <template>
   <div style="position: relative">
       <div style="margin-top: 9px;color: red;position: absolute;top: 1px;right: 279px;z-index: 999999999;font-size: 15px;">项目名称：<span style="color: red !important;margin-right: 50px;">{{projectName}}</span></div>
@@ -372,9 +372,9 @@
         var num3=0;
         list[index].yearValuationFee=list[index].oldYearJje?Number(list[index].oldYearJje)+Number(list[index].valuationFee):list[index].valuationFee;
         list[index].totalValuationFee=list[index].oldTotalJje?Number(list[index].oldTotalJje)+Number(list[index].valuationFee):list[index].valuationFee;
-        list[index].yearRate=Math.round(list[index].yearPlan /list[index].yearValue) / 100;
-        list[index].monthRate=Math.round(list[index].monthPlan /list[index].monthValue) / 100;
-        list[index].totalRate=Math.round(list[index].totalPlan /list[index].totalValue) / 100;
+        list[index].yearRate=Math.round(Number(list[index].yearPlan) /Number(list[index].yearValue)) / 100;
+        list[index].monthRate=Math.round(Number(list[index].monthPlan) /Number(list[index].monthValue)) / 100;
+        list[index].totalRate=Math.round(Number(list[index].totalPlan) /Number(list[index].totalValue)) / 100;
         console.log(list[index])
         list.forEach((item,i)=>{
           if(item.sumTarget==code) {
@@ -393,6 +393,11 @@
             item.totalValue=item.totalValuationFee+item.totalTaxFee;
           }
         });
+        this.data.forEach((item,i)=>{
+          item.monthValue=Number(item.valuationFee)+Number(item.taxFee);
+          item.yearValue=Number(item.yearValuationFee)+Number(item.yearTaxFee);
+          item.totalValue=Number(item.totalValuationFee)+Number(item.totalTaxFee);
+        });
       },
       //设置当月额度，计算税额
       getYearSe(list,index,code){
@@ -402,9 +407,9 @@
         var num3=0;
         list[index].yearTaxFee=list[index].oldYearSe?Number(list[index].oldYearSe)+Number(list[index].taxFee):list[index].taxFee;
         list[index].totalTaxFee=list[index].oldTotalSe?Number(list[index].oldTotalSe)+Number(list[index].taxFee):list[index].taxFee;
-        list[index].yearRate=Math.round(list[index].yearPlan /list[index].yearValue) / 100;
-        list[index].monthRate=Math.round(list[index].monthPlan /list[index].monthValue) / 100;
-        list[index].totalRate=Math.round(list[index].totalPlan /list[index].totalValue) / 100;
+        list[index].yearRate=Math.round(Number(list[index].yearPlan) /Number(list[index].yearValue)) / 100;
+        list[index].monthRate=Math.round(Number(list[index].monthPlan) /Number(list[index].monthValue)) / 100;
+        list[index].totalRate=Math.round(Number(list[index].totalPlan) /Number(list[index].totalValue)) / 100;
         console.log(list[index])
         list.forEach((item,i)=>{
           if(item.sumTarget==code) {
@@ -423,10 +428,16 @@
             item.totalValue=item.totalValuationFee+item.totalTaxFee;
           }
         });
+        this.data.forEach((item,i)=>{
+          item.monthValue=Number(item.valuationFee)+Number(item.taxFee);
+          item.yearValue=Number(item.yearValuationFee)+Number(item.yearTaxFee);
+          item.totalValue=Number(item.totalValuationFee)+Number(item.totalTaxFee);
+        });
       },
       // 保存
       save() {
         this.dataReport.status="1"
+        this.commonFilesList.businessId=this.dataReport.uuid
           let tableData = {
             tjxDetailList:this.data,
             projectcheck:this.dataReport,
@@ -481,14 +492,16 @@
       //获取上传的附件列表
       getUpInfo(data){
         this.$forceUpdate();
-        this.dataReport[data.list]=this.dataReport[data.list].concat(data.fileList);
+        this.commonFilesList=data.fileList;
         this.uploadVisible = false;
       },
       submit() {
         this.dataReport.status="2"
+        this.commonFilesList.businessId=this.dataReport.uuid
         let tableData = {
           tjxDetailList:this.data,
-          projectcheck:this.dataReport
+          projectcheck:this.dataReport,
+          commonFilesList:this.commonFilesList
         }
           this.$http
             .post('/api/statistics/Projectcheck/detail/saveOrUpdate', JSON.stringify(tableData), {useJson: true})
@@ -502,6 +515,19 @@
                 })
               }
             })
+      },
+      handleRemove1(file,index) {
+        this.$http
+            .post(
+                "/api/statistics/projectCheck/CommonFiles/list/delete",
+                {ids:[file.uuid]},
+            )
+            .then((res) => {
+              if (res.data.code === 200) {
+                this.commonFilesList.splice(index,1);
+              }
+
+            });
       },
       // 返回上一页
       back() {

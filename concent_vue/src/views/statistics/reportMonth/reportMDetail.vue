@@ -355,9 +355,9 @@
         var num2=0;
         list[index].yearValue=list[index].oldYearValue?Number(list[index].oldYearValue)+Number(list[index].monthValue):list[index].monthValue;
         list[index].totalValue=list[index].oldTotalValue?Number(list[index].oldTotalValue)+Number(list[index].monthValue):list[index].monthValue;
-        list[index].yearRate=Math.round(list[index].yearPlan /list[index].yearValue) / 100;
-        list[index].monthRate=Math.round(list[index].monthPlan /list[index].monthValue) / 100;
-        list[index].totalRate=Math.round(list[index].totalPlan /list[index].totalValue) / 100;
+        list[index].yearRate=Math.round(Number(list[index].yearPlan) /Number(list[index].yearValue)) / 100;
+        list[index].monthRate=Math.round(Number(list[index].monthPlan) /Number(list[index].monthValue)) / 100;
+        list[index].totalRate=Math.round(Number(list[index].totalPlan) /Number(list[index].totalValue)) / 100;
         console.log(list[index])
         list.forEach((item,i)=>{
           if(item.sumTarget==code) {

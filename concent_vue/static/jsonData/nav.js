@@ -1351,6 +1351,23 @@ export default {
                   'menushow': false,
                   'leaf': true,
                   'defaultpage': false
+                },
+                {
+                  'name': '公司月报(自揽)',
+                  'path': '/statistics/projectCheck/companyMList',
+                  'component': '/statistics/projectCheck/companyMList',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '公司月报(自揽)详情',
+                  'path': '/statistics/projectCheck/companyMDetail',
+                  'component': '/statistics/projectCheck/companyMDetail',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': false,
+                  'leaf': true
                 }
               ]
             },
