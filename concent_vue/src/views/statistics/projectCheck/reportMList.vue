@@ -308,7 +308,7 @@
             }
           };
         }
-        var url = ''
+        var url = '/api/statistics/Projectcheck/detail/entityInfoByPrjCheck'
         var params = {}
         params.projectId = JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectId
         params.createOrgCode =JSON.parse(this.$utils.decrypt(this.$route.query.mList)).orgCode
@@ -323,9 +323,9 @@
        ).then((res) => {
             if (res.data.code === 200) {
             this.showYMDialog = false
-              let mList = {projectId:res.data.data.projectreport.projectId,uuid:res.data.data.projectreport.uuid,
-                fillDate:res.data.data.projectreport.fillDate,orgCode:res.data.data.projectreport.createOrgCode,
-                projectName:res.data.data.projectreport.reportProjectName,projectStatus:res.data.data.projectreport.status
+              let mList = {projectId:res.data.data.projectcheck.projectId,uuid:res.data.data.projectcheck.uuid,
+                fillDate:res.data.data.projectcheck.fillDate,orgCode:res.data.data.projectcheck.createOrgCode,
+                projectName:res.data.data.projectcheck.reportProjectName,projectStatus:res.data.data.projectcheck.status
               }
                 this.$router.push({
                       path: '../reportMDetail/',
@@ -392,7 +392,7 @@
         }).then(() => {
           this.$http
             .post(
-              '/api/statistics/projectMonthlyReport/Projectreport/list/delete',
+              '/api/statistics/Projectcheck/list/delete',
               { ids: uuids }
             )
             .then((res) => {
