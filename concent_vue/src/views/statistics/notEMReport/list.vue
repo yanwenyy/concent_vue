@@ -267,7 +267,7 @@
       // 修改
       totop() {
         if (this.multipleSelection.length !== 1) {
-          this.$message.info("请选择一条记录进行查看操作！");
+          this.$message.info("请选择一条记录进行修改操作！");
           return false;
         }
         // if(this.multipleSelection[0].flowStatus=='2'||this.multipleSelection[0].flowStatus=='3'){
@@ -283,7 +283,8 @@
       },
       // 查看
       rowshow(row) {
-        let p = {actpoint: "look", instid: row.topOrgId};
+        console.log(row)
+        let p = {actpoint: "look", reportUuid: row.uuid,reportDate: row.reportDate,stauts:row.stauts};
         this.$router.push({
           path: "./detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
@@ -389,11 +390,11 @@
       },
     },
     created() {
-      this.getData();
       //获取当前月份
       var sj=new Date().toLocaleDateString().split('/');
       sj[1]=sj[1]<10?'0'+sj[1]:sj[1];
       this.searchform.reportDate=sj[0]+"-"+sj[1];
+      this.getData();
     },
   };
 </script>
