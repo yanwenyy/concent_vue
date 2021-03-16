@@ -1296,7 +1296,8 @@ export default {
                   'menushow': true,
                   'leaf': true,
                   'defaultpage': false
-                },
+                }
+       /*         ,
                 {
                   'name': '项目月报批量提交',
                   'path': '/statistics/reportMonth/reportMCommit',
@@ -1305,7 +1306,7 @@ export default {
                   'menushow': true,
                   'leaf': true,
                   'defaultpage': false
-                }
+                }*/
               ]
             },
             {
@@ -1365,6 +1366,15 @@ export default {
                   'name': '公司月报(工区)',
                   'path': '/statistics/projectCheck/companyMgList',
                   'component': '/statistics/projectCheck/companyMgList',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '上报截止日期',
+                  'path': '/statistics/projectCheck/reportEndDate',
+                  'component': '/statistics/projectCheck/reportEndDate',
                   'iconCls': 'el-icon-office-building',
                   'menushow': true,
                   'leaf': true,

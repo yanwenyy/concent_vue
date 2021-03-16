@@ -211,13 +211,13 @@
               :width="150"
               align="center"
               label="本月上报"
-              prop="status"
+              prop="flowStatus"
               show-overflow-tooltip
             >
               <template slot="header" slot-scope="scope">
                 <span>本月上报</span>
                 <div>
-                  <el-input style=" width: 100%" v-model="searchform.status" size="mini"/>
+                  <el-input style=" width: 100%" v-model="searchform.flowStatus" size="mini"/>
                 </div>
               </template>
             </el-table-column>
@@ -270,7 +270,7 @@
         menus: [],
         multipleSelection: [],
         orgTree: [],
-        status:'未上报',
+        flowStatus:'未上报',
       }
     },
     computed: {

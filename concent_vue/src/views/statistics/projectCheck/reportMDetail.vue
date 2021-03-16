@@ -437,6 +437,7 @@
       // 保存
       save() {
         this.dataReport.status="1"
+        this.dataReport.flowStatus="1"
         this.commonFilesList.businessId=this.dataReport.uuid
           let tableData = {
             tjxDetailList:this.data,
@@ -496,7 +497,8 @@
         this.uploadVisible = false;
       },
       submit() {
-        this.dataReport.status="2"
+        this.dataReport.status="1"
+        this.dataReport.flowStatus="2"
         this.commonFilesList.businessId=this.dataReport.uuid
         let tableData = {
           tjxDetailList:this.data,

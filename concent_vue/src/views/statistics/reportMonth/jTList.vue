@@ -14,7 +14,7 @@
         <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>创建</el-button>
         <el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
         <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
-        <el-button @click="summary" type="primary" plain>重新汇总</el-button>
+        <el-button @click="summary" type="primary" plain><i class="el-icon-coin"></i>重新汇总</el-button>
       </el-button-group>
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
@@ -403,7 +403,7 @@
         }
         let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          if(item.createOrgCode==this.userdata.managerOrgCode && (item.flowStatus=='1'||item.flowStatus!=''|| item.status!=null)){
+          if(item.createOrgCode==this.userdata.managerOrgCode && (item.flowStatus=='1'||item.flowStatus!=''|| item.flowStatus!=null)){
             uuids.push(item.uuid);
           }else{
           this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
@@ -439,7 +439,7 @@
           this.$message.info("只能选择一条记录！");
           return false;
         }
-        this.multipleSelection[0].status='2'
+        this.multipleSelection[0].status='3'//集团创建
         this.multipleSelection[0].flowStatus='1'
         this.multipleSelection[0].projectId=this.multipleSelection[0].createOrgId
         this.multipleSelection[0].reportYear= this.searchform.yearDateS.split("-")[0]

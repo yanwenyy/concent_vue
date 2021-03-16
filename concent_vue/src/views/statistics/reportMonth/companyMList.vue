@@ -13,7 +13,7 @@
         <el-button @click="del"
                    type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
         <el-button @click="batchT"
-                   type="primary" plain>未上报批量填0</el-button>
+                   type="primary" plain><i class="el-icon-thumb"></i>未上报批量填0</el-button>
       <!--  <el-button @click="searchformReset"
                    type="info" plain
                    style="color:black;background:none">
@@ -369,7 +369,7 @@
         params.reportYear=this.searchform.yearDateS.split("-")[0];
         params.reportMonth=this.searchform.yearDateS.split("-")[1];
         params.reportType='1';
-        params.status='1'
+        params.status='2'
         params.flowStatus="1"
         this.$http.post(
             url,
@@ -442,7 +442,7 @@
         this.multipleSelection.forEach((item) => {
           let a=this.userdata.managerOrgId;
           if(item.projectId==this.userdata.managerOrgId){
-            if(item.flowStatus!='1'&&item.status!=null){
+            if(item.flowStatus!='1'&&item.flowStatus!=null){
             this.$message.info('只允许删除未上报的数据！')
             return itemStatus=false
             }else{
