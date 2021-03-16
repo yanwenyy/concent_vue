@@ -2,16 +2,6 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-form class="search-form" :inline="true" :model="searchform" @keyup.enter.native="init()">
-      <!--  <el-form-item label="季度:">
-          <el-select v-model="searchform.month" placeholder="请选择">
-            <el-option
-              v-for="(item,index) in 4"
-              :key="index"
-              :label="item"
-              :value="item">
-            </el-option>
-          </el-select>
-        </el-form-item>-->
       </el-form>
       <el-button-group style="float: left">
         <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>创建</el-button>
@@ -21,7 +11,6 @@
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
         <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
-        <!-- <el-button @click="Importdata" type="primary" plain>导入</el-button> -->
       </div>
     </div>
 
@@ -71,9 +60,6 @@
               />
             </div>
           </template>
-          <!--<template slot-scope="scope">-->
-          <!--<span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>-->
-          <!--</template>-->
         </el-table-column>
         <el-table-column
           :width="200"
@@ -89,6 +75,7 @@
                 v-model="searchform.year"
                 value-format="yyyy"
                 type="year"
+
                 placeholder="选择年"
               size="mini"
               style="width: 60%">
@@ -108,11 +95,12 @@
           :width="200"
           align="center"
           label="审核状态"
-          prop="status"
+          prop="flowStatus"
           show-overflow-tooltip
 
         >
           <template slot="header" slot-scope="scope">
+            {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':scope.row.flowStatus==5?'未创建':scope.row.flowStatus==null?'待登记':'其他'}}
             <span>审核状态</span>
             <div>
               <el-select
@@ -161,6 +149,8 @@
           createTime: "",
           auditDate: "",
           year:"",
+          uuid:"",
+          season:{},
         },
         menus: [],
         multipleSelection: [],
@@ -182,7 +172,10 @@
           {
             detailName:"审核驳回",
             id:'4'
-          }
+          },{
+            detailName:"未创建",
+            id:'5'
+            }
         ]
       };
     },
@@ -201,20 +194,42 @@
               this.$message.info("请选择一条记录进行创建操作！");
               return false;
           }
-        let p = {actpoint: "add"};
+          if(this.multipleSelection[0].uuid!=null){
+              this.$message.info("该填报下已有相应的该季度的季报数据，无法创建新的填报记录");
+              return false;
+      }
+          this.$http
+              .post(
+                  "/api/statistics/Season/detail/createSeasonTable",
+                  JSON.stringify(this.multipleSelection[0]),
+                  {useJson: true,isLoading:false}
+              )
+              .then((res)=>{
+                  var datas=res.data.data;
+                  console.log(datas);
+                  if(datas.isExist=="0"){
+                      this.$message.info("该填报下已有相应的该季度的季报数据，无法创建新的填报记录");
+                  }else{
+                      let p = {actpoint: "add",season:datas};
+                      this.$router.push({
+                          path: "./detail/",
+                          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+                      });
+                  }
+          })
+      /*  let p = {actpoint: "add",yData:this.multipleSelection[0]};
+          if(type=='save'){
+              url="/api/statistics/Season/detail/createSeasonTable"
+          }
         this.$router.push({
           path: "./detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
+        });*/
       },
       // 修改
       totop() {
         if (this.multipleSelection.length !== 1) {
           this.$message.info("请选择一条记录进行查看操作！");
-          return false;
-        }
-        if(this.multipleSelection[0].flowStatus=='2'||this.multipleSelection[0].flowStatus=='3'){
-          this.$message.info("此条数据不可修改！");
           return false;
         }
         let p = {actpoint: "edit", instid: this.multipleSelection[0].uuid};
@@ -298,8 +313,7 @@
       },
       // 查询
       getData() {
-        if(this.searchform.year!=''){
-            this.$http
+          this.$http
                 .post(
                     "/api/statistics/Season/detail/findByYears",
                     this.searchform
@@ -307,14 +321,14 @@
                 .then((res) => {
                     this.tableData = res.data.data;
                 });
-        }else {
-            this.$message.info("请选择年份进行查询！");
-          }
-
       },
     },
     created() {
-      // this.getData();
+        this.getData();
+        //获取当前年份
+        var sj=new Date().toLocaleDateString().split('/');
+        sj[1]=sj[1]<10?'0'+sj[1]:sj[1];
+        this.searchform.year=sj[0];
     },
   };
 </script>

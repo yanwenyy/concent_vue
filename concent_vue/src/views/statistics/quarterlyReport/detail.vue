@@ -3095,18 +3095,7 @@
         }else{
           //url="/api/contract/topInfo/TopInfor/process/start"
         }
-        var topInforCapitalList = [];
-        this.amountSource.forEach((item) => {
-          if (this.detailform.value1&&this.detailform.value1.indexOf(item.id) != -1) {
-          var v = {
-            capitalId: item.id,
-            capitalName: item.detailName,
-          };
-          topInforCapitalList.push(v);
-        }
-      });
-
-        this.detailform.topInforCapitalList=topInforCapitalList;
+        this.detailform.season=this.p.season;
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
@@ -3174,7 +3163,7 @@
       //新增标段和地点
       add(type) {
         var v = {};
-        if (type == 'dd') {
+        if (type == 'add') {
           v = {
             country: '',
             ffid: '',
@@ -3203,6 +3192,7 @@
         this.$http
           .post("/api/statistics/Season/detail/entityInfo", {id:this.id})
           .then((res) => {
+              //debugger
           var datas=res.data.data;
 
         this.detailform={
@@ -3212,7 +3202,7 @@
             businessJnDetailMap:datas.businessJnDetailMap,
             financialDetail:datas.financialDetail,
             salaryDetail:datas.salaryDetail,
-            season:datas.season,
+            //season:JSON.parse(this.$utils.decrypt(this.$route.query.p)).season
         }
       });
       },
