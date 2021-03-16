@@ -7,11 +7,11 @@
         <!--   <el-button @click="searchformSubmit"
                       type="primary" plain>查询</el-button>-->
         <el-button @click="add"
-                   type="primary" plain>新增</el-button>
+                   type="primary" plain><i class="el-icon-plus"></i>新增</el-button>
         <el-button @click="edit"
-                   type="primary" plain>修改</el-button>
+                   type="primary" plain><i class="el-icon-edit"></i>修改</el-button>
         <el-button @click="del"
-                   type="primary" plain>删除</el-button>
+                   type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
         <el-button @click="batchT"
                    type="primary" plain>未上报批量填0</el-button>
         <!--  <el-button @click="searchformReset"
@@ -22,7 +22,7 @@
 
       </el-button-group>
       <div style="float: right;">
-        <el-button @click="searchformSubmit" type="primary" plain>查询</el-button>
+        <el-button @click="searchformSubmit" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
       </div>
     </div>
 
@@ -437,41 +437,43 @@
           this.$message.info('请选择一条记录进行删除操作！')
           return false
         }
-        let uuids = []
+        let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
           let a=this.userdata.managerOrgId;
           if(item.projectId==this.userdata.managerOrgId){
             if(item.status!='1'&&item.status!=null){
               this.$message.info('只允许删除未上报的数据！')
-              return false
+              return itemStatus=false
             }else{
               uuids.push(item.projectreportuuid);
-              this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-              }).then(() => {
-                this.$http
-                    .post(
-                        '/api/statistics/projectMonthlyReport/Projectreport/list/delete',
-                        { ids: uuids }
-                    )
-                    .then((res) => {
-                      if (res.data.code === 200) {
-                        this.getData()
-                      }else if(res.data.code === 400){
-
-                      }else{
-
-                      }
-
-                    })
-              }).catch(() => {
-              })
             }
           }else{
             this.$message.info('无权删除下级单位月报！')
-            return false
+            return itemStatus=false
+          }
+          if(itemStatus){
+            this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              this.$http
+                  .post(
+                      '/api/statistics/projectMonthlyReport/Projectreport/list/delete',
+                      { ids: uuids }
+                  )
+                  .then((res) => {
+                    if (res.data.code === 200) {
+                      this.getData()
+                    }else if(res.data.code === 400){
+
+                    }else{
+
+                    }
+
+                  })
+            }).catch(() => {
+            })
           }
         })
       },

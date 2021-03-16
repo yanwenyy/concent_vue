@@ -5,9 +5,9 @@
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
         <!--<el-button @click="add" type="primary" plain>新增</el-button>-->
-        <el-button  @click="showCfclAddDialog" type="primary" plain>新增</el-button>
-        <el-button @click="showCfclEditDialog" type="primary" plain>修改</el-button>
-        <el-button @click="del" type="primary" plain>删除</el-button>
+        <el-button  @click="showCfclAddDialog" type="primary" plain><i class="el-icon-plus"></i>新增</el-button>
+        <el-button @click="showCfclEditDialog" type="primary" plain><i class="el-icon-edit"></i>修改</el-button>
+        <el-button @click="del" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
       </el-button-group>
       <div style="float: right;">
         <el-button
@@ -17,7 +17,7 @@
           style="color:black;background:none">
           重置
         </el-button>
-        <el-button @click="searchformSubmit" type="primary" plain>查询</el-button>
+        <el-button @click="searchformSubmit" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
       </div>
     </div>
 

@@ -1255,14 +1255,6 @@ export default {
                   'defaultpage': false
                 },
                 {
-                  'name': '公司月报(工区)详情',
-                  'path': '/statistics/reportMonth/companyMgqDetail',
-                  'component': '/statistics/reportMonth/companyMgqDetail',
-                  'iconCls': 'el-icon-office-building',
-                  'menushow': false,
-                  'leaf': true
-                },
-                {
                   'name': '集团公司月报',
                   'path': '/statistics/reportMonth/jTList',
                   'component': '/statistics/reportMonth/jTList',
@@ -1368,6 +1360,15 @@ export default {
                   'iconCls': 'el-icon-office-building',
                   'menushow': false,
                   'leaf': true
+                },
+                {
+                  'name': '公司月报(工区)',
+                  'path': '/statistics/projectCheck/companyMgList',
+                  'component': '/statistics/projectCheck/companyMgList',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
                 }
               ]
             },

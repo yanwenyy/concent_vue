@@ -12,9 +12,9 @@
     </el-collapse>-->
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button  @click="add" type="primary" plain>新增</el-button>
-        <el-button @click="edit" type="primary" plain>修改</el-button>
-        <el-button @click="del" type="primary" plain>删除</el-button>
+        <el-button  @click="add" type="primary" plain><i class="el-icon-plus"></i>新增</el-button>
+        <el-button @click="edit" type="primary" plain><i class="el-icon-edit"></i>修改</el-button>
+        <el-button @click="del" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
       </el-button-group>
         <div style="float: left;margin: 4px auto;margin-left: 20px;"><span style="color: red;">项目名称：{{projectName}}</span></div>
       <div style="float: right;">
@@ -25,8 +25,8 @@
           style="color:black;background:none">
           重置
         </el-button>
-        <el-button @click="searchformSubmit" type="primary" plain>查询</el-button>
-        <el-button  @click="back" type="info"  style="color:black;background:none" plain>返回</el-button>
+        <el-button @click="searchformSubmit" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
+        <el-button  @click="back" type="info"  style="color:black;background:none" plain><i class="el-icon-search"></i>返回</el-button>
       </div>
     </div>
 
@@ -119,11 +119,11 @@
           :width="150"
           align="center"
           label="状态"
-          prop="status"
+          prop="flowStatus"
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-             {{scope.row.status==1?'草稿':scope.row.status==2?'审核中':scope.row.status==3?'审核通过':scope.row.status==4?'审核退回':'待登记'}}
+             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
           </template>
           <template slot="header" slot-scope="scope">
             <span>状态</span>
@@ -134,7 +134,7 @@
                 filterable
                 placeholder="请选择"
                 size="mini"
-                v-model="searchform.status"
+                v-model="searchform.flowStatus"
               >
                 <el-option
                   :key="index"
@@ -152,7 +152,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column
+      <!--  <el-table-column
           :width="150"
           align="center"
           label="批复状态"
@@ -165,7 +165,7 @@
               <el-input style=" width: 100%" v-model="searchform.pfStatus" size="mini"/>
             </div>
           </template>
-        </el-table-column>
+        </el-table-column>-->
       </el-table>
       <el-pagination
         :current-page="page.current"
@@ -318,6 +318,7 @@
         params.reportYear = years[0]
         params.reportMonth = years[1]
         params.status='1'
+        params.flowStatus='1'
        this.$http.post(
         url,
         JSON.stringify(params),
@@ -327,7 +328,7 @@
             this.showYMDialog = false
               let mList = {projectId:res.data.data.projectreport.projectId,uuid:res.data.data.projectreport.uuid,
                 fillDate:res.data.data.projectreport.fillDate,orgCode:res.data.data.projectreport.createOrgCode,
-                projectName:res.data.data.projectreport.reportProjectName,projectStatus:res.data.data.projectreport.status
+                projectName:res.data.data.projectreport.reportProjectName,projectStatus:res.data.data.projectreport.flowStatus
               }
                 this.$router.push({
                       path: '../reportMDetail/',
@@ -383,10 +384,16 @@
           this.$message.info('请选择一条记录进行删除操作！')
           return false
         }
-        let uuids = []
+        let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          uuids.push(item.uuid)
+          if(item.status<='1'){
+            uuids.push(item.uuid)}
+          else{
+            this.$message.info('只允许删除未上报的数据！')
+            return itemStatus=false;
+          }
         })
+        if(itemStatus){
         this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -401,7 +408,7 @@
               this.getData()
             })
         }).catch(() => {
-        })
+        })}
       },
       // 查看
       rowShow(row) {
@@ -452,8 +459,8 @@
           createUserId: '',
           createUserName: '',
           projectId:JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectId,
-          pfStatus:'',
           status:'',
+          flowStatus:'',
           reportProjectName:'',
           uuid:'',
           fillDate:'',
