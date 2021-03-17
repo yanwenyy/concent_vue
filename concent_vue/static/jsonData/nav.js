@@ -973,10 +973,19 @@ export default {
               'children': [
                 {
                   'name': '项目部上报',
-                  'path': '/statistics/plan/01-1',
-                  'component': '/statistics/plan/01-1',
+                  'path': '/statistics/annualPlan/projectReport',
+                  'component': '/statistics/annualPlan/projectReport',
                   'iconCls': 'el-icon-notebook-2',
                   'menushow': true,
+                  'leaf': false,
+                  'defaultpage': true
+                },
+                {
+                  'name': '项目部上报详情',
+                  'path': '/statistics/annualPlan/projectReportDetail',
+                  'component': '/statistics/annualPlan/projectReportDetail',
+                  'iconCls': 'el-icon-notebook-2',
+                  'menushow': false,
                   'leaf': true,
                   'defaultpage': false
                 },
@@ -1395,6 +1404,14 @@ export default {
                   'component': '/statistics/notEMReport/detail',
                   'iconCls': 'el-icon-reading',
                   'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                }, {
+                  'name': '新兴市场月报查询',
+                  'path': '/statistics/notEMReport/searchList',
+                  'component': '/statistics/notEMReport/searchList',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
                   'leaf': true,
                   'defaultpage': false
                 },
