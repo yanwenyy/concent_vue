@@ -3440,16 +3440,7 @@
     width: 32.5%!important;
     display: inline-block;
   }
-  .tabs-header-copy{
-    width: 99%;
-    height: 38px;
-    background-color: #F5F7FA;
-    border-bottom: 1px solid #E4E7ED;
-    margin: 0;
-    position: absolute;
-    top:2px;
-    right: 3px;
-  }
+
   >>>.el-tabs__header{
     width: 77%;
   }

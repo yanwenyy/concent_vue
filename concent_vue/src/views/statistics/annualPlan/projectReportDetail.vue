@@ -1,86 +1,272 @@
-<!--集团月报详情-->
 <template>
   <div style="position: relative">
-    <!--<el-button  @click="save" v-if="dataReport.status!='1'" type="primary"  class="detailbutton detail-back-tab" style="float: left; margin-right: 185px;"plain>保存</el-button>-->
-    <el-button  @click="submit" v-if="dataReport.status!='1'" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>
-    <el-button  @click="back" type="primary"  class="detailbutton detail-back-tab " plain>返回</el-button>
-    <el-tabs type="border-card" v-model="activeName">
-      <el-tab-pane v-if="projectList.uuid!=''&& projectList.uuid!=null" label="整体进度" name="ztjd">
+    <el-button @click="back" class="detailbutton detail-back-tab" >返回</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="saveInfo('detailform','save')" class="detailbutton detail-back-tab save-btn">保存</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||p.stauts==1||p.stauts==4)" @click="saveInfo('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
+    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
+    <!--<el-button v-show="p.actpoint == 'task'&&p.task.edit==true" @click="operation('recall')" class="detailbutton" type="danger">撤销</el-button>-->
+    <el-tabs type="border-card" >
+      <el-tab-pane label="项目部计划年报">
         <div class="detailBox">
           <el-form
             :inline="false"
-            :model="dataReport"
+            :model="detailform"
+            :rules="rules"
             class="gcform"
+            ref="detailform"
           >
-            <el-form-item
-              label="报表年月:"
-            ><el-input v-model="dataReport.yearDateS" disabled ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="所属单位:"
-            ><el-input v-model="dataReport.createOrgName" disabled></el-input>
-            </el-form-item>
+            <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+              <span>基础信息: </span>
+            </p>
             <el-form-item
               label="项目名称:"
             >
-              <div v-if="dataReport.reportProjectName==''">
-                <el-input v-model="dataReport.reportProjectName" disabled></el-input>
-              </div>
-              <div v-else>
-                <el-input v-model="projectName" disabled></el-input>
-              </div>
+              <el-input
+                disabled
+                :value="(detailform.sumByMon_0.kcsjMonth||0)+(detailform.sumByMon_0.gcjlMonth||0)+(detailform.sumByMon_0.jszxMonth||0)+(detailform.sumByMon_0.qtMonth||0)"/>
+            </el-form-item>
+            <el-form-item
+              label="所属单位:"
+            >
+              <el-input
+                disabled
+                v-model="detailform.sumByMon_0.kcsjMonth"/>
+            </el-form-item>
+            <el-form-item
+              label="工程行业类别:"
+            >
+              <el-input
+                disabled
+                v-model="detailform.sumByMon_0.gcjlMonth"/>
+            </el-form-item>
+            <el-form-item
+              label="计量单位:"
+            >
+              <el-input
+                disabled
+                v-model="detailform.sumByMon_0.jszxMonth"/>
+            </el-form-item>
+            <el-form-item
+              label="数量:"
+            >
+              <el-input
+                disabled
+                v-model="detailform.sumByMon_0.qtMonth"/>
+            </el-form-item>
+            <el-form-item
+              label="初始合同额(万元)"
+              :rules="rules.contractAmount"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                placeholder=""
+
+                v-model="detailform.sumByMon_0.contractAmount"
+              >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+              label="本年计划产值(万元)"
+              :rules="rules.contractAmount"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                placeholder=""
+
+                v-model="detailform.sumByMon_0.contractAmount"
+              >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+              label="合同总金额(万元)"
+              :rules="rules.contractAmount"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                placeholder=""
+
+                v-model="detailform.sumByMon_0.contractAmount"
+              >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+              label="合同开工日期:"
+            >
+              <el-input
+                disabled
+                v-model="detailform.sumByMon_0.jszxMonth"/>
+            </el-form-item>
+            <el-form-item
+              label="合同竣工日期:"
+            >
+              <el-input
+                disabled
+                v-model="detailform.sumByMon_0.jszxMonth"/>
+            </el-form-item>
+            <el-form-item
+              label="本年完成金额(万元)"
+              :rules="rules.contractAmount"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                placeholder=""
+                v-model="detailform.sumByMon_0.contractAmount"
+              >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+            <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+              <span>2020年12月底开累: </span>
+            </p>
+            <el-form-item
+              label="完成金额(万元)"
+              :rules="rules.contractAmount"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                placeholder=""
+                v-model="detailform.sumByMon_0.contractAmount"
+              >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+              label="剩余金额(万元)"
+              :rules="rules.contractAmount"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                placeholder=""
+                v-model="detailform.sumByMon_0.contractAmount"
+              >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+            <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+              <span>预计2020年底开累: </span>
+            </p>
+            <el-form-item
+              label="完成金额(万元)"
+              :rules="rules.contractAmount"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                placeholder=""
+                v-model="detailform.sumByMon_0.contractAmount"
+              >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+              label="剩余金额(万元)"
+              :rules="rules.contractAmount"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                placeholder=""
+                v-model="detailform.sumByMon_0.contractAmount"
+              >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+            <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+              <span>2021年本年计划完成: </span>
+            </p>
+            <el-form-item
+              label="完成金额(万元)"
+              :rules="rules.contractAmount"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                placeholder=""
+                v-model="detailform.sumByMon_0.contractAmount"
+              >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
             </el-form-item>
             <div>
               <el-form-item
-                label="本月计划:"
-              ><el-input v-model="dataReport.thisPlan" type="textarea" ></el-input>
+                class="neirong"
+                label="主要建设内容"
+              >
+                <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  type="textarea"
+                  clearable
+                  placeholder="请输入"
+                  v-model="detailform.sumByMon_0.remarks"
+                />
               </el-form-item>
-            </div>
-            <div>
               <el-form-item
-                label="完成情况:"
-              ><el-input v-model="dataReport.finishedPlan" type="textarea" ></el-input>
-              </el-form-item>
-            </div>
-            <div>
-              <el-form-item
-                label="下月计划:"
-              ><el-input v-model="dataReport.nextPlan" type="textarea" ></el-input>
+                class="neirong"
+                label="备注说明"
+              >
+                <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  type="textarea"
+                  clearable
+                  placeholder="请输入"
+                  v-model="detailform.sumByMon_0.remarks"
+                />
               </el-form-item>
             </div>
           </el-form>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="产物及实物工程量" name="cwjswgcl">
-        <div class="detailBoxBG">
+      <el-tab-pane label="产值及实物工程量">
+        <div class="table-div">
           <el-table
-            class="tableStyle"
-            :max-height="$tableHeight"
-            :height="$tableHeight"
-            :data="data"
-            :key="key"
+            :data="detailform.kc_list"
             :header-cell-style="{
-                      'text-align': 'center',
-                      'background-color': 'whitesmoke'
-                    }"
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+            @selection-change="handleSelectionChange"
+            align="center"
             border
-            highlight-current-row
+            class="detailTable"
             ref="table"
-            style="width: 100%"
-            cell-style="padding:5px 0"
-            tooltip-effect="dark"
+            style="width: 100%; min-height: calc(100vh - 370px)"
           >
             <el-table-column
-              :width="50"
+              :width="80"
               align="center"
               label="序号"
               show-overflow-tooltip
               type="index"
             ></el-table-column>
+
             <el-table-column
-              :width="250"
-              align="left"
+              class="listTabel"
+              :resizable="false"
               label="统计项名称"
+              prop="amountCompanyName"
+              align="center"
               show-overflow-tooltip
             >
               <template slot-scope="scope">
@@ -89,341 +275,129 @@
               </template>
             </el-table-column>
             <el-table-column
-              :width="90"
-              align="center"
-              prop="jldw"
+              class="listTabel"
+              :resizable="false"
               label="计量单位"
-              show-overflow-tooltip
-            >
-              <template slot-scope="scope">
-                <div>{{scope.row.jldw}}</div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              :width="150"
+              prop="projectOmit"
               align="center"
-              label="本月完成"
-              show-overflow-tooltip
-            >
-              <template slot-scope="scope">
-                <div>{{scope.row.monthValue}}</div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              :width="150"
-              align="center"
-              label="本月计划"
-              show-overflow-tooltip
-            >
-              <template slot-scope="scope">
-                <div>{{scope.row.monthPlan}}</div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              :width="150"
-              align="center"
-              label="本月%"
-              show-overflow-tooltip
-            >
-              <template slot-scope="scope">
-                <div v-if="scope.row.monthPlan&&scope.row.monthValue">{{Math.round(scope.row.monthPlan /scope.row.monthValue) / 100+"%"}}
-                </div>
-                <div v-if="scope.row.monthRate!=null">{{scope.row.monthRate+"%"}}
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              :width="150"
-              align="center"
-              label="本年完成"
-              show-overflow-tooltip
-            >
-              <template slot-scope="scope">
-                <div>{{scope.row.yearValue}}</div>
-                <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
-              </template>
-            </el-table-column>
-            <el-table-column
-              :width="150"
-              align="center"
-              label="本年计划"
-              show-overflow-tooltip
-            >
-              <template slot-scope="scope">
-                <div>{{scope.row.yearPlan}}</div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              :width="150"
-              align="center"
-              label="本年%"
-              show-overflow-tooltip
-            >
-              <template slot-scope="scope">
-                <div v-if="scope.row.yearPlan&&scope.row.yearValue">{{Math.round(scope.row.yearPlan /scope.row.yearValue) / 100+"%"}}
-                </div>
-                <div v-if="scope.row.yearRate!=null">{{scope.row.yearRate+"%"}}
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              :width="150"
-              align="center"
-              label="开累完成"
-              show-overflow-tooltip
-            >
-              <template slot-scope="scope">
-                <div>{{scope.row.totalValue}}</div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              :width="150"
-              align="center"
-              label="开累计划"
-              show-overflow-tooltip
-            >
-              <template slot-scope="scope">
-                <div>{{scope.row.totalPlan}}</div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              :width="150"
-              align="center"
-              label="开累%"
-              show-overflow-tooltip
-            >
-              <template slot-scope="scope">
-                <div v-if="scope.row.totalPlan&&scope.row.totalValue">{{Math.round(scope.row.totalPlan /scope.row.totalValue) / 100+"%"}}
-                </div>
-                <div v-if="scope.row.totalRate!=null">{{scope.row.totalRate+"%"}}
-                </div>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane label="下月计划" v-if="projectList.uuid!=''&& projectList.uuid!=null" name="xyjh">
-        <div class="detailBoxBG">
-          <el-table
-            class="tableStyle"
-            :max-height="$tableHeight"
-            :height="$tableHeight"
-            :data="nextData"
-            :header-cell-style="{
-                    'text-align': 'center',
-                    'background-color': 'whitesmoke'
-                  }"
-            border
-            highlight-current-row
-            ref="table"
-            style="width: 100%"
-            cell-style="padding:5px 0"
-            tooltip-effect="dark"
-          >
-            <el-table-column
-              :width="50"
-              align="center"
-              label="序号"
-              show-overflow-tooltip
-              type="index"
-            ></el-table-column>
-            <el-table-column
-              :width="250"
-              align="left"
-              label="统计项名称"
-              show-overflow-tooltip
-            >
-              <template slot-scope="scope">
-                <div :class="vnameMarginLeft(scope.row.tjxCode,scope.row.veditable)">{{scope.row.tjxName}}</div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              :width="90"
-              align="center"
-              prop="jldw"
-              label="计量单位"
               show-overflow-tooltip
             >
             </el-table-column>
-
             <el-table-column
-              :width="150"
-              align="center"
+              class="listTabel"
+              :resizable="false"
               label="计划"
+              prop="projectName"
+              align="center"
               show-overflow-tooltip
             >
-              <template slot-scope="scope">
-                <div >{{scope.row.value}}</div>
-              </template>
             </el-table-column>
-            <el-table-column
-              :width="400"
-              align="center"
-              label=""
-            ></el-table-column>
           </el-table>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="项目概况" v-if="projectList.uuid!=''&& projectList.uuid!=null" name="xmgk">
-        <div class="detailBoxBG">
-          <el-form
-            :inline="false"
-            :model="projectList"
-            class="gcform"
-          >
-            <el-form-item
-              label="项目名称:"
-            ><el-input v-model="projectList.projectName" disabled ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="板块:"
-            ><el-input v-model="projectList.projectPlate" disabled></el-input>
-            </el-form-item>
-            <el-form-item
-              label="项目类型:"
-            >
-              <el-input v-model="projectList.projectType" disabled></el-input>
-            </el-form-item>
-            <el-form-item
-              label="承建单位:"
-            ><el-input v-model="projectList.companyBuiltName" disabled ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="项目简称:"
-            ><el-input v-model="projectList.projectOmit" disabled ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="工程行业类别:"
-            ><el-input v-model="projectList.projectTypeSecond" disabled ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="所属铁路局:"
-            ><el-input v-model="projectList.railwayName" disabled ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="项目状态:"
-            ><el-input v-model="projectList.projectStatus" disabled ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="项目所在地:"
-            ><el-input v-model="projectList.projectLocation" disabled ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="初始合同额(万元):"
-            ><el-input v-model="projectList.contractAmountInitial" disabled ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="工程合同额(万元):"
-            ><el-input v-model="projectList.contractAmountEngine" disabled ></el-input>
-            </el-form-item>
-            <!--    <el-form-item
-                  label="合同额增减(万元):"
-                ><el-input v-model="projectList.projectName" disabled ></el-input>
-                </el-form-item>-->
-            <el-form-item
-              label="计量单位:"
-            ><el-input v-model="projectList.unitName" disabled ></el-input>
-            </el-form-item>
-            <!-- <el-form-item
-               label="初始签订数量:"
-             ><el-input v-model="projectList.projectName" disabled ></el-input>
-             </el-form-item>-->
-            <el-form-item
-              label="工程合同数量:"
-            ><el-input v-model="projectList.contractCount" disabled ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="合同竣工日期:"
-            ><el-input v-model="projectList.contractEndTime| dateformat" disabled ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="合同签订日期:"
-            ><el-input v-model="projectList.projectName| dateformat" disabled ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="实际开工日期:"
-            ><el-input v-model="projectList.realStartTime| dateformat" disabled ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="实际竣工日期:"
-            ><el-input v-model="projectList.realEndTime | dateformat" disabled ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="竣工产值:"
-            ><el-input v-model="projectList.completedOutputValue" disabled ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="建设单位:"
-            ><el-input v-model="projectList.companyBuild" disabled ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="设计单位:"
-            ><el-input v-model="projectList.companyDesign" disabled ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="监理单位:"
-            ><el-input v-model="projectList.companySupervisor" disabled ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="工程标段:"
-            ><el-input v-model="projectList.projectBidSection" disabled ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="项目经理:"
-            ><el-input v-model="projectList.projectManagerName" disabled ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="起讫地点(标段):"
-            ><el-input v-model="projectList.beginAddress" disabled ></el-input>
-            </el-form-item>
-            <div>
-              <el-form-item
-                label="工程概况(最多700字):"
-              ><el-input v-model="projectList.engineSurvey" type="textarea"disabled ></el-input>
-              </el-form-item>
-            </div>
-            <div>
-              <el-form-item
-                label="备 注(最多200字):"
-              ><el-input v-model="projectList.projectRemark" type="textarea" disabled ></el-input>
-              </el-form-item>
-            </div>
-            <!--     <el-form-item
-                   label="相关附件(最大10 MB):"
-                 ><el-input v-model="projectList.projectName" disabled ></el-input>
-                 </el-form-item>-->
-          </el-form>
-        </div>
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
+        <Audit-Process :task="p.task||{businessId:p.instid,businessType:' contract_project_new'}"></Audit-Process>
       </el-tab-pane>
-      <!--<el-tab-pane label="流程查看" name="lcjh">
-        <div class="detailBoxBG">
-        </div>
-      </el-tab-pane>-->
     </el-tabs>
   </div>
 </template>
 
 <script>
+  import { isMoney, isMobile} from '@/utils/validate'
+  import AuditProcess from '@/components/auditProcess'
   export default {
-    name: 'reportM-all-detail',
-    components: {
-    },
+    // name: "详情",
     data() {
-      return {
-        data:[],
-        projectList:{},
-        dataReport:{
-        },
-        nextData:[],
-        yearDateS:'',
-        activeName:"ztjd",
-        mList: JSON.parse(this.$utils.decrypt(this.$route.query.mList)),
-        proNameHover: false,
-        projectName: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectName,
-        projectreport: {},
-        projectreportDetaiList: [],
-        planPrjTjxDetailList: [],
+      var validateMoney = (rule, value, callback) => {
+        // console.log(value)
+        if(value===''){
+          callback(new Error('不能为空'))
+        }else if (!isMoney(value)) {
+          callback(new Error('请输入正确的金额格式'))
+        } else {
+          callback()
+        }
+      };
+      var validatePhone = (rule, value, callback) => {
+        // console.log(value)
+        if(value===''){
+          callback(new Error('不能为空'))
+        }else if (!isMobile(value)) {
+          callback(new Error('请输入正确的手机格式'))
+        } else {
+          callback()
+        }
       }
+      return {
+        Authorization:sessionStorage.getItem("token"),
+        projectStatus:[],//项目状态
+        timeout:  null,
+        maxMoney:1000000,
+        id:'',
+        key: 0,
+        treeStatas: false,
+        positionIndex: '',//缓存当前的选中的项目地点的index
+        options2: [],
+        options: [],
+        p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
+        searchform:{
+          designDetail:{},
+          industryDetail:{},
+          materialDetail:{},
+          otherDetail:{},
+          realtyDetail:{},
+          secureDetail:{},
+          serviceDetail:{},
+        },
+        detailform: {
+          fdc_list:[],
+          sumByMon_3:{},
+          sumByYear_3:{},
+          gy_list:[],
+          sumByMon_1:{},
+          sumByYear_1:{},
+          jrbx_list:[],
+          sumByMon_4:{},
+          sumByYear_4:{},
+          kc_list:[],
+          sumByMon_0:{},
+          sumByYear_0:{},
+          qt_list:[],
+          sumByMon_6:{},
+          sumByYear_6:{},
+          wz_list:[],
+          sumByMon_2:{},
+          sumByYear_2:{},
+          yy_list:[],
+          sumByMon_5:{},
+          sumByYear_5:{},
+        },
+        xqprojectType: [],//工程类别二级
+        emergingMarketTwo:[],//新兴市场二级
+        projectNatureTwo:[],//项目性质二级
+        sizeform: {projectScale: "", sectionName: ""},
+        yesOrNo:[
+          {
+            id:'0',
+            detailName:'是'
+          },
+          {
+            id:'1',
+            detailName:'否'
+          }
+        ],
+        rules:{
+          contractAmount: [
+            { required: true,validator: validateMoney, trigger: 'change' }
+          ],
+          phone: [
+            { required: true,validator: validatePhone, trigger: 'blur' }
+          ]
+        },//表单验证规则
+      };
+    },
+    components: {
+      AuditProcess
     },
     computed: {
       vnameMarginLeft() {
@@ -447,93 +421,123 @@
         }
       }
     },
+    mounted() {
+      this.id=this.p.instid;
+      // this.getDetail();
+      // eslint-disable-next-line no-unde
+    },
     methods: {
-      // 保存
-      save() {
-        this.dataReport.status="1"
-        let tableData = {
-          projectReportDetaiList:this.data,
-          projectreport:this.dataReport,
-          planPrjTjxDetailList:this.nextData
-        }
+      addNum(){
+        this.detailform.sumByMon_1.industry=Number(this.detailform.sumByMon_1.industry||0)+1;
+        this.$forceUpdate();
+      },
+      //勘察设计月末进度
+      setCcsjYmjd(list,obj,name,index){
+        console.log(index)
+      },
+      //修改产值
+      getGyzzCz(list,obj,name){
+        //  list 列表数据 obj 修改哪个对象 name 修改对象里的哪个值
+        var num=0;
+        list.forEach((item)=>{
+          num=num+Number(item[name]||0);
+      })
+        obj[name]=num;
+        this.$forceUpdate();
+      },
+      //重置
+      searchformReset() {
+        this.searchform={
+          current: 1,
+          size: 20
+        };
+        this.getData();
+      },
+      //流程操作
+      operation(type){
         this.$http
-            .post('/api/statistics/projectMonthlyReport/Projectreport/detail/saveOrUpdate', JSON.stringify(tableData), {useJson: true})
-            .then(res => {
-              if (res.data.code === 200) {
-                this.$message({
-                  message: '暂存成功',
-                  duration: 1000,
-                  type: 'success',
-                  onClose: () => { this.$router.back() }
-                })
-              }
-            })
+          .post(
+            '/api/contract/topInfo/TopInfor/process/'+type,
+            JSON.stringify(this.p.task),
+            {useJson: true}
+          )
+          .then((res) => {
+          if (res.data.code === 200) {
+          this.$message({
+            message: "操作成功",
+            type: "success",
+          });
+          this.$router.back()
+        }
+      });
       },
       submit() {
-        this.dataReport.status="2"
-        let tableData = {
-          projectReportDetaiList:this.data,
-          projectreport:this.dataReport,
-          planPrjTjxDetailList:this.nextData
-        }
-        this.$http
-            .post('/api/statistics/projectMonthlyReport/Projectreport/detail/saveOrUpdate', JSON.stringify(tableData), {useJson: true})
-            .then(res => {
-              if (res.data.code === 200) {
-                this.$message({
-                  message: '提交成功',
-                  duration: 1000,
-                  type: 'success',
-                  onClose: () => { this.$router.back() }
-                })
-              }
-            })
       },
-      /*    rollback() {
+      saveInfo(formName,type) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
             this.$http
-              .post('/api/statistics/PlanProjectTjx/detail/save', JSON.stringify({uuid: this.p.planInfo.planId, status: 0}), {useJson: true})
-              .then(res => {
-                if (res.data.code === 200) {
-                  this.$message({
-                    message: '回退成功',
-                    duration: 1000,
-                    onClose: () => { this.$router.back() }
-                  })
-                }
-              })
-          },*/
-      // 返回上一页
+              .post(
+                '/api/statistics/unProjectReport/save/batch/addDetail',
+                JSON.stringify(this.detailform),
+                {useJson: true}
+              )
+              .then((res) => {
+              if (res.data.code === 200) {
+              this.$message({
+                message: "保存成功",
+                type: "success",
+              });
+              this.back();
+            }
+          });
+          } else {
+            this.$message.error("请添加必填项");
+        return false;
+      }
+      });
+      },
       back() {
         this.$router.back()
+        // this.$router.push({
+        //   path: "/manage/proposal/list",
+        // });
       },
-      // 获取数据
-      getData() {
-        var datas=JSON.parse(this.$utils.decrypt(this.$route.query.mList));
+      // 加载列表
+      getDetail() {
+        var data={};
+        if(this.p.actpoint=='add'){
+          data={reportDate: this.p.reportDate}
+        }else if(this.p.actpoint=='edit'||this.p.actpoint=='look'){
+          data={reportUuid: this.p.reportUuid,isAdd:'1',reportDate:this.p.reportDate}
+        }
         this.$http
-            .post('/api/statistics/projectMonthlyReport/Projectreport/detail/queryMonthReportEntityInfo', datas.params, {useJson: true})
-            .then(res => {
-              this.data = res.data.data.projectReportDetaiList
-              this.dataReport=res.data.data.projectreport
-              this.dataReport.yearDateS=this.dataReport.reportYear+"-"+this.dataReport.reportMonth
-              this.nextData=res.data.data.planPrjTjxDetailList
-              this.projectList=res.data.data.projectList||{}
-              console.log('data', this.data)
-              if(this.projectList.uuid!=''&& this.projectList.uuid!=null){
-                this.activeName="ztjd"
-              }else{
-                this.activeName="cwjswgcl"
-              }
-              // this.reportVo=this.data;
-            })
-      }
+          .post("/api/statistics/unProjectReport/list/queryAllInfo",data )
+          .then((res) => {
+          var datas=res.data.data;
+        this.detailform=datas;
+        this.detailform.sumByMon_0=datas.sumByMon_0||{};
+        this.detailform.sumByYear_0=datas.sumByYear_0||{};
+        this.detailform.sumByMon_1=datas.sumByMon_1||{};
+        this.detailform.sumByYear_1=datas.sumByYear_1||{};
+        this.detailform.sumByMon_2=datas.sumByMon_2||{};
+        this.detailform.sumByYear_2=datas.sumByYear_2||{};
+        this.detailform.sumByMon_3=datas.sumByMon_3||{};
+        this.detailform.sumByYear_3=datas.sumByYear_3||{};
+        this.detailform.sumByMon_4=datas.sumByMon_4||{};
+        this.detailform.sumByYear_4=datas.sumByYear_4||{};
+        this.detailform.sumByMon_5=datas.sumByMon_5||{};
+        this.detailform.sumByYear_5=datas.sumByYear_5||{};
+        this.detailform.sumByMon_6=datas.sumByMon_6||{};
+        this.detailform.sumByYear_6=datas.sumByYear_6||{};
+        this.detailform.statId=this.p.statId;
+      });
+      },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
     },
-    created() {
-
-    },
-    mounted() {
-      // this.getData()
-    }
-  }
+  };
 </script>
 <style lang="scss" scoped>
   .detail-back-tab{
@@ -601,10 +605,10 @@
     .errorMsg >>>.el-form-item__label {
       color: red;
     }
-    >>>.el-input {
+    .el-input {
       width: 300px;
     }
-    >>>.el-input >>>.el-input_inner {
+    .el-input .el-input_inner {
       width: 300px;
       height: 500px;
     }
@@ -643,12 +647,12 @@
     // height: 200px;
   }
 
-  /*  >>>.el-input--mini .el-input__inner {
-      height: 40px;
-      width: 100%;
-      box-sizing: border-box;
-      // margin: 10px 0 0 10px;
-    }*/
+  >>>.el-input--mini .el-input__inner {
+    height: 40px;
+    width: 100%;
+    box-sizing: border-box;
+    // margin: 10px 0 0 10px;
+  }
 
   .gcform >>>.el-input {
     width: 95%;
@@ -703,57 +707,26 @@
   .el-table--border {
     min-height: auto !important;
   }
-  /deep/ .el-input__inner{
-    height: 25px;
-    text-align: right;
-    padding-right:2px;
+  .table-div{
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
   }
-  .margin-left-25{
-    margin-left: 25px;
+  .queryForm>.el-button{
+    margin-top: 5px;
   }
-  .margin-left-50{
-    margin-left: 50px;
+  .queryForm >>>.el-form-item__label{
+    width: auto;
   }
-  .margin-left-75{
-    margin-left: 75px;
+  .queryForm >>>.el-input--mini .el-input__inner{
+    height: auto;
+    line-height: inherit;
   }
-  .margin-left-100{
-    margin-left: 100px;
+  .detailTable >>>.el-input input{
+    width: 100%;
+    height: 30px;
+    margin: 5px 0;
+    box-sizing: border-box;
   }
-  .editable{
-    color: #0e45a1;
-  }
-  /deep/ .el-collapse-item__header{
-    height:35px !important;
-    ling-height:35px !important;
-  }
-
-  /deep/ .el-collapse-item__content{
-    padding-bottom: 5px !important;
-  }
-  /deep/ .el-input__inner{
-    height: 25px;
-    text-align: right;
-    padding-right:2px;
-  }
-  /*按钮样式*/
-  .detail-back-tab{
-    padding: 10px 20px ;
-    border:1px solid #ddd;
-    color: black;
-    position: absolute;
-    top:1px;
-    right:15px;
-    z-index: 999999999;
-    background: #fff;
-  }
-  .save-btn{
-    right: 95px;
-    background: #409EFF;
-    color:#fff;
-  }
-  .sub-btn{
-    right: 175px;
-  }
-  /**/
 </style>
+

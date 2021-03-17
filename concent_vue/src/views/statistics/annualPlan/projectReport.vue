@@ -148,9 +148,9 @@
           fixed="right"
         >
           <template slot-scope="scope">
-            <el-link type="warning">详细显示</el-link>
+            <el-link type="warning" @click="toSummary(scope.row)">详细显示</el-link>
             <el-link type="success" @click="rowshow(scope.row)">查看</el-link>
-            <el-link type="primary">修改</el-link>
+            <el-link type="primary" @click="totop(scope.row)">修改</el-link>
           </template>
         </el-table-column>
       </el-table>
@@ -247,25 +247,23 @@
 
       },
       // 修改
-      totop() {
-        if (this.multipleSelection.length !== 1) {
-          this.$message.info("请选择一条记录进行修改操作！");
-          return false;
-        }
-        // if(this.multipleSelection[0].flowStatus=='2'||this.multipleSelection[0].flowStatus=='3'){
-        //   this.$message.info("此条数据不可修改！");
-        //   return false;
-        // }
-        let p = {actpoint: "edit", reportUuid: this.multipleSelection[0].uuid,reportDate: this.multipleSelection[0].reportDate,stauts:this.multipleSelection[0].stauts};
+      totop(row) {
+        let p = {actpoint: "edit", row: row};
         this.$router.push({
-          path: "./detail/",
+          path: "./projectReportDetail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
-
+      },
+      //去汇总详情
+      toSummary(row){
+        let p = {actpoint: "edit", row: row};
+        this.$router.push({
+          path: "./summaryDetail/",
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        });
       },
       // 查看
       rowshow(row) {
-        console.log(row)
         let p = {actpoint: "look", row: row};
         this.$router.push({
           path: "./projectReportDetail/",

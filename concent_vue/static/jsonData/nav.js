@@ -990,6 +990,15 @@ export default {
                   'defaultpage': false
                 },
                 {
+                  'name': '项目部上报汇总详情',
+                  'path': '/statistics/annualPlan/summaryDetail',
+                  'component': '/statistics/annualPlan/summaryDetail',
+                  'iconCls': 'el-icon-notebook-2',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
                   'name': '工程公司汇总',
                   'path': '/statistics/plan/02-1',
                   'component': '/statistics/plan/02-1',

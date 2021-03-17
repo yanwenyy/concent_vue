@@ -392,8 +392,8 @@ export default {
       setTimeout(() => {
         this.$http
           .post("/api/statistics/bp/BpTjx/list/getBpTjxListUpdateByParentId", {
-
-            parentId:node.data.uuid||this.itemform.vparentid,
+            // parentId:node.data.uuid||this.itemform.vparentid,
+            parentId:node.data.uuid,
           })
           .then((res) => {
             var datas=res.data.data;
