@@ -97,10 +97,11 @@
           label="审核状态"
           prop="flowStatus"
           show-overflow-tooltip
-
         >
-          <template slot="header" slot-scope="scope">
+          <template slot-scope="scope">
             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':scope.row.flowStatus==5?'未创建':scope.row.flowStatus==null?'待登记':'其他'}}
+          </template>
+          <template slot="header" slot-scope="scope">
             <span>审核状态</span>
             <div>
               <el-select
@@ -232,7 +233,7 @@
           this.$message.info("请选择一条记录进行查看操作！");
           return false;
         }
-        let p = {actpoint: "edit", instid: this.multipleSelection[0].uuid};
+        let p = {actpoint: "edit", instid: this.multipleSelection[0].uuid,season:this.multipleSelection[0]};
         this.$router.push({
           path: "./detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},

@@ -3,7 +3,7 @@
     <div class="tabs-header-copy"></div>
     <el-button @click="back" class="detailbutton detail-back-tab" >返回</el-button>
     <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="saveInfo('detailform','save')" class="detailbutton detail-back-tab save-btn">保存</el-button>
-    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.topInfoOrg.flowStatus==1||detailform.topInfoOrg.flowStatus==4)" @click="saveInfo('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.season.flowStatus==1||detailform.season.flowStatus==4)" @click="saveInfo('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
     <!--<el-button v-show="p.actpoint == 'task'&&p.task.edit==true" @click="operation('recall')" class="detailbutton" type="danger">撤销</el-button>-->
@@ -1004,6 +1004,7 @@
               <div class="four-name">合计：</div>
               <el-form-item>
                 <el-input
+                  id="jb0"
                   disabled
                   v-model="detailform.buildingDetailList.JB2_00_convalue"/>
               </el-form-item>
@@ -1026,23 +1027,24 @@
               <div class="four-name">1、住宅房屋：</div>
               <el-form-item>
                 <el-input
+                  id="jb1"
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_01_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_01_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_01_value"/>
               </el-form-item>
             </div>
@@ -1050,23 +1052,24 @@
               <div class="four-name">2、商业及服务用房屋：</div>
               <el-form-item>
                 <el-input
+                  id="jb2"
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_02_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_02_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_02_value"/>
               </el-form-item>
             </div>
@@ -1076,7 +1079,7 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_02_001_convalue"/>
               </el-form-item>
               <el-form-item>
@@ -2830,6 +2833,9 @@
       AuditProcess
     },
     computed: {
+        sum:function(){
+            return Number(this.detailform.buildingDetailList.JB2_01_convalue) + Number(this.detailform.buildingDetailList.JB2_02_convalue)
+        },
       projectDomainType() {
         // console.log(this.$store.state.category.projectDomainType)
         return this.$store.state.category.projectDomainType;
@@ -2933,6 +2939,19 @@
         this.detailform.topInfor[id]=_id.join(",");
         this.detailform.topInfor[name]=_name.join(",");
       },
+
+        //计算合计
+        Addsum(list,name,type){
+          list[name]=0;
+          var val=0;
+          for(var i in list){
+              if(i.indexOf(type)!=-1){
+                  val=val+(Number(list[i])||0)
+              }
+          }
+          list[name]=val;
+          this.$forceUpdate();
+        },
       //流程操作
       operation(type){
         this.$http
@@ -3196,13 +3215,13 @@
           var datas=res.data.data;
 
         this.detailform={
-            buildingDetailList:datas.buildingDetailList,
-            buildingJnDetailList:datas.buildingJnDetailList,
-            businessDetailMap:datas.businessDetailMap,
-            businessJnDetailMap:datas.businessJnDetailMap,
-            financialDetail:datas.financialDetail,
-            salaryDetail:datas.salaryDetail,
-            //season:JSON.parse(this.$utils.decrypt(this.$route.query.p)).season
+            buildingDetailList:datas.buildingDetailList||{},
+            buildingJnDetailList:datas.buildingJnDetailList||{},
+            businessDetailMap:datas.businessDetailMap||{},
+            businessJnDetailMap:datas.businessJnDetailMap||{},
+            financialDetail:datas.financialDetail||{},
+            salaryDetail:datas.salaryDetail||{},
+            season:datas.season||{}
         }
       });
       },
