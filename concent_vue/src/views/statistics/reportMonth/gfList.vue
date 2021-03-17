@@ -100,7 +100,7 @@
           :width="200"
           align="center"
           label="审核状态"
-          prop="stauts"
+          prop="flowStauts"
           show-overflow-tooltip
 
         >
@@ -131,7 +131,7 @@
             </div>
           </template>-->
           <template slot-scope="scope">
-            <div>{{scope.row.status==1?'草稿':scope.row.status==2?'审核中':scope.row.status==3?'审核通过':scope.row.status==4?'审核退回':'未创建'}}
+            <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'未创建'}}
             </div>
           </template>
         </el-table-column>
@@ -219,7 +219,7 @@
         sousuo: "",
         searchform: {
           createOrgName: "",
-          status: "",
+          flowStatus: "",
           createTime: "",
           yearDateS: "",
         },
@@ -302,7 +302,7 @@
       rowshow(row) {
       debugger
         let mList = {actpoint: "look", params: row};
-        if(row.status==''||row.status==null){
+        if(row.flowStatus==''||row.flowStatus==null){
           this.$message.info("该项目月报还未完成上报,无法查看");
           return false;
         }else{

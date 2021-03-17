@@ -450,7 +450,8 @@
     methods: {
       // 保存
       save() {
-        this.dataReport.status="1"
+        this.dataReport.status="2"
+        this.dataReport.flowStatus="1"
           let tableData = {
             projectReportDetaiList:this.data,
             projectreport:this.dataReport,
@@ -471,6 +472,7 @@
       },
       submit() {
         this.dataReport.status="2"
+        this.dataReport.flowStatus="2"
         let tableData = {
           projectReportDetaiList:this.data,
           projectreport:this.dataReport,

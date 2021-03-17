@@ -235,7 +235,7 @@
           :width="150"
           align="center"
           label="剩余工程合同额"
-          prop="status"
+          prop="htquantity"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
