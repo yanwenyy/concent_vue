@@ -2,7 +2,7 @@
 <template>
   <div style="position: relative">
       <div style="margin-top: 9px;color: red;position: absolute;top: 1px;right: 279px;z-index: 999999999;font-size: 15px;">项目名称：<span style="color: red !important;margin-right: 50px;">{{projectName}}</span></div>
-    <el-button  @click="submit" v-if="dataReport.status=='1'" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>
+    <el-button  @click="submit" v-if="dataReport.flowStatus=='1'" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>
       <el-button  @click="back" type="primary"  class="detailbutton detail-back-tab " plain>返回</el-button>
     <el-tabs type="border-card" v-model="activeName">
       <el-tab-pane label="整体进度" name="ztjd">
@@ -173,10 +173,11 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div v-if="scope.row.veditable == '1' && actpoint!='look' ">
+            <!--    <div v-if="scope.row.veditable == '1' && actpoint!='look' ">
                   <el-input v-model="scope.row.valuationFee" @input="scope.row.value = scope.row.valuationFee.replace(/[^\-?\d.]/g,'','')" @blur="getYear(data,scope.$index,scope.row.sumTarget)"/>
                 </div>
-                <div  v-if="scope.row.veditable != '1'">{{scope.row.valuationFee}}</div>
+                <div  v-if="scope.row.veditable != '1'">{{scope.row.valuationFee}}</div>-->
+                {{scope.row.valuationFee}}
               </template>
             </el-table-column>
             <el-table-column
@@ -186,10 +187,11 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div v-if="scope.row.veditable == '1' && actpoint!='look' ">
+                <!--<div v-if="scope.row.veditable == '1' && actpoint!='look' ">
                   <el-input v-model="scope.row.taxFee"  @input="scope.row.value = scope.row.taxFee.replace(/[^\-?\d.]/g,'','')" @blur="getYearSe(data,scope.$index,scope.row.sumTarget)"/>
                 </div>
-                <div  v-if="scope.row.veditable != '1'">{{scope.row.taxFee}}</div>
+                <div  v-if="scope.row.veditable != '1'">{{scope.row.taxFee}}</div>-->
+                {{scope.row.taxFee}}
               </template>
             </el-table-column>
             <el-table-column
