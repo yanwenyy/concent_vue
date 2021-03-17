@@ -1,4 +1,4 @@
-<!--工程月报上报截止日期-->
+<!--工程月报验工计价上报截止日期-->
 
 <template>
   <div>
@@ -304,7 +304,7 @@
           createUserId: '',
           createUserName: '',
           endreporttime: '',
-          reportType: '',
+          reportType: '2',
           restrictedobjects:'',
           standardreporttime:'',
         },
@@ -358,7 +358,7 @@
         params.createOrgType = this.userdata.managerOrgType;
         params.createUserId =this.userdata.id;
          params.createOrgCode =this.userdata.createOrgCode;
-        params.reportType ='1';
+        params.reportType ='2';
         if(this.type == 'edit') {
           params.uuid = this.form1.uuid;
         }
@@ -467,7 +467,7 @@
           createUserId: '',
           createUserName: '',
           endreporttime: '',
-          reportType: '1',
+          reportType: '',
           restrictedobjects:'',
           standardreporttime:'',
           startStatus:'',
@@ -481,7 +481,6 @@
       },
       // 获取分页数据
       getData() {
-
         this.$http
           .post('/api/statistics/projectMonthlyReport/ReportEndtime/list/loadPageData', this.searchform)
           .then(res => {

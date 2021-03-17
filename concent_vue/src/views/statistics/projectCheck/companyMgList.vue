@@ -1,11 +1,9 @@
-<!--工程月报-公司月报自揽或工区-->
+<!--工程月报验工计价-公司月报自揽或工区-->
 
 <template>
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <!--   <el-button @click="searchformSubmit"
-                      type="primary" plain>查询</el-button>-->
         <el-button @click="add"
                    type="primary" plain><i class="el-icon-plus"></i>新增</el-button>
         <el-button @click="edit"
@@ -14,11 +12,11 @@
                    type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
         <el-button @click="batchT"
                    type="primary" plain><i class="el-icon-thumb"></i>未上报批量填0</el-button>
-        <!--  <el-button @click="searchformReset"
-                     type="info" plain
-                     style="color:black;background:none">
-            重置
-          </el-button>-->
+      <!--  <el-button @click="searchformReset"
+                   type="info" plain
+                   style="color:black;background:none">
+          重置
+        </el-button>-->
 
       </el-button-group>
       <div style="float: right;">
@@ -49,9 +47,9 @@
                          align="center"
                          prop="projectId"
                          v-if="false" />
-        <el-table-column label="projectreportuuid"
+        <el-table-column label="projectCheckUuid"
                          align="center"
-                         prop="projectreportuuid"
+                         prop="projectCheckUuid"
                          v-if="false" />
         <el-table-column :width="70"
                          align="center"
@@ -194,20 +192,20 @@
             </div>
           </template>
         </el-table-column>
-        <!--  <el-table-column
-            :width="150"
-            align="center"
-            label="所属单位"
-            prop="createOrgName"
-            show-overflow-tooltip
-          >
-            <template slot="header" slot-scope="scope">
-              <span>所属单位</span>
-              <div>
-                <el-input style=" width: 100%" v-model="searchform.createOrgName" size="mini"/>
-              </div>
-            </template>
-          </el-table-column>-->
+      <!--  <el-table-column
+          :width="150"
+          align="center"
+          label="所属单位"
+          prop="createOrgName"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>所属单位</span>
+            <div>
+              <el-input style=" width: 100%" v-model="searchform.createOrgName" size="mini"/>
+            </div>
+          </template>
+        </el-table-column>-->
         <el-table-column :width="150"
                          align="center"
                          label="状态"
@@ -239,9 +237,9 @@
       <el-dialog :title="addTitle" :visible.sync="showTqDialog" append-to-body @close="closeAdd">
         <div>
           <div>
-            此操作将为当月所有未上报的项目月报创建当月完成值为0的月报并提交。
-            如果项目已经创建了当月月报 则直接提交。
-            确认批量填充?
+          此操作将为当月所有未上报的项目月报创建当月完成值为0的月报并提交。
+          如果项目已经创建了当月月报 则直接提交。
+          确认批量填充?
           </div>
           <div style="text-align:right;margin-top:10px">
             <el-button @click="submit" type="primary">是</el-button>
@@ -347,9 +345,9 @@
         var y = date.getFullYear();
         var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
         var time=y + '-' + m;
-        this.searchform.yearDateS= time;
+      this.searchform.yearDateS= time;
       },
-      //新增
+        //新增
       add(){
         //判断是否存在未上报的数据，如果存在就提示，不存在就创建
         if(this.data.length>0){
@@ -363,13 +361,13 @@
             };
           };
         }
-        var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/companyMonthlyReportEntityInfo';
+        var url = '/api/statistics/Projectcheck/detail/companyCheckEntityInfo';
         var params = {};
         //params.fillDate = this.searchform.fillDate;
-        params.reportYear=this.searchform.yearDateS.split("-")[0]
-        params.reportMonth=this.searchform.yearDateS.split("-")[1]
-        params.reportType='2'
-        params.status='2'
+        params.reportYear=this.searchform.yearDateS.split("-")[0];
+        params.reportMonth=this.searchform.yearDateS.split("-")[1];
+        params.reportType='2';
+        params.status='2'//公司创建
         params.flowStatus='1'
         this.$http.post(
             url,
@@ -394,13 +392,13 @@
         });
       },
       // 查看
-      rowShow(row) {
+  /*    rowShow(row) {
         let p = { actpoint: 'look', uuid: row.uuid };
         this.$router.push({
           path: '',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
         });
-      },
+      },*/
       //未上报批量填0
       batchT(){
         this.showTqDialog=true;
@@ -408,12 +406,12 @@
       //未上报批量填0点击是
       submit(){
         let tableData = {
-          prjAndPrjReportAndDetailList:this.data,
+          prjAndPrjCheckAndDetailVo:this.data,
           yearVo:this.searchform.yearDateS.split("-")[0],
           monthVo:this.searchform.yearDateS.split("-")[1],
           reportTypeVo:"2"
         }
-        var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/batchUpdateValue'
+        var url = '/api/statistics/Projectcheck/detail/batchUpdateValue'
         this.$http.post(
             url,
             JSON.stringify(tableData),
@@ -443,40 +441,36 @@
           let a=this.userdata.managerOrgId;
           if(item.projectId==this.userdata.managerOrgId){
             if(item.flowStatus!='1'&&item.flowStatus!=null){
-              this.$message.info('只允许删除未上报的数据！')
-              return itemStatus=false
+            this.$message.info('只允许删除未上报的数据！')
+              return itemStatus=false;
             }else{
-              uuids.push(item.projectreportuuid);
+              uuids.push(item.projectCheckUuid);
             }
           }else{
             this.$message.info('无权删除下级单位月报！')
-            return itemStatus=false
-          }
-          if(itemStatus){
-            this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(() => {
-              this.$http
-                  .post(
-                      '/api/statistics/projectMonthlyReport/Projectreport/list/delete',
-                      { ids: uuids }
-                  )
-                  .then((res) => {
-                    if (res.data.code === 200) {
-                      this.getData()
-                    }else if(res.data.code === 400){
-
-                    }else{
-
-                    }
-
-                  })
-            }).catch(() => {
-            })
+            return itemStatus=false;
           }
         })
+        if(itemStatus){
+          this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$http
+                .post(
+                    '/api/statistics/Projectcheck/list/delete',
+                    { ids: uuids }
+                )
+                .then((res) => {
+                  if (res.data.code === 200) {
+                    this.getData()
+                  }
+                })
+          }).catch(() => {
+          })
+
+        }
       },
       //点击否
       closeAdd() {
@@ -505,21 +499,25 @@
           this.$message.info("请选择一条数据，进行编辑", "提示")
           return false
         }
-        if((this.multipleSelection[0].flowStatus==''||this.multipleSelection[0].flowStatus==null) && this.multipleSelection[0].projectId!=this.userdata.managerOrgId){
-          this.$message.info("该项目月报还未进行创建，无法进行操作", "提示")
+        if(this.multipleSelection[0].projectId!=this.userdata.managerOrgId){
+          this.$message.info("不允许对下级进行任何操作", "提示")
           return false
-        }else{
-          this.type = 'edit'
-          this.form1 = JSON.parse(JSON.stringify(this.multipleSelection[0]));
-          let mList = {projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,projectreportuuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectreportuuid,
-            reportYear:JSON.parse(JSON.stringify(this.multipleSelection[0])).reportYear,reportMonth:JSON.parse(JSON.stringify(this.multipleSelection[0])).reportMonth,orgCode:JSON.parse(JSON.stringify(this.multipleSelection[0])).createOrgCode,
-            projectflowStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).flowStatus,projectName:this.multipleSelection[0].projectName
-          }
-          this.$router.push({
-            path: './companyMDetail/',
-            query: {mList: this.$utils.encrypt(JSON.stringify(mList))}
-          });
         }
+          if((this.multipleSelection[0].flowStatus==''||this.multipleSelection[0].flowStatus==null) && this.multipleSelection[0].projectId!=this.userdata.managerOrgId){
+            this.$message.info("该项目月报还未进行创建，无法进行操作", "提示")
+            return false
+          }else{
+            this.type = 'edit'
+            this.form1 = JSON.parse(JSON.stringify(this.multipleSelection[0]));
+            let mList = {projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,projectCheckUuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectCheckUuid,
+              reportYear:JSON.parse(JSON.stringify(this.multipleSelection[0])).reportYear,reportMonth:JSON.parse(JSON.stringify(this.multipleSelection[0])).reportMonth,orgCode:JSON.parse(JSON.stringify(this.multipleSelection[0])).createOrgCode,
+              projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).flowStatus,projectName:this.multipleSelection[0].projectName
+            }
+            this.$router.push({
+              path: './companyMDetail/',
+              query: {mList: this.$utils.encrypt(JSON.stringify(mList))}
+            });
+          }
 
       },
       handleSizeChange(val) {
@@ -575,25 +573,25 @@
         this.searchform.reportYear= this.searchform.yearDateS.split("-")[0];
         this.searchform.reportMonth= this.searchform.yearDateS.split("-")[1];
         this.$http
-            .post('/api/statistics/projectMonthlyReport/Projectreport/list/companyMonthlyReportList', this.searchform)
+            .post('/api/statistics/Projectcheck/list/companyMonthlyReportList', this.searchform)
             .then(res => {
               this.data = res.data.data;
             });
       },
       rowShow(row){
-        let mList = {projectId: row.projectId, orgCode: row.createOrgCode,projectName:row.projectName,createOrgId:row.createOrgId,createOrgName:row.createOrgName,
-          reportYear:row.reportYear,reportMonth:row.reportMonth,projectreportuuid:row.projectreportuuid,reportType:row.reportType,createOrgType:row.createOrgType
+        let mList = {actpoint: 'look', projectId: row.projectId, orgCode: row.createOrgCode,projectName:row.projectName,createOrgId:row.createOrgId,createOrgName:row.createOrgName,
+          reportYear:row.reportYear,reportMonth:row.reportMonth,uuid:row.projectCheckUuid,reportType:row.reportType,createOrgType:row.createOrgType
         };
         if((row.flowStatus==''||row.flowStatus==null) && row.projectId!=this.userdata.managerOrgId){
           this.$message.info("该项目月报还未进行创建，无法进行操作", "提示")
           return false
         }else{
-          this.$router.push({
-            path: './companyMDetail/',
-            query: {mList: this.$utils.encrypt(JSON.stringify(mList))}
-          });
+        this.$router.push({
+          path: './companyMDetail/',
+          query: {mList: this.$utils.encrypt(JSON.stringify(mList))}
+        });
 
-        }}
+      }}
     },
     created() {
       let that = this;

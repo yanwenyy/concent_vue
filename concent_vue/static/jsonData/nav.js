@@ -1264,14 +1264,6 @@ export default {
                   'defaultpage': false
                 },
                 {
-                  'name': '公司月报(工区)详情',
-                  'path': '/statistics/reportMonth/companyMgqDetail',
-                  'component': '/statistics/reportMonth/companyMgqDetail',
-                  'iconCls': 'el-icon-office-building',
-                  'menushow': false,
-                  'leaf': true
-                },
-                {
                   'name': '集团公司月报',
                   'path': '/statistics/reportMonth/jTList',
                   'component': '/statistics/reportMonth/jTList',
@@ -1313,7 +1305,8 @@ export default {
                   'menushow': true,
                   'leaf': true,
                   'defaultpage': false
-                },
+                }
+       /*         ,
                 {
                   'name': '项目月报批量提交',
                   'path': '/statistics/reportMonth/reportMCommit',
@@ -1322,7 +1315,7 @@ export default {
                   'menushow': true,
                   'leaf': true,
                   'defaultpage': false
-                }
+                }*/
               ]
             },
             {
@@ -1377,6 +1370,24 @@ export default {
                   'iconCls': 'el-icon-office-building',
                   'menushow': false,
                   'leaf': true
+                },
+                {
+                  'name': '公司月报(工区)',
+                  'path': '/statistics/projectCheck/companyMgList',
+                  'component': '/statistics/projectCheck/companyMgList',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '上报截止日期',
+                  'path': '/statistics/projectCheck/reportEndDate',
+                  'component': '/statistics/projectCheck/reportEndDate',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
                 }
               ]
             },

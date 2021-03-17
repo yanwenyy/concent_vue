@@ -2,7 +2,7 @@
 <template>
   <div style="position: relative">
     <!--<el-button  @click="save" v-if="dataReport.status!='1'" type="primary"  class="detailbutton detail-back-tab" style="float: left; margin-right: 185px;"plain>保存</el-button>-->
-    <el-button  @click="submit" v-if="dataReport.status!='1'" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>
+    <el-button  @click="submit" v-if="dataReport.flowStatus!='1'" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>
     <el-button  @click="back" type="primary"  class="detailbutton detail-back-tab " plain>返回</el-button>
     <el-tabs type="border-card" v-model="activeName">
       <el-tab-pane v-if="projectList.uuid!=''&& projectList.uuid!=null" label="整体进度" name="ztjd">
@@ -450,7 +450,8 @@
     methods: {
       // 保存
       save() {
-        this.dataReport.status="1"
+        this.dataReport.status="3"//集团创建
+        this.dataReport.flowStatus="1"
         let tableData = {
           projectReportDetaiList:this.data,
           projectreport:this.dataReport,
@@ -470,7 +471,8 @@
             })
       },
       submit() {
-        this.dataReport.status="2"
+        this.dataReport.status="3"
+        this.dataReport.flowStatus="2"
         let tableData = {
           projectReportDetaiList:this.data,
           projectreport:this.dataReport,

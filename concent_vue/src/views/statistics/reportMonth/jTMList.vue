@@ -193,10 +193,10 @@
         <el-table-column :width="150"
                          align="center"
                          label="状态"
-                         prop="status" show-overflow-tooltip
+                         prop="flowStatus" show-overflow-tooltip
         >
           <template slot-scope="scope">
-            <div>{{scope.row.status==1?'草稿':scope.row.status==2?'审核中':scope.row.status==3?'审核通过':scope.row.status==4?'审核退回':'未创建'}}
+            <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'未创建'}}
             </div>
           </template>
           <template slot="header"
@@ -206,7 +206,7 @@
               <el-select class="list-search-picker" clearable filterable
                          placeholder="请选择"
                          size="mini"
-                         v-model="searchform.status"
+                         v-model="searchform.flowStatus"
               >
                 <el-option :key="index"
                            :label="item.detailName"
@@ -380,7 +380,7 @@
       },
       rowShow(row){
         let mList = {actpoint: "look", params: row};
-        if((row.status==''||row.status==null) && row.projectId!=this.userdata.managerOrgId){
+        if((row.flowStatus==''||row.flowStatus==null) && row.projectId!=this.userdata.managerOrgId){
           this.$message.info("该项目月报还未进行创建，无法进行操作", "提示")
           return false
         }else{

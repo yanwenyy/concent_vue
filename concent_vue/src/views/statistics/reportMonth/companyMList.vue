@@ -7,13 +7,13 @@
      <!--   <el-button @click="searchformSubmit"
                    type="primary" plain>查询</el-button>-->
         <el-button @click="add"
-                   type="primary" plain>新增</el-button>
+                   type="primary" plain><i class="el-icon-plus"></i>新增</el-button>
         <el-button @click="edit"
-                   type="primary" plain>修改</el-button>
+                   type="primary" plain><i class="el-icon-edit"></i>修改</el-button>
         <el-button @click="del"
-                   type="primary" plain>删除</el-button>
+                   type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
         <el-button @click="batchT"
-                   type="primary" plain>未上报批量填0</el-button>
+                   type="primary" plain><i class="el-icon-thumb"></i>未上报批量填0</el-button>
       <!--  <el-button @click="searchformReset"
                    type="info" plain
                    style="color:black;background:none">
@@ -22,7 +22,7 @@
 
       </el-button-group>
       <div style="float: right;">
-        <el-button @click="searchformSubmit" type="primary" plain>查询</el-button>
+        <el-button @click="searchformSubmit" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
       </div>
     </div>
 
@@ -211,10 +211,10 @@
         <el-table-column :width="150"
                          align="center"
                          label="状态"
-                         prop="status" show-overflow-tooltip
+                         prop="flowStatus" show-overflow-tooltip
         >
           <template slot-scope="scope">
-               <div>{{scope.row.status==1?'草稿':scope.row.status==2?'审核中':scope.row.status==3?'审核通过':scope.row.status==4?'审核退回':'未创建'}}
+               <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'未创建'}}
           </div>
           </template>
           <template slot="header"
@@ -224,7 +224,7 @@
               <el-select class="list-search-picker" clearable filterable
                          placeholder="请选择"
                          size="mini"
-                         v-model="searchform.status"
+                         v-model="searchform.flowStatus"
               >
                 <el-option :key="index"
                            :label="item.detailName"
@@ -354,7 +354,7 @@
         //判断是否存在未上报的数据，如果存在就提示，不存在就创建
         if(this.data.length>0){
           for (var i=0; i < this.data.length; i++) {
-            if((this.data[i].status ==''||this.data[i].status ==null) && this.data[i].projectId!=this.userdata.managerOrgId){
+            if((this.data[i].flowStatus ==''||this.data[i].flowStatus ==null) && this.data[i].projectId!=this.userdata.managerOrgId){
               this.$message.info('该单位下存在未提交的月报,请提交该单位下所有项目月报后再进行尝试！')
               return false;
             }else if(this.data[i].projectId==this.userdata.managerOrgId && this.data[i].reportType=='1'){
@@ -369,7 +369,8 @@
         params.reportYear=this.searchform.yearDateS.split("-")[0];
         params.reportMonth=this.searchform.yearDateS.split("-")[1];
         params.reportType='1';
-        params.status='1'
+        params.status='2'
+        params.flowStatus="1"
         this.$http.post(
             url,
             JSON.stringify(params),
@@ -437,41 +438,43 @@
           this.$message.info('请选择一条记录进行删除操作！')
           return false
         }
-        let uuids = []
+        let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
           let a=this.userdata.managerOrgId;
           if(item.projectId==this.userdata.managerOrgId){
-            if(item.status!='1'&&item.status!=null){
+            if(item.flowStatus!='1'&&item.flowStatus!=null){
             this.$message.info('只允许删除未上报的数据！')
-            return false
+            return itemStatus=false
             }else{
               uuids.push(item.projectreportuuid);
-              this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-              }).then(() => {
-                this.$http
-                    .post(
-                        '/api/statistics/projectMonthlyReport/Projectreport/list/delete',
-                        { ids: uuids }
-                    )
-                    .then((res) => {
-                      if (res.data.code === 200) {
-                        this.getData()
-                      }else if(res.data.code === 400){
-
-                      }else{
-
-                      }
-
-                    })
-              }).catch(() => {
-              })
             }
           }else{
             this.$message.info('无权删除下级单位月报！')
-            return false
+            return itemStatus=false
+          }
+          if(itemStatus){
+            this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              this.$http
+                  .post(
+                      '/api/statistics/projectMonthlyReport/Projectreport/list/delete',
+                      { ids: uuids }
+                  )
+                  .then((res) => {
+                    if (res.data.code === 200) {
+                      this.getData()
+                    }else if(res.data.code === 400){
+
+                    }else{
+
+                    }
+
+                  })
+            }).catch(() => {
+            })
           }
         })
       },
@@ -502,7 +505,7 @@
           this.$message.info("请选择一条数据，进行编辑", "提示")
           return false
         }
-          if((this.multipleSelection[0].status==''||this.multipleSelection[0].status==null) && this.multipleSelection[0].projectId!=this.userdata.managerOrgId){
+          if((this.multipleSelection[0].flowStatus==''||this.multipleSelection[0].flowStatus==null) && this.multipleSelection[0].projectId!=this.userdata.managerOrgId){
             this.$message.info("该项目月报还未进行创建，无法进行操作", "提示")
             return false
           }else{
@@ -510,7 +513,7 @@
             this.form1 = JSON.parse(JSON.stringify(this.multipleSelection[0]));
             let mList = {projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,projectreportuuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectreportuuid,
               reportYear:JSON.parse(JSON.stringify(this.multipleSelection[0])).reportYear,reportMonth:JSON.parse(JSON.stringify(this.multipleSelection[0])).reportMonth,orgCode:JSON.parse(JSON.stringify(this.multipleSelection[0])).createOrgCode,
-              projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).status,projectName:this.multipleSelection[0].projectName
+              projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).flowStatus,projectName:this.multipleSelection[0].projectName
             }
             this.$router.push({
               path: './companyMDetail/',
@@ -581,7 +584,7 @@
         let mList = {projectId: row.projectId, orgCode: row.createOrgCode,projectName:row.projectName,createOrgId:row.createOrgId,createOrgName:row.createOrgName,
           reportYear:row.reportYear,reportMonth:row.reportMonth,projectreportuuid:row.projectreportuuid,reportType:row.reportType,createOrgType:row.createOrgType
         };
-        if((row.status==''||row.status==null) && row.projectId!=this.userdata.managerOrgId){
+        if((row.flowStatus==''||row.flowStatus==null) && row.projectId!=this.userdata.managerOrgId){
           this.$message.info("该项目月报还未进行创建，无法进行操作", "提示")
           return false
         }else{
