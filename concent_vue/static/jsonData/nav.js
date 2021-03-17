@@ -36,7 +36,7 @@ export default {
               'iconCls': 'el-icon-s-home',
               'menushow': true,
               'leaf': true,
-              'defaultpage': false
+              'defaultpage': true
             },
             {
               'name': '待办已办列表',
@@ -54,7 +54,7 @@ export default {
               'iconCls': 'el-icon-document-copy',
               'menushow': true,
               'leaf': false,
-              'defaultpage': true,
+              'defaultpage': false,
               'children': [
                 {
                   'name': '项目信息登记',
@@ -680,7 +680,7 @@ export default {
               'iconCls': 'el-icon-s-home',
               'menushow': true,
               'leaf': true,
-              'defaultpage': false
+              'defaultpage': true
             },
             {
               'name': '待办已办列表',
@@ -698,7 +698,7 @@ export default {
               'iconCls': 'el-icon-coin',
               'menushow': true,
               'leaf': false,
-              'defaultpage': true,
+              'defaultpage': false,
               'children': [
                 {
                   'name': '工程承包项目',
@@ -1138,7 +1138,7 @@ export default {
               ]
             },
             {
-              'name': '项目月报计划',
+              'name': '项目计划',
               'path': '/statistics/plan',
               'component': '/router',
               'iconCls': 'el-icon-time',
@@ -1444,7 +1444,7 @@ export default {
               'iconCls': 'el-icon-time',
               'menushow': true,
               'leaf': false,
-              'defaultpage': true,
+              'defaultpage': false,
               'children': [
                 {
                   'name': '季报填报',

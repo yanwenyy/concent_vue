@@ -1004,7 +1004,6 @@
               <div class="four-name">合计：</div>
               <el-form-item>
                 <el-input
-                  id="jb0"
                   disabled
                   v-model="detailform.buildingDetailList.JB2_00_convalue"/>
               </el-form-item>
@@ -1012,14 +1011,12 @@
                 <el-input
                   disabled
                   clearable
-
                   v-model="detailform.buildingDetailList.JB2_00_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   disabled
                   clearable
-
                   v-model="detailform.buildingDetailList.JB2_00_value"/>
               </el-form-item>
             </div>
@@ -1052,7 +1049,6 @@
               <div class="four-name">2、商业及服务用房屋：</div>
               <el-form-item>
                 <el-input
-                  id="jb2"
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
                   @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
@@ -1086,7 +1082,7 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_02_001_comvalue"/>
               </el-form-item>
               <el-form-item>
@@ -1103,14 +1099,14 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_02_002_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_02_002_comvalue"/>
               </el-form-item>
               <el-form-item>
@@ -1127,21 +1123,21 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_02_003_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_02_003_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_02_003_value"/>
               </el-form-item>
             </div>
@@ -1151,21 +1147,21 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_02_004_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_02_004_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_02_004_value"/>
               </el-form-item>
             </div>
@@ -1175,21 +1171,21 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_02_005_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_02_005_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_02_005_value"/>
               </el-form-item>
             </div>
@@ -1199,21 +1195,21 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_03_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_03_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_03_value"/>
               </el-form-item>
             </div>
@@ -1223,21 +1219,21 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_04_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_04_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_04_value"/>
               </el-form-item>
             </div>
@@ -1247,21 +1243,21 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_04_001_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_04_001_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_04_001_value"/>
               </el-form-item>
             </div>
@@ -1271,21 +1267,21 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_04_002_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_04_002_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_04_002_value"/>
               </el-form-item>
             </div>
@@ -1295,21 +1291,21 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_04_003_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_04_003_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_04_003_value"/>
               </el-form-item>
             </div>
@@ -1319,21 +1315,21 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_05_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_05_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_05_value"/>
               </el-form-item>
             </div>
@@ -1343,21 +1339,21 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_06_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_06_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_06_value"/>
               </el-form-item>
             </div>
@@ -1367,21 +1363,21 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_06_001_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_06_001_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_06_001_value"/>
               </el-form-item>
             </div>
@@ -1391,21 +1387,21 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_07_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_07_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_07_value"/>
               </el-form-item>
             </div>
@@ -1415,21 +1411,21 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_08_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_08_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_08_value"/>
               </el-form-item>
             </div>
@@ -1439,21 +1435,21 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_09_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_09_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_09_value"/>
               </el-form-item>
             </div>
@@ -1463,21 +1459,21 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_10_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_10_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_10_value"/>
               </el-form-item>
             </div>
@@ -1487,21 +1483,21 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_11_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_11_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_11_value"/>
               </el-form-item>
             </div>
@@ -1511,21 +1507,21 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_12_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_12_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_12_value"/>
               </el-form-item>
             </div>
@@ -1535,21 +1531,21 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_13_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_13_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_13_value"/>
               </el-form-item>
             </div>
@@ -1559,21 +1555,21 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_14_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_14_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_14_value"/>
               </el-form-item>
             </div>
@@ -1583,21 +1579,21 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_15_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_15_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_15_value"/>
               </el-form-item>
             </div>
@@ -1607,21 +1603,21 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_16_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_16_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_16_value"/>
               </el-form-item>
             </div>
@@ -1631,21 +1627,21 @@
               <el-input
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
-
+                @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                 v-model="detailform.buildingDetailList.JB2_17_convalue"/>
             </el-form-item>
             <el-form-item>
               <el-input
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
-
+                @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                 v-model="detailform.buildingDetailList.JB2_17_comvalue"/>
             </el-form-item>
             <el-form-item>
               <el-input
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
-
+                @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                 v-model="detailform.buildingDetailList.JB2_17_value"/>
             </el-form-item>
           </div>
@@ -1655,21 +1651,21 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_convalue','convalue')"
                   v-model="detailform.buildingDetailList.JB2_18_convalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_comvalue','comvalue')"
                   v-model="detailform.buildingDetailList.JB2_18_comvalue"/>
               </el-form-item>
               <el-form-item>
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="Addsum(detailform.buildingDetailList,'JB2_00_value','value')"
                   v-model="detailform.buildingDetailList.JB2_18_value"/>
               </el-form-item>
             </div>
@@ -1678,691 +1674,689 @@
       </el-tab-pane>
       <el-tab-pane label="季报房建完成JB2表(境内)">
         <div class="detailBox">
-          <el-form
-            :inline="false"
-            :model="detailform"
-            :rules="rules"
-            class="gcform"
-            ref="detailform"
-          >
-            <div class="row-four">
-              <div class="four-name">指标名称</div>
-              <div class="four-name">房屋建筑施工面积(平方米)</div>
-              <div class="four-name">房屋建筑竣工面积(平方米)</div>
-              <div class="four-name">房屋竣工价值(万元)</div>
-            </div>
-            <div class="row-four">
-              <div class="four-name">合计：</div>
-              <el-form-item>
-                <el-input
-                  disabled
-                  v-model="detailform.buildingJnDetailList.JB2_00_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  disabled
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_00_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  disabled
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_00_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">1、住宅房屋：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_01_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_01_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_01_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">2、商业及服务用房屋：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_02_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_02_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_02_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">（1）商厦房屋（批发和零售用房）：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_02_001_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_02_001_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_02_001_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">（2）宾馆用房屋（住宿用房）：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_02_002_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_02_002_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_02_002_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">（3）餐饮用房屋（餐饮用房）：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_02_003_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_02_003_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_02_003_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">（4）商务会展用房屋：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_02_004_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_02_004_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_02_004_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">（5）其他商业及服务用房屋（居民服务业用房）：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_02_005_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_02_005_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_02_005_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">3、办公用房屋：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_03_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_03_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_03_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">4、科研、教育、医疗用房屋：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_04_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_04_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_04_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">（1）科学研究用房屋：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_04_001_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_04_001_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_04_001_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">（2）教育用房屋：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_04_002_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_04_002_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_04_002_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">（3）医疗用房屋（卫生医疗用房）：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_04_003_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_04_003_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_04_003_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">5、文化、体育、娱乐用房屋：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_05_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_05_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_05_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">6、厂房及建筑物：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_06_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_06_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_06_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">其中：厂房：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_06_001_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_06_001_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_06_001_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">7、仓库：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_07_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_07_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_07_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">8、其他未列明的房屋建筑物：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_08_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_08_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_08_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">9、铁路工程：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_09_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_09_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_09_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">10、公路工程：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_10_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_10_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_10_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">11、城市轨道：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_11_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_11_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_11_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">12、市政工程：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_12_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_12_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_12_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">13、电力工程：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_13_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_13_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_13_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">14、水利工程：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_14_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_14_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_14_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">15、机场工程：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_15_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_15_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_15_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">16、矿山工程：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_16_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_16_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_16_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">17、港口与航道工程：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_17_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_17_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_17_value"/>
-              </el-form-item>
-            </div>
-            <div class="row-four">
-              <div class="four-name">18、其它工程：</div>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_18_convalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_18_comvalue"/>
-              </el-form-item>
-              <el-form-item>
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-
-                  v-model="detailform.buildingJnDetailList.JB2_18_value"/>
-              </el-form-item>
-            </div>
-          </el-form>
-        </div>
+        <el-form
+          :inline="false"
+          :model="detailform"
+          :rules="rules"
+          class="gcform"
+          ref="detailform"
+        >
+          <div class="row-four">
+            <div class="four-name">指标名称</div>
+            <div class="four-name">房屋建筑施工面积(平方米)</div>
+            <div class="four-name">房屋建筑竣工面积(平方米)</div>
+            <div class="four-name">房屋竣工价值(万元)</div>
+          </div>
+          <div class="row-four">
+            <div class="four-name">合计：</div>
+            <el-form-item>
+              <el-input
+                disabled
+                v-model="detailform.buildingJnDetailList.JB2_00_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                disabled
+                clearable
+                v-model="detailform.buildingJnDetailList.JB2_00_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                disabled
+                clearable
+                v-model="detailform.buildingJnDetailList.JB2_00_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">1、住宅房屋：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_01_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_01_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_01_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">2、商业及服务用房屋：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_02_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_02_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_02_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">（1）商厦房屋（批发和零售用房）：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_02_001_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_02_001_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_02_001_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">（2）宾馆用房屋（住宿用房）：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_02_002_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_02_002_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_02_002_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">（3）餐饮用房屋（餐饮用房）：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_02_003_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_02_003_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_02_003_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">（4）商务会展用房屋：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_02_004_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_02_004_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_02_004_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">（5）其他商业及服务用房屋（居民服务业用房）：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_02_005_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_02_005_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_02_005_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">3、办公用房屋：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_03_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_03_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_03_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">4、科研、教育、医疗用房屋：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_04_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_04_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_04_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">（1）科学研究用房屋：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_04_001_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_04_001_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_04_001_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">（2）教育用房屋：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_04_002_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_04_002_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_04_002_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">（3）医疗用房屋（卫生医疗用房）：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_04_003_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_04_003_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_04_003_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">5、文化、体育、娱乐用房屋：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_05_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_05_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_05_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">6、厂房及建筑物：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_06_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_06_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_06_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">其中：厂房：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_06_001_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_06_001_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_06_001_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">7、仓库：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_07_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_07_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_07_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">8、其他未列明的房屋建筑物：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_08_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_08_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_08_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">9、铁路工程：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_09_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_09_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_09_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">10、公路工程：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_10_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_10_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_10_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">11、城市轨道：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_11_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_11_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_11_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">12、市政工程：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_12_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_12_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_12_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">13、电力工程：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_13_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_13_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_13_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">14、水利工程：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_14_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_14_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_14_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">15、机场工程：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_15_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_15_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_15_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">16、矿山工程：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_16_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_16_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_16_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">17、港口与航道工程：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_17_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_17_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_17_value"/>
+            </el-form-item>
+          </div>
+          <div class="row-four">
+            <div class="four-name">18、其它工程：</div>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_convalue','convalue')"
+                v-model="detailform.buildingJnDetailList.JB2_18_convalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_comvalue','comvalue')"
+                v-model="detailform.buildingJnDetailList.JB2_18_comvalue"/>
+            </el-form-item>
+            <el-form-item>
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                @input="Addsum(detailform.buildingJnDetailList,'JB2_00_value','value')"
+                v-model="detailform.buildingJnDetailList.JB2_18_value"/>
+            </el-form-item>
+          </div>
+        </el-form>
+      </div>
       </el-tab-pane>
       <el-tab-pane label="季报从业人员JB3表">
         <div class="detailBox">
@@ -2945,7 +2939,7 @@
           list[name]=0;
           var val=0;
           for(var i in list){
-              if(i.indexOf(type)!=-1){
+              if(i.indexOf('_'+type)!=-1){
                   val=val+(Number(list[i])||0)
               }
           }
