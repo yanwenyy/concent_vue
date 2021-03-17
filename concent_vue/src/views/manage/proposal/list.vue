@@ -7,25 +7,25 @@
         <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
         <!-- <el-button @click="searchformReset" type="primary" plain>刷新<i class="el-icon-refresh-left"></i></el-button> -->
 
-
         <el-upload
-              style="float:left"
-              class="upload-demo detailUpload detail-back-tab add-group "
-              :action="'/api/contract/topInfo/TopInfor/list/importExcel'"
-              :on-success="handleChange"
-              :headers="{'Authorization':Authorization}"
-              :on-error="handleChange"
-              :show-file-list="false"
-              accept=".xls,.xlsx"
-              multiple
-            >
-              <el-button
-                type="primary"
-                plain
-                class="new-add-btn"
-                ><i class="el-icon-download"></i>导入
-                </el-button>
+          style="float:left"
+          class="upload-demo detailUpload detail-back-tab add-group "
+          :action="'/api/contract/topInfo/TopInfor/list/importExcel'"
+          :on-success="handleChange"
+          :headers="{'Authorization':Authorization}"
+          :on-error="handleChange"
+          :show-file-list="false"
+          accept=".xls,.xlsx"
+          multiple
+        >
+          <el-button
+            type="primary"
+            plain
+            class="new-add-btn"
+          ><i class="el-icon-download"></i>导入
+          </el-button>
         </el-upload>
+
         <el-button @click="exportdata" type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>
       </el-button-group>
       <div style="float: right">

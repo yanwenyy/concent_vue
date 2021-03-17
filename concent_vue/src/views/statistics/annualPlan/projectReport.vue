@@ -5,15 +5,14 @@
         <el-form-item label="填报年月:">
           <el-date-picker
             v-model="searchform.reportDate"
-            type="month"
-            value-format="yyyy-MM"
-            placeholder="选择月">
+            type="year"
+            placeholder="选择年">
           </el-date-picker>
         </el-form-item>
       </el-form>
       <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>新增</el-button>
-        <el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
+        <!--<el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>新增</el-button>-->
+        <el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>自揽项目批量填写0计划</el-button>
         <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
       </el-button-group>
       <div style="float: right">
@@ -31,7 +30,7 @@
         class="tableStyle"
         :max-height="$tableHeight"
         :height="$tableHeight"
-        :data="tableData"
+        :data="[{}]"
         :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
         @row-dblclick="rowshow"
         @selection-change="handleSelectionChange"
@@ -56,120 +55,103 @@
           type="index"
         ></el-table-column>
         <el-table-column
-          :width="500"
-          label="填报单位"
-          prop="createOrgName"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>填报单位</span>
-            <div>
-              <el-input
-                class="list-search-picker"
-                style=" width: 100%"
-                v-model="searchform.createOrgName"
-                size="mini"
-              />
-            </div>
-          </template>
-          <!--<template slot-scope="scope">-->
-            <!--<span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>-->
-          <!--</template>-->
-        </el-table-column>
-        <el-table-column
           :width="200"
           align="center"
-          label="年月"
+          label="计划日期"
           prop="reportDate"
           show-overflow-tooltip
         >
         </el-table-column>
         <el-table-column
+          :width="500"
+          label="填报单位"
+          prop="createOrgName"
+          show-overflow-tooltip
+        >
+          <!--<template slot-scope="scope">-->
+            <!--<span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>-->
+          <!--</template>-->
+        </el-table-column>
+
+        <el-table-column
           :width="200"
           align="center"
-          label="审核状态"
+          label="项目状态"
           prop="stauts"
           show-overflow-tooltip
 
         >
-          <template slot="header" slot-scope="scope">
-            <span>审核状态</span>
-            <div>
-              <el-select
-                class="list-search-picker"
-                clearable
-                filterable
-                placeholder="请选择"
-                size="mini"
-                v-model="searchform.stauts"
-              >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in flowStatusList"
-                ></el-option>
-              </el-select>
-              <!--<el-input-->
-              <!--class="list-search-picker"-->
-              <!--style=" width: 100%"-->
-              <!--v-model="searchform.flowStatus"-->
-              <!--size="mini"-->
-              <!--/>-->
-            </div>
-          </template>
         </el-table-column>
+        <el-table-column
+          :width="200"
+          align="center"
+          label="工程合同额"
+          prop="stauts"
+          show-overflow-tooltip
+
+        >
+        </el-table-column>
+        <el-table-column
+          :width="200"
+          align="center"
+          label="剩余额"
+          prop="stauts"
+          show-overflow-tooltip
+
+        >
+        </el-table-column>
+        <el-table-column
+          :width="200"
+          align="center"
+          label="本年计划"
+          prop="stauts"
+          show-overflow-tooltip
+
+        >
+        </el-table-column>
+        <el-table-column
+          :width="200"
+          align="center"
+          label="填报类型"
+          prop="stauts"
+          show-overflow-tooltip
+
+        >
+        </el-table-column>
+        <el-table-column
+          :width="200"
+          align="center"
+          label="状态"
+          prop="stauts"
+          show-overflow-tooltip
+
+        >
+        </el-table-column>
+
         <el-table-column
           :width="180"
           align="center"
-          label="创建时间"
+          label="审核通过时间"
           prop="createTime"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>创建时间</span>
-            <div>
-              <el-date-picker
-                class="list-search-picker"
-                filterable
-                clearable
-                type="date"
-                value-format="timestamp"
-                v-model="searchform.createTime"
-
-              >
-              </el-date-picker>
-            </div>
-          </template>
           <template slot-scope="scope">{{
             scope.row.createTime | dateformat
             }}</template>
         </el-table-column>
         <el-table-column
-          :width="180"
+          :width="200"
           align="center"
-          label="审核通过时间"
-          prop="state"
+          label="操作"
+          prop="stauts"
           show-overflow-tooltip
+          fixed="right"
         >
-          <template slot="header" slot-scope="scope">
-            <span>审核通过时间</span>
-            <div>
-              <el-date-picker
-                class="list-search-picker"
-                filterable
-                clearable
-                type="date"
-                value-format="timestamp"
-                v-model="searchform.planBidTime"
-
-              >
-              </el-date-picker>
-            </div>
+          <template slot-scope="scope">
+            <el-link type="warning">详细显示</el-link>
+            <el-link type="success" @click="rowshow(scope.row)">查看</el-link>
+            <el-link type="primary">修改</el-link>
           </template>
-          <template slot-scope="scope">{{
-            scope.row.auditDate | dateformat
-            }}</template>
         </el-table-column>
       </el-table>
     </div>
@@ -284,9 +266,9 @@
       // 查看
       rowshow(row) {
         console.log(row)
-        let p = {actpoint: "look", reportUuid: row.uuid,reportDate: row.reportDate,stauts:row.stauts};
+        let p = {actpoint: "look", row: row};
         this.$router.push({
-          path: "./detail/",
+          path: "./projectReportDetail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       },
@@ -392,9 +374,8 @@
     created() {
       //获取当前月份
       var sj=new Date().toLocaleDateString().split('/');
-      sj[1]=sj[1]<10?'0'+sj[1]:sj[1];
-      this.searchform.reportDate=sj[0]+"-"+sj[1];
-      this.getData();
+      this.searchform.reportDate=sj[0];
+      // this.getData();
     },
   };
 </script>
