@@ -3359,9 +3359,8 @@
         this.$http
           .post(
             '/api/statistics/unProjectReport/export/exportDataToExcel',
-            JSON.stringify(this.searchform[type]),
-            {responseType:'arraybuffer'},
-            {useJson: true}
+            this.searchform[type],
+            { responseType: 'blob' }
           )
           .then((res) => {
           // let blob = new Blob([res.data], {type: "application/vnd.ms-excel"});
