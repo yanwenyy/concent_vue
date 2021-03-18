@@ -1397,6 +1397,15 @@ export default {
                   'menushow': true,
                   'leaf': true,
                   'defaultpage': false
+                },
+                {
+                  'name': '集团公司月报',
+                  'path': '/statistics/projectCheck/jTList',
+                  'component': '/statistics/projectCheck/jTList',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
                 }
               ]
             },

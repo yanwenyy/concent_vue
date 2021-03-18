@@ -243,7 +243,12 @@
         page: { current: 1, size: 20, total: 0, records: [] },
         searchform: {
           current: 1,
-          size: 20
+          size: 20,
+          reportProjectName:'',
+          flowStatus:'',
+          createOrgName:'',
+          yearDateS:''
+
         },
         menus: [],
         multipleSelection: [],
@@ -441,11 +446,13 @@
       searchformSubmit() {
         this.searchform.current = 1
         var shijian=this.searchform.yearDateS;
+        if(shijian!=''&& shijian!=null){
         var y=shijian.split("-")[0];
         var m =shijian.split("-")[1];
         this.searchform.reportYear=y;
         this.searchform.reportMonth=m;
-        this.getData()
+        }
+        this.getData();
       },
       searchformReset() {
         this.searchform = {
