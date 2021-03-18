@@ -328,7 +328,7 @@
           };
         }
         if (this.multipleSelection[0].createOrgCode==this.userdata.managerOrgCode && (this.multipleSelection[0].flowStatus==''||this.multipleSelection[0].flowStatus==null)) {
-          var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/jtReportEntityInfo';
+          var url = '/api/statistics/Projectcheck/detail/jtReportEntityInfo';
         var params =  this.multipleSelection[0];
         this.$http.post(
             url,
@@ -409,7 +409,7 @@
           }).then(() => {
             this.$http
             .post(
-               '/api/statistics/projectMonthlyReport/Projectreport/list/delete',{ids: uuids}
+               '/api/statistics/Projectcheck/list/delete',{ids: uuids}
 
             )
             .then((res) => {
@@ -442,7 +442,7 @@
           }).then(() => {
             this.$http
                 .post(
-                    '/api/statistics/projectMonthlyReport/Projectreport/detail/summaryReportM',datas
+                    '/api/statistics/Projectcheck/detail/summaryReportM',datas
 
                 )
                 .then((res) => {
@@ -498,7 +498,7 @@
         this.searchform.reportMonth= this.searchform.yearDateS.split("-")[1];
         this.$http
           .post(
-            "/api/statistics/projectMonthlyReport/Projectreport/list/jtQueryEntInfo",
+            "/api/statistics/Projectcheck/list/jtQueryEntInfo",
             this.searchform
           )
           .then((res) => {
@@ -546,3 +546,5 @@
     line-height: 30px;
   }
 </style>
+
+
