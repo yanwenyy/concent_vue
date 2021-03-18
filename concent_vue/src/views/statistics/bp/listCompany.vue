@@ -165,6 +165,7 @@ export default {
   data() {
     return {
       checkedList:[],//tree默认勾选数组
+      disabledList:[],//tree禁用数组
       form:{
             code:'',
             name:''
@@ -344,38 +345,56 @@ export default {
     },
     // 树节点保存
     handleCheckChange(data, checked) {
-      console.log(data,checked)
+      // console.log(data,checked)
+      var list=checked.checkedNodes,subList=[];
+      list.forEach((item)=>{
+        if(item.disabled!=true){
+          subList.push(item)
+        }
+      });
+      console.log(list,subList)
       // console.log(checked.checkedKeys.indexOf(data.uuid))
-      var ifChecked=checked.checkedKeys.indexOf(data.uuid);
-      if(ifChecked!=-1){
-          //debugger
-        this.$http
-          .post(
-            "/api/statistics/bp/BpGdwtjxsz/detail/save",
-             JSON.stringify({ids:[data.uuid],projectType:this.itemform.vprojecttypes,vcode:data.vcode}),
-            {useJson: true}
-          )
-          .then((res) => {
-          //      this.$http
-          //         .post(
-          //           "/api/statistics/bp/BpGdwtjxsz/list/deleteById",
-          //         {ids:data.uuid,projectId:this.itemform.vprojecttypes},
 
-          //         )
-          //         .then((res) => {
-          //           // console.log(res.data)
-          //         });
-          });
-      }else{
-        this.$http
-          .post(
-            "/api/statistics/bp/BpGdwtjxsz/list/deleteById",
-          {ids:data.uuid,projectId:this.itemform.vprojecttypes},
+      this.$http
+        .post(
+          "/api/statistics/bp/BpGdwtjxsz/detail/saveAll",
+          JSON.stringify(subList),
+          {useJson: true}
+        )
+        .then((res) => {
+      });
 
-          )
-          .then((res) => {
-          });
-      }
+      //old
+      // var ifChecked=checked.checkedKeys.indexOf(data.uuid);
+      // if(ifChecked!=-1){
+      //     //debugger
+      //   this.$http
+      //     .post(
+      //       "/api/statistics/bp/BpGdwtjxsz/detail/save",
+      //        JSON.stringify({ids:[data.uuid],projectType:this.itemform.vprojecttypes,vcode:data.vcode}),
+      //       {useJson: true}
+      //     )
+      //     .then((res) => {
+      //     //      this.$http
+      //     //         .post(
+      //     //           "/api/statistics/bp/BpGdwtjxsz/list/deleteById",
+      //     //         {ids:data.uuid,projectId:this.itemform.vprojecttypes},
+      //
+      //     //         )
+      //     //         .then((res) => {
+      //     //           // console.log(res.data)
+      //     //         });
+      //     });
+      // }else{
+      //   this.$http
+      //     .post(
+      //       "/api/statistics/bp/BpGdwtjxsz/list/deleteById",
+      //     {ids:data.uuid,projectId:this.itemform.vprojecttypes},
+      //
+      //     )
+      //     .then((res) => {
+      //     });
+      // }
 
     },
     handleNodeClick(data,node) {
@@ -438,12 +457,15 @@ export default {
         {'projectType':this.itemform.vprojecttypes}
         )
         .then((res) => {
-          var datas=res.data.data,list=[];
+          var datas=res.data.data,list=[],disabledList=[];
           datas.forEach((item)=>{
-            list.push(item.vtjxid)
+            list.push(item.vtjxid);
+            if(item.disabled==true){
+              disabledList.push(item.vtjxid)
+            }
           })
           this.checkedList= list;
-          console.log(this.checkedList)
+          this.disabledList=disabledList;
         });
       setTimeout(() => {
         if(this.itemform.vprojecttypes!=''){
@@ -465,7 +487,10 @@ export default {
                 item.icon = 'el-icon-folder';
 
               }
+              // console.log(item.uuid,'==>',this.disabledList.indexOf(item.uuid)!=-1)
+              item.disabled=this.disabledList.indexOf(item.uuid)!=-1?true:null;
               data.push(item);
+
             });
             this.itemList=data;
             // this.itemList = res.data.data;
