@@ -368,6 +368,9 @@
             path: "./jTMDetail/",
             query: {mList: this.$utils.encrypt(JSON.stringify(mList))},
           });
+        }else{
+          this.$message.info("当前工程月报还没创建，创建后再修改！");
+          return false;
         }
 
 
