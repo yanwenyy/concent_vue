@@ -354,7 +354,10 @@ export default {
       });
       console.log(list,subList)
       // console.log(checked.checkedKeys.indexOf(data.uuid))
-
+      subList.forEach((item)=>{
+        item.typeBpGdw=this.itemform.vprojecttypes;
+      });
+      console.log("分别覆盖==="+subList);
       this.$http
         .post(
           "/api/statistics/bp/BpGdwtjxsz/detail/saveAll",
