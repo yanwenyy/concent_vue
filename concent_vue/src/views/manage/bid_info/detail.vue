@@ -489,7 +489,14 @@
                 filterable
                 clearable
                 placeholder="请选择"
-                v-model="detailform.bidInfo.bidModeName"
+                v-model="detailform.bidInfo.bidModeId"
+                @change="
+                getName(
+                  detailform.bidInfo.bidModeId,
+                  bidType,
+                  'bidModeName',
+                  'bidModeCode'
+                )"
               >
                 <el-option
                   :key="index"
@@ -1369,13 +1376,15 @@ export default {
       console.log(v);
     },
     //获取下拉框id和name的公共方法
-    getName(id, list, name) {
+    getName(id, list, name,code) {
       if (id) {
         this.$forceUpdate();
-        this.detailform.topInfor[name] = list.find(
+        this.detailform.bidInfo[name] = list.find(
           (item) => item.id == id
         ).detailName;
-        console.log(this.detailform.topInfor[name]);
+          this.detailform.bidInfo[code] = list.find(
+              (item) => item.id == id
+          ).detailCode;
       }
     },
     saveInfo(formName,type) {
