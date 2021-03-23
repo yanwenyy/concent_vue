@@ -39,7 +39,8 @@
                 getName(
                   detailForm.bidInfoSection.bidEvaluationMethodId,
                   bidMethod,
-                  'bidEvaluationMethodName'
+                  'bidEvaluationMethodName',
+                  'bidEvaluationMethodCode'
                 )
               "
                 v-model="detailForm.bidInfoSection.bidEvaluationMethodId">
@@ -551,13 +552,15 @@ import { isMoney } from '@/utils/validate'
       this.detailForm.bidInfoSection.openBidPlaceName = data.fullDetailName;
       this.key = this.key + 1;
     },
-    getName(id, list, name) {
+    getName(id, list, name ,code) {
       if(id){
         this.$forceUpdate()
         this.detailForm.bidInfoSection[name] = list.find(
           (item) => item.id == id
       ).detailName;
-        console.log(this.detailForm.bidInfoSection[name]);
+          this.detailForm.bidInfoSection[code] = list.find(
+              (item) => item.id == id
+          ).detailCode;
       }
     },
         //选择项目地点

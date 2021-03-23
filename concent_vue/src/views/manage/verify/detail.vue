@@ -453,7 +453,14 @@
                 filterable
                 clearable
                 placeholder="请选择"
-                v-model="detailform.verify.bidModeName"
+                v-model="detailform.verify.bidModeId"
+                @change="
+                getName(
+                  detailform.verify.bidModeId,
+                  bidType,
+                  'bidModeName',
+                  'bidModeCode'
+                )"
               >
                 <el-option
                   :key="index"
@@ -917,17 +924,7 @@ export default {
       treeOrgStatas2: false,
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
       detailform: {
-        'verify': {
-          bidModeName:'',
-          isCoalitionBid:'',
-          verifyTypeName:'',
-          verifyExplain:'',
-          saleTime:'',
-          subTime:'',
-          designOrg:'',
-          publishTime:'',
-          flowStatus:'0'
-        },
+         verify:{},
         'topInfor': {
         },
         'sectionStr': [
@@ -1015,13 +1012,15 @@ export default {
         });
       },
 //获取下拉框id和name的公共方法
-    getName(id, list, name) {
+    getName(id, list, name,code) {
       if(id){
-        this.$forceUpdate()
-        this.detailform.topInfor[name] = list.find(
-          (item) => item.id == id
-        ).detailName;
-        // console.log(this.detailform.topInfor[name]);
+        this.$forceUpdate();
+          this.detailform.verify[name] = list.find(
+              (item) => item.id == id
+          ).detailName;
+          this.detailform.verify[code] = list.find(
+              (item) => item.id == id
+          ).detailCode;
       }
     },
     back() {
@@ -1445,7 +1444,7 @@ export default {
     // eslint-disable-next-line no-unde
     this.getDetail()
     this.getTopInforDetail();
-
+    this.$store.dispatch("getConfig", {});
   }
 }
 </script>
