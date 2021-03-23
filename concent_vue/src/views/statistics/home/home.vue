@@ -11,7 +11,7 @@
                 :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
                 border
                 highlight-current-row
-                @row-dblclick="rowshow"
+                @row-click="rowshow"
                 ref="table"
                 tooltip-effect="dark"
               >
@@ -28,6 +28,9 @@
                   prop="businessName"
                   show-overflow-tooltip
                 >
+                  <template slot-scope="scope">
+                    <span class="blue pointer">{{scope.row.businessName}}</span>
+                  </template>
                 </el-table-column>
                 <el-table-column
                   :width="150"
@@ -80,7 +83,7 @@
                 :data="page2.records"
                 :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
                 border
-                @row-dblclick="rowshow"
+                @row-click="rowshow"
                 highlight-current-row
                 ref="table"
                 tooltip-effect="dark"
@@ -98,6 +101,9 @@
                   prop="businessName"
                   show-overflow-tooltip
                 >
+                  <template slot-scope="scope">
+                    <span class="blue pointer">{{scope.row.businessName}}</span>
+                  </template>
                 </el-table-column>
                 <el-table-column
                   :width="150"
@@ -254,7 +260,7 @@
         url=this.$utils.getUrl[row.businessType];
         this.urlGO(p,url)
       }
-      
+
       },
       urlGO(p,url){
         this.$router.push({
