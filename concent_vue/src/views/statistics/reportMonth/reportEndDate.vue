@@ -105,7 +105,27 @@
           <template slot="header" slot-scope="scope">
             <span>状态</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.startStatus" size="mini"/>
+              <el-select
+                class="list-search-picker"
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="searchform.startStatus"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in flowStatusList"
+                ></el-option>
+              </el-select>
+              <!--<el-input-->
+              <!--class="list-search-picker"-->
+              <!--style=" width: 100%"-->
+              <!--v-model="searchform.flowStatus"-->
+              <!--size="mini"-->
+              <!--/>-->
             </div>
           </template>
            <template slot-scope="scope">
@@ -123,9 +143,9 @@
             <span>标准上报时间</span>
             <div>
               <el-date-picker
-                 v-model="form1.standardreporttime"
+                 v-model="searchform.standardreporttime"
                   type="date"
-                  format="d"
+                  format="dd"
                    value-format="dd"
                  placeholder="选择日" style=" width: 100%" size="mini">
                </el-date-picker>
@@ -143,9 +163,9 @@
             <span>截止上报时间</span>
             <div>
               <el-date-picker
-                v-model="form1.endreporttime"
+                v-model="searchform.endreporttime"
                  type="date"
-                 format="d"
+                 format="dd"
                   value-format="dd"
                 placeholder="选择日" style=" width: 100%" size="mini">
               </el-date-picker>
@@ -166,6 +186,7 @@
              style=" width: 100%"
              v-model="searchform.createTime"
              size="mini"
+             type="datetime"
              value-format="timestamp"
           >
             </el-date-picker>
@@ -175,7 +196,7 @@
             <!-- <div>{{scope.row.monthValue}}</div>-->
             <div>
               {{
-              scope.row.createTime | monthdateformat
+              scope.row.createTime | dateformat
               }}
             </div>
 
@@ -201,7 +222,7 @@
                 <tr>
                   <td><span style="color: red;font-weight:bold">*</span>填报单位:</td>
                   <td style="width:70%;text-align:left;padding:10px">
-                    <el-input v-model.trim="form1.createOrgName" placeholder="填报单位" min="0" max="500" type="text"
+                    <el-input  :disabled="true" v-model.trim="form1.createOrgName" placeholder="填报单位" min="0" max="500" type="text"
                       style="width:100%" ></el-input>
                     <span style="color:red;font-size:12px" v-if="this.show && this.form1.createOrgName == ''">此项不能为空</span>
                   </td>
@@ -209,7 +230,7 @@
                 <tr>
                   <td><span style="color: red;font-weight:bold">*</span>填报人:</td>
                   <td style="width:70%;text-align:left;padding:10px">
-                    <el-input v-model.trim="form1.createUserName" style="width:100%" type="text" placeholder="填报人:"></el-input>
+                    <el-input  :disabled="true" v-model.trim="form1.createUserName" style="width:100%" type="text" placeholder="填报人:"></el-input>
                     <span style="color:red;font-size:12px" v-if="this.show && this.form1.createUserName == ''">此项不能为空</span>
                   </td>
                 </tr>
@@ -220,6 +241,7 @@
                            <el-radio label="1" ><span>启用</span></el-radio>
                            <el-radio label="2" ><span>未启用</span></el-radio>
                          </el-radio-group>
+                    <span style="color:red;font-size:12px" v-if="this.show && this.form1.startStatus == ''">此项不能为空</span>
                   </td>
                 </tr>
                  <tr>
@@ -232,6 +254,7 @@
                                value-format="dd"
                               placeholder="选择日">
                             </el-date-picker>
+                        <span style="color:red;font-size:12px" v-if="this.show && this.form1.standardreporttime == ''">此项不能为空</span>
                       </td>
                     </tr>
                      <tr>
@@ -244,6 +267,7 @@
                                     value-format="dd"
                                   placeholder="选择日">
                                 </el-date-picker>
+                            <span style="color:red;font-size:12px" v-if="this.show && this.form1.endreporttime == ''">此项不能为空</span>
                           </td>
                     </tr>
               </table>
@@ -308,7 +332,18 @@
           restrictedobjects:'',
           standardreporttime:'',
         },
+        show:false,
         menus: [],
+        flowStatusList:[
+          {
+            detailName:"启用",
+            id:'1'
+          },
+          {
+            detailName:"未启用",
+            id:'2'
+          }
+        ],
         multipleSelection: [],
         orgTree: []
       }
@@ -448,11 +483,6 @@
       },
       searchformSubmit() {
         this.searchform.current = 1;
-      if (this.searchform.createTime != "") {
-            var date = new Date(this.searchform.createTime);
-            var time1 = Date.parse(date);
-            this.searchform.createTime = time1;
-          }
         this.getData()
       },
       searchformReset() {
@@ -496,7 +526,8 @@
           }
           this.show = false
           this.showCfclAddDialog1 = false
-          this.query()
+         this.getData()
+         this.form1.startStatus='2'
         }
     },
 

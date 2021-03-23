@@ -276,13 +276,18 @@
             ><el-input v-model="projectList.projectName" disabled ></el-input>
             </el-form-item>
             <el-form-item
-              label="板块:"
-            ><el-input v-model="projectList.projectPlate" disabled></el-input>
+              label="项目板块:"
+              prop="projectList.projectModuleName"
+              style="width: 32.5%">
+              <el-input
+                disabled
+                v-model="projectList.projectModuleName">
+              </el-input>
             </el-form-item>
             <el-form-item
               label="项目类型:"
             >
-                <el-input v-model="projectList.projectType" disabled></el-input>
+                <el-input v-model="projectList.projectTypeName" disabled></el-input>
             </el-form-item>
             <el-form-item
               label="承建单位:"
@@ -302,7 +307,12 @@
             </el-form-item>
             <el-form-item
               label="项目状态:"
-            ><el-input v-model="projectList.projectStatus" disabled ></el-input>
+              prop="projectList.projectStatusName"
+              style="width: 32.5%">
+              <el-input
+                disabled
+                v-model="projectList.projectStatusName">
+              </el-input>
             </el-form-item>
             <el-form-item
               label="项目所在地:"
@@ -334,19 +344,55 @@
             </el-form-item>
             <el-form-item
               label="合同竣工日期:"
-            ><el-input v-model="projectList.contractEndTime| dateformat" disabled ></el-input>
+            >
+              <el-date-picker
+                disabled="true"
+                class="list-search-picker"
+                filterable
+                clearable
+                type="month"
+                v-model="projectList.contractEndTime"
+              >
+              </el-date-picker>
             </el-form-item>
             <el-form-item
               label="合同签订日期:"
-            ><el-input v-model="projectList.projectName| dateformat" disabled ></el-input>
+            >
+              <el-date-picker
+                disabled="true"
+                class="list-search-picker"
+                filterable
+                clearable
+                type="month"
+                v-model="projectList.contractSignTime"
+              >
+              </el-date-picker>
             </el-form-item>
             <el-form-item
               label="实际开工日期:"
-            ><el-input v-model="projectList.realStartTime| dateformat" disabled ></el-input>
+            >
+              <el-date-picker
+                disabled="true"
+                class="list-search-picker"
+                filterable
+                clearable
+                type="month"
+                v-model="projectList.realStartTime"
+              >
+              </el-date-picker>
             </el-form-item>
             <el-form-item
               label="实际竣工日期:"
-            ><el-input v-model="projectList.realEndTime | dateformat" disabled ></el-input>
+            >
+              <el-date-picker
+                disabled="true"
+                class="list-search-picker"
+                filterable
+                clearable
+                type="month"
+                v-model="projectList.realEndTime"
+              >
+              </el-date-picker>
             </el-form-item>
             <el-form-item
               label="竣工产值:"
@@ -425,6 +471,12 @@
         planPrjTjxDetailList: [],
       }
     },
+    projectPlate() {
+      return this.$store.state.projectPlate
+    },
+    projectStatus() {
+      return this.$store.state.projectStatus
+    },
     computed: {
       vnameMarginLeft() {
         return (vcode, veditable) => {
@@ -469,6 +521,15 @@
                 })
               }
             })
+      },
+      getName(id, list, name) {
+        debugger
+        if (id) {
+          this.$forceUpdate()
+          this.projectList[name] = list.find(
+              (item) => item.id === id
+          ).detailName
+        }
       },
       submit() {
         this.dataReport.status="2"
@@ -714,7 +775,7 @@
   }
   /deep/ .el-input__inner{
     height: 25px;
-    text-align: right;
+    //text-align: right;
     padding-right:2px;
   }
   .margin-left-25{
@@ -742,7 +803,7 @@
   }
   /deep/ .el-input__inner{
     height: 25px;
-    text-align: right;
+    //text-align: right;
     padding-right:2px;
   }
   /*按钮样式*/

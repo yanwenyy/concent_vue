@@ -1,15 +1,9 @@
 <template>
   <div>
     <div style="width: 100%; overflow: hidden">
-      <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>创建</el-button>
-        <el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
-        <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
-        <el-button @click="summary" type="primary" plain><i class="el-icon-coin"></i>重新汇总</el-button>
-      </el-button-group>
       <div style="float: right">
-        <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
         <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
+        <!-- <el-button @click="Importdata" type="primary" plain>导入</el-button> -->
       </div>
     </div>
 
@@ -51,7 +45,7 @@
           prop="createOrgName"
           show-overflow-tooltip
         >
-       <!--   <template slot="header" slot-scope="scope">
+         <!-- <template slot="header" slot-scope="scope">
             <span>填报单位</span>
             <div>
               <el-input
@@ -106,11 +100,11 @@
           :width="200"
           align="center"
           label="审核状态"
-          prop="flowStatus"
+          prop="flowStauts"
           show-overflow-tooltip
 
         >
-<!--          <template slot="header" slot-scope="scope">
+ <!--         <template slot="header" slot-scope="scope">
             <span>审核状态</span>
             <div>
               <el-select
@@ -148,7 +142,7 @@
           prop="createTime"
           show-overflow-tooltip
         >
-<!--          <template slot="header" slot-scope="scope">
+       <!--   <template slot="header" slot-scope="scope">
             <span>创建时间</span>
             <div>
               <el-date-picker
@@ -162,7 +156,7 @@
               >
               </el-date-picker>
             </div>
-          </template-->>
+          </template>-->
           <template slot-scope="scope">{{
             scope.row.createTime | dateformat
             }}</template>
@@ -174,7 +168,7 @@
           prop="state"
           show-overflow-tooltip
         >
-    <!--      <template slot="header" slot-scope="scope">
+         <!-- <template slot="header" slot-scope="scope">
             <span>审核通过时间</span>
             <div>
               <el-date-picker
@@ -269,7 +263,7 @@
         setTimeout(() => {
           this.$http
               .post(
-                  "/api/statistics/projectMonthlyReport/Projectreport/list/jtClickQueryEntInfo",
+                  "/api/statistics/Projectcheck/list/jtClickQueryEntInfo",
                   tree
               )
               .then((res) => {
@@ -304,79 +298,9 @@
           query: {mList: this.$utils.encrypt(JSON.stringify(mList))},
         });
       },
-      // 增加
-      add() {
-        if (this.multipleSelection.length !== 1) {
-          this.$message.info("请选择一条记录进行创建操作！");
-          return false;
-        }
-        if (this.multipleSelection[0].createOrgCode==this.userdata.managerOrgCode && (this.multipleSelection[0].flowStatus!='' && this.multipleSelection[0].flowStatus!=null)) {
-          this.$message.info("本单位月报已经创建！");
-          return false;
-        }
-        if(this.multipleSelection[0].createOrgCode!=this.userdata.managerOrgCode){
-          this.$message.info("无权操作下级单位月报！");
-          return false;
-        }
-        //判断是否存在未上报的数据，如果存在就提示，不存在就创建
-    /*    if(this.tableData.length>0){
-          for (var i=0; i < this.tableData.length; i++) {
-            if((this.tableData[i].flowStatus ==''||this.tableData[i].flowStatus ==null) && this.tableData[i].projectId!=this.tableData.managerOrgId){
-              this.$message.info('该单位下存在未提交的月报,请提交该单位下所有项目月报后再进行尝试！')
-              return false;
-            }
-          };
-        }*/
-        if (this.multipleSelection[0].createOrgCode==this.userdata.managerOrgCode && (this.multipleSelection[0].flowStatus==''||this.multipleSelection[0].flowStatus==null)) {
-          var url = '/api/statistics/Projectcheck/detail/jtReportEntityInfo';
-        var params =  this.multipleSelection[0];
-        this.$http.post(
-            url,
-            JSON.stringify(params),
-            {useJson: true}
-        ).then((res) => {
-          if (res.data.code === 200) {
-            this.$message({
-              message: '创建成功'
-            });
-            this.getData();
-          }else if(res.data.code === 400){
-            this.$message({
-              message: '该单位已在本月创建过月报请尝试修改或于下月再进行尝试'
-            });
-            this.getData();
-          }else{
-            this.$message({
-              message: '创建失败'
-            });
-          }
-        });}
-      },
-      // 修改
-      totop() {
-        if (this.multipleSelection.length !== 1) {
-          this.$message.info("请选择一条记录进行查看操作！");
-          return false;
-        }
-         if(this.multipleSelection[0].createOrgCode!=this.userdata.managerOrgCode){
-           this.$message.info("无权操作下级单位数据！");
-           return false;
-        }
-        if (this.multipleSelection[0].createOrgCode==this.userdata.managerOrgCode && (this.multipleSelection[0].flowStatus!='' && this.multipleSelection[0].flowStatus!=null)){
-          let mList = {actpoint: "edit", params: this.multipleSelection[0]};
-          this.$router.push({
-            path: "./jTMDetail/",
-            query: {mList: this.$utils.encrypt(JSON.stringify(mList))},
-          });
-        }else{
-          this.$message.info("当前工程月报还没创建，创建后再修改！");
-          return false;
-        }
-
-
-      },
       // 查看
       rowshow(row) {
+      debugger
         let mList = {actpoint: "look", params: row};
         if(row.flowStatus==''||row.flowStatus==null){
           this.$message.info("该项目月报还未完成上报,无法查看");
@@ -388,89 +312,6 @@
           });
         }
       },
-      // 删除
-      remove() {
-        if (this.multipleSelection.length < 1) {
-          this.$message.info("请选择一条记录进行查看操作！");
-          return false;
-        }
-        let uuids = [],itemStatus=true;
-        this.multipleSelection.forEach((item) => {
-          if(item.createOrgCode==this.userdata.managerOrgCode && (item.flowStatus=='1'||item.flowStatus!=''|| item.flowStatus!=null)){
-            uuids.push(item.uuid);
-          }else{
-          this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
-          return itemStatus=false;
-        }
-      })
-
-        if(itemStatus){
-          this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            this.$http
-            .post(
-               '/api/statistics/Projectcheck/list/delete',{ids: uuids}
-
-            )
-            .then((res) => {
-            this.getData()
-        });
-        }).catch(() => {})
-        }
-
-      },
-      // 重新汇总
-      summary() {
-        if (this.multipleSelection.length < 1) {
-          this.$message.info("请先选中要生成月报的工程公司！");
-          return false;
-        }
-        if (this.multipleSelection.length > 1) {
-          this.$message.info("只能选择一条记录！");
-          return false;
-        }
-        this.multipleSelection[0].status='3'//集团创建
-        this.multipleSelection[0].flowStatus='1'
-        this.multipleSelection[0].projectId=this.multipleSelection[0].createOrgId
-        this.multipleSelection[0].reportYear= this.searchform.yearDateS.split("-")[0]
-        this.multipleSelection[0].reportMonth= this.searchform.yearDateS.split("-")[1]
-        let datas=this.multipleSelection[0];
-          this.$confirm(`该操作会重新生成工程公司月报 如果该公司已经上报过月报 将被新生成的月报替代 确认重新生成月报?`, '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            this.$http
-                .post(
-                    '/api/statistics/Projectcheck/detail/summaryReportM',datas
-
-                )
-                .then((res) => {
-                  if (res.data.code === 200) {
-                    this.$message({
-                      message: '汇总成功'
-                    });
-                    this.getData();
-                  }
-                });
-          }).catch(() => {})
-
-      },
-/*      // 展示
-      show() {
-        if (this.multipleSelection.length !== 1) {
-          this.$message.info("请选择一条记录进行查看操作！");
-          return false;
-        }
-        let mList = {actpoint: "look", instid: this.multipleSelection[0].uuid};
-        this.$router.push({
-          path: "../detail/",
-          query: {mList: this.$utils.encrypt(JSON.stringify(p))},
-        });
-      }, */
       // list通用方法开始
       handleSizeChange(val) {
         this.searchform.size = val;
@@ -500,13 +341,13 @@
         this.searchform.reportYear= this.searchform.yearDateS.split("-")[0];
         this.searchform.reportMonth= this.searchform.yearDateS.split("-")[1];
         this.$http
-          .post(
-            "/api/statistics/Projectcheck/list/jtQueryEntInfo",
-            this.searchform
-          )
-          .then((res) => {
-          this.tableData = res.data.data;
-      });
+            .post(
+                "/api/statistics/Projectcheck/list/jtQueryEntInfo",
+                this.searchform
+            )
+            .then((res) => {
+              this.tableData = res.data.data;
+            });
       },
     },
     created() {
@@ -549,5 +390,3 @@
     line-height: 30px;
   }
 </style>
-
-

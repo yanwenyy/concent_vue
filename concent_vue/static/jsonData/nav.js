@@ -1406,6 +1406,31 @@ export default {
                   'menushow': true,
                   'leaf': true,
                   'defaultpage': false
+                },
+                {
+                  'name': '集团公司月报二级页面',
+                  'path': '/statistics/projectCheck/jTMList',
+                  'component': '/statistics/projectCheck/jTMList',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': false,
+                  'leaf': true
+                },
+                {
+                  'name': '集团公司月报详情页面',
+                  'path': '/statistics/projectCheck/jTMDetail',
+                  'component': '/statistics/projectCheck/jTMDetail',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': false,
+                  'leaf': true
+                },
+                {
+                  'name': '股份公司月报查看',
+                  'path': '/statistics/projectCheck/gfList',
+                  'component': '/statistics/projectCheck/gfList',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
                 }
               ]
             },
