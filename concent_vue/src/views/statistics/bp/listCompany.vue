@@ -26,17 +26,19 @@
           </el-select>
   <!-- <el-button  class="detail-back-tab detailbutton save-btn"  @click="saveInfo">保存</el-button> -->
 </div>
+    <!--@check-change="handleCheckChange"-->
     <el-tree
       :key="key"
       :props="props"
       lazy
+      :check-strictly="canSelParent"
       ref="tree"
       :default-expanded-keys="['']"
       node-key="uuid"
       :load="loadNode"
       show-checkbox
       :default-checked-keys="checkedList"
-      @check="handleCheckChange"
+      @check="checkChange"
       @node-click="handleNodeClick"
       @node-expand="handleNodeExpand"
       @node-collapse = "handleNodeCollapse">
@@ -164,6 +166,7 @@ export default {
   name: "proposal-list-look",
   data() {
     return {
+      canSelParent:true,//是否父子不关联
       checkedList:[],//tree默认勾选数组
       disabledList:[],//tree禁用数组
       form:{
@@ -270,6 +273,80 @@ export default {
 
   },
   methods: {
+    checkChange(a,list) {
+      const self = this
+      const anode = this.$refs.tree.getNode(a)
+      if (anode.checked) {//删除选中的
+        this.setParentChecked(anode.parent);
+
+        //勾选保存
+        var list=list.checkedNodes,subList=[];
+        list.forEach((item)=>{
+          if(item.uuid&&item.uuid!=''&&item.disabled!=true){
+          subList.push(item)
+        }
+      });
+        // console.log(list,subList)
+        // console.log(checked.checkedKeys.indexOf(data.uuid))
+        subList.forEach((item)=>{
+          item.typeBpGdw=this.itemform.vprojecttypes;
+      });
+        // console.log("分别覆盖==="+subList);
+        this.$http
+          .post(
+            "/api/statistics/bp/BpGdwtjxsz/detail/saveAll",
+            JSON.stringify(subList),
+            {useJson: true}
+          )
+          .then((res) => {
+        });
+      } else {//新增选中的
+        this.deleteParentChecked(anode.parent)
+        this.deleteChildChecked(anode.childNodes);
+
+        //取消勾选
+        this.$http
+          .post(
+            "/api/statistics/bp/BpGdwtjxsz/list/deleteById",
+          {ids:a.uuid,projectId:this.itemform.vprojecttypes},
+          )
+          .then((res) => {
+          });
+      }
+
+
+    },
+    setParentChecked(parent) {//如果不是全选中为父级添加半选状态，如果子集全选后，父级也要全选
+      const fnode = this.$refs.tree.getNode(parent)
+      const isAllChecked = fnode.childNodes.every(k => k.checked && k.indeterminate === false)//子集是否是全选
+      if (!fnode.isLeaf) {
+        fnode.indeterminate = !isAllChecked//子集是否是全选，如果子集全选，则半选状态为假
+        fnode.checked = true
+      }
+      if (fnode.parent) {
+        this.setParentChecked(fnode.parent)
+      }
+    },
+    deleteParentChecked(parent, d = false) {//如果取消子节点的选中， 设置父级节点选中状态
+      const fnode = this.$refs.tree.getNode(parent)
+      const isAllChecked = fnode.childNodes.some(k => d ? (k.checked || k.indeterminate) : k.checked)//子集是否是全选
+      if (!fnode.isLeaf) {
+        fnode.indeterminate = isAllChecked//子集是否是全选，如果子集全选，则半选状态为假
+        fnode.checked = isAllChecked
+        if (fnode.parent) {//如果有父节点，则需要去判断父节点是否选中
+          this.deleteParentChecked(fnode.parent, true)
+        }
+      }
+    },
+    deleteChildChecked(childNodes) {//删除子节点的勾选状态
+      if (childNodes && childNodes.length > 0) {
+        childNodes.map(k => {
+          k.indeterminate = false
+        k.checked = false
+        this.deleteChildChecked(this.$refs.tree.getNode(k).childNodes)
+      })
+      }
+    },
     // 点击下拉框调用
     engineer(){
       this.key+=1;
@@ -302,15 +379,17 @@ export default {
       if(row.vprojecttype!=null)
       {
         var strs=row.vprojecttype.split(",");
-        strs.forEach((itemstr)=> {
-          this.projectDomainType.forEach((item)=> {
-            if(itemstr==item.id)
-            {
-              str+= item.detailName+", ";
-            }
+        if(strs!=""){
+          strs.forEach((itemstr)=> {
+            this.projectDomainType.forEach((item)=> {
+                if(itemstr==item.id)
+              {
+                str+= item.detailName+", ";
+              }
 
-          })
-        });
+            })
+            });
+        }
         str=str.substring(0,str.length-2);
         return str;
       }
@@ -345,14 +424,25 @@ export default {
     },
     // 树节点保存
     handleCheckChange(data, checked) {
+
+      if(checked){
+        this.canSelParent=false;
+        this.$forceUpdate();
+      }else{
+        this.canSelParent=true;
+        this.$forceUpdate();
+      }
+      console.log(checked,'==>',this.canSelParent)
       // console.log(data,checked)
+      var selList=(this.$refs.tree.getCheckedNodes()||[]).concat(this.$refs.tree.getHalfCheckedNodes()||[]);
+      console.log(selList)
       var list=checked.checkedNodes,subList=[];
-      list.forEach((item)=>{
-        if(item.disabled!=true){
+      selList.forEach((item)=>{
+        if(item.uuid&&item.uuid!=''&&item.disabled!=true){
           subList.push(item)
         }
       });
-      console.log(list,subList)
+      // console.log(list,subList)
       // console.log(checked.checkedKeys.indexOf(data.uuid))
       subList.forEach((item)=>{
         item.typeBpGdw=this.itemform.vprojecttypes;
@@ -449,6 +539,8 @@ export default {
       this.multipleSelection = val
     },
     getData(node,resolve) {
+      this.canSelParent=true;
+      this.$forceUpdate();
       this.node = node;
       this.resolve = resolve;
       if (node.level === 0) {
@@ -460,13 +552,16 @@ export default {
         {'projectType':this.itemform.vprojecttypes}
         )
         .then((res) => {
+
           var datas=res.data.data,list=[],disabledList=[];
-          datas.forEach((item)=>{
-            list.push(item.vtjxid);
-            if(item.disabled==true){
-              disabledList.push(item.vtjxid)
-            }
-          })
+          if(datas!=""){
+            datas.forEach((item)=>{
+              list.push(item.vtjxid);
+                if(item.disabled==true){
+                  disabledList.push(item.vtjxid)
+                }
+              })
+          }
           this.checkedList= list;
           this.disabledList=disabledList;
         });

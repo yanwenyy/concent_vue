@@ -274,7 +274,7 @@
         //   this.$message.info("此条数据不可修改！");
         //   return false;
         // }
-        let p = {actpoint: "edit", reportUuid: this.multipleSelection[0].uuid,reportDate: this.multipleSelection[0].reportDate,stauts:this.multipleSelection[0].stauts};
+        let p = {actpoint: "edit", statId: this.multipleSelection[0].uuid,reportDate: this.multipleSelection[0].reportDate,stauts:this.multipleSelection[0].stauts};
         this.$router.push({
           path: "./detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
@@ -284,7 +284,7 @@
       // 查看
       rowshow(row) {
         console.log(row)
-        let p = {actpoint: "look", reportUuid: row.uuid,reportDate: row.reportDate,stauts:row.stauts};
+        let p = {actpoint: "look", statId: row.uuid,reportDate: row.reportDate,stauts:row.stauts};
         this.$router.push({
           path: "./detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},

@@ -892,7 +892,6 @@
               <el-table-column
                 align="center"
                 :resizable="false"
-                fixed="right"
                 label="操作"
                 show-overflow-tooltip
                 v-if="p.actpoint!=='look'"
@@ -2467,7 +2466,7 @@
           }
         })
       },
-      
+
       // 打开单位弹框
       addDw(type, list) {
         this.DwVisible = true
@@ -2478,7 +2477,7 @@
       // 修改和查看时的时候详情
       getDetail() {
         this.$http
-          .post('/api/statistics/StatisticsProject/detail/entityInfoByBeforeAndAfterId', 
+          .post('/api/statistics/StatisticsProject/detail/entityInfoByBeforeAndAfterId',
           {
             beforeId: this.p.beforeId,
             afterId: this.p.afterId,

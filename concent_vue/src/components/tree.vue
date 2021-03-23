@@ -19,7 +19,7 @@
     export default {
       data() {
         return {
-          datas: [],
+          // datas: [],
           dialogVisible:true,
           defaultProps: {
             children: 'children',
@@ -27,6 +27,12 @@
           },
           notSelect:['0','1','01','02','03','04','05','06','101','102','103','105','106','108']
         };
+      },
+      computed: {
+
+        datas () {
+          return this.$store.state.category.position
+        },
       },
       mounted(){
         //json方法引入数据
@@ -36,8 +42,10 @@
         // });
 
         //js方法引入数据
-        this.datas=datas;
-        console.log(datas)
+        // this.datas=datas;
+        // console.log(datas)
+
+        this.$store.dispatch('getCategory', {name: 'position', id: '321a917eb2b111e9a1746778b5c1176e'});
       },
       methods: {
         init(){
