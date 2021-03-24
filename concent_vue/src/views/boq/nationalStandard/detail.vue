@@ -126,7 +126,14 @@
               filterable
               placeholder="请选择"
               multiple
-              v-model="detailform.boqNationalStandard.engineeringType1"
+              v-model="detailform.syfw"
+              @change="getMultipleName(
+              detailform.syfw,
+              projectDomainType,
+              'engineeringTypeId',
+              'engineeringType',
+              'engineeringTypeCode')"
+
             >
               <el-option
                 :key="index"
@@ -501,17 +508,18 @@ import AddBd  from "./addBd";
     methods: {
       //多选传参
        //复选下拉框框获取name
-    getMultipleName(valueList,list,id,name){
-      var _id=[],_name=[];
+    getMultipleName(valueList,list,id,name,code){
+      var _id=[],_name=[],_code=[];
       list.forEach((item)=>{
         if(valueList.indexOf(item.id)!=-1){
         _id.push(item.id);
         _name.push(item.detailName)
+        _code.push(item.detailCode)
       }
     });
-      this.detailform.contractInfo[id]=_id.join(",");
-      this.detailform.contractInfo[name]=_name.join(",");
-      // console.log(this.detailform.contractInfo[id])
+      this.detailform.boqNationalStandard[id]=_id.join(",");
+      this.detailform.boqNationalStandard[name]=_name.join(",");
+      this.detailform.boqNationalStandard[code]=_code.join(",");
     },
       // engineeringType(){
       //   if(label=="适用范围:"){
@@ -591,18 +599,20 @@ import AddBd  from "./addBd";
       },
 
       //获取下拉框id和name的公共方法
-      getName(id, list, name) {
+      getName(id, list, name,code) {
         if(id){
           this.$forceUpdate();
-          this.detailform.topInfor[name] = list.find(
+          this.detailform.boqNationalStandard[name] = list.find(
             (item) => item.id == id
           ).detailName;
-          console.log(this.detailform.topInfor[name]);
+            this.detailform.boqNationalStandard[code] = list.find(
+                (item) => item.id == id
+            ).detailCode;
         }
       },
 
       saveInfo(formName) {
-        this.detailform.boqNationalStandard.engineeringType=this.detailform.boqNationalStandard.engineeringType1.join(",");
+       // this.detailform.boqNationalStandard.engineeringType=this.detailform.boqNationalStandard.engineeringType1.join(",");
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
