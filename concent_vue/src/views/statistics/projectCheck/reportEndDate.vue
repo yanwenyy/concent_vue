@@ -255,7 +255,7 @@
                     value-format="dd"
                     placeholder="选择日">
                   </el-date-picker>
-                  <span style="color:red;font-size:12px;float:left" v-if="show && (form1.standardreporttime == ''||form1.standardreporttime == '')">此项不能为空</span>
+                  <span style="color:red;font-size:12px;float:left" v-if="show && (form1.standardreporttime == ''||form1.standardreporttime == null)">此项不能为空</span>
                 </td>
               </tr>
               <tr>
@@ -269,7 +269,7 @@
                     @change="jyShowEnd"
                     placeholder="选择日">
                   </el-date-picker>
-                  <span style="color:red;font-size:12px;float:left" v-if="show && (form1.endreporttime == ''||form1.endreporttime == '')">此项不能为空</span>
+                  <span style="color:red;font-size:12px;float:left" v-if="show && (form1.endreporttime == ''||form1.endreporttime == null)">此项不能为空</span>
                 </td>
               </tr>
             </table>
