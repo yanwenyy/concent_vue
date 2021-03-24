@@ -298,6 +298,9 @@
       },
       //查询项目详细列表
       queryGsXq(row){
+        row.reportYear=this.searchform.yearDateS.split("-")[0];
+        row.reportMonth=this.searchform.yearDateS.split("-")[1];
+        row.yearDateS=this.searchform.yearDateS;
         let mList = row;
         this.$router.push({
           path: "./jTMList/",

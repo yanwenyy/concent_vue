@@ -104,7 +104,7 @@
           </template>
           <template slot-scope="scope">
             <!-- <div>{{scope.row.monthValue}}</div>-->
-            <div v-if="scope.row.reportYear != null && scope.row.reportMonth != null ">
+            <div v-if="scope.row.reportYear != null && scope.row.reportYear !=''">
               {{
               scope.row.reportYear+"-"+scope.row.reportMonth
               }}
@@ -308,6 +308,9 @@
       },
       //查询项目详细列表
       queryGsXq(row){
+        row.reportYear=this.searchform.yearDateS.split("-")[0];
+        row.reportMonth=this.searchform.yearDateS.split("-")[1];
+        row.yearDateS=this.searchform.yearDateS;
         let mList = row;
         this.$router.push({
           path: "./jTMList/",

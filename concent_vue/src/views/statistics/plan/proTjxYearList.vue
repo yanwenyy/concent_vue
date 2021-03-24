@@ -70,21 +70,33 @@
           :width="110"
           align="left"
           label="计划年份"
+          prop="planYear"
           show-overflow-tooltip
         >
+          <template slot="header" slot-scope="scope">
+            <span>计划年份</span>
+            <div>
+              <el-date-picker
+                class="list-search-picker"
+                clearable
+                type="year"
+                value-format="yyyy"
+                @change="queryList"
+                v-model="searchform.planYear"
+              >
+              </el-date-picker>
+            </div>
+          </template>
           <template  slot-scope="scope">
-            <div @dblclick.stop>
-              <el-select
-                @change="handleYearChange(scope.row.projectId,$event)"
-                size="mini"
-                placeholder="请选择"
-                v-model="currentYears[computeTableIndex(scope.$index)]">
-                <el-option
-                  :key="index"
-                  :label="item+'年'"
-                  :value="item"
-                  v-for="(item, index) in arrYear"/>
-              </el-select>
+            <div v-if="scope.row.planYear != null ">
+              {{
+              scope.row.planYear
+              }}
+            </div>
+            <div v-else>
+              {{
+              searchform.planYear
+              }}
             </div>
           </template>
         </el-table-column>
@@ -246,12 +258,20 @@
       }
     },
     methods: {
+      getdatatime(){//默认显示今天
+        var sj=new Date().toLocaleDateString().split('/');
+        this.searchform.planYear= sj[0];
+      },
       handleSelectionChange(val) {
         this.multipleSelection = val
       },
       handleYearChange(projectId, val) {
         this.selectYears.push({projectId: projectId, year: val})
         this.$forceUpdate()
+      },
+      queryList(){
+        this.searchform.current = 1
+        this.getData()
       },
       // 删除
       del() {
@@ -375,7 +395,7 @@
           projectStatus: '',
           projectLocation: '',
           planType: '2',
-          planYear: new Date().getFullYear()
+          planYear:''
         }
         this.getData()
       },
@@ -418,7 +438,7 @@
         }
         this.searchformSubmit()
       },
-      // 获取2013年至今的年份数组
+    /*  // 获取2013年至今的年份数组
       getArrYear() {
         let myDate = new Date()
         let thisYear = myDate.getFullYear() // 获取当年年份
@@ -428,7 +448,7 @@
           arrYear.push(thisYear--)
         }
         this.arrYear = arrYear.reverse()
-      },
+      },*/
       // 叠加序号
       computeTableIndex(index) {
         return (this.page.current - 1) * this.page.size + index + 1
@@ -446,7 +466,7 @@
       }
     },
     created() {
-      this.getArrYear()
+      this.getdatatime()
       this.getData()
       let promptVal = localStorage.getItem('isPrompt')
       if (promptVal != null && promptVal !== '') {
