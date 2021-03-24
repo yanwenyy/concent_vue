@@ -7,7 +7,7 @@
     <el-button  class="detail-back-tab detailbutton" @click="back" type="text">返回</el-button>
     <el-tabs type="border-card" v-model="activeName">
       <el-tab-pane label="变更前" name="before">
-          <div class="detailBoxBG">
+          <div class="detailBoxBG detailBoxBGBefore">
             <el-form
               :inline="false"
               :model="detailFormBefore"
@@ -1881,6 +1881,14 @@
 
   .el-table--border {
     min-height: auto !important;
+  }
+  .detailBoxBGBefore {
+    .detailTable .el-input-group{
+      margin-top: 0px;
+    }
+    >>>.detailTable td{
+      padding: 5px 0!important;
+    }
   }
 </style>
 

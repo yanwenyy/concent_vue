@@ -16,7 +16,6 @@
         border
         v-loading="dataListLoading"
         highlight-current-row
-        @current-change="handleCurrentChange"
         :header-cell-style="{
           'text-align': 'center',
           'background-color': 'whitesmoke',
@@ -80,7 +79,6 @@
         border
         v-loading="dataListLoading"
         highlight-current-row
-        @current-change="handleCurrentChange"
         :header-cell-style="{
           'text-align': 'center',
           'background-color': 'whitesmoke',
@@ -214,21 +212,20 @@
       });
       },
       handleSizeChange(val) {
-        this.searchFrom.size = val;
-        this.getData();
+        this.searchform.size = val;
+        this.searchform2.size = val;
+        this.init(this.searchform.moduleId,this.contractType);
       },
       handleCurrentChange(val) {
-        this.searchFrom.current = val;
-        this.getData();
+        this.searchform.current = val;
+        this.searchform2.current = val;
+        this.init(this.searchform.moduleId,this.contractType);
       },
       searchFromSubmit() {
-        this.searchFrom.current = 1;
-        this.getData();
+        this.searchform.current = 1;
+        this.searchform2.current =  1;
+        this.init(this.searchform.moduleId,this.contractType);
       },
-      // 单选
-      handleCurrentChange(val) {
-        this.currentRow = val;
-      }
     }
   }
 </script>

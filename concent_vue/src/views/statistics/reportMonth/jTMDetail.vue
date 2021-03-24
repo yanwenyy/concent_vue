@@ -2,7 +2,7 @@
 <template>
   <div style="position: relative">
     <!--<el-button  @click="save" v-if="dataReport.status!='1'" type="primary"  class="detailbutton detail-back-tab" style="float: left; margin-right: 185px;"plain>保存</el-button>-->
-    <el-button  @click="submit" v-if="dataReport.flowStatus!='1'" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus==1||dataReport.flowStatus==4)" @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
     <el-button  @click="back" type="primary"  class="detailbutton detail-back-tab " plain>返回</el-button>
     <el-tabs type="border-card" v-model="activeName">
       <el-tab-pane v-if="projectList.uuid!=''&& projectList.uuid!=null" label="整体进度" name="ztjd">
@@ -67,7 +67,6 @@
             highlight-current-row
             ref="table"
             style="width: 100%"
-            cell-style="padding:5px 0"
             tooltip-effect="dark"
           >
             <el-table-column
@@ -410,6 +409,7 @@
     },
     data() {
       return {
+        key:0,
         data:[],
         projectList:{},
         dataReport:{
@@ -417,9 +417,9 @@
         nextData:[],
         yearDateS:'',
         activeName:"ztjd",
-        mList: JSON.parse(this.$utils.decrypt(this.$route.query.mList)),
+        p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         proNameHover: false,
-        projectName: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectName,
+        projectName: JSON.parse(this.$utils.decrypt(this.$route.query.p)).projectName,
         projectreport: {},
         projectreportDetaiList: [],
         planPrjTjxDetailList: [],
@@ -449,7 +449,13 @@
     },
     methods: {
       // 保存
-      save() {
+      save(type) {
+        var url='';
+        if(type=='save'){
+          url="/api/statistics/projectMonthlyReport/Projectreport/detail/saveOrUpdate"
+        }else{
+          url="/api/statistics/projectMonthlyReport/Projectreport/process/start"
+        }
         this.dataReport.status="3"//集团创建
         this.dataReport.flowStatus="1"
         let tableData = {
@@ -458,7 +464,7 @@
           planPrjTjxDetailList:this.nextData
         }
         this.$http
-            .post('/api/statistics/projectMonthlyReport/Projectreport/detail/saveOrUpdate', JSON.stringify(tableData), {useJson: true})
+            .post(url, JSON.stringify(tableData), {useJson: true})
             .then(res => {
               if (res.data.code === 200) {
                 this.$message({
@@ -510,9 +516,8 @@
       },
       // 获取数据
       getData() {
-        var datas=JSON.parse(this.$utils.decrypt(this.$route.query.mList));
         this.$http
-            .post('/api/statistics/projectMonthlyReport/Projectreport/detail/queryMonthReportEntityInfo', datas.params, {useJson: true})
+            .post('/api/statistics/projectMonthlyReport/Projectreport/detail/queryMonthReportEntityInfo', this.p.params, {useJson: true})
             .then(res => {
               this.data = res.data.data.projectReportDetaiList
               this.dataReport=res.data.data.projectreport
@@ -755,7 +760,7 @@
     color:#fff;
   }
   .sub-btn{
-    right: 175px;
+    right: 95px!important;
   }
   /**/
 </style>

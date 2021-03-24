@@ -525,7 +525,7 @@
             }
             this.$router.push({
               path: './companyMDetail/',
-              query: {mList: this.$utils.encrypt(JSON.stringify(mList))}
+              query: {p: this.$utils.encrypt(JSON.stringify(mList))}
             });
           }
 
@@ -598,7 +598,7 @@
         }else{
         this.$router.push({
           path: './companyMDetail/',
-          query: {mList: this.$utils.encrypt(JSON.stringify(mList))}
+          query: {p: this.$utils.encrypt(JSON.stringify(mList))}
         });
 
       }}

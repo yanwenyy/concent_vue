@@ -691,7 +691,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="合同额"
-                    prop="contractAmountTotal"
+                    prop="contractMoney"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -700,7 +700,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="剩余合同额"
-                    prop="tempPrice"
+                    prop="htquantity"
                     align="center"
                     show-overflow-tooltip
                     width="150"
@@ -1019,7 +1019,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="合同额"
-                    prop="contractAmountTotal"
+                    prop="contractMoney"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -1028,7 +1028,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="剩余合同额"
-                    prop="tempPrice"
+                    prop="htquantity"
                     align="center"
                     show-overflow-tooltip
                     width="150"
@@ -1403,7 +1403,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="合同额"
-                    prop="contractAmountTotal"
+                    prop="amountSignup"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -1412,7 +1412,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="剩余合同额"
-                    prop="tempPrice"
+                    prop="htquantity"
                     align="center"
                     show-overflow-tooltip
                     width="150"
@@ -1850,7 +1850,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="合同额"
-                    prop="contractAmountTotal"
+                    prop="amountSignup"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -1859,7 +1859,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="剩余合同额"
-                    prop="tempPrice"
+                    prop="htquantity"
                     align="center"
                     show-overflow-tooltip
                     width="150"
@@ -2315,7 +2315,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="合同额"
-                    prop="contractAmountTotal"
+                    prop="contractMoney"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2324,7 +2324,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="剩余合同额"
-                    prop="tempPrice"
+                    prop="htquantity"
                     align="center"
                     show-overflow-tooltip
                     width="150"
@@ -2927,7 +2927,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="合同额"
-                    prop="contractAmountTotal"
+                    prop="contractMoney"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -2936,7 +2936,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="剩余合同额"
-                    prop="tempPrice"
+                    prop="htquantity"
                     align="center"
                     show-overflow-tooltip
                     width="150"

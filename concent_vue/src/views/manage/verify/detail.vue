@@ -595,7 +595,7 @@
             <p class="detail-title"><span  class="uploadSpan">附件: </span>
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-button
-                v-show="p.actpoint !== 'look'"
+                v-show="p.actpoint !== 'look'&&p.actpoint!='task'"
                 size="small"
                 type="primary"
                 @click="openFileUp('/api/contract/topInfo/CommonFiles/verify/01/uploadFile','commonFilesList')">
@@ -660,7 +660,7 @@
 <p class="detail-title" style="overflow: hidden;margin-right:30px">
      <span  >标段信息: </span>   <el-button
        @click="dialogTopInfoSection=true"
-       v-show="p.actpoint != 'look'"
+       v-show="p.actpoint != 'look'&&p.actpoint!='task'"
        class="detatil-flie-btn"
             type="primary"
           >新增</el-button>

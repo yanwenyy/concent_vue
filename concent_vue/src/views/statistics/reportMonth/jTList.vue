@@ -331,7 +331,7 @@
         //判断是否存在未上报的数据，如果存在就提示，不存在就创建
         if(this.tableData.length>0){
           for (var i=0; i < this.tableData.length; i++) {
-            if((this.tableData[i].flowStatus ==''||this.tableData[i].flowStatus ==null) && this.tableData[i].projectId!=this.tableData.managerOrgId){
+            if((this.tableData[i].flowStatus ==''||this.tableData[i].flowStatus ==null) && this.tableData[i].projectId!=this.userdata.managerOrgId){
               this.$message.info('该单位下存在未提交的月报,请提交该单位下所有项目月报后再进行尝试！')
               return false;
             }
@@ -376,7 +376,7 @@
           let mList = {actpoint: "edit", params: this.multipleSelection[0]};
           this.$router.push({
             path: "./jTMDetail/",
-            query: {mList: this.$utils.encrypt(JSON.stringify(mList))},
+            query: {p: this.$utils.encrypt(JSON.stringify(mList))},
           });
         }
 
@@ -391,7 +391,7 @@
         }else{
           this.$router.push({
             path: "./jTMDetail/",
-            query: {mList: this.$utils.encrypt(JSON.stringify(mList))},
+            query: {p: this.$utils.encrypt(JSON.stringify(mList))},
           });
         }
       },
@@ -440,7 +440,7 @@
           return false;
         }
         this.multipleSelection[0].status='3'//集团创建
-        this.multipleSelection[0].flowStatus='1'
+        this.multipleSelection[0].flowStatus='3'
         this.multipleSelection[0].projectId=this.multipleSelection[0].createOrgId
         this.multipleSelection[0].reportYear= this.searchform.yearDateS.split("-")[0]
         this.multipleSelection[0].reportMonth= this.searchform.yearDateS.split("-")[1]

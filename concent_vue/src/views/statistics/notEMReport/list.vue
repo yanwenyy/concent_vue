@@ -244,24 +244,29 @@
       },
       // 增加
       add() {
-        this.$http
-          .post(
-            "/api/statistics/unProjectReport/detail/save",
-            JSON.stringify({'reportDate':this.searchform.reportDate}),
-            {useJson: true,isLoading:false}
-          )
-          .then((res) => {
+        if(this.searchform.reportDate!=''&&this.searchform.reportDate!=null){
+          this.$http
+            .post(
+              "/api/statistics/unProjectReport/detail/save",
+              JSON.stringify({'reportDate':this.searchform.reportDate}),
+              {useJson: true,isLoading:false}
+            )
+            .then((res) => {
             var datas=res.data.data;
-            if(datas.isExist=="0"){
-              this.$message.info("该填报年下已有相应的该月份的月报数据 无法创建新的填报记录");
-            }else{
-              let p = {actpoint: "add",reportDate: this.searchform.reportDate,statId:datas.uuid};
-              this.$router.push({
-                path: "./detail/",
-                query: {p: this.$utils.encrypt(JSON.stringify(p))},
-              });
-            }
+          if(datas.isExist=="0"){
+            this.$message.info("该填报年下已有相应的该月份的月报数据 无法创建新的填报记录");
+          }else{
+            let p = {actpoint: "add",reportDate: this.searchform.reportDate,statId:datas.uuid};
+            this.$router.push({
+              path: "./detail/",
+              query: {p: this.$utils.encrypt(JSON.stringify(p))},
+            });
+          }
         });
+        }else{
+          this.$message.info("填报年月不能为空");
+        }
+
 
       },
       // 修改

@@ -12,9 +12,14 @@
 
 -->
       <div style="margin-top: 9px;color: red;position: absolute;top: 1px;right: 279px;z-index: 999999999;font-size: 15px;">项目名称：<span style="color: red !important;margin-right: 50px;">{{projectName}}</span></div>
-      <el-button v-if="isCk!='1'" @click="save" type="primary"  class="detailbutton detail-back-tab" style="float: left; margin-right: 185px;"plain>保存</el-button>
-      <el-button v-if="isCk!='1'" @click="submit" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>
-      <el-button  @click="back" type="primary"  class="detailbutton detail-back-tab " plain>返回</el-button>
+
+      <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus==1||dataReport.flowStatus==4)" @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+      <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="save('save')" class="detailbutton detail-back-tab save-btn">保存</el-button>
+    <!--<el-button v-if="isCk!='1'" @click="save" type="primary"  class="detailbutton detail-back-tab" style="float: left; margin-right: 185px;" plain>保存</el-button>-->
+    <!--<el-button v-if="isCk!='1'" @click="submit" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>-->
+    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
+    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
+    <el-button  @click="back" type="primary"  class="detailbutton detail-back-tab " plain>返回</el-button>
      <el-tabs type="border-card" v-model="activeName">
      <el-tab-pane label="整体进度" name="ztjd">
           <div class="detailBox">
@@ -38,25 +43,25 @@
               <div>
               <el-form-item
                 label="本月计划:"
-              ><el-input  :disabled="isCk=='1'" v-model="dataReport.thisPlan" type="textarea" ></el-input>
+              ><el-input  :disabled="isCk=='1'||p.actpoint == 'task'" v-model="dataReport.thisPlan" type="textarea" ></el-input>
               </el-form-item>
               </div>
                 <div>
                 <el-form-item
                   label="完成情况:"
-                ><el-input :disabled="isCk=='1'" v-model="dataReport.finishedPlan" type="textarea" ></el-input>
+                ><el-input :disabled="isCk=='1'||p.actpoint == 'task'" v-model="dataReport.finishedPlan" type="textarea" ></el-input>
                 </el-form-item>
                 </div>
                  <div>
                  <el-form-item
                   label="下月计划:"
-                ><el-input :disabled="isCk=='1'" v-model="dataReport.nextPlan" type="textarea" ></el-input>
+                ><el-input :disabled="isCk=='1'||p.actpoint == 'task'" v-model="dataReport.nextPlan" type="textarea" ></el-input>
                 </el-form-item>
                 </div>
             </el-form>
               </div>
            </el-tab-pane>
-         <el-tab-pane label="产物及实物工程量" name="cwjswgcl">
+       <el-tab-pane label="产物及实物工程量" name="cwjswgcl">
             <div class="detailBoxBG">
              <el-table
                     class="tableStyle"
@@ -213,7 +218,7 @@
                   </el-table>
            </div>
         </el-tab-pane>
-        <el-tab-pane label="下月计划" name="xyjh">
+       <el-tab-pane label="下月计划" v-if="dataReport.status==1" name="xyjh">
             <div class="detailBoxBG">
               <el-table
                 class="tableStyle"
@@ -279,21 +284,22 @@
               </el-table>
            </div>
          </el-tab-pane>
-         <el-tab-pane label="流程查看" name="lcjh">
-             <div class="detailBoxBG">
-            </div>
-         </el-tab-pane>
-          </el-tabs>
+       <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
+         <Audit-Process :task="p.task||{businessId:p.uuid,businessType:' engineering_monthly_report'}"></Audit-Process>
+       </el-tab-pane>
+     </el-tabs>
     </div>
 </template>
 
 <script>
+  import AuditProcess from '@/components/auditProcess'
   export default {
     name: 'reportM-all-detail',
     components: {
     },
     data() {
       return {
+        p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         key:0,
         data:[],
         dataReport:{
@@ -301,15 +307,18 @@
         nextData:[],
         yearDateS:'',
         activeName:"ztjd",
-        mList: JSON.parse(this.$utils.decrypt(this.$route.query.mList)),
+        mList: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         proNameHover: false,
-        projectName: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectName,
-        isCk:JSON.parse(this.$utils.decrypt(this.$route.query.mList)).isCk,
+        projectName: '',
+        isCk:JSON.parse(this.$utils.decrypt(this.$route.query.p)).isCk,
         projectreport: {},
         projectreportDetaiList: [],
         planPrjTjxDetailList: [],
-        projectStatus: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectStatus,
+        projectStatus: JSON.parse(this.$utils.decrypt(this.$route.query.p)).projectStatus,
       }
+    },
+    components: {
+      AuditProcess
     },
     computed: {
       vnameMarginLeft() {
@@ -348,6 +357,24 @@
       }*/
     },
     methods: {
+      //流程操作
+      operation(type){
+        this.$http
+          .post(
+            '/api/statistics/projectMonthlyReport/Projectreport/process/'+type,
+            JSON.stringify(this.p.task),
+            {useJson: true}
+          )
+          .then((res) => {
+          if (res.data.code === 200) {
+          this.$message({
+            message: "操作成功",
+            type: "success",
+          });
+          this.$router.back()
+        }
+      });
+      },
       //设置当年的完成值
       getYear(list,index,code){
         var num=0;
@@ -375,16 +402,22 @@
         });
       },
       // 保存
-      save() {
-        this.dataReport.status="1"
-        this.dataReport.flowStatus="1"
+      save(type) {
+        var url='';
+        if(type=='save'){
+          url="/api/statistics/projectMonthlyReport/Projectreport/detail/saveOrUpdate"
+        }else{
+          url="/api/statistics/projectMonthlyReport/Projectreport/process/start"
+        }
+        // this.dataReport.status="1"
+        // this.dataReport.flowStatus="1"
           let tableData = {
             projectReportDetaiList:this.data,
             projectreport:this.dataReport,
             planPrjTjxDetailList:this.nextData
           }
           this.$http
-            .post('/api/statistics/projectMonthlyReport/Projectreport/detail/saveOrUpdate', JSON.stringify(tableData), {useJson: true})
+            .post(url, JSON.stringify(tableData), {useJson: true})
             .then(res => {
               if (res.data.code === 200) {
                 this.$message({
@@ -464,17 +497,19 @@
       getData() {
         this.$http
           .post('/api/statistics/projectMonthlyReport/Projectreport/detail/queryMonthReportEntityInfo', JSON.stringify({
-            projectId: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectId,
-            uuid: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).uuid,
-            reportYear: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportYear,
-            reportMonth:JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportMonth,
-            createOrgCode: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).orgCode
+            projectId: this.p.projectId,
+            uuid: this.p.uuid||this.p.instid,
+            reportYear: this.p.reportYear,
+            reportMonth: this.p.reportMonth,
+            createOrgCode: this.p.orgCode
           }), {useJson: true})
           .then(res => {
-            this.data = res.data.data.projectReportDetaiList
-            this.dataReport=res.data.data.projectreport
+            var datas=res.data.data;
+            this.data = datas.projectReportDetaiList
+            this.dataReport=datas.projectreport
             this.dataReport.yearDateS=this.dataReport.reportYear+"-"+this.dataReport.reportMonth
-            this.nextData=res.data.data.planPrjTjxDetailList
+            this.nextData=datas.planPrjTjxDetailList;
+            this.projectName=datas.projectreport.reportProjectName;
             console.log('data', this.data)
             // this.reportVo=this.data;
           })

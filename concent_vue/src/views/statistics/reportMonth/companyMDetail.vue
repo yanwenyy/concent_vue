@@ -2,7 +2,7 @@
 <template>
   <div style="position: relative">
       <!--<el-button  @click="save" v-if="dataReport.status!='1'" type="primary"  class="detailbutton detail-back-tab" style="float: left; margin-right: 185px;"plain>保存</el-button>-->
-      <el-button  @click="submit" v-if="dataReport.status=='1'" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus==1||dataReport.flowStatus==4)" @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
       <el-button  @click="back" type="primary"  class="detailbutton detail-back-tab " plain>返回</el-button>
     <el-tabs type="border-card" v-model="activeName">
       <el-tab-pane v-if="projectList.uuid!=''&& projectList.uuid!=null" label="整体进度" name="ztjd">
@@ -460,12 +460,13 @@
         projectList:{},
         dataReport:{
         },
+        key:0,
         nextData:[],
         yearDateS:'',
         activeName:"ztjd",
-        mList: JSON.parse(this.$utils.decrypt(this.$route.query.mList)),
+        p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         proNameHover: false,
-        projectName: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectName,
+        projectName: JSON.parse(this.$utils.decrypt(this.$route.query.p)).projectName,
         projectreport: {},
         projectreportDetaiList: [],
         planPrjTjxDetailList: [],
@@ -501,7 +502,13 @@
     },
     methods: {
       // 保存
-      save() {
+      save(type) {
+        var url='';
+        if(type=='save'){
+          url="/api/statistics/projectMonthlyReport/Projectreport/detail/saveOrUpdate"
+        }else{
+          url="/api/statistics/projectMonthlyReport/Projectreport/process/start"
+        }
         this.dataReport.status="2"
         this.dataReport.flowStatus="1"
           let tableData = {
@@ -510,7 +517,7 @@
             planPrjTjxDetailList:this.nextData
           }
           this.$http
-            .post('/api/statistics/projectMonthlyReport/Projectreport/detail/saveOrUpdate', JSON.stringify(tableData), {useJson: true})
+            .post(url, JSON.stringify(tableData), {useJson: true})
             .then(res => {
               if (res.data.code === 200) {
                 this.$message({
@@ -573,13 +580,13 @@
       getData() {
         this.$http
           .post('/api/statistics/projectMonthlyReport/Projectreport/detail/queryMonthReportEntityInfo', JSON.stringify({
-            projectId: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectId,
-            uuid: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectreportuuid,
-            reportYear: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportYear,
-            reportMonth: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportMonth,
-            createOrgCode: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).orgCode,
-            createOrgType: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).createOrgType,
-            reportType: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportType
+            projectId: this.p.projectId,
+            uuid: this.p.projectreportuuid,
+            reportYear: this.p.reportYear,
+            reportMonth:this.p.reportMonth,
+            createOrgCode: this.p.orgCode,
+            createOrgType: this.p.createOrgType,
+            reportType: this.p.reportType
           }), {useJson: true})
           .then(res => {
             this.data = res.data.data.projectReportDetaiList
@@ -823,7 +830,7 @@
     color:#fff;
   }
   .sub-btn{
-    right: 175px;
+    right: 95px!important;
   }
   /**/
 </style>

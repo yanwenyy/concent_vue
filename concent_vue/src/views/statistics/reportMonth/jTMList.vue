@@ -386,7 +386,7 @@
         }else{
         this.$router.push({
           path: '../jTMDetail/',
-          query: {mList: this.$utils.encrypt(JSON.stringify(mList))}
+          query: {p: this.$utils.encrypt(JSON.stringify(mList))}
         });
 
       }},
