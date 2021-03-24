@@ -1,23 +1,7 @@
 <template>
   <div>
     <div style="width: 100%; overflow: hidden">
-      <el-form class="search-form" :inline="true" :model="searchform" @keyup.enter.native="init()">
-        <el-form-item label="填报年月:">
-          <el-date-picker
-            v-model="searchform.reportDate"
-            type="month"
-            value-format="yyyy-MM"
-            placeholder="选择月">
-          </el-date-picker>
-        </el-form-item>
-      </el-form>
-      <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>新增</el-button>
-        <el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
-        <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
-      </el-button-group>
       <div style="float: right">
-        <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
         <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
         <!-- <el-button @click="Importdata" type="primary" plain>导入</el-button> -->
       </div>
@@ -25,7 +9,6 @@
 
     <div style="margin-top: 10px">
       <el-table
-        default-expand-all
         row-key="uuid"
         :tree-props="{children: 'chirldList', hasChildren: 'hasChildren'}"
         class="tableStyle"
@@ -41,6 +24,7 @@
         tooltip-effect="dark"
         lazy
         :load="load"
+        default-expand-all
       >
         <el-table-column
           :width="50"
@@ -61,7 +45,7 @@
           prop="createOrgName"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
+         <!-- <template slot="header" slot-scope="scope">
             <span>填报单位</span>
             <div>
               <el-input
@@ -71,28 +55,56 @@
                 size="mini"
               />
             </div>
+          </template>-->
+          <template slot-scope="scope">
+            <spam class="blue pointer" v-if="scope.row.reportType != null && scope.row.reportType != ''">
+              {{scope.row.createOrgName+"("+(scope.row.reportType==1?'自揽':scope.row.reportType==2?'工区':'')+")"}}
+            </spam>
+            <span class="blue pointer"v-if="scope.row.reportType== null || scope.row.reportType == ''">
+              {{scope.row.createOrgName}}
+            </span>
           </template>
-          <!--<template slot-scope="scope">-->
-            <!--<span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>-->
-          <!--</template>-->
+
         </el-table-column>
         <el-table-column
           :width="200"
           align="center"
           label="年月"
-          prop="reportDate"
+          prop="enginTypeFirstName"
           show-overflow-tooltip
         >
+          <template slot="header"
+                    slot-scope="scope">
+            <span>填报年月</span>
+            <div>
+              <el-date-picker class="list-search-picker" filterable clearable
+                              type="month"
+                              value-format="yyyy-MM"
+                              @change="queryList"
+                              v-model="searchform.yearDateS"
+              >
+              </el-date-picker>
+            </div>
+          </template>
+          <template slot-scope="scope">
+            <!-- <div>{{scope.row.monthValue}}</div>-->
+            <div v-if="scope.row.reportYear != null && scope.row.reportMonth != null ">
+              {{
+              scope.row.reportYear+"-"+scope.row.reportMonth
+              }}
+            </div>
+            <div v-else>{{searchform.yearDateS}}</div>
+          </template>
         </el-table-column>
         <el-table-column
           :width="200"
           align="center"
           label="审核状态"
-          prop="stauts"
+          prop="flowStauts"
           show-overflow-tooltip
 
         >
-          <template slot="header" slot-scope="scope">
+ <!--         <template slot="header" slot-scope="scope">
             <span>审核状态</span>
             <div>
               <el-select
@@ -101,7 +113,7 @@
                 filterable
                 placeholder="请选择"
                 size="mini"
-                v-model="searchform.stauts"
+                v-model="searchform.status"
               >
                 <el-option
                   :key="index"
@@ -110,12 +122,16 @@
                   v-for="(item, index) in flowStatusList"
                 ></el-option>
               </el-select>
-              <!--<el-input-->
-              <!--class="list-search-picker"-->
-              <!--style=" width: 100%"-->
-              <!--v-model="searchform.flowStatus"-->
-              <!--size="mini"-->
-              <!--/>-->
+              &lt;!&ndash;<el-input&ndash;&gt;
+              &lt;!&ndash;class="list-search-picker"&ndash;&gt;
+              &lt;!&ndash;style=" width: 100%"&ndash;&gt;
+              &lt;!&ndash;v-model="searchform.flowStatus"&ndash;&gt;
+              &lt;!&ndash;size="mini"&ndash;&gt;
+              &lt;!&ndash;/>&ndash;&gt;
+            </div>
+          </template>-->
+          <template slot-scope="scope">
+            <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'未创建'}}
             </div>
           </template>
         </el-table-column>
@@ -126,7 +142,7 @@
           prop="createTime"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
+       <!--   <template slot="header" slot-scope="scope">
             <span>创建时间</span>
             <div>
               <el-date-picker
@@ -140,7 +156,7 @@
               >
               </el-date-picker>
             </div>
-          </template>
+          </template>-->
           <template slot-scope="scope">{{
             scope.row.createTime | dateformat
             }}</template>
@@ -152,7 +168,7 @@
           prop="state"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
+         <!-- <template slot="header" slot-scope="scope">
             <span>审核通过时间</span>
             <div>
               <el-date-picker
@@ -166,10 +182,23 @@
               >
               </el-date-picker>
             </div>
-          </template>
+          </template>-->
           <template slot-scope="scope">{{
             scope.row.auditDate | dateformat
             }}</template>
+        </el-table-column>
+        <el-table-column
+          :width="180"
+          align="center"
+          label="查看详细"
+          prop="createTime"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+            <span @click="queryGsXq(scope.row)"   class="blue pointer" v-if="scope.row.createOrgType=='13'">
+            查看详细
+           </span>
+          </template>
         </el-table-column>
       </el-table>
     </div>
@@ -179,20 +208,20 @@
 <script>
   export default {
     // inject:['reload'],
-    name: "proposal-list-look",
+    //name: "proposal-list-look",
     data() {
       return {
         Authorization:sessionStorage.getItem("token"),
         page: {current: 1, size: 20, total: 0, records: []},
         tableData: [],
+        userdata:{},
         showinput: false,
         sousuo: "",
         searchform: {
-          reportDate:'',
           createOrgName: "",
-          stauts: "",
+          flowStatus: "",
           createTime: "",
-          auditDate: "",
+          yearDateS: "",
         },
         menus: [],
         multipleSelection: [],
@@ -214,6 +243,10 @@
           {
             detailName:"审核驳回",
             id:'4'
+          },
+          {
+            detailName:"未创建",
+            id:''
           }
         ]
       };
@@ -222,126 +255,64 @@
 
     },
     methods: {
+      exportdata() {
+      },
       load(tree, treeNode, resolve) {
+        tree.reportYear= this.searchform.yearDateS.split("-")[0];
+        tree.reportMonth= this.searchform.yearDateS.split("-")[1];
         setTimeout(() => {
           this.$http
-          .post(
-            "/api/statistics/unProjectReport/list/checkEntInfo",
-            JSON.stringify(tree),
-            {useJson: true}
-          )
-          .then((res) => {
-            var datas=res.data.data.list
-            resolve(datas)
-          });
+              .post(
+                  "/api/statistics/Projectcheck/list/jtClickQueryEntInfo",
+                  tree
+              )
+              .then((res) => {
+                var datas=res.data.data.list
+                resolve(datas)
+              });
 
         }, 1000)
       },
-      exportdata() {
+      getdatatime(){//默认显示今天
+        var date = new Date();
+        var y = date.getFullYear();
+        var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+        var time=y + '-' + m;
+        this.searchform.yearDateS= time;
       },
       search() {
         this.showinput = false;
       },
-      // 增加
-      add() {
-        this.$http
-          .post(
-            "/api/statistics/unProjectReport/detail/save",
-            JSON.stringify({'reportDate':this.searchform.reportDate}),
-            {useJson: true,isLoading:false}
-          )
-          .then((res) => {
-            var datas=res.data.data;
-            if(datas.isExist=="0"){
-              this.$message.info("该填报年下已有相应的该月份的月报数据 无法创建新的填报记录");
-            }else{
-              let p = {actpoint: "add",reportDate: this.searchform.reportDate,statId:datas.uuid};
-              this.$router.push({
-                path: "./detail/",
-                query: {p: this.$utils.encrypt(JSON.stringify(p))},
-              });
-            }
-        });
-
+      queryList(){
+        this.searchform.current = 1;
+        this.searchform.current = 1;
+        this.searchform.reportYear= this.searchform.yearDateS.split("-")[0];
+        this.searchform.reportMonth= this.searchform.yearDateS.split("-")[1];
+        this.getData();
       },
-      // 修改
-      totop() {
-        if (this.multipleSelection.length !== 1) {
-          this.$message.info("请选择一条记录进行修改操作！");
-          return false;
-        }
-        // if(this.multipleSelection[0].flowStatus=='2'||this.multipleSelection[0].flowStatus=='3'){
-        //   this.$message.info("此条数据不可修改！");
-        //   return false;
-        // }
-        let p = {actpoint: "edit", statId: this.multipleSelection[0].uuid,reportDate: this.multipleSelection[0].reportDate,stauts:this.multipleSelection[0].stauts};
+      //查询项目详细列表
+      queryGsXq(row){
+        let mList = row;
         this.$router.push({
-          path: "./detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+          path: "./jTMList/",
+          query: {mList: this.$utils.encrypt(JSON.stringify(mList))},
         });
-
       },
       // 查看
       rowshow(row) {
-        console.log(row)
-        let p = {actpoint: "look", statId: row.uuid,reportDate: row.reportDate,stauts:row.stauts};
-        this.$router.push({
-          path: "./detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
-      },
-      // 删除
-      remove() {
-        if (this.multipleSelection.length < 1) {
-          this.$message.info("请选择一条记录进行查看操作！");
+      debugger
+        let mList = {actpoint: "look", params: row};
+        if(row.flowStatus==''||row.flowStatus==null){
+          this.$message.info("该项目月报还未完成上报,无法查看");
           return false;
+        }else{
+          this.$router.push({
+            path: "./jTMDetail/",
+            query: {mList: this.$utils.encrypt(JSON.stringify(mList))},
+          });
         }
-        let uuids = [],itemStatus=true;
-        this.multipleSelection.forEach((item) => {
-          uuids.push(item.uuid);
-        //   if(item.stauts==1||item.stauts==4){
-        //   uuids.push(item.uuid);
-        // }else{
-        //   this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
-        //   return itemStatus=false;
-        // }
-      })
-
-        if(itemStatus){
-          this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            this.$http
-            .post(
-              "/api/statistics/unProjectReport/list/delete",{ids: uuids}
-
-            )
-            .then((res) => {
-            if (res.data && res.data.code == 200) {
-            this.getData()
-            } else {
-              this.$message.error(data.message)
-            }
-
-        });
-        }).catch(() => {})
-        }
-
       },
-      // 展示
-      show() {
-        if (this.multipleSelection.length !== 1) {
-          this.$message.info("请选择一条记录进行查看操作！");
-          return false;
-        }
-        let p = {actpoint: "look", instid: this.multipleSelection[0].uuid};
-        this.$router.push({
-          path: "../detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
-      }, // list通用方法开始
+      // list通用方法开始
       handleSizeChange(val) {
         this.searchform.size = val;
         this.getData();
@@ -355,11 +326,6 @@
         this.getData();
       },
       searchformReset() {
-        // this.$refs["searchform"].resetFields();
-        // this.searchform.inforName = "";
-        // this.searchform.enginTypeFirstId = "";
-        // this.searchform.constructionOrg = "";
-        // this.searchform.noticeTypeId = "";
         this.searchform={
           current: 1,
           size: 20
@@ -372,29 +338,23 @@
       },
       // 查询
       getData() {
-        if(this.searchform.importFileRecordName!=''){
-          if(this.searchform.importFileRecordName=='是'){
-            this.searchform.importFileRecordId='1';
-          }else if(this.searchform.importFileRecordName=='否'){
-            this.searchform.importFileRecordId='0';
-          }
-        }
+        this.searchform.reportYear= this.searchform.yearDateS.split("-")[0];
+        this.searchform.reportMonth= this.searchform.yearDateS.split("-")[1];
         this.$http
-          .post(
-            "/api/statistics/unProjectReport/list/loadPageData",
-            this.searchform
-          )
-          .then((res) => {
-          this.tableData = res.data.data;
-      });
+            .post(
+                "/api/statistics/Projectcheck/list/jtQueryEntInfo",
+                this.searchform
+            )
+            .then((res) => {
+              this.tableData = res.data.data;
+            });
       },
     },
     created() {
-      //获取当前月份
-      var sj=new Date().toLocaleDateString().split('/');
-      sj[1]=sj[1]<10?'0'+sj[1]:sj[1];
-      this.searchform.reportDate=sj[0]+"-"+sj[1];
+      let that = this;
+      that.getdatatime();
       this.getData();
+      this.userdata=JSON.parse(sessionStorage.getItem('userdata'))
     },
   };
 </script>

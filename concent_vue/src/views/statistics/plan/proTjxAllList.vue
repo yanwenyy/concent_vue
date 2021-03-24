@@ -275,11 +275,15 @@
             isSubmit = true
             return false
           }
+          if (item.status ===null) {
+            isSubmit = true
+            return false
+          }
         })
         console.log(isSubmit)
         if (isSubmit) {
           this.$message({
-            message: '选中项包含已提交项目，请重新选择',
+            message: '选中项包含已提交项目或者未填报的项目，请重新选择',
             duration: 2000,
             type: 'warning',
             onClose: () => { this.getData() }

@@ -319,14 +319,14 @@
           return false;
         }
         //判断是否存在未上报的数据，如果存在就提示，不存在就创建
-        if(this.tableData.length>0){
+    /*    if(this.tableData.length>0){
           for (var i=0; i < this.tableData.length; i++) {
             if((this.tableData[i].flowStatus ==''||this.tableData[i].flowStatus ==null) && this.tableData[i].projectId!=this.tableData.managerOrgId){
               this.$message.info('该单位下存在未提交的月报,请提交该单位下所有项目月报后再进行尝试！')
               return false;
             }
           };
-        }
+        }*/
         if (this.multipleSelection[0].createOrgCode==this.userdata.managerOrgCode && (this.multipleSelection[0].flowStatus==''||this.multipleSelection[0].flowStatus==null)) {
           var url = '/api/statistics/Projectcheck/detail/jtReportEntityInfo';
         var params =  this.multipleSelection[0];

@@ -7033,6 +7033,9 @@ export default {
                 fileList3.push(item)
               }
           });
+          this.getTwo(datas.contractInfo.enginTypeFirstId);
+          this.getTwoSC(datas.contractInfo.marketFirstNameId);
+          this.getTwoXZ(datas.contractInfo.projectNatureFirstId);
           this.detailform={
             commonFilesList: datas.commonFilesList,
             contractInfo: datas.contractInfo,
@@ -7046,10 +7049,7 @@ export default {
             jzlx:[],//建筑类型
             jzjglx:[],//建筑结构类型
             cdmc:[],//场地名称
-          }
-      this.getTwo(datas.contractInfo.enginTypeFirstId);
-      this.getTwoSC(datas.contractInfo.marketFirstNameId);
-      this.getTwoXZ(datas.contractInfo.projectNatureFirstId);
+          };
       this.detailform.cdmc=datas.contractInfo.siteNameId&&datas.contractInfo.siteNameId.split(",");
       this.detailform.zplx=datas.contractInfo.otherAssemblyTypeId&&datas.contractInfo.otherAssemblyTypeId.split(",");
       this.detailform.jzlx=datas.contractInfo.otherBuildingTypeId&&datas.contractInfo.otherBuildingTypeId.split(",");

@@ -219,7 +219,7 @@
       ></el-pagination>
     </div>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
-    <State ref="stateUpdate" :data="flowStatus" @resetState="getData"></State>
+    <State ref="stateUpdate" :data="projectStatus" @resetState="getData"></State>
   </div>
 </template>
 
@@ -279,15 +279,23 @@
           this.$message.info('请选择至少一条记录进行修改操作！')
           return false
         }
-        let uuids = []
+        let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          uuids.push(item.uuid)
-        })
-        const _this = this.$refs.stateUpdate
-        _this.dialog = true
-        _this.ids = uuids
-        _this.newStatusId = ''
-        _this.newStatusName = ''
+          if(item.flowStatus==1||item.flowStatus==4){
+          uuids.push(item.uuid);
+        }else{
+          this.$message.info("当前所选数据中包含不可修改的选项,请检查后进行操作");
+          return itemStatus=false;
+        }
+      });
+        if(itemStatus){
+          this.flowStatus=uuids;
+          const _this = this.$refs.stateUpdate
+          _this.dialog = true
+          _this.ids = uuids
+          _this.newStatusId = ''
+          _this.newStatusName = ''
+        }
       },
       selectPosition() {
         this.treeStatas = true
@@ -341,37 +349,49 @@
           this.$message.info('请选择一条记录进行删除操作！')
           return false
         }
-        let uuids = []
+        let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          uuids.push(item.uuid)
-        })
-        this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$http
+          if(item.flowStatus==1||item.flowStatus==4){
+          uuids.push(item.uuid);
+          }else{
+            this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
+            return itemStatus=false;
+          }
+        });
+        if(itemStatus){
+          this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$http
             .post(
               '/api/statistics/StatisticsProject/list/delete',
               { ids: uuids }
             )
             .then((res) => {
-              this.getData()
+            this.getData()
             })
-        }).catch(() => {
-        })
+            }).catch(() => {
+          })
+        }
+
       },
       // 修改
       edit() {
         if (this.multipleSelection.length !== 1) {
           this.$message.info('请选择一条记录进行查看操作！')
           return false
+        }else if(this.multipleSelection[0].flowStatus==3){
+          this.$message.info('当前数据不能进行修改！')
+        }else{
+          let p = { actpoint: 'edit', uuid: this.multipleSelection[0].uuid }
+          this.$router.push({
+            path: './tradeAdd/',
+            query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+          })
         }
-        let p = { actpoint: 'edit', uuid: this.multipleSelection[0].uuid }
-        this.$router.push({
-          path: './tradeAdd/',
-          query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-        })
+
       },
       // 查看
       rowShow(row) {

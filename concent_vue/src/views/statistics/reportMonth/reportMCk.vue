@@ -365,7 +365,6 @@
           createOrgId: '',
           createOrgName: '',
           createOrgType: '',
-          createTime: '',
           createUserId: '',
           createUserName: '',
           createOrgName:'',
@@ -376,13 +375,15 @@
           projectStatusName:'',
           projectName:'',
           projectOmit:'',
-          projectId:'',
-          projectreportuuid:'',
           htquantity:'',
-          reportYear:'',
-          reportMonth:'',
           yearDatesEnd:'',
+          yearDateS:''
         }
+        var date = new Date();
+        var y = date.getFullYear();
+        var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+        var time=y + '-' + m;
+        this.searchform.yearDateS=time
         this.getData()
       },
       // 列表选项数据

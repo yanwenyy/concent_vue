@@ -176,8 +176,8 @@
                     ></el-option>
                   </el-select>
                 </el-form-item>
-                <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-                <el-button @click="getData" type="primary" plain>查询</el-button>
+                <el-button @click="searchform.design={}" type="info" plain style="color:black;background:none">重置</el-button>
+                <el-button @click="searchDate('design','kc_list')" type="primary" plain>查询</el-button>
                 <el-button @click="exportdata('design','勘察设计板块')" type="primary" plain>导出</el-button>
                 <!--<el-button @click="importData('designDetail')" type="primary" plain>导入</el-button>-->
                 <el-upload
@@ -185,6 +185,7 @@
                   :action="'/api/statistics/unProjectReport/import/designDetail'"
                   :on-success="importData"
                   :headers="{'Authorization':Authorization}"
+                  :data="{'statId':p.statId}"
                   :on-error="importData"
                   :show-file-list="false"
                   accept=".xls,.xlsx"
@@ -574,14 +575,15 @@
                 <el-form-item label="项目名称:">
                   <el-input v-model="searchform.industry.projectName" placeholder="项目名称" clearable></el-input>
                 </el-form-item>
-                <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-                <el-button @click="getData" type="primary" plain>查询</el-button>
+                <el-button @click="searchform.industry.projectName=''" type="info" plain style="color:black;background:none">重置</el-button>
+                <el-button @click="searchDate('industry','gy_list')" type="primary" plain>查询</el-button>
                 <el-button @click="exportdata('industry','工业制造板块')" type="primary" plain>导出</el-button>
                 <el-upload
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/industryDetail'"
                   :on-success="importData"
                   :headers="{'Authorization':Authorization}"
+                  :data="{'statId':p.statId}"
                   :on-error="importData"
                   :show-file-list="false"
                   accept=".xls,.xlsx"
@@ -900,14 +902,15 @@
                 <el-form-item label="项目名称:">
                   <el-input v-model="searchform.material.projectName" placeholder="项目名称" clearable></el-input>
                 </el-form-item>
-                <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-                <el-button @click="getData" type="primary" plain>查询</el-button>
+                <el-button @click="searchform.material.projectName=''" type="info" plain style="color:black;background:none">重置</el-button>
+                <el-button @click="searchDate('material','wz_list')" type="primary" plain>查询</el-button>
                 <el-button @click="exportdata('material','物资贸易板块')" type="primary" plain>导出</el-button>
                 <el-upload
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/materialDetail'"
                   :on-success="importData"
                   :headers="{'Authorization':Authorization}"
+                  :data="{'statId':p.statId}"
                   :on-error="importData"
                   :show-file-list="false"
                   accept=".xls,.xlsx"
@@ -959,7 +962,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目名称"
-                    prop="projectName	"
+                    prop="projectName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -1284,14 +1287,15 @@
                 <el-form-item label="项目名称:">
                   <el-input v-model="searchform.realty.projectName" placeholder="项目名称" clearable></el-input>
                 </el-form-item>
-                <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-                <el-button @click="getData" type="primary" plain>查询</el-button>
+                <el-button @click="searchform.realty.projectName=''" type="info" plain style="color:black;background:none">重置</el-button>
+                <el-button @click="searchDate('realty','fdc_list')" type="primary" plain>查询</el-button>
                 <el-button @click="exportdata('realty','房地产板块')" type="primary" plain>导出</el-button>
                 <el-upload
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/realtyDetail'"
                   :on-success="importData"
                   :headers="{'Authorization':Authorization}"
+                  :data="{'statId':p.statId}"
                   :on-error="importData"
                   :show-file-list="false"
                   accept=".xls,.xlsx"
@@ -1739,14 +1743,15 @@
                 <el-form-item label="项目名称:">
                   <el-input v-model="searchform.secure.projectName" placeholder="项目名称" clearable></el-input>
                 </el-form-item>
-                <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-                <el-button @click="getData" type="primary" plain>查询</el-button>
+                <el-button @click="searchform.secure.projectName==''" type="info" plain style="color:black;background:none">重置</el-button>
+                <el-button @click="searchDate('secure','jrbx_list')" type="primary" plain>查询</el-button>
                 <el-button @click="exportdata('secure','金融保险')" type="primary" plain>导出</el-button>
                 <el-upload
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/secureDetail'"
                   :on-success="importData"
                   :headers="{'Authorization':Authorization}"
+                  :data="{'statId':p.statId}"
                   :on-error="importData"
                   :show-file-list="false"
                   accept=".xls,.xlsx"
@@ -2203,14 +2208,15 @@
                 <el-form-item label="项目名称:">
                   <el-input v-model="searchform.service.projectName" placeholder="项目名称" clearable></el-input>
                 </el-form-item>
-                <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-                <el-button @click="getData" type="primary" plain>查询</el-button>
+                <el-button @click="searchform.service.projectName=''" type="info" plain style="color:black;background:none">重置</el-button>
+                <el-button @click="searchDate('service','yy_list')" type="primary" plain>查询</el-button>
                 <el-button @click="exportdata('service','运营维管')" type="primary" plain>导出</el-button>
                 <el-upload
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/serviceDetail'"
                   :on-success="importData"
                   :headers="{'Authorization':Authorization}"
+                  :data="{'statId':p.statId}"
                   :on-error="importData"
                   :show-file-list="false"
                   accept=".xls,.xlsx"
@@ -2814,14 +2820,15 @@
                 <el-form-item label="项目名称:">
                   <el-input v-model="searchform.other.projectName" placeholder="项目名称" clearable></el-input>
                 </el-form-item>
-                <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-                <el-button @click="getData" type="primary" plain>查询</el-button>
+                <el-button @click="searchform.other.projectName=''" type="info" plain style="color:black;background:none">重置</el-button>
+                <el-button @click="searchDate('other','qt_list')" type="primary" plain>查询</el-button>
                 <el-button @click="exportdata('other','其他产值板块')" type="primary" plain>导出</el-button>
                 <el-upload
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/otherDetail'"
                   :on-success="importData"
                   :headers="{'Authorization':Authorization}"
+                  :data="{'statId':p.statId}"
                   :on-error="importData"
                   :show-file-list="false"
                   accept=".xls,.xlsx"
@@ -3182,25 +3189,36 @@
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         searchform:{
           design:{
-            type:'design'
+            type:'design',
+            projectOmit:'',
+            projectTypeFirstId:'',
+            projectTypeSecondId:'',
+            projectStatusId:'',
+            businessId:'',
           },
           industry:{
-            type:'industry'
+            type:'industry',
+            projectName:'',
           },
           material:{
-            type:'material'
+            type:'material',
+            projectName:'',
           },
           realty:{
-            type:'realty'
+            type:'realty',
+            projectName:'',
           },
           secure:{
-            type:'secure'
+            type:'secure',
+            projectName:'',
           },
           service:{
-            type:'service'
+            type:'service',
+            projectName:'',
           },
           other:{
-            type:'other'
+            type:'other',
+            projectName:'',
           }
         },
         detailform: {
@@ -3352,7 +3370,19 @@
         this.getData();
       },
       //查询
-      getData(){},
+      searchDate(type,name){
+        this.$http
+          .post(
+            '/api/statistics/unProjectReport/list/detail/queryInfo',
+            this.searchform[type],
+          )
+          .then((res) => {
+          var datas=res.data.data;
+          // this.$forceUpdate();
+          this.detailform[name]=datas[name];
+
+        })
+      },
       //导出
       exportdata(type,name){
         this.searchform[type].reportDate=this.p.reportDate;
@@ -3660,7 +3690,7 @@
         if(this.p.actpoint=='add'){
           data={reportDate: this.p.reportDate}
         }else if(this.p.actpoint=='edit'||this.p.actpoint=='look'){
-          data={reportUuid: this.p.reportUuid,isAdd:'1',reportDate:this.p.reportDate}
+          data={statId: this.p.statId,isAdd:'1',reportDate:this.p.reportDate}
         }
         this.$http
           .post("/api/statistics/unProjectReport/list/queryAllInfo",data )
@@ -3878,6 +3908,15 @@
     height: 30px;
     margin: 5px 0;
     box-sizing: border-box;
+  }
+  .table-div{
+    max-height: calc(100vh - 215px)!important;
+    min-height: calc(100vh - 215px)!important;
+    overflow: scroll;
+  }
+  .detailBox{
+    max-height:calc(100vh - 215px)!important;
+    min-height: calc(100vh - 215px)!important;
   }
 </style>
 
