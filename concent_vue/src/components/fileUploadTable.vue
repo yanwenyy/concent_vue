@@ -11,6 +11,7 @@
                 v-show="isShow==='1'"
                 class="upload-demo detailUpload"
                 :action="UploadUrl()"
+                :headers="{'Authorization':Authorization}"
                 :on-success="handleChange"
                 :on-error="handleChange"
                 :on-remove="handleRemove"
@@ -96,6 +97,7 @@
   export default {
     data() {
       return {
+        Authorization:sessionStorage.getItem("token"),
         page: {current: 1, size: 20, total: 0, records: []},
         searchform:{
           current: 1,
