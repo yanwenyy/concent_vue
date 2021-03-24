@@ -70,7 +70,7 @@
           <div>
             <el-form-item label="项目板块:" class="inline-formitem">
               <template>
-                <el-radio-group class="detail-radio-group" disabled v-model="detailformBefore.topInfor.moduleId" @change="getName(detailformBefore.topInfor.moduleId, projectPlate, 'moduleName')">
+                <el-radio-group class="detail-radio-group" disabled v-model="detailformBefore.topInfor.moduleId" @change="getName(detailformBefore.topInfor.moduleId, projectPlate, 'moduleName','moduleCode')">
                   <el-radio v-for="(item, index) in projectPlate" :label="item.id" :key="index">{{item.detailName}}</el-radio>
                 </el-radio-group>
               </template>
@@ -1156,7 +1156,13 @@
                 filterable
                 clearable
                 placeholder="请选择"
-                v-model="detailformAfter.verify.bidModeName"
+                v-model="detailformAfter.verify.bidModeId"
+                @change="getName(
+                 detailformAfter.verify.bidModeId,
+                    bidType,
+                    'bidModeName',
+                    'bidModeCode'
+                )"
               >
                 <el-option
                   :key="index"
@@ -1670,6 +1676,20 @@ export default {
       this.detailformAfter[data.list]=this.detailformAfter[data.list].concat(data.fileList);
       this.uploadVisible = false;
     },
+
+      //获取下拉框id和name的公共方法
+      getName(id, list, name,code) {
+          if(id){
+              this.$forceUpdate()
+              this.detailform.verify[name] = list.find(
+                  (item) => item.id == id
+              ).detailName;
+              this.detailform.verify[code] = list.find(
+                  (item) => item.id == id
+              ).detailCode;
+              console.log(this.detailform.topInfor[name]);
+          }
+      },
       //流程操作
       operation(type){
         this.$http

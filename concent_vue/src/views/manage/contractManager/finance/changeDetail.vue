@@ -1188,7 +1188,8 @@
               getName(
                 detailform.contractInfo.marketSecondId,
                 emergingMarketTwo,
-                'marketSecondName'
+                'marketSecondName',
+                'marketSecondCode'
               )
             "
                     v-model="detailform.contractInfo.marketSecondId"
@@ -1364,7 +1365,8 @@
                   getName(
                     detailform.contractInfo.businessTypeId,
                     bizTypeCode,
-                    'businessType'
+                    'businessType',
+                    'businessTypeCode'
                   )
                 "
                   >
@@ -1406,7 +1408,8 @@
                   getName(
                     detailform.contractInfo.enginTypeFirstId,
                     contractType,
-                    'enginTypeFirstName'
+                    'enginTypeFirstName',
+                    'enginTypeFirstCode'
                   )
                 "
                   >
@@ -3127,6 +3130,7 @@
             (item) => {
             if (item.id == id) {
             this.detailform.contractInfo.enginTypeFirstName = item.detailName;
+                this.detailform.contractInfo.enginTypeFirstCode = item.detailCode;
             this.xqprojectType = item.children;
           }
         }
@@ -3142,6 +3146,7 @@
             (item)=>{
             if (item.id == id) {
             this.detailform.contractInfo.marketFirstName = item.detailName;
+                this.detailform.contractInfo.marketFirstCode = item.detailCode;
             this.emergingMarketTwo = item.children;
           }
         }
@@ -3158,6 +3163,7 @@
             if (item.id == id) {
 
             this.detailform.contractInfo.projectNatureFirstName = item.detailName;
+                this.detailform.contractInfo.projectNatureFirstCode = item.detailCode;
             this.projectNatureTwo = item.children;
           }
         }
@@ -3165,12 +3171,15 @@
         }
       },
       //获取下拉框id和name的公共方法
-      getName(id, list, name) {
+      getName(id, list, name,code) {
         if(id){
           this.$forceUpdate()
           this.detailform.contractInfo[name] = list.find(
             (item) => item.id == id
         ).detailName;
+            this.detailform.contractInfo[code] = list.find(
+                (item) => item.id == id
+            ).detailCode;
           console.log(this.detailform.contractInfo[name]);
         }
       },

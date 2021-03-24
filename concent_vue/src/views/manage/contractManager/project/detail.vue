@@ -114,7 +114,8 @@
                 getName(
                   detailform.contractInfo.enginTypeSecondId,
                   xqprojectType,
-                  'enginTypeSecondName'
+                  'enginTypeSecondName',
+                  'enginTypeSecondCode'
                 )
               "
                 v-model="detailform.contractInfo.enginTypeSecondId"
@@ -138,6 +139,12 @@
             placeholder="请选择"
 
             v-model="detailform.contractInfo.designRailwayClassifyId"
+            @change="getName(
+            detailform.contractInfo.designRailwayClassifyId,
+                  options2,
+                  'designRailwayClassify',
+                  'designRailwayClassifyCode'
+            )"
           >
             <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options2"></el-option>
           </el-select>
@@ -324,7 +331,8 @@
                 getName(
                   detailform.contractInfo.constructionNatureId,
                   constructionUnitNature,
-                  'constructionNature'
+                  'constructionNature',
+                  'constructionNatureCode'
                 )
               "
               >
@@ -623,7 +631,8 @@
                 getName(
                   detailform.contractInfo.marketSecondId,
                   emergingMarketTwo,
-                  'marketSecondName'
+                  'marketSecondName',
+                  'marketSecondCode'
                 )
               "
                 v-model="detailform.contractInfo.marketSecondId"
@@ -823,7 +832,8 @@
                 getName(
                   detailform.contractInfo.projectNatureSecondId,
                   projectNatureTwo,
-                  'projectNaturetSecondName'
+                  'projectNaturetSecondName',
+                  'projectNaturetSecondCode'
                 )
               "
                 v-model="detailform.contractInfo.projectNatureSecondId"
@@ -940,7 +950,8 @@
                 getName(
                   detailform.contractInfo.contractProvinceId,
                   ssList,
-                  'contractProvinceName'
+                  'contractProvinceName',
+                  'contractProvinceCode'
                 )
               "
               >
@@ -6804,6 +6815,7 @@ export default {
           (item) => {
           if (item.id == id) {
           this.detailform.contractInfo.enginTypeFirstName = item.detailName;
+          this.detailform.contractInfo.enginTypeFirstCode = item.detailCode;
           this.xqprojectType = item.children;
         }
       }
@@ -6819,6 +6831,7 @@ export default {
           (item)=>{
           if (item.id == id) {
           this.detailform.contractInfo.marketFirstName = item.detailName;
+          this.detailform.contractInfo.marketFirstCode = item.detailCode;
           this.emergingMarketTwo = item.children;
         }
       }
@@ -6835,6 +6848,7 @@ export default {
           if (item.id == id) {
 
           this.detailform.contractInfo.projectNatureFirstName = item.detailName;
+          this.detailform.contractInfo.projectNatureFirstCode = item.detailCode;
           this.projectNatureTwo = item.children;
         }
       }
@@ -6842,12 +6856,15 @@ export default {
       }
     },
     //获取下拉框id和name的公共方法
-    getName(id, list, name) {
+    getName(id, list, name,code) {
       if(id){
         this.$forceUpdate()
         this.detailform.contractInfo[name] = list.find(
           (item) => item.id == id
       ).detailName;
+          this.detailform.contractInfo[code] = list.find(
+              (item) => item.id == id
+          ).detailCode;
         console.log(this.detailform.contractInfo[name]);
       }
     },

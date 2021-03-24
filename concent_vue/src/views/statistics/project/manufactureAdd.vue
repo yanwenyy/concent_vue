@@ -160,7 +160,7 @@
                 clearable
                 placeholder="请选择"
                 :disabled="p.actpoint === 'look'"
-                @change="getName(detailForm.project.projectStatusId, projectStatus, 'projectStatusName')"
+                @change="getName(detailForm.project.projectStatusId, projectStatus, 'projectStatusName','projectStatusCode')"
                 v-model="detailForm.project.projectStatusId">
                 <el-option
                   :key="index"
@@ -265,7 +265,7 @@
                 clearable
                 :disabled="p.actpoint === 'look'"
                 placeholder="请选择"
-                @change="getName(detailForm.project.categorySecondId, bizTypeCodeTwo, 'categorySecondName')"
+                @change="getName(detailForm.project.categorySecondId, bizTypeCodeTwo, 'categorySecondName','categorySecondCode')"
                 v-model="detailForm.project.categorySecondId">
                 <el-option
                   :key="index"
@@ -317,7 +317,7 @@
                 clearable
                 :disabled="p.actpoint === 'look'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'"
                 placeholder="请选择"
-                @change="getName(detailForm.project.marketSecondId, emergingMarketTwo, 'marketSecondName')"
+                @change="getName(detailForm.project.marketSecondId, emergingMarketTwo, 'marketSecondName','marketSecondCode')"
                 v-model="detailForm.project.marketSecondId">
                 <el-option
                   :key="index"
@@ -352,7 +352,7 @@
                 :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
-                @change="getName(detailForm.project.assemblyTypeId, assemblyType, 'assemblyTypeName')"
+                @change="getName(detailForm.project.assemblyTypeId, assemblyType, 'assemblyTypeName','assemblyTypeCode')"
                 placeholder="请选择"
                 v-model="detailForm.project.assemblyTypeId">
                 <el-option
@@ -374,7 +374,7 @@
                 :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
-                @change="getName(detailForm.project.architectureTypeId, architecturalType, 'architectureTypeName')"
+                @change="getName(detailForm.project.architectureTypeId, architecturalType, 'architectureTypeName','architectureTypeCode')"
                 placeholder="请选择"
                 v-model="detailForm.project.architectureTypeId">
                 <el-option
@@ -394,7 +394,7 @@
                 :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
-                @change="getName(detailForm.project.houseTypeId, buildingStructure, 'houseTypeName')"
+                @change="getName(detailForm.project.houseTypeId, buildingStructure, 'houseTypeName','houseTypeCode')"
                 placeholder="请选择"
                 v-model="detailForm.project.houseTypeId">
                 <el-option
@@ -416,7 +416,7 @@
                 :disabled="p.actpoint === 'look'"
                 filterable
                 clearable
-                @change="getName(detailForm.project.fieldId, siteName, 'fieldName')"
+                @change="getName(detailForm.project.fieldId, siteName, 'fieldName','fieldCode')"
                 placeholder="请选择"
                 v-model="detailForm.project.fieldId">
                 <el-option
@@ -689,7 +689,7 @@
             projectSubContractList: [], // 分包字段
             infoProductList: [], // 产品列表
             infoSubjectMatterList: [], // 标的信息
-            commonFilesList: [], // 文件列表 
+            commonFilesList: [], // 文件列表
             projectModuleId: '510ba0d79593418493eb1a11ed3e7df4', // 项目板块
             projectModuleName: '工业制造', // 项目板块
             projectName: '',
@@ -843,12 +843,15 @@
         this.detailForm.project.topInfoSiteList[0].placeId = data.id
         this.detailForm.project.topInfoSiteList[0].path = data.fullDetailName
       },
-      getName(id, list, name) {
+      getName(id, list, name,code) {
         if (id) {
           this.$forceUpdate()
           this.detailForm.project[name] = list.find(
             (item) => item.id === id
           ).detailName
+            this.detailForm.project[code] = list.find(
+                (item) => item.id === id
+            ).detailCode
           console.log(this.detailForm)
         }
       },
@@ -877,6 +880,7 @@
             (item) => {
               if (item.id === id) {
                 this.detailForm.project.marketFirstName = item.detailName
+                  this.detailForm.project.marketFirstCode = item.detailCode
                 this.emergingMarketTwo = item.children
               }
             }
@@ -928,7 +932,7 @@
       submit() {
         const id = this.p.uuid || this.uuid
         this.$http
-          .post('/api/statistics/StatisticsProject/process/start', 
+          .post('/api/statistics/StatisticsProject/process/start',
           JSON.stringify(this.detailForm.project),{ useJson: true })
           .then((res) => {
             if (res.data.code === 200) {
