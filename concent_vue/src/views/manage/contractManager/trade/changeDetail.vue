@@ -1037,7 +1037,8 @@
                   getName(
                     detailform.contractInfo.tradeContractCategoryId,
                     wumoveType,
-                    'tradeContractCategory'
+                    'tradeContractCategory',
+                    'tradeContractCategoryCode'
                   )
                 "
                     v-model="detailform.contractInfo.tradeContractCategoryId"
@@ -1404,7 +1405,8 @@
               getName(
                 detailform.contractInfo.marketSecondId,
                 emergingMarketTwo,
-                'marketSecondName'
+                'marketSecondName',
+                'marketSecondCode'
               )
             "
                     v-model="detailform.contractInfo.marketSecondId"
@@ -3389,6 +3391,7 @@
             (item) => {
             if (item.id == id) {
             this.detailform.contractInfo.enginTypeFirstName = item.detailName;
+                this.detailform.contractInfo.enginTypeFirstCode = item.detailCode;
             this.xqprojectType = item.children;
           }
         }
@@ -3404,6 +3407,7 @@
             (item)=>{
             if (item.id == id) {
             this.detailform.contractInfo.marketFirstName = item.detailName;
+                this.detailform.contractInfo.marketFirstCode = item.detailCode;
             this.emergingMarketTwo = item.children;
           }
         }
@@ -3420,6 +3424,7 @@
             if (item.id == id) {
 
             this.detailform.contractInfo.projectNatureFirstName = item.detailName;
+                this.detailform.contractInfo.projectNatureFirstCode = item.detailCode;
             this.projectNatureTwo = item.children;
           }
         }

@@ -185,7 +185,8 @@
                   getName(
                     detailform.contractInfo.enginTypeFirstId,
                     contractType,
-                    'enginTypeFirstName'
+                    'enginTypeFirstName',
+                    'enginTypeFirstCode'
                   )
                 "
                 >
@@ -346,7 +347,8 @@
                     getName(
                       detailform.contractInfo.marketSecondId,
                       emergingMarketTwo,
-                      'marketSecondName'
+                      'marketSecondName',
+                      'marketSecondCode'
                     )
                   "
                   v-model="detailform.contractInfo.marketSecondId"
@@ -522,7 +524,8 @@
                   getName(
                     detailform.contractInfo.businessTypeId,
                     bizTypeCode,
-                    'businessType'
+                    'businessType',
+                    'businessTypeCode'
                   )
                 "
                 >
@@ -2146,12 +2149,15 @@
         }
       },
       //获取下拉框id和name的公共方法
-      getName(id, list, name) {
+      getName(id, list, name,code) {
         if(id){
           this.$forceUpdate()
           this.detailform.contractInfo[name] = list.find(
             (item) => item.id == id
         ).detailName;
+            this.detailform.contractInfo[code] = list.find(
+                (item) => item.id == id
+            ).detailCode;
           console.log(this.detailform.contractInfo[name]);
         }
       },
@@ -2165,6 +2171,7 @@
             (item)=>{
             if (item.id == id) {
             this.detailform.contractInfo.marketFirstName = item.detailName;
+            this.detailform.contractInfo.marketFirstCode = item.detailCode;
             this.emergingMarketTwo = item.children;
           }
         }

@@ -53,7 +53,14 @@
                 filterable
                 clearable
                 placeholder="请选择"
-                v-model="detailForm.nationalStandardSchedule.measuringUnit">
+                v-model="detailForm.nationalStandardSchedule.measuringUnitId"
+                @change="getName(
+                detailForm.nationalStandardSchedule.measuringUnitId,
+                  unit,
+                  'measuringUnit',
+                  'measuringUnitCode'
+                )"
+          >
                 <el-option
                   :key="index"
                   :label="item.detailName"
@@ -184,7 +191,21 @@ import { isMoney } from '@/utils/validate'
         ).detailName;
         }
       },
-    close(){
+        //获取下拉框id和name的公共方法
+        getName(id, list, name,code) {
+            if(id){
+                this.$forceUpdate();
+                this.detailForm.nationalStandardSchedule[name] = list.find(
+                    (item) => item.id == id
+                ).detailName;
+                this.detailForm.nationalStandardSchedule[code] = list.find(
+                    (item) => item.id == id
+                ).detailCode;
+            }
+        },
+
+
+        close(){
         this.$refs['detailForm'].clearValidate();
         this.visible = false;
       },

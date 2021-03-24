@@ -2,23 +2,6 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-form class="search-form" :inline="true" :model="searchform" @keyup.enter.native="init()">
-        <el-form-item label="年份:">
-          <el-date-picker
-            v-model="searchform.month"
-            type="year"
-            placeholder="选择年">
-          </el-date-picker>
-        </el-form-item>
-      <!--  <el-form-item label="季度:">
-          <el-select v-model="searchform.month" placeholder="请选择">
-            <el-option
-              v-for="(item,index) in 4"
-              :key="index"
-              :label="item"
-              :value="item">
-            </el-option>
-          </el-select>
-        </el-form-item>-->
       </el-form>
       <el-button-group style="float: left">
         <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>创建</el-button>
@@ -78,9 +61,7 @@
               />
             </div>
           </template>
-          <!--<template slot-scope="scope">-->
-          <!--<span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>-->
-          <!--</template>-->
+
         </el-table-column>
         <el-table-column
           :width="200"
@@ -89,22 +70,27 @@
           prop="reportYear"
           show-overflow-tooltip
         >
+          <template slot="header" slot-scope="scope">
+            <span>年份</span>
+            <div>
+              <el-date-picker
+                v-model="searchform.year"
+                value-format="yyyy"
+                type="year"
+
+                placeholder="选择年"
+                size="mini"
+                style="width: 60%">
+              </el-date-picker>
+            </div>
+          </template>
         </el-table-column>
-      <!--  <el-table-column
-          :width="200"
-          align="center"
-          label="季度"
-          prop="reportYear"
-          show-overflow-tooltip
-        >
-        </el-table-column>-->
         <el-table-column
           :width="200"
           align="center"
           label="审核状态"
-          prop="stauts"
+          prop="flowStatus"
           show-overflow-tooltip
-
         >
           <template slot="header" slot-scope="scope">
             <span>审核状态</span>
@@ -124,12 +110,6 @@
                   v-for="(item, index) in flowStatusList"
                 ></el-option>
               </el-select>
-              <!--<el-input-->
-              <!--class="list-search-picker"-->
-              <!--style=" width: 100%"-->
-              <!--v-model="searchform.flowStatus"-->
-              <!--size="mini"-->
-              <!--/>-->
             </div>
           </template>
         </el-table-column>
@@ -154,6 +134,8 @@
           stauts: "",
           createTime: "",
           auditDate: "",
+          year:"",
+          year:{}
         },
         menus: [],
         multipleSelection: [],
@@ -306,7 +288,7 @@
         }
         this.$http
           .post(
-            "/api/statistics/unProjectReport/list/loadPageData",
+            "/api/statistics/Year/detail/findByYear",
             this.searchform
           )
           .then((res) => {

@@ -94,7 +94,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 clearable
                 filterable
-                @change="getName(detailForm.project.projectNatureSecondId, projectNatureTwo, 'projectNatureSecond')"
+                @change="getName(detailForm.project.projectNatureSecondId, projectNatureTwo, 'projectNatureSecond','projectNatureSecondCode')"
                 placeholder="请选择"
                 v-model="detailForm.project.projectNatureSecondId">
                 <el-option
@@ -130,7 +130,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 clearable
                 filterable
-                @change="getName(detailForm.project.investmentModelId, investmentModel, 'investmentModel')"
+                @change="getName(detailForm.project.investmentModelId, investmentModel, 'investmentModel','investmentModelCode')"
                 placeholder="请选择"
                 v-model="detailForm.project.investmentModelId">
                 <el-option
@@ -174,7 +174,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 clearable
                 filterable
-                @change="getName(detailForm.project.railwayId, railwayBureau, 'railwayName')"
+                @change="getName(detailForm.project.railwayId, railwayBureau, 'railwayName','railwayCode')"
                 placeholder="请选择"
                 v-model="detailForm.project.railwayId">
                 <el-option
@@ -227,7 +227,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 clearable
                 filterable
-                @change="getName(detailForm.project.projectTypeSecondId, projectTypeTwo, 'projectTypeSecond')"
+                @change="getName(detailForm.project.projectTypeSecondId, projectTypeTwo, 'projectTypeSecond','projectTypeSecondCode')"
                 placeholder="请选择"
                 v-model="detailForm.project.projectTypeSecondId">
                 <el-option
@@ -246,7 +246,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 filterable
                 clearable
-                @change="getName(detailForm.project.projectLineId, railwayLine, 'projectLine')"
+                @change="getName(detailForm.project.projectLineId, railwayLine, 'projectLine','projectLineCode')"
                 placeholder="请选择或直接填写所属现路"
                 v-model="detailForm.project.projectLineId">
                 <el-option
@@ -267,7 +267,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                @change="getName(detailForm.project.projectModuleId, projectPlate, 'projectModuleName')"
+                @change="getName(detailForm.project.projectModuleId, projectPlate, 'projectModuleName','projectModuleCode')"
                 v-model="detailForm.project.projectModuleId">
                 <el-option
                   :key="index"
@@ -285,7 +285,7 @@
                 clearable
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 placeholder="请选择"
-                @change="getName(detailForm.project.categorySecondId, bizTypeCodeTwo, 'categorySecondName')"
+                @change="getName(detailForm.project.categorySecondId, bizTypeCodeTwo, 'categorySecondName','categorySecondCode')"
                 v-model="detailForm.project.categorySecondId">
                 <el-option
                   :key="index"
@@ -314,7 +314,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 filterable
                 clearable
-                @change="getName(detailForm.project.unitId, unit, 'unitName')"
+                @change="getName(detailForm.project.unitId, unit, 'unitName','unitCode')"
                 placeholder="请选择"
                 v-model="detailForm.project.unitId">
                 <el-option
@@ -345,7 +345,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 filterable
                 clearable
-                @change="getName(detailForm.project.projectStatusId, projectStatus, 'projectStatusName')"
+                @change="getName(detailForm.project.projectStatusId, projectStatus, 'projectStatusName','projectStatusCode')"
                 placeholder="请选择"
                 v-model="detailForm.project.projectStatusId">
                 <el-option
@@ -404,7 +404,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'"
                 filterable
                 clearable
-                @change="getName(detailForm.project.marketSecondId, emergingMarketTwo, 'marketSecondName')"
+                @change="getName(detailForm.project.marketSecondId, emergingMarketTwo, 'marketSecondName','marketSecondCode')"
                 placeholder="请选择"
                 v-model="detailForm.project.marketSecondId">
                 <el-option
@@ -440,7 +440,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 filterable
                 clearable
-                @change="getName(detailForm.project.assemblyTypeId, assemblyType, 'assemblyTypeName')"
+                @change="getName(detailForm.project.assemblyTypeId, assemblyType, 'assemblyTypeName','assemblyTypeCode')"
                 placeholder="请选择"
                 v-model="detailForm.project.assemblyTypeId">
                 <el-option
@@ -461,7 +461,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 filterable
                 clearable
-                @change="getName(detailForm.project.architectureTypeId, architecturalType, 'architectureTypeName')"
+                @change="getName(detailForm.project.architectureTypeId, architecturalType, 'architectureTypeName','architectureTypeCode')"
                 placeholder="请选择"
                 v-model="detailForm.project.architectureTypeId">
                 <el-option
@@ -480,7 +480,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 filterable
                 clearable
-                @change="getName(detailForm.project.houseTypeId, buildingStructure, 'houseTypeName')"
+                @change="getName(detailForm.project.houseTypeId, buildingStructure, 'houseTypeName','houseTypeCode')"
                 placeholder="请选择"
                 v-model="detailForm.project.houseTypeId">
                 <el-option
@@ -501,7 +501,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 filterable
                 clearable
-                @change="getName(detailForm.project.fieldId, siteName, 'fieldName')"
+                @change="getName(detailForm.project.fieldId, siteName, 'fieldName','fieldCode')"
                 placeholder="请选择"
                 v-model="detailForm.project.fieldId">
                 <el-option
@@ -1059,12 +1059,15 @@
         this.detailForm.project.topInfoSiteList[0].placeId = data.id
         this.detailForm.project.topInfoSiteList[0].path = data.fullDetailName
       },
-      getName(id, list, name) {
+      getName(id, list, name,code) {
         if (id) {
           this.$forceUpdate()
           this.detailForm.project[name] = list.find(
             (item) => item.id === id
           ).detailName
+            this.detailForm.project[code] = list.find(
+                (item) => item.id === id
+            ).detailCode
           console.log(this.detailForm)
         }
       },
@@ -1103,6 +1106,7 @@
             (item) => {
               if (item.id === id) {
                 this.detailForm.project.marketFirstName = item.detailName
+                this.detailForm.project.marketFirstCode = item.detailCode
                 this.emergingMarketTwo = item.children
               }
             }
@@ -1120,6 +1124,7 @@
             (item) => {
               if (item.id === id) {
                 this.detailForm.project.projectTypeFirst = item.detailName
+                this.detailForm.project.projectTypeFirstCode = item.detailCode
                 this.projectTypeTwo = item.children
               }
             }
@@ -1137,6 +1142,7 @@
             (item) => {
               if (item.id === id) {
                 this.detailForm.project.projectNatureFirst = item.detailName
+                this.detailForm.project.projectNatureFirstCode = item.detailCode
                 this.projectNatureTwo = item.children
               }
             }

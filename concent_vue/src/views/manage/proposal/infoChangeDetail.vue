@@ -475,7 +475,7 @@
                   <!--</el-select>-->
 
                   <template>
-                    <el-radio-group class="detail-radio-group" v-model="detailform.topInfor.moduleId"  @change="getName(detailform.topInfor.moduleId, projectPlate, 'moduleName')">
+                    <el-radio-group class="detail-radio-group" v-model="detailform.topInfor.moduleId"  @change="getName(detailform.topInfor.moduleId, projectPlate, 'moduleName','moduleCode')">
                       <el-radio :disabled="p.actpoint === 'look'||p.actpoint=='task'"  v-for="(item, index) in projectPlate" :label="item.id" :key="index">{{item.detailName}}</el-radio>
                     </el-radio-group>
                   </template>
@@ -517,7 +517,8 @@
                   getName(
                     detailform.topInfor.enginTypeSecondId,
                     xqprojectType,
-                    'enginTypeSecondName'
+                    'enginTypeSecondName',
+                    'enginTypeSecondCode'
                   )
                 "
                   v-model="detailform.topInfor.enginTypeSecondId"
@@ -545,7 +546,8 @@
                   getName(
                     detailform.topInfor.belongLineId,
                     railwayLine,
-                    'belongLineName'
+                    'belongLineName',
+                    'belongLineCode'
                   )
                 "
                   v-model="detailform.topInfor.belongLineId"
@@ -596,7 +598,8 @@
                   getName(
                     detailform.topInfor.projectNatureSecondId,
                     projectNatureTwo,
-                    'projectNatureSecondName'
+                    'projectNatureSecondName',
+                    'projectNatureSecondCode'
                   )
                 "
                   v-model="detailform.topInfor.projectNatureSecondId"
@@ -656,7 +659,8 @@
                   getName(
                     detailform.topInfor.marketSecondId,
                     emergingMarketTwo,
-                    'marketSecondName'
+                    'marketSecondName',
+                    'marketSecondCode'
                   )
                 "
                   v-model="detailform.topInfor.marketSecondId"
@@ -858,7 +862,8 @@
                   getName(
                     detailform.topInfor.noticeTypeId,
                     bulletinType,
-                    'noticeTypeName'
+                    'noticeTypeName',
+                    'noticeTypeCode'
                   )
                 "
                 >
@@ -970,7 +975,8 @@
                   getNameZb(
                     detailform.topInfoOrg.bidProbId,
                     probability,
-                    'bidProbName'
+                    'bidProbName',
+                    'bidProbCode'
                   )
                 "
                   v-model="detailform.topInfoOrg.bidProbId"
@@ -1450,6 +1456,7 @@
             (item) => {
             if (item.id == id) {
             this.detailform.topInfor.enginTypeFirstName = item.detailName;
+            this.detailform.topInfor.enginTypeFirstCode = item.detailCode;
             this.xqprojectType = item.children;
           }
         }
@@ -1465,6 +1472,7 @@
             (item)=>{
             if (item.id == id) {
             this.detailform.topInfor.marketFirstName = item.detailName;
+            this.detailform.topInfor.marketFirstCode = item.detailCode;
             this.emergingMarketTwo = item.children;
           }
         }
@@ -1480,6 +1488,7 @@
             (item)=>{
             if (item.id == id) {
             this.detailform.topInfor.projectNatureFirstName = item.detailName;
+            this.detailform.topInfor.projectNatureFirstCode = item.detailCode;
             this.projectNatureTwo = item.children;
           }
         }
@@ -1487,22 +1496,28 @@
         }
       },
       //获取下拉框id和name的公共方法
-      getName(id, list, name) {
+      getName(id, list, name,code) {
         if(id){
           this.$forceUpdate()
           this.detailform.topInfor[name] = list.find(
             (item) => item.id == id
         ).detailName;
+            this.detailform.topInfor[code] = list.find(
+                (item) => item.id == id
+            ).detailCode;
           console.log(this.detailform.topInfor[name]);
         }
       },
       //获取下拉框id和name的公共方法
-      getNameZb(id, list, name) {
+      getNameZb(id, list, name,code) {
         if(id){
           this.$forceUpdate()
           this.detailform.topInfoOrg[name] = list.find(
             (item) => item.id == id
         ).detailName;
+            this.detailform.topInfoOrg[code] = list.find(
+                (item) => item.id == id
+            ).detailCode;
           console.log(this.detailform.topInfoOrg[name]);
         }
       },
@@ -1514,6 +1529,7 @@
           var v = {
             capitalId: item.id,
             capitalName: item.detailName,
+            capitalCode:item.detailCode
           };
           topInforCapitalList.push(v);
         }
