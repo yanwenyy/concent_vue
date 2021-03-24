@@ -69,21 +69,33 @@
           :width="110"
           align="left"
           label="计划年份"
+          prop="planYear"
           show-overflow-tooltip
         >
+          <template slot="header" slot-scope="scope">
+            <span>计划年份</span>
+            <div>
+              <el-date-picker
+                class="list-search-picker"
+                clearable
+                type="year"
+                value-format="yyyy"
+                @change="queryList"
+                v-model="searchform.planYear"
+              >
+              </el-date-picker>
+            </div>
+          </template>
           <template  slot-scope="scope">
-            <div @dblclick.stop>
-              <el-select
-                @change="handleYearChange(scope.row.projectId,$event)"
-                size="mini"
-                placeholder="请选择"
-                v-model="currentYears[computeTableIndex(scope.$index)]">
-                <el-option
-                  :key="index"
-                  :label="item+'年'"
-                  :value="item"
-                  v-for="(item, index) in arrYear"/>
-              </el-select>
+            <div v-if="scope.row.planYear != null ">
+              {{
+              scope.row.planYear
+              }}
+            </div>
+            <div v-else>
+              {{
+              searchform.planYear
+              }}
             </div>
           </template>
         </el-table-column>
@@ -91,21 +103,35 @@
           :width="110"
           align="left"
           label="计划月份"
+          prop="planMonth"
           show-overflow-tooltip
         >
+          <template slot="header" slot-scope="scope">
+            <span>计划月份</span>
+            <div>
+              <el-date-picker
+                class="list-search-picker"
+                filterable
+                clearable
+                type="month"
+                value-format="MM"
+                @change="queryList"
+                format="MM"
+                v-model="searchform.planMonth"
+              >
+              </el-date-picker>
+            </div>
+          </template>
           <template  slot-scope="scope">
-            <div @dblclick.stop>
-              <el-select
-                @change="handleMonthChange(scope.row.projectId,$event)"
-                size="mini"
-                placeholder="请选择"
-                v-model="currentMonths[computeTableIndex(scope.$index)]">
-                <el-option
-                  :key="index"
-                  :label="item+'月'"
-                  :value="item"
-                  v-for="(item, index) in arrMonth"/>
-              </el-select>
+            <div v-if="scope.row.planMonth != null ">
+              {{
+              scope.row.planMonth
+              }}
+            </div>
+            <div v-else>
+              {{
+              searchform.planMonth
+              }}
             </div>
           </template>
         </el-table-column>
@@ -255,8 +281,8 @@
           projectStatus: '',
           projectLocation: '',
           planType: '1',
-          planYear: new Date().getFullYear(),
-          planMonth: new Date().getMonth() + 1
+          planYear:'',
+          planMonth:''
         },
         proNameHover: false,
         projectName: '请选择项目',
@@ -271,6 +297,12 @@
       }
     },
     methods: {
+      getdatatime(){//默认显示今天
+        var sj=new Date().toLocaleDateString().split('/');
+        sj[1]=sj[1]<10?'0'+sj[1]:sj[1];
+        this.searchform.planYear= sj[0];
+        this.searchform.planMonth= sj[1];
+      },
       handleSelectionChange(val) {
         this.multipleSelection = val
       },
@@ -281,6 +313,11 @@
       handleMonthChange(projectId, val) {
         this.selectMonths.push({projectId: projectId, month: val})
         this.$forceUpdate()
+      },
+
+      queryList(){
+        this.searchform.current = 1
+        this.getData()
       },
       // 删除
       del() {
@@ -416,8 +453,8 @@
           projectStatus: '',
           projectLocation: '',
           planType: '1',
-          planYear: new Date().getFullYear(),
-          planMonth: new Date().getMonth() + 1
+          planYear: '',
+          planMonth:''
         }
         this.getData()
       },
@@ -490,7 +527,8 @@
       }
     },
     created() {
-      this.getArrYear()
+      /*this.getArrYear()*/
+      this.getdatatime()
       this.getData()
       let promptVal = localStorage.getItem('isPrompt')
       if (promptVal != null && promptVal !== '') {

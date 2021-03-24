@@ -224,14 +224,14 @@
                 <td style="width:70%;text-align:left;padding:10px">
                   <el-input  :disabled="true" v-model.trim="form1.createOrgName" placeholder="填报单位" min="0" max="500" type="text"
                              style="width:100%" ></el-input>
-                  <span style="color:red;font-size:12px" v-if="this.show && this.form1.createOrgName == ''">此项不能为空</span>
+                  <span style="color:red;font-size:12px;float:left" v-if="this.show && this.form1.createOrgName == ''">此项不能为空</span>
                 </td>
               </tr>
               <tr>
                 <td><span style="color: red;font-weight:bold">*</span>填报人:</td>
                 <td style="width:70%;text-align:left;padding:10px">
                   <el-input  :disabled="true" v-model.trim="form1.createUserName" style="width:100%" type="text" placeholder="填报人:"></el-input>
-                  <span style="color:red;font-size:12px" v-if="this.show && this.form1.createUserName == ''">此项不能为空</span>
+                  <span style="color:red;font-size:12px;float:left" v-if="this.show && this.form1.createUserName == ''">此项不能为空</span>
                 </td>
               </tr>
               <tr>
@@ -241,7 +241,7 @@
                     <el-radio label="1" ><span>启用</span></el-radio>
                     <el-radio label="2" ><span>未启用</span></el-radio>
                   </el-radio-group>
-                  <span style="color:red;font-size:12px" v-if="this.show && this.form1.startStatus == ''">此项不能为空</span>
+                  <span style="color:red;font-size:12px;float:left" v-if="this.show && this.form1.startStatus == ''">此项不能为空</span>
                 </td>
               </tr>
               <tr>
@@ -251,10 +251,11 @@
                     v-model="form1.standardreporttime"
                     type="date"
                     format="d"
+                    @change="jyShow"
                     value-format="dd"
                     placeholder="选择日">
                   </el-date-picker>
-                  <span style="color:red;font-size:12px" v-if="this.show && this.form1.standardreporttime == ''">此项不能为空</span>
+                  <span style="color:red;font-size:12px;float:left" v-if="show && (form1.standardreporttime == ''||form1.standardreporttime == '')">此项不能为空</span>
                 </td>
               </tr>
               <tr>
@@ -265,9 +266,10 @@
                     type="date"
                     format="d"
                     value-format="dd"
+                    @change="jyShowEnd"
                     placeholder="选择日">
                   </el-date-picker>
-                  <span style="color:red;font-size:12px" v-if="this.show && this.form1.endreporttime == ''">此项不能为空</span>
+                  <span style="color:red;font-size:12px;float:left" v-if="show && (form1.endreporttime == ''||form1.endreporttime == '')">此项不能为空</span>
                 </td>
               </tr>
             </table>
@@ -375,6 +377,18 @@
         this.form1.createOrgType=this.userdata.managerOrgType;
         this.form1.createUserName=this.userdata.username;
         this.showCfclAddDialog1 = true;
+      },
+      jyShow(){
+        if(this.form1.standardreporttime==null || this.form1.standardreporttime=='') {
+          this.show = true
+        }
+        this.$forceUpdate();
+      },
+      jyShowEnd(){
+        if(this.form1.endreporttime==null || this.form1.endreporttime==''){
+          this.show=true
+        }
+        this.$forceUpdate();
       },
       //提交
       submit() {

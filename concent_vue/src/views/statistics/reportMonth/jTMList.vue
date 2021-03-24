@@ -64,9 +64,18 @@
               </el-date-picker>
             </div>
           </template>
-          <template slot-scope="scope">{{
-            scope.row.reportYear+"-"+scope.row.reportMonth
-            }}</template>
+          <template slot-scope="scope">
+            <div v-if="scope.row.reportYear!=''&& scope.row.reportYear!=null">
+              {{
+              scope.row.reportYear+"-"+scope.row.reportMonth
+              }}
+            </div>
+            <div v-else>
+              {{
+              searchform.reportYear+"-"+searchform.reportMonth
+              }}
+            </div>
+          </template>
         </el-table-column>
         <el-table-column :min-width="200"
                          align="center"
@@ -241,8 +250,7 @@
       return {
         data:{},
         mList: JSON.parse(this.$utils.decrypt(this.$route.query.mList)),
-        yearDateS:'',
-        userdata:{},
+        yearDateS:JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportYear+'-'+JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportMonth,        userdata:{},
         treeStatas: false,
         page: { current: 1, size: 20, total: 0, records: [] },
         searchform: {
@@ -365,13 +373,14 @@
         //this.searchform=this.mList.params;
         this.searchform.createOrgCode=this.mList.createOrgCode
         this.searchform.createOrgId=this.mList.createOrgId
-        this.searchform.createOrgName=this.mList.createOrgName
+        //this.searchform.createOrgName=this.mList.createOrgName
         this.searchform.createOrgType=this.mList.createOrgType
         this.searchform.createUserId=this.mList.createUserId
         this.searchform.createUserName=this.mList.createUserName
         this.searchform.reportYear=this.mList.reportYear
         this.searchform.reportMonth=this.mList.reportMonth
         this.searchform.reportType=this.mList.reportType
+        this.searchform.yearDateS=this.mList.reportYear+'-'+this.mList.reportMonth
         this.$http
             .post('/api/statistics/projectMonthlyReport/Projectreport/list/companyMonthlyReportList', this.searchform)
             .then(res => {
