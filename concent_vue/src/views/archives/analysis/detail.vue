@@ -128,6 +128,14 @@
               style="width: 33%"
             >
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
+
+              <!--<el-button-->
+                <!--v-show="p.actpoint !== 'look'"-->
+                <!--size="small"-->
+                <!--type="primary"-->
+                <!--@click="openFileUp('/api/contract/topInfo/CommonFiles/archives/03/uploadFile','commonFilesList')">-->
+                <!--点击上传-->
+              <!--</el-button>-->
               <el-upload
                 class="upload-demo"
                 action="https://jsonplaceholder.typicode.com/posts/"
@@ -176,14 +184,17 @@
                  @click="saveInfo('detailform')">保存</el-button>
       <el-button @click="submitForm('detailform')">提交</el-button>
     </div>
+    <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
   </div>
 </template>
 
 <script>
+  import FileUpload from '@/components/fileUpload'
 export default {
   name: '详情',
   data() {
     return {
+      uploadVisible:false,//上传附件组件状态
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
       detailform:{
         archivesInfo:{
@@ -232,6 +243,9 @@ export default {
       multipleSelection1:[],
     }
   },
+  components: {
+    FileUpload,
+  },
   computed: {
 
     // bidType () {
@@ -243,7 +257,19 @@ export default {
 
   },
   methods: {
-
+//打开附件上传的组件
+    openFileUp(url,list){
+      this.uploadVisible = true;
+      this.$nextTick(() => {
+        this.$refs.infoUp.init(url,list);
+    })
+    },
+    //获取上传的附件列表
+    getUpInfo(data){
+      this.$forceUpdate();
+      this.detailform[data.list]=this.detailform[data.list].concat(data.fileList);
+      this.uploadVisible = false;
+    },
     back() {
       this.$router.back()
 

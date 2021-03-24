@@ -713,7 +713,7 @@
 
               >
                 <el-select
-                  :disabled="p.actpoint==='look'"
+                  :disabled="p.actpoint==='look'||p.actpoint=='task'"
                   filterable
                   clearable
                   placeholder="请选择"
@@ -728,7 +728,7 @@
 
               >
                 <el-select
-                  :disabled="p.actpoint==='look'"
+                  :disabled="p.actpoint==='look'||p.actpoint=='task'"
                   clearable
                   filterable
                   placeholder="请选择"
@@ -780,7 +780,7 @@
 
               >
                 <el-select
-                  :disabled="p.actpoint==='look'"
+                  :disabled="p.actpoint==='look'||p.actpoint=='task'"
                   filterable
                   clearable
                   placeholder="请选择"
@@ -813,7 +813,7 @@
                 "
               >
                 <el-select
-                  :disabled="p.actpoint==='look'"
+                  :disabled="p.actpoint==='look'||p.actpoint=='task'"
                   filterable
                   clearable
                   placeholder="请选择"

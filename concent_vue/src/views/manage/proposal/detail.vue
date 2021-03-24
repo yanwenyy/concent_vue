@@ -744,7 +744,7 @@
             <p class="detail-title" style="overflow: hidden;margin-right: 30px">
               <span>项目地点: </span>
               <el-button
-                v-show="p.actpoint != 'look'"
+                v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
                 @click="add('dd')"
                 class="detatil-flie-btn"
                 type="primary"
@@ -860,7 +860,7 @@
             <p  class="detail-title" style="overflow: hidden;margin-right:30px">
               <span>标段信息: </span>
               <el-button
-                v-show="p.actpoint != 'look'"
+                v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
                 @click="add('bd')"
                 class="detatil-flie-btn"
                 type="primary"

@@ -89,16 +89,24 @@
                 <div>
                 <p class="detail-title"><span class="uploadSpan">附件: </span>
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
-                  <el-upload v-show="p.actpoint != 'look'"
-                    class="upload-demo detailUpload"
-                    :action="'/api/contract/topInfo/CommonFiles/archives/04/uploadFile'"
-                    :on-success="handleChange"
-                    :on-error="handleChange"
-                    :on-remove="handleRemove"
-                    multiple
-                  >
-                  <el-button size="small" type="primary">点击上传</el-button>
-                </el-upload>
+
+                  <el-button
+                    v-show="p.actpoint !== 'look'"
+                    size="small"
+                    type="primary"
+                    @click="openFileUp('/api/contract/topInfo/CommonFiles/archives/04/uploadFile','commonFilesList')">
+                    点击上传
+                  </el-button>
+                  <!--<el-upload v-show="p.actpoint != 'look'"-->
+                    <!--class="upload-demo detailUpload"-->
+                    <!--:action="'/api/contract/topInfo/CommonFiles/archives/04/uploadFile'"-->
+                    <!--:on-success="handleChange"-->
+                    <!--:on-error="handleChange"-->
+                    <!--:on-remove="handleRemove"-->
+                    <!--multiple-->
+                  <!--&gt;-->
+                  <!--<el-button size="small" type="primary">点击上传</el-button>-->
+                <!--</el-upload>-->
                 </p>
                 </div>
         <div>
@@ -176,18 +184,22 @@
 <!--      <el-button @click="submitForm('detailform')">提交</el-button>-->
 <!--    </div>-->
   <orgTable v-if="orgTableStatus" ref="addOrUpdate1" @getPosition="getOrgTable"></orgTable>
+    <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
   </div>
 </template>
 
 <script>
 import orgTable from '@/components/orgTable'
+import FileUpload from '@/components/fileUpload'
 export default {
   // name: '详情',
   components: {
-    orgTable
+    orgTable,
+    FileUpload
   },
   data() {
     return {
+      uploadVisible:false,//上传附件组件状态
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
       detailform:{
         archivesInfo:{
@@ -252,6 +264,19 @@ export default {
 
   },
   methods: {
+    //打开附件上传的组件
+    openFileUp(url,list){
+      this.uploadVisible = true;
+      this.$nextTick(() => {
+        this.$refs.infoUp.init(url,list);
+    })
+    },
+    //获取上传的附件列表
+    getUpInfo(data){
+      this.$forceUpdate();
+      this.detailform[data.list]=this.detailform[data.list].concat(data.fileList);
+      this.uploadVisible = false;
+    },
     getOrgTable(data)
     {
       console.log(data)

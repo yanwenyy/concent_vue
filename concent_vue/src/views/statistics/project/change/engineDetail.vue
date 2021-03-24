@@ -36,7 +36,7 @@
                 style="width: 32.5%">
                 <el-input
                   clearable
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   placeholder="请输入"
                   v-model="detailForm.project.projectName"/>
               </el-form-item>
@@ -45,7 +45,7 @@
                 prop="project.projectForeginName"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.projectForeginName"/>
@@ -55,7 +55,7 @@
                 prop="project.projectOmit"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.projectOmit"/>
@@ -68,7 +68,7 @@
                 prop="project.projectNatureFirstId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   filterable
                   placeholder="请选择"
@@ -86,7 +86,7 @@
                 prop="project.projectNatureSecondId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   filterable
                   @change="getName(detailForm.project.projectNatureSecondId, projectNatureTwo, 'projectNatureSecond','projectNatureSecondCode')"
@@ -106,7 +106,7 @@
                 class="inline-formitem"
                 style="width: 32.5%">
                 <el-switch
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   class="inline-formitem-switch"
                   v-model="detailForm.project.isConsortion"
                   active-color="#409EFF"
@@ -122,7 +122,7 @@
                 prop="project.investmentModelId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   filterable
                   @change="getName(detailForm.project.investmentModelId, investmentModel, 'investmentModel','investmentModelCode')"
@@ -142,7 +142,7 @@
                 :rules="rules.project.isMustMoney"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.investmentContract">
@@ -158,7 +158,7 @@
                 style="width: 32.5%">
                 <el-input
                   clearable
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   placeholder="请输入"
                   v-model="detailForm.project.companyBuiltName"/>
               </el-form-item>
@@ -166,7 +166,7 @@
                 label="所属铁路局:"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   filterable
                   @change="getName(detailForm.project.railwayId, railwayBureau, 'railwayName','railwayCode')"
@@ -187,7 +187,7 @@
                 prop="project.projectTypeFirstId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   filterable
                   placeholder="请选择"
@@ -205,7 +205,7 @@
                 prop="project.projectTypeSecondId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   filterable
                   @change="getName(detailForm.project.projectTypeSecondId, projectTypeTwo, 'projectTypeSecond','projectTypeSecondCode')"
@@ -224,7 +224,7 @@
                 prop="project.projectLine"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   filterable
                   clearable
                   @change="getName(detailForm.project.projectLineId, railwayLine, 'projectLine','railwayLineCode')"
@@ -262,7 +262,7 @@
                 prop="project.projectTypeId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   filterable
                   clearable
                   placeholder="请选择"
@@ -282,7 +282,7 @@
                 prop="project.fatherProjectName"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.fatherProjectName"/>
@@ -294,7 +294,7 @@
                 prop="project.isBureauIndex"
                 style="width: 32.5%">
                 <el-switch
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   class="inline-formitem-switch"
                   v-model="detailForm.project.isBureauIndex"
                   active-color="#409EFF"
@@ -309,7 +309,7 @@
                 prop="project.unitId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   filterable
                   clearable
                   @change="getName(detailForm.project.unitId, unit, 'unitName','unitCode')"
@@ -328,7 +328,7 @@
                 :rules="rules.project.isNumber"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.signedNumber"/>
@@ -339,7 +339,7 @@
                 :rules="rules.project.isNumber"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.contractCount"/>
@@ -351,7 +351,7 @@
                 prop="project.projectStatusId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   filterable
                   clearable
                   @change="getName(detailForm.project.projectStatusId, projectStatus, 'projectStatusName','projectStatusCode')"
@@ -374,8 +374,8 @@
                 style="width: 32.5%"
               >
                 <el-input v-model="detailForm.project.topInfoSiteList[0].path" placeholder="项目所在地"
-                          :disabled="p.actpoint === 'look'" clearable>
-                  <el-button slot="append" :disabled="p.actpoint === 'look'" icon="el-icon-search"
+                          :disabled="p.actpoint === 'look'||p.actpoint === 'task'" clearable>
+                  <el-button slot="append" :disabled="p.actpoint === 'look'||p.actpoint === 'task'" icon="el-icon-search"
                              @click="selectPosition()"></el-button>
                 </el-input>
               </el-form-item>
@@ -384,7 +384,7 @@
                 prop="project.companyName"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.companyName"/>
@@ -397,7 +397,7 @@
                 prop="project.marketFirstId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   filterable
                   placeholder="请选择"
@@ -422,7 +422,7 @@
                 <!--multiple-->
                 <!--collapse-tags-->
                 <el-select
-                  :disabled="p.actpoint === 'look'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'"
                   filterable
                   clearable
                   @change="getName(detailForm.project.marketSecondId, emergingMarketTwo, 'marketSecondName','marketSecondCode')"
@@ -445,7 +445,7 @@
                 :rules="rules.project.isPercent"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.assemblyRate">
@@ -458,7 +458,7 @@
                 prop="project.assemblyTypeId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   filterable
                   clearable
                   @change="getName(detailForm.project.assemblyTypeId, assemblyType, 'assemblyTypeName','assemblyTypeCode')"
@@ -479,7 +479,7 @@
                 prop="project.architectureTypeId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   filterable
                   clearable
                   @change="getName(detailForm.project.architectureTypeId, architecturalType, 'architectureTypeName','architectureTypeCode')"
@@ -498,7 +498,7 @@
                 prop="project.houseTypeId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   filterable
                   clearable
                   @change="getName(detailForm.project.houseTypeId, buildingStructure, 'houseTypeName','houseTypeCode')"
@@ -519,7 +519,7 @@
                 prop="project.fieldId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   filterable
                   clearable
                   @change="getName(detailForm.project.fieldId, siteName, 'fieldName','fieldCode')"
@@ -541,7 +541,7 @@
                 :rules="rules.project.isMustMoney"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   @change="getCount"
                   placeholder="请输入"
@@ -556,7 +556,7 @@
                 :rules="rules.project.isMustMoney"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   @change="getCount"
                   placeholder="请输入"
@@ -586,7 +586,7 @@
                 :rules="rules.project.isMoney"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.contractAmountTotal">
@@ -603,7 +603,7 @@
                 :rules="rules.project.isMoney"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.realInvest">
@@ -617,7 +617,7 @@
                 :rules="rules.project.isMustMoney"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   @change="getOutputTax"
                   placeholder="请输入"
@@ -648,7 +648,7 @@
                 prop="project.contractStartTime"
                 style="width: 32.5%">
                 <el-date-picker
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   v-model="detailForm.project.contractStartTime"
                   type="date"
                   value-format="timestamp"
@@ -659,7 +659,7 @@
                 prop="project.contractEndTime"
                 style="width: 32.5%">
                 <el-date-picker
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   v-model="detailForm.project.contractEndTime"
                   type="date"
                   value-format="timestamp"
@@ -671,7 +671,7 @@
                 prop="project.isTrusteeship"
                 style="width: 32.5%">
                 <el-switch
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   class="inline-formitem-switch"
                   v-model="detailForm.project.isTrusteeship"
                   active-color="#409EFF"
@@ -686,7 +686,7 @@
                 prop="project.contractSignTime"
                 style="width: 32.5%">
                 <el-date-picker
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   v-model="detailForm.project.contractSignTime"
                   type="date"
                   value-format="timestamp"
@@ -697,7 +697,7 @@
                 prop="project.projectEndTime"
                 style="width: 32.5%">
                 <el-date-picker
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   v-model="detailForm.project.projectEndTime"
                   type="date"
                   value-format="timestamp"
@@ -709,7 +709,7 @@
                 class="inline-formitem"
                 style="width: 32.5%">
                 <el-switch
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   class="inline-formitem-switch"
                   v-model="detailForm.project.isEscrow"
                   active-color="#409EFF"
@@ -725,7 +725,7 @@
                 prop="project.realStartTime"
                 style="width: 32.5%">
                 <el-date-picker
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   v-model="detailForm.project.realStartTime"
                   type="date"
                   value-format="timestamp"
@@ -736,7 +736,7 @@
                 prop="project.realEndTime"
                 style="width: 32.5%">
                 <el-date-picker
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   v-model="detailForm.project.realEndTime"
                   type="date"
                   value-format="timestamp"
@@ -748,7 +748,7 @@
                 :rules="rules.project.isNumber"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.completedOutputValue"/>
@@ -761,7 +761,7 @@
                 prop="project.companyBuild"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.companyBuild"/>
@@ -771,7 +771,7 @@
                 prop="project.companyDesign"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.companyDesign"/>
@@ -781,7 +781,7 @@
                 prop="project.companySupervisor"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.companySupervisor"/>
@@ -794,7 +794,7 @@
                 prop="project.projectManagerName"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.projectManagerName"/>
@@ -804,7 +804,7 @@
                 prop="project.projectBidSection"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.projectBidSection"/>
@@ -814,7 +814,7 @@
                 prop="project.beginAddress"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.beginAddress"/>
@@ -827,7 +827,7 @@
                 label="工程概况(最多700字):"
                 prop="project.engineSurvey">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   type="textarea"
                   placeholder="请输入"
@@ -841,7 +841,7 @@
                 label="备注(最多2000字):"
                 prop="project.projectRemark">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   type="textarea"
                   placeholder="请输入"
                   v-model="detailForm.project.projectRemark"/>
@@ -945,7 +945,7 @@
                     <el-form-item class="tabelForm">
                       <el-input
                         clearable
-                        :disabled="p.actpoint === 'look'"
+                        :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                         v-model="scope.row.subContractName"/>
                     </el-form-item>
                   </template>
@@ -961,7 +961,7 @@
                   <template slot-scope="scope">
                     <el-form-item class="tabelForm">
                       <el-select
-                        :disabled="p.actpoint === 'look'"
+                        :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                         filterable
                         clearable
                         placeholder="请选择"
@@ -991,7 +991,7 @@
                       <el-input
                         v-model="scope.row.projectName"
                         clearable
-                        :disabled="p.actpoint === 'look'"/>
+                        :disabled="p.actpoint === 'look'||p.actpoint === 'task'"/>
                     </el-form-item>
                   </template>
                 </el-table-column>
@@ -1011,7 +1011,7 @@
                         class="group-no-padding"
                         v-model="scope.row.contractAmountInitial"
                         clearable
-                        :disabled="p.actpoint === 'look'"
+                        :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                       >
                         <template slot="prepend">¥</template>
                         <template slot="append">(万元)</template>
@@ -1035,7 +1035,7 @@
                         class="group-no-padding"
                         v-model="scope.row.contractAmountEngine"
                         clearable
-                        :disabled="p.actpoint === 'look'"
+                        :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                       >
                         <template slot="prepend">¥</template>
                         <template slot="append">(万元)</template>
@@ -1283,7 +1283,7 @@
                 label="父项目名称:"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.fatherProjectName"/>
@@ -1358,7 +1358,7 @@
                 style="width: 32.5%"
               >
                 <el-input v-model="showDetailForm.project.topInfoSiteList[0].path" placeholder="项目所在地" disabled>
-                  <el-button slot="append" :disabled="p.actpoint === 'look'" icon="el-icon-search"
+                  <el-button slot="append" :disabled="p.actpoint === 'look'||p.actpoint === 'task'" icon="el-icon-search"
                              @click="selectPosition()"></el-button>
                 </el-input>
               </el-form-item>

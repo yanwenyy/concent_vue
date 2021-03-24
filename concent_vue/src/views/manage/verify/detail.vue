@@ -315,7 +315,7 @@
               <el-input
                 disabled
                 placeholder="请选择"
-                v-model="detailform.topInfor.capitalName"
+                v-model="detailform.capitalName"
               >
               </el-input>
             </el-form-item>
@@ -1388,6 +1388,7 @@ export default {
           this.detailform = res.data.data;
           var datas=res.data.data;
            this.detailform={
+             capitalName:datas.capitalName,
             'verify':datas.verify||{},
             'topInfor': datas.topInfor||{},
             'sectionStr':datas.sectionStr||'',
