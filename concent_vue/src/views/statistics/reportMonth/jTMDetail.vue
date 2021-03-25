@@ -394,18 +394,19 @@
           </el-form>
         </div>
       </el-tab-pane>
-      <!--<el-tab-pane label="流程查看" name="lcjh">
-        <div class="detailBoxBG">
-        </div>
-      </el-tab-pane>-->
+      <el-tab-pane label="审批流程" v-if="dataReport.flowStatus!=1&&(p.actpoint == 'task'||p.actpoint == 'look')">
+        <Audit-Process :task="p.task||{businessId:p.params.uuid||p.instid,businessType:' engineering_monthly_report'}"></Audit-Process>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script>
+  import AuditProcess from '@/components/auditProcess'
   export default {
     name: 'reportM-all-detail',
     components: {
+      AuditProcess
     },
     data() {
       return {
@@ -468,7 +469,7 @@
             .then(res => {
               if (res.data.code === 200) {
                 this.$message({
-                  message: '暂存成功',
+                  message:  `${type=='save'?'保存':'提交'}成功`,
                   duration: 1000,
                   type: 'success',
                   onClose: () => { this.$router.back() }

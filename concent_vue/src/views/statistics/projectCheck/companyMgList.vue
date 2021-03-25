@@ -515,7 +515,7 @@
             this.form1 = JSON.parse(JSON.stringify(this.multipleSelection[0]));
             let mList = {projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,projectCheckUuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectCheckUuid,
               reportYear:JSON.parse(JSON.stringify(this.multipleSelection[0])).reportYear,reportMonth:JSON.parse(JSON.stringify(this.multipleSelection[0])).reportMonth,orgCode:JSON.parse(JSON.stringify(this.multipleSelection[0])).createOrgCode,
-              projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).flowStatus,projectName:this.multipleSelection[0].projectName
+              projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).flowStatus,projectName:this.multipleSelection[0].projectName,uuid:this.multipleSelection[0].projectCheckUuid
             }
             this.$router.push({
               path: './companyMDetail/',

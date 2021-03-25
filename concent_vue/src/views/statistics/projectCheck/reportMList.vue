@@ -330,7 +330,7 @@
               }
                 this.$router.push({
                       path: '../reportMDetail/',
-                      query: {mList: this.$utils.encrypt(JSON.stringify(mList))}
+                      query: {p: this.$utils.encrypt(JSON.stringify(mList))}
                     })
            }else if(res.data.code === 400){
                 this.$message({
@@ -373,7 +373,7 @@
           }
           this.$router.push({
             path: '../reportMDetail/',
-            query: {mList: this.$utils.encrypt(JSON.stringify(mList))}
+            query: {p: this.$utils.encrypt(JSON.stringify(mList))}
           })
         },
       // 删除
@@ -413,7 +413,7 @@
         let mList = { actpoint: 'look', projectId: row.projectId,uuid:row.uuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.flowStatus }
         this.$router.push({
           path: '../reportMDetail/',
-          query: { mList: this.$utils.encrypt(JSON.stringify(mList)) }
+          query: { p: this.$utils.encrypt(JSON.stringify(mList)) }
         })
       },
       // 选中查看
@@ -483,12 +483,11 @@
       // 返回上一页
       back() {
         this.$router.back()
-      }
+      },
     },
 
     created() {
       this.getData()
-       console.log(this.mList)
        this.userdata=JSON.parse(sessionStorage.getItem('userdata'))
     },
 

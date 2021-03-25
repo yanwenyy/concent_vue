@@ -714,6 +714,7 @@ export default {
         this.$message.info("请选择一条记录进行登记操作！");
         return false;
       }
+      console.log(this.multipleSelection)
       this.$http
         .post("/api/contract/topInfo/BidInfoSection/detail/entityInfo", {
           id: this.multipleSelection[0].uuid,

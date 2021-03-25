@@ -766,11 +766,17 @@
               label="建设单位:"
               prop="project.companyBuild"
               style="width: 32.5%">
-              <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                clearable
-                placeholder="请输入"
-                v-model="detailForm.project.companyBuild"/>
+              <el-autocomplete
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                v-model="detailForm.project.companyBuild"
+                :fetch-suggestions="querySearchAsync"
+                placeholder="请输入内容"
+              ></el-autocomplete>
+              <!--<el-input-->
+                <!--:disabled="p.actpoint === 'look'||p.actpoint === 'task'"-->
+                <!--clearable-->
+                <!--placeholder="请输入"-->
+                <!--v-model="detailForm.project.companyBuild"/>-->
             </el-form-item>
             <el-form-item
               label="设计单位:"
@@ -1264,6 +1270,9 @@
       }
     },
     computed: {
+      pubCustomers() {//客户名称
+        return this.$store.state.pubCustomers;
+      },
       emergingMarket() {
         return this.$store.state.category.emergingMarket
       },
@@ -1314,6 +1323,22 @@
       }
     },
     methods: {
+      //建设单位搜索
+      querySearchAsync(queryString, cb) {
+        var restaurants = this.pubCustomers;
+        var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
+
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+          this.$forceUpdate();
+        cb(results);
+      }, 500 * Math.random());
+      },
+      createStateFilter(queryString) {
+        return (restaurants) => {
+          return (restaurants.value.toLowerCase().indexOf(queryString.toLowerCase()) != -1);
+        };
+      },
           //流程操作
       operation(type){
         this.$http
@@ -1646,6 +1671,7 @@
     },
     mounted() {
       this.$store.dispatch('getConfig', {})
+      this.$store.dispatch("getPubCustomers", {});
       this.$store.dispatch('getCategory', { name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3' })
       this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })

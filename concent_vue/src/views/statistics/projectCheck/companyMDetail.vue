@@ -2,7 +2,7 @@
 <template>
   <div style="position: relative">
       <div style="margin-top: 9px;color: red;position: absolute;top: 1px;right: 279px;z-index: 999999999;font-size: 15px;">项目名称：<span style="color: red !important;margin-right: 50px;">{{projectName}}</span></div>
-    <el-button  @click="submit" v-if="dataReport.flowStatus=='1'" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus==1||dataReport.flowStatus==4)" @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
       <el-button  @click="back" type="primary"  class="detailbutton detail-back-tab " plain>返回</el-button>
     <el-tabs type="border-card" v-model="activeName">
       <el-tab-pane label="整体进度" name="ztjd">
@@ -306,18 +306,19 @@
           </el-table>
         </div>
       </el-tab-pane>
-      <!--<el-tab-pane label="流程查看" name="lcjh">
-          <div class="detailBoxBG">
-         </div>
-      </el-tab-pane>-->
+      <el-tab-pane label="审批流程" v-if="dataReport.flowStatus!=1&&(p.actpoint == 'task'||p.actpoint == 'look')">
+        <Audit-Process :task="p.task||{businessId:p.uuid,businessType:'emr_valuation'}"></Audit-Process>
+      </el-tab-pane>
     </el-tabs>
     </div>
 </template>
 
 <script>
+  import AuditProcess from '@/components/auditProcess'
   export default {
     name: 'reportM-all-detail',
     components: {
+      AuditProcess
     },
     data() {
       return {
@@ -329,7 +330,7 @@
         commonFilesList:[],
         yearDateS:'',
         activeName:"ztjd",
-        mList: JSON.parse(this.$utils.decrypt(this.$route.query.mList)),
+        p: JSON.parse(this.$utils.decrypt(this.$route.query.mList)),
         proNameHover: false,
         projectName: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectName,
         actpoint: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).actpoint,
@@ -362,6 +363,35 @@
       }
     },
     methods: {
+      // 保存
+      save(type) {
+        var url='';
+        if(type=='save'){
+          url="/api/statistics/Projectcheck/detail/saveOrUpdate"
+        }else{
+          url="/api/statistics/Projectcheck/process/start"
+        }
+        // this.dataReport.status="1"
+        // this.dataReport.flowStatus="1"
+        this.commonFilesList.businessId=this.dataReport.uuid
+        let tableData = {
+          tjxDetailList:this.data,
+          projectcheck:this.dataReport,
+          commonFilesList:this.commonFilesList,
+        }
+        this.$http
+          .post(url, JSON.stringify(tableData), {useJson: true})
+          .then(res => {
+          if (res.data.code === 200) {
+          this.$message({
+            message: `${type=='save'?'保存':'提交'}成功`,
+            duration: 1000,
+            type: 'success',
+            onClose: () => { this.$router.back() }
+        })
+        }
+      })
+      },
       //设置当年的完成值
       getYear(list,index,code){
         var num=0;
@@ -455,11 +485,11 @@
       getData() {
         this.$http
           .post('/api/statistics/Projectcheck/detail/queryEntityInfoDetail', JSON.stringify({
-            projectId: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectId,
-            uuid: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).uuid,
-            reportYear: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportYear,
-            reportMonth:JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportMonth,
-            createOrgCode: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).orgCode
+            projectId: this.p.projectId,
+            uuid: this.p.uuid,
+            reportYear: this.p.reportYear,
+            reportMonth: this.p.reportMonth,
+            createOrgCode: this.p.orgCode
           }), {useJson: true})
           .then(res => {
             this.data = res.data.data.tjxDetailList
@@ -702,7 +732,7 @@
     color:#fff;
   }
   .sub-btn{
-    right: 175px;
+    right: 95px!important;
   }
   /**/
 </style>

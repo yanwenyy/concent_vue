@@ -1,9 +1,11 @@
 <!--工程月报验工计价详情-->
 <template>
   <div style="position: relative">
-      <div style="margin-top: 9px;color: red;position: absolute;top: 1px;right: 279px;z-index: 999999999;font-size: 15px;">项目名称：<span style="color: red !important;margin-right: 50px;">{{projectName}}</span></div>
-      <el-button v-if="isCk!='1'" @click="save" type="primary"  class="detailbutton detail-back-tab" style="float: left; margin-right: 185px;"plain>保存</el-button>
-      <el-button v-if="isCk!='1'" @click="submit" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>
+      <div  v-if="dataReport.status==1" style="margin-top: 9px;color: red;position: absolute;top: 1px;right: 279px;z-index: 999999999;font-size: 15px;">项目名称：<span style="color: red !important;margin-right: 50px;">{{projectName}}</span></div>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus==1||dataReport.flowStatus==4)" @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="save('save')" class="detailbutton detail-back-tab save-btn">保存</el-button>
+    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
+    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
       <el-button  @click="back" type="primary"  class="detailbutton detail-back-tab " plain>返回</el-button>
      <el-tabs type="border-card" v-model="activeName">
      <el-tab-pane label="整体进度" name="ztjd">
@@ -28,7 +30,7 @@
               <div>
               <el-form-item
                 label="本月备注:"
-              ><el-input  :disabled="isCk=='1'" v-model="dataReport.thisPlan" type="textarea" ></el-input>
+              ><el-input  :disabled="isCk=='1'||p.actpoint=='task'" v-model="dataReport.thisPlan" type="textarea" ></el-input>
               </el-form-item>
               </div>
                 <!--<div>
@@ -40,12 +42,13 @@
                  <div>
                  <el-form-item
                   label="上月备注:"
-                ><el-input :disabled="isCk=='1'" v-model="dataReport.nextPlan" type="textarea" ></el-input>
+                ><el-input :disabled="isCk=='1'||p.actpoint=='task'" v-model="dataReport.nextPlan" type="textarea" ></el-input>
                 </el-form-item>
                 </div>
               <p>
                 <span>上传附件: </span>
                 <el-button
+                  v-if="isCk!='1'&&p.actpoint!=='task'"
                   class="detatil-flie-btn"
                   size="small"
                   type="primary"
@@ -305,21 +308,22 @@
                   </el-table>
            </div>
         </el-tab-pane>
-         <!--<el-tab-pane label="流程查看" name="lcjh">
-             <div class="detailBoxBG">
-            </div>
-         </el-tab-pane>-->
+           <el-tab-pane label="审批流程" v-if="dataReport.flowStatus!=1&&(p.actpoint == 'task'||p.actpoint == 'look')">
+             <Audit-Process :task="p.task||{businessId:p.uuid,businessType:'emr_valuation'}"></Audit-Process>
+           </el-tab-pane>
           </el-tabs>
     <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
     </div>
 </template>
 
 <script>
+  import AuditProcess from '@/components/auditProcess'
   import FileUpload from '@/components/fileUpload'
   export default {
     name: 'reportM-all-detail',
     components: {
-      FileUpload
+      FileUpload,
+      AuditProcess
     },
     data() {
       return {
@@ -332,13 +336,13 @@
         nextData:[],
         yearDateS:'',
         activeName:"ztjd",
-        mList: JSON.parse(this.$utils.decrypt(this.$route.query.mList)),
+        p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         proNameHover: false,
-        projectName: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectName,
-        isCk:JSON.parse(this.$utils.decrypt(this.$route.query.mList)).isCk,
+        projectName: '',
+        isCk:JSON.parse(this.$utils.decrypt(this.$route.query.p)).isCk,
         projectcheck: {},
         tjxDetailList:[],
-        projectStatus: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectStatus,
+        projectStatus: JSON.parse(this.$utils.decrypt(this.$route.query.p)).projectStatus,
       }
     },
     computed: {
@@ -364,6 +368,24 @@
       }
     },
     methods: {
+      //流程操作
+      operation(type){
+        this.$http
+          .post(
+            '/api/statistics/Projectcheck/process/'+type,
+            JSON.stringify(this.p.task),
+            {useJson: true}
+          )
+          .then((res) => {
+          if (res.data.code === 200) {
+          this.$message({
+            message: "操作成功",
+            type: "success",
+          });
+          this.$router.back()
+        }
+      });
+      },
       //设置当月额度，计算计价额
       getYear(list,index,code){
         var num=0;
@@ -435,9 +457,15 @@
         });
       },
       // 保存
-      save() {
-        this.dataReport.status="1"
-        this.dataReport.flowStatus="1"
+      save(type) {
+        var url='';
+        if(type=='save'){
+          url="/api/statistics/Projectcheck/detail/saveOrUpdate"
+        }else{
+          url="/api/statistics/Projectcheck/process/start"
+        }
+        // this.dataReport.status="1"
+        // this.dataReport.flowStatus="1"
         this.commonFilesList.businessId=this.dataReport.uuid
           let tableData = {
             tjxDetailList:this.data,
@@ -445,11 +473,11 @@
             commonFilesList:this.commonFilesList,
           }
           this.$http
-            .post('/api/statistics/Projectcheck/detail/saveOrUpdate', JSON.stringify(tableData), {useJson: true})
+            .post(url, JSON.stringify(tableData), {useJson: true})
             .then(res => {
               if (res.data.code === 200) {
                 this.$message({
-                  message: '保存成功',
+                  message:  `${type=='save'?'保存':'提交'}成功`,
                   duration: 1000,
                   type: 'success',
                   onClose: () => { this.$router.back() }
@@ -496,7 +524,8 @@
         this.commonFilesList=data.fileList;
         this.uploadVisible = false;
       },
-      submit() {
+      submit(type) {
+
         this.dataReport.status="1"
         this.dataReport.flowStatus="2"
         this.commonFilesList.businessId=this.dataReport.uuid
@@ -506,7 +535,7 @@
           commonFilesList:this.commonFilesList
         }
           this.$http
-            .post('/api/statistics/Projectcheck/detail/saveOrUpdate', JSON.stringify(tableData), {useJson: true})
+            .post(url, JSON.stringify(tableData), {useJson: true})
             .then(res => {
               if (res.data.code === 200) {
                 this.$message({
@@ -542,25 +571,29 @@
       getData() {
         this.$http
           .post('/api/statistics/Projectcheck/detail/queryEntityInfoDetail', JSON.stringify({
-            projectId: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectId,
-            uuid: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).uuid,
-            reportYear: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportYear,
-            reportMonth:JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportMonth,
-            createOrgCode: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).orgCode
+            projectId: this.p.projectId,
+            uuid: this.p.uuid||this.p.instid,
+            reportYear: this.p.reportYear,
+            reportMonth:this.p.reportMonth,
+            createOrgCode: this.p.orgCode
           }), {useJson: true})
           .then(res => {
-            this.data = res.data.data.tjxDetailList
-            this.dataReport=res.data.data.projectcheck
+
+            var datas=res.data.data;
+            this.projectName=datas.projectList&&datas.projectList.projectName;
+            this.data = datas.tjxDetailList
+            this.dataReport=datas.projectcheck
             this.dataReport.yearDateS=this.dataReport.reportYear+"-"+this.dataReport.reportMonth
-            this.commonFilesList=res.data.data.commonFilesList
+            this.commonFilesList=datas.commonFilesList
           })
-      }
+      },
     },
     created() {
 
     },
     mounted() {
-      this.getData()
+      this.getData();
+
     }
   }
 </script>

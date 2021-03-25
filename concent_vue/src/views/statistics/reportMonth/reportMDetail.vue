@@ -284,7 +284,7 @@
               </el-table>
            </div>
          </el-tab-pane>
-       <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
+       <el-tab-pane label="审批流程" v-if="dataReport.flowStatus!=1&&(p.actpoint == 'task'||p.actpoint == 'look')">
          <Audit-Process :task="p.task||{businessId:p.uuid,businessType:' engineering_monthly_report'}"></Audit-Process>
        </el-tab-pane>
      </el-tabs>
@@ -296,6 +296,7 @@
   export default {
     name: 'reportM-all-detail',
     components: {
+      AuditProcess
     },
     data() {
       return {
@@ -421,7 +422,7 @@
             .then(res => {
               if (res.data.code === 200) {
                 this.$message({
-                  message: '暂存成功',
+                  message:  `${type=='save'?'保存':'提交'}成功`,
                   duration: 1000,
                   type: 'success',
                   onClose: () => { this.$router.back() }

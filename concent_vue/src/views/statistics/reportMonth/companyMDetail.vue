@@ -441,18 +441,19 @@
           </el-form>
         </div>
       </el-tab-pane>
-      <!--<el-tab-pane label="流程查看" name="lcjh">
-        <div class="detailBoxBG">
-        </div>
-      </el-tab-pane>-->
+      <el-tab-pane label="审批流程" v-if="dataReport.flowStatus!=1&&(p.actpoint == 'task'||p.actpoint == 'look')">
+        <Audit-Process :task="p.task||{businessId:p.uuid,businessType:' engineering_monthly_report'}"></Audit-Process>
+      </el-tab-pane>
     </el-tabs>
     </div>
 </template>
 
 <script>
+  import AuditProcess from '@/components/auditProcess'
   export default {
     name: 'reportM-all-detail',
     components: {
+      AuditProcess
     },
     data() {
       return {
@@ -509,25 +510,25 @@
         }else{
           url="/api/statistics/projectMonthlyReport/Projectreport/process/start"
         }
-        this.dataReport.status="2"
-        this.dataReport.flowStatus="1"
-          let tableData = {
-            projectReportDetaiList:this.data,
-            projectreport:this.dataReport,
-            planPrjTjxDetailList:this.nextData
-          }
-          this.$http
-            .post(url, JSON.stringify(tableData), {useJson: true})
-            .then(res => {
-              if (res.data.code === 200) {
-                this.$message({
-                  message: '暂存成功',
-                  duration: 1000,
-                  type: 'success',
-                  onClose: () => { this.$router.back() }
-                })
-              }
-            })
+        // this.dataReport.status="1"
+        // this.dataReport.flowStatus="1"
+        let tableData = {
+          projectReportDetaiList:this.data,
+          projectreport:this.dataReport,
+          planPrjTjxDetailList:this.nextData
+        }
+        this.$http
+          .post(url, JSON.stringify(tableData), {useJson: true})
+          .then(res => {
+          if (res.data.code === 200) {
+          this.$message({
+            message:  `${type=='save'?'保存':'提交'}成功`,
+            duration: 1000,
+            type: 'success',
+            onClose: () => { this.$router.back() }
+        })
+        }
+      })
       },
       getName(id, list, name) {
         debugger

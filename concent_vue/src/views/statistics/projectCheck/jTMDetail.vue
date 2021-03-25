@@ -5,6 +5,7 @@
 <!--
     <el-button  @click="submit" v-if="dataReport.flowStatus!='1'" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>
 -->
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus==1||dataReport.flowStatus==4)" @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
     <el-button  @click="back" type="primary"  class="detailbutton detail-back-tab " plain>返回</el-button>
     <el-tabs type="border-card" v-model="activeName">
       <el-tab-pane label="整体进度" name="ztjd">
@@ -57,7 +58,6 @@
             <el-table
               :data="commonFilesList"
               :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
-              @selection-change="handleSelectionChange"
               align="center"
               border
               class="detailTable"
@@ -307,14 +307,19 @@
           </el-table>
         </div>
       </el-tab-pane>
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
+        <Audit-Process :task="p.task||{businessId:p.params.uuid||p.instid,businessType:' emr_valuation'}"></Audit-Process>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script>
+  import AuditProcess from '@/components/auditProcess'
   export default {
     name: 'reportM-all-detail',
     components: {
+      AuditProcess
     },
     data() {
       return {
@@ -322,15 +327,18 @@
         projectList:{},
         dataReport:{
         },
+        key:0,
         nextData:[],
         yearDateS:'',
         activeName:"ztjd",
-        mList: JSON.parse(this.$utils.decrypt(this.$route.query.mList)),
+        p: JSON.parse(this.$utils.decrypt(this.$route.query.mList)),
         proNameHover: false,
         projectName: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectName,
+        isCk:JSON.parse(this.$utils.decrypt(this.$route.query.mList)).isCk,
         projectreport: {},
         projectreportDetaiList: [],
         planPrjTjxDetailList: [],
+        commonFilesList:[]
       }
     },
     computed: {
@@ -356,15 +364,43 @@
       }
     },
     methods: {
+      // 保存
+      save(type) {
+        var url='';
+        if(type=='save'){
+          url="/api/statistics/Projectcheck/detail/saveOrUpdate"
+        }else{
+          url="/api/statistics/Projectcheck/process/start"
+        }
+        // this.dataReport.status="1"
+        // this.dataReport.flowStatus="1"
+        this.commonFilesList.businessId=this.dataReport.uuid
+        let tableData = {
+          tjxDetailList:this.data,
+          projectcheck:this.dataReport,
+          commonFilesList:this.commonFilesList,
+        }
+        this.$http
+          .post(url, JSON.stringify(tableData), {useJson: true})
+          .then(res => {
+          if (res.data.code === 200) {
+          this.$message({
+            message:  `${type=='save'?'保存':'提交'}成功`,
+            duration: 1000,
+            type: 'success',
+            onClose: () => { this.$router.back() }
+        })
+        }
+      })
+      },
       // 返回上一页
       back() {
         this.$router.back()
       },
       // 获取数据
       getData() {
-        var datas=JSON.parse(this.$utils.decrypt(this.$route.query.mList));
         this.$http
-            .post('/api/statistics/Projectcheck/detail/queryEntityInfoDetail', datas.params, {useJson: true})
+            .post('/api/statistics/Projectcheck/detail/queryEntityInfoDetail', this.p.params, {useJson: true})
             .then(res => {
               this.data = res.data.data.tjxDetailList
               this.dataReport=res.data.data.projectcheck
@@ -605,7 +641,7 @@
     color:#fff;
   }
   .sub-btn{
-    right: 175px;
+    right: 95px!important;
   }
   /**/
 </style>

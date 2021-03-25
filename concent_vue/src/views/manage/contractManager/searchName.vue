@@ -16,6 +16,7 @@
         border
         v-loading="dataListLoading"
         highlight-current-row
+        @current-change="rowSel"
         :header-cell-style="{
           'text-align': 'center',
           'background-color': 'whitesmoke',
@@ -79,6 +80,7 @@
         border
         v-loading="dataListLoading"
         highlight-current-row
+        @current-change="rowSel"
         :header-cell-style="{
           'text-align': 'center',
           'background-color': 'whitesmoke',
@@ -226,6 +228,9 @@
         this.searchform2.current =  1;
         this.init(this.searchform.moduleId,this.contractType);
       },
+      rowSel(val){
+        this.currentRow = val;
+      }
     }
   }
 </script>

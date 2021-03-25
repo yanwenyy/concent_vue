@@ -1418,32 +1418,15 @@
                   :rules="{
                 required: true,
                 message: '此项不能为空',
-                trigger: 'change',
+                 trigger: ['blur','change'],
               }"
                 >
-                  <el-select
+                  <el-autocomplete
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-                    filterable
-                    placeholder="请选择"
-
-                    @change="
-                  getName(
-                    detailform.contractInfo.constructionOrgId,
-                    xqprojectType,
-                    'constructionOrg',
-                    'constructionOrgCode'
-                  )
-                "
-                    v-model="detailform.contractInfo.constructionOrgId"
-                  >
-                    <el-option
-                      :key="index"
-                      :label="item.detailName"
-                      :value="item.id"
-                      v-for="(item, index) in xqprojectType"
-                    ></el-option>
-                  </el-select>
+                    v-model="detailform.contractInfo.constructionOrg"
+                    :fetch-suggestions="querySearchAsync"
+                    placeholder="请输入内容"
+                  ></el-autocomplete>
                 </el-form-item>
                 <el-form-item
                   v-if="detailform.contractInfo.enginTypeFirstId!='17ff5c08d36b41ea8f2dc2e9d3029cac'"
@@ -1452,16 +1435,15 @@
                   :rules="{
                 required: true,
                 message: '此项不能为空',
-                trigger: 'blur',
+                trigger: ['blur','change'],
               }"
                 >
-                  <el-input
+                  <el-autocomplete
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-                    placeholder="请输入"
-
                     v-model="detailform.contractInfo.constructionOrg"
-                  />
+                    :fetch-suggestions="querySearchAsync"
+                    placeholder="请输入内容"
+                  ></el-autocomplete>
                 </el-form-item>
                 <el-form-item
                   label="建设单位性质:"
@@ -3569,6 +3551,9 @@
       AuditProcess
     },
     computed: {
+      pubCustomers() {//客户名称
+        return this.$store.state.pubCustomers;
+      },
       projectDomainType() {
         // console.log(this.$store.state.category.projectDomainType)
         return this.$store.state.category.projectDomainType;
@@ -3622,12 +3607,29 @@
         this.getAddDetail()
       }
       this.$store.dispatch("getConfig", {});
+      this.$store.dispatch("getPubCustomers", {});
       this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
       this.$store.dispatch('getCategory', {name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3'});
       this.$store.dispatch('getCategory', {name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72'});
       // eslint-disable-next-line no-unde
     },
     methods: {
+      //建设单位搜索
+      querySearchAsync(queryString, cb) {
+        var restaurants = this.pubCustomers;
+        var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
+
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+          this.$forceUpdate();
+        cb(results);
+      }, 500 * Math.random());
+      },
+      createStateFilter(queryString) {
+        return (restaurants) => {
+          return (restaurants.value.toLowerCase().indexOf(queryString.toLowerCase()) != -1);
+        };
+      },
       //隐藏标段信息某些行
       tableRowClassName: function (row, index) {
         if (row.row.isDelete=='1') {
