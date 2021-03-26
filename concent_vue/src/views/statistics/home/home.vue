@@ -279,8 +279,12 @@
     overflow: auto;
     max-height: calc(100vh - 280px)!important;
   }
+  >>>.el-table--border::after, >>>.el-table--group::after, >>>.el-table::before{
+    background-color: transparent;
+  }
   .dbTabel{
     width: 100%;
+    /*height:auto;*/
     box-sizing: border-box;
     padding: 10px;
   }

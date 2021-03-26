@@ -270,6 +270,7 @@ export default {
     'project_project_new@510ba0d79593418493eb1a11ea4e7af4':'/statistics/project/tradeAdd',
     'project_project_change@510ba0d79593418493eb1a11ea4e7af4':'/statistics/project/change/tradeDetail',
     'engineering_monthly_report':'/statistics/reportMonth/reportMDetail',
-    'emr_valuation':'/statistics/projectCheck/reportMDetail'
+    'emr_valuation':'/statistics/projectCheck/reportMDetail',
+    'project_plan':'/statistics/plan/proTjxDetail'
   }
 }

@@ -1,136 +1,109 @@
 <!--详情-->
 <template>
-  <div>
-    <el-card class="box-card">
-      <div class="clearfix el-card__header">
-        <span style="color: #2a2a7d;line-height: 32px">
-          <b>项目计划</b>
-          <span style="color:#0a469d !important;margin-left: 20px;margin-right: 20px;font-size:14px;">{{projectName}}</span>
-          <span style="color:#0a469d !important;font-size:14px;margin-right: 20px;">{{planTypeName}}</span>
-          <span v-show="planType === 2" style="color:#0a469d !important;font-size:14px;">{{p.planInfo.planProjectTjx.planYear}}年</span>
-          <span v-show="planType === 1" style="color:#0a469d !important;font-size:14px;">{{p.planInfo.planProjectTjx.planYear}}年{{p.planInfo.planProjectTjx.planMonth}}月</span>
-        </span>
-
-        <span v-if="projectStatus !== '2'" >
-          <el-button @click="back" class="detailbutton" >返回</el-button>
-          <el-button @click="save" class="detailbutton" type="primary" >保存</el-button>
-          <el-button @click="submit" class="detailbutton" >提交</el-button>
-        </span>
-        <span v-else >
-          <el-button @click="rollback" class="detailbutton detail-back-tab bh" type="warning">回退</el-button>
-          <el-button @click="back" class="detailbutton" plain>返回</el-button>
-        </span>
-
-        <!--<el-button @click="back" class="detailbutton">返回</el-button>
-        <el-button type="primary" @click="submitForm('detailForm','save')" class="detailbutton">
-          保存
-        </el-button>
-        <el-button class="detailbutton">提交
-        </el-button>
-        <el-button
-          class="detailbutton detail-back-tab bh"
-          type="warning"
-        >驳回</el-button>
-        <el-button
-          class="detailbutton detail-back-tab tg"
-          type="success"
-        >通过</el-button>-->
-      </div>
-    </el-card>
-
-    <!-- <div style="width: 100%; overflow: hidden;margin-top:10px;">
-      <el-button-group v-if="projectStatus !== '1'" style="float: left">
-        <el-button icon="el-icon-success" @click="submit" type="primary" plain>提交</el-button>
-        <el-button icon="el-icon-folder-checked" @click="save" type="primary" plain>保存</el-button>
-        <el-button icon="el-icon-refresh-left" @click="back" type="primary" plain>返回</el-button>
-      </el-button-group>
-      <el-button-group v-else style="float: left">
-        <el-button icon="el-icon-refresh-left" @click="back" type="primary" plain>返回</el-button>
-        <el-button icon="el-icon-s-custom" @click="rollback" type="primary" plain>回退</el-button>
-      </el-button-group>
-    </div>-->
-
-    <div style="margin-top: 10px">
-      <el-table
-        class="tableStyle"
-        :max-height="$tableHeight"
-        :height="$tableHeight"
-        :data="data"
-        :header-cell-style="{
+  <div style="position: relative">
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&p.planInfo.projectStatus !== '2'" type="primary" @click="save" class="detailbutton detail-back-tab save-btn">保存</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||p.planInfo.projectStatus !== '2')" @click="submit" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
+    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
+    <el-button class="detail-back-tab" @click="back" type="text">返回</el-button>
+    <el-tabs type="border-card">
+      <el-tab-pane label="项目计划">
+        <div class="table-div">
+          <el-card class="box-card" v-if="p.actpoint != 'task'">
+            <div class="clearfix el-card__header">
+              <span style="color: #2a2a7d;line-height: 32px">
+                <b>项目计划</b>
+                <span style="color:#0a469d !important;margin-left: 20px;margin-right: 20px;font-size:14px;">{{p.planInfo.projectName}}</span>
+                <span style="color:#0a469d !important;font-size:14px;margin-right: 20px;">{{p.planInfo.planTypeName}}</span>
+                <span v-show="p.planInfo.planProjectTjx.planType === 2" style="color:#0a469d !important;font-size:14px;">{{p.planInfo.planProjectTjx.planYear}}年</span>
+                <span v-show="p.planInfo.planProjectTjx.planType === 1" style="color:#0a469d !important;font-size:14px;">{{p.planInfo.planProjectTjx.planYear}}年{{p.planInfo.planProjectTjx.planMonth}}月</span>
+              </span>
+            </div>
+          </el-card>
+          <div class="table-div">
+            <el-table
+              class="tableStyle"
+              :max-height="$tableHeight"
+              :height="$tableHeight"
+              :data="data"
+              :header-cell-style="{
           'text-align': 'center',
           'background-color': 'whitesmoke'
         }"
-        border
-        highlight-current-row
-        ref="table"
-        style="width: 100%"
-        cell-style="padding:5px 0"
-        tooltip-effect="dark"
-      >
-        <el-table-column
-          :width="50"
-          align="center"
-          label="序号"
-          show-overflow-tooltip
-          type="index"
-        ></el-table-column>
-        <el-table-column
-          :width="250"
-          align="left"
-          label="统计项名称"
-          show-overflow-tooltip
-        >
-          <template slot-scope="scope">
-            <div :class="vnameMarginLeft(scope.row.tjxCode,scope.row.veditable)">{{scope.row.tjxName}}</div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="90"
-          align="center"
-          prop="jldw"
-          label="计量单位"
-          show-overflow-tooltip
-        >
-        </el-table-column>
+              border
+              highlight-current-row
+              ref="table"
+              style="width: 100%"
+              tooltip-effect="dark"
+            >
+              <el-table-column
+                :width="50"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+              <el-table-column
+                align="left"
+                label="统计项名称"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <div :class="vnameMarginLeft(scope.row.tjxCode,scope.row.veditable)">{{scope.row.tjxName}}</div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                :width="90"
+                align="center"
+                prop="jldw"
+                label="计量单位"
+                show-overflow-tooltip
+              >
+              </el-table-column>
 
-        <el-table-column
-          :width="150"
-          align="center"
-          label="计划"
-          show-overflow-tooltip
-        >
-          <template slot-scope="scope">
-            <div v-if="scope.row.veditable === '1' && scope.row.venabled === '1' && projectStatus !== '2'&& projectStatus !== '4' ">
-              <el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')"/>
-            </div>
-            <div v-else-if="projectStatus !== '2'&& projectStatus !== '4' " style="text-align: right">{{sonCount(scope.row)}}</div>
-            <div v-else>{{scope.row.value}}</div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="400"
-          align="center"
-          label=""
-        ></el-table-column>
-      </el-table>
-    </div>
+              <el-table-column
+                :width="150"
+                align="center"
+                label="计划"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <div v-if="scope.row.veditable === '1' && scope.row.venabled === '1' && p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '4' ">
+                    <el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')"/>
+                  </div>
+                  <div v-else-if="p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '4' " style="text-align: right">{{sonCount(scope.row)}}</div>
+                  <div v-else>{{scope.row.value}}</div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                :width="400"
+                align="center"
+                label=""
+              ></el-table-column>
+            </el-table>
+          </div>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
+        <Audit-Process :task="p.task||{businessId:p.planInfo.planId||p.instid,businessType:'project_plan'}"></Audit-Process>
+      </el-tab-pane>
+    </el-tabs>
+
   </div>
 </template>
 
 <script>
+  import AuditProcess from '@/components/auditProcess'
   export default {
     name: 'plan-all-detail',
     components: {
+      AuditProcess
     },
     data() {
       return {
-        projectStatus: JSON.parse(this.$utils.decrypt(this.$route.query.p)).planInfo.projectStatus,
         data: [],
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         proNameHover: false,
-        projectName: JSON.parse(this.$utils.decrypt(this.$route.query.p)).planInfo.projectName,
-        planType: JSON.parse(this.$utils.decrypt(this.$route.query.p)).planInfo.planProjectTjx.planType,
-        planTypeName: JSON.parse(this.$utils.decrypt(this.$route.query.p)).planInfo.planTypeName
       }
     },
     computed: {
@@ -167,6 +140,24 @@
       }
     },
     methods: {
+      //流程操作
+      operation(type){
+        this.$http
+          .post(
+            '/api/statistics/planPrjTjxDetail/process/'+type,
+            JSON.stringify(this.p.task),
+            {useJson: true}
+          )
+          .then((res) => {
+          if (res.data.code === 200) {
+          this.$message({
+            message: "操作成功",
+            type: "success",
+          });
+          this.$router.back()
+        }
+      });
+      },
       // 保存
       save() {
         let planId = ''
@@ -197,7 +188,7 @@
           planId = this.data[0].planId
           let tableData = {
             planId: planId,
-            planProjectTjx: {uuid: planId, flowStatus: 2,planProjectName:this.projectName},
+            planProjectTjx: {uuid: planId, flowStatus: 2,planProjectName:this.p.planInfo.projectName},
             planPrjTjxDetailList: this.data
           }
           this.$http
@@ -235,9 +226,9 @@
       getData() {
         this.$http
           .post('/api/statistics/planPrjTjxDetail/list/loadPageData', JSON.stringify({
-            planId: JSON.parse(this.$utils.decrypt(this.$route.query.p)).planInfo.planId,
-            planType: JSON.parse(this.$utils.decrypt(this.$route.query.p)).planInfo.planProjectTjx.planType,
-            planProjectTjx: JSON.parse(this.$utils.decrypt(this.$route.query.p)).planInfo.planProjectTjx
+            planId: this.p.planInfo?this.p.planInfo.planId:this.p.instid,
+            planType: this.p.planInfo?this.p.planInfo.planProjectTjx.planType:"",
+            planProjectTjx: this.p.planInfo&&this.p.planInfo.planProjectTjx
           }), {useJson: true})
           .then(res => {
             this.data = res.data.data
@@ -280,7 +271,27 @@
   .editable{
     color: #0e45a1;
   }
-
+  .table-div{
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    max-height: calc(100vh - 175px)!important;
+    min-height: calc(100vh - 175px)!important;
+    overflow: scroll;
+  }
+  .tableStyle{
+    width: 100%;
+  }
+  .detail-back-tab{
+    padding: 10px 20px ;
+    border:1px solid #ddd;
+    color: black;
+    position: absolute;
+    top:1px;
+    right:15px;
+    z-index: 999999999;
+    background: #fff;
+  }
   /deep/ .el-collapse-item__header{
     height:35px !important;
     ling-height:35px !important;
