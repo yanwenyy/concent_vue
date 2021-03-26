@@ -197,7 +197,7 @@
           planId = this.data[0].planId
           let tableData = {
             planId: planId,
-            planProjectTjx: {uuid: planId, status: 1},
+            planProjectTjx: {uuid: planId, status: 1,planProjectName:this.projectName},
             planPrjTjxDetailList: this.data
           }
           this.$http
