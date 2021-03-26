@@ -372,6 +372,10 @@
              this.$message.info("请选择一条数据，进行编辑", "提示")
              return false
             }
+          if ((this.multipleSelection[0].flowStatus!=null||this.multipleSelection[0].flowStatus!='')&& this.multipleSelection[0].flowStatus!='1'){
+            this.$message.info("只允许修改草稿数据", "提示")
+            return false
+          }
           this.type = 'edit'
           this.form1 = JSON.parse(JSON.stringify(this.multipleSelection[0]))
           let mList = {projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,uuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).uuid,
