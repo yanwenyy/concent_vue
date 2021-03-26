@@ -59,21 +59,21 @@
           prop="createUserName"
           show-overflow-tooltip
         >
-         <template slot="header" slot-scope="scope">
+          <template slot="header" slot-scope="scope">
             <span>填报人</span>
             <div>
               <el-input style=" width: 100%" v-model="searchform.createUserName" size="mini"/>
             </div>
           </template>
-          </el-table-column>
-         <el-table-column
+        </el-table-column>
+        <el-table-column
           :min-width="200"
           align="center"
           label="填报单位"
           prop="createOrgName"
           show-overflow-tooltip
         >
-         <template slot="header" slot-scope="scope">
+          <template slot="header" slot-scope="scope">
             <span>填报单位</span>
             <div>
               <el-input style=" width: 100%" v-model="searchform.createOrgName" size="mini"/>
@@ -87,7 +87,7 @@
           prop="restrictedobjects"
           show-overflow-tooltip
         >
-        <template slot="header" slot-scope="scope">
+          <template slot="header" slot-scope="scope">
             <span>限制对象</span>
             <div>
               <el-input style=" width: 100%" v-model="searchform.restrictedobjects" size="mini"/>
@@ -128,9 +128,9 @@
               <!--/>-->
             </div>
           </template>
-           <template slot-scope="scope">
-             {{scope.row.startStatus==1?'启用':'未启用'}}
-            </template>
+          <template slot-scope="scope">
+            {{scope.row.startStatus==1?'启用':'未启用'}}
+          </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -139,16 +139,16 @@
           prop="standardreporttime"
           show-overflow-tooltip
         >
-        <template slot="header" slot-scope="scope">
+          <template slot="header" slot-scope="scope">
             <span>标准上报时间</span>
             <div>
               <el-date-picker
-                 v-model="searchform.standardreporttime"
-                  type="date"
-                  format="dd"
-                   value-format="dd"
-                 placeholder="选择日" style=" width: 100%" size="mini">
-               </el-date-picker>
+                v-model="searchform.standardreporttime"
+                type="date"
+                format="dd"
+                value-format="dd"
+                placeholder="选择日" style=" width: 100%" size="mini">
+              </el-date-picker>
             </div>
           </template>
         </el-table-column>
@@ -159,14 +159,14 @@
           prop="endreporttime"
           show-overflow-tooltip
         >
-        <template slot="header" slot-scope="scope">
+          <template slot="header" slot-scope="scope">
             <span>截止上报时间</span>
             <div>
               <el-date-picker
                 v-model="searchform.endreporttime"
-                 type="date"
-                 format="dd"
-                  value-format="dd"
+                type="date"
+                format="dd"
+                value-format="dd"
                 placeholder="选择日" style=" width: 100%" size="mini">
               </el-date-picker>
             </div>
@@ -179,17 +179,17 @@
           prop="createTime"
           show-overflow-tooltip
         >
-        <template slot="header" slot-scope="scope">
-          <span>创建时间</span>
-           <div>
-        <el-date-picker
-             style=" width: 100%"
-             v-model="searchform.createTime"
-             size="mini"
-             type="datetime"
-             value-format="timestamp"
-          >
-            </el-date-picker>
+          <template slot="header" slot-scope="scope">
+            <span>创建时间</span>
+            <div>
+              <el-date-picker
+                style=" width: 100%"
+                v-model="searchform.createTime"
+                size="mini"
+                type="datetime"
+                value-format="timestamp"
+              >
+              </el-date-picker>
             </div>
           </template>
           <template slot-scope="scope">
@@ -216,68 +216,70 @@
       ></el-pagination>
 
       <el-dialog :title="addTitle1" :visible.sync="showCfclAddDialog1" append-to-body @close="closeAdd">
+        <div>
           <div>
-            <div>
-              <table>
-                <tr>
-                  <td><span style="color: red;font-weight:bold">*</span>填报单位:</td>
-                  <td style="width:70%;text-align:left;padding:10px">
-                    <el-input  :disabled="true" v-model.trim="form1.createOrgName" placeholder="填报单位" min="0" max="500" type="text"
-                      style="width:100%" ></el-input>
-                    <span style="color:red;font-size:12px" v-if="this.show && this.form1.createOrgName == ''">此项不能为空</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td><span style="color: red;font-weight:bold">*</span>填报人:</td>
-                  <td style="width:70%;text-align:left;padding:10px">
-                    <el-input  :disabled="true" v-model.trim="form1.createUserName" style="width:100%" type="text" placeholder="填报人:"></el-input>
-                    <span style="color:red;font-size:12px" v-if="this.show && this.form1.createUserName == ''">此项不能为空</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td><span style="color: red;font-weight:bold">*</span>启用状态:</td>
-                  <td style="width:70%;text-align:left;padding:10px">
-                         <el-radio-group v-model="form1.startStatus">
-                           <el-radio label="1" ><span>启用</span></el-radio>
-                           <el-radio label="2" ><span>未启用</span></el-radio>
-                         </el-radio-group>
-                    <span style="color:red;font-size:12px" v-if="this.show && this.form1.startStatus == ''">此项不能为空</span>
-                  </td>
-                </tr>
-                 <tr>
-                      <td><span style="color: red;font-weight:bold">*</span>标准上报时间:</td>
-                      <td style="width:70%;text-align:left;padding:10px">
-                         <el-date-picker
-                              v-model="form1.standardreporttime"
-                              type="date"
-                               format="d"
-                               value-format="dd"
-                              placeholder="选择日">
-                            </el-date-picker>
-                        <span style="color:red;font-size:12px" v-if="this.show && this.form1.standardreporttime == ''">此项不能为空</span>
-                      </td>
-                    </tr>
-                     <tr>
-                          <td><span style="color: red;font-weight:bold">*</span>下月标准截止时间:</td>
-                          <td style="width:70%;text-align:left;padding:10px">
-                             <el-date-picker
-                                  v-model="form1.endreporttime"
-                                   type="date"
-                                   format="d"
-                                    value-format="dd"
-                                  placeholder="选择日">
-                                </el-date-picker>
-                            <span style="color:red;font-size:12px" v-if="this.show && this.form1.endreporttime == ''">此项不能为空</span>
-                          </td>
-                    </tr>
-              </table>
-            </div>
-            <div style="text-align:right;margin-top:10px">
-              <el-button @click="submit" type="primary">确认</el-button>
-              <el-button @click="closeAdd" type="primary">取消</el-button>
-            </div>
+            <table>
+              <tr>
+                <td><span style="color: red;font-weight:bold">*</span>填报单位:</td>
+                <td style="width:70%;text-align:left;padding:10px">
+                  <el-input  :disabled="true" v-model.trim="form1.createOrgName" placeholder="填报单位" min="0" max="500" type="text"
+                             style="width:100%" ></el-input>
+                  <span style="color:red;font-size:12px;float:left" v-if="this.show && this.form1.createOrgName == ''">此项不能为空</span>
+                </td>
+              </tr>
+              <tr>
+                <td><span style="color: red;font-weight:bold">*</span>填报人:</td>
+                <td style="width:70%;text-align:left;padding:10px">
+                  <el-input  :disabled="true" v-model.trim="form1.createUserName" style="width:100%" type="text" placeholder="填报人:"></el-input>
+                  <span style="color:red;font-size:12px;float:left" v-if="this.show && this.form1.createUserName == ''">此项不能为空</span>
+                </td>
+              </tr>
+              <tr>
+                <td><span style="color: red;font-weight:bold">*</span>启用状态:</td>
+                <td style="width:70%;text-align:left;padding:10px">
+                  <el-radio-group v-model="form1.startStatus">
+                    <el-radio label="1" ><span>启用</span></el-radio>
+                    <el-radio label="2" ><span>未启用</span></el-radio>
+                  </el-radio-group>
+                  <span style="color:red;font-size:12px;float:left" v-if="this.show && this.form1.startStatus == ''">此项不能为空</span>
+                </td>
+              </tr>
+              <tr>
+                <td><span style="color: red;font-weight:bold">*</span>标准上报时间:</td>
+                <td style="width:70%;text-align:left;padding:10px">
+                  <el-date-picker
+                    v-model="form1.standardreporttime"
+                    type="date"
+                    format="d"
+                    @change="jyShow"
+                    value-format="dd"
+                    placeholder="选择日">
+                  </el-date-picker>
+                  <span style="color:red;font-size:12px;float:left" v-if="show && (form1.standardreporttime == ''||form1.standardreporttime == null)">此项不能为空</span>
+                </td>
+              </tr>
+              <tr>
+                <td><span style="color: red;font-weight:bold">*</span>下月标准截止时间:</td>
+                <td style="width:70%;text-align:left;padding:10px">
+                  <el-date-picker
+                    v-model="form1.endreporttime"
+                    type="date"
+                    format="d"
+                    value-format="dd"
+                    @change="jyShowEnd"
+                    placeholder="选择日">
+                  </el-date-picker>
+                  <span style="color:red;font-size:12px;float:left" v-if="show && (form1.endreporttime == ''||form1.endreporttime == null)">此项不能为空</span>
+                </td>
+              </tr>
+            </table>
           </div>
-        </el-dialog>
+          <div style="text-align:right;margin-top:10px">
+            <el-button @click="submit" type="primary">确认</el-button>
+            <el-button @click="closeAdd" type="primary">取消</el-button>
+          </div>
+        </div>
+      </el-dialog>
     </div>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
     <State ref="stateUpdate" :data="projectStatus" @resetState="getData"></State>
@@ -298,22 +300,22 @@
         userdata:{},
         //新增弹窗
         showCfclAddDialog1: false,
-         addTitle1: "新增",
-     //上报截止日期
+        addTitle1: "新增",
+        //上报截止日期
         form1: {
-           createOrgCode: '',
-           createOrgId: '',
-           createOrgName: '',
-           createOrgType: '',
-           createTime: '',
-           createUserId: '',
-           createUserName: '',
-           endreporttime: '',
-           reportType: '',
-           restrictedobjects:'',
-           standardreporttime:'',
-           startStatus:'2',
-           uuid:''
+          createOrgCode: '',
+          createOrgId: '',
+          createOrgName: '',
+          createOrgType: '',
+          createTime: '',
+          createUserId: '',
+          createUserName: '',
+          endreporttime: '',
+          reportType: '',
+          restrictedobjects:'',
+          standardreporttime:'',
+          startStatus:'2',
+          uuid:''
         },
         treeStatas: false,
         page: { current: 1, size: 20, total: 0, records: [] },
@@ -363,19 +365,31 @@
       }
     },
     methods: {
-        //新增
-        showCfclAddDialog() {
-           if (this.multipleSelection.length > 0) {
-                this.$message.info("请取消选中的数据后进行新增操作", "提示")
-                return false;
-            }
-          this.type = 'add';
-          this.addTitle1 = '新增';
-          this.form1.createOrgName=this.userdata.managerOrgName;
-          this.form1.createOrgType=this.userdata.managerOrgType;
-          this.form1.createUserName=this.userdata.username;
-          this.showCfclAddDialog1 = true;
-        },
+      //新增
+      showCfclAddDialog() {
+        if (this.multipleSelection.length > 0) {
+          this.$message.info("请取消选中的数据后进行新增操作", "提示")
+          return false;
+        }
+        this.type = 'add';
+        this.addTitle1 = '新增';
+        this.form1.createOrgName=this.userdata.managerOrgName;
+        this.form1.createOrgType=this.userdata.managerOrgType;
+        this.form1.createUserName=this.userdata.username;
+        this.showCfclAddDialog1 = true;
+      },
+      jyShow(){
+        if(this.form1.standardreporttime==null || this.form1.standardreporttime=='') {
+          this.show = true
+        }
+        this.$forceUpdate();
+      },
+      jyShowEnd(){
+        if(this.form1.endreporttime==null || this.form1.endreporttime==''){
+          this.show=true
+        }
+        this.$forceUpdate();
+      },
       //提交
       submit() {
         if(!this.form1.createOrgName || !this.form1.createUserName || !this.form1.startStatus || !this.form1.standardreporttime|| !this.form1.endreporttime) {
@@ -392,41 +406,41 @@
         params.createOrgId = this.userdata.managerOrgId;
         params.createOrgType = this.userdata.managerOrgType;
         params.createUserId =this.userdata.id;
-         params.createOrgCode =this.userdata.createOrgCode;
+        params.createOrgCode =this.userdata.createOrgCode;
         params.reportType ='1';
         if(this.type == 'edit') {
           params.uuid = this.form1.uuid;
         }
-       this.$http.post(
-        url,
-        JSON.stringify(params),
-        {useJson: true}
-       ).then((res) => {
-            if (res.data.code === 200) {
+        this.$http.post(
+            url,
+            JSON.stringify(params),
+            {useJson: true}
+        ).then((res) => {
+          if (res.data.code === 200) {
             this.$message({
               message: "保存成功",
               type: "success",
             });
             this.showCfclAddDialog1 = false;
-              this.getData()
-             }
-      })
+            this.getData()
+          }
+        })
       },
-        //编辑
-        showCfclEditDialog() {
-          if (this.multipleSelection.length == 0) {
-              this.$message.info("请选择需要编辑的数据", "提示")
-              return false;
-           }
-            if (this.multipleSelection.length >1) {
-             this.$message.info("请选择一条数据，进行编辑", "提示")
-             return false;
-            }
-          this.type = 'edit';
-          this.addTitle1 = '编辑';
-          this.form1 = JSON.parse(JSON.stringify(this.multipleSelection[0]));
-          this.showCfclAddDialog1 = true;
-        },
+      //编辑
+      showCfclEditDialog() {
+        if (this.multipleSelection.length == 0) {
+          this.$message.info("请选择需要编辑的数据", "提示")
+          return false;
+        }
+        if (this.multipleSelection.length >1) {
+          this.$message.info("请选择一条数据，进行编辑", "提示")
+          return false;
+        }
+        this.type = 'edit';
+        this.addTitle1 = '编辑';
+        this.form1 = JSON.parse(JSON.stringify(this.multipleSelection[0]));
+        this.showCfclAddDialog1 = true;
+      },
       // 删除
       del() {
         if (this.multipleSelection.length < 1) {
@@ -443,13 +457,13 @@
           type: 'warning'
         }).then(() => {
           this.$http
-            .post(
-              '/api/statistics/projectMonthlyReport/ReportEndtime/list/delete',
-              { ids: uuids }
-            )
-            .then((res) => {
-              this.getData()
-            })
+              .post(
+                  '/api/statistics/projectMonthlyReport/ReportEndtime/list/delete',
+                  { ids: uuids }
+              )
+              .then((res) => {
+                this.getData()
+              })
         }).catch(() => {
         })
       },
@@ -513,28 +527,27 @@
       getData() {
 
         this.$http
-          .post('/api/statistics/projectMonthlyReport/ReportEndtime/list/loadPageData', this.searchform)
-          .then(res => {
-            this.page = res.data.data
-          })
+            .post('/api/statistics/projectMonthlyReport/ReportEndtime/list/loadPageData', this.searchform)
+            .then(res => {
+              this.page = res.data.data
+            })
       },
-       closeAdd() {
-          for(let item in this.form1) {
-            if(this.form1.hasOwnProperty(item)) {
-              this.form1[item] = ''
-            }
+      closeAdd() {
+        for(let item in this.form1) {
+          if(this.form1.hasOwnProperty(item)) {
+            this.form1[item] = ''
           }
-          this.show = false
-          this.showCfclAddDialog1 = false
-         this.getData()
-         this.form1.startStatus='2'
         }
+        this.show = false
+        this.showCfclAddDialog1 = false
+        this.getData()
+        this.form1.startStatus='2'
+      }
     },
 
     created() {
       this.getData()
-       console.log(JSON.parse(sessionStorage.getItem('userdata')))
-       this.userdata=JSON.parse(sessionStorage.getItem('userdata'))
+      this.userdata=JSON.parse(sessionStorage.getItem('userdata'))
     },
 
   }
