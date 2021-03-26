@@ -11,7 +11,7 @@
           <span v-show="planType === 1" style="color:#0a469d !important;font-size:14px;">{{p.planInfo.planProjectTjx.planYear}}年{{p.planInfo.planProjectTjx.planMonth}}月</span>
         </span>
 
-        <span v-if="projectStatus !== '1'" >
+        <span v-if="projectStatus !== '2'" >
           <el-button @click="back" class="detailbutton" >返回</el-button>
           <el-button @click="save" class="detailbutton" type="primary" >保存</el-button>
           <el-button @click="submit" class="detailbutton" >提交</el-button>
@@ -100,10 +100,10 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            <div v-if="scope.row.veditable === '1' && scope.row.venabled === '1' && projectStatus !== '1' ">
+            <div v-if="scope.row.veditable === '1' && scope.row.venabled === '1' && projectStatus !== '2'&& projectStatus !== '4' ">
               <el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')"/>
             </div>
-            <div v-else-if="projectStatus !== '1' " style="text-align: right">{{sonCount(scope.row)}}</div>
+            <div v-else-if="projectStatus !== '2'&& projectStatus !== '4' " style="text-align: right">{{sonCount(scope.row)}}</div>
             <div v-else>{{scope.row.value}}</div>
           </template>
         </el-table-column>
@@ -174,7 +174,7 @@
           planId = this.data[0].planId
           let tableData = {
             planId: planId,
-            planProjectTjx: {uuid: planId, status: 0},
+            planProjectTjx: {uuid: planId, flowStatus: 1},
             planPrjTjxDetailList: this.data
           }
           this.$http
@@ -197,11 +197,11 @@
           planId = this.data[0].planId
           let tableData = {
             planId: planId,
-            planProjectTjx: {uuid: planId, status: 1,planProjectName:this.projectName},
+            planProjectTjx: {uuid: planId, flowStatus: 2,planProjectName:this.projectName},
             planPrjTjxDetailList: this.data
           }
           this.$http
-            .post('/api/statistics/planPrjTjxDetail/detail/save', JSON.stringify(tableData), {useJson: true})
+            .post('/api/statistics/planPrjTjxDetail/process/start', JSON.stringify(tableData), {useJson: true})
             .then(res => {
               if (res.data.code === 200) {
                 this.$message({
@@ -216,7 +216,7 @@
       },
       rollback() {
         this.$http
-          .post('/api/statistics/PlanProjectTjx/detail/save', JSON.stringify({uuid: this.p.planInfo.planId, status: 0}), {useJson: true})
+          .post('/api/statistics/PlanProjectTjx/detail/save', JSON.stringify({uuid: this.p.planInfo.planId, flowStatus: 0}), {useJson: true})
           .then(res => {
             if (res.data.code === 200) {
               this.$message({

@@ -166,9 +166,8 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            <span v-if="scope.row.status=='0'" style="color:#909399;">未提交</span>
-            <span v-else-if="scope.row.status=='1'" style="color:#67c23a;">已提交</span>
-            <span v-else>未填报</span>
+            <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'未创建'}}
+            </div>
           </template>
           <template slot="header" slot-scope="scope">
             <span>状态</span>
@@ -179,12 +178,12 @@
                 size="mini"
                 @change="searchformSubmit"
                 placeholder="请选择"
-                v-model="searchform.status">
+                v-model="searchform.flowStatus">
                 <el-option
                   :key="index"
                   :label="item.detailName"
                   :value="item.id"
-                  v-for="(item, index) in status"/>
+                  v-for="(item, index) in flowStatus"/>
               </el-select>
             </div>
           </template>
@@ -213,7 +212,28 @@
     data() {
       return {
         projectTypeTwo: [], // 工程类别(二级)
-        status: [{ id: 1, detailName: '已提交' }, { id: 0, detailName: '未提交' }, {id: 2, detailName: '未填报'}],
+        flowStatus:[
+          {
+            detailName:"草稿",
+            id:'1'
+          },
+          {
+            detailName:"审核中",
+            id:'2'
+          },
+          {
+            detailName:"审核通过",
+            id:'3'
+          },
+          {
+            detailName:"审核驳回",
+            id:'4'
+          },
+          {
+            detailName:"未创建",
+            id:''
+          }
+        ],
         page: { current: 1, size: 20, total: 0, records: [] },
         searchform: {
           current: 1,
@@ -275,7 +295,7 @@
             isSubmit = true
             return false
           }
-          if (item.status ===null) {
+          if (item.flowStatus ===null) {
             isSubmit = true
             return false
           }
@@ -320,14 +340,14 @@
           return false
         }
         let planId = this.multipleSelection[0].uuid
-        let status = this.multipleSelection[0].status
+        let flowStatus = this.multipleSelection[0].flowStatus
         let projectName = this.multipleSelection[0].projectName
         let projecttypeCode = this.multipleSelection[0].projecttypeCode
         let projectId = this.multipleSelection[0].projectId
         if (planId == null || planId === '') {
-          status = '0'
+          flowStatus = '1'
         }
-        let p = {actpoint: 'edit', planInfo: {planId: planId, projectName: projectName, planTypeName: '开累计划', projectStatus: status, planProjectTjx: {projectId: projectId, projecttypeCode: projecttypeCode, planType: 3}}}
+        let p = {actpoint: 'edit', planInfo: {planId: planId, projectName: projectName, planTypeName: '开累计划', projectStatus: flowStatus, planProjectTjx: {projectId: projectId, projecttypeCode: projecttypeCode, planType: 3}}}
         this.$router.push({
           path: './proTjxDetail/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
@@ -335,15 +355,16 @@
       },
       // 双击事件
       rowEdit(row) {
-        let status = row.status
-        if (row.uuid == null || row.uuid === '' || status !== '1') {
-          status = '0'
+        var isShow = true
+        if (row.uuid == null || row.uuid === '') {
+          isShow=false
         }
-        let p = {actpoint: 'edit', planInfo: {planId: row.uuid, projectName: row.projectName, planTypeName: '开累计划', projectStatus: status, planProjectTjx: {projectId: row.projectId, projecttypeCode: row.projecttypeCode, planType: 3}}}
+        if(isShow){
+        let p = {actpoint: 'edit', planInfo: {planId: row.uuid, projectName: row.projectName, planTypeName: '开累计划', projectStatus:row.flowStatus, planProjectTjx: {projectId: row.projectId, projecttypeCode: row.projecttypeCode, planType: 3}}}
         this.$router.push({
           path: './proTjxDetail/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-        })
+        })}
       },
       handleSizeChange(val) {
         this.searchform.size = val

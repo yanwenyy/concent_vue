@@ -96,8 +96,8 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            <span v-if="scope.row.status=='0'" style="color:#909399;">未提交</span>
-            <span v-else-if="scope.row.status=='1'" style="color:#67c23a;">已提交</span>
+            <span v-if="scope.row.flowStatus=='0'" style="color:#909399;">未提交</span>
+            <span v-else-if="scope.row.flowStatus=='1'" style="color:#67c23a;">已提交</span>
             <span v-else>未填报</span>
           </template>
         </el-table-column>
@@ -176,16 +176,16 @@
           return false
         }
         let planId = this.multipleSelection[0].uuid
-        let status = this.multipleSelection[0].status
+        let flowStatus = this.multipleSelection[0].flowStatus
         let projectName = this.multipleSelection[0].projectName
         let projecttypeCode = this.multipleSelection[0].projectTypeFirstId
         let projectId = this.multipleSelection[0].projectId
         let planYear = this.multipleSelection[0].planYear
         let planMonth = this.multipleSelection[0].planMonth
         if (planId == null || planId === '') {
-          status = '0'
+          flowStatus = '0'
         }
-        let p = {actpoint: 'edit', planInfo: {planId: planId, projectName: projectName, planTypeName: '年计划', projectStatus: status, planProjectTjx: {projectId: projectId, planYear: planYear, planMonth: planMonth, planType: 1, projecttypeCode: projecttypeCode}}}
+        let p = {actpoint: 'edit', planInfo: {planId: planId, projectName: projectName, planTypeName: '年计划', projectStatus: flowStatus, planProjectTjx: {projectId: projectId, planYear: planYear, planMonth: planMonth, planType: 1, projecttypeCode: projecttypeCode}}}
         this.$router.push({
           path: '../proTjxDetail/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
@@ -193,11 +193,11 @@
       },
       // 双击事件
       rowEdit(row) {
-        let status = row.status
-        if (row.uuid == null || row.uuid === '' || status !== '1') {
-          status = '0'
+        let flowStatus = row.flowStatus
+        if (row.uuid == null || row.uuid === '' || flowStatus !== '1') {
+          flowStatus = '0'
         }
-        let p = {actpoint: 'edit', planInfo: {planId: row.uuid, projectName: row.projectName, planTypeName: '年计划', projectStatus: status, planProjectTjx: {projectId: row.projectId, planYear: row.planYear, planMonth: row.planMonth, planType: 1, projecttypeCode: row.projectTypeFirstId}}}
+        let p = {actpoint: 'edit', planInfo: {planId: row.uuid, projectName: row.projectName, planTypeName: '年计划', projectStatus: flowStatus, planProjectTjx: {projectId: row.projectId, planYear: row.planYear, planMonth: row.planMonth, planType: 1, projecttypeCode: row.projectTypeFirstId}}}
         this.$router.push({
           path: '../proTjxDetail/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
