@@ -422,7 +422,7 @@
           isShow=false
         }
         if(isShow){
-        let p = {actpoint: 'edit', planInfo: {planId: row.uuid, projectName: row.projectName, planTypeName: '月计划', projectStatus: row.flowStatus, planProjectTjx: {projectId: row.projectId, planYear: currentYear, planMonth: currentMonth, planType: 1, projecttypeCode: row.projecttypeCode}}}
+        let p = {actpoint: 'look', planInfo: {planId: row.uuid, projectName: row.projectName, planTypeName: '月计划', projectStatus: row.flowStatus, planProjectTjx: {projectId: row.projectId, planYear: currentYear, planMonth: currentMonth, planType: 1, projecttypeCode: row.projecttypeCode}}}
         this.$router.push({
           path: './proTjxDetail/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }

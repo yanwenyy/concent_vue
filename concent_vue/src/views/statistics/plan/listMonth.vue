@@ -197,7 +197,7 @@
         if (row.uuid == null || row.uuid === '' || flowStatus !== '1') {
           flowStatus = '0'
         }
-        let p = {actpoint: 'edit', planInfo: {planId: row.uuid, projectName: row.projectName, planTypeName: '年计划', projectStatus: flowStatus, planProjectTjx: {projectId: row.projectId, planYear: row.planYear, planMonth: row.planMonth, planType: 1, projecttypeCode: row.projectTypeFirstId}}}
+        let p = {actpoint: 'look', planInfo: {planId: row.uuid, projectName: row.projectName, planTypeName: '年计划', projectStatus: flowStatus, planProjectTjx: {projectId: row.projectId, planYear: row.planYear, planMonth: row.planMonth, planType: 1, projecttypeCode: row.projectTypeFirstId}}}
         this.$router.push({
           path: '../proTjxDetail/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }

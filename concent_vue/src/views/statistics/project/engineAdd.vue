@@ -15,17 +15,18 @@
         <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailForm.project.flowStatus==1||detailForm.project.flowStatus==4)" @click="submitForm('detailForm','sub')" class="detailbutton">提交
         </el-button>
         <el-button
+          v-show="p.actpoint == 'task'&&p.task.edit==false"
+          class="detailbutton detail-back-tab tg"
+          @click="operation('complete')"
+          type="success"
+        >通过</el-button>
+        <el-button
             v-show="p.actpoint == 'task'&&p.task.edit==false"
             class="detailbutton detail-back-tab bh"
             @click="operation('back')"
             type="warning"
           >驳回</el-button>
-          <el-button
-            v-show="p.actpoint == 'task'&&p.task.edit==false"
-            class="detailbutton detail-back-tab tg"
-            @click="operation('complete')"
-            type="success"
-          >通过</el-button>
+
       </div>
       <div class="detailBox">
         <el-form
@@ -863,7 +864,7 @@
           <p>
             <span>相关附件: </span>
             <el-button
-              v-show="p.actpoint !== 'look'"
+              v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
               size="small"
               type="primary"
               @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','commonFilesList')">

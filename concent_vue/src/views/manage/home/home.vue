@@ -285,6 +285,9 @@
   }
 </script>
 <style scoped>
+  >>>.el-table--border::after, >>>.el-table--group::after, >>>.el-table::before{
+    background-color: transparent;
+  }
   .tabel-list{
     overflow: auto;
     max-height: calc(100vh - 280px)!important;

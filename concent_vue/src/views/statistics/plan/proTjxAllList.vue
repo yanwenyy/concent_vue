@@ -360,7 +360,7 @@
           isShow=false
         }
         if(isShow){
-        let p = {actpoint: 'edit', planInfo: {planId: row.uuid, projectName: row.projectName, planTypeName: '开累计划', projectStatus:row.flowStatus, planProjectTjx: {projectId: row.projectId, projecttypeCode: row.projecttypeCode, planType: 3}}}
+        let p = {actpoint: 'look', planInfo: {planId: row.uuid, projectName: row.projectName, planTypeName: '开累计划', projectStatus:row.flowStatus, planProjectTjx: {projectId: row.projectId, projecttypeCode: row.projecttypeCode, planType: 3}}}
         this.$router.push({
           path: './proTjxDetail/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }

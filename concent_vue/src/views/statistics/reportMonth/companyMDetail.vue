@@ -52,9 +52,9 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="产物及实物工程量" name="cwjswgcl">
-        <div class="detailBoxBG">
+        <div class="table-div">
           <el-table
-            class="tableStyle"
+            class="tableStyle detailTable"
             :max-height="$tableHeight"
             :height="$tableHeight"
             :data="data"
@@ -829,6 +829,14 @@
     right: 95px;
     background: #409EFF;
     color:#fff;
+  }
+  .table-div{
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    max-height: calc(100vh - 175px)!important;
+    min-height: calc(100vh - 175px)!important;
+    overflow: scroll;
   }
   .sub-btn{
     right: 95px!important;
