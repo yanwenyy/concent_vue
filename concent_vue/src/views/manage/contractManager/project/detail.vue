@@ -7065,6 +7065,7 @@ export default {
                 fileList3.push(item)
               }
           });
+          this.detailform.contractInfo.uuid= datas.contractInfo.uuid;
           this.getTwo(datas.contractInfo.enginTypeFirstId);
           this.getTwoSC(datas.contractInfo.marketFirstNameId);
           this.getTwoXZ(datas.contractInfo.projectNatureFirstId);

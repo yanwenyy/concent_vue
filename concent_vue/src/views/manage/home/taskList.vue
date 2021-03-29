@@ -147,7 +147,7 @@
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  <el-button type="text" :disabled="scope.row.reCall==false" @click="withdraw(scope.row)">撤回</el-button>
+                  <el-button type="text" :disabled="scope.row.reCall==false" @click.stop="withdraw(scope.row)">撤回</el-button>
                 </template>
               </el-table-column>
             </el-table>
