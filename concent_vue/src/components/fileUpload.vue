@@ -86,7 +86,7 @@
         handleChange(response, file, fileList){
           if (response && response.code === 200) {
             this.fileList1.push(response.data);
-            this.$forceUpdate();
+            // this.$forceUpdate();
             console.log(this.fileList1)
             this.$message({
               message: '上传成功',

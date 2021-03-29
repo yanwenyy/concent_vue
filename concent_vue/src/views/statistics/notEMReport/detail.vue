@@ -1563,14 +1563,14 @@
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_4.sum||0)+(detailform.sumByMon_4.overseasSum||0)"/>
+                    :value="(detailform.sumByMon_4.finance||0)+(detailform.sumByMon_4.secure||0)+(detailform.sumByMon_4.otherFinance||0)+(detailform.sumByMon_4.overseasFinance||0)+(detailform.sumByMon_4.overseasSecure||0)+(detailform.sumByMon_4.otherFinanceHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_4.sum||0)+(detailform.sumByMon_4.overseasSum||0)+(detailform.sumByYear_4.sum||0)+(detailform.sumByYear_4.overseasSum||0)"/>
+                    :value="(detailform.sumByMon_4.finance||0)+(detailform.sumByMon_4.secure||0)+(detailform.sumByMon_4.otherFinance||0)+(detailform.sumByMon_4.overseasFinance||0)+(detailform.sumByMon_4.overseasSecure||0)+(detailform.sumByMon_4.otherFinanceHw||0)+(detailform.sumByYear_4.sum||0)+(detailform.sumByYear_4.overseasSum||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="金融收入(万元):"
@@ -1623,14 +1623,14 @@
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_4.sum"/>
+                    :value="(detailform.sumByMon_4.finance||0)+(detailform.sumByMon_4.secure||0)+(detailform.sumByMon_4.otherFinance||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_4.sum||0)+(detailform.sumByYear_4.sum||0)"/>
+                    :value="(detailform.sumByMon_4.finance||0)+(detailform.sumByMon_4.secure||0)+(detailform.sumByMon_4.otherFinance||0)+(detailform.sumByYear_4.sum||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="金融收入(万元):"
@@ -1683,14 +1683,14 @@
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_4.overseasSum"/>
+                    :value="(detailform.sumByMon_4.overseasFinance||0)+(detailform.sumByMon_4.overseasSecure||0)+(detailform.sumByMon_4.otherFinanceHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_4.overseasSum||0)+(detailform.sumByYear_4.overseasSum||0)"/>
+                    :value="(detailform.sumByMon_4.overseasFinance||0)+(detailform.sumByMon_4.overseasSecure||0)+(detailform.sumByMon_4.otherFinanceHw||0)+(detailform.sumByYear_4.overseasSum||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="金融收入(万元):"
@@ -1986,14 +1986,14 @@
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_5.sum||0)+(detailform.sumByMon_5.overseasSum||0)"/>
+                    :value="(detailform.sumByMon_5.engineeringOperation||0)+(detailform.sumByMon_5.informationOperation||0)+(detailform.sumByMon_5.estateManagement||0)+(detailform.sumByMon_5.otherOperation||0)+(detailform.sumByMon_5.engineeringOperationHw||0)+(detailform.sumByMon_5.informationOperationHw||0)+(detailform.sumByMon_5.estateManagementHw||0)+(detailform.sumByMon_5.overseasOtherOperation||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_5.sum||0)+(detailform.sumByMon_5.overseasSum||0)+(detailform.sumByYear_5.sum||0)+(detailform.sumByYear_5.overseasSum||0)"/>
+                    :value="(detailform.sumByMon_5.engineeringOperation||0)+(detailform.sumByMon_5.informationOperation||0)+(detailform.sumByMon_5.estateManagement||0)+(detailform.sumByMon_5.otherOperation||0)+(detailform.sumByMon_5.engineeringOperationHw||0)+(detailform.sumByMon_5.informationOperationHw||0)+(detailform.sumByMon_5.estateManagementHw||0)+(detailform.sumByMon_5.overseasOtherOperation||0)+(detailform.sumByYear_5.sum||0)+(detailform.sumByYear_5.overseasSum||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="工程运营维管(万元):"
@@ -2060,14 +2060,14 @@
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_5.sum"/>
+                    :value="(detailform.sumByMon_5.engineeringOperation||0)+(detailform.sumByMon_5.informationOperation||0)+(detailform.sumByMon_5.estateManagement||0)+(detailform.sumByMon_5.otherOperation||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_5.sum||0)+(detailform.sumByYear_5.sum||0)"/>
+                    :value="(detailform.sumByMon_5.engineeringOperation||0)+(detailform.sumByMon_5.informationOperation||0)+(detailform.sumByMon_5.estateManagement||0)+(detailform.sumByMon_5.otherOperation||0)+(detailform.sumByYear_5.sum||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="工程运营维管(万元):"
@@ -2134,7 +2134,7 @@
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_5.overseasSum"/>
+                    :value="(detailform.sumByMon_5.engineeringOperationHw||0)+(detailform.sumByMon_5.informationOperationHw||0)+(detailform.sumByMon_5.estateManagementHw||0)+(detailform.sumByMon_5.overseasOtherOperation||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
@@ -2474,14 +2474,14 @@
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_6.sum||0)+(detailform.sumByMon_6.overseasSum||0)"/>
+                    :value="(detailform.sumByMon_6.equipmentLeasing||0)+(detailform.sumByMon_6.leaseHouses||0)+(detailform.sumByMon_6.transportation||0)+(detailform.sumByMon_6.accommodationCatering||0)+(detailform.sumByMon_6.educationTraining||0)+(detailform.sumByMon_6.informationConstruction||0)+(detailform.sumByMon_6.otherProject||0)+(detailform.sumByMon_6.equipmentLeasingHw||0)+(detailform.sumByMon_6.leaseHousesHw||0)+(detailform.sumByMon_6.transportationHw||0)+(detailform.sumByMon_6.accommodationCateringHw||0)+(detailform.sumByMon_6.educationTrainingHw||0)+(detailform.sumByMon_6.informationConstructionHw||0)+(detailform.sumByMon_6.otherProjectHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_6.sum||0)+(detailform.sumByMon_6.overseasSum||0)+(detailform.sumByYear_6.sum||0)+(detailform.sumByYear_6.overseasSum||0)"/>
+                    :value="(detailform.sumByMon_6.equipmentLeasing||0)+(detailform.sumByMon_6.leaseHouses||0)+(detailform.sumByMon_6.transportation||0)+(detailform.sumByMon_6.accommodationCatering||0)+(detailform.sumByMon_6.educationTraining||0)+(detailform.sumByMon_6.informationConstruction||0)+(detailform.sumByMon_6.otherProject||0)+(detailform.sumByMon_6.equipmentLeasingHw||0)+(detailform.sumByMon_6.leaseHousesHw||0)+(detailform.sumByMon_6.transportationHw||0)+(detailform.sumByMon_6.accommodationCateringHw||0)+(detailform.sumByMon_6.educationTrainingHw||0)+(detailform.sumByMon_6.informationConstructionHw||0)+(detailform.sumByMon_6.otherProjectHw||0)+(detailform.sumByYear_6.sum||0)+(detailform.sumByYear_6.overseasSum||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="设备租赁(万元):"
@@ -2589,14 +2589,14 @@
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_6.sum"/>
+                    :value="(detailform.sumByMon_6.equipmentLeasing||0)+(detailform.sumByMon_6.leaseHouses||0)+(detailform.sumByMon_6.transportation||0)+(detailform.sumByMon_6.accommodationCatering||0)+(detailform.sumByMon_6.educationTraining||0)+(detailform.sumByMon_6.informationConstruction||0)+(detailform.sumByMon_6.otherProject||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_6.sum||0)+(detailform.sumByYear_6.sum||0)"/>
+                    :value="(detailform.sumByMon_6.equipmentLeasing||0)+(detailform.sumByMon_6.leaseHouses||0)+(detailform.sumByMon_6.transportation||0)+(detailform.sumByMon_6.accommodationCatering||0)+(detailform.sumByMon_6.educationTraining||0)+(detailform.sumByMon_6.informationConstruction||0)+(detailform.sumByMon_6.otherProject||0)+(detailform.sumByYear_6.sum||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="设备租赁(万元):"
@@ -2704,7 +2704,7 @@
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_6.overseasSum"/>
+                    :value="(detailform.sumByMon_6.equipmentLeasingHw||0)+(detailform.sumByMon_6.leaseHousesHw||0)+(detailform.sumByMon_6.transportationHw||0)+(detailform.sumByMon_6.accommodationCateringHw||0)+(detailform.sumByMon_6.educationTrainingHw||0)+(detailform.sumByMon_6.informationConstructionHw||0)+(detailform.sumByMon_6.otherProjectHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
@@ -2802,7 +2802,7 @@
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_6.otherHw"/>
+                    v-model="detailform.sumByMon_6.otherProjectHw"/>
                 </el-form-item>
                 <el-form-item
                   label="其它项目年累(万元):"
