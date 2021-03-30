@@ -219,7 +219,7 @@
       ></el-pagination>
     </div>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
-    <State ref="stateUpdate" :data="flowStatus" @resetState="getData"></State>
+    <State ref="stateUpdate" :data="projectStatus" @resetState="getData"></State>
   </div>
 </template>
 
@@ -270,7 +270,7 @@
         return this.$store.state.projectType
       },
       projectStatus() {
-        return this.$store.state.flowStatus
+        return this.$store.state.projectStatus
       }
     },
     methods: {
@@ -416,7 +416,7 @@
           companyBelongName: '', // 所属单位
           contractMoney: '',
           customerName: '',
-          flowStatus: '',
+          projectStatus: '',
           projectStatusId: '',
           projectPusher: '',
           projectPusherPhone: ''
