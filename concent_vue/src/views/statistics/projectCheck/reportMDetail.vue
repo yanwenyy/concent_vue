@@ -1,7 +1,7 @@
 <!--工程月报验工计价详情-->
 <template>
   <div style="position: relative">
-      <div  v-if="dataReport.status==1" style="margin-top: 9px;color: red;position: absolute;top: 1px;right: 279px;z-index: 999999999;font-size: 15px;">项目名称：<span style="color: red !important;margin-right: 50px;">{{projectName}}</span></div>
+      <div  v-if="dataReport.status==1" style="margin-top: 9px;color: red;position: absolute;top: 1px;right: 279px;z-index: 999;font-size: 15px;">项目名称：<span style="color: red !important;margin-right: 50px;">{{projectName}}</span></div>
     <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus==1||dataReport.flowStatus==4)" @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
     <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="save('save')" class="detailbutton detail-back-tab save-btn">保存</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
@@ -177,7 +177,7 @@
                      show-overflow-tooltip
                    >
                      <template slot-scope="scope">
-                       <div v-if="scope.row.veditable == '1' && isCk!='1' ">
+                       <div v-if="scope.row.veditable == '1' && isCk!='1'&&p.actpoint!='task' ">
                          <el-input v-model="scope.row.valuationFee" @input="scope.row.value = scope.row.valuationFee.replace(/[^\-?\d.]/g,'','')" @blur="getYear(data,scope.$index,scope.row.sumTarget)"/>
                        </div>
                        <div  v-if="scope.row.veditable != '1'">{{scope.row.valuationFee}}</div>
@@ -190,7 +190,7 @@
                      show-overflow-tooltip
                    >
                  <template slot-scope="scope">
-                   <div v-if="scope.row.veditable == '1' && isCk!='1' ">
+                   <div v-if="scope.row.veditable == '1' && isCk!='1' &&p.actpoint!='task'">
                      <el-input v-model="scope.row.taxFee"  @input="scope.row.value = scope.row.taxFee.replace(/[^\-?\d.]/g,'','')" @blur="getYearSe(data,scope.$index,scope.row.sumTarget)"/>
                    </div>
                    <div  v-if="scope.row.veditable != '1'">{{scope.row.taxFee}}</div>
@@ -521,7 +521,8 @@
       //获取上传的附件列表
       getUpInfo(data){
         this.$forceUpdate();
-        this.commonFilesList=data.fileList;
+        //this.commonFilesList=data.fileList;
+        this.commonFilesList=this.commonFilesList.concat(data.fileList);
         this.uploadVisible = false;
       },
       submit(type) {

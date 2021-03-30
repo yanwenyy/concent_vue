@@ -14,7 +14,7 @@
       :on-remove="handleRemove"
       :on-change="fileChage1"
       multiple
-      :show-file-list="true">
+      show-file-list>
       <el-button size="small" type="primary">选择文件</el-button>
     </el-upload>
     <div class="btn-group">
@@ -86,6 +86,7 @@
         handleChange(response, file, fileList){
           if (response && response.code === 200) {
             this.fileList1.push(response.data);
+            // this.$forceUpdate();
             console.log(this.fileList1)
             this.$message({
               message: '上传成功',

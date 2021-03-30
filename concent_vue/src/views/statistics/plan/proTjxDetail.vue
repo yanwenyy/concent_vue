@@ -68,7 +68,7 @@
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  <div v-if="scope.row.veditable === '1' && scope.row.venabled === '1' && p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '4' ">
+                  <div v-if="scope.row.veditable === '1' && scope.row.venabled === '1' && p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '4'&&p.actpoint!='task' ">
                     <el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')"/>
                   </div>
                   <div v-else-if="p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '4' " style="text-align: right">{{sonCount(scope.row)}}</div>

@@ -228,10 +228,6 @@
           {
             detailName:"审核驳回",
             id:'4'
-          },
-          {
-            detailName:"未创建",
-            id:''
           }
         ],
         page: { current: 1, size: 20, total: 0, records: [] },
@@ -251,7 +247,8 @@
           createTime: '',
           projectStatus: '',
           projectLocation: '',
-          planType: '3'
+          planType: '3',
+          flowStatus:''
         },
         proNameHover: false,
         projectName: '请选择项目',
@@ -335,8 +332,13 @@
       },
       // 修改
       edit() {
+        debugger;
         if (this.multipleSelection.length !== 1) {
           this.$message.info('请选择一条记录进行查看操作！')
+          return false
+        }
+        if ((this.multipleSelection[0].flowStatus!=null || this.multipleSelection[0].flowStatus!='') && (this.multipleSelection[0].flowStatus=='2'||this.multipleSelection[0].flowStatus=='3')) {
+          this.$message.info('只可以编编未创建的和草稿状态的数据！')
           return false
         }
         let planId = this.multipleSelection[0].uuid
@@ -344,10 +346,11 @@
         let projectName = this.multipleSelection[0].projectName
         let projecttypeCode = this.multipleSelection[0].projecttypeCode
         let projectId = this.multipleSelection[0].projectId
+        let createOrgCode=this.multipleSelection[0].createOrgCode
         if (planId == null || planId === '') {
           flowStatus = '1'
         }
-        let p = {actpoint: 'edit', planInfo: {planId: planId, projectName: projectName, planTypeName: '开累计划', projectStatus: flowStatus, planProjectTjx: {projectId: projectId, projecttypeCode: projecttypeCode, planType: 3}}}
+        let p = {actpoint: 'edit', planInfo: {planId: planId, projectName: projectName, planTypeName: '开累计划', projectStatus: flowStatus, planProjectTjx: {projectId: projectId, projecttypeCode: projecttypeCode, planType: 3,createOrgCode:createOrgCode}}}
         this.$router.push({
           path: './proTjxDetail/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }

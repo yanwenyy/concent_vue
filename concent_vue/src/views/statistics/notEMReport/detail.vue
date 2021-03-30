@@ -397,14 +397,14 @@
                   >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_1.industry||0)+(detailform.sumByMon_1.industryHw||0)"/>
+                    :value="(detailform.sumByMon_1.industry||0)+(detailform.sumByMon_1.overseasIndustry||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="工业总产值年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_1.industry||0)+(detailform.sumByMon_1.industryHw||0)+(detailform.sumByYear_1.industry||0)+(detailform.sumByYear_1.industryHw||0)"/>
+                    :value="(detailform.sumByMon_1.industry||0)+(detailform.sumByMon_1.overseasIndustry||0)+(detailform.sumByYear_1.industry||0)+(detailform.sumByYear_1.overseasIndustry||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="装备制造(万元):"
@@ -515,14 +515,14 @@
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_1.industryHw"/>
+                    v-model="detailform.sumByMon_1.overseasIndustry"/>
                 </el-form-item>
                 <el-form-item
                   label="工业总产值年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_1.industryHw||0)+(detailform.sumByYear_1.industryHw||0)"/>
+                    :value="(detailform.sumByMon_1.overseasIndustry||0)+(detailform.sumByYear_1.overseasIndustry||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="装备制造(万元):"
@@ -746,11 +746,11 @@
                         clearable
                         v-model="scope.row.industry"/>
                       <el-input
-                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'industryHw')"
+                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'overseasIndustry')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         clearable
-                        v-model="scope.row.industryHw"/>
+                        v-model="scope.row.overseasIndustry"/>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -850,14 +850,14 @@
                  >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_2.materialTrade||0)+(detailform.sumByMon_2.materialTradeHw||0)"/>
+                    :value="(detailform.sumByMon_2.sale||0)+(detailform.sumByMon_2.overseasSale||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="物资贸易产值年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_2.materialTrade||0)+(detailform.sumByMon_2.materialTradeHw||0)+(detailform.sumByYear_2.materialTrade||0)+(detailform.sumByYear_2.materialTradeHw||0)"/>
+                    :value="(detailform.sumByMon_2.sale||0)+(detailform.sumByMon_2.overseasSale||0)+(detailform.sumByYear_2.sale||0)+(detailform.sumByYear_2.overseasSale||0)"/>
                 </el-form-item>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境内数据: </span>
@@ -867,14 +867,14 @@
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_2.materialTrade"/>
+                    v-model="detailform.sumByMon_2.sale"/>
                 </el-form-item>
                 <el-form-item
                   label="物资贸易产值年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_2.materialTrade||0)+(detailform.sumByYear_2.materialTrade||0)"/>
+                    :value="(detailform.sumByMon_2.sale||0)+(detailform.sumByYear_2.sale||0)"/>
                 </el-form-item>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境外数据: </span>
@@ -884,14 +884,14 @@
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_2.materialTradeHw"/>
+                    v-model="detailform.sumByMon_2.overseasSale"/>
                 </el-form-item>
                 <el-form-item
                   label="物资贸易产值年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_2.materialTradeHw||0)+(detailform.sumByYear_2.materialTradeHw||0)"/>
+                    :value="(detailform.sumByMon_2.overseasSale||0)+(detailform.sumByYear_2.overseasSale||0)"/>
                 </el-form-item>
               </el-form>
             </div>
@@ -1068,17 +1068,17 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.wz_list,detailform.sumByMon_2,'materialTrade')"
+                        @input="getGyzzCz(detailform.wz_list,detailform.sumByMon_2,'sale')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         clearable
-                        v-model="scope.row.materialTrade"/>
+                        v-model="scope.row.sale"/>
                       <el-input
-                        @input="getGyzzCz(detailform.wz_list,detailform.sumByMon_2,'materialTradeHw')"
+                        @input="getGyzzCz(detailform.wz_list,detailform.sumByMon_2,'overseasSale')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         clearable
-                        v-model="scope.row.materialTradeHw"/>
+                        v-model="scope.row.overseasSale"/>
                     </template>
                   </el-table-column>
                 </el-table-column>
@@ -1107,28 +1107,28 @@
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_3.realEstateIncome||0)+(detailform.sumByMon_3.realEstateIncomeHw||0)"/>
+                    :value="(detailform.sumByMon_3.income||0)+(detailform.sumByMon_3.overseasIncome||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="房地产营业收入年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_3.realEstateIncome||0)+(detailform.sumByMon_3.realEstateIncomeHw||0)+(detailform.sumByYear_3.realEstateIncome||0)+(detailform.sumByYear_3.realEstateIncomeHw||0)"/>
+                    :value="(detailform.sumByMon_3.income||0)+(detailform.sumByMon_3.overseasIncome||0)+(detailform.sumByYear_3.income||0)+(detailform.sumByYear_3.overseasIncome||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="表内营收(万元)::"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_3.inRevenue||0)+(detailform.sumByMon_3.inRevenue||0)"/>
+                    :value="(detailform.sumByMon_3.inRevenue||0)+(detailform.sumByMon_3.inRevenueHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="表内营收年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_3.inRevenue||0)+(detailform.sumByMon_3.inRevenue||0)+(detailform.sumByYear_3.inRevenue||0)+(detailform.sumByYear_3.inRevenue||0)"/>
+                    :value="(detailform.sumByMon_3.inRevenue||0)+(detailform.sumByMon_3.inRevenueHw||0)+(detailform.sumByYear_3.inRevenue||0)+(detailform.sumByYear_3.inRevenueHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="表外权益(万元):"
@@ -1167,14 +1167,14 @@
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_3.realEstateIncome"/>
+                    v-model="detailform.sumByMon_3.income"/>
                 </el-form-item>
                 <el-form-item
                   label="房地产营业收入年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_3.realEstateIncome||0)+(detailform.sumByYear_3.realEstateIncome||0)"/>
+                    :value="(detailform.sumByMon_3.income||0)+(detailform.sumByYear_3.income||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="表内营收(万元)::"
@@ -1227,14 +1227,14 @@
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_3.realEstateIncomeHw"/>
+                    v-model="detailform.sumByMon_3.overseasIncome"/>
                 </el-form-item>
                 <el-form-item
                   label="房地产营业收入年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_3.realEstateIncomeHw||0)+(detailform.sumByYear_3.realEstateIncomeHw||0)"/>
+                    :value="(detailform.sumByMon_3.overseasIncome||0)+(detailform.sumByYear_3.overseasIncome||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="表内营收(万元)::"
@@ -1452,17 +1452,17 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'realEstateIncome')"
+                        @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'income')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         clearable
-                        v-model="scope.row.realEstateIncome"/>
+                        v-model="scope.row.income"/>
                       <el-input
-                        @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'realEstateIncomeHw')"
+                        @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'overseasIncome')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         clearable
-                        v-model="scope.row.realEstateIncomeHw"/>
+                        v-model="scope.row.overseasIncome"/>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -1563,42 +1563,42 @@
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_4.jnyl||0)+(detailform.sumByMon_4.jwyl||0)"/>
+                    :value="(detailform.sumByMon_4.finance||0)+(detailform.sumByMon_4.secure||0)+(detailform.sumByMon_4.otherFinance||0)+(detailform.sumByMon_4.overseasFinance||0)+(detailform.sumByMon_4.overseasSecure||0)+(detailform.sumByMon_4.otherFinanceHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_4.jnyl||0)+(detailform.sumByMon_4.jwyl||0)+(detailform.sumByMon_4.jnnl||0)+(detailform.sumByMon_4.jwnl||0)"/>
+                    :value="(detailform.sumByMon_4.finance||0)+(detailform.sumByMon_4.secure||0)+(detailform.sumByMon_4.otherFinance||0)+(detailform.sumByMon_4.overseasFinance||0)+(detailform.sumByMon_4.overseasSecure||0)+(detailform.sumByMon_4.otherFinanceHw||0)+(detailform.sumByYear_4.sum||0)+(detailform.sumByYear_4.overseasSum||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="金融收入(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_4.financialIncome||0)+(detailform.sumByMon_4.financialIncomeHw||0)"/>
+                    :value="(detailform.sumByMon_4.finance||0)+(detailform.sumByMon_4.overseasFinance||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="金融收入年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_4.financialIncome||0)+(detailform.sumByMon_4.financialIncomeHw||0)+(detailform.sumByYear_4.financialIncome||0)+(detailform.sumByYear_4.financialIncomeHw||0)"/>
+                    :value="(detailform.sumByMon_4.finance||0)+(detailform.sumByMon_4.overseasFinance||0)+(detailform.sumByYear_4.finance||0)+(detailform.sumByYear_4.overseasFinance||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="保险收入(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_4.insuranceIncome||0)+(detailform.sumByMon_4.insuranceIncomeHw||0)"/>
+                    :value="(detailform.sumByMon_4.secure||0)+(detailform.sumByMon_4.overseasSecure||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="保险收入年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_4.insuranceIncome||0)+(detailform.sumByMon_4.insuranceIncomeHw||0)+(detailform.sumByYear_4.insuranceIncome||0)+(detailform.sumByYear_4.insuranceIncomeHw||0)"/>
+                    :value="(detailform.sumByMon_4.secure||0)+(detailform.sumByMon_4.overseasSecure||0)+(detailform.sumByYear_4.secure||0)+(detailform.sumByYear_4.overseasSecure||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其他金融收入(万元):"
@@ -1623,42 +1623,42 @@
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_4.jnyl"/>
+                    :value="(detailform.sumByMon_4.finance||0)+(detailform.sumByMon_4.secure||0)+(detailform.sumByMon_4.otherFinance||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_4.jnyl||0)+(detailform.sumByYear_4.jnnl||0)"/>
+                    :value="(detailform.sumByMon_4.finance||0)+(detailform.sumByMon_4.secure||0)+(detailform.sumByMon_4.otherFinance||0)+(detailform.sumByYear_4.sum||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="金融收入(万元):"
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_4.financialIncome"/>
+                    v-model="detailform.sumByMon_4.finance"/>
                 </el-form-item>
                 <el-form-item
                   label="金融收入年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_4.financialIncome||0)+(detailform.sumByYear_4.financialIncome||0)"/>
+                    :value="(detailform.sumByMon_4.finance||0)+(detailform.sumByYear_4.finance||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="保险收入(万元):"
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_4.insuranceIncome"/>
+                    v-model="detailform.sumByMon_4.secure"/>
                 </el-form-item>
                 <el-form-item
                   label="保险收入年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_4.insuranceIncome||0)+(detailform.sumByYear_4.insuranceIncome||0)"/>
+                    :value="(detailform.sumByMon_4.secure||0)+(detailform.sumByYear_4.secure||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其他金融收入(万元):"
@@ -1683,42 +1683,42 @@
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_4.jwyl"/>
+                    :value="(detailform.sumByMon_4.overseasFinance||0)+(detailform.sumByMon_4.overseasSecure||0)+(detailform.sumByMon_4.otherFinanceHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_4.jwyl||0)+(detailform.sumByYear_4.jwnl||0)"/>
+                    :value="(detailform.sumByMon_4.overseasFinance||0)+(detailform.sumByMon_4.overseasSecure||0)+(detailform.sumByMon_4.otherFinanceHw||0)+(detailform.sumByYear_4.overseasSum||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="金融收入(万元):"
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_4.financialIncomeHw"/>
+                    v-model="detailform.sumByMon_4.overseasFinance"/>
                 </el-form-item>
                 <el-form-item
                   label="金融收入年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_4.financialIncomeHw||0)+(detailform.sumByYear_4.financialIncomeHw||0)"/>
+                    :value="(detailform.sumByMon_4.overseasFinance||0)+(detailform.sumByYear_4.overseasFinance||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="保险收入(万元):"
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_4.insuranceIncomeHw"/>
+                    v-model="detailform.sumByMon_4.overseasSecure"/>
                 </el-form-item>
                 <el-form-item
                   label="保险收入年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_4.insuranceIncomeHw||0)+(detailform.sumByYear_4.insuranceIncomeHw||0)"/>
+                    :value="(detailform.sumByMon_4.overseasSecure||0)+(detailform.sumByYear_4.overseasSecure||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其他金融收入(万元):"
@@ -1899,17 +1899,17 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'financialIncome')"
+                        @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'finance')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         clearable
-                        v-model="scope.row.financialIncome"/>
+                        v-model="scope.row.finance"/>
                       <el-input
-                        @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'financialIncomeHw')"
+                        @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'overseasFinance')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         clearable
-                        v-model="scope.row.financialIncomeHw"/>
+                        v-model="scope.row.overseasFinance"/>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -1923,17 +1923,17 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'insuranceIncome')"
+                        @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'secure')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         clearable
-                        v-model="scope.row.insuranceIncome"/>
+                        v-model="scope.row.secure"/>
                       <el-input
-                        @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'insuranceIncomeHw')"
+                        @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'overseasSecure')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         clearable
-                        v-model="scope.row.insuranceIncomeHw"/>
+                        v-model="scope.row.overseasSecure"/>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -1986,14 +1986,14 @@
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_5.jnyl||0)+(detailform.sumByMon_5.jwyl||0)"/>
+                    :value="(detailform.sumByMon_5.engineeringOperation||0)+(detailform.sumByMon_5.informationOperation||0)+(detailform.sumByMon_5.estateManagement||0)+(detailform.sumByMon_5.otherOperation||0)+(detailform.sumByMon_5.engineeringOperationHw||0)+(detailform.sumByMon_5.informationOperationHw||0)+(detailform.sumByMon_5.estateManagementHw||0)+(detailform.sumByMon_5.overseasOtherOperation||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_5.jnyl||0)+(detailform.sumByMon_5.jwyl||0)+(detailform.sumByYear_5.jnnl||0)+(detailform.sumByYear_5.jwnl||0)"/>
+                    :value="(detailform.sumByMon_5.engineeringOperation||0)+(detailform.sumByMon_5.informationOperation||0)+(detailform.sumByMon_5.estateManagement||0)+(detailform.sumByMon_5.otherOperation||0)+(detailform.sumByMon_5.engineeringOperationHw||0)+(detailform.sumByMon_5.informationOperationHw||0)+(detailform.sumByMon_5.estateManagementHw||0)+(detailform.sumByMon_5.overseasOtherOperation||0)+(detailform.sumByYear_5.sum||0)+(detailform.sumByYear_5.overseasSum||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="工程运营维管(万元):"
@@ -2060,14 +2060,14 @@
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_5.jnyl"/>
+                    :value="(detailform.sumByMon_5.engineeringOperation||0)+(detailform.sumByMon_5.informationOperation||0)+(detailform.sumByMon_5.estateManagement||0)+(detailform.sumByMon_5.otherOperation||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_5.jnyl||0)+(detailform.sumByYear_5.jnnl||0)"/>
+                    :value="(detailform.sumByMon_5.engineeringOperation||0)+(detailform.sumByMon_5.informationOperation||0)+(detailform.sumByMon_5.estateManagement||0)+(detailform.sumByMon_5.otherOperation||0)+(detailform.sumByYear_5.sum||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="工程运营维管(万元):"
@@ -2134,14 +2134,14 @@
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_5.jwyl"/>
+                    :value="(detailform.sumByMon_5.engineeringOperationHw||0)+(detailform.sumByMon_5.informationOperationHw||0)+(detailform.sumByMon_5.estateManagementHw||0)+(detailform.sumByMon_5.overseasOtherOperation||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_5.jwyl||0)+(detailform.sumByYear_5.jwnl||0)"/>
+                    :value="(detailform.sumByMon_5.overseasSum||0)+(detailform.sumByYear_5.overseasSum||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="工程运营维管(万元):"
@@ -2474,14 +2474,14 @@
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_6.jnyl||0)+(detailform.sumByMon_6.jwyl||0)"/>
+                    :value="(detailform.sumByMon_6.equipmentLeasing||0)+(detailform.sumByMon_6.leaseHouses||0)+(detailform.sumByMon_6.transportation||0)+(detailform.sumByMon_6.accommodationCatering||0)+(detailform.sumByMon_6.educationTraining||0)+(detailform.sumByMon_6.informationConstruction||0)+(detailform.sumByMon_6.otherProject||0)+(detailform.sumByMon_6.equipmentLeasingHw||0)+(detailform.sumByMon_6.leaseHousesHw||0)+(detailform.sumByMon_6.transportationHw||0)+(detailform.sumByMon_6.accommodationCateringHw||0)+(detailform.sumByMon_6.educationTrainingHw||0)+(detailform.sumByMon_6.informationConstructionHw||0)+(detailform.sumByMon_6.otherProjectHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_6.jnyl||0)+(detailform.sumByMon_6.jwyl||0)+(detailform.sumByYear_6.jnnl||0)+(detailform.sumByYear_6.jwnl||0)"/>
+                    :value="(detailform.sumByMon_6.equipmentLeasing||0)+(detailform.sumByMon_6.leaseHouses||0)+(detailform.sumByMon_6.transportation||0)+(detailform.sumByMon_6.accommodationCatering||0)+(detailform.sumByMon_6.educationTraining||0)+(detailform.sumByMon_6.informationConstruction||0)+(detailform.sumByMon_6.otherProject||0)+(detailform.sumByMon_6.equipmentLeasingHw||0)+(detailform.sumByMon_6.leaseHousesHw||0)+(detailform.sumByMon_6.transportationHw||0)+(detailform.sumByMon_6.accommodationCateringHw||0)+(detailform.sumByMon_6.educationTrainingHw||0)+(detailform.sumByMon_6.informationConstructionHw||0)+(detailform.sumByMon_6.otherProjectHw||0)+(detailform.sumByYear_6.sum||0)+(detailform.sumByYear_6.overseasSum||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="设备租赁(万元):"
@@ -2572,14 +2572,14 @@
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_6.other||0)+(detailform.sumByMon_6.otherHw||0)"/>
+                    :value="(detailform.sumByMon_6.otherProject||0)+(detailform.sumByMon_6.otherProjectHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其它项目年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_6.other||0)+(detailform.sumByMon_6.otherHw||0)+(detailform.sumByYear_6.other||0)+(detailform.sumByYear_6.otherHw||0)"/>
+                    :value="(detailform.sumByMon_6.otherProject||0)+(detailform.sumByMon_6.otherProjectHw||0)+(detailform.sumByYear_6.otherProject||0)+(detailform.sumByYear_6.otherProjectHw||0)"/>
                 </el-form-item>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境内数据: </span>
@@ -2589,14 +2589,14 @@
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_6.jnyl"/>
+                    :value="(detailform.sumByMon_6.equipmentLeasing||0)+(detailform.sumByMon_6.leaseHouses||0)+(detailform.sumByMon_6.transportation||0)+(detailform.sumByMon_6.accommodationCatering||0)+(detailform.sumByMon_6.educationTraining||0)+(detailform.sumByMon_6.informationConstruction||0)+(detailform.sumByMon_6.otherProject||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_6.jnyl||0)+(detailform.sumByYear_6.jnnl||0)"/>
+                    :value="(detailform.sumByMon_6.equipmentLeasing||0)+(detailform.sumByMon_6.leaseHouses||0)+(detailform.sumByMon_6.transportation||0)+(detailform.sumByMon_6.accommodationCatering||0)+(detailform.sumByMon_6.educationTraining||0)+(detailform.sumByMon_6.informationConstruction||0)+(detailform.sumByMon_6.otherProject||0)+(detailform.sumByYear_6.sum||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="设备租赁(万元):"
@@ -2687,14 +2687,14 @@
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_6.other"/>
+                    v-model="detailform.sumByMon_6.otherProject"/>
                 </el-form-item>
                 <el-form-item
                   label="其它项目年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_6.other||0)+(detailform.sumByYear_6.other||0)"/>
+                    :value="(detailform.sumByMon_6.otherProject||0)+(detailform.sumByYear_6.otherProject||0)"/>
                 </el-form-item>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境外数据: </span>
@@ -2704,14 +2704,14 @@
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_6.jwyl"/>
+                    :value="(detailform.sumByMon_6.equipmentLeasingHw||0)+(detailform.sumByMon_6.leaseHousesHw||0)+(detailform.sumByMon_6.transportationHw||0)+(detailform.sumByMon_6.accommodationCateringHw||0)+(detailform.sumByMon_6.educationTrainingHw||0)+(detailform.sumByMon_6.informationConstructionHw||0)+(detailform.sumByMon_6.otherProjectHw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="合计年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_6.jwyl||0)+(detailform.sumByYear_6.jwnl||0)"/>
+                    :value="(detailform.sumByMon_6.overseasSum||0)+(detailform.sumByYear_6.overseasSum||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="设备租赁(万元):"
@@ -2802,14 +2802,14 @@
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_6.otherHw"/>
+                    v-model="detailform.sumByMon_6.otherProjectHw"/>
                 </el-form-item>
                 <el-form-item
                   label="其它项目年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_6.otherHw||0)+(detailform.sumByYear_6.otherHw||0)"/>
+                    :value="(detailform.sumByMon_6.otherProjectHw||0)+(detailform.sumByYear_6.otherProjectHw||0)"/>
                 </el-form-item>
               </el-form>
             </div>
@@ -3120,17 +3120,17 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'other')"
+                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'otherProject')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         clearable
-                        v-model="scope.row.other"/>
+                        v-model="scope.row.otherProject"/>
                       <el-input
-                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'otherHw')"
+                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'otherProjectHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         clearable
-                        v-model="scope.row.otherHw"/>
+                        v-model="scope.row.otherProjectHw"/>
                     </template>
                   </el-table-column>
                 </el-table-column>
@@ -3371,6 +3371,7 @@
       },
       //查询
       searchDate(type,name){
+        this.searchform[type].reportDate=this.p.reportDate;
         this.$http
           .post(
             '/api/statistics/unProjectReport/list/detail/queryInfo',
