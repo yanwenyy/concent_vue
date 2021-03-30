@@ -147,7 +147,7 @@
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  <el-button type="text" :disabled="scope.row.reCall==false" @click="withdraw(scope.row)">撤回</el-button>
+                  <el-button type="text" :disabled="scope.row.reCall==false" @click.stop="withdraw(scope.row)">撤回</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -193,6 +193,12 @@
           url='/api/statistics/StatisticsProject/process/recall'
         }else  if(val.businessType=='project_project_change'){
           url='/api/statistics/StatisticsProject/changeProcess/recall'
+        }else  if(val.businessType=='project_plan'){
+          url='/api/statistics/planPrjTjxDetail/process/recall'
+        }else  if(val.businessType=='emr_valuation'){
+          url='/api/statistics/Projectcheck/process/recall'
+        }else  if(val.businessType=='engineering_monthly_report'){
+          url='/api/statistics/projectMonthlyReport/Projectreport/process/recall'
         }
         this.$http
           .post(
