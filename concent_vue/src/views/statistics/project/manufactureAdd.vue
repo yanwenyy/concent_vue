@@ -726,6 +726,7 @@
               {
                 path: '',
                 placeId: '',
+                ffid:'',
                 uuid: ''
               }
             ]
@@ -839,9 +840,9 @@
       // 获取项目地点的值
       getPositionTree(data) {
         this.treeStatas = false
-        //this.detailForm.project.supplierAddress = data.fullDetailName
         this.detailForm.project.topInfoSiteList[0].placeId = data.id
         this.detailForm.project.topInfoSiteList[0].path = data.fullDetailName
+        this.detailForm.project.topInfoSiteList[0].ffid = data.fullDetailCode
       },
       getName(id, list, name) {
         if (id) {

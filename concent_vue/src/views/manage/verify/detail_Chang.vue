@@ -2262,9 +2262,6 @@ export default {
 >>>.el-form-item__label{
   width: auto;
 }
->>>.el-upload-list{
-  display: none;
-}
 .uploadSpan{
   font-size: 16px;
   color: #303133;

@@ -233,6 +233,35 @@
             </div>
           </template>
         </el-table-column>
+        <el-table-column
+          :width="100"
+          align="center"
+          label="状态"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+            <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'未创建'}}
+            </div>
+          </template>
+          <template slot="header" slot-scope="scope">
+            <span>状态</span>
+            <div>
+              <el-select
+                filterable
+                clearable
+                size="mini"
+                @change="searchformSubmit"
+                placeholder="请选择"
+                v-model="searchform.flowStatus">
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in flowStatus"/>
+              </el-select>
+            </div>
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         :current-page="page.current"
@@ -259,6 +288,24 @@
         projectTypeTwo: [], // 工程类别(二级)
         arrYear: [],
         currentYears: [],
+        flowStatus:[
+          {
+            detailName:"草稿",
+            id:'1'
+          },
+          {
+            detailName:"审核中",
+            id:'2'
+          },
+          {
+            detailName:"审核通过",
+            id:'3'
+          },
+          {
+            detailName:"审核驳回",
+            id:'4'
+          }
+        ],
         selectYears: [],
         arrMonth: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         currentMonths: [],
@@ -282,7 +329,8 @@
           projectLocation: '',
           planType: '1',
           planYear:'',
-          planMonth:''
+          planMonth:'',
+          flowStatus:''
         },
         proNameHover: false,
         projectName: '请选择项目',
@@ -373,6 +421,10 @@
           this.$message.info('请选择一条记录进行查看操作！')
           return false
         }
+        if ((this.multipleSelection[0].flowStatus!=null || this.multipleSelection[0].flowStatus!='') && (this.multipleSelection[0].flowStatus=='2'||this.multipleSelection[0].flowStatus=='3')) {
+          this.$message.info('只可以编编未创建的和草稿状态的数据！')
+          return false
+        }
         var currentYear = this.currentYears[this.multipleSelection[0].index]
         this.selectYears.forEach((item) => {
           if (this.multipleSelection[0].projectId === item.projectId) {
@@ -390,10 +442,11 @@
         let projectName = this.multipleSelection[0].projectName
         let projecttypeCode = this.multipleSelection[0].projecttypeCode
         let projectId = this.multipleSelection[0].projectId
+        let createOrgCode=this.multipleSelection[0].createOrgCode
         if (planId == null || planId === '') {
           flowStatus = '1'
         }
-        let p = {actpoint: 'edit', planInfo: {planId: planId, projectName: projectName, planTypeName: '月计划', projectStatus: flowStatus, planProjectTjx: {projectId: projectId, planYear: currentYear, planMonth: currentMonth, planType: 1, projecttypeCode: projecttypeCode}}}
+        let p = {actpoint: 'edit', planInfo: {planId: planId, projectName: projectName, planTypeName: '月计划', projectStatus: flowStatus, planProjectTjx: {projectId: projectId, planYear: currentYear, planMonth: currentMonth, planType: 1, projecttypeCode: projecttypeCode,createOrgCode:createOrgCode}}}
         this.$router.push({
           path: './proTjxDetail/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }

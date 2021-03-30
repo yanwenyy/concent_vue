@@ -3371,6 +3371,7 @@
       },
       //查询
       searchDate(type,name){
+        this.searchform[type].reportDate=this.p.reportDate;
         this.$http
           .post(
             '/api/statistics/unProjectReport/list/detail/queryInfo',

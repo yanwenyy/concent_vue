@@ -14,7 +14,7 @@
       :on-remove="handleRemove"
       :on-change="fileChage1"
       multiple
-      :show-file-list="true">
+      show-file-list>
       <el-button size="small" type="primary">选择文件</el-button>
     </el-upload>
     <div class="btn-group">
