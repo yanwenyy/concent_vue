@@ -1790,6 +1790,26 @@ export default {
             }
 
           ]
+        },
+        {
+          'name': '数据迁移',
+          'path': '/dataMigration',
+          'component': '/router',
+          'iconCls': 'el-icon-printer',
+          'menushow': true,
+          'leaf': false,
+          'defaultpage': false,
+          'children': [
+            {
+              'name': '数据迁移查询',
+              'path': '/dataMigration/data/list',
+              'component': '/dataMigration/data/list',
+              'iconCls': 'el-icon-edit',
+              'menushow': true,
+              'leaf': true,
+              'defaultpage': true
+            }
+          ]
         }
       ]
     }
