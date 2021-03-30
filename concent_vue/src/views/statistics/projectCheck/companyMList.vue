@@ -304,10 +304,6 @@
           {
             detailName:"审核驳回",
             id:'4'
-          },
-          {
-            detailName:"未创建",
-            id:''
           }
         ],
         flowStatusNameList:[
