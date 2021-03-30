@@ -1297,70 +1297,72 @@ export default {
         }
       });
     },
-    handleRemove(file,index) {
-      this.$http
-        .post(
-          "/api/contract/topInfo/CommonFiles/list/delete",
-          {ids:[file.uuid]},
-        )
-        .then((res) => {
-          if (res.data.code === 200) {
-            this.detailform.commonFilesList.splice(index,1);
-          }
-
-        });
-      console.log(this.detailform.commonFilesList)
-    },
+    // handleRemove(file,index) {
+    //   this.$http
+    //     .post(
+    //       "/api/contract/topInfo/CommonFiles/list/delete",
+    //       {ids:[file.uuid]},
+    //     )
+    //     .then((res) => {
+    //       if (res.data.code === 200) {
+    //         this.detailform.commonFilesList.splice(index,1);
+    //       }
+    //
+    //     });
+    //   console.log(this.detailform.commonFilesList)
+    // },
     //上传附件
-    handleChange(response, file, fileList){
-      if (response && response.code === 200) {
-        this.$message({
-          message: '上传成功',
-          type: 'success',
-          duration: 1500,
-          onClose: () => {
-            console.log(response.data)
-            console.log( JSON.stringify(this.detailform.commonFilesList))
-            console.log( JSON.stringify(this.detailform))
-            if(response.data.uuid!=null) {
-              //var list =[];
-              //this.detailform.commonFilesList = list;
-              var commonFile = {
+    // handleChange(response, file, fileList){
+    //   if (response && response.code === 200) {
+    //     this.$message({
+    //       message: '上传成功',
+    //       type: 'success',
+    //       duration: 1500,
+    //       onClose: () => {
+    //         console.log(response.data)
+    //         console.log( JSON.stringify(this.detailform.commonFilesList))
+    //         console.log( JSON.stringify(this.detailform))
+    //         if(response.data.uuid!=null) {
+    //           //var list =[];
+    //           //this.detailform.commonFilesList = list;
+    //           var commonFile = {
+    //
+    //             uuid: response.data.uuid,
+    //             businessId: response.data.businessId,
+    //             businessType: response.data.businessType,
+    //             businessCode: response.data.businessCode,
+    //             fileName: response.data.fileName,
+    //             fileType: response.data.fileType,
+    //             fileSize: response.data.fileSize,
+    //             filePath: response.data.filePath,
+    //             remarks: response.data.remarks,
+    //             createTime: response.data.createTime,
+    //             createUserId: response.data.createUserId,
+    //             createUserName: response.data.createUserName,
+    //             createOrgId: response.data.createOrgId,
+    //             createOrgName: response.data.createOrgName
+    //           }
+    //           if(this.detailform.commonFilesList==null)
+    //           {
+    //             var list =[];
+    //             list.push(commonFile);
+    //             this.detailform.commonFilesList = list;
+    //           }else {
+    //             this.detailform.commonFilesList.push(commonFile);
+    //           }
+    //           // this.detailform.commonFilesList.push(commonFile);
+    //         }
+    //
+    //         //this.detailform.commonFilesList.push(response.data);
+    //         console.log( JSON.stringify(this.detailform.commonFilesList))
+    //       }
+    //     })
+    //   } else {
+    //     this.$message.error(response.msg)
+    //   }
+    // },
 
-                uuid: response.data.uuid,
-                businessId: response.data.businessId,
-                businessType: response.data.businessType,
-                businessCode: response.data.businessCode,
-                fileName: response.data.fileName,
-                fileType: response.data.fileType,
-                fileSize: response.data.fileSize,
-                filePath: response.data.filePath,
-                remarks: response.data.remarks,
-                createTime: response.data.createTime,
-                createUserId: response.data.createUserId,
-                createUserName: response.data.createUserName,
-                createOrgId: response.data.createOrgId,
-                createOrgName: response.data.createOrgName
-              }
-              if(this.detailform.commonFilesList==null)
-              {
-                var list =[];
-                list.push(commonFile);
-                this.detailform.commonFilesList = list;
-              }else {
-                this.detailform.commonFilesList.push(commonFile);
-              }
-              // this.detailform.commonFilesList.push(commonFile);
-            }
 
-            //this.detailform.commonFilesList.push(response.data);
-            console.log( JSON.stringify(this.detailform.commonFilesList))
-          }
-        })
-      } else {
-        this.$message.error(response.msg)
-      }
-    },
     // sure() {
     //   console.log(this.sizeform)
     //   this.$refs['sizeform'].validate(valid => {
@@ -1622,9 +1624,9 @@ export default {
 >>>.el-form-item__label{
   width: auto;
 }
->>>.el-upload-list{
-  display: none;
-}
+/*>>>.el-upload-list{*/
+  /*display: none;*/
+/*}*/
 .uploadSpan{
   font-size: 16px;
   color: #303133;

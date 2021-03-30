@@ -117,7 +117,7 @@
                     >
                       <template slot-scope="scope">
                        <!-- <div>{{scope.row.monthValue}}</div>-->
-                        <div v-if="scope.row.veditable == '1' && isCk!='1' ">
+                        <div v-if="scope.row.veditable == '1' && isCk!='1'&&p.actpoint!='task'">
                           <el-input v-model="scope.row.monthValue" @input="scope.row.value = scope.row.monthValue.replace(/[^\-?\d.]/g,'','')" @blur="getYear(data,scope.$index,scope.row.sumTarget)"/>
                         </div>
 
@@ -520,7 +520,12 @@
 
     },
     mounted() {
-      this.getData()
+      this.getData();
+      if(this.p.actpoint=='task'){
+        this.activeName='cwjswgcl'
+      }else{
+        this.activeName='ztjd'
+      }
     }
   }
 </script>

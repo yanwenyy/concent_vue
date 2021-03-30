@@ -177,7 +177,7 @@
                      show-overflow-tooltip
                    >
                      <template slot-scope="scope">
-                       <div v-if="scope.row.veditable == '1' && isCk!='1' ">
+                       <div v-if="scope.row.veditable == '1' && isCk!='1'&&p.actpoint!='task' ">
                          <el-input v-model="scope.row.valuationFee" @input="scope.row.value = scope.row.valuationFee.replace(/[^\-?\d.]/g,'','')" @blur="getYear(data,scope.$index,scope.row.sumTarget)"/>
                        </div>
                        <div  v-if="scope.row.veditable != '1'">{{scope.row.valuationFee}}</div>
@@ -190,7 +190,7 @@
                      show-overflow-tooltip
                    >
                  <template slot-scope="scope">
-                   <div v-if="scope.row.veditable == '1' && isCk!='1' ">
+                   <div v-if="scope.row.veditable == '1' && isCk!='1' &&p.actpoint!='task'">
                      <el-input v-model="scope.row.taxFee"  @input="scope.row.value = scope.row.taxFee.replace(/[^\-?\d.]/g,'','')" @blur="getYearSe(data,scope.$index,scope.row.sumTarget)"/>
                    </div>
                    <div  v-if="scope.row.veditable != '1'">{{scope.row.taxFee}}</div>
