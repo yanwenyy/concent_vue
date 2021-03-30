@@ -2,13 +2,10 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary">项目前期信息</el-button>
-        <el-button @click="totop" plain type="primary">资审信息</el-button>
-        <el-button @click="remove" type="primary" plain>投标信息</el-button>
-        <el-button @click="searchformReset" type="primary" plain>合同信息</el-button>
-        <el-button @click="searchformReset" type="primary" plain>计统项目信息</el-button>
-        <el-button @click="searchformReset" type="primary" plain>非工程月报</el-button>
-
+       <!-- <el-button @click="add" plain type="primary">新增</el-button>
+        <el-button @click="totop" plain type="primary">修改</el-button>
+        <el-button @click="remove" type="primary" plain>删除</el-button>-->
+        <!-- <el-button @click="searchformReset" type="primary" plain>刷新</el-button> -->
       </el-button-group>
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
@@ -32,13 +29,11 @@
       >
         <el-table-column
           :width="50"
-          fixed="left"
           align="center"
           show-overflow-tooltip
           type="selection"
         ></el-table-column>
         <el-table-column
-          fixed="left"
           :width="70"
           align="center"
           label="序号"
@@ -48,7 +43,7 @@
 
         <el-table-column
           :width="300"
-          label="数据主表名称"
+          label="数据表名称"
           prop="reportName"
         >
           <template slot="header" slot-scope="scope">
@@ -65,68 +60,114 @@
         </el-table-column>
 
         <el-table-column
-        :width="150"
-        label="数据类型"
-        prop="reportName"
-      >
-        <template slot="header" slot-scope="scope">
-          <span>数据类型</span>
-          <div>
-            <el-input
-              class="list-search-picker"
-              style=" width: 100%"
-              v-model="searchform.reportName"
-              size="mini"
-            />
-          </div>
-        </template>
-      </el-table-column>
-
-        <el-table-column
-          :width="260"
-          label="迁移开始时间"
+          :width="300"
+          label="原系统数据表名称"
           prop="reportName"
         >
           <template slot="header" slot-scope="scope">
-            <span>迁移开始时间</span>
+            <span>原系统数据表名称</span>
             <div>
-              <el-date-picker
+              <el-input
+                class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchform.endTime"
+                v-model="searchform.reportName"
                 size="mini"
-                value-format="timestamp"
-              >
-              </el-date-picker>
+              />
             </div>
           </template>
         </el-table-column>
 
         <el-table-column
-          :width="260"
-          label="迁移结束时间"
+          :width="150"
+          label="总数据量"
           prop="reportName"
         >
           <template slot="header" slot-scope="scope">
-            <span>迁移结束时间</span>
+            <span>总数据量</span>
             <div>
-              <el-date-picker
+              <el-input
+                class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchform.endTime"
+                v-model="searchform.reportName"
                 size="mini"
-                value-format="timestamp"
-              >
-              </el-date-picker>
+              />
             </div>
           </template>
         </el-table-column>
+
         <el-table-column
-          label="操作"
-          fixed="right"
-          :width="150">
-          <template slot-scope="scope">
-            <el-button @click="lookInfo(scope.row)" type="text">查看</el-button>
+          :width="150"
+          label="新增数据量"
+          prop="reportName"
+        >
+          <template slot="header" slot-scope="scope">
+            <span>新增数据量</span>
+            <div>
+              <el-input
+                class="list-search-picker"
+                style=" width: 100%"
+                v-model="searchform.reportName"
+                size="mini"
+              />
+            </div>
           </template>
         </el-table-column>
+
+        <el-table-column
+          :width="150"
+          label="更新数据量"
+          prop="reportName"
+        >
+          <template slot="header" slot-scope="scope">
+            <span>更新数据量</span>
+            <div>
+              <el-input
+                class="list-search-picker"
+                style=" width: 100%"
+                v-model="searchform.reportName"
+                size="mini"
+              />
+            </div>
+          </template>
+        </el-table-column>
+
+        <el-table-column
+          :width="150"
+          label="失败数据量"
+          prop="reportName"
+        >
+          <template slot="header" slot-scope="scope">
+            <span>失败数据量</span>
+            <div>
+              <el-input
+                class="list-search-picker"
+                style=" width: 100%"
+                v-model="searchform.reportName"
+                size="mini"
+              />
+            </div>
+          </template>
+        </el-table-column>
+
+        <el-table-column
+          :width="150"
+          label="备注"
+          prop="reportName"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>备注</span>
+            <div>
+              <el-input
+                class="list-search-picker"
+                style=" width: 100%"
+                v-model="searchform.reportName"
+                size="mini"
+              />
+            </div>
+          </template>
+        </el-table-column>
+
       </el-table>
     </div>
     <el-pagination
@@ -414,11 +455,22 @@
         },
         // 查看
         rowshow(row) {
-            let p = {actpoint: "look", instid: row.topOrgId};
-            this.$router.push({
-                path: "./listchild/",
-                query: {p: this.$utils.encrypt(JSON.stringify(p))},
-            });
+            this.type='look';
+            this.$http
+                .post("/api/contract/ReportManage/detail/entityInfo", {
+                    id: row.uuid,
+                })
+                .then((res) => {
+                    var datas = res.data.data;
+                    this.form.reportName = datas.reportName;
+                    this.form.reportType = datas.reportType;
+                    // this.form.reportHeyComb = datas.reportHeyComb;
+                    this.form.reportHeyCombId = datas.reportHeyCombId;
+                    this.form.enableStatus = datas.enableStatus;
+                    this.form.reportSort = datas.reportSort;
+                    this.dialogResult = true;
+                    this.form.reportHeyComb=datas.reportHierarchyId?datas.reportHierarchyId.split(","):[];
+                });
         },
         // 删除
         remove() {
@@ -464,8 +516,7 @@
           path: "./detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
-      },
-        // list通用方法开始
+      }, // list通用方法开始
       handleSizeChange(val) {
         this.searchform.size = val;
         this.getData();
@@ -499,17 +550,11 @@
       handleSelectionChange(val) {
         this.multipleSelection = val;
       },
-        //查看子表列表信息
-        lookInfo(row){
-            this.$router.push({
-                path: "./listchild/",
-            });
-        },
       // 查询
       getData() {
         this.$http
           .post(
-            "/api/contract/ReportManage/list/loadPageData",
+            //"/api/contract/ReportManage/list/loadPageData",
             this.searchform
           )
           .then((res) => {
