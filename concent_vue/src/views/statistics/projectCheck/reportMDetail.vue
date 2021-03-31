@@ -8,310 +8,309 @@
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
       <el-button  @click="back" type="primary"  class="detailbutton detail-back-tab " plain>返回</el-button>
      <el-tabs type="border-card" v-model="activeName">
-     <el-tab-pane label="整体进度" v-if="dataReport.status==1" name="ztjd">
-          <div class="detailBox">
-            <el-form
-              :inline="false"
-              :model="dataReport"
-              class="gcform"
-            >
-              <el-form-item
-                label="报表年月:"
-              ><el-input v-model="dataReport.yearDateS" disabled ></el-input>
-              </el-form-item>
-              <el-form-item
-                label="所属单位:"
-              ><el-input v-model="dataReport.createOrgName" disabled></el-input>
-              </el-form-item>
-              <el-form-item
-                  label="项目名称:"
-                ><el-input v-model="dataReport.reportProjectName" disabled></el-input>
-                </el-form-item>
-              <div>
-              <el-form-item
-                label="本月备注:"
-              ><el-input  :disabled="isCk=='1'||p.actpoint=='task'" v-model="dataReport.thisPlan" type="textarea" ></el-input>
-              </el-form-item>
-              </div>
-                <!--<div>
-                <el-form-item
-                  label="完成情况:"
-                ><el-input :disabled="isCk=='1'" v-model="dataReport.finishedPlan" type="textarea" ></el-input>
-                </el-form-item>
-                </div>-->
-                 <div>
-                 <el-form-item
-                  label="上月备注:"
-                ><el-input :disabled="isCk=='1'||p.actpoint=='task'" v-model="dataReport.nextPlan" type="textarea" ></el-input>
-                </el-form-item>
-                </div>
-              <p>
-                <span>上传附件: </span>
-                <el-button
-                  v-if="isCk!='1'&&p.actpoint!=='task'"
-                  class="detatil-flie-btn"
-                  size="small"
-                  type="primary"
-                  @click="openFileUp('/api/statistics/projectCheck/CommonFiles/projectCheck/01/uploadFile','fileList')">
-                  点击上传
-                </el-button>
-              </p>
-              <el-table
-                :data="commonFilesList"
-                :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
-                @selection-change="handleSelectionChange"
-                align="center"
-                border
-                class="detailTable"
-                ref="table"
-                style="width: 100%;height: auto;"
-              >
-                <el-table-column
-                  :width="55"
-                  align="center"
-                  label="序号"
-                  show-overflow-tooltip
-                  type="index"
-                ></el-table-column>
-                <el-table-column align="center"  :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column align="center" width="200" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip>
-                  <template slot-scope="scope">
-                    {{(scope.row.fileSize/1024).toFixed(2)}}
-                  </template>
-                </el-table-column>
-                <el-table-column align="center" width="100" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
-
-                </el-table-column>
-
-                <el-table-column
-                  align="center"
-                  :resizable="false"
-                  fixed="right"
-                  label="操作"
-                  show-overflow-tooltip
-                  width="80"
+         <el-tab-pane label="整体进度" v-if="dataReport.status==1" name="ztjd">
+              <div class="detailBox">
+                <el-form
+                  :inline="false"
+                  :model="dataReport"
+                  class="gcform"
                 >
-                  <template slot-scope="scope">
-                    <el-link :underline="false" @click="handleRemove1(scope.row,scope.$index)" type="warning">删除</el-link>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </el-form>
-              </div>
-           </el-tab-pane>
-         <el-tab-pane label="产值(验工计价)" name="cwjswgcl">
-            <div class="detailBoxBG">
-             <el-table
-                    class="tableStyle"
-                    :max-height="$tableHeight"
-                    :height="$tableHeight"
-                    :data="data"
-                    :key="key"
-                    :header-cell-style="{
-                      'text-align': 'center',
-                      'background-color': 'whitesmoke'
-                    }"
+                  <el-form-item
+                    label="报表年月:"
+                  ><el-input v-model="dataReport.yearDateS" disabled ></el-input>
+                  </el-form-item>
+                  <el-form-item
+                    label="所属单位:"
+                  ><el-input v-model="dataReport.createOrgName" disabled></el-input>
+                  </el-form-item>
+                  <el-form-item
+                      label="项目名称:"
+                    ><el-input v-model="dataReport.reportProjectName" disabled></el-input>
+                    </el-form-item>
+                  <div>
+                  <el-form-item
+                    label="本月备注:"
+                  ><el-input  :disabled="isCk=='1'||p.actpoint=='task'" v-model="dataReport.thisPlan" type="textarea" ></el-input>
+                  </el-form-item>
+                  </div>
+                    <!--<div>
+                    <el-form-item
+                      label="完成情况:"
+                    ><el-input :disabled="isCk=='1'" v-model="dataReport.finishedPlan" type="textarea" ></el-input>
+                    </el-form-item>
+                    </div>-->
+                     <div>
+                     <el-form-item
+                      label="上月备注:"
+                    ><el-input :disabled="isCk=='1'||p.actpoint=='task'" v-model="dataReport.nextPlan" type="textarea" ></el-input>
+                    </el-form-item>
+                    </div>
+                  <p>
+                    <span>上传附件: </span>
+                    <el-button
+                      v-if="isCk!='1'&&p.actpoint!=='task'"
+                      class="detatil-flie-btn"
+                      size="small"
+                      type="primary"
+                      @click="openFileUp('/api/statistics/projectCheck/CommonFiles/projectCheck/01/uploadFile','fileList')">
+                      点击上传
+                    </el-button>
+                  </p>
+                  <el-table
+                    :data="commonFilesList"
+                    :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+                    @selection-change="handleSelectionChange"
+                    align="center"
                     border
-                    highlight-current-row
+                    class="detailTable"
                     ref="table"
-                    style="width: 100%"
-
-                    tooltip-effect="dark"
+                    style="width: 100%;height: auto;"
                   >
                     <el-table-column
-                      :width="50"
+                      :width="55"
                       align="center"
                       label="序号"
                       show-overflow-tooltip
                       type="index"
                     ></el-table-column>
-                    <el-table-column
-                      :width="250"
-                      align="left"
-                      label="统计项名称"
-                      show-overflow-tooltip
-                    >
+                    <el-table-column align="center"  :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+
+                    </el-table-column>
+
+                    <el-table-column align="center" width="200" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip>
                       <template slot-scope="scope">
-                        <div :class="vnameMarginLeft(scope.row.tjxCode,scope.row.veditable)">{{scope.row.tjxName}}</div>
-<!--                        <div :class="scope.row.tjxCode.length>3&&scope.row.tjxCode.length<6?'':''">{{scope.row.tjxName}}</div>-->
+                        {{(scope.row.fileSize/1024).toFixed(2)}}
                       </template>
                     </el-table-column>
+                    <el-table-column align="center" width="100" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+
+                    </el-table-column>
+
                     <el-table-column
-                      :width="90"
                       align="center"
-                      prop="jldw"
-                      label="计量单位"
+                      :resizable="false"
+                      label="操作"
                       show-overflow-tooltip
+                      width="80"
                     >
                       <template slot-scope="scope">
-                        <div>{{scope.row.jldw}}</div>
+                        <el-link :underline="false" @click="handleRemove1(scope.row,scope.$index)" type="warning">删除</el-link>
                       </template>
                     </el-table-column>
-                     <el-table-column
-                       :width="150"
-                       align="center"
-                       label="本月计划"
-                       show-overflow-tooltip
-                     >
-                       <template slot-scope="scope">
-                         <div>{{scope.row.monthPlan}}</div>
-                       </template>
-                     </el-table-column>
-                    <el-table-column
-                      :width="150"
-                      align="center"
-                      label="本月合计"
-                      show-overflow-tooltip
-                    >
-                      <template slot-scope="scope">
-                       {{scope.row.monthValue}}
-                      </template>
-                    </el-table-column>
-                   <el-table-column
-                     :width="150"
-                     align="center"
-                     label="本月计价额"
-                     show-overflow-tooltip
-                   >
-                     <template slot-scope="scope">
-                       <div v-if="scope.row.veditable == '1' && isCk!='1'&&p.actpoint!='task' ">
-                         <el-input v-model="scope.row.valuationFee" @input="scope.row.value = scope.row.valuationFee.replace(/[^\-?\d.]/g,'','')" @blur="getYear(data,scope.$index,scope.row.sumTarget)"/>
-                       </div>
-                       <div  v-if="scope.row.veditable != '1'">{{scope.row.valuationFee}}</div>
-                     </template>
-                   </el-table-column>
-                   <el-table-column
-                     :width="150"
-                     align="center"
-                     label="本月税额"
-                     show-overflow-tooltip
-                   >
-                 <template slot-scope="scope">
-                   <div v-if="scope.row.veditable == '1' && isCk!='1' &&p.actpoint!='task'">
-                     <el-input v-model="scope.row.taxFee"  @input="scope.row.value = scope.row.taxFee.replace(/[^\-?\d.]/g,'','')" @blur="getYearSe(data,scope.$index,scope.row.sumTarget)"/>
-                   </div>
-                   <div  v-if="scope.row.veditable != '1'">{{scope.row.taxFee}}</div>
-                 </template>
-               </el-table-column>
-                   <el-table-column
-                     :width="150"
-                     align="center"
-                     label="本年计划"
-                     show-overflow-tooltip
-                   >
-                     <template slot-scope="scope">
-                       <div>{{scope.row.yearPlan}}</div>
-                     </template>
-                   </el-table-column>
-                   <el-table-column
-                     :width="150"
-                     align="center"
-                     label="本年合计"
-                     show-overflow-tooltip
-                   >
-                     <template slot-scope="scope">
-                      <div>{{scope.row.yearValue}}</div>
-                      <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
-                     </template>
-                   </el-table-column>
-                   <el-table-column
-                     :width="150"
-                     align="center"
-                     label="本年计价额"
-                     show-overflow-tooltip
-                   >
-                     <template slot-scope="scope">
-                       <div>{{scope.row.yearValuationFee}}</div>
-                       <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
-                     </template>
-                   </el-table-column>
-                   <el-table-column
-                     :width="150"
-                     align="center"
-                     label="本年税额"
-                     show-overflow-tooltip
-                   >
-                     <template slot-scope="scope">
-                       <div>{{scope.row.yearTaxFee}}</div>
-                       <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
-                     </template>
-                   </el-table-column>
-                   <el-table-column
-                     :width="150"
-                     align="center"
-                     label="本年%"
-                     show-overflow-tooltip
-                   >
-                     <template slot-scope="scope">
-                     <div v-if="scope.row.yearPlan&&scope.row.yearValue">{{Math.round(scope.row.yearPlan /scope.row.yearValue) / 100+"%"}}
-                       </div>
-                       <div v-if="scope.row.yearRate!=null">{{scope.row.yearRate+"%"}}
-                       </div>
-                     </template>
-                   </el-table-column>
-               <el-table-column
-                 :width="150"
-                 align="center"
-                 label="总设计量"
-                 show-overflow-tooltip
-               >
-                 <template slot-scope="scope">
-                   <div>{{scope.row.totalPlan}}</div>
-                 </template>
-               </el-table-column>
-               <el-table-column
-                 :width="150"
-                 align="center"
-                 label="开累合计"
-                 show-overflow-tooltip
-               >
-                 <template slot-scope="scope">
-                   <div>{{scope.row.totalValue}}</div>
-                 </template>
-               </el-table-column>
-               <el-table-column
-                 :width="150"
-                 align="center"
-                 label="开累计价额"
-                 show-overflow-tooltip
-               >
-                 <template slot-scope="scope">
-                   <div>{{scope.row.totalValuationFee}}</div>
-                 </template>
-               </el-table-column>
-               <el-table-column
-                 :width="150"
-                 align="center"
-                 label="开累税额"
-                 show-overflow-tooltip
-               >
-                 <template slot-scope="scope">
-                   <div>{{scope.row.totalTaxFee}}</div>
-                 </template>
-               </el-table-column>
-               <el-table-column
-                 :width="150"
-                 align="center"
-                 label="开累%"
-                 show-overflow-tooltip
-               >
-                 <template slot-scope="scope">
-                   <div v-if="scope.row.totalPlan&&scope.row.totalValue">{{Math.round(scope.row.totalPlan /scope.row.totalValue) / 100+"%"}}
-                   </div>
-                   <div v-if="scope.row.totalRate!=null">{{scope.row.totalRate+"%"}}
-                   </div>
-                 </template>
-               </el-table-column>
                   </el-table>
-           </div>
-        </el-tab-pane>
-           <el-tab-pane label="审批流程" v-if="dataReport.flowStatus!=1&&(p.actpoint == 'task'||p.actpoint == 'look')">
+                </el-form>
+                  </div>
+               </el-tab-pane>
+         <el-tab-pane label="产值(验工计价)" name="cwjswgcl">
+        <div class="detailBoxBG">
+         <el-table
+                class="tableStyle"
+                :max-height="$tableHeight"
+                :height="$tableHeight"
+                :data="data"
+                :key="key"
+                :header-cell-style="{
+                  'text-align': 'center',
+                  'background-color': 'whitesmoke'
+                }"
+                border
+                highlight-current-row
+                ref="table"
+                style="width: 100%"
+
+                tooltip-effect="dark"
+              >
+                <el-table-column
+                  :width="50"
+                  align="center"
+                  label="序号"
+                  show-overflow-tooltip
+                  type="index"
+                ></el-table-column>
+                <el-table-column
+                  :width="250"
+                  align="left"
+                  label="统计项名称"
+                  show-overflow-tooltip
+                >
+                  <template slot-scope="scope">
+                    <div :class="vnameMarginLeft(scope.row.tjxCode,scope.row.veditable)">{{scope.row.tjxName}}</div>
+<!--                        <div :class="scope.row.tjxCode.length>3&&scope.row.tjxCode.length<6?'':''">{{scope.row.tjxName}}</div>-->
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  :width="90"
+                  align="center"
+                  prop="jldw"
+                  label="计量单位"
+                  show-overflow-tooltip
+                >
+                  <template slot-scope="scope">
+                    <div>{{scope.row.jldw}}</div>
+                  </template>
+                </el-table-column>
+                 <el-table-column
+                   :width="150"
+                   align="center"
+                   label="本月计划"
+                   show-overflow-tooltip
+                 >
+                   <template slot-scope="scope">
+                     <div>{{scope.row.monthPlan}}</div>
+                   </template>
+                 </el-table-column>
+                <el-table-column
+                  :width="150"
+                  align="center"
+                  label="本月合计"
+                  show-overflow-tooltip
+                >
+                  <template slot-scope="scope">
+                   {{scope.row.monthValue}}
+                  </template>
+                </el-table-column>
+               <el-table-column
+                 :width="150"
+                 align="center"
+                 label="本月计价额"
+                 show-overflow-tooltip
+               >
+                 <template slot-scope="scope">
+                   <div v-if="scope.row.veditable == '1' && isCk!='1'&&p.actpoint!='task' ">
+                     <el-input v-model="scope.row.valuationFee" @input="scope.row.value = scope.row.valuationFee.replace(/[^\-?\d.]/g,'','')" @blur="getYear(data,scope.$index,scope.row.sumTarget)"/>
+                   </div>
+                   <div  v-if="scope.row.veditable != '1'">{{scope.row.valuationFee}}</div>
+                 </template>
+               </el-table-column>
+               <el-table-column
+                 :width="150"
+                 align="center"
+                 label="本月税额"
+                 show-overflow-tooltip
+               >
+             <template slot-scope="scope">
+               <div v-if="scope.row.veditable == '1' && isCk!='1' &&p.actpoint!='task'">
+                 <el-input v-model="scope.row.taxFee"  @input="scope.row.value = scope.row.taxFee.replace(/[^\-?\d.]/g,'','')" @blur="getYearSe(data,scope.$index,scope.row.sumTarget)"/>
+               </div>
+               <div  v-if="scope.row.veditable != '1'">{{scope.row.taxFee}}</div>
+             </template>
+           </el-table-column>
+               <el-table-column
+                 :width="150"
+                 align="center"
+                 label="本年计划"
+                 show-overflow-tooltip
+               >
+                 <template slot-scope="scope">
+                   <div>{{scope.row.yearPlan}}</div>
+                 </template>
+               </el-table-column>
+               <el-table-column
+                 :width="150"
+                 align="center"
+                 label="本年合计"
+                 show-overflow-tooltip
+               >
+                 <template slot-scope="scope">
+                  <div>{{scope.row.yearValue}}</div>
+                  <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
+                 </template>
+               </el-table-column>
+               <el-table-column
+                 :width="150"
+                 align="center"
+                 label="本年计价额"
+                 show-overflow-tooltip
+               >
+                 <template slot-scope="scope">
+                   <div>{{scope.row.yearValuationFee}}</div>
+                   <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
+                 </template>
+               </el-table-column>
+               <el-table-column
+                 :width="150"
+                 align="center"
+                 label="本年税额"
+                 show-overflow-tooltip
+               >
+                 <template slot-scope="scope">
+                   <div>{{scope.row.yearTaxFee}}</div>
+                   <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
+                 </template>
+               </el-table-column>
+               <el-table-column
+                 :width="150"
+                 align="center"
+                 label="本年%"
+                 show-overflow-tooltip
+               >
+                 <template slot-scope="scope">
+                 <div v-if="scope.row.yearPlan&&scope.row.yearValue">{{Math.round(scope.row.yearPlan /scope.row.yearValue) / 100+"%"}}
+                   </div>
+                   <div v-if="scope.row.yearRate!=null">{{scope.row.yearRate+"%"}}
+                   </div>
+                 </template>
+               </el-table-column>
+           <el-table-column
+             :width="150"
+             align="center"
+             label="总设计量"
+             show-overflow-tooltip
+           >
+             <template slot-scope="scope">
+               <div>{{scope.row.totalPlan}}</div>
+             </template>
+           </el-table-column>
+           <el-table-column
+             :width="150"
+             align="center"
+             label="开累合计"
+             show-overflow-tooltip
+           >
+             <template slot-scope="scope">
+               <div>{{scope.row.totalValue}}</div>
+             </template>
+           </el-table-column>
+           <el-table-column
+             :width="150"
+             align="center"
+             label="开累计价额"
+             show-overflow-tooltip
+           >
+             <template slot-scope="scope">
+               <div>{{scope.row.totalValuationFee}}</div>
+             </template>
+           </el-table-column>
+           <el-table-column
+             :width="150"
+             align="center"
+             label="开累税额"
+             show-overflow-tooltip
+           >
+             <template slot-scope="scope">
+               <div>{{scope.row.totalTaxFee}}</div>
+             </template>
+           </el-table-column>
+           <el-table-column
+             :width="150"
+             align="center"
+             label="开累%"
+             show-overflow-tooltip
+           >
+             <template slot-scope="scope">
+               <div v-if="scope.row.totalPlan&&scope.row.totalValue">{{Math.round(scope.row.totalPlan /scope.row.totalValue) / 100+"%"}}
+               </div>
+               <div v-if="scope.row.totalRate!=null">{{scope.row.totalRate+"%"}}
+               </div>
+             </template>
+           </el-table-column>
+              </el-table>
+       </div>
+    </el-tab-pane>
+         <el-tab-pane label="审批流程" v-if="dataReport.flowStatus!=1&&(p.actpoint == 'task'||p.actpoint == 'look')">
              <Audit-Process :task="p.task||{businessId:p.uuid,businessType:'emr_valuation'}"></Audit-Process>
            </el-tab-pane>
-          </el-tabs>
+    </el-tabs>
     <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
     </div>
 </template>

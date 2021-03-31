@@ -176,7 +176,7 @@
         page: {current: 1, size: 20, total: 0, records: []},
         searchform: {
           current: 1,
-          size: 10,
+          size: 20,
           sorts:[],
           condition:{
             systemSource:'project'
