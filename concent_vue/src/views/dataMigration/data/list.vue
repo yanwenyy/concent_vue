@@ -3,11 +3,11 @@
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
         <el-button @click="add" plain type="primary">项目前期信息</el-button>
-        <el-button @click="totop" plain type="primary">资审信息</el-button>
-        <el-button @click="remove" type="primary" plain>投标信息</el-button>
-        <el-button @click="searchformReset" type="primary" plain>合同信息</el-button>
-        <el-button @click="searchformReset" type="primary" plain>计统项目信息</el-button>
-        <el-button @click="searchformReset" type="primary" plain>非工程月报</el-button>
+        <el-button @click="add" plain type="primary">资审信息</el-button>
+        <el-button @click="add" type="primary" plain>投标信息</el-button>
+        <el-button @click="add" type="primary" plain>合同信息</el-button>
+        <el-button @click="add" type="primary" plain>计统项目信息</el-button>
+        <el-button @click="add" type="primary" plain>非工程月报</el-button>
 
       </el-button-group>
       <div style="float: right">
@@ -48,16 +48,16 @@
 
         <el-table-column
           :width="300"
-          label="数据主表名称"
-          prop="reportName"
+          label="业务名称"
+          prop="formName"
         >
           <template slot="header" slot-scope="scope">
-            <span>数据表名称</span>
+            <span>业务名称</span>
             <div>
               <el-input
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchform.reportName"
+                v-model="searchform.formName"
                 size="mini"
               />
             </div>
@@ -67,7 +67,7 @@
         <el-table-column
         :width="150"
         label="数据类型"
-        prop="reportName"
+        prop="formType"
       >
         <template slot="header" slot-scope="scope">
           <span>数据类型</span>
@@ -75,7 +75,7 @@
             <el-input
               class="list-search-picker"
               style=" width: 100%"
-              v-model="searchform.reportName"
+              v-model="searchform.formType"
               size="mini"
             />
           </div>
@@ -83,28 +83,49 @@
       </el-table-column>
 
         <el-table-column
-          :width="260"
-          label="迁移开始时间"
-          prop="reportName"
+          :width="150"
+          label="需同步表数量"
+          prop="synchronCount"
         >
           <template slot="header" slot-scope="scope">
-            <span>迁移开始时间</span>
+            <span>需同步表数量</span>
             <div>
-              <el-date-picker
+              <el-input
+                class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchform.endTime"
+                v-model="searchform.synchronCount"
                 size="mini"
-                value-format="timestamp"
-              >
-              </el-date-picker>
+              />
             </div>
           </template>
         </el-table-column>
 
         <el-table-column
           :width="260"
+          label="迁移开始时间"
+          prop="startTime"
+        >
+          <template slot="header" slot-scope="scope">
+            <span>迁移开始时间</span>
+            <div>
+              <el-date-picker
+                style=" width: 100%"
+                v-model="searchform.startTime"
+                size="mini"
+                value-format="timestamp"
+              >
+              </el-date-picker>
+            </div>
+          </template>
+          <template slot-scope="scope">{{
+            scope.row.startTime | dateformat
+            }}</template>
+        </el-table-column>
+
+        <el-table-column
+          :width="260"
           label="迁移结束时间"
-          prop="reportName"
+          prop="endTime"
         >
           <template slot="header" slot-scope="scope">
             <span>迁移结束时间</span>
@@ -118,6 +139,9 @@
               </el-date-picker>
             </div>
           </template>
+          <template slot-scope="scope">{{
+            scope.row.endTime | dateformat
+            }}</template>
         </el-table-column>
         <el-table-column
           label="操作"
@@ -223,14 +247,6 @@
         searchform: {
           current: 1,
           size: 20,
-          reportName: "",
-          reportType: "08",
-          reportHierarchy: "",
-          reportHierarchyId:"",
-          reportSort: "",
-          enableStatus:"",
-          constructionOrg: "",
-          noticeTypeId: "",
         },
           form:{
               reportName: "",
@@ -376,19 +392,19 @@
         },
       // 增加
         add() {
-            this.type='add';
-            this.dialogResult=true;
-            this.form={
-                reportName: "",
-                reportType: "",
-                reportHierarchy:"",
-                reportHierarchyId:"",
-                enableStatus: "",
-                reportSort: "",
-                reportHeyComb: [],
-                reportHeyCombId:[],
-                uuid:''
-            }
+          /*  this.$http
+                .post(
+                    "/api/statistics/DataMigration/detail/save",
+                    JSON.stringify({
+                        dataMigration:{},
+                    }),
+                    { useJson: true }
+                )
+                .then((res) => {
+                    if (res.data.code === 200) {
+
+                    }
+                });*/
         },
       // 修改
         totop() {
@@ -509,7 +525,7 @@
       getData() {
         this.$http
           .post(
-            "/api/contract/ReportManage/list/loadPageData",
+            "/api/statistics/DataMigration/list/loadPageData",
             this.searchform
           )
           .then((res) => {

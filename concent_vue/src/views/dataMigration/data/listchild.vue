@@ -44,7 +44,7 @@
         <el-table-column
           :width="300"
           label="数据表名称"
-          prop="reportName"
+          prop="newFormName"
         >
           <template slot="header" slot-scope="scope">
             <span>数据表名称</span>
@@ -52,7 +52,7 @@
               <el-input
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchform.reportName"
+                v-model="searchform.newFormName"
                 size="mini"
               />
             </div>
@@ -62,7 +62,7 @@
         <el-table-column
           :width="300"
           label="原系统数据表名称"
-          prop="reportName"
+          prop="oldFormName"
         >
           <template slot="header" slot-scope="scope">
             <span>原系统数据表名称</span>
@@ -70,7 +70,7 @@
               <el-input
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchform.reportName"
+                v-model="searchform.oldFormName"
                 size="mini"
               />
             </div>
@@ -80,7 +80,7 @@
         <el-table-column
           :width="150"
           label="总数据量"
-          prop="reportName"
+          prop="oldDataCount"
         >
           <template slot="header" slot-scope="scope">
             <span>总数据量</span>
@@ -88,7 +88,7 @@
               <el-input
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchform.reportName"
+                v-model="searchform.oldDataCount"
                 size="mini"
               />
             </div>
@@ -98,7 +98,7 @@
         <el-table-column
           :width="150"
           label="新增数据量"
-          prop="reportName"
+          prop="addDataCount"
         >
           <template slot="header" slot-scope="scope">
             <span>新增数据量</span>
@@ -106,7 +106,7 @@
               <el-input
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchform.reportName"
+                v-model="searchform.addDataCount"
                 size="mini"
               />
             </div>
@@ -116,7 +116,7 @@
         <el-table-column
           :width="150"
           label="更新数据量"
-          prop="reportName"
+          prop="updateDataCount"
         >
           <template slot="header" slot-scope="scope">
             <span>更新数据量</span>
@@ -124,7 +124,7 @@
               <el-input
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchform.reportName"
+                v-model="searchform.updateDataCount"
                 size="mini"
               />
             </div>
@@ -134,7 +134,7 @@
         <el-table-column
           :width="150"
           label="失败数据量"
-          prop="reportName"
+          prop="failedDataDetail"
         >
           <template slot="header" slot-scope="scope">
             <span>失败数据量</span>
@@ -142,7 +142,7 @@
               <el-input
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchform.reportName"
+                v-model="searchform.failedDataDetail"
                 size="mini"
               />
             </div>
@@ -152,7 +152,7 @@
         <el-table-column
           :width="150"
           label="备注"
-          prop="reportName"
+          prop="remarks"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -161,7 +161,7 @@
               <el-input
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchform.reportName"
+                v-model="searchform.remarks"
                 size="mini"
               />
             </div>
