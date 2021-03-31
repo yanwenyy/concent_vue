@@ -753,6 +753,9 @@
     background: #409EFF;
     color:#fff;
   }
+  .detailBoxBG{
+    overflow: hidden!important;
+  }
   .sub-btn{
     right: 175px;
   }

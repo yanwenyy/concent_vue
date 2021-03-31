@@ -119,7 +119,7 @@
             </div>
           </template>
           <template slot-scope="scope">
-            {{scope.row.stauts==1?'草稿':scope.row.stauts==2?'审核中':scope.row.stauts==3?'审核通过':scope.row.stauts==4?'审核退回':''}}
+            {{scope.row.stauts==1?'草稿':scope.row.stauts==2?'审核中':scope.row.stauts==3?'审核通过':scope.row.stauts==4?'审核退回':scope.row.stauts==0?'未创建':''}}
           </template>
         </el-table-column>
         <el-table-column
@@ -149,7 +149,7 @@
             }}</template>
         </el-table-column>
         <el-table-column
-          :width="180"
+          :width="250"
           align="center"
           label="审核通过时间"
           prop="state"
@@ -162,9 +162,12 @@
                 class="list-search-picker"
                 filterable
                 clearable
-                type="date"
+                type="daterange"
+                range-separator="-"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
                 value-format="timestamp"
-                v-model="searchform.planBidTime"
+                v-model="prossDate"
 
               >
               </el-date-picker>
@@ -190,12 +193,14 @@
         tableData: [],
         showinput: false,
         sousuo: "",
+        prossDate:'',
         searchform: {
           reportDate:'',
           createOrgName: "",
           stauts: "",
           createTime: "",
-          auditDate: "",
+          auditStartDate: "",
+          auditEndDate: "",
         },
         menus: [],
         multipleSelection: [],
@@ -217,6 +222,10 @@
           {
             detailName:"审核驳回",
             id:'4'
+          },
+          {
+            detailName:"未创建",
+            id:'0'
           }
         ]
       };
@@ -278,11 +287,11 @@
           this.$message.info("请选择一条记录进行修改操作！");
           return false;
         }
-        // if(this.multipleSelection[0].flowStatus=='2'||this.multipleSelection[0].flowStatus=='3'){
-        //   this.$message.info("此条数据不可修改！");
-        //   return false;
-        // }
-        let p = {actpoint: "edit", statId: this.multipleSelection[0].uuid,reportDate: this.multipleSelection[0].reportDate,stauts:this.multipleSelection[0].stauts};
+        if(this.multipleSelection[0].stauts=='2'||this.multipleSelection[0].stauts=='3'){
+          this.$message.info("此条数据不可修改！");
+          return false;
+        }
+        let p = {actpoint: "edit", statId: this.multipleSelection[0].uuid,reportDate: this.multipleSelection[0].reportDate,stauts:this.multipleSelection[0].stauts,createOrgCode:this.multipleSelection[0].createOrgCode};
         this.$router.push({
           path: "./detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
@@ -292,7 +301,7 @@
       // 查看
       rowshow(row) {
         console.log(row)
-        let p = {actpoint: "look", statId: row.uuid,reportDate: row.reportDate,stauts:row.stauts};
+        let p = {actpoint: "look", statId: row.uuid,reportDate: row.reportDate,stauts:row.stauts,createOrgCode:row.createOrgCode };
         this.$router.push({
           path: "./detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
@@ -306,13 +315,13 @@
         }
         let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
+          // uuids.push(item.uuid);
+          if(item.stauts==1||item.stauts==4){
           uuids.push(item.uuid);
-        //   if(item.stauts==1||item.stauts==4){
-        //   uuids.push(item.uuid);
-        // }else{
-        //   this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
-        //   return itemStatus=false;
-        // }
+        }else{
+          this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
+          return itemStatus=false;
+        }
       })
 
         if(itemStatus){
@@ -386,6 +395,10 @@
           }else if(this.searchform.importFileRecordName=='否'){
             this.searchform.importFileRecordId='0';
           }
+        }
+        if(this.prossDate){
+          this.searchform.auditStartDate=this.prossDate[0];
+          this.searchform.auditEndDate=this.prossDate[0];
         }
         this.$http
           .post(

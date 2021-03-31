@@ -26,7 +26,7 @@
           重置
         </el-button>
         <el-button @click="searchformSubmit" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
-        <el-button  @click="back" type="info"  style="color:black;background:none" plain>返回</el-button>
+        <el-button  @click="back" type="info"  style="color:black;background:none;margin-left: 0" plain>返回</el-button>
       </div>
     </div>
 

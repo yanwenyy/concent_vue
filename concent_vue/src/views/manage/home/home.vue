@@ -297,6 +297,10 @@
     box-sizing: border-box;
     padding: 10px;
   }
+  .dbTabel >>>.el-button{
+    height: auto!important;
+    line-height:inherit!important;
+  }
   .home-body{
     width: 100%;
     min-height: calc(100vh - 170px)!important;
