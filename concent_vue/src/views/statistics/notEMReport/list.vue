@@ -118,6 +118,9 @@
               <!--/>-->
             </div>
           </template>
+          <template slot-scope="scope">
+            {{scope.row.stauts==1?'草稿':scope.row.stauts==2?'审核中':scope.row.stauts==3?'审核通过':scope.row.stauts==4?'审核退回':''}}
+          </template>
         </el-table-column>
         <el-table-column
           :width="180"
