@@ -1259,7 +1259,14 @@
             infoProductList: [], // 产品列表
             infoSubjectMatterList: [], // 标的信息
             commonFilesList: [], // 文件列表
-            topInfoSiteList: [], // 项目所在地
+            topInfoSiteList: [
+              {
+                path: '',
+                placeId: '',
+                ffid:'',
+                uuid: ''
+              }
+            ], // 项目所在地
             projectModuleId: '510ba0d79593418493eb1a11ea4e7af4', // 项目板块
             projectModuleName: '物资贸易', // 项目板块
             projectName: '',
@@ -1413,7 +1420,10 @@
       // 获取项目地点的值
       getPositionTree(data) {
         this.treeStatas = false
-        this.detailForm.project.supplierAddress = data.fullDetailName
+        //this.detailForm.project.supplierAddress = data.fullDetailName
+        this.detailForm.project.topInfoSiteList[0].placeId = data.id
+        this.detailForm.project.topInfoSiteList[0].path = data.fullDetailName
+        this.detailForm.project.topInfoSiteList[0].ffid = data.fullDetailCode
       },
       getName(id, list, name) {
         if (id) {

@@ -495,6 +495,7 @@
               {
                 path: '',
                 placeId: '',
+                ffid:'',
                 uuid: ''
               }
             ],
@@ -595,6 +596,7 @@
         this.treeStatas = false
         this.detailForm.project.topInfoSiteList[0].placeId = data.id
         this.detailForm.project.topInfoSiteList[0].path = data.fullDetailName
+        this.detailForm.project.topInfoSiteList[0].ffid = data.fullDetailCode
       },
       getName(id, list, name) {
         if (id) {
