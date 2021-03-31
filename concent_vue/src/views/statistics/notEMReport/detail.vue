@@ -3140,7 +3140,7 @@
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
-        <Audit-Process :task="p.task||{businessId:p.instid,businessType:' contract_project_new'}"></Audit-Process>
+        <Audit-Process :task="p.task||{businessId:p.instid||p.statId,businessType:' engineering_monthly_report_not'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
@@ -3445,7 +3445,7 @@
       operation(type){
         this.$http
           .post(
-            '/api/contract/topInfo/TopInfor/process/'+type,
+            '/api/statistics/unProjectReport/process/'+type,
             JSON.stringify(this.p.task),
             {useJson: true}
           )
@@ -3597,11 +3597,17 @@
         }
       },
       saveInfo(formName,type) {
+        var url='';
+        if(type=='save'){
+          url="/api/statistics/unProjectReport/save/batch/addDetail"
+        }else{
+          url="/api/statistics/unProjectReport/process/start"
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
               .post(
-                '/api/statistics/unProjectReport/save/batch/addDetail',
+                url,
                 JSON.stringify(this.detailform),
                 {useJson: true}
               )
@@ -3689,9 +3695,11 @@
       getDetail() {
         var data={};
         if(this.p.actpoint=='add'){
-          data={reportDate: this.p.reportDate}
+          data={reportDate: this.p.reportDate,isAdd:'0'}
         }else if(this.p.actpoint=='edit'||this.p.actpoint=='look'){
           data={statId: this.p.statId,isAdd:'1',reportDate:this.p.reportDate}
+        }else if(this.p.actpoint=='task'){
+          data={uuid: this.p.instid,isAdd:'2'}
         }
         this.$http
           .post("/api/statistics/unProjectReport/list/queryAllInfo",data )
