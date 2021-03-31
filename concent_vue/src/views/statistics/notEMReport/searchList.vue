@@ -813,6 +813,11 @@
           current: 1,
           size: 20,
           gyType:"",
+          reportDate:'',
+          projectName:'',
+          projectLocation:'',
+          projectTypeFirstId:'',
+          projectTypeSecondId:''
         },
         tableData:{},
         multipleSelection: [],
@@ -922,7 +927,14 @@
         this.searchform={
           current: 1,
           size: 20,
-        }
+          gyType:"",
+          reportDate:'',
+          projectName:'',
+          projectLocation:'',
+          projectTypeFirstId:'',
+          projectTypeSecondId:''
+        };
+        this.setDate();
         this.getData();
       },
       // 列表选项数据
@@ -931,22 +943,28 @@
       },
       // 查询
       getData() {
-        this.$http
-          .post(
-            "/api/statistics/unProjectReport/xxsc/list",
-            this.searchform
-          )
-          .then((res)=>{
-          this.tableData = res.data.data;
-      });
+        if(this.searchform.reportDate!=null&&this.searchform.reportDate!=''){
+          this.$http
+            .post(
+              "/api/statistics/unProjectReport/xxsc/list",
+              this.searchform
+            )
+            .then((res)=>{
+                this.tableData = res.data.data;
+            });
+        }else{
+          this.$message.error("填报年月不能为空");
+        }
       },
-
+      //获取当前月份
+      setDate(){
+        var sj=new Date().toLocaleDateString().split('/');
+        sj[1]=sj[1]<10?'0'+sj[1]:sj[1];
+        this.searchform.reportDate=sj[0]+"-"+sj[1];
+      },
     },
     created() {
-      //获取当前月份
-      var sj=new Date().toLocaleDateString().split('/');
-      sj[1]=sj[1]<10?'0'+sj[1]:sj[1];
-      this.searchform.reportDate=sj[0]+"-"+sj[1];
+      this.setDate();
       this.getData();
     },
   };

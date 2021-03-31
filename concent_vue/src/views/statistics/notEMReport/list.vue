@@ -149,7 +149,7 @@
             }}</template>
         </el-table-column>
         <el-table-column
-          :width="180"
+          :width="250"
           align="center"
           label="审核通过时间"
           prop="state"
@@ -162,9 +162,12 @@
                 class="list-search-picker"
                 filterable
                 clearable
-                type="date"
+                type="daterange"
+                range-separator="-"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
                 value-format="timestamp"
-                v-model="searchform.auditDate"
+                v-model="prossDate"
 
               >
               </el-date-picker>
@@ -190,12 +193,14 @@
         tableData: [],
         showinput: false,
         sousuo: "",
+        prossDate:'',
         searchform: {
           reportDate:'',
           createOrgName: "",
           stauts: "",
           createTime: "",
-          auditDate: "",
+          auditStartDate: "",
+          auditEndDate: "",
         },
         menus: [],
         multipleSelection: [],
@@ -390,6 +395,10 @@
           }else if(this.searchform.importFileRecordName=='否'){
             this.searchform.importFileRecordId='0';
           }
+        }
+        if(this.prossDate){
+          this.searchform.auditStartDate=this.prossDate[0];
+          this.searchform.auditEndDate=this.prossDate[0];
         }
         this.$http
           .post(
