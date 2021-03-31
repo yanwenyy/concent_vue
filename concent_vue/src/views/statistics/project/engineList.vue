@@ -462,6 +462,10 @@
           this.$message.info('请选择一条记录进行删除操作！')
           return false
         }
+        if(this.multipleSelection[0].flowStatus == '2'|| this.multipleSelection[0].flowStatus == '3'){
+          this.$message.info('不能删除审核中或审核通过的数据！')
+          return false
+        }
         let uuids = []
         this.multipleSelection.forEach((item) => {
           uuids.push(item.uuid)
@@ -489,7 +493,7 @@
           return false
         }
         if(this.multipleSelection[0].flowStatus=='2'||this.multipleSelection[0].flowStatus=='3'){
-          this.$message.info("此条数据不可修改！");
+          this.$message.info("不能修改正在审核中或审核通过的数据！");
           return false;
         }
         let p = { actpoint: 'edit', uuid: this.multipleSelection[0].uuid }

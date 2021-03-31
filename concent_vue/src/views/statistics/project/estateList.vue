@@ -293,6 +293,10 @@
           this.$message.info('请选择至少一条记录进行修改操作！')
           return false
         }
+        if(this.multipleSelection[0].flowStatus == '2' || this.multipleSelection[0].flowStatus == '3'){
+          this.$message.info('不可修改审核中或者审核通过项目的状态！')
+          return false
+        }
         let uuids = []
         this.multipleSelection.forEach((item) => {
           uuids.push(item.uuid)
@@ -355,6 +359,10 @@
           this.$message.info('请选择一条记录进行删除操作！')
           return false
         }
+        if(this.multipleSelection[0].flowStatus == '2' || this.multipleSelection[0].flowStatus == '3'){
+          this.$message.info('不可删除审核中或者审核通过的数据！')
+          return false
+        }
         let uuids = []
         this.multipleSelection.forEach((item) => {
           uuids.push(item.uuid)
@@ -379,6 +387,10 @@
       edit() {
         if (this.multipleSelection.length !== 1) {
           this.$message.info('请选择一条记录进行查看操作！')
+          return false
+        }
+        if(this.multipleSelection[0].flowStatus == '2' || this.multipleSelection[0].flowStatus == '3'){
+          this.$message.info('不可修改审核中或者审核通过的数据！')
           return false
         }
         let p = { actpoint: 'edit', uuid: this.multipleSelection[0].uuid }
