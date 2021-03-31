@@ -22,18 +22,26 @@ export default {
   methods: {
     getbreadcrumb(items) {
       items.filter(item => {
-        if (this.$route.path.indexOf(item.path) === 0) {
+        if(this.$route.path.indexOf(item.path) === 0){
+        // console.log(this.$route, '==>', item);
           this.breadcrumbs.push(item)
         }
         if (item.children && item.children.length) {
           this.getbreadcrumb(item.children)
         }
       })
-    }
+    },
+    getUrlsub (href) {
+      let index = href.lastIndexOf("\/");
+      let str = href.substring(index + 1,href.length);
+      return str
+    },
   },
   mounted() {
     this.breadcrumbs = []
-    this.getbreadcrumb(this.$store.state.route[1].children)
+    this.getbreadcrumb(this.$store.state.route[1].children);
+    console.log(this.breadcrumbs)
+
   },
   watch: {
     $route: {

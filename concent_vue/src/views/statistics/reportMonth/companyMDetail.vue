@@ -33,19 +33,19 @@
             <div>
               <el-form-item
                 label="本月计划:"
-              ><el-input v-model="dataReport.thisPlan" type="textarea" ></el-input>
+              ><el-input :disabled="p.actpoint=='look'" v-model="dataReport.thisPlan" type="textarea" ></el-input>
               </el-form-item>
             </div>
             <div>
               <el-form-item
                 label="完成情况:"
-              ><el-input v-model="dataReport.finishedPlan" type="textarea" ></el-input>
+              ><el-input :disabled="p.actpoint=='look'" v-model="dataReport.finishedPlan" type="textarea" ></el-input>
               </el-form-item>
             </div>
             <div>
               <el-form-item
                 label="下月计划:"
-              ><el-input v-model="dataReport.nextPlan" type="textarea" ></el-input>
+              ><el-input :disabled="p.actpoint=='look'" v-model="dataReport.nextPlan" type="textarea" ></el-input>
               </el-form-item>
             </div>
           </el-form>
@@ -54,7 +54,7 @@
       <el-tab-pane label="产物及实物工程量" name="cwjswgcl">
         <div class="table-div">
           <el-table
-            class="tableStyle detailTable"
+            class="tableStyle"
             :max-height="$tableHeight"
             :height="$tableHeight"
             :data="data"
@@ -442,7 +442,7 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="审批流程" v-if="dataReport.flowStatus!=1&&(p.actpoint == 'task'||p.actpoint == 'look')">
-        <Audit-Process :task="p.task||{businessId:p.uuid,businessType:' engineering_monthly_report'}"></Audit-Process>
+        <Audit-Process :task="p.task||{businessId:p.uuid||p.projectreportuuid,businessType:' engineering_monthly_report'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>
     </div>

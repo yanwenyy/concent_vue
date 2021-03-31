@@ -199,6 +199,8 @@
           url='/api/statistics/Projectcheck/process/recall'
         }else  if(val.businessType=='engineering_monthly_report'){
           url='/api/statistics/projectMonthlyReport/Projectreport/process/recall'
+        }else  if(val.businessType=='engineering_monthly_report_not'){
+          url='/api/statistics/unProjectReport/process/recall'
         }
         this.$http
           .post(

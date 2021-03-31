@@ -1521,7 +1521,7 @@ export default {
             },
             {
               'name': '计统报表',
-              'path': '/statistics/report',
+              'path': '/statistics/report/',
               'component': '/router',
               'iconCls': 'el-icon-document-copy',
               'menushow': true,
