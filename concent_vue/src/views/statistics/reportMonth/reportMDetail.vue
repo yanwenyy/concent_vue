@@ -308,7 +308,7 @@
         nextData:[],
         yearDateS:'',
         activeName:"ztjd",
-        mList: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
+        p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         proNameHover: false,
         projectName: '',
         isCk:JSON.parse(this.$utils.decrypt(this.$route.query.p)).isCk,

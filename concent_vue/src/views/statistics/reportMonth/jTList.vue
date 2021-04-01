@@ -147,7 +147,7 @@
             </div>
           </template>-->
           <template slot-scope="scope">
-            <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'未创建'}}
+            <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核驳回':'未创建'}}
             </div>
           </template>
         </el-table-column>
@@ -311,10 +311,10 @@
         row.reportYear=this.searchform.yearDateS.split("-")[0];
         row.reportMonth=this.searchform.yearDateS.split("-")[1];
         row.yearDateS=this.searchform.yearDateS;
-        let mList = row;
+        let p = row;
         this.$router.push({
           path: "./jTMList/",
-          query: {mList: this.$utils.encrypt(JSON.stringify(mList))},
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       },
       // 增加
@@ -376,10 +376,10 @@
            return false;
         }
         if (this.multipleSelection[0].createOrgCode==this.userdata.managerOrgCode && (this.multipleSelection[0].flowStatus!='' && this.multipleSelection[0].flowStatus!=null)){
-          let mList = {actpoint: "edit", params: this.multipleSelection[0]};
+          let p = {actpoint: "edit", params: this.multipleSelection[0]};
           this.$router.push({
             path: "./jTMDetail/",
-            query: {p: this.$utils.encrypt(JSON.stringify(mList))},
+            query: {p: this.$utils.encrypt(JSON.stringify(p))},
           });
         }
 
@@ -387,14 +387,14 @@
       },
       // 查看
       rowshow(row) {
-        let mList = {actpoint: "look", params: row};
+        let p = {actpoint: "look", params: row};
         if(row.flowStatus==''||row.flowStatus==null){
           this.$message.info("该项目月报还未完成上报,无法查看");
           return false;
         }else{
           this.$router.push({
             path: "./jTMDetail/",
-            query: {p: this.$utils.encrypt(JSON.stringify(mList))},
+            query: {p: this.$utils.encrypt(JSON.stringify(p))},
           });
         }
       },
@@ -475,10 +475,10 @@
           this.$message.info("请选择一条记录进行查看操作！");
           return false;
         }
-        let mList = {actpoint: "look", instid: this.multipleSelection[0].uuid};
+        let p = {actpoint: "look", instid: this.multipleSelection[0].uuid};
         this.$router.push({
           path: "../detail/",
-          query: {mList: this.$utils.encrypt(JSON.stringify(p))},
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       }, */
       // list通用方法开始

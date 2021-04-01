@@ -360,10 +360,10 @@
           })
       },
       rowShow(row){
-            let mList = {projectId: row.projectId, orgCode: row.createOrgCode,projectName:row.projectName}
+            let p = {projectId: row.projectId, orgCode: row.createOrgCode,projectName:row.projectName}
               this.$router.push({
                     path: './reportMList/',
-                    query: {mList: this.$utils.encrypt(JSON.stringify(mList))}
+                    query: {p: this.$utils.encrypt(JSON.stringify(p))}
                   })
 
       }
