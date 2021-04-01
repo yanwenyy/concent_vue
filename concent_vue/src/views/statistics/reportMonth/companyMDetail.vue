@@ -264,7 +264,8 @@
           </el-table>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="项目概况" v-if="projectList.uuid!=''&& projectList.uuid!=null" name="xmgk">
+      <el-tab-pane label="项目概况" name="xmgk">
+        <!--v-if="projectList.uuid!=''&& projectList.uuid!=null"-->
         <div class="detailBoxBG">
           <el-form
             :inline="false"
@@ -274,6 +275,24 @@
             <el-form-item
               label="项目名称:"
             ><el-input v-model="projectList.projectName" disabled ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="项目简称:"
+            ><el-input v-model="projectList.projectOmit" disabled ></el-input>
+            </el-form-item>
+            <br>
+            <el-form-item
+              label="承建单位:"
+            ><el-input v-model="projectList.companyBuiltName" disabled ></el-input>
+            </el-form-item>
+            <el-form-item
+              label="所属铁路局:"
+            ><el-input v-model="projectList.railwayName" disabled ></el-input>
+            </el-form-item>
+            <br>
+            <el-form-item
+              label="工程行业类别:"
+            ><el-input v-model="projectList.projectTypeSecond" disabled ></el-input>
             </el-form-item>
             <el-form-item
               label="项目板块:"
@@ -290,21 +309,18 @@
                 <el-input v-model="projectList.projectTypeName" disabled></el-input>
             </el-form-item>
             <el-form-item
-              label="承建单位:"
-            ><el-input v-model="projectList.companyBuiltName" disabled ></el-input>
+              label="计量单位:"
+            ><el-input v-model="projectList.unitName" disabled ></el-input>
             </el-form-item>
+            <!-- <el-form-item
+               label="初始签订数量:"
+             ><el-input v-model="projectList.projectName" disabled ></el-input>
+             </el-form-item>-->
             <el-form-item
-              label="项目简称:"
-            ><el-input v-model="projectList.projectOmit" disabled ></el-input>
+              label="工程合同数量:"
+            ><el-input v-model="projectList.contractCount" disabled ></el-input>
             </el-form-item>
-            <el-form-item
-              label="工程行业类别:"
-            ><el-input v-model="projectList.projectTypeSecond" disabled ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="所属铁路局:"
-            ><el-input v-model="projectList.railwayName" disabled ></el-input>
-            </el-form-item>
+            <br>
             <el-form-item
               label="项目状态:"
               prop="projectList.projectStatusName"
@@ -318,6 +334,7 @@
               label="项目所在地:"
             ><el-input v-model="projectList.projectLocation" disabled ></el-input>
             </el-form-item>
+            <br>
             <el-form-item
               label="初始合同额(万元):"
             ><el-input v-model="projectList.contractAmountInitial" disabled ></el-input>
@@ -330,17 +347,20 @@
               label="合同额增减(万元):"
             ><el-input v-model="projectList.projectName" disabled ></el-input>
             </el-form-item>-->
+            <br>
+
             <el-form-item
-              label="计量单位:"
-            ><el-input v-model="projectList.unitName" disabled ></el-input>
-            </el-form-item>
-           <!-- <el-form-item
-              label="初始签订数量:"
-            ><el-input v-model="projectList.projectName" disabled ></el-input>
-            </el-form-item>-->
-            <el-form-item
-              label="工程合同数量:"
-            ><el-input v-model="projectList.contractCount" disabled ></el-input>
+              label="合同签订日期:"
+            >
+              <el-date-picker
+                disabled="true"
+                class="list-search-picker"
+                filterable
+                clearable
+                type="month"
+                v-model="projectList.contractSignTime"
+              >
+              </el-date-picker>
             </el-form-item>
             <el-form-item
               label="合同竣工日期:"
@@ -355,19 +375,7 @@
               >
               </el-date-picker>
             </el-form-item>
-            <el-form-item
-              label="合同签订日期:"
-            >
-              <el-date-picker
-                disabled="true"
-                class="list-search-picker"
-                filterable
-                clearable
-                type="month"
-                v-model="projectList.contractSignTime"
-              >
-              </el-date-picker>
-            </el-form-item>
+            <br>
             <el-form-item
               label="实际开工日期:"
             >
@@ -394,6 +402,7 @@
               >
               </el-date-picker>
             </el-form-item>
+            <br>
             <el-form-item
               label="竣工产值:"
             ><el-input v-model="projectList.completedOutputValue" disabled ></el-input>
@@ -411,13 +420,14 @@
             ><el-input v-model="projectList.companySupervisor" disabled ></el-input>
             </el-form-item>
             <el-form-item
-              label="工程标段:"
-            ><el-input v-model="projectList.projectBidSection" disabled ></el-input>
-            </el-form-item>
-            <el-form-item
               label="项目经理:"
             ><el-input v-model="projectList.projectManagerName" disabled ></el-input>
             </el-form-item>
+            <el-form-item
+              label="工程标段:"
+            ><el-input v-model="projectList.projectBidSection" disabled ></el-input>
+            </el-form-item>
+
             <el-form-item
               label="起讫地点(标段):"
             ><el-input v-model="projectList.beginAddress" disabled ></el-input>

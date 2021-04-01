@@ -61,17 +61,17 @@
           prop="createOrgName"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>填报单位</span>
-            <div>
-              <el-input
-                class="list-search-picker"
-                style=" width: 100%"
-                v-model="searchform.createOrgName"
-                size="mini"
-              />
-            </div>
-          </template>
+          <!--<template slot="header" slot-scope="scope">-->
+            <!--<span>填报单位</span>-->
+            <!--<div>-->
+              <!--<el-input-->
+                <!--class="list-search-picker"-->
+                <!--style=" width: 100%"-->
+                <!--v-model="searchform.createOrgName"-->
+                <!--size="mini"-->
+              <!--/>-->
+            <!--</div>-->
+          <!--</template>-->
           <!--<template slot-scope="scope">-->
             <!--<span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>-->
           <!--</template>-->
@@ -92,32 +92,32 @@
           show-overflow-tooltip
 
         >
-          <template slot="header" slot-scope="scope">
-            <span>审核状态</span>
-            <div>
-              <el-select
-                class="list-search-picker"
-                clearable
-                filterable
-                placeholder="请选择"
-                size="mini"
-                v-model="searchform.stauts"
-              >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in flowStatusList"
-                ></el-option>
-              </el-select>
-              <!--<el-input-->
-              <!--class="list-search-picker"-->
-              <!--style=" width: 100%"-->
-              <!--v-model="searchform.flowStatus"-->
-              <!--size="mini"-->
-              <!--/>-->
-            </div>
-          </template>
+          <!--<template slot="header" slot-scope="scope">-->
+            <!--<span>审核状态</span>-->
+            <!--<div>-->
+              <!--<el-select-->
+                <!--class="list-search-picker"-->
+                <!--clearable-->
+                <!--filterable-->
+                <!--placeholder="请选择"-->
+                <!--size="mini"-->
+                <!--v-model="searchform.stauts"-->
+              <!--&gt;-->
+                <!--<el-option-->
+                  <!--:key="index"-->
+                  <!--:label="item.detailName"-->
+                  <!--:value="item.id"-->
+                  <!--v-for="(item, index) in flowStatusList"-->
+                <!--&gt;</el-option>-->
+              <!--</el-select>-->
+              <!--&lt;!&ndash;<el-input&ndash;&gt;-->
+              <!--&lt;!&ndash;class="list-search-picker"&ndash;&gt;-->
+              <!--&lt;!&ndash;style=" width: 100%"&ndash;&gt;-->
+              <!--&lt;!&ndash;v-model="searchform.flowStatus"&ndash;&gt;-->
+              <!--&lt;!&ndash;size="mini"&ndash;&gt;-->
+              <!--&lt;!&ndash;/>&ndash;&gt;-->
+            <!--</div>-->
+          <!--</template>-->
           <template slot-scope="scope">
             {{scope.row.stauts==1?'草稿':scope.row.stauts==2?'审核中':scope.row.stauts==3?'审核通过':scope.row.stauts==4?'审核退回':scope.row.stauts==0?'未创建':''}}
           </template>
@@ -129,21 +129,21 @@
           prop="createTime"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>创建时间</span>
-            <div>
-              <el-date-picker
-                class="list-search-picker"
-                filterable
-                clearable
-                type="date"
-                value-format="timestamp"
-                v-model="searchform.createTime"
+          <!--<template slot="header" slot-scope="scope">-->
+            <!--<span>创建时间</span>-->
+            <!--<div>-->
+              <!--<el-date-picker-->
+                <!--class="list-search-picker"-->
+                <!--filterable-->
+                <!--clearable-->
+                <!--type="date"-->
+                <!--value-format="timestamp"-->
+                <!--v-model="searchform.createTime"-->
 
-              >
-              </el-date-picker>
-            </div>
-          </template>
+              <!--&gt;-->
+              <!--</el-date-picker>-->
+            <!--</div>-->
+          <!--</template>-->
           <template slot-scope="scope">{{
             scope.row.createTime | dateformat
             }}</template>
@@ -155,24 +155,24 @@
           prop="state"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>审核通过时间</span>
-            <div>
-              <el-date-picker
-                class="list-search-picker"
-                filterable
-                clearable
-                type="daterange"
-                range-separator="-"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-                value-format="timestamp"
-                v-model="prossDate"
+          <!--<template slot="header" slot-scope="scope">-->
+            <!--<span>审核通过时间</span>-->
+            <!--<div>-->
+              <!--<el-date-picker-->
+                <!--class="list-search-picker"-->
+                <!--filterable-->
+                <!--clearable-->
+                <!--type="daterange"-->
+                <!--range-separator="-"-->
+                <!--start-placeholder="开始日期"-->
+                <!--end-placeholder="结束日期"-->
+                <!--value-format="timestamp"-->
+                <!--v-model="prossDate"-->
 
-              >
-              </el-date-picker>
-            </div>
-          </template>
+              <!--&gt;-->
+              <!--</el-date-picker>-->
+            <!--</div>-->
+          <!--</template>-->
           <template slot-scope="scope">{{
             scope.row.auditDate | dateformat
             }}</template>
@@ -189,6 +189,7 @@
     data() {
       return {
         Authorization:sessionStorage.getItem("token"),
+        userdata:JSON.parse(sessionStorage.getItem('userdata')),
         page: {current: 1, size: 20, total: 0, records: []},
         tableData: [],
         showinput: false,
@@ -287,8 +288,12 @@
           this.$message.info("请选择一条记录进行修改操作！");
           return false;
         }
-        if(this.multipleSelection[0].stauts=='2'||this.multipleSelection[0].stauts=='3'){
+        if(this.multipleSelection[0].stauts=='2'||this.multipleSelection[0].stauts=='3'||this.multipleSelection[0].stauts=='0'){
           this.$message.info("此条数据不可修改！");
+          return false;
+        }
+        if(this.multipleSelection[0].createOrgCode!=this.userdata.managerOrgCode){
+          this.$message.info("无权操作下级单位月报！");
           return false;
         }
         let p = {actpoint: "edit", statId: this.multipleSelection[0].uuid,reportDate: this.multipleSelection[0].reportDate,stauts:this.multipleSelection[0].stauts,createOrgCode:this.multipleSelection[0].createOrgCode};

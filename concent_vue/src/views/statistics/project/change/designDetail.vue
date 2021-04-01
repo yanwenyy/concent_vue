@@ -708,7 +708,7 @@
             <p>
               <span>相关附件: </span>
               <el-button
-                v-show="p.actpoint !== 'look'"
+                v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                 size="small"
                 type="primary"
                 @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','commonFilesList')">

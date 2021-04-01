@@ -30,7 +30,7 @@
                   <div>
                   <el-form-item
                     label="本月备注:"
-                  ><el-input  :disabled="isCk=='1'||p.actpoint=='task'" v-model="dataReport.thisPlan" type="textarea" ></el-input>
+                  ><el-input  :disabled="isCk=='1'||p.actpoint=='task'||p.actpoint=='look'" v-model="dataReport.thisPlan" type="textarea" ></el-input>
                   </el-form-item>
                   </div>
                     <!--<div>
@@ -42,13 +42,13 @@
                      <div>
                      <el-form-item
                       label="上月备注:"
-                    ><el-input :disabled="isCk=='1'||p.actpoint=='task'" v-model="dataReport.nextPlan" type="textarea" ></el-input>
+                    ><el-input :disabled="isCk=='1'||p.actpoint=='task'||p.actpoint=='look'" v-model="dataReport.nextPlan" type="textarea" ></el-input>
                     </el-form-item>
                     </div>
                   <p>
                     <span>上传附件: </span>
                     <el-button
-                      v-if="isCk!='1'&&p.actpoint!=='task'"
+                      v-if="isCk!='1'&&p.actpoint!=='task'&&p.actpoint!='look'"
                       class="detatil-flie-btn"
                       size="small"
                       type="primary"
@@ -584,7 +584,12 @@
             this.data = datas.tjxDetailList
             this.dataReport=datas.projectcheck
             this.dataReport.yearDateS=this.dataReport.reportYear+"-"+this.dataReport.reportMonth
-            this.commonFilesList=datas.commonFilesList
+            this.commonFilesList=datas.commonFilesList;
+            if(this.dataReport.status==1){
+              this.activeName='ztjd'
+            }else{
+              this.activeName='cwjswgcl'
+            }
           })
       },
     },
@@ -819,6 +824,9 @@
     right: 95px;
     background: #409EFF;
     color:#fff;
+  }
+  .detailBoxBG{
+    overflow: hidden!important;
   }
   .sub-btn{
     right: 175px;

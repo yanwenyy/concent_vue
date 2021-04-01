@@ -1717,6 +1717,9 @@
       margin-top: 30px;
     }
 
+    >>>.el-autocomplete{
+      width: 95%!important;
+    }
     .el-form-item {
       float: left;
       margin-bottom: 0;
