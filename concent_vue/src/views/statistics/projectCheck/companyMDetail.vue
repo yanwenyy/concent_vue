@@ -684,7 +684,7 @@
   }
   /deep/ .el-input__inner{
     height: 25px;
-    text-align: right;
+    //text-align: right;
     padding-right:2px;
   }
   .margin-left-25{
@@ -712,7 +712,7 @@
   }
   /deep/ .el-input__inner{
     height: 25px;
-    text-align: right;
+    //text-align: right;
     padding-right:2px;
   }
   /*按钮样式*/

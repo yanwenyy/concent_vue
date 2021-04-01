@@ -284,20 +284,19 @@
           this.$message.info('请选择一条记录进行删除操作！')
           return false
         }
-        var isSubmit = false
+        var isSubmit = true
         let uuids = []
         this.multipleSelection.forEach(function(item) {
           uuids.push(item.uuid)
-          if (item.status === '1') {
-            isSubmit = true
+          if (item.flowStatus === '1') {
+            isSubmit = false
             return false
           }
           if (item.flowStatus ===null) {
-            isSubmit = true
+            isSubmit = false
             return false
           }
         })
-        console.log(isSubmit)
         if (isSubmit) {
           this.$message({
             message: '选中项包含已提交项目或者未填报的项目，请重新选择',

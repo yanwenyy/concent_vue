@@ -439,10 +439,12 @@
       searchformSubmit() {
         this.searchform.current = 1
         var shijian=this.searchform.yearDateS;
+        if(shijian!='' && shijian!=null && shijian!=undefined){
         var y=shijian.split("-")[0];
         var m =shijian.split("-")[1];
         this.searchform.reportYear=y;
         this.searchform.reportMonth=m;
+        }
         this.getData()
       },
       searchformReset() {

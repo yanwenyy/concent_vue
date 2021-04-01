@@ -81,6 +81,7 @@
                 clearable
                 type="year"
                 value-format="yyyy"
+                size="large"
                 @change="queryList"
                 v-model="searchform.planYear"
               >
