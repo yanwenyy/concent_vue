@@ -328,14 +328,14 @@
         commonFilesList:[],
         yearDateS:'',
         activeName:"ztjd",
-        p: JSON.parse(this.$utils.decrypt(this.$route.query.mList)),
+        p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         proNameHover: false,
-        projectName: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectName,
-        actpoint: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).actpoint,
+        projectName: JSON.parse(this.$utils.decrypt(this.$route.query.p)).projectName,
+        actpoint: JSON.parse(this.$utils.decrypt(this.$route.query.p)).actpoint,
         projectreport: {},
         projectreportDetaiList: [],
         planPrjTjxDetailList: [],
-        projectStatus: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectStatus,
+        projectStatus: JSON.parse(this.$utils.decrypt(this.$route.query.p)).projectStatus,
       }
     },
     computed: {
@@ -492,7 +492,7 @@
             this.data = res.data.data.tjxDetailList
             this.dataReport=res.data.data.projectcheck
             this.dataReport.yearDateS=this.dataReport.reportYear+"-"+this.dataReport.reportMonth
-            this.dataReport.projectName=JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectName
+            this.dataReport.projectName=JSON.parse(this.$utils.decrypt(this.$route.query.p)).projectName
             this.commonFilesList=res.data.data.commonFilesList
           })
       }

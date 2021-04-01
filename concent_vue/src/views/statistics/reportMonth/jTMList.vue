@@ -249,8 +249,8 @@
     data() {
       return {
         data:{},
-        mList: JSON.parse(this.$utils.decrypt(this.$route.query.mList)),
-        yearDateS:JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportYear+'-'+JSON.parse(this.$utils.decrypt(this.$route.query.mList)).reportMonth,        userdata:{},
+        p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
+        yearDateS:JSON.parse(this.$utils.decrypt(this.$route.query.p)).reportYear+'-'+JSON.parse(this.$utils.decrypt(this.$route.query.p)).reportMonth,        userdata:{},
         treeStatas: false,
         page: { current: 1, size: 20, total: 0, records: [] },
         searchform: {
@@ -370,17 +370,17 @@
       },
       // 获取分页数据
       getData() {
-        //this.searchform=this.mList.params;
-        this.searchform.createOrgCode=this.mList.createOrgCode
-        this.searchform.createOrgId=this.mList.createOrgId
-        //this.searchform.createOrgName=this.mList.createOrgName
-        this.searchform.createOrgType=this.mList.createOrgType
-        this.searchform.createUserId=this.mList.createUserId
-        this.searchform.createUserName=this.mList.createUserName
-        this.searchform.reportYear=this.mList.reportYear
-        this.searchform.reportMonth=this.mList.reportMonth
-        this.searchform.reportType=this.mList.reportType
-        this.searchform.yearDateS=this.mList.reportYear+'-'+this.mList.reportMonth
+        //this.searchform=this.p.params;
+        this.searchform.createOrgCode=this.p.createOrgCode
+        this.searchform.createOrgId=this.p.createOrgId
+        //this.searchform.createOrgName=this.p.createOrgName
+        this.searchform.createOrgType=this.p.createOrgType
+        this.searchform.createUserId=this.p.createUserId
+        this.searchform.createUserName=this.p.createUserName
+        this.searchform.reportYear=this.p.reportYear
+        this.searchform.reportMonth=this.p.reportMonth
+        this.searchform.reportType=this.p.reportType
+        this.searchform.yearDateS=this.p.reportYear+'-'+this.p.reportMonth
         this.$http
             .post('/api/statistics/projectMonthlyReport/Projectreport/list/companyMonthlyReportList', this.searchform)
             .then(res => {
@@ -388,14 +388,14 @@
             });
       },
       rowShow(row){
-        let mList = {actpoint: "look", params: row};
+        let p = {actpoint: "look", params: row};
         if((row.flowStatus==''||row.flowStatus==null) && row.projectId!=this.userdata.managerOrgId){
           this.$message.info("该项目月报还未进行创建，无法进行操作", "提示")
           return false
         }else{
         this.$router.push({
           path: '../jTMDetail/',
-          query: {p: this.$utils.encrypt(JSON.stringify(mList))}
+          query: {p: this.$utils.encrypt(JSON.stringify(p))}
         });
 
       }},

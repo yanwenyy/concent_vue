@@ -401,10 +401,10 @@
             })
       },
       rowShow(row){
-        let mList = { actpoint: 'look', projectId: row.projectId,uuid:row.projectreportuuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.projectName,projectStatus:row.status,isCk:'1' }
+        let p = { actpoint: 'look', projectId: row.projectId,uuid:row.projectreportuuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.projectName,projectStatus:row.status,isCk:'1' }
         this.$router.push({
           path: './reportMDetail/',
-          query: { mList: this.$utils.encrypt(JSON.stringify(mList)) }
+          query: { p: this.$utils.encrypt(JSON.stringify(p)) }
         })
 
       }

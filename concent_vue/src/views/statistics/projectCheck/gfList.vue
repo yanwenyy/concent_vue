@@ -131,7 +131,7 @@
             </div>
           </template>-->
           <template slot-scope="scope">
-            <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'未创建'}}
+            <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核驳回':'未创建'}}
             </div>
           </template>
         </el-table-column>
@@ -295,23 +295,23 @@
         row.reportYear=this.searchform.yearDateS.split("-")[0];
         row.reportMonth=this.searchform.yearDateS.split("-")[1];
         row.yearDateS=this.searchform.yearDateS;
-        let mList = row;
+        let p = row;
         this.$router.push({
           path: "./jTMList/",
-          query: {mList: this.$utils.encrypt(JSON.stringify(mList))},
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       },
       // 查看
       rowshow(row) {
       debugger
-        let mList = {actpoint: "look", params: row};
+        let p = {actpoint: "look", params: row};
         if(row.flowStatus==''||row.flowStatus==null){
           this.$message.info("该项目月报还未完成上报,无法查看");
           return false;
         }else{
           this.$router.push({
             path: "./jTMDetail/",
-            query: {mList: this.$utils.encrypt(JSON.stringify(mList))},
+            query: {p: this.$utils.encrypt(JSON.stringify(p))},
           });
         }
       },

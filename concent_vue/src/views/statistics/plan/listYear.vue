@@ -87,13 +87,31 @@
             }}</template>
         </el-table-column>
         <el-table-column
-          :width="150"
+          :width="100"
           align="center"
           label="状态"
           show-overflow-tooltip
         >
           <template slot-scope="scope">
             <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'未创建'}}
+            </div>
+          </template>
+          <template slot="header" slot-scope="scope">
+            <span>状态</span>
+            <div>
+              <el-select
+                filterable
+                clearable
+                size="mini"
+                @change="searchformSubmit"
+                placeholder="请选择"
+                v-model="searchform.flowStatus">
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in flowStatus"/>
+              </el-select>
             </div>
           </template>
         </el-table-column>
@@ -125,11 +143,30 @@
         projectStatus: '',
         page: { current: 1, size: 20, total: 0, records: [] },
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
+        flowStatus:[
+          {
+            detailName:"草稿",
+            id:'1'
+          },
+          {
+            detailName:"审核中",
+            id:'2'
+          },
+          {
+            detailName:"审核通过",
+            id:'3'
+          },
+          {
+            detailName:"审核驳回",
+            id:'4'
+          }
+        ],
         searchform: {
           current: 1,
           size: 20,
           projectId: '',
-          planType: '2'
+          planType: '2',
+          flowStatus:''
         },
         menus: [],
         multipleSelection: [],
@@ -146,8 +183,17 @@
           return false
         }
         let uuids = []
+        var isSubmit=true
         this.multipleSelection.forEach((item) => {
           uuids.push(item.uuid)
+          if (item.flowStatus === '1') {
+            isSubmit = false
+            return false
+          }
+          if (item.flowStatus ===null) {
+            isSubmit = false
+            return false
+          }
         })
         this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
           confirmButtonText: '确定',
@@ -169,6 +215,10 @@
       edit() {
         if (this.multipleSelection.length !== 1) {
           this.$message.info('请选择一条记录进行查看操作！')
+          return false
+        }
+        if ((this.multipleSelection[0].flowStatus!=null || this.multipleSelection[0].flowStatus!='') && (this.multipleSelection[0].flowStatus=='2'||this.multipleSelection[0].flowStatus=='3')) {
+          this.$message.info('只可以编编未创建的和草稿状态的数据！')
           return false
         }
         let planId = this.multipleSelection[0].uuid

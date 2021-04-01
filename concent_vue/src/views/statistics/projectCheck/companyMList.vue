@@ -212,7 +212,7 @@
                          prop="flowStatus" show-overflow-tooltip
         >
           <template slot-scope="scope">
-               <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'未创建'}}
+               <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核驳回':'未创建'}}
           </div>
           </template>
           <template slot="header"
@@ -222,6 +222,7 @@
               <el-select class="list-search-picker" clearable filterable
                          placeholder="请选择"
                          size="mini"
+                         @clear="searchform.flowStatus=''"
                          v-model="searchform.flowStatus"
               >
                 <el-option :key="index"
@@ -304,6 +305,10 @@
           {
             detailName:"审核驳回",
             id:'4'
+          },
+          {
+            detailName:"未创建",
+            id:'0'
           }
         ],
         flowStatusNameList:[
@@ -505,13 +510,13 @@
           }else{
             this.type = 'edit'
             this.form1 = JSON.parse(JSON.stringify(this.multipleSelection[0]));
-            let mList = {projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,projectCheckUuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectCheckUuid,
+            let p = {projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,projectCheckUuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectCheckUuid,
               reportYear:JSON.parse(JSON.stringify(this.multipleSelection[0])).reportYear,reportMonth:JSON.parse(JSON.stringify(this.multipleSelection[0])).reportMonth,orgCode:JSON.parse(JSON.stringify(this.multipleSelection[0])).createOrgCode,
               projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).flowStatus,projectName:this.multipleSelection[0].projectName,uuid:this.multipleSelection[0].projectCheckUuid
             }
             this.$router.push({
               path: './companyMDetail/',
-              query: {mList: this.$utils.encrypt(JSON.stringify(mList))}
+              query: {p: this.$utils.encrypt(JSON.stringify(p))}
             });
           }
 
@@ -575,7 +580,7 @@
             });
       },
       rowShow(row){
-        let mList = {actpoint: 'look', projectId: row.projectId, orgCode: row.createOrgCode,projectName:row.projectName,createOrgId:row.createOrgId,createOrgName:row.createOrgName,
+        let p = {actpoint: 'look', projectId: row.projectId, orgCode: row.createOrgCode,projectName:row.projectName,createOrgId:row.createOrgId,createOrgName:row.createOrgName,
           reportYear:row.reportYear,reportMonth:row.reportMonth,uuid:row.projectCheckUuid,reportType:row.reportType,createOrgType:row.createOrgType
         };
         if((row.flowStatus==''||row.flowStatus==null) && row.projectId!=this.userdata.managerOrgId){
@@ -584,7 +589,7 @@
         }else{
         this.$router.push({
           path: './companyMDetail/',
-          query: {mList: this.$utils.encrypt(JSON.stringify(mList))}
+          query: {p: this.$utils.encrypt(JSON.stringify(p))}
         });
 
       }}
