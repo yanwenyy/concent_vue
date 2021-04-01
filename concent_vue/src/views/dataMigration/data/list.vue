@@ -66,11 +66,11 @@
 
         <el-table-column
         :width="150"
-        label="数据类型"
+        label="业务类型"
         prop="formType"
       >
         <template slot="header" slot-scope="scope">
-          <span>数据类型</span>
+          <span>业务类型</span>
           <div>
             <el-input
               class="list-search-picker"
@@ -118,7 +118,7 @@
             </div>
           </template>
           <template slot-scope="scope">{{
-            scope.row.startTime | dateformat
+            scope.row.startTime | dateformatTime
             }}</template>
         </el-table-column>
 
@@ -140,7 +140,7 @@
             </div>
           </template>
           <template slot-scope="scope">{{
-            scope.row.endTime | dateformat
+            scope.row.endTime | dateformatTime
             }}</template>
         </el-table-column>
         <el-table-column
@@ -236,6 +236,7 @@
 </template>
 
 <script>
+    import moment from 'moment'
   export default {
     // inject:['reload'],
     name: "proposal-list-look",
@@ -292,6 +293,15 @@
         type:'',
       };
     },
+      filters:{
+        dateformatTime: function(dataStr, pattern = 'YYYY-MM-DD HH:mm:ss'){
+            if (dataStr) {
+                return moment(dataStr).format(pattern)
+            } else {
+                return ''
+            }
+        }
+      },
     computed: {
       projectDomainType() {
         // console.log(this.$store.state.category["projectDomainType"])
@@ -430,11 +440,11 @@
         },
         // 查看
         rowshow(row) {
-            let p = {actpoint: "look", instid: row.topOrgId};
+           /* let p = {actpoint: "look", instid: row.uuid};
             this.$router.push({
                 path: "./listchild/",
                 query: {p: this.$utils.encrypt(JSON.stringify(p))},
-            });
+            });*/
         },
         // 删除
         remove() {
@@ -517,8 +527,10 @@
       },
         //查看子表列表信息
         lookInfo(row){
+            let p = {actpoint: "look", instid: row.uuid};
             this.$router.push({
                 path: "./listchild/",
+                query: {p: this.$utils.encrypt(JSON.stringify(p))},
             });
         },
       // 查询
