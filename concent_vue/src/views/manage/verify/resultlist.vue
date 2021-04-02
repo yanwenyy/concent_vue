@@ -39,6 +39,20 @@
 
         <el-table-column
           :width="500"
+          label="标段名称"
+          prop="sectionName"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+            <span>标段名称</span>
+          </template>
+          <template slot-scope="scope">
+            <span class="blue pointer" @click="verifyResultEdit(scope.row,'look')">{{scope.row.sectionName}}</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column
+          :width="500"
           label="项目名称"
           prop="inforName"
           show-overflow-tooltip

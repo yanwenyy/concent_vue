@@ -668,7 +668,7 @@ export default {
               'iconCls': 'el-icon-search',
               'menushow': true,
               'leaf': true,
-              'defaultpage': true
+              'defaultpage': false
             },
           ]
         },

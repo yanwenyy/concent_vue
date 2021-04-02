@@ -205,7 +205,7 @@
         <el-table-column
           :width="150"
           align="center"
-          label="资格预审结果"
+          label="状态"
           prop="verify.flowStatus"
 
           show-overflow-tooltip
@@ -216,7 +216,7 @@
           </template>
 
           <template slot="header" slot-scope="scope">
-            <span>资格预审结果</span>
+            <span>状态</span>
             <div>
               <el-input
                 style=" width: 100%"
