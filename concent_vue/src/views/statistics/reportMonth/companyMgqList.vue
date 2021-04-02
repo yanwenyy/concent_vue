@@ -83,7 +83,7 @@
               scope.row.reportYear+"-"+scope.row.reportMonth
               }}
             </div>
-            <div v-else>{{searchform.yearDateS}}</div>
+            <div v-else>{{mrTime}}</div>
           </template>
         </el-table-column>
         <el-table-column :min-width="200"
@@ -273,6 +273,7 @@
       return {
         data:{},
         userdata:{},
+        mrTime:'',
         treeStatas: false,
         showTqDialog:false,
         addTitle:'请注意',
@@ -349,6 +350,7 @@
         var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
         var time=y + '-' + m;
         this.searchform.yearDateS= time;
+        this.mrTime=time;
       },
       //新增
       add(){
@@ -408,8 +410,14 @@
       },
       //未上报批量填0点击是
       submit(){
+        var dataInfo=[];
+        this.data.forEach((item) => {
+          if(item.projectId!=this.userdata.managerOrgId){
+            dataInfo.push(item);
+          }
+        })
         let tableData = {
-          prjAndPrjReportAndDetailList:this.data,
+          prjAndPrjReportAndDetailList:dataInfo,
           yearVo:this.searchform.yearDateS.split("-")[0],
           monthVo:this.searchform.yearDateS.split("-")[1],
           reportTypeVo:"2"
@@ -541,14 +549,19 @@
       },
       searchformSubmit() {
         this.searchform.current = 1;
-        this.searchform.reportYear= this.searchform.yearDateS.split("-")[0];
-        this.searchform.reportMonth= this.searchform.yearDateS.split("-")[1];
+        if(this.searchform.yearDateS!='' && this.searchform.yearDateS!=null && this.searchform.yearDateS!=undefined) {
+          this.searchform.reportYear = this.searchform.yearDateS.split("-")[0];
+          this.searchform.reportMonth = this.searchform.yearDateS.split("-")[1];
+        }
         this.getData();
       },
       queryList(){
         this.searchform.current = 1;
-        this.searchform.reportYear= this.searchform.yearDateS.split("-")[0];
-        this.searchform.reportMonth= this.searchform.yearDateS.split("-")[1];
+        if(this.searchform.yearDateS!='' && this.searchform.yearDateS!=null && this.searchform.yearDateS!=undefined){
+          this.mrTime=this.searchform.yearDateS;
+          this.searchform.reportYear= this.searchform.yearDateS.split("-")[0];
+          this.searchform.reportMonth= this.searchform.yearDateS.split("-")[1];
+        }
         this.getData();
       },
       searchformReset() {
@@ -581,8 +594,10 @@
       },
       // 获取分页数据
       getData() {
-        this.searchform.reportYear= this.searchform.yearDateS.split("-")[0];
-        this.searchform.reportMonth= this.searchform.yearDateS.split("-")[1];
+        if(this.searchform.yearDateS!='' && this.searchform.yearDateS!=null && this.searchform.yearDateS!=undefined) {
+          this.searchform.reportYear = this.searchform.yearDateS.split("-")[0];
+          this.searchform.reportMonth = this.searchform.yearDateS.split("-")[1];
+        }
         this.$http
             .post('/api/statistics/projectMonthlyReport/Projectreport/list/companyMonthlyReportList', this.searchform)
             .then(res => {
