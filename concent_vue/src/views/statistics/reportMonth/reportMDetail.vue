@@ -117,7 +117,7 @@
                     >
                       <template slot-scope="scope">
                        <!-- <div>{{scope.row.monthValue}}</div>-->
-                        <div v-if="scope.row.veditable == '1' && isCk!='1'&&p.actpoint!='task'">
+                        <div v-if="scope.row.veditable == '1' && isCk!='1' && p.actpoint!='task'&& p.actpoint!='look'">
                           <el-input v-model="scope.row.monthValue" @input="scope.row.value = scope.row.monthValue.replace(/[^\-?\d.]/g,'','')" @blur="getYear(data,scope.$index,scope.row.sumTarget)"/>
                         </div>
 
@@ -269,7 +269,7 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <div v-if="scope.row.veditable === '1'&& isCk!='1'">
+                    <div v-if="scope.row.veditable === '1'&& isCk!='1' && p.actpoint!='look'">
                       <el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')" @blur="getNextPlanYear(nextData,scope.$index,scope.row.sumTarget)"/>
                     </div>
 <!--                    <div v-else-if="projectStatus !== '2' " style="text-align: right">{{sumCount(scope.row)}}</div>-->
