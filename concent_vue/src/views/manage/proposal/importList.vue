@@ -3,7 +3,7 @@
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
         <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>新增</el-button>
-        <!--<el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>-->
+        <el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
         <!--<el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>-->
         <!-- <el-button @click="searchformReset" type="primary" plain>刷新<i class="el-icon-refresh-left"></i></el-button> -->
 
