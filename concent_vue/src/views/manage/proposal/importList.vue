@@ -4,29 +4,29 @@
       <el-button-group style="float: left">
         <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>新增</el-button>
         <el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
-        <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
+        <!--<el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>-->
         <!-- <el-button @click="searchformReset" type="primary" plain>刷新<i class="el-icon-refresh-left"></i></el-button> -->
 
-        <!--<el-upload-->
-          <!--style="float:left"-->
-          <!--class="upload-demo detailUpload detail-back-tab add-group "-->
-          <!--:action="'/api/contract/topInfo/TopInfor/list/importExcel'"-->
-          <!--:on-success="handleChange"-->
-          <!--:headers="{'Authorization':Authorization}"-->
-          <!--:on-error="handleChange"-->
-          <!--:show-file-list="false"-->
-          <!--accept=".xls,.xlsx"-->
-          <!--multiple-->
-        <!--&gt;-->
-          <!--<el-button-->
-            <!--type="primary"-->
-            <!--plain-->
-            <!--class="new-add-btn"-->
-          <!--&gt;<i class="el-icon-download"></i>导入-->
-          <!--</el-button>-->
-        <!--</el-upload>-->
+        <el-upload
+        style="float:left"
+        class="upload-demo detailUpload detail-back-tab add-group "
+        :action="'/api/contract/topInfo/TopInfor/list/importExcel'"
+        :on-success="handleChange"
+        :headers="{'Authorization':Authorization}"
+        :on-error="handleChange"
+        :show-file-list="false"
+        accept=".xls,.xlsx"
+        multiple
+        >
+        <el-button
+        type="primary"
+        plain
+        class="new-add-btn"
+        ><i class="el-icon-download"></i>导入
+        </el-button>
+        </el-upload>
 
-        <el-button @click="exportdata" type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>
+        <!--<el-button @click="exportdata" type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>-->
       </el-button-group>
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
@@ -80,7 +80,7 @@
             </div>
           </template>
           <template slot-scope="scope">
-              <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
+            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -228,43 +228,43 @@
             scope.row.planBidTime | dateformat
             }}</template>
         </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="状态"
-          prop="flowStatus"
-          show-overflow-tooltip
-        >
-          <template slot-scope="scope">
-             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
-          </template>
-          <template slot="header" slot-scope="scope">
-            <span>状态</span>
-            <div>
-              <el-select
-                class="list-search-picker"
-                clearable
-                filterable
-                placeholder="请选择"
-                size="mini"
-                v-model="searchform.flowStatus"
-              >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in flowStatusList"
-                ></el-option>
-              </el-select>
-              <!--<el-input-->
+        <!--<el-table-column-->
+          <!--:width="150"-->
+          <!--align="center"-->
+          <!--label="状态"-->
+          <!--prop="flowStatus"-->
+          <!--show-overflow-tooltip-->
+        <!--&gt;-->
+          <!--<template slot-scope="scope">-->
+            <!-- {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}-->
+          <!--</template>-->
+          <!--<template slot="header" slot-scope="scope">-->
+            <!--<span>状态</span>-->
+            <!--<div>-->
+              <!--<el-select-->
                 <!--class="list-search-picker"-->
-                <!--style=" width: 100%"-->
-                <!--v-model="searchform.flowStatus"-->
+                <!--clearable-->
+                <!--filterable-->
+                <!--placeholder="请选择"-->
                 <!--size="mini"-->
-              <!--/>-->
-            </div>
-          </template>
-        </el-table-column>
+                <!--v-model="searchform.flowStatus"-->
+              <!--&gt;-->
+                <!--<el-option-->
+                  <!--:key="index"-->
+                  <!--:label="item.detailName"-->
+                  <!--:value="item.id"-->
+                  <!--v-for="(item, index) in flowStatusList"-->
+                <!--&gt;</el-option>-->
+              <!--</el-select>-->
+              <!--&lt;!&ndash;<el-input&ndash;&gt;-->
+              <!--&lt;!&ndash;class="list-search-picker"&ndash;&gt;-->
+              <!--&lt;!&ndash;style=" width: 100%"&ndash;&gt;-->
+              <!--&lt;!&ndash;v-model="searchform.flowStatus"&ndash;&gt;-->
+              <!--&lt;!&ndash;size="mini"&ndash;&gt;-->
+              <!--&lt;!&ndash;/>&ndash;&gt;-->
+            <!--</div>-->
+          <!--</template>-->
+        <!--</el-table-column>-->
 
         <el-table-column
           :width="150"
@@ -297,33 +297,33 @@
                 ></el-option>
               </el-select>
               <!--<el-input-->
-                <!--class="list-search-picker"-->
-                <!--style=" width: 100%"-->
-                <!--v-model="searchform.importFileRecordName"-->
-                <!--size="mini"-->
+              <!--class="list-search-picker"-->
+              <!--style=" width: 100%"-->
+              <!--v-model="searchform.importFileRecordName"-->
+              <!--size="mini"-->
               <!--/>-->
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-          width="150"
-          align="center"
-          label="版本标识"
-          prop="version"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>版本标识</span>
-            <div>
-              <el-input
-              class="list-search-picker"
-              style=" width: 100%"
-              v-model="searchform.version"
-              size="mini"
-              />
-            </div>
-          </template>
-        </el-table-column>
+        <!--<el-table-column-->
+          <!--width="150"-->
+          <!--align="center"-->
+          <!--label="版本标识"-->
+          <!--prop="version"-->
+          <!--show-overflow-tooltip-->
+        <!--&gt;-->
+          <!--<template slot="header" slot-scope="scope">-->
+            <!--<span>版本标识</span>-->
+            <!--<div>-->
+              <!--<el-input-->
+                <!--class="list-search-picker"-->
+                <!--style=" width: 100%"-->
+                <!--v-model="searchform.version"-->
+                <!--size="mini"-->
+              <!--/>-->
+            <!--</div>-->
+          <!--</template>-->
+        <!--</el-table-column>-->
         <!-- <el-table-column
           :width="120"
           align="center"
@@ -355,7 +355,7 @@
     name: "proposal-list-look",
     data() {
       return {
-          Authorization:sessionStorage.getItem("token"),
+        Authorization:sessionStorage.getItem("token"),
         page: {current: 1, size: 20, total: 0, records: []},
         showinput: false,
         sousuo: "",
@@ -404,22 +404,22 @@
       },
     },
     methods: {
-          //上传附件
-    handleChange(response, file, fileList) {
-      if (response && response.code === 200) {
-        this.$message({
-          message: "导入成功",
-          type: "success",
-          duration: 1500,
-          onClose: () => {
+      //上传附件
+      handleChange(response, file, fileList) {
+        if (response && response.code === 200) {
+          this.$message({
+            message: "导入成功",
+            type: "success",
+            duration: 1500,
+            onClose: () => {
             this.getData();
-            // console.log(fileList);
-          },
+          // console.log(fileList);
+        },
         });
-      } else {
-        this.$message.error(response.msg);
-      }
-    },
+        } else {
+          this.$message.error(response.msg);
+        }
+      },
       //工程类别二级
       getTwo(id) {
         this.searchform.enginTypeSecondId='';
@@ -443,7 +443,7 @@
       add() {
         let p = {actpoint: "add"};
         this.$router.push({
-          path: "./detail/",
+          path: "./importDetail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       },
@@ -459,7 +459,7 @@
         }
         let p = {actpoint: "edit", instid: this.multipleSelection[0].topOrgId};
         this.$router.push({
-          path: "./detail/",
+          path: "./importDetail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
 
@@ -468,7 +468,7 @@
       rowshow(row) {
         let p = {actpoint: "look", instid: row.topOrgId};
         this.$router.push({
-          path: "./detail/",
+          path: "./importDetail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       },
@@ -514,7 +514,7 @@
         }
         let p = {actpoint: "look", instid: this.multipleSelection[0].uuid};
         this.$router.push({
-          path: "../detail/",
+          path: "./importDetail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       }, // list通用方法开始
@@ -561,17 +561,17 @@
             this.searchform
           )
           .then((res) => {
-            this.page = res.data.data;
-          });
+          this.page = res.data.data;
+      });
       },
       getMenus() {
         this.$http
           .post("api/base/loadcascader", {typecode: "XMLX"})
           .then((res) => {
-            if (res.data.code === 0) {
-              this.menus = res.data.data;
-            }
-          });
+          if (res.data.code === 0) {
+          this.menus = res.data.data;
+        }
+      });
       },
       currentMenu(selVal) {
         let selMenuObj = this.menus.filter((item) => item.value === selVal);
@@ -581,7 +581,7 @@
       getOrgTree() {
         this.$http.get("/api/contract/base/loadorglist").then((res) => {
           this.orgTree = res.data.data;
-        });
+      });
       },
       // 确定单位
       orgChange() {
@@ -605,5 +605,8 @@
   }
   .add-group .new-add-btn{
     border-radius: 0;
+    border-top-right-radius: 4px!important;
+    border-bottom-right-radius: 4px!important;
+    border-right: 1px solid #08459c!important;
   }
 </style>
