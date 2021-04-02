@@ -399,10 +399,14 @@
       },
       // 获取数据
       getData() {
-        debugger
-        let a=p.params
         this.$http
-            .post('/api/statistics/Projectcheck/detail/queryEntityInfoDetail', this.p.params, {useJson: true})
+            .post('/api/statistics/Projectcheck/detail/queryEntityInfoDetail', JSON.stringify({
+              projectId: this.p.params.projectId,
+              uuid: this.p.params.uuid,
+              reportYear: this.p.params.reportYear,
+              reportMonth:this.p.params.reportMonth,
+              createOrgCode: this.p.params.orgCode
+            }), {useJson: true})
             .then(res => {
               this.data = res.data.data.tjxDetailList
               this.dataReport=res.data.data.projectcheck

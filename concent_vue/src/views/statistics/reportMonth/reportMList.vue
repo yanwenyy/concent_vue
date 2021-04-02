@@ -332,7 +332,7 @@
             if (res.data.code === 200) {
             this.showYMDialog = false
               let p = {projectId:res.data.data.projectreport.projectId,uuid:res.data.data.projectreport.uuid,
-                fillDate:res.data.data.projectreport.fillDate,orgCode:res.data.data.projectreport.createOrgCode,
+                yearDates:res.data.data.projectreport.yearDates,orgCode:res.data.data.projectreport.createOrgCode,
                 projectName:res.data.data.projectreport.reportProjectName,projectStatus:res.data.data.projectreport.flowStatus
               }
                 this.$router.push({
@@ -379,7 +379,7 @@
           this.type = 'edit'
           this.form1 = JSON.parse(JSON.stringify(this.multipleSelection[0]))
           let p = {projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,uuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).uuid,
-            fillDate:JSON.parse(JSON.stringify(this.multipleSelection[0])).fillDate,orgCode:JSON.parse(JSON.stringify(this.multipleSelection[0])).createOrgCode,
+            yearDates:JSON.parse(JSON.stringify(this.multipleSelection[0])).yearDates,orgCode:JSON.parse(JSON.stringify(this.multipleSelection[0])).createOrgCode,
             projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).status,projectName:this.multipleSelection[0].reportProjectName
           }
           this.$router.push({
@@ -474,7 +474,6 @@
           flowStatus:'',
           reportProjectName:'',
           uuid:'',
-          fillDate:'',
           yearDates:''
 
         }
