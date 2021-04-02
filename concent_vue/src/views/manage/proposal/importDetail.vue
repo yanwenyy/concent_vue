@@ -1360,9 +1360,7 @@
                     type: "success",
                   });
                   this.$refs[formName].resetFields();
-                  this.$router.push({
-                    path: "/manage/proposal/list",
-                  });
+                  this.back();
                 }
               });
           } else {
