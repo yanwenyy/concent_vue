@@ -81,7 +81,7 @@
               scope.row.reportYear+"-"+scope.row.reportMonth
               }}
             </div>
-            <div v-else>{{searchform.yearDateS}}</div>
+            <div v-else>{{mrTime}}</div>
           </template>
         </el-table-column>
         <el-table-column :min-width="200"
@@ -270,6 +270,7 @@
     data() {
       return {
         data:{},
+        mrTime:'',
         userdata:{},
         treeStatas: false,
         showTqDialog:false,
@@ -346,7 +347,8 @@
         var y = date.getFullYear();
         var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
         var time=y + '-' + m;
-      this.searchform.yearDateS= time;
+        this.searchform.yearDateS= time;
+        this.mrTime=time;
       },
         //新增
       add(){
@@ -406,8 +408,14 @@
       },
       //未上报批量填0点击是
       submit(){
+        var dataInfo=[];
+        this.data.forEach((item) => {
+          if(item.projectId!=this.userdata.managerOrgId){
+            dataInfo.push(item);
+          }
+        })
         let tableData = {
-          prjAndPrjCheckAndDetailVo:this.data,
+          prjAndPrjCheckAndDetailVo:dataInfo,
           yearVo:this.searchform.yearDateS.split("-")[0],
           monthVo:this.searchform.yearDateS.split("-")[1],
           reportTypeVo:"1"
@@ -541,8 +549,11 @@
       },
       queryList(){
         this.searchform.current = 1;
-        this.searchform.reportYear= this.searchform.yearDateS.split("-")[0];
-        this.searchform.reportMonth= this.searchform.yearDateS.split("-")[1];
+        if(this.searchform.yearDateS!='' && this.searchform.yearDateS!=null && this.searchform.yearDateS!=undefined){
+          this.mrTime=this.searchform.yearDateS;
+          this.searchform.reportYear= this.searchform.yearDateS.split("-")[0];
+          this.searchform.reportMonth= this.searchform.yearDateS.split("-")[1];
+        }
         this.getData();
       },
       searchformReset() {
@@ -575,8 +586,10 @@
       },
       // 获取分页数据
       getData() {
+        if(this.searchform.yearDateS!='' && this.searchform.yearDateS!=null && this.searchform.yearDateS!=undefined){
         this.searchform.reportYear= this.searchform.yearDateS.split("-")[0];
         this.searchform.reportMonth= this.searchform.yearDateS.split("-")[1];
+        }
         this.$http
             .post('/api/statistics/Projectcheck/list/companyMonthlyReportList', this.searchform)
             .then(res => {
