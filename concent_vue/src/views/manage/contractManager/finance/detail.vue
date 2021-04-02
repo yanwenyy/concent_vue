@@ -1629,6 +1629,7 @@ export default {
       }
     }
     return {
+      ifOAS:false,
       options1:[{label:"值",value:'111'}],
       DwVisible:false,//选择单位弹框状态
       uploadVisible:false,//上传附件组件状态
@@ -1709,6 +1710,13 @@ export default {
     },
   },
   methods: {
+    //设置我方份额含补充
+    getOurAmountSupply(){
+      if(this.detailform.contractInfo.ourAmountSupply==null||this.ifOAS){
+        this.detailform.contractInfo.ourAmountSupply=this.detailform.contractInfo.ourAmount;
+        this.ifOAS=true;
+      }
+    },
     //流程操作
     operation(type){
       this.$http
@@ -1997,6 +2005,7 @@ export default {
         this.$forceUpdate();
         this.detailform.contractInfo.ourAmount=this.detailform.contractInfo.crccCash-our_money;
       }
+      this.getOurAmountSupply();
     },
     handleRemove1(file,index) {
       this.$http

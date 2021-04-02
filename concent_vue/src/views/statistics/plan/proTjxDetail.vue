@@ -277,7 +277,7 @@
     box-sizing: border-box;
     max-height: calc(100vh - 175px)!important;
     min-height: calc(100vh - 175px)!important;
-    overflow: scroll;
+    /*overflow: scroll;*/
   }
   .tableStyle{
     width: 100%;

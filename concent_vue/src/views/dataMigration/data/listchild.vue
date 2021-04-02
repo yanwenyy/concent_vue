@@ -259,19 +259,13 @@
     data() {
       return {
         page: {current: 1, size: 20, total: 0, records: []},
+          p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         showinput: false,
         sousuo: "",
         searchform: {
           current: 1,
           size: 20,
-          reportName: "",
-          reportType: "08",
-          reportHierarchy: "",
-          reportHierarchyId:"",
-          reportSort: "",
-          enableStatus:"",
-          constructionOrg: "",
-          noticeTypeId: "",
+          id:"",
         },
           form:{
               reportName: "",
@@ -552,10 +546,10 @@
       },
       // 查询
       getData() {
+        this.searchform.id=this.p.instid
         this.$http
-          .post(
-            //"/api/contract/ReportManage/list/loadPageData",
-            this.searchform
+          .post("/api/statistics/DataMigration/detail/loadPageDetailById",
+          this.searchform
           )
           .then((res) => {
             this.page = res.data.data;

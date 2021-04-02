@@ -41,6 +41,7 @@ const state = {
   projectStatus:[],//项目状态
   emergingMarket:[],//新兴市场
   customernatureCode:[],//客户性质
+  customerNature:[],//企业性质
   cooperation:[],//框架合作协议
   operation:[],//运营维管
   other:[],//其他
@@ -222,6 +223,9 @@ const mutations = {
       case 'customernatureCode':
         state.customernatureCode=item.sysCategoryDetailList;
         break;
+      case 'customerNature':
+        state.customerNature=item.sysCategoryDetailList;
+        break;
       case 'cooperation':
         state.cooperation=item.sysCategoryDetailList;
         break;
@@ -401,6 +405,9 @@ const mutations = {
         break;
       case 'customernatureCode':
         state.customernatureCode=item.sysCategoryDetailList;
+        break;
+      case 'customerNature':
+        state.customerNature=item.sysCategoryDetailList;
         break;
       case 'cooperation':
         state.cooperation=item.sysCategoryDetailList;

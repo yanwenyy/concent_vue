@@ -196,6 +196,14 @@
         url='/api/statistics/StatisticsProject/process/recall'
       }else  if(val.businessType=='project_project_change'){
         url='/api/statistics/StatisticsProject/changeProcess/recall'
+      }else  if(val.businessType=='project_plan'){
+        url='/api/statistics/planPrjTjxDetail/process/recall'
+      }else  if(val.businessType=='emr_valuation'){
+        url='/api/statistics/Projectcheck/process/recall'
+      }else  if(val.businessType=='engineering_monthly_report'){
+        url='/api/statistics/projectMonthlyReport/Projectreport/process/recall'
+      }else  if(val.businessType=='engineering_monthly_report_not'){
+        url='/api/statistics/unProjectReport/process/recall'
       }
       this.$http
         .post(
@@ -287,6 +295,10 @@
     /*height:auto;*/
     box-sizing: border-box;
     padding: 10px;
+  }
+  .dbTabel >>>.el-button{
+    height: auto!important;
+    line-height:inherit!important;
   }
   .home-body{
     width: 100%;

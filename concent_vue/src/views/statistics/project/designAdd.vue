@@ -713,7 +713,7 @@
           <p>
             <span>相关附件: </span>
             <el-button
-              v-show="p.actpoint !== 'look'"
+              v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
               size="small"
               type="primary"
               @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','commonFilesList')">
@@ -1172,7 +1172,7 @@
               .then((res) => {
                 if (res.data.code === 200) {
                     this.$message({
-                      message: '保存成功',
+                      message:  `${type=='save'?'保存':'提交'}成功`,
                       type: 'success'
                     })
                     this.$router.push({

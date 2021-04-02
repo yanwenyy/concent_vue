@@ -96,9 +96,11 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            <span v-if="scope.row.flowStatus=='0'" style="color:#909399;">未提交</span>
+            <!--<span v-if="scope.row.flowStatus=='0'" style="color:#909399;">未提交</span>
             <span v-else-if="scope.row.flowStatus=='1'" style="color:#67c23a;">已提交</span>
-            <span v-else>未填报</span>
+            <span v-else>未填报</span>-->
+            <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'未创建'}}
+            </div>
           </template>
         </el-table-column>
       </el-table>
@@ -150,9 +152,26 @@
           return false
         }
         let uuids = []
+        var isSubmit=true
         this.multipleSelection.forEach((item) => {
           uuids.push(item.uuid)
+          if (item.flowStatus === '1') {
+            isSubmit = false
+            return false
+          }
+          if (item.flowStatus ===null) {
+            isSubmit = false
+            return false
+          }
         })
+        if (isSubmit) {
+          this.$message({
+            message: '选中项包含已提交项目或者未填报的项目，请重新选择',
+            duration: 2000,
+            type: 'warning',
+            onClose: () => { this.getData() }
+          })
+        } else {
         this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -168,11 +187,15 @@
             })
         }).catch(() => {
         })
-      },
+      }},
       // 修改
       edit() {
         if (this.multipleSelection.length !== 1) {
           this.$message.info('请选择一条记录进行查看操作！')
+          return false
+        }
+        if ((this.multipleSelection[0].flowStatus!=null || this.multipleSelection[0].flowStatus!='') && (this.multipleSelection[0].flowStatus=='2'||this.multipleSelection[0].flowStatus=='3')) {
+          this.$message.info('只可以编编未创建的和草稿状态的数据！')
           return false
         }
         let planId = this.multipleSelection[0].uuid

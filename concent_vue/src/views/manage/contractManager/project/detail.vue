@@ -6055,6 +6055,7 @@ export default {
       }
     }
     return {
+      ifOAS:false,
       gclList:[],//工程量清单列表
       gclName:'0',
       gcl_current:1,
@@ -6197,6 +6198,13 @@ export default {
     // eslint-disable-next-line no-unde
   },
   methods: {
+    //设置我方份额含补充
+    getOurAmountSupply(){
+      if(this.detailform.contractInfo.ourAmountSupply==null||this.ifOAS){
+        this.detailform.contractInfo.ourAmountSupply=this.detailform.contractInfo.ourAmount;
+        this.ifOAS=true;
+      }
+    },
     //建设单位搜索
     querySearchAsync(queryString, cb) {
       var restaurants = this.pubCustomers;
@@ -6472,7 +6480,9 @@ export default {
         });
         this.$forceUpdate();
         this.detailform.contractInfo.ourAmount=this.detailform.contractInfo.crccCash-our_money;
+
       }
+      this.getOurAmountSupply();
     },
     //获取其他投资
     getOther(){

@@ -160,13 +160,13 @@
           </template>
         </el-table-column>
         <el-table-column
-          :width="100"
+          :width="150"
           align="center"
           label="状态"
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'未创建'}}
+            <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核驳回':'未创建'}}
             </div>
           </template>
           <template slot="header" slot-scope="scope">
@@ -176,6 +176,7 @@
                 filterable
                 clearable
                 size="mini"
+                @clear="searchform.flowStatus=''"
                 @change="searchformSubmit"
                 placeholder="请选择"
                 v-model="searchform.flowStatus">
@@ -228,6 +229,10 @@
           {
             detailName:"审核驳回",
             id:'4'
+          },
+          {
+            detailName:"未创建",
+            id:'0'
           }
         ],
         page: { current: 1, size: 20, total: 0, records: [] },
@@ -284,20 +289,19 @@
           this.$message.info('请选择一条记录进行删除操作！')
           return false
         }
-        var isSubmit = false
+        var isSubmit = true
         let uuids = []
         this.multipleSelection.forEach(function(item) {
           uuids.push(item.uuid)
-          if (item.status === '1') {
-            isSubmit = true
+          if (item.flowStatus === '1') {
+            isSubmit = false
             return false
           }
           if (item.flowStatus ===null) {
-            isSubmit = true
+            isSubmit = false
             return false
           }
         })
-        console.log(isSubmit)
         if (isSubmit) {
           this.$message({
             message: '选中项包含已提交项目或者未填报的项目，请重新选择',
@@ -332,7 +336,7 @@
       },
       // 修改
       edit() {
-        debugger;
+        // debugger;
         if (this.multipleSelection.length !== 1) {
           this.$message.info('请选择一条记录进行查看操作！')
           return false

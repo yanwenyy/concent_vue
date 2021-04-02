@@ -66,7 +66,7 @@
           :index="computeTableIndex"
         ></el-table-column>
         <el-table-column
-          :width="110"
+          :width="150"
           align="left"
           label="计划年份"
           prop="planYear"
@@ -234,13 +234,13 @@
           </template>
         </el-table-column>
         <el-table-column
-          :width="100"
+          :width="150"
           align="center"
           label="状态"
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'未创建'}}
+            <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核驳回':'未创建'}}
             </div>
           </template>
           <template slot="header" slot-scope="scope">
@@ -250,6 +250,7 @@
                 filterable
                 clearable
                 size="mini"
+                @clear="searchform.flowStatus=''"
                 @change="searchformSubmit"
                 placeholder="请选择"
                 v-model="searchform.flowStatus">
@@ -304,6 +305,10 @@
           {
             detailName:"审核驳回",
             id:'4'
+          },
+          {
+            detailName:"未创建",
+            id:'0'
           }
         ],
         selectYears: [],
@@ -417,6 +422,7 @@
       },
       // 修改
       edit() {
+        debugger
         if (this.multipleSelection.length !== 1) {
           this.$message.info('请选择一条记录进行查看操作！')
           return false
@@ -425,7 +431,7 @@
           this.$message.info('只可以编编未创建的和草稿状态的数据！')
           return false
         }
-        var currentYear = this.currentYears[this.multipleSelection[0].index]
+/*        var currentYear = this.currentYears[this.multipleSelection[0].index]
         this.selectYears.forEach((item) => {
           if (this.multipleSelection[0].projectId === item.projectId) {
             currentYear = item.year
@@ -436,7 +442,9 @@
           if (this.multipleSelection[0].projectId === item.projectId) {
             currentMonth = item.month
           }
-        })
+        })*/
+        var currentYear=this.searchform.planYear
+        var currentMonth =this.searchform.planMonth
         let planId = this.multipleSelection[0].uuid
         let flowStatus = this.multipleSelection[0].flowStatus
         let projectName = this.multipleSelection[0].projectName

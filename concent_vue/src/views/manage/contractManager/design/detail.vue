@@ -2186,6 +2186,7 @@
         }
       }
       return {
+        ifOAS:false,
         key: 0,
         treeStatas: false,
         positionIndex: '',//缓存当前的选中的项目地点的index
@@ -2322,6 +2323,13 @@
       // eslint-disable-next-line no-unde
     },
     methods: {
+      //设置我方份额含补充
+      getOurAmountSupply(){
+        if(this.detailform.contractInfo.ourAmountSupply==null||this.ifOAS){
+          this.detailform.contractInfo.ourAmountSupply=this.detailform.contractInfo.ourAmount;
+          this.ifOAS=true;
+        }
+      },
       //建设单位搜索
       querySearchAsync(queryString, cb) {
         var restaurants = this.pubCustomers;
@@ -2446,6 +2454,7 @@
           this.$forceUpdate();
           this.detailform.contractInfo.ourAmount=this.detailform.contractInfo.crccCash-our_money;
         }
+        this.getOurAmountSupply();
       },
       handleRemove1(file,index) {
         this.$http

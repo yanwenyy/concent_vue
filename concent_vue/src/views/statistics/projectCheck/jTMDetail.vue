@@ -331,10 +331,10 @@
         nextData:[],
         yearDateS:'',
         activeName:"ztjd",
-        p: JSON.parse(this.$utils.decrypt(this.$route.query.mList)),
+        p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         proNameHover: false,
-        projectName: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectName,
-        isCk:JSON.parse(this.$utils.decrypt(this.$route.query.mList)).isCk,
+        projectName: JSON.parse(this.$utils.decrypt(this.$route.query.p)).projectName,
+        isCk:JSON.parse(this.$utils.decrypt(this.$route.query.p)).isCk,
         projectreport: {},
         projectreportDetaiList: [],
         planPrjTjxDetailList: [],
@@ -399,6 +399,8 @@
       },
       // 获取数据
       getData() {
+        debugger
+        let a=p.params
         this.$http
             .post('/api/statistics/Projectcheck/detail/queryEntityInfoDetail', this.p.params, {useJson: true})
             .then(res => {
@@ -593,7 +595,7 @@
   }
   /deep/ .el-input__inner{
     height: 25px;
-    text-align: right;
+    //text-align: right;
     padding-right:2px;
   }
   .margin-left-25{
@@ -621,7 +623,7 @@
   }
   /deep/ .el-input__inner{
     height: 25px;
-    text-align: right;
+    //text-align: right;
     padding-right:2px;
   }
   /*按钮样式*/

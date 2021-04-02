@@ -647,7 +647,7 @@
             <p class="detail-title">
               <span>附件: </span>
               <el-button
-                v-show="p.actpoint != 'look' && p.actpoint !== 'searchLook'"
+                v-show="p.actpoint != 'look' && p.actpoint !== 'searchLook'&& p.actpoint !== 'task'"
                 size="small"
                 type="primary"
                 @click="openFileUp('/api/contract/topInfo/CommonFiles/bidInfo/01/uploadFile','bidInfo_01')">
@@ -749,7 +749,7 @@
             <span>标段信息:</span>
             <!-- @click="add('bd')" -->
             <el-button
-              v-show="p.actpoint != 'look' && p.actpoint !== 'searchLook'"
+              v-show="p.actpoint != 'look' && p.actpoint !== 'searchLook'&& p.actpoint !== 'task'"
               @click="openBd('add')"
               class="detatil-flie-btn"
               type="primary"
@@ -1051,7 +1051,7 @@
             </el-table-column>
 
             <el-table-column
-              v-if="p.actpoint !== 'look' && p.actpoint !== 'searchLook'"
+              v-if="p.actpoint !== 'look' && p.actpoint !== 'searchLook'&& p.actpoint !== 'task'"
               :resizable="false"
               fixed="right"
               label="操作"

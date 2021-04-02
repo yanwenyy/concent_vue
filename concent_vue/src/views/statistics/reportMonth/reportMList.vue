@@ -123,7 +123,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
+             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核驳回':'待登记'}}
           </template>
           <template slot="header" slot-scope="scope">
             <span>状态</span>
@@ -237,8 +237,8 @@
         form1:{
         year:''
         },
-        mList: JSON.parse(this.$utils.decrypt(this.$route.query.mList)),
-        projectName: JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectName,
+        p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
+        projectName: JSON.parse(this.$utils.decrypt(this.$route.query.p)).projectName,
         treeStatas: false,
         page: { current: 1, size: 20, total: 0, records: [] },
         searchform: {
@@ -317,9 +317,9 @@
         }
         var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/entityInfoByProjectReport'
         var params = {}
-        params.projectId = JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectId
-        params.createOrgCode =JSON.parse(this.$utils.decrypt(this.$route.query.mList)).orgCode
-        params.reportProjectName =JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectName
+        params.projectId = JSON.parse(this.$utils.decrypt(this.$route.query.p)).projectId
+        params.createOrgCode =JSON.parse(this.$utils.decrypt(this.$route.query.p)).orgCode
+        params.reportProjectName =JSON.parse(this.$utils.decrypt(this.$route.query.p)).projectName
         params.reportYear = years[0]
         params.reportMonth = years[1]
         params.status='1'
@@ -331,13 +331,13 @@
        ).then((res) => {
             if (res.data.code === 200) {
             this.showYMDialog = false
-              let mList = {projectId:res.data.data.projectreport.projectId,uuid:res.data.data.projectreport.uuid,
+              let p = {projectId:res.data.data.projectreport.projectId,uuid:res.data.data.projectreport.uuid,
                 fillDate:res.data.data.projectreport.fillDate,orgCode:res.data.data.projectreport.createOrgCode,
                 projectName:res.data.data.projectreport.reportProjectName,projectStatus:res.data.data.projectreport.flowStatus
               }
                 this.$router.push({
                       path: '../reportMDetail/',
-                      query: {p: this.$utils.encrypt(JSON.stringify(mList))}
+                      query: {p: this.$utils.encrypt(JSON.stringify(p))}
                     })
            }else if(res.data.code === 400){
                 this.$message({
@@ -378,13 +378,13 @@
           }
           this.type = 'edit'
           this.form1 = JSON.parse(JSON.stringify(this.multipleSelection[0]))
-          let mList = {projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,uuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).uuid,
+          let p = {projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,uuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).uuid,
             fillDate:JSON.parse(JSON.stringify(this.multipleSelection[0])).fillDate,orgCode:JSON.parse(JSON.stringify(this.multipleSelection[0])).createOrgCode,
             projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).status,projectName:this.multipleSelection[0].reportProjectName
           }
           this.$router.push({
             path: '../reportMDetail/',
-            query: {p: this.$utils.encrypt(JSON.stringify(mList))}
+            query: {p: this.$utils.encrypt(JSON.stringify(p))}
           })
         },
       // 删除
@@ -421,10 +421,10 @@
       },
       // 查看
       rowShow(row) {
-        let mList = { actpoint: 'look', projectId: row.projectId,uuid:row.uuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.status }
+        let p = { actpoint: 'look', projectId: row.projectId,uuid:row.uuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.status }
         this.$router.push({
           path: '../reportMDetail/',
-          query: { p: this.$utils.encrypt(JSON.stringify(mList)) }
+          query: { p: this.$utils.encrypt(JSON.stringify(p)) }
         })
       },
       // 选中查看
@@ -469,7 +469,7 @@
           createTime: '',
           createUserId: '',
           createUserName: '',
-          projectId:JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectId,
+          projectId:JSON.parse(this.$utils.decrypt(this.$route.query.p)).projectId,
           status:'',
           flowStatus:'',
           reportProjectName:'',
@@ -486,7 +486,7 @@
       },
       // 获取分页数据
       getData() {
-      this.searchform.projectId=JSON.parse(this.$utils.decrypt(this.$route.query.mList)).projectId
+      this.searchform.projectId=JSON.parse(this.$utils.decrypt(this.$route.query.p)).projectId
         this.$http
           .post('/api/statistics/projectMonthlyReport/Projectreport/list/loadPageData', this.searchform)
           .then(res => {
@@ -501,7 +501,7 @@
 
     created() {
       this.getData()
-       console.log(this.mList)
+       console.log(this.p)
        this.userdata=JSON.parse(sessionStorage.getItem('userdata'))
     },
 

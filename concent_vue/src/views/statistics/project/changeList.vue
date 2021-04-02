@@ -7,6 +7,7 @@
         <el-button @click="add" type="primary" plain>新增</el-button>
         <el-button @click="edit" type="primary" plain>修改</el-button>
         <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
+        <el-button @click="del" type="primary" plain>删除</el-button>
       </el-button-group>
       <div style="float: right;">
         <el-button
@@ -351,28 +352,36 @@
       // 删除
       del() {
         if (this.multipleSelection.length < 1) {
-          this.$message.info('请选择一条记录进行删除操作！')
-          return false
+          this.$message.info("请选择一条记录进行查看操作！");
+          return false;
         }
-        let uuids = []
+        let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          uuids.push(item.uuid)
+          if(item.flowStatus==1||item.flowStatus==4){
+            uuids.push(item.uuid);
+          }else{
+            this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
+            return itemStatus=false;
+          }
         })
-        this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$http
+
+        if(itemStatus){
+          this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$http
             .post(
-              '/api/statistics/StatisticsProject/list/delete',
-              { ids: uuids }
+              "/api/statistics/StatisticsProject/list/delete",{ids: uuids}
+
             )
             .then((res) => {
-              this.getData()
-            })
-        }).catch(() => {
-        })
+            this.getData()
+        });
+        }).catch(() => {})
+        }
+
       },
       // 修改
       edit() {

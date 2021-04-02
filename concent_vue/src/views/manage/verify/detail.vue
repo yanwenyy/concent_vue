@@ -1156,14 +1156,14 @@ export default {
     },
     selectOrg1(row, column, cell, event){
       // alert(JSON.stringify(row));
-      if(column.label==="参与投标单位") {
+      if(column.label==="参与投标单位"&&this.p.actpoint != 'look'&&this.p.actpoint!='task') {
         this.myVerifySection = row;
         this.treeOrgStatas1 = true;
         //console.log(this.positionIndex);
         this.$nextTick(() => {
           this.$refs.addOrUpdate1.init()
         })
-      }else if(column.label==="编标拟配合单位") {
+      }else if(column.label==="编标拟配合单位"&&this.p.actpoint != 'look'&&this.p.actpoint!='task') {
         this.myVerifySection1 = row;
         this.treeOrgStatas2 = true;
         //console.log(this.positionIndex);

@@ -857,7 +857,7 @@
             <p>
               <span>相关附件: </span>
               <el-button
-                v-show="p.actpoint !== 'look'"
+                v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                 size="small"
                 type="primary"
                 @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','commonFilesList')">
@@ -913,7 +913,7 @@
               <p class="detail-title" style="overflow:hidden;margin-right:30px">
                 <span>分包承建单位信息:</span>
                 <el-button
-                  v-if="p.actpoint !== 'look'"
+                  v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                   @click="addProduct()"
                   class="upload-demo detailUpload detatil-flie-btn"
                   type="primary">

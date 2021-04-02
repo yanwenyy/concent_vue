@@ -117,8 +117,7 @@ export default {
                   'menushow': true,
                   'leaf': true,
                   'defaultpage': false
-                }
-
+                },
               ]
             },
 
@@ -661,6 +660,15 @@ export default {
               'menushow': true,
               'leaf': true,
               'defaultpage': false
+            },
+            {
+              'name': '共享单位库',
+              'path': '/manage/companies/companiesList',
+              'component': '/manage/companies/companiesList',
+              'iconCls': 'el-icon-search',
+              'menushow': true,
+              'leaf': true,
+              'defaultpage': true
             },
           ]
         },

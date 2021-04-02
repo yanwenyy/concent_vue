@@ -43,19 +43,19 @@
               <div>
               <el-form-item
                 label="本月计划:"
-              ><el-input  :disabled="isCk=='1'||p.actpoint == 'task'" v-model="dataReport.thisPlan" type="textarea" ></el-input>
+              ><el-input  :disabled="isCk=='1'||p.actpoint == 'task'||p.actpoint=='look'" v-model="dataReport.thisPlan" type="textarea" ></el-input>
               </el-form-item>
               </div>
                 <div>
                 <el-form-item
                   label="完成情况:"
-                ><el-input :disabled="isCk=='1'||p.actpoint == 'task'" v-model="dataReport.finishedPlan" type="textarea" ></el-input>
+                ><el-input :disabled="isCk=='1'||p.actpoint == 'task'||p.actpoint=='look'" v-model="dataReport.finishedPlan" type="textarea" ></el-input>
                 </el-form-item>
                 </div>
                  <div>
                  <el-form-item
                   label="下月计划:"
-                ><el-input :disabled="isCk=='1'||p.actpoint == 'task'" v-model="dataReport.nextPlan" type="textarea" ></el-input>
+                ><el-input :disabled="isCk=='1'||p.actpoint == 'task'||p.actpoint=='look'" v-model="dataReport.nextPlan" type="textarea" ></el-input>
                 </el-form-item>
                 </div>
             </el-form>
@@ -308,7 +308,7 @@
         nextData:[],
         yearDateS:'',
         activeName:"ztjd",
-        mList: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
+        p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         proNameHover: false,
         projectName: '',
         isCk:JSON.parse(this.$utils.decrypt(this.$route.query.p)).isCk,
@@ -752,6 +752,9 @@
     right: 95px;
     background: #409EFF;
     color:#fff;
+  }
+  .detailBoxBG{
+    overflow: hidden!important;
   }
   .sub-btn{
     right: 175px;
