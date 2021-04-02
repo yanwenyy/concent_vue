@@ -118,6 +118,24 @@ export default {
                   'leaf': true,
                   'defaultpage': false
                 },
+                {
+                  'name': '项目信息导入',
+                  'path': '/manage/proposal/importList',
+                  'component': '/manage/proposal/importList',
+                  'iconCls': 'el-icon-notebook-2',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '项目信息导入详情',
+                  'path': '/manage/proposal/importDetail',
+                  'component': '/manage/proposal/importDetail',
+                  'iconCls': 'el-icon-notebook-2',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
               ]
             },
 
@@ -668,7 +686,7 @@ export default {
               'iconCls': 'el-icon-search',
               'menushow': true,
               'leaf': true,
-              'defaultpage': true
+              'defaultpage': false
             },
           ]
         },

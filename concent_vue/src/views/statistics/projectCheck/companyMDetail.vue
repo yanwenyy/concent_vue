@@ -1,7 +1,7 @@
 <!--工程月报验工计价公司月报自揽或工区详情-->
 <template>
   <div style="position: relative">
-      <div style="margin-top: 9px;color: red;position: absolute;top: 1px;right: 279px;z-index: 999999999;font-size: 15px;">项目名称：<span style="color: red !important;margin-right: 50px;">{{projectName}}</span></div>
+      <div style="margin-top: 9px;color: red;position: absolute;top: 1px;right: 279px;z-index: 999;font-size: 15px;">项目名称：<span style="color: red !important;margin-right: 50px;">{{projectName}}</span></div>
     <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus==1||dataReport.flowStatus==4)" @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
       <el-button  @click="back" type="primary"  class="detailbutton detail-back-tab " plain>返回</el-button>
     <el-tabs type="border-card" v-model="activeName">
@@ -27,7 +27,7 @@
             <div>
               <el-form-item
                 label="本月备注:"
-              ><el-input  :disabled="actpoint!='look'" v-model="dataReport.thisPlan" type="textarea" disabled></el-input>
+              ><el-input  :disabled="actpoint!='look'" v-model="dataReport.thisPlan" type="textarea" ></el-input>
               </el-form-item>
             </div>
             <!--<div>
@@ -39,7 +39,7 @@
             <div>
               <el-form-item
                 label="上月备注:"
-              ><el-input :disabled="actpoint!='look'" v-model="dataReport.nextPlan" type="textarea" disabled></el-input>
+              ><el-input :disabled="actpoint!='look'" v-model="dataReport.nextPlan" type="textarea" ></el-input>
               </el-form-item>
             </div>
             <p>
@@ -310,14 +310,17 @@
         <Audit-Process :task="p.task||{businessId:p.uuid,businessType:'emr_valuation'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>
+    <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
     </div>
 </template>
 
 <script>
   import AuditProcess from '@/components/auditProcess'
+  import FileUpload from '@/components/fileUpload'
   export default {
     name: 'reportM-all-detail',
     components: {
+      FileUpload,
       AuditProcess
     },
     data() {
@@ -326,6 +329,7 @@
         data:[],
         dataReport:{
         },
+        uploadVisible:false,//上传附件组件状态
         nextData:[],
         commonFilesList:[],
         yearDateS:'',
@@ -463,6 +467,21 @@
                 })
               }
             })
+      },
+
+      //打开附件上传的组件
+      openFileUp(url,list){
+        this.uploadVisible = true;
+        this.$nextTick(() => {
+          this.$refs.infoUp.init(url,list);
+        })
+      },
+      //获取上传的附件列表
+      getUpInfo(data){
+        this.$forceUpdate();
+        //this.commonFilesList=data.fileList;
+        this.commonFilesList=this.commonFilesList.concat(data.fileList);
+        this.uploadVisible = false;
       },
   /*    rollback() {
         this.$http

@@ -45,7 +45,7 @@
           :min-width="200"
           align="center"
           label="月报日期"
-          prop="fillDate"
+          prop="yearDateS"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -262,7 +262,6 @@
           createUserId: '',
           createUserName: '',
           projectTypeName:'',
-          fillDate:'',
           reportType:'',
           yearDates:'',
           reportMonth:'',
