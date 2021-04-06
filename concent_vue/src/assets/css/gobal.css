@@ -600,6 +600,9 @@ pre {
 }
 .list-search-picker{
   width: 100%!important;
+  box-sizing: border-box;
+  height: 28px!important;
+  line-height: 28px!important;
 }
 .list-search-picker .el-input__inner{
   box-sizing: border-box;
