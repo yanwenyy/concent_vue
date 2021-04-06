@@ -457,7 +457,7 @@
           this.$message.info("此条数据不可修改！");
           return false;
         }
-        let p = {actpoint: "edit", instid: this.multipleSelection[0].topOrgId};
+        let p = {actpoint: "edit", instid: this.multipleSelection[0].uuid};
         this.$router.push({
           path: "./importDetail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
@@ -466,7 +466,7 @@
       },
       // 查看
       rowshow(row) {
-        let p = {actpoint: "look", instid: row.topOrgId};
+        let p = {actpoint: "look", instid: row.uuid};
         this.$router.push({
           path: "./importDetail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
