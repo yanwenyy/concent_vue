@@ -557,7 +557,7 @@
         }
         this.$http
           .post(
-            "/api/contract/topInfo/TopInfor/list/loadPageDataForReg",
+            "/api/contract/topInfo/TopInfor/list/loadPageDataForImport",
             this.searchform
           )
           .then((res) => {
