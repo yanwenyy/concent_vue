@@ -94,7 +94,7 @@
             </div>
             <div v-else>
               {{
-              searchform.planYear
+              mrTime
               }}
             </div>
           </template>
@@ -130,7 +130,7 @@
             </div>
             <div v-else>
               {{
-              searchform.planMonth
+              mrTimeMonth
               }}
             </div>
           </template>
@@ -288,6 +288,8 @@
       return {
         projectTypeTwo: [], // 工程类别(二级)
         arrYear: [],
+        mrTimeMonth:'',
+        mrTime:'',
         currentYears: [],
         flowStatus:[
           {
@@ -355,6 +357,8 @@
         sj[1]=sj[1]<10?'0'+sj[1]:sj[1];
         this.searchform.planYear= sj[0];
         this.searchform.planMonth= sj[1];
+        this.mrTime=sj[0];
+        this.mrTimeMonth=sj[1];
       },
       handleSelectionChange(val) {
         this.multipleSelection = val
@@ -370,6 +374,12 @@
 
       queryList(){
         this.searchform.current = 1
+        if(this.searchform.planYear!='' && this.searchform.planYear!=null && this.searchform.planYear!=undefined){
+          this.mrTime=this.searchform.planYear
+        }
+        if(this.searchform.planMonth!='' && this.searchform.planMonth!=null && this.searchform.planMonth!=undefined){
+          this.mrTimeMonth=this.searchform.planMonth;
+        }
         this.getData()
       },
       // 删除

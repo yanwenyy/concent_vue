@@ -24,24 +24,24 @@
               label="项目名称:"
             ><el-input v-model="dataReport.projectName" disabled></el-input>
             </el-form-item>
-            <div>
+       <!--     <div>
               <el-form-item
                 label="本月备注:"
               ><el-input  :disabled="actpoint!='look'" v-model="dataReport.thisPlan" type="textarea" ></el-input>
               </el-form-item>
             </div>
-            <!--<div>
+            &lt;!&ndash;<div>
             <el-form-item
               label="完成情况:"
             ><el-input :disabled="isCk=='1'" v-model="dataReport.finishedPlan" type="textarea" ></el-input>
             </el-form-item>
-            </div>-->
+            </div>&ndash;&gt;
             <div>
               <el-form-item
                 label="上月备注:"
               ><el-input :disabled="actpoint!='look'" v-model="dataReport.nextPlan" type="textarea" ></el-input>
               </el-form-item>
-            </div>
+            </div>-->
             <p>
               <span>上传附件: </span>
               <el-button
