@@ -70,7 +70,7 @@
                   placeholder="选择日期">
                 </el-date-picker>
               </el-form-item>
-              <br>
+
               <el-form-item
                 label="合同总金额（万元）:"
                 :rules="{
