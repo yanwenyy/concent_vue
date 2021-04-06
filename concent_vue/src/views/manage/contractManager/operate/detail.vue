@@ -36,9 +36,6 @@
               <el-form-item
                 label="合同名称(外文):"
                 prop="contractInfo.contractNameForeign"
-                :rules="{
-           required: true, message: '此项不能为空', trigger: 'blur'
-        }"
               >
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -48,7 +45,6 @@
                   v-model="detailform.contractInfo.contractNameForeign"
                 />
               </el-form-item>
-              <br>
               <el-form-item
                 label="合同编号:"
                 prop="contractInfo.contractNo"

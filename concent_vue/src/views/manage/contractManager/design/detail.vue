@@ -32,11 +32,6 @@
               <el-form-item
                 label="项目名称(外文):"
                 prop="contractInfo.inforNameForeign"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
               >
                 <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.inforNameForeign" class="input-with-select">
 
@@ -59,16 +54,23 @@
               <el-form-item
                 label="合同名称(外文):"
                 prop="contractInfo.contractName"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
               >
                 <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.contractNameForeign" class="input-with-select">
 
                 </el-input>
               </el-form-item>
+              <el-form-item
+                label="合同编号:"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+                  placeholder=""
+
+                  v-model="detailform.contractInfo.contractNo"
+                />
+              </el-form-item>
+
               <br>
               <el-form-item
                 label="工程类别(一级):"
@@ -145,17 +147,25 @@
                 </el-select>
               </el-form-item>
               <br>
-
               <el-form-item
-                label="合同编号:"
+                label="中标日期:"
+                prop="contractInfo.bidTime"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
               >
-                <el-input
+                <el-date-picker
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  filterable
                   clearable
-                  placeholder=""
+                  type="date"
+                  value-format="timestamp"
+                  v-model="detailform.contractInfo.bidTime"
 
-                  v-model="detailform.contractInfo.contractNo"
-                />
+                >
+                </el-date-picker>
               </el-form-item>
               <el-form-item
                 label="合同签订日期:"
@@ -839,26 +849,6 @@
                     v-for="(item, index) in emergingMarketTwo"
                   ></el-option>
                 </el-select>
-              </el-form-item>
-              <el-form-item
-                label="中标日期:"
-                prop="contractInfo.bidTime"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              >
-                <el-date-picker
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  filterable
-                  clearable
-                  type="date"
-                  value-format="timestamp"
-                  v-model="detailform.contractInfo.bidTime"
-
-                >
-                </el-date-picker>
               </el-form-item>
               <el-form-item
                 label="合同开工日期:"

@@ -46,9 +46,6 @@
               <el-form-item
                 label="合同名称(外文):"
                 prop="contractInfo.contractNameForeign"
-                :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
               >
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -58,7 +55,6 @@
                   v-model="detailform.contractInfo.contractNameForeign"
                 />
               </el-form-item>
-              <br>
               <el-form-item
                 label="合同编号:"
                 prop="contractInfo.contractNo"
@@ -74,7 +70,8 @@
                   size="mini"
                   v-model="detailform.contractInfo.contractNo"
                 />
-              </el-form-item>
+              </el-form-item><br>
+
               <el-form-item
                 label="合同签定日期:"
                 prop="contractInfo.contractSignTime"
@@ -89,6 +86,58 @@
                   placeholder="选择日期时间">
                 </el-date-picker>
               </el-form-item>
+
+              <el-form-item
+                label="控股情况:"
+                prop="contractInfo.estateHolding"
+                :rules="{
+      required: true, message: '此项不能为空', trigger: 'blur'
+    }"
+
+              >
+                <el-select
+                  :disabled="p.actpoint==='look'"
+
+                  clearable
+                  filterable
+                  placeholder="请选择"
+                  size="mini"
+                  v-model="detailform.contractInfo.estateHolding"
+                >
+                  <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options1"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item
+                class="inline-formitem"
+                label="是否并表:"
+                prop="contractInfo.isMergeEstate"
+                :rules="{
+      required: true, message: '此项不能为空', trigger: 'blur'
+    }"
+
+              >
+                <el-switch
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  class="inline-formitem-switch"
+                  v-model="detailform.contractInfo.isMergeEstate"
+                  active-color="#409EFF"
+                  inactive-color="#ddd"
+                  active-value="0"
+                  inactive-value="1"
+                >
+                </el-switch>
+                <!--<el-select-->
+                <!--:disabled="p.actpoint==='look'"-->
+                <!--clearable-->
+                <!--filterable-->
+                <!--placeholder="请选择"-->
+                <!--size="mini"-->
+                <!--v-model="detailform.contractInfo.isMergeEstate"-->
+                <!--&gt;-->
+                <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
+                <!--</el-select>-->
+              </el-form-item>
+
               <br>
 
               <el-form-item
@@ -486,57 +535,6 @@
                   </el-select>
                 </el-form-item>
                </div>
-              <el-form-item
-                label="控股情况:"
-                prop="contractInfo.estateHolding"
-                :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
-
-              >
-                <el-select
-                  :disabled="p.actpoint==='look'"
-
-                  clearable
-                  filterable
-                  placeholder="请选择"
-                  size="mini"
-                  v-model="detailform.contractInfo.estateHolding"
-                >
-                  <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options1"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item
-                class="inline-formitem"
-                label="是否并表:"
-                prop="contractInfo.isMergeEstate"
-                :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
-
-              >
-                <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  class="inline-formitem-switch"
-                  v-model="detailform.contractInfo.isMergeEstate"
-                  active-color="#409EFF"
-                  inactive-color="#ddd"
-                  active-value="0"
-                  inactive-value="1"
-                >
-                </el-switch>
-                <!--<el-select-->
-                  <!--:disabled="p.actpoint==='look'"-->
-                  <!--clearable-->
-                  <!--filterable-->
-                  <!--placeholder="请选择"-->
-                  <!--size="mini"-->
-                  <!--v-model="detailform.contractInfo.isMergeEstate"-->
-                <!--&gt;-->
-                  <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
-                <!--</el-select>-->
-              </el-form-item>
-              <br>
               <el-form-item
                 label="建设地点:"
                 prop="contractInfo.path"
@@ -1674,7 +1672,21 @@ export default {
     }
     return {
       ifOAS:false,
-      options1:[{label:"值",value:'111'}],
+      options1:[
+          {
+              label:"100%控股",
+              value:'1'
+          },
+          {
+              label:"相对控股",
+              value:'2'
+          },
+          {
+              label:"参股",
+              value:'3'
+          }
+
+          ],
       DwVisible:false,//选择单位弹框状态
       treeStatas: false,
       positionIndex: '',//缓存当前的选中的项目地点的index
