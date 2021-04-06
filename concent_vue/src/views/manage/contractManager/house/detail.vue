@@ -64,7 +64,7 @@
         }"
               >
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  disabled
                   clearable
                   placeholder="请输入"
                   size="mini"
@@ -104,7 +104,12 @@
                   size="mini"
                   v-model="detailform.contractInfo.estateHolding"
                 >
-                  <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options1"></el-option>
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in holdingSituation"
+                  ></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item
@@ -1749,6 +1754,10 @@ export default {
     },
     assemblyType(){
       return this.$store.state.assemblyType;//装配类型
+    },
+    holdingSituation(){
+        console.log(this.$store.state.holdingSituation)
+        return this.$store.state.holdingSituation;//控股情况
     },
     architecturalType(){
       return this.$store.state.architecturalType;//建筑类型

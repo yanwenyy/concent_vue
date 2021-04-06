@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const state = {
+  holdingSituation:[],//控股情况
   bulletinType:[],//公告类型
   certificationType:[],//资审方式
   amountSource:[],//资金来源
@@ -108,6 +109,9 @@ const mutations = {
         switch (item.categoryCode){
       case 'railwayLine':
         state.railwayLine=item.sysCategoryDetailList;
+        break;
+      case 'holdingSituation':
+        state.holdingSituation=item.sysCategoryDetailList;
         break;
       case 'bulletinType':
         state.bulletinType=item.sysCategoryDetailList;
@@ -291,6 +295,9 @@ const mutations = {
         switch (item.categoryCode){
       case 'railwayLine':
         state.railwayLine=item.sysCategoryDetailList;
+        break;
+      case 'holdingSituation':
+        state.holdingSituation=item.sysCategoryDetailList;
         break;
       case 'bulletinType':
         state.bulletinType=item.sysCategoryDetailList;

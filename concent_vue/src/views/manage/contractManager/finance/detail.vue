@@ -50,7 +50,7 @@
                 prop="contractInfo.contractNo"
               >
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  disabled
                   clearable
                   placeholder="请输入"
                   size="mini"
