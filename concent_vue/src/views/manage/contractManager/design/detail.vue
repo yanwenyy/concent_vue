@@ -183,6 +183,46 @@
               </el-form-item>
               <br>
               <el-form-item
+                label="合同开工日期:"
+              >
+                <el-date-picker
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  filterable
+                  clearable
+                  type="date"
+                  value-format="timestamp"
+                  v-model="detailform.contractInfo.startTime"
+
+                >
+                </el-date-picker>
+              </el-form-item>
+              <el-form-item
+                label="合同竣工日期:"
+              >
+                <el-date-picker
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  filterable
+                  clearable
+                  type="date"
+                  value-format="timestamp"
+                  v-model="detailform.contractInfo.endTime"
+
+                >
+                </el-date-picker>
+              </el-form-item>
+              <el-form-item
+                label="工期(天):"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+                  placeholder="请输入"
+
+                  v-model="detailform.contractInfo.contractPeriod"
+                />
+              </el-form-item>
+              <br>
+              <el-form-item
                 label="使用资质单位:"
                 prop="contractInfo.qualityOrgNames"
                 :rules="{
@@ -851,34 +891,7 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item
-                label="合同开工日期:"
-              >
-                <el-date-picker
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  filterable
-                  clearable
-                  type="date"
-                  value-format="timestamp"
-                  v-model="detailform.contractInfo.startTime"
-
-                >
-                </el-date-picker>
-              </el-form-item>
-              <el-form-item
-                label="合同竣工日期:"
-              >
-                <el-date-picker
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  filterable
-                  clearable
-                  type="date"
-                  value-format="timestamp"
-                  v-model="detailform.contractInfo.endTime"
-
-                >
-                </el-date-picker>
-              </el-form-item>
+            <br>
               <el-form-item
                 label="合同类型:"
               >
@@ -891,17 +904,7 @@
                 />
               </el-form-item>
 
-              <el-form-item
-                label="工期(天):"
-              >
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-                  placeholder="请输入"
 
-                  v-model="detailform.contractInfo.contractPeriod"
-                />
-              </el-form-item>
               <br>
               <el-form-item
                 label="录入时间:"

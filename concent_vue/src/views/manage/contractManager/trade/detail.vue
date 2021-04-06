@@ -287,7 +287,7 @@
                   <template slot="append">(万元)</template>
                 </el-input>
               </el-form-item>
-              <br>
+
               <el-form-item
                 label="增值税(万元):"
                 prop="contractInfo.valueAddedTax"
@@ -305,6 +305,7 @@
                   <template slot="append">(万元)</template>
                 </el-input>
               </el-form-item>
+            <br>
               <el-form-item
               label="初始我方份额(万元):"
               prop="contractInfo.ourAmount"
