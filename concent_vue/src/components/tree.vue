@@ -4,8 +4,14 @@
     :visible.sync="dialogVisible"
     width="30%"
    >
+    <div class="tree-search-input">
+      <el-input
+        placeholder="输入关键字进行过滤"
+        v-model="filterText">
+      </el-input>
+    </div>
     <div class="tree-div">
-      <el-tree :data="datas" :props="defaultProps" :highlight-current="true"  @node-click="handleNodeClick"></el-tree>
+      <el-tree class="filter-tree" ref="tree" :data="datas" :props="defaultProps" :highlight-current="true"  @node-click="handleNodeClick" :filter-node-method="filterNode"></el-tree>
     </div>
     <div style="text-align: center">
       <el-button @click="dialogVisible = false">取 消</el-button>
@@ -17,8 +23,14 @@
 <script>
   import datas from '@/utils/position'
     export default {
+      watch: {
+        filterText(val) {
+          this.$refs.tree.filter(val);
+        }
+      },
       data() {
         return {
+          filterText: '',
           // datas: [],
           dialogVisible:true,
           defaultProps: {
@@ -48,6 +60,10 @@
         this.$store.dispatch('getCategory', {name: 'position', id: '321a917eb2b111e9a1746778b5c1176e'});
       },
       methods: {
+        filterNode(value, data) {
+          if (!value) return true;
+          return data.detailName.indexOf(value) !== -1;
+        },
         init(){
 
           this.dialogVisible = true;

@@ -198,7 +198,7 @@
               </el-form-item>
               <br>
               <el-form-item
-                class="inline-formitem"
+                class="inline-formitem form-item-four"
                 label="是否为系统内联合体"
               >
                 <el-switch
@@ -223,7 +223,7 @@
                 <!--</el-select>-->
               </el-form-item>
               <el-form-item
-                class="inline-formitem"
+                class="inline-formitem form-item-four"
                 label="是否含系统内分包"
               >
                 <el-switch
@@ -247,9 +247,8 @@
                 <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
                 <!--</el-select>-->
               </el-form-item>
-              <br>
               <el-form-item
-                class="inline-formitem"
+                class="inline-formitem form-item-four"
                 label="是否为系统外联合体"
               >
                 <el-switch
@@ -274,7 +273,7 @@
                 <!--</el-select>-->
               </el-form-item>
               <el-form-item
-                class="inline-formitem"
+                class="inline-formitem form-item-four"
                 label="是否含系统外分包:"
               >
                 <el-switch
