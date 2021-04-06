@@ -75,8 +75,6 @@
                   <template slot="append">(万元)</template>
                 </el-input>
               </el-form-item>
-              <br>
-
               <el-form-item
                 label="合同规模（万元）:"
                 :rules="{
