@@ -48,7 +48,7 @@
           prop="yearDateS"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
+      <!--    <template slot="header" slot-scope="scope">
             <span>月报日期</span>
             <div>
               <el-date-picker
@@ -63,7 +63,7 @@
               >
               </el-date-picker>
             </div>
-          </template>
+          </template>-->
           <template slot-scope="scope">
             <div v-if="scope.row.reportYear!=''&& scope.row.reportYear!=null">
               {{
@@ -82,7 +82,7 @@
                          label="项目名称"
                          prop="projectName" show-overflow-tooltip
         >
-          <template slot="header"
+    <!--      <template slot="header"
                     slot-scope="scope">
             <span>填报单位</span>
             <div>
@@ -90,14 +90,14 @@
                         v-model="searchform.projectName"
                         size="mini"/>
             </div>
-          </template>
+          </template>-->
         </el-table-column>
         <el-table-column :min-width="200"
                          align="center"
                          label="项目状态"
                          prop="projectStatusName" show-overflow-tooltip
         >
-          <template slot="header"
+     <!--     <template slot="header"
                     slot-scope="scope">
             <span>项目状态</span>
             <div>
@@ -105,8 +105,8 @@
                         v-model="searchform.projectStatusName"
                         size="mini"/>
             </div>
-          </template>
-          <template slot="header"
+          </template>-->
+    <!--      <template slot="header"
                     slot-scope="scope">
             <span>项目状态</span>
             <div>
@@ -122,14 +122,14 @@
                 ></el-option>
               </el-select>
             </div>
-          </template>
+          </template>-->
         </el-table-column>
         <el-table-column :width="150"
                          align="center"
                          label="合同总额(万元)"
                          prop="contractAmountTotal" show-overflow-tooltip
         >
-          <template slot="header"
+  <!--        <template slot="header"
                     slot-scope="scope">
             <span>合同总额(万元)</span>
             <div>
@@ -137,7 +137,7 @@
                         v-model="searchform.contractAmountTotal"
                         size="mini"/>
             </div>
-          </template>
+          </template>-->
         </el-table-column>
 
         <el-table-column :width="150"
@@ -145,7 +145,7 @@
                          label="本月(万元)"
                          prop="monthValue" show-overflow-tooltip
         >
-          <template slot="header"
+      <!--    <template slot="header"
                     slot-scope="scope">
             <span>本月(万元)</span>
             <div>
@@ -153,14 +153,14 @@
                         v-model="searchform.monthValue"
                         size="mini"/>
             </div>
-          </template>
+          </template>-->
         </el-table-column>
         <el-table-column :width="150"
                          align="center"
                          label="本年(万元)"
                          prop="yearValue" show-overflow-tooltip
         >
-          <template slot="header"
+         <!-- <template slot="header"
                     slot-scope="scope">
             <span>本年(万元)</span>
             <div>
@@ -168,14 +168,14 @@
                         v-model="searchform.yearValue"
                         size="mini"/>
             </div>
-          </template>
+          </template>-->
         </el-table-column>
         <el-table-column :width="150"
                          align="center"
                          label="开累(万元)"
                          prop="totalValue" show-overflow-tooltip
         >
-          <template slot="header"
+      <!--    <template slot="header"
                     slot-scope="scope">
             <span>开累(万元)</span>
             <div>
@@ -183,7 +183,7 @@
                         v-model="searchform.totalValue"
                         size="mini"/>
             </div>
-          </template>
+          </template>-->
         </el-table-column>
       <!--  <el-table-column
           :width="150"
@@ -208,7 +208,7 @@
             <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'未创建'}}
             </div>
           </template>
-          <template slot="header"
+     <!--     <template slot="header"
                     slot-scope="scope">
             <span>状态</span>
             <div>
@@ -224,7 +224,7 @@
                 ></el-option>
               </el-select>
             </div>
-          </template>
+          </template>-->
         </el-table-column>
       </el-table>
     </div>

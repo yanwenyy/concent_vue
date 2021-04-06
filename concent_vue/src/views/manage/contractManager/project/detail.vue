@@ -62,7 +62,7 @@
             label="合同编号"
           >
             <el-input
-              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+              disabled
               clearable
               placeholder=""
 

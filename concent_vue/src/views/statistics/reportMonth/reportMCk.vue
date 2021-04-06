@@ -3,7 +3,7 @@
 <template>
   <div>
     <div style="width: 100%; overflow: hidden">
-      <div style="float: left;">
+     <!-- <div style="float: left;">
         <el-form class="search-form" :inline="true" :model="searchform" @keyup.enter.native="init()">
           <el-form-item label="上报年月起:">
             <el-date-picker
@@ -22,7 +22,7 @@
             </el-date-picker>
           </el-form-item>
         </el-form>
-      </div>
+      </div>-->
       <div style="float: right;">
         <el-button
           @click="searchformReset"
@@ -105,26 +105,27 @@
             }}</template>
         </el-table-column>
         <el-table-column
-          :min-width="200"
+          :min-width="450"
           align="center"
           label="上报年月"
           prop="yearDateS"
           show-overflow-tooltip
         >
-    <!--      <template slot="header" slot-scope="scope">
+          <template slot="header" slot-scope="scope">
             <span>上报年月</span>
-            <div>
+            <div class="block">
               <el-date-picker
+                v-model="setTimes"
                 class="list-search-picker"
-                filterable
-                clearable
-                type="month"
+                type="datetimerange"
+                format="yyyy-MM"
                 value-format="yyyy-MM"
-                v-model="searchform.yearDateS"
-              >
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期">
               </el-date-picker>
             </div>
-          </template>-->
+          </template>
           <template slot-scope="scope">{{
             scope.row.reportYear+"-"+scope.row.reportMonth
             }}</template>
@@ -278,6 +279,7 @@
     data() {
       return {
         userdata:{},
+        setTimes:[],
         treeStatas: false,
         page: { current: 1, size: 20, total: 0, records: [] },
         searchform: {
@@ -392,6 +394,10 @@
       },
       // 获取分页数据
       getData() {
+        if(this.setTimes.length>0){
+          this.searchform.yearDateS=this.setTimes[0];
+          this.searchform.yearDatesEnd=this.setTimes[1];
+        }
         this.searchform.reportYear=this.searchform.yearDateS.split("-")[0];
         this.searchform.reportMonth=this.searchform.yearDateS.split("-")[1];
         this.$http
@@ -447,5 +453,12 @@
   }
   >>>.el-icon-date{
     line-height: 30px;
+  }
+  .list-search-picker >>>.el-input__icon {
+    line-height: 28px;
+    height: 28px;
+  }
+  .list-search-picker >>>.el-range-separator{
+    line-height: 23px!important;
   }
 </style>
