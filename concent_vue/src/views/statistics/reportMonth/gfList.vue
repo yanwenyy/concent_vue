@@ -93,7 +93,7 @@
               scope.row.reportYear+"-"+scope.row.reportMonth
               }}
             </div>
-            <div v-else>{{searchform.yearDateS}}</div>
+            <div v-else>{{mrTime}}</div>
           </template>
         </el-table-column>
         <el-table-column
@@ -214,6 +214,7 @@
         Authorization:sessionStorage.getItem("token"),
         page: {current: 1, size: 20, total: 0, records: []},
         tableData: [],
+        mrTime:'',
         userdata:{},
         showinput: false,
         sousuo: "",
@@ -279,6 +280,7 @@
         var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
         var time=y + '-' + m;
         this.searchform.yearDateS= time;
+        this.mrTime=time;
       },
       search() {
         this.showinput = false;
@@ -286,8 +288,11 @@
       queryList(){
         this.searchform.current = 1;
         this.searchform.current = 1;
-        this.searchform.reportYear= this.searchform.yearDateS.split("-")[0];
-        this.searchform.reportMonth= this.searchform.yearDateS.split("-")[1];
+        if(this.searchform.yearDateS!='' && this.searchform.yearDateS!=null && this.searchform.yearDateS!=undefined) {
+          this.mrTime = this.searchform.yearDateS;
+          this.searchform.reportYear = this.searchform.yearDateS.split("-")[0];
+          this.searchform.reportMonth = this.searchform.yearDateS.split("-")[1];
+        }
         this.getData();
       },
       //查询项目详细列表
@@ -300,7 +305,6 @@
       },
       // 查看
       rowshow(row) {
-      debugger
         let p = {actpoint: "look", params: row};
         if(row.flowStatus==''||row.flowStatus==null){
           this.$message.info("该项目月报还未完成上报,无法查看");
@@ -338,8 +342,10 @@
       },
       // 查询
       getData() {
-        this.searchform.reportYear= this.searchform.yearDateS.split("-")[0];
-        this.searchform.reportMonth= this.searchform.yearDateS.split("-")[1];
+        if(this.searchform.yearDateS!='' && this.searchform.yearDateS!=null && this.searchform.yearDateS!=undefined) {
+          this.searchform.reportYear = this.searchform.yearDateS.split("-")[0];
+          this.searchform.reportMonth = this.searchform.yearDateS.split("-")[1];
+        }
         this.$http
             .post(
                 "/api/statistics/projectMonthlyReport/Projectreport/list/jtQueryEntInfo",

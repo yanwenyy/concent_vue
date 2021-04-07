@@ -256,7 +256,24 @@
             scope.row.createtime | dateformat
           }}</template>
         </el-table-column>
-
+        <el-table-column
+          :width="150"
+          align="center"
+          label="版本标识"
+          prop="version"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>版本标识</span>
+            <div>
+              <el-input
+                class="list-search-picker"
+                style=" width: 100%"
+                v-model="searchform.version"
+              />
+            </div>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
       <el-pagination
@@ -305,6 +322,7 @@ export default {
         ptype: "",
         orgid: "",
         orgname: "",
+        version:''
       },
       zbForm:{},
       menus: [],
@@ -490,15 +508,16 @@ export default {
     searchformReset() {
       // this.$refs["searchform"].resetFields();
         this.searchform= {
-        current: 1,
-        size: 20,
-        year: "",
-        name: "",
-        ptype: "",
-        orgid: "",
-        orgname: "",
-        enginTypeFirstName:"",
-        enginTypeSecondName:""
+          current: 1,
+          size: 20,
+          year: "",
+          name: "",
+          ptype: "",
+          orgid: "",
+          orgname: "",
+          enginTypeFirstName:"",
+          enginTypeSecondName:"",
+          version:''
       }
 
         this.getData();

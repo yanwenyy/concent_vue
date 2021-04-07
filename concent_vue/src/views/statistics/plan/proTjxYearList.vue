@@ -94,11 +94,7 @@
               scope.row.planYear
               }}
             </div>
-            <div v-else>
-              {{
-              searchform.planYear
-              }}
-            </div>
+              <div v-else>{{mrTime}}</div>
           </template>
         </el-table-column>
         <el-table-column
@@ -254,6 +250,7 @@
       return {
         projectTypeTwo: [], // 工程类别(二级)
         arrYear: [],
+        mrTime:'',
         currentYears: [],
         selectYears: [],
         flowStatus:[
@@ -315,6 +312,7 @@
       getdatatime(){//默认显示今天
         var sj=new Date().toLocaleDateString().split('/');
         this.searchform.planYear= sj[0];
+        this.mrTime=sj[0];
       },
       handleSelectionChange(val) {
         this.multipleSelection = val
@@ -325,6 +323,9 @@
       },
       queryList(){
         this.searchform.current = 1
+        if(this.searchform.planYear!='' && this.searchform.planYear!=null && this.searchform.planYear!=undefined){
+          this.mrTime=this.searchform.planYear;
+        }
         this.getData()
       },
       // 删除

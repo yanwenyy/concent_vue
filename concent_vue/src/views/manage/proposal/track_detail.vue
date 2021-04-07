@@ -1224,7 +1224,11 @@
       // })()
       // }
       // this.$store.commit("setCategory", 'projectDomainType');
-      console.log(this.p.trackStatus)
+      this.$store.dispatch("getConfig", {});
+      this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
+      this.$store.dispatch('getCategory', {name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3'});
+      this.$store.dispatch('getCategory', {name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72'});
+      console.log(this.p)
       this.id=this.p.instid;
       if (this.p.actpoint === "edit"||this.id) {
         this.getDetail();
@@ -1242,10 +1246,7 @@
           projectScale: '',
         }]
       }
-      this.$store.dispatch("getConfig", {});
-      this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
-      this.$store.dispatch('getCategory', {name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3'});
-      this.$store.dispatch('getCategory', {name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72'});
+
       // eslint-disable-next-line no-unde
     },
     methods: {
@@ -1594,6 +1595,7 @@
             datas.topInforCapitalList.forEach((item)=>{
               this.detailform.value1.push(item.capitalId)
             });
+            console.log(this.detailform)
           });
       },
 

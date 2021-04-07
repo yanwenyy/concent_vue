@@ -57,6 +57,24 @@ export default {
               'defaultpage': false,
               'children': [
                 {
+                  'name': '项目信息导入',
+                  'path': '/manage/proposal/importList',
+                  'component': '/manage/proposal/importList',
+                  'iconCls': 'el-icon-notebook-2',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '项目信息导入详情',
+                  'path': '/manage/proposal/importDetail',
+                  'component': '/manage/proposal/importDetail',
+                  'iconCls': 'el-icon-notebook-2',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
                   'name': '项目信息登记',
                   'path': '/manage/proposal/list',
                   'component': '/manage/proposal/list',
@@ -118,24 +136,7 @@ export default {
                   'leaf': true,
                   'defaultpage': false
                 },
-                {
-                  'name': '项目信息导入',
-                  'path': '/manage/proposal/importList',
-                  'component': '/manage/proposal/importList',
-                  'iconCls': 'el-icon-notebook-2',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': true
-                },
-                {
-                  'name': '项目信息导入详情',
-                  'path': '/manage/proposal/importDetail',
-                  'component': '/manage/proposal/importDetail',
-                  'iconCls': 'el-icon-notebook-2',
-                  'menushow': false,
-                  'leaf': true,
-                  'defaultpage': false
-                },
+
               ]
             },
 
@@ -551,116 +552,116 @@ export default {
                 }
               ]
             },
-            {
-              'name': '新签年计划',
-              'path': '/manage/plan',
-              'component': '/router',
-              'iconCls': 'el-icon-document-remove',
-              'menushow': true,
-              'leaf': false,
-              'defaultpage': false,
-              'children': [
-                {
-                  'name': '工程公司上报',
-                  'path': '/manage/plan/01',
-                  'component': '/manage/plan/01',
-                  'iconCls': 'el-icon-notebook-2',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '集团公司汇总',
-                  'path': '/manage/plan/02',
-                  'component': '/manage/plan/02',
-                  'iconCls': 'el-icon-receiving',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '集团公司上报',
-                  'path': '/manage/plan/03',
-                  'component': '/manage/plan/03',
-                  'iconCls': 'el-icon-notebook-2',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '股份公司汇总',
-                  'path': '/manage/plan/04',
-                  'component': '/manage/plan/04',
-                  'iconCls': 'el-icon-receiving',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '下级上报查询',
-                  'path': '/manage/plan/05',
-                  'component': '/manage/plan/05',
-                  'iconCls': 'el-icon-search',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '股份公司调整',
-                  'path': '/manage/plan/06',
-                  'component': '/manage/plan/06',
-                  'iconCls': 'el-icon-edit-outline',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '集团公司调整',
-                  'path': '/manage/plan/07',
-                  'component': '/manage/plan/07',
-                  'iconCls': 'el-icon-edit-outline',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '股份公司下达',
-                  'path': '/manage/plan/08',
-                  'component': '/manage/plan/08',
-                  'iconCls': 'el-icon-finished',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '集团公司下达',
-                  'path': '/manage/plan/09',
-                  'component': '/manage/plan/09',
-                  'iconCls': 'el-icon-finished',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '上级下达查看',
-                  'path': '/manage/plan/10',
-                  'component': '/manage/plan/10',
-                  'iconCls': 'el-icon-search',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '下级下达查看',
-                  'path': '/manage/plan/11',
-                  'component': '/manage/plan/11',
-                  'iconCls': 'el-icon-search',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                }
-              ]
-            },
+            // {
+            //   'name': '新签年计划',
+            //   'path': '/manage/plan',
+            //   'component': '/router',
+            //   'iconCls': 'el-icon-document-remove',
+            //   'menushow': true,
+            //   'leaf': false,
+            //   'defaultpage': false,
+            //   'children': [
+            //     {
+            //       'name': '工程公司上报',
+            //       'path': '/manage/plan/01',
+            //       'component': '/manage/plan/01',
+            //       'iconCls': 'el-icon-notebook-2',
+            //       'menushow': true,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     },
+            //     {
+            //       'name': '集团公司汇总',
+            //       'path': '/manage/plan/02',
+            //       'component': '/manage/plan/02',
+            //       'iconCls': 'el-icon-receiving',
+            //       'menushow': true,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     },
+            //     {
+            //       'name': '集团公司上报',
+            //       'path': '/manage/plan/03',
+            //       'component': '/manage/plan/03',
+            //       'iconCls': 'el-icon-notebook-2',
+            //       'menushow': true,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     },
+            //     {
+            //       'name': '股份公司汇总',
+            //       'path': '/manage/plan/04',
+            //       'component': '/manage/plan/04',
+            //       'iconCls': 'el-icon-receiving',
+            //       'menushow': true,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     },
+            //     {
+            //       'name': '下级上报查询',
+            //       'path': '/manage/plan/05',
+            //       'component': '/manage/plan/05',
+            //       'iconCls': 'el-icon-search',
+            //       'menushow': true,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     },
+            //     {
+            //       'name': '股份公司调整',
+            //       'path': '/manage/plan/06',
+            //       'component': '/manage/plan/06',
+            //       'iconCls': 'el-icon-edit-outline',
+            //       'menushow': true,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     },
+            //     {
+            //       'name': '集团公司调整',
+            //       'path': '/manage/plan/07',
+            //       'component': '/manage/plan/07',
+            //       'iconCls': 'el-icon-edit-outline',
+            //       'menushow': true,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     },
+            //     {
+            //       'name': '股份公司下达',
+            //       'path': '/manage/plan/08',
+            //       'component': '/manage/plan/08',
+            //       'iconCls': 'el-icon-finished',
+            //       'menushow': true,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     },
+            //     {
+            //       'name': '集团公司下达',
+            //       'path': '/manage/plan/09',
+            //       'component': '/manage/plan/09',
+            //       'iconCls': 'el-icon-finished',
+            //       'menushow': true,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     },
+            //     {
+            //       'name': '上级下达查看',
+            //       'path': '/manage/plan/10',
+            //       'component': '/manage/plan/10',
+            //       'iconCls': 'el-icon-search',
+            //       'menushow': true,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     },
+            //     {
+            //       'name': '下级下达查看',
+            //       'path': '/manage/plan/11',
+            //       'component': '/manage/plan/11',
+            //       'iconCls': 'el-icon-search',
+            //       'menushow': true,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     }
+            //   ]
+            // },
             {
               'name': '新签报表',
               'path': '/manage/xinqian/list',
@@ -988,152 +989,152 @@ export default {
                 }
               ]
             },
-            {
-              'name': '产值年计划',
-              'path': '/statistics/plan',
-              'component': '/router',
-              'iconCls': 'el-icon-printer',
-              'menushow': true,
-              'leaf': false,
-              'defaultpage': false,
-              'children': [
-                {
-                  'name': '项目部上报',
-                  'path': '/statistics/annualPlan/projectReport',
-                  'component': '/statistics/annualPlan/projectReport',
-                  'iconCls': 'el-icon-notebook-2',
-                  'menushow': true,
-                  'leaf': false,
-                  'defaultpage': true
-                },
-                {
-                  'name': '项目部上报详情',
-                  'path': '/statistics/annualPlan/projectReportDetail',
-                  'component': '/statistics/annualPlan/projectReportDetail',
-                  'iconCls': 'el-icon-notebook-2',
-                  'menushow': false,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '项目部上报汇总详情',
-                  'path': '/statistics/annualPlan/summaryDetail',
-                  'component': '/statistics/annualPlan/summaryDetail',
-                  'iconCls': 'el-icon-notebook-2',
-                  'menushow': false,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '工程公司汇总',
-                  'path': '/statistics/plan/02-1',
-                  'component': '/statistics/plan/02-1',
-                  'iconCls': 'el-icon-receiving',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '工程公司上报',
-                  'path': '/statistics/plan/01',
-                  'component': '/statistics/plan/01',
-                  'iconCls': 'el-icon-notebook-2',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '集团公司汇总',
-                  'path': '/statistics/plan/02',
-                  'component': '/statistics/plan/02',
-                  'iconCls': 'el-icon-receiving',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '集团公司上报',
-                  'path': '/statistics/plan/03',
-                  'component': '/statistics/plan/03',
-                  'iconCls': 'el-icon-notebook-2',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '股份公司汇总',
-                  'path': '/statistics/plan/04',
-                  'component': '/statistics/plan/04',
-                  'iconCls': 'el-icon-receiving',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '下级上报查询',
-                  'path': '/statistics/plan/05',
-                  'component': '/statistics/plan/05',
-                  'iconCls': 'el-icon-search',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '股份公司调整',
-                  'path': '/statistics/plan/06',
-                  'component': '/statistics/plan/06',
-                  'iconCls': 'el-icon-edit-outline',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '集团公司调整',
-                  'path': '/statistics/plan/07',
-                  'component': '/statistics/plan/07',
-                  'iconCls': 'el-icon-edit-outline',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '股份公司下达',
-                  'path': '/statistics/plan/08',
-                  'component': '/statistics/plan/08',
-                  'iconCls': 'el-icon-finished',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '集团公司下达',
-                  'path': '/statistics/plan/09',
-                  'component': '/statistics/plan/09',
-                  'iconCls': 'el-icon-finished',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '上级下达查看',
-                  'path': '/statistics/plan/10',
-                  'component': '/statistics/plan/10',
-                  'iconCls': 'el-icon-search',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
-                  'name': '下级下达查看',
-                  'path': '/statistics/plan/11',
-                  'component': '/statistics/plan/11',
-                  'iconCls': 'el-icon-search',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                }
-              ]
-            },
+            // {
+            //   'name': '产值年计划',
+            //   'path': '/statistics/plan',
+            //   'component': '/router',
+            //   'iconCls': 'el-icon-printer',
+            //   'menushow': true,
+            //   'leaf': false,
+            //   'defaultpage': false,
+            //   'children': [
+            //     {
+            //       'name': '项目部上报',
+            //       'path': '/statistics/annualPlan/projectReport',
+            //       'component': '/statistics/annualPlan/projectReport',
+            //       'iconCls': 'el-icon-notebook-2',
+            //       'menushow': true,
+            //       'leaf': false,
+            //       'defaultpage': true
+            //     },
+            //     {
+            //       'name': '项目部上报详情',
+            //       'path': '/statistics/annualPlan/projectReportDetail',
+            //       'component': '/statistics/annualPlan/projectReportDetail',
+            //       'iconCls': 'el-icon-notebook-2',
+            //       'menushow': false,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     },
+            //     {
+            //       'name': '项目部上报汇总详情',
+            //       'path': '/statistics/annualPlan/summaryDetail',
+            //       'component': '/statistics/annualPlan/summaryDetail',
+            //       'iconCls': 'el-icon-notebook-2',
+            //       'menushow': false,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     },
+            //     {
+            //       'name': '工程公司汇总',
+            //       'path': '/statistics/plan/02-1',
+            //       'component': '/statistics/plan/02-1',
+            //       'iconCls': 'el-icon-receiving',
+            //       'menushow': true,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     },
+            //     {
+            //       'name': '工程公司上报',
+            //       'path': '/statistics/plan/01',
+            //       'component': '/statistics/plan/01',
+            //       'iconCls': 'el-icon-notebook-2',
+            //       'menushow': true,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     },
+            //     {
+            //       'name': '集团公司汇总',
+            //       'path': '/statistics/plan/02',
+            //       'component': '/statistics/plan/02',
+            //       'iconCls': 'el-icon-receiving',
+            //       'menushow': true,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     },
+            //     {
+            //       'name': '集团公司上报',
+            //       'path': '/statistics/plan/03',
+            //       'component': '/statistics/plan/03',
+            //       'iconCls': 'el-icon-notebook-2',
+            //       'menushow': true,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     },
+            //     {
+            //       'name': '股份公司汇总',
+            //       'path': '/statistics/plan/04',
+            //       'component': '/statistics/plan/04',
+            //       'iconCls': 'el-icon-receiving',
+            //       'menushow': true,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     },
+            //     {
+            //       'name': '下级上报查询',
+            //       'path': '/statistics/plan/05',
+            //       'component': '/statistics/plan/05',
+            //       'iconCls': 'el-icon-search',
+            //       'menushow': true,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     },
+            //     {
+            //       'name': '股份公司调整',
+            //       'path': '/statistics/plan/06',
+            //       'component': '/statistics/plan/06',
+            //       'iconCls': 'el-icon-edit-outline',
+            //       'menushow': true,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     },
+            //     {
+            //       'name': '集团公司调整',
+            //       'path': '/statistics/plan/07',
+            //       'component': '/statistics/plan/07',
+            //       'iconCls': 'el-icon-edit-outline',
+            //       'menushow': true,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     },
+            //     {
+            //       'name': '股份公司下达',
+            //       'path': '/statistics/plan/08',
+            //       'component': '/statistics/plan/08',
+            //       'iconCls': 'el-icon-finished',
+            //       'menushow': true,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     },
+            //     {
+            //       'name': '集团公司下达',
+            //       'path': '/statistics/plan/09',
+            //       'component': '/statistics/plan/09',
+            //       'iconCls': 'el-icon-finished',
+            //       'menushow': true,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     },
+            //     {
+            //       'name': '上级下达查看',
+            //       'path': '/statistics/plan/10',
+            //       'component': '/statistics/plan/10',
+            //       'iconCls': 'el-icon-search',
+            //       'menushow': true,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     },
+            //     {
+            //       'name': '下级下达查看',
+            //       'path': '/statistics/plan/11',
+            //       'component': '/statistics/plan/11',
+            //       'iconCls': 'el-icon-search',
+            //       'menushow': true,
+            //       'leaf': true,
+            //       'defaultpage': false
+            //     }
+            //   ]
+            // },
             {
               'name': '统计指标',
               'path': '/statistics/bp',

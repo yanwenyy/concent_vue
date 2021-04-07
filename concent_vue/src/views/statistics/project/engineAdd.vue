@@ -287,11 +287,24 @@
               label="父项目名称:"
               prop="project.fatherProjectName"
               style="width: 32.5%">
-              <el-input
+              <el-select
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                filterable
                 clearable
-                placeholder="请输入"
-                v-model="detailForm.project.fatherProjectName"/>
+                placeholder="请选择"
+                @change="getFatherName(detailForm.project.fatherProjectId, fatherList, 'fatherProjectName')"
+                v-model="detailForm.project.fatherProjectId">
+                <el-option
+                  :key="index"
+                  :label="item.projectName"
+                  :value="item.uuid"
+                  v-for="(item, index) in fatherList"/>
+              </el-select>
+              <!--<el-input-->
+                <!--:disabled="p.actpoint === 'look'||p.actpoint === 'task'"-->
+                <!--clearable-->
+                <!--placeholder="请输入"-->
+                <!--v-model="detailForm.project.fatherProjectName"/>-->
             </el-form-item>
             <el-form-item
               v-if="detailForm.project.projectTypeId===''||detailForm.project.projectTypeId==='625a3ee0728a4f45b792d022b8bb36d9'"
@@ -1149,6 +1162,7 @@
         }
       }
       return {
+        fatherList:[],
         uuid: null,
         DwVisible: false,
         infoCSVisible: false,
@@ -1474,6 +1488,14 @@
         this.detailForm.project.isBureauIndex = ''
         this.getName(id, list, name,code)
       },
+      getFatherName(id, list, name) {
+        if (id) {
+          this.$forceUpdate()
+          this.detailForm.project[name] = list.find(
+            (item) => item.uuid === id
+        ).projectName
+        }
+      },
       getName(id, list, name,code) {
         if (id) {
           this.$forceUpdate()
@@ -1681,6 +1703,12 @@
       if (this.p.actpoint === 'look' || this.p.actpoint === 'edit'||this.p.actpoint=='task') {
         this.getShow()
       }
+      //获取父项目名称列表
+      this.$http
+        .post('/api/statistics/StatisticsProject/detail/findProjectFather')
+        .then(res => {
+        this.fatherList = res.data.data
+    })
     }
   }
 </script>

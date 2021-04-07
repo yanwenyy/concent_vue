@@ -4,9 +4,17 @@
     :visible.sync="dialogVisible"
     width="30%"
   >
+    <div class="tree-search-input">
+      <el-input
+        placeholder="输入关键字进行过滤"
+        v-model="filterText">
+      </el-input>
+    </div>
     <div class="tree-div" v-if="ifChek==true">
       <!--:data="datas"-->
       <el-tree
+        :filter-node-method="filterNode"
+        class="filter-tree"
         ref="tree"
         show-checkbox
         :check-strictly="true"
@@ -22,6 +30,8 @@
     <div class="tree-div" v-if="ifChek==false">
       <!--:data="datas"-->
       <el-tree
+        :filter-node-method="filterNode"
+        class="filter-tree"
         ref="tree"
         :load="loadNode"
         lazy
@@ -43,8 +53,14 @@
 <script>
   import datas from '@/utils/position'
   export default {
+    watch: {
+      filterText(val) {
+        this.$refs.tree.filter(val);
+      }
+    },
     data() {
       return {
+        filterText: '',
         datas: [],
         list:[],
         dialogVisible:true,
@@ -78,6 +94,10 @@
       })
     },
     methods: {
+      filterNode(value, data) {
+        if (!value) return true;
+        return data.name.indexOf(value) !== -1;
+      },
       loadNode(node, resolve) {
           if (node.level === 0) {
             this.getFrist(resolve)

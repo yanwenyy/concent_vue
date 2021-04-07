@@ -394,6 +394,24 @@
             scope.row.bidTime | dateformat
             }}</template>
         </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="版本标识"
+          prop="version"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>版本标识</span>
+            <div>
+              <el-input
+                class="list-search-picker"
+                style=" width: 100%"
+                v-model="searchFrom.version"
+              />
+            </div>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
     <el-pagination
