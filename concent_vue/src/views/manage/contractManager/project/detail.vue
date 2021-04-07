@@ -64,7 +64,7 @@
             <el-input
               disabled
               clearable
-              placeholder=""
+              placeholder="保存后系统自动生成"
 
               v-model="detailform.contractInfo.contractNo"
             />
@@ -210,6 +210,47 @@
                 <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
               <!--</el-select>-->
             </el-form-item>
+          <br>
+          <el-form-item
+            label="合同开工日期"
+          >
+            <el-date-picker
+              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+              filterable
+              clearable
+              type="date"
+              value-format="timestamp"
+              v-model="detailform.contractInfo.startTime"
+
+            >
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item
+            label="合同竣工日期"
+          >
+            <el-date-picker
+              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+              filterable
+              clearable
+              type="date"
+              value-format="timestamp"
+              v-model="detailform.contractInfo.endTime"
+
+            >
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item
+            label="工期(天)"
+          >
+            <el-input
+              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+              clearable
+              placeholder="请输入"
+
+              v-model="detailform.contractInfo.contractPeriod"
+            />
+          </el-form-item>
+          <br>
             <el-form-item
               label="使用资质单位"
               prop="contractInfo.qualityOrgNames"
@@ -366,7 +407,119 @@
                 ></el-option>
               </el-select>
             </el-form-item>
+          <el-form-item
+            label="设计单位"
+          >
+            <el-input
+              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+              clearable
+              placeholder="请输入"
+
+              v-model="detailform.contractInfo.designOrg"
+            />
+          </el-form-item>
             <br>
+          <el-form-item
+            class="inline-formitem form-item-four"
+            label="是否为系统内联合体"
+          >
+            <el-switch
+              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+              class="inline-formitem-switch"
+              v-model="detailform.contractInfo.isInSystemUnion"
+              active-color="#409EFF"
+              inactive-color="#ddd"
+              active-value="0"
+              inactive-value="1"
+            >
+            </el-switch>
+            <!--<el-select-->
+            <!--:disabled="p.actpoint==='look'"-->
+            <!--clearable-->
+            <!--filterable-->
+            <!--placeholder="请选择"-->
+
+            <!--v-model="detailform.contractInfo.isInSystemUnion"-->
+            <!--&gt;-->
+            <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
+            <!--</el-select>-->
+          </el-form-item>
+          <el-form-item
+            class="inline-formitem form-item-four"
+            label="是否含系统内分包"
+          >
+            <el-switch
+              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+              class="inline-formitem-switch"
+              v-model="detailform.contractInfo.isInSystemSub"
+              active-color="#409EFF"
+              inactive-color="#ddd"
+              active-value="0"
+              inactive-value="1"
+            >
+            </el-switch>
+            <!--<el-select-->
+            <!--:disabled="p.actpoint==='look'"-->
+            <!--filterable-->
+            <!--clearable-->
+            <!--placeholder="请选择"-->
+
+            <!--v-model="detailform.contractInfo.isInSystemSub"-->
+            <!--&gt;-->
+            <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
+            <!--</el-select>-->
+          </el-form-item>
+          <el-form-item
+            class="inline-formitem form-item-four"
+            label="是否为系统外联合体"
+          >
+            <el-switch
+              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+              class="inline-formitem-switch"
+              v-model="detailform.contractInfo.isOutSystemUnion"
+              active-color="#409EFF"
+              inactive-color="#ddd"
+              active-value="0"
+              inactive-value="1"
+            >
+            </el-switch>
+            <!--<el-select-->
+            <!--:disabled="p.actpoint==='look'"-->
+            <!--clearable-->
+            <!--filterable-->
+            <!--placeholder="请选择"-->
+
+            <!--v-model="detailform.contractInfo.isOutSystemUnion"-->
+            <!--&gt;-->
+            <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
+            <!--</el-select>-->
+          </el-form-item>
+          <el-form-item
+            class="inline-formitem form-item-four"
+            label="是否含系统外分包:"
+          >
+            <el-switch
+              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+              class="inline-formitem-switch"
+              v-model="detailform.contractInfo.isOutSystemSub"
+              active-color="#409EFF"
+              inactive-color="#ddd"
+              active-value="0"
+              inactive-value="1"
+            >
+            </el-switch>
+            <!--<el-select-->
+            <!--:disabled="p.actpoint==='look'"-->
+            <!--filterable-->
+            <!--clearable-->
+            <!--placeholder="请选择"-->
+
+            <!--v-model="detailform.contractInfo.isOutSystemSub"-->
+            <!--&gt;-->
+            <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
+            <!--</el-select>-->
+          </el-form-item>
+          <br>
             <el-form-item
               label="合同总金额(万元)"
               prop="contractInfo.contractAmount"
@@ -458,57 +611,6 @@
             </el-form-item>
             <br>
             <el-form-item
-              class="inline-formitem"
-              label="是否为系统内联合体"
-            >
-              <el-switch
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                class="inline-formitem-switch"
-                v-model="detailform.contractInfo.isInSystemUnion"
-                active-color="#409EFF"
-                inactive-color="#ddd"
-                active-value="0"
-                inactive-value="1"
-              >
-              </el-switch>
-              <!--<el-select-->
-                <!--:disabled="p.actpoint==='look'"-->
-                <!--clearable-->
-                <!--filterable-->
-                <!--placeholder="请选择"-->
-
-                <!--v-model="detailform.contractInfo.isInSystemUnion"-->
-              <!--&gt;-->
-                <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
-              <!--</el-select>-->
-            </el-form-item>
-            <el-form-item
-              class="inline-formitem"
-              label="是否含系统内分包"
-            >
-              <el-switch
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                class="inline-formitem-switch"
-                v-model="detailform.contractInfo.isInSystemSub"
-                active-color="#409EFF"
-                inactive-color="#ddd"
-                active-value="0"
-                inactive-value="1"
-              >
-              </el-switch>
-              <!--<el-select-->
-                <!--:disabled="p.actpoint==='look'"-->
-                <!--filterable-->
-                <!--clearable-->
-                <!--placeholder="请选择"-->
-
-                <!--v-model="detailform.contractInfo.isInSystemSub"-->
-              <!--&gt;-->
-                <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
-              <!--</el-select>-->
-            </el-form-item>
-            <br>
-            <el-form-item
               v-if="detailform.contractInfo.isInSystemUnion==='1'"
               label="暂定金(万元)"
               prop="contractInfo.designTempPrice"
@@ -555,57 +657,6 @@
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
               </el-input>
-            </el-form-item>
-            <br>
-            <el-form-item
-              class="inline-formitem"
-              label="是否为系统外联合体"
-            >
-              <el-switch
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                class="inline-formitem-switch"
-                v-model="detailform.contractInfo.isOutSystemUnion"
-                active-color="#409EFF"
-                inactive-color="#ddd"
-                active-value="0"
-                inactive-value="1"
-              >
-              </el-switch>
-              <!--<el-select-->
-                <!--:disabled="p.actpoint==='look'"-->
-                <!--clearable-->
-                <!--filterable-->
-                <!--placeholder="请选择"-->
-
-                <!--v-model="detailform.contractInfo.isOutSystemUnion"-->
-              <!--&gt;-->
-                <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
-              <!--</el-select>-->
-            </el-form-item>
-            <el-form-item
-              class="inline-formitem"
-              label="是否含系统外分包:"
-            >
-              <el-switch
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                class="inline-formitem-switch"
-                v-model="detailform.contractInfo.isOutSystemSub"
-                active-color="#409EFF"
-                inactive-color="#ddd"
-                active-value="0"
-                inactive-value="1"
-              >
-              </el-switch>
-              <!--<el-select-->
-                <!--:disabled="p.actpoint==='look'"-->
-                <!--filterable-->
-                <!--clearable-->
-                <!--placeholder="请选择"-->
-
-                <!--v-model="detailform.contractInfo.isOutSystemSub"-->
-              <!--&gt;-->
-                <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
-              <!--</el-select>-->
             </el-form-item>
             <br>
             <el-form-item
@@ -998,66 +1049,9 @@
                 v-model="detailform.contractInfo.createOrgName"
               />
             </el-form-item>
-            <el-form-item
-              label="设计单位"
-            >
-              <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                clearable
-                placeholder="请输入"
 
-                v-model="detailform.contractInfo.designOrg"
-              />
-            </el-form-item>
             <br>
-            <el-form-item
-          label="中标日期"
-          prop="contractInfo.bidTime"
-          :rules="{
-              required: true,
-              message: '此项不能为空',
-              trigger: 'blur',
-            }"
-        >
-          <el-date-picker
-            :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-            filterable
-            clearable
-            type="date"
-            value-format="timestamp"
-            v-model="detailform.contractInfo.bidTime"
 
-          >
-          </el-date-picker>
-        </el-form-item>
-            <el-form-item
-              label="合同开工日期"
-            >
-              <el-date-picker
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                filterable
-                clearable
-                type="date"
-                value-format="timestamp"
-                v-model="detailform.contractInfo.startTime"
-
-              >
-              </el-date-picker>
-            </el-form-item>
-            <el-form-item
-          label="合同竣工日期"
-        >
-          <el-date-picker
-            :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-            filterable
-            clearable
-            type="date"
-            value-format="timestamp"
-            v-model="detailform.contractInfo.endTime"
-
-          >
-          </el-date-picker>
-        </el-form-item>
             <el-form-item
               label="合同类型"
             >
@@ -1069,17 +1063,7 @@
                 v-model="detailform.contractInfo.contractType=='2'?'补充合同':'主合同'"
               />
             </el-form-item>
-            <el-form-item
-              label="工期(天)"
-            >
-              <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                clearable
-                placeholder="请输入"
 
-                v-model="detailform.contractInfo.contractPeriod"
-              />
-            </el-form-item>
             <br>
             <el-form-item
             label="录入时间"

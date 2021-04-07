@@ -52,7 +52,7 @@
                 <el-input
                   disabled
                   clearable
-                  placeholder="请输入"
+                  placeholder="保存后系统自动生成"
                   size="mini"
                   v-model="detailform.contractInfo.contractNo"
                 />·
@@ -70,131 +70,27 @@
                   placeholder="选择日期">
                 </el-date-picker>
               </el-form-item>
-
               <el-form-item
-                label="合同总金额（万元）:"
-                :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
-                prop="contractInfo.contractAmount"
-
-              >
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  @input="getOurAmount"
-                  clearable
-                  placeholder=""
-                  size="mini"
-                  v-model="detailform.contractInfo.contractAmount"
-                >
-                  <template slot="prepend">¥</template>
-                  <template slot="append">(万元)</template>
-                </el-input>
-              </el-form-item>
-              <el-form-item
-                label="铁建金额(万元):"
-                prop="contractInfo.crccCash"
-                :rules="rules.contractAmount"
-              >
-                <el-input
-                  :disabled="true"
-                  v-model="detailform.contractInfo.crccCash"
-                >
-                  <template slot="prepend">¥</template>
-                  <template slot="append">(万元)</template>
-                </el-input>
-              </el-form-item>
-              <br>
-              <el-form-item
-                label="初始我方份额(万元):"
-                prop="contractInfo.ourAmount"
-                :rules="rules.contractAmount"
-              >
-                <el-input
-                  :disabled="true"
-                  clearable
-                  placeholder=""
-                  size="mini"
-                  v-model="detailform.contractInfo.ourAmount"
-                >
-                  <template slot="prepend">¥</template>
-                  <template slot="append">(万元)</template>
-                </el-input>
-              </el-form-item>
-              <el-form-item
-                v-if="detailform.contractInfo.contractType!='2'"
-                label="我方份额含补充(万元)"
-              >
-                <el-input
-                  :disabled="true"
-                  v-model="detailform.contractInfo.ourAmountSupply"
-                >
-                  <template slot="prepend">¥</template>
-                  <template slot="append">(万元)</template>
-                </el-input>
-              </el-form-item>
-              <el-form-item
-                label="增值税（万元）:"
-                prop="contractInfo.valueAddedTax"
-                :rules="{
-            required: true, message: '此项不能为空', trigger: 'blur'
-          }"
-              >
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-                  placeholder="请输入"
-                  size="mini"
-                  v-model="detailform.contractInfo.valueAddedTax"
-                >
-                  <template slot="prepend">¥</template>
-                  <template slot="append">(万元)</template>
-                </el-input>
-              </el-form-item>
-              <br>
-              <el-form-item
-                label="使用资质单位:"
-                prop="contractInfo.qualityOrgNames"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: ['blur','change'],
-              }"
-              >
-                <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.qualityOrgNames" class="input-with-select">
-                  <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('使用资质单位',detailform.contractInfo.qualityOrgIds)" ></el-button>
-                </el-input>
-              </el-form-item>
-              <el-form-item
-                label="合同类型:"
-                prop="contractInfo.enginTypeFirstId"
+                label="甲方单位:"
+                prop="contractInfo.constructionOrg"
                 :rules="{
       required: true, message: '此项不能为空', trigger: 'blur'
     }"
               >
-                <el-select
-                  :disabled="p.actpoint==='look'"
-                  clearable
-                  filterable
-                  placeholder="请选择"
-                  size="mini"
-                  v-model="detailform.contractInfo.enginTypeFirstId"
-                  @change="
-                  getName(
-                    detailform.contractInfo.enginTypeFirstId,
-                    contractType,
-                    'enginTypeFirstName',
-                    'enginTypeFirstCode'
-                  )
-                "
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in contractType"
-                  ></el-option>
-                </el-select>
+                <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.constructionOrg" class="input-with-select">
+
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                label="乙方单位:"
+                prop="contractInfo.buildOrgNames"
+                :rules="{
+      required: true, message: '此项不能为空', trigger: 'blur'
+    }"
+              >
+                <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.buildOrgNames" class="input-with-select">
+
+                </el-input>
               </el-form-item>
               <br>
               <el-form-item
@@ -298,6 +194,134 @@
                 <!--</el-select>-->
               </el-form-item>
               <br>
+              <el-form-item
+                label="合同总金额（万元）:"
+                :rules="{
+      required: true, message: '此项不能为空', trigger: 'blur'
+    }"
+                prop="contractInfo.contractAmount"
+
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  @input="getOurAmount"
+                  clearable
+                  placeholder=""
+                  size="mini"
+                  v-model="detailform.contractInfo.contractAmount"
+                >
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                label="铁建金额(万元):"
+                prop="contractInfo.crccCash"
+                :rules="rules.contractAmount"
+              >
+                <el-input
+                  :disabled="true"
+                  v-model="detailform.contractInfo.crccCash"
+                >
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                label="增值税（万元）:"
+                prop="contractInfo.valueAddedTax"
+                :rules="{
+            required: true, message: '此项不能为空', trigger: 'blur'
+          }"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+                  placeholder="请输入"
+                  size="mini"
+                  v-model="detailform.contractInfo.valueAddedTax"
+                >
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <br>
+              <el-form-item
+                label="初始我方份额(万元):"
+                prop="contractInfo.ourAmount"
+                :rules="rules.contractAmount"
+              >
+                <el-input
+                  :disabled="true"
+                  clearable
+                  placeholder=""
+                  size="mini"
+                  v-model="detailform.contractInfo.ourAmount"
+                >
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                v-if="detailform.contractInfo.contractType!='2'"
+                label="我方份额含补充(万元)"
+              >
+                <el-input
+                  :disabled="true"
+                  v-model="detailform.contractInfo.ourAmountSupply"
+                >
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+
+              <br>
+              <el-form-item
+                label="使用资质单位:"
+                prop="contractInfo.qualityOrgNames"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: ['blur','change'],
+              }"
+              >
+                <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.qualityOrgNames" class="input-with-select">
+                  <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('使用资质单位',detailform.contractInfo.qualityOrgIds)" ></el-button>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                label="合同类型:"
+                prop="contractInfo.enginTypeFirstId"
+                :rules="{
+      required: true, message: '此项不能为空', trigger: 'blur'
+    }"
+              >
+                <el-select
+                  :disabled="p.actpoint==='look'"
+                  clearable
+                  filterable
+                  placeholder="请选择"
+                  size="mini"
+                  v-model="detailform.contractInfo.enginTypeFirstId"
+                  @change="
+                  getName(
+                    detailform.contractInfo.enginTypeFirstId,
+                    contractType,
+                    'enginTypeFirstName',
+                    'enginTypeFirstCode'
+                  )
+                "
+                >
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in contractType"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+              <br>
+
               <el-form-item
                 label="新兴市场类别(一级):"
                 prop="contractInfo.marketFirstNameId"
@@ -532,29 +556,6 @@
                     v-for="(item, index) in bizTypeCode"
                   ></el-option>
                 </el-select>
-              </el-form-item>
-              <br>
-              <el-form-item
-                label="甲方单位:"
-                prop="contractInfo.constructionOrg"
-                :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
-              >
-                <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.constructionOrg" class="input-with-select">
-
-                </el-input>
-              </el-form-item>
-              <el-form-item
-                label="乙方单位:"
-                prop="contractInfo.buildOrgNames"
-                :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
-              >
-                <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.buildOrgNames" class="input-with-select">
-
-                </el-input>
               </el-form-item>
               <br>
               <el-form-item
