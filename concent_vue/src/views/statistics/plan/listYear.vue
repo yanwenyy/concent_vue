@@ -4,9 +4,9 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="edit" type="primary" plain>修改</el-button>
-        <el-button @click="del" type="primary" plain>删除</el-button>
-        <el-button @click="searchformSubmit" type="primary" plain>刷新</el-button>
+        <el-button @click="edit" type="primary" plain><i class="el-icon-edit"></i>修改</el-button>
+        <el-button @click="del" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
+        <el-button @click="searchformSubmit" type="primary" plain><i class="el-icon-refresh-right"></i>刷新</el-button>
         <el-button @click="back" type="primary" plain>返回</el-button>
       </el-button-group>
       <!--<label style="margin-left: 10px;line-height: 32px;font-size: 15px;">项目名称：{{p.projectName}}</label>-->

@@ -2,10 +2,10 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="add" type="primary" plain>新增</el-button>
-        <el-button @click="edit" type="primary" plain>修改</el-button>
-        <el-button @click="del" type="primary" plain>删除</el-button>
-        <el-button @click="editState" type="primary" plain>批量修改项目状态</el-button>
+        <el-button @click="add" type="primary" plain><i class="el-icon-plus"></i>新增</el-button>
+        <el-button @click="edit" type="primary" plain><i class="el-icon-edit"></i>修改</el-button>
+        <el-button @click="del" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
+        <el-button @click="editState" type="primary" plain><i class="el-icon-document-copy"></i>批量修改项目状态</el-button>
       </el-button-group>
       <div style="float: right;">
         <el-button
@@ -13,9 +13,9 @@
           type="info"
           plain
           style="color:black;background:none">
-          重置
+          <i class="el-icon-refresh-right"></i>重置
         </el-button>
-        <el-button @click="searchformSubmit" type="primary" plain>查询</el-button>
+        <el-button @click="searchformSubmit" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
         <!--<el-button @click="exportdata" type="primary" plain>导出</el-button>-->
       </div>
     </div>
@@ -170,7 +170,7 @@
         >
           <template slot-scope="scope">
                 <span> {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':''}}</span>
-       
+
           </template>
           <template slot="header" slot-scope="scope">
             <span>状态</span>
