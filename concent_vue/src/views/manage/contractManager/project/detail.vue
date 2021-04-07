@@ -73,7 +73,7 @@
             <el-form-item
               label="工程类别(一级)"
               prop="contractInfo.enginTypeFirstId"
-              class="inline-formitem form-item-four"
+              class="inline-formitem form-item-six"
               :rules="{
               required: true,
               message: '此项不能为空',
@@ -97,8 +97,14 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-          <el-form-item
-            class="inline-formitem form-item-four"
+            <el-form-item
+            v-show="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'||
+                    detailform.contractInfo.enginTypeFirstId=='0f16c387f17b402db45c4de58e1cf8b4'||
+                    detailform.contractInfo.enginTypeFirstId=='f6f5188458ab4c5ba1e0bc12a9a4188b'||
+                    detailform.contractInfo.enginTypeFirstId=='24ebba9f2f3447579d0086209aff6ecd'||
+                    detailform.contractInfo.enginTypeFirstId=='193b4d4003d04899a1d09c8d5f7877fe'||
+                    detailform.contractInfo.enginTypeFirstId==''||detailform.contractInfo.enginTypeFirstId==null"
+            class="inline-formitem form-item-six"
             label="是否导入清单"
           >
             <el-switch
@@ -123,9 +129,16 @@
             <!--</el-select>-->
           </el-form-item>
             <el-form-item
+              v-show="detailform.contractInfo.enginTypeFirstId!='17ff5c08d36b41ea8f2dc2e9d3029cac'&&
+                    detailform.contractInfo.enginTypeFirstId!='0f16c387f17b402db45c4de58e1cf8b4'&&
+                    detailform.contractInfo.enginTypeFirstId!='f6f5188458ab4c5ba1e0bc12a9a4188b'&&
+                    detailform.contractInfo.enginTypeFirstId!='24ebba9f2f3447579d0086209aff6ecd'&&
+                    detailform.contractInfo.enginTypeFirstId!='193b4d4003d04899a1d09c8d5f7877fe'&&detailform.contractInfo.enginTypeFirstId!=''&&detailform.contractInfo.enginTypeFirstId!=null"
+              class="inline-formitem form-item-six"></el-form-item>
+            <el-form-item
               label="工程类别(二级)"
               prop="contractInfo.enginTypeSecondId"
-              class="inline-formitem form-item-four"
+              class="inline-formitem"
               :rules="{
               required: true,
               message: '此项不能为空',
@@ -158,7 +171,7 @@
             </el-form-item>
             <el-form-item
           label="铁路分类"
-          class="inline-formitem form-item-four"
+          class="inline-formitem"
           v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'||detailform.contractInfo.enginTypeFirstId==null"
         >
           <el-select
@@ -7287,5 +7300,8 @@ export default {
   }
   >>>.gcl-pagination .el-select{
     width: 100px!important;
+  }
+  .form-item-six{
+    width: 16.25%!important;
   }
 </style>
