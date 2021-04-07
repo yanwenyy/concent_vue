@@ -130,9 +130,9 @@
           <el-button slot="append" icon="el-icon-search"  @click="selectPosition()"></el-button>
         </el-input>
       </el-form-item>
-      <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-      <el-button @click="getData" type="primary" plain>查询</el-button>
-      <el-button @click="exportdata" type="primary" plain>导出</el-button>
+      <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
+      <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
+      <!--<el-button @click="exportdata" type="primary" plain><i class="el-icon-top"></i>导出</el-button>-->
     </el-form>
     <div style="margin-top: 10px">
       <el-table
@@ -168,6 +168,22 @@
           <template slot-scope="scope">
             <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
           </template>
+        </el-table-column>
+        <el-table-column
+          width="200"
+          align="center"
+          label="项目编码"
+          prop="inforCode"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+        <el-table-column
+          width="200"
+          align="center"
+          label="项目板块"
+          prop="moduleName"
+          show-overflow-tooltip
+        >
         </el-table-column>
         <el-table-column
           :width="150"

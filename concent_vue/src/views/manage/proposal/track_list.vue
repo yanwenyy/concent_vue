@@ -2,13 +2,13 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="add('')" plain :disabled="trackStatus!=null" type="primary">跟踪</el-button>
-        <el-button @click="add('fq')" :disabled="trackStatus!='1'" plain type="primary">放弃跟踪</el-button>
-        <el-button @click="add('end')" :disabled="trackStatus!='1'" plain type="primary">结束跟踪</el-button>
+        <el-button @click="add('')" plain :disabled="trackStatus!=null" type="primary"><i class="el-icon-circle-check"></i>跟踪</el-button>
+        <el-button @click="add('fq')" :disabled="trackStatus!='1'" plain type="primary"><i class="el-icon-warning-outline"></i>放弃跟踪</el-button>
+        <el-button @click="add('end')" :disabled="trackStatus!='1'" plain type="primary"><i class="el-icon-circle-close"></i>结束跟踪</el-button>
       </el-button-group>
       <div style="float: right">
-        <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-        <el-button @click="getData" type="primary" plain>查询</el-button>
+        <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
+        <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
       </div>
     </div>
 
@@ -59,6 +59,44 @@
           </template>
           <template slot-scope="scope">
               <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          width="200"
+          align="center"
+          label="项目编码"
+          prop="inforCode"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>项目编码</span>
+            <div>
+              <el-input
+                class="list-search-picker"
+                style=" width: 100%"
+                v-model="searchform.inforCode"
+                size="mini"
+              />
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column
+          width="200"
+          align="center"
+          label="项目板块"
+          prop="moduleName"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>项目板块</span>
+            <div>
+              <el-input
+                class="list-search-picker"
+                style=" width: 100%"
+                v-model="searchform.moduleName"
+                size="mini"
+              />
+            </div>
           </template>
         </el-table-column>
         <el-table-column

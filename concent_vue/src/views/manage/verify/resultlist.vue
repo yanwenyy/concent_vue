@@ -2,7 +2,7 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="verifyResultEdit()" plain type="primary">资审结果登记</el-button>
+        <el-button @click="verifyResultEdit()" plain type="primary"><i class="el-icon-plus"></i>资审结果登记</el-button>
       </el-button-group>
     </div>
     <div style="margin-top: 10px">

@@ -103,6 +103,25 @@
           </template>
         </el-table-column>
         <el-table-column
+          width="200"
+          align="center"
+          label="项目板块"
+          prop="moduleName"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>项目板块</span>
+            <div>
+              <el-input
+                class="list-search-picker"
+                style=" width: 100%"
+                v-model="searchform.moduleName"
+                size="mini"
+              />
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column
           :width="200"
           align="center"
           label="工程类别(一级)"
