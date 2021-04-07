@@ -72,7 +72,7 @@
           </div>
         </div>
         <div class="cx">
-          <el-button @click="getList" type="primary">查询</el-button>
+          <el-button @click="getList" type="primary"><i class="el-icon-search"></i>查询</el-button>
           <!-- <el-input  placeholder="请输入统计项名称" ></el-input> -->
 
         </div>
