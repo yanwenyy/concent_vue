@@ -29,9 +29,9 @@
           type="info"
           plain
           style="color:black;background:none">
-          重置
+          <i class="el-icon-refresh-right"></i> 重置
         </el-button>
-        <el-button @click="searchformSubmit" type="primary" plain>查询</el-button>
+        <el-button @click="searchformSubmit" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
       </div>
     </div>
 

@@ -33,7 +33,7 @@
       lazy
       :check-strictly="canSelParent"
       ref="tree"
-      :default-expand-all="true"
+
       :default-expanded-keys="['']"
       node-key="uuid"
       :load="loadNode"
@@ -72,7 +72,7 @@
           </div>
         </div>
         <div class="cx">
-          <el-button @click="getList" type="primary">查询</el-button>
+          <el-button @click="getList" type="primary"><i class="el-icon-search"></i>查询</el-button>
           <!-- <el-input  placeholder="请输入统计项名称" ></el-input> -->
 
         </div>
@@ -296,7 +296,10 @@ export default {
         this.$http
           .post(
             "/api/statistics/bp/BpGdwtjxsz/detail/saveAll",
-            JSON.stringify(subList),
+            JSON.stringify({
+              bpTjxList: subList,
+              projectBpTjxType: this.itemform.vprojecttypes
+            }),
             {useJson: true}
           )
           .then((res) => {
