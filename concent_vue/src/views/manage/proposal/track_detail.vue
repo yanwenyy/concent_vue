@@ -27,7 +27,8 @@
           >保存</el-button>
         <!-- </div> -->
 
-        <el-button v-show="p.actpoint != 'look'" @click="submit" class="detailbutton">提交</el-button>
+        <!--<el-button v-show="p.actpoint != 'look'" @click="submit" class="detailbutton">提交</el-button>-->
+        <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.topInfoOrg.flowStatus==1||detailform.topInfoOrg.flowStatus==4)" @click="submit('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
       </div>
       <div class="detailBox">
         <el-form
@@ -1311,6 +1312,7 @@
         })
       },
       submit() {
+
       },
       //工程类别二级
       getTwo(id) {
@@ -1377,6 +1379,52 @@
           console.log(this.detailform.topInfoOrg[name]);
         }
       },
+
+        submit(formName,type) {
+            var url='';
+            if(type=='save'){
+                url="/api/contract/topInfo/TopInfor/detail/saveOrUpdate"
+            }else{
+                url="/api/contract/topInfo/TopInfor/process/start"
+            }
+            var topInforCapitalList = [];
+            this.amountSource.forEach((item) => {
+                if (this.detailform.value1&&this.detailform.value1.indexOf(item.id) != -1) {
+                    var v = {
+                        capitalId: item.id,
+                        capitalName: item.detailName,
+                        capitalCode: item.detailCode
+                    };
+                    topInforCapitalList.push(v);
+                }
+            });
+            this.detailform.topInforCapitalList=topInforCapitalList;
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    this.$http
+                        .post(
+                            url,
+                            JSON.stringify(this.detailform),
+                            {useJson: true}
+                        )
+                        .then((res) => {
+                            if (res.data.code === 200) {
+                                this.$message({
+                                    message: "保存成功",
+                                    type: "success",
+                                });
+                                this.$refs[formName].resetFields();
+                                this.$router.push({
+                                    path: "/manage/proposal/list",
+                                });
+                            }
+                        });
+                } else {
+                    this.$message.error("请添加必填项");
+                    return false;
+                }
+            });
+        },
 
       //跟踪接口
       saveInfo(formName) {
