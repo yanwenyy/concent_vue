@@ -659,71 +659,7 @@
                 v-model="detailform.topInfor.majorProjectExplain"
               />
             </el-form-item>
-            <div>
-              <el-form-item class="formItem"
-                            label="项目跟踪负责人:"
-                            prop="topInfoOrg.projectTrackResponPerson"
-                            :rules="{
-                  required: true,
-                  message: '此项不能为空',
-                  trigger: 'blur',
-                }"
-              >
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-                  placeholder=""
 
-                  v-model="detailform.topInfoOrg.projectTrackResponPerson"
-                />
-              </el-form-item>
-              <el-form-item  class="formItem"
-                             label="联系电话:"
-                             prop="topInfoOrg.contactMode"
-                             :rules="rules.phone"
-              >
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-                  placeholder=""
-
-                  v-model="detailform.topInfoOrg.contactMode"
-                />
-              </el-form-item>
-              <el-form-item  class="formItem"
-                             label="预计中标概率:"
-                             prop="topInfoOrg.bidProbId"
-                             :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              >
-                <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  filterable
-                  clearable
-                  placeholder="请选择"
-
-                  @change="
-                  getNameZb(
-                    detailform.topInfoOrg.bidProbId,
-                    probability,
-                    'bidProbName',
-                    'bidProbCode'
-                  )
-                "
-                  v-model="detailform.topInfoOrg.bidProbId"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in probability"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
             <div>
               <el-form-item
                 class="neirong"
@@ -857,6 +793,72 @@
                 </template>
               </el-table-column>
             </el-table>
+            <el-divider content-position="left" class="detailDivider" >跟踪信息</el-divider>
+            <div>
+              <el-form-item class="formItem"
+                            label="项目跟踪负责人:"
+                            prop="topInfoOrg.projectTrackResponPerson"
+                            :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'blur',
+                }"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+                  placeholder=""
+
+                  v-model="detailform.topInfoOrg.projectTrackResponPerson"
+                />
+              </el-form-item>
+              <el-form-item  class="formItem"
+                             label="联系电话:"
+                             prop="topInfoOrg.contactMode"
+                             :rules="rules.phone"
+              >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+                  placeholder=""
+
+                  v-model="detailform.topInfoOrg.contactMode"
+                />
+              </el-form-item>
+              <el-form-item  class="formItem"
+                             label="预计中标概率:"
+                             prop="topInfoOrg.bidProbId"
+                             :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+              >
+                <el-select
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  filterable
+                  clearable
+                  placeholder="请选择"
+
+                  @change="
+                  getNameZb(
+                    detailform.topInfoOrg.bidProbId,
+                    probability,
+                    'bidProbName',
+                    'bidProbCode'
+                  )
+                "
+                  v-model="detailform.topInfoOrg.bidProbId"
+                >
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in probability"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
             <p  class="detail-title" style="overflow: hidden;margin-right:30px">
               <span>标段信息: </span>
               <el-button
@@ -1640,6 +1642,8 @@
   .el-table--border {
     min-height: auto !important;
   }
-
+  >>>.detailDivider {
+    margin: 60px 0 20px 0 !important;
+  }
 </style>
 

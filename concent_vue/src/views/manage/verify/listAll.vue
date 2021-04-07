@@ -2,20 +2,19 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="add" :disabled="flowStatus!=1&&flowStatus!=null" plain type="primary" >登记</el-button>
+        <el-button @click="add" :disabled="flowStatus!=1&&flowStatus!=null" plain type="primary" ><i class="el-icon-plus"></i>登记</el-button>
 
         <el-button @click="editItem"
         :disabled="flowStatus==2 || flowStatus==3"
         plain type="primary"
-        >修改</el-button>
+        ><i class="el-icon-edit"></i>修改</el-button>
 
-        <el-button @click="remove" :disabled="flowStatus!=1&&flowStatus!=4" type="primary" plain>删除</el-button>
-        <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
+        <el-button @click="remove" :disabled="flowStatus!=1&&flowStatus!=4" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
+        <el-button  type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>
       </el-button-group>
             <div style="float: right">
-        <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-        <el-button @click="getData" type="primary" plain >查询</el-button>
-        <el-button @click="" type="primary" plain >导出</el-button>
+        <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
+        <el-button @click="getData" type="primary" plain ><i class="el-icon-search"></i>查询</el-button>
       </div>
     </div>
     <div style="margin-top: 10px">

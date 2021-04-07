@@ -2,14 +2,14 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button :disabled="btnStatus" @click="add" plain type="primary">新增</el-button>
-        <el-button @click="totop" plain type="primary">修改</el-button>
-        <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
+        <el-button :disabled="btnStatus" @click="add" plain type="primary"><i class="el-icon-plus"></i>新增</el-button>
+        <el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
+        <el-button @click="searchformReset" type="primary" plain><i class="el-icon-refresh-left"></i>刷新</el-button>
       </el-button-group>
       <div style="float: right">
-        <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-        <el-button @click="getData" type="primary" plain>查询</el-button>
-        <el-button @click="exportdata" type="primary" plain>导出</el-button>
+        <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
+        <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
+        <el-button @click="exportdata" type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>
       </div>
     </div>
     <div style="margin-top: 10px">
@@ -65,7 +65,44 @@
             <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
           </template>
         </el-table-column>
-
+        <el-table-column
+          width="200"
+          align="center"
+          label="项目编码"
+          prop="inforCode"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>项目编码</span>
+            <div>
+              <el-input
+                class="list-search-picker"
+                style=" width: 100%"
+                v-model="searchform.inforCode"
+                size="mini"
+              />
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column
+          width="200"
+          align="center"
+          label="项目板块"
+          prop="moduleName"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>项目板块</span>
+            <div>
+              <el-input
+                class="list-search-picker"
+                style=" width: 100%"
+                v-model="searchform.moduleName"
+                size="mini"
+              />
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column
           :width="200"
           align="center"
