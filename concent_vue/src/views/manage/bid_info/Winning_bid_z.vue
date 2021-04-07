@@ -2,7 +2,7 @@
   <div>
     <div style="width: 100%;overflow: hidden;">
       <el-button-group style="float: left">
-        <el-button @click="setZB" plain type="primary" :disabled="isWinBid==1">中标结果登记</el-button>
+        <el-button @click="setZB" plain type="primary" :disabled="isWinBid==1"><i class="el-icon-plus"></i>中标结果登记</el-button>
       </el-button-group>
     </div>
 

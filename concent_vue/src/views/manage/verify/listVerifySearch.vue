@@ -120,10 +120,10 @@
 <!--            ></el-option>-->
 <!--          </el-select>-->
 <!--        </el-form-item>-->
-      <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-      <el-button @click="getData" type="primary" plain>查询</el-button>
-      <el-button @click="exportdata" type="primary" plain>导出</el-button>
-      <el-button @click="verifyResultEdit" plain type="primary">资审结果登记查看</el-button>
+      <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
+      <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
+      <el-button @click="exportdata" type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>
+      <el-button @click="verifyResultEdit" plain type="primary"><i class="el-icon-view"></i>资审结果登记查看</el-button>
 
 
     </el-form>

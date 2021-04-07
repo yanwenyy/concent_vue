@@ -3,7 +3,7 @@
     <!--<FileUpload :businessCode='"01"' :businessType='"bidInfo"' ></FileUpload>-->
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span class="detailSpan" v-if="!p.type&&p.actpoint != 'look'"><b>项目信息跟踪</b></span>
+        <span class="detailSpan" v-if="!p.type"><b>项目信息跟踪</b></span>
         <span class="detailSpan" v-if="p.type == 'fq'&&p.actpoint != 'look'"><b>放弃跟踪</b></span>
         <span class="detailSpan" v-if="p.type == 'end'&&p.actpoint != 'look'"><b>结束跟踪</b></span>
         <el-button @click="back" class="detailbutton" >返回</el-button>

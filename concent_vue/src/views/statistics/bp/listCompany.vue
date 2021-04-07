@@ -33,7 +33,7 @@
       lazy
       :check-strictly="canSelParent"
       ref="tree"
-      :default-expand-all="true"
+
       :default-expanded-keys="['']"
       node-key="uuid"
       :load="loadNode"
@@ -296,7 +296,10 @@ export default {
         this.$http
           .post(
             "/api/statistics/bp/BpGdwtjxsz/detail/saveAll",
-            JSON.stringify(subList),
+            JSON.stringify({
+              bpTjxList: subList,
+              projectBpTjxType: this.itemform.vprojecttypes
+            }),
             {useJson: true}
           )
           .then((res) => {

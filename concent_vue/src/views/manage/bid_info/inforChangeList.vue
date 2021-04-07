@@ -3,15 +3,15 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button :disabled="btnStatus" @click="add" plain type="primary">新增</el-button>
-        <el-button @click="totop" plain type="primary">修改</el-button>
-        <el-button @click="searchformReset" type="primary" plain>刷新</el-button>
-        <el-button @click="remove" type="primary" plain>删除</el-button>
+        <el-button :disabled="btnStatus" @click="add" plain type="primary"><i class="el-icon-plus"></i>新增</el-button>
+        <el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
+        <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
+        <el-button @click="exportdata" type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>
       </el-button-group>
       <div style="float: right">
-        <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-        <el-button @click="getData" type="primary" plain>查询</el-button>
-        <el-button @click="exportdata" type="primary" plain>导出</el-button>
+        <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
+        <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
+
       </div>
     </div>
     <div style="margin-top: 10px">

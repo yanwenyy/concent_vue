@@ -60,7 +60,7 @@ export default {
                   'name': '项目信息导入',
                   'path': '/manage/proposal/importList',
                   'component': '/manage/proposal/importList',
-                  'iconCls': 'el-icon-notebook-2',
+                  'iconCls': 'el-icon-notebook-1',
                   'menushow': true,
                   'leaf': true,
                   'defaultpage': true

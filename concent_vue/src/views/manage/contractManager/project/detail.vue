@@ -103,7 +103,7 @@
                     detailform.contractInfo.enginTypeFirstId=='f6f5188458ab4c5ba1e0bc12a9a4188b'||
                     detailform.contractInfo.enginTypeFirstId=='24ebba9f2f3447579d0086209aff6ecd'||
                     detailform.contractInfo.enginTypeFirstId=='193b4d4003d04899a1d09c8d5f7877fe'||
-                    detailform.contractInfo.enginTypeFirstId==''||detailform.contractInfo.enginTypeFirstId==null"
+                    detailform.contractInfo.enginTypeFirstId==''"
             class="inline-formitem form-item-six"
             label="是否导入清单"
           >
@@ -133,7 +133,7 @@
                     detailform.contractInfo.enginTypeFirstId!='0f16c387f17b402db45c4de58e1cf8b4'&&
                     detailform.contractInfo.enginTypeFirstId!='f6f5188458ab4c5ba1e0bc12a9a4188b'&&
                     detailform.contractInfo.enginTypeFirstId!='24ebba9f2f3447579d0086209aff6ecd'&&
-                    detailform.contractInfo.enginTypeFirstId!='193b4d4003d04899a1d09c8d5f7877fe'&&detailform.contractInfo.enginTypeFirstId!=''&&detailform.contractInfo.enginTypeFirstId!=null"
+                    detailform.contractInfo.enginTypeFirstId!='193b4d4003d04899a1d09c8d5f7877fe'&&detailform.contractInfo.enginTypeFirstId!=''"
               class="inline-formitem form-item-six"></el-form-item>
             <el-form-item
               label="工程类别(二级)"
@@ -172,7 +172,7 @@
             <el-form-item
           label="铁路分类"
           class="inline-formitem"
-          v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'||detailform.contractInfo.enginTypeFirstId==null"
+          v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
         >
           <el-select
             :disabled="p.actpoint==='look'"
@@ -310,7 +310,7 @@
               />
             </el-form-item>
             <el-form-item
-          v-if="detailform.contractInfo.enginTypeFirstId=='193b4d4003d04899a1d09c8d5f7877fe'||detailform.contractInfo.enginTypeFirstId==null"
+          v-if="detailform.contractInfo.enginTypeFirstId=='193b4d4003d04899a1d09c8d5f7877fe'"
           label="建筑面积(平方米)"
           prop="contractInfo.contractBuiltArea"
           :rules="{
