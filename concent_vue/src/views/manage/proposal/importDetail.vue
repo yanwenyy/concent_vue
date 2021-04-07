@@ -1329,7 +1329,7 @@
       saveInfo(formName,type) {
         var url='';
         if(type=='save'){
-          url="/api/contract/topInfo/TopInfor/detail/saveOrUpdate"
+          url="/api/contract/topInfo/TopInfor/detail/saveOrUpdateImport"
         }else{
           url="/api/contract/topInfo/TopInfor/process/start"
         }
@@ -1437,7 +1437,7 @@
       // 加载列表
       getDetail() {
         this.$http
-          .post("/api/contract/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.id})
+          .post("/api/contract/topInfo/TopInfor/detail/entityInfoImport", {id:this.id})
           .then((res) => {
             var datas=res.data.data;
             this.getTwo(datas.topInfor.enginTypeFirstId||'');
