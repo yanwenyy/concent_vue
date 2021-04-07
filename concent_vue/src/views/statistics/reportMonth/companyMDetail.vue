@@ -264,7 +264,7 @@
           </el-table>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="项目概况" name="xmgk">
+      <el-tab-pane label="项目概况" name="xmgk" v-if="projectList.uuid!=''&& projectList.uuid!=null">
         <!--v-if="projectList.uuid!=''&& projectList.uuid!=null"-->
         <div class="detailBoxBG">
           <el-form
