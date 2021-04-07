@@ -33,6 +33,7 @@
       lazy
       :check-strictly="canSelParent"
       ref="tree"
+      :default-expand-all="true"
       :default-expanded-keys="['']"
       node-key="uuid"
       :load="loadNode"
