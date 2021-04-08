@@ -20,15 +20,15 @@
           type="info"
           plain
           style="color:black;background:none">
-          重置
+          <i class="el-icon-refresh-right"></i>重置
         </el-button>
         <el-popover v-if="isSearchPrompt"
                     placement="top"
                     trigger="hover">
           <span style="font-size: 12px;">项目简称、项目名称等输入项支持回车搜索。<label @click="doNotPopover(2)" style="color:#67c23a;cursor:pointer;">不再提示</label></span>
-          <el-button slot="reference" @click="searchformSubmit" type="primary" plain>查询</el-button>
+          <el-button slot="reference" @click="searchformSubmit" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
         </el-popover>
-        <el-button v-else @click="searchformSubmit" type="primary" plain>查询</el-button>
+        <el-button v-else @click="searchformSubmit" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
         <!--<el-button @click="exportdata" type="primary" plain>导出</el-button>-->
       </div>
     </div>

@@ -41,11 +41,11 @@
     >
       <div style="width: 100%; overflow: hidden;">
         <el-button-group style="float: left">
-          <el-button @click="add" plain type="primary">新增</el-button>
-          <el-button @click="editItem" plain type="primary">修改</el-button>
-          <el-button @click="remove" plain type="primary">删除</el-button>
+          <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>新增</el-button>
+          <el-button @click="editItem" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
+          <el-button @click="remove" plain type="primary"><i class="el-icon-delete"></i>删除</el-button>
           <el-button @click="searchformReset" plain type="primary"
-            >刷新</el-button
+            ><i class="el-icon-refresh-right"></i>刷新</el-button
           >
         </el-button-group>
       </div>

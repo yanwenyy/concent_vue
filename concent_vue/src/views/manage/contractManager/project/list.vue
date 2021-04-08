@@ -15,18 +15,17 @@
           <!--<el-button class="add-group-btn" @click="add()" type="primary" plain >新签合同</el-button>-->
           <!--<br>-->
           <!--<el-button class="add-group-btn" @click="add('bq')" type="primary" plain >新签补充合同</el-button>-->
-          <el-button class="new-add-btn" slot="reference"  type="primary" plain >新增</el-button>
+          <el-button class="new-add-btn" slot="reference"  type="primary" plain ><i class="el-icon-plus"></i>新增</el-button>
         </el-popover>
         <!--<el-button @click="add()" type="primary" plain >新增</el-button>-->
         <!--<el-button @click="add('bq')" type="primary" plain >新增补签</el-button>-->
-        <el-button @click="totop" type="primary" plain>修改</el-button>
-        <el-button type="primary" plain>提交</el-button>
-        <el-button @click="remove" type="primary" plain>删除</el-button>
+        <el-button @click="totop" type="primary" plain><i class="el-icon-edit"></i>修改</el-button>
+        <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
       </el-button-group>
       <div style="float: right;">
-        <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
-        <el-button @click="getData" type="primary" plain>查询</el-button>
-        <el-button type="primary" plain>导出</el-button>
+        <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
+        <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
+        <el-button type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>
       </div>
     </div>
     <div style="margin-top: 10px">

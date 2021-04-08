@@ -2070,7 +2070,7 @@ export default {
   },
   mounted() {
     //alert(2);
-    //this.$store.dispatch('getConfig', { })
+    this.$store.dispatch('getConfig', { })
     // eslint-disable-next-line no-unde
     console.log(this.p)
     this.getDetail()

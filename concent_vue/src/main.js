@@ -44,11 +44,11 @@ Vue.prototype.$getOrgPermission = getOrgPermission
     // }, 500);
     // 日期格式化过滤器注册
 Vue.filter('dateformat', function(dataStr, pattern = 'YYYY-MM-DD') {
-    if (dataStr) {
-        return moment(dataStr).format(pattern)
-    } else {
-        return ''
-    }
+  if (dataStr) {
+    return moment(dataStr).format(pattern)
+  } else {
+    return ''
+  }
 })
 Vue.filter('monthdateformat', function(dataStr, pattern = 'YYYY-MM') {
     if (dataStr) {
