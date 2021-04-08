@@ -964,7 +964,6 @@
                 </template>
               </el-table-column>
             </el-table>
-
           </el-form>
         </div>
       </el-tab-pane>
@@ -973,6 +972,7 @@
       </el-tab-pane>
     </el-tabs>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
+
   </div>
 </template>
 
@@ -981,6 +981,7 @@
   import FileUpload from '@/components/fileUpload'
   import { isMoney, isMobile} from '@/utils/validate'
   import AuditProcess from '@/components/auditProcess'
+
   export default {
     // name: "详情",
     data() {
@@ -1005,6 +1006,7 @@
         }
       }
       return {
+
         timeout:  null,
         maxMoney:1000000,
         id:'',
@@ -1149,6 +1151,7 @@
       // eslint-disable-next-line no-unde
     },
     methods: {
+
       //复选下拉框框获取name
       getMultipleName(valueList,list,id,name,code){
         var _id=[],_name=[],_code=[];
