@@ -68,18 +68,18 @@
         </el-table-column>
         <el-table-column
           :width="500"
-          prop="inforName"
+          prop="contractName"
           show-overflow-tooltip
           label="合同名称">
         </el-table-column>
         <el-table-column
-          prop="enginTypeSecondName"
+          prop="contractCode"
           header-align="center"
           align="center"
           label="合同号">
         </el-table-column>
         <el-table-column
-          prop="constructionOrg"
+          prop="contractAmount"
           header-align="center"
           align="center"
           label="合同金额">
@@ -136,7 +136,7 @@
       //选中数据
       sub() {
         this.visible = false;
-        this.$emit('refreshDataList', this.currentRow)
+        this.$emit('getPosition', this.currentRow)
       },
       // 初始化
       init(id) {
