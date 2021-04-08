@@ -1560,7 +1560,7 @@
       <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
     </el-tab-pane>
     <el-tab-pane label="审批流程" name="lc" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
-        <Audit-Process :task="p.task||{businessId:p.uuid,businessType:'contract_qual_change'}"></Audit-Process>
+      <Audit-Process :task="p.task||{businessId:(p.changRecorUUid+'-'+p.topinfoid),businessType:'contract_qual_change'}"></Audit-Process>
     </el-tab-pane>
   </el-tabs>
  </div>
@@ -2008,8 +2008,8 @@ export default {
           .post(
             '/api/contract/topInfo/Verify/detail/entityInfoChange',
             // '/api' + this.$route.path.substr(0, this.$route.path.length - 1),
-            // {"id": this.p.topinfoid}
-             {"id": this.p.task?this.p.instid.split("-")[1]:this.p.topinfoid}
+            // {"id": this.uuid}
+             {"id": this.p.task?this.p.instid.split("-")[0]:this.p.changRecorUUid}
           )
           .then(res => {
             var data = res.data.data;
