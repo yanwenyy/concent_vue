@@ -2395,15 +2395,27 @@
       //设置各方份额
       getOurAmountGfwt(index,list,type){
         var tj_money=0
-        if(type=='nlht'){
+        //if(type=='nlht'){
           list.forEach((item)=>{
             tj_money+=Number(item.contractAmount);
           });
-        }
+       // }
         if(tj_money>0){
           // this.$set( this.detailform, "contractInfo.crccCash", ourAmount);
           this.$forceUpdate();
-          this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.contractAmount=tj_money;
+          //this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.contractAmount=tj_money;
+          if(type=='wfb') {
+            this.detailform.contractInfoAttachBO.outContractInfoAttachList.contractAmount = tj_money;
+          }
+          if(type=='wlht') {
+            this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.contractAmount = tj_money;
+          }
+          if(type=='nfb') {
+            this.detailform.contractInfoAttachBO.innerContractInfoAttachList.contractAmount = tj_money;
+          }
+          if(type=='nlht') {
+            this.detailform.contractInfoAttachBO.unionContractInfoAttachList.contractAmount = tj_money;
+          }
 
         }else{
           this.$message.error('各方份额需要大于0');

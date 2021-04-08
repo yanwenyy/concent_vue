@@ -58,10 +58,6 @@
               <el-form-item
                 label="合同编号:"
                 prop="contractInfo.contractNo"
-
-                :rules="{
-           required: true, message: '此项不能为空', trigger: 'blur'
-        }"
               >
                 <el-input
                   disabled
@@ -1042,7 +1038,7 @@
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                       <el-input
                         class="group-no-padding"
-                        @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.unionContractInfoAttachList,'nlht')"
+                        @input="getOurAmountGfwt(scope.$index,detailform.contractInfoAttachBO.unionContractInfoAttachList,'nlht')"
                         v-model="scope.row.contractAmount"
                         clearable
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -1222,7 +1218,7 @@
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                       <el-input
                         class="group-no-padding"
-                        @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.innerContractInfoAttachList,'nfb')"
+                        @input="getOurAmountGfwt(scope.$index,detailform.contractInfoAttachBO.innerContractInfoAttachList,'nfb')"
                         v-model="scope.row.contractAmount"
                         clearable
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -1401,7 +1397,7 @@
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                       <el-input
                         class="group-no-padding"
-                        @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.outUnionContractInfoAttachList,'wlht')"
+                        @input="getOurAmountGfwt(scope.$index,detailform.contractInfoAttachBO.outUnionContractInfoAttachList,'wlht')"
                         v-model="scope.row.contractAmount"
                         clearable
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -1580,7 +1576,7 @@
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                       <el-input
                         class="group-no-padding"
-                        @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.outContractInfoAttachList,'wfb')"
+                        @input="getOurAmountGfwt(scope.$index,detailform.contractInfoAttachBO.outContractInfoAttachList,'wfb')"
                         v-model="scope.row.contractAmount"
                         clearable
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -1796,6 +1792,36 @@ export default {
         this.$router.back()
       }
     });
+    },
+    //设置各方份额
+    getOurAmountGfwt(index,list,type){
+      var tj_money=0
+      //if(type=='nlht'){
+        list.forEach((item)=>{
+          tj_money+=Number(item.contractAmount);
+        });
+     // }
+      if(tj_money>0){
+        // this.$set( this.detailform, "contractInfo.crccCash", ourAmount);
+        this.$forceUpdate();
+        //this.detailform.contractInfoAttachBO.outContractInfoAttachList.contractAmount=tj_money;
+        if(type=='wfb') {
+          this.detailform.contractInfoAttachBO.outContractInfoAttachList.contractAmount = tj_money;
+        }
+        if(type=='wlht') {
+          this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.contractAmount = tj_money;
+        }
+        if(type=='nfb') {
+          this.detailform.contractInfoAttachBO.innerContractInfoAttachList.contractAmount = tj_money;
+        }
+        if(type=='nlht') {
+          this.detailform.contractInfoAttachBO.unionContractInfoAttachList.contractAmount = tj_money;
+        }
+
+      }else{
+        this.$message.error('各方份额需要大于0');
+        list[index].contractAmount=''
+      }
     },
     // 搜索名字
     searchName() {
