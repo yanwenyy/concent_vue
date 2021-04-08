@@ -122,7 +122,7 @@
                         </div>
 
                        <!-- <div v-else-if="projectStatus != '2' " style="text-align: right">{{sumCount(scope.row)}}</div>-->
-                        <div  v-if="scope.row.veditable != '1'">{{scope.row.monthValue}}</div>
+                        <div  v-else>{{scope.row.monthValue}}</div>
                       </template>
                     </el-table-column>
                    <el-table-column
