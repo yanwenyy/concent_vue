@@ -5,7 +5,7 @@
         <span class="detailSpan"><b>开标结果登记</b></span>
         <el-button @click="back" class="detailbutton">返回</el-button>
         <el-button type="primary" @click="saveInfo('detailform')" class="detailbutton">保存</el-button>
-        <el-button @click="saveInfo('detailform')" class="detailbutton">提交</el-button>
+     <!--   <el-button @click="saveInfo('detailform')" class="detailbutton">提交</el-button>-->
 
       </div>
       <div class="detailBox">

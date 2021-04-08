@@ -1095,12 +1095,90 @@
               </el-table-column>
             </el-table>
           </div>
+          <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+            <span>关联合同: </span>
+            <el-button
+              v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
+              @click="addContract()"
+              class="detatil-flie-btn"
+              type="primary"
+            >新增
+            </el-button
+            >
+          </p>
+          <el-table
+            :data="detailForm.project.contractInfoList"
+            :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+            align="center"
+            border
+            class="detailTable"
+            ref="table"
+            style="width: 100%;"
+          >
+            <el-table-column
+              :width="80"
+              align="center"
+              label="序号"
+              show-overflow-tooltip
+              type="index"
+            ></el-table-column>
+
+            <el-table-column
+              class="listTabel"
+              :resizable="false"
+              label="合同名称"
+              prop="contractName"
+              align="center"
+              show-overflow-tooltip
+            >
+            </el-table-column>
+            <el-table-column
+              class="listTabel"
+              :resizable="false"
+              label="合同编号"
+              prop="contractCode"
+              align="center"
+              show-overflow-tooltip
+            >
+            </el-table-column>
+            <el-table-column
+              class="listTabel"
+              :resizable="false"
+              label="合同金额"
+              prop="contractAmount"
+              align="center"
+              show-overflow-tooltip
+            >
+            </el-table-column>
+            <el-table-column
+              v-show="!p.actpoint === 'look'"
+              :resizable="false"
+              fixed="right"
+              label="操作"
+              align="center"
+              show-overflow-tooltip
+              v-if="p.actpoint !== 'look'"
+              width="80">
+              <template slot-scope="scope">
+                <el-link
+                  :underline="false"
+                  @click="del(scope.$index,scope.row,detailForm.project.contractInfoList,'glht')"
+                  type="warning">删除
+                </el-link>
+              </template>
+            </el-table-column>
+          </el-table>
         </el-form>
       </div>
     </el-card>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
     <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
     <Separate-Dialog v-if="infoCSVisible" ref="infoCS" @refreshDataList="goSeparate"></Separate-Dialog>
+    <related-contract  v-if="contractStatas" ref="infoCS" @getPosition="goAddDetail"></related-contract>
   </div>
 </template>
 
@@ -1109,11 +1187,12 @@
   import FileUpload from '@/components/fileUpload'
   import { isMoney, isMobile, isPhone } from '@/utils/validate'
   import SeparateDialog from '@/components/separateDialog'
+  import RelatedContract from './relatedContract'
   // import datas from '@/utils/position'
   export default {
     name: 'InvestMode',
     components: {
-      Tree, FileUpload, SeparateDialog
+      Tree, FileUpload, SeparateDialog,RelatedContract
     },
     data() {
       const validateMoney = (rule, value, callback) => {
@@ -1162,6 +1241,7 @@
         }
       }
       return {
+        contractStatas:false,//关联合同状态
         fatherList:[],
         uuid: null,
         DwVisible: false,
@@ -1175,6 +1255,7 @@
         options1: [{ label: '测试所在地', value: 'testabcd' }],
         detailForm: {
           project: {
+            contractInfoList:[],//关联合同列表
             projectSubContractList: [], // 分包字段
             infoProductList: [], // 产品列表
             infoSubjectMatterList: [], // 标的信息
@@ -1339,6 +1420,20 @@
       }
     },
     methods: {
+      //新增关联合同
+      addContract(){
+        this.contractStatas = true;
+        this.$nextTick(() => {
+          this.$refs.infoCS.init(this.detailForm.project.projectModuleId);
+        })
+      },
+      //获取新增的关联合同
+      goAddDetail(data){
+        this.$forceUpdate();
+        console.log(data);
+        this.detailForm.project.contractInfoList=this.detailForm.project.contractInfoList.concat(data);
+        this.contractStatas = false;
+      },
       //建设单位搜索
       querySearchAsync(queryString, cb) {
         var restaurants = this.pubCustomers;
@@ -1404,9 +1499,9 @@
         }
         this.detailForm.project.projectSubContractList.push(v)
       },
-      del(index, item, list) {
+      del(index, item, list,name) {
         console.log(index, item, list)
-        if (item.uuid && item.uuid !== '') {
+        if (item.uuid && item.uuid !== ''&& !name) {
           this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
@@ -1685,6 +1780,9 @@
               }
               if (!res.data.data.projectSubContractList) {
                 this.detailForm.project.projectSubContractList = []
+              }
+              if (!res.data.data.contractInfoList) {
+                this.detailForm.project.contractInfoList = []
               }
               if (res.data.data.topInfoSiteList.length < 1) {
                 this.detailForm.project.topInfoSiteList = [{ path: '', placeId: '', uuid: '' }]

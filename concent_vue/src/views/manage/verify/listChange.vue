@@ -381,6 +381,7 @@ export default {
       let p = {
         actpoint: 'editItem',
         instid: this.multipleSelection[0].uuid,
+        changRecorUUid:this.multipleSelection[0].ccrUuid,
         topinfoid: this.multipleSelection[0].topInfoOrgId
       }
       //alert(JSON.stringify(p));
@@ -394,6 +395,7 @@ export default {
       let p = {
         actpoint: 'look',
         instid: row.uuid,
+        changRecorUUid:row.ccrUuid,
         topinfoid: row.topInfoOrgId,
         uuid:row.topInfoOrgId
       }

@@ -161,7 +161,7 @@
       init() {
         this.visible = true
         this.$http
-          .post('/api/statistics/StatisticsProject/list/loadPageData', this.searchform, { isLoading: false })
+          .post('/api/statistics/StatisticsProject/list/selectProjectFb', this.searchform, { isLoading: false })
           .then(res => {
             if (res.data && res.data.code === 200) {
               this.dataList = res.data.data.records
