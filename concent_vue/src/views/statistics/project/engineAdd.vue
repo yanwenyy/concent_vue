@@ -1131,7 +1131,7 @@
               class="listTabel"
               :resizable="false"
               label="合同名称"
-              prop="sectionName"
+              prop="contractName"
               align="center"
               show-overflow-tooltip
             >
@@ -1140,7 +1140,7 @@
               class="listTabel"
               :resizable="false"
               label="合同编号"
-              prop="sectionName"
+              prop="contractCode"
               align="center"
               show-overflow-tooltip
             >
@@ -1149,7 +1149,7 @@
               class="listTabel"
               :resizable="false"
               label="合同金额"
-              prop="sectionName"
+              prop="contractAmount"
               align="center"
               show-overflow-tooltip
             >
@@ -1166,7 +1166,7 @@
               <template slot-scope="scope">
                 <el-link
                   :underline="false"
-                  @click="del(scope.$index,scope.row,detailform.topInfoSectionList,'bd')"
+                  @click="del(scope.$index,scope.row,detailForm.project.contractInfoList,'glht')"
                   type="warning">删除
                 </el-link>
               </template>
@@ -1255,6 +1255,7 @@
         options1: [{ label: '测试所在地', value: 'testabcd' }],
         detailForm: {
           project: {
+            contractInfoList:[],//关联合同列表
             projectSubContractList: [], // 分包字段
             infoProductList: [], // 产品列表
             infoSubjectMatterList: [], // 标的信息
@@ -1498,9 +1499,9 @@
         }
         this.detailForm.project.projectSubContractList.push(v)
       },
-      del(index, item, list) {
+      del(index, item, list,name) {
         console.log(index, item, list)
-        if (item.uuid && item.uuid !== '') {
+        if (item.uuid && item.uuid !== ''&& !name) {
           this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
@@ -1779,6 +1780,9 @@
               }
               if (!res.data.data.projectSubContractList) {
                 this.detailForm.project.projectSubContractList = []
+              }
+              if (!res.data.data.contractInfoList) {
+                this.detailForm.project.contractInfoList = []
               }
               if (res.data.data.topInfoSiteList.length < 1) {
                 this.detailForm.project.topInfoSiteList = [{ path: '', placeId: '', uuid: '' }]
