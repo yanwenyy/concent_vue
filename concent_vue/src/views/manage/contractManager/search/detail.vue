@@ -131,7 +131,7 @@
             clearable
             placeholder=""
             size="mini"
-            v-model="detailform.contractInfo.contractNo"
+            v-model="detailform.contractInfo.contractCode"
           />
         </el-form-item>
         <el-form-item
