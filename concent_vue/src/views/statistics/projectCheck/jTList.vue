@@ -507,7 +507,7 @@
         if(this.searchform.yearDateS!='' && this.searchform.yearDateS!=null && this.searchform.yearDateS!=undefined) {
           this.searchform.reportYear = this.searchform.yearDateS.split("-")[0];
           this.searchform.reportMonth = this.searchform.yearDateS.split("-")[1];
-        }bu
+        }
         this.$http
           .post(
             "/api/statistics/Projectcheck/list/jtQueryEntInfo",
