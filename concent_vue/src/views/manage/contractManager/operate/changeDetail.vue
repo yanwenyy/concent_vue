@@ -2913,7 +2913,7 @@
           //铁建金额计算
           this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
             tj_money+=Number(item.contractAmount);
-        });
+          });
           var ourAmount=this.detailform.contractInfo.contractAmount-tj_money;
 
           if(ourAmount>0){
@@ -2928,7 +2928,7 @@
           //我方份额计算
           this.detailform.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
             our_money+=Number(item.contractAmount);
-        });
+          });
           var ourAmount2=this.detailform.contractInfo.crccCash-our_money;
           if(ourAmount2>0){
             this.$forceUpdate();
@@ -2941,90 +2941,90 @@
           //变更后的内联合体金额是否有变化
           this.detailFormBefore.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
             if(this.p.actpoint == 'add'&&item.uuid==list[index].uuid&&item.contractAmount==list[index].contractAmount){
-            this.$forceUpdate();
-            list[index].isAmountChange=1
-          }else if(this.p.actpoint == 'add'&&item.uuid==list[index].uuid&&item.contractAmount!=list[index].contractAmount){
-            this.$forceUpdate();
-            list[index].isAmountChange=0
-          }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount==list[index].contractAmount){
-            this.$forceUpdate();
-            list[index].isAmountChange=1
-          }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount!=list[index].contractAmount){
-            this.$forceUpdate();
-            list[index].isAmountChange=0;
-          }
-        });
+              this.$forceUpdate();
+              list[index].isAmountChange=1
+            }else if(this.p.actpoint == 'add'&&item.uuid==list[index].uuid&&item.contractAmount!=list[index].contractAmount){
+              this.$forceUpdate();
+              list[index].isAmountChange=0
+            }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount==list[index].contractAmount){
+              this.$forceUpdate();
+              list[index].isAmountChange=1
+            }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount!=list[index].contractAmount){
+              this.$forceUpdate();
+              list[index].isAmountChange=0;
+            }
+          });
           //变更后的外联合题金额是否有变化
           this.detailFormBefore.contractInfoAttachBO.outUnionContractInfoAttachList	.forEach((item)=>{
             if(this.p.actpoint == 'add'&&item.uuid==list[index].uuid&&item.contractAmount==list[index].contractAmount){
-            this.$forceUpdate();
-            list[index].isAmountChange=1
-          }else if(this.p.actpoint == 'add'&&item.uuid==list[index].uuid&&item.contractAmount!=list[index].contractAmount){
-            this.$forceUpdate();
-            list[index].isAmountChange=0
-          }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount==list[index].contractAmount){
-            this.$forceUpdate();
-            list[index].isAmountChange=1
-          }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount!=list[index].contractAmount){
-            this.$forceUpdate();
-            list[index].isAmountChange=0;
-          }
-        });
+              this.$forceUpdate();
+              list[index].isAmountChange=1
+            }else if(this.p.actpoint == 'add'&&item.uuid==list[index].uuid&&item.contractAmount!=list[index].contractAmount){
+              this.$forceUpdate();
+              list[index].isAmountChange=0
+            }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount==list[index].contractAmount){
+              this.$forceUpdate();
+              list[index].isAmountChange=1
+            }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount!=list[index].contractAmount){
+              this.$forceUpdate();
+              list[index].isAmountChange=0;
+            }
+          });
         }else if(type=='nfb'||type=='wfb'){
           //判断内分包和外分包之和是否大于我方份额
           this.detailform.contractInfoAttachBO.innerContractInfoAttachList.forEach((item)=>{
             our_money+=Number(item.contractAmount);
-        });
+          });
           this.detailform.contractInfoAttachBO.outContractInfoAttachList.forEach((item)=>{
             our_money+=Number(item.contractAmount);
-        });
+          });
           var ourAmount=this.detailform.contractInfo.ourAmount-our_money;
-          if(ourAmount<0){
+          if(!ourAmount>0){
             this.$message.error('我方份额需要大于0');
             list[index].contractAmount=''
           }
           //变更后的内分包金额是否有变化
           this.detailFormBefore.contractInfoAttachBO.innerContractInfoAttachList.forEach((item)=>{
             if(this.p.actpoint == 'add'&&item.uuid==list[index].uuid&&item.contractAmount==list[index].contractAmount){
-            this.$forceUpdate();
-            list[index].isAmountChange=1
-          }else if(this.p.actpoint == 'add'&&item.uuid==list[index].uuid&&item.contractAmount!=list[index].contractAmount){
-            this.$forceUpdate();
-            list[index].isAmountChange=0
-          }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount==list[index].contractAmount){
-            this.$forceUpdate();
-            list[index].isAmountChange=1
-          }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount!=list[index].contractAmount){
-            this.$forceUpdate();
-            list[index].isAmountChange=0;
-          }
-        });
+              this.$forceUpdate();
+              list[index].isAmountChange=1
+            }else if(this.p.actpoint == 'add'&&item.uuid==list[index].uuid&&item.contractAmount!=list[index].contractAmount){
+              this.$forceUpdate();
+              list[index].isAmountChange=0
+            }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount==list[index].contractAmount){
+              this.$forceUpdate();
+              list[index].isAmountChange=1
+            }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount!=list[index].contractAmount){
+              this.$forceUpdate();
+              list[index].isAmountChange=0;
+            }
+          });
           //变更后的外联合题金额是否有变化
           this.detailFormBefore.contractInfoAttachBO.outContractInfoAttachList	.forEach((item)=>{
             if(this.p.actpoint == 'add'&&item.uuid==list[index].uuid&&item.contractAmount==list[index].contractAmount){
-            this.$forceUpdate();
-            list[index].isAmountChange=1
-          }else if(this.p.actpoint == 'add'&&item.uuid==list[index].uuid&&item.contractAmount!=list[index].contractAmount){
-            this.$forceUpdate();
-            list[index].isAmountChange=0
-          }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount==list[index].contractAmount){
-            this.$forceUpdate();
-            list[index].isAmountChange=1
-          }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount!=list[index].contractAmount){
-            this.$forceUpdate();
-            list[index].isAmountChange=0;
-          }
-        });
+              this.$forceUpdate();
+              list[index].isAmountChange=1
+            }else if(this.p.actpoint == 'add'&&item.uuid==list[index].uuid&&item.contractAmount!=list[index].contractAmount){
+              this.$forceUpdate();
+              list[index].isAmountChange=0
+            }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount==list[index].contractAmount){
+              this.$forceUpdate();
+              list[index].isAmountChange=1
+            }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount!=list[index].contractAmount){
+              this.$forceUpdate();
+              list[index].isAmountChange=0;
+            }
+          });
         }else{
           //合同总金额输入计算我方份额和铁建金额
           this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
             tj_money+=Number(item.contractAmount);
-        });
+          });
           this.$forceUpdate();
           this.detailform.contractInfo.crccCash=this.detailform.contractInfo.contractAmount-tj_money;
           this.detailform.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
             our_money+=Number(item.contractAmount);
-        });
+          });
           this.$forceUpdate();
           this.detailform.contractInfo.ourAmount=this.detailform.contractInfo.crccCash-our_money;
         }

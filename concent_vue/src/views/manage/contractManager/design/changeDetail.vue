@@ -3754,7 +3754,7 @@
             our_money+=Number(item.contractAmount);
         });
           var ourAmount=this.detailform.contractInfo.ourAmount-our_money;
-          if(ourAmount<0){
+          if(!ourAmount>0){
             this.$message.error('我方份额需要大于0');
             list[index].contractAmount=''
           }
