@@ -934,14 +934,14 @@
             <p class="detail-title" style="overflow:hidden;margin-right:30px">
               <span>分包承建单位信息:</span>
               <el-button
-                v-if="p.actpoint !== 'look'"
+                v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                 @click="addProduct()"
                 class="upload-demo detailUpload detatil-flie-btn"
                 type="primary">
                 新增
               </el-button>
               <el-button
-                v-if="p.actpoint !== 'look'"
+                v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                 @click="addSeparate()"
                 class="upload-demo detailUpload detatil-flie-btn"
                 type="primary">
@@ -1078,7 +1078,7 @@
                 </template>
               </el-table-column>
               <el-table-column
-                v-if="p.actpoint !== 'look'"
+                v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                 :resizable="false"
                 fixed="right"
                 label="操作"
@@ -1161,7 +1161,7 @@
               label="操作"
               align="center"
               show-overflow-tooltip
-              v-if="p.actpoint !== 'look'"
+              v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
               width="80">
               <template slot-scope="scope">
                 <el-link
@@ -1354,7 +1354,7 @@
             valueAddedTax: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
             companyBuiltName: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
             marketFirstId: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
-            engineSurvey: [{ min: 0, max: 700, message: '最多输入2000字', trigger: 'blur' }],
+            engineSurvey: [{ min: 0, max: 700, message: '最多输入700字', trigger: 'blur' }],
             projectRemark: [{ min: 0, max: 2000, message: '最多输入2000字', trigger: 'blur' }],
             isMoney: [{ validator: validateMoney, trigger: ['blur', 'change'] }],
             isMustMoney: [{ required: true, validator: validateMustMoney, trigger: ['blur', 'change'] }],

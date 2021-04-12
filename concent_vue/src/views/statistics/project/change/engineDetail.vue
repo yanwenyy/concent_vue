@@ -919,6 +919,13 @@
                   type="primary">
                   新增
                 </el-button>
+                <el-button
+                  v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
+                  @click="addSeparate()"
+                  class="upload-demo detailUpload detatil-flie-btn"
+                  type="primary">
+                  选择分包
+                </el-button>
               </p>
               <el-table
                 :data="detailForm.project.projectSubContractList"
@@ -1933,12 +1940,14 @@
     </el-tabs>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
     <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
+    <Separate-Dialog v-if="infoCSVisible" ref="infoCS" @refreshDataList="goSeparate"></Separate-Dialog>
   </div>
 </template>
 
 <script>
   import Tree from '@/components/tree'
   import FileUpload from '@/components/fileUpload'
+  import SeparateDialog from '@/components/separateDialog'
   import { isMoney, isMobile, isPhone } from '@/utils/validate'
 
   export default {
@@ -1990,6 +1999,7 @@
         }
       }
       return {
+        infoCSVisible: false,
         uuid: null,
         DwVisible: false,
         treeStatas: false,
@@ -2188,7 +2198,7 @@
       }
     },
     components: {
-      Tree, FileUpload
+      Tree, FileUpload,SeparateDialog
     },
     computed: {
       pubCustomers() {//客户名称
@@ -2291,6 +2301,12 @@
           this.$router.back()
         }
         });
+      },
+      addSeparate() {
+        this.infoCSVisible = true
+        this.$nextTick(() => {
+          this.$refs.infoCS.init()
+        })
       },
       addProduct() {
         let v = {
@@ -2478,7 +2494,7 @@
               .then((res) => {
                 if (res.data.code === 200) {
                   this.$message({
-                    message: '保存成功',
+                    message:  `${type=='save'?'保存':'提交'}成功`,
                     type: 'success'
                   })
                   this.$router.push({
@@ -2486,7 +2502,7 @@
                   })
                 } else {
                   this.$message({
-                    message: '保存失败',
+                    message:  `${type=='save'?'保存':'提交'}失败`,
                     type: 'error'
                   })
                 }
