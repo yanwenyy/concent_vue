@@ -721,6 +721,14 @@
               if (!res.data.data.projectSubContractList) {
                 this.detailForm.project.projectSubContractList = []
               }
+              if (!res.data.data.topInfoSiteList|| res.data.data.topInfoSiteList=='') {
+                this.detailForm.project.topInfoSiteList = [{
+                  path: '',
+                  placeId: '',
+                  ffid:'',
+                  uuid: ''
+                }]
+              }
               this.getShowTwo()
             }
           })
