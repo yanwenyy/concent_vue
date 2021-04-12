@@ -1544,7 +1544,7 @@
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                       <el-input
                         class="group-no-padding"
-                        @input="getOurAmountGfwt(scope.$index,detailform.contractInfoAttachBO.unionContractInfoAttachList,'nlht')"
+                        @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.unionContractInfoAttachList,'nlht')"
                         v-model="scope.row.contractAmount"
                         clearable
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -1724,7 +1724,7 @@
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                       <el-input
                         class="group-no-padding"
-                        @input="getOurAmountGfwt(scope.$index,detailform.contractInfoAttachBO.innerContractInfoAttachList,'nfb')"
+                        @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.innerContractInfoAttachList,'nfb')"
                         v-model="scope.row.contractAmount"
                         clearable
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -1903,7 +1903,7 @@
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                       <el-input
                         class="group-no-padding"
-                        @input="getOurAmountGfwt(scope.$index,detailform.contractInfoAttachBO.outUnionContractInfoAttachList,'wlht')"
+                        @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.outUnionContractInfoAttachList,'wlht')"
                         v-model="scope.row.contractAmount"
                         clearable
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -2082,7 +2082,7 @@
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                       <el-input
                         class="group-no-padding"
-                        @input="getOurAmountGfwt(scope.$index,detailform.contractInfoAttachBO.outContractInfoAttachList,'wfb')"
+                        @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.outContractInfoAttachList,'wfb')"
                         v-model="scope.row.contractAmount"
                         clearable
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -2461,7 +2461,7 @@
             our_money+=Number(item.contractAmount);
         });
           var ourAmount=this.detailform.contractInfo.ourAmount-our_money;
-          if(ourAmount<0){
+          if(!ourAmount>0){
             this.$message.error('我方份额需要大于0');
             list[index].contractAmount=''
           }
