@@ -1383,8 +1383,8 @@ export default {
         .post(
           '/api/contract/topInfo/Verify/detail/entityInfo',
           // '/api' + this.$route.path.substr(0, this.$route.path.length - 1),
-          // {"id":this.p.task?this.p.instid.split("-")[1]:this.p.topinfoid},
-          {"id":this.p.task?this.p.instid:this.p.topinfoid}
+          {"id":this.p.task?this.p.instid.split("-")[1]:this.p.topinfoid},
+         // {"id":this.p.task?this.p.instid:this.p.topinfoid}
         )
         .then(res => {
           this.detailform = res.data.data;
