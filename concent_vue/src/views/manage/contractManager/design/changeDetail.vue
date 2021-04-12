@@ -77,7 +77,7 @@
                       clearable
                       placeholder=""
                       size="mini"
-                      v-model="detailFormBefore.contractInfo.contractNo"
+                      v-model="detailFormBefore.contractInfo.contractCode"
                     />
                   </el-form-item>
                   <el-form-item
@@ -1354,7 +1354,7 @@
                     clearable
                     placeholder=""
 
-                    v-model="detailform.contractInfo.contractNo"
+                    v-model="detailform.contractInfo.contractCode"
                   />
                 </el-form-item>
                 <el-form-item

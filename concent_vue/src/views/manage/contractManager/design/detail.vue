@@ -67,7 +67,7 @@
                   clearable
                   placeholder="保存后系统自动生成"
 
-                  v-model="detailform.contractInfo.contractNo"
+                  v-model="detailform.contractInfo.contractCode"
                 />
               </el-form-item>
 

@@ -49,14 +49,14 @@
 
               <el-form-item
                 label="合同编号:"
-                prop="contractInfo.contractNo"
+                prop="contractInfo.contractCode"
               >
                 <el-input
                   disabled
                   clearable
                   placeholder="保存后系统自动生成"
                   size="mini"
-                  v-model="detailform.contractInfo.contractNo"
+                  v-model="detailform.contractInfo.contractCode"
                 />
               </el-form-item>
 
@@ -363,42 +363,7 @@
                 />
               </el-form-item>
               <br>
-              <el-form-item
-                label="系统内外:"
-                prop="contractInfo.tradeInoutSystem"
-                :rules="{
-           required: true, message: '此项不能为空', trigger: 'blur'
-        }"
 
-              >
-                <el-select
-                  :disabled="p.actpoint==='look'"
-                  filterable
-                  clearable
-                  placeholder="请选择"
-                  size="mini"
-                  v-model="detailform.contractInfo.tradeInoutSystem"
-                >
-                  <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in outOrIn"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item
-                label="路内路外:"
-                prop="contractInfo.tradeInoutRoad"
-
-              >
-                <el-select
-                  :disabled="p.actpoint==='look'"
-                  clearable
-                  filterable
-                  placeholder="请选择"
-                  size="mini"
-                  v-model="detailform.contractInfo.tradeInoutRoad"
-                >
-                  <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in outOrIn"></el-option>
-                </el-select>
-              </el-form-item>
-              <br>
               <el-form-item
                 label="新兴市场类别(一级):"
                 prop="contractInfo.marketFirstNameId"
@@ -459,6 +424,66 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
+              <el-form-item
+              label="场地名称:"
+              prop="cdmc"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+              v-if="detailform.contractInfo.marketFirstNameId=='50cd5e9992ac4653920fac8c1f2eb2e3'"
+
+            >
+              <el-select
+                class="multiple-sel"
+                :disabled="p.actpoint==='look'"
+                multiple
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="detailform.cdmc"
+                @change="getMultipleName(detailform.cdmc,siteName,'siteNameId','siteName')"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in siteName"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+              <el-form-item
+              label="装配类型:"
+              prop="zplx"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+              v-if="detailform.contractInfo.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
+            >
+              <el-select
+                class="multiple-sel"
+                :disabled="p.actpoint==='look'"
+                multiple
+                @change="getMultipleName(detailform.zplx,assemblyType,'otherAssemblyTypeId','otherAssemblyType')"
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="detailform.zplx"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in assemblyType"
+                ></el-option>
+              </el-select>
+            </el-form-item>
               <br>
               <div>
                 <el-form-item
@@ -478,38 +503,6 @@
                     v-model="detailform.contractInfo.otherAssemblyRate"
                   />
                 </el-form-item>
-                <el-form-item
-                  label="装配类型:"
-                  prop="zplx"
-                  :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-                  v-if="detailform.contractInfo.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
-
-                >
-                  <el-select
-                    class="multiple-sel"
-                    :disabled="p.actpoint==='look'"
-                    multiple
-                    @change="getMultipleName(detailform.zplx,assemblyType,'otherAssemblyTypeId','otherAssemblyType')"
-                    clearable
-                    filterable
-                    placeholder="请选择"
-                    size="mini"
-                    v-model="detailform.zplx"
-                  >
-                    <el-option
-                      :key="index"
-                      :label="item.detailName"
-                      :value="item.id"
-                      v-for="(item, index) in assemblyType"
-                    ></el-option>
-                  </el-select>
-                </el-form-item>
-              </div>
-              <div>
                 <el-form-item
                   label="建筑类型:"
                   prop="jzlx"
@@ -570,36 +563,7 @@
                     ></el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item
-                  label="场地名称:"
-                  prop="cdmc"
-                  :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-                  v-if="detailform.contractInfo.marketFirstNameId=='50cd5e9992ac4653920fac8c1f2eb2e3'"
 
-                >
-                  <el-select
-                    class="multiple-sel"
-                    :disabled="p.actpoint==='look'"
-                    multiple
-                    clearable
-                    filterable
-                    placeholder="请选择"
-                    size="mini"
-                    v-model="detailform.cdmc"
-                    @change="getMultipleName(detailform.cdmc,siteName,'siteNameId','siteName')"
-                  >
-                    <el-option
-                      :key="index"
-                      :label="item.detailName"
-                      :value="item.id"
-                      v-for="(item, index) in siteName"
-                    ></el-option>
-                  </el-select>
-                </el-form-item>
               </div>
               <el-form-item
                 label="合同签订时间:"
@@ -643,38 +607,39 @@
                 </el-date-picker>
               </el-form-item>
               <el-form-item
-                label="录入单位:"
-
-                prop="contractInfo.createOrgName"
+                label="系统内外:"
+                prop="contractInfo.tradeInoutSystem"
                 :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
-              >
-                <el-input
-                  disabled
-                  clearable
-                  placeholder="请输入"
-                  size="mini"
-                  v-model="detailform.contractInfo.createOrgName"
-                />
-              </el-form-item>
-              <el-form-item
-                label="录入时间:"
+             required: true, message: '此项不能为空', trigger: 'blur'
+          }"
 
-                prop="contractInfo.createTime"
-                :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
               >
-                <el-date-picker
-                  :disabled="true"
+                <el-select
+                  :disabled="p.actpoint==='look'"
                   filterable
                   clearable
-                  type="date"
-                  v-model="detailform.contractInfo.createTime"
-                  value-format="timestamp"
+                  placeholder="请选择"
+                  size="mini"
+                  v-model="detailform.contractInfo.tradeInoutSystem"
                 >
-                </el-date-picker>
+                  <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in outOrIn"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item
+                label="路内路外:"
+                prop="contractInfo.tradeInoutRoad"
+
+              >
+                <el-select
+                  :disabled="p.actpoint==='look'"
+                  clearable
+                  filterable
+                  placeholder="请选择"
+                  size="mini"
+                  v-model="detailform.contractInfo.tradeInoutRoad"
+                >
+                  <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in outOrIn"></el-option>
+                </el-select>
               </el-form-item>
               <el-form-item
                 class="inline-formitem"

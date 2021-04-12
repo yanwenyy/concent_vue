@@ -39,7 +39,7 @@
                       clearable
                       placeholder=""
                       size="mini"
-                      v-model="detailFormBefore.contractInfo.contractNo"
+                      v-model="detailFormBefore.contractInfo.contractCode"
                     />
                   </el-form-item>
                   <el-form-item
@@ -959,7 +959,7 @@
                 <br>
                 <el-form-item
                   label="合同编号:"
-                  prop="contractInfo.contractNo"
+                  prop="contractInfo.contractCode"
                   :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -972,7 +972,7 @@
                     clearable
                     placeholder="请输入"
 
-                    v-model="detailform.contractInfo.contractNo"
+                    v-model="detailform.contractInfo.contractCode"
                   />
                 </el-form-item>
                 <el-form-item

@@ -39,7 +39,7 @@
                       clearable
                       placeholder=""
                       size="mini"
-                      v-model="detailFormBefore.contractInfo.contractNo"
+                      v-model="detailFormBefore.contractInfo.contractCode"
                     />
                   </el-form-item>
                   <el-form-item
@@ -914,14 +914,14 @@
                 <br>
                 <el-form-item
                   label="合同编号:"
-                  prop="contractInfo.contractNo"
+                  prop="contractInfo.contractCode"
                 >
                   <el-input
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     clearable
                     placeholder="请输入"
                     size="mini"
-                    v-model="detailform.contractInfo.contractNo"
+                    v-model="detailform.contractInfo.contractCode"
                   />
                 </el-form-item>
                 <el-form-item
