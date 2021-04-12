@@ -1737,6 +1737,34 @@ export default {
         this.$refs.infoCS.init(this.detailform.contractInfo.moduleId,this.detailform.contractInfo.contractType);
     })
     },
+    //设置各方份额
+    getOurAmountGfwt(index,list,type){
+      var tj_money=0
+      list.forEach((item)=>{
+        tj_money+=Number(item.contractAmount);
+      });
+      if(tj_money>0){
+        // this.$set( this.detailform, "contractInfo.crccCash", ourAmount);
+        this.$forceUpdate();
+        //this.detailform.contractInfoAttachBO.outContractInfoAttachList.contractAmount=tj_money;
+        if(type=='wfb') {
+          this.detailform.contractInfoAttachBO.outContractInfoAttachList.contractAmount = tj_money;
+        }
+        if(type=='wlht') {
+          this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.contractAmount = tj_money;
+        }
+        if(type=='nfb') {
+          this.detailform.contractInfoAttachBO.innerContractInfoAttachList.contractAmount = tj_money;
+        }
+        if(type=='nlht') {
+          this.detailform.contractInfoAttachBO.unionContractInfoAttachList.contractAmount = tj_money;
+        }
+
+      }else{
+        this.$message.error('各方份额需要大于0');
+        list[index].contractAmount=''
+      }
+    },
     //项目名称查询回来的数据
     goAddDetail(data){
       if(data.type=='1'){//项目名称查找回来的信息
@@ -1948,10 +1976,10 @@ export default {
     getOurAmount(index,list,type){
       var tj_money=0,our_money=0;
       if(type=='wlht'||type=='nlht'){
-
+        //铁建金额计算
         this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
           tj_money+=Number(item.contractAmount);
-      });
+        });
         var ourAmount=this.detailform.contractInfo.contractAmount-tj_money;
 
         if(ourAmount>0){
@@ -1963,9 +1991,10 @@ export default {
           this.$message.error('铁建份额需要大于0');
           list[index].contractAmount=''
         }
+        //我方份额计算
         this.detailform.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
           our_money+=Number(item.contractAmount);
-      });
+        });
         var ourAmount2=this.detailform.contractInfo.crccCash-our_money;
         if(ourAmount2>0){
           this.$forceUpdate();
@@ -1976,29 +2005,31 @@ export default {
           list[index].contractAmount=''
         }
       }else if(type=='nfb'||type=='wfb'){
+        //判断内分包和外分包之和是否大于我方份额
         this.detailform.contractInfoAttachBO.innerContractInfoAttachList.forEach((item)=>{
           our_money+=Number(item.contractAmount);
-      });
+        });
         this.detailform.contractInfoAttachBO.outContractInfoAttachList.forEach((item)=>{
           our_money+=Number(item.contractAmount);
-      });
+        });
         var ourAmount=this.detailform.contractInfo.ourAmount-our_money;
-        if(ourAmount<0){
+        if(!ourAmount>0){
           this.$message.error('我方份额需要大于0');
           list[index].contractAmount=''
         }
       }else{
-
+        //合同总金额输入计算我方份额和铁建金额
         this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
           tj_money+=Number(item.contractAmount);
-      });
+        });
         this.$forceUpdate();
         this.detailform.contractInfo.crccCash=this.detailform.contractInfo.contractAmount-tj_money;
         this.detailform.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
           our_money+=Number(item.contractAmount);
-      });
+        });
         this.$forceUpdate();
         this.detailform.contractInfo.ourAmount=this.detailform.contractInfo.crccCash-our_money;
+
       }
       this.getOurAmountSupply();
     },

@@ -108,14 +108,31 @@
         }
       },
       getFrist(resolve){
-        this.$http
-          .get(
-            '/jsonapi/System/system/hr/orglist',
-          )
-          .then(res => {
-            var datas= res.data.data;
-            resolve(datas);
-         })
+        // this.$http
+        //   .get(
+        //     '/jsonapi/System/system/hr/orglist',
+        //   )
+        //   .then(res => {
+        //     var datas= res.data.data;
+        //     resolve(datas);
+        //  })
+
+        //假数据,解决不稳定,测试完得换
+        var datas=[{code: "0000100001",
+          fullname: "股份公司总部",
+          hookOrgName: "中国铁建股份有限公司",
+          id: 986436,
+          ifLastNode: "0",
+          ifUse: "1",
+          name: "股份公司",
+          order: 1,
+          path: "股份公司",
+          providerId: "hr",
+          relationOrgName: "股份公司",
+          show: true,
+          type: 1,
+          virtual: false}];
+        resolve(datas);
       },
       getChildren(node, resolve){
         this.$http

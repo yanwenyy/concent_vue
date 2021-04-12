@@ -264,7 +264,7 @@
               <el-form-item
                 v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
                 label="建设单位:"
-                prop="contractInfo.constructionOrgId"
+                prop="contractInfo.constructionOrg"
                 :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -2392,6 +2392,36 @@
         this.detailform.contractInfo[name]=_name.join(",");
         console.log(this.detailform.contractInfo[id])
       },
+      //设置各方份额
+      getOurAmountGfwt(index,list,type){
+        var tj_money=0
+        //if(type=='nlht'){
+          list.forEach((item)=>{
+            tj_money+=Number(item.contractAmount);
+          });
+       // }
+        if(tj_money>0){
+          // this.$set( this.detailform, "contractInfo.crccCash", ourAmount);
+          this.$forceUpdate();
+          //this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.contractAmount=tj_money;
+          if(type=='wfb') {
+            this.detailform.contractInfoAttachBO.outContractInfoAttachList.contractAmount = tj_money;
+          }
+          if(type=='wlht') {
+            this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.contractAmount = tj_money;
+          }
+          if(type=='nfb') {
+            this.detailform.contractInfoAttachBO.innerContractInfoAttachList.contractAmount = tj_money;
+          }
+          if(type=='nlht') {
+            this.detailform.contractInfoAttachBO.unionContractInfoAttachList.contractAmount = tj_money;
+          }
+
+        }else{
+          this.$message.error('各方份额需要大于0');
+          list[index].contractAmount=''
+        }
+      },
       //合同总金额获取我方份额和铁建
       getOurAmount(index,list,type){
         var tj_money=0,our_money=0;
@@ -2431,7 +2461,7 @@
             our_money+=Number(item.contractAmount);
         });
           var ourAmount=this.detailform.contractInfo.ourAmount-our_money;
-          if(ourAmount<0){
+          if(!ourAmount>0){
             this.$message.error('我方份额需要大于0');
             list[index].contractAmount=''
           }

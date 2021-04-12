@@ -1193,7 +1193,7 @@
             <p class="detail-p">
               <span>中标通知书: </span>
               <el-button
-                v-show="p.actpoint !== 'look'"
+                v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                 size="small"
                 type="primary"
                 @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile','fileList1')">
@@ -1262,7 +1262,7 @@
             <p>
               <span>合同附件: </span>
               <el-button
-                v-show="p.actpoint !== 'look'"
+                v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                 size="small"
                 type="primary"
                 @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','fileList2')">
@@ -1329,7 +1329,7 @@
             <p >
               <span>工程量清单和劳材机附件(两种文件都要): </span>
               <el-button
-                v-show="p.actpoint !== 'look'"
+                v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                 size="small"
                 type="primary"
                 @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/03/uploadFile','fileList3')">
@@ -1396,7 +1396,7 @@
             <p>
               <span >标段信息: </span>
               <el-button
-                v-show="p.actpoint !== 'look'&&detailform.searchProject!=true"
+                v-show="p.actpoint !== 'look'&&detailform.searchProject!=true&&p.actpoint !== 'task'"
                 class="detatil-flie-btn"
                 @click="openBd('add')"
                 type="primary"
@@ -1548,7 +1548,7 @@
             <p>
               <span >项目地点: </span>
               <el-button
-                v-show="p.actpoint !== 'look'"
+                v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                 class="detatil-flie-btn"
                 @click="add('dd')"
                 type="primary"
@@ -1645,7 +1645,7 @@
                 align="center"
                 width="80"
                 show-overflow-tooltip
-                v-if="p.actpoint !== 'look'"
+                v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
               >
                 <template slot-scope="scope">
                   <el-link
@@ -1830,7 +1830,7 @@
                 label="操作"
                 align="center"
                 show-overflow-tooltip
-                v-if="p.actpoint !== 'look'"
+                v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                 width="80">
                 <template slot-scope="scope">
                   <el-link
@@ -2009,7 +2009,7 @@
                 label="操作"
                 align="center"
                 show-overflow-tooltip
-                v-if="p.actpoint !== 'look'"
+                v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                 width="80">
                 <template slot-scope="scope">
                   <el-link
@@ -2188,7 +2188,7 @@
                 label="操作"
                 align="center"
                 show-overflow-tooltip
-                v-if="p.actpoint !== 'look'"
+                v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                 width="80">
                 <template slot-scope="scope">
                   <el-link
@@ -2367,7 +2367,7 @@
                 label="操作"
                 align="center"
                 show-overflow-tooltip
-                v-if="p.actpoint !== 'look'"
+                v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                 width="80">
                 <template slot-scope="scope">
                   <el-link
@@ -6475,7 +6475,7 @@ export default {
           our_money+=Number(item.contractAmount);
         });
         var ourAmount=this.detailform.contractInfo.ourAmount-our_money;
-        if(ourAmount<0){
+        if(!ourAmount>0){
           this.$message.error('我方份额需要大于0');
           list[index].contractAmount=''
         }

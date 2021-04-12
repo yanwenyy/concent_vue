@@ -75,7 +75,8 @@ axios.interceptors.request.use(
         'Authorization':
           sessionStorage.getItem("token"),
          "Content-Type": "application/json; charset = utf-8",
-         "dataSource": "bdmp"
+         "dataSource": "bdmp",
+          'timeout':9000
       };
 
       if (config.method === 'get') {
