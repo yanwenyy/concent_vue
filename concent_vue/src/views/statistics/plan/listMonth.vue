@@ -99,7 +99,7 @@
             <!--<span v-if="scope.row.flowStatus=='0'" style="color:#909399;">未提交</span>
             <span v-else-if="scope.row.flowStatus=='1'" style="color:#67c23a;">已提交</span>
             <span v-else>未填报</span>-->
-            <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'未创建'}}
+            <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核驳回':'未创建'}}
             </div>
           </template>
         </el-table-column>

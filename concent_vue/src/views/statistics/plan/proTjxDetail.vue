@@ -254,6 +254,7 @@
           }), {useJson: true})
           .then(res => {
             this.data = res.data.data
+            consloe.log(JSON.parse(this.$utils.decrypt(this.$route.query.p)));
             if (this.data) {
               this.data.forEach((obj) => {
                 if (obj.value === 0) {
