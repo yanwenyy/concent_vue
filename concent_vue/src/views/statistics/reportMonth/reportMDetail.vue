@@ -176,8 +176,8 @@
                      show-overflow-tooltip
                    >
                      <template slot-scope="scope">
-                     <div v-if="scope.row.yearPlan&&scope.row.yearValue">{{Math.round(scope.row.yearPlan /scope.row.yearValue) / 100+"%"}}
-                       </div>
+ <!--                    <div v-if="scope.row.yearPlan&&scope.row.yearValue">{{Math.round(scope.row.yearPlan /scope.row.yearValue) / 100+"%"}}
+                       </div>-->
                        <div v-if="scope.row.yearRate!=null">{{scope.row.yearRate+"%"}}
                        </div>
                      </template>
@@ -209,8 +209,8 @@
                  show-overflow-tooltip
                >
                  <template slot-scope="scope">
-                   <div v-if="scope.row.totalPlan&&scope.row.totalValue">{{Math.round(scope.row.totalPlan /scope.row.totalValue) / 100+"%"}}
-                   </div>
+                  <!-- <div v-if="scope.row.totalPlan&&scope.row.totalValue">{{Math.round(scope.row.totalPlan /scope.row.totalValue) / 100+"%"}}
+                   </div>-->
                    <div v-if="scope.row.totalRate!=null">{{scope.row.totalRate+"%"}}
                    </div>
                  </template>
