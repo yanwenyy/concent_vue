@@ -65,6 +65,21 @@
             </div>
           </template>
         </el-table-column>
+
+        <el-table-column
+          :min-width="200"
+          align="center"
+          label="项目编码"
+          prop="projectCode"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>项目编码</span>
+            <div>
+              <el-input style=" width: 100%" v-model="searchform.projectCode" size="mini"/>
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column
           :width="150"
           align="center"
