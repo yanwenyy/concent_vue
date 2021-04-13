@@ -407,7 +407,7 @@ export default {
       setTjx(obj,node,data){
         this.itemform.sumTarget=obj.uuid;
         this.itemform.sumTargetName=obj.vname;
-        this.itemform.vparentid=obj.vparentid;
+       /* this.itemform.vparentid=obj.vparentid;*/
         this.tjx = false
 
       },

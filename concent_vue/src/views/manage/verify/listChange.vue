@@ -190,7 +190,7 @@
         >
           <template slot-scope="scope">
             <!-- {{scope.row.uuid==null?'未通过':'通过'}} -->
-             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'通过审核':scope.row.flowStatus==4?'审核退回':'其他情况'}}
+             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'其他情况'}}
           </template>
          <template slot="header" slot-scope="scope">
             <span>资格预审结果</span>
