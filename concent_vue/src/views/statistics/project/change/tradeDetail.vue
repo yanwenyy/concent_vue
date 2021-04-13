@@ -1527,12 +1527,28 @@
                   this.showDetailForm.project = JSON.parse(JSON.stringify(item.project))
                   this.showDetailForm.project.beforeId = this.p.beforeId
                   this.showDetailForm.project.afterId = this.p.afterId
+                  if (!item.topInfoSiteList|| item.topInfoSiteList=='') {
+                    this.showDetailForm.project.topInfoSiteList = [{
+                      path: '',
+                      placeId: '',
+                      ffid:'',
+                      uuid: ''
+                    }]
+                  }
                 } else if (item.project.changeStatus == '2') {
                   this.detailForm.project = item.project
                   this.detailForm.project.beforeId = this.p.beforeId
                   this.detailForm.project.afterId = this.p.afterId
                   if (!this.detailForm.project.projectSubContractList) {
                     this.detailForm.project.projectSubContractList = []
+                  }
+                  if (!item.topInfoSiteList|| item.topInfoSiteList=='') {
+                    this.showDetailForm.project.topInfoSiteList = [{
+                      path: '',
+                      placeId: '',
+                      ffid:'',
+                      uuid: ''
+                    }]
                   }
                 }
               })
@@ -1558,6 +1574,20 @@
               }
               if (!res.data.data.projectSubContractList) {
                 this.detailForm.project.projectSubContractList = []
+              }
+              if (!res.data.data.topInfoSiteList|| res.data.data.topInfoSiteList=='') {
+                this.detailForm.project.topInfoSiteList = [{
+                  path: '',
+                  placeId: '',
+                  ffid:'',
+                  uuid: ''
+                }]
+                this.showDetailForm.project.topInfoSiteList = [{
+                  path: '',
+                  placeId: '',
+                  ffid:'',
+                  uuid: ''
+                }]
               }
               this.getShowTwo()
             }

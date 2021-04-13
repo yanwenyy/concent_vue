@@ -2323,7 +2323,7 @@
               .then((res) => {
               if (res.data.code === 200) {
               this.$message({
-                message: "保存成功",
+                message:  `${type=='save'?'保存':'提交'}成功`,
                 type: "success",
               });
               this.$router.back()
