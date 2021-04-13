@@ -214,6 +214,14 @@
         >
         </el-table-column>
         <el-table-column
+          :width="300"
+          align="center"
+          label="项目编码"
+          prop="projectCode"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+        <el-table-column
           :width="150"
           align="center"
           label="项目状态"
