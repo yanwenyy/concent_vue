@@ -81,6 +81,25 @@
             <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.contractName}}</span>
           </template>
         </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="合同号"
+          prop="contractCode"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>合同号</span>
+            <div>
+              <el-input
+                class="list-search-picker"
+                style=" width: 100%"
+                v-model="searchFrom.contractCode"
+                size="mini"
+              />
+            </div>
+          </template>
+        </el-table-column>
 
         <el-table-column
           :width="150"
@@ -102,25 +121,6 @@
 
         </el-table-column>
 
-        <el-table-column
-          :width="150"
-          align="center"
-          label="合同号"
-          prop="contractCode"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>合同号</span>
-            <div>
-              <el-input
-                class="list-search-picker"
-                style=" width: 100%"
-                v-model="searchFrom.contractCode"
-                size="mini"
-              />
-            </div>
-          </template>
-        </el-table-column>
         <el-table-column
           :width="150"
           align="center"
