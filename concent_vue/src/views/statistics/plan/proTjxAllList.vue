@@ -293,7 +293,7 @@
         let uuids = []
         this.multipleSelection.forEach(function(item) {
           uuids.push(item.uuid)
-          if (item.flowStatus === '1') {
+          if (item.flowStatus === '1'||item.flowStatus === '4') {
             isSubmit = false
             return false
           }

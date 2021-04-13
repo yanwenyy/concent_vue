@@ -372,8 +372,8 @@
              this.$message.info("请选择一条数据，进行编辑", "提示")
              return false
             }
-          if ((this.multipleSelection[0].flowStatus!=null||this.multipleSelection[0].flowStatus!='')&& this.multipleSelection[0].flowStatus!='1'){
-            this.$message.info("只允许修改草稿数据", "提示")
+          if ((this.multipleSelection[0].flowStatus!=null||this.multipleSelection[0].flowStatus!='')&& this.multipleSelection[0].flowStatus!='1'&& this.multipleSelection[0].flowStatus!='4'){
+            this.$message.info("只允许修改草稿和审核驳回数据", "提示")
             return false
           }
           this.type = 'edit'
@@ -395,7 +395,7 @@
         }
         let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          if(item.status<='1'){
+          if(item.status<='1'||item.status=='4'){
             uuids.push(item.uuid)}
           else{
             this.$message.info('只允许删除未上报的数据！')
