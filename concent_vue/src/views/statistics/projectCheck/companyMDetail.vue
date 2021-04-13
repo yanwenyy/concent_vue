@@ -146,7 +146,7 @@
                 <div>{{scope.row.jldw}}</div>
               </template>
             </el-table-column>
-            <el-table-column
+           <!-- <el-table-column
               :width="150"
               align="center"
               label="本月计划"
@@ -155,7 +155,7 @@
               <template slot-scope="scope">
                 <div>{{scope.row.monthPlan}}</div>
               </template>
-            </el-table-column>
+            </el-table-column>-->
             <el-table-column
               :width="150"
               align="center"
@@ -194,7 +194,7 @@
                 {{scope.row.taxFee}}
               </template>
             </el-table-column>
-            <el-table-column
+           <!-- <el-table-column
               :width="150"
               align="center"
               label="本年计划"
@@ -203,7 +203,7 @@
               <template slot-scope="scope">
                 <div>{{scope.row.yearPlan}}</div>
               </template>
-            </el-table-column>
+            </el-table-column>-->
             <el-table-column
               :width="150"
               align="center"
@@ -237,7 +237,7 @@
                 <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
               </template>
             </el-table-column>
-            <el-table-column
+         <!--   <el-table-column
               :width="150"
               align="center"
               label="本年%"
@@ -249,8 +249,8 @@
                 <div v-if="scope.row.yearRate!=null">{{scope.row.yearRate+"%"}}
                 </div>
               </template>
-            </el-table-column>
-            <el-table-column
+            </el-table-column>-->
+            <!--<el-table-column
               :width="150"
               align="center"
               label="总设计量"
@@ -259,7 +259,7 @@
               <template slot-scope="scope">
                 <div>{{scope.row.totalPlan}}</div>
               </template>
-            </el-table-column>
+            </el-table-column>-->
             <el-table-column
               :width="150"
               align="center"
@@ -290,7 +290,7 @@
                 <div>{{scope.row.totalTaxFee}}</div>
               </template>
             </el-table-column>
-            <el-table-column
+           <!-- <el-table-column
               :width="150"
               align="center"
               label="开累%"
@@ -302,7 +302,7 @@
                 <div v-if="scope.row.totalRate!=null">{{scope.row.totalRate+"%"}}
                 </div>
               </template>
-            </el-table-column>
+            </el-table-column>-->
           </el-table>
         </div>
       </el-tab-pane>
@@ -403,9 +403,9 @@
         var num2=0;
         list[index].yearValue=list[index].oldYearValue?Number(list[index].oldYearValue)+Number(list[index].monthValue):list[index].monthValue;
         list[index].totalValue=list[index].oldTotalValue?Number(list[index].oldTotalValue)+Number(list[index].monthValue):list[index].monthValue;
-        list[index].yearRate=Math.round(Number(list[index].yearPlan) /Number(list[index].yearValue)) / 100;
+    /*    list[index].yearRate=Math.round(Number(list[index].yearPlan) /Number(list[index].yearValue)) / 100;
         list[index].monthRate=Math.round(Number(list[index].monthPlan) /Number(list[index].monthValue)) / 100;
-        list[index].totalRate=Math.round(Number(list[index].totalPlan) /Number(list[index].totalValue)) / 100;
+        list[index].totalRate=Math.round(Number(list[index].totalPlan) /Number(list[index].totalValue)) / 100;*/
         console.log(list[index])
         list.forEach((item,i)=>{
           if(item.sumTarget==code) {

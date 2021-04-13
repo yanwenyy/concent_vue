@@ -27,24 +27,24 @@
               label="项目名称:"
             ><el-input v-model="dataReport.reportProjectName" disabled></el-input>
             </el-form-item>
-            <div>
+         <!--   <div>
               <el-form-item
                 label="本月备注:"
               ><el-input  :disabled="isCk=='1'" v-model="dataReport.thisPlan" type="textarea" ></el-input>
               </el-form-item>
-            </div>
+            </div>-->
             <!--<div>
             <el-form-item
               label="完成情况:"
             ><el-input :disabled="isCk=='1'" v-model="dataReport.finishedPlan" type="textarea" ></el-input>
             </el-form-item>
             </div>-->
-            <div>
+         <!--   <div>
               <el-form-item
                 label="上月备注:"
               ><el-input :disabled="isCk=='1'" v-model="dataReport.nextPlan" type="textarea" ></el-input>
               </el-form-item>
-            </div>
+            </div>-->
             <p>
               <span>上传附件: </span>
               <el-button
@@ -147,7 +147,7 @@
                 <div>{{scope.row.jldw}}</div>
               </template>
             </el-table-column>
-            <el-table-column
+         <!--   <el-table-column
               :width="150"
               align="center"
               label="本月计划"
@@ -156,7 +156,7 @@
               <template slot-scope="scope">
                 <div>{{scope.row.monthPlan}}</div>
               </template>
-            </el-table-column>
+            </el-table-column>-->
             <el-table-column
               :width="150"
               align="center"
@@ -195,7 +195,7 @@
                 {{scope.row.taxFee}}
               </template>
             </el-table-column>
-            <el-table-column
+           <!-- <el-table-column
               :width="150"
               align="center"
               label="本年计划"
@@ -204,7 +204,7 @@
               <template slot-scope="scope">
                 <div>{{scope.row.yearPlan}}</div>
               </template>
-            </el-table-column>
+            </el-table-column>-->
             <el-table-column
               :width="150"
               align="center"
@@ -238,7 +238,7 @@
                 <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
               </template>
             </el-table-column>
-            <el-table-column
+      <!--      <el-table-column
               :width="150"
               align="center"
               label="本年%"
@@ -250,8 +250,8 @@
                 <div v-if="scope.row.yearRate!=null">{{scope.row.yearRate+"%"}}
                 </div>
               </template>
-            </el-table-column>
-            <el-table-column
+            </el-table-column>-->
+          <!--  <el-table-column
               :width="150"
               align="center"
               label="总设计量"
@@ -260,7 +260,7 @@
               <template slot-scope="scope">
                 <div>{{scope.row.totalPlan}}</div>
               </template>
-            </el-table-column>
+            </el-table-column>-->
             <el-table-column
               :width="150"
               align="center"
@@ -291,7 +291,7 @@
                 <div>{{scope.row.totalTaxFee}}</div>
               </template>
             </el-table-column>
-            <el-table-column
+          <!--  <el-table-column
               :width="150"
               align="center"
               label="开累%"
@@ -303,7 +303,7 @@
                 <div v-if="scope.row.totalRate!=null">{{scope.row.totalRate+"%"}}
                 </div>
               </template>
-            </el-table-column>
+            </el-table-column>-->
           </el-table>
         </div>
       </el-tab-pane>
@@ -399,6 +399,7 @@
       },
       // 获取数据
       getData() {
+        console.log(JSON.parse(this.$utils.decrypt(this.$route.query.p)))
         this.$http
             .post('/api/statistics/Projectcheck/detail/queryEntityInfoDetail', JSON.stringify({
               projectId: this.p.params.projectId,

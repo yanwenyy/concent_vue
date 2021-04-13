@@ -449,7 +449,7 @@
         this.multipleSelection.forEach((item) => {
           let a=this.userdata.managerOrgId;
           if(item.projectId==this.userdata.managerOrgId){
-            if(item.flowStatus!='1'&&item.flowStatus!=null){
+            if(item.flowStatus!='1'&&item.flowStatus!=null&&item.flowStatus!='4'){
             this.$message.info('只允许删除未上报的数据！')
               return itemStatus=false;
             }else{
@@ -513,7 +513,7 @@
           return false
         }
         if((this.multipleSelection[0].flowStatus!=''||this.multipleSelection[0].flowStatus!=null)&& (this.multipleSelection[0].flowStatus=='2'|| this.multipleSelection[0].flowStatus=='3')){
-          this.$message.info("只允许修改草稿状态的数据", "提示")
+          this.$message.info("只允许修改草稿和审核退回状态的数据", "提示")
           return false
         }
           if((this.multipleSelection[0].flowStatus==''||this.multipleSelection[0].flowStatus==null) && this.multipleSelection[0].projectId!=this.userdata.managerOrgId){

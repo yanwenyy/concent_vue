@@ -384,7 +384,7 @@
         }
         let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          if(item.flowStatus<='1'){
+          if(item.flowStatus<='1'||item.flowStatus=='4'){
           uuids.push(item.uuid)}
           else{
             this.$message.info('只允许删除未上报的数据！')

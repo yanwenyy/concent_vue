@@ -149,7 +149,7 @@
                     <div>{{scope.row.jldw}}</div>
                   </template>
                 </el-table-column>
-                 <el-table-column
+              <!--   <el-table-column
                    :width="150"
                    align="center"
                    label="本月计划"
@@ -158,7 +158,7 @@
                    <template slot-scope="scope">
                      <div>{{scope.row.monthPlan}}</div>
                    </template>
-                 </el-table-column>
+                 </el-table-column>-->
                 <el-table-column
                   :width="150"
                   align="center"
@@ -195,7 +195,7 @@
                <div  v-if="scope.row.veditable != '1'">{{scope.row.taxFee}}</div>
              </template>
            </el-table-column>
-               <el-table-column
+            <!--   <el-table-column
                  :width="150"
                  align="center"
                  label="本年计划"
@@ -204,7 +204,7 @@
                  <template slot-scope="scope">
                    <div>{{scope.row.yearPlan}}</div>
                  </template>
-               </el-table-column>
+               </el-table-column>-->
                <el-table-column
                  :width="150"
                  align="center"
@@ -238,20 +238,20 @@
                    <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
                  </template>
                </el-table-column>
-               <el-table-column
+             <!--  <el-table-column
                  :width="150"
                  align="center"
                  label="本年%"
                  show-overflow-tooltip
                >
                  <template slot-scope="scope">
-                 <!--<div v-if="scope.row.yearPlan&&scope.row.yearValue">{{Math.round(scope.row.yearPlan /scope.row.yearValue) / 100+"%"}}
-                   </div>-->
+                 &lt;!&ndash;<div v-if="scope.row.yearPlan&&scope.row.yearValue">{{Math.round(scope.row.yearPlan /scope.row.yearValue) / 100+"%"}}
+                   </div>&ndash;&gt;
                    <div v-if="scope.row.yearRate!=null">{{scope.row.yearRate+"%"}}
                    </div>
                  </template>
-               </el-table-column>
-           <el-table-column
+               </el-table-column>-->
+         <!--  <el-table-column
              :width="150"
              align="center"
              label="总设计量"
@@ -260,7 +260,7 @@
              <template slot-scope="scope">
                <div>{{scope.row.totalPlan}}</div>
              </template>
-           </el-table-column>
+           </el-table-column>-->
            <el-table-column
              :width="150"
              align="center"
@@ -291,19 +291,19 @@
                <div>{{scope.row.totalTaxFee}}</div>
              </template>
            </el-table-column>
-           <el-table-column
+         <!--  <el-table-column
              :width="150"
              align="center"
              label="开累%"
              show-overflow-tooltip
            >
              <template slot-scope="scope">
-               <!--<div v-if="scope.row.totalPlan&&scope.row.totalValue">{{Math.round(scope.row.totalPlan /scope.row.totalValue) / 100+"%"}}
-               </div>-->
+               &lt;!&ndash;<div v-if="scope.row.totalPlan&&scope.row.totalValue">{{Math.round(scope.row.totalPlan /scope.row.totalValue) / 100+"%"}}
+               </div>&ndash;&gt;
                <div v-if="scope.row.totalRate!=null">{{scope.row.totalRate+"%"}}
                </div>
              </template>
-           </el-table-column>
+           </el-table-column>-->
               </el-table>
        </div>
     </el-tab-pane>
@@ -393,12 +393,12 @@
         var num3=0;
         list[index].yearValuationFee=list[index].oldYearJje?Number(list[index].oldYearJje)+Number(list[index].valuationFee):list[index].valuationFee;
         list[index].totalValuationFee=list[index].oldTotalJje?Number(list[index].oldTotalJje)+Number(list[index].valuationFee):list[index].valuationFee;
-        //list[index].yearRate=Math.round(Number(list[index].yearPlan) /Number(list[index].yearValue)) / 100;
+       /* //list[index].yearRate=Math.round(Number(list[index].yearPlan) /Number(list[index].yearValue)) / 100;
         list[index].yearRate=list[index].yearValue&&list[index].yearPlan?(Number(list[index].yearValue)/Number(list[index].yearPlan)/ 100).toFixed(4):0;
         //list[index].monthRate=Math.round(Number(list[index].monthPlan) /Number(list[index].monthValue)) / 100;
         //list[index].totalRate=Math.round(Number(list[index].totalPlan) /Number(list[index].totalValue)) / 100;
         list[index].totalRate=list[index].totalValue&&list[index].totalPlan?(Number(list[index].totalValue)/Number(list[index].totalPlan) / 100).toFixed(4):0;
-        console.log(list[index])
+        console.log(list[index])*/
         list.forEach((item,i)=>{
           if(item.sumTarget==code) {
             num= Number(item.valuationFee)+num;
@@ -430,12 +430,12 @@
         var num3=0;
         list[index].yearTaxFee=list[index].oldYearSe?Number(list[index].oldYearSe)+Number(list[index].taxFee):list[index].taxFee;
         list[index].totalTaxFee=list[index].oldTotalSe?Number(list[index].oldTotalSe)+Number(list[index].taxFee):list[index].taxFee;
-        //list[index].yearRate=Math.round(Number(list[index].yearPlan) /Number(list[index].yearValue)) / 100;
+     /*   //list[index].yearRate=Math.round(Number(list[index].yearPlan) /Number(list[index].yearValue)) / 100;
         list[index].yearRate=list[index].yearValue&&list[index].yearPlan?(Number(list[index].yearValue)/Number(list[index].yearPlan)/ 100).toFixed(4):0;
         //list[index].monthRate=Math.round(Number(list[index].monthPlan) /Number(list[index].monthValue)) / 100;
         //list[index].totalRate=Math.round(Number(list[index].totalPlan) /Number(list[index].totalValue)) / 100;
         list[index].totalRate=list[index].totalValue&&list[index].totalPlan?(Number(list[index].totalValue)/Number(list[index].totalPlan) / 100).toFixed(4):0;
-        console.log(list[index])
+        console.log(list[index])*/
         list.forEach((item,i)=>{
           if(item.sumTarget==code) {
             num= Number(item.taxFee)+num;
