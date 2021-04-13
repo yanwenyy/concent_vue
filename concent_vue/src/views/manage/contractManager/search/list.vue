@@ -35,7 +35,7 @@
         <el-input v-model="searchform.contractName" placeholder="合同名称" clearable></el-input>
       </el-form-item>
       <el-form-item label="合同编号:">
-        <el-input v-model="searchform.contractNo" placeholder="合同编号" clearable></el-input>
+        <el-input v-model="searchform.contractCode" placeholder="合同编号" clearable></el-input>
       </el-form-item>
       <el-form-item
         label="项目性质(一级):"
@@ -228,7 +228,7 @@
           :width="300"
           align="center"
           label="合同编号"
-          prop="contractNo"
+          prop="contractCode"
           show-overflow-tooltip
         >
         </el-table-column>

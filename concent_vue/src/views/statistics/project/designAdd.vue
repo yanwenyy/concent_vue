@@ -757,7 +757,7 @@
               fixed="right"
               label="操作"
               show-overflow-tooltip
-              v-if="p.actpoint!=='look'"
+              v-if="p.actpoint!=='look'&&p.actpoint !== 'task'"
               width="80"
             >
               <template slot-scope="scope">

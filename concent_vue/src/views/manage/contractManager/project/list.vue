@@ -59,8 +59,31 @@
           show-overflow-tooltip
           type="index"
         ></el-table-column>
+
         <el-table-column
           :width="500"
+          label="合同名称"
+          prop="contractName"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>合同名称</span>
+            <div>
+              <el-input
+                class="list-search-picker"
+                style=" width: 100%"
+                v-model="searchFrom.contractName"
+                size="mini"
+              />
+            </div>
+          </template>
+          <template slot-scope="scope">
+            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column
+          :width="150"
           label="项目名称"
           prop="inforName"
           show-overflow-tooltip
@@ -76,9 +99,7 @@
               />
             </div>
           </template>
-          <template slot-scope="scope">
-            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
-          </template>
+
         </el-table-column>
         <el-table-column
           :width="150"
@@ -102,7 +123,7 @@
           :width="150"
           align="center"
           label="合同号"
-          prop="contractNo"
+          prop="contractCode"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -111,7 +132,7 @@
               <el-input
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchFrom.contractNo"
+                v-model="searchFrom.contractCode"
                 size="mini"
               />
             </div>
@@ -131,25 +152,6 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchFrom.createOrgName"
-                size="mini"
-              />
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="主推单位"
-          prop="contractMianOrg"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>主推单位</span>
-            <div>
-              <el-input
-                class="list-search-picker"
-                style=" width: 100%"
-                v-model="searchFrom.contractMianOrg"
                 size="mini"
               />
             </div>

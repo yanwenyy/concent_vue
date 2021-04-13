@@ -8,7 +8,7 @@
           <el-input v-model="searchform.contractName" placeholder="项目名称" clearable></el-input>
         </el-form-item>
         <el-form-item label="合同编号:">
-          <el-input v-model="searchform.contractNo" placeholder="项目名称" clearable></el-input>
+          <el-input v-model="searchform.contractCode" placeholder="项目名称" clearable></el-input>
         </el-form-item>
         <el-form-item
           label="合同类型:"
@@ -62,7 +62,7 @@
           label="合同名称">
         </el-table-column>
         <el-table-column
-          prop="contractNo"
+          prop="contractCode"
           header-align="center"
           align="center"
           label="合同号">
@@ -116,7 +116,7 @@
         visible: false,
         searchform: {
           contractName: '',
-          contractNo: '',
+          contractCode: '',
           moduleId: '',
           changeStatus:'0',
           current: 1,

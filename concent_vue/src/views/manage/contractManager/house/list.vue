@@ -95,12 +95,15 @@
               />
             </div>
           </template>
+          <template slot-scope="scope">
+            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.contractName}}</span>
+          </template>
         </el-table-column>
         <el-table-column
           :width="150"
           align="center"
           label="合同号"
-          prop="contractNo"
+          prop="contractCode"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -109,7 +112,7 @@
               <el-input
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchFrom.contractNo"
+                v-model="searchFrom.contractCode"
                 size="mini"
               />
             </div>
