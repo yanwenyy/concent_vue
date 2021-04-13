@@ -102,7 +102,7 @@
           :width="150"
           align="center"
           label="合同号"
-          prop="contractNo"
+          prop="contractCode"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -111,7 +111,7 @@
               <el-input
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchFrom.contractNo"
+                v-model="searchFrom.contractCode"
                 size="mini"
               />
             </div>

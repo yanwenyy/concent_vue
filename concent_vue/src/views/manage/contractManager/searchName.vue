@@ -100,7 +100,7 @@
           label="合同名称">
         </el-table-column>
         <el-table-column
-          prop="contractNo"
+          prop="contractCode"
           header-align="center"
           align="center"
           label="合同号">

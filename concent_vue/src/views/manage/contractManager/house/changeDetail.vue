@@ -56,6 +56,132 @@
                     >
                     </el-date-picker>
                   </el-form-item>
+                  <el-form-item
+                    label="控股情况:"
+
+                  >
+                    <el-input
+                      disabled
+                      size="mini"
+                      v-model="detailFormBefore.contractInfo.estateHolding"
+                    />
+                  </el-form-item>
+                  <el-form-item
+                    label="是否并表:"
+
+                  >
+                    <el-switch
+                      disabled
+                      class="inline-formitem-switch"
+                      v-model="detailFormBefore.contractInfo.isMergeEstate"
+                      active-color="#409EFF"
+                      inactive-color="#ddd"
+                      active-value="0"
+                      inactive-value="1"
+                    >
+                    </el-switch>
+                  </el-form-item>
+                  <br>
+                  <el-form-item
+                    class="inline-formitem form-item-four"
+                    label="是否为系统内联合体"
+                  >
+                    <el-switch
+                      disabled
+                      class="inline-formitem-switch"
+                      v-model="detailFormBefore.contractInfo.isInSystemUnion"
+                      active-color="#409EFF"
+                      inactive-color="#ddd"
+                      active-value="0"
+                      inactive-value="1"
+                    >
+                    </el-switch>
+                    <!--<el-select-->
+                    <!--:disabled="p.actpoint==='look'"-->
+                    <!--clearable-->
+                    <!--filterable-->
+                    <!--placeholder="请选择"-->
+
+                    <!--v-model="detailform.contractInfo.isInSystemUnion"-->
+                    <!--&gt;-->
+                    <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
+                    <!--</el-select>-->
+                  </el-form-item>
+                  <el-form-item
+                    class="inline-formitem form-item-four"
+                    label="是否含系统内分包"
+                  >
+                    <el-switch
+                      disabled
+                      class="inline-formitem-switch"
+                      v-model="detailFormBefore.contractInfo.isInSystemSub"
+                      active-color="#409EFF"
+                      inactive-color="#ddd"
+                      active-value="0"
+                      inactive-value="1"
+                    >
+                    </el-switch>
+                    <!--<el-select-->
+                    <!--:disabled="p.actpoint==='look'"-->
+                    <!--filterable-->
+                    <!--clearable-->
+                    <!--placeholder="请选择"-->
+
+                    <!--v-model="detailform.contractInfo.isInSystemSub"-->
+                    <!--&gt;-->
+                    <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
+                    <!--</el-select>-->
+                  </el-form-item>
+                  <el-form-item
+                    class="inline-formitem form-item-four"
+                    label="是否为系统外联合体"
+                  >
+                    <el-switch
+                      disabled
+                      class="inline-formitem-switch"
+                      v-model="detailFormBefore.contractInfo.isOutSystemUnion"
+                      active-color="#409EFF"
+                      inactive-color="#ddd"
+                      active-value="0"
+                      inactive-value="1"
+                    >
+                    </el-switch>
+                    <!--<el-select-->
+                    <!--:disabled="p.actpoint==='look'"-->
+                    <!--clearable-->
+                    <!--filterable-->
+                    <!--placeholder="请选择"-->
+
+                    <!--v-model="detailform.contractInfo.isOutSystemUnion"-->
+                    <!--&gt;-->
+                    <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
+                    <!--</el-select>-->
+                  </el-form-item>
+                  <el-form-item
+                    class="inline-formitem form-item-four"
+                    label="是否含系统外分包:"
+                  >
+                    <el-switch
+                      disabled
+                      class="inline-formitem-switch"
+                      v-model="detailFormBefore.contractInfo.isOutSystemSub"
+                      active-color="#409EFF"
+                      inactive-color="#ddd"
+                      active-value="0"
+                      inactive-value="1"
+                    >
+                    </el-switch>
+                    <!--<el-select-->
+                    <!--:disabled="p.actpoint==='look'"-->
+                    <!--filterable-->
+                    <!--clearable-->
+                    <!--placeholder="请选择"-->
+
+                    <!--v-model="detailform.contractInfo.isOutSystemSub"-->
+                    <!--&gt;-->
+                    <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
+                    <!--</el-select>-->
+                  </el-form-item>
                   <br>
                   <el-form-item
                     label="合同总金额(万元):"
@@ -137,92 +263,6 @@
                   </el-form-item>
                   <br>
                   <el-form-item
-                    class="inline-formitem"
-                    label="是否为系统内联合体"
-                  >
-                    <el-switch
-                      disabled
-                      class="inline-formitem-switch"
-                      v-model="detailFormBefore.contractInfo.isInSystemUnion"
-                      active-color="#409EFF"
-                      inactive-color="#ddd"
-                      active-value="0"
-                      inactive-value="1"
-                    >
-                    </el-switch>
-                    <!--<el-input-->
-                    <!--disabled-->
-                    <!--clearable-->
-                    <!--placeholder=""-->
-                    <!--v-model="detailFormBefore.contractInfo.isInSystemUnion=='1'?'否':'是'"-->
-                    <!--/>-->
-                  </el-form-item>
-                  <el-form-item
-                    label="是否含系统内分包"
-                    class="inline-formitem"
-                  >
-                    <el-switch
-                      disabled
-                      class="inline-formitem-switch"
-                      v-model="detailFormBefore.contractInfo.isInSystemSub"
-                      active-color="#409EFF"
-                      inactive-color="#ddd"
-                      active-value="0"
-                      inactive-value="1"
-                    >
-                    </el-switch>
-                    <!--<el-input-->
-                    <!--disabled-->
-                    <!--clearable-->
-                    <!--placeholder=""-->
-                    <!--v-model="detailFormBefore.contractInfo.isInSystemSub=='1'?'否':'是'"-->
-                    <!--/>-->
-                  </el-form-item>
-                  <br>
-                  <el-form-item
-                    class="inline-formitem"
-                    label="是否为系统外联合体"
-                  >
-                    <el-switch
-                      disabled
-                      class="inline-formitem-switch"
-                      v-model="detailFormBefore.contractInfo.isOutSystemUnion"
-                      active-color="#409EFF"
-                      inactive-color="#ddd"
-                      active-value="0"
-                      inactive-value="1"
-                    >
-                    </el-switch>
-                    <!--<el-input-->
-                    <!--disabled-->
-                    <!--clearable-->
-                    <!--placeholder=""-->
-                    <!--v-model="detailFormBefore.contractInfo.isOutSystemUnion=='1'?'否':'是'"-->
-                    <!--/>-->
-                  </el-form-item>
-                  <el-form-item
-                    class="inline-formitem"
-                    label="是否含系统外分包"
-                  >
-                    <el-switch
-                      disabled
-                      class="inline-formitem-switch"
-                      v-model="detailFormBefore.contractInfo.isOutSystemSub"
-                      active-color="#409EFF"
-                      inactive-color="#ddd"
-                      active-value="0"
-                      inactive-value="1"
-                    >
-                    </el-switch>
-                    <!--<el-input-->
-                    <!--disabled-->
-                    <!--clearable-->
-                    <!--placeholder=""-->
-                    <!--v-model="detailFormBefore.contractInfo.isOutSystemSub=='1'?'否':'是'"-->
-                    <!--/>-->
-                  </el-form-item>
-                  <br>
-                  <el-form-item
                     label="新兴市场类别(一级):"
                   >
                     <el-input
@@ -244,6 +284,28 @@
                       v-model="detailFormBefore.contractInfo.marketSecondName"
                     />
                   </el-form-item>
+                  <el-form-item
+                    label="场地名称:"
+                    v-if="detailFormBefore.contractInfo.marketFirstNameId=='50cd5e9992ac4653920fac8c1f2eb2e3'"
+
+                  >
+                    <el-input
+                      disabled
+                      size="mini"
+                      v-model="detailFormBefore.contractInfo.siteName"
+                    />
+                  </el-form-item>
+                  <el-form-item
+                    label="装配类型:"
+                    v-if="detailFormBefore.contractInfo.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
+                  >
+                    <el-input
+                      disabled
+                      size="mini"
+                      v-model="detailFormBefore.contractInfo.otherAssemblyType"
+                    />
+                  </el-form-item>
                   <div>
                     <el-form-item
                       label="装配率(%):"
@@ -256,19 +318,6 @@
                         v-model="detailFormBefore.contractInfo.otherAssemblyRate"
                       />
                     </el-form-item>
-                    <el-form-item
-                      label="装配类型:"
-                      v-if="detailFormBefore.contractInfo.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
-
-                    >
-                      <el-input
-                        disabled
-                        size="mini"
-                        v-model="detailFormBefore.contractInfo.otherAssemblyType"
-                      />
-                    </el-form-item>
-                  </div>
-                  <div>
                     <el-form-item
                       label="建筑类型:"
                       v-if="detailFormBefore.contractInfo.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
@@ -291,44 +340,11 @@
                         v-model="detailFormBefore.contractInfo.otherBuildingStructureType"
                       />
                     </el-form-item>
-                    <el-form-item
-                      label="场地名称:"
-                      v-if="detailFormBefore.contractInfo.marketFirstNameId=='50cd5e9992ac4653920fac8c1f2eb2e3'"
 
-                    >
-                      <el-input
-                        disabled
-                        size="mini"
-                        v-model="detailFormBefore.contractInfo.siteName"
-                      />
-                    </el-form-item>
                   </div>
 
-                  <el-form-item
-                      label="控股情况:"
 
-                  >
-                    <el-input
-                      disabled
-                      size="mini"
-                      v-model="detailFormBefore.contractInfo.estateHolding"
-                    />
-                  </el-form-item>
-                  <el-form-item
-                    label="是否并表:"
 
-                  >
-                    <el-switch
-                      disabled
-                      class="inline-formitem-switch"
-                      v-model="detailFormBefore.contractInfo.isMergeEstate"
-                      active-color="#409EFF"
-                      inactive-color="#ddd"
-                      active-value="0"
-                      inactive-value="1"
-                    >
-                    </el-switch>
-                  </el-form-item>
                   <br>
                   <el-form-item
                     label="建设地点:"
@@ -373,32 +389,6 @@
                       placeholder="请输入"
                       size="mini"
                       v-model="detailFormBefore.contractInfo.signOrgName"
-                    />
-                  </el-form-item>
-                  <br>
-                  <el-form-item
-                    label="录入时间:"
-                  >
-                    <el-date-picker
-                      disabled
-                      filterable
-                      clearable
-                      type="date"
-                      value-format="timestamp"
-                      v-model="detailFormBefore.contractInfo.createTime"
-
-                    >
-                    </el-date-picker>
-                  </el-form-item>
-                  <el-form-item
-                    label="录入单位:"
-                  >
-                    <el-input
-                      disabled
-                      clearable
-                      placeholder="请输入"
-                      size="mini"
-                      v-model="detailFormBefore.contractInfo.createOrgName"
                     />
                   </el-form-item>
                   <div>
@@ -911,15 +901,12 @@
                   <!--v-model="detailform.contractInfo.contractName"-->
                   <!--/>-->
                   <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.contractName" class="input-with-select">
-                    <el-button :disabled="detailform.contractInfo.contractType!='2'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
+                    <el-button v-if="detailform.contractInfo.contractType=='2'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
                   </el-input>
                 </el-form-item>
                 <el-form-item
                   label="合同名称(外文):"
                   prop="contractInfo.contractNameForeign"
-                  :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
                 >
                   <el-input
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -929,23 +916,19 @@
                     v-model="detailform.contractInfo.contractNameForeign"
                   />
                 </el-form-item>
-                <br>
                 <el-form-item
                   label="合同编号:"
                   prop="contractInfo.contractCode"
-
-                  :rules="{
-           required: true, message: '此项不能为空', trigger: 'blur'
-        }"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    disabled
                     clearable
-                    placeholder="请输入"
+                    placeholder="保存后系统自动生成"
                     size="mini"
                     v-model="detailform.contractInfo.contractCode"
                   />
-                </el-form-item>
+                </el-form-item><br>
+
                 <el-form-item
                   label="合同签定日期:"
                   prop="contractInfo.contractSignTime"
@@ -960,8 +943,166 @@
                     placeholder="选择日期时间">
                   </el-date-picker>
                 </el-form-item>
+
+                <el-form-item
+                  label="控股情况:"
+                  prop="contractInfo.estateHolding"
+                  :rules="{
+      required: true, message: '此项不能为空', trigger: 'blur'
+    }"
+
+                >
+                  <el-select
+                    :disabled="p.actpoint==='look'"
+
+                    clearable
+                    filterable
+                    placeholder="请选择"
+                    size="mini"
+                    v-model="detailform.contractInfo.estateHolding"
+                  >
+                    <el-option
+                      :key="index"
+                      :label="item.detailName"
+                      :value="item.id"
+                      v-for="(item, index) in holdingSituation"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item
+                  class="inline-formitem"
+                  label="是否并表:"
+                  prop="contractInfo.isMergeEstate"
+                  :rules="{
+      required: true, message: '此项不能为空', trigger: 'blur'
+    }"
+
+                >
+                  <el-switch
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    class="inline-formitem-switch"
+                    v-model="detailform.contractInfo.isMergeEstate"
+                    active-color="#409EFF"
+                    inactive-color="#ddd"
+                    active-value="0"
+                    inactive-value="1"
+                  >
+                  </el-switch>
+                  <!--<el-select-->
+                  <!--:disabled="p.actpoint==='look'"-->
+                  <!--clearable-->
+                  <!--filterable-->
+                  <!--placeholder="请选择"-->
+                  <!--size="mini"-->
+                  <!--v-model="detailform.contractInfo.isMergeEstate"-->
+                  <!--&gt;-->
+                  <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
+                  <!--</el-select>-->
+                </el-form-item>
+
                 <br>
 
+                <el-form-item
+                  class="inline-formitem form-item-four"
+                  label="是否为系统内联合体"
+                >
+                  <el-switch
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    class="inline-formitem-switch"
+                    v-model="detailform.contractInfo.isInSystemUnion"
+                    active-color="#409EFF"
+                    inactive-color="#ddd"
+                    active-value="0"
+                    inactive-value="1"
+                  >
+                  </el-switch>
+                  <!--<el-select-->
+                  <!--:disabled="p.actpoint==='look'"-->
+                  <!--clearable-->
+                  <!--filterable-->
+                  <!--placeholder="请选择"-->
+
+                  <!--v-model="detailform.contractInfo.isInSystemUnion"-->
+                  <!--&gt;-->
+                  <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
+                  <!--</el-select>-->
+                </el-form-item>
+                <el-form-item
+                  class="inline-formitem form-item-four"
+                  label="是否含系统内分包"
+                >
+                  <el-switch
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    class="inline-formitem-switch"
+                    v-model="detailform.contractInfo.isInSystemSub"
+                    active-color="#409EFF"
+                    inactive-color="#ddd"
+                    active-value="0"
+                    inactive-value="1"
+                  >
+                  </el-switch>
+                  <!--<el-select-->
+                  <!--:disabled="p.actpoint==='look'"-->
+                  <!--filterable-->
+                  <!--clearable-->
+                  <!--placeholder="请选择"-->
+
+                  <!--v-model="detailform.contractInfo.isInSystemSub"-->
+                  <!--&gt;-->
+                  <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
+                  <!--</el-select>-->
+                </el-form-item>
+                <el-form-item
+                  class="inline-formitem form-item-four"
+                  label="是否为系统外联合体"
+                >
+                  <el-switch
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    class="inline-formitem-switch"
+                    v-model="detailform.contractInfo.isOutSystemUnion"
+                    active-color="#409EFF"
+                    inactive-color="#ddd"
+                    active-value="0"
+                    inactive-value="1"
+                  >
+                  </el-switch>
+                  <!--<el-select-->
+                  <!--:disabled="p.actpoint==='look'"-->
+                  <!--clearable-->
+                  <!--filterable-->
+                  <!--placeholder="请选择"-->
+
+                  <!--v-model="detailform.contractInfo.isOutSystemUnion"-->
+                  <!--&gt;-->
+                  <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
+                  <!--</el-select>-->
+                </el-form-item>
+                <el-form-item
+                  class="inline-formitem form-item-four"
+                  label="是否含系统外分包:"
+                >
+                  <el-switch
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    class="inline-formitem-switch"
+                    v-model="detailform.contractInfo.isOutSystemSub"
+                    active-color="#409EFF"
+                    inactive-color="#ddd"
+                    active-value="0"
+                    inactive-value="1"
+                  >
+                  </el-switch>
+                  <!--<el-select-->
+                  <!--:disabled="p.actpoint==='look'"-->
+                  <!--filterable-->
+                  <!--clearable-->
+                  <!--placeholder="请选择"-->
+
+                  <!--v-model="detailform.contractInfo.isOutSystemSub"-->
+                  <!--&gt;-->
+                  <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
+                  <!--</el-select>-->
+                </el-form-item>
+                <br>
                 <el-form-item
                   label="合同总金额(万元):"
                   prop="contractInfo.contractAmount"
@@ -1054,108 +1195,6 @@
                 </el-form-item>
                 <br>
                 <el-form-item
-                  class="inline-formitem"
-                  label="是否为系统内联合体"
-                >
-                  <el-switch
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    class="inline-formitem-switch"
-                    v-model="detailform.contractInfo.isInSystemUnion"
-                    active-color="#409EFF"
-                    inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"
-                  >
-                  </el-switch>
-                  <!--<el-select-->
-                  <!--:disabled="p.actpoint==='look'"-->
-                  <!--clearable-->
-                  <!--filterable-->
-                  <!--placeholder="请选择"-->
-
-                  <!--v-model="detailform.contractInfo.isInSystemUnion"-->
-                  <!--&gt;-->
-                  <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
-                  <!--</el-select>-->
-                </el-form-item>
-                <el-form-item
-                  class="inline-formitem"
-                  label="是否含系统内分包"
-                >
-                  <el-switch
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    class="inline-formitem-switch"
-                    v-model="detailform.contractInfo.isInSystemSub"
-                    active-color="#409EFF"
-                    inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"
-                  >
-                  </el-switch>
-                  <!--<el-select-->
-                  <!--:disabled="p.actpoint==='look'"-->
-                  <!--filterable-->
-                  <!--clearable-->
-                  <!--placeholder="请选择"-->
-
-                  <!--v-model="detailform.contractInfo.isInSystemSub"-->
-                  <!--&gt;-->
-                  <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
-                  <!--</el-select>-->
-                </el-form-item>
-                <br>
-                <el-form-item
-                  class="inline-formitem"
-                  label="是否为系统外联合体"
-                >
-                  <el-switch
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    class="inline-formitem-switch"
-                    v-model="detailform.contractInfo.isOutSystemUnion"
-                    active-color="#409EFF"
-                    inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"
-                  >
-                  </el-switch>
-                  <!--<el-select-->
-                  <!--:disabled="p.actpoint==='look'"-->
-                  <!--clearable-->
-                  <!--filterable-->
-                  <!--placeholder="请选择"-->
-
-                  <!--v-model="detailform.contractInfo.isOutSystemUnion"-->
-                  <!--&gt;-->
-                  <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
-                  <!--</el-select>-->
-                </el-form-item>
-                <el-form-item
-                  class="inline-formitem"
-                  label="是否含系统外分包:"
-                >
-                  <el-switch
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    class="inline-formitem-switch"
-                    v-model="detailform.contractInfo.isOutSystemSub"
-                    active-color="#409EFF"
-                    inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"
-                  >
-                  </el-switch>
-                  <!--<el-select-->
-                  <!--:disabled="p.actpoint==='look'"-->
-                  <!--filterable-->
-                  <!--clearable-->
-                  <!--placeholder="请选择"-->
-
-                  <!--v-model="detailform.contractInfo.isOutSystemSub"-->
-                  <!--&gt;-->
-                  <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
-                  <!--</el-select>-->
-                </el-form-item>
-                <br>
-                <el-form-item
                   label="新兴市场类别(一级):"
                   prop="contractInfo.marketFirstNameId"
                   :rules="{
@@ -1201,7 +1240,8 @@
                   getName(
                     detailform.contractInfo.marketSecondId,
                     emergingMarketTwo,
-                    'marketSecondName'
+                    'marketSecondName',
+                    'marketSecondCode'
                   )
                 "
                     v-model="detailform.contractInfo.marketSecondId"
@@ -1211,6 +1251,66 @@
                       :label="item.detailName"
                       :value="item.id"
                       v-for="(item, index) in emergingMarketTwo"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item
+                  label="场地名称:"
+                  prop="cdmc"
+                  :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+                  v-if="detailform.contractInfo.marketFirstNameId=='50cd5e9992ac4653920fac8c1f2eb2e3'"
+
+                >
+                  <el-select
+                    class="multiple-sel"
+                    :disabled="p.actpoint==='look'"
+                    multiple
+                    clearable
+                    filterable
+                    placeholder="请选择"
+                    size="mini"
+                    v-model="detailform.cdmc"
+                    @change="getMultipleName(detailform.cdmc,siteName,'siteNameId','siteName')"
+                  >
+                    <el-option
+                      :key="index"
+                      :label="item.detailName"
+                      :value="item.id"
+                      v-for="(item, index) in siteName"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item
+                  label="装配类型:"
+                  prop="zplx"
+                  :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+                  v-if="detailform.contractInfo.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
+                >
+                  <el-select
+                    class="multiple-sel"
+                    :disabled="p.actpoint==='look'"
+                    multiple
+                    @change="getMultipleName(detailform.zplx,assemblyType,'otherAssemblyTypeId','otherAssemblyType')"
+                    clearable
+                    filterable
+                    placeholder="请选择"
+                    size="mini"
+                    v-model="detailform.zplx"
+                  >
+                    <el-option
+                      :key="index"
+                      :label="item.detailName"
+                      :value="item.id"
+                      v-for="(item, index) in assemblyType"
                     ></el-option>
                   </el-select>
                 </el-form-item>
@@ -1233,38 +1333,6 @@
                       v-model="detailform.contractInfo.otherAssemblyRate"
                     />
                   </el-form-item>
-                  <el-form-item
-                    label="装配类型:"
-                    prop="zplx"
-                    :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-                    v-if="detailform.contractInfo.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
-
-                  >
-                    <el-select
-                      class="multiple-sel"
-                      :disabled="p.actpoint==='look'"
-                      multiple
-                      @change="getMultipleName(detailform.zplx,assemblyType,'otherAssemblyTypeId','otherAssemblyType')"
-                      clearable
-                      filterable
-                      placeholder="请选择"
-                      size="mini"
-                      v-model="detailform.zplx"
-                    >
-                      <el-option
-                        :key="index"
-                        :label="item.detailName"
-                        :value="item.id"
-                        v-for="(item, index) in assemblyType"
-                      ></el-option>
-                    </el-select>
-                  </el-form-item>
-                </div>
-                <div>
                   <el-form-item
                     label="建筑类型:"
                     prop="jzlx"
@@ -1325,98 +1393,17 @@
                       ></el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item
-                    label="场地名称:"
-                    prop="cdmc"
-                    :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-                    v-if="detailform.contractInfo.marketFirstNameId=='50cd5e9992ac4653920fac8c1f2eb2e3'"
-
-                  >
-                    <el-select
-                      class="multiple-sel"
-                      :disabled="p.actpoint==='look'"
-                      multiple
-                      clearable
-                      filterable
-                      placeholder="请选择"
-                      size="mini"
-                      v-model="detailform.cdmc"
-                      @change="getMultipleName(detailform.cdmc,siteName,'siteNameId','siteName')"
-                    >
-                      <el-option
-                        :key="index"
-                        :label="item.detailName"
-                        :value="item.id"
-                        v-for="(item, index) in siteName"
-                      ></el-option>
-                    </el-select>
-                  </el-form-item>
                 </div>
                 <el-form-item
-                  label="控股情况:"
-                  prop="contractInfo.estateHolding"
-                  :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
-
-                >
-                  <el-select
-                    :disabled="p.actpoint==='look'"
-
-                    clearable
-                    filterable
-                    placeholder="请选择"
-                    size="mini"
-                    v-model="detailform.contractInfo.estateHolding"
-                  >
-                    <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options1"></el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item
-                  class="inline-formitem"
-                  label="是否并表:"
-                  prop="contractInfo.isMergeEstate"
-                  :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
-
-                >
-                  <el-switch
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    class="inline-formitem-switch"
-                    v-model="detailform.contractInfo.isMergeEstate"
-                    active-color="#409EFF"
-                    inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"
-                  >
-                  </el-switch>
-                  <!--<el-select-->
-                  <!--:disabled="p.actpoint==='look'"-->
-                  <!--clearable-->
-                  <!--filterable-->
-                  <!--placeholder="请选择"-->
-                  <!--size="mini"-->
-                  <!--v-model="detailform.contractInfo.isMergeEstate"-->
-                  <!--&gt;-->
-                  <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
-                  <!--</el-select>-->
-                </el-form-item>
-                <br>
-                <el-form-item
                   label="建设地点:"
-                  prop="contractInfo.estateBuildPlace"
+                  prop="contractInfo.path"
                   :rules="{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'change',
               }"
                 >
-                  <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.estateBuildPlace" class="input-with-select">
+                  <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.path" class="input-with-select">
                     <el-button slot="append" icon="el-icon-circle-plus-outline" @click="selectPosition" ></el-button>
                   </el-input>
                 </el-form-item>
@@ -1457,47 +1444,12 @@
                   label="签约单位（使用资质单位）:"
                   prop="contractInfo.signOrgName"
                   :rules="{
-      required: true, message: '此项不能为空', trigger: 'change'
+      required: true, message: '此项不能为空', trigger: ['blur','change']
     }"
                 >
-                  <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.signOrgName" class="input-with-select">
+                  <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.signOrgName" class="input-with-select">
                     <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('签约单位',detailform.contractInfo.signOrgId)" ></el-button>
                   </el-input>
-                </el-form-item>
-                <br>
-                <el-form-item
-                  label="录入时间:"
-
-                  prop="contractInfo.createTime"
-                  :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
-                >
-                  <el-date-picker
-                    :disabled="true"
-                    filterable
-                    clearable
-                    type="date"
-                    v-model="detailform.contractInfo.createTime"
-                    value-format="timestamp"
-                  >
-                  </el-date-picker>
-                </el-form-item>
-                <el-form-item
-                  label="录入单位:"
-
-                  prop="contractInfo.createOrgName"
-                  :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
-                >
-                  <el-input
-                    disabled
-                    clearable
-                    placeholder="请输入"
-                    size="mini"
-                    v-model="detailform.contractInfo.createOrgName"
-                  />
                 </el-form-item>
                 <div>
                   <el-form-item
@@ -1596,7 +1548,6 @@
                     >
                   </p>
                   <el-table
-                    :row-class-name="tableRowClassName"
                     :data="detailform.contractInfoHouseSalesList"
                     :header-cell-style="{
                 'text-align': 'center',

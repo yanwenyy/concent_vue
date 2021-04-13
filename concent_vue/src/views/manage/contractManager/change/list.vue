@@ -85,7 +85,7 @@
           :width="150"
           align="center"
           label="合同号"
-          prop="contractNo"
+          prop="contractCode"
           show-overflow-tooltip
         >
         </el-table-column>
