@@ -88,11 +88,12 @@
                 :resizable="false"
                 fixed="right"
                 label="操作"
+                v-if="dataReport.flowStatus==1||dataReport.flowStatus==4"
                 show-overflow-tooltip
                 width="80"
               >
                 <template slot-scope="scope">
-                  <el-link :underline="false" @click="handleRemove1(scope.row,scope.$index)" type="warning">删除</el-link>
+                  <el-link :underline="false"  @click="handleRemove1(scope.row,scope.$index)" type="warning">删除</el-link>
                 </template>
               </el-table-column>
             </el-table>

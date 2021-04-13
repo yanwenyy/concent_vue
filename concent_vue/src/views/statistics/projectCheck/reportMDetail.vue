@@ -92,6 +92,7 @@
                       label="操作"
                       show-overflow-tooltip
                       width="80"
+                      v-if="isCk!='1'&&p.actpoint!=='task'&&p.actpoint!='look'"
                     >
                       <template slot-scope="scope">
                         <el-link :underline="false" @click="handleRemove1(scope.row,scope.$index)" type="warning">删除</el-link>

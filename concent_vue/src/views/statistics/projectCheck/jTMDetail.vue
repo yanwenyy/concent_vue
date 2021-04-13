@@ -51,6 +51,7 @@
                 class="detatil-flie-btn"
                 size="small"
                 type="primary"
+                v-if="dataReport.flowStatus==1||dataReport.flowStatus==4"
                 @click="openFileUp('/api/statistics/projectCheck/CommonFiles/projectCheck/01/uploadFile','fileList')">
                 点击上传
               </el-button>
@@ -89,6 +90,7 @@
                 :resizable="false"
                 fixed="right"
                 label="操作"
+                v-if="dataReport.flowStatus==1||dataReport.flowStatus==4"
                 show-overflow-tooltip
                 width="80"
               >
