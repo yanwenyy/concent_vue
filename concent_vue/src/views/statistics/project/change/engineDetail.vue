@@ -2268,6 +2268,19 @@
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
     },
     methods: {
+      goSeparate(data) {
+        console.log(data)
+        let v = {
+          uuid: data.uuid, // ID新增为空，但必须传
+          subContractName: data.companyBuiltName, // 承包单位名称
+          projectName: data.projectName, // 项目名称
+          projectTypeId: data.projectTypeId, // 项目类型ID
+          projectTypeName: data.projectTypeName, // 项目类型名称
+          contractAmountInitial: data.contractAmountInitial, // 初始合同额
+          contractAmountEngine: data.contractAmountEngine // 工程合同额
+        }
+        this.detailForm.project.projectSubContractList.push(v)
+      },
       //建设单位搜索
       querySearchAsync(queryString, cb) {
         var restaurants = this.pubCustomers;
@@ -2541,12 +2554,28 @@
                   this.showDetailForm.project = JSON.parse(JSON.stringify(item.project))
                   this.showDetailForm.project.beforeId = this.p.beforeId
                   this.showDetailForm.project.afterId = this.p.afterId
+                  if (!item.topInfoSiteList|| item.topInfoSiteList=='') {
+                    this.showDetailForm.project.topInfoSiteList = [{
+                      path: '',
+                      placeId: '',
+                      ffid:'',
+                      uuid: ''
+                    }]
+                  }
                 } else if (item.project.changeStatus == '2') {
                   this.detailForm.project = item.project
                   this.detailForm.project.beforeId = this.p.beforeId
                   this.detailForm.project.afterId = this.p.afterId
                   if (!this.detailForm.project.projectSubContractList) {
                     this.detailForm.project.projectSubContractList = []
+                  }
+                  if (!item.topInfoSiteList|| item.topInfoSiteList=='') {
+                    this.showDetailForm.project.topInfoSiteList = [{
+                      path: '',
+                      placeId: '',
+                      ffid:'',
+                      uuid: ''
+                    }]
                   }
                 }
               })
@@ -2575,6 +2604,20 @@
               }
               if (res.data.data.topInfoSiteList.length < 1) {
                 this.detailForm.project.topInfoSiteList = [{ path: '', placeId: '', uuid: '' }]
+              }
+              if (!res.data.data.topInfoSiteList|| res.data.data.topInfoSiteList=='') {
+                this.detailForm.project.topInfoSiteList = [{
+                  path: '',
+                  placeId: '',
+                  ffid:'',
+                  uuid: ''
+                }]
+                this.showDetailForm.project.topInfoSiteList = [{
+                  path: '',
+                  placeId: '',
+                  ffid:'',
+                  uuid: ''
+                }]
               }
               this.getShowTwo()
             }
@@ -2659,6 +2702,9 @@
   }
   .sub-btn{
   right: 175px;
+  }
+  >>>.el-autocomplete{
+    width: 95%!important;
   }
   /**/
 </style>
