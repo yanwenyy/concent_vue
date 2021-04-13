@@ -220,6 +220,9 @@
                   <el-input style=" width: 100%" v-model="searchform.flowStatus" size="mini"/>
                 </div>
               </template>
+             <template  slot-scope="scope">
+                  <div>{{scope.row.status==1?'未上报':'未上报'}}</div>
+             </template>
             </el-table-column>
       </el-table>
       <el-pagination
@@ -271,6 +274,7 @@
         multipleSelection: [],
         orgTree: [],
         flowStatus:'未上报',
+        status:'未上报'
       }
     },
     computed: {
