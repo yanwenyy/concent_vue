@@ -432,7 +432,7 @@
       },
       // 修改
       edit() {
-        debugger
+        // debugger
         if (this.multipleSelection.length !== 1) {
           this.$message.info('请选择一条记录进行查看操作！')
           return false

@@ -68,10 +68,14 @@
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  <div v-if="scope.row.veditable === '1' && scope.row.venabled === '1' && p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '4'&&p.actpoint!='task' ">
-                    <el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')"/>
+                  <div v-if="scope.row.veditable === '1' && scope.row.venabled === '1' && p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '3'&&p.actpoint!='task' ">
+                    <!--<el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')"/>-->
+                    <el-input v-model="scope.row.value" @input="formatValue(scope.row.value,scope.$index,data,'value')"/>
                   </div>
-                  <div v-else-if="p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '4' " style="text-align: right">{{sonCount(scope.row)}}</div>
+                  <div v-else-if="p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '3' " style="text-align: right">
+                    <!--<el-input style="visibility: hidden;width: 0" :value="sonCount(scope.row)"/>-->
+                    {{sonCount(scope.row,scope.$index,data,'value')}}
+                  </div>
                   <div v-else>{{scope.row.value}}</div>
                 </template>
               </el-table-column>
@@ -128,18 +132,36 @@
         }
       },
       sonCount () {
-        return (rowData) => {
+        return (rowData,index,list,name) => {
           var bb = []
           for (var i in this.data.map(row => row.value)) {
             if (this.data.map(row => row.value)[i] && this.data.map(row => row.sumTarget)[i] === rowData.uuid) {
               bb.push(this.data.map(row => row.value)[i])
             }
           }
-          return (bb.reduce((acc, cur) => (parseFloat(cur) + acc), 0) === 0 ? '' : bb.reduce((acc, cur) => (parseFloat(cur) + acc), 0))
+          var sum=(bb.reduce((acc, cur) => (parseFloat(cur) + acc), 0) === 0 ? '' : bb.reduce((acc, cur) => (parseFloat(cur) + acc), 0));
+          list[index][name]=sum;
+          // this.$forceUpdate();
+          return sum
         }
       }
     },
     methods: {
+      // 只允许输入金额类型，最大两位小数（如：3.88）
+      formatValue(val,index,list,name){
+        val = val.replace(/(^\s*)|(\s*$)/g, "");
+        if (!val) return this.value = "";
+        val = val.replace(/[^\d.]/g, "");
+        val = val.replace(/^\./g, "");
+        val = val.replace(/^\b(0{2,})/gi, "0");
+        val = val
+          .replace(".", "$#$")
+          .replace(/\./g, "")
+          .replace("$#$", ".");
+        val = val.replace(/^(\-)*(\d+)\.(\d*).*$/, "$1$2.$3");
+        list[index][name]=val;
+        this.$forceUpdate();
+      },
       //流程操作
       operation(type){
         this.$http
@@ -232,6 +254,7 @@
           }), {useJson: true})
           .then(res => {
             this.data = res.data.data
+            consloe.log(JSON.parse(this.$utils.decrypt(this.$route.query.p)));
             if (this.data) {
               this.data.forEach((obj) => {
                 if (obj.value === 0) {
@@ -246,7 +269,7 @@
 
     },
     mounted() {
-      this.getData()
+      this.getData();
     }
   }
 </script>
