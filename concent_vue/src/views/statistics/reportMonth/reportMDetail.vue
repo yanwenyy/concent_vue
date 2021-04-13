@@ -269,7 +269,7 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <div v-if="scope.row.veditable === '1'&& isCk!='1' && p.actpoint!='look'">
+                    <div v-if="scope.row.veditable === '1'&& isCk!='1' && p.actpoint!='look'&& p.actpoint!='task'">
                       <el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')" @blur="getNextPlanYear(nextData,scope.$index,scope.row.sumTarget)"/>
                     </div>
 <!--                    <div v-else-if="projectStatus !== '2' " style="text-align: right">{{sumCount(scope.row)}}</div>-->
