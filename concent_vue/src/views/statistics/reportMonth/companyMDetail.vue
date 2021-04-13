@@ -128,8 +128,8 @@
               <template slot-scope="scope">
                 <div v-if="scope.row.monthPlan&&scope.row.monthValue">{{Math.round(scope.row.monthPlan /scope.row.monthValue) / 100+"%"}}
                 </div>
-                <div v-if="scope.row.monthRate!=null">{{scope.row.monthRate+"%"}}
-                </div>
+                <!--<div v-if="scope.row.monthRate!=null">{{scope.row.monthRate+"%"}}-->
+                <!--</div>-->
               </template>
             </el-table-column>
             <el-table-column
