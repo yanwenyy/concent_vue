@@ -59,29 +59,9 @@
           show-overflow-tooltip
           type="index"
         ></el-table-column>
+
         <el-table-column
           :width="500"
-          label="项目名称"
-          prop="inforName"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>项目名称</span>
-            <div>
-              <el-input
-                class="list-search-picker"
-                style=" width: 100%"
-                v-model="searchFrom.inforName"
-                size="mini"
-              />
-            </div>
-          </template>
-          <template slot-scope="scope">
-            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
           label="合同名称"
           prop="contractName"
           show-overflow-tooltip
@@ -97,7 +77,31 @@
               />
             </div>
           </template>
+          <template slot-scope="scope">
+            <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.contractName}}</span>
+          </template>
         </el-table-column>
+
+        <el-table-column
+          :width="150"
+          label="项目名称"
+          prop="inforName"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>项目名称</span>
+            <div>
+              <el-input
+                class="list-search-picker"
+                style=" width: 100%"
+                v-model="searchFrom.inforName"
+                size="mini"
+              />
+            </div>
+          </template>
+
+        </el-table-column>
+
         <el-table-column
           :width="150"
           align="center"

@@ -47,12 +47,6 @@
           align="center"
           label="建设单位">
         </el-table-column>
-        <el-table-column
-          prop="noticeTypeName"
-          header-align="center"
-          align="center"
-          label="建设单位">
-        </el-table-column>
       </el-table>
       <el-pagination
         :current-page="page.current"
