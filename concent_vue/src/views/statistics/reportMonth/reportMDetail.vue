@@ -21,7 +21,7 @@
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
     <el-button  @click="back" type="primary"  class="detailbutton detail-back-tab " plain>返回</el-button>
      <el-tabs type="border-card" v-model="activeName">
-     <el-tab-pane label="整体进度" v-if="dataReport.status==1" name="ztjd">
+     <el-tab-pane label="整体进度"  name="ztjd">
           <div class="detailBox">
             <el-form
               :inline="false"
@@ -218,7 +218,7 @@
                   </el-table>
            </div>
         </el-tab-pane>
-       <el-tab-pane label="下月计划" v-if="dataReport.status==1" name="xyjh">
+       <el-tab-pane label="下月计划"  name="xyjh">
             <div class="detailBoxBG">
               <el-table
                 class="tableStyle"
