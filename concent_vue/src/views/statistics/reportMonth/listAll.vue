@@ -217,11 +217,11 @@
               <template slot="header" slot-scope="scope">
                 <span>本月上报</span>
                 <div>
-                  <el-input style=" width: 100%" v-model="searchform.status" size="mini"/>
+                  <el-input style=" width: 100%" v-model="searchform.flowStatus" size="mini"/>
                 </div>
               </template>
              <template  slot-scope="scope">
-                  <div>{{scope.row.status==1?'未上报':'未上报'}}</div>
+                {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核驳回':'未创建'}}
              </template>
             </el-table-column>
       </el-table>
