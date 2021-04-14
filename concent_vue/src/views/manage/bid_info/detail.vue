@@ -730,7 +730,7 @@
                 label="操作"
                 show-overflow-tooltip
 
-                v-if="p.actpoint !== 'look' && p.actpoint !== 'searchLook'"
+                v-if="p.actpoint !== 'look' && p.actpoint !== 'searchLook'&& p.actpoint !== 'task'"
                 width="60"
               >
                 <template slot-scope="scope">

@@ -1009,7 +1009,7 @@
               <p class="detail-title" style="overflow: hidden；margin-right: 30px">
                 <span>项目地点: </span>
                 <el-button
-                  v-show="p.actpoint != 'look'"
+                  v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
                   @click="add('dd')"
                   class="detatil-flie-btn"
                   type="primary"
@@ -1046,7 +1046,7 @@
                   prop="inforName"
                 >
                   <template slot-scope="scope">
-                    <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
+                    <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'&&p.actpoint != 'task'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
                     <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
                   </template>
                 </el-table-column>
@@ -1108,7 +1108,7 @@
                   align="center"
                   width="80"
                   show-overflow-tooltip
-                  v-if="p.actpoint !== 'look'"
+                  v-if="p.actpoint !== 'look'&&p.actpoint != 'task'"
                 >
                   <template slot-scope="scope">
                     <el-link
@@ -1124,7 +1124,7 @@
               <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                 <span>标段信息: </span>
                 <el-button
-                  v-show="p.actpoint != 'look'"
+                  v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
                   @click="add('bd')"
                   class="detatil-flie-btn"
                   type="primary"
@@ -1224,7 +1224,7 @@
                   label="操作"
                   align="center"
                   show-overflow-tooltip
-                  v-if="p.actpoint !== 'look'"
+                  v-if="p.actpoint !== 'look'&&p.actpoint != 'task'"
                   width="80">
                   <template slot-scope="scope">
                     <el-link

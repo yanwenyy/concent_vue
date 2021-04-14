@@ -780,7 +780,7 @@
                 align="center"
                 width="80"
                 show-overflow-tooltip
-                v-if="p.actpoint !== 'look'"
+                v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
               >
                 <template slot-scope="scope">
                   <el-link

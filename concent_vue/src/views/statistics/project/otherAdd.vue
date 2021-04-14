@@ -349,27 +349,27 @@
             </el-form-item>
           </el-row>
           <el-row>
-            <el-form-item
-              label="推送人:"
-              prop="project.projectPusher"
-              style="width:32.5%;">
-              <el-input
-                clearable
-                placeholder="请输入"
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                v-model="detailForm.project.projectPusher"/>
-            </el-form-item>
-            <el-form-item
-              label="联系方式:"
-              prop="project.projectPusherPhone"
-              :rules="rules.project.isMobile"
-              style="width:32.5%;">
-              <el-input
-                clearable
-                placeholder="请输入"
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                v-model="detailForm.project.projectPusherPhone"/>
-            </el-form-item>
+            <!--<el-form-item-->
+              <!--label="推送人:"-->
+              <!--prop="project.projectPusher"-->
+              <!--style="width:32.5%;">-->
+              <!--<el-input-->
+                <!--clearable-->
+                <!--placeholder="请输入"-->
+                <!--:disabled="p.actpoint === 'look'||p.actpoint === 'task'"-->
+                <!--v-model="detailForm.project.projectPusher"/>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item-->
+              <!--label="联系方式:"-->
+              <!--prop="project.projectPusherPhone"-->
+              <!--:rules="rules.project.isMobile"-->
+              <!--style="width:32.5%;">-->
+              <!--<el-input-->
+                <!--clearable-->
+                <!--placeholder="请输入"-->
+                <!--:disabled="p.actpoint === 'look'||p.actpoint === 'task'"-->
+                <!--v-model="detailForm.project.projectPusherPhone"/>-->
+            <!--</el-form-item>-->
             <el-form-item
               label="是否填报产值反写合同额"
               prop="reportOutputValue"

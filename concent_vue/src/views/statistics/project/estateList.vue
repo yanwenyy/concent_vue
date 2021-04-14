@@ -205,34 +205,34 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="推送人"
-          prop="projectPusher"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>推送人</span>
-            <div>
-              <el-input style=" width: 100%" v-model="searchform.projectPusher" size="mini"/>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="推送人联系方式"
-          prop="projectPusherPhone"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>推送人联系方式</span>
-            <div>
-              <el-input style=" width: 100%" v-model="searchform.projectPusherPhone" size="mini"/>
-            </div>
-          </template>
-        </el-table-column>
+        <!--<el-table-column-->
+          <!--:width="150"-->
+          <!--align="center"-->
+          <!--label="推送人"-->
+          <!--prop="projectPusher"-->
+          <!--show-overflow-tooltip-->
+        <!--&gt;-->
+          <!--<template slot="header" slot-scope="scope">-->
+            <!--<span>推送人</span>-->
+            <!--<div>-->
+              <!--<el-input style=" width: 100%" v-model="searchform.projectPusher" size="mini"/>-->
+            <!--</div>-->
+          <!--</template>-->
+        <!--</el-table-column>-->
+        <!--<el-table-column-->
+          <!--:width="150"-->
+          <!--align="center"-->
+          <!--label="推送人联系方式"-->
+          <!--prop="projectPusherPhone"-->
+          <!--show-overflow-tooltip-->
+        <!--&gt;-->
+          <!--<template slot="header" slot-scope="scope">-->
+            <!--<span>推送人联系方式</span>-->
+            <!--<div>-->
+              <!--<el-input style=" width: 100%" v-model="searchform.projectPusherPhone" size="mini"/>-->
+            <!--</div>-->
+          <!--</template>-->
+        <!--</el-table-column>-->
       </el-table>
       <el-pagination
         :current-page="page.current"
