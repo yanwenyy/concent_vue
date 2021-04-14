@@ -115,7 +115,7 @@
               <el-table-column
                 :width="500"
                 label="项目名称"
-                prop="createOrgName"
+                prop="projectName"
                 show-overflow-tooltip
               >
                 <!--<template slot-scope="scope">-->
@@ -126,7 +126,7 @@
                 :width="200"
                 align="center"
                 label="新兴市场一级类别"
-                prop="reportDate"
+                prop="marketFirstName"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -134,7 +134,7 @@
                 :width="200"
                 align="center"
                 label="新兴市场二级类别"
-                prop="stauts"
+                prop="marketSecondName"
                 show-overflow-tooltip
 
               >
@@ -151,7 +151,7 @@
                 :width="180"
                 align="center"
                 label="所属单位"
-                prop="state"
+                prop="companyBelongName"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -162,12 +162,15 @@
                 prop="state"
                 show-overflow-tooltip
               >
+                <template slot-scope="scope">
+                  {{scope.row.country=='01'?'境内':'境外'}}
+                </template>
               </el-table-column>
               <el-table-column
                 :width="180"
                 align="center"
                 label="合同额"
-                prop="state"
+                prop="contractMoney"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -175,7 +178,7 @@
                 :width="180"
                 align="center"
                 label="剩余合同额"
-                prop="state"
+                prop="htquantity"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -183,7 +186,7 @@
                 :width="180"
                 align="center"
                 label="本月工业总产值"
-                prop="state"
+                prop="monthCzSum"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -191,7 +194,7 @@
                 :width="180"
                 align="center"
                 label="本年工业总产值"
-                prop="state"
+                prop="yearCzSum"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -232,7 +235,7 @@
               <el-table-column
                 :width="500"
                 label="项目名称"
-                prop="createOrgName"
+                prop="projectName"
                 show-overflow-tooltip
               >
                 <!--<template slot-scope="scope">-->
@@ -243,7 +246,7 @@
                 :width="200"
                 align="center"
                 label="新兴市场一级类别"
-                prop="reportDate"
+                prop="marketFirstName"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -251,7 +254,7 @@
                 :width="200"
                 align="center"
                 label="新兴市场二级类别"
-                prop="stauts"
+                prop="marketSecondName"
                 show-overflow-tooltip
 
               >
@@ -268,7 +271,7 @@
                 :width="180"
                 align="center"
                 label="所属单位"
-                prop="state"
+                prop="companyBelongName"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -279,12 +282,15 @@
                 prop="state"
                 show-overflow-tooltip
               >
+                <template slot-scope="scope">
+                  {{scope.row.country=='01'?'境内':'境外'}}
+                </template>
               </el-table-column>
               <el-table-column
                 :width="180"
                 align="center"
                 label="合同额"
-                prop="state"
+                prop="contractMoney"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -292,7 +298,7 @@
                 :width="180"
                 align="center"
                 label="剩余合同额"
-                prop="state"
+                prop="htquantity"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -300,7 +306,7 @@
                 :width="180"
                 align="center"
                 label="本月物资贸易产值"
-                prop="state"
+                prop="monthCzSum"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -308,7 +314,7 @@
                 :width="180"
                 align="center"
                 label="本年物资贸易产值"
-                prop="state"
+                prop="yearCzSum"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -349,7 +355,7 @@
               <el-table-column
                 :width="500"
                 label="项目名称"
-                prop="createOrgName"
+                prop="projectName"
                 show-overflow-tooltip
               >
                 <!--<template slot-scope="scope">-->
@@ -360,7 +366,7 @@
                 :width="200"
                 align="center"
                 label="新兴市场一级类别"
-                prop="reportDate"
+                prop="marketFirstName"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -368,7 +374,7 @@
                 :width="200"
                 align="center"
                 label="新兴市场二级类别"
-                prop="stauts"
+                prop="marketSecondName"
                 show-overflow-tooltip
 
               >
@@ -385,7 +391,7 @@
                 :width="180"
                 align="center"
                 label="所属单位"
-                prop="state"
+                prop="companyBelongName"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -396,12 +402,15 @@
                 prop="state"
                 show-overflow-tooltip
               >
+                <template slot-scope="scope">
+                  {{scope.row.country=='01'?'境内':'境外'}}
+                </template>
               </el-table-column>
               <el-table-column
                 :width="180"
                 align="center"
                 label="合同额"
-                prop="state"
+                prop="amountSignup"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -409,7 +418,7 @@
                 :width="180"
                 align="center"
                 label="剩余合同额"
-                prop="state"
+                prop="htquantity"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -417,7 +426,7 @@
                 :width="180"
                 align="center"
                 label="本月房地产营业收入"
-                prop="state"
+                prop="monthCzSum"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -425,7 +434,7 @@
                 :width="180"
                 align="center"
                 label="本年房地产营业收入"
-                prop="state"
+                prop="yearCzSum"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -466,7 +475,7 @@
               <el-table-column
                 :width="500"
                 label="项目名称"
-                prop="createOrgName"
+                prop="projectName"
                 show-overflow-tooltip
               >
                 <!--<template slot-scope="scope">-->
@@ -477,7 +486,7 @@
                 :width="200"
                 align="center"
                 label="新兴市场一级类别"
-                prop="reportDate"
+                prop="marketFirstName"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -485,7 +494,7 @@
                 :width="200"
                 align="center"
                 label="新兴市场二级类别"
-                prop="stauts"
+                prop="marketSecondName"
                 show-overflow-tooltip
 
               >
@@ -502,7 +511,7 @@
                 :width="180"
                 align="center"
                 label="所属单位"
-                prop="state"
+                prop="companyBelongName"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -513,12 +522,15 @@
                 prop="state"
                 show-overflow-tooltip
               >
+                <template slot-scope="scope">
+                  {{scope.row.country=='01'?'境内':'境外'}}
+                </template>
               </el-table-column>
               <el-table-column
                 :width="180"
                 align="center"
                 label="合同额"
-                prop="state"
+                prop="amountSignup"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -526,7 +538,7 @@
                 :width="180"
                 align="center"
                 label="剩余合同额"
-                prop="state"
+                prop="htquantity"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -534,7 +546,7 @@
                 :width="180"
                 align="center"
                 label="本月金融保险产值"
-                prop="state"
+                prop="monthCzSum"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -542,7 +554,7 @@
                 :width="180"
                 align="center"
                 label="本年金融保险产值"
-                prop="state"
+                prop="yearCzSum"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -583,7 +595,7 @@
               <el-table-column
                 :width="500"
                 label="项目名称"
-                prop="createOrgName"
+                prop="projectName"
                 show-overflow-tooltip
               >
                 <!--<template slot-scope="scope">-->
@@ -594,7 +606,7 @@
                 :width="200"
                 align="center"
                 label="新兴市场一级类别"
-                prop="reportDate"
+                prop="marketFirstName"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -602,7 +614,7 @@
                 :width="200"
                 align="center"
                 label="新兴市场二级类别"
-                prop="stauts"
+                prop="marketSecondName"
                 show-overflow-tooltip
 
               >
@@ -619,7 +631,7 @@
                 :width="180"
                 align="center"
                 label="所属单位"
-                prop="state"
+                prop="companyBelongName"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -630,12 +642,15 @@
                 prop="state"
                 show-overflow-tooltip
               >
+                <template slot-scope="scope">
+                  {{scope.row.country=='01'?'境内':'境外'}}
+                </template>
               </el-table-column>
               <el-table-column
                 :width="180"
                 align="center"
                 label="合同额"
-                prop="state"
+                prop="contractMoney"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -643,7 +658,7 @@
                 :width="180"
                 align="center"
                 label="剩余合同额"
-                prop="state"
+                prop="htquantity"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -651,7 +666,7 @@
                 :width="180"
                 align="center"
                 label="本月运营维管产值"
-                prop="state"
+                prop="monthCzSum"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -659,7 +674,7 @@
                 :width="180"
                 align="center"
                 label="本年运营维管产值"
-                prop="state"
+                prop="yearCzSum"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -700,7 +715,7 @@
               <el-table-column
                 :width="500"
                 label="项目名称"
-                prop="createOrgName"
+                prop="projectName"
                 show-overflow-tooltip
               >
                 <!--<template slot-scope="scope">-->
@@ -711,7 +726,7 @@
                 :width="200"
                 align="center"
                 label="新兴市场一级类别"
-                prop="reportDate"
+                prop="marketFirstName"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -719,7 +734,7 @@
                 :width="200"
                 align="center"
                 label="新兴市场二级类别"
-                prop="stauts"
+                prop="marketSecondName"
                 show-overflow-tooltip
 
               >
@@ -736,7 +751,7 @@
                 :width="180"
                 align="center"
                 label="所属单位"
-                prop="state"
+                prop="companyBelongName"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -747,12 +762,15 @@
                 prop="state"
                 show-overflow-tooltip
               >
+                <template slot-scope="scope">
+                  {{scope.row.country=='01'?'境内':'境外'}}
+                </template>
               </el-table-column>
               <el-table-column
                 :width="180"
                 align="center"
                 label="合同额"
-                prop="state"
+                prop="contractMoney"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -760,7 +778,7 @@
                 :width="180"
                 align="center"
                 label="剩余合同额"
-                prop="state"
+                prop="htquantity"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -768,7 +786,7 @@
                 :width="180"
                 align="center"
                 label="本月其他产值"
-                prop="state"
+                prop="monthCzSum"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -776,7 +794,7 @@
                 :width="180"
                 align="center"
                 label="本年其他产值"
-                prop="state"
+                prop="yearCzSum"
                 show-overflow-tooltip
               >
               </el-table-column>

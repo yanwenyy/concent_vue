@@ -1180,7 +1180,7 @@
                     })
                 } else {
                   this.$message({
-                    message: '保存失败',
+                    message:  `${type=='save'?'保存':'提交'}失败`,
                     type: 'error'
                   })
                 }
