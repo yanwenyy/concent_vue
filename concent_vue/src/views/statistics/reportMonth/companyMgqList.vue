@@ -518,7 +518,7 @@
           this.$message.info("不允许对下级进行任何操作", "提示")
           return false
         }
-        if(this.multipleSelection[0].flowStatus==''&& this.multipleSelection[0].flowStatus==null &&this.multipleSelection[0].flowStatus!='1'&&this.multipleSelection[0].flowStatus!='4'){
+        if(this.multipleSelection[0].flowStatus==''&& this.multipleSelection[0].flowStatus==null &&this.multipleSelection[0].flowStatus!='1'&&this.multipleSelection[0].flowStatus!='3'){
           this.$message.info("只允许修改草稿和审核驳回状态的数据", "提示")
           return false
         }
