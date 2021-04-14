@@ -305,7 +305,7 @@
             </el-form-item>
             <el-form-item
               label="项目所在地:"
-            ><el-input v-model="projectList.projectLocation" disabled ></el-input>
+            ><el-input v-model="projectList.projectLocationMonth" disabled ></el-input>
             </el-form-item>
             <el-form-item
               label="初始合同额(万元):"
