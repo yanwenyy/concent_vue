@@ -3697,7 +3697,7 @@
         if(this.p.actpoint=='add'){
           data={reportDate: this.p.reportDate,isAdd:'0'}
         }else if(this.p.actpoint=='edit'||this.p.actpoint=='look'){
-          data={statId: this.p.statId,isAdd:'1',reportDate:this.p.reportDate,createOrgCode:this.p.createOrgCode}
+          data={statId: this.p.statId,isAdd:this.p.actpoint=='edit'?'1':'3',reportDate:this.p.reportDate,createOrgCode:this.p.createOrgCode}
         }else if(this.p.actpoint=='task'){
           data={uuid: this.p.instid,isAdd:'2'}
         }

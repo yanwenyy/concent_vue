@@ -323,6 +323,10 @@
           this.$message.info("请选择一条记录进行修改操作！");
           return false;
         }
+        if(this.multipleSelection[0].flowStatus=='2'||this.multipleSelection[0].flowStatus=='3'){
+          this.$message.info("此条数据不可修改！");
+          return false;
+        }
         let p = {actpoint: "edit", instid: this.multipleSelection[0].beforeId,afterId:this.multipleSelection[0].afterId,uuid:this.multipleSelection[0].uuid};
         this.$router.push({
           path: "./InfoChangeDetail/",

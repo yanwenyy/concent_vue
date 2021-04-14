@@ -1055,7 +1055,6 @@
                 <el-form-item
                   label="铁建金额(万元):"
                   prop="contractInfo.crccCash"
-                  :rules="rules.contractAmount"
                 >
                   <el-input
                     :disabled="true"
@@ -1068,7 +1067,6 @@
                 <el-form-item
                   label="初始我方份额(万元):"
                   prop="contractInfo.ourAmount"
-                  :rules="rules.contractAmount"
                 >
                   <el-input
                     :disabled="true"

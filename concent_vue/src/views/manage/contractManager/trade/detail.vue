@@ -275,7 +275,6 @@
             <el-form-item
               label="铁建金额(万元)"
               prop="contractInfo.crccCash"
-              :rules="rules.contractAmount"
             >
               <el-input
                 :disabled="true"
@@ -319,7 +318,6 @@
             <el-form-item
               label="初始我方份额(万元)"
               prop="contractInfo.ourAmount"
-              :rules="rules.contractAmount"
             >
               <el-input
                 :disabled="true"
@@ -409,6 +407,7 @@
                   placeholder="请输入"
                   size="mini"
                   v-model="detailform.contractInfo.tradeExpectedProfit"
+                  @input="detailform.contractInfo.tradeExpectedProfit = detailform.contractInfo.tradeExpectedProfit.replace(/[^\-?\d.]/g,'','')"
                 />
               </el-form-item>
               <el-form-item
@@ -422,6 +421,7 @@
                   placeholder="请输入"
                   size="mini"
                   v-model="detailform.contractInfo.tradeExpectedIncome"
+                  @input="detailform.contractInfo.tradeExpectedIncome = detailform.contractInfo.tradeExpectedIncome.replace(/[^\-?\d.]/g,'','')"
                 />
               </el-form-item>
               <br>

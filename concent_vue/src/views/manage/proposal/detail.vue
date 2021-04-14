@@ -1314,8 +1314,8 @@
             this.detailform.topInfor[code] = list.find(
                 (item) => item.id == id
             ).detailCode;
-          console.log(this.detailform.topInfor[name]);
-            console.log(this.detailform.topInfor[code]);
+          // console.log(this.detailform.topInfor[name]);
+          //   console.log(this.detailform.topInfor[code]);
         }
       },
       //获取下拉框id和name的公共方法

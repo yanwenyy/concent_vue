@@ -381,6 +381,7 @@
                     </el-input>
                   </el-form-item>
                   <el-form-item
+                    v-if="detailFormBefore.contractInfo.isOutSystemUnion==='0'"
                     label="系统外份额(万元):"
                   >
                     <el-input
@@ -1412,7 +1413,6 @@
                   />
                 </el-form-item>
                 <br>
-
                 <el-form-item
                   label="合同开工日期:"
                 >
@@ -1727,17 +1727,24 @@
                   </el-input>
                 </el-form-item>
                 <el-form-item
-                  label="初始我方份额(万元)"
-                  prop="contractInfo.ourAmount"
+                  v-if="detailform.contractInfo.isOutSystemUnion==='0'"
+                  label="系统外份额(万元)"
+                  prop="contractInfo.outSystemAmount"
+                  :rules="rules.contractAmount"
+
                 >
                   <el-input
-                    :disabled="true"
-                    v-model="detailform.contractInfo.ourAmount"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+                    placeholder=""
+
+                    v-model="detailform.contractInfo.outSystemAmount"
                   >
                     <template slot="prepend">¥</template>
                     <template slot="append">(万元)</template>
                   </el-input>
                 </el-form-item>
+                <br>
                 <el-form-item
                   v-if="detailform.contractInfo.contractType!='2'"
                   label="我方份额含补充(万元)"
@@ -1751,25 +1758,22 @@
                   </el-input>
                 </el-form-item>
                 <el-form-item
-                  label="系统外份额(万元):"
-                  prop="contractInfo.outSystemAmount"
-                  :rules="rules.contractAmount"
+                  label="初始我方份额(万元)"
+                  prop="contractInfo.ourAmount"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-                    placeholder=""
-
-                    v-model="detailform.contractInfo.outSystemAmount"
+                    :disabled="true"
+                    v-model="detailform.contractInfo.ourAmount"
                   >
                     <template slot="prepend">¥</template>
                     <template slot="append">(万元)</template>
                   </el-input>
                 </el-form-item>
                 <el-form-item
-                  label="增值税(万元):"
+                  label="增值税(万元)"
                   prop="contractInfo.valueAddedTax"
                   :rules="rules.contractAmount"
+
                 >
                   <el-input
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -1783,6 +1787,36 @@
                   </el-input>
                 </el-form-item>
                 <br>
+
+                <el-form-item
+                  v-if="detailform.contractInfo.isInSystemUnion==='0'"
+                  label="未分配(万元)"
+                  prop="contractInfo.unAllocatedFee"
+                  :rules="rules.contractAmount"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.contractInfo.unAllocatedFee">
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-form-item>
+                <el-form-item
+                  label="自留份额(万元)"
+                  prop="contractInfo.selfCash"
+                  :rules="rules.contractAmount"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+
+                    v-model="detailform.contractInfo.selfCash">
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-form-item>
                 <el-form-item
                   v-if="detailform.contractInfo.isInSystemUnion==='1'"
                   label="暂定金(万元)"
@@ -1801,6 +1835,7 @@
                     <template slot="append">(万元)</template>
                   </el-input>
                 </el-form-item>
+                <br>
                 <br>
                 <el-form-item
                   label="新兴市场类别(一级):"
