@@ -389,7 +389,9 @@
             });
       },
       rowShow(row){
-        row.uuid=row.projectCheckUuid
+        if(row.uuid==''||row.uuid==null||row.uuid==undefined) {
+          row.uuid = row.projectCheckUuid
+        }
         let p = {actpoint: "look", params: row};
         if((row.flowStatus==''||row.flowStatus==null) && row.projectId!=this.userdata.managerOrgId){
           this.$message.info("该项目月报还未进行创建，无法进行操作", "提示")
