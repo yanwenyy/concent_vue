@@ -1901,16 +1901,16 @@
       },
       saveInfo(formName, type) {
 
-        var url='';
+        var url='';
         if(type=='save'){
-          url="/api/statistics/StatisticsProject/detail/saveChangeRecord"
+          url=`/api/statistics/StatisticsProject/detail/${this.p.actpoint === "add"?'saveChangeRecord':'updateChangeRecord'}`;
         }else{
           url="/api/statistics/StatisticsProject/changeProcess/start"
         }
 
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            let params = {afterProjectBo: {project: this.detailForm.project}, beforeProjectBo: {project: this.showDetailForm.project}}
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            let params = {afterProjectBo: {project: this.detailForm.project}, beforeProjectBo: {project: this.showDetailForm.project},changeRecordUuid: this.changeRecordUuid}
             this.$http
               .post(
                 url,
@@ -1967,6 +1967,7 @@
                   this.showDetailForm.project.beforeId = this.p.beforeId
                   this.showDetailForm.project.afterId = this.p.afterId
                 } else if (item.project.changeStatus == '2') {
+                  this.changeRecordUuid=item.changeRecordUuid;
                   this.detailForm.project = item.project
                   this.detailForm.project.beforeId = this.p.beforeId
                   this.detailForm.project.afterId = this.p.afterId

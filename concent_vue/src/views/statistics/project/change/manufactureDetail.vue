@@ -423,29 +423,29 @@
                 </el-select>
               </el-form-item>
             </el-row>
-            <el-row>
-              <el-form-item
-                label="推送人:"
-                prop="project.projectPusher"
-                style="width:32.5%;">
-                <el-input
-                  clearable
-                  placeholder="请输入"
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                  v-model="detailForm.project.projectPusher"/>
-              </el-form-item>
-              <el-form-item
-                label="联系方式:"
-                prop="project.projectPusherPhone"
-                :rules="rules.project.isMobile"
-                style="width:32.5%;">
-                <el-input
-                  clearable
-                  placeholder="请输入"
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                  v-model="detailForm.project.projectPusherPhone"/>
-              </el-form-item>
-            </el-row>
+            <!--<el-row>-->
+              <!--<el-form-item-->
+                <!--label="推送人:"-->
+                <!--prop="project.projectPusher"-->
+                <!--style="width:32.5%;">-->
+                <!--<el-input-->
+                  <!--clearable-->
+                  <!--placeholder="请输入"-->
+                  <!--:disabled="p.actpoint === 'look'||p.actpoint === 'task'"-->
+                  <!--v-model="detailForm.project.projectPusher"/>-->
+              <!--</el-form-item>-->
+              <!--<el-form-item-->
+                <!--label="联系方式:"-->
+                <!--prop="project.projectPusherPhone"-->
+                <!--:rules="rules.project.isMobile"-->
+                <!--style="width:32.5%;">-->
+                <!--<el-input-->
+                  <!--clearable-->
+                  <!--placeholder="请输入"-->
+                  <!--:disabled="p.actpoint === 'look'||p.actpoint === 'task'"-->
+                  <!--v-model="detailForm.project.projectPusherPhone"/>-->
+              <!--</el-form-item>-->
+            <!--</el-row>-->
             <!--备注(最多2000字)-->
             <el-row>
               <el-form-item
@@ -1467,15 +1467,16 @@
       },
       saveInfo(formName, type) {
 
-        var url='';
+        var url='';
         if(type=='save'){
-          url="/api/statistics/StatisticsProject/detail/saveChangeRecord"
+          url=`/api/statistics/StatisticsProject/detail/${this.p.actpoint === "add"?'saveChangeRecord':'updateChangeRecord'}`;
         }else{
           url="/api/statistics/StatisticsProject/changeProcess/start"
         }
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            let params = {afterProjectBo: {project: this.detailForm.project}, beforeProjectBo: {project: this.showDetailForm.project}}
+
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            let params = {afterProjectBo: {project: this.detailForm.project}, beforeProjectBo: {project: this.showDetailForm.project},changeRecordUuid: this.changeRecordUuid}
             this.$http
               .post(
                 url,
@@ -1533,6 +1534,7 @@
                     }]
                   }
                 } else if (item.project.changeStatus == '2') {
+                  this.changeRecordUuid=item.changeRecordUuid;
                   this.detailForm.project = item.project
                   this.detailForm.project.beforeId = this.p.beforeId
                   this.detailForm.project.afterId = this.p.afterId
