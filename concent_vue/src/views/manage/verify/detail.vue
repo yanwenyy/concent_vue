@@ -1054,7 +1054,7 @@ export default {
 
               if (res.data.msg === "SUCCESS") {
                 this.$message({
-                  message: "保存成功",
+                  message:  `${type=='save'?'保存':'提交'}成功`,
                   type: "success",
                 });
                 this.$refs[formName].resetFields();

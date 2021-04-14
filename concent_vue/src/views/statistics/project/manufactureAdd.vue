@@ -468,7 +468,7 @@
             <p class="detail-title" style="overflow:hidden;margin-right:30px">
               <span>产品信息:</span>
               <el-button
-                v-if="p.actpoint !== 'look'||p.actpoint === 'task'"
+                v-if="p.actpoint !== 'look'&&p.actpoint!= 'task'"
                 @click="addProduct()"
                 class="upload-demo detailUpload detatil-flie-btn"
                 type="primary">

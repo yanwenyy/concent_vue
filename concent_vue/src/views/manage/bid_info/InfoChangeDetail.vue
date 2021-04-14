@@ -1504,7 +1504,7 @@
             <el-row>
                 <p><span >附件: </span>
                   <el-button
-                    v-show="p.actpoint !== 'look'"
+                    v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                     size="small"
                     type="primary"
                     @click="openFileUp('/api/contract/topInfo/CommonFiles/bidInfo/01/uploadFile','bidInfo_01')">
@@ -1561,7 +1561,7 @@
 
 
                   label="操作"
-                  v-if="p.actpoint!=='look'"
+                  v-if="p.actpoint!=='look'&&p.actpoint!=='task'"
                   width="60"
                 >
                   <template slot-scope="scope">
@@ -1574,7 +1574,7 @@
             <p class="detail-title" style="overflow: hidden；margin-right: 30px">
               <span >标段信息: </span>
               <el-button
-                v-show="p.actpoint != 'look'"
+                v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                 @click="openBd('add')"
                 size="mini"
                 style="
@@ -1874,13 +1874,12 @@
             </el-table-column>
 
               <el-table-column
-                v-show="!p.actpoint === 'look'"
+                v-if="p.actpoint!=='look'&&p.actpoint!=='task'"
                 :resizable="false"
                 fixed="right"
                 label="操作"
                 align="center"
                 show-overflow-tooltip
-                v-if="p.actpoint !== 'look'"
                 width="100"
               >
                 <template slot-scope="scope">
@@ -2278,7 +2277,7 @@ export default {
             .then((res) => {
               if (res.data.code === 200) {
                 this.$message({
-                  message: "保存成功",
+                  message:  `${type=='save'?'保存':'提交'}成功`,
                   type: "success",
                 });
                 // this.$refs[formName].resetFields();

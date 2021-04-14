@@ -1800,7 +1800,7 @@
     }"
                         label-width="0"
                       >
-                        <el-input max-length=50 clearable :disabled="p.actpoint==='look'" v-model="scope.row.productQuantity"></el-input>
+                        <el-input max-length=50 clearable :disabled="p.actpoint==='look'" @input="scope.row.productQuantity = scope.row.productQuantity.replace(/[^\-?\d.]/g,'','')" v-model="scope.row.productQuantity"></el-input>
                       </el-form-item>
                       <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                     </template>
