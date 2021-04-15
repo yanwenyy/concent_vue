@@ -471,6 +471,7 @@
               }
             ],
             projectModuleId: '510ba0d79593418493eb1a11ed4e7df4', // 项目板块
+            projectModuleCode:"operation",//项目板块code
             projectModuleName: '运营维管', // 项目板块
             projectName: '',
             projectForeginName: '',

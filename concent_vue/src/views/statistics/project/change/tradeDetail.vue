@@ -1220,6 +1220,7 @@
             commonFilesList: [], // 文件列表
             topInfoSiteList: [], // 项目所在地
             projectModuleId: '510ba0d79593418493eb1a11ea4e7af4', // 项目板块
+            projectModuleCode:"material",//项目板块code
             projectModuleName: '物资贸易', // 项目板块
             projectName: '',
             projectForeginName: '',
@@ -1268,6 +1269,7 @@
               }
             ], // 项目所在地
             projectModuleId: '510ba0d79593418493eb1a11ea4e7af4', // 项目板块
+            projectModuleCode:"material",//项目板块code
             projectModuleName: '物资贸易', // 项目板块
             projectName: '',
             projectForeginName: '',

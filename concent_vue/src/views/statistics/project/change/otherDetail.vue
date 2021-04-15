@@ -823,6 +823,7 @@
               }
             ],
             projectModuleId: '510ba0d79593419493eb1a11ed3e7df4', // 项目板块
+            projectModuleCode:"other",//项目板块code
             projectModuleName: '其它', // 项目板块
             projectName: '',
             projectForeginName: '',
@@ -864,6 +865,7 @@
               }
             ],
             projectModuleId: '510ba0d79593419493eb1a11ed3e7df4', // 项目板块
+            projectModuleCode:"other",//项目板块code
             projectModuleName: '其它', // 项目板块
             projectName: '',
             projectForeginName: '',

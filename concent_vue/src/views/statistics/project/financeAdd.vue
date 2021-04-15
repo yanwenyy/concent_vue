@@ -500,6 +500,7 @@
               }
             ],
             projectModuleId: '510ba0d79593418493eb1a11ea4e7df4', // 项目板块
+            projectModuleCode:"finance",//项目板块code
             projectModuleName: '金融保险', // 项目板块
             projectName: '',
             projectForeginName: '',
