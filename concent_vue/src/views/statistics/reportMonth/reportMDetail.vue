@@ -511,6 +511,9 @@
             this.dataReport.yearDateS=this.dataReport.reportYear+"-"+this.dataReport.reportMonth
             this.nextData=datas.planPrjTjxDetailList;
             this.projectName=datas.projectreport.reportProjectName;
+            if(this.projectName=='' || this.projectName==null){
+              this.projectName=this.p.projectName;
+            }
             console.log('data', this.data)
             // this.reportVo=this.data;
           })
