@@ -691,6 +691,7 @@
             infoSubjectMatterList: [], // 标的信息
             commonFilesList: [], // 文件列表
             projectModuleId: '510ba0d79593418493eb1a11ed3e7df4', // 项目板块
+            projectModuleCode:"industry",//项目板块code
             projectModuleName: '工业制造', // 项目板块
             projectName: '',
             projectForeginName: '',
