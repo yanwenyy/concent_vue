@@ -117,7 +117,7 @@
               <el-date-picker
                 v-model="setTimes"
                 class="list-search-picker"
-                type="datetimerange"
+                type="monthrange"
                 format="yyyy-MM"
                 value-format="yyyy-MM"
                 range-separator="至"
@@ -381,6 +381,7 @@
           yearDatesEnd:'',
           yearDateS:''
         }
+        this.setTimes=[];
         var date = new Date();
         var y = date.getFullYear();
         var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
