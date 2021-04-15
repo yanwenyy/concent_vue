@@ -2188,6 +2188,7 @@
           contractInfo: {
             moduleId:'f6823a41e9354b81a1512155a5565aeb',
             moduleName:'勘察设计咨询',
+            moduleCode:'design',
             marketSecondId:'',
             qualityOrgNames:''
           },

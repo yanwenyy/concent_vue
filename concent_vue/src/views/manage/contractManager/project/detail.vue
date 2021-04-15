@@ -6040,6 +6040,7 @@ export default {
         contractInfo: {
           moduleId:'7f4fcba4255b43a8babf15afd6c04a53',
           moduleName:'工程承包',
+          moduleCode:'engineering',
           marketSecondId:'',
           qualityOrgNames:'',
         },

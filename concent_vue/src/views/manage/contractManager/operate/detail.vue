@@ -1729,6 +1729,7 @@
           contractInfo: {
             moduleId:'510ba0d79593418493eb1a11ed4e7df4',
             moduleName:'运营维管',
+            moduleCode:'operation',
             marketSecondId:'',
             signOrgName:''
           },

@@ -1812,6 +1812,7 @@ export default {
         contractInfo: {
           moduleId:'510ba0d79593418493eb1a11ea4e7af4',
           moduleName:'物资贸易',
+          moduleCode:'material',
           marketSecondId:'',
           qualityOrgNames:''
         },

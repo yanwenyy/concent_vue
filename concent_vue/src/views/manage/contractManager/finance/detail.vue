@@ -1594,6 +1594,7 @@ export default {
         contractInfo: {
           moduleId:'510ba0d79593418493eb1a11ea4e7df4',
           moduleName:'金融保险',
+          moduleCode:'finance',
           marketSecondId:'',
           signOrgName:''
         },

@@ -1732,6 +1732,7 @@
           contractInfo: {
             moduleId:'510ba0d79593419493eb1a11ed3e7df4',
             moduleName:'其它',
+            moduleCode:'other',
             marketSecondId:'',
             qualityOrgNames:''
           },
