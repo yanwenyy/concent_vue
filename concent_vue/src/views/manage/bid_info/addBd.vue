@@ -17,12 +17,18 @@
           <el-select
             clearable
             placeholder=""
-            v-model="detailForm.bidInfoSection.sectionName"
+            v-model="detailForm.bidInfoSection.sectionId"
+            @change="
+                getName2(
+                  detailForm.bidInfoSection.sectionId,
+                  bdName,
+                  'sectionName'
+                )"
             :disabled="type === 'look'">
           <el-option
               :key="index"
               :label="item.sectionName"
-              :value="item.sectionName"
+              :value="item.uuid"
               v-for="(item, index) in bdName"
             ></el-option>
             </el-select>
@@ -514,6 +520,15 @@ import { isMoney } from '@/utils/validate'
         ).detailName;
         }
       },
+      //获取标段名称
+      getName2(id, list, name,code) {
+        if (id) {
+          this.$forceUpdate();
+          this.detailForm.bidInfoSection[name] = list.find(
+            (item) => item.uuid == id
+          ).sectionName;
+        }
+      },
     close(){
         this.$refs['detailForm'].clearValidate();
         this.visible = false;
@@ -602,7 +617,7 @@ import { isMoney } from '@/utils/validate'
           };
         this.type=type;
         this.index=index;
-        console.log(isBidRates)
+        console.log(list)
         this.visible = true;
         this.bdName=list||[];
         this.isBidRates=isBidRates;

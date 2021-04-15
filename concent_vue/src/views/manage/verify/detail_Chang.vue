@@ -660,10 +660,10 @@
                   align="center"
                   prop="verifySectionOrgNameType01"
                   show-overflow-tooltip
-                  v-show="p.actpoint != 'look'"
+                  v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
                   width="500">
 
-          <template slot-scope="scope" v-show="p.actpoint != 'look'">
+          <template slot-scope="scope" v-show="p.actpoint != 'look'&&p.actpoint != 'task'">
             <span  >
               {{scope.row.verifySectionOrgNameType01}}
             </span>
@@ -676,10 +676,10 @@
           align="center"
           prop="verifySectionOrgNameType02"
           show-overflow-tooltip
-          v-show="p.actpoint != 'look'"
+          v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
           width="500">
 
-          <template slot-scope="scope" v-show="p.actpoint != 'look'">
+          <template slot-scope="scope" v-show="p.actpoint != 'look'&&p.actpoint != 'task'">
 
             <span  >
               {{scope.row.verifySectionOrgNameType02}}
@@ -714,7 +714,7 @@
           align="center"
           prop="jananInvestment"
           show-overflow-tooltip
-          v-show="p.actpoint != 'look'"
+          v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
           width="260">
 
           <template slot-scope="scope" >
@@ -1256,7 +1256,7 @@
         <el-form-item label="内部联合体单位:">
           <el-input :disabled="p.actpoint === 'look'|| detailformAfter.verify.isCoalitionBid=='否' || detailformAfter.verify.isCoalitionBid==null||p.actpoint=='task'" v-model="detailformAfter.verifyOrgLists">
             <el-button
-            v-if="p.actpoint != 'look' && detailformAfter.verify.isCoalitionBid != '否' && detailformAfter.verify.isCoalitionBid!=null"
+            v-if="p.actpoint != 'look' &&p.actpoint != 'task'&& detailformAfter.verify.isCoalitionBid != '否' && detailformAfter.verify.isCoalitionBid!=null"
             slot="append" icon="el-icon-search" @click="selectOrg()"></el-button>
             <!-- :disabled="p.actpoint === 'look'|| detailformAfter.verify.isCoalitionBid=='否' || detailformAfter.verify.isCoalitionBid==null"  -->
           </el-input>
@@ -1299,7 +1299,7 @@
                 <p class="detail-title"><span  class="uploadSpan">附件: </span>
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-button
-                    v-show="p.actpoint !== 'look'"
+                    v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                     size="small"
                     type="primary"
                     @click="openFileUp('/api/contract/topInfo/CommonFiles/verify/01/uploadFile','commonFilesList')">
@@ -1350,21 +1350,21 @@
 
                             </el-table-column>
 
-                            <el-table-column align="center" v-show="p.actpoint != 'look'"
+                            <el-table-column align="center" v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
                               :resizable="false"
                               label="操作"
                               show-overflow-tooltip
                               :width="80"
                             >
                               <template slot-scope="scope">
-                                <el-link  v-show="p.actpoint != 'look'" :underline="false" @click="handleRemove(scope.row,scope.$index)"
+                                <el-link  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'" :underline="false" @click="handleRemove(scope.row,scope.$index)"
                                           type="warning">删除</el-link>
                               </template>
                             </el-table-column>
                           </el-table>
                 </div>
               <p style="overflow:hidden;margin-right: 30px"><span style="font-size: 14px">标段信息: </span>
-                <el-button v-show="p.actpoint != 'look'"
+                <el-button v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
                   @click="dialogTopInfoSection = true"
                   size="mini"
                   class="detatil-flie-btn"
@@ -1414,10 +1414,10 @@
                   align="center"
                   prop="verifySectionOrgNameType01"
                   show-overflow-tooltip
-                  v-show="p.actpoint != 'look'"
+                  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
                   width="500">
 
-          <template slot-scope="scope" v-show="p.actpoint != 'look'">
+          <template slot-scope="scope" v-show="p.actpoint != 'look'&&p.actpoint !== 'task'">
             <span  >
               {{scope.row.verifySectionOrgNameType01}}
             </span>
@@ -1430,10 +1430,10 @@
           align="center"
           prop="verifySectionOrgNameType02"
           show-overflow-tooltip
-          v-show="p.actpoint != 'look'"
+          v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
           width="500">
 
-          <template slot-scope="scope" v-show="p.actpoint != 'look'">
+          <template slot-scope="scope" v-show="p.actpoint != 'look'&&p.actpoint !== 'task'">
 
             <span  >
               {{scope.row.verifySectionOrgNameType02}}
@@ -1451,7 +1451,7 @@
 
           <template slot-scope="scope" >
           <el-input
-            :disabled="p.actpoint === 'look'"
+            :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
             placeholder=""
             size="mini"
             v-model="scope.row.verifySection.investmentReckon"
@@ -1473,7 +1473,7 @@
 
           <template slot-scope="scope" >
            <el-input
-             :disabled="p.actpoint === 'look'"
+             :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
              placeholder=""
              size="mini"
              v-model="scope.row.verifySection.jananInvestment"
@@ -1484,7 +1484,7 @@
           </template>
         </el-table-column>
                 <el-table-column
-                  v-show="p.actpoint != 'look'"
+                  v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
                   :resizable="false"
                   fixed="right"
                   label="操作"
@@ -1492,7 +1492,7 @@
                   width="80"
                   show-overflow-tooltip>
                   <template slot-scope="scope">
-                    <el-link  v-show="p.actpoint != 'look'"
+                    <el-link  v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
                       :underline="false"
                       @click="del(scope.$index,scope.row,detailformAfter.verifySectionList,'bd')"
                       type="warning">删除
