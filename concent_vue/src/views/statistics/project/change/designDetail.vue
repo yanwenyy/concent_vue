@@ -1515,6 +1515,7 @@
             projectTypeSecondId: '', // 工程类别（二级）
             projectLineId: '', // 所属线路ID
             projectModuleId: 'f6823a41e9354b81a1512155a5565aeb', // 项目板块
+            projectModuleCode:"design",//项目板块code
             projectModuleName: '勘察设计咨询', // 项目板块
             categoryFirstId: '0f333a962655480c8ef668a8ce129d41', // 业务类别（一级）
             categorySecondId: '', // 业务类别二级
@@ -1575,6 +1576,7 @@
             projectTypeSecondId: '', // 工程类别（二级）
             projectLineId: '', // 所属线路ID
             projectModuleId: 'f6823a41e9354b81a1512155a5565aeb', // 项目板块
+            projectModuleCode:"design",//项目板块code
             projectModuleName: '勘察设计咨询', // 项目板块
             categoryFirstId: '0f333a962655480c8ef668a8ce129d41', // 业务类别（一级）
             categorySecondId: '', // 业务类别二级

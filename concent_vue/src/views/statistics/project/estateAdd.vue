@@ -476,6 +476,7 @@
               }
             ],
             projectModuleId: '510ba0d79593418493eb1a11ea4e7af6', // 项目板块
+            projectModuleCode:"realty",//项目板块code
             projectModuleName: '房地产开发', // 项目板块
             projectName: '',
             projectForeginName: '',

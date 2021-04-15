@@ -1275,6 +1275,7 @@
             projectTypeSecondId: '', // 工程类别（二级）
             projectLineId: '', // 所属线路ID
             projectModuleId: '7f4fcba4255b43a8babf15afd6c04a53', // 项目板块
+            projectModuleCode:"engineering",//项目板块code
             projectModuleName: '工程承包', // 项目板块
             businessId: '', // 业务板块
             isConsortion: '', // 是否联合体项目

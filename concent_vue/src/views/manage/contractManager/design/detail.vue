@@ -2188,6 +2188,7 @@
           contractInfo: {
             moduleId:'f6823a41e9354b81a1512155a5565aeb',
             moduleName:'勘察设计咨询',
+            moduleCode:'design',
             marketSecondId:'',
             qualityOrgNames:''
           },
@@ -2418,10 +2419,10 @@
       getOurAmount(index,list,type){
         var tj_money=0,our_money=0;
         if(type=='wlht'||type=='nlht'){
-
+          //铁建金额计算
           this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
             tj_money+=Number(item.contractAmount);
-        });
+          });
           var ourAmount=this.detailform.contractInfo.contractAmount-tj_money;
 
           if(ourAmount>0){
@@ -2433,9 +2434,10 @@
             this.$message.error('铁建份额需要大于0');
             list[index].contractAmount=''
           }
+          //我方份额计算
           this.detailform.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
             our_money+=Number(item.contractAmount);
-        });
+          });
           var ourAmount2=this.detailform.contractInfo.crccCash-our_money;
           if(ourAmount2>0){
             this.$forceUpdate();
@@ -2446,29 +2448,32 @@
             list[index].contractAmount=''
           }
         }else if(type=='nfb'||type=='wfb'){
+          //判断内分包和外分包之和是否大于我方份额
           this.detailform.contractInfoAttachBO.innerContractInfoAttachList.forEach((item)=>{
             our_money+=Number(item.contractAmount);
-        });
+          });
           this.detailform.contractInfoAttachBO.outContractInfoAttachList.forEach((item)=>{
             our_money+=Number(item.contractAmount);
-        });
+          });
           var ourAmount=this.detailform.contractInfo.ourAmount-our_money;
           if(!ourAmount>0){
             this.$message.error('我方份额需要大于0');
             list[index].contractAmount=''
           }
         }else{
-
+          this.detailform.contractInfo.contractAmount=this.detailform.contractInfo.contractAmount.replace(/[^\-?\d.]/g,'','');
+          //合同总金额输入计算我方份额和铁建金额
           this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
             tj_money+=Number(item.contractAmount);
-        });
+          });
           this.$forceUpdate();
-          this.detailform.contractInfo.crccCash=this.detailform.contractInfo.contractAmount-tj_money;
+          this.detailform.contractInfo.crccCash=this.detailform.contractInfo.contractAmount!=''?this.detailform.contractInfo.contractAmount-tj_money:'';
           this.detailform.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
             our_money+=Number(item.contractAmount);
-        });
+          });
           this.$forceUpdate();
-          this.detailform.contractInfo.ourAmount=this.detailform.contractInfo.crccCash-our_money;
+          this.detailform.contractInfo.ourAmount=this.detailform.contractInfo.contractAmount!=''?this.detailform.contractInfo.crccCash-our_money:'';
+
         }
         this.getOurAmountSupply();
       },

@@ -1732,6 +1732,7 @@
           contractInfo: {
             moduleId:'510ba0d79593419493eb1a11ed3e7df4',
             moduleName:'其它',
+            moduleCode:'other',
             marketSecondId:'',
             qualityOrgNames:''
           },
@@ -2163,17 +2164,18 @@
             list[index].contractAmount=''
           }
         }else{
+          this.detailform.contractInfo.contractAmount=this.detailform.contractInfo.contractAmount.replace(/[^\-?\d.]/g,'','');
           //合同总金额输入计算我方份额和铁建金额
           this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
             tj_money+=Number(item.contractAmount);
           });
           this.$forceUpdate();
-          this.detailform.contractInfo.crccCash=this.detailform.contractInfo.contractAmount-tj_money;
+          this.detailform.contractInfo.crccCash=this.detailform.contractInfo.contractAmount!=''?this.detailform.contractInfo.contractAmount-tj_money:'';
           this.detailform.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
             our_money+=Number(item.contractAmount);
           });
           this.$forceUpdate();
-          this.detailform.contractInfo.ourAmount=this.detailform.contractInfo.crccCash-our_money;
+          this.detailform.contractInfo.ourAmount=this.detailform.contractInfo.contractAmount!=''?this.detailform.contractInfo.crccCash-our_money:'';
 
         }
         this.getOurAmountSupply();
