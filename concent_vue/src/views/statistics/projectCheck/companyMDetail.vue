@@ -754,5 +754,8 @@
   .sub-btn{
     right: 95px!important;
   }
+  .detailBoxBG{
+    overflow: hidden!important;
+  }
   /**/
 </style>
