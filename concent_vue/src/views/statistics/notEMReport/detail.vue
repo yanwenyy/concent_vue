@@ -299,7 +299,7 @@
                   <template slot-scope="scope">
                     <el-input
                       @input="setCcsjYmjd(detailform.kc_list,detailform.sumByMon_0,'categorySecondName',scope.$index)"
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                       clearable
                       v-model="scope.row.monthValue"/>
                   </template>
@@ -3695,9 +3695,9 @@
       getDetail() {
         var data={};
         if(this.p.actpoint=='add'){
-          data={reportDate: this.p.reportDate,isAdd:'0'}
+          data={reportDate: this.p.reportDate,isAdd:'0',uuid:this.p.statId}
         }else if(this.p.actpoint=='edit'||this.p.actpoint=='look'){
-          data={statId: this.p.statId,isAdd:this.p.actpoint=='edit'?'1':'3',reportDate:this.p.reportDate,createOrgCode:this.p.createOrgCode}
+          data={statId: this.p.statId,isAdd:this.p.actpoint=='edit'?'1':'3',reportDate:this.p.reportDate,createOrgCode:this.p.createOrgCode,uuid:this.p.statId}
         }else if(this.p.actpoint=='task'){
           data={uuid: this.p.instid,isAdd:'2'}
         }
