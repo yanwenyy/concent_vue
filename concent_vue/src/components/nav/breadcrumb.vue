@@ -45,8 +45,10 @@ export default {
   },
   watch: {
     $route: {
+      immediate: true, // immediate选项可以开启首次赋值监听
       handler: function(val, oldVal) {
         this.ifDetail=val.path.indexOf("detail")!=-1||val.path.indexOf("Detail")!=-1||val.path.indexOf("Winning_bidKB")!=-1
+        console.log(this.ifDetail)
         this.breadcrumbs = []
         this.getbreadcrumb(this.$store.state.route[1].children);
       },

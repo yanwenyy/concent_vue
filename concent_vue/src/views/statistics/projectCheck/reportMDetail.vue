@@ -372,7 +372,7 @@
       operation(type){
         this.$http
           .post(
-            '/api/statistics/Projectcheck/process/complete'+type,
+            '/api/statistics/Projectcheck/process/'+type,
             JSON.stringify(this.p.task),
             {useJson: true}
           )

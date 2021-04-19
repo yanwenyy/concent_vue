@@ -299,7 +299,7 @@
                   <template slot-scope="scope">
                     <el-input
                       @input="setCcsjYmjd(detailform.kc_list,detailform.sumByMon_0,'categorySecondName',scope.$index)"
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                       clearable
                       v-model="scope.row.monthValue"/>
                   </template>
@@ -742,13 +742,13 @@
                       <el-input
                         @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'industry')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.industry"/>
                       <el-input
                         @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'overseasIndustry')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.overseasIndustry"/>
                     </template>
@@ -766,13 +766,13 @@
                       <el-input
                         @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'equipmentManufacturin')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.equipmentManufacturin"/>
                       <el-input
                         @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'equipmentManufacturinHw')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.equipmentManufacturinHw"/>
                     </template>
@@ -790,13 +790,13 @@
                       <el-input
                         @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'componentManufacturin')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.componentManufacturin"/>
                       <el-input
                         @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'componentManufacturinHw')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.componentManufacturinHw"/>
                     </template>
@@ -814,13 +814,13 @@
                       <el-input
                         @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'otherIndustrayProduct')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.otherIndustrayProduct"/>
                       <el-input
                         @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'otherIndustrayProductHw')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.otherIndustrayProductHw"/>
                     </template>
@@ -1070,13 +1070,13 @@
                       <el-input
                         @input="getGyzzCz(detailform.wz_list,detailform.sumByMon_2,'sale')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.sale"/>
                       <el-input
                         @input="getGyzzCz(detailform.wz_list,detailform.sumByMon_2,'overseasSale')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.overseasSale"/>
                     </template>
@@ -1454,13 +1454,13 @@
                       <el-input
                         @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'income')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.income"/>
                       <el-input
                         @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'overseasIncome')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.overseasIncome"/>
                     </template>
@@ -1478,13 +1478,13 @@
                       <el-input
                         @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'inRevenue')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.inRevenue"/>
                       <el-input
                         @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'inRevenueHw')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.inRevenueHw"/>
                     </template>
@@ -1502,13 +1502,13 @@
                       <el-input
                         @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenue')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.offRevenue"/>
                       <el-input
                         @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenueHw')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.offRevenueHw"/>
                     </template>
@@ -1526,13 +1526,13 @@
                       <el-input
                         @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenueNon')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.offRevenueNon"/>
                       <el-input
                         @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenueNonHw')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.offRevenueNonHw"/>
                     </template>
@@ -1901,13 +1901,13 @@
                       <el-input
                         @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'finance')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.finance"/>
                       <el-input
                         @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'overseasFinance')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.overseasFinance"/>
                     </template>
@@ -1925,13 +1925,13 @@
                       <el-input
                         @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'secure')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.secure"/>
                       <el-input
                         @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'overseasSecure')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.overseasSecure"/>
                     </template>
@@ -1949,13 +1949,13 @@
                       <el-input
                         @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'otherFinance')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.otherFinance"/>
                       <el-input
                         @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'otherFinanceHw')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.otherFinanceHw"/>
                     </template>
@@ -2366,13 +2366,13 @@
                       <el-input
                         @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'engineeringOperation')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.engineeringOperation"/>
                       <el-input
                         @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'engineeringOperationHw')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.engineeringOperationHw"/>
                     </template>
@@ -2390,13 +2390,13 @@
                       <el-input
                         @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'informationOperation')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.informationOperation"/>
                       <el-input
                         @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'informationOperationHw')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.informationOperationHw"/>
                     </template>
@@ -2414,13 +2414,13 @@
                       <el-input
                         @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'estateManagement')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.estateManagement"/>
                       <el-input
                         @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'estateManagementHw')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.estateManagementHw"/>
                     </template>
@@ -2438,13 +2438,13 @@
                       <el-input
                         @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'otherOperation')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.otherOperation"/>
                       <el-input
                         @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'overseasOtherOperation')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.overseasOtherOperation"/>
                     </template>
@@ -2978,13 +2978,13 @@
                       <el-input
                         @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'equipmentLeasing')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.equipmentLeasing"/>
                       <el-input
                         @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'equipmentLeasingHw')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.equipmentLeasingHw"/>
                     </template>
@@ -3002,13 +3002,13 @@
                       <el-input
                         @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'transportation')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.transportation"/>
                       <el-input
                         @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'transportationHw')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.transportationHw"/>
                     </template>
@@ -3026,13 +3026,13 @@
                       <el-input
                         @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'accommodationCatering')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.accommodationCatering"/>
                       <el-input
                         @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'accommodationCateringHw')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.accommodationCateringHw"/>
                     </template>
@@ -3050,13 +3050,13 @@
                       <el-input
                         @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'educationTraining')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.educationTraining"/>
                       <el-input
                         @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'educationTrainingHw')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.educationTrainingHw"/>
                     </template>
@@ -3074,13 +3074,13 @@
                       <el-input
                         @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'informationConstruction')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.informationConstruction"/>
                       <el-input
                         @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'informationConstructionHw')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.informationConstructionHw"/>
                     </template>
@@ -3098,13 +3098,13 @@
                       <el-input
                         @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'leaseHouses')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.leaseHouses"/>
                       <el-input
                         @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'leaseHousesHw')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.leaseHousesHw"/>
                     </template>
@@ -3122,13 +3122,13 @@
                       <el-input
                         @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'otherProject')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.otherProject"/>
                       <el-input
                         @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'otherProjectHw')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.otherProjectHw"/>
                     </template>
@@ -3695,9 +3695,9 @@
       getDetail() {
         var data={};
         if(this.p.actpoint=='add'){
-          data={reportDate: this.p.reportDate,isAdd:'0'}
+          data={reportDate: this.p.reportDate,isAdd:'0',uuid:this.p.statId}
         }else if(this.p.actpoint=='edit'||this.p.actpoint=='look'){
-          data={statId: this.p.statId,isAdd:this.p.actpoint=='edit'?'1':'3',reportDate:this.p.reportDate,createOrgCode:this.p.createOrgCode}
+          data={statId: this.p.statId,isAdd:this.p.actpoint=='edit'?'1':'3',reportDate:this.p.reportDate,createOrgCode:this.p.createOrgCode,uuid:this.p.statId}
         }else if(this.p.actpoint=='task'){
           data={uuid: this.p.instid,isAdd:'2'}
         }
