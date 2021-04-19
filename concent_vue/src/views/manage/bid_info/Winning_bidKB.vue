@@ -1172,7 +1172,7 @@ export default {
           if (valid) {
             this.$http
               .post(
-                "/api/contract/topInfo/BidInfo/detail/saveOrUpdate",
+                "/api/contract/topInfo/BidInfo/detail/saveOrUpdateOpenBid",
                 JSON.stringify(this.detailform),
                 {useJson: true}
               )
