@@ -201,10 +201,11 @@
         <el-form-item label="评标办法:" class="list-item">
                 <template slot-scope="scope">
                  <el-select
+
                 clearable
                 placeholder="评标办法"
                 size="mini"
-                disabled
+                :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'"
                 @change="
                 getName(
                   zbForm.bidInfoSection.bidEvaluationMethodId,
@@ -228,7 +229,7 @@
           <el-input v-model="zbForm.bidInfoSection.openBidPlaceName"
           placeholder="开标地点"
           clearable
-          disabled
+          :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'"
           @clear="searchform.openBidPlaceId=''"
           >
           <el-button
@@ -246,20 +247,20 @@
             clearable
             type="date"
             value-format="timestamp"
-            disabled
+            :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'"
             v-model="zbForm.bidInfoSection.dateOfBidOpeningName"
           >
           </el-date-picker>
         </el-form-item>
 
         <el-form-item label="参与投标单位:" class="list-item">
-          <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.participatingUnitsName" class="input-with-select" disabled>
+          <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.participatingUnitsName" class="input-with-select" :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'">
             <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('参与投标单位',zbForm.bidInfoSection.participatingUnitsId)" ></el-button>
           </el-input>
         </el-form-item>
 
         <el-form-item label="编标拟配合单位:" class="list-item">
-           <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.orgName" class="input-with-select" disabled>
+           <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.orgName" class="input-with-select" :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'">
             <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('编标拟配合单位',zbForm.bidInfoSection.orgId)" ></el-button>
           </el-input>
         </el-form-item>
@@ -270,7 +271,7 @@
                     v-model="zbForm.bidInfoSection.tenderSecurity"
                     clearable
                     placeholder="投标保证金(万元)"
-                    disabled
+                    :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'"
                   >
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
@@ -282,7 +283,7 @@
                     v-model="zbForm.bidInfoSection.bidPrice"
                     clearable
                     placeholder="投标价(万元)"
-                    disabled
+                    :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'"
                   >
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
@@ -294,17 +295,17 @@
                     v-model="zbForm.bidInfoSection.tenderRate"
                     clearable
                     placeholder="投标费率(百分比)"
-                    disabled
+                    :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'"
                   >
               </el-input>
         </el-form-item>
           <br>
         <el-form-item label="项目经理:" class="list-item">
-          <el-input v-model="zbForm.bidInfoSection.projectManager" placeholder="项目经理" clearable disabled></el-input>
+          <el-input v-model="zbForm.bidInfoSection.projectManager" placeholder="项目经理" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'"></el-input>
         </el-form-item>
 
         <el-form-item label="项目副经理:" class="list-item">
-          <el-input v-model="zbForm.bidInfoSection.deputyProjectManager	" placeholder="项目副经理" clearable disabled></el-input>
+          <el-input v-model="zbForm.bidInfoSection.deputyProjectManager	" placeholder="项目副经理" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'"></el-input>
         </el-form-item>
 
         <el-form-item v-if="isBidRates=='1'" label="风险费(万元):" class="list-item"  prop="bidInfoSection.riskFee"  :rules="rules.contractAmount">
@@ -312,7 +313,7 @@
                       v-model="zbForm.bidInfoSection.riskFee"
                       clearable
                       placeholder="风险费(万元)"
-                      disabled
+                      :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'"
                     >
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
@@ -320,11 +321,11 @@
         </el-form-item>
         <br>
         <el-form-item label="技术负责人:" class="list-item">
-          <el-input v-model="zbForm.bidInfoSection.technicalDirector" placeholder="技术负责人" clearable disabled></el-input>
+          <el-input v-model="zbForm.bidInfoSection.technicalDirector" placeholder="技术负责人" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'"></el-input>
         </el-form-item>
 
         <el-form-item label="安全负责人:" class="list-item">
-          <el-input v-model="zbForm.bidInfoSection.personInChargeOfSafety" placeholder="安全负责人" clearable disabled></el-input>
+          <el-input v-model="zbForm.bidInfoSection.personInChargeOfSafety" placeholder="安全负责人" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'"></el-input>
         </el-form-item>
 
         <el-form-item v-if="isBidRates=='1'" label="安全费(万元):" class="list-item"  prop="bidInfoSection.safetyCost"  :rules="rules.contractAmount">
@@ -332,7 +333,7 @@
                     v-model="zbForm.bidInfoSection.safetyCost"
                     clearable
                     placeholder="安全费(万元)"
-                    disabled
+                    :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'"
                   >
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
@@ -341,11 +342,11 @@
           <br>
 
         <el-form-item label="财务负责人:" class="list-item">
-          <el-input v-model="zbForm.bidInfoSection.personInChargeOfFinance" placeholder="财务负责人" clearable disabled></el-input>
+          <el-input v-model="zbForm.bidInfoSection.personInChargeOfFinance" placeholder="财务负责人" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'"></el-input>
         </el-form-item>
 
         <el-form-item label="成本负责人:" class="list-item">
-          <el-input v-model="zbForm.bidInfoSection.costOwner" placeholder="成本负责人" clearable disabled></el-input>
+          <el-input v-model="zbForm.bidInfoSection.costOwner" placeholder="成本负责人" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'"></el-input>
         </el-form-item>
 
         <el-form-item v-if="isBidRates=='1'" label="投标限价(万元):" class="list-item" prop="bidInfoSection.biddingPriceLimit"  :rules="rules.contractAmount">
@@ -353,7 +354,7 @@
                     v-model="zbForm.bidInfoSection.biddingPriceLimit"
                     clearable
                     placeholder="投标限价(万元)"
-                    disabled
+                    :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'"
                   >
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
@@ -361,13 +362,13 @@
         </el-form-item>
           <br>
           <el-form-item label="投资估算:" class="list-item" >
-          <el-input v-model="zbForm.bidInfoSection.investmentReckon" placeholder="投资估算" clearable disabled>
+          <el-input v-model="zbForm.bidInfoSection.investmentReckon" placeholder="投资估算" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'">
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
           </el-input>
         </el-form-item>
           <el-form-item label="其中建安投资:" class="list-item" >
-          <el-input v-model="zbForm.bidInfoSection.jananInvestment" placeholder="其中建安投资" clearable disabled >
+          <el-input v-model="zbForm.bidInfoSection.jananInvestment" placeholder="其中建安投资" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'" >
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
           </el-input>
@@ -379,7 +380,7 @@
           v-model="zbForm.bidInfoSection.otherUnitsNotListed"
           placeholder="其他未列出单位(单位与单位之间用英文逗号隔开)"
           clearable
-          disabled
+          :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'"
           :autosize="{ minRows: 2, maxRows: 4}"
           type="textarea"></el-input>
         </el-form-item>
@@ -626,13 +627,22 @@
         <el-button v-show="zbType=='add'" type="primary" @click="saveInfo('zbForm')">确 定</el-button>
       </div>
     </el-dialog>
+    <Tree v-if="treeStatas" ref="addOrUpdate"  @getPosition="getPositionTree" ></Tree>
+    <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
   </div>
 </template>
 
 <script>
 import InfoChangeSearch from "../proposal/infoChangeSearch";
+import CompanyTree from '../contractManager/companyTree'
+import Tree from "@/components/tree";
 import { isMoney } from "@/utils/validate";
 export default {
+    components: {
+        Tree,
+        CompanyTree,
+        InfoChangeSearch
+    },
   name: "proposal-list-look",
   data() {
     var validateMoney = (rule, value, callback) => {
@@ -645,6 +655,8 @@ export default {
       }
     };
     return {
+      treeStatas:false,
+      DwVisible:false,//选择单位弹框状态
       Authorization:sessionStorage.getItem("token"),
       key: 0,
       isWinBid: "",
@@ -695,9 +707,6 @@ export default {
       }, //表单验证规则
     };
   },
-  components: {
-    InfoChangeSearch,
-  },
   computed: {
     bidMethod() {
       // console.log(this.$store.state.bidMethod)
@@ -705,6 +714,51 @@ export default {
     },
   },
   methods: {
+
+      //选择项目地点
+      selectPosition() {
+          this.treeStatas = true;
+          console.log(this.positionIndex);
+          this.$nextTick(() => {
+              this.$refs.addOrUpdate.init();
+          });
+      },
+
+      //获取项目地点的值
+      getPositionTree(data) {
+          this.treeStatas = false;
+          console.log(data)
+          this.zbForm.bidInfoSection.openBidPlaceId = data.fullDetailCode;
+          this.zbForm.bidInfoSection.openBidPlaceName = data.fullDetailName;
+          this.key = this.key + 1;
+      },
+
+      //打开单位弹框
+      addDw(type,list){
+          this.DwVisible = true;
+          this.$nextTick(() => {
+              this.$refs.infoDw.init(type,list);
+          })
+      },
+      //获取单位的值
+      getDwInfo(data){
+          console.log(data);
+          var id=[],name=[];
+          if(data){
+              data.forEach((item)=>{
+                  id.push(item.id);
+                  name.push(item.detailName);
+              })
+          }
+          if(data.type=="参与投标单位"){
+              this.detailForm.bidInfoSection.participatingUnitsId=id.join(",");
+              this.detailForm.bidInfoSection.participatingUnitsName=name.join(",");
+          }else if(data.type=="编标拟配合单位"){
+              this.detailForm.bidInfoSection.orgId=id.join(",");
+              this.detailForm.bidInfoSection.orgName=name.join(",");
+          }
+          this.DwVisible=false;
+      },
     //打开中标弹框
     setZB(isBidRates, list) {
       if (
@@ -1017,4 +1071,27 @@ export default {
       overflow: auto;
     }
   }
+
+.bdClass >>>.el-dialog{
+  height: 70vh!important;
+}
+.bdClass >>>.el-card__header{
+  padding: 8px 20px !important;
+}
+.bdClass >>>.el-dialog__header{
+  display: none;
+}
+.bdClass >>>.el-dialog__body{
+  padding: 0;
+  height: calc(100% - 60px)!important;
+  width: 100%;
+  overflow: hidden;
+}
+.bdClass >>>.dialog-footer{
+  padding-top: 14px;
+  margin:0;
+  text-align: center;
+  background-color: #fafafa;
+}
+
 </style>
