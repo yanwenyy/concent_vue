@@ -135,7 +135,7 @@
           :width="150"
           align="center"
           label="资格预审结果"
-          prop="uuid"
+          prop="verifyResult"
           :filter-multiple="true"
           show-overflow-tooltip
         >
@@ -143,7 +143,7 @@
              {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'通过审核':'其他情况'}}
           </template> -->
           <template slot-scope="scope">
-            <span> {{scope.row.uuid==null?'未通过':'通过'}}</span>
+            <span> {{scope.row.verifyResult=='0'?'未通过':'通过'}}</span>
           </template>
           <!-- <template slot-scope="scope">
             <el-tag v-if="scope.row.uuid===null" type="warning">未进行资审申请</el-tag>
@@ -190,14 +190,18 @@
     <el-dialog title="资审结果登记" :visible.sync="dialogResult" width="70%"  >
       <el-form :model="resultform.verifySection" class="queryForm" >
         <el-form-item label="资格预审结果"   prop="verifyResult" >
-         <el-switch
-           active-text="通过"
-           v-model="resultform.verifySection.verifyResult"
-           :active-value="true"
-           inactive-value="false"
-          :disabled="type=='look'"
-         >
-            </el-switch>
+         <!--<el-switch-->
+           <!--active-text="通过"-->
+           <!--v-model="resultform.verifySection.verifyResult"-->
+           <!--:active-value="true"-->
+           <!--inactive-value="false"-->
+          <!--:disabled="type=='look'"-->
+         <!--&gt;-->
+            <!--</el-switch>-->
+          <el-radio-group v-model="resultform.verifySection.verifyResult">
+            <el-radio label="0">未通过</el-radio>
+            <el-radio label="1">通过</el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="通过时间"  prop="verifyResultTime" >
           <el-date-picker

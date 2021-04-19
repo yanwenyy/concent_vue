@@ -57,7 +57,7 @@ export default {
               'defaultpage': false,
               'children': [
                 {
-                  'name': '项目信息导入',
+                  'name': '项目信息登记',
                   'path': '/manage/proposal/importList',
                   'component': '/manage/proposal/importList',
                   'iconCls': 'el-icon-notebook-1',
@@ -66,7 +66,7 @@ export default {
                   'defaultpage': true
                 },
                 {
-                  'name': '项目信息导入详情',
+                  'name': '项目信息登记详情',
                   'path': '/manage/proposal/importDetail',
                   'component': '/manage/proposal/importDetail',
                   'iconCls': 'el-icon-notebook-2',
@@ -74,24 +74,24 @@ export default {
                   'leaf': true,
                   'defaultpage': false
                 },
-                {
-                  'name': '项目信息登记',
-                  'path': '/manage/proposal/list',
-                  'component': '/manage/proposal/list',
-                  'iconCls': 'el-icon-notebook-2',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': true
-                },
-                {
-                  'name': '项目信息登记维护',
-                  'path': '/manage/proposal/detail',
-                  'component': '/manage/proposal/detail',
-                  'iconCls': 'el-icon-notebook-2',
-                  'menushow': false,
-                  'leaf': true,
-                  'defaultpage': false
-                },
+                // {
+                //   'name': '项目信息登记',
+                //   'path': '/manage/proposal/list',
+                //   'component': '/manage/proposal/list',
+                //   'iconCls': 'el-icon-notebook-2',
+                //   'menushow': true,
+                //   'leaf': true,
+                //   'defaultpage': true
+                // },
+                // {
+                //   'name': '项目信息登记维护',
+                //   'path': '/manage/proposal/detail',
+                //   'component': '/manage/proposal/detail',
+                //   'iconCls': 'el-icon-notebook-2',
+                //   'menushow': false,
+                //   'leaf': true,
+                //   'defaultpage': false
+                // },
                 {
                   'name': '项目信息跟踪',
                   'path': '/manage/proposal/track_list',

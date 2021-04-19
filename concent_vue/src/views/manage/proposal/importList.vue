@@ -4,7 +4,7 @@
       <el-button-group style="float: left">
         <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>新增</el-button>
         <el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
-        <!--<el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>-->
+        <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
         <!-- <el-button @click="searchformReset" type="primary" plain>刷新<i class="el-icon-refresh-left"></i></el-button> -->
 
         <el-upload
@@ -500,12 +500,12 @@
         let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
           if(item.flowStatus==1||item.flowStatus==4){
-          uuids.push(item.topOrgId);
-        }else{
-          this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
-          return itemStatus=false;
-        }
-      })
+            uuids.push(item.topOrgId);
+          }else{
+            this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
+            return itemStatus=false;
+          }
+        })
 
         if(itemStatus){
           this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
@@ -514,14 +514,14 @@
             type: 'warning'
           }).then(() => {
             this.$http
-            .post(
-              "/api/contract/topInfo/TopInfor/list/delete",{ids: uuids}
+              .post(
+                "/api/contract/topInfo/TopInfor/list/delete",{ids: uuids}
 
-            )
-            .then((res) => {
-            this.getData()
-        });
-        }).catch(() => {})
+              )
+              .then((res) => {
+                this.getData()
+              });
+          }).catch(() => {})
         }
 
       },

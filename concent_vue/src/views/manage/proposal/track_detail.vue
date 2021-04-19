@@ -985,7 +985,7 @@
             <p  class="detail-title" style="overflow: hidden;margin-right:30px">
               <span>标段信息: </span>
               <el-button
-                v-show="p.actpoint !== 'look'"
+                v-show="p.actpoint == 'add'"
                 @click="add('bd')"
                 class="detatil-flie-btn"
                 type="primary"
@@ -1073,13 +1073,12 @@
               </el-table-column>
 
               <el-table-column
-                v-show="!p.actpoint === 'look'"
                 :resizable="false"
                 fixed="right"
                 label="操作"
                 align="center"
                 show-overflow-tooltip
-                v-if="p.actpoint !== 'look'"
+                v-if="p.actpoint=='add'"
                 width="80">
                 <template slot-scope="scope">
                   <el-link
@@ -1087,6 +1086,28 @@
                     :underline="false"
                     @click="del(scope.$index,scope.row,detailform.topInfoSectionList,'bd')"
                     type="warning">删除</el-link>
+                </template>
+              </el-table-column>
+              <el-table-column
+                :resizable="false"
+                fixed="right"
+                label="是否为跟踪标段"
+                align="center"
+                show-overflow-tooltip
+                v-if="p.actpoint!='add'"
+                width="80">
+                <template slot-scope="scope">
+                  <el-switch
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    class="inline-formitem-switch"
+                    v-model="scope.row.isTrack"
+                    active-color="#409EFF"
+                    inactive-color="#ddd"
+                    active-value="1"
+                    inactive-value="0"
+                    @change="setMain(scope.$index,detailform.topInfoSectionList)"
+                  >
+                  </el-switch>
                 </template>
               </el-table-column>
             </el-table>
@@ -1165,7 +1186,7 @@
             { required: true,validator: validateMoney, trigger: 'change' }
           ],
           phone: [
-            { required: true,validator: validatePhone, trigger: 'change' }
+            { required: true,validator: validatePhone, trigger: 'blur' }
           ]
         },//表单验证规则
       };
@@ -1251,6 +1272,16 @@
       // eslint-disable-next-line no-unde
     },
     methods: {
+      //设置是否为跟踪标段
+      setMain(i,list){
+        list.forEach((item,index)=>{
+          if(index==i){
+            item.isTrack="1"
+          }else{
+            item.isTrack="0"
+          }
+        });
+      },
     //上传附件
     handleChange(response, file, fileList) {
       if (response && response.code === 200) {

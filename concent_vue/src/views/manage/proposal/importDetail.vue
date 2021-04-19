@@ -73,12 +73,13 @@
                 <!--</el-select>-->
                 <template>
                   <el-radio-group class="detail-radio-group" v-model="detailform.topInfor.moduleId"  @change="getName(detailform.topInfor.moduleId, projectPlate, 'moduleName','moduleCode')">
-                    <el-radio :disabled="p.actpoint === 'look'||p.actpoint=='task'"  v-for="(item, index) in projectPlate" :label="item.id" :key="index">{{item.detailName}}</el-radio>
+                    <el-radio :disabled="p.actpoint === 'look'||p.actpoint=='task'"  v-for="(item, index) in projectPlate" :label="item.id" :key="index" v-if="item.id=='7f4fcba4255b43a8babf15afd6c04a53'||item.id=='f6823a41e9354b81a1512155a5565aeb'||item.id=='510ba0d79593418493eb1a11ed3e7df4'">{{item.detailName}}</el-radio>
                   </el-radio-group>
                 </template>
               </el-form-item>
             </div>
             <el-form-item
+              v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null"
               label="工程类别(一级):"
               prop="topInfor.enginTypeFirstId"
             >
@@ -100,6 +101,7 @@
               </el-select>
             </el-form-item>
             <el-form-item
+              v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null"
               label="工程类别(二级):"
               prop="topInfor.enginTypeSecondId"
             >
@@ -128,7 +130,7 @@
               </el-select>
             </el-form-item>
             <el-form-item
-              v-if="detailform.topInfor.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
+              v-if="(detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null)&&detailform.topInfor.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
               label="所属线路:"
               prop="topInfor.belongLineId"
             >
@@ -156,8 +158,9 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-            <br>
+            <br v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null">
             <el-form-item
+              v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null"
               label="项目性质(一级):"
               prop="topInfor.projectNatureFirstId"
             >
@@ -179,6 +182,7 @@
               </el-select>
             </el-form-item>
             <el-form-item
+              v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null"
               label="项目性质(二级):"
               prop="topInfor.projectNatureSecondId"
             >
@@ -207,7 +211,51 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-            <br>
+            <br v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null">
+            <el-form-item
+              v-if="detailform.topInfor.moduleId=='510ba0d79593418493eb1a11ed3e7df4'"
+              label="供应产品"
+              prop="topInfor.supplyProductName"
+              :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'blur',
+                }"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+
+                v-model="detailform.topInfor.supplyProductName"
+              />
+            </el-form-item>
+            <el-form-item
+              v-if="detailform.topInfor.moduleId=='510ba0d79593418493eb1a11ed3e7df4'"
+              label="采购性质:"
+              prop="topInfor.purchaseNatureId"
+            >
+              <el-select
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                filterable
+                clearable
+                @change="
+                getName(
+                  detailform.topInfor.purchaseNatureId,
+                  purchaseNature,
+                  'purchaseNatureName',
+                  'purchaseNatureCode'
+                )
+              "
+                v-model="detailform.topInfor.purchaseNatureId"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in purchaseNature"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <br v-if="detailform.topInfor.moduleId=='510ba0d79593418493eb1a11ed3e7df4'">
             <el-form-item
               label="新兴市场(一级):"
               prop="topInfor.marketFirstNameId"
@@ -268,6 +316,66 @@
                 ></el-option>
               </el-select>
             </el-form-item>
+            <el-form-item
+              label="场地名称"
+              prop="cdmc"
+              :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+              v-if="detailform.topInfor.marketFirstNameId=='50cd5e9992ac4653920fac8c1f2eb2e3'"
+
+            >
+              <el-select
+                class="multiple-sel"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                multiple
+                clearable
+                filterable
+                placeholder="请选择"
+
+                v-model="detailform.cdmc"
+                @change="getMultipleName(detailform.cdmc,siteName,'siteNameId','siteName','siteNameCode')"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in siteName"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="装配类型"
+              prop="zplx"
+              :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'blur',
+                }"
+              v-if="detailform.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
+
+            >
+              <el-select
+                class="multiple-sel"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                multiple
+                @change="getMultipleName(detailform.zplx,assemblyType,'otherAssemblyTypeId','otherAssemblyType','otherAssemblyTypeCode')"
+                clearable
+                filterable
+                placeholder="请选择"
+
+                v-model="detailform.zplx"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in assemblyType"
+                ></el-option>
+              </el-select>
+            </el-form-item>
             <br>
             <div class="div-item">
               <el-form-item
@@ -287,38 +395,6 @@
                   v-model="detailform.topInfor.otherAssemblyRate"
                 />
               </el-form-item>
-              <el-form-item
-                label="装配类型"
-                prop="zplx"
-                :rules="{
-                  required: true,
-                  message: '此项不能为空',
-                  trigger: 'blur',
-                }"
-                v-if="detailform.topInfor.marketFirstNameId=='00b87acd71784c3ba860b9513789724e'"
-
-              >
-                <el-select
-                  class="multiple-sel"
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  multiple
-                  @change="getMultipleName(detailform.zplx,assemblyType,'otherAssemblyTypeId','otherAssemblyType','otherAssemblyTypeCode')"
-                  clearable
-                  filterable
-                  placeholder="请选择"
-
-                  v-model="detailform.zplx"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in assemblyType"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-            <div class="div-item">
               <el-form-item
                 label="建筑类型"
                 prop="jzlx"
@@ -379,36 +455,6 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item
-                label="场地名称"
-                prop="cdmc"
-                :rules="{
-              required: true,
-              message: '此项不能为空',
-              trigger: 'blur',
-            }"
-                v-if="detailform.topInfor.marketFirstNameId=='50cd5e9992ac4653920fac8c1f2eb2e3'"
-
-              >
-                <el-select
-                  class="multiple-sel"
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  multiple
-                  clearable
-                  filterable
-                  placeholder="请选择"
-
-                  v-model="detailform.cdmc"
-                  @change="getMultipleName(detailform.cdmc,siteName,'siteNameId','siteName','siteNameCode')"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in siteName"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
             </div>
             <el-form-item
               label="建设单位:"
@@ -428,9 +474,31 @@
               <el-autocomplete
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 v-model="detailform.topInfor.constructionOrg"
-                :fetch-suggestions="querySearchAsync"
+                :fetch-suggestions="detailform.topInfor.isClientele=='1'?querySearchAsync:querySjdw"
                 placeholder="请输入内容"
               ></el-autocomplete>
+            </el-form-item>
+            <el-form-item
+              class="inline-formitem"
+              label="是否为客户选择:"
+              prop="topInfor.isClientele"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
+              <el-switch
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                class="inline-formitem-switch"
+                v-model="detailform.topInfor.isClientele"
+                active-color="#409EFF"
+                inactive-color="#ddd"
+                active-value="1"
+                inactive-value="0"
+                @change="detailform.topInfor.constructionOrg=''"
+              >
+              </el-switch>
             </el-form-item>
             <el-form-item
               label="设计单位:"
@@ -449,7 +517,7 @@
               <el-autocomplete
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 v-model="detailform.topInfor.designOrg"
-                :fetch-suggestions="querySearchAsync"
+                :fetch-suggestions="querySjdw"
                 placeholder="请输入内容"
               ></el-autocomplete>
             </el-form-item>
@@ -1011,10 +1079,12 @@
         positionIndex: '',//缓存当前的选中的项目地点的index
         options2: [],
         options: [],
+        sjdwList:[],//设计单位列表
         detailform: {
           topInfor: {
             marketSecondId:'',
-            constructionOrg:''
+            constructionOrg:'',
+            isClientele:'1'
           },
           topInfoOrg: {},
           topInfoSiteList: [],
@@ -1112,6 +1182,9 @@
       siteName(){
         return this.$store.state.siteName;//场地名称
       },
+      purchaseNature(){
+        return this.$store.state.purchaseNature;//采购性质
+      },
     },
     mounted() {
       // window.onresize = () => {
@@ -1143,8 +1216,17 @@
           projectScale: '',
         }]
       }
-
-      // eslint-disable-next-line no-unde
+      //设计单位列表
+      this.$http
+        .post(
+          "/api/contract/Companies/detail/findCompanies",
+        )
+        .then((res) => {
+          this.sjdwList = res.data.data;
+          this.sjdwList.forEach((item)=>{
+            item.value=item.companyName;
+          })
+        });
     },
     methods: {
       //复选下拉框框获取name
@@ -1191,6 +1273,22 @@
       }, 500 * Math.random());
       },
       createStateFilter(queryString) {
+        return (restaurants) => {
+          return (restaurants.value.toLowerCase().indexOf(queryString.toLowerCase()) != -1);
+        };
+      },
+      //设计单位搜索
+      querySjdw(queryString, cb) {
+        var restaurants = this.sjdwList;
+        var results = queryString ? restaurants.filter(this.createStateFilter2(queryString)) : restaurants;
+
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+          this.$forceUpdate();
+          cb(results);
+        }, 500 * Math.random());
+      },
+      createStateFilter2(queryString) {
         return (restaurants) => {
           return (restaurants.value.toLowerCase().indexOf(queryString.toLowerCase()) != -1);
         };

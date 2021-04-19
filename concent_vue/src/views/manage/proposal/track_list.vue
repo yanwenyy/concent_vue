@@ -3,8 +3,10 @@
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
         <el-button @click="add('')" plain :disabled="trackStatus!=null" type="primary"><i class="el-icon-circle-check"></i>跟踪</el-button>
+        <el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
         <el-button @click="add('fq')" :disabled="trackStatus!='1'" plain type="primary"><i class="el-icon-warning-outline"></i>放弃跟踪</el-button>
         <el-button @click="add('end')" :disabled="trackStatus!='1'" plain type="primary"><i class="el-icon-circle-close"></i>结束跟踪</el-button>
+        <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
       </el-button-group>
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
@@ -276,7 +278,7 @@
         <el-table-column
           :width="150"
           align="center"
-          label="状态"
+          label="跟踪状态"
           prop="trackStatus"
           show-overflow-tooltip
         >
@@ -290,13 +292,49 @@
 
                 class="list-search-picker"
                 style=" width: 100%"
-                v-model="searchform.flowStatus"
+                v-model="searchform.trackStatus"
                 size="mini"
               />
             </div>
           </template>
         </el-table-column>
-
+        <el-table-column
+          :width="150"
+          align="center"
+          label="审核状态"
+          prop="flowStatus"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
+          </template>
+          <template slot="header" slot-scope="scope">
+            <span>状态</span>
+            <div>
+              <el-select
+                class="list-search-picker"
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="searchform.flowStatus"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in flowStatusList"
+                ></el-option>
+              </el-select>
+              <!--<el-input-->
+              <!--class="list-search-picker"-->
+              <!--style=" width: 100%"-->
+              <!--v-model="searchform.flowStatus"-->
+              <!--size="mini"-->
+              <!--/>-->
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column
           :width="150"
           align="center"
@@ -388,6 +426,57 @@
       },
     },
     methods: {
+      // 修改
+      totop() {
+        if (this.multipleSelection.length !== 1) {
+          this.$message.info("请选择一条记录进行查看操作！");
+          return false;
+        }
+        if(this.multipleSelection[0].flowStatus=='2'||this.multipleSelection[0].flowStatus=='3'){
+          this.$message.info("此条数据不可修改！");
+          return false;
+        }
+        let p = {actpoint: "edit", instid: this.multipleSelection[0].uuid};
+        this.$router.push({
+          path: "./track_detail/",
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        });
+
+      },
+      // 删除
+      remove() {
+        if (this.multipleSelection.length < 1) {
+          this.$message.info("请选择一条记录进行查看操作！");
+          return false;
+        }
+        let uuids = [],itemStatus=true;
+        this.multipleSelection.forEach((item) => {
+          if(item.flowStatus==1||item.flowStatus==4){
+            uuids.push(item.topOrgId);
+          }else{
+            this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
+            return itemStatus=false;
+          }
+        })
+
+        if(itemStatus){
+          this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$http
+              .post(
+                "/api/contract/topInfo/TopInfor/list/delete",{ids: uuids}
+
+              )
+              .then((res) => {
+                this.getData()
+              });
+          }).catch(() => {})
+        }
+
+      },
       //工程类别二级
       getTwo(id) {
         this.searchform.enginTypeSecondId='';
