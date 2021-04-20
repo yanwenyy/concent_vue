@@ -444,7 +444,7 @@
        <el-divider content-position="left" class="detailDivider">资审信息</el-divider>
 
         <!-- --------------------------------------------------------------- -->
-       <el-form-item
+        <el-form-item
          label="招标方式:"
          class="formItem"
        >
@@ -470,6 +470,18 @@
                 ></el-option>
               </el-select>
             </el-form-item>
+        <el-form-item
+          v-if="detailform.verify.flowStatus!=3&&detailform.verify.lateRegist=='0'"
+          label="是否逾期记录:"
+          class="formItem"
+        >
+          <el-switch
+            disabled
+            v-model="detailform.verify.lateRegist"
+            active-value="0"
+            inactive-value="1"
+          />
+      </el-form-item>
             <br>
         <el-form-item
           label="资格预审公告发布日期:"
@@ -498,6 +510,7 @@
         }"
         >
           <el-date-picker
+            @change="ifYq"
             clearable
             :disabled="p.actpoint === 'look'||p.actpoint=='task'"
             value-format="timestamp"
@@ -515,6 +528,7 @@
           required: true, message: '此项不能为空', trigger: 'blur'
         }">
           <el-date-picker
+            @change="ifYq"
             clearable
             :disabled="p.actpoint === 'look'||p.actpoint=='task'"
             value-format="timestamp"
@@ -567,7 +581,7 @@
 
 
 
-<div>
+            <div>
             <el-form-item
             class="neirong"
               label="资审说明(最多1000字):"
@@ -589,6 +603,29 @@
                 v-model="detailform.verify.verifyExplain"
               />
             </el-form-item>
+            </div>
+            <div>
+              <el-form-item
+                v-if="detailform.verify.flowStatus!=3&&detailform.verify.lateRegist=='0'"
+                class="neirong"
+                label="逾期原因:"
+                prop="verify.overdueReason"
+                :rules="{
+                      required: true,
+                      message: '此项不能为空',
+                      trigger: 'blur',
+                    }"
+              >
+                <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+                  placeholder="请输入"
+                  type="textarea"
+                  size="mini"
+                  v-model="detailform.verify.overdueReason"
+                />
+              </el-form-item>
             </div>
       <div>
 
@@ -980,6 +1017,17 @@ export default {
 
   },
   methods: {
+    //判断是否逾期
+    ifYq(){
+      if(this.detailform.verify.saleTime||this.detailform.verify.subTime){
+        if(this.detailform.verify.saleTime>this.detailform1.topInfoOrg.trackingTime||this.detailform.verify.subTime>this.detailform1.topInfoOrg.createTime){
+
+          this.detailform.verify.lateRegist='1'
+        }else{
+          this.detailform.verify.lateRegist='0'
+        }
+      }
+    },
       //打开附件上传的组件
       openFileUp(url,list){
         this.uploadVisible = true;
@@ -1399,6 +1447,7 @@ export default {
             verifyOrgLists:datas.verifyOrgLists,
             commonFilesList:datas.commonFilesList||[],
           };
+          this.ifYq();
           // console.log( JSON.stringify(this.detailform.verifySectionList))
           // console.log( JSON.stringify(this.detailform.topInfor))
         })
@@ -1429,6 +1478,7 @@ export default {
           topInfoSiteList: datas.topInfoSiteList,
           topInfoSectionList: datas.topInfoSectionList,
         }
+        this.ifYq();
         //alert( JSON.stringify(this.detailform1.topInfoSiteList))
       });
   },

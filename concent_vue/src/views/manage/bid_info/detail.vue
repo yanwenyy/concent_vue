@@ -617,12 +617,26 @@
               class="formItem1"
               label="外部联合体单位:"
             >
-              <el-input
+              <!--<el-input-->
+                <!--:disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"-->
+                <!--clearable-->
+                <!--placeholder="外部联合体单位"-->
+                <!--v-model="detailform.bidInfo.outOrg"-->
+              <!--/>-->
+              <el-select
                 :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"
                 clearable
-                placeholder="外部联合体单位"
+                filterable
+                placeholder="请选择"
                 v-model="detailform.bidInfo.outOrg"
-              />
+              >
+                <el-option
+                  :key="index"
+                  :label="item.companyName"
+                  :value="item.companyName"
+                  v-for="(item, index) in sjdwList"
+                ></el-option>
+              </el-select>
             </el-form-item>
 
           </div>
@@ -937,7 +951,7 @@
               </template> -->
               <template slot-scope="scope">
                 <span v-for="(item, index) in scope.row.bidInfoSectionOrgList">
-                  {{ item.orgType == 1 ? item.orgName : "" }}
+                  {{ item.orgType == 2 ? item.orgName : "" }}
                   {{
                     scope.row.bidInfoSectionOrgList[index + 1] &&
                     index > 0 &&
@@ -1123,6 +1137,7 @@ export default {
       BDCSVisible: false, //标段新增弹框状态
       DwVisible: false, //选择单位弹框状态
       options1: [{ label: "值", value: "111" }],
+      sjdwList:[],//共享单位库
       detailform: {
         bidInfo: {},
         bidInfoInnerOrgList: [],
@@ -1555,6 +1570,14 @@ export default {
     if (this.p.actpoint === "edit" || this.p.actpoint === "look" || this.id) {
       this.getDetail();
     }
+    //共享单位库列表
+    this.$http
+      .post(
+        "/api/contract/Companies/detail/findCompanies",
+      )
+      .then((res) => {
+        this.sjdwList = res.data.data;
+      });
   },
 };
 </script>
