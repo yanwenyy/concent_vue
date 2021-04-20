@@ -13,7 +13,7 @@ let Route = new Router({
   routes: [{
     path: '/',
     component: App,
-    redirect: 'manage/proposal/list'
+    redirect: 'manage/proposal/importList'
   }]
 })
 Route.beforeEach(function(to, from, next) {
