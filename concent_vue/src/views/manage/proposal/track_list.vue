@@ -283,10 +283,10 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-             {{scope.row.trackStatus==1?'跟踪中':scope.row.trackStatus==2?'放弃跟踪':scope.row.trackStatus==3?'结束跟踪':'待跟踪'}}
+             {{scope.row.trackStatus==1?'持续跟踪中':scope.row.trackStatus==2?'放弃跟踪':scope.row.trackStatus==3?'结束跟踪':scope.row.trackStatus==4?'资审中':scope.row.trackStatus==5?'资审通过待投标':scope.row.trackStatus==6?'资审未通过':scope.row.trackStatus==7?'投标中':scope.row.trackStatus==8?'已开标':scope.row.trackStatus==9?'中标未新签':scope.row.trackStatus==10?'中标已新签':scope.row.trackStatus==11?'未中标':scope.row.trackStatus==12?'废标':scope.row.trackStatus==13?'流标':'待跟踪'}}
           </template>
           <template slot="header" slot-scope="scope">
-            <span>状态</span>
+            <span>跟踪状态</span>
             <div>
               <el-input
 
@@ -309,7 +309,7 @@
              {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
           </template>
           <template slot="header" slot-scope="scope">
-            <span>状态</span>
+            <span>审核状态</span>
             <div>
               <el-select
                 class="list-search-picker"
