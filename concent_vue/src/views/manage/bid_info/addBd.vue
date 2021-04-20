@@ -277,28 +277,31 @@
             show-overflow-tooltip
             label="其他投标单位(系统内)">
             <template slot-scope="scope">
-              <el-select
-                clearable
-                filterable
-                placeholder="请选择"
-                v-model="scope.row.orgId"
-                  @change="
-                  getBdName(
-                    scope.row.orgId,
-                    detailForm.dataList,
-                    scope.$index
-                  )
-                "
-                :disabled="type === 'look'"
+              <!--<el-select-->
+                <!--clearable-->
+                <!--filterable-->
+                <!--placeholder="请选择"-->
+                <!--v-model="scope.row.orgId"-->
+                  <!--@change="-->
+                  <!--getBdName(-->
+                    <!--scope.row.orgId,-->
+                    <!--detailForm.dataList,-->
+                    <!--scope.$index-->
+                  <!--)-->
+                <!--"-->
+                <!--:disabled="type === 'look'"-->
 
-              >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in nameList"
-                ></el-option>
-              </el-select>
+              <!--&gt;-->
+                <!--<el-option-->
+                  <!--:key="index"-->
+                  <!--:label="item.detailName"-->
+                  <!--:value="item.id"-->
+                  <!--v-for="(item, index) in nameList"-->
+                <!--&gt;</el-option>-->
+              <!--</el-select>-->
+              <el-input  placeholder="请输入内容" v-model="scope.row.orgName" class="input-with-select" :disabled="type === 'look'">
+                <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('其他投标单位(系统内)',scope.row.orgId,false,scope.$index,detailForm.dataList)" ></el-button>
+              </el-input>
             </template>
           </el-table-column>
 
@@ -381,11 +384,12 @@
               >
                 <el-option
                   :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in nameList"
+                  :label="item.companyName"
+                  :value="item.uuid"
+                  v-for="(item, index) in sjdwList"
                 ></el-option>
               </el-select>
+
             </template>
           </el-table-column>
 
@@ -483,6 +487,7 @@ import { isMoney } from '@/utils/validate'
         dataListLoading: false,
         dataListSelections: [],
         currentRow: '',
+        sjdwList:[],//共享单位库
         nameList:[
           {
           id:'0',
@@ -501,7 +506,14 @@ import { isMoney } from '@/utils/validate'
       }
     },
     mounted() {
-
+      //共享单位库列表
+      this.$http
+        .post(
+          "/api/contract/Companies/detail/findCompanies",
+        )
+        .then((res) => {
+          this.sjdwList = res.data.data;
+        });
     },
     computed:{
       bidMethod (){
@@ -515,9 +527,8 @@ import { isMoney } from '@/utils/validate'
         console.log(id,list,index)
         if(id){
           this.$forceUpdate()
-          list[index].orgName=this.nameList.find(
-            (item) => item.id == id
-        ).detailName;
+          list[index].orgName=this.sjdwList.find(
+            (item) => item.uuid == id).companyName;
         }
       },
       //获取标段名称
@@ -534,17 +545,17 @@ import { isMoney } from '@/utils/validate'
         this.visible = false;
       },
     //打开单位弹框
-    addDw(type,list){
+    addDw(type,list,ifChek,index,tableList){
       this.DwVisible = true;
       this.$nextTick(() => {
-        this.$refs.infoDw.init(type,list);
+        this.$refs.infoDw.init(type,list,ifChek,index,tableList);
       })
     },
     //获取单位的值
     getDwInfo(data){
       console.log(data);
       var id=[],name=[];
-      if(data){
+      if(data&&data.type!="其他投标单位(系统内)"){
         data.forEach((item)=>{
           id.push(item.id);
           name.push(item.detailName);
@@ -556,6 +567,10 @@ import { isMoney } from '@/utils/validate'
       }else if(data.type=="编标拟配合单位"){
         this.detailForm.bidInfoSection.orgId=id.join(",");
         this.detailForm.bidInfoSection.orgName=name.join(",");
+      }else if(data.type=="其他投标单位(系统内)"){
+        this.$forceUpdate()
+        this.detailForm.dataList[data.index].orgId=data.code;
+        this.detailForm.dataList[data.index].orgName=data.name;
       }
       this.DwVisible=false;
     },

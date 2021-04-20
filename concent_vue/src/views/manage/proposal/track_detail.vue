@@ -94,13 +94,14 @@
                 <!--&gt;</el-option>-->
               <!--</el-select>-->
               <template>
-                <el-radio-group class="detail-radio-group" v-model="detailform.topInfor.moduleId"  @change="getName(detailform.topInfor.moduleId, projectPlate, 'moduleName')">
-                  <el-radio disabled  v-for="(item, index) in projectPlate" :label="item.id" :key="index">{{item.detailName}}</el-radio>
+                <el-radio-group class="detail-radio-group" v-model="detailform.topInfor.moduleId"  @change="getName(detailform.topInfor.moduleId, projectPlate, 'moduleName','moduleCode')">
+                  <el-radio disabled  v-for="(item, index) in projectPlate" :label="item.id" :key="index" v-if="item.id=='7f4fcba4255b43a8babf15afd6c04a53'||item.id=='f6823a41e9354b81a1512155a5565aeb'||item.id=='510ba0d79593418493eb1a11ed3e7df4'">{{item.detailName}}</el-radio>
                 </el-radio-group>
               </template>
             </el-form-item>
           </div>
           <el-form-item
+            v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null"
             label="工程类别(一级):"
             prop="topInfor.enginTypeFirstId"
           >
@@ -122,6 +123,7 @@
             </el-select>
           </el-form-item>
           <el-form-item
+            v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null"
             label="工程类别(二级):"
             prop="topInfor.enginTypeSecondId"
           >
@@ -130,12 +132,13 @@
               clearable
               filterable
               placeholder="请选择"
-
+              @clear="clear(detailform.topInfor.enginTypeSecondId,detailform.topInfor.enginTypeSecondName)"
               @change="
                 getName(
                   detailform.topInfor.enginTypeSecondId,
                   xqprojectType,
-                  'enginTypeSecondName'
+                  'enginTypeSecondName',
+                  'enginTypeSecondCode'
                 )
               "
               v-model="detailform.topInfor.enginTypeSecondId"
@@ -149,35 +152,37 @@
             </el-select>
           </el-form-item>
           <el-form-item
-            v-if="detailform.topInfor.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
-          label="所属线路:"
-          prop="topInfor.belongLineId"
-        >
-          <el-select
-            disabled
-            filterable
-            clearable
-            placeholder="请选择或直接填写所属现路"
+            v-if="(detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null)&&detailform.topInfor.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
+            label="所属线路:"
+            prop="topInfor.belongLineId"
+          >
+            <el-select
+              disabled
+              filterable
+              clearable
+              placeholder="请选择或直接填写所属现路"
 
-            @change="
+              @change="
                 getName(
                   detailform.topInfor.belongLineId,
                   railwayLine,
-                  'belongLineName'
+                  'belongLineName',
+                  'belongLineCode'
                 )
               "
-            v-model="detailform.topInfor.belongLineId"
-          >
-            <el-option
-              :key="index"
-              :label="item.detailName"
-              :value="item.id"
-              v-for="(item, index) in railwayLine"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-          <br>
+              v-model="detailform.topInfor.belongLineId"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.id"
+                v-for="(item, index) in railwayLine"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <br v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null">
           <el-form-item
+            v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null"
             label="项目性质(一级):"
             prop="topInfor.projectNatureFirstId"
           >
@@ -199,6 +204,7 @@
             </el-select>
           </el-form-item>
           <el-form-item
+            v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null"
             label="项目性质(二级):"
             prop="topInfor.projectNatureSecondId"
           >
@@ -207,12 +213,14 @@
               clearable
               filterable
               placeholder="请选择"
-
+              @clear="clear(detailform.topInfor.projectNatureSecondId,detailform.topInfor.projectNatureSecondName)"
               @change="
                   getName(
                     detailform.topInfor.projectNatureSecondId,
                     projectNatureTwo,
-                    'projectNatureSecondName'
+                    'projectNatureSecondName',
+                    'projectNatureSecondCode'
+
                   )
                 "
               v-model="detailform.topInfor.projectNatureSecondId"
@@ -225,7 +233,51 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <br>
+          <br v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null">
+          <el-form-item
+            v-if="detailform.topInfor.moduleId=='510ba0d79593418493eb1a11ed3e7df4'"
+            label="供应产品"
+            prop="topInfor.supplyProductName"
+            :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'blur',
+                }"
+          >
+            <el-input
+              disabled
+
+              v-model="detailform.topInfor.supplyProductName"
+            />
+          </el-form-item>
+          <el-form-item
+            v-if="detailform.topInfor.moduleId=='510ba0d79593418493eb1a11ed3e7df4'"
+            label="采购性质:"
+            prop="topInfor.purchaseNatureId"
+          >
+            <el-select
+              disabled
+              filterable
+              clearable
+              @change="
+                getName(
+                  detailform.topInfor.purchaseNatureId,
+                  purchaseNature,
+                  'purchaseNatureName',
+                  'purchaseNatureCode'
+                )
+              "
+              v-model="detailform.topInfor.purchaseNatureId"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.id"
+                v-for="(item, index) in purchaseNature"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <br v-if="detailform.topInfor.moduleId=='510ba0d79593418493eb1a11ed3e7df4'">
           <el-form-item
             label="新兴市场(一级):"
             prop="topInfor.marketFirstNameId"
