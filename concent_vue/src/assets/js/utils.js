@@ -231,7 +231,7 @@ export default {
   },
   //首页代办任务跳转
   getUrl:{
-    'contract_project_new':'/manage/proposal/detail',
+    'contract_project_new':'/manage/proposal/track_detail',
     'contract_project_change':'/manage/proposal/infoChangeDetail',
     'contract_qual_new':'/manage/verify/detail',
     'contract_qual_change':'/manage/verify/detail_Chang',
