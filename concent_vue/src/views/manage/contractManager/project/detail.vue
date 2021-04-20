@@ -341,7 +341,7 @@
             <el-form-item
               v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
               label="建设单位"
-              prop="contractInfo.constructionOrgId"
+              prop="contractInfo.constructionOrg"
               :rules="{
               required: true,
               message: '此项不能为空',
@@ -6698,6 +6698,7 @@ export default {
           var datas=res.data.data;
         this.detailform.searchProject=true;
         this.detailform.contractInfo.topInforId=data.data.uuid;
+        this.detailform.contractInfo.topInfoId=datas.topInfor.uuid;
         var _con={};
         this.getTwo(datas.topInfor.enginTypeFirstId);
         this.getTwoSC(datas.topInfor.marketFirstNameId);
