@@ -506,6 +506,18 @@
                 ></el-option>
               </el-select>
             </el-form-item>
+            <el-form-item
+              v-if="detailform.bidInfo.lateRegist=='0'"
+              label="是否逾期记录:"
+              class="formItem"
+            >
+              <el-switch
+                disabled
+                v-model="detailform.bidInfo.lateRegist"
+                active-value="0"
+                inactive-value="1"
+              />
+            </el-form-item>
               <br>
 
             <el-form-item
@@ -530,6 +542,7 @@
 
               <el-form-item class="formItem" label="招标文件发售截止日期">
               <el-date-picker
+                @change="ifYq"
                 :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint=='task'"
                 value-format="timestamp"
                 filterable
@@ -545,6 +558,7 @@
               prop="bidInfo.endTime"
             >
               <el-date-picker
+                @change="ifYq"
                 :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint=='task'"
                 value-format="timestamp"
                 clearable
@@ -654,6 +668,29 @@
                 clearable
                 placeholder="请输入"
                 v-model="detailform.bidInfo.bidExplain"
+              />
+            </el-form-item>
+          </div>
+          <div>
+            <el-form-item
+              v-if="detailform.bidInfo.lateRegist=='0'"
+              class="neirong"
+              label="逾期原因:"
+              prop="bidInfo.overdueReason"
+              :rules="{
+                      required: true,
+                      message: '此项不能为空',
+                      trigger: 'blur',
+                    }"
+            >
+              <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
+                placeholder="请输入"
+                type="textarea"
+                size="mini"
+                v-model="detailform.bidInfo.overdueReason"
               />
             </el-form-item>
           </div>
@@ -1202,6 +1239,17 @@ export default {
     // }
   },
   methods: {
+    //判断是否逾期
+    ifYq(){
+      if(this.detailform.bidInfo.saleTime||detailform.bidInfo.subTime){
+        if(this.detailform.bidInfo.saleTime>this.detailform.bidInfo.trackingTime||this.detailform.bidInfo.endTime>this.detailform.bidInfo.createTime){
+
+          this.detailform.bidInfo.lateRegist='1'
+        }else{
+          this.detailform.bidInfo.lateRegist='0'
+        }
+      }
+    },
     //打开附件上传的组件
     openFileUp(url,list){
       this.uploadVisible = true;

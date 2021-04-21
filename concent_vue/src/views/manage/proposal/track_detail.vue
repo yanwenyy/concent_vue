@@ -1147,7 +1147,6 @@
                     v-if="p.actpoint!='add'"
                     width="80">
                     <template slot-scope="scope">
-                      {{scope.row.isTrack}}
                       <el-switch
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         class="inline-formitem-switch"
@@ -1349,7 +1348,6 @@
       },
       //设置是否为跟踪标段
       setMain(i,list){
-        console.log(list)
         list.forEach((item,index)=>{
           if(index!=i){
             item.isTrack="0"
