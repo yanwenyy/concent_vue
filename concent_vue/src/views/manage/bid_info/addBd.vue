@@ -105,22 +105,7 @@
           </el-input> -->
         </el-form-item>
 
-        <el-form-item label="编标拟配合单位:" class="list-item">
-           <el-input  placeholder="请输入内容" v-model="detailForm.bidInfoSection.orgName" class="input-with-select" :disabled="type === 'look'">
-            <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('编标拟配合单位',detailForm.bidInfoSection.orgId)" ></el-button>
-          </el-input>
-          <!-- <el-input
-          v-model="detailForm.bidInfoSection.orgName"
-          placeholder="编标拟配合单位"
-          clearable
-          :disabled="type === 'look'">
-            <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="selectPosition()"
-          ></el-button>
-          </el-input> -->
-        </el-form-item>
+
         <br>
 
         <el-form-item label="投标保证金(万元):" class="list-item" prop="bidInfoSection.tenderSecurity"  :rules="rules.contractAmount">
@@ -236,6 +221,22 @@
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
           </el-input>
+        </el-form-item>
+        <el-form-item label="编标拟配合单位:" class="list-item">
+          <el-input  placeholder="请输入内容" v-model="detailForm.bidInfoSection.orgName" class="input-with-select" :disabled="type === 'look'">
+            <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('编标拟配合单位',detailForm.bidInfoSection.orgId)" ></el-button>
+          </el-input>
+          <!-- <el-input
+          v-model="detailForm.bidInfoSection.orgName"
+          placeholder="编标拟配合单位"
+          clearable
+          :disabled="type === 'look'">
+            <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="selectPosition()"
+          ></el-button>
+          </el-input> -->
         </el-form-item>
 <br>
         <el-form-item label="其他未列出单位(单位与单位之间用英文逗号隔开):" >

@@ -1492,14 +1492,14 @@
       },
       //设置是否为跟踪标段
       setTrack(i,list){
-    list.forEach((item,index)=>{
-      if(index==i){
-        item.isTrack="1"
-      }else{
-        item.isTrack="0"
-      }
-    });
-  },
+        list.forEach((item,index)=>{
+          list.forEach((item,index)=>{
+            if(index!=i){
+              item.isTrack="0"
+            }
+          });
+        });
+      },
       //设置主地点
       setMain(i,list){
         list.forEach((item,index)=>{
