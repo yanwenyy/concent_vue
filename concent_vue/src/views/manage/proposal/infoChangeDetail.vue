@@ -1316,8 +1316,9 @@
                       inactive-color="#ddd"
                       active-value="1"
                       inactive-value="0"
-                      @change="setTrack(scope.$index,detailform.topInfoSectionList)"
+
                     >
+                      <!--@change="setTrack(scope.$index,detailform.topInfoSectionList)"-->
                     </el-switch>
                   </template>
                 </el-table-column>
