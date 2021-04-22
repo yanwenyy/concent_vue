@@ -6698,7 +6698,6 @@ export default {
           var datas=res.data.data;
         this.detailform.searchProject=true;
         this.detailform.contractInfo.topInforId=data.data.uuid;
-        this.detailform.contractInfo.topInfoId=datas.topInfor.uuid;
         var _con={};
         this.getTwo(datas.topInfor.enginTypeFirstId);
         this.getTwoSC(datas.topInfor.marketFirstNameId);
