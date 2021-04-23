@@ -26,6 +26,7 @@
                 )"
             :disabled="type === 'look'">
           <el-option
+              v-if="item.isTrack=='1'"
               :key="index"
               :label="item.sectionName"
               :value="item.uuid"
@@ -34,7 +35,7 @@
             </el-select>
         </el-form-item>
 
-        <el-form-item label="评标办法:" class="list-item">
+        <el-form-item v-if="ifkb!='kbxq'" label="评标办法:" class="list-item">
                 <template slot-scope="scope">
                  <el-select
                 clearable
@@ -60,7 +61,44 @@
                 </el-select>
               </template>
         </el-form-item>
+        <el-form-item v-if="ifkb=='kbxq'" label="评标办法:" class="list-item">
+          <template slot-scope="scope">
+            <el-select
+              clearable
+              placeholder="评标办法"
+              size="mini"
+              :disabled="type === 'look'&&ifkb!='kbxq'"
+              @change="
+                getName(
+                  detailForm.bidInfoSection.bidEvaluationMethodId,
+                  bidMethod,
+                  'bidEvaluationMethodName',
+                  'bidEvaluationMethodCode'
+                )
+              "
+              v-model="detailForm.bidInfoSection.bidEvaluationMethodId">
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.id"
+                v-for="(item, index) in bidMethod"
 
+              ></el-option>
+            </el-select>
+          </template>
+        </el-form-item>
+        <el-form-item v-if="ifkb=='kbxq'" label="开标金额(万元):" class="list-item" prop="bidInfoSection.riskFee"  :rules="rules.contractAmount">
+          <el-input
+            v-model="detailForm.bidInfoSection.riskFee"
+            clearable
+            placeholder="投标保证金(万元)"
+            :disabled="type === 'look'&&ifkb!='kbxq'"
+          >
+            <template slot="prepend">¥</template>
+            <template slot="append">(万元)</template>
+          </el-input>
+          <!-- <el-input v-model="detailForm.bidInfoSection.tenderSecurity" placeholder="投标保证金(万元)" clearable></el-input> -->
+        </el-form-item>
         <el-form-item label="开标地点:" class="list-item">
           <el-input v-model="detailForm.bidInfoSection.openBidPlaceName"
           placeholder="开标地点"
@@ -306,22 +344,23 @@
             </template>
           </el-table-column>
 
-          <!-- <el-table-column
+          <el-table-column
             prop="bidAmount"
             header-align="center"
             align="center"
-            label="投标价"
+            label="开标价"
             width="475"
+            v-if="ifkb=='kbxq'"
             >
              <template slot-scope="scope">
-                <el-form-item class="tabelForm bd-table-item" :prop="'dataList.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
-                 <el-input type="text" v-model="scope.row.bidAmount" :disabled="type === 'look'">
+                <el-form-item class="tabelForm bd-table-item" :prop="'dataList.' + scope.$index + '.riskFee'" :rules='rules.contractAmount'>
+                 <el-input type="text" v-model="scope.row.riskFee" :disabled="type === 'look'&&ifkb!='kbxq'">
                     <template slot="prepend">¥</template>
                     <template slot="append">(万元)</template>
                   </el-input>
                 </el-form-item>
               </template>
-          </el-table-column> -->
+          </el-table-column>
 
           <el-table-column
             :resizable="false"
@@ -410,7 +449,23 @@
                 </el-form-item>
               </template>
           </el-table-column> -->
-
+          <el-table-column
+            prop="bidAmount"
+            header-align="center"
+            align="center"
+            label="开标价"
+            width="475"
+            v-if="ifkb=='kbxq'"
+          >
+            <template slot-scope="scope">
+              <el-form-item class="tabelForm bd-table-item" :prop="'dataList.' + scope.$index + '.riskFee'" :rules='rules.contractAmount'>
+                <el-input type="text" v-model="scope.row.riskFee" :disabled="type === 'look'&&ifkb!='kbxq'">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+            </template>
+          </el-table-column>
           <el-table-column
             :resizable="false"
             fixed="right"
@@ -431,6 +486,7 @@
     <div slot="footer" class="dialog-footer">
       <el-button @click="close">取消</el-button>
       <el-button v-if="type!='look'" type="primary" @click="sub()">确定</el-button>
+      <el-button v-if="ifkb=='kbxq'" type="primary" @click="sub()">确定</el-button>
     </div>
 
     </el-dialog>
@@ -478,6 +534,7 @@ import { isMoney } from '@/utils/validate'
           dataList2: []
 
         },
+        ifkb:'',
         type:'',
         index:'',
         bdName:[],
@@ -622,7 +679,7 @@ import { isMoney } from '@/utils/validate'
 
       },
       // 初始化
-      init(list,isBidRates,type,detail,index) {
+      init(list,isBidRates,type,detail,index,ifkb) {
 
         this.detailForm={
             bidInfoSection:{},
@@ -637,6 +694,7 @@ import { isMoney } from '@/utils/validate'
         this.visible = true;
         this.bdName=list||[];
         this.isBidRates=isBidRates;
+        this.ifkb=ifkb;
         if(type=='edit'||type=='look'){
 
           detail.bidInfoSectionOrgList.forEach((item, index) => {

@@ -243,6 +243,15 @@ export default {
                   'defaultpage': true
                 },
                 {
+                  'name': '开标信息登记',
+                  'path': '/manage/bid_info/KBlist',
+                  'component': '/manage/bid_info/KBlist',
+                  'iconCls': 'el-icon-notebook-2',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
                   'name': '中标结果登记',
                   'path': '/manage/bid_info/Winning_bid_z',
                   'component': '/manage/bid_info/Winning_bid_z',

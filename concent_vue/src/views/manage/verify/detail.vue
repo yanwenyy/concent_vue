@@ -1004,7 +1004,11 @@ export default {
     }
   },
   computed: {
-
+    topInfoSectionList(){
+      return this.detailform1.topInfoSectionList.filter((data) => {
+        return data.isTrack== '1'
+      })
+    },
     bidType () {
       return this.$store.state.bidType
     },

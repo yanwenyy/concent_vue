@@ -1239,10 +1239,23 @@ export default {
     // }
   },
   methods: {
+    //两个时间戳之间相隔的天数
+    getDaysAndHours(startTime,endTime){
+      let timeDiff = endTime - startTime;  // 时间差的毫秒数
+      // timeDiff = 时间戳差值
+
+      let days = Math.floor(timeDiff / (24 * 3600 * 1000)); // 计算出天数
+      let leavel1 = timeDiff % (24 * 3600 * 1000); // 计算天数后剩余的时间
+      let hours = Math.floor(leavel1 / (3600 * 1000)); // 计算天数后剩余的小时数
+      // let leavel2 = timeDiff % (3600 * 1000); // 计算剩余小时后剩余的毫秒数
+      // let minutes = Math.floor(leavel2 / (60 * 1000)); // 计算剩余的分钟数
+
+      return days;
+    },
     //判断是否逾期
     ifYq(){
       if(this.detailform.bidInfo.saleTime||detailform.bidInfo.subTime){
-        if(this.detailform.bidInfo.saleTime>this.detailform.bidInfo.trackingTime||this.detailform.bidInfo.endTime>this.detailform.bidInfo.createTime){
+        if(this.detailform.bidInfo.saleTime>this.detailform.bidInfo.trackingTime||this.getDaysAndHours(this.detailform.bidInfo.endTime,this.detailform.bidInfo.createTime)>15){
 
           this.detailform.bidInfo.lateRegist='1'
         }else{

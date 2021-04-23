@@ -204,6 +204,8 @@
           url='/api/contract/topInfo/BidInfo/changeProcess/recall'
         }else  if(val.businessType=='contract_contract_change'){
           url='/api/contract/contract/ContractInfo/changeProcess/recall'
+        }else  if(val.businessType=='contract_bid_register'){
+          url='/api/contract/topInfo/BidInfo/bidProcess/recall'
         }
         this.$http
           .post(

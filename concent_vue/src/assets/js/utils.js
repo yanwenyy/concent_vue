@@ -237,6 +237,7 @@ export default {
     'contract_qual_change':'/manage/verify/detail_Chang',
     'contract_bid_new':'/manage/bid_info/detail',
     'contract_bid_change':'/manage/bid_info/InfoChangeDetail',
+    'contract_bid_register':'/manage/bid_info/Winning_bidKB',
     'contract_contract_new@7f4fcba4255b43a8babf15afd6c04a53':'/manage/contractManager/project/detail',
     'contract_contract_change@7f4fcba4255b43a8babf15afd6c04a53':'/manage/contractManager/project/changeDetail',
     'contract_contract_new@f6823a41e9354b81a1512155a5565aeb':'/manage/contractManager/design/detail',
