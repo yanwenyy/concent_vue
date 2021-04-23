@@ -404,6 +404,10 @@ export default {
           this.$message.info("请选择一条记录进行修改操作！");uuid
           return false;
         }
+        if(this.multipleSelection[0].flowStatus=='6'||this.multipleSelection[0].flowStatus=='7'){
+          this.$message.info("此条数据不可修改！");
+          return false;
+        }
         let p = {actpoint: "edit", instid: this.multipleSelection[0].uuid};
         this.$router.push({
           path: "./detail/",
@@ -434,7 +438,7 @@ export default {
         }
         let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          if(item.flowStatus==1||item.flowStatus==4){
+          if(item.flowStatus==5||item.flowStatus==8){
             uuids.push(item.uuid);
           }else{
             this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
