@@ -464,20 +464,6 @@ export default {
         }
 
       },
-
-
-    // 查讯
-        getData() {
-        this.$http
-          .post(
-            "/api/contract/topInfo/BidInfo/list/loadPageDataOpenBid",
-            this.searchform
-          )
-          .then((res) => {
-            this.page = res.data.data;
-          });
-      },
-
     rowshow(row) {
       var id=row.flowStatus==null?row.topInfoOrgId:row.uuid;
       let p = { actpoint: "look", instid: id ,flowStatus:row.flowStatus,uuid:row.uuid};
@@ -534,7 +520,7 @@ export default {
     getData() {
       this.$http
         .post(
-         "/api/contract/topInfo/BidInfo/detail/loadPageDataForReg",
+         "/api/contract/topInfo/BidInfo/list/loadPageDataOpenBid",
           this.searchform
         )
         .then((res) => {
