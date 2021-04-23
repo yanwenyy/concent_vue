@@ -9,6 +9,8 @@
         <el-button @click="add" type="primary" plain>计统项目信息</el-button>
         <el-button @click="add" type="primary" plain>非工程月报</el-button>
         <el-button @click="addPlan" type="primary" plain>项目计划</el-button>
+        <el-button @click="addReport" type="primary" plain>工程月报</el-button>
+        <el-button @click="addCheck" type="primary" plain>工程月报验工计价</el-button>
       </el-button-group>
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none">重置</el-button>
@@ -430,6 +432,36 @@
 
                     }
                 });
+      },
+      //添加工程月报
+      addReport(){
+        this.$http.post(
+            "/api/datamigration/PrjPlanAndReportMonth/movedate/prjReprot",
+            JSON.stringify({
+              dataMigration:{},
+            }),
+            { useJson: true }
+        )
+            .then((res) => {
+              if (res.data.code === 200) {
+
+              }
+            });
+      },
+      //添加工程月报验工计价
+      addCheck(){
+        this.$http.post(
+            "/api/datamigration/PrjPlanAndReportMonth/movedate/prjCheck",
+            JSON.stringify({
+              dataMigration:{},
+            }),
+            { useJson: true }
+        )
+            .then((res) => {
+              if (res.data.code === 200) {
+
+              }
+            });
       },
       // 修改
         totop() {
