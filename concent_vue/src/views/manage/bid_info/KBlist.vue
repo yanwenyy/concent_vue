@@ -182,14 +182,14 @@
 
           show-overflow-tooltip>
           <template slot-scope="scope">
-              {{scope.row.flowStatus==5?'草稿':scope.row.flowStatus==6?'审核中':scope.row.flowStatus==7?'审核通过':scope.row.flowStatus==8?'审核退回':'待登记'}}
+              {{scope.row.bidFlowStatus==1?'草稿':scope.row.bidFlowStatus==2?'审核中':scope.row.bidFlowStatus==3?'审核通过':scope.row.bidFlowStatus==4?'审核退回':'待登记'}}
           </template>
           <template slot="header" slot-scope="scope">
             <span>状态</span>
             <div>
               <el-input
                 style=" width: 100%"
-                v-model="searchform.flowStatus"
+                v-model="searchform.bidFlowStatus"
                 size="mini"/>
             </div>
           </template>
@@ -362,7 +362,7 @@ export default {
       //行选择的时候
       rowSelect(selection, row){
         if(selection.indexOf(row)!=-1){
-          this.flowStatus=row.flowStatus;
+          this.flowStatus=row.bidFlowStatus;
         }else{
           this.flowStatus='';
         }
@@ -404,10 +404,6 @@ export default {
           this.$message.info("请选择一条记录进行修改操作！");uuid
           return false;
         }
-        if(this.multipleSelection[0].flowStatus=='6'||this.multipleSelection[0].flowStatus=='7'){
-          this.$message.info("此条数据不可修改！");
-          return false;
-        }
         let p = {actpoint: "edit", instid: this.multipleSelection[0].uuid};
         this.$router.push({
           path: "./detail/",
@@ -438,7 +434,7 @@ export default {
         }
         let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          if(item.flowStatus==5||item.flowStatus==8){
+          if(item.bidFlowStatus==1||item.bidFlowStatus==4){
             uuids.push(item.uuid);
           }else{
             this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
@@ -466,7 +462,7 @@ export default {
       },
     rowshow(row) {
       var id=row.flowStatus==null?row.topInfoOrgId:row.uuid;
-      let p = { actpoint: "look", instid: id ,flowStatus:row.flowStatus,uuid:row.uuid};
+      let p = { actpoint: "look", instid: id ,flowStatus:row.bidFlowStatus,uuid:row.uuid};
       this.$router.push({
         path: "./detail/",
         query: { p: this.$utils.encrypt(JSON.stringify(p)) },
