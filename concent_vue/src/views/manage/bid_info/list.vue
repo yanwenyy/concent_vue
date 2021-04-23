@@ -233,29 +233,6 @@
             </div>
           </template>
         </el-table-column>
-
-        <el-table-column
-          :width="150"
-          align="center"
-          label="登记时间"
-          prop="planBidTime"
-          show-overflow-tooltip>
-          <template slot="header" slot-scope="scope">
-            <span>登记时间</span>
-            <div>
-            <el-date-picker
-              style=" width: 100%"
-              v-model="searchform.planBidTime"
-              size="mini"
-              value-format="timestamp"
-              >
-              </el-date-picker>
-            </div>
-          </template>
-            <template slot-scope="scope">{{
-            scope.row.createtime | dateformat
-          }}</template>
-        </el-table-column>
         <el-table-column
           :width="150"
           align="center"
