@@ -1426,7 +1426,10 @@ export default {
     },
     // 详情信息
     getDetail() {
-        var q=this.p.actpoint === "addk"?{id:this.id}:{topInfoOrgId:this.id};
+      if(this.p.actpoint=='task'){
+        this.id=this.id.split("-")[0];
+      }
+        var q=this.p.actpoint === "addk"||this.p.actpoint=='task'?{id:this.id}:{topInfoOrgId:this.id};
         console.log(q)
         this.$http
           .post("/api/contract/topInfo/BidInfo/detail/entityInfo", q)
