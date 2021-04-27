@@ -208,7 +208,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   filterable
-                  @change="getName(detailForm.project.projectTypeSecondId, projectTypeTwo, 'projectTypeSecond','projectTypeSecondCode')"
+                  @change="getThree"
                   placeholder="请选择"
                   v-model="detailForm.project.projectTypeSecondId">
                   <el-option
@@ -216,6 +216,40 @@
                     :label="item.detailName"
                     :value="item.id"
                     v-for="(item, index) in projectTypeTwo"/>
+                </el-select>
+              </el-form-item>
+              <el-form-item
+                v-if="detailForm.project.projectTypeFirstId=='193b4d4003d04899a1d09c8d5f7877fe'&&xqprojectTypeThree.length>0"
+                label="工程类别(三级)"
+                prop="project.enginTypeThirdId"
+                style="width: 32.5%"
+                :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+              >
+                <el-select
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  clearable
+                  filterable
+                  placeholder="请选择"
+                  @change="
+                getName(
+                  detailForm.project.enginTypeThirdId,
+                  xqprojectTypeThree,
+                  'enginTypeThirdName',
+                  'enginTypeThirdCode'
+                )
+              "
+                  v-model="detailForm.project.enginTypeThirdId"
+                >
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in xqprojectTypeThree"
+                  ></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item
@@ -1243,6 +1277,21 @@
                 </el-select>
               </el-form-item>
               <el-form-item
+                v-if="showDetailForm.project.enginTypeThirdId!=''&&showDetailForm.project.enginTypeThirdId!=null"
+                label="工程类别(三级):"
+                style="width: 32.5%">
+                <el-select
+                  disabled
+                  placeholder="请选择"
+                  v-model="showDetailForm.project.enginTypeThirdId">
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in xqprojectTypeThree"/>
+                </el-select>
+              </el-form-item>
+              <el-form-item
                 v-if="showDetailForm.project.projectTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
                 label="所属线路:"
                 style="width: 32.5%">
@@ -2007,6 +2056,7 @@
         emergingMarketTwo: [], // 新兴市场二级类别
         projectTypeTwo: [], // 工程类别二级
         projectNatureTwo: [], // 项目性质二级
+        xqprojectTypeThree:[],//工程类别三级
         isOutputTax: [{ label: '是' }, { label: '否' }], // 上报产值是否含税
         options1: [{ label: '测试所在地', value: 'testabcd' }],
         detailForm: {
@@ -2029,6 +2079,7 @@
             railwayId: '', // 所属铁路局
             projectTypeFirstId: '', // 工程类别（一级）
             projectTypeSecondId: '', // 工程类别（二级）
+            enginTypeThirdId: '', // 工程类别（三级）
             projectLineId: '', // 所属线路ID
             projectModuleId: '7f4fcba4255b43a8babf15afd6c04a53', // 项目板块
             projectModuleCode:"engineering",//项目板块code
@@ -2105,6 +2156,7 @@
             railwayId: '', // 所属铁路局
             projectTypeFirstId: '', // 工程类别（一级）
             projectTypeSecondId: '', // 工程类别（二级）
+            enginTypeThirdId: '', // 工程类别（三级）
             projectLineId: '', // 所属线路ID
             projectModuleId: '7f4fcba4255b43a8babf15afd6c04a53', // 项目板块
             projectModuleCode:"engineering",//项目板块code
@@ -2418,6 +2470,11 @@
             this.projectTypeTwo = item.children
           }
         })
+        this.projectTypeTwo.find((item) => {
+          if (item.id === this.detailForm.project.projectTypeSecondId) {
+            this.xqprojectTypeThree = item.children||[]
+          }
+        })
         this.projectNature.find((item) => {
           if (item.id === this.detailForm.project.projectNatureFirstId) {
             this.projectNatureTwo = item.children
@@ -2462,6 +2519,22 @@
                 this.detailForm.project.projectTypeFirst = item.detailName
                   this.detailForm.project.projectTypeFirstCode = item.detailCode
                 this.projectTypeTwo = item.children
+              }
+            }
+          )
+        }
+      },
+      //获取工程类别三级
+      getThree(id){
+        this.detailForm.project.enginTypeThirdId='';
+        this.xqprojectTypeThree=[];
+        if(id!=''){
+          this.projectTypeTwo.find(
+            (item) => {
+              if (item.id == id) {
+                this.detailForm.project.projectTypeSecond = item.detailName;
+                this.detailForm.project.projectTypeSecondCode = item.detailCode;
+                this.xqprojectTypeThree = item.children||[];
               }
             }
           )

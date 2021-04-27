@@ -447,6 +447,10 @@
               <!--v-model="detailform.topInfor.designOrg"-->
               <!--/>-->
               <el-autocomplete
+               @blur="getautoCompleteName(
+                detailform.topInfor.designOrg,
+                 'designOrgId'
+               )"
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 v-model="detailform.topInfor.designOrg"
                 :fetch-suggestions="querySearchAsync"
@@ -478,11 +482,21 @@
               trigger: 'blur',
             }"
             >
-              <el-input
+              <el-autocomplete
+                @blur="getautoCompleteName(
+                detailform.topInfor.bidAgentCompany,
+                 'bidAgentCompanyId'
+               )"
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-
                 v-model="detailform.topInfor.bidAgentCompany"
-              />
+                :fetch-suggestions="querySearchAsync"
+                placeholder="请输入内容"
+              ></el-autocomplete>
+              <!--<el-input-->
+                <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+
+                <!--v-model="detailform.topInfor.bidAgentCompany"-->
+              <!--/>-->
             </el-form-item>
             <el-form-item
               label="预计招标时间:"
@@ -1199,6 +1213,10 @@
         return (restaurants) => {
           return (restaurants.value.toLowerCase().indexOf(queryString.toLowerCase()) != -1);
         };
+      },
+      //获取远程搜索的id
+      getautoCompleteName(name,id){
+        this.detailform.topInfor[id]=this.pubCustomers.find((item)=>name==item.companyName).uuid;
       },
       //设置主地点
       setMain(i,list){

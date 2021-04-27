@@ -82,6 +82,11 @@
               v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null"
               label="工程类别(一级):"
               prop="topInfor.enginTypeFirstId"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
             >
               <el-select
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -480,7 +485,7 @@
             </el-form-item>
             <el-form-item
               class="inline-formitem"
-              label="是否为客户选择:"
+              label="是否客户:"
               prop="topInfor.isClientele"
               :rules="{
                 required: true,
@@ -515,6 +520,10 @@
               <!--v-model="detailform.topInfor.designOrg"-->
               <!--/>-->
               <el-autocomplete
+                @input="getautoCompleteName(
+                detailform.topInfor.designOrg,
+                 'designOrgId'
+               )"
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 v-model="detailform.topInfor.designOrg"
                 :fetch-suggestions="querySjdw"
@@ -546,11 +555,17 @@
               trigger: 'blur',
             }"
             >
-              <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+              <el-autocomplete
 
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 v-model="detailform.topInfor.bidAgentCompany"
-              />
+                :fetch-suggestions="querySjdw"
+                placeholder="请输入内容"
+                @input="getautoCompleteName(
+                detailform.topInfor.bidAgentCompany,
+                 'bidAgentCompanyId'
+               )"
+              ></el-autocomplete>
             </el-form-item>
             <el-form-item
               label="预计招标时间:"
@@ -1277,6 +1292,7 @@
           return (restaurants.value.toLowerCase().indexOf(queryString.toLowerCase()) != -1);
         };
       },
+
       //设计单位搜索
       querySjdw(queryString, cb) {
         var restaurants = this.sjdwList;
@@ -1287,6 +1303,13 @@
           this.$forceUpdate();
           cb(results);
         }, 500 * Math.random());
+      },
+      //获取远程搜索的id
+      getautoCompleteName(name,id){
+        console.log(name)
+        if(name!=null&&name!=''&&name!=undefined&&this.sjdwList.find((item)=>item.value==name)){
+          this.detailform.topInfor[id]=this.sjdwList.find((item)=>item.value==name).uuid;
+        }
       },
       createStateFilter2(queryString) {
         return (restaurants) => {

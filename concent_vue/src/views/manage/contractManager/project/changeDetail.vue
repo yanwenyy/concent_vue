@@ -112,10 +112,28 @@
                     </el-input>
                   </el-form-item>
                   <el-form-item
+                    label="工程类别(三级)"
+                    class="inline-formitem"
+                    v-if="detailFormBefore.contractInfo.enginTypeThirdId!=''&&detailFormBefore.contractInfo.enginTypeThirdId!=null"
+                  >
+                    <el-input disabled placeholder="请输入内容" v-model="detailFormBefore.contractInfo.enginTypeThirdName" class="input-with-select">
+
+                    </el-input>
+                  </el-form-item>
+                  <br>
+                  <el-form-item
                     label="铁路分类"
                     v-if="detailFormBefore.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
                   >
                     <el-input disabled placeholder="请输入内容" v-model="detailFormBefore.contractInfo.designRailwayClassify" class="input-with-select">
+
+                    </el-input>
+                  </el-form-item>
+                  <el-form-item
+                    label="所属铁路局"
+                    v-if="detailFormBefore.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
+                  >
+                    <el-input disabled placeholder="请输入内容" v-model="detailFormBefore.contractInfo.railwayBureauName" class="input-with-select">
 
                     </el-input>
                   </el-form-item>
@@ -284,7 +302,7 @@
                   </el-form-item>
                   <br>
                   <el-form-item
-                    class="inline-formitem form-item-four"
+                    class="inline-formitem form-item-five"
                     label="是否为系统内联合体"
                   >
                     <el-switch
@@ -309,7 +327,7 @@
                     <!--</el-select>-->
                   </el-form-item>
                   <el-form-item
-                    class="inline-formitem form-item-four"
+                    class="inline-formitem form-item-five"
                     label="是否含系统内分包"
                   >
                     <el-switch
@@ -334,7 +352,7 @@
                     <!--</el-select>-->
                   </el-form-item>
                   <el-form-item
-                    class="inline-formitem form-item-four"
+                    class="inline-formitem form-item-five"
                     label="是否为系统外联合体"
                   >
                     <el-switch
@@ -359,13 +377,38 @@
                     <!--</el-select>-->
                   </el-form-item>
                   <el-form-item
-                    class="inline-formitem form-item-four"
+                    class="inline-formitem form-item-five"
                     label="是否含系统外分包:"
                   >
                     <el-switch
                       disabled="disabled"
                       class="inline-formitem-switch"
                       v-model="detailFormBefore.contractInfo.isOutSystemSub"
+                      active-color="#409EFF"
+                      inactive-color="#ddd"
+                      active-value="0"
+                      inactive-value="1"
+                    >
+                    </el-switch>
+                    <!--<el-select-->
+                    <!--:disabled="p.actpoint==='look'"-->
+                    <!--filterable-->
+                    <!--clearable-->
+                    <!--placeholder="请选择"-->
+
+                    <!--v-model="detailform.contractInfo.isOutSystemSub"-->
+                    <!--&gt;-->
+                    <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
+                    <!--</el-select>-->
+                  </el-form-item>
+                  <el-form-item
+                    class="inline-formitem form-item-five"
+                    label="是否集团内分包:"
+                  >
+                    <el-switch
+                      disabled="disabled"
+                      class="inline-formitem-switch"
+                      v-model="detailFormBefore.contractInfo.isInGroupSub"
                       active-color="#409EFF"
                       inactive-color="#ddd"
                       active-value="0"
@@ -1058,7 +1101,7 @@
                   </el-table>
                 </div>
             </el-tab-pane>
-            <el-tab-pane v-if="detailFormBefore.contractInfo.isInSystemUnion==='0'||detailFormBefore.contractInfo.isInSystemSub==='0'||detailFormBefore.contractInfo.isOutSystemUnion==='0'||detailFormBefore.contractInfo.isOutSystemSub==='0'" label="合同附属信息">
+            <el-tab-pane v-if="detailFormBefore.contractInfo.isInSystemUnion==='0'||detailFormBefore.contractInfo.isInSystemSub==='0'||detailFormBefore.contractInfo.isOutSystemUnion==='0'||detailFormBefore.contractInfo.isOutSystemSub==='0'||detailFormBefore.contractInfo.isInGroupSub==='0'" label="合同附属信息">
               <div class="detailBoxBG htfs">
                 <div  v-if="detailFormBefore.contractInfo.isInSystemUnion==='0'">
                   <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
@@ -1377,6 +1420,103 @@
                     </el-table-column>
                   </el-table>
                 </div>
+                <div  v-if="detailFormBefore.contractInfo.isInGroupSub==='0'">
+                  <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
+                    <span>集团内分包单位列表: </span>
+                    <el-button
+                      v-show="p.actpoint != 'look'"
+                      @click="addfs('jtfb',5,1)"
+
+                      style="
+                  width: 70px;
+                  height: 32px;
+                  background: #5c8bfa;
+                  font-size: 16px;
+                "
+                      type="primary"
+                    >新增
+                    </el-button
+                    >
+                  </p>
+                  <el-table
+                    :data="detailFormBefore.contractInfoAttachBO.innerGroupContractInfoAttachList"
+                    :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                    @selection-change="handleSelectionChange"
+                    align="center"
+                    border
+                    class="clothSizeTable"
+                    ref="table"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
+                  >
+                    <el-table-column
+                      :width="80"
+                      align="center"
+                      label="序号"
+                      show-overflow-tooltip
+                      type="index"
+                    ></el-table-column>
+
+                    <el-table-column
+                      class="listTabel"
+                      :resizable="false"
+                      label="单位名称"
+                      prop="orgName"
+                      align="center"
+                      width="300"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      class="listTabel"
+                      :resizable="false"
+                      label="板块名称"
+                      prop="moduleName"
+                      align="center"
+                      width="200"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      class="listTabel"
+                      :resizable="false"
+                      label="项目性质"
+                      prop="projectNature"
+                      align="center"
+                      show-overflow-tooltip
+                      width="150"
+                    >
+                      <template slot-scope="scope">
+                        集团内分包
+                      </template>
+                    </el-table-column>
+                    <el-table-column
+                      :resizable="false"
+                      label="各方份额(万元)"
+                      align="center"
+                      prop="contractAmount"
+                      width="400"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      class="listTabel"
+                      :resizable="false"
+                      label="是否为补充"
+                      prop="isAdd"
+                      align="center"
+                      width="100"
+                      show-overflow-tooltip
+                    >
+                      <template slot-scope="scope">
+                        {{scope.row.isAdd=='1'?'否':'是'}}
+                      </template>
+                    </el-table-column>
+                  </el-table>
+                </div>
               </div>
             </el-tab-pane>
           </el-tabs>
@@ -1529,14 +1669,7 @@
                     filterable
                     placeholder="请选择"
                     @clear="clear(detailform.contractInfo.enginTypeSecondId,detailform.contractInfo.enginTypeSecondName)"
-                    @change="
-                getName(
-                  detailform.contractInfo.enginTypeSecondId,
-                  xqprojectType,
-                  'enginTypeSecondName',
-                  'enginTypeSecondCode'
-                )
-              "
+                    @change="getThree"
                     v-model="detailform.contractInfo.enginTypeSecondId"
                   >
                     <el-option
@@ -1547,6 +1680,42 @@
                     ></el-option>
                   </el-select>
                 </el-form-item>
+                <el-form-item
+                  v-if="detailform.contractInfo.enginTypeFirstId=='193b4d4003d04899a1d09c8d5f7877fe'&&xqprojectTypeThree.length>0"
+                  label="工程类别(三级)"
+                  prop="contractInfo.enginTypeThirdId"
+                  class="inline-formitem"
+                  :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+                >
+                  <el-select
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    clearable
+                    filterable
+                    placeholder="请选择"
+                    @clear="clear(detailform.contractInfo.enginTypeThirdId,detailform.contractInfo.enginTypeThirdName)"
+                    @change="
+                getName(
+                  detailform.contractInfo.enginTypeThirdId,
+                  xqprojectTypeThree,
+                  'enginTypeThirdName',
+                  'enginTypeThirdCode'
+                )
+              "
+                    v-model="detailform.contractInfo.enginTypeThirdId"
+                  >
+                    <el-option
+                      :key="index"
+                      :label="item.detailName"
+                      :value="item.id"
+                      v-for="(item, index) in xqprojectTypeThree"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+                <br>
                 <el-form-item
                   label="铁路分类"
                   class="inline-formitem"
@@ -1567,6 +1736,28 @@
             )"
                   >
                     <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options2"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item
+                  label="所属铁路局"
+                  class="inline-formitem"
+                  v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
+                >
+                  <el-select
+                    :disabled="p.actpoint==='look'"
+                    filterable
+                    clearable
+                    placeholder="请选择"
+
+                    v-model="detailform.contractInfo.railwayBureauId"
+                    @change="getName(
+                detailform.contractInfo.railwayBureauId,
+                      railwayBureau,
+                      'railwayBureauName',
+                      'railwayBureauCode'
+                )"
+                  >
+                    <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in railwayBureau"></el-option>
                   </el-select>
                 </el-form-item>
                 <br>
@@ -1825,7 +2016,7 @@
                 </el-form-item>
                 <br>
                 <el-form-item
-                  class="inline-formitem form-item-four"
+                  class="inline-formitem form-item-five"
                   label="是否为系统内联合体"
                 >
                   <el-switch
@@ -1850,7 +2041,7 @@
                   <!--</el-select>-->
                 </el-form-item>
                 <el-form-item
-                  class="inline-formitem form-item-four"
+                  class="inline-formitem form-item-five"
                   label="是否含系统内分包"
                 >
                   <el-switch
@@ -1875,7 +2066,7 @@
                   <!--</el-select>-->
                 </el-form-item>
                 <el-form-item
-                  class="inline-formitem form-item-four"
+                  class="inline-formitem form-item-five"
                   label="是否为系统外联合体"
                 >
                   <el-switch
@@ -1900,13 +2091,38 @@
                   <!--</el-select>-->
                 </el-form-item>
                 <el-form-item
-                  class="inline-formitem form-item-four"
+                  class="inline-formitem form-item-five"
                   label="是否含系统外分包:"
                 >
                   <el-switch
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     class="inline-formitem-switch"
                     v-model="detailform.contractInfo.isOutSystemSub"
+                    active-color="#409EFF"
+                    inactive-color="#ddd"
+                    active-value="0"
+                    inactive-value="1"
+                  >
+                  </el-switch>
+                  <!--<el-select-->
+                  <!--:disabled="p.actpoint==='look'"-->
+                  <!--filterable-->
+                  <!--clearable-->
+                  <!--placeholder="请选择"-->
+
+                  <!--v-model="detailform.contractInfo.isOutSystemSub"-->
+                  <!--&gt;-->
+                  <!--<el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>-->
+                  <!--</el-select>-->
+                </el-form-item>
+                <el-form-item
+                  class="inline-formitem form-item-five"
+                  label="是否集团内分包:"
+                >
+                  <el-switch
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    class="inline-formitem-switch"
+                    v-model="detailform.contractInfo.isInGroupSub"
                     active-color="#409EFF"
                     inactive-color="#ddd"
                     active-value="0"
@@ -2990,7 +3206,7 @@
                 </el-table>
               </div>
             </el-tab-pane>
-            <el-tab-pane v-if="detailform.contractInfo.isInSystemUnion==='0'||detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isOutSystemUnion==='0'||detailform.contractInfo.isOutSystemSub==='0'" label="合同附属信息">
+            <el-tab-pane v-if="detailform.contractInfo.isInSystemUnion==='0'||detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isOutSystemUnion==='0'||detailform.contractInfo.isOutSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'" label="合同附属信息">
               <div class="detailBoxBG htfs">
                 <div  v-if="detailform.contractInfo.isInSystemUnion==='0'">
                   <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
@@ -3051,10 +3267,10 @@
                           <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'unionContractInfoAttachList')" ></el-button>
                         </el-input>
                         <!--<el-input-->
-                          <!--class="input-el-input-group"-->
-                          <!--clearable-->
-                          <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
-                          <!--v-model="scope.row.orgName"-->
+                        <!--class="input-el-input-group"-->
+                        <!--clearable-->
+                        <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                        <!--v-model="scope.row.orgName"-->
                         <!--&gt;</el-input>-->
                         <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                       </template>
@@ -3259,10 +3475,10 @@
                           <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'innerContractInfoAttachList')" ></el-button>
                         </el-input>
                         <!--<el-input-->
-                          <!--class="input-el-input-group"-->
-                          <!--clearable-->
-                          <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
-                          <!--v-model="scope.row.orgName"-->
+                        <!--class="input-el-input-group"-->
+                        <!--clearable-->
+                        <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                        <!--v-model="scope.row.orgName"-->
                         <!--&gt;</el-input>-->
                         <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                       </template>
@@ -3467,10 +3683,10 @@
                           <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outUnionContractInfoAttachList')" ></el-button>
                         </el-input>
                         <!--<el-input-->
-                          <!--class="input-el-input-group"-->
-                          <!--clearable-->
-                          <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
-                          <!--v-model="scope.row.orgName"-->
+                        <!--class="input-el-input-group"-->
+                        <!--clearable-->
+                        <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                        <!--v-model="scope.row.orgName"-->
                         <!--&gt;</el-input>-->
                         <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                       </template>
@@ -3675,10 +3891,10 @@
                           <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outContractInfoAttachList')" ></el-button>
                         </el-input>
                         <!--<el-input-->
-                          <!--class="input-el-input-group"-->
-                          <!--clearable-->
-                          <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
-                          <!--v-model="scope.row.orgName"-->
+                        <!--class="input-el-input-group"-->
+                        <!--clearable-->
+                        <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                        <!--v-model="scope.row.orgName"-->
                         <!--&gt;</el-input>-->
                         <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                       </template>
@@ -3824,6 +4040,214 @@
                     </el-table-column>
                   </el-table>
                 </div>
+                <div  v-if="detailform.contractInfo.isOutSystemSub==='0'">
+                  <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                    <span>集团内分包单位列表: </span>
+                    <el-button
+                      v-show="p.actpoint != 'look'"
+                      @click="addfs('jtfb',5,1)"
+
+                      style="
+                  width: 70px;
+                  height: 32px;
+                  background: #5c8bfa;
+                  font-size: 16px;
+                "
+                      type="primary"
+                    >新增
+                    </el-button
+                    >
+                  </p>
+                  <el-table
+                    :row-class-name="tableRowClassName"
+                    :data="detailform.contractInfoAttachBO.innerGroupContractInfoAttachList"
+                    :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                    @selection-change="handleSelectionChange"
+                    align="center"
+                    border
+                    class="detailTable"
+                    ref="table"
+                    style="width: 100%; min-height: calc(100vh - 370px)"
+                  >
+                    <el-table-column
+                      :width="80"
+                      align="center"
+                      label="序号"
+                      show-overflow-tooltip
+                      type="index"
+                    ></el-table-column>
+
+                    <el-table-column
+                      class="listTabel"
+                      :resizable="false"
+                      label="单位名称"
+                      prop="orgName"
+                      align="center"
+                      width="300"
+                      show-overflow-tooltip
+                    >
+                      <template slot-scope="scope">
+                        <el-input
+                          clearable
+                          :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                          v-model="scope.row.orgName"
+                          class="input-el-input-group">
+                          <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'innerGroupContractInfoAttachList')" ></el-button>
+                        </el-input>
+                        <!--<el-input-->
+                        <!--class="input-el-input-group"-->
+                        <!--clearable-->
+                        <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                        <!--v-model="scope.row.orgName"-->
+                        <!--&gt;</el-input>-->
+                        <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                      </template>
+                    </el-table-column>
+                    <el-table-column
+                      class="listTabel"
+                      :resizable="false"
+                      label="板块名称"
+                      prop="moduleName"
+                      width="150"
+                      align="center"
+                    >
+                      <template slot-scope="scope">
+                        <el-select
+                          class="input-el-input-group"
+                          :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                          clearable
+                          filterable
+                          placeholder="请选择"
+                          size="mini"
+                          v-model="scope.row.moduleId"
+                          @change="
+                    getBdName(
+                      scope.row.moduleId,
+                      detailform.contractInfoAttachBO.innerGroupContractInfoAttachList,
+                      scope.$index
+                    )
+                  "
+                        >
+                          <el-option
+                            :key="index"
+                            :label="item.detailName"
+                            :value="item.id"
+                            v-for="(item, index) in projectPlate"
+                          ></el-option>
+                        </el-select>
+                      </template>
+                    </el-table-column>
+                    <el-table-column
+                      class="listTabel"
+                      :resizable="false"
+                      label="项目性质"
+                      prop="projectNature"
+                      width="150"
+                      align="center"
+                      show-overflow-tooltip
+                    >
+                      <template slot-scope="scope">
+                        系统外分包
+                      </template>
+                    </el-table-column>
+                    <el-table-column
+                      :resizable="false"
+                      label="各方份额(万元)"
+                      align="center"
+                      prop="contractAmount"
+                      width="400"
+                      show-overflow-tooltip
+                    >
+                      <template slot-scope="scope">
+                        <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.innerGroupContractInfoAttachList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
+                          <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                          <el-input
+                            class="group-no-padding"
+                            @blur="getOurAmount(scope.$index,detailform.contractInfoAttachBO.innerGroupContractInfoAttachList,'wfb')"
+                            v-model="scope.row.contractAmount"
+                            clearable
+                            :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                          >
+                            <template slot="prepend">¥</template>
+                            <template slot="append">(万元)</template>
+                          </el-input>
+                        </el-form-item>
+                        <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                      </template>
+                    </el-table-column>
+                    <el-table-column
+                      class="listTabel"
+                      :resizable="false"
+                      label="是否为补充"
+                      prop="isAdd"
+                      align="center"
+                      show-overflow-tooltip
+                    >
+                      <template slot-scope="scope">
+                        <el-switch
+                          :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                          class="inline-formitem-switch"
+                          v-model="scope.row.isAdd"
+                          active-color="#409EFF"
+                          inactive-color="#ddd"
+                          active-value="0"
+                          inactive-value="1"
+                        >
+                        </el-switch>
+                      </template>
+                    </el-table-column>
+                    <el-table-column
+                      class="listTabel"
+                      :resizable="false"
+                      label="合同金额是否变化"
+                      prop="isAmountChange"
+                      align="center"
+                      show-overflow-tooltip
+                    >
+                      <!--<template slot-scope="scope">-->
+                      <!--{{detailFormBefore.contractInfoAttachBO.outContractInfoAttachList[scope.$index]&&scope.row.contractAmount!=detailFormBefore.contractInfoAttachBO.outContractInfoAttachList[scope.$index].contractAmount?'是':'否'}}-->
+                      <!--<span v-show="false">{{detailFormBefore.contractInfoAttachBO.outContractInfoAttachList[scope.$index]&&scope.row.contractAmount!=detailFormBefore.contractInfoAttachBO.outContractInfoAttachList[scope.$index].contractAmount?scope.row.isAmountChange=0:scope.row.isAmountChange=1}}</span>-->
+                      <!--</template>-->
+                      <template slot-scope="scope">
+                        {{scope.row.isAmountChange=='1'?'否':scope.row.isAmountChange=='0'?'是':''}}
+                      </template>
+                    </el-table-column>
+                    <el-table-column
+                      class="listTabel"
+                      :resizable="false"
+                      label="该单位是否确认"
+                      prop="isVerify"
+                      align="center"
+                      show-overflow-tooltip
+                    >
+                      <template slot-scope="scope">
+                        {{scope.row.isVerify==='1'?'否':scope.row.isVerify==='0'?'是':''}}
+                      </template>
+                    </el-table-column>
+                    <el-table-column
+                      v-show="!p.actpoint === 'look'"
+                      :resizable="false"
+                      fixed="right"
+                      label="操作"
+                      align="center"
+                      show-overflow-tooltip
+                      v-if="p.actpoint !== 'look'"
+                      width="80">
+                      <template slot-scope="scope">
+                        <el-link
+                          v-show="!scope.row.uuid"
+                          :underline="false"
+                          @click="del(scope.$index,scope.row,detailform.contractInfoAttachBO.innerGroupContractInfoAttachList,'fb')"
+                          type="warning">删除
+                        </el-link>
+                      </template>
+                    </el-table-column>
+                  </el-table>
+                </div>
               </div>
             </el-tab-pane>
           </el-tabs>
@@ -3930,6 +4354,7 @@
         ssList:[],//所属省市list
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         xqprojectType: [],//工程类别二级
+        xqprojectTypeThree:[],//工程类别三级
         emergingMarketTwo:[],//新兴市场二级
         projectNatureTwo:[],//项目性质二级
         rules:{
@@ -3951,6 +4376,9 @@
       AuditProcess
     },
     computed: {
+      railwayBureau(){//所属铁路局
+        return this.$store.state.railwayBureau;
+      },
       pubCustomers() {//客户名称
         return this.$store.state.pubCustomers;
       },
@@ -4381,6 +4809,7 @@
           this.detailform.searchProject=true;
           var _con={};
           this.getTwo(datas.topInfor.enginTypeFirstId);
+          this.getThree(datas.topInfor.enginTypeSecondId);
           this.getTwoSC(datas.topInfor.marketFirstNameId);
           this.getTwoXZ(datas.topInfor.projectNatureFirstId);
           for(var i in this.detailform.contractInfo){
@@ -4420,6 +4849,7 @@
           this.detailform.contractInfo.supplyContractId=data.data.uuid;
           var _con={};
           this.getTwo(datas.contractInfo.enginTypeFirstId);
+          this.getThree(datas.contractInfo.enginTypeSecondId);
           this.getTwoSC(datas.contractInfo.marketFirstNameId);
           this.getTwoXZ(datas.contractInfo.projectNatureFirstId);
           for(var i in this.detailform.contractInfo){
@@ -4495,6 +4925,22 @@
           }
         }
         )
+        }
+      },
+      //获取工程类别三级
+      getThree(id){
+        this.detailform.contractInfo.enginTypeThirdId='';
+        this.xqprojectTypeThree=[];
+        if(id!=''){
+          this.xqprojectType.find(
+            (item) => {
+              if (item.id == id) {
+                this.detailform.contractInfo.enginTypeSecondName = item.detailName;
+                this.detailform.contractInfo.enginTypeSecondCode = item.detailCode;
+                this.xqprojectTypeThree = item.children||[];
+              }
+            }
+          )
         }
       },
       //新兴市场二级
@@ -4636,8 +5082,7 @@
           contractInfoId:'',
           projectNature:projectNature,
           contractAmount:'',
-          isAdd:isAdd,
-          isDelete:'0'
+          isAdd:isAdd
         }
         if(type=='nlht'){
           this.detailform.contractInfoAttachBO.unionContractInfoAttachList.push(v);
@@ -4647,6 +5092,8 @@
           this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.push(v);
         }else if(type=='wfb'){
           this.detailform.contractInfoAttachBO.outContractInfoAttachList.push(v);
+        }else if(type=='jtfb'){
+          this.detailform.contractInfoAttachBO.innerGroupContractInfoAttachList.push(v);
         }
       },
       resetinfo() {
