@@ -393,7 +393,7 @@
               <el-input
                 disabled
                 placeholder="请选择"
-                v-model="detailformBefore.verify.projectTrackResponPerson"
+                v-model="detailformBefore.topInfoOrg.projectTrackResponPerson"
               >
               </el-input>
               </el-form-item>
@@ -407,7 +407,7 @@
               <el-input
                 disabled
                 placeholder="请选择"
-                v-model="detailformBefore.verify.tioContactMode"
+                v-model="detailformBefore.topInfoOrg.contactMode"
               >
               </el-input>
               </el-form-item>
@@ -422,7 +422,7 @@
               <el-input
                 disabled
                 placeholder="请选择"
-                v-model="detailformBefore.verify.bidProbName"
+                v-model="detailformBefore.topInfoOrg.bidProbName"
               >
               </el-input>
             </el-form-item>
@@ -1094,7 +1094,7 @@
               <el-input
                 disabled
                 placeholder="请选择"
-                v-model="detailformAfter.verify.projectTrackResponPerson"
+                v-model="detailformAfter.topInfoOrg.projectTrackResponPerson"
               >
               </el-input>
               </el-form-item>
@@ -1108,7 +1108,7 @@
               <el-input
                 disabled
                 placeholder="请选择"
-                v-model="detailformAfter.verify.tioContactMode"
+                v-model="detailformAfter.topInfoOrg.contactMode"
               >
               </el-input>
               </el-form-item>
