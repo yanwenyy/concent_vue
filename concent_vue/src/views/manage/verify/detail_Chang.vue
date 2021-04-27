@@ -393,7 +393,7 @@
               <el-input
                 disabled
                 placeholder="请选择"
-                v-model="detailformBefore.topInfoOrg.projectTrackResponPerson"
+                v-model="detailformBefore.verify.projectTrackResponPerson"
               >
               </el-input>
               </el-form-item>
@@ -407,7 +407,7 @@
               <el-input
                 disabled
                 placeholder="请选择"
-                v-model="detailformBefore.topInfoOrg.contactMode"
+                v-model="detailformBefore.verify.tioContactMode"
               >
               </el-input>
               </el-form-item>
@@ -422,7 +422,7 @@
               <el-input
                 disabled
                 placeholder="请选择"
-                v-model="detailformBefore.topInfoOrg.bidProbName"
+                v-model="detailformBefore.verify.bidProbName"
               >
               </el-input>
             </el-form-item>
@@ -1094,7 +1094,7 @@
               <el-input
                 disabled
                 placeholder="请选择"
-                v-model="detailformAfter.topInfoOrg.projectTrackResponPerson"
+                v-model="detailformAfter.verify.projectTrackResponPerson"
               >
               </el-input>
               </el-form-item>
@@ -1108,7 +1108,7 @@
               <el-input
                 disabled
                 placeholder="请选择"
-                v-model="detailformAfter.topInfoOrg.contactMode"
+                v-model="detailformAfter.verify.tioContactMode"
               >
               </el-input>
               </el-form-item>
@@ -1123,7 +1123,7 @@
               <el-input
                 disabled
                 placeholder="请选择"
-                v-model="detailformAfter.topInfoOrg.bidProbName"
+                v-model="detailformAfter.verify.bidProbName"
               >
               </el-input>
             </el-form-item>
@@ -1599,6 +1599,7 @@ export default {
           flowStatus: '0'
         },
         'topInfor': {},
+        'topInfoOrg':{},
         'sectionStr': [],
         'verifySectionList': [],
         'verifyOrgList': [],
