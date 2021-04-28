@@ -1306,7 +1306,6 @@
       },
       //获取远程搜索的id
       getautoCompleteName(name,id){
-        console.log(name)
         if(name!=null&&name!=''&&name!=undefined&&this.sjdwList.find((item)=>item.value==name)){
           this.detailform.topInfor[id]=this.sjdwList.find((item)=>item.value==name).uuid;
         }

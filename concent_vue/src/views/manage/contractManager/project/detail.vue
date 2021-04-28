@@ -408,7 +408,7 @@
               <el-autocomplete
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 v-model="detailform.contractInfo.constructionOrg"
-                :fetch-suggestions="querySearchAsync"
+                :fetch-suggestions="detailform.contractInfo.isClientele=='1'?querySearchAsync:querySjdw"
                 placeholder="请输入内容"
               ></el-autocomplete>
               <!--<el-select-->
@@ -447,7 +447,7 @@
               <el-autocomplete
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 v-model="detailform.contractInfo.constructionOrg"
-                :fetch-suggestions="querySearchAsync"
+                :fetch-suggestions="detailform.contractInfo.isClientele=='1'?querySearchAsync:querySjdw"
                 placeholder="请输入内容"
               ></el-autocomplete>
               <!--<el-input-->
@@ -458,6 +458,28 @@
                 <!--v-model="detailform.contractInfo.constructionOrg"-->
               <!--/>-->
             </el-form-item>
+          <el-form-item
+            class="inline-formitem"
+            label="是否客户:"
+            prop="contractInfo.isClientele"
+            :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+          >
+            <el-switch
+              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+              class="inline-formitem-switch"
+              v-model="detailform.contractInfo.isClientele"
+              active-color="#409EFF"
+              inactive-color="#ddd"
+              active-value="1"
+              inactive-value="0"
+              @change="detailform.contractInfo.constructionOrg=''"
+            >
+            </el-switch>
+          </el-form-item>
             <el-form-item
               label="建设单位性质"
               prop="contractInfo.constructionNatureId"
@@ -494,13 +516,23 @@
           <el-form-item
             label="设计单位"
           >
-            <el-input
+            <el-autocomplete
+              @input="getautoCompleteName(
+                detailform.contractInfo.designOrg,
+                 'designOrgId'
+               )"
               :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-              clearable
-              placeholder="请输入"
-
               v-model="detailform.contractInfo.designOrg"
-            />
+              :fetch-suggestions="querySjdw"
+              placeholder="请输入内容"
+            ></el-autocomplete>
+            <!--<el-input-->
+              <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+              <!--clearable-->
+              <!--placeholder="请输入"-->
+
+              <!--v-model="detailform.contractInfo.designOrg"-->
+            <!--/>-->
           </el-form-item>
             <br>
           <el-form-item
@@ -1103,16 +1135,19 @@
               label="承揽所属机构"
 
             >
-              <el-select
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                filterable
-                clearable
-                placeholder="请选择"
+              <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.contractOrgName" class="input-with-select">
+                <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('承揽所属机构',detailform.contractInfo.contractOrgId,false)" ></el-button>
+              </el-input>
+              <!--<el-select-->
+                <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                <!--filterable-->
+                <!--clearable-->
+                <!--placeholder="请选择"-->
 
-                v-model="detailform.contractInfo.contractOrgId"
-              >
-                <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options2"></el-option>
-              </el-select>
+                <!--v-model="detailform.contractInfo.contractOrgId"-->
+              <!--&gt;-->
+                <!--<el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options2"></el-option>-->
+              <!--</el-select>-->
             </el-form-item>
             <el-form-item
               label="承揽所属省市"
@@ -6303,6 +6338,7 @@ export default {
           moduleCode:'engineering',
           marketSecondId:'',
           qualityOrgNames:'',
+          enginTypeSecondId:''
         },
         contractInfoAttachBO: {
           innerContractInfoAttachList:[],
@@ -6425,6 +6461,17 @@ export default {
     this.$store.dispatch('getCategory', {name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3'});
     this.$store.dispatch('getCategory', {name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72'});
     // eslint-disable-next-line no-unde
+    //设计单位列表
+    this.$http
+      .post(
+        "/api/contract/Companies/detail/findCompanies",
+      )
+      .then((res) => {
+        this.sjdwList = res.data.data;
+        this.sjdwList.forEach((item)=>{
+          item.value=item.companyName;
+        })
+      });
   },
   methods: {
     //设置我方份额含补充
@@ -6446,6 +6493,28 @@ export default {
     }, 500 * Math.random());
     },
     createStateFilter(queryString) {
+      return (restaurants) => {
+        return (restaurants.value.toLowerCase().indexOf(queryString.toLowerCase()) != -1);
+      };
+    },
+    //设计单位搜索
+    querySjdw(queryString, cb) {
+      var restaurants = this.sjdwList;
+      var results = queryString ? restaurants.filter(this.createStateFilter2(queryString)) : restaurants;
+
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(() => {
+        this.$forceUpdate();
+        cb(results);
+      }, 500 * Math.random());
+    },
+    //获取远程搜索的id
+    getautoCompleteName(name,id){
+      if(name!=null&&name!=''&&name!=undefined&&this.sjdwList.find((item)=>item.value==name)){
+        this.detailform.contractInfo[id]=this.sjdwList.find((item)=>item.value==name).uuid;
+      }
+    },
+    createStateFilter2(queryString) {
       return (restaurants) => {
         return (restaurants.value.toLowerCase().indexOf(queryString.toLowerCase()) != -1);
       };
@@ -6890,7 +6959,7 @@ export default {
     getDwInfo(data){
       this.$forceUpdate();
       var id=[],name=[];
-      if(data&&data.type!='单位名称'){
+      if(data&&data.type!='单位名称'&&data.type!='承揽所属机构'){
         data.forEach((item)=>{
           id.push(item.id);
           name.push(item.detailName);
@@ -6906,7 +6975,9 @@ export default {
         this.detailform.contractInfoAttachBO[data.tableList][data.index].orgId=data.code;
         this.detailform.contractInfoAttachBO[data.tableList][data.index].orgName=data.name;
         this.$set(this.detailform.contractInfoAttachBO[data.tableList][data.index],this.detailform.contractInfoAttachBO[data.tableList][data.index]);
-
+      }else if(data.type=="承揽所属机构"){
+        this.detailform.contractInfo.contractOrgId=data.id;
+        this.detailform.contractInfo.contractOrgName=data.name;
       }
       this.DwVisible=false;
     },
