@@ -1471,8 +1471,9 @@
       //获取新增的关联合同
       goAddDetail(data){
         this.$forceUpdate();
-        console.log(data);
-        this.detailForm.project.contractInfoList=this.detailForm.project.contractInfoList.concat(data);
+        if(!this.detailForm.project.contractInfoList.find((item)=>item.uuid==data.uuid)){
+          this.detailForm.project.contractInfoList=this.detailForm.project.contractInfoList.concat(data);
+        }
         this.contractStatas = false;
       },
       //建设单位搜索
