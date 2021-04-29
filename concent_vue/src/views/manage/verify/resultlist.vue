@@ -143,7 +143,7 @@
              {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'通过审核':'其他情况'}}
           </template> -->
           <template slot-scope="scope">
-            <span> {{scope.row.verifyResult=='0'?'未通过':'通过'}}</span>
+            <span> {{scope.row.verifyResult=='0'?'未通过':scope.row.verifyResult=='1'?'通过':'待通过'}}</span>
           </template>
           <!-- <template slot-scope="scope">
             <el-tag v-if="scope.row.uuid===null" type="warning">未进行资审申请</el-tag>
