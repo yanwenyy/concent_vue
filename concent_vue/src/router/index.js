@@ -17,6 +17,7 @@ let Route = new Router({
   }]
 })
 Route.beforeEach(function(to, from, next) {
+
   // getPermission(to.path)
   // getOrgPermission(to.path)
   // console.log(to.name, to.path)

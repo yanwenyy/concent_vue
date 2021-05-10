@@ -30,7 +30,7 @@ export default {
           'defaultpage': false,
           'children': [
             {
-              'name': '首页',
+              'name': '工作台',
               'path': '/manage/home/home',
               'component': '/manage/home/home',
               'iconCls': 'el-icon-s-home',
@@ -710,7 +710,7 @@ export default {
           'defaultpage': false,
           'children': [
             {
-              'name': '首页',
+              'name': '工作台',
               'path': '/statistics/home/home',
               'component': '/statistics/home/home',
               'iconCls': 'el-icon-s-home',

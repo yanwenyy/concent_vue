@@ -1,14 +1,13 @@
 import router from '../../router'
 import Vue from 'vue'
 import data from '../../../static/jsonData/nav.js'
-
 const _import = file => () =>
     import('@/views' + file)
 const routevue = () =>
     import(/* webpackChunkName: "routevue" */ '@/components/router.vue')
-    
 
-var getRouter // 用来获取后台拿到的路由
+
+var getRouter; // 用来获取后台拿到的路由
 let zcsbRoute = {
   name: 'tm',
   data: [{
@@ -29,6 +28,9 @@ export function permissionRouter() {
   var string = ''
   getRouter = data.data//本地路由
   routerGo()
+
+
+
   // Vue.prototype.$http.post('/api/contract/resource/getRoute').then(res => {
   //   getRouter = res.data.data
   //   getRouter[0] = zcsbRoute

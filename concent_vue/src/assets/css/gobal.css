@@ -497,19 +497,24 @@ pre {
 }
 .tableStyle{
   width: 100%;
-  min-height: calc(100vh - 233px)!important;
+  /*min-height: calc(100vh - 233px)!important;*/
+  min-height: calc(100vh - 110px)!important;
 }
 .detailBox{
   overflow: scroll;
-  max-height:calc(100vh - 175px)!important;
-  min-height:calc(100vh - 175px)!important;
+  /*max-height:calc(100vh - 175px)!important;*/
+  /*min-height:calc(100vh - 175px)!important;*/
+  max-height:calc(100vh - 75px)!important;
+  min-height:calc(100vh - 75px)!important;
   padding:0 100px 50px 100px;
   box-sizing: border-box;
 }
 .detailBoxBG{
   overflow: scroll;
-  max-height:calc(100vh - 170px)!important;
-  min-height:calc(100vh - 170px)!important;
+  /*max-height:calc(100vh - 170px)!important;*/
+  /*min-height:calc(100vh - 170px)!important;*/
+  max-height:calc(100vh - 70px)!important;
+  min-height:calc(100vh - 70px)!important;
   padding:0 100px 50px 100px;
   box-sizing: border-box;
 }
@@ -713,8 +718,10 @@ pre {
 }
 .gclqd{
   padding: 0!important;
-  max-height: calc(100vh - 170px)!important;
-  min-height: calc(100vh - 170px)!important;
+  /*max-height: calc(100vh - 170px)!important;*/
+  /*min-height: calc(100vh - 170px)!important;*/
+  max-height: calc(100vh - 70px)!important;
+  min-height: calc(100vh - 70px)!important;
 }
 .gclqd .el-tabs--border-card{
   border: none;
