@@ -224,12 +224,12 @@
         <el-table-column
           :width="180"
           align="center"
-          label="截止日期"
+          label="预计招标时间"
           prop="state"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>截止日期</span>
+            <span>预计招标时间</span>
             <div>
               <el-date-picker
                 class="list-search-picker"
@@ -293,7 +293,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-             {{scope.row.importFileRecordId==1?'是':scope.row.importFileRecordId==0?'否':"其他"}}
+             {{scope.row.importFileRecordId==1?'是':scope.row.importFileRecordId==0?'否':scope.row.importFileRecordId==2?'历史数据':"其他"}}
           </template>
           <template slot="header" slot-scope="scope">
             <span>是否导入</span>
