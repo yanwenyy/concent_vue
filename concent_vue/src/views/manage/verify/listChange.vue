@@ -15,6 +15,7 @@
 
     <div style="margin-top: 10px">
       <el-table
+        class="tableStyle"
         :max-height="$tableHeight"
         :height="$tableHeight"
         :data="page.records"

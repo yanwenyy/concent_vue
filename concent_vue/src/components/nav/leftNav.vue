@@ -16,7 +16,7 @@
           <template v-for="(item,index) in route.children">
 
             <!-- 非叶子节点 -->
-            <el-submenu :index="index+''" v-bind:key="index" v-if="!item.leaf&&item.menushow">
+            <el-submenu :index="index+''" v-bind:key="index" v-if="!item.leaf&&item.menushow&&routerList.indexOf(item.path)!=-1">
               <template slot="title">
                 <i :class="item.iconCls"></i>
                 <span slot="title">{{item.name}}</span>
@@ -26,7 +26,7 @@
                   :class="$route.path.indexOf(term.path) === 0 ?'is-active':''"
                   :index="term.path"
                   :key="term.path"
-                  v-if="term.menushow"
+                  v-if="term.menushow&&routerList.indexOf(term.path)!=-1"
                 >
                   <i :class="term.iconCls"></i>
                   <span slot="title">{{term.name}}</span>
@@ -38,7 +38,7 @@
               :class="$route.path===item.path?'is-active':''"
               :index="item.path"
               v-bind:key="index"
-              v-else-if="item.leaf&&item.menushow"
+              v-else-if="item.leaf&&item.menushow&&routerList.indexOf(item.path)!=-1"
             >
               <i :class="item.iconCls"></i>
               <span slot="title">{{item.name}}</span>
@@ -58,11 +58,22 @@
 export default {
   data() {
     return {
-      useroute: true
+      useroute: true,
+      userdata:{},
+      routerList:[]
     }
   },
 
   methods: {
+    //获取路由名字
+    getRouterName(list){
+      list.forEach(item=>{
+        this.routerList.push(item.menuPath);
+        if(item.children){
+          this.getRouterName(item.children)
+        }
+      })
+    },
     // 折叠导航栏
     collapse: function() {
       this.$store.state.collapsed = !this.$store.state.collapsed
@@ -102,13 +113,26 @@ export default {
     }
   },
   mounted() {
-    this.defaultLeftNavOpened()
-  }
+    this.defaultLeftNavOpened();
+
+    this.$http.get(
+      '/jsonapi/System/system/v1.0/userinfo')
+      .then(res => {
+        sessionStorage.setItem('userdata',JSON.stringify( res.data.data));
+        this.userdata = res.data.data;
+        this.getRouterName(this.userdata.menuPermission);
+        // console.log(this.routerList)
+      })
+
+    this.$store.state.topNavState = '/' + this.$route.path.split('/')[1]
+  },
 }
 </script>
 <style scoped>
   .left-tab{
-    max-height: calc(100vh - 168px)!important;
+    /*max-height: calc(100vh - 168px)!important;*/
+    height: calc(100vh)!important;
+    max-height: calc(100vh)!important;
     /*margin-bottom: 60px;*/
     overflow: auto;
   }
@@ -166,4 +190,7 @@ export default {
   .left-tab>li{
     padding-left: 10px!important;
   }
+  /*>>>.el-scrollbar__view{*/
+    /*height: 100%!important;*/
+  /*}*/
 </style>

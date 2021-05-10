@@ -3,6 +3,8 @@ import Vue from "vue";
 import qs from 'qs'
 // axios 全局配置
 
+
+
 Vue.prototype.$http = axios;
 axios.defaults.timeout = 60000; // 请求超时
 axios.defaults.withCredentials = false;
@@ -11,6 +13,7 @@ axios.defaults.withCredentials = false;
 // loading框设置局部刷新，且所有请求完成后关闭loading框
 let loading;
 let needLoadingRequestCount = 0; // 声明一个对象用于存储请求个数
+var loginUrl="https://g1openid.crcc.cn/login";//token过期跳转的url
 function startLoading() {
   loading = Vue.prototype.$loading({
     lock: true,
@@ -135,29 +138,33 @@ axios.interceptors.response.use(
     }
     //token过期时的弹框
     if (response.data.message!=null&&(response.data.message.indexOf("已过期") != -1||response.data.message.indexOf("格式错误") != -1||response.data.message.indexOf("token信息异常") != -1)) {
-        Vue.prototype.$prompt('请输入token', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-        }).then(({ value }) => {
-          sessionStorage.setItem("token",value);
-          window.location.reload();
-          return false;
-        }).catch(() => {
-
-        });
+        // Vue.prototype.$prompt('请输入token', '提示', {
+        //   confirmButtonText: '确定',
+        //   cancelButtonText: '取消',
+        // }).then(({ value }) => {
+        //   sessionStorage.setItem("token",value);
+        //   window.location.reload();
+        //   return false;
+        // }).catch(() => {
+        //
+        // });
+      sessionStorage.removeItem("token")
+      // window.location.href=loginUrl;
       return false;
     }
     if (response.data.msg!=null&&(response.data.msg.indexOf("已过期") != -1||response.data.msg.indexOf("格式错误") != -1||response.data.msg.indexOf("token信息异常") != -1)) {
-      Vue.prototype.$prompt('请输入token', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-      }).then(({ value }) => {
-        sessionStorage.setItem("token",value);
-      window.location.reload();
-      return false;
-    }).catch(() => {
-
-      });
+    //   Vue.prototype.$prompt('请输入token', '提示', {
+      //     confirmButtonText: '确定',
+      //     cancelButtonText: '取消',
+      //   }).then(({ value }) => {
+      //     sessionStorage.setItem("token",value);
+      //   window.location.reload();
+      //   return false;
+      // }).catch(() => {
+      //
+      //   });
+      sessionStorage.removeItem("token")
+      // window.location.href=loginUrl;
       return false;
     }
     if (response.data.code === -1) {

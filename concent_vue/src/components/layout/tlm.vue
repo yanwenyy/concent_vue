@@ -1,48 +1,51 @@
 <template>
   <el-container style="width: 100%; height: 100%;">
-    <el-header style="border-bottom: 1px solid #e6e6e6; width:100%;margin:0;padding:0;">
-      <top></top>
-    </el-header>
-    <div :class="el_container_style" style="width: 100%; height: calc(100% - 68px);margin-top:8px;">
-      <div style="width:100%;height:40px;box-sizing:border-box;">
-        <el-menu
-          :default-active="defaultActiveIndex"
-          :router="true"
-          @select="handleSelect"
-          class="el-menu-demo"
-          mode="horizontal"
-          style=""
-        >
-          <!-- 上下布局 -->
-          <template v-for="(route) in this.$store.state.route[0].children">
-            <el-menu-item
-              :index="route.path"
-              v-bind:key="route.name"
-              v-if="route.menushow"
-            >{{route.name}}
-            </el-menu-item>
-          </template>
+    <!--<el-header style="border-bottom: 1px solid #e6e6e6; width:100%;margin:0;padding:0;">-->
+      <!--<top></top>-->
+    <!--</el-header>-->
 
-          <!-- 上左右布局 -->
-          <template v-for="(route) in this.$store.state.route[1].children">
-            <el-menu-item
-              class="biaoqian"
-              :index="route.path"
-              style="font-size:20px;padding:0 6px;font-weight: 1000; width: 177px;height: 45px;line-height: 45px;text-align: center;"
-              v-bind:key="route.name"
-              v-if="route.menushow"
-            >{{route.name}}
-            </el-menu-item>
-          </template>
-        </el-menu>
-      </div>
+    <!--style="width: 100%; height: calc(100% - 68px);margin-top:8px;"-->
+    <div :class="el_container_style" style="width: 100%; height: 100%;margin-top:8px;">
+      <!--<div style="width:100%;height:40px;box-sizing:border-box;">-->
+        <!--<el-menu-->
+          <!--:default-active="defaultActiveIndex"-->
+          <!--:router="true"-->
+          <!--@select="handleSelect"-->
+          <!--class="el-menu-demo"-->
+          <!--mode="horizontal"-->
+          <!--style=""-->
+        <!--&gt;-->
+          <!--&lt;!&ndash; 上下布局 &ndash;&gt;-->
+          <!--<template v-for="(route) in this.$store.state.route[0].children">-->
+            <!--<el-menu-item-->
+              <!--:index="route.path"-->
+              <!--v-bind:key="route.name"-->
+              <!--v-if="route.menushow"-->
+            <!--&gt;{{route.name}}-->
+            <!--</el-menu-item>-->
+          <!--</template>-->
+
+          <!--&lt;!&ndash; 上左右布局 &ndash;&gt;-->
+          <!--<template v-for="(route) in this.$store.state.route[1].children">-->
+            <!--<el-menu-item-->
+              <!--class="biaoqian"-->
+              <!--:index="route.path"-->
+              <!--style="font-size:20px;padding:0 6px;font-weight: 1000; width: 177px;height: 45px;line-height: 45px;text-align: center;"-->
+              <!--v-bind:key="route.name"-->
+              <!--v-if="route.menushow"-->
+            <!--&gt;{{route.name}}-->
+            <!--</el-menu-item>-->
+          <!--</template>-->
+        <!--</el-menu>-->
+      <!--</div>-->
+
       <div
-        style="position:relatve;width:100%;height:100%;background:#F7F9FA;;box-sizing:border-box;padding:1px 0 40px;">
+        style="position:relative;width:100%;height:100%;background:#F7F9FA;;box-sizing:border-box;padding:1px 0;"><!--1px 0 40px-->
         <div style="height:calc(100%);background:white;display:flex;">
           <el-scrollbar
             :class="tlm_height"
             id="el-leftnav-scrollbar"
-            style="border-right: 1px solid #e6e6e6;"
+            style="border-right: 1px solid #e6e6e6;height:100%"
             wrap-class="default-scrollbar__wrap"
           >
             <el-aside id="el-leftnav" style="height: 100%; overflow-y: hidden;" width>
@@ -97,8 +100,9 @@
     mounted() {
       if (this.$store.state.browser === 'FF') {
         this.tlm_height = this.tlm_height + '_' + this.$store.state.browser
-      }
+      };
     },
+
     methods: {
       handleSelect() {
       },
@@ -108,7 +112,7 @@
         } else if (this.el_container_style === 'el_container_style_false') {
           this.el_container_style = 'el_container_style_true'
         }
-      }
+      },
     },
     computed: {
       listenCollapsed() {
@@ -161,7 +165,8 @@
   .el_container_style_true #el-leftnav {
     position: relative;
     width: 160px;
-    height: calc(100vh - 108px) !important;
+    /*height: calc(100vh - 108px) !important;*/
+    height: 100%!important;
     transition: width 0.5s;
     -moz-transition: width 0.5s;
     -webkit-transition: width 0.5s;
@@ -179,7 +184,8 @@
   .el_container_style_false #el-leftnav-scrollbar,
   .el_container_style_false #el-leftnav {
     width: 64px;
-    height: calc(100vh - 108px) !important;
+    /*height: calc(100vh - 108px) !important;*/
+    height: 100%!important;
     transition: width 0.3s;
     -moz-transition: width 0.3s;
     -webkit-transition: width 0.3s;
@@ -225,5 +231,8 @@
   .el-pagination .el-select .el-input .el-input__inner {
     height: auto;
     margin: 1px;
+  }
+  >>>.el-scrollbar__view{
+    height: 100%!important;
   }
 </style>
