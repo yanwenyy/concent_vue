@@ -1488,26 +1488,28 @@
                 {useJson: true}
               )
               .then((res) => {
-                if (res.data.code === 200) {
-
+                if (res.data.data === true) {
+                  this.$http
+                    .post(
+                      url,
+                      JSON.stringify(this.detailform),
+                      {useJson: true}
+                    )
+                    .then((res) => {
+                      if (res.data.code === 200) {
+                        this.$message({
+                          message: "保存成功",
+                          type: "success",
+                        });
+                        // this.$refs[formName].resetFields();
+                        this.back();
+                      }
+                    });
+                }else{
+                  this.$message.error("数据库已存在该条数据");
                 }
               });
-            // this.$http
-            //   .post(
-            //     url,
-            //     JSON.stringify(this.detailform),
-            //     {useJson: true}
-            //   )
-            //   .then((res) => {
-            //     if (res.data.code === 200) {
-            //       this.$message({
-            //         message: "保存成功",
-            //         type: "success",
-            //       });
-            //       // this.$refs[formName].resetFields();
-            //       this.back();
-            //     }
-            //   });
+
           } else {
             this.$message.error("请添加必填项");
             return false;

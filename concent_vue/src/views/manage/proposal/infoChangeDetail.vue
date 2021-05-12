@@ -33,7 +33,7 @@
                 >
                   <template>
                     <el-radio-group class="detail-radio-group" v-model="detailFormBefore.topInfor.moduleId">
-                      <el-radio disabled  v-for="(item, index) in projectPlate" :label="item.id" :key="index" v-if="item.id=='7f4fcba4255b43a8babf15afd6c04a53'||item.id=='f6823a41e9354b81a1512155a5565aeb'||item.id=='510ba0d79593418493eb1a11ed3e7df4'">{{item.detailName}}</el-radio>
+                      <el-radio disabled  v-for="(item, index) in projectPlate" :label="item.id" :key="index">{{item.detailName}}</el-radio>
                     </el-radio-group>
                   </template>
                   <!--<el-input v-model="detailFormBefore.topInfor.moduleName" disabled></el-input>-->
@@ -99,30 +99,45 @@
 
               <br>
               <el-form-item
-                label="建设单位:"
+                :label="detailFormBefore.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailFormBefore.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'?'建设单位:':'客户名称:'"
               >
                 <el-input v-model="detailFormBefore.topInfor.constructionOrg" disabled></el-input>
               </el-form-item>
               <el-form-item
+                v-if="detailFormBefore.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailFormBefore.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailFormBefore.topInfor.moduleId=='510ba0d79593418493eb1a11ed3e7df4'||detailFormBefore.topInfor.moduleId==null"
                 label="设计单位:"
               >
                 <el-input v-model="detailFormBefore.topInfor.designOrg	" disabled></el-input>
               </el-form-item>
               <br>
 
+              <el-form-item
+                label="公告类型:"
+              >
+                <el-input v-model="detailFormBefore.topInfor.noticeTypeName" disabled></el-input>
+              </el-form-item>
 
+              <el-form-item
+                label="资审方式:"
+              >
+                <el-input v-model="detailFormBefore.topInfor.verifyTypeName" disabled></el-input>
+              </el-form-item>
+              <br>
               <!-- 下拉 -->
               <el-form-item
+                v-if="detailFormBefore.topInfor.noticeTypeId!='9d70138b32d611eb8271a1606dfca13c'"
                 label="招标人:"
               >
                 <el-input v-model="detailFormBefore.topInfor.bidPerson" disabled></el-input>
               </el-form-item>
               <el-form-item
+                v-if="detailFormBefore.topInfor.noticeTypeId!='9d70138b32d611eb8271a1606dfca13c'"
                 label="招标代理公司:"
               >
                 <el-input v-model="detailFormBefore.topInfor.bidAgentCompany	" disabled></el-input>
               </el-form-item>
               <el-form-item
+                v-if="detailFormBefore.topInfor.noticeTypeId!='9d70138b32d611eb8271a1606dfca13c'"
                 label="预计招标时间:"
               >
                 <el-date-picker
@@ -138,7 +153,7 @@
               </el-form-item>
               <br>
               <el-form-item
-                label="投资额（万元）:"
+                :label="detailFormBefore.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailFormBefore.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'?'投资额（万元）:':'项目规模:'"
                 prop="topInfor.investment"
                 :rules="{
                 required: true,
@@ -191,17 +206,7 @@
               </el-form-item>
               <br>
 
-              <el-form-item
-                label="公告类型:"
-              >
-                <el-input v-model="detailFormBefore.topInfor.noticeTypeName" disabled></el-input>
-              </el-form-item>
 
-              <el-form-item
-                label="资审方式:"
-              >
-                <el-input v-model="detailFormBefore.topInfor.verifyTypeName" disabled></el-input>
-              </el-form-item>
 
               <el-form-item
                 v-show="detailFormBefore.topInfor.investment<maxMoney&&detailFormBefore.topInfor.isMajorProject=='0'"
@@ -352,10 +357,11 @@
                   </template>
                 </el-table-column>
               </el-table>
-              <p style="overflow: hidden；margin-right: 30px">
+              <p  v-if="detailFormBefore.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailFormBefore.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'" style="overflow: hidden；margin-right: 30px">
                 <span style="float: left">标段信息: </span>
               </p>
               <el-table
+                v-if="detailFormBefore.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailFormBefore.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'"
                 :data="detailFormBefore.topInfoSectionList"
                 :header-cell-style="{
                 'text-align': 'center',
@@ -493,7 +499,7 @@
 
                   <template>
                     <el-radio-group class="detail-radio-group" v-model="detailform.topInfor.moduleId"  @change="getName(detailform.topInfor.moduleId, projectPlate, 'moduleName','moduleCode')">
-                      <el-radio disabled  v-for="(item, index) in projectPlate" :label="item.id" :key="index" v-if="item.id=='7f4fcba4255b43a8babf15afd6c04a53'||item.id=='f6823a41e9354b81a1512155a5565aeb'||item.id=='510ba0d79593418493eb1a11ed3e7df4'">{{item.detailName}}</el-radio>
+                      <el-radio disabled  v-for="(item, index) in projectPlate" :label="item.id" :key="index">{{item.detailName}}</el-radio>
                     </el-radio-group>
                   </template>
                 </el-form-item>
@@ -740,7 +746,7 @@
 
               <br>
               <el-form-item
-                label="建设单位:"
+                :label="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'?'建设单位:':'客户名称:'"
                 prop="topInfor.constructionOrg"
                 :rules="{
                 required: true,
@@ -756,6 +762,7 @@
                 />
               </el-form-item>
               <el-form-item
+                v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId=='510ba0d79593418493eb1a11ed3e7df4'||detailform.topInfor.moduleId==null"
                 label="设计单位:"
                 prop="topInfor.designOrg"
                 :rules="{
@@ -772,6 +779,75 @@
               </el-form-item>
               <br>
               <el-form-item
+                label="公告类型:"
+                prop="topInfor.noticeTypeId"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+              >
+                <el-select
+                  disabled
+                  clearable
+                  filterable
+                  placeholder="请选择"
+
+                  v-model="detailform.topInfor.noticeTypeId"
+                  @change="
+                  getName(
+                    detailform.topInfor.noticeTypeId,
+                    bulletinType,
+                    'noticeTypeName',
+                    'noticeTypeCode'
+                  )
+                "
+                >
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in bulletinType"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+
+              <el-form-item
+                label="资审方式:"
+                prop="topInfor.noticeTypeName"
+              >
+                <el-input
+                  disabled
+                  clearable
+                  placeholder="请输入"
+                  v-model="detailform.topInfor.noticeTypeName=='资审公告'?detailform.topInfor.verifyTypeName='资格预审':detailform.topInfor.noticeTypeName=='招标公告'?detailform.topInfor.verifyTypeName='资格后审':detailform.topInfor.noticeTypeName=='竞争性谈判'?detailform.topInfor.verifyTypeName='竞争性谈判':detailform.topInfor.verifyTypeName=''"
+                />
+                <!--<el-select-->
+                <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                <!--clearable-->
+                <!--filterable-->
+                <!--placeholder="请选择"-->
+                <!---->
+                <!--@change="-->
+                <!--getName(-->
+                <!--detailform.topInfor.verifyTypeId,-->
+                <!--certificationType,-->
+                <!--'verifyTypeName'-->
+                <!--)-->
+                <!--"-->
+                <!--v-model="detailform.topInfor.verifyTypeId"-->
+                <!--&gt;-->
+                <!--<el-option-->
+                <!--:key="index"-->
+                <!--:label="item.detailName"-->
+                <!--:value="item.id"-->
+                <!--v-for="(item, index) in certificationType"-->
+                <!--&gt;</el-option>-->
+                <!--</el-select>-->
+              </el-form-item>
+              <br>
+              <el-form-item
+                v-if="detailform.topInfor.noticeTypeId!='9d70138b32d611eb8271a1606dfca13c'"
                 label="招标人:"
                 prop="topInfor.bidPerson"
                 :rules="{
@@ -789,6 +865,7 @@
               </el-form-item>
 
               <el-form-item
+                v-if="detailform.topInfor.noticeTypeId!='9d70138b32d611eb8271a1606dfca13c'"
                 label="招标代理公司:"
                 prop="topInfor.bidAgentCompany"
                 :rules="{
@@ -804,6 +881,7 @@
               </el-form-item>
 
               <el-form-item
+                v-if="detailform.topInfor.noticeTypeId!='9d70138b32d611eb8271a1606dfca13c'"
                 label="预计招标时间:"
                 prop="topInfor.planBidTime"
                 :rules="{
@@ -827,7 +905,7 @@
               <br>
 
               <el-form-item
-                label="投资额（万元）:"
+                :label="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'?'投资额（万元）:':'项目规模:'"
                 prop="topInfor.investment"
                 :rules="rules.contractAmount"
               >
@@ -906,73 +984,7 @@
                 </el-select> -->
               </el-form-item>
                 <br>
-              <el-form-item
-                label="公告类型:"
-                prop="topInfor.noticeTypeId"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              >
-                <el-select
-                  disabled
-                  clearable
-                  filterable
-                  placeholder="请选择"
 
-                  v-model="detailform.topInfor.noticeTypeId"
-                  @change="
-                  getName(
-                    detailform.topInfor.noticeTypeId,
-                    bulletinType,
-                    'noticeTypeName',
-                    'noticeTypeCode'
-                  )
-                "
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in bulletinType"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-
-              <el-form-item
-                label="资审方式:"
-                prop="topInfor.noticeTypeName"
-              >
-                <el-input
-                  disabled
-                  clearable
-                  placeholder="请输入"
-                  v-model="detailform.topInfor.noticeTypeName=='资审公告'?detailform.topInfor.verifyTypeName='资格预审':detailform.topInfor.noticeTypeName=='招标公告'?detailform.topInfor.verifyTypeName='资格后审':detailform.topInfor.noticeTypeName=='竞争性谈判'?detailform.topInfor.verifyTypeName='竞争性谈判':detailform.topInfor.verifyTypeName=''"
-                />
-                <!--<el-select-->
-                  <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
-                  <!--clearable-->
-                  <!--filterable-->
-                  <!--placeholder="请选择"-->
-                  <!---->
-                  <!--@change="-->
-                  <!--getName(-->
-                    <!--detailform.topInfor.verifyTypeId,-->
-                    <!--certificationType,-->
-                    <!--'verifyTypeName'-->
-                  <!--)-->
-                <!--"-->
-                  <!--v-model="detailform.topInfor.verifyTypeId"-->
-                <!--&gt;-->
-                  <!--<el-option-->
-                    <!--:key="index"-->
-                    <!--:label="item.detailName"-->
-                    <!--:value="item.id"-->
-                    <!--v-for="(item, index) in certificationType"-->
-                  <!--&gt;</el-option>-->
-                <!--</el-select>-->
-              </el-form-item>
               <el-form-item
                 v-show="detailform.topInfor.investment<maxMoney&&detailform.topInfor.isMajorProject=='0'"
                 label="重大项目说明"
@@ -1186,7 +1198,7 @@
                   <!--</template>-->
                 <!--</el-table-column>-->
               </el-table>
-              <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+              <p v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'"  class="detail-title" style="overflow: hidden；margin-right: 30px">
                 <span>标段信息: </span>
                 <!--<el-button-->
                   <!--v-show="p.actpoint != 'look'&&p.actpoint != 'task'"-->
@@ -1198,6 +1210,7 @@
                 <!--&gt;-->
               </p>
               <el-table
+                v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'"
                 :row-class-name="tableRowClassName"
                 :data="detailform.topInfoSectionList"
                 :header-cell-style="{

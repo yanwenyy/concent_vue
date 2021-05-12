@@ -821,6 +821,76 @@
                       />
                     </el-form-item>
                   </div>
+                  <p>
+                    <span >项目地点: </span>
+                  </p>
+                  <el-table
+                    :data="detailFormBefore.topInfoSiteList"
+                    :key="key"
+                    :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                    @selection-change="handleSelectionChange"
+                    align="center"
+                    border
+                    class="detailTable"
+                    ref="table"
+                    style="width: 100%;height: auto;"
+                  >
+                    <el-table-column
+                      :width="80"
+                      align="center"
+                      label="序号"
+                      show-overflow-tooltip
+                      type="index"
+                    ></el-table-column>
+                    <el-table-column
+                      :resizable="false"
+                      label="项目地点"
+                      align="center"
+                      prop="inforName"
+                    >
+                      <template slot-scope="scope">
+                        <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
+                        <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
+                      </template>
+                    </el-table-column>
+
+                    <el-table-column
+                      :resizable="false"
+                      label="份额(万元)"
+                      prop="contractAmount"
+                      show-overflow-tooltip
+                      align="center"
+                    >
+                    </el-table-column>
+
+                    <el-table-column
+                      :resizable="false"
+                      label="是否为主地点"
+                      prop="contractAmount"
+                      align="center"
+                      show-overflow-tooltip
+                    >
+                      <template slot-scope="scope">
+                        <el-switch
+                          disabled
+                          class="inline-formitem-switch"
+                          v-model="scope.row.isMain"
+                          active-color="#409EFF"
+                          inactive-color="#ddd"
+                          active-value="1"
+                          inactive-value="0"
+                        >
+                        </el-switch>
+                        <!--<el-radio disabled v-model="scope.row.isMain" label="1">是</el-radio>-->
+                        <!--<el-radio disabled v-model="scope.row.isMain" label="0">否</el-radio>-->
+                        <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                      </template>
+                    </el-table-column>
+                  </el-table>
                   <p class="detail-p">
                     <span>中标通知书: </span>
                   </p>
@@ -1044,76 +1114,7 @@
                     </el-table-column>
 
                   </el-table>
-                  <p>
-                    <span >项目地点: </span>
-                  </p>
-                  <el-table
-                    :data="detailFormBefore.topInfoSiteList"
-                    :key="key"
-                    :header-cell-style="{
-                'text-align': 'center',
-                'background-color': 'rgba(246,248,252,1)',
-                color: 'rgba(0,0,0,1)',
-              }"
-                    @selection-change="handleSelectionChange"
-                    align="center"
-                    border
-                    class="detailTable"
-                    ref="table"
-                    style="width: 100%;height: auto;"
-                  >
-                    <el-table-column
-                      :width="80"
-                      align="center"
-                      label="序号"
-                      show-overflow-tooltip
-                      type="index"
-                    ></el-table-column>
-                    <el-table-column
-                      :resizable="false"
-                      label="项目地点"
-                      align="center"
-                      prop="inforName"
-                    >
-                      <template slot-scope="scope">
-                        <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
-                        <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
-                      </template>
-                    </el-table-column>
 
-                    <el-table-column
-                      :resizable="false"
-                      label="份额(万元)"
-                      prop="contractAmount"
-                      show-overflow-tooltip
-                      align="center"
-                    >
-                    </el-table-column>
-
-                    <el-table-column
-                      :resizable="false"
-                      label="是否为主地点"
-                      prop="contractAmount"
-                      align="center"
-                      show-overflow-tooltip
-                    >
-                      <template slot-scope="scope">
-                        <el-switch
-                          disabled
-                          class="inline-formitem-switch"
-                          v-model="scope.row.isMain"
-                          active-color="#409EFF"
-                          inactive-color="#ddd"
-                          active-value="1"
-                          inactive-value="0"
-                        >
-                        </el-switch>
-                        <!--<el-radio disabled v-model="scope.row.isMain" label="1">是</el-radio>-->
-                        <!--<el-radio disabled v-model="scope.row.isMain" label="0">否</el-radio>-->
-                        <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                      </template>
-                    </el-table-column>
-                  </el-table>
                 </div>
             </el-tab-pane>
             <el-tab-pane v-if="detailFormBefore.contractInfo.isInSystemUnion==='0'||detailFormBefore.contractInfo.isInSystemSub==='0'||detailFormBefore.contractInfo.isOutSystemUnion==='0'||detailFormBefore.contractInfo.isOutSystemSub==='0'||detailFormBefore.contractInfo.isInGroupSub==='0'" label="合同附属信息">
@@ -2769,6 +2770,119 @@
                     />
                   </el-form-item>
                 </div>
+                <p>
+                  <span >项目地点: </span>
+                  <el-button
+                    v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
+                    class="detatil-flie-btn"
+                    @click="add('dd')"
+                    type="primary"
+                  >新增</el-button >
+                </p>
+                <el-table
+                  :data="detailform.topInfoSiteList"
+                  :key="key"
+                  :header-cell-style="{
+              'text-align': 'center',
+              'background-color': 'rgba(246,248,252,1)',
+              color: 'rgba(0,0,0,1)',
+            }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%;height: auto;"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="项目地点"
+                    align="center"
+                    prop="inforName"
+                  >
+                    <template slot-scope="scope">
+                      <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
+                      <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column
+                    :resizable="false"
+                    label="份额(万元)"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                    align="center"
+                  >
+                    <template slot-scope="scope">
+                      <el-form-item class="tabelForm" :prop="'topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
+                        <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                        <el-input
+                          class="group-no-padding"
+                          clearable
+                          :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                          v-model="scope.row.contractAmount"
+                        >
+                          <template slot="prepend">¥</template>
+                          <template slot="append">(万元)</template>
+                        </el-input>
+                      </el-form-item>
+                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column
+                    :resizable="false"
+                    label="是否为主地点"
+                    prop="contractAmount"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                    <template slot-scope="scope">
+                      <el-switch
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        class="inline-formitem-switch"
+                        v-model="scope.row.isMain"
+                        active-color="#409EFF"
+                        inactive-color="#ddd"
+                        active-value="1"
+                        inactive-value="0"
+                        @change="setMain(scope.$index,detailform.topInfoSiteList)"
+                      >
+                      </el-switch>
+                      <!--<el-radio v-model="scope.row.isMain" label="1">是</el-radio>-->
+                      <!--<el-radio v-model="scope.row.isMain" label="0">否</el-radio>-->
+                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column
+                    v-show="!p.actpoint === 'look'"
+                    :resizable="false"
+                    fixed="right"
+                    label="操作"
+                    align="center"
+                    width="80"
+                    show-overflow-tooltip
+                    v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
+                  >
+                    <template slot-scope="scope">
+                      <el-link
+                        :underline="false"
+                        @click="del(scope.$index,scope.row,detailform.topInfoSiteList)"
+                        type="warning"
+                      >删除
+                      </el-link
+                      >
+                    </template>
+                  </el-table-column>
+                </el-table>
                 <p class="detail-p">
                   <span>中标通知书: </span>
                   <el-button
@@ -3124,119 +3238,7 @@
                     </template>
                   </el-table-column>
                 </el-table>
-                <p>
-                  <span >项目地点: </span>
-                  <el-button
-                    v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
-                    class="detatil-flie-btn"
-                    @click="add('dd')"
-                    type="primary"
-                  >新增</el-button >
-                </p>
-                <el-table
-                  :data="detailform.topInfoSiteList"
-                  :key="key"
-                  :header-cell-style="{
-              'text-align': 'center',
-              'background-color': 'rgba(246,248,252,1)',
-              color: 'rgba(0,0,0,1)',
-            }"
-                  @selection-change="handleSelectionChange"
-                  align="center"
-                  border
-                  class="detailTable"
-                  ref="table"
-                  style="width: 100%;height: auto;"
-                >
-                  <el-table-column
-                    :width="80"
-                    align="center"
-                    label="序号"
-                    show-overflow-tooltip
-                    type="index"
-                  ></el-table-column>
-                  <el-table-column
-                    :resizable="false"
-                    label="项目地点"
-                    align="center"
-                    prop="inforName"
-                  >
-                    <template slot-scope="scope">
-                      <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
-                      <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
-                    </template>
-                  </el-table-column>
 
-                  <el-table-column
-                    :resizable="false"
-                    label="份额(万元)"
-                    prop="contractAmount"
-                    show-overflow-tooltip
-                    align="center"
-                  >
-                    <template slot-scope="scope">
-                      <el-form-item class="tabelForm" :prop="'topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
-                        <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                        <el-input
-                          class="group-no-padding"
-                          clearable
-                          :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                          v-model="scope.row.contractAmount"
-                        >
-                          <template slot="prepend">¥</template>
-                          <template slot="append">(万元)</template>
-                        </el-input>
-                      </el-form-item>
-                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                    </template>
-                  </el-table-column>
-
-                  <el-table-column
-                    :resizable="false"
-                    label="是否为主地点"
-                    prop="contractAmount"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                    <template slot-scope="scope">
-                      <el-switch
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                        class="inline-formitem-switch"
-                        v-model="scope.row.isMain"
-                        active-color="#409EFF"
-                        inactive-color="#ddd"
-                        active-value="1"
-                        inactive-value="0"
-                        @change="setMain(scope.$index,detailform.topInfoSiteList)"
-                      >
-                      </el-switch>
-                      <!--<el-radio v-model="scope.row.isMain" label="1">是</el-radio>-->
-                      <!--<el-radio v-model="scope.row.isMain" label="0">否</el-radio>-->
-                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                    </template>
-                  </el-table-column>
-
-                  <el-table-column
-                    v-show="!p.actpoint === 'look'"
-                    :resizable="false"
-                    fixed="right"
-                    label="操作"
-                    align="center"
-                    width="80"
-                    show-overflow-tooltip
-                    v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
-                  >
-                    <template slot-scope="scope">
-                      <el-link
-                        :underline="false"
-                        @click="del(scope.$index,scope.row,detailform.topInfoSiteList)"
-                        type="warning"
-                      >删除
-                      </el-link
-                      >
-                    </template>
-                  </el-table-column>
-                </el-table>
               </div>
             </el-tab-pane>
             <el-tab-pane v-if="detailform.contractInfo.isInSystemUnion==='0'||detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isOutSystemUnion==='0'||detailform.contractInfo.isOutSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'" label="合同附属信息">
@@ -5189,21 +5191,26 @@
               'afterContractInfoBO':this.detailform,
               'beforeContractInfoBO':this.detailFormBefore
             }:this.detailform;
-            this.$http
-              .post(
-                url,
-                JSON.stringify(datas),
-                {useJson: true}
-              )
-              .then((res) => {
-              if (res.data.code === 200) {
-              this.$message({
-                message:  `${type=='save'?'保存':'提交'}成功`,
-                type: "success",
-              });
-              this.$router.back();
+            if(this.detailform.topInfoSiteList.length>0){
+              this.$http
+                .post(
+                  url,
+                  JSON.stringify(datas),
+                  {useJson: true}
+                )
+                .then((res) => {
+                  if (res.data.code === 200) {
+                    this.$message({
+                      message:  `${type=='save'?'保存':'提交'}成功`,
+                      type: "success",
+                    });
+                    this.$router.back();
+                  }
+                });
+            }else{
+              this.$message.error("请至少选择一个项目地点");
             }
-          });
+
           } else {
             this.$message.error("请添加必填项");
         return false;
