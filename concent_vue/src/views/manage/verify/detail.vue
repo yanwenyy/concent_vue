@@ -74,7 +74,9 @@
             </el-form-item>
             </div>
 
-            <el-form-item label="工程类别(一级):">
+            <el-form-item label="工程类别(一级):"
+                          v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'"
+            >
               <el-input
                 disabled
                 clearable
@@ -87,6 +89,7 @@
 
             <el-form-item
               label="工程类别(二级):"
+              v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'"
             >
               <el-input
                 disabled
@@ -98,16 +101,17 @@
 
 
             <el-form-item label="所属线路:"
-                          v-if="detailform.topInfor.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'">
+                          v-if="(detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb')&&detailform.topInfor.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'">
               <el-input
                 disabled
                 v-model="detailform.topInfor.belongLineName"
               >
               </el-input>
             </el-form-item>
-            <br>
+            <br  v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null">
 
             <el-form-item
+              v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null"
               label="项目性质(一级):"
             >
               <el-input
@@ -121,6 +125,7 @@
             </el-form-item>
 
             <el-form-item
+              v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null"
               label="项目性质(二级):"
             >
               <el-input
@@ -132,8 +137,26 @@
               >
               </el-input>
             </el-form-item>
-            <br>
-
+            <br  v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null">
+            <el-form-item
+              v-if="detailform.topInfor.moduleId=='510ba0d79593418493eb1a11ed3e7df4'"
+              label="供应产品"
+            >
+              <el-input
+                disabled
+                v-model="detailform.topInfor.supplyProductName"
+              />
+            </el-form-item>
+            <el-form-item
+              v-if="detailform.topInfor.moduleId=='510ba0d79593418493eb1a11ed3e7df4'"
+              label="采购性质:"
+            >
+              <el-input
+                disabled
+                v-model="detailform.topInfor.purchaseNatureName"
+              />
+            </el-form-item>
+            <br v-if="detailform.topInfor.moduleId=='510ba0d79593418493eb1a11ed3e7df4'">
             <el-form-item  label="新兴市场(一级):"
                            :rules="{
                 required: true,
@@ -222,7 +245,8 @@
             </div>
 
 
-            <el-form-item  label="建设单位:"
+            <el-form-item
+              :label="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'?'建设单位:':'客户名称:'"
                 :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -235,15 +259,43 @@
               />
             </el-form-item>
 
-              <el-form-item label="设计单位:">
+              <el-form-item
+                v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId=='510ba0d79593418493eb1a11ed3e7df4'||detailform.topInfor.moduleId==null"
+                label="设计单位:">
               <el-input
                 disabled
                 v-model="detailform.topInfor.designOrg"
               />
             </el-form-item>
             <br>
+            <el-form-item label="公告类型:"
+                          :rules="{
+                      required: true,
+                      message: '此项不能为空',
+                      trigger: 'blur',
+                    }"
+            >
+              <el-input
+                disabled
+                placeholder="公告类型"
+                v-model="detailform.topInfor.noticeTypeName"
+              >
 
-            <el-form-item label="招标人:"
+              </el-input>
+            </el-form-item>
+
+            <el-form-item label="资审方式:">
+              <el-input
+                disabled
+                clearable
+                placeholder="资审方式"
+                v-model="detailform.topInfor.verifyTypeName"
+              />
+            </el-form-item>
+            <br>
+            <el-form-item
+              v-if="detailform.topInfor.noticeTypeId!='9d70138b32d611eb8271a1606dfca13c'"
+              label="招标人:"
                           :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -256,14 +308,18 @@
               />
             </el-form-item>
 
-            <el-form-item label="招标代理公司:">
+            <el-form-item
+              v-if="detailform.topInfor.noticeTypeId!='9d70138b32d611eb8271a1606dfca13c'"
+              label="招标代理公司:">
               <el-input
                 disabled
                 v-model="detailform.topInfor.bidAgentCompany"
               />
             </el-form-item>
 
-            <el-form-item label="预计招标时间:"
+            <el-form-item
+              v-if="detailform.topInfor.noticeTypeId!='9d70138b32d611eb8271a1606dfca13c'"
+              label="预计招标时间:"
                           :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -281,7 +337,8 @@
               </el-date-picker>
             </el-form-item>
             <br>
-            <el-form-item label="投资额（万元）:"
+            <el-form-item
+              :label="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'?'投资额（万元）:':'项目规模:'"
                           :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -346,30 +403,7 @@
             </el-form-item>
             <br>
 
-            <el-form-item label="公告类型:"
-                          :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
-              <el-input
-                disabled
-                placeholder="公告类型"
-                v-model="detailform.topInfor.noticeTypeName"
-              >
 
-              </el-input>
-            </el-form-item>
-
-            <el-form-item label="资审方式:">
-              <el-input
-                disabled
-                clearable
-                placeholder="资审方式"
-                v-model="detailform.topInfor.verifyTypeName"
-              />
-            </el-form-item>
              <el-form-item
                v-show="detailform.topInfor.investment<maxMoney&&detailform.topInfor.isMajorProject=='0'"
                label="重大项目说明"
@@ -694,7 +728,7 @@
                 </el-table-column>
               </el-table>
     </div>
-<p class="detail-title" style="overflow: hidden;margin-right:30px">
+<p  v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'" class="detail-title" style="overflow: hidden;margin-right:30px">
      <span  >标段信息: </span>   <el-button
        @click="dialogTopInfoSection=true"
        v-show="p.actpoint != 'look'&&p.actpoint!='task'"
@@ -705,6 +739,7 @@
        <!-- && dialogTopInfoSection. == []   &&checked-->
 
       <el-table
+        v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'"
         :data="detailform.verifySectionList"
         :header-cell-style="{
                 'text-align': 'center',

@@ -43,7 +43,9 @@
               </el-form-item>
             </div>
             <br>
-            <el-form-item label="工程类别(一级):">
+            <el-form-item
+              v-if="detailform.topInforBO.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInforBO.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'"
+              label="工程类别(一级):">
               <el-input
                 disabled
                 clearable
@@ -56,6 +58,7 @@
             </el-form-item>
 
             <el-form-item
+              v-if="detailform.topInforBO.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInforBO.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'"
               label="工程类别(二级):"
             ><!-- :disabled="p.actpoint === 'look'" -->
               <el-input
@@ -67,7 +70,11 @@
             </el-form-item>
 
             <el-form-item label="所属线路:"
-                          v-if="detailform.topInforBO.topInfor.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'">
+                          v-if="
+            (detailform.topInforBO.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInforBO.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb')&&
+              detailform.topInforBO.topInfor.enginTypeFirstId ==
+              '17ff5c08d36b41ea8f2dc2e9d3029cac'
+            ">
               <el-input
                 disabled
                 v-model="detailform.topInforBO.topInfor.belongLineName"
@@ -77,6 +84,7 @@
             <br>
 
             <el-form-item
+              v-if="detailform.topInforBO.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInforBO.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'"
               label="项目性质(一级):"
             >
               <el-input
@@ -91,6 +99,7 @@
             </el-form-item>
 
             <el-form-item
+              v-if="detailform.topInforBO.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInforBO.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'"
               label="项目性质(二级):"
             >
               <el-input
@@ -103,7 +112,35 @@
               >
               </el-input>
             </el-form-item>
-            <br>
+            <br v-if="detailform.topInforBO.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInforBO.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInforBO.topInfor.moduleId==null">
+            <el-form-item
+              v-if="detailform.topInforBO.topInfor.moduleId=='510ba0d79593418493eb1a11ed3e7df4'"
+              label="供应产品"
+              prop="topInfor.supplyProductName"
+              :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'blur',
+                }"
+            >
+              <el-input
+                disabled
+
+                v-model="detailform.topInforBO.topInfor.supplyProductName"
+              />
+            </el-form-item>
+            <el-form-item
+              v-if="detailform.topInforBO.topInfor.moduleId=='510ba0d79593418493eb1a11ed3e7df4'"
+              label="采购性质:"
+              prop="topInfor.purchaseNatureId"
+            >
+              <el-input
+                disabled
+
+                v-model="detailform.topInforBO.topInfor.purchaseNatureName"
+              />
+            </el-form-item>
+            <br v-if="detailform.topInforBO.topInfor.moduleId=='510ba0d79593418493eb1a11ed3e7df4'">
 
             <el-form-item  label="新兴市场(一级):">
               <el-input
@@ -212,14 +249,18 @@
             </div>
 
 
-            <el-form-item  label="建设单位:">
+            <el-form-item
+              :label="detailform.topInforBO.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInforBO.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'?'建设单位:':'客户名称:'"
+            >
               <el-input
                 disabled
                 v-model="detailform.topInforBO.topInfor.constructionOrg"
               />
             </el-form-item>
 
-            <el-form-item label="设计单位:">
+            <el-form-item
+              v-if="detailform.topInforBO.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInforBO.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInforBO.topInfor.moduleId=='510ba0d79593418493eb1a11ed3e7df4'||detailform.topInforBO.topInfor.moduleId==null"
+              label="设计单位:">
               <el-input
                 disabled
                 size="mini"
@@ -227,8 +268,28 @@
               />
             </el-form-item>
             <br>
+            <el-form-item label="公告类型:">
+              <el-input
+                disabled
+                placeholder="公告类型"
+                v-model="detailform.topInforBO.topInfor.noticeTypeName"
+              >
+              </el-input>
+            </el-form-item>
 
-            <el-form-item label="招标人:">
+            <el-form-item label="资审方式:">
+              <el-input
+                disabled
+                clearable
+                placeholder="资审方式"
+                size="mini"
+                v-model="detailform.topInforBO.topInfor.verifyTypeName"
+              />
+            </el-form-item>
+            <br>
+            <el-form-item
+              v-if="detailform.topInforBO.topInfor.noticeTypeId!='9d70138b32d611eb8271a1606dfca13c'"
+              label="招标人:">
               <el-input
                 disabled
                 size="mini"
@@ -237,7 +298,9 @@
             </el-form-item>
 
 
-            <el-form-item label="招标代理公司:">
+            <el-form-item
+              v-if="detailform.topInforBO.topInfor.noticeTypeId!='9d70138b32d611eb8271a1606dfca13c'"
+              label="招标代理公司:">
               <el-input
                 disabled
                 size="mini"
@@ -245,7 +308,9 @@
               />
             </el-form-item>
 
-            <el-form-item label="预计招标时间:">
+            <el-form-item
+              v-if="detailform.topInforBO.topInfor.noticeTypeId!='9d70138b32d611eb8271a1606dfca13c'"
+              label="预计招标时间:">
               <el-date-picker
                 disabled
                 filterable
@@ -258,7 +323,9 @@
             </el-form-item>
             <br>
 
-            <el-form-item label="投资额（万元）:">
+            <el-form-item
+              :label="detailform.topInforBO.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInforBO.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'?'投资额（万元）:':'项目规模:'"
+            >
               <el-input
                 disabled
                 clearable
@@ -293,24 +360,7 @@
               </el-switch>
             </el-form-item>
             <br>
-            <el-form-item label="公告类型:">
-              <el-input
-                disabled
-                placeholder="公告类型"
-                v-model="detailform.topInforBO.topInfor.noticeTypeName"
-              >
-              </el-input>
-            </el-form-item>
 
-            <el-form-item label="资审方式:">
-              <el-input
-                disabled
-                clearable
-                placeholder="资审方式"
-                size="mini"
-                v-model="detailform.topInforBO.topInfor.verifyTypeName"
-              />
-            </el-form-item>
 
             <el-form-item
               v-show="detailform.topInforBO.topInfor.investment<maxMoney&&detailform.topInforBO.topInfor.isMajorProject=='0'"
@@ -617,11 +667,12 @@
               </el-table>
             </el-row>
 
-            <p style="overflow: hidden" class="detail-title">
+            <p   v-if="detailform.topInforBO.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInforBO.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'" style="overflow: hidden" class="detail-title">
               <span>标段信息: </span>
             </p>
 
             <el-table
+              v-if="detailform.topInforBO.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInforBO.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'"
               :key="key"
               @row-dblclick="lookBd"
               :data="detailform.bidInfoSectionList"

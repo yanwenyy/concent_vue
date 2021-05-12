@@ -93,7 +93,7 @@
                 <!--</el-select>-->
                 <template>
                   <el-radio-group class="detail-radio-group" v-model="detailform.topInfor.moduleId"  @change="getName(detailform.topInfor.moduleId, projectPlate, 'moduleName','moduleCode')">
-                    <el-radio disabled  v-for="(item, index) in projectPlate" :label="item.id" :key="index" v-if="item.id=='7f4fcba4255b43a8babf15afd6c04a53'||item.id=='f6823a41e9354b81a1512155a5565aeb'||item.id=='510ba0d79593418493eb1a11ed3e7df4'">{{item.detailName}}</el-radio>
+                    <el-radio disabled  v-for="(item, index) in projectPlate" :label="item.id" :key="index">{{item.detailName}}</el-radio>
                   </el-radio-group>
                 </template>
               </el-form-item>
@@ -330,7 +330,7 @@
             </el-form-item>
             <br>
             <el-form-item
-              label="建设单位:"
+              :label="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'?'建设单位:':'客户名称:'"
               prop="topInfor.constructionOrg"
               :rules="{
                 required: true,
@@ -346,6 +346,7 @@
               />
             </el-form-item>
             <el-form-item
+              v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId=='510ba0d79593418493eb1a11ed3e7df4'||detailform.topInfor.moduleId==null"
               label="设计单位:"
               prop="topInfor.designOrg"
               :rules="{
@@ -361,6 +362,52 @@
             </el-form-item>
             <br>
             <el-form-item
+              label="公告类型:"
+              prop="topInfor.noticeTypeId"
+              :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+            >
+              <el-select
+                disabled
+                clearable
+                filterable
+                placeholder="请选择"
+
+                v-model="detailform.topInfor.noticeTypeId"
+                @change="
+                getName(
+                  detailform.topInfor.noticeTypeId,
+                  bulletinType,
+                  'noticeTypeName'
+                )
+              "
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in bulletinType"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="资审方式:"
+              prop="topInfor.noticeTypeName"
+            >
+              <el-input
+                disabled
+                clearable
+                placeholder="请输入"
+                v-model="detailform.topInfor.noticeTypeName=='资审公告'?detailform.topInfor.verifyTypeName='资格预审':detailform.topInfor.noticeTypeName=='招标公告'?detailform.topInfor.verifyTypeName='资格后审':detailform.topInfor.noticeTypeName=='竞争性谈判'?detailform.topInfor.verifyTypeName='竞争性谈判':detailform.topInfor.verifyTypeName=''"
+              />
+
+            </el-form-item>
+            <br>
+            <el-form-item
+              v-if="detailform.topInfor.noticeTypeId!='9d70138b32d611eb8271a1606dfca13c'"
               label="招标人:"
               prop="topInfor.bidPerson"
               :rules="{
@@ -377,6 +424,7 @@
               />
             </el-form-item>
             <el-form-item
+              v-if="detailform.topInfor.noticeTypeId!='9d70138b32d611eb8271a1606dfca13c'"
               label="招标代理公司:"
               prop="topInfor.bidAgentCompany"
               :rules="{
@@ -391,6 +439,7 @@
               />
             </el-form-item>
             <el-form-item
+              v-if="detailform.topInfor.noticeTypeId!='9d70138b32d611eb8271a1606dfca13c'"
               label="预计招标时间:"
               prop="topInfor.planBidTime"
               :rules="{
@@ -412,7 +461,7 @@
               </el-date-picker>
             </el-form-item>
             <el-form-item
-              label="投资额（万元）:"
+              :label="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'?'投资额（万元）:':'项目规模:'"
               prop="topInfor.investment"
               :rules="rules.contractAmount"
             >
@@ -489,50 +538,7 @@
               >
               </el-switch>
             </el-form-item>
-            <el-form-item
-              label="公告类型:"
-              prop="topInfor.noticeTypeId"
-              :rules="{
-              required: true,
-              message: '此项不能为空',
-              trigger: 'blur',
-            }"
-            >
-              <el-select
-                disabled
-                clearable
-                filterable
-                placeholder="请选择"
 
-                v-model="detailform.topInfor.noticeTypeId"
-                @change="
-                getName(
-                  detailform.topInfor.noticeTypeId,
-                  bulletinType,
-                  'noticeTypeName'
-                )
-              "
-              >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in bulletinType"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item
-              label="资审方式:"
-              prop="topInfor.noticeTypeName"
-            >
-              <el-input
-                disabled
-                clearable
-                placeholder="请输入"
-                v-model="detailform.topInfor.noticeTypeName=='资审公告'?detailform.topInfor.verifyTypeName='资格预审':detailform.topInfor.noticeTypeName=='招标公告'?detailform.topInfor.verifyTypeName='资格后审':detailform.topInfor.noticeTypeName=='竞争性谈判'?detailform.topInfor.verifyTypeName='竞争性谈判':detailform.topInfor.verifyTypeName=''"
-              />
-
-            </el-form-item>
 
             <el-form-item
               v-show="detailform.topInfor.investment<maxMoney&&detailform.topInfor.isMajorProject=='0'"
@@ -741,7 +747,7 @@
             </div>
 
             <div  v-if="p.type||(!p.type&&p.trackStatus !=1&&p.trackStatus !=null)">
-              <p  class="detail-title" style="overflow: hidden;margin-right:30px" >
+              <p  v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'"  class="detail-title" style="overflow: hidden;margin-right:30px" >
                 <span>标段信息: </span>
                 <el-button
                   :disabled="p.actpoint !== 'look'||p.type !='fq'||p.type !='end'"
@@ -753,6 +759,7 @@
                 >
               </p>
               <el-table
+                v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'"
                 :disabled="p.type =='fq' || p.type =='end'||p.actpoint === 'look'"
                 :data="detailform.topInfoSectionList"
                 :header-cell-style="{
@@ -1032,7 +1039,7 @@
                 </el-table>
               </el-row>
               <div v-if="!p.type&& p.trackStatus !=2&&p.trackStatus !=3 ">
-                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                <p v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'"  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>标段信息: </span>
                   <el-button
                     v-show="p.actpoint == 'add'"
@@ -1044,6 +1051,7 @@
                   >
                 </p>
                 <el-table
+                  v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'"
                   :data="detailform.topInfoSectionList"
                   :header-cell-style="{
                 'text-align': 'center',
