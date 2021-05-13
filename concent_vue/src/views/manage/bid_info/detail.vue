@@ -685,12 +685,19 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                v-model="detailform.bidInfo.outOrg"
+                v-model="detailform.bidInfo.outOrgId"
+                @change="
+                getName(
+                  detailform.bidInfo.outOrgId,
+                  sjdwList,
+                  'outOrg',
+                  'outOrgCode'
+                )"
               >
                 <el-option
                   :key="index"
-                  :label="item.companyName"
-                  :value="item.companyName"
+                  :label="item.detailName"
+                  :value="item.id"
                   v-for="(item, index) in sjdwList"
                 ></el-option>
               </el-select>
@@ -1682,6 +1689,11 @@ export default {
       )
       .then((res) => {
         this.sjdwList = res.data.data;
+        this.sjdwList.forEach((item)=>{
+          item.id=item.uuid;
+          item.detailName=item.companyName;
+          item.detailCode=item.createOrgCode;
+        })
       });
   },
 };
