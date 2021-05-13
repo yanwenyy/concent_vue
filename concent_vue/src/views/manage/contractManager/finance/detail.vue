@@ -16,6 +16,28 @@
         <el-tab-pane label="金融保险合同新增">
             <div class="detailBoxBG">
               <el-form-item
+                label="项目名称(中文):"
+                prop="contractInfo.inforName"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+              >
+                <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.inforName" class="input-with-select">
+                  <el-button v-if="detailform.contractInfo.contractType!='2'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                label="项目名称(外文):"
+                prop="contractInfo.inforNameForeign"
+              >
+                <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.inforNameForeign" class="input-with-select">
+
+                </el-input>
+              </el-form-item>
+              <br>
+              <el-form-item
                 label="合同名称(中文):"
                 prop="contractInfo.contractName"
                 :rules="{

@@ -661,6 +661,66 @@
             <!--</el-select>-->
           </el-form-item>
           <br>
+          <el-form-item
+            label="项目性质(一级)"
+            prop="contractInfo.projectNatureFirstId"
+            :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+          >
+            <el-select
+              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+              clearable
+              filterable
+              placeholder="请选择"
+              @change="getTwoXZ"
+
+              v-model="detailform.contractInfo.projectNatureFirstId"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.id"
+                v-for="(item, index) in projectNature"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item
+            label="项目性质(二级)"
+            prop="contractInfo.projectNatureSecondId"
+            :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+          >
+            <el-select
+              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+              clearable
+              filterable
+              placeholder="请选择"
+              @clear="clear(detailform.contractInfo.projectNatureSecondId,detailform.contractInfo.projectNaturetSecondName)"
+              @change="
+                getName(
+                  detailform.contractInfo.projectNatureSecondId,
+                  projectNatureTwo,
+                  'projectNaturetSecondName',
+                  'projectNaturetSecondCode'
+                )
+              "
+              v-model="detailform.contractInfo.projectNatureSecondId"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.id"
+                v-for="(item, index) in projectNatureTwo"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <br>
             <el-form-item
               label="合同总金额(万元)"
               prop="contractInfo.contractAmount"
@@ -698,7 +758,7 @@
 
           >
             <el-input
-              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+              disabled
               clearable
               placeholder=""
 
@@ -753,7 +813,7 @@
             <br>
 
             <el-form-item
-              v-if="detailform.contractInfo.isInSystemUnion==='0'"
+              v-if="detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'"
               label="未分配(万元)"
               prop="contractInfo.unAllocatedFee"
               :rules="rules.contractAmount"
@@ -761,19 +821,20 @@
               <el-input
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
-
+                @input="getOurAmount('','','nfb')"
                 v-model="detailform.contractInfo.unAllocatedFee">
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
               </el-input>
             </el-form-item>
             <el-form-item
+              v-if="detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'"
               label="自留份额(万元)"
               prop="contractInfo.selfCash"
               :rules="rules.contractAmount"
             >
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                disabled
                 clearable
 
                 v-model="detailform.contractInfo.selfCash">
@@ -999,65 +1060,7 @@
                 </el-select>
               </el-form-item>
             </div>
-            <el-form-item
-              label="项目性质(一级)"
-              prop="contractInfo.projectNatureFirstId"
-              :rules="{
-              required: true,
-              message: '此项不能为空',
-              trigger: 'blur',
-            }"
-            >
-              <el-select
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                clearable
-                filterable
-                placeholder="请选择"
-                @change="getTwoXZ"
 
-                v-model="detailform.contractInfo.projectNatureFirstId"
-              >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in projectNature"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item
-              label="项目性质(二级)"
-              prop="contractInfo.projectNatureSecondId"
-              :rules="{
-              required: true,
-              message: '此项不能为空',
-              trigger: 'blur',
-            }"
-            >
-              <el-select
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                clearable
-                filterable
-                placeholder="请选择"
-                @clear="clear(detailform.contractInfo.projectNatureSecondId,detailform.contractInfo.projectNaturetSecondName)"
-                @change="
-                getName(
-                  detailform.contractInfo.projectNatureSecondId,
-                  projectNatureTwo,
-                  'projectNaturetSecondName',
-                  'projectNaturetSecondCode'
-                )
-              "
-                v-model="detailform.contractInfo.projectNatureSecondId"
-              >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in projectNatureTwo"
-                ></el-option>
-              </el-select>
-            </el-form-item>
            <div>
              <el-form-item
                v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
@@ -1084,7 +1087,6 @@
                <el-input
                  :disabled="true"
                  clearable
-
                  v-model="detailform.contractInfo.otherInvest">
                  <template slot="prepend">¥</template>
                  <template slot="append">(万元)</template>
@@ -1113,19 +1115,20 @@
                :rules="rules.contractAmount"
              >
                <el-input
-                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                 disabled
                  clearable
 
                  v-model="detailform.contractInfo.installDesignAllocated"/>
              </el-form-item>
              <el-form-item
+               v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
                class="long-form-item"
                label="本企业建安部分未分配"
                prop="contractInfo.installDesignUnallocat"
                :rules="rules.contractAmount"
              >
                <el-input
-                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                 disabled
                  clearable
 
                  v-model="detailform.contractInfo.installDesignUnallocat"/>
@@ -2577,6 +2580,7 @@
                     <el-input
                       class="group-no-padding"
                       v-model="scope.row.contractAmount"
+                      @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.innerGroupContractInfoAttachList,'jtnfb')"
                       clearable
                       :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     >
@@ -6271,6 +6275,168 @@
           </el-tabs>
         </div>
       </el-tab-pane>
+      <el-tab-pane v-if="p.actpoint == 'edit'" label="实物工程量">
+        <div class="detailBoxBG htfs">
+          <div>
+            <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
+              <span>实物工程量列表: </span>
+              <el-upload
+                class="inline-block"
+                :action="'/api/contract/ContractInfoQuantityMachine/list/importQuantity'"
+                :on-success="importData"
+                :headers="{'Authorization':Authorization}"
+                :data="{'contractInfoId':p.instid}"
+                :on-error="importData"
+                :show-file-list="false"
+                accept=".xls,.xlsx"
+                multiple
+              >
+                <el-button
+                  type="primary"
+                  plain
+                  class="new-add-btn"
+                ><i class="el-icon-download"></i>导入
+                </el-button>
+              </el-upload>
+            </p>
+            <el-table
+              :data="detailform.contractInfoQuantityMachineList1"
+              :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+              @selection-change="handleSelectionChange"
+              align="center"
+              border
+              class="detailTable"
+              ref="table"
+              style="width: 100%; min-height: calc(100vh - 370px)"
+            >
+              <el-table-column
+                :width="80"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="统计项名称"
+                prop="vname"
+                width="300"
+                align="center"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="计量单位"
+                prop="vjldw"
+                align="center"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="总量"
+                prop="vsum"
+                align="center"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-input v-model="scope.row.vsum" @input="scope.row.vsum=parseInt(scope.row.vsum.replace(/[^\d]/g,''))"/>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane v-if="p.actpoint == 'edit'" label="劳材机统计">
+        <div class="detailBoxBG htfs">
+          <div>
+            <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
+              <span>劳材机统计列表: </span>
+              <el-upload
+                class="inline-block"
+                :action="'/api/contract/ContractInfoQuantityMachine/list/importMachine'"
+                :on-success="importData"
+                :headers="{'Authorization':Authorization}"
+                :data="{'contractInfoId':p.instid}"
+                :on-error="importData"
+                :show-file-list="false"
+                accept=".xls,.xlsx"
+                multiple
+              >
+                <el-button
+                  type="primary"
+                  plain
+                  class="new-add-btn"
+                ><i class="el-icon-download"></i>导入
+                </el-button>
+              </el-upload>
+            </p>
+            <el-table
+              :data="detailform.contractInfoQuantityMachineList2"
+              :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+              @selection-change="handleSelectionChange"
+              align="center"
+              border
+              class="detailTable"
+              ref="table"
+              style="width: 100%; min-height: calc(100vh - 370px)"
+            >
+              <el-table-column
+                :width="80"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="名称"
+                prop="vname"
+                align="center"
+                width="300"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="单位"
+                prop="vjldw"
+                align="center"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="数量"
+                prop="vsum"
+                align="center"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-input v-model="scope.row.vsum" @input="scope.row.vsum=parseInt(scope.row.vsum.replace(/[^\d]/g,''))"/>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+        </div>
+      </el-tab-pane>
       <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
         <Audit-Process :task="p.task||{businessId:p.instid,businessType:' contract_contract_new'}"></Audit-Process>
       </el-tab-pane>
@@ -6314,6 +6480,7 @@ export default {
       }
     }
     return {
+      Authorization:sessionStorage.getItem("token"),
       ifOAS:false,
       gclList:[],//工程量清单列表
       gclName:'0',
@@ -6351,6 +6518,8 @@ export default {
         },
         contractInfoSectionList: [],
         topInfoSiteList:[],
+        contractInfoQuantityMachineList1:[],//实物工程量列表
+        contractInfoQuantityMachineList2:[],//劳材机统计列表
         fileList1:[],
         fileList2:[],
         fileList3:[],
@@ -6476,6 +6645,21 @@ export default {
       });
   },
   methods: {
+    //实物工程量和劳材机统计导入
+    importData(response, file, fileList) {
+      if (response && response.code === 200) {
+        this.$message({
+          message: "导入成功",
+          type: "success",
+          duration: 1500,
+          onClose: () => {
+            this.getDetail();
+          },
+        });
+      } else {
+        this.$message.error(response.msg);
+      }
+    },
     //设置我方份额含补充
     getOurAmountSupply(){
       if(this.detailform.contractInfo.ourAmountSupply==null||this.ifOAS){
@@ -6726,64 +6910,85 @@ export default {
     //合同总金额获取我方份额和铁建
     getOurAmount(index,list,type){
       var tj_money=0,our_money=0;
-      if(type=='wlht'||type=='nlht'){
-        //铁建金额计算
-        this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
-          tj_money+=Number(item.contractAmount);
-        });
-        var ourAmount=this.detailform.contractInfo.contractAmount-tj_money;
+      if(this.detailform.contractInfo.contractAmount>0){
+        if(type=='wlht'||type=='nlht'){
+          //铁建金额计算
+          this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
+            tj_money+=Number(item.contractAmount);
+          });
+          this.detailform.contractInfo.outSystemAmount=tj_money;
+          var ourAmount=this.detailform.contractInfo.contractAmount-tj_money;
 
-        if(ourAmount>0){
-          // this.$set( this.detailform, "contractInfo.crccCash", ourAmount);
-          this.$forceUpdate();
-          this.detailform.contractInfo.crccCash=ourAmount;
+          if(ourAmount>0){
+            // this.$set( this.detailform, "contractInfo.crccCash", ourAmount);
+            this.$forceUpdate();
+            this.detailform.contractInfo.crccCash=ourAmount;
 
-        }else{
-          this.$message.error('铁建份额需要大于0');
-          list[index].contractAmount=''
-        }
-        //我方份额计算
-        this.detailform.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
-          our_money+=Number(item.contractAmount);
-        });
-        var ourAmount2=this.detailform.contractInfo.crccCash-our_money;
-        if(ourAmount2>0){
+          }else{
+            this.$message.error('铁建份额需要大于0');
+            list[index].contractAmount=''
+          }
+          //我方份额计算
+          this.detailform.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
+            our_money+=Number(item.contractAmount);
+          });
+          var ourAmount2=this.detailform.contractInfo.crccCash-our_money;
+          if(ourAmount2>0){
+            this.$forceUpdate();
+            this.detailform.contractInfo.ourAmount=ourAmount2;
+            // this.$set( this.detailform, "contractInfo.ourAmount", ourAmount2);
+          }else{
+            this.$message.error('我方份额需要大于0');
+            list[index].contractAmount=''
+          }
+        }else if(type=='nfb'||type=='jtnfb'){
+          //计算系统内分包和集团内分包的和
+          this.detailform.contractInfoAttachBO.innerContractInfoAttachList.forEach((item)=>{
+            our_money+=Number(item.contractAmount);
+          });
+          this.detailform.contractInfoAttachBO.innerGroupContractInfoAttachList.forEach((item)=>{
+            our_money+=Number(item.contractAmount);
+          });
+          //计算自留份额 初始我方份额 （非投融资，投融资使用建安和勘察设计费）- 未分配 - 系统内分包份额-集团内分包
+          var zile=(this.detailform.contractInfo.projectNatureFirstId=='7031076e7a5f4225b1a89f31ee017802'?this.detailform.contractInfo.installDesignFee||0:this.detailform.contractInfo.ourAmount||0)-(this.detailform.contractInfo.unAllocatedFee||0)-our_money;
+          this.detailform.contractInfo.selfCash=zile;
+          //计算本企业建安已分配和本企业建安未分配
+          this.detailform.contractInfo.installDesignAllocated=our_money;
+          this.detailform.contractInfo.installDesignUnallocat=our_money;
           this.$forceUpdate();
-          this.detailform.contractInfo.ourAmount=ourAmount2;
-          // this.$set( this.detailform, "contractInfo.ourAmount", ourAmount2);
+
+        // else if(type=='nfb'||type=='wfb'){
+        //   //判断内分包和外分包之和是否大于我方份额
+        //   this.detailform.contractInfoAttachBO.innerContractInfoAttachList.forEach((item)=>{
+        //     our_money+=Number(item.contractAmount);
+        //   });
+        //   this.detailform.contractInfoAttachBO.outContractInfoAttachList.forEach((item)=>{
+        //     our_money+=Number(item.contractAmount);
+        //   });
+        //   var ourAmount=this.detailform.contractInfo.ourAmount-our_money;
+        //   if(!ourAmount>0){
+        //     this.$message.error('我方份额需要大于0');
+        //     list[index].contractAmount=''
+        //   }
         }else{
-          this.$message.error('我方份额需要大于0');
-          list[index].contractAmount=''
+          this.detailform.contractInfo.contractAmount=this.detailform.contractInfo.contractAmount.replace(/[^\-?\d.]/g,'','');
+          //合同总金额输入计算我方份额和铁建金额
+          this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
+            tj_money+=Number(item.contractAmount);
+          });
+          this.$forceUpdate();
+          this.detailform.contractInfo.crccCash=this.detailform.contractInfo.contractAmount!=''?this.detailform.contractInfo.contractAmount-tj_money:'';
+          this.detailform.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
+            our_money+=Number(item.contractAmount);
+          });
+          this.$forceUpdate();
+          this.detailform.contractInfo.ourAmount=this.detailform.contractInfo.contractAmount!=''?this.detailform.contractInfo.crccCash-our_money:'';
         }
-      }else if(type=='nfb'||type=='wfb'){
-        //判断内分包和外分包之和是否大于我方份额
-        this.detailform.contractInfoAttachBO.innerContractInfoAttachList.forEach((item)=>{
-          our_money+=Number(item.contractAmount);
-        });
-        this.detailform.contractInfoAttachBO.outContractInfoAttachList.forEach((item)=>{
-          our_money+=Number(item.contractAmount);
-        });
-        var ourAmount=this.detailform.contractInfo.ourAmount-our_money;
-        if(!ourAmount>0){
-          this.$message.error('我方份额需要大于0');
-          list[index].contractAmount=''
-        }
+        this.getOurAmountSupply();
       }else{
-        this.detailform.contractInfo.contractAmount=this.detailform.contractInfo.contractAmount.replace(/[^\-?\d.]/g,'','');
-        //合同总金额输入计算我方份额和铁建金额
-        this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
-          tj_money+=Number(item.contractAmount);
-        });
-        this.$forceUpdate();
-        this.detailform.contractInfo.crccCash=this.detailform.contractInfo.contractAmount!=''?this.detailform.contractInfo.contractAmount-tj_money:'';
-        this.detailform.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
-          our_money+=Number(item.contractAmount);
-        });
-        this.$forceUpdate();
-        this.detailform.contractInfo.ourAmount=this.detailform.contractInfo.contractAmount!=''?this.detailform.contractInfo.crccCash-our_money:'';
-
+        this.$message.error('合同总金额需要大于0');
       }
-      this.getOurAmountSupply();
+
     },
     //获取其他投资
     getOther(){
@@ -7059,6 +7264,7 @@ export default {
         for(var i in datas.bidInfoSectionBOList){
           var bidInfoSection=datas.bidInfoSectionBOList[i].bidInfoSection,
             bidInfoSectionOrgList=datas.bidInfoSectionBOList[i].bidInfoSectionOrgList;
+          this.detailform.contractInfo.bidTime=bidInfoSection.bidTime;
           bidInfoSection.uuid='';
           for(var k in bidInfoSection.bidInfoSectionOrgList){
             bidInfoSection.bidInfoSectionOrgList[k].uuid='';
@@ -7070,6 +7276,34 @@ export default {
           datas.topInfoSiteList[i].uuid='';
         }
         this.detailform.topInfoSiteList=datas.topInfoSiteList;
+        //系统内联合体列表
+        if(datas.bidInfoBO.bidInfoInnerOrgList!=null&&datas.bidInfoBO.bidInfoInnerOrgList!=''){
+          this.detailform.contractInfo.isInSystemUnion='0';
+          datas.bidInfoBO.bidInfoInnerOrgList.forEach((item)=>{
+            var v={
+              orgName:item.innerOrgName,
+              orgId:item.innerOrgId,
+              contractInfoId:'',
+              projectNature:'1',
+              contractAmount:'',
+              isAdd:'1'
+            }
+            this.detailform.contractInfoAttachBO.unionContractInfoAttachList.push(v)
+          })
+        }
+        //系统外联合体列表
+        if(datas.bidInfoBO.bidInfo.outOrg!=''&&datas.bidInfoBO.bidInfo.outOrg!=null){
+          this.detailform.contractInfo.isOutSystemUnion='0';
+          var v={
+            orgName:datas.bidInfoBO.bidInfo.outOrg,
+            orgId:datas.bidInfoBO.bidInfo.outOrgId,
+            contractInfoId:'',
+            projectNature:'3',
+            contractAmount:'',
+            isAdd:'1'
+          }
+          this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.push(v)
+        }
       });
         this.$forceUpdate();
         this.infoCSVisible=false;
@@ -7412,6 +7646,8 @@ export default {
             contractInfoAttachBO: datas.contractInfoAttachBO,
             contractInfoSectionList: datas.contractInfoSectionList,
             topInfoSiteList:datas.topInfoSiteList,
+            contractInfoQuantityMachineList1:datas.contractInfoQuantityMachineList1,
+            contractInfoQuantityMachineList2:datas.contractInfoQuantityMachineList2,
             fileList1:fileList1,
             fileList2:fileList2,
             fileList3:fileList3,
