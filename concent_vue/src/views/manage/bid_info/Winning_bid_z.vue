@@ -757,14 +757,14 @@ export default {
               })
           }
           if(data.type=="参与投标单位"){
-              this.detailForm.bidInfoSection.participatingUnitsId=id.join(",");
-              this.detailForm.bidInfoSection.participatingUnitsName=name.join(",");
+              this.zbForm.bidInfoSection.participatingUnitsId=id.join(",");
+              this.zbForm.bidInfoSection.participatingUnitsName=name.join(",");
           }else if(data.type=="编标拟配合单位"){
-              this.detailForm.bidInfoSection.orgId=id.join(",");
-              this.detailForm.bidInfoSection.orgName=name.join(",");
+              this.zbForm.bidInfoSection.orgId=id.join(",");
+              this.zbForm.bidInfoSection.orgName=name.join(",");
           }else if(data.type=="施工单位"){
-            this.detailForm.bidInfoSection.constructionUnitId=id.join(",");
-            this.detailForm.bidInfoSection.constructionUnitName=name.join(",");
+            this.zbForm.bidInfoSection.constructionUnitId=id.join(",");
+            this.zbForm.bidInfoSection.constructionUnitName=name.join(",");
           }
           this.DwVisible=false;
       },
