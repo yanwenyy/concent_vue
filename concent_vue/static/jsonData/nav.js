@@ -558,6 +558,24 @@ export default {
                   'menushow': true,
                   'leaf': true,
                   'defaultpage': true
+                },
+                {
+                  'name': '数据迁移查询',
+                  'path': '/dataMigration/data/list',
+                  'component': '/dataMigration/data/list',
+                  'iconCls': 'el-icon-edit',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '数据迁移子表',
+                  'path': '/dataMigration/data/listchild',
+                  'component': '/dataMigration/data/listchild',
+                  'iconCls': 'el-icon-edit',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
                 }
               ]
             },
@@ -693,6 +711,15 @@ export default {
               'name': '共享单位库',
               'path': '/manage/companies/companiesList',
               'component': '/manage/companies/companiesList',
+              'iconCls': 'el-icon-search',
+              'menushow': true,
+              'leaf': true,
+              'defaultpage': false
+            },
+            {
+              'name': '扩展字段',
+              'path': '/manage/extend/list',
+              'component': '/manage/extend/list',
               'iconCls': 'el-icon-search',
               'menushow': true,
               'leaf': true,
@@ -1827,35 +1854,35 @@ export default {
 
           ]
         },
-        {
-          'name': '数据迁移',
-          'path': '/dataMigration',
-          'component': '/router',
-          'iconCls': 'el-icon-printer',
-          'menushow': true,
-          'leaf': false,
-          'defaultpage': false,
-          'children': [
-            {
-              'name': '数据迁移查询',
-              'path': '/dataMigration/data/list',
-              'component': '/dataMigration/data/list',
-              'iconCls': 'el-icon-edit',
-              'menushow': true,
-              'leaf': true,
-              'defaultpage': true
-            },
-            {
-              'name': '数据迁移子表',
-              'path': '/dataMigration/data/listchild',
-              'component': '/dataMigration/data/listchild',
-              'iconCls': 'el-icon-edit',
-              'menushow': false,
-              'leaf': true,
-              'defaultpage': false
-            }
-          ]
-        }
+        // {
+        //   'name': '数据迁移',
+        //   'path': '/dataMigration',
+        //   'component': '/router',
+        //   'iconCls': 'el-icon-printer',
+        //   'menushow': true,
+        //   'leaf': false,
+        //   'defaultpage': false,
+        //   'children': [
+        //     {
+        //       'name': '数据迁移查询',
+        //       'path': '/dataMigration/data/list',
+        //       'component': '/dataMigration/data/list',
+        //       'iconCls': 'el-icon-edit',
+        //       'menushow': true,
+        //       'leaf': true,
+        //       'defaultpage': true
+        //     },
+        //     {
+        //       'name': '数据迁移子表',
+        //       'path': '/dataMigration/data/listchild',
+        //       'component': '/dataMigration/data/listchild',
+        //       'iconCls': 'el-icon-edit',
+        //       'menushow': false,
+        //       'leaf': true,
+        //       'defaultpage': false
+        //     }
+        //   ]
+        // }
       ]
     }
   ]

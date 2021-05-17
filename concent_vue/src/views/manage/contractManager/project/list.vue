@@ -30,6 +30,7 @@
     </div>
     <div style="margin-top: 10px">
       <el-table
+        :row-class-name="tableRowClassName"
         class="tableStyle"
         :max-height="$tableHeight"
         :height="$tableHeight"
@@ -286,6 +287,17 @@ export default {
     };
   },
   methods: {
+    //table根据类型显示不一样的颜色
+    tableRowClassName({row, rowIndex}) {
+      if (row.projectNature == '2') {
+        return 'red';
+      } else if (row.projectNature =='1') {
+        return 'blue';
+      }else if (row.projectNature == '5') {
+        return 'green';
+      }
+      return '';
+    },
     // 删除
     remove() {
       if (this.multipleSelection.length < 1) {
@@ -414,5 +426,14 @@ export default {
 <style scoped>
 .el-table__row {
   cursor: pointer;
+}
+>>>.el-table .red{
+  background: rgba(255,0,0,.3);
+}
+>>>.el-table .blue{
+  background: rgba(0,51,204,.3);
+}
+>>>.el-table .green{
+  background: rgba(0,204,0,.3);
 }
 </style>

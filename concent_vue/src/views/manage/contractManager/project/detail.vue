@@ -1190,29 +1190,62 @@
             <el-form-item
               label="扩展字段1"
             >
-              <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+              <el-select
+                :disabled="p.actpoint==='look'||p.actpoint=='task'"
                 clearable
-                placeholder="请输入"
-              />
+                filterable
+                placeholder="请选择"
+
+                v-model="detailform.contractInfo.extensionField1"
+              >
+                <el-option
+                  v-if="item.expandType=='1'"
+                  :key="index"
+                  :label="item.expandName"
+                  :value="item.expandName"
+                  v-for="(item, index) in extendList"
+                ></el-option>
+              </el-select>
             </el-form-item>
             <el-form-item
               label="扩展字段2"
             >
-              <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+              <el-select
+                :disabled="p.actpoint==='look'||p.actpoint=='task'"
                 clearable
-                placeholder="请输入"
-              />
+                filterable
+                placeholder="请选择"
+
+                v-model="detailform.contractInfo.extensionField2"
+              >
+                <el-option
+                  v-if="item.expandType=='2'"
+                  :key="index"
+                  :label="item.expandName"
+                  :value="item.expandName"
+                  v-for="(item, index) in extendList"
+                ></el-option>
+              </el-select>
             </el-form-item>
             <el-form-item
               label="扩展字段3"
             >
-              <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+              <el-select
+                :disabled="p.actpoint==='look'||p.actpoint=='task'"
                 clearable
-                placeholder="请输入"
-              />
+                filterable
+                placeholder="请选择"
+
+                v-model="detailform.contractInfo.extensionField3"
+              >
+                <el-option
+                  v-if="item.expandType=='3'"
+                  :key="index"
+                  :label="item.expandName"
+                  :value="item.expandName"
+                  v-for="(item, index) in extendList"
+                ></el-option>
+              </el-select>
             </el-form-item>
             <div>
             <el-form-item
@@ -1297,10 +1330,17 @@
               :resizable="false"
               label="项目地点"
               align="center"
-              prop="inforName"
+              prop="path"
             >
               <template slot-scope="scope">
-                <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
+                <el-form-item class="tabelForm" :prop="'topInfoSiteList.' + scope.$index + '.path'"  :rules="{required: true,message: '此项不能为空'}">
+                  <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                  <el-input disabled placeholder="请输入内容" v-model="scope.row.path" class="input-with-select">
+                    <el-button v-if="p.actpoint != 'look'" slot="append" icon="el-icon-circle-plus" @click="selectPosition(),positionIndex=scope.$index"></el-button>
+                  </el-input>
+                </el-form-item>
+
+                <!--<i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>-->
                 <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
               </template>
             </el-table-column>
@@ -1318,8 +1358,9 @@
                   <el-input
                     class="group-no-padding"
                     clearable
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.$index==0"
                     v-model="scope.row.contractAmount"
+                    @input="getPositionMoney(scope.$index,detailform.topInfoSiteList)"
                   >
                     <template slot="prepend">¥</template>
                     <template slot="append">(万元)</template>
@@ -2144,13 +2185,38 @@
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  <el-input
-                    clearable
+                  <el-select
+                    class="input-el-input-group"
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    v-model="scope.row.orgName"
-                    class="input-el-input-group">
-                    <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outUnionContractInfoAttachList')" ></el-button>
-                  </el-input>
+                    clearable
+                    filterable
+                    placeholder="请选择"
+                    size="mini"
+                    v-model="scope.row.orgId"
+                    @change="
+                    getXtwName(
+                      scope.row.orgId,
+                      sjdwList,
+                      scope.$index
+                    )
+                  "
+                  >
+                    <el-option
+                      :key="index"
+                      :label="item.detailName"
+                      :value="item.id"
+                      v-for="(item, index) in sjdwList"
+                    ></el-option>
+                  </el-select>
+                  <!--<el-input-->
+                    <!--clearable-->
+                    <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                    <!--v-model="scope.row.orgName"-->
+                    <!--class="input-el-input-group">-->
+                    <!--<el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outUnionContractInfoAttachList')" ></el-button>-->
+                  <!--</el-input>-->
+
+
                   <!--<el-input-->
                   <!--class="input-el-input-group"-->
                   <!--clearable-->
@@ -2323,13 +2389,38 @@
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  <el-input
-                    clearable
+                  <el-select
+                    class="input-el-input-group"
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    v-model="scope.row.orgName"
-                    class="input-el-input-group">
-                    <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outContractInfoAttachList')" ></el-button>
-                  </el-input>
+                    clearable
+                    filterable
+                    placeholder="请选择"
+                    size="mini"
+                    v-model="scope.row.orgId"
+                    @change="
+                    getXtwName(
+                      scope.row.orgId,
+                      sjdwList,
+                      scope.$index
+                    )
+                  "
+                  >
+                    <el-option
+                      :key="index"
+                      :label="item.detailName"
+                      :value="item.id"
+                      v-for="(item, index) in sjdwList"
+                    ></el-option>
+                  </el-select>
+                  <!--<el-input-->
+                    <!--clearable-->
+                    <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                    <!--v-model="scope.row.orgName"-->
+                    <!--class="input-el-input-group">-->
+                    <!--<el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outContractInfoAttachList')" ></el-button>-->
+                  <!--</el-input>-->
+
+
                   <!--<el-input-->
                   <!--class="input-el-input-group"-->
                   <!--clearable-->
@@ -6480,6 +6571,7 @@ export default {
       }
     }
     return {
+      extendList:[],//扩展字段list
       Authorization:sessionStorage.getItem("token"),
       ifOAS:false,
       gclList:[],//工程量清单列表
@@ -6517,7 +6609,14 @@ export default {
           innerGroupContractInfoAttachList:[]
         },
         contractInfoSectionList: [],
-        topInfoSiteList:[],
+        topInfoSiteList:[{
+          country: '',
+          ffid: '',
+          path: '',
+          contractAmount: '',
+          isMain: '',
+          placeId:''
+        }],
         contractInfoQuantityMachineList1:[],//实物工程量列表
         contractInfoQuantityMachineList2:[],//劳材机统计列表
         fileList1:[],
@@ -6641,7 +6740,17 @@ export default {
         this.sjdwList = res.data.data;
         this.sjdwList.forEach((item)=>{
           item.value=item.companyName;
+          item.detailName=item.companyName;
+          item.id=item.uuid;
         })
+      });
+    //扩展字段列表
+    this.$http
+      .post(
+        "/api/contract/ContractInfoExpand/detail/findExpandByType",
+      )
+      .then((res) => {
+        this.extendList = res.data.data;
       });
   },
   methods: {
@@ -6936,6 +7045,8 @@ export default {
           if(ourAmount2>0){
             this.$forceUpdate();
             this.detailform.contractInfo.ourAmount=ourAmount2;
+            //项目地点的第一条数据金额默认是我方份额
+            this.getPositionMoney(0,this.detailform.topInfoSiteList);
             // this.$set( this.detailform, "contractInfo.ourAmount", ourAmount2);
           }else{
             this.$message.error('我方份额需要大于0');
@@ -6983,10 +7094,34 @@ export default {
           });
           this.$forceUpdate();
           this.detailform.contractInfo.ourAmount=this.detailform.contractInfo.contractAmount!=''?this.detailform.contractInfo.crccCash-our_money:'';
+          //项目地点的第一条数据金额默认是我方份额
+          this.getPositionMoney(0,this.detailform.topInfoSiteList);
+
         }
         this.getOurAmountSupply();
       }else{
         this.$message.error('合同总金额需要大于0');
+      }
+
+    },
+    //项目地点份额变动的时候
+    getPositionMoney(index,list){
+      if(list.length==1){
+        list[0].contractAmount=this.detailform.contractInfo.ourAmount
+      }else{
+        var money=0;
+        list.forEach((item,i)=>{
+          if(i>0){
+            money+=Number(item.contractAmount);
+          }
+        });
+        console.log(this.detailform.contractInfo.ourAmount,money)
+        if(this.detailform.contractInfo.ourAmount-money>0){
+          list[0].contractAmount=this.detailform.contractInfo.ourAmount-money;
+        }else{
+          list[index].contractAmount='';
+          this.$message.error('项目地点份额之和不能大于初始我方份额');
+        }
       }
 
     },
@@ -7225,6 +7360,15 @@ export default {
       ).detailName;
       }
     },
+    //获取系统外联合体,系统外分包的单位名称
+    getXtwName(id, list, index){
+      if(id){
+        this.$forceUpdate()
+        list[index].orgName=this.projectPlate.find(
+          (item) => item.id == id
+        ).detailName;
+      }
+    },
     // 搜索名字
     searchName() {
       this.infoCSVisible = true;
@@ -7265,6 +7409,7 @@ export default {
           var bidInfoSection=datas.bidInfoSectionBOList[i].bidInfoSection,
             bidInfoSectionOrgList=datas.bidInfoSectionBOList[i].bidInfoSectionOrgList;
           this.detailform.contractInfo.bidTime=bidInfoSection.bidTime;
+          this.detailform.contractInfo.bidNoticeWebsite=bidInfoSection.bidNoticeWebsite;
           bidInfoSection.uuid='';
           for(var k in bidInfoSection.bidInfoSectionOrgList){
             bidInfoSection.bidInfoSectionOrgList[k].uuid='';
@@ -7482,25 +7627,34 @@ export default {
       }
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          if(this.detailform.topInfoSiteList.length>0){
-            this.$http
-              .post(
-                url,
-                JSON.stringify(this.detailform),
-                {useJson: true}
-              )
-              .then((res) => {
-                if (res.data.code === 200) {
-                  this.$message({
-                    message:  `${type=='save'?'保存':'提交'}成功`,
-                    type: "success",
-                  });
-                  this.$router.back()
-                }
-              });
-          }else{
+          console.log(this.detailform.topInfoSiteList.length)
+          if(this.detailform.topInfoSiteList.length==0){
             this.$message.error("请至少选择一个项目地点");
+            return false;
           }
+          if(this.detailform.fileList1.length==0||this.detailform.fileList2.length==0){
+            this.$message.error("中标通知书和合同附件必须传一个");
+            return false;
+          }
+          if(this.detailform.contractInfo.isImport=='0'&&this.detailform.fileList3.length==0){
+            this.$message.error("导入清单为是的时候，工程量清单和劳材机两个文件必须都要上传");
+            return false;
+          }
+          this.$http
+            .post(
+              url,
+              JSON.stringify(this.detailform),
+              {useJson: true}
+            )
+            .then((res) => {
+              if (res.data.code === 200) {
+                this.$message({
+                  message:  `${type=='save'?'保存':'提交'}成功`,
+                  type: "success",
+                });
+                this.$router.back()
+              }
+            });
 
         } else {
           this.$message.error("请添加必填项和正确的数据格式");
