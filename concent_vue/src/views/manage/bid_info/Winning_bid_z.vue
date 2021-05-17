@@ -937,6 +937,13 @@ export default {
           this.dialogFormVisible = true;
           this.zbForm.bidInfoSection = datas.bidInfoSection;
           this.zbForm.bidInfo_03 = datas.bidInfo_03;
+          datas.bidInfoSectionOrgList.forEach((item)=>{
+            if(item.orgType=='1'){
+              this.zbForm.dataList.push(item);
+            }else{
+              this.zbForm.dataList2.push(item);
+            }
+          })
         });
     },
     // 展示

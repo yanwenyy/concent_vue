@@ -1028,29 +1028,62 @@
               <el-form-item
                 label="扩展字段1"
               >
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                <el-select
+                  :disabled="p.actpoint==='look'||p.actpoint=='task'"
                   clearable
-                  placeholder="请输入"
-                />
+                  filterable
+                  placeholder="请选择"
+
+                  v-model="detailform.contractInfo.extensionField1"
+                >
+                  <el-option
+                    v-if="item.expandType=='1'"
+                    :key="index"
+                    :label="item.expandName"
+                    :value="item.expandName"
+                    v-for="(item, index) in extendList"
+                  ></el-option>
+                </el-select>
               </el-form-item>
               <el-form-item
                 label="扩展字段2"
               >
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                <el-select
+                  :disabled="p.actpoint==='look'||p.actpoint=='task'"
                   clearable
-                  placeholder="请输入"
-                />
+                  filterable
+                  placeholder="请选择"
+
+                  v-model="detailform.contractInfo.extensionField2"
+                >
+                  <el-option
+                    v-if="item.expandType=='2'"
+                    :key="index"
+                    :label="item.expandName"
+                    :value="item.expandName"
+                    v-for="(item, index) in extendList"
+                  ></el-option>
+                </el-select>
               </el-form-item>
               <el-form-item
                 label="扩展字段3"
               >
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                <el-select
+                  :disabled="p.actpoint==='look'||p.actpoint=='task'"
                   clearable
-                  placeholder="请输入"
-                />
+                  filterable
+                  placeholder="请选择"
+
+                  v-model="detailform.contractInfo.extensionField3"
+                >
+                  <el-option
+                    v-if="item.expandType=='3'"
+                    :key="index"
+                    :label="item.expandName"
+                    :value="item.expandName"
+                    v-for="(item, index) in extendList"
+                  ></el-option>
+                </el-select>
               </el-form-item>
               <div>
                 <el-form-item
@@ -2445,6 +2478,7 @@
         }
       }
       return {
+        extendList:[],//扩展字段list
         ifOAS:false,
         key: 0,
         treeStatas: false,
@@ -2597,6 +2631,14 @@
           this.sjdwList.forEach((item)=>{
             item.value=item.companyName;
           })
+        });
+      //扩展字段列表
+      this.$http
+        .post(
+          "/api/contract/ContractInfoExpand/detail/findExpandByType",
+        )
+        .then((res) => {
+          this.extendList = res.data.data;
         });
     },
     methods: {
