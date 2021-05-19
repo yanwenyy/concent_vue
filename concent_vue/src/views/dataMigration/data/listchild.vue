@@ -548,7 +548,7 @@
       getData() {
         this.searchform.id=this.p.instid
         this.$http
-          .post("/api/statistics/DataMigration/detail/loadPageDetailById",
+          .post("/api/datamigration/DataMigration/detail/loadPageDetailById",
           this.searchform
           )
           .then((res) => {

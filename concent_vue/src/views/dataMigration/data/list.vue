@@ -616,7 +616,7 @@
       getData() {
         this.$http
           .post(
-            "/api/statistics/DataMigration/list/loadPageData",
+            "/api/datamigration/DataMigration/list/loadPageData",
             this.searchform
           )
           .then((res) => {
