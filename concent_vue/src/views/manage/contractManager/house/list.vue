@@ -268,7 +268,7 @@
       <el-tab-pane label="填报销售业绩" name="second">
         <div style="width: 100%; overflow: hidden">
           <el-button-group style="float: left">
-            <el-button @click="totopTb" type="primary" plain><i class="el-icon-edit"></i>修改</el-button>
+            <el-button @click="totop" type="primary" plain><i class="el-icon-edit"></i>修改</el-button>
             <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
           </el-button-group>
           <div style="float: right;">
@@ -611,22 +611,6 @@ export default {
       });
 
     },
-      totopTb() {
-          if (this.multipleSelection.length !== 1) {
-              this.$message.info("请选择一条记录进行查看操作！");
-              return false;
-          }
-          if(this.multipleSelection[0].flowStatus=='2'||this.multipleSelection[0].flowStatus=='3'){
-              this.$message.info("此条数据不可修改！");
-              return false;
-          }
-          let p = {actpoint:this.activeName=='first'? "edit":'Yjedit', instid: this.multipleSelection[0].uuid};
-          this.$router.push({
-              path: "./tbDetail/",
-              query: {p: this.$utils.encrypt(JSON.stringify(p))},
-          });
-
-      },
     add(type) {
       let p = { actpoint: "add" ,type:type};
       this.$router.push({
