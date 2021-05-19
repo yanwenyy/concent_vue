@@ -559,25 +559,25 @@ export default {
                   'leaf': true,
                   'defaultpage': true
                 },
-                {
-                  'name': '数据迁移查询',
-                  'path': '/dataMigration/data/list',
-                  'component': '/dataMigration/data/list',
-                  'iconCls': 'el-icon-edit',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': true
-                },
-                {
-                  'name': '数据迁移子表',
-                  'path': '/dataMigration/data/listchild',
-                  'component': '/dataMigration/data/listchild',
-                  'iconCls': 'el-icon-edit',
-                  'menushow': false,
-                  'leaf': true,
-                  'defaultpage': false
-                }
               ]
+            },
+            {
+              'name': '数据迁移查询',
+              'path': '/dataMigration/data/list',
+              'component': '/dataMigration/data/list',
+              'iconCls': 'el-icon-edit',
+              'menushow': true,
+              'leaf': true,
+              'defaultpage': true
+            },
+            {
+              'name': '数据迁移子表',
+              'path': '/dataMigration/data/listchild',
+              'component': '/dataMigration/data/listchild',
+              'iconCls': 'el-icon-edit',
+              'menushow': false,
+              'leaf': true,
+              'defaultpage': false
             },
             // {
             //   'name': '新签年计划',
