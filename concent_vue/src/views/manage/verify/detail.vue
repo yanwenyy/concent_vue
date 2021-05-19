@@ -430,12 +430,7 @@
               </el-input>
               </el-form-item>
 
-              <el-form-item  class="formItem"  label="联系电话:"
-                             :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }">
+              <el-form-item  class="formItem"  label="联系电话:">
               <el-input
                 disabled
                 placeholder="请选择"
@@ -444,13 +439,7 @@
               </el-input>
               </el-form-item>
 
-            <el-form-item  label="预计中标概率:"
-                           :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-            >
+            <el-form-item  label="预计中标概率:">
               <el-input
                 disabled
                 placeholder="请选择"
