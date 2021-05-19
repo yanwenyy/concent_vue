@@ -268,7 +268,7 @@
       <el-tab-pane label="填报销售业绩" name="second">
         <div style="width: 100%; overflow: hidden">
           <el-button-group style="float: left">
-            <el-button @click="totop" type="primary" plain><i class="el-icon-edit"></i>修改</el-button>
+            <el-button @click="totopTb" type="primary" plain><i class="el-icon-edit"></i>修改</el-button>
             <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
           </el-button-group>
           <div style="float: right;">
@@ -479,24 +479,6 @@
               </template>
               <template slot-scope="scope">
                  {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
-              </template>
-            </el-table-column>
-            <el-table-column
-              :width="150"
-              align="center"
-              label="版本标识"
-              prop="version"
-              show-overflow-tooltip
-            >
-              <template slot="header" slot-scope="scope">
-                <span>版本标识</span>
-                <div>
-                  <el-input
-                    class="list-search-picker"
-                    style=" width: 100%"
-                    v-model="searchFrom.version"
-                  />
-                </div>
               </template>
             </el-table-column>
           </el-table>
