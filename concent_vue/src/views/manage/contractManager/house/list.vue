@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-tabs v-model="activeName" @tab-click="handleClick">
+    <el-tabs class="houseTab" v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="新签" name="first">
         <div style="width: 100%; overflow: hidden">
           <el-button-group style="float: left">
@@ -252,17 +252,6 @@
               </template>
             </el-table-column>
           </el-table>
-          <el-pagination
-            :current-page="page.current"
-            :page-size="page.size"
-            :page-sizes="[20, 50, 100]"
-            :total="page.total"
-            @current-change="handleCurrentChange"
-            @size-change="handleSizeChange"
-            layout="total, sizes, prev, pager, next, jumper"
-            style="margin-top: 5px"
-            v-if="page.total !== 0"
-          ></el-pagination>
         </div>
       </el-tab-pane>
       <el-tab-pane label="填报销售业绩" name="second">
@@ -330,7 +319,6 @@
             <!--</template>-->
             <!--</el-table-column>-->
             <el-table-column
-              :width="150"
               label="合同名称"
               prop="contractName"
               show-overflow-tooltip
@@ -478,24 +466,25 @@
                 </div>
               </template>
               <template slot-scope="scope">
-                 {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
+                 {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':''}}
               </template>
             </el-table-column>
           </el-table>
-          <el-pagination
-            :current-page="page.current"
-            :page-size="page.size"
-            :page-sizes="[20, 50, 100]"
-            :total="page.total"
-            @current-change="handleCurrentChange"
-            @size-change="handleSizeChange"
-            layout="total, sizes, prev, pager, next, jumper"
-            style="margin-top: 5px"
-            v-if="page.total !== 0"
-          ></el-pagination>
+
         </div>
       </el-tab-pane>
     </el-tabs>
+    <el-pagination
+      :current-page="page.current"
+      :page-size="page.size"
+      :page-sizes="[20, 50, 100]"
+      :total="page.total"
+      @current-change="handleCurrentChange"
+      @size-change="handleSizeChange"
+      layout="total, sizes, prev, pager, next, jumper"
+      style="margin-top: 5px"
+      v-if="page.total !== 0"
+    ></el-pagination>
   </div>
 </template>
 
@@ -680,4 +669,12 @@ export default {
 .tableStyle{
   min-height: calc(100vh - 160px)!important;
 }
+  /*.houseTab{*/
+    /*padding-bottom: 0!important;*/
+    /*position: relative;*/
+  /*}*/
+  /*>>>.el-tabs__content{*/
+    /*min-height: calc(100vh - 120px)!important;*/
+    /*max-height: calc(100vh - 120px)!important;*/
+  /*}*/
 </style>

@@ -1146,7 +1146,7 @@
                 >
                   <el-select
                     :disabled="p.actpoint==='look'"
-
+                    @change="detailform.contractInfo.estateHolding=='872d545096af11eb9d22f557900f0bae'||detailform.contractInfo.estateHolding=='8c461bc396af11eb9d225bb1ba27925f'?detailform.contractInfo.isMergeEstate='0':''"
                     clearable
                     filterable
                     placeholder="请选择"
@@ -1171,7 +1171,7 @@
 
                 >
                   <el-switch
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'||detailform.contractInfo.estateHolding=='872d545096af11eb9d22f557900f0bae'||detailform.contractInfo.estateHolding=='8c461bc396af11eb9d225bb1ba27925f'"
                     class="inline-formitem-switch"
                     v-model="detailform.contractInfo.isMergeEstate"
                     active-color="#409EFF"
@@ -3930,6 +3930,7 @@
         this.detailform.zplx=afterData.contractInfo.otherAssemblyTypeId&&afterData.contractInfo.otherAssemblyTypeId.split(",");
         this.detailform.jzlx=afterData.contractInfo.otherBuildingTypeId&&afterData.contractInfo.otherBuildingTypeId.split(",");
         this.detailform.jzjglx=afterData.contractInfo.otherBuildingStructureTypeId&&afterData.contractInfo.otherBuildingStructureTypeId.split(",");
+        this.detailform.contractInfo.isMergeEstate=afterData.estateHolding=='872d545096af11eb9d22f557900f0bae'||afterData.contractInfo.estateHolding=='8c461bc396af11eb9d225bb1ba27925f'?'0':'1';
         this.detailFormBefore={
           commonFilesList: beforData.commonFilesList,
           contractInfo: beforData.contractInfo,
@@ -3945,7 +3946,8 @@
         this.detailFormBefore.zplx=beforData.contractInfo.otherAssemblyTypeId&&beforData.contractInfo.otherAssemblyTypeId.split(",");
         this.detailFormBefore.jzlx=beforData.contractInfo.otherBuildingTypeId&&beforData.contractInfo.otherBuildingTypeId.split(",");
         this.detailFormBefore.jzjglx=beforData.contractInfo.otherBuildingStructureTypeId&&beforData.contractInfo.otherBuildingStructureTypeId.split(",");
-      });
+        this.detailFormBefore.contractInfo.isMergeEstate=beforData.estateHolding=='872d545096af11eb9d22f557900f0bae'||beforData.contractInfo.estateHolding=='8c461bc396af11eb9d225bb1ba27925f'?'0':'1';
+        });
       },
       //新增的时候详情
       getAddDetail(){
@@ -3969,6 +3971,7 @@
         this.detailform.zplx=datas.contractInfo.otherAssemblyTypeId&&datas.contractInfo.otherAssemblyTypeId.split(",");
         this.detailform.jzlx=datas.contractInfo.otherBuildingTypeId&&datas.contractInfo.otherBuildingTypeId.split(",");
         this.detailform.jzjglx=datas.contractInfo.otherBuildingStructureTypeId&&datas.contractInfo.otherBuildingStructureTypeId.split(",");
+            this.detailform.contractInfo.isMergeEstate=this.detailform.contractInfo.estateHolding=='872d545096af11eb9d22f557900f0bae'||this.detailform.contractInfo.estateHolding=='8c461bc396af11eb9d225bb1ba27925f'?'0':'1';
         for(var i in this.detailform){
           this.detailFormBefore[i]=JSON.parse(JSON.stringify(this.detailform[i]));
         }

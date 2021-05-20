@@ -3,9 +3,16 @@
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
         <el-button @click="add" plain type="primary">项目前期信息</el-button>
-        <el-button @click="add" plain type="primary">资审信息</el-button>
-        <el-button @click="add" type="primary" plain>投标信息</el-button>
-        <el-button @click="add" type="primary" plain>合同信息</el-button>
+        <!--<el-button @click="add('/api/datamigration/Verify/movedate/verify')" plain type="primary">资审信息</el-button>-->
+        <!--<el-button @click="add('/api/datamigration/BidInfo/movedate/bidInfo')" type="primary" plain>投标信息</el-button>-->
+        <el-button @click="add('/api/datamigration/Contract/movedate/contract')" type="primary" plain>工程承包</el-button>
+        <el-button @click="add('/api/datamigration/Contract/movedate/contract1')" type="primary" plain>工业制造</el-button>
+        <el-button @click="add('/api/datamigration/Contract/movedate/contract2')" type="primary" plain>新签运维</el-button>
+        <el-button @click="add('/api/datamigration/Contract/movedate/contract3')" type="primary" plain>金融租赁</el-button>
+        <el-button @click="add('/api/datamigration/Contract/movedate/contract4')" type="primary" plain>房地产</el-button>
+        <el-button @click="add('/api/datamigration/Contract/movedate/contract5')" type="primary" plain>物资贸易</el-button>
+        <el-button @click="add('/api/datamigration/Contract/movedate/contract6')" type="primary" plain>勘察设计</el-button>
+        <el-button @click="add('/api/datamigration/Contract/movedate/contract7')" type="primary" plain>其他</el-button>
         <el-button @click="add" type="primary" plain>计统项目信息</el-button>
         <el-button @click="add" type="primary" plain>非工程月报</el-button>
         <el-button @click="addPlan" type="primary" plain>项目计划</el-button>
@@ -404,21 +411,20 @@
         search() {
             this.showinput = false;
         },
-      // 增加
-        add() {
-          /*  this.$http
-                .post(
-                    "/api/statistics/DataMigration/detail/save",
-                    JSON.stringify({
-                        dataMigration:{},
-                    }),
-                    { useJson: true }
-                )
-                .then((res) => {
-                    if (res.data.code === 200) {
+      add(url) {
+          this.$http
+            .post(
+                url,
+                JSON.stringify({
+                    dataMigration:{},
+                }),
+                { useJson: true }
+            )
+            .then((res) => {
+                if (res.data.code === 200) {
 
-                    }
-                });*/
+                }
+            });
         },
       //添加项目计划
       addPlan(){
