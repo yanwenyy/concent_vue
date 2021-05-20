@@ -693,7 +693,7 @@
             :rules="{
               required: true,
               message: '此项不能为空',
-              trigger: 'blur',
+              trigger: ['blur'],
             }"
           >
             <el-select
@@ -1335,7 +1335,7 @@
               <template slot-scope="scope">
                 <el-form-item class="tabelForm" :prop="'topInfoSiteList.' + scope.$index + '.path'"  :rules="{required: true,message: '此项不能为空'}">
                   <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                  <el-input disabled placeholder="请输入内容" v-model="scope.row.path" class="input-with-select">
+                  <el-input disabled placeholder="请输入内容" v-model="scope.row.path" class="input-with-select group-no-padding">
                     <el-button v-if="p.actpoint != 'look'" slot="append" icon="el-icon-circle-plus" @click="selectPosition(),positionIndex=scope.$index"></el-button>
                   </el-input>
                 </el-form-item>

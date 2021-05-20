@@ -30,7 +30,7 @@
     </div>
     <div style="margin-top: 10px">
       <el-table
-        :row-class-name="tableRowClassName"
+
         class="tableStyle"
         :max-height="$tableHeight"
         :height="$tableHeight"
@@ -46,6 +46,7 @@
         ref="table"
         style="width: 100%"
         tooltip-effect="dark"
+        :row-class-name="tableRowClassName"
       >
         <el-table-column
           :width="50"
@@ -290,11 +291,11 @@ export default {
     //table根据类型显示不一样的颜色
     tableRowClassName({row, rowIndex}) {
       if (row.projectNature == '2') {
-        return 'red';
+        return 'row_red';
       } else if (row.projectNature =='1') {
-        return 'blue';
+        return 'row_blue';
       }else if (row.projectNature == '5') {
-        return 'green';
+        return 'row_green';
       }
       return '';
     },
@@ -427,13 +428,13 @@ export default {
 .el-table__row {
   cursor: pointer;
 }
->>>.el-table .red{
-  background: rgba(255,0,0,.3);
+>>>.tableStyle .row_red{
+  background: rgba(255,0,0,.1);
 }
->>>.el-table .blue{
-  background: rgba(0,51,204,.3);
+>>>.tableStyle .row_blue{
+  background: rgba(0,51,204,.1);
 }
->>>.el-table .green{
-  background: rgba(0,204,0,.3);
+>>>.tableStyle .row_green{
+  background: rgba(0,204,0,.1);
 }
 </style>

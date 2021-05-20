@@ -854,12 +854,12 @@
                       :resizable="false"
                       label="项目地点"
                       align="center"
-                      prop="inforName"
+                      prop="path"
                     >
-                      <template slot-scope="scope">
-                        <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
-                        <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
-                      </template>
+                      <!--<template slot-scope="scope">-->
+                        <!--<i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>-->
+                        <!--&lt;!&ndash;<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>&ndash;&gt;-->
+                      <!--</template>-->
                     </el-table-column>
 
                     <el-table-column
@@ -2849,7 +2849,7 @@
                     <template slot-scope="scope">
                       <el-form-item class="tabelForm" :prop="'topInfoSiteList.' + scope.$index + '.path'"  :rules="{required: true,message: '此项不能为空'}">
                         <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                        <el-input disabled placeholder="请输入内容" v-model="scope.row.path" class="input-with-select">
+                        <el-input disabled placeholder="请输入内容" v-model="scope.row.path" class="input-with-select group-no-padding">
                           <el-button v-if="p.actpoint != 'look'" slot="append" icon="el-icon-circle-plus" @click="selectPosition(),positionIndex=scope.$index"></el-button>
                         </el-input>
                       </el-form-item>

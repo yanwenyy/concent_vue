@@ -990,7 +990,7 @@
                   )
                 "
                 >
-                  <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in bizTypeCode"></el-option>
+                  <el-option :key="index" :label="item.detailName" v-if="item.parentDetailId=='0f333a962655480c8ef668a8ce129d41'" :value="item.id" v-for="(item,index) in bizTypeCode"></el-option>
                 </el-select>
               </el-form-item>
 
@@ -3049,6 +3049,9 @@
             var bidInfoSection=datas.bidInfoSectionBOList[i].bidInfoSection,
               bidInfoSectionOrgList=datas.bidInfoSectionBOList[i].bidInfoSectionOrgList;
             this.detailform.contractInfo.bidTime=bidInfoSection.bidTime;
+            //参见单位把前期中标中的施工单位直接带过来
+            this.detailform.contractInfo.buildOrgNames=bidInfoSection.constructionUnitName;
+            this.detailform.contractInfo.buildOrgIds=bidInfoSection.constructionUnitId;
             bidInfoSection.uuid='';
             for(var k in bidInfoSection.bidInfoSectionOrgList){
               bidInfoSection.bidInfoSectionOrgList[k].uuid='';
