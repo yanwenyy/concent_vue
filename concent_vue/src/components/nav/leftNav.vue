@@ -104,27 +104,32 @@ export default {
           }
         })
       }
-    }
+    },
+    loadUrl(){
+      this.defaultLeftNavOpened();
+      this.$http.get(
+        '/jsonapi/System/system/v1.0/userinfo')
+        .then(res => {
+          sessionStorage.setItem('userdata',JSON.stringify( res.data.data));
+          this.userdata = res.data.data;
+          this.getRouterName(this.userdata.menuPermission);
+          // console.log(this.routerList)
+        })
+
+      this.$store.state.topNavState = '/' + this.$route.path.split('/')[1]
+    },
   },
   watch: {
     $route: function(to, from) {
       // 路由改变时执行
-      // console.info("to.path:" + to.path);
+     console.log(to, from)
+      if(to.path=='/manage/xinqian/list'&&from.path=='/reportForm/list'){
+        this.loadUrl();
+      }
     }
   },
   mounted() {
-    this.defaultLeftNavOpened();
-
-    this.$http.get(
-      '/jsonapi/System/system/v1.0/userinfo')
-      .then(res => {
-        sessionStorage.setItem('userdata',JSON.stringify( res.data.data));
-        this.userdata = res.data.data;
-        this.getRouterName(this.userdata.menuPermission);
-        // console.log(this.routerList)
-      })
-
-    this.$store.state.topNavState = '/' + this.$route.path.split('/')[1]
+    this.loadUrl();
   },
 }
 </script>

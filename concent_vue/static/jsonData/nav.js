@@ -1854,6 +1854,26 @@ export default {
 
           ]
         },
+        {
+          'name': '报表管理',
+          'path': '/reportForm',
+          'component': '/router',
+          'iconCls': 'el-icon-printer',
+          'menushow': true,
+          'leaf': false,
+          'defaultpage': false,
+          'children': [
+            {
+              'name': '报表列表',
+              'path': '/reportForm/list',
+              'component': '/reportForm/list',
+              'iconCls': 'el-icon-edit',
+              'menushow': true,
+              'leaf': true,
+              'defaultpage': true
+            },
+          ]
+        },
         // {
         //   'name': '数据迁移',
         //   'path': '/dataMigration',

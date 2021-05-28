@@ -42,7 +42,6 @@
         ></el-table-column>
 
         <el-table-column
-          :width="500"
           label="报表名称"
           prop="reportName"
           show-overflow-tooltip
@@ -346,22 +345,27 @@
         },
         // 查看
         rowshow(row) {
-            this.type='look';
-            this.$http
-                .post("/api/contract/ReportManage/detail/entityInfo", {
-                    id: row.uuid,
-                })
-                .then((res) => {
-                    var datas = res.data.data;
-                    this.form.reportName = datas.reportName;
-                    this.form.reportType = datas.reportType;
-                    // this.form.reportHeyComb = datas.reportHeyComb;
-                    this.form.reportHeyCombId = datas.reportHeyCombId;
-                    this.form.enableStatus = datas.enableStatus;
-                    this.form.reportSort = datas.reportSort;
-                    this.dialogResult = true;
-                    this.form.reportHeyComb=datas.reportHierarchyId?datas.reportHierarchyId.split(","):[];
-                });
+          // window.performance.navigation.type=1
+          this.$router.push({
+            path: "/reportForm/list",
+            query: {resid: row.smartbi},
+          });
+            // this.type='look';
+            // this.$http
+            //     .post("/api/contract/ReportManage/detail/entityInfo", {
+            //         id: row.uuid,
+            //     })
+            //     .then((res) => {
+            //         var datas = res.data.data;
+            //         this.form.reportName = datas.reportName;
+            //         this.form.reportType = datas.reportType;
+            //         // this.form.reportHeyComb = datas.reportHeyComb;
+            //         this.form.reportHeyCombId = datas.reportHeyCombId;
+            //         this.form.enableStatus = datas.enableStatus;
+            //         this.form.reportSort = datas.reportSort;
+            //         this.dialogResult = true;
+            //         this.form.reportHeyComb=datas.reportHierarchyId?datas.reportHierarchyId.split(","):[];
+            //     });
         },
         // 删除
         remove() {

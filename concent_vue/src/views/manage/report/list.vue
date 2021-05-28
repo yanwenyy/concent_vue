@@ -241,6 +241,13 @@
             size="mini"
           />
         </el-form-item>
+        <el-form-item label="报表ID:" :label-width="formLabelWidth">
+          <el-input
+            :disabled="type=='look'"
+            v-model="form.smartbi"
+            size="mini"
+          />
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button :disabled="type=='look'"  type="primary" @click="save()">保 存</el-button>
@@ -280,6 +287,7 @@
               enableStatus:"",
               reportHeyComb: [],
               reportHeyCombId:[],
+              smartbi:""
           },
           options: [{
               value: '11',
@@ -397,7 +405,8 @@
                             enableStatus: "",
                             reportHeyComb: [],
                             reportHeyCombId:[],
-                            uuid:''
+                            uuid:'',
+                            smartbi:""
                         };
                         //关闭dialog对话框
                         this.dialogResult = false;
@@ -426,7 +435,8 @@
                 reportSort: "",
                 reportHeyComb: [],
                 reportHeyCombId:[],
-                uuid:''
+                uuid:'',
+                smartbi:""
             }
         },
       // 修改
@@ -447,6 +457,7 @@
                 enableStatus:list.enableStatus,
                 uuid:list.uuid,
                 reportHeyComb:list.reportHierarchyId?list.reportHierarchyId.split(","):[],
+                smartbi:list.smartbi
             };
             this.dialogResult = true;
 
@@ -468,6 +479,7 @@
                     this.form.reportSort = datas.reportSort;
                     this.dialogResult = true;
                     this.form.reportHeyComb=datas.reportHierarchyId?datas.reportHierarchyId.split(","):[];
+                    this.form.smartbi=data.smartbi;
                 });
         },
         // 删除
