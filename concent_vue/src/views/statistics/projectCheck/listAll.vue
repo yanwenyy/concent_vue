@@ -3,7 +3,15 @@
 <template>
   <div>
     <div style="width: 100%; overflow: hidden">
-      <div style="float: right;">
+      <el-form class="search-form" :inline="true" :model="searchform" @keyup.enter.native="init()">
+        <el-form-item label="填报年月:">
+          <el-date-picker
+            v-model="searchform.fullDate"
+            type="month"
+            value-format="yyyy-MM"
+            placeholder="选择月">
+          </el-date-picker>
+        </el-form-item>
         <el-button
           @click="searchformReset"
           type="info"
@@ -12,7 +20,7 @@
           <i class="el-icon-refresh-right"></i>重置
         </el-button>
         <el-button @click="searchformSubmit" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
-      </div>
+      </el-form>
     </div>
 
     <div style="margin-top: 10px">
@@ -267,6 +275,7 @@
       ],
         page: { current: 1, size: 20, total: 0, records: [] },
         searchform: {
+          fullDate:'',
           current: 1,
           size: 20
         },
@@ -318,6 +327,7 @@
       },
       searchformReset() {
         this.searchform = {
+          fullDate:'',
           current: 1,
           size: 20,
           createOrgCode: '',
@@ -371,8 +381,11 @@
     },
 
     created() {
+      //获取当前月份
+      var sj=new Date().toLocaleDateString().split('/');
+      sj[1]=sj[1]<10?'0'+sj[1]:sj[1];
+      this.searchform.fullDate=sj[0]+"-"+sj[1];
       this.getData()
-       console.log(JSON.parse(sessionStorage.getItem('userdata')))
        this.userdata=JSON.parse(sessionStorage.getItem('userdata'))
     },
 
@@ -381,5 +394,8 @@
 <style scoped>
   .el-table__row {
     cursor: pointer;
+  }
+  .search-form >>>.el-form-item__label{
+    width: auto!important;
   }
 </style>

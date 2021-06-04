@@ -959,6 +959,7 @@
               >
             </p>
             <el-table
+              :row-class-name="tableRowClassName"
               v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null"
               :data="detailform.topInfoSectionList"
               :header-cell-style="{
@@ -1252,6 +1253,12 @@
         });
     },
     methods: {
+      tableRowClassName({row, rowIndex}) {
+        if (row.noValidate == 1) {
+          return 'red-row';
+        }
+        return '';
+      },
       //复选下拉框框获取name
       getMultipleName(valueList,list,id,name,code){
         var _id=[],_name=[],_code=[];
@@ -1479,7 +1486,7 @@
           }
         });
         this.detailform.topInforCapitalList=topInforCapitalList;
-        this.$refs[formName].validate((valid) => {
+        this.$refs[formName].validate((valid,object) => {
           if (valid) {
             this.$http
               .post(
@@ -1511,6 +1518,14 @@
               });
 
           } else {
+            console.log(object)
+            for (var i in object){
+              if(i.indexOf("topInfoSectionList")!=-1){
+                var key=i.split(".")[1];
+                this.detailform.topInfoSectionList[key].noValidate=1;
+              }
+            }
+            this.$forceUpdate();
             this.$message.error("请添加必填项");
             return false;
           }
@@ -1785,6 +1800,8 @@
   .el-table--border {
     min-height: auto !important;
   }
-
+  .detailTable >>>.red-row{
+    background: red;
+  }
 </style>
 

@@ -725,6 +725,190 @@ export default {
               'leaf': true,
               'defaultpage': false
             },
+            {
+              'name': '工程量清单库数据标准',
+              'path': '/boq/dataStandards',
+              'component': '/router',
+              'iconCls': 'el-icon-data-analysis',
+              'menushow': true,
+              'leaf': false,
+              'defaultpage': false,
+              'children': [
+                {
+                  'name': '标准库',
+                  'path': '/boq/dataStandards/ordinaryStandard/list',
+                  'component': '/boq/dataStandards/ordinaryStandard/list',
+                  'iconCls': 'el-icon-switch-button',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                /* {
+                'name': '标准库新增',
+                'path': '/boq/dataStandards/ordinaryStandard/detail',
+                'component': '/boq/dataStandards/ordinaryStandard/detail',
+                'iconCls': 'el-icon-switch-button',
+                'menushow': false,
+                'leaf': true,
+                'defaultpage': true
+              }, */
+                {
+                  'name': '国标库',
+                  'path': '/boq/nationalStandard/list',
+                  'component': '/boq/nationalStandard/list',
+                  'iconCls': 'el-icon-folder-opened',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '国标库新增',
+                  'path': '/boq/nationalStandard/detail',
+                  'component': '/boq/nationalStandard/detail',
+                  'iconCls': 'el-icon-switch-button',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '知识库',
+                  'path': '/boq/ordinaryScience',
+                  'component': '',
+                  'iconCls': 'el-icon-switch-button',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                }, {
+                  'name': '近义词库',
+                  'path': '/boq/standardSynonym/list',
+                  'component': '/boq/standardSynonym/list',
+                  'iconCls': 'el-icon-switch-button',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                }
+              ]
+            },
+            {
+              'name': '档案管理',
+              'path': '/archives',
+              'component': '/router',
+              'iconCls': 'el-icon-printer',
+              'menushow': true,
+              'leaf': false,
+              'defaultpage': false,
+              'children': [
+                {
+                  'name': '档案文件录入',
+                  'path': '/archives/archives/list_archives',
+                  'component': '/archives/archives/list_archives',
+                  'iconCls': 'el-icon-edit',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '档案文件详细',
+                  'path': '/archives/archives/detail_archives',
+                  'component': '/archives/archives/detail_archives',
+                  'iconCls': 'el-icon-printer',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '档案文件查询',
+                  'path': '/archives/archives/list_archivesSearch',
+                  'component': '/archives/archives/list_archivesSearch',
+                  'iconCls': 'el-icon-search',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '统计分析录入',
+                  'path': '/archives/statistics/list_statistics',
+                  'component': '/archives/statistics/list_statistics',
+                  'iconCls': 'el-icon-edit',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '统计分析详细',
+                  'path': '/archives/statistics/detail_statistics',
+                  'component': '/archives/statistics/detail_statistics',
+                  'iconCls': 'el-icon-printer',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '统计分析查询',
+                  'path': '/archives/statistics/list_statisticsSearch',
+                  'component': '/archives/statistics/list_statisticsSearch',
+                  'iconCls': 'el-icon-search',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '月度分析录入',
+                  'path': '/archives/analysis/list',
+                  'component': '/archives/analysis/list',
+                  'iconCls': 'el-icon-edit',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '月度分析详细',
+                  'path': '/archives/analysis/detail',
+                  'component': '/archives/analysis/detail',
+                  'iconCls': 'el-icon-printer',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '月度分析查询',
+                  'path': '/archives/analysis/list_search',
+                  'component': '/archives/analysis/list_search',
+                  'iconCls': 'el-icon-search',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '消息信息录入',
+                  'path': '/archives/news/list',
+                  'component': '/archives/news/list',
+                  'iconCls': 'el-icon-edit',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '消息信息详细',
+                  'path': '/archives/news/detail',
+                  'component': '/archives/news/detail',
+                  'iconCls': 'el-icon-printer',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '消息信息查询',
+                  'path': '/archives/news/list_search',
+                  'component': '/archives/news/list_search',
+                  'iconCls': 'el-icon-search',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                }
+
+              ]
+            },
           ]
         },
         {
@@ -1022,6 +1206,26 @@ export default {
                   'menushow': false,
                   'leaf': true,
                   'defaultpage': false
+                }
+              ]
+            },
+            {
+              'name': '产品信息管理',
+              'path': '/statistics/productInfo',
+              'component': '/router',
+              'iconCls': 'el-icon-coin',
+              'menushow': true,
+              'leaf': false,
+              'defaultpage': false,
+              'children': [
+                {
+                  'name': '产品信息列表',
+                  'path': '/statistics/productInfo/list',
+                  'component': '/statistics/productInfo/list',
+                  'iconCls': 'el-icon-school',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
                 }
               ]
             },
@@ -1584,7 +1788,7 @@ export default {
             },
             {
               'name': '计统报表',
-              'path': '/statistics/report/',
+              'path': '/statistics/report',
               'component': '/router',
               'iconCls': 'el-icon-document-copy',
               'menushow': true,
@@ -1658,202 +1862,202 @@ export default {
             },
           ]
         },
-        {
-          'name': '工程量清单库',
-          'path': '/boq',
-          'component': '/router',
-          'iconCls': 'el-icon-printer',
-          'menushow': true,
-          'leaf': false,
-          'defaultpage': false,
-          'children': [
-            {
-              'name': '数据标准',
-              'path': '/boq/dataStandards',
-              'component': '/router',
-              'iconCls': 'el-icon-data-analysis',
-              'menushow': true,
-              'leaf': false,
-              'defaultpage': false,
-              'children': [
-                {
-                  'name': '标准库',
-                  'path': '/boq/dataStandards/ordinaryStandard/list',
-                  'component': '/boq/dataStandards/ordinaryStandard/list',
-                  'iconCls': 'el-icon-switch-button',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': true
-                },
-                /* {
-                'name': '标准库新增',
-                'path': '/boq/dataStandards/ordinaryStandard/detail',
-                'component': '/boq/dataStandards/ordinaryStandard/detail',
-                'iconCls': 'el-icon-switch-button',
-                'menushow': false,
-                'leaf': true,
-                'defaultpage': true
-              }, */
-                {
-                  'name': '国标库',
-                  'path': '/boq/nationalStandard/list',
-                  'component': '/boq/nationalStandard/list',
-                  'iconCls': 'el-icon-folder-opened',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': true
-                },
-                {
-                  'name': '国标库新增',
-                  'path': '/boq/nationalStandard/detail',
-                  'component': '/boq/nationalStandard/detail',
-                  'iconCls': 'el-icon-switch-button',
-                  'menushow': false,
-                  'leaf': true,
-                  'defaultpage': true
-                },
-                {
-                  'name': '知识库',
-                  'path': '/boq/ordinaryScience',
-                  'component': '',
-                  'iconCls': 'el-icon-switch-button',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': true
-                }, {
-                  'name': '近义词库',
-                  'path': '/boq/standardSynonym/list',
-                  'component': '/boq/standardSynonym/list',
-                  'iconCls': 'el-icon-switch-button',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': true
-                }
-              ]
-            }
-
-          ]
-        },
-        {
-          'name': '档案管理',
-          'path': '/archives',
-          'component': '/router',
-          'iconCls': 'el-icon-printer',
-          'menushow': true,
-          'leaf': false,
-          'defaultpage': false,
-          'children': [
-            {
-              'name': '档案文件录入',
-              'path': '/archives/archives/list_archives',
-              'component': '/archives/archives/list_archives',
-              'iconCls': 'el-icon-edit',
-              'menushow': true,
-              'leaf': true,
-              'defaultpage': true
-            },
-            {
-              'name': '档案文件详细',
-              'path': '/archives/archives/detail_archives',
-              'component': '/archives/archives/detail_archives',
-              'iconCls': 'el-icon-printer',
-              'menushow': false,
-              'leaf': true,
-              'defaultpage': true
-            },
-            {
-              'name': '档案文件查询',
-              'path': '/archives/archives/list_archivesSearch',
-              'component': '/archives/archives/list_archivesSearch',
-              'iconCls': 'el-icon-search',
-              'menushow': true,
-              'leaf': true,
-              'defaultpage': true
-            },
-            {
-              'name': '统计分析录入',
-              'path': '/archives/statistics/list_statistics',
-              'component': '/archives/statistics/list_statistics',
-              'iconCls': 'el-icon-edit',
-              'menushow': true,
-              'leaf': true,
-              'defaultpage': true
-            },
-            {
-              'name': '统计分析详细',
-              'path': '/archives/statistics/detail_statistics',
-              'component': '/archives/statistics/detail_statistics',
-              'iconCls': 'el-icon-printer',
-              'menushow': false,
-              'leaf': true,
-              'defaultpage': true
-            },
-            {
-              'name': '统计分析查询',
-              'path': '/archives/statistics/list_statisticsSearch',
-              'component': '/archives/statistics/list_statisticsSearch',
-              'iconCls': 'el-icon-search',
-              'menushow': true,
-              'leaf': true,
-              'defaultpage': true
-            },
-            {
-              'name': '月度分析录入',
-              'path': '/archives/analysis/list',
-              'component': '/archives/analysis/list',
-              'iconCls': 'el-icon-edit',
-              'menushow': true,
-              'leaf': true,
-              'defaultpage': true
-            },
-            {
-              'name': '月度分析详细',
-              'path': '/archives/analysis/detail',
-              'component': '/archives/analysis/detail',
-              'iconCls': 'el-icon-printer',
-              'menushow': false,
-              'leaf': true,
-              'defaultpage': true
-            },
-            {
-              'name': '月度分析查询',
-              'path': '/archives/analysis/list_search',
-              'component': '/archives/analysis/list_search',
-              'iconCls': 'el-icon-search',
-              'menushow': true,
-              'leaf': true,
-              'defaultpage': true
-            },
-            {
-              'name': '消息信息录入',
-              'path': '/archives/news/list',
-              'component': '/archives/news/list',
-              'iconCls': 'el-icon-edit',
-              'menushow': true,
-              'leaf': true,
-              'defaultpage': true
-            },
-            {
-              'name': '消息信息详细',
-              'path': '/archives/news/detail',
-              'component': '/archives/news/detail',
-              'iconCls': 'el-icon-printer',
-              'menushow': false,
-              'leaf': true,
-              'defaultpage': true
-            },
-            {
-              'name': '消息信息查询',
-              'path': '/archives/news/list_search',
-              'component': '/archives/news/list_search',
-              'iconCls': 'el-icon-search',
-              'menushow': true,
-              'leaf': true,
-              'defaultpage': true
-            }
-
-          ]
-        },
+        // {
+        //   'name': '工程量清单库',
+        //   'path': '/boq',
+        //   'component': '/router',
+        //   'iconCls': 'el-icon-printer',
+        //   'menushow': true,
+        //   'leaf': false,
+        //   'defaultpage': false,
+        //   'children': [
+        //     {
+        //       'name': '数据标准',
+        //       'path': '/boq/dataStandards',
+        //       'component': '/router',
+        //       'iconCls': 'el-icon-data-analysis',
+        //       'menushow': true,
+        //       'leaf': false,
+        //       'defaultpage': false,
+        //       'children': [
+        //         {
+        //           'name': '标准库',
+        //           'path': '/boq/dataStandards/ordinaryStandard/list',
+        //           'component': '/boq/dataStandards/ordinaryStandard/list',
+        //           'iconCls': 'el-icon-switch-button',
+        //           'menushow': true,
+        //           'leaf': true,
+        //           'defaultpage': true
+        //         },
+        //         /* {
+        //         'name': '标准库新增',
+        //         'path': '/boq/dataStandards/ordinaryStandard/detail',
+        //         'component': '/boq/dataStandards/ordinaryStandard/detail',
+        //         'iconCls': 'el-icon-switch-button',
+        //         'menushow': false,
+        //         'leaf': true,
+        //         'defaultpage': true
+        //       }, */
+        //         {
+        //           'name': '国标库',
+        //           'path': '/boq/nationalStandard/list',
+        //           'component': '/boq/nationalStandard/list',
+        //           'iconCls': 'el-icon-folder-opened',
+        //           'menushow': true,
+        //           'leaf': true,
+        //           'defaultpage': true
+        //         },
+        //         {
+        //           'name': '国标库新增',
+        //           'path': '/boq/nationalStandard/detail',
+        //           'component': '/boq/nationalStandard/detail',
+        //           'iconCls': 'el-icon-switch-button',
+        //           'menushow': false,
+        //           'leaf': true,
+        //           'defaultpage': true
+        //         },
+        //         {
+        //           'name': '知识库',
+        //           'path': '/boq/ordinaryScience',
+        //           'component': '',
+        //           'iconCls': 'el-icon-switch-button',
+        //           'menushow': true,
+        //           'leaf': true,
+        //           'defaultpage': true
+        //         }, {
+        //           'name': '近义词库',
+        //           'path': '/boq/standardSynonym/list',
+        //           'component': '/boq/standardSynonym/list',
+        //           'iconCls': 'el-icon-switch-button',
+        //           'menushow': true,
+        //           'leaf': true,
+        //           'defaultpage': true
+        //         }
+        //       ]
+        //     }
+        //
+        //   ]
+        // },
+        // {
+        //   'name': '档案管理',
+        //   'path': '/archives',
+        //   'component': '/router',
+        //   'iconCls': 'el-icon-printer',
+        //   'menushow': true,
+        //   'leaf': false,
+        //   'defaultpage': false,
+        //   'children': [
+        //     {
+        //       'name': '档案文件录入',
+        //       'path': '/archives/archives/list_archives',
+        //       'component': '/archives/archives/list_archives',
+        //       'iconCls': 'el-icon-edit',
+        //       'menushow': true,
+        //       'leaf': true,
+        //       'defaultpage': true
+        //     },
+        //     {
+        //       'name': '档案文件详细',
+        //       'path': '/archives/archives/detail_archives',
+        //       'component': '/archives/archives/detail_archives',
+        //       'iconCls': 'el-icon-printer',
+        //       'menushow': false,
+        //       'leaf': true,
+        //       'defaultpage': true
+        //     },
+        //     {
+        //       'name': '档案文件查询',
+        //       'path': '/archives/archives/list_archivesSearch',
+        //       'component': '/archives/archives/list_archivesSearch',
+        //       'iconCls': 'el-icon-search',
+        //       'menushow': true,
+        //       'leaf': true,
+        //       'defaultpage': true
+        //     },
+        //     {
+        //       'name': '统计分析录入',
+        //       'path': '/archives/statistics/list_statistics',
+        //       'component': '/archives/statistics/list_statistics',
+        //       'iconCls': 'el-icon-edit',
+        //       'menushow': true,
+        //       'leaf': true,
+        //       'defaultpage': true
+        //     },
+        //     {
+        //       'name': '统计分析详细',
+        //       'path': '/archives/statistics/detail_statistics',
+        //       'component': '/archives/statistics/detail_statistics',
+        //       'iconCls': 'el-icon-printer',
+        //       'menushow': false,
+        //       'leaf': true,
+        //       'defaultpage': true
+        //     },
+        //     {
+        //       'name': '统计分析查询',
+        //       'path': '/archives/statistics/list_statisticsSearch',
+        //       'component': '/archives/statistics/list_statisticsSearch',
+        //       'iconCls': 'el-icon-search',
+        //       'menushow': true,
+        //       'leaf': true,
+        //       'defaultpage': true
+        //     },
+        //     {
+        //       'name': '月度分析录入',
+        //       'path': '/archives/analysis/list',
+        //       'component': '/archives/analysis/list',
+        //       'iconCls': 'el-icon-edit',
+        //       'menushow': true,
+        //       'leaf': true,
+        //       'defaultpage': true
+        //     },
+        //     {
+        //       'name': '月度分析详细',
+        //       'path': '/archives/analysis/detail',
+        //       'component': '/archives/analysis/detail',
+        //       'iconCls': 'el-icon-printer',
+        //       'menushow': false,
+        //       'leaf': true,
+        //       'defaultpage': true
+        //     },
+        //     {
+        //       'name': '月度分析查询',
+        //       'path': '/archives/analysis/list_search',
+        //       'component': '/archives/analysis/list_search',
+        //       'iconCls': 'el-icon-search',
+        //       'menushow': true,
+        //       'leaf': true,
+        //       'defaultpage': true
+        //     },
+        //     {
+        //       'name': '消息信息录入',
+        //       'path': '/archives/news/list',
+        //       'component': '/archives/news/list',
+        //       'iconCls': 'el-icon-edit',
+        //       'menushow': true,
+        //       'leaf': true,
+        //       'defaultpage': true
+        //     },
+        //     {
+        //       'name': '消息信息详细',
+        //       'path': '/archives/news/detail',
+        //       'component': '/archives/news/detail',
+        //       'iconCls': 'el-icon-printer',
+        //       'menushow': false,
+        //       'leaf': true,
+        //       'defaultpage': true
+        //     },
+        //     {
+        //       'name': '消息信息查询',
+        //       'path': '/archives/news/list_search',
+        //       'component': '/archives/news/list_search',
+        //       'iconCls': 'el-icon-search',
+        //       'menushow': true,
+        //       'leaf': true,
+        //       'defaultpage': true
+        //     }
+        //
+        //   ]
+        // },
         {
           'name': '报表管理',
           'path': '/reportForm',

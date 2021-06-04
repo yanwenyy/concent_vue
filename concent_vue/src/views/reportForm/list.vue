@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form :action="url" ref="itForm" method="post" id="itForm" style="display: none">
+    <form :action="url" ref="itForm" method="post" id="itForm" style="display: none" target="_top">
       <input id="paramsInfo" ref="paramsInfo" type="hidden" name="paramsInfo">
       <input type="hidden" v-for="(item,i) in paramMap" :value="item" :name="i" >
     </form>
@@ -38,28 +38,30 @@
             this.url=res.data.data.url;
             this.paramMap = res.data.data;
             console.log(this.paramMap)
-            /* 设置报表参数 */
-            var params = new Array();
+            return new Promise((resolve, reject) => {
+              /* 设置报表参数 */
+              var params = new Array();
 
-            var param = new Object();
-            param.name = "R1USERID";
-            param.value = this.paramMap.R1USERID;
-            param.displayValue = this.paramMap.R1USERID;
-            param.stanbyValue = this.paramMap.R1USERID;
-            params[0] = param;
-            for(var n in this.paramMap){
-              var val=this.paramMap[n];
-              var obj = new Object();
-              obj.name = n;
-              obj.value = this.parseObj(val);
-              obj.displayValue = this.parseObj(val);
-              obj.stanbyValue = this.parseObj(val);
-              params.push(obj);
-            }
-            this.$refs.paramsInfo.value = JSON.stringify(params);
-            setTimeout(() => {
+              var param = new Object();
+              param.name = "R1USERID";
+              param.value = this.paramMap.R1USERID;
+              param.displayValue = this.paramMap.R1USERID;
+              param.stanbyValue = this.paramMap.R1USERID;
+              params[0] = param;
+              for(var n in this.paramMap){
+                var val=this.paramMap[n];
+                var obj = new Object();
+                obj.name = n;
+                obj.value = this.parseObj(val);
+                obj.displayValue = this.parseObj(val);
+                obj.stanbyValue = this.parseObj(val);
+                params.push(obj);
+              }
+              this.$refs.paramsInfo.value = JSON.stringify(params);
+                resolve("1111")
+            }).then((data)=>{
               this.$refs.itForm.submit();
-            }, 200);
+            });
           });
       }
     },

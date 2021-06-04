@@ -122,7 +122,7 @@ export default {
   watch: {
     $route: function(to, from) {
       // 路由改变时执行
-     console.log(to, from)
+     // console.log(to, from)
       if(to.path=='/manage/xinqian/list'&&from.path=='/reportForm/list'){
         this.loadUrl();
       }
@@ -140,6 +140,8 @@ export default {
     max-height: calc(100vh)!important;
     /*margin-bottom: 60px;*/
     overflow: auto;
+    padding-bottom: 40px;
+    box-sizing: border-box;
   }
 
   >>>.el-submenu__title{
