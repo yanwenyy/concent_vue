@@ -324,6 +324,7 @@
         params.reportMonth = years[1]
         params.status='1'
         params.flowStatus='1'
+        params.yearDateS=this.form1.year
        this.$http.post(
         url,
         JSON.stringify(params),

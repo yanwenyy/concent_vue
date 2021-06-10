@@ -4,14 +4,14 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-form class="search-form" :inline="true" :model="searchform" @keyup.enter.native="init()">
-        <el-form-item label="填报年月:">
-          <el-date-picker
-            v-model="searchform.fullDate"
-            type="month"
-            value-format="yyyy-MM"
-            placeholder="选择月">
-          </el-date-picker>
-        </el-form-item>
+        <!--<el-form-item label="填报年月:">-->
+          <!--<el-date-picker-->
+            <!--v-model="searchform.fullDate"-->
+            <!--type="month"-->
+            <!--value-format="yyyy-MM"-->
+            <!--placeholder="选择月">-->
+          <!--</el-date-picker>-->
+        <!--</el-form-item>-->
         <el-button
           @click="searchformReset"
           type="info"
@@ -361,10 +361,10 @@
         var y = date.getFullYear();
         var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
         var time=y + '-' + m;
-        // var time="2004-06-01 00:00:00";
+        // var time="2004-06";
         //this.searchform.reportYear= y;
         this.searchform.yearDateS=time;
-
+        this.searchform.beginDate=y + '-' +"01";
         this.$http
           .post('/api/statistics/projectMonthlyReport/Projectreport/list/projectDeptList', this.searchform)
           .then(res => {
@@ -383,9 +383,9 @@
 
     created() {
       //获取当前月份
-      var sj=new Date().toLocaleDateString().split('/');
-      sj[1]=sj[1]<10?'0'+sj[1]:sj[1];
-      this.searchform.fullDate=sj[0]+"-"+sj[1];
+      // var sj=new Date().toLocaleDateString().split('/');
+      // sj[1]=sj[1]<10?'0'+sj[1]:sj[1];
+      // this.searchform.fullDate=sj[0]+"-"+sj[1];
       this.getData()
        this.userdata=JSON.parse(sessionStorage.getItem('userdata'))
     },

@@ -829,6 +829,213 @@
               </el-table>
             </div>
           </el-tab-pane>
+          <el-tab-pane label="主要产品管理">
+            <div class="table-div">
+              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+                <el-button @click="exportdata('industry','工业制造板块')" type="primary" plain>导出</el-button>
+              </el-form>
+              <el-table
+                :data="detailform.gy_list"
+                :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                @selection-change="handleSelectionChange"
+                align="center"
+                border
+                class="detailTable"
+                ref="table"
+                style="width: 100%; min-height: calc(100vh - 370px)"
+              >
+                <el-table-column
+                  label="产品信息"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="单位名称"
+                    prop="projectName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="产品编号"
+                    prop="contractNumber"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="产品名称"
+                    prop="companyBelongName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="计量单位"
+                    align="center"
+                    prop="measureUnit"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table-column>
+                <el-table-column
+                  label="本月完成"
+                >
+                  <el-table-column
+                    :resizable="false"
+                    label="产品数量"
+                    align="center"
+                    prop="measureUnit"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="工业总产值"
+                    prop="industry"
+                    align="center"
+                    show-overflow-tooltip
+                    width="150"
+                  >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'industry')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                        clearable
+                        v-model="scope.row.industry"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'overseasIndustry')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                        clearable
+                        v-model="scope.row.overseasIndustry"/>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="装备制造"
+                    prop="equipmentManufacturin"
+                    align="center"
+                    show-overflow-tooltip
+                    width="150"
+                  >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'equipmentManufacturin')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                        clearable
+                        v-model="scope.row.equipmentManufacturin"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'equipmentManufacturinHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                        clearable
+                        v-model="scope.row.equipmentManufacturinHw"/>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="预购件"
+                    prop="tempPrice"
+                    align="center"
+                    show-overflow-tooltip
+                    width="150"
+                  >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'componentManufacturin')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                        clearable
+                        v-model="scope.row.componentManufacturin"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'componentManufacturinHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                        clearable
+                        v-model="scope.row.componentManufacturinHw"/>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="其他工业产品"
+                    prop="otherIndustrayProduct"
+                    align="center"
+                    show-overflow-tooltip
+                    width="150"
+                  >
+                    <template slot-scope="scope">
+                      <el-input
+                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'otherIndustrayProduct')"
+                        v-if="scope.row.country=='01'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                        clearable
+                        v-model="scope.row.otherIndustrayProduct"/>
+                      <el-input
+                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'otherIndustrayProductHw')"
+                        v-if="scope.row.country=='02'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                        clearable
+                        v-model="scope.row.otherIndustrayProductHw"/>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="境/内外"
+                    align="center"
+                    prop="measureUnit"
+                    show-overflow-tooltip
+                  >
+                    <template slot-scope="scope">
+                      {{scope.row.country=='01'?'境内':'境外'}}
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="上报产值是否含增值税"
+                    prop="isOutputTax"
+                    align="center"
+                    show-overflow-tooltip
+                    width="200"
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="增值税"
+                    prop="vat"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table-column>
+              </el-table>
+            </div>
+          </el-tab-pane>
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="物资贸易板块">
@@ -3919,13 +4126,13 @@
     box-sizing: border-box;
   }
   .table-div{
-    max-height: calc(100vh - 215px)!important;
-    min-height: calc(100vh - 215px)!important;
+    max-height: calc(100vh - 105px)!important;
+    min-height: calc(100vh - 105px)!important;
     overflow: scroll;
   }
   .detailBox{
-    max-height:calc(100vh - 215px)!important;
-    min-height: calc(100vh - 215px)!important;
+    max-height:calc(100vh - 105px)!important;
+    min-height: calc(100vh - 105px)!important;
   }
 </style>
 

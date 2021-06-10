@@ -1487,6 +1487,15 @@ export default {
                   'defaultpage': false
                 },
                 {
+                  'name': '项目部月报批量提交',
+                  'path': '/statistics/reportMonth/batchList',
+                  'component': '/statistics/reportMonth/batchList',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
                   'name': '项目部月报二级list',
                   'path': '/statistics/reportMonth/reportMList',
                   'component': '/statistics/reportMonth/reportMList',
@@ -1607,6 +1616,15 @@ export default {
                   'name': '项目部月报',
                   'path': '/statistics/projectCheck/listAll',
                   'component': '/statistics/projectCheck/listAll',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '项目部月报批量提交',
+                  'path': '/statistics/projectCheck/batchList',
+                  'component': '/statistics/projectCheck/batchList',
                   'iconCls': 'el-icon-reading',
                   'menushow': true,
                   'leaf': true,
