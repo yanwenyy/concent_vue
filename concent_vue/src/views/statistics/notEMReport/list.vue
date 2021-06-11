@@ -261,7 +261,7 @@
           this.$http
             .post(
               "/api/statistics/unProjectReport/detail/save",
-              JSON.stringify({'reportDate':this.searchform.reportDate}),
+              JSON.stringify({'reportDate':this.searchform.reportDate,'gyType': this.userdata.managerOrgList[0].principalCode||'2'}),
               {useJson: true,isLoading:false}
             )
             .then((res) => {
@@ -269,7 +269,7 @@
           if(datas.isExist=="0"){
             this.$message.info("该填报年下已有相应的该月份的月报数据 无法创建新的填报记录");
           }else{
-            let p = {actpoint: "add",reportDate: this.searchform.reportDate,statId:datas.uuid};
+            let p = {actpoint: "add",reportDate: this.searchform.reportDate,statId:datas.uuid,gyType:datas.gyType};
             this.$router.push({
               path: "./detail/",
               query: {p: this.$utils.encrypt(JSON.stringify(p))},
@@ -296,7 +296,7 @@
           this.$message.info("无权操作下级单位月报！");
           return false;
         }
-        let p = {actpoint: "edit", statId: this.multipleSelection[0].uuid,reportDate: this.multipleSelection[0].reportDate,stauts:this.multipleSelection[0].stauts,createOrgCode:this.multipleSelection[0].createOrgCode};
+        let p = {'gyType': this.userdata.managerOrgList[0].principalCode||'2',actpoint: "edit", statId: this.multipleSelection[0].uuid,reportDate: this.multipleSelection[0].reportDate,stauts:this.multipleSelection[0].stauts,createOrgCode:this.multipleSelection[0].createOrgCode};
         this.$router.push({
           path: "./detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},

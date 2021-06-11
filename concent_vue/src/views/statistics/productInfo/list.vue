@@ -104,11 +104,33 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
+          width="150"
           align="center"
           label="启用状态"
           prop="venabled"
 
           show-overflow-tooltip>
+          <template slot="header" slot-scope="scope">
+            <span>启用状态</span>
+            <el-select
+              class="list-search-picker"
+              clearable
+              filterable
+              placeholder="请选择"
+              size="mini"
+              v-model="searchform.venabled"
+            >
+              <el-option
+                label="启用"
+                value="1"
+              ></el-option>
+              <el-option
+                label="禁用"
+                value="0"
+              ></el-option>
+            </el-select>
+          </template>
+          <template slot-scope="scope">{{scope.row.venabled=='1'?'启用':scope.row.venabled=='0'?'禁用':''}}</template>
           <!--<template slot-scope="scope">-->
               <!--{{scope.row.bidFlowStatus==1?'草稿':scope.row.bidFlowStatus==2?'审核中':scope.row.bidFlowStatus==3?'审核通过':scope.row.bidFlowStatus==4?'审核退回':'待登记'}}-->
           <!--</template>-->
@@ -143,6 +165,33 @@
            <!--<template slot-scope="scope">{{-->
             <!--scope.row.endTime | dateformat-->
           <!--}}</template>-->
+        </el-table-column>
+        <el-table-column
+          align="center"
+          label="是否包含增值税"
+          prop="vincludevat"
+          show-overflow-tooltip>
+          <template slot-scope="scope">{{scope.row.vincludevat=='1'?'包含':scope.row.vincludevat=='0'?'不包含':''}}</template>
+        </el-table-column>
+        <el-table-column
+          align="center"
+          label="新签是否显示"
+          prop="isXqShow"
+          show-overflow-tooltip>
+          <template slot-scope="scope">{{scope.row.isXqShow=='1'?'是':scope.row.isXqShow=='0'?'否':''}}</template>
+        </el-table-column>
+        <el-table-column
+          align="center"
+          label="产值是否填月报"
+          prop="isTb"
+          show-overflow-tooltip>
+          <template slot-scope="scope">{{scope.row.isTb=='1'?'是':scope.row.isTb=='0'?'否':''}}</template>
+        </el-table-column>
+        <el-table-column
+          align="center"
+          label="产品类型"
+          prop="productTypeName"
+          show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           align="center"
@@ -181,11 +230,11 @@
           <el-select v-model="form.venabled" placeholder="请选择启用状态" :disabled="look">
             <el-option
               label="启用"
-              value="启用"
+              value="1"
             ></el-option>
             <el-option
               label="禁用"
-              value="禁用"
+              value="0"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -198,6 +247,59 @@
             <el-option
               label="境外"
               value="境外"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="是否包含增值税:">
+          <el-select v-model="form.vincludevat" placeholder="请选择" :disabled="look">
+            <el-option
+              label="包含"
+              value="1"
+            ></el-option>
+            <el-option
+              label="不包含"
+              value="0"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="新签是否显示:">
+          <el-select v-model="form.isXqShow" placeholder="请选择" :disabled="look">
+            <el-option
+              label="是"
+              value="1"
+            ></el-option>
+            <el-option
+              label="否"
+              value="0"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="产值是否填月报:">
+          <el-select v-model="form.isTb" placeholder="请选择" :disabled="look">
+            <el-option
+              label="是"
+              value="1"
+            ></el-option>
+            <el-option
+              label="否"
+              value="0"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="产品类型:">
+          <el-select v-model="form.productTypeId"
+                     @change="getName(
+                          form.productTypeId,
+                          measureUnit,
+                          'prodectTypeName',
+                          'prodectTypeCode'
+                        )"
+                     placeholder="请选择计量单位" :disabled="look">
+            <el-option
+              :key="index"
+              :label="item.detailName"
+              :value="item.id"
+              v-for="(item, index) in measureUnit"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -255,7 +357,9 @@ export default {
         vcode: "",
         vname: "",
         vmeasure: "",
-        vjnw:''
+        vjnw:'',
+        venabled:'1',
+        isTb:'1'
       },
       multipleSelection: [],
     };
@@ -269,6 +373,20 @@ export default {
       },
 },
   methods: {
+    //获取下拉框id和name的公共方法
+    getName(id, list, name,code) {
+      if(id){
+        this.$forceUpdate();
+        this.form[name] = list.find(
+          (item) => item.id == id
+        ).detailName;
+        this.form[code] = list.find(
+          (item) => item.id == id
+        ).detailCode;
+        console.log(this.form[name]);
+        console.log(this.form[code]);
+      }
+    },
     //保存
     sub(formName){
       this.$refs[formName].validate((valid) => {
@@ -367,7 +485,13 @@ export default {
         venabled: row.venabled,
         vjnw:  row.vjnw,
         vsort:  row.vsort,
-        vremark: row.vremark
+        vremark: row.vremark,
+        vincludevat: row.vincludevat,
+        isXqShow:  row.isXqShow,
+        isTb:  row.isTb,
+        productTypeId: row.productTypeId,
+        prodectTypeCode: row.prodectTypeCode,
+        prodectTypeName: row.prodectTypeName
       };
       this.dialogFormVisible=true;
 
@@ -428,7 +552,7 @@ export default {
   cursor: pointer;
 }
   .proForm >>>.el-form-item__label{
-    width:100px;
+    width:120px;
     text-align: right;
   }
 .proForm >>>.el-form-item__content{

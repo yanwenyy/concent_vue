@@ -225,7 +225,7 @@
                   class="listTabel"
                   :resizable="false"
                   label="单位名称"
-                  prop="amountCompanyName"
+                  prop="companyBelongName"
                   align="center"
                   show-overflow-tooltip
                 >
@@ -252,7 +252,7 @@
                   :resizable="false"
                   label="工程合同额"
                   align="center"
-                  prop="contractAmountEngine"
+                  prop="contractMoney"
                   show-overflow-tooltip
                   width="150"
                 >
@@ -297,8 +297,9 @@
                   width="150"
                 >
                   <template slot-scope="scope">
+                    <!--scope.row.monthValue = scope.row.monthValue.replace(/[^\-?\d.]/g,'','').replace( /([0-9]+\.[0-9]{2})[0-9]*/,'$1')-->
                     <el-input
-                      @input="setCcsjYmjd(detailform.kc_list,detailform.sumByMon_0,'categorySecondName',scope.$index)"
+                      @input="scope.row.monthValue = scope.row.monthValue.replace(/[^\d.]/g,'','').replace( /([0-9]+\.[0-9]{2})[0-9]*/,'$1'),setCcsjYmjd(detailform.kc_list,detailform.sumByMon_0,'categorySecondName',scope.$index)"
                       :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                       clearable
                       v-model="scope.row.monthValue"/>
@@ -380,7 +381,7 @@
       </el-tab-pane>
       <el-tab-pane label="工业制造板块">
         <el-tabs type="border-card">
-          <el-tab-pane label="产值">
+          <el-tab-pane v-if="p.gyType=='1'" label="产值">
             <div class="detailBox">
               <el-form
                 :inline="false"
@@ -569,7 +570,7 @@
               </el-form>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="主要项目管理">
+          <el-tab-pane v-if="p.gyType=='1'" label="主要项目管理">
             <div class="table-div">
               <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
                 <el-form-item label="项目名称:">
@@ -740,13 +741,13 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'industry')"
+                        @input="isFloor(scope.row.industry,scope.$index,detailform.gy_list,'industry'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'industry')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.industry"/>
                       <el-input
-                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'overseasIndustry')"
+                        @input="isFloor(scope.row.overseasIndustry,scope.$index,detailform.gy_list,'overseasIndustry'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'overseasIndustry')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
@@ -764,13 +765,13 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'equipmentManufacturin')"
+                        @input="isFloor(scope.row.equipmentManufacturin,scope.$index,detailform.gy_list,'equipmentManufacturin'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'equipmentManufacturin')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.equipmentManufacturin"/>
                       <el-input
-                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'equipmentManufacturinHw')"
+                        @input="isFloor(scope.row.equipmentManufacturinHw,scope.$index,detailform.gy_list,'equipmentManufacturinHw'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'equipmentManufacturinHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
@@ -788,13 +789,13 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'componentManufacturin')"
+                        @input="isFloor(scope.row.componentManufacturin,scope.$index,detailform.gy_list,'componentManufacturin'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'componentManufacturin')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.componentManufacturin"/>
                       <el-input
-                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'componentManufacturinHw')"
+                        @input="isFloor(scope.row.componentManufacturinHw,scope.$index,detailform.gy_list,'componentManufacturinHw'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'componentManufacturinHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
@@ -812,13 +813,13 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'otherIndustrayProduct')"
+                        @input="isFloor(scope.row.otherIndustrayProduct,scope.$index,detailform.gy_list,'otherIndustrayProduct'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'otherIndustrayProduct')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.otherIndustrayProduct"/>
                       <el-input
-                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'otherIndustrayProductHw')"
+                        @input="isFloor(scope.row.otherIndustrayProductHw,scope.$index,detailform.gy_list,'otherIndustrayProductHw'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'otherIndustrayProductHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
@@ -829,13 +830,220 @@
               </el-table>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="主要产品管理">
+          <el-tab-pane v-if="p.gyType=='2'" label="产值">
+            <div class="detailBox">
+              <el-form
+                :inline="false"
+                :model="detailform"
+                :rules="rules"
+                class="gcform"
+                ref="detailform"
+              >
+                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                  <span>合计:</span>
+                </p>
+                <el-form-item
+                  label="工业总产值(万元):"
+                >
+                  <el-input
+                    disabled
+                    :value="(detailform.sumByMon_cp.ngyvalueJn||0)+(detailform.sumByMon_cp.ngyvalueJw||0)"/>
+                </el-form-item>
+                <el-form-item
+                  label="工业总产值年累(万元):"
+                >
+                  <el-input
+                    disabled
+                    :value="(detailform.sumByMon_cp.ngyvalueJn||0)+(detailform.sumByMon_cp.ngyvalueJw||0)+(detailform.sumByYear_cp.ngyvalueJn||0)+(detailform.sumByYear_cp.ngyvalueJw||0)"/>
+                </el-form-item>
+                <el-form-item
+                  label="装备制造(万元):"
+                >
+                  <el-input
+                    disabled
+                    :value="(detailform.sumByMon_cp.nzbsbvalueJn||0)+(detailform.sumByMon_cp.nzbsbvalueJw||0)"/>
+                </el-form-item>
+                <el-form-item
+                  label="装备制造年累(万元):"
+                >
+                  <el-input
+                    disabled
+                    :value="(detailform.sumByMon_cp.nzbsbvalueJn||0)+(detailform.sumByMon_cp.nzbsbvalueJw||0)+(detailform.sumByYear_cp.nzbsbvalueJn||0)+(detailform.sumByYear_cp.nzbsbvalueJw||0)"/>
+                </el-form-item>
+                <el-form-item
+                  label="预构件(万元):"
+                >
+                  <el-input
+                    disabled
+                    :value="(detailform.sumByMon_cp.nygjvalueJn||0)+(detailform.sumByMon_cp.nygjvalueJw||0)"/>
+                </el-form-item>
+                <el-form-item
+                  label="预构件年累(万元):"
+                >
+                  <el-input
+                    disabled
+                    :value="(detailform.sumByMon_cp.nygjvalueJn||0)+(detailform.sumByMon_cp.nygjvalueJw||0)+(detailform.sumByYear_cp.nygjvalueJn||0)+(detailform.sumByYear_cp.nygjvalueJw||0)"/>
+                </el-form-item>
+                <el-form-item
+                  label="其他工业产品(万元):"
+                >
+                  <el-input
+                    disabled
+                    :value="(detailform.sumByMon_cp.nqigyvalueJn||0)+(detailform.sumByMon_cp.nqigyvalueJw||0)"/>
+                </el-form-item>
+                <el-form-item
+                  label="其他工业产品年累(万元):"
+                >
+                  <el-input
+                    disabled
+                    :value="(detailform.sumByMon_cp.nqigyvalueJn||0)+(detailform.sumByMon_cp.nqigyvalueJw||0)+(detailform.sumByYear_cp.nqigyvalueJn||0)+(detailform.sumByYear_cp.nqigyvalueJw||0)"/>
+                </el-form-item>
+                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                  <span>境内数据: </span>
+                </p>
+                <el-form-item
+                  label="工业总产值(万元):"
+                >
+                  <el-input
+                    disabled
+                    v-model="detailform.sumByMon_cp.ngyvalueJn"/>
+                </el-form-item>
+                <el-form-item
+                  label="工业总产值年累(万元):"
+                >
+                  <el-input
+                    disabled
+                    :value="(detailform.sumByMon_cp.ngyvalueJn||0)+(detailform.sumByYear_cp.ngyvalueJn||0)"/>
+                </el-form-item>
+                <el-form-item
+                  label="装备制造(万元):"
+                >
+                  <el-input
+                    disabled
+                    v-model="detailform.sumByMon_cp.nzbsbvalueJn"/>
+                </el-form-item>
+                <el-form-item
+                  label="装备制造年累(万元):"
+                >
+                  <el-input
+                    disabled
+                    :value="(detailform.sumByMon_cp.nzbsbvalueJn||0)+(detailform.sumByYear_cp.nzbsbvalueJn||0)"/>
+                </el-form-item>
+                <el-form-item
+                  label="预构件(万元):"
+                >
+                  <el-input
+                    disabled
+                    v-model="detailform.sumByMon_cp.nygjvalueJn"/>
+                </el-form-item>
+                <el-form-item
+                  label="预构件年累(万元):"
+                >
+                  <el-input
+                    disabled
+                    :value="(detailform.sumByMon_cp.nygjvalueJn||0)+(detailform.sumByYear_cp.nygjvalueJn||0)"/>
+                </el-form-item>
+                <el-form-item
+                  label="其他工业产品(万元):"
+                >
+                  <el-input
+                    disabled
+                    v-model="detailform.sumByMon_cp.nqigyvalueJn"/>
+                </el-form-item>
+                <el-form-item
+                  label="其他工业产品年累(万元):"
+                >
+                  <el-input
+                    disabled
+                    :value="(detailform.sumByMon_cp.nqigyvalueJn||0)+(detailform.sumByYear_cp.nqigyvalueJn||0)"/>
+                </el-form-item>
+                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                  <span>境外数据: </span>
+                </p>
+                <el-form-item
+                  label="工业总产值(万元):"
+                >
+                  <el-input
+                    disabled
+                    v-model="detailform.sumByMon_cp.nqigyvalueJw"/>
+                </el-form-item>
+                <el-form-item
+                  label="工业总产值年累(万元):"
+                >
+                  <el-input
+                    disabled
+                    :value="(detailform.sumByMon_cp.nqigyvalueJw||0)+(detailform.sumByYear_cp.nqigyvalueJw||0)"/>
+                </el-form-item>
+                <el-form-item
+                  label="装备制造(万元):"
+                >
+                  <el-input
+                    disabled
+                    v-model="detailform.sumByMon_cp.nzbsbvalueJw"/>
+                </el-form-item>
+                <el-form-item
+                  label="装备制造年累(万元):"
+                >
+                  <el-input
+                    disabled
+                    :value="(detailform.sumByMon_cp.nzbsbvalueJw||0)+(detailform.sumByYear_cp.nzbsbvalueJw||0)"/>
+                </el-form-item>
+                <el-form-item
+                  label="预构件(万元):"
+                >
+                  <el-input
+                    disabled
+                    v-model="detailform.sumByMon_cp.nygjvalueJw"/>
+                </el-form-item>
+                <el-form-item
+                  label="预构件年累(万元):"
+                >
+                  <el-input
+                    disabled
+                    :value="(detailform.sumByMon_cp.nygjvalueJw||0)+(detailform.sumByYear_cp.nygjvalueJw||0)"/>
+                </el-form-item>
+                <el-form-item
+                  label="其他工业产品(万元):"
+                >
+                  <el-input
+                    disabled
+                    v-model="detailform.sumByMon_cp.nqigyvalueJw"/>
+                </el-form-item>
+                <el-form-item
+                  label="其他工业产品年累(万元):"
+                >
+                  <el-input
+                    disabled
+                    :value="(detailform.sumByMon_cp.nqigyvalueJw||0)+(detailform.sumByYear_cp.nqigyvalueJw||0)"/>
+                </el-form-item>
+              </el-form>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane v-if="p.gyType=='2'" label="主要产品管理">
             <div class="table-div">
               <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
-                <el-button @click="exportdata('industry','工业制造板块')" type="primary" plain>导出</el-button>
+                <el-button @click="exportdata('product','工业制造板块')" type="primary" plain>导出</el-button>
+                <el-upload
+                  class="inline-block"
+                  :action="'/api/statistics/unProjectReport/import/productDetail'"
+                  :on-success="importData"
+                  :headers="{'Authorization':Authorization}"
+                  :data="{'statId':p.statId}"
+                  :on-error="importData"
+                  :show-file-list="false"
+                  accept=".xls,.xlsx"
+                  multiple
+                >
+                  <el-button
+                    type="primary"
+                    plain
+                    class="new-add-btn"
+                  ><i class="el-icon-download"></i>导入
+                  </el-button>
+                </el-upload>
               </el-form>
               <el-table
-                :data="detailform.gy_list"
+                :data="detailform.gycp_list"
                 :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -863,7 +1071,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="单位名称"
-                    prop="projectName"
+                    prop="createOrgName"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -872,7 +1080,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="产品编号"
-                    prop="contractNumber"
+                    prop="vcode"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -881,7 +1089,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="产品名称"
-                    prop="companyBelongName"
+                    prop="vname"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -890,7 +1098,7 @@
                     :resizable="false"
                     label="计量单位"
                     align="center"
-                    prop="measureUnit"
+                    prop="vmeasure"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -902,7 +1110,7 @@
                     :resizable="false"
                     label="产品数量"
                     align="center"
-                    prop="measureUnit"
+                    prop="ncount"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -917,17 +1125,17 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'industry')"
-                        v-if="scope.row.country=='01'"
+                        @input="isFloor(scope.row.ngyvalueJn,scope.$index,detailform.gycp_list,'ngyvalueJn'),getGyzzCz(detailform.gycp_list,detailform.sumByMon_cp,'ngyvalueJn')"
+                        v-if="scope.row.vjnw=='境内'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
-                        v-model="scope.row.industry"/>
+                        v-model="scope.row.ngyvalueJn"/>
                       <el-input
-                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'overseasIndustry')"
-                        v-if="scope.row.country=='02'"
+                        @input="isFloor(scope.row.nygjvalueJw,scope.$index,detailform.gycp_list,'nygjvalueJw'),getGyzzCz(detailform.gycp_list,detailform.sumByMon_cp,'nygjvalueJw')"
+                        v-if="scope.row.vjnw=='境外'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
-                        v-model="scope.row.overseasIndustry"/>
+                        v-model="scope.row.nygjvalueJw"/>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -941,17 +1149,17 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'equipmentManufacturin')"
-                        v-if="scope.row.country=='01'"
+                        @input="isFloor(scope.row.nzbsbvalueJn,scope.$index,detailform.gycp_list,'nzbsbvalueJn'),getGyzzCz(detailform.gycp_list,detailform.sumByMon_cp,'nzbsbvalueJn')"
+                        v-if="scope.row.vjnw=='境内'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
-                        v-model="scope.row.equipmentManufacturin"/>
+                        v-model="scope.row.nzbsbvalueJn"/>
                       <el-input
-                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'equipmentManufacturinHw')"
-                        v-if="scope.row.country=='02'"
+                        @input="isFloor(scope.row.nzbsbvalueJw,scope.$index,detailform.gycp_list,'nzbsbvalueJw'),getGyzzCz(detailform.gycp_list,detailform.sumByMon_cp,'nzbsbvalueJw')"
+                        v-if="scope.row.vjnw=='境外'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
-                        v-model="scope.row.equipmentManufacturinHw"/>
+                        v-model="scope.row.nzbsbvalueJw"/>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -965,17 +1173,17 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'componentManufacturin')"
-                        v-if="scope.row.country=='01'"
+                        @input="isFloor(scope.row.nygjvalueJn,scope.$index,detailform.gycp_list,'nygjvalueJn'),getGyzzCz(detailform.gycp_list,detailform.sumByMon_cp,'nygjvalueJn')"
+                        v-if="scope.row.vjnw=='境内'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
-                        v-model="scope.row.componentManufacturin"/>
+                        v-model="scope.row.nygjvalueJn"/>
                       <el-input
-                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'componentManufacturinHw')"
-                        v-if="scope.row.country=='02'"
+                        @input="isFloor(scope.row.nygjvalueJw,scope.$index,detailform.gycp_list,'nygjvalueJw'),getGyzzCz(detailform.gycp_list,detailform.sumByMon_cp,'nygjvalueJw')"
+                        v-if="scope.row.vjnw=='境外'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
-                        v-model="scope.row.componentManufacturinHw"/>
+                        v-model="scope.row.nygjvalueJw"/>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -989,29 +1197,29 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'otherIndustrayProduct')"
-                        v-if="scope.row.country=='01'"
+                        @input="isFloor(scope.row.nqigyvalueJn,scope.$index,detailform.gycp_list,'nqigyvalueJn'),getGyzzCz(detailform.gycp_list,detailform.sumByMon_cp,'nqigyvalueJn')"
+                        v-if="scope.row.vjnw=='境内'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
-                        v-model="scope.row.otherIndustrayProduct"/>
+                        v-model="scope.row.nqigyvalueJn"/>
                       <el-input
-                        @input="getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'otherIndustrayProductHw')"
-                        v-if="scope.row.country=='02'"
+                        @input="isFloor(scope.row.nqigyvalueJw,scope.$index,detailform.gycp_list,'nqigyvalueJw'),getGyzzCz(detailform.gycp_list,detailform.sumByMon_cp,'nqigyvalueJw')"
+                        v-if="scope.row.vjnw=='境外'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
-                        v-model="scope.row.otherIndustrayProductHw"/>
+                        v-model="scope.row.nqigyvalueJw"/>
                     </template>
                   </el-table-column>
                   <el-table-column
                     :resizable="false"
                     label="境/内外"
                     align="center"
-                    prop="measureUnit"
+                    prop="vjnw"
                     show-overflow-tooltip
                   >
-                    <template slot-scope="scope">
-                      {{scope.row.country=='01'?'境内':'境外'}}
-                    </template>
+                    <!--<template slot-scope="scope">-->
+                      <!--{{scope.row.country=='01'?'境内':'境外'}}-->
+                    <!--</template>-->
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
@@ -1027,7 +1235,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="增值税"
-                    prop="vat"
+                    prop="nvat"
                     align="center"
                     show-overflow-tooltip
                   >
@@ -1275,13 +1483,13 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.wz_list,detailform.sumByMon_2,'sale')"
+                        @input="isFloor(scope.row.sale,scope.$index,detailform.wz_list,'sale'),getGyzzCz(detailform.wz_list,detailform.sumByMon_2,'sale')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.sale"/>
                       <el-input
-                        @input="getGyzzCz(detailform.wz_list,detailform.sumByMon_2,'overseasSale')"
+                        @input="isFloor(scope.row.overseasSale,scope.$index,detailform.wz_list,'overseasSale'),getGyzzCz(detailform.wz_list,detailform.sumByMon_2,'overseasSale')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
@@ -1659,13 +1867,13 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'income')"
+                        @input="isFloor(scope.row.income,scope.$index,detailform.fdc_list,'income'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'income')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.income"/>
                       <el-input
-                        @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'overseasIncome')"
+                        @input="isFloor(scope.row.overseasIncome,scope.$index,detailform.fdc_list,'overseasIncome'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'overseasIncome')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
@@ -1683,13 +1891,13 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'inRevenue')"
+                        @input="isFloor(scope.row.inRevenue,scope.$index,detailform.fdc_list,'inRevenue'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'inRevenue')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.inRevenue"/>
                       <el-input
-                        @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'inRevenueHw')"
+                        @input="isFloor(scope.row.inRevenueHw,scope.$index,detailform.fdc_list,'inRevenueHw'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'inRevenueHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
@@ -1707,13 +1915,13 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenue')"
+                        @input="isFloor(scope.row.offRevenue,scope.$index,detailform.fdc_list,'offRevenue'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenue')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.offRevenue"/>
                       <el-input
-                        @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenueHw')"
+                        @input="isFloor(scope.row.offRevenueHw,scope.$index,detailform.fdc_list,'offRevenueHw'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenueHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
@@ -1731,13 +1939,13 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenueNon')"
+                        @input="isFloor(scope.row.offRevenueNon,scope.$index,detailform.fdc_list,'offRevenueNon'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenueNon')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.offRevenueNon"/>
                       <el-input
-                        @input="getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenueNonHw')"
+                        @input="isFloor(scope.row.offRevenueNonHw,scope.$index,detailform.fdc_list,'offRevenueNonHw'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenueNonHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
@@ -2106,13 +2314,13 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'finance')"
+                        @input="isFloor(scope.row.finance,scope.$index,detailform.jrbx_list,'finance'),getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'finance')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.finance"/>
                       <el-input
-                        @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'overseasFinance')"
+                        @input="isFloor(scope.row.overseasFinance,scope.$index,detailform.jrbx_list,'overseasFinance'),getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'overseasFinance')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
@@ -2130,13 +2338,13 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'secure')"
+                        @input="isFloor(scope.row.secure,scope.$index,detailform.jrbx_list,'secure'),getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'secure')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.secure"/>
                       <el-input
-                        @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'overseasSecure')"
+                        @input="isFloor(scope.row.overseasSecure,scope.$index,detailform.jrbx_list,'overseasSecure'),getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'overseasSecure')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
@@ -2154,13 +2362,13 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'otherFinance')"
+                        @input="isFloor(scope.row.otherFinance,scope.$index,detailform.jrbx_list,'otherFinance'),getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'otherFinance')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.otherFinance"/>
                       <el-input
-                        @input="getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'otherFinanceHw')"
+                        @input="isFloor(scope.row.otherFinanceHw,scope.$index,detailform.jrbx_list,'otherFinanceHw'),getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'otherFinanceHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
@@ -2571,13 +2779,13 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'engineeringOperation')"
+                        @input="isFloor(scope.row.engineeringOperation,scope.$index,detailform.yy_list,'engineeringOperation'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'engineeringOperation')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.engineeringOperation"/>
                       <el-input
-                        @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'engineeringOperationHw')"
+                        @input="isFloor(scope.row.engineeringOperationHw,scope.$index,detailform.yy_list,'engineeringOperationHw'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'engineeringOperationHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
@@ -2595,13 +2803,13 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'informationOperation')"
+                        @input="isFloor(scope.row.informationOperation,scope.$index,detailform.yy_list,'informationOperation'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'informationOperation')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.informationOperation"/>
                       <el-input
-                        @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'informationOperationHw')"
+                        @input="isFloor(scope.row.informationOperationHw,scope.$index,detailform.yy_list,'informationOperationHw'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'informationOperationHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
@@ -2619,13 +2827,13 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'estateManagement')"
+                        @input="isFloor(scope.row.estateManagement,scope.$index,detailform.yy_list,'estateManagement'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'estateManagement')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.estateManagement"/>
                       <el-input
-                        @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'estateManagementHw')"
+                        @input="isFloor(scope.row.estateManagementHw,scope.$index,detailform.yy_list,'estateManagementHw'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'estateManagementHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
@@ -2643,13 +2851,13 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'otherOperation')"
+                        @input="isFloor(scope.row.otherOperation,scope.$index,detailform.yy_list,'otherOperation'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'otherOperation')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.otherOperation"/>
                       <el-input
-                        @input="getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'overseasOtherOperation')"
+                        @input="isFloor(scope.row.overseasOtherOperation,scope.$index,detailform.yy_list,'overseasOtherOperation'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'overseasOtherOperation')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
@@ -3183,13 +3391,13 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'equipmentLeasing')"
+                        @input="isFloor(scope.row.equipmentLeasing,scope.$index,detailform.qt_list,'equipmentLeasing'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'equipmentLeasing')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.equipmentLeasing"/>
                       <el-input
-                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'equipmentLeasingHw')"
+                        @input="isFloor(scope.row.equipmentLeasingHw,scope.$index,detailform.qt_list,'equipmentLeasingHw'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'equipmentLeasingHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
@@ -3207,13 +3415,13 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'transportation')"
+                        @input="isFloor(scope.row.transportation,scope.$index,detailform.qt_list,'transportation'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'transportation')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.transportation"/>
                       <el-input
-                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'transportationHw')"
+                        @input="isFloor(scope.row.transportationHw,scope.$index,detailform.qt_list,'transportationHw'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'transportationHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
@@ -3231,13 +3439,13 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'accommodationCatering')"
+                        @input="isFloor(scope.row.accommodationCatering,scope.$index,detailform.qt_list,'accommodationCatering'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'accommodationCatering')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.accommodationCatering"/>
                       <el-input
-                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'accommodationCateringHw')"
+                        @input="isFloor(scope.row.accommodationCateringHw,scope.$index,detailform.qt_list,'accommodationCateringHw'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'accommodationCateringHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
@@ -3255,13 +3463,13 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'educationTraining')"
+                        @input="isFloor(scope.row.educationTraining,scope.$index,detailform.qt_list,'educationTraining'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'educationTraining')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.educationTraining"/>
                       <el-input
-                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'educationTrainingHw')"
+                        @input="isFloor(scope.row.educationTrainingHw,scope.$index,detailform.qt_list,'educationTrainingHw'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'educationTrainingHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
@@ -3279,13 +3487,13 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'informationConstruction')"
+                        @input="isFloor(scope.row.informationConstruction,scope.$index,detailform.qt_list,'informationConstruction'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'informationConstruction')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.informationConstruction"/>
                       <el-input
-                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'informationConstructionHw')"
+                        @input="isFloor(scope.row.informationConstructionHw,scope.$index,detailform.qt_list,'informationConstructionHw'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'informationConstructionHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
@@ -3303,13 +3511,13 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'leaseHouses')"
+                        @input="isFloor(scope.row.leaseHouses,scope.$index,detailform.qt_list,'leaseHouses'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'leaseHouses')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.leaseHouses"/>
                       <el-input
-                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'leaseHousesHw')"
+                        @input="isFloor(scope.row.leaseHousesHw,scope.$index,detailform.qt_list,'leaseHousesHw'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'leaseHousesHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
@@ -3327,13 +3535,13 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'otherProject')"
+                        @input="isFloor(scope.row.otherProject,scope.$index,detailform.qt_list,'otherProject'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'otherProject')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.otherProject"/>
                       <el-input
-                        @input="getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'otherProjectHw')"
+                        @input="isFloor(scope.row.otherProjectHw,scope.$index,detailform.qt_list,'otherProjectHw'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'otherProjectHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
@@ -3407,6 +3615,9 @@
             type:'industry',
             projectName:'',
           },
+          product:{
+            type:'product'
+          },
           material:{
             type:'material',
             projectName:'',
@@ -3435,6 +3646,9 @@
           gy_list:[],
           sumByMon_1:{},
           sumByYear_1:{},
+          gycp_list:[],
+          sumByMon_cp:{},
+          sumByYear_cp:{},
           jrbx_list:[],
           sumByMon_4:{},
           sumByYear_4:{},
@@ -3550,6 +3764,21 @@
       // eslint-disable-next-line no-unde
     },
     methods: {
+      //输入正负数,保留4位小数
+      isFloor(val,index,list,name){
+        var t = val.charAt(0);
+        val = val.replace(".", "$#$")//把第一个字符'.'替换成'$#$'
+          .replace(/\./g, "")//把其余的字符'.'替换为空
+          .replace("$#$", ".")//把字符'$#$'替换回原来的'.'
+          .replace(/[^\d.]/g, "")//只能输入数字和'.'
+          .replace(/^\./g, "")//不能以'.'开头
+          .replace( /([0-9]+\.[0-9]{4})[0-9]*/,"$1");//只保留4位小数
+        if (t == '-') {
+          val = '-' + val;
+        }
+        list[index][name]=val;
+        this.$forceUpdate();
+      },
       addNum(){
         this.detailform.sumByMon_1.industry=Number(this.detailform.sumByMon_1.industry||0)+1;
         this.$forceUpdate();
@@ -3810,6 +4039,7 @@
         }else{
           url="/api/statistics/unProjectReport/process/start"
         }
+        this.detailform.gyType=this.p.gyType;
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
@@ -3902,9 +4132,9 @@
       getDetail() {
         var data={};
         if(this.p.actpoint=='add'){
-          data={reportDate: this.p.reportDate,isAdd:'0',uuid:this.p.statId}
+          data={reportDate: this.p.reportDate,isAdd:'0',uuid:this.p.statId,gyType:this.p.gyType}
         }else if(this.p.actpoint=='edit'||this.p.actpoint=='look'){
-          data={statId: this.p.statId,isAdd:this.p.actpoint=='edit'?'1':'3',reportDate:this.p.reportDate,createOrgCode:this.p.createOrgCode,uuid:this.p.statId}
+          data={statId: this.p.statId,isAdd:this.p.actpoint=='edit'?'1':'3',reportDate:this.p.reportDate,createOrgCode:this.p.createOrgCode,uuid:this.p.statId,gyType:this.p.gyType}
         }else if(this.p.actpoint=='task'){
           data={uuid: this.p.instid,isAdd:'2'}
         }
@@ -3917,6 +4147,8 @@
           this.detailform.sumByYear_0=datas.sumByYear_0||{};
           this.detailform.sumByMon_1=datas.sumByMon_1||{};
           this.detailform.sumByYear_1=datas.sumByYear_1||{};
+          this.detailform.sumByMon_cp=datas.sumByMon_cp||{};
+          this.detailform.sumByYear_cp=datas.sumByYear_cp||{};
           this.detailform.sumByMon_2=datas.sumByMon_2||{};
           this.detailform.sumByYear_2=datas.sumByYear_2||{};
           this.detailform.sumByMon_3=datas.sumByMon_3||{};
