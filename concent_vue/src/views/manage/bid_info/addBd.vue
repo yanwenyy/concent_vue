@@ -24,7 +24,7 @@
                   bdName,
                   'sectionName'
                 )"
-            :disabled="type === 'look'">
+            :disabled="type === 'look'||type=='eidtnew'">
           <el-option
               v-if="item.isTrack=='1'"
               :key="index"
@@ -103,7 +103,7 @@
           <el-input v-model="detailForm.bidInfoSection.openBidPlaceName"
           placeholder="开标地点"
           clearable
-          :disabled="type === 'look'"
+          :disabled="type === 'look'||type=='eidtnew'"
           @clear="searchform.openBidPlaceId=''"
           >
           <el-button
@@ -121,13 +121,19 @@
             clearable
             type="date"
             value-format="timestamp"
-            :disabled="type === 'look'"
+            :disabled="type === 'look'||type=='eidtnew'"
             v-model="detailForm.bidInfoSection.dateOfBidOpeningName"
           >
           </el-date-picker>
         </el-form-item>
 
-        <el-form-item label="参与投标单位:" class="list-item">
+        <el-form-item label="参与投标单位:" class="list-item"
+                prop="bidInfoSection.participatingUnitsName"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }">
           <el-input  placeholder="请输入内容" v-model="detailForm.bidInfoSection.participatingUnitsName" class="input-with-select" :disabled="type === 'look'">
             <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('参与投标单位',detailForm.bidInfoSection.participatingUnitsId)" ></el-button>
           </el-input>
@@ -184,11 +190,23 @@
           <!-- <el-input v-model="detailForm.bidInfoSection.tenderRate" placeholder="投标费率(百分比)" clearable></el-input> -->
         </el-form-item>
           <br>
-        <el-form-item label="项目经理:" class="list-item">
+        <el-form-item label="项目经理:" class="list-item"
+                prop="bidInfoSection.projectManager"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }">
           <el-input v-model="detailForm.bidInfoSection.projectManager" placeholder="项目经理" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
 
-        <el-form-item label="项目副经理:" class="list-item">
+        <el-form-item label="项目副经理:" class="list-item"
+                prop="bidInfoSection.deputyProjectManager"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }">
           <el-input v-model="detailForm.bidInfoSection.deputyProjectManager	" placeholder="项目副经理" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
 
@@ -205,11 +223,23 @@
           <!-- <el-input v-model="detailForm.bidInfoSection.riskFee" placeholder="风险费(万元)" clearable></el-input> -->
         </el-form-item>
         <br>
-        <el-form-item label="技术负责人:" class="list-item">
+        <el-form-item label="技术负责人:" class="list-item"
+                prop="bidInfoSection.technicalDirector"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }">
           <el-input v-model="detailForm.bidInfoSection.technicalDirector" placeholder="技术负责人" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
 
-        <el-form-item label="安全负责人:" class="list-item">
+        <el-form-item label="安全负责人:" class="list-item"
+                prop="bidInfoSection.personInChargeOfSafety"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }">
           <el-input v-model="detailForm.bidInfoSection.personInChargeOfSafety" placeholder="安全负责人" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
 
@@ -227,11 +257,23 @@
         </el-form-item>
           <br>
 
-        <el-form-item label="财务负责人:" class="list-item">
+        <el-form-item label="财务负责人:" class="list-item"
+                prop="bidInfoSection.personInChargeOfFinance"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }">
           <el-input v-model="detailForm.bidInfoSection.personInChargeOfFinance" placeholder="财务负责人" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
 
-        <el-form-item label="成本负责人:" class="list-item">
+        <el-form-item label="成本负责人:" class="list-item"
+                prop="bidInfoSection.costOwner"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }">
           <el-input v-model="detailForm.bidInfoSection.costOwner" placeholder="成本负责人" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
 
@@ -261,7 +303,7 @@
           </el-input>
         </el-form-item>
         <el-form-item label="编标拟配合单位:" class="list-item">
-          <el-input  placeholder="请输入内容" v-model="detailForm.bidInfoSection.orgName" class="input-with-select" :disabled="type === 'look'">
+          <el-input  placeholder="请输入内容" v-model="detailForm.bidInfoSection.orgName" class="input-with-select" :disabled="type === 'look'||type=='eidtnew'">
             <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('编标拟配合单位',detailForm.bidInfoSection.orgId)" ></el-button>
           </el-input>
           <!-- <el-input
@@ -283,7 +325,7 @@
           v-model="detailForm.bidInfoSection.otherUnitsNotListed"
           placeholder="其他未列出单位(单位与单位之间用英文逗号隔开)"
           clearable
-          :disabled="type === 'look'"
+          :disabled="type === 'look'||type=='eidtnew'"
           :autosize="{ minRows: 2, maxRows: 4}"
           type="textarea"></el-input>
         </el-form-item>
@@ -294,7 +336,7 @@
             @click="add('inside',1)"
             class="detatil-flie-btn"
             type="primary"
-            :disabled="type === 'look'"
+            :disabled="type === 'look'||type=='eidtnew'"
           >新增</el-button >
         </div>
         <el-table class="detailTable"
@@ -338,7 +380,7 @@
                   <!--v-for="(item, index) in nameList"-->
                 <!--&gt;</el-option>-->
               <!--</el-select>-->
-              <el-input  placeholder="请输入内容" v-model="scope.row.orgName" class="input-with-select" :disabled="type === 'look'">
+              <el-input  placeholder="请输入内容" v-model="scope.row.orgName" class="input-with-select" :disabled="type === 'look'||type=='eidtnew'">
                 <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('其他投标单位(系统内)',scope.row.orgId,false,scope.$index,detailForm.dataList)" ></el-button>
               </el-input>
             </template>
@@ -369,7 +411,7 @@
             show-overflow-tooltip
             align="center"
             width="100"
-            :disabled="type === 'look'"
+            :disabled="type === 'look'||type=='eidtnew'"
           >
             <template slot-scope="scope" >
               <el-link :underline="false" @click="del(scope.$index,'inside')" type="warning" :disabled="type === 'look'">删除</el-link>
@@ -383,7 +425,7 @@
             @click="add('outside',2)"
             class="detatil-flie-btn"
             type="primary"
-            :disabled="type === 'look'"
+            :disabled="type === 'look'||type=='eidtnew'"
           >新增</el-button >
         </div>
 
@@ -420,7 +462,7 @@
                     scope.$index
                   )
                 "
-                :disabled="type === 'look'"
+                :disabled="type === 'look'||type=='eidtnew'"
               >
                 <el-option
                   :key="index"
@@ -473,7 +515,7 @@
             show-overflow-tooltip
             align="center"
             width="100"
-            :disabled="type === 'look'"
+            :disabled="type === 'look'||type=='eidtnew'"
           >
             <template slot-scope="scope">
               <el-link :underline="false" @click="del(scope.$index,'outside')" type="warning" :disabled="type === 'look'">删除</el-link>
@@ -485,7 +527,7 @@
     </div>
     <div slot="footer" class="dialog-footer">
       <el-button @click="close">取消</el-button>
-      <el-button v-if="type!='look'" type="primary" @click="sub()">确定</el-button>
+      <el-button v-if="type!='look'&&type!='eidtnew'" type="primary" @click="sub()">确定</el-button>
       <el-button v-if="ifkb=='kbxq'" type="primary" @click="sub()">确定</el-button>
     </div>
 
@@ -847,4 +889,10 @@ p{
 >>>.el-table .cell.el-tooltip{
 padding: 10px 10px;
 }
+  >>>.el-form-item__label:before{
+    left:0!important;
+  }
+  >>>.is-required .el-form-item__label{
+    padding-left: 10px!important;
+  }
 </style>

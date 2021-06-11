@@ -1031,7 +1031,7 @@
                 <template slot-scope="scope">
                   <el-link
                     :underline="false"
-                    @click="openBd('look', scope.row, scope.$index)"
+                    @click="openBd('eidtnew', scope.row, scope.$index)"
                     type="warning"
                   >修改
                   </el-link>
