@@ -361,10 +361,10 @@
         //判断是否存在未上报的数据，如果存在就提示，不存在就创建
         if(this.data.length>0){
           for (var i=0; i < this.data.length; i++) {
-            if((this.data[i].flowStatus ==''||this.data[i].flowStatus ==null) && this.data[i].projectId!=this.userdata.managerOrgId){
+            if((this.data[i].flowStatus ==''||this.data[i].flowStatus ==null) && (this.data[i].projectId!=''||this.data[i].projectId!=null )){
               this.$message.info('该单位下存在未提交的月报,请提交该单位下所有项目月报后再进行尝试！');
               return false;
-            }else if(this.data[i].projectId==this.userdata.managerOrgId && this.data[i].reportType=='1'){
+            }else if((this.data[i].projectId==''|| this.data[i].projectId==null) && this.data[i].reportType=='1'){
               this.$message.info('该单位已在本月创建过月报请尝试修改或下月再进行尝试！');
               return false;
             };
@@ -416,7 +416,7 @@
       submit(){
         var dataInfo=[];
         this.data.forEach((item) => {
-          if(item.projectId!=this.userdata.managerOrgId){
+          if(item.projectId!=''&&item.projectId!=null ){
             dataInfo.push(item);
           }
         })
