@@ -909,6 +909,24 @@ export default {
 
               ]
             },
+            {
+              'name': '区域信息录入',
+              'path': '/manage/regionEntry/list',
+              'component': '/manage/regionEntry/list',
+              'iconCls': 'el-icon-edit',
+              'menushow': true,
+              'leaf': true,
+              'defaultpage': true
+            },
+            {
+              'name': '区域信息录入详情',
+              'path': '/manage/regionEntry/detail',
+              'component': '/manage/regionEntry/detail',
+              'iconCls': 'el-icon-printer',
+              'menushow': false,
+              'leaf': true,
+              'defaultpage': true
+            },
           ]
         },
         {

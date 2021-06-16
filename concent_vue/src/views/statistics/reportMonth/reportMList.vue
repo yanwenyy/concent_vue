@@ -328,7 +328,7 @@
        this.$http.post(
         url,
         JSON.stringify(params),
-        {useJson: true}
+        {useJson: true,timeout:600000}
        ).then((res) => {
             if (res.data.code === 200) {
             this.showYMDialog = false

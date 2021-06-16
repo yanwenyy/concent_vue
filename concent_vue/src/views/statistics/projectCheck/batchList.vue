@@ -186,7 +186,7 @@
           }).then(() => {
             this.$http
               .post(
-                "/api/statistics/projectMonthlyReport/Projectreport/process/allCommit",JSON.stringify(uuids), {useJson: true}
+                "/api/statistics/Projectcheck/process/allCommit",JSON.stringify(uuids), {useJson: true}
 
               )
               .then((res) => {
@@ -223,13 +223,7 @@
       },
       // 获取分页数据
       getData() {
-        var date = new Date();
-        var y = date.getFullYear();
-        var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
-        var time=y + '-' + m;
-        // var time="2004-06";
-        //this.searchform.reportYear= y;
-        this.searchform.fullDate=time;
+
         this.searchform.flowStatus="1";
 
         this.$http
@@ -257,6 +251,14 @@
       // var sj=new Date().toLocaleDateString().split('/');
       // sj[1]=sj[1]<10?'0'+sj[1]:sj[1];
       // this.searchform.fullDate=sj[0]+"-"+sj[1];
+
+      var date = new Date();
+      var y = date.getFullYear();
+      var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+      var time=y + '-' + m;
+      // var time="2004-06";
+      //this.searchform.reportYear= y;
+      this.searchform.fullDate=time;
       this.getData()
        this.userdata=JSON.parse(sessionStorage.getItem('userdata'))
     },

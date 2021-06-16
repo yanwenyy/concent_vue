@@ -426,7 +426,7 @@
         this.$http.post(
             url,
             JSON.stringify(tableData),
-            {useJson: true}
+            {useJson: true,timeout:600000}
         ).then((res) => {
           if (res.data.code === 200) {
             this.showTqDialog=false;
