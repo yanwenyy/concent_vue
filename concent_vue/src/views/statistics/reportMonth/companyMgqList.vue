@@ -450,7 +450,7 @@
         let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
           let a=this.userdata.managerOrgId;
-          if(item.projectId==this.userdata.managerOrgId){
+          if(item.projectId==null||item.projectId==''){
             if(item.flowStatus!='1'&&item.flowStatus!=null&&item.flowStatus!='4'){
               this.$message.info('只允许删除未上报的数据！')
               return itemStatus=false

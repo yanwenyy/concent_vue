@@ -454,7 +454,7 @@
         let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
           let a=this.userdata.managerOrgId;
-          if(item.projectId==this.userdata.managerOrgId){
+          if(item.projectId==null||item.projectId==''){
             if(item.flowStatus!='1'&&item.flowStatus!=null&&item.flowStatus!='4'){
             this.$message.info('只允许删除未上报的数据！');
             return itemStatus=false;
@@ -526,7 +526,7 @@
           this.$message.info('只允许修改草稿和审核驳回状态的数据', '提示');
           return false;
         }
-          if((this.multipleSelection[0].flowStatus==''||this.multipleSelection[0].flowStatus==null) && this.multipleSelection[0].projectId!=this.userdata.managerOrgId){
+          if((this.multipleSelection[0].flowStatus==''||this.multipleSelection[0].flowStatus==null) && (this.multipleSelection[0].projectId!=''||this.multipleSelection[0].projectId!=null)){
             this.$message.info('该项目月报还未进行创建，无法进行操作', '提示');
             return false;
           }else{

@@ -339,7 +339,7 @@
         //判断是否存在未上报的数据，如果存在就提示，不存在就创建
         if(this.tableData.length>0){
           for (var i=0; i < this.tableData.length; i++) {
-            if((this.tableData[i].flowStatus ==''||this.tableData[i].flowStatus ==null) && this.tableData[i].projectId!=this.userdata.managerOrgId){
+            if((this.tableData[i].flowStatus ==''||this.tableData[i].flowStatus ==null) && (this.tableData[i].projectId!=''||this.tableData[i].projectId!=null)){
               this.$message.info('该单位下存在未提交的月报,请提交该单位下所有项目月报后再进行尝试！')
               return false;
             }
