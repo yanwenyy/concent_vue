@@ -518,7 +518,7 @@
           this.$message.info('请选择一条数据，进行编辑', '提示');
           return false;
         }
-        if(this.multipleSelection[0].projectId!=this.userdata.managerOrgId){
+        if(this.multipleSelection[0].projectId!=''&&this.multipleSelection[0].projectId!=null){
           this.$message.info('不允许对下级进行任何操作', '提示');
           return false;
         }

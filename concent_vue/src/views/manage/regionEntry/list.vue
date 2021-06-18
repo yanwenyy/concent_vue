@@ -20,12 +20,12 @@
         ref="table"
         tooltip-effect="dark"
       >
-        <el-table-column
-          :width="50"
-          align="center"
-          show-overflow-tooltip
-          type="selection"
-        ></el-table-column>
+        <!--<el-table-column-->
+          <!--:width="50"-->
+          <!--align="center"-->
+          <!--show-overflow-tooltip-->
+          <!--type="selection"-->
+        <!--&gt;</el-table-column>-->
         <el-table-column
           :width="70"
           align="center"
@@ -36,14 +36,14 @@
         <el-table-column
           :width="500"
           label="区域指挥部名称"
-          prop="inforName"
+          prop="orgFullName"
           show-overflow-tooltip
         >
         </el-table-column>
         <el-table-column
           align="center"
           label="指挥长"
-          prop="inforCode"
+          prop="principalName"
           show-overflow-tooltip
         >
         </el-table-column>
@@ -90,24 +90,12 @@
       },
       // 查看
       rowshow(row) {
-        let p = {actpoint: "edit", instid: row.topOrgId};
+        let p = {actpoint: "edit", orgCode: row.orgCode};
         this.$router.push({
           path: "./detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       },
-      // 展示
-      show() {
-        if (this.multipleSelection.length !== 1) {
-          this.$message.info("请选择一条记录进行查看操作！");
-          return false;
-        }
-        let p = {actpoint: "edit", instid: this.multipleSelection[0].uuid};
-        this.$router.push({
-          path: "../detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
-      }, // list通用方法开始
       handleSizeChange(val) {
         this.searchform.size = val;
         this.getData();
@@ -145,9 +133,6 @@
       });
       },
 
-    },
-    created() {
-      this.getData();
     },
   };
 </script>

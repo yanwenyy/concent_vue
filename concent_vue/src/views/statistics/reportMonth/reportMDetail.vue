@@ -65,8 +65,8 @@
             <div class="detailBoxBG">
              <el-table
                     class="tableStyle"
-                    :max-height="$tableHeight"
-                    :height="$tableHeight"
+                    :height="tableHeight"
+                    :max-height="tableHeight"
                     :data="data"
                     :key="key"
                     :header-cell-style="{
@@ -222,8 +222,8 @@
             <div class="detailBoxBG">
               <el-table
                 class="tableStyle"
-                :max-height="$tableHeight"
-                :height="$tableHeight"
+                :height="tableHeight"
+                :max-height="tableHeight"
                 :data="nextData"
                 :header-cell-style="{
                     'text-align': 'center',
@@ -300,6 +300,7 @@
     },
     data() {
       return {
+        tableHeight:"100vh - 110px",
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         key:0,
         data:[],
@@ -384,7 +385,7 @@
         list[index].yearValue=list[index].oldYearValue?Number(list[index].oldYearValue)+Number(list[index].monthValue):list[index].monthValue;
         list[index].totalValue=list[index].oldTotalValue?Number(list[index].oldTotalValue)+Number(list[index].monthValue):list[index].monthValue;
         list[index].yearRate=list[index].yearValue&&list[index].yearPlan?(Number(list[index].yearValue)/Number(list[index].yearPlan)/ 100).toFixed(4):0;
-        list[index].monthRate=(Number(list[index].monthValue)/Number(list[index].monthPlan) / 100).toFixed(4);
+        list[index].monthRate=list[index].monthPlan>0?(Number(list[index].monthValue)/Number(list[index].monthPlan) / 100).toFixed(4):Number(list[index].monthValue)*100;
         list[index].totalRate=list[index].totalValue&&list[index].totalPlan?(Number(list[index].totalValue)/Number(list[index].totalPlan) / 100).toFixed(4):0;
         console.log(list[index])
         list.forEach((item,i)=>{
@@ -761,6 +762,10 @@
   }
   .sub-btn{
     right: 175px;
+  }
+  .tableStyle{
+    max-height: calc(100vh - 110px)!important;
+    overflow: auto;
   }
   /**/
 </style>

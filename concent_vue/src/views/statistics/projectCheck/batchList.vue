@@ -27,7 +27,7 @@
       </el-form>
     </div>
 
-    <div style="margin-top: 10px">
+    <div style="margin-top: -10px">
       <el-table
         class="tableStyle"
         :max-height="$tableHeight"

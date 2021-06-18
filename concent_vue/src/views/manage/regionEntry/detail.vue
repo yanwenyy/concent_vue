@@ -14,7 +14,7 @@
           ref="detailform"
         >
           <el-table
-            :data="detailform.topInfoSiteList"
+            :data="detailform.list"
             :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -36,14 +36,14 @@
               :resizable="false"
               label="指挥部名称"
               align="center"
-              prop="inforName"
+              prop="orgFullName"
             >
             </el-table-column>
 
             <el-table-column
               :resizable="false"
               label="管辖省市"
-              prop="contractAmount"
+              prop="governingProvinceName"
               align="center"
             >
             </el-table-column>
@@ -53,7 +53,7 @@
               <el-table-column
                 :resizable="false"
                 label="姓名"
-                prop="contractAmount"
+                prop="principalName"
                 align="center"
                 show-overflow-tooltip
               >
@@ -61,7 +61,7 @@
               <el-table-column
                 :resizable="false"
                 label="电话"
-                prop="contractAmount"
+                prop="contactNumber"
                 align="center"
                 show-overflow-tooltip
               >
@@ -69,7 +69,7 @@
               <el-table-column
                 :resizable="false"
                 label="级别"
-                prop="contractAmount"
+                prop="grade"
                 align="center"
                 show-overflow-tooltip
               >
@@ -81,7 +81,7 @@
               <el-table-column
                 :resizable="false"
                 label="姓名"
-                prop="contractAmount"
+                prop="provinceName"
                 align="center"
                 show-overflow-tooltip
               >
@@ -89,14 +89,14 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    v-model="scope.row.sectionName"
+                    v-model="scope.row.provinceName"
                   ></el-input>
                 </template>
               </el-table-column>
               <el-table-column
                 :resizable="false"
                 label="级别"
-                prop="contractAmount"
+                prop="provinceGrade"
                 align="center"
                 show-overflow-tooltip
               >
@@ -104,14 +104,14 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    v-model="scope.row.sectionName"
+                    v-model="scope.row.provinceGrade"
                   ></el-input>
                 </template>
               </el-table-column>
               <el-table-column
                 :resizable="false"
                 label="电话"
-                prop="contractAmount"
+                prop="provinceContactNumber"
                 align="center"
                 show-overflow-tooltip
               >
@@ -119,12 +119,21 @@
                   <el-input
                     clearable
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    v-model="scope.row.sectionName"
+                    v-model="scope.row.provinceContactNumber"
                   ></el-input>
                 </template>
               </el-table-column>
             </el-table-column>
           </el-table>
+          <!--<el-pagination-->
+            <!--:current-page="page.current"-->
+            <!--:page-size="page.size"-->
+            <!--:page-sizes="[20, 50, 100]"-->
+            <!--:total="page.total"-->
+            <!--@current-change="handleCurrentChange"-->
+            <!--@size-change="handleSizeChange"-->
+            <!--layout="total, sizes, prev, pager, next, jumper"-->
+          <!--&gt;</el-pagination>-->
         </el-form>
       </div>
     </el-card>
@@ -160,9 +169,10 @@
         searchform: {
           current: 1,
           size: 20,
+          orgCode:''
         },
         detailform: {
-
+          list:[]
         },
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         page: {current: 1, size: 20, total: 0, records: []},
@@ -183,7 +193,8 @@
 
     },
     mounted() {
-
+      this.searchform.orgCode=this.p.orgCode;
+      this.getDetail();
     },
     methods: {
       handleSizeChange(val) {
@@ -201,28 +212,16 @@
       saveInfo(formName,type) {
         var url='';
         if(type=='save'){
-          url="/api/contract/topInfo/TopInfor/detail/saveOrUpdate"
+          url="/api/contract/regionalInfo/list/saveOrUpdateRegional"
         }else{
           url="/api/contract/topInfo/TopInfor/process/start"
         }
-        var topInforCapitalList = [];
-        this.amountSource.forEach((item) => {
-          if (this.detailform.value1&&this.detailform.value1.indexOf(item.id) != -1) {
-            var v = {
-              capitalId: item.id,
-              capitalName: item.detailName,
-              capitalCode: item.detailCode
-            };
-            topInforCapitalList.push(v);
-          }
-        });
-        this.detailform.topInforCapitalList=topInforCapitalList;
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
               .post(
                 url,
-                JSON.stringify(this.detailform),
+                JSON.stringify(this.detailform.list),
                 {useJson: true}
               )
               .then((res) => {
@@ -231,10 +230,7 @@
                     message:  `${type=='save'?'保存':'提交'}成功`,
                     type: "success",
                   });
-                  this.$refs[formName].resetFields();
-                  this.$router.push({
-                    path: "/manage/proposal/list",
-                  });
+                 this.back();
                 }
               });
           } else {
@@ -249,30 +245,17 @@
       // 加载列表
       getDetail() {
         this.$http
-          .post("/api/contract/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.id})
+          .post("/api/contract/regionalInfo/list/loadPageDataOrgCode", this.searchform)
           .then((res) => {
             var datas=res.data.data;
-            this.getTwo(datas.topInfor.enginTypeFirstId||'');
-            this.getTwoSC(datas.topInfor.marketFirstNameId||'');
-            this.getTwoXZ(datas.topInfor.projectNatureFirstId||'');
-            this.detailform={
-              topInfor: datas.topInfor,
-              topInfoOrg: datas.topInfoOrg,
-              topInfoSiteList: datas.topInfoSiteList,
-              topInfoSectionList: datas.topInfoSectionList,
-              value1:[],
-              zplx:[],//装配类型
-              jzlx:[],//建筑类型
-              jzjglx:[],//建筑结构类型
-              cdmc:[],//场地名称
-            }
-            this.detailform.cdmc=datas.topInfor.siteNameId&&datas.topInfor.siteNameId.split(",");
-            this.detailform.zplx=datas.topInfor.otherAssemblyTypeId&&datas.topInfor.otherAssemblyTypeId.split(",");
-            this.detailform.jzlx=datas.topInfor.otherBuildingTypeId&&datas.topInfor.otherBuildingTypeId.split(",");
-            this.detailform.jzjglx=datas.topInfor.otherBuildingStructureTypeId&&datas.topInfor.otherBuildingStructureTypeId.split(",");
-            datas.topInforCapitalList.forEach((item)=>{
-              this.detailform.value1.push(item.capitalId)
+            datas.forEach((item,index)=>{
+              item.index=index;
+              item.orgCode=this.p.orgCode;
             });
+            this.detailform={
+              list: datas,
+            };
+            // this.page = datas;
           });
       },
 
@@ -462,6 +445,9 @@
   }
   .detailBox{
     padding: 0 30px 50px 30px!important;
+  }
+  >>>.el-pagination .el-input,>>>.el-pagination .el-input__inner{
+    width:80px!important;
   }
 </style>
 

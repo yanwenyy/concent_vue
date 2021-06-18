@@ -11,15 +11,16 @@
         </el-form-item>
       </el-form>-->
       <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>创建</el-button>
-        <el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
-        <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
-        <el-button @click="summary" type="primary" plain><i class="el-icon-coin"></i>重新汇总</el-button>
+        <!--<el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>创建</el-button>-->
+        <!--<el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>-->
+        <!--<el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>-->
+        <el-button @click="summary" type="primary" plain><i class="el-icon-edit"></i>批复</el-button>
+        <el-button @click="summary" type="primary" plain><i class="el-icon-edit"></i>填写意见</el-button>
       </el-button-group>
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
         <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
-        <!-- <el-button @click="Importdata" type="primary" plain>导入</el-button> -->
+        <el-button  @click="back" type="info"  style="color:black;background:none" plain><i class="el-icon-search"></i>返回</el-button>
       </div>
     </div>
 
@@ -115,7 +116,31 @@
         <el-table-column
           :width="200"
           align="center"
-          label="审核状态"
+          label="所属单位"
+          prop="enginTypeFirstName"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+        <el-table-column
+          :width="200"
+          align="center"
+          label="本月上报产值"
+          prop="enginTypeFirstName"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+        <el-table-column
+          :width="200"
+          align="center"
+          label="本年上报产值"
+          prop="enginTypeFirstName"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+        <el-table-column
+          :width="200"
+          align="center"
+          label="批复状态"
           prop="flowStatus"
           show-overflow-tooltip
 
@@ -149,71 +174,6 @@
           <template slot-scope="scope">
             <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核驳回':'未创建'}}
             </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="180"
-          align="center"
-          label="创建时间"
-          prop="createTime"
-          show-overflow-tooltip
-        >
-<!--          <template slot="header" slot-scope="scope">
-            <span>创建时间</span>
-            <div>
-              <el-date-picker
-                class="list-search-picker"
-                filterable
-                clearable
-                type="date"
-                value-format="timestamp"
-                v-model="searchform.createTime"
-
-              >
-              </el-date-picker>
-            </div>
-          </template-->>
-          <template slot-scope="scope">{{
-            scope.row.createTime | dateformat
-            }}</template>
-        </el-table-column>
-        <el-table-column
-          :width="180"
-          align="center"
-          label="审核通过时间"
-          prop="state"
-          show-overflow-tooltip
-        >
-    <!--      <template slot="header" slot-scope="scope">
-            <span>审核通过时间</span>
-            <div>
-              <el-date-picker
-                class="list-search-picker"
-                filterable
-                clearable
-                type="date"
-                value-format="timestamp"
-                v-model="searchform.planBidTime"
-
-              >
-              </el-date-picker>
-            </div>
-          </template>-->
-          <template slot-scope="scope">{{
-            scope.row.auditDate | dateformat
-            }}</template>
-        </el-table-column>
-        <el-table-column
-          :width="180"
-          align="center"
-          label="查看详细"
-          prop="createTime"
-          show-overflow-tooltip
-        >
-          <template slot-scope="scope">
-            <span @click="queryGsXq(scope.row)"   class="blue pointer" v-if="scope.row.createOrgType=='13'">
-            查看详细
-           </span>
           </template>
         </el-table-column>
       </el-table>
@@ -272,6 +232,10 @@
 
     },
     methods: {
+      // 返回上一页
+      back() {
+        this.$router.back()
+      },
       exportdata() {
       },
       load(tree, treeNode, resolve) {
@@ -402,16 +366,11 @@
       },
       // 查看
       rowshow(row) {
-        let p = {actpoint: "look", params: row};
-        if(row.flowStatus==''||row.flowStatus==null){
-          this.$message.info("该项目月报还未完成上报,无法查看");
-          return false;
-        }else{
-          this.$router.push({
-            path: "./jTMDetail/",
-            query: {p: this.$utils.encrypt(JSON.stringify(p))},
-          });
-        }
+        let p = { actpoint: 'look', projectId: row.projectId,uuid:row.uuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.status }
+        this.$router.push({
+          path: '../reportMDetail/',
+          query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+        })
       },
       // 删除
       remove() {
