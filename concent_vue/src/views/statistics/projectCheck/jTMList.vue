@@ -393,7 +393,7 @@
           row.uuid = row.projectCheckUuid
         }
         let p = {actpoint: "look", params: row};
-        if((row.flowStatus==''||row.flowStatus==null) && row.projectId!=this.userdata.managerOrgId){
+        if((row.flowStatus==''||row.flowStatus==null) && (row.projectId!=''|| row.projectId!=null)){
           this.$message.info("该项目月报还未进行创建，无法进行操作", "提示")
           return false
         }else{

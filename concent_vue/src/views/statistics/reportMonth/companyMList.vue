@@ -612,7 +612,7 @@
         let p = {actpoint: 'look',projectId: row.projectId, orgCode: row.createOrgCode,projectName:row.projectName,createOrgId:row.createOrgId,createOrgName:row.createOrgName,
           reportYear:row.reportYear,reportMonth:row.reportMonth,projectreportuuid:row.projectreportuuid,reportType:row.reportType,createOrgType:row.createOrgType
         };
-        if((row.flowStatus==''||row.flowStatus==null) && row.projectId!=this.userdata.managerOrgId){
+        if((row.flowStatus==''||row.flowStatus==null) && (row.projectId!=''||row.projectId!=null)){
           this.$message.info('该项目月报还未进行创建，无法进行操作', '提示');
           return false;
         }else{

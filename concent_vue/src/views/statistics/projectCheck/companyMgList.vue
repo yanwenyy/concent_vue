@@ -355,7 +355,7 @@
         //判断是否存在未上报的数据，如果存在就提示，不存在就创建
         if(this.data.length>0){
           for (var i=0; i < this.data.length; i++) {
-            if((this.data[i].flowStatus ==''||this.data[i].flowStatus ==null) && this.data[i].projectId!=this.userdata.managerOrgId){
+            if((this.data[i].flowStatus ==''||this.data[i].flowStatus ==null)  && (this.data[i].projectId!=''||this.data[i].projectId!=null )){
               this.$message.info('该单位下存在未提交的月报,请提交该单位下所有项目月报后再进行尝试！')
               return false;
             }else if(this.data[i].projectId==this.userdata.managerOrgId && this.data[i].reportType=='2'){
@@ -410,7 +410,7 @@
       submit(){
         var dataInfo=[];
         this.data.forEach((item) => {
-          if(item.projectId!=this.userdata.managerOrgId){
+          if(item.projectId!=''&& item.projectId!=null){
             dataInfo.push(item);
           }
         })
@@ -448,7 +448,7 @@
         let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
           let a=this.userdata.managerOrgId;
-          if(item.projectId==this.userdata.managerOrgId){
+          if(item.projectId==null ||item.projectId==''){
             if(item.flowStatus!='1'&&item.flowStatus!=null&&item.flowStatus!='4'){
             this.$message.info('只允许删除未上报的数据！')
               return itemStatus=false;
@@ -516,7 +516,7 @@
           this.$message.info("只允许修改草稿和审核退回状态的数据", "提示")
           return false
         }
-          if((this.multipleSelection[0].flowStatus==''||this.multipleSelection[0].flowStatus==null) && this.multipleSelection[0].projectId!=this.userdata.managerOrgId){
+          if((this.multipleSelection[0].flowStatus==''||this.multipleSelection[0].flowStatus==null) && (this.multipleSelection[0].projectId!=''||this.multipleSelection[0].projectId!=null)){
             this.$message.info("该项目月报还未进行创建，无法进行操作", "提示")
             return false
           }else{
@@ -600,7 +600,7 @@
         let p = {actpoint: 'look', projectId: row.projectId, orgCode: row.createOrgCode,projectName:row.projectName,createOrgId:row.createOrgId,createOrgName:row.createOrgName,
           reportYear:row.reportYear,reportMonth:row.reportMonth,uuid:row.projectCheckUuid,reportType:row.reportType,createOrgType:row.createOrgType
         };
-        if((row.flowStatus==''||row.flowStatus==null) && row.projectId!=this.userdata.managerOrgId){
+        if((row.flowStatus==''||row.flowStatus==null) && (row.projectId!=''||row.projectId!=null)){
           this.$message.info("该项目月报还未进行创建，无法进行操作", "提示")
           return false
         }else{

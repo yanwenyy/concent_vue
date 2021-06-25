@@ -364,6 +364,7 @@
         var time=y + '-' + m;
         //this.searchform.reportYear= y;
         this.searchform.yearDateS=time;
+        this.searchform.beginDate=y + '-' +"01";
         this.$http
           .post('/api/statistics/Projectcheck/list/projectDeptList', this.searchform)
           .then(res => {
