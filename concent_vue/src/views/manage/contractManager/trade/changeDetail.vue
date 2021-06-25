@@ -1972,11 +1972,34 @@
                         label-width="0"
 
                       >
-                        <el-input
-                          clearable
+                        <el-select
+                          class="input-el-input-group"
                           :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                          clearable
+                          filterable
+                          placeholder="请选择"
+                          size="mini"
                           v-model="scope.row.subjectMatterName"
-                        ></el-input>
+                          @change="
+                    getBdwdw(
+                      scope.row.subjectMatterName,
+                      detailform.contractInfoSubjectMatterList,
+                      scope.$index
+                    )
+                  "
+                        >
+                          <el-option
+                            :key="index"
+                            :label="item.subjectMatterName"
+                            :value="item.subjectMatterName"
+                            v-for="(item, index) in bdwList"
+                          ></el-option>
+                        </el-select>
+                        <!--<el-input-->
+                          <!--clearable-->
+                          <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                          <!--v-model="scope.row.subjectMatterName"-->
+                        <!--&gt;</el-input>-->
                       </el-form-item>
                       <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                     </template>
@@ -2016,7 +2039,7 @@
                       >
                         <el-input
                           clearable
-                          :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                          disabled
                           v-model="scope.row.subjectMatterUnit"
                         ></el-input>
                       </el-form-item>
@@ -3160,6 +3183,8 @@
         }
       }
       return {
+        userInfo: JSON.parse(sessionStorage.getItem('userdata')),
+        bdwList:[],//标的物名称list
         activeName:"after",
         id:'',
         key: 0,
@@ -3304,8 +3329,26 @@
       this.$store.dispatch('getCategory', {name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3'});
       this.$store.dispatch('getCategory', {name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72'});
       // eslint-disable-next-line no-unde
+      //获取标的物名称列表
+      this.$http
+        .post(
+          "/api/contract/SubjectMatter/list/loadPageData",
+          {createOrgId:this.userInfo.managerOrgId}
+        )
+        .then((res) => {
+          this.bdwList = res.data.data.records;
+        });
     },
     methods: {
+      //获取标的物单位
+      getBdwdw( name,list, index) {
+        if(name){
+          this.$forceUpdate();
+          list[index].subjectMatterUnit=this.bdwList.find(
+            (item) => item.subjectMatterName == name
+          ).subjectMatterUnitName;
+        }
+      },
       //隐藏标段信息某些行
       tableRowClassName: function (row, index) {
         if (row.row.isDelete=='1') {

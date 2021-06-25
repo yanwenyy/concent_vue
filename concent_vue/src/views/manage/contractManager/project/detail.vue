@@ -7632,7 +7632,7 @@ export default {
             this.$message.error("请至少选择一个项目地点");
             return false;
           }
-          if(this.detailform.fileList1.length==0||this.detailform.fileList2.length==0){
+          if(this.detailform.fileList1.length==0&&this.detailform.fileList2.length==0){
             this.$message.error("中标通知书和合同附件必须传一个");
             return false;
           }

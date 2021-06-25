@@ -559,6 +559,15 @@ export default {
                   'leaf': true,
                   'defaultpage': true
                 },
+                {
+                  'name': '标的物维护',
+                  'path': '/manage/contractManager/BdwList',
+                  'component': '/manage/contractManager/BdwList',
+                  'iconCls': 'el-icon-search',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
               ]
             },
             {

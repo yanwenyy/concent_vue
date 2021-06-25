@@ -573,7 +573,7 @@
                 disabled
                 clearable
                 placeholder="请输入"
-                v-model="detailform.topInfor.noticeTypeName=='资审公告'?detailform.topInfor.verifyTypeName='资格预审':detailform.topInfor.noticeTypeName=='招标公告'?detailform.topInfor.verifyTypeName='资格后审':detailform.topInfor.noticeTypeName=='竞争性谈判'?detailform.topInfor.verifyTypeName='竞争性谈判':detailform.topInfor.verifyTypeName=''"
+                v-model="detailform.topInfor.noticeTypeName=='资审公告'?detailform.topInfor.verifyTypeName='资格预审':detailform.topInfor.noticeTypeName=='招标公告'?detailform.topInfor.verifyTypeName='资格后审':detailform.topInfor.noticeTypeName=='竞争性谈判'?detailform.topInfor.verifyTypeName='竞争性谈判':detailform.topInfor.noticeTypeName=='待招标'?detailform.topInfor.verifyTypeName='待招标':detailform.topInfor.verifyTypeName=''"
               />
               <!--<el-select-->
               <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
