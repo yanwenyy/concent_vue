@@ -83,14 +83,14 @@
           :width="200"
           align="center"
           label="计量单位"
-          prop="vmeasure"
+          prop="vmeasurename"
           show-overflow-tooltip>
           <template slot="header" slot-scope="scope">
             <span>计量单位</span>
             <div>
               <el-input
                 style=" width: 100%"
-                v-model="searchform.vmeasure"
+                v-model="searchform.vmeasurename"
                 size="mini"/>
             </div>
           </template>
@@ -217,11 +217,16 @@
           <el-input v-model="form.vname" autocomplete="off" :disabled="look"></el-input>
         </el-form-item>
         <el-form-item label="计量单位:">
-          <el-select v-model="form.vmeasure" placeholder="请选择计量单位" :disabled="look">
+          <el-select v-model="form.vmeasureunitid"  @change="getName(
+                          form.vmeasureunitid,
+                          measureUnit,
+                          'vmeasurename',
+                          'vmeasureunit'
+                        )" placeholder="请选择计量单位" :disabled="look">
             <el-option
               :key="index"
               :label="item.detailName"
-              :value="item.detailName"
+              :value="item.id"
               v-for="(item, index) in measureUnit"
             ></el-option>
           </el-select>
@@ -291,15 +296,30 @@
                      @change="getName(
                           form.productTypeId,
                           measureUnit,
-                          'prodectTypeName',
-                          'prodectTypeCode'
+                          'productTypeName',
+                          'productTypeCode'
                         )"
-                     placeholder="请选择计量单位" :disabled="look">
+                     placeholder="请选择产品类型" :disabled="look">
             <el-option
               :key="index"
               :label="item.detailName"
               :value="item.id"
               v-for="(item, index) in measureUnit"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="业务类型:">
+          <el-select v-model="form.ywtypeid"  @change="getName(
+                          form.ywtypeid,
+                          bizTypeCode,
+                          'ywtypename',
+                          'ywtypecode'
+                        )" placeholder="请选择业务类型" :disabled="look">
+            <el-option
+              :key="index"
+              :label="item.detailName"
+              :value="item.id"
+              v-for="(item, index) in bizTypeCode"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -371,6 +391,16 @@ export default {
       measureUnit() {
         return this.$store.state.measureUnit;
       },
+      //业务类型
+      bizTypeCode() {
+        var list=[];
+        this.$store.state.bizTypeCode.forEach((item)=>{
+          if(item.parentDetailId==null){
+            list.push(item)
+          }
+        });
+        return list;
+      },
 },
   methods: {
     //获取下拉框id和name的公共方法
@@ -418,13 +448,13 @@ export default {
     add() {
       this.look=false;
        this.form={
-         vcode: '',
-         vname: '',
-         vmeasure: '',
-         venabled: '',
-         vjnw: '',
-         vsort: '',
-         vremark: ''
+         // vcode: '',
+         // vname: '',
+         // vmeasure: '',
+         // venabled: '',
+         // vjnw: '',
+         // vsort: '',
+         // vremark: ''
        };
        this.dialogFormVisible=true;
     },
@@ -436,16 +466,17 @@ export default {
         }
         this.look=false;
         var row=this.multipleSelection[0];
-        this.form={
-          vcode: row.vcode,
-          vname:  row.vname,
-          vmeasure:  row.vmeasure,
-          venabled: row.venabled,
-          vjnw:  row.vjnw,
-          vsort:  row.vsort,
-          vremark: row.vremark,
-          id:row.id
-        };
+        this.form=row;
+        // this.form={
+        //   vcode: row.vcode,
+        //   vname:  row.vname,
+        //   vmeasure:  row.vmeasure,
+        //   venabled: row.venabled,
+        //   vjnw:  row.vjnw,
+        //   vsort:  row.vsort,
+        //   vremark: row.vremark,
+        //   id:row.id
+        // };
         this.dialogFormVisible=true;
       },
       // 删除

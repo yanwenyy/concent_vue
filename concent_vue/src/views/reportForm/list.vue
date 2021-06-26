@@ -24,7 +24,8 @@
     mounted() {
       if(window.performance.navigation.type==2&&sessionStorage.getItem('fromReportJump')=='true'){
         this.$router.push({
-          path: "/manage/xinqian/list",
+          // path: "/manage/xinqian/list",
+          path:sessionStorage.getItem("bbPath")
         });
         sessionStorage.setItem("fromReportJump",false)
       }else{
@@ -64,6 +65,16 @@
             });
           });
       }
+    },
+    beforeRouteEnter(to, from, next) {
+      console.log(from, 'beforeRouteEnter');
+      if(from.path!='/reportForm/list'){
+        sessionStorage.setItem("bbPath",from.path);
+      }
+      next(vm => {
+        // vm相当于上面的this
+        vm.fromPage = from.path;
+      });
     },
   };
 </script>

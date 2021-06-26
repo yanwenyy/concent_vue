@@ -745,8 +745,8 @@ export default {
               'children': [
                 {
                   'name': '标准库',
-                  'path': '/boq/dataStandards/ordinaryStandard/list',
-                  'component': '/boq/dataStandards/ordinaryStandard/list',
+                  'path': '/boq/ordinaryStandard/list',
+                  'component': '/boq/ordinaryStandard/list',
                   'iconCls': 'el-icon-switch-button',
                   'menushow': true,
                   'leaf': true,
@@ -781,8 +781,8 @@ export default {
                 },
                 {
                   'name': '知识库',
-                  'path': '/boq/ordinaryScience',
-                  'component': '',
+                  'path': '/boq/ordinaryScience/list',
+                  'component': '/boq/ordinaryScience/list',
                   'iconCls': 'el-icon-switch-button',
                   'menushow': true,
                   'leaf': true,
