@@ -500,6 +500,7 @@
       },
       //编辑
       edit() {
+        debugger
         if (this.multipleSelection.length == 0) {
           this.$message.info("请选择需要编辑的数据", "提示")
           return false
@@ -508,7 +509,7 @@
           this.$message.info("请选择一条数据，进行编辑", "提示")
           return false
         }
-        if(this.multipleSelection[0].projectId!=this.userdata.managerOrgId){
+        if(this.multipleSelection[0].projectId!=''&& this.multipleSelection[0].projectId!=null){
           this.$message.info("不允许对下级进行任何操作", "提示")
           return false
         }
@@ -522,7 +523,7 @@
           }else{
             this.type = 'edit'
             this.form1 = JSON.parse(JSON.stringify(this.multipleSelection[0]));
-            let p = {projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,projectCheckUuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectCheckUuid,
+            let p = {projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,uuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectCheckUuid,
               reportYear:JSON.parse(JSON.stringify(this.multipleSelection[0])).reportYear,reportMonth:JSON.parse(JSON.stringify(this.multipleSelection[0])).reportMonth,orgCode:JSON.parse(JSON.stringify(this.multipleSelection[0])).createOrgCode,
               projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).flowStatus,projectName:this.multipleSelection[0].projectName,uuid:this.multipleSelection[0].projectCheckUuid
             }
