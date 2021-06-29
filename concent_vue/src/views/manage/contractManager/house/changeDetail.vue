@@ -1662,7 +1662,8 @@
       required: true, message: '此项不能为空', trigger: ['blur','change']
     }"
                 >
-                  <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.signOrgName" class="input-with-select">
+                  <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                  <el-input clearable disabled  placeholder="请输入内容" v-model="detailform.contractInfo.signOrgName" class="input-with-select">
                     <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('签约单位',detailform.contractInfo.signOrgId)" ></el-button>
                   </el-input>
                 </el-form-item>

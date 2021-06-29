@@ -367,9 +367,9 @@
       },
       // 查看
       rowshow(row) {
-        let p = {actpoint: "look", instid: row.topOrgId};
+        let p = {actpoint: "look", instid: row.uuid};
         this.$router.push({
-          path: "./detail/",
+          path: "./importDetail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       },
@@ -381,7 +381,7 @@
         }
         let p = {actpoint: "look", instid: this.multipleSelection[0].uuid};
         this.$router.push({
-          path: "../detail/",
+          path: "../importDetail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       }, // list通用方法开始

@@ -21,7 +21,7 @@
             </el-popover>
             <el-button @click="totop" type="primary" plain><i class="el-icon-edit"></i>修改</el-button>
             <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
-            <el-button @click="report" type="primary" plain><i class="el-icon-delete"></i>填报销售业绩</el-button>
+            <!--<el-button @click="report" type="primary" plain><i class="el-icon-edit"></i>填报销售业绩</el-button>-->
           </el-button-group>
           <div style="float: right;">
             <el-button @click="searchFromReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>

@@ -1119,27 +1119,32 @@ export default {
          //alert(valid);
         if (valid) {
           //alert(JSON.stringify(this.detailform));
-           var obj = Object.assign(this.detailform, this.detailform1);
-          this.$http
-            .post(
-              url,
-              JSON.stringify(obj),
-              { useJson: true }
-            )
-            .then((res) => {
+          if(this.detailform.verifySectionList.length==0){
+            this.$message.error("标段信息不能为空");
+          }else{
+            var obj = Object.assign(this.detailform, this.detailform1);
+            this.$http
+              .post(
+                url,
+                JSON.stringify(obj),
+                { useJson: true }
+              )
+              .then((res) => {
 
-              if (res.data.msg === "SUCCESS") {
-                this.$message({
-                  message:  `${type=='save'?'保存':'提交'}成功`,
-                  type: "success",
-                });
-                this.$refs[formName].resetFields();
-                this.$router.push({
-                  path: "/manage/verify/listAll",
-                });
-              }
+                if (res.data.msg === "SUCCESS") {
+                  this.$message({
+                    message:  `${type=='save'?'保存':'提交'}成功`,
+                    type: "success",
+                  });
+                  this.$refs[formName].resetFields();
+                  this.$router.push({
+                    path: "/manage/verify/listAll",
+                  });
+                }
 
-            });
+              });
+          }
+
         } else {
           this.$message.error("请添加必填项");
           return false;

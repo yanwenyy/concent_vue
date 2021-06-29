@@ -680,7 +680,8 @@
       required: true, message: '此项不能为空', trigger: ['blur','change']
     }"
               >
-                <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'" placeholder="请输入内容" v-model="detailform.contractInfo.signOrgName" class="input-with-select">
+                <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'"-->
+                <el-input clearable  placeholder="请输入内容" disabled v-model="detailform.contractInfo.signOrgName" class="input-with-select">
                   <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('签约单位',detailform.contractInfo.signOrgId)" ></el-button>
                 </el-input>
               </el-form-item>
@@ -2660,21 +2661,25 @@ export default {
       }
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$http
-            .post(
-              url,
-              JSON.stringify(this.detailform),
-              {useJson: true}
-            )
-            .then((res) => {
-            if (res.data.code === 200) {
-            this.$message({
-              message:  `${type=='save'?'保存':'提交'}成功`,
-              type: "success",
-            });
-            this.$router.back()
+          if(this.detailform.contractInfoHouseSalesList.length==0){
+            this.$message.error("请至少添加一条销售业绩");
+          }else{
+            this.$http
+              .post(
+                url,
+                JSON.stringify(this.detailform),
+                {useJson: true}
+              )
+              .then((res) => {
+                if (res.data.code === 200) {
+                  this.$message({
+                    message:  `${type=='save'?'保存':'提交'}成功`,
+                    type: "success",
+                  });
+                  this.$router.back()
+                }
+              });
           }
-        });
         } else {
           this.$message.error("请添加必填项和正确的数据格式");
       return false;

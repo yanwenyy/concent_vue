@@ -57,7 +57,7 @@
                     </el-date-picker>
                   </el-form-item>
                   <el-form-item
-                    label="甲方单位:"
+                    label="客户名称:"
 
                   >
                     <el-input
@@ -1070,7 +1070,7 @@
                   </el-date-picker>
                 </el-form-item>
                 <el-form-item
-                  label="甲方单位:"
+                  label="客户名称:"
                   prop="contractInfo.constructionOrg"
                   :rules="{
       required: true, message: '此项不能为空', trigger: 'blur'

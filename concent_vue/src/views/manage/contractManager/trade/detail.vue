@@ -111,7 +111,7 @@
               </el-form-item>
 
               <el-form-item
-                label="合同甲方:"
+                label="客户名称:"
                 prop="contractInfo.constructionOrg"
                 :rules="{
            required: true, message: '此项不能为空', trigger: 'blur'

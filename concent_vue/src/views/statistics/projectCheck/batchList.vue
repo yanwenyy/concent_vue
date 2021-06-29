@@ -227,7 +227,7 @@
         this.searchform.flowStatus="1";
 
         this.$http
-          .post('/api/statistics/projectMonthlyReport/Projectreport/list/reportMQuery', this.searchform)
+          .post('/api/statistics/Projectcheck/list/reportMQuery', this.searchform)
           .then(res => {
             this.page = res.data.data
           })

@@ -621,7 +621,7 @@
               </el-form-item>
               <br>
               <el-form-item
-                label="对方名称:"
+                label="客户名称:"
                 prop="contractInfo.insureOtherName"
                 :rules="{
       required: true, message: '此项不能为空', trigger: 'blur'

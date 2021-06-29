@@ -500,7 +500,7 @@
       },
       //编辑
       edit() {
-        debugger
+        // debugger
         if (this.multipleSelection.length == 0) {
           this.$message.info("请选择需要编辑的数据", "提示")
           return false
@@ -523,7 +523,7 @@
           }else{
             this.type = 'edit'
             this.form1 = JSON.parse(JSON.stringify(this.multipleSelection[0]));
-            let p = {projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,uuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectCheckUuid,
+            let p = {actpoint:'edit',projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,uuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectCheckUuid,
               reportYear:JSON.parse(JSON.stringify(this.multipleSelection[0])).reportYear,reportMonth:JSON.parse(JSON.stringify(this.multipleSelection[0])).reportMonth,orgCode:JSON.parse(JSON.stringify(this.multipleSelection[0])).createOrgCode,
               projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).flowStatus,projectName:this.multipleSelection[0].projectName,uuid:this.multipleSelection[0].projectCheckUuid
             }
