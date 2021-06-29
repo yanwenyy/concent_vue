@@ -357,7 +357,7 @@ export default {
           //this.detailform.verify.flowStatus="1";
           this.$http
             .post(
-              "/api/contract/archives/ArchivesInfo/detail/saveOrUpdate",
+              "/api/contract/archives/ArchivesInfo/process/start",
               JSON.stringify(this.detailform),
               {useJson: true}
             )

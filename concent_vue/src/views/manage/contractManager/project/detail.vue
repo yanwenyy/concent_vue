@@ -534,6 +534,27 @@
               <!--v-model="detailform.contractInfo.designOrg"-->
             <!--/>-->
           </el-form-item>
+          <el-form-item
+            class="inline-formitem"
+            label="是否公开招标:"
+            prop="contractInfo.isClientele"
+            :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+          >
+            <el-switch
+              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+              class="inline-formitem-switch"
+              v-model="detailform.contractInfo.isOpenBid"
+              active-color="#409EFF"
+              inactive-color="#ddd"
+              active-value="1"
+              inactive-value="0"
+            >
+            </el-switch>
+          </el-form-item>
             <br>
           <el-form-item
             class="inline-formitem form-item-five"
@@ -713,6 +734,7 @@
               v-model="detailform.contractInfo.projectNatureSecondId"
             >
               <el-option
+                v-if="item.isUse==1"
                 :key="index"
                 :label="item.detailName"
                 :value="item.id"
@@ -1485,6 +1507,73 @@
                   </template>
                 </el-table-column>
               </el-table>
+            <p>
+              <span>招标公告附件: </span>
+              <el-button
+                v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
+                size="small"
+                type="primary"
+                @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/04/uploadFile','fileList4')">
+                点击上传
+              </el-button>
+              <!--<el-upload-->
+              <!--ref="fileList2"-->
+              <!--v-show="p.actpoint !== 'look'"-->
+              <!--class="upload-demo detailUpload detatil-flie-btn"-->
+              <!--:action="'/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile'"-->
+              <!--:on-success="handleChange2"-->
+              <!--:on-error="handleChange2"-->
+              <!--:on-remove="handleRemove2"-->
+              <!--:show-file-list="detailform.fileList2.showFile"-->
+              <!--multiple-->
+              <!--&gt;-->
+              <!--<el-button size="small" type="primary">点击上传</el-button>-->
+              <!--</el-upload>-->
+            </p>
+            <el-table
+              :data="detailform.fileList4"
+              :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+              @selection-change="handleSelectionChange"
+              align="center"
+              border
+              class="detailTable"
+              ref="table"
+              style="width: 100%;height: auto;"
+            >
+              <el-table-column
+                :width="55"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+              <el-table-column align="center"  :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+
+              </el-table-column>
+
+              <el-table-column align="center" width="200" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip>
+                <template slot-scope="scope">
+                  {{(scope.row.fileSize/1024).toFixed(2)}}
+                </template>
+              </el-table-column>
+              <el-table-column align="center" width="100" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+
+              </el-table-column>
+
+              <el-table-column
+                align="center"
+                :resizable="false"
+                fixed="right"
+                label="操作"
+                show-overflow-tooltip
+                v-if="p.actpoint!=='look'"
+                width="80"
+              >
+                <template slot-scope="scope">
+                  <el-link :underline="false" @click="handleRemove4(scope.row,scope.$index)" type="warning">删除</el-link>
+                </template>
+              </el-table-column>
+            </el-table>
             <p>
               <span>合同附件: </span>
               <el-button
@@ -6622,6 +6711,7 @@ export default {
         fileList1:[],
         fileList2:[],
         fileList3:[],
+        fileList4:[],
         zplx:[],//装配类型
         jzlx:[],//建筑类型
         jzjglx:[],//建筑结构类型
@@ -6754,6 +6844,20 @@ export default {
       });
   },
   methods: {
+    handleRemove4(file,index) {
+      this.$http
+        .post(
+          "/api/contract/topInfo/CommonFiles/list/delete",
+          {ids:[file.uuid]},
+        )
+        .then((res) => {
+          if (res.data.code === 200) {
+            this.detailform.fileList4.splice(index,1);
+          }
+
+        });
+      console.log(this.detailform.fileList1)
+    },
     //实物工程量和劳材机统计导入
     importData(response, file, fileList) {
       if (response && response.code === 200) {
@@ -7264,6 +7368,7 @@ export default {
     });
       console.log(this.detailform.fileList1)
     },
+
     //上传附件
     handleChange3(response, file, fileList){
       if (response && response.code === 200) {
@@ -7610,7 +7715,7 @@ export default {
     },
     saveInfo(formName,type) {
 
-      this.detailform.commonFilesList=this.detailform.fileList1.concat(this.detailform.fileList2).concat(this.detailform.fileList3)
+      this.detailform.commonFilesList=this.detailform.fileList1.concat(this.detailform.fileList2).concat(this.detailform.fileList3).concat(this.detailform.fileList4)
       var url='';
       if(this.detailform.searchProject==true&&(this.p.actpoint === "edit")){
         url='/api/contract/contract/ContractInfo/detail/update';
@@ -7638,6 +7743,10 @@ export default {
           }
           if(this.detailform.contractInfo.isImport=='0'&&this.detailform.fileList3.length==0){
             this.$message.error("导入清单为是的时候，工程量清单和劳材机两个文件必须都要上传");
+            return false;
+          }
+          if(this.detailform.contractInfo.isOpenBid=='1'&&this.detailform.fileList4.length==0){
+            this.$message.error("请上传招标公告文件");
             return false;
           }
           this.$http
@@ -7774,7 +7883,7 @@ export default {
     },
     // 加载列表
     getDetail() {
-      var fileList1=[],fileList2=[],fileList3=[];
+      var fileList1=[],fileList2=[],fileList3=[],fileList4=[];
       this.$http
         .post("/api/contract/contract/ContractInfo/detail/entityInfo", {id:this.id})
         .then((res) => {
@@ -7785,6 +7894,8 @@ export default {
                fileList1.push(item)
               }else if(item.businessCode=='02'){
                 fileList2.push(item)
+              }else if(item.businessCode=='04'){
+                fileList4.push(item)
               }else{
                 fileList3.push(item)
               }
@@ -7805,6 +7916,7 @@ export default {
             fileList1:fileList1,
             fileList2:fileList2,
             fileList3:fileList3,
+            fileList4:fileList4,
             zplx:[],//装配类型
             jzlx:[],//建筑类型
             jzjglx:[],//建筑结构类型

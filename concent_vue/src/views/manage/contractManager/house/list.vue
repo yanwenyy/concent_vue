@@ -254,7 +254,7 @@
           </el-table>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="填报销售业绩" name="second">
+      <el-tab-pane v-if="false" label="填报销售业绩" name="second">
         <div style="width: 100%; overflow: hidden">
           <el-button-group style="float: left">
             <el-button @click="totop" type="primary" plain><i class="el-icon-edit"></i>修改</el-button>

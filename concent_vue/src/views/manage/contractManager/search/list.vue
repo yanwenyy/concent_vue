@@ -173,6 +173,42 @@
           ></el-option>
         </el-select>
       </el-form-item>
+      <el-form-item
+        label="是否导入清单:"
+      >
+        <el-select
+          clearable
+          filterable
+          placeholder="请选择"
+          size="mini"
+          v-model="searchform.isImport"
+        >
+          <el-option
+            :key="index"
+            :label="item.detailName"
+            :value="item.id"
+            v-for="(item, index) in ifBg"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item
+        label="是否公开招标:"
+      >
+        <el-select
+          clearable
+          filterable
+          placeholder="请选择"
+          size="mini"
+          v-model="searchform.isOpenBid"
+        >
+          <el-option
+            :key="index"
+            :label="item.detailName"
+            :value="item.id"
+            v-for="(item, index) in ifBg"
+          ></el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item label="地点:">
         <el-input v-model="searchform.path" placeholder="地点" clearable @clear="clear('ffid','path')">
           <el-button slot="append" icon="el-icon-search"  @click="selectPosition()"></el-button>
@@ -401,16 +437,16 @@
           prop="version"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>版本标识</span>
-            <div>
-              <el-input
-                class="list-search-picker"
-                style=" width: 100%"
-                v-model="searchFrom.version"
-              />
-            </div>
-          </template>
+          <!--<template slot="header" slot-scope="scope">-->
+            <!--<span>版本标识</span>-->
+            <!--<div>-->
+              <!--<el-input-->
+                <!--class="list-search-picker"-->
+                <!--style=" width: 100%"-->
+                <!--v-model="searchFrom.version"-->
+              <!--/>-->
+            <!--</div>-->
+          <!--</template>-->
         </el-table-column>
       </el-table>
     </div>

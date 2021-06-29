@@ -2726,7 +2726,7 @@ export default {
     this.$http
       .post(
         "/api/contract/SubjectMatter/list/loadPageData",
-        {createOrgId:this.userInfo.managerOrgId}
+        {createOrgId:this.userInfo.managerOrgId,isEnable:'1'}
       )
       .then((res) => {
         this.bdwList = res.data.data.records;

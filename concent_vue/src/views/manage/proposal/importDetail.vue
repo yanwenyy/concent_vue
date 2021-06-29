@@ -213,6 +213,7 @@
                   :key="index"
                   :label="item.detailName"
                   :value="item.id"
+                  v-if="item.isUse==1"
                   v-for="(item, index) in projectNatureTwo"
                 ></el-option>
               </el-select>

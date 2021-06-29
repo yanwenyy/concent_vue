@@ -100,7 +100,7 @@
                 <el-option
                   :key="index"
                   :label="item.detailName"
-                  :value="item.id"
+                  :value="item.id" v-if="item.isUse==1"
                   v-for="(item, index) in projectNatureTwo"/>
               </el-select>
             </el-form-item>

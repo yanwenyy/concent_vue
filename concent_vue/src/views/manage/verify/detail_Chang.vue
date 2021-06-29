@@ -1053,7 +1053,7 @@
             </el-form-item>
             <br>
             <el-form-item
-
+              prop="topInfor.investment"
               :label="detailformAfter.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailformAfter.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'?'投资额（万元）:':'项目规模:'"
                           :rules="{
                 required: true,
@@ -1155,7 +1155,7 @@
             <br>
               <!-- 下拉 -->
 
-              <el-form-item   class="formItem" label="项目跟踪负责人:"
+              <el-form-item   prop="topInfoOrg.projectTrackResponPerson"  class="formItem" label="项目跟踪负责人:"
                               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -1897,7 +1897,7 @@ export default {
         //alert(valid);
         if (valid) {
           //alert(JSON.stringify(this.detailform));
-          console.log(JSON.stringify(this.detailformAfter));
+          // console.log(JSON.stringify(this.detailformAfter));
           this.detailformAfter.verify.flowStatus = "0";
           this.$http
             .post(
@@ -1916,10 +1916,11 @@ export default {
                   message:  `${type=='save'?'保存':'提交'}成功`,
                   type: "success",
                 });
-                this.$refs[formName].resetFields();
-                this.$router.push({
-                  path: "/manage/verify/listChange",
-                });
+                this.$router.back();
+                // this.$refs[formName].resetFields();
+                // this.$router.push({
+                //   path: "/manage/verify/listChange",
+                // });
               }
 
             });

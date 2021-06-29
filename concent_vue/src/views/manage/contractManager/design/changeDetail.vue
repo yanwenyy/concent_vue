@@ -258,6 +258,21 @@
                       v-model="detailFormBefore.contractInfo.designOrg"
                     />
                   </el-form-item>
+                  <el-form-item
+                    class="inline-formitem"
+                    label="是否公开招标:"
+                  >
+                    <el-switch
+                      disabled
+                      class="inline-formitem-switch"
+                      v-model="detailFormBefore.contractInfo.isOpenBid"
+                      active-color="#409EFF"
+                      inactive-color="#ddd"
+                      active-value="1"
+                      inactive-value="0"
+                    >
+                    </el-switch>
+                  </el-form-item>
                   <br>
                   <el-form-item
                     class="inline-formitem form-item-five"
@@ -729,6 +744,39 @@
                     align="center"
                     border
                     class="detailTable"
+                    ref="table"
+                    style="width: 100%;height: auto;"
+                  >
+                    <el-table-column
+                      :width="55"
+                      align="center"
+                      label="序号"
+                      show-overflow-tooltip
+                      type="index"
+                    ></el-table-column>
+                    <el-table-column align="center" :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+
+                    </el-table-column>
+
+                    <el-table-column align="center" width="200" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip>
+                      <template slot-scope="scope">
+                        {{(scope.row.fileSize/1024).toFixed(2)}}
+                      </template>
+                    </el-table-column>
+                    <el-table-column align="center" width="100" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+
+                    </el-table-column>
+                  </el-table>
+                  <p>
+                    <span>招标公告附件: </span>
+                  </p>
+                  <el-table
+                    :data="detailFormBefore.fileList3"
+                    :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+                    @selection-change="handleSelectionChange"
+                    align="center"
+                    border
+                    class="contractInfoTable"
                     ref="table"
                     style="width: 100%;height: auto;"
                   >
@@ -1853,6 +1901,27 @@
                     placeholder="请输入内容"
                   ></el-autocomplete>
                 </el-form-item>
+                <el-form-item
+                  class="inline-formitem"
+                  label="是否公开招标:"
+                  prop="contractInfo.isClientele"
+                  :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+                >
+                  <el-switch
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    class="inline-formitem-switch"
+                    v-model="detailform.contractInfo.isOpenBid"
+                    active-color="#409EFF"
+                    inactive-color="#ddd"
+                    active-value="1"
+                    inactive-value="0"
+                  >
+                  </el-switch>
+                </el-form-item>
                 <br>
                 <el-form-item
                   class="inline-formitem form-item-five"
@@ -2596,6 +2665,72 @@
                   >
                     <template slot-scope="scope">
                       <el-link :underline="false" @click="handleRemove1(scope.row,scope.$index)" type="warning">删除</el-link>
+                    </template>
+                  </el-table-column>
+                </el-table>
+                <p>
+                  <span>招标公告附件: </span>
+                  <el-button
+                    class="detatil-flie-btn"
+                    v-show="p.actpoint !== 'look'"
+                    size="small"
+                    type="primary"
+                    @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/03/uploadFile','fileList3')">
+                    点击上传
+                  </el-button>
+                  <!--<el-upload-->
+                  <!--v-show="p.actpoint != 'look'"-->
+                  <!--class="upload-demo detailUpload detatil-flie-btn"-->
+                  <!--:action="'/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile'"-->
+                  <!--:on-success="handleChange2"-->
+                  <!--:on-error="handleChange2"-->
+                  <!--:on-remove="handleRemove2"-->
+                  <!--:show-file-list="false"-->
+                  <!--multiple-->
+                  <!--&gt;-->
+                  <!--<el-button size="small" type="primary">点击上传</el-button>-->
+                  <!--</el-upload>-->
+                </p>
+                <el-table
+                  :data="detailform.fileList3"
+                  :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%;height: auto;"
+                >
+                  <el-table-column
+                    :width="55"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+                  <el-table-column align="center"  :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+
+                  </el-table-column>
+
+                  <el-table-column align="center" width="200" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip>
+                    <template slot-scope="scope">
+                      {{(scope.row.fileSize/1024).toFixed(2)}}
+                    </template>
+                  </el-table-column>
+                  <el-table-column align="center" width="100" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+
+                  </el-table-column>
+
+                  <el-table-column
+                    :resizable="false"
+                    fixed="right"
+                    label="操作"
+                    show-overflow-tooltip
+                    v-if="p.actpoint!=='look'"
+                    width="80"
+                  >
+                    <template slot-scope="scope">
+                      <el-link :underline="false" @click="handleRemove3(scope.row,scope.$index)" type="warning">删除</el-link>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -4910,21 +5045,25 @@
         this.getTwo(afterData.contractInfo.enginTypeFirstId);
         this.getThree(afterData.contractInfo.enginTypeSecondId);
         this.getTwoSC(afterData.contractInfo.marketFirstNameId);
-        var fileList1=[],fileList2=[];
+        var fileList1=[],fileList2=[],fileList3=[];
         afterData.commonFilesList.forEach((item) => {
           if(item.businessCode=='01'){
           fileList1.push(item)
         }else if(item.businessCode=='02'){
           fileList2.push(item)
-        }
+        }else if(item.businessCode=='03'){
+            fileList3.push(item)
+          }
         });
-        var _fileList1=[],_fileList2=[];
+        var _fileList1=[],_fileList2=[],_fileList3=[];
         beforData.commonFilesList.forEach((item) => {
           if(item.businessCode=='01'){
           _fileList1.push(item)
         }else if(item.businessCode=='02'){
           _fileList2.push(item)
-        }
+        }else if(item.businessCode=='03'){
+            _fileList3.push(item)
+          }
         });
         // afterData.topInforCapitalList.forEach((item)=>{
         //   this.value1.push(item.capitalId);
@@ -4938,6 +5077,7 @@
           topInfoSiteList:afterData.topInfoSiteList,
           fileList1:fileList1,
           fileList2:fileList2,
+          fileList3:fileList3,
           zplx:[],//装配类型
           jzlx:[],//建筑类型
           jzjglx:[],//建筑结构类型
@@ -4955,6 +5095,7 @@
           topInfoSiteList:beforData.topInfoSiteList,
           fileList1:_fileList1,
           fileList2:_fileList2,
+          fileList3:_fileList3,
           zplx:[],//装配类型
           jzlx:[],//建筑类型
           jzjglx:[],//建筑结构类型
@@ -4968,7 +5109,7 @@
       },
       //新增的时候详情
       getAddDetail(){
-        var fileList1=[],fileList2=[];
+        var fileList1=[],fileList2=[],fileList3=[];
         this.$http
           .post("/api/contract/contract/ContractInfo/detail/entityInfo", {id:this.id})
           .then((res) => {
@@ -4981,7 +5122,9 @@
           fileList1.push(item)
         }else if(item.businessCode=='02'){
           fileList2.push(item)
-        }
+        }else if(item.businessCode=='03'){
+            fileList3.push(item)
+          }
       });
         this.detailform={
           commonFilesList: datas.commonFilesList,
@@ -4991,6 +5134,7 @@
           topInfoSiteList:datas.topInfoSiteList,
           fileList1:fileList1,
           fileList2:fileList2,
+          fileList3:fileList3,
           zplx:[],//装配类型
           jzlx:[],//建筑类型
           jzjglx:[],//建筑结构类型

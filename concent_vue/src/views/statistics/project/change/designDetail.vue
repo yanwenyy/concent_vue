@@ -93,6 +93,7 @@
                   placeholder="请选择"
                   v-model="detailForm.project.projectNatureSecondId">
                   <el-option
+                    v-if="item.isUse==1"
                     :key="index"
                     :label="item.detailName"
                     :value="item.id"
@@ -861,6 +862,7 @@
                   placeholder="请选择"
                   v-model="showDetailForm.project.projectNatureSecond">
                   <el-option
+                    v-if="item.isUse==1"
                     :key="index"
                     :label="item.detailName"
                     :value="item.id"

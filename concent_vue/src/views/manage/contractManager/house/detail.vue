@@ -641,7 +641,7 @@
                 <!--</el-input>-->
               <!--</el-form-item>-->
               <el-form-item
-                label="详细建细地点:"
+                label="详细建设地点:"
 
                 prop="contractInfo.estateDetailedBuildPlace"
                 :rules="{
@@ -655,6 +655,27 @@
                   size="mini"
                   v-model="detailform.contractInfo.estateDetailedBuildPlace"
                 />
+              </el-form-item>
+              <el-form-item
+                class="inline-formitem"
+                label="是否公开招标:"
+                prop="contractInfo.isClientele"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+              >
+                <el-switch
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  class="inline-formitem-switch"
+                  v-model="detailform.contractInfo.isOpenBid"
+                  active-color="#409EFF"
+                  inactive-color="#ddd"
+                  active-value="1"
+                  inactive-value="0"
+                >
+                </el-switch>
               </el-form-item>
               <br>
               <el-form-item
@@ -886,6 +907,72 @@
                 >
                   <template slot-scope="scope">
                     <el-link :underline="false" @click="handleRemove1(scope.row,scope.$index)" type="warning">删除</el-link>
+                  </template>
+                </el-table-column>
+              </el-table>
+              <p><span >招标公告文件: </span>
+                <el-button
+                  v-show="p.actpoint !== 'look'&&p.actpoint!='task'&&p.actpoint!='Yjedit'"
+                  size="small"
+                  type="primary"
+                  @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile','commonFilesList2')">
+                  点击上传
+                </el-button>
+                <!--<el-upload-->
+                <!--v-show="p.actpoint != 'look'"-->
+                <!--class="upload-demo detailUpload detatil-flie-btn"-->
+                <!--:action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"-->
+                <!--:on-success="handleChange1"-->
+                <!--:on-error="handleChange1"-->
+                <!--:on-remove="handleRemove1"-->
+                <!--:show-file-list="false"-->
+                <!--multiple-->
+                <!--&gt;-->
+                <!--<el-button size="small" type="primary">点击上传</el-button>-->
+                <!--</el-upload>-->
+              </p>
+
+              <el-table
+                :data="detailform.commonFilesList2"
+                :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+
+                @selection-change="handleSelectionChange"
+                align="center"
+                border
+                class="detailTable"
+                ref="table"
+                style="width: 100%;min-height: calc(100vh - 370px);"
+              >
+                <el-table-column
+                  :width="55"
+                  align="center"
+                  label="序号"
+                  show-overflow-tooltip
+                  type="index"
+                ></el-table-column>
+                <el-table-column align="center"  :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+
+                </el-table-column>
+
+                <el-table-column align="center" width="200" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    {{(scope.row.fileSize/1024).toFixed(2)}}
+                  </template>
+                </el-table-column>
+                <el-table-column align="center" width="100" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+
+                </el-table-column>
+
+                <el-table-column
+                  align="center"
+                  :resizable="false"
+                  label="操作"
+                  show-overflow-tooltip
+                  v-if="p.actpoint!=='look'&&p.actpoint!='Yjedit'&&p.actpoint!='task'"
+                  width="80"
+                >
+                  <template slot-scope="scope">
+                    <el-link :underline="false" @click="handleRemove2(scope.row,scope.$index)" type="warning">删除</el-link>
                   </template>
                 </el-table-column>
               </el-table>
@@ -2066,6 +2153,7 @@ export default {
           placeId:''
         }],
         commonFilesList: [],
+        commonFilesList2: [],
         contractInfoHouseSalesList:[],
         contractInfoAttachBO: {
           innerContractInfoAttachList:[],
@@ -2562,6 +2650,19 @@ export default {
     });
       console.log(this.detailform.commonFilesList)
     },
+    handleRemove2(file,index) {
+      this.$http
+        .post(
+          "/api/contract/topInfo/CommonFiles/list/delete",
+          {ids:[file.uuid]},
+        )
+        .then((res) => {
+          if (res.data.code === 200) {
+            this.detailform.commonFilesList2.splice(index,1);
+          }
+
+        });
+    },
     //上传附件
     handleChange1(response, file, fileList){
       if (response && response.code === 200) {
@@ -2653,11 +2754,16 @@ export default {
       }
     },
     saveInfo(formName,type) {
+      this.detailform.commonFilesList=this.detailform.commonFilesList.concat(this.detailform.commonFilesList2)
       var url='';
       if(type=='save'){
         url='/api/contract/contract/ContractInfo/detail/saveOrUpdate';
       }else{
         url=this.p.actpoint!='Yjedit'?'/api/contract/contract/ContractInfo/process/start':'/api/contract/ContractInfoDetail/process/start';
+      }
+      if(this.detailform.contractInfo.isOpenBid=='1'&&this.detailform.commonFilesList2.length==0){
+        this.$message.error("请上传招标公告文件");
+        return false;
       }
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -2717,8 +2823,17 @@ export default {
         .then((res) => {
         var datas=res.data.data;
       this.getTwoSC(datas.contractInfo.marketFirstNameId);
+          var fileList1=[],fileList2=[];
+          datas.commonFilesList.forEach((item) => {
+            if(item.businessCode=='01'){
+              fileList1.push(item)
+            }else if(item.businessCode=='02'){
+              fileList2.push(item)
+            }
+          });
       this.detailform={
-        commonFilesList: datas.commonFilesList,
+        commonFilesList: fileList1,
+        commonFilesList2: fileList2,
         contractInfo: datas.contractInfo,
         contractInfoAttachBO: datas.contractInfoAttachBO,
         contractInfoHouseSalesList:datas.contractInfoHouseSalesList,

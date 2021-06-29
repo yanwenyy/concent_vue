@@ -46,7 +46,6 @@
           <!--fixed>-->
         <!--</el-table-column>-->
         <el-table-column
-          width="50"
           align="center"
           label="编码"
           prop="subjectMatterCode"
@@ -80,6 +79,24 @@
           label="所属单位"
           prop="createOrgName"
           show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
+          align="center"
+          label="是否启用"
+          prop="isEnable"
+          show-overflow-tooltip>
+          <template slot-scope="scope">
+              <el-switch
+                class="inline-formitem-switch"
+                v-model="scope.row.isEnable"
+                active-color="#409EFF"
+                inactive-color="#ddd"
+                active-value="1"
+                inactive-value="0"
+                @change="changeUse(scope.row.isEnable,scope.row.id)"
+              >
+              </el-switch>
+          </template>
         </el-table-column>
       </el-table>
     </div>
@@ -153,6 +170,23 @@ export default {
       },
 },
   methods: {
+    //是否启用点击
+    changeUse(val,id){
+      this.$http
+        .post(
+          "/api/contract/SubjectMatter/list/isEnable",
+          JSON.stringify({id:id, isEnable:val}),
+          {useJson: true}
+
+        )
+        .then((res) => {
+          if (res.data && res.data.code === 200) {
+            this.getData();
+          } else {
+            this.$message.error(data.msg)
+          }
+        });
+    },
     //获取下拉框id和name的公共方法
     getName(id, list, name,code) {
       if(id){
