@@ -251,6 +251,17 @@
                 </div>
               </template>
             </el-table-column>
+            <el-table-column
+              :width="150"
+              align="center"
+              label="是否招标公示"
+              prop="isOpenBid"
+              show-overflow-tooltip
+            >
+              <template slot-scope="scope">
+                 {{scope.row.isOpenBid==1?'是':scope.row.isOpenBid==0?'否':''}}
+              </template>
+            </el-table-column>
           </el-table>
         </div>
       </el-tab-pane>

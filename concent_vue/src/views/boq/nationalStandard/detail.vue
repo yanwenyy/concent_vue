@@ -7,7 +7,7 @@
         <span class="detailSpan"><b>国标库详情</b></span>
         <el-button @click="back" class="detailbutton" >返回</el-button>
         <el-button v-show="p.actpoint != 'look'" type="primary" @click="saveInfo('detailform')" class="detailbutton">保存</el-button>
-        <el-button v-show="p.actpoint != 'look'" @click="submit" class="detailbutton">提交</el-button>
+        <!--<el-button v-show="p.actpoint != 'look'" @click="submit" class="detailbutton">提交</el-button>-->
       </div>
       <div class="detailBox">
  <el-form

@@ -448,7 +448,6 @@
       return {
           key:0,
           railwayLine:[],
-          projectType:[],
           whStatus:true,
           dialogResult1:false,
           dialogResult2:false,
@@ -512,7 +511,21 @@
           formLabelWidth: '120px'
       }
     },
+    computed: {
+      projectType(){
+        return this.$store.state.category.projectDomainType;
+      },
+    },
     methods: {
+      //获取下拉框id和name的公共方法
+      getName(id, list, name,code) {
+        if(id){
+          this.$forceUpdate()
+          this.form[name] = list.find(
+            (item) => item.id == id
+          ).detailName;
+        }
+      },
         //保存特征
         saveTz(){
 
@@ -596,15 +609,36 @@
       // 修改
       totop() {
         if (this.multipleSelection.length !== 1) {
-          this.$message.info("请选择一条记录进行查看操作！");
+          this.$message.info("请选择一条记录进行修改操作！");
           return false;
         }
-        let p = {actpoint: "edit", instid: this.multipleSelection[0].topOrgId};
-        this.$router.push({
-          path: "./detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
+        // let p = {actpoint: "edit", instid: this.multipleSelection[0].topOrgId};
 
+        // this.$router.push({
+        //   path: "./detail/",
+        //   query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        // });
+        var row=this.multipleSelection[0];
+        this.dialogResult=true;
+        this.whStatus=true;
+        this.dialogResult1=false;
+        this.dialogResult2=false;
+        this.form={
+          boqOrdinaryStandard:{
+            importCode:row.importCode,
+            name:row.name,
+            unit:row.unit,
+            projectType:row.projectType,
+            enable:row.enable,
+            feature:row.feature,
+            uuid:row.uuid,
+          },
+          boqFeatureStandardList:row.boqFeatureStandardList,
+          addTzForm:{
+            feature:row.feature,
+            enable:row.enable
+          },
+        }
       },
       // 查看
       rowshow(row) {
@@ -723,8 +757,9 @@
 
       // list通用方法结束
     },
-    created() {
+    mounted() {
       this.getData();
+      this.$store.dispatch("getConfig", {});
     },
   };
 </script>

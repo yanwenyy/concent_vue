@@ -175,6 +175,27 @@
                   <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('使用资质单位',detailform.contractInfo.qualityOrgIds)" ></el-button>
                 </el-input>
               </el-form-item>
+            <el-form-item
+              class="inline-formitem"
+              label="是否公开招标:"
+              prop="contractInfo.isOpenBid"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+            >
+              <el-switch
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                class="inline-formitem-switch"
+                v-model="detailform.contractInfo.isOpenBid"
+                active-color="#409EFF"
+                inactive-color="#ddd"
+                active-value="1"
+                inactive-value="0"
+              >
+              </el-switch>
+            </el-form-item>
               <br>
             <el-form-item
               class="inline-formitem form-item-five"
@@ -546,7 +567,7 @@
             >
               <el-select
                 class="multiple-sel"
-                :disabled="p.actpoint==='look'"
+                :disabled="p.actpoint==='look'||p.actpoint=='task'"
                 multiple
                 clearable
                 filterable
@@ -576,7 +597,7 @@
             >
               <el-select
                 class="multiple-sel"
-                :disabled="p.actpoint==='look'"
+                :disabled="p.actpoint==='look'||p.actpoint=='task'"
                 multiple
                 @change="getMultipleName(detailform.zplx,assemblyType,'otherAssemblyTypeId','otherAssemblyType')"
                 clearable
@@ -625,7 +646,7 @@
                 >
                   <el-select
                     class="multiple-sel"
-                    :disabled="p.actpoint==='look'"
+                    :disabled="p.actpoint==='look'||p.actpoint=='task'"
                     multiple
                     @change="getMultipleName(detailform.jzlx,architecturalType,'otherBuildingTypeId','otherBuildingType')"
                     clearable
@@ -655,7 +676,7 @@
                 >
                   <el-select
                     class="multiple-sel"
-                    :disabled="p.actpoint==='look'"
+                    :disabled="p.actpoint==='look'||p.actpoint=='task'"
                     multiple
                     @change="getMultipleName(detailform.jzjglx,buildingStructure,'otherBuildingStructureTypeId','otherBuildingStructureType')"
                     clearable
@@ -724,7 +745,7 @@
 
               >
                 <el-select
-                  :disabled="p.actpoint==='look'"
+                  :disabled="p.actpoint==='look'||p.actpoint=='task'"
                   filterable
                   clearable
                   placeholder="请选择"
@@ -740,7 +761,7 @@
 
               >
                 <el-select
-                  :disabled="p.actpoint==='look'"
+                  :disabled="p.actpoint==='look'||p.actpoint=='task'"
                   clearable
                   filterable
                   placeholder="请选择"
@@ -843,7 +864,7 @@
               </div>
               <p><span >证明文件: </span>
                 <el-button
-                  v-show="p.actpoint !== 'look'"
+                  v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                   size="small"
                   type="primary"
                   @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile','commonFilesList')">
@@ -899,7 +920,7 @@
                   :resizable="false"
                   label="操作"
                   show-overflow-tooltip
-                  v-if="p.actpoint!=='look'"
+                  v-if="p.actpoint!=='look'&&p.actpoint !== 'task'"
                   width="80"
                 >
                   <template slot-scope="scope">
@@ -907,11 +928,76 @@
                   </template>
                 </el-table-column>
               </el-table>
+            <p><span >招标公告文件: </span>
+              <el-button
+                v-show="p.actpoint !== 'look'&&p.actpoint!='task'&&p.actpoint!='Yjedit'"
+                size="small"
+                type="primary"
+                @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile','commonFilesList2')">
+                点击上传
+              </el-button>
+              <!--<el-upload-->
+              <!--v-show="p.actpoint != 'look'"-->
+              <!--class="upload-demo detailUpload detatil-flie-btn"-->
+              <!--:action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"-->
+              <!--:on-success="handleChange1"-->
+              <!--:on-error="handleChange1"-->
+              <!--:on-remove="handleRemove1"-->
+              <!--:show-file-list="false"-->
+              <!--multiple-->
+              <!--&gt;-->
+              <!--<el-button size="small" type="primary">点击上传</el-button>-->
+              <!--</el-upload>-->
+            </p>
 
+            <el-table
+              :data="detailform.commonFilesList2"
+              :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+
+              @selection-change="handleSelectionChange"
+              align="center"
+              border
+              class="detailTable"
+              ref="table"
+              style="width: 100%;min-height: calc(100vh - 370px);"
+            >
+              <el-table-column
+                :width="55"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+              <el-table-column align="center"  :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+
+              </el-table-column>
+
+              <el-table-column align="center" width="200" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip>
+                <template slot-scope="scope">
+                  {{(scope.row.fileSize/1024).toFixed(2)}}
+                </template>
+              </el-table-column>
+              <el-table-column align="center" width="100" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+
+              </el-table-column>
+
+              <el-table-column
+                align="center"
+                :resizable="false"
+                label="操作"
+                show-overflow-tooltip
+                v-if="p.actpoint!=='look'&&p.actpoint!='Yjedit'&&p.actpoint!='task'"
+                width="80"
+              >
+                <template slot-scope="scope">
+                  <el-link :underline="false" @click="handleRemove2(scope.row,scope.$index)" type="warning">删除</el-link>
+                </template>
+              </el-table-column>
+            </el-table>
 
               <p><span>标的物信息: </span>
                 <el-button
-                  v-show="p.actpoint != 'look'"
+                  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
                 @click="addXs()"
                 size="mini"
                 class="detatil-flie-btn"
@@ -1090,7 +1176,7 @@
                   fixed="right"
                   label="操作"
                   show-overflow-tooltip
-                  v-if="p.actpoint!=='look'"
+                  v-if="p.actpoint!=='look'&&p.actpoint !== 'task'"
                   width="80"
                   align="center"
                 >
@@ -1116,7 +1202,7 @@
               <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                 <span>系统内其他联合体单位列表: </span>
                 <el-button
-                  v-show="p.actpoint != 'look'"
+                  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
                   @click="addfs('nlht',1,1)"
 
                   style="
@@ -1275,7 +1361,6 @@
                   </template>
                 </el-table-column>
                 <el-table-column
-                  v-show="!p.actpoint === 'look'"
                   :resizable="false"
                   label="操作"
                   align="center"
@@ -1296,7 +1381,7 @@
               <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                 <span>系统内分包单位列表: </span>
                 <el-button
-                  v-show="p.actpoint != 'look'"
+                  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
                   @click="addfs('nfb',2,1)"
 
                   style="
@@ -1454,7 +1539,6 @@
                   </template>
                 </el-table-column>
                 <el-table-column
-                  v-show="!p.actpoint === 'look'"
                   :resizable="false"
                   label="操作"
                   align="center"
@@ -1475,7 +1559,7 @@
               <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                 <span>系统外其他联合体单位列表: </span>
                 <el-button
-                  v-show="p.actpoint != 'look'"
+                  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
                   @click="addfs('wlht',3,1)"
 
                   style="
@@ -1633,7 +1717,6 @@
                   </template>
                 </el-table-column>
                 <el-table-column
-                  v-show="!p.actpoint === 'look'"
                   :resizable="false"
                   label="操作"
                   align="center"
@@ -1654,7 +1737,7 @@
               <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                 <span>系统外分包单位列表: </span>
                 <el-button
-                  v-show="p.actpoint != 'look'"
+                  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
                   @click="addfs('wfb',4,1)"
 
                   style="
@@ -1812,7 +1895,6 @@
                   </template>
                 </el-table-column>
                 <el-table-column
-                  v-show="!p.actpoint === 'look'"
                   :resizable="false"
                   label="操作"
                   align="center"
@@ -1833,7 +1915,7 @@
               <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                 <span>集团内分包单位列表: </span>
                 <el-button
-                  v-show="p.actpoint != 'look'"
+                  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
                   @click="addfs('jtfb',5,1)"
 
                   style="
@@ -1990,7 +2072,6 @@
                   </template>
                 </el-table-column>
                 <el-table-column
-                  v-show="!p.actpoint === 'look'"
                   :resizable="false"
                   label="操作"
                   align="center"
@@ -2066,6 +2147,7 @@ export default {
           qualityOrgNames:''
         },
         commonFilesList: [],
+        commonFilesList2: [],
         contractInfoSubjectMatterList:[],
         contractInfoAttachBO: {
           innerContractInfoAttachList:[],
@@ -2531,6 +2613,19 @@ export default {
     });
       console.log(this.detailform.commonFilesList)
     },
+    handleRemove2(file,index) {
+      this.$http
+        .post(
+          "/api/contract/topInfo/CommonFiles/list/delete",
+          {ids:[file.uuid]},
+        )
+        .then((res) => {
+          if (res.data.code === 200) {
+            this.detailform.commonFilesList2.splice(index,1);
+          }
+
+        });
+    },
     //上传附件
     handleChange1(response, file, fileList){
       if (response && response.code === 200) {
@@ -2647,11 +2742,16 @@ export default {
       this.$refs[formName].resetFields()
     },
     saveInfo(formName,type) {
+      this.detailform.commonFilesList=this.detailform.commonFilesList.concat(this.detailform.commonFilesList2)
       var url='';
       if(type=='save'){
         url='/api/contract/contract/ContractInfo/detail/saveOrUpdate';
       }else{
         url='/api/contract/contract/ContractInfo/process/start';
+      }
+      if(this.detailform.contractInfo.isOpenBid=='1'&&this.detailform.commonFilesList2.length==0){
+        this.$message.error("请上传招标公告文件");
+        return false;
       }
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -2683,8 +2783,17 @@ export default {
         .then((res) => {
         var datas=res.data.data;
       this.getTwoSC(datas.contractInfo.marketFirstNameId);
+          var fileList1=[],fileList2=[];
+          datas.commonFilesList.forEach((item) => {
+            if(item.businessCode=='01'){
+              fileList1.push(item)
+            }else if(item.businessCode=='02'){
+              fileList2.push(item)
+            }
+          });
       this.detailform={
-        commonFilesList: datas.commonFilesList,
+        commonFilesList: fileList1,
+        commonFilesList2: fileList2,
         contractInfo: datas.contractInfo,
         contractInfoAttachBO: datas.contractInfoAttachBO,
         contractInfoSubjectMatterList: datas.contractInfoSubjectMatterList,

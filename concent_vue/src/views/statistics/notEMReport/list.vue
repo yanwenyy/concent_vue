@@ -306,7 +306,7 @@
       // 查看
       rowshow(row) {
         console.log(row)
-        let p = {actpoint: "look", statId: row.uuid,reportDate: row.reportDate,stauts:row.stauts,createOrgCode:row.createOrgCode };
+        let p = {'stauts':row.stauts,'gyType': this.userdata.managerOrgList[0].principalCode||'2',actpoint: "look", statId: row.uuid,reportDate: row.reportDate,stauts:row.stauts,createOrgCode:row.createOrgCode };
         this.$router.push({
           path: "./detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},

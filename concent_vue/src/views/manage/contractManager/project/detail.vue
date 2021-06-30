@@ -210,7 +210,7 @@
           v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
         >
           <el-select
-            :disabled="p.actpoint==='look'"
+            :disabled="p.actpoint==='look'||p.actpoint==='task'"
             filterable
             clearable
             placeholder="请选择"
@@ -232,7 +232,7 @@
             v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
           >
             <el-select
-              :disabled="p.actpoint==='look'"
+              :disabled="p.actpoint==='look'||p.actpoint==='task'"
               filterable
               clearable
               placeholder="请选择"
@@ -537,7 +537,7 @@
           <el-form-item
             class="inline-formitem"
             label="是否公开招标:"
-            prop="contractInfo.isClientele"
+            prop="contractInfo.isOpenBid"
             :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -955,7 +955,7 @@
           >
             <el-select
               class="multiple-sel"
-              :disabled="p.actpoint==='look'"
+              :disabled="p.actpoint==='look'||p.actpoint==='task'"
               multiple
               clearable
               filterable
@@ -985,7 +985,7 @@
           >
             <el-select
               class="multiple-sel"
-              :disabled="p.actpoint==='look'"
+              :disabled="p.actpoint==='look'||p.actpoint==='task'"
               multiple
               @change="getMultipleName(detailform.zplx,assemblyType,'otherAssemblyTypeId','otherAssemblyType')"
               clearable
@@ -1034,7 +1034,7 @@
               >
                 <el-select
                   class="multiple-sel"
-                  :disabled="p.actpoint==='look'"
+                  :disabled="p.actpoint==='look'||p.actpoint==='task'"
                   multiple
                   @change="getMultipleName(detailform.jzlx,architecturalType,'otherBuildingTypeId','otherBuildingType')"
                   clearable
@@ -1064,7 +1064,7 @@
               >
                 <el-select
                   class="multiple-sel"
-                  :disabled="p.actpoint==='look'"
+                  :disabled="p.actpoint==='look'||p.actpoint==='task'"
                   multiple
                   @change="getMultipleName(detailform.jzjglx,buildingStructure,'otherBuildingStructureTypeId','otherBuildingStructureType')"
                   clearable
@@ -1499,7 +1499,7 @@
                   fixed="right"
                   label="操作"
                   show-overflow-tooltip
-                  v-if="p.actpoint!=='look'"
+                  v-if="p.actpoint!=='look'&&p.actpoint!=='task'"
                   width="80"
                 >
                   <template slot-scope="scope">
@@ -1566,7 +1566,7 @@
                 fixed="right"
                 label="操作"
                 show-overflow-tooltip
-                v-if="p.actpoint!=='look'"
+                v-if="p.actpoint!=='look'&&p.actpoint!=='task'"
                 width="80"
               >
                 <template slot-scope="scope">
@@ -1633,7 +1633,7 @@
                 fixed="right"
                 label="操作"
                 show-overflow-tooltip
-                v-if="p.actpoint!=='look'"
+                v-if="p.actpoint!=='look'&&p.actpoint!=='task'"
                 width="80"
               >
                 <template slot-scope="scope">
@@ -1700,7 +1700,7 @@
                 fixed="right"
                 label="操作"
                 show-overflow-tooltip
-                v-if="p.actpoint!=='look'"
+                v-if="p.actpoint!=='look'&&p.actpoint!=='task'"
                 width="80"
               >
                 <template slot-scope="scope">
@@ -1841,7 +1841,7 @@
                 fixed="right"
                 label="操作"
                 show-overflow-tooltip
-                v-if="p.actpoint!=='look'"
+                v-if="p.actpoint!=='look'&&p.actpoint!=='task'"
                 align="center"
                 width="150"
               >

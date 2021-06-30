@@ -202,10 +202,12 @@
           v-model="searchform.isOpenBid"
         >
           <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in ifBg"
+            label="是"
+            value="1"
+          ></el-option>
+          <el-option
+            label="否"
+            value="0"
           ></el-option>
         </el-select>
       </el-form-item>
@@ -447,6 +449,17 @@
               <!--/>-->
             <!--</div>-->
           <!--</template>-->
+        </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="是否招标公示"
+          prop="isOpenBid"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+             {{scope.row.isOpenBid==1?'是':scope.row.isOpenBid==0?'否':''}}
+          </template>
         </el-table-column>
       </el-table>
     </div>

@@ -1714,9 +1714,9 @@ export default {
   .el-table--border {
     min-height: auto !important;
   }
-    .detailBox{
-      max-height:calc(100vh - 175px)!important;
-      min-height: calc(100vh - 175px)!important;
-    }
+    /*.detailBox{*/
+      /*max-height:calc(100vh - 175px)!important;*/
+      /*min-height: calc(100vh - 175px)!important;*/
+    /*}*/
 </style>
 

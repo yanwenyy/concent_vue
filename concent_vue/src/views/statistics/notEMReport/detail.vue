@@ -3554,7 +3554,7 @@
           </el-tab-pane>
         </el-tabs>
       </el-tab-pane>
-      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
+      <el-tab-pane label="审批流程" v-if="p.stauts!='1'&&(p.actpoint == 'task'||p.actpoint == 'look')">
         <Audit-Process :task="p.task||{businessId:p.instid||p.statId,businessType:' engineering_monthly_report_not'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>

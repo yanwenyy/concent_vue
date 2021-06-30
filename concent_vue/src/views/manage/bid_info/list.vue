@@ -4,7 +4,7 @@
       <el-button-group style="float: left">
         <el-button @click="add" :disabled="flowStatus!=null"  plain type="primary"><i class="el-icon-plus"></i>登记</el-button>
         <el-button @click="totop" :disabled="flowStatus!=1&&flowStatus!=4" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
-        <el-button type="primary" @click="addk" plain :disabled="flowStatus!=3"><i class="el-icon-document-checked"></i>开标登记</el-button>
+        <el-button type="primary" @click="addk" plain :disabled="flowStatus!=3||(bidFlowStatus!=1&&bidFlowStatus!=4)"><i class="el-icon-document-checked"></i>开标登记</el-button>
 
         <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
 
@@ -276,6 +276,7 @@ export default {
 
     return {
       flowStatus:'',
+      bidFlowStatus:'',
       dialogFormVisible: false,
       infoCSVisible:false,
       form: {
@@ -339,6 +340,7 @@ export default {
       rowSelect(selection, row){
         if(selection.indexOf(row)!=-1){
           this.flowStatus=row.flowStatus;
+          this.bidFlowStatus=row.bidFlowStatus;
         }else{
           this.flowStatus='';
         }

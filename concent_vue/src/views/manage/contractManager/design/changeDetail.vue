@@ -988,7 +988,7 @@
                       prop="inforName"
                     >
                       <template slot-scope="scope">
-                        <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
+                        <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
                         <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
                       </template>
                     </el-table-column>
@@ -1351,7 +1351,7 @@
                   <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                     <span>集团内分包单位列表: </span>
                     <el-button
-                      v-show="p.actpoint != 'look'"
+                      v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
                       @click="addfs('jtfb',5,1)"
 
                       style="
@@ -1610,7 +1610,7 @@
                   v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
                 >
                   <el-select
-                    :disabled="p.actpoint==='look'"
+                    :disabled="p.actpoint==='look'||p.actpoint == 'task'"
                     filterable
                     clearable
                     placeholder="请选择"
@@ -1626,7 +1626,7 @@
                   v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
                 >
                   <el-select
-                    :disabled="p.actpoint==='look'"
+                    :disabled="p.actpoint==='look'||p.actpoint == 'task'"
                     filterable
                     clearable
                     placeholder="请选择"
@@ -1864,7 +1864,7 @@
               }"
                 >
                   <el-select
-                    :disabled="p.actpoint==='look'"
+                    :disabled="p.actpoint==='look'||p.actpoint == 'task'"
                     clearable
                     filterable
                     placeholder="请选择"
@@ -1904,7 +1904,7 @@
                 <el-form-item
                   class="inline-formitem"
                   label="是否公开招标:"
-                  prop="contractInfo.isClientele"
+                  prop="contractInfo.isOpenBid"
                   :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -2263,7 +2263,7 @@
                 >
                   <el-select
                     class="multiple-sel"
-                    :disabled="p.actpoint==='look'"
+                    :disabled="p.actpoint==='look'||p.actpoint == 'task'"
                     multiple
                     clearable
                     filterable
@@ -2293,7 +2293,7 @@
                 >
                   <el-select
                     class="multiple-sel"
-                    :disabled="p.actpoint==='look'"
+                    :disabled="p.actpoint==='look'||p.actpoint == 'task'"
                     multiple
                     @change="getMultipleName(detailform.zplx,assemblyType,'otherAssemblyTypeId','otherAssemblyType')"
                     clearable
@@ -2342,7 +2342,7 @@
                   >
                     <el-select
                       class="multiple-sel"
-                      :disabled="p.actpoint==='look'"
+                      :disabled="p.actpoint==='look'||p.actpoint == 'task'"
                       multiple
                       @change="getMultipleName(detailform.jzlx,architecturalType,'otherBuildingTypeId','otherBuildingType')"
                       clearable
@@ -2372,7 +2372,7 @@
                   >
                     <el-select
                       class="multiple-sel"
-                      :disabled="p.actpoint==='look'"
+                      :disabled="p.actpoint==='look'||p.actpoint == 'task'"
                       multiple
                       @change="getMultipleName(detailform.jzjglx,buildingStructure,'otherBuildingStructureTypeId','otherBuildingStructureType')"
                       clearable
@@ -2605,7 +2605,7 @@
                   <span>中标通知书: </span>
                   <el-button
                     class="detatil-flie-btn"
-                    v-show="p.actpoint !== 'look'"
+                    v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                     size="small"
                     type="primary"
                     @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile','fileList1')">
@@ -2660,7 +2660,7 @@
                     fixed="right"
                     label="操作"
                     show-overflow-tooltip
-                    v-if="p.actpoint!=='look'"
+                    v-if="p.actpoint!=='look'&&p.actpoint !== 'task'"
                     width="80"
                   >
                     <template slot-scope="scope">
@@ -2672,7 +2672,7 @@
                   <span>招标公告附件: </span>
                   <el-button
                     class="detatil-flie-btn"
-                    v-show="p.actpoint !== 'look'"
+                    v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                     size="small"
                     type="primary"
                     @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/03/uploadFile','fileList3')">
@@ -2726,7 +2726,7 @@
                     fixed="right"
                     label="操作"
                     show-overflow-tooltip
-                    v-if="p.actpoint!=='look'"
+                    v-if="p.actpoint!=='look'&&p.actpoint !== 'task'"
                     width="80"
                   >
                     <template slot-scope="scope">
@@ -2738,7 +2738,7 @@
                   <span>合同附件: </span>
                   <el-button
                     class="detatil-flie-btn"
-                    v-show="p.actpoint !== 'look'"
+                    v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                     size="small"
                     type="primary"
                     @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','fileList2')">
@@ -2792,7 +2792,7 @@
                     fixed="right"
                     label="操作"
                     show-overflow-tooltip
-                    v-if="p.actpoint!=='look'"
+                    v-if="p.actpoint!=='look'&&p.actpoint !== 'task'"
                     width="80"
                   >
                     <template slot-scope="scope">
@@ -2803,7 +2803,7 @@
                 <p>
                   <span >标段信息: </span>
                   <el-button
-                    v-show="p.actpoint != 'look'"
+                    v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
                     class="detatil-flie-btn"
                     @click="openBd('add')"
                     type="primary"
@@ -2933,7 +2933,7 @@
                     fixed="right"
                     label="操作"
                     show-overflow-tooltip
-                    v-if="p.actpoint!=='look'"
+                    v-if="p.actpoint!=='look'&&p.actpoint !== 'task'"
                     align="center"
                     width="150"
                   >
@@ -2954,7 +2954,7 @@
                 <p>
                   <span >项目地点: </span>
                   <el-button
-                    v-show="p.actpoint != 'look'"
+                    v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
                     class="detatil-flie-btn"
                     @click="add('dd')"
                     type="primary"
@@ -2989,7 +2989,7 @@
                     prop="inforName"
                   >
                     <template slot-scope="scope">
-                      <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
+                      <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
                       <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
                     </template>
                   </el-table-column>
@@ -3044,14 +3044,13 @@
                   </el-table-column>
 
                   <el-table-column
-                    v-show="!p.actpoint === 'look'"
                     :resizable="false"
                     fixed="right"
                     label="操作"
                     align="center"
                     width="80"
                     show-overflow-tooltip
-                    v-if="p.actpoint !== 'look'"
+                    v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                   >
                     <template slot-scope="scope">
                       <el-link
@@ -3072,7 +3071,7 @@
                   <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                     <span>系统内其他联合体单位列表: </span>
                     <el-button
-                      v-show="p.actpoint != 'look'"
+                      v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
                       @click="addfs('nlht',1,1)"
 
                       style="
@@ -3257,13 +3256,12 @@
                       </template>
                     </el-table-column>
                     <el-table-column
-                      v-show="!p.actpoint === 'look'"
                       :resizable="false"
                       fixed="right"
                       label="操作"
                       align="center"
                       show-overflow-tooltip
-                      v-if="p.actpoint !== 'look'"
+                      v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                       width="80">
                       <template slot-scope="scope">
                         <el-link
@@ -3280,7 +3278,7 @@
                   <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                     <span>系统内分包单位列表: </span>
                     <el-button
-                      v-show="p.actpoint != 'look'"
+                      v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
                       @click="addfs('nfb',2,1)"
 
                       style="
@@ -3465,13 +3463,12 @@
                       </template>
                     </el-table-column>
                     <el-table-column
-                      v-show="!p.actpoint === 'look'"
                       :resizable="false"
                       fixed="right"
                       label="操作"
                       align="center"
                       show-overflow-tooltip
-                      v-if="p.actpoint !== 'look'"
+                      v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                       width="80">
                       <template slot-scope="scope">
                         <el-link
@@ -3488,7 +3485,7 @@
                   <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                     <span>系统外其他联合体单位列表: </span>
                     <el-button
-                      v-show="p.actpoint != 'look'"
+                      v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
                       @click="addfs('wlht',3,1)"
 
                       style="
@@ -3673,13 +3670,12 @@
                       </template>
                     </el-table-column>
                     <el-table-column
-                      v-show="!p.actpoint === 'look'"
                       :resizable="false"
                       fixed="right"
                       label="操作"
                       align="center"
                       show-overflow-tooltip
-                      v-if="p.actpoint !== 'look'"
+                      v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                       width="80">
                       <template slot-scope="scope">
                         <el-link
@@ -3696,7 +3692,7 @@
                   <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                     <span>系统外分包单位列表: </span>
                     <el-button
-                      v-show="p.actpoint != 'look'"
+                      v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
                       @click="addfs('wfb',4,1)"
 
                       style="
@@ -3881,13 +3877,12 @@
                       </template>
                     </el-table-column>
                     <el-table-column
-                      v-show="!p.actpoint === 'look'"
                       :resizable="false"
                       fixed="right"
                       label="操作"
                       align="center"
                       show-overflow-tooltip
-                      v-if="p.actpoint !== 'look'"
+                      v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                       width="80">
                       <template slot-scope="scope">
                         <el-link
@@ -3904,7 +3899,7 @@
                   <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                     <span>集团内分包单位列表: </span>
                     <el-button
-                      v-show="p.actpoint != 'look'"
+                      v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
                       @click="addfs('jtfb',5,1)"
 
                       style="
@@ -4089,13 +4084,12 @@
                       </template>
                     </el-table-column>
                     <el-table-column
-                      v-show="!p.actpoint === 'look'"
                       :resizable="false"
                       fixed="right"
                       label="操作"
                       align="center"
                       show-overflow-tooltip
-                      v-if="p.actpoint !== 'look'"
+                      v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                       width="80">
                       <template slot-scope="scope">
                         <el-link

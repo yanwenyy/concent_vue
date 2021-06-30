@@ -519,6 +519,7 @@ export default {
       //排序
       this.itemform.vxh = "0";
       this.itemform.vprojecttype = str;
+      // this.itemform.vParentid=this.itemform.sumTarget;
       // this.itemform.uuid = this.node.data.uuid;
       this.$http
         .post(
