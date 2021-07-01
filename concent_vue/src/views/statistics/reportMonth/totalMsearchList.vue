@@ -14,8 +14,8 @@
         <!--<el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>创建</el-button>-->
         <!--<el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>-->
         <!--<el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>-->
-        <el-button @click="summary" type="primary" plain><i class="el-icon-edit"></i>批复</el-button>
-        <el-button @click="summary" type="primary" plain><i class="el-icon-edit"></i>填写意见</el-button>
+        <el-button @click="Reply" type="primary" plain><i class="el-icon-edit"></i>批复</el-button>
+        <el-button @click="writeOpinion" type="primary" plain><i class="el-icon-edit"></i>填写意见</el-button>
       </el-button-group>
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
@@ -25,9 +25,11 @@
     </div>
 
     <div style="margin-top: 10px">
+      <!--row-key="uuid"-->
+      <!--:tree-props="{children: 'chirldList', hasChildren: 'hasChildren'}"-->
+      <!--lazy-->
+      <!--:load="load"-->
       <el-table
-        row-key="uuid"
-        :tree-props="{children: 'chirldList', hasChildren: 'hasChildren'}"
         class="tableStyle"
         :max-height="$tableHeight"
         :height="$tableHeight"
@@ -39,8 +41,6 @@
         highlight-current-row
         ref="table"
         tooltip-effect="dark"
-        lazy
-        :load="load"
         default-expand-all
       >
         <el-table-column
@@ -178,6 +178,20 @@
         </el-table-column>
       </el-table>
     </div>
+    <el-dialog title="填写意见" :visible.sync="dialogFormVisible">
+      <el-form :model="form">
+        <el-form-item label="意见" :label-width="formLabelWidth">
+          <el-input type="textarea" v-model="form.remark" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="批复金额(万元):" :label-width="formLabelWidth">
+          <el-input v-model="form.pfMoney" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="subOpinion">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -187,6 +201,9 @@
     //name: "proposal-list-look",
     data() {
       return {
+        dialogFormVisible:false,
+        formLabelWidth: '120px',
+        form:{},
         Authorization:sessionStorage.getItem("token"),
         page: {current: 1, size: 20, total: 0, records: []},
         mrTime:'',
@@ -195,10 +212,9 @@
         showinput: false,
         sousuo: "",
         searchform: {
-          createOrgName: "",
-          flowStatus: "",
-          createTime: "",
-          yearDateS: "",
+          current: 1,
+          size: 20,
+          uuid:"",
         },
         menus: [],
         multipleSelection: [],
@@ -232,6 +248,46 @@
 
     },
     methods: {
+      //批复
+      Reply(){
+        if (this.multipleSelection.length !=1) {
+          this.$message.info("请选择一条记录进行批复操作！");
+          return false;
+        }
+        this.$http
+          .post(
+            "/api/statistics/engineerMonthlyReport/list/reply",
+            JSON.stringify({uuid:this.multipleSelection[0].uuid}),
+            {useJson: true,timeout:600000}
+          )
+          .then((res) => {
+           this.getData()
+          });
+      },
+      //填写意见点击
+      writeOpinion(){
+        // this.multipleSelection[0]
+        if (this.multipleSelection.length !=1) {
+          this.$message.info("请选择一条记录进行填写操作！");
+          return false;
+        }
+        this.dialogFormVisible=true;
+        this.form={
+          uuid:this.multipleSelection[0].uuid
+        };
+      },
+      //提交意见
+      subOpinion(){
+        this.$http
+          .post(
+            "/api/statistics/engineerMonthlyReport/list/reply",
+            JSON.stringify(this.form),
+            {useJson: true,timeout:600000}
+          )
+          .then((res) => {
+            this.getData()
+          });
+      },
       // 返回上一页
       back() {
         this.$router.back()
@@ -239,26 +295,16 @@
       exportdata() {
       },
       load(tree, treeNode, resolve) {
-        tree.reportYear= this.searchform.yearDateS.split("-")[0];
-        tree.reportMonth= this.searchform.yearDateS.split("-")[1];
-        var datas={
-          createOrgId:tree.createOrgId,
-          createOrgCode:tree.createOrgCode,
-          createOrgName:tree.createOrgName,
-          createOrgType:tree.createOrgType,
-          uuid:tree.uuid,
-          reportYear:tree.reportYear,
-          reportMonth:tree.reportMonth,
-          hasChildren:tree.hasChildren,
-        }
+        this.searchform.statisticsProject.uuid=tree.uuid;
         setTimeout(() => {
           this.$http
               .post(
-                  "/api/statistics/projectMonthlyReport/Projectreport/list/jtClickQueryEntInfo",
-                datas
+                  "/api/statistics/engineerMonthlyReportFill/list/queryProject",
+                JSON.stringify(this.searchform),
+                {useJson: true,timeout:600000}
               )
               .then((res) => {
-                var datas=res.data.data.list
+                var datas=res.data.data.records
                 resolve(datas)
               });
 
@@ -368,7 +414,7 @@
       rowshow(row) {
         let p = { actpoint: 'look', projectId: row.projectId,uuid:row.uuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.status }
         this.$router.push({
-          path: '../reportMDetail/',
+          path: '../totalMsearchDetail/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
         })
       },
@@ -495,14 +541,15 @@
       },
       // 查询
       getData() {
-        if(this.searchform.yearDateS!='' && this.searchform.yearDateS!=null && this.searchform.yearDateS!=undefined) {
-          this.searchform.reportYear = this.searchform.yearDateS.split("-")[0];
-          this.searchform.reportMonth = this.searchform.yearDateS.split("-")[1];
-        }
+        // if(this.searchform.yearDateS!='' && this.searchform.yearDateS!=null && this.searchform.yearDateS!=undefined) {
+        //   this.searchform.reportYear = this.searchform.yearDateS.split("-")[0];
+        //   this.searchform.reportMonth = this.searchform.yearDateS.split("-")[1];
+        // }
         this.$http
           .post(
-            "/api/statistics/projectMonthlyReport/Projectreport/list/jtQueryEntInfo",
-            this.searchform
+            "/api/statistics/engineerMonthlyReportFill/detail/queryMonthReportSum",
+            JSON.stringify(this.searchform),
+            {useJson: true,timeout:600000}
           )
           .then((res) => {
           this.tableData = res.data.data;
@@ -513,6 +560,7 @@
       let that = this;
       that.getdatatime();
       this.getData();
+      this.searchform.uuid=this.p.projectId;
       this.userdata=JSON.parse(sessionStorage.getItem('userdata'))
     },
   };

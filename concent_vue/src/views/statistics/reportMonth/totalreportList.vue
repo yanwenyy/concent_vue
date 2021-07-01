@@ -486,9 +486,9 @@
       },
       // 获取分页数据
       getData() {
-      this.searchform.projectId=JSON.parse(this.$utils.decrypt(this.$route.query.p)).projectId
+      this.searchform.projectId=JSON.parse(this.$utils.decrypt(this.$route.query.p)).projectId;
         this.$http
-          .post('/api/statistics/projectMonthlyReport/Projectreport/list/loadPageData', this.searchform)
+          .post('/api/statistics/engineerMonthlyReportFill/listMonthReport/queryMonthReportList', this.searchform)
           .then(res => {
             this.page = res.data.data
           })

@@ -67,7 +67,7 @@
          <template slot="header" slot-scope="scope">
             <span>项目简称</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.projectOmit" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.statisticsProject.projectOmit" size="mini"/>
             </div>
           </template>
           </el-table-column>
@@ -81,7 +81,7 @@
            <template slot="header" slot-scope="scope">
               <span>项目名称</span>
               <div>
-                <el-input style=" width: 100%" v-model="searchform.projectName" size="mini"/>
+                <el-input style=" width: 100%" v-model="searchform.statisticsProject.projectName" size="mini"/>
               </div>
             </template>
             </el-table-column>
@@ -95,7 +95,7 @@
          <template slot="header" slot-scope="scope">
             <span>项目状态</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.projectStatusName" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.statisticsProject.projectStatusName" size="mini"/>
             </div>
           </template>
            <template slot="header"
@@ -126,7 +126,7 @@
         <template slot="header" slot-scope="scope">
             <span>合同总额(万元)</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.contractAmountTotal" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.statisticsProject.contractAmountTotal" size="mini"/>
             </div>
           </template>
         </el-table-column>
@@ -141,7 +141,7 @@
           <template slot="header" slot-scope="scope">
             <span>本月(万元)</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.monthValue" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.statisticsProject.monthValue" size="mini"/>
             </div>
           </template>
         </el-table-column>
@@ -155,7 +155,7 @@
           <template slot="header" slot-scope="scope">
             <span>本年(万元)</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.yearValue" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.statisticsProject.yearValue" size="mini"/>
             </div>
           </template>
         </el-table-column>
@@ -169,7 +169,7 @@
           <template slot="header" slot-scope="scope">
             <span>开累(万元)</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.totalValue" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.statisticsProject.totalValue" size="mini"/>
             </div>
           </template>
         </el-table-column>
@@ -183,7 +183,7 @@
            <template slot="header" slot-scope="scope">
              <span>所属单位</span>
              <div>
-               <el-input style=" width: 100%" v-model="searchform.createOrgName" size="mini"/>
+               <el-input style=" width: 100%" v-model="searchform.statisticsProject.createOrgName" size="mini"/>
              </div>
            </template>
          </el-table-column>
@@ -197,7 +197,7 @@
            <template slot="header" slot-scope="scope">
              <span>行业类别</span>
              <div>
-               <el-input style=" width: 100%" v-model="searchform.categorySecondName" size="mini"/>
+               <el-input style=" width: 100%" v-model="searchform.statisticsProject.categorySecondName" size="mini"/>
              </div>
            </template>
          </el-table-column>
@@ -211,7 +211,7 @@
             <template slot="header" slot-scope="scope">
               <span>项目类型</span>
               <div>
-                <el-input style=" width: 100%" v-model="searchform.projectTypeName" size="mini"/>
+                <el-input style=" width: 100%" v-model="searchform.statisticsProject.projectTypeName" size="mini"/>
               </div>
             </template>
           </el-table-column>
@@ -225,7 +225,7 @@
               <template slot="header" slot-scope="scope">
                 <span>本月上报</span>
                 <div>
-                  <el-input style=" width: 100%" v-model="searchform.flowStatus" size="mini"/>
+                  <el-input style=" width: 100%" v-model="searchform.statisticsProject.flowStatus" size="mini"/>
                 </div>
               </template>
              <template  slot-scope="scope">
@@ -277,7 +277,8 @@
         searchform: {
           current: 1,
           size: 20,
-          // fullDate:''
+          initFlag:"initFlag",
+          statisticsProject:{},
         },
         menus: [],
         multipleSelection: [],
@@ -326,29 +327,11 @@
       },
       searchformReset() {
         this.searchform = {
-          // fullDate:'',
           current: 1,
           size: 20,
-          createOrgCode: '',
-          createOrgId: '',
-          createOrgName: '',
-          createOrgType: '',
-          createTime: '',
-          createUserId: '',
-          createUserName: '',
-          projectTypeName:'',
-          categorySecondName:'',
-          createOrgName:'',
-          totalValue:'',
-          yearValue:'',
-          monthValue:'',
-          contractAmountTotal:'',
-          projectStatusName:'',
-          projectName:'',
-          projectOmit:'',
-          projectId:'',
-          projectreportuuid:''
-        }
+          initFlag:"initFlag",
+          statisticsProject:{},
+        };
         this.getData()
       },
       // 列表选项数据
@@ -358,26 +341,44 @@
       // 获取分页数据
       getData() {
         var date = new Date();
-        var y = date.getFullYear();
-        var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
-        var time=y + '-' + m;
-        // var time="2004-06";
-        //this.searchform.reportYear= y;
-        this.searchform.yearDateS=time;
-        this.searchform.beginDate=y + '-' +"01";
+        // var y = date.getFullYear();
+        // var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+        // var time=y + '-' + m;
+        // // var time="2004-06";
+        // //this.searchform.reportYear= y;
+        // this.searchform.statisticsProject.yearDateS=time;
+        // this.searchform.statisticsProject.beginDate=y + '-' +"01";
         this.$http
-          .post('/api/statistics/projectMonthlyReport/Projectreport/list/projectDeptList', this.searchform)
+          .post('/api/statistics/engineerMonthlyReportFill/list/queryProject',
+            JSON.stringify(this.searchform),
+            {useJson: true,timeout:600000})
           .then(res => {
             this.page = res.data.data
           })
       },
       rowShow(row){
-            let p = {projectId: row.projectId, orgCode: row.createOrgCode,projectName:row.projectName}
+        this.searchform ={
+          current: 1,
+          size: 20,
+          initFlag:"",
+          statisticsProject:{uuid:row.uuid},
+        };
+        this.$http
+          .post('/api/statistics/engineerMonthlyReportFill/list/queryProject',
+            JSON.stringify(this.searchform),
+            {useJson: true,timeout:600000})
+          .then(res => {
+            var datas=res.data.data;
+            if(datas.records!=''){
+              this.page = datas;
+            }else{
+              let p = {projectId: row.uuid, orgCode: row.createOrgCode,projectName:row.projectName}
               this.$router.push({
-                    path: './totalreportList/',
-                    query: {p: this.$utils.encrypt(JSON.stringify(p))}
-                  })
-
+                path: './totalreportList/',
+                query: {p: this.$utils.encrypt(JSON.stringify(p))}
+              })
+            }
+          })
       }
     },
 
