@@ -317,6 +317,7 @@
         }
         var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/entityInfoByProjectReport'
         var params = {}
+        params.pfStatus=0;
         params.projectId = JSON.parse(this.$utils.decrypt(this.$route.query.p)).projectId
         params.createOrgCode =JSON.parse(this.$utils.decrypt(this.$route.query.p)).orgCode
         params.reportProjectName =JSON.parse(this.$utils.decrypt(this.$route.query.p)).projectName

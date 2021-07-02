@@ -771,7 +771,7 @@
           v-show="p.actpoint != 'look'"
           width="500">
 
-          <template slot-scope="scope" v-show="p.actpoint != 'look'">
+          <template slot-scope="scope" v-show="p.actpoint != 'look'&&p.actpoint != 'task'">
             <span  >
               {{scope.row.verifySectionOrgNameType01}}
             </span>
@@ -809,7 +809,7 @@
               <el-tooltip popper-class="tooltip-class" :content="String(scope.row.verifySection.investmentReckon)" placement="bottom" :disabled="p.actpoint !== 'look'" effect="dark">
                 <el-input
                   class="group-no-padding"
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   placeholder=""
                   size="mini"
                   v-model="scope.row.verifySection.investmentReckon"
@@ -839,7 +839,7 @@
               <el-tooltip popper-class="tooltip-class" :content="String(scope.row.verifySection.jananInvestment)" placement="bottom" :disabled="p.actpoint !== 'look'" effect="dark">
                 <el-input
                 class="group-no-padding"
-                  :disabled="p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   placeholder=""
                   size="mini"
                   v-model="scope.row.verifySection.jananInvestment"
@@ -860,7 +860,7 @@
           label="操作"
           align="center"
           show-overflow-tooltip
-          v-if="p.actpoint !== 'look'"
+          v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
           width="80">
           <template slot-scope="scope">
             <el-link

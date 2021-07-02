@@ -1653,6 +1653,15 @@ export default {
                   'leaf': true,
                   'defaultpage': false
                 },
+                {
+                  'name': '总分包月报详情',
+                  'path': '/statistics/reportMonth/totalMsearchDetail',
+                  'component': '/statistics/reportMonth/totalMsearchDetail',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
        /*         ,
                 {
                   'name': '项目月报批量提交',

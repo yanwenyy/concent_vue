@@ -357,7 +357,7 @@
           })
       },
       rowShow(row){
-        let p = {projectId: row.projectId, orgCode: row.createOrgCode,projectName:row.projectName}
+        let p = {projectId: row.uuid, orgCode: row.createOrgCode,projectName:row.projectName}
         this.$router.push({
           path: './totalMsearchList/',
           query: {p: this.$utils.encrypt(JSON.stringify(p))}

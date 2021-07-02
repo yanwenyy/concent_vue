@@ -117,7 +117,7 @@
           :width="200"
           align="center"
           label="所属单位"
-          prop="enginTypeFirstName"
+          prop="companyBelongName"
           show-overflow-tooltip
         >
         </el-table-column>
@@ -125,7 +125,7 @@
           :width="200"
           align="center"
           label="本月上报产值"
-          prop="enginTypeFirstName"
+          prop="monthValue"
           show-overflow-tooltip
         >
         </el-table-column>
@@ -133,7 +133,7 @@
           :width="200"
           align="center"
           label="本年上报产值"
-          prop="enginTypeFirstName"
+          prop="yearValue"
           show-overflow-tooltip
         >
         </el-table-column>
@@ -141,7 +141,7 @@
           :width="200"
           align="center"
           label="批复状态"
-          prop="flowStatus"
+          prop="pfStatus"
           show-overflow-tooltip
 
         >
@@ -172,7 +172,7 @@
             </div>
           </template>-->
           <template slot-scope="scope">
-            <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核驳回':'未创建'}}
+            <div>{{scope.row.pfStatus==1?'已批复':scope.row.pfStatus==0?'未批复':''}}
             </div>
           </template>
         </el-table-column>
@@ -201,6 +201,7 @@
     //name: "proposal-list-look",
     data() {
       return {
+        p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         dialogFormVisible:false,
         formLabelWidth: '120px',
         form:{},
@@ -254,6 +255,10 @@
           this.$message.info("请选择一条记录进行批复操作！");
           return false;
         }
+        if (this.multipleSelection[0].pfStatus!=0) {
+          this.$message.info("请选择有效数据进行批复操作！");
+          return false;
+        }
         this.$http
           .post(
             "/api/statistics/engineerMonthlyReport/list/reply",
@@ -271,6 +276,10 @@
           this.$message.info("请选择一条记录进行填写操作！");
           return false;
         }
+        if (this.multipleSelection[0].pfStatus!=0) {
+          this.$message.info("请选择有效数据进行批复操作！");
+          return false;
+        }
         this.dialogFormVisible=true;
         this.form={
           uuid:this.multipleSelection[0].uuid
@@ -280,12 +289,18 @@
       subOpinion(){
         this.$http
           .post(
-            "/api/statistics/engineerMonthlyReport/list/reply",
+            "/api/statistics/engineerMonthlyReport/list/saveOrUpdateSuggestion",
             JSON.stringify(this.form),
-            {useJson: true,timeout:600000}
+            {useJson: true}
           )
           .then((res) => {
-            this.getData()
+            if(res.data.code==200){
+              this.dialogFormVisible=false;
+              this.getData()
+            }else{
+              this.$message.error(res.data.msg);
+            }
+
           });
       },
       // 返回上一页
@@ -412,7 +427,7 @@
       },
       // 查看
       rowshow(row) {
-        let p = { actpoint: 'look', projectId: row.projectId,uuid:row.uuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.status }
+        let p = { actpoint: 'look', projectId: row.projectId,uuid:row.uuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.status };
         this.$router.push({
           path: '../totalMsearchDetail/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
@@ -531,7 +546,8 @@
       searchformReset() {
         this.searchform={
           current: 1,
-          size: 20
+          size: 20,
+          uuid:this.p.projectId
         };
         this.getData();
       },
@@ -548,19 +564,18 @@
         this.$http
           .post(
             "/api/statistics/engineerMonthlyReportFill/detail/queryMonthReportSum",
-            JSON.stringify(this.searchform),
-            {useJson: true,timeout:600000}
+            this.searchform
           )
           .then((res) => {
-          this.tableData = res.data.data;
+          this.tableData = res.data.data.records;
       });
       },
     },
-    created() {
+    mounted() {
       let that = this;
-      that.getdatatime();
-      this.getData();
+      // that.getdatatime();
       this.searchform.uuid=this.p.projectId;
+      this.getData();
       this.userdata=JSON.parse(sessionStorage.getItem('userdata'))
     },
   };
