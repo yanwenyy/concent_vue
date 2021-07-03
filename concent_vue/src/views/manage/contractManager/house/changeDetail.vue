@@ -520,7 +520,7 @@
                     <span>证明文件: </span>
                   </p>
                   <el-table
-                    :data="detailFormBefore.commonFilesList"
+                    :data="detailFormBefore.commonFilesList1"
                     :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
                     @selection-change="handleSelectionChange"
                     align="center"
@@ -1863,7 +1863,7 @@
                     v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                     size="small"
                     type="primary"
-                    @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile','commonFilesList')">
+                    @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile','commonFilesList1')">
                     点击上传
                   </el-button>
                   <!--<el-upload-->
@@ -1880,7 +1880,7 @@
                   <!--</el-upload>-->
                 </p>
                 <el-table
-                  :data="detailform.commonFilesList"
+                  :data="detailform.commonFilesList1"
                   :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
 
                   @selection-change="handleSelectionChange"
@@ -1928,7 +1928,7 @@
                     v-show="p.actpoint !== 'look'&&p.actpoint!='task'&&p.actpoint!='Yjedit'"
                     size="small"
                     type="primary"
-                    @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile','commonFilesList2')">
+                    @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','commonFilesList2')">
                     点击上传
                   </el-button>
                   <!--<el-upload-->
@@ -3283,7 +3283,7 @@
         options2: [],
         options: [],
         detailform: {
-          commonFilesList: [],
+          commonFilesList1: [],
           commonFilesList2: [],
           contractInfo: {},
           contractInfoAttachBO: {
@@ -3298,7 +3298,7 @@
           cdmc:[],//场地名称
         },
         detailFormBefore:{
-          commonFilesList: [],
+          commonFilesList1: [],
           commonFilesList2: [],
           contractInfo: {},
           contractInfoAttachBO: {
@@ -3645,7 +3645,7 @@
           )
           .then((res) => {
           if (res.data.code === 200) {
-          this.detailform.commonFilesList.splice(index,1);
+          this.detailform.commonFilesList1.splice(index,1);
         }
 
       });
@@ -3995,7 +3995,7 @@
       },
       saveInfo(formName,type) {
         this.detailform.srcId=this.id;
-        this.detailform.commonFilesList=this.detailform.commonFilesList.concat(this.detailform.commonFilesList2)
+        this.detailform.commonFilesList=this.detailform.commonFilesList1.concat(this.detailform.commonFilesList2)
         var url='';
         if(type=='save'){
           url=`/api/contract/contract/ContractInfo/detail/${this.p.actpoint === "add"?'saveChangeRecord':'updateChangeRecord'}`;
@@ -4065,7 +4065,7 @@
         this.getTwoSC(afterData.contractInfo.marketFirstNameId);
         this.detailform={
           changeRecordUuid:afterData.changeRecordUuid,
-          commonFilesList: fileList1,
+          commonFilesList1: fileList1,
           commonFilesList2: fileList2,
           contractInfo: afterData.contractInfo,
           contractInfoAttachBO: afterData.contractInfoAttachBO,
@@ -4082,7 +4082,7 @@
         this.detailform.jzjglx=afterData.contractInfo.otherBuildingStructureTypeId&&afterData.contractInfo.otherBuildingStructureTypeId.split(",");
         this.detailform.contractInfo.isMergeEstate=afterData.estateHolding=='872d545096af11eb9d22f557900f0bae'||afterData.contractInfo.estateHolding=='8c461bc396af11eb9d225bb1ba27925f'?'0':'1';
         this.detailFormBefore={
-          commonFilesList: _fileList1,
+          commonFilesList1: _fileList1,
           commonFilesList2: _fileList2,
           contractInfo: beforData.contractInfo,
           contractInfoAttachBO: beforData.contractInfoAttachBO,
@@ -4116,7 +4116,7 @@
               }
             });
         this.detailform={
-          commonFilesList: fileList1,
+          commonFilesList1: fileList1,
           commonFilesList2: fileList2,
           contractInfo: datas.contractInfo,
           contractInfoAttachBO: datas.contractInfoAttachBO,

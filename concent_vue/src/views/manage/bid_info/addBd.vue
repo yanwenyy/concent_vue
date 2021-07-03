@@ -126,13 +126,12 @@
           >
           </el-date-picker>
         </el-form-item>
-
         <el-form-item label="参与投标单位:" class="list-item"
                 prop="bidInfoSection.participatingUnitsName"
                 :rules="{
                 required: true,
                 message: '此项不能为空',
-                trigger: 'blur',
+                trigger: ['change','blur'],
               }">
           <el-input  placeholder="请输入内容" v-model="detailForm.bidInfoSection.participatingUnitsName" class="input-with-select" :disabled="type === 'look'">
             <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('参与投标单位',detailForm.bidInfoSection.participatingUnitsId)" ></el-button>
@@ -569,7 +568,9 @@ import { isMoney } from '@/utils/validate'
         visible: false,
         DwVisible:false,//选择单位弹框状态
         detailForm: {
-          bidInfoSection:{},
+          bidInfoSection:{
+            participatingUnitsName:''
+          },
           verifySection:{},
           bidInfoSectionOrgList:[],
           dataList: [],
@@ -661,10 +662,14 @@ import { isMoney } from '@/utils/validate'
           name.push(item.detailName);
         })
       }
+
       if(data.type=="参与投标单位"){
+
         this.detailForm.bidInfoSection.participatingUnitsId=id.join(",");
         this.detailForm.bidInfoSection.participatingUnitsName=name.join(",");
+        this.$forceUpdate();
       }else if(data.type=="编标拟配合单位"){
+        this.$forceUpdate();
         this.detailForm.bidInfoSection.orgId=id.join(",");
         this.detailForm.bidInfoSection.orgName=name.join(",");
       }else if(data.type=="其他投标单位(系统内)"){
@@ -722,9 +727,8 @@ import { isMoney } from '@/utils/validate'
       },
       // 初始化
       init(list,isBidRates,type,detail,index,ifkb) {
-
         this.detailForm={
-            bidInfoSection:{},
+            bidInfoSection:{ participatingUnitsName:''},
             verifySection:{},
             bidInfoSectionOrgList:{},
             dataList: [],
@@ -732,9 +736,10 @@ import { isMoney } from '@/utils/validate'
           };
         this.type=type;
         this.index=index;
-        console.log(list)
+        // console.log(list,type)
         this.visible = true;
         this.bdName=list||[];
+        console.log(this.bdName)
         this.isBidRates=isBidRates;
         this.ifkb=ifkb;
         if(type=='edit'||type=='look'){
@@ -751,7 +756,7 @@ import { isMoney } from '@/utils/validate'
           console.log(this.detailForm)
         }else{
           this.detailForm={
-            bidInfoSection:{},
+            bidInfoSection:{participatingUnitsName:''},
             verifySection:{},
             bidInfoSectionOrgList:{},
             dataList: [],

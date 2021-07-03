@@ -959,8 +959,9 @@
               </el-button
               >
             </p>
+            <!--:row-class-name="tableRowClassName"-->
             <el-table
-              :row-class-name="tableRowClassName"
+
               v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null"
               :data="detailform.topInfoSectionList"
               :header-cell-style="{

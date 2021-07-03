@@ -117,24 +117,24 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="国标表中上级节点id"
-          prop="parentCode"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>国标表中上级节点id</span>
-            <div>
-              <el-input
-                style=" width: 100%"
-                v-model="searchform.parentCode"
-                size="mini"
-              />
-            </div>
-          </template>
-        </el-table-column>
+        <!--<el-table-column-->
+          <!--:width="150"-->
+          <!--align="center"-->
+          <!--label="国标表中上级节点id"-->
+          <!--prop="parentCode"-->
+          <!--show-overflow-tooltip-->
+        <!--&gt;-->
+          <!--<template slot="header" slot-scope="scope">-->
+            <!--<span>国标表中上级节点id</span>-->
+            <!--<div>-->
+              <!--<el-input-->
+                <!--style=" width: 100%"-->
+                <!--v-model="searchform.parentCode"-->
+                <!--size="mini"-->
+              <!--/>-->
+            <!--</div>-->
+          <!--</template>-->
+        <!--</el-table-column>-->
 
       </el-table>
     </div>
@@ -163,6 +163,7 @@
             prop="boqOrdinaryStandard.importCode"
           >
             <el-input
+              :disabled="ifLook==true"
               clearable
               size="mini"
               v-model="form.boqOrdinaryStandard.importCode"/>
@@ -178,6 +179,7 @@
               }"
           >
             <el-input
+              :disabled="ifLook==true"
               clearable
               size="mini"
               v-model="form.boqOrdinaryStandard.name"/>
@@ -193,6 +195,7 @@
               }"
           >
             <el-input
+              :disabled="ifLook==true"
               clearable
               size="mini"
               v-model="form.boqOrdinaryStandard.unit"/>
@@ -210,6 +213,7 @@
               }"
           >
             <el-select
+              :disabled="ifLook==true"
               filterable
               clearable
               placeholder=""
@@ -230,6 +234,7 @@
 
           >
             <el-select
+              :disabled="ifLook==true"
               clearable
               filterable
               placeholder="请选择"
@@ -257,102 +262,102 @@
               prop="boqOrdinaryStandard.feature"
             >
               <el-input
+                :disabled="ifLook==true"
                 type="textarea"
                 :rows="2"
                 clearable
-                readonly
                 v-model="form.boqOrdinaryStandard.feature"/>
             </el-form-item>
           </div>
 
-        <p style="overflow: hidden; margin-right:30px">
-          <span style="float: left">项目特征修改: </span>
-          <el-button
-            @click="whStatus=false,dialogResult1=true"
-            size="mini"
-            style="
-                  float: right;
-                  width: 60px;
-                  height: 32px;
-                  background: #5c8bfa;
-                  font-size: 12px;
-                "
-            type="primary"
-          >修改</el-button>
-        </p>
-        <el-table
-          :data="form.boqFeatureStandardList"
-          :key="key"
-          :header-cell-style="{
-                'text-align': 'center',
-                'background-color': 'rgba(246,248,252,1)',
-                color: 'rgba(0,0,0,1)',
-              }"
-          @selection-change="handleSelectionChange"
-          align="center"
-          border
-          class="clothSizeTable"
-          ref="table"
-          style="width: 98%; min-height: calc(100vh - 370px)"
-        >
-          <el-table-column
-            :width="80"
-            align="center"
-            label="序号"
-            show-overflow-tooltip
-            type="index"
-          ></el-table-column>
-          <el-table-column
-            :resizable="false"
-            label="特征描述"
-            prop="feature"
-            show-overflow-tooltip
-            align="center"
-          >
-            <template slot-scope="scope">
-              <el-input
-                class="listInput"
-                clearable
-                v-model="scope.row.feature"
-              ></el-input>
-            </template>
-          </el-table-column>
+        <!--<p style="overflow: hidden; margin-right:30px">-->
+          <!--<span style="float: left">项目特征修改: </span>-->
+          <!--<el-button-->
+            <!--@click="whStatus=false,dialogResult1=true"-->
+            <!--size="mini"-->
+            <!--style="-->
+                  <!--float: right;-->
+                  <!--width: 60px;-->
+                  <!--height: 32px;-->
+                  <!--background: #5c8bfa;-->
+                  <!--font-size: 12px;-->
+                <!--"-->
+            <!--type="primary"-->
+          <!--&gt;修改</el-button>-->
+        <!--</p>-->
+        <!--<el-table-->
+          <!--:data="form.boqFeatureStandardList"-->
+          <!--:key="key"-->
+          <!--:header-cell-style="{-->
+                <!--'text-align': 'center',-->
+                <!--'background-color': 'rgba(246,248,252,1)',-->
+                <!--color: 'rgba(0,0,0,1)',-->
+              <!--}"-->
+          <!--@selection-change="handleSelectionChange"-->
+          <!--align="center"-->
+          <!--border-->
+          <!--class="clothSizeTable"-->
+          <!--ref="table"-->
+          <!--style="width: 98%; min-height: calc(100vh - 370px)"-->
+        <!--&gt;-->
+          <!--<el-table-column-->
+            <!--:width="80"-->
+            <!--align="center"-->
+            <!--label="序号"-->
+            <!--show-overflow-tooltip-->
+            <!--type="index"-->
+          <!--&gt;</el-table-column>-->
+          <!--<el-table-column-->
+            <!--:resizable="false"-->
+            <!--label="特征描述"-->
+            <!--prop="feature"-->
+            <!--show-overflow-tooltip-->
+            <!--align="center"-->
+          <!--&gt;-->
+            <!--<template slot-scope="scope">-->
+              <!--<el-input-->
+                <!--class="listInput"-->
+                <!--clearable-->
+                <!--v-model="scope.row.feature"-->
+              <!--&gt;</el-input>-->
+            <!--</template>-->
+          <!--</el-table-column>-->
 
-          <el-table-column
-            :resizable="false"
-            label="启用状态"
+          <!--<el-table-column-->
+            <!--:resizable="false"-->
+            <!--label="启用状态"-->
 
-            align="center"
-            show-overflow-tooltip
-          >
-            <template slot-scope="scope">
-              <el-form-item class="tabelForm"  :prop="'boqFeatureStandardList.' + scope.$index + '.enable'"
-                            :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }">
-                <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                <el-select
-                  clearable
-                  filterable
-                  placeholder="请选择"
-                  v-model="scope.row.enable"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.name"
-                    :value="item.id"
-                    v-for="(item, index) in qyzt"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-              <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-            </template>
+            <!--align="center"-->
+            <!--show-overflow-tooltip-->
+          <!--&gt;-->
+            <!--<template slot-scope="scope">-->
+              <!--<el-form-item class="tabelForm"  :prop="'boqFeatureStandardList.' + scope.$index + '.enable'"-->
+                            <!--:rules="{-->
+                <!--required: true,-->
+                <!--message: '此项不能为空',-->
+                <!--trigger: 'blur',-->
+              <!--}">-->
+                <!--&lt;!&ndash;@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"&ndash;&gt;-->
+                <!--<el-select-->
+                  <!--clearable-->
+                  <!--filterable-->
+                  <!--placeholder="请选择"-->
+                  <!--v-model="scope.row.enable"-->
+                <!--&gt;-->
+                  <!--<el-option-->
+                    <!--:key="index"-->
+                    <!--:label="item.name"-->
+                    <!--:value="item.id"-->
+                    <!--v-for="(item, index) in qyzt"-->
+                  <!--&gt;</el-option>-->
+                <!--</el-select>-->
+              <!--</el-form-item>-->
+              <!--&lt;!&ndash; <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> &ndash;&gt;-->
+            <!--</template>-->
 
-          </el-table-column>
-        </el-table>
-        <div slot="footer" class="dialog-footer">
+          <!--</el-table-column>-->
+        <!--</el-table>-->
+        <div slot="footer" class="dialog-footer" v-if="!ifLook">
           <el-button type="primary" @click="saveOrUpdate()">保 存</el-button>
           <el-button @click="dialogResult = false">关 闭</el-button>
         </div>
@@ -446,6 +451,7 @@
     name: "proposal-list-look",
     data() {
       return {
+          ifLook:false,
           key:0,
           railwayLine:[],
           whStatus:true,
@@ -557,10 +563,15 @@
                         });
                         //清空输入框
                         this.form={
-                            standardName: "",
-                            nearName: "",
-                            sortNo: "",
-                            uuid:''
+                          boqOrdinaryStandard:{
+                            importCode:"",
+                            name:"",
+                            unit:"",
+                            projectType:"",
+                            enable:"",
+                            feature:"",
+                            uuid:"",
+                          },
                         };
                         //关闭dialog对话框
                         this.dialogResult = false;
@@ -585,6 +596,7 @@
         },*/
       // 增加
       add() {
+          this.ifLook=false;
           this.dialogResult=true;
           this.whStatus=true;
           this.dialogResult1=false;
@@ -608,6 +620,7 @@
       },
       // 修改
       totop() {
+        this.ifLook=false;
         if (this.multipleSelection.length !== 1) {
           this.$message.info("请选择一条记录进行修改操作！");
           return false;
@@ -642,11 +655,24 @@
       },
       // 查看
       rowshow(row) {
-        let p = {actpoint: "look", instid: row.topOrgId};
-        this.$router.push({
-          path: "./detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
+        this.dialogResult=true;
+        this.ifLook=true;
+        this.form={
+          boqOrdinaryStandard:{
+            importCode:row.importCode,
+            name:row.name,
+            unit:row.unit,
+            projectType:row.projectType,
+            enable:row.enable,
+            feature:row.feature,
+            uuid:row.uuid,
+          },
+          boqFeatureStandardList:row.boqFeatureStandardList,
+          addTzForm:{
+            feature:row.feature,
+            enable:row.enable
+          },
+        }
       },
       // 删除
       remove() {
@@ -780,5 +806,6 @@
     height: 350px;
     box-sizing: border-box;
     overflow: auto;
+    padding-bottom: 50px;
   }
 </style>

@@ -849,7 +849,7 @@
                   v-show="p.actpoint !== 'look'&&p.actpoint!='task'&&p.actpoint!='Yjedit'"
                   size="small"
                   type="primary"
-                  @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile','commonFilesList')">
+                  @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile','commonFilesList1')">
                   点击上传
                 </el-button>
                 <!--<el-upload-->
@@ -866,7 +866,7 @@
                 <!--</el-upload>-->
               </p>
               <el-table
-                :data="detailform.commonFilesList"
+                :data="detailform.commonFilesList1"
                 :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
 
                 @selection-change="handleSelectionChange"
@@ -914,7 +914,7 @@
                   v-show="p.actpoint !== 'look'&&p.actpoint!='task'&&p.actpoint!='Yjedit'"
                   size="small"
                   type="primary"
-                  @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile','commonFilesList2')">
+                  @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','commonFilesList2')">
                   点击上传
                 </el-button>
                 <!--<el-upload-->
@@ -2145,7 +2145,7 @@ export default {
           isMain: '',
           placeId:''
         }],
-        commonFilesList: [],
+        commonFilesList1: [],
         commonFilesList2: [],
         contractInfoHouseSalesList:[],
         contractInfoAttachBO: {
@@ -2637,11 +2637,10 @@ export default {
         )
         .then((res) => {
         if (res.data.code === 200) {
-        this.detailform.commonFilesList.splice(index,1);
+        this.detailform.commonFilesList1.splice(index,1);
       }
 
     });
-      console.log(this.detailform.commonFilesList)
     },
     handleRemove2(file,index) {
       this.$http
@@ -2747,7 +2746,7 @@ export default {
       }
     },
     saveInfo(formName,type) {
-      this.detailform.commonFilesList=this.detailform.commonFilesList.concat(this.detailform.commonFilesList2)
+      this.detailform.commonFilesList=this.detailform.commonFilesList1.concat(this.detailform.commonFilesList2)
       var url='';
       if(type=='save'){
         url='/api/contract/contract/ContractInfo/detail/saveOrUpdate';
@@ -2825,7 +2824,7 @@ export default {
             }
           });
       this.detailform={
-        commonFilesList: fileList1,
+        commonFilesList1: fileList1,
         commonFilesList2: fileList2,
         contractInfo: datas.contractInfo,
         contractInfoAttachBO: datas.contractInfoAttachBO,

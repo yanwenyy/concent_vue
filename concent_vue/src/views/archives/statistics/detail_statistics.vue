@@ -6,7 +6,7 @@
           <span class="detailSpan"><b>统计分析详情</b></span>
           <el-button class="detailbutton" @click="back">返回</el-button>
           <el-button type="primary" class="detailbutton" v-show="p.actpoint != 'look'" @click="saveInfo('detailform')">保存</el-button>
-          <el-button class="detailbutton" @click="submitForm('detailform')" v-show="p.actpoint != 'look'">提交</el-button>
+          <!--<el-button class="detailbutton" @click="submitForm('detailform')" v-show="p.actpoint != 'look'">提交</el-button>-->
       </div>
       <div class="detailBox">
         <el-form

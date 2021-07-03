@@ -1359,7 +1359,7 @@
               <p>
                 <span >标段信息: </span>
                 <el-button
-                  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
+                  v-show="p.actpoint !== 'look'&&detailform.searchProject!=true&&p.actpoint !== 'task'"
                   class="detatil-flie-btn"
                   @click="openBd('add')"
                   type="primary"
@@ -1495,6 +1495,7 @@
                 >
                   <template slot-scope="scope">
                     <el-link
+                      v-show="detailform.searchProject!=true"
                       :underline="false"
                       @click="del(scope.$index,scope.row,detailform.contractInfoSectionList,'bd')"
                       type="warning">删除

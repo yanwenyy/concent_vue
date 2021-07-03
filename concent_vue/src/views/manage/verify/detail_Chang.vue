@@ -1434,13 +1434,13 @@
                           </el-table>
                 </div>
               <p  v-if="detailformAfter.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailformAfter.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'" style="overflow:hidden;margin-right: 30px"><span style="font-size: 14px">标段信息: </span>
-                <el-button v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
-                  @click="dialogTopInfoSection = true"
-                  size="mini"
-                  class="detatil-flie-btn"
-                  type="primary"
-                >新增
-                </el-button>
+                <!--<el-button v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"-->
+                  <!--@click="dialogTopInfoSection = true"-->
+                  <!--size="mini"-->
+                  <!--class="detatil-flie-btn"-->
+                  <!--type="primary"-->
+                <!--&gt;新增-->
+                <!--</el-button>-->
               </p>
 
               <el-table
@@ -1554,22 +1554,22 @@
           </el-input>
           </template>
         </el-table-column>
-                <el-table-column
-                  v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
-                  :resizable="false"
-                  fixed="right"
-                  label="操作"
-                  align="center"
-                  width="80"
-                  show-overflow-tooltip>
-                  <template slot-scope="scope">
-                    <el-link  v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
-                      :underline="false"
-                      @click="del(scope.$index,scope.row,detailformAfter.verifySectionList,'bd')"
-                      type="warning">删除
-                    </el-link>
-                  </template>
-                </el-table-column>
+                <!--<el-table-column-->
+                  <!--v-show="p.actpoint != 'look'&&p.actpoint != 'task'"-->
+                  <!--:resizable="false"-->
+                  <!--fixed="right"-->
+                  <!--label="操作"-->
+                  <!--align="center"-->
+                  <!--width="80"-->
+                  <!--show-overflow-tooltip>-->
+                  <!--<template slot-scope="scope">-->
+                    <!--<el-link  v-show="p.actpoint != 'look'&&p.actpoint != 'task'"-->
+                      <!--:underline="false"-->
+                      <!--@click="del(scope.$index,scope.row,detailformAfter.verifySectionList,'bd')"-->
+                      <!--type="warning">删除-->
+                    <!--</el-link>-->
+                  <!--</template>-->
+                <!--</el-table-column>-->
               </el-table>
 
 
@@ -1890,15 +1890,17 @@ export default {
         var url='';
         if(type=='save'){
           url=`/api/contract/topInfo/Verify/detail/${this.p.actpoint === "add"? "saveChange": "updateChangeRecord"}`
+          this.detailformAfter.verify.flowStatus = "1";
         }else{
-          url="/api/contract/topInfo/Verify/changeProcess/start"
+          url="/api/contract/topInfo/Verify/changeProcess/start";
+          this.detailformAfter.verify.flowStatus = "2";
         }
       this.$refs[formName].validate((valid) => {
         //alert(valid);
         if (valid) {
           //alert(JSON.stringify(this.detailform));
           // console.log(JSON.stringify(this.detailformAfter));
-          this.detailformAfter.verify.flowStatus = "0";
+
           this.$http
             .post(
               // "/api/contract/topInfo/Verify/detail/saveChange",

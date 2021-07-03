@@ -492,7 +492,7 @@
             <p class="detail-title" style="overflow:hidden;margin-right:30px">
               <span>标的物信息:</span>
               <el-button
-                v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
+                v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'&&detailForm.project.contractInfoList==''"
                 @click="addProduct()"
                 class="upload-demo detailUpload detatil-flie-btn"
                 type="primary">
@@ -598,7 +598,7 @@
                 </template>
               </el-table-column>
               <el-table-column
-                v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
+                v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'&&detailForm.project.contractInfoList==''"
                 :resizable="false"
                 fixed="right"
                 label="操作"

@@ -675,7 +675,7 @@
                   prop="inforName"
                 >
                   <template slot-scope="scope">
-                    <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
+                    <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'&&p.actpoint != 'task'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
                     <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
                   </template>
                 </el-table-column>
@@ -873,7 +873,7 @@
                 }"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'"
+                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                     clearable
                     placeholder=""
                     v-model="detailform.topInfoOrg.projectTrackResponPerson"
@@ -885,7 +885,7 @@
                                :rules="rules.phone"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'"
+                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                     clearable
                     placeholder=""
 
@@ -902,7 +902,7 @@
               }"
                 >
                   <el-select
-                    :disabled="p.actpoint === 'look'"
+                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                     filterable
                     clearable
                     placeholder="请选择"

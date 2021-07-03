@@ -1029,12 +1029,12 @@ export default {
 }
 .zb-dialog >>> .el-dialog {
   width: 80% !important;
-  height: 80%;
+  height: 82%;
   overflow: hidden;
   /* overflow: auto; */
 }
 >>> .el-dialog__body {
-  height: 70%;
+  height: 60%;
   overflow: auto;
 }
 >>>.el-dialog__wrapper{

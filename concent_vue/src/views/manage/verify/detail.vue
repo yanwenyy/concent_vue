@@ -1136,10 +1136,7 @@ export default {
                     message:  `${type=='save'?'保存':'提交'}成功`,
                     type: "success",
                   });
-                  this.$refs[formName].resetFields();
-                  this.$router.push({
-                    path: "/manage/verify/listAll",
-                  });
+                  this.$router.back();
                 }
 
               });
