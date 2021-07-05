@@ -497,7 +497,7 @@
       // 获取数据
       getData() {
         this.$http
-          .post('/api/statistics/inspectMonthReportFill/detail/queryCollect', JSON.stringify({
+          .post('/api/statistics/inspectMonthReportFill/detail/queryMonthReportEntityInfo', JSON.stringify({
             projectId: this.p.projectId,
             uuid: this.p.uuid||this.p.instid,
             reportYear: this.p.reportYear,

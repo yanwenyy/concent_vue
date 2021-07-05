@@ -4054,6 +4054,8 @@
             fileList2.push(item)
           }
         });
+            afterData.commonFilesList=afterData.commonFilesList||[];
+            beforData.commonFilesList=beforData.commonFilesList||[];
         var _fileList1=[],_fileList2=[];
         beforData.commonFilesList.forEach((item) => {
           if(item.businessCode=='01'){

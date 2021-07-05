@@ -5039,6 +5039,8 @@
         this.getTwo(afterData.contractInfo.enginTypeFirstId);
         this.getThree(afterData.contractInfo.enginTypeSecondId);
         this.getTwoSC(afterData.contractInfo.marketFirstNameId);
+        afterData.commonFilesList=afterData.commonFilesList||[];
+        beforData.commonFilesList=beforData.commonFilesList||[];
         var fileList1=[],fileList2=[],fileList3=[];
         afterData.commonFilesList.forEach((item) => {
           if(item.businessCode=='01'){

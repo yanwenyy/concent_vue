@@ -313,7 +313,7 @@
     border-radius: 0;
   }
   .tableStyle{
-    min-height:calc(100vh - 236px)!important;
-    max-height:calc(100vh - 236px)!important ;
+    min-height:calc(100vh - 136px)!important;
+    max-height:calc(100vh - 136px)!important ;
   }
 </style>

@@ -1131,7 +1131,7 @@
              </el-form-item>
              <el-form-item
                class="long-form-item"
-               v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
+               v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'&&(detailform.contractInfo.isInSystemSub==0||detailform.contractInfo.isInGroupSub==0)"
                label="本企业建安部分已分配"
                prop="contractInfo.installDesignAllocated"
                :rules="rules.contractAmount"
@@ -1139,11 +1139,10 @@
                <el-input
                  disabled
                  clearable
-
                  v-model="detailform.contractInfo.installDesignAllocated"/>
              </el-form-item>
              <el-form-item
-               v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
+               v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'&&(detailform.contractInfo.isInSystemSub==0||detailform.contractInfo.isInGroupSub==0)"
                class="long-form-item"
                label="本企业建安部分未分配"
                prop="contractInfo.installDesignUnallocat"

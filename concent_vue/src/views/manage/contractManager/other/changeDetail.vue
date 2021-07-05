@@ -4036,6 +4036,8 @@
           beforData=datas[1];
           afterData=datas[0];
         }
+        afterData.commonFilesList=afterData.commonFilesList||[];
+        beforData.commonFilesList=beforData.commonFilesList||[];
         var fileList1=[],fileList2=[];
         afterData.commonFilesList.forEach((item) => {
           if(item.businessCode=='01'){

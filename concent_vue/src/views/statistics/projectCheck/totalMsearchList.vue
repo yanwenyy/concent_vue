@@ -563,7 +563,7 @@
         // }
         this.$http
           .post(
-            "/api/statistics/inspectMonthReportFill/detail/queryMonthReportSum",
+            "/api/statistics/inspectMonthReportFill/detail/queryCollect",
             this.searchform
           )
           .then((res) => {

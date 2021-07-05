@@ -305,7 +305,7 @@
   }
   .home-body{
     width: 100%;
-    min-height: calc(100vh - 170px)!important;
+    min-height: calc(100vh - 70px)!important;
     box-sizing: border-box;
   }
   .home-card{
