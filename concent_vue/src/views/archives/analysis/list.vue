@@ -4,7 +4,7 @@
       <el-button-group style="float: left">
         <el-button plain type="primary" @click="add">新增</el-button>
         <el-button plain type="primary" @click="editItem">修改</el-button>
-        <el-button plain type="primary" @click="sumbitFrom">提交</el-button>
+        <!--<el-button plain type="primary" @click="sumbitFrom">提交</el-button>-->
       </el-button-group>
       <div style="float: right">
         <el-form class="search-form" :inline="true" :model="searchFrom" @keyup.enter.native="init()">
@@ -395,41 +395,46 @@ export default {
         this.detailform.selectYear = this.resultform.year;
         //查询选中年度是否已经有填报信息
       this.searchform.selectYear = this.resultform.year;
-      this.$http
-        .post(
-          '/api/contract/archives/ArchivesInfo/list/loadPageDataByAnalysis',
-          this.searchform
-        )
-        .then(res => {
-          if(res.data.data.records.length>0)
-          {
-            this.$message.error("不能对相同年度进行重复填报！");
-          }else {
-            this.$http
-              .post(
-                "/api/contract/archives/ArchivesInfo/detail/save",
-                JSON.stringify(this.detailform),
-                {useJson: true}
-              )
-              .then((res) => {
+      if(this.resultform.year==null||this.resultform.year==''){
+        this.$message.error("请选择填报年份！");
+      }else{
+        this.$http
+          .post(
+            '/api/contract/archives/ArchivesInfo/list/loadPageDataByAnalysis',
+            this.searchform
+          )
+          .then(res => {
+            if(res.data.data.records.length>0)
+            {
+              this.$message.error("不能对相同年度进行重复填报！");
+            }else {
+              this.$http
+                .post(
+                  "/api/contract/archives/ArchivesInfo/detail/save",
+                  JSON.stringify(this.detailform),
+                  {useJson: true}
+                )
+                .then((res) => {
 
-                if (res.data.msg === "SUCCESS") {
-                  this.$message({
-                    message: "保存成功",
-                    type: "success",
-                  });
-                  // this.$refs[formName].resetFields();
-                  // this.$router.push({
-                  //   path: "./list",
-                  // });
-                  this.dialogAdd = false;
-                  this.getData();
-                }
+                  if (res.data.msg === "SUCCESS") {
+                    this.$message({
+                      message: "保存成功",
+                      type: "success",
+                    });
+                    // this.$refs[formName].resetFields();
+                    // this.$router.push({
+                    //   path: "./list",
+                    // });
+                    this.dialogAdd = false;
+                    this.getData();
+                  }
 
-              });
-          }
-          // console.log(JSON.stringify(this.page));
-        })
+                });
+            }
+            // console.log(JSON.stringify(this.page));
+          })
+      }
+
 
 
 

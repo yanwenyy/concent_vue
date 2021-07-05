@@ -1161,7 +1161,7 @@
                 <span>中标通知书: </span>
                 <el-button
                   class="detatil-flie-btn"
-                  v-show="p.actpoint !== 'look'"
+                  v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                   size="small"
                   type="primary"
                   @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile','fileList1')">
@@ -1489,7 +1489,7 @@
                   fixed="right"
                   label="操作"
                   show-overflow-tooltip
-                  v-if="p.actpoint!=='look'"
+                  v-if="p.actpoint!=='look'&&p.actpoint!=='task'"
                   align="center"
                   width="150"
                 >

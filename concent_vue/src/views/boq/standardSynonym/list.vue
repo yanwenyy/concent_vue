@@ -114,6 +114,7 @@
       <el-form :model="form" style="height:30%">
         <el-form-item label="清单名称:" :label-width="formLabelWidth">
           <el-input
+            :disabled="lookType"
             v-model="form.standardName"
             size="mini"
           />
@@ -121,6 +122,7 @@
 
         <el-form-item label="近义词:" :label-width="formLabelWidth">
           <el-input
+            :disabled="lookType"
             v-model="form.nearName"
             size="mini"
           />
@@ -128,12 +130,14 @@
 
         <el-form-item label="排序号:" :label-width="formLabelWidth">
           <el-input
+            @input="form.sortNo=form.sortNo.replace(/^\.+|[^\d.]/g,'')"
+            :disabled="lookType"
             v-model="form.sortNo"
             size="mini"
           />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <div slot="footer" class="dialog-footer" v-if="!lookType">
         <el-button type="primary" @click="save()">保 存</el-button>
         <el-button @click="dialogResult = false">关 闭</el-button>
       </div>
@@ -147,6 +151,7 @@
     name: "proposal-list-look",
     data() {
       return {
+          lookType:false,
           page: {current: 1, size: 20, total: 0, records: []},
           showinput: false,
           sousuo: "",
@@ -223,6 +228,7 @@
         },
       // 增加
       add() {
+        this.lookType=false;
           this.dialogResult=true;
           this.form={
               code: "",
@@ -236,6 +242,7 @@
       },
       // 修改
       totop() {
+        this.lookType=false;
         if (this.multipleSelection.length !== 1 ||this.multipleSelection.length>1) {
           this.$message.info("请选择一条记录进行查看操作！");
           return false;
@@ -252,11 +259,14 @@
       },
       // 查看
       rowshow(row) {
-        let p = {actpoint: "look", instid: row.topOrgId};
-        this.$router.push({
-          path: "./detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
+        this.lookType=true;
+        this.form={
+          standardName: row.standardName,
+          nearName: row.nearName,
+          sortNo:row.sortNo,
+          uuid:row.uuid
+        };
+        this.dialogResult = true;
       },
       // 删除
       remove() {

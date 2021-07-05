@@ -164,34 +164,60 @@
       @size-change="handleSizeChange"
       layout="total, sizes, prev, pager, next, jumper"
     ></el-pagination>
-    <!--<el-dialog  title="近义词库维护" :visible.sync="dialogResult" width="30%" >-->
-      <!--<el-form :model="form" style="height:30%">-->
-        <!--<el-form-item label="清单名称:" :label-width="formLabelWidth">-->
-          <!--<el-input-->
-            <!--v-model="form.standardName"-->
-            <!--size="mini"-->
-          <!--/>-->
-        <!--</el-form-item>-->
+    <el-dialog  title="知识库维护" :visible.sync="dialogResult" width="50%" >
+      <el-form :model="form" style="height:30%">
+        <el-form-item label="项目基础名称:" :label-width="formLabelWidth">
+          <el-input
+            disabled
+            v-model="form.nameImport"
+            size="mini"
+          />
+        </el-form-item>
 
-        <!--<el-form-item label="近义词:" :label-width="formLabelWidth">-->
-          <!--<el-input-->
-            <!--v-model="form.nearName"-->
-            <!--size="mini"-->
-          <!--/>-->
-        <!--</el-form-item>-->
+        <el-form-item label="标准项目名称:" :label-width="formLabelWidth">
+          <el-input
+            disabled
+            v-model="form.nameStandard"
+            size="mini"
+          />
+        </el-form-item>
 
-        <!--<el-form-item label="排序号:" :label-width="formLabelWidth">-->
-          <!--<el-input-->
-            <!--v-model="form.sortNo"-->
-            <!--size="mini"-->
-          <!--/>-->
-        <!--</el-form-item>-->
-      <!--</el-form>-->
+        <el-form-item label="基础单位:" :label-width="formLabelWidth">
+          <el-input
+            disabled
+            v-model="form.unitImport"
+            size="mini"
+          />
+        </el-form-item>
+        <el-form-item label="标准单位:" :label-width="formLabelWidth">
+          <el-input
+            disabled
+            v-model="form.unitStandard"
+            size="mini"
+          />
+        </el-form-item>
+        <el-form-item label="基础项目特征:" :label-width="formLabelWidth">
+          <el-input
+            type="textarea"
+            disabled
+            v-model="form.featureImport"
+            size="mini"
+          />
+        </el-form-item>
+        <el-form-item label="标准项目特征:" :label-width="formLabelWidth">
+          <el-input
+            type="textarea"
+            disabled
+            v-model="form.featureStandard"
+            size="mini"
+          />
+        </el-form-item>
+      </el-form>
       <!--<div slot="footer" class="dialog-footer">-->
         <!--<el-button type="primary" @click="save()">保 存</el-button>-->
         <!--<el-button @click="dialogResult = false">关 闭</el-button>-->
       <!--</div>-->
-    <!--</el-dialog>-->
+    </el-dialog>
 </div>
 </template>
 
@@ -308,11 +334,8 @@
       },
       // 查看
       rowshow(row) {
-        let p = {actpoint: "look", instid: row.topOrgId};
-        this.$router.push({
-          path: "./detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
+        this.form=row;
+        this.dialogResult = true;
       },
       // 删除
       remove() {

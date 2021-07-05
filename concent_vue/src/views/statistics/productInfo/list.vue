@@ -291,23 +291,6 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="产品类型:">
-          <el-select v-model="form.productTypeId"
-                     @change="getName(
-                          form.productTypeId,
-                          measureUnit,
-                          'productTypeName',
-                          'productTypeCode'
-                        )"
-                     placeholder="请选择产品类型" :disabled="look">
-            <el-option
-              :key="index"
-              :label="item.detailName"
-              :value="item.id"
-              v-for="(item, index) in measureUnit"
-            ></el-option>
-          </el-select>
-        </el-form-item>
         <el-form-item label="业务类型:">
           <el-select v-model="form.ywtypeid"  @change="getName(
                           form.ywtypeid,
@@ -323,6 +306,24 @@
             ></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="产品类型:">
+          <el-select v-model="form.productTypeId"
+                     @change="getName(
+                          form.productTypeId,
+                          cplxList,
+                          'productTypeName',
+                          'productTypeCode'
+                        )"
+                     placeholder="请选择产品类型" :disabled="look">
+            <el-option
+              :key="index"
+              :label="item.detailName"
+              :value="item.id"
+              v-for="(item, index) in cplxList"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+
         <el-form-item label="排序:">
           <el-input v-model="form.vsort" autocomplete="off" :disabled="look"></el-input>
         </el-form-item>
@@ -336,7 +337,7 @@
           </el-input>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <div slot="footer" class="dialog-footer" v-if="!look">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
         <el-button type="primary" @click="sub('form')">确 定</el-button>
       </div>
@@ -358,6 +359,7 @@
 export default {
   data() {
     return {
+      cplxList:[],
       formLabelWidth:'120px',
       dialogFormVisible: false,
       look:false,
@@ -393,6 +395,7 @@ export default {
       },
       //业务类型
       bizTypeCode() {
+        // console.log(this.$store.state.category.bizTypeCode)
         var list=[];
         this.$store.state.bizTypeCode.forEach((item)=>{
           if(item.parentDetailId==null){
@@ -403,6 +406,27 @@ export default {
       },
 },
   methods: {
+    //获取产品类型列表
+    getCplx(code){
+      this.$http
+        .post(
+          '/api/statistics/product/list/sysDic',
+          {
+            categoryName:"业务类别",
+            detailCode:code
+          }
+        )
+        .then((res) => {
+          if (res.data.code === 200) {
+            this.cplxList=res.data.data;
+            this.cplxList.forEach((item)=>{
+              item.detailCode=item.DETAIL_CODE;
+              item.detailName=item.DETAIL_NAME;
+              item.id=item.ID;
+            })
+          }
+        });
+    },
     //获取下拉框id和name的公共方法
     getName(id, list, name,code) {
       if(id){
@@ -413,8 +437,11 @@ export default {
         this.form[code] = list.find(
           (item) => item.id == id
         ).detailCode;
-        console.log(this.form[name]);
-        console.log(this.form[code]);
+        if(name=='ywtypename'){
+         this.getCplx(this.form[code])
+        }
+        // console.log(this.form[name]);
+        // console.log(this.form[code]);
       }
     },
     //保存
@@ -477,6 +504,7 @@ export default {
         //   vremark: row.vremark,
         //   id:row.id
         // };
+        this.getCplx(this.form.ywtypecode)
         this.dialogFormVisible=true;
       },
       // 删除
@@ -524,6 +552,7 @@ export default {
         prodectTypeCode: row.prodectTypeCode,
         prodectTypeName: row.prodectTypeName
       };
+      this.getCplx(this.form.ywtypecode)
       this.dialogFormVisible=true;
 
     },
@@ -569,9 +598,10 @@ export default {
 
     // list通用方法结束
   },
-  created() {
+  mounted() {
     this.getData();
     this.$store.dispatch("getConfig", {});
+    // this.$store.dispatch('getCategory', {name: 'bizTypeCode', id: '238a917eb2b111e9a1746778b5c1173f'});
   },
 };
 </script>

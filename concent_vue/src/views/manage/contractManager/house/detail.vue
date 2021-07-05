@@ -1146,8 +1146,8 @@
                     show-overflow-tooltip
                   >
                     <template slot-scope="scope">
-                      <el-radio v-model="scope.row.isFinish" label="0">是</el-radio>
-                      <el-radio v-model="scope.row.isFinish" label="1">否</el-radio>
+                      <el-radio :disabled="p.actpoint === 'look'||p.actpoint=='task'" v-model="scope.row.isFinish" label="0">是</el-radio>
+                      <el-radio :disabled="p.actpoint === 'look'||p.actpoint=='task'" v-model="scope.row.isFinish" label="1">否</el-radio>
                     </template>
                   </el-table-column>
                   <el-table-column

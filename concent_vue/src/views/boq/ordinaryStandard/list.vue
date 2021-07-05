@@ -117,6 +117,14 @@
             </div>
           </template>
         </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="工程类别"
+          prop="projectTypeName"
+          show-overflow-tooltip
+        >
+        </el-table-column>
         <!--<el-table-column-->
           <!--:width="150"-->
           <!--align="center"-->
@@ -241,9 +249,9 @@
               size="mini"
               @change="
                   getName(
-                    form.projectType,
+                    form.boqOrdinaryStandard.projectType,
                     projectType,
-                    'projectType'
+                    'projectTypeName'
                   )
                 "
               v-model="form.boqOrdinaryStandard.projectType"
@@ -481,6 +489,7 @@
                   enable:"",
                   feature:"",
                   uuid:"",
+                  projectTypeName:''
               },
               boqFeatureStandardList:[],
               addTzForm:{
@@ -527,7 +536,7 @@
       getName(id, list, name,code) {
         if(id){
           this.$forceUpdate()
-          this.form[name] = list.find(
+          this.form.boqOrdinaryStandard[name] = list.find(
             (item) => item.id == id
           ).detailName;
         }
@@ -610,6 +619,7 @@
                       enable:"",
                       feature:"",
                       uuid:"",
+                      projectTypeName:''
               },
               boqFeatureStandardList:[],
               addTzForm:{
@@ -645,6 +655,7 @@
             enable:row.enable,
             feature:row.feature,
             uuid:row.uuid,
+            projectTypeName:row.projectTypeName
           },
           boqFeatureStandardList:row.boqFeatureStandardList,
           addTzForm:{
@@ -666,6 +677,7 @@
             enable:row.enable,
             feature:row.feature,
             uuid:row.uuid,
+            projectTypeName:row.projectTypeName
           },
           boqFeatureStandardList:row.boqFeatureStandardList,
           addTzForm:{
@@ -786,6 +798,7 @@
     mounted() {
       this.getData();
       this.$store.dispatch("getConfig", {});
+      this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
     },
   };
 </script>

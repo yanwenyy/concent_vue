@@ -4150,6 +4150,10 @@
           this.$message.error("请上传招标公告文件");
           return false;
         }
+        if(this.detailform.contractInfo.contractStartTime>this.detailform.contractInfo.contractEndTime){
+          this.$message.error("合同开始日期不能大于合同结束日期");
+          return false;
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             var datas=this.p.actpoint === "add"||(type!='save'&&this.detailform.contractInfo.flowStatus==1||this.detailform.contractInfo.flowStatus==4)?{

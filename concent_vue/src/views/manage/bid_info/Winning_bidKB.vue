@@ -601,7 +601,7 @@
             <el-row>
               <p class="detail-title"><span >开标记录（最大10MB）: </span>
                 <el-button
-                  v-show="p.actpoint !== 'look'"
+                  v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                   size="small"
                   type="primary"
                   @click="openFileUp('/api/contract/topInfo/CommonFiles/bidInfo/02/uploadFile','bidInfo_02')">
@@ -657,7 +657,7 @@
                   fixed="right"
                   label="操作"
                   show-overflow-tooltip
-                  v-if="p.actpoint!=='look'"
+                  v-if="p.actpoint!=='look'&&p.actpoint !== 'task'"
                   width="100"
                 >
                   <template slot-scope="scope">

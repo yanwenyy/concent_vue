@@ -1787,7 +1787,51 @@ export default {
                   'menushow': true,
                   'leaf': true,
                   'defaultpage': false
-                }
+                },
+                {
+                  'name': '总分包月报(代填)',
+                  'path': '/statistics/projectCheck/totalMDtList',
+                  'component': '/statistics/projectCheck/totalMDtList',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '总分包月报(代填)填报页面',
+                  'path': '/statistics/projectCheck/totalreportList',
+                  'component': '/statistics/projectCheck/totalreportList',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': false,
+                  'leaf': true
+                },
+                {
+                  'name': '总分包月报',
+                  'path': '/statistics/projectCheck/totalMList',
+                  'component': '/statistics/projectCheck/totalMList',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '总分包月报查看',
+                  'path': '/statistics/projectCheck/totalMsearchList',
+                  'component': '/statistics/projectCheck/totalMsearchList',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '总分包月报详情',
+                  'path': '/statistics/projectCheck/totalMsearchDetail',
+                  'component': '/statistics/projectCheck/totalMsearchDetail',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
               ]
             },
             {

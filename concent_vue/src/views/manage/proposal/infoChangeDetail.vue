@@ -424,6 +424,29 @@
                     <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                   </template>
                 </el-table-column>
+                <el-table-column
+                  :resizable="false"
+                  fixed="right"
+                  label="是否为跟踪标段"
+                  align="center"
+                  show-overflow-tooltip
+
+                  width="80">
+                  <template slot-scope="scope">
+                    <el-switch
+                      disabled
+                      class="inline-formitem-switch"
+                      v-model="scope.row.isTrack"
+                      active-color="#409EFF"
+                      inactive-color="#ddd"
+                      active-value="1"
+                      inactive-value="0"
+
+                    >
+                      <!--@change="setTrack(scope.$index,detailform.topInfoSectionList)"-->
+                    </el-switch>
+                  </template>
+                </el-table-column>
               </el-table>
 
             </el-form>
@@ -1318,7 +1341,7 @@
                   label="是否为跟踪标段"
                   align="center"
                   show-overflow-tooltip
-                  v-if="p.actpoint!= 'look'&&p.actpoint!='task'"
+
                   width="80">
                   <template slot-scope="scope">
                     <el-switch
@@ -1671,10 +1694,7 @@
                 message:  `${type=='save'?'保存':'提交'}成功`,
                 type: "success",
               });
-              this.$refs[formName].resetFields();
-              this.$router.push({
-                path: "/manage/proposal/infoChangeList",
-              });
+                this.$router.back();
             }
           });
           } else {

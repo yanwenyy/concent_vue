@@ -199,7 +199,7 @@
           <!--:disabled="type=='look'"-->
          <!--&gt;-->
             <!--</el-switch>-->
-          <el-radio-group v-model="resultform.verifySection.verifyResult">
+          <el-radio-group :disabled="type=='look'"  v-model="resultform.verifySection.verifyResult">
             <el-radio label="0">未通过</el-radio>
             <el-radio label="1">通过</el-radio>
           </el-radio-group>
