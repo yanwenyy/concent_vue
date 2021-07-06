@@ -218,7 +218,7 @@
                   </el-table>
            </div>
         </el-tab-pane>
-       <el-tab-pane label="下月计划"  name="xyjh">
+      <!-- <el-tab-pane label="下月计划"  name="xyjh">
             <div class="detailBoxBG">
               <el-table
                 class="tableStyle"
@@ -272,7 +272,7 @@
                     <div v-if="scope.row.veditable === '1'&& isCk!='1' && p.actpoint!='look'&& p.actpoint!='task'">
                       <el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')" @blur="getNextPlanYear(nextData,scope.$index,scope.row.sumTarget)"/>
                     </div>
-<!--                    <div v-else-if="projectStatus !== '2' " style="text-align: right">{{sumCount(scope.row)}}</div>-->
+&lt;!&ndash;                    <div v-else-if="projectStatus !== '2' " style="text-align: right">{{sumCount(scope.row)}}</div>&ndash;&gt;
                     <div v-else>{{scope.row.value}}</div>
                   </template>
                 </el-table-column>
@@ -283,7 +283,7 @@
                 ></el-table-column>
               </el-table>
            </div>
-         </el-tab-pane>
+         </el-tab-pane>-->
        <el-tab-pane label="审批流程" v-if="dataReport.flowStatus!=1&&(p.actpoint == 'task'||p.actpoint == 'look')">
          <Audit-Process :task="p.task||{businessId:p.uuid,businessType:' engineering_monthly_report'}"></Audit-Process>
        </el-tab-pane>
@@ -312,9 +312,8 @@
         proNameHover: false,
         projectName: '',
         isCk:JSON.parse(this.$utils.decrypt(this.$route.query.p)).isCk,
-        projectreport: {},
-        projectreportDetaiList: [],
-        planPrjTjxDetailList: [],
+        projectcheck: {},
+        tjxDetailList:[],
         projectStatus: JSON.parse(this.$utils.decrypt(this.$route.query.p)).projectStatus,
       }
     },
@@ -497,7 +496,7 @@
       // 获取数据
       getData() {
         this.$http
-          .post('/api/statistics/inspectMonthReportFill/detail/queryMonthReportEntityInfo', JSON.stringify({
+          .post('/api/statistics/inspectMonthReportFill/detail/queryEntityInfoDetail', JSON.stringify({
             projectId: this.p.projectId,
             uuid: this.p.uuid||this.p.instid,
             reportYear: this.p.reportYear,
@@ -506,11 +505,11 @@
           }), {useJson: true})
           .then(res => {
             var datas=res.data.data;
-            this.data = datas.projectReportDetaiList
-            this.dataReport=datas.projectreport
+            this.data = datas.tjxDetailList
+            this.dataReport=datas.projectcheck
             this.dataReport.yearDateS=this.dataReport.reportYear+"-"+this.dataReport.reportMonth
-            this.nextData=datas.planPrjTjxDetailList;
-            this.projectName=datas.projectreport.reportProjectName;
+            //this.nextData=datas.planPrjTjxDetailList;
+            this.projectName=datas.projectcheck.reportProjectName;
             if(this.projectName=='' || this.projectName==null){
               this.projectName=this.p.projectName;
             }
