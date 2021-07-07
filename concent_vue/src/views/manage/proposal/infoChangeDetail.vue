@@ -1345,7 +1345,7 @@
                   width="80">
                   <template slot-scope="scope">
                     <el-switch
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                      disabled
                       class="inline-formitem-switch"
                       v-model="scope.row.isTrack"
                       active-color="#409EFF"
@@ -1804,6 +1804,9 @@
         afterData.topInforCapitalList.forEach((item)=>{
           this.detailform.value1.push(item.capitalId)
       });
+            afterData.topInfoSectionList.forEach((item)=>{
+              item.isDelete="0"
+            });
           this.detailFormBefore={
             capitalName: beforData.capitalName,
             topInfor: beforData.topInfor,

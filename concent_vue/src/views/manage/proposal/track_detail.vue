@@ -675,7 +675,7 @@
                   prop="inforName"
                 >
                   <template slot-scope="scope">
-                    <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'&&p.actpoint != 'task'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
+                    <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'&&p.actpoint != 'add'&&p.actpoint != 'task'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
                     <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
                   </template>
                 </el-table-column>
@@ -911,7 +911,8 @@
                   getNameZb(
                     detailform.topInfoOrg.bidProbId,
                     probability,
-                    'bidProbName'
+                    'bidProbName',
+                    'bidProbCode'
                   )
                 "
                     v-model="detailform.topInfoOrg.bidProbId"
@@ -1042,7 +1043,7 @@
                 <p v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'"  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>标段信息: </span>
                   <el-button
-                    v-show="p.actpoint == 'add'"
+                    v-show="p.actpoint != 'add'"
                     @click="add('bd')"
                     class="detatil-flie-btn"
                     type="primary"
@@ -1152,11 +1153,10 @@
                     label="是否为跟踪标段"
                     align="center"
                     show-overflow-tooltip
-                    v-if="p.actpoint!='add'"
                     width="80">
                     <template slot-scope="scope">
                       <el-switch
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint === 'add'"
                         class="inline-formitem-switch"
                         v-model="scope.row.isTrack"
                         active-color="#409EFF"
@@ -1479,12 +1479,15 @@
         }
       },
       //获取下拉框id和name的公共方法
-      getNameZb(id, list, name) {
+      getNameZb(id, list, name,code) {
         if(id){
           this.$forceUpdate()
           this.detailform.topInfoOrg[name] = list.find(
             (item) => item.id == id
         ).detailName;
+          this.detailform.topInfoOrg[code] = list.find(
+            (item) => item.id == id
+          ).detailCode;
           console.log(this.detailform.topInfoOrg[name]);
         }
       },
@@ -1538,6 +1541,7 @@
         //   this.$message.error("重大项目必须上传项目总结附件");
         // }
         var topInforCapitalList = [];
+
         this.amountSource.forEach((item) => {
           if (this.detailform.value1&&this.detailform.value1.indexOf(item.id) != -1) {
             var v = {
@@ -1757,7 +1761,11 @@
             datas.topInforCapitalList.forEach((item)=>{
               this.detailform.value1.push(item.capitalId)
             });
-            console.log(this.detailform)
+            if(this.p.actpoint=='add'&&this.p.type==''){
+              this.detailform.topInfoSectionList.forEach((item)=>{
+                item.isTrack="1";
+              })
+            }
           });
       },
 

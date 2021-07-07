@@ -497,7 +497,7 @@ const mutations = {
     if(state.pubCustomers== null||state.pubCustomers==''){
       Vue.prototype.$http
         .post(
-          "/jsonapi/Customer/customer/queryPassCustomerList",
+          "/jsonapi/Customer/customer/pub/queryCustomerList",
           JSON.stringify({
             'current':'1',
             'size':'1000000'
@@ -505,7 +505,7 @@ const mutations = {
           {useJson: true}
         )
         .then((res) => {
-          var pubCustomers=res.data.data.customers;
+          var pubCustomers=res.data.data.pubCustomers;
           pubCustomers.forEach((item)=>{
             item.value=item.customerName;
 

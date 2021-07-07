@@ -110,6 +110,11 @@
               v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null"
               label="工程类别(二级):"
               prop="topInfor.enginTypeSecondId"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
             >
               <el-select
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -169,6 +174,11 @@
               v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null"
               label="项目性质(一级):"
               prop="topInfor.projectNatureFirstId"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
             >
               <el-select
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -191,6 +201,11 @@
               v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null"
               label="项目性质(二级):"
               prop="topInfor.projectNatureSecondId"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
             >
               <el-select
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -479,6 +494,7 @@
               <!--v-model="detailform.topInfor.constructionOrg"-->
               <!--/>-->
               <el-autocomplete
+
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 v-model="detailform.topInfor.constructionOrg"
                 :fetch-suggestions="detailform.topInfor.isClientele=='1'?querySearchAsync:querySjdw"
@@ -548,7 +564,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-
+                @clear="detailform.topInfor.noticeTypeName=''"
                 v-model="detailform.topInfor.noticeTypeId"
                 @change="
                 getName(
@@ -568,7 +584,7 @@
             </el-form-item>
             <el-form-item
               label="资审方式:"
-              prop="topInfor.noticeTypeName"
+              prop="topInfor.verifyTypeName"
             >
               <el-input
                 disabled
@@ -663,11 +679,15 @@
             <el-form-item
               :label="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'?'投资额（万元）:':'项目规模:'"
               prop="topInfor.investment"
-              :rules="rules.contractAmount"
+              :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
             >
               <el-tooltip popper-class="tooltip-class" :content="String(detailform.topInfor.investment)" placement="bottom" :disabled="p.actpoint !== 'look'" effect="dark">
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null"
                   clearable
                   placeholder=""
                   v-model="detailform.topInfor.investment"
@@ -872,8 +892,16 @@
                 prop="inforName"
               >
                 <template slot-scope="scope">
-                  <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
-                  <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
+                  <el-form-item class="tabelForm" :prop="'topInfoSiteList.' + scope.$index + '.ffid'"
+                                :rules="{
+                                required: true,
+                                message: '此项不能为空',
+                                trigger: 'change',
+                              }">
+
+                    <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
+                    <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
+                  </el-form-item>
                 </template>
               </el-table-column>
 
@@ -893,6 +921,7 @@
                         clearable
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         v-model="scope.row.contractAmount"
+                        @input="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'?SummaryTze():checkTze(detailform.topInfoSiteList,scope.$index,'contractAmount')"
                       >
                         <template slot="prepend">¥</template>
                         <template slot="append">(万元)</template>
@@ -1027,6 +1056,7 @@
                         v-model="scope.row.projectScale"
                         clearable
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        @input="checkTze(detailform.topInfoSectionList,scope.$index,'projectScale')"
                       >
                         <template slot="prepend">¥</template>
                         <template slot="append">(万元)</template>
@@ -1235,7 +1265,7 @@
           ffid: '',
           path: '',
           contractAmount: '',
-          isMain: ''
+          isMain: '1'
         }];
         this.detailform.topInfoSectionList=[{
           sectionName: '',
@@ -1255,6 +1285,26 @@
         });
     },
     methods: {
+      //检查项目地点或标段信息总和是否超过投资额
+      checkTze(list,index,itemValueName){
+        var val=0;
+        list.forEach((item)=>{
+          val=val+Number(item[itemValueName])
+        });
+        if(val>this.detailform.topInfor.investment){
+          this.$message.error("总和不能超过投资额");
+          list[index][itemValueName]='';
+        }
+      },
+      //项目地点汇总投资额
+      SummaryTze(){
+        var sum=0;
+        this.detailform.topInfoSiteList.forEach((item)=>{
+          sum=sum+Number(item.contractAmount);
+        });
+        this.$forceUpdate();
+        this.detailform.topInfor.investment=Number(sum);
+      },
       tableRowClassName({row, rowIndex}) {
         if (row.noValidate == 1) {
           return 'red-row';
@@ -1362,12 +1412,18 @@
         } else if (_data.fullDetailName.indexOf("境外") != -1) {
           country = '02';
         }
+        var ifRepeat=false;
         this.detailform.topInfoSiteList.forEach((item, index) => {
-          if (index == this.positionIndex) {
-            // item.detailName = _data.detailName;
-            item.country = country;
-            item.ffid = _data.fullDetailCode;
-            item.path = _data.fullDetailName;
+          if(item.ffid!=_data.fullDetailCode&&!ifRepeat){
+            if (index == this.positionIndex) {
+              // item.detailName = _data.detailName;
+              item.country = country;
+              item.ffid = _data.fullDetailCode;
+              item.path = _data.fullDetailName;
+            }
+          }else{
+            this.$message.error("项目地点不能重复");
+            ifRepeat=true;
           }
         });
         this.key = this.key + 1;
@@ -1488,6 +1544,24 @@
           }
         });
         this.detailform.topInforCapitalList=topInforCapitalList;
+        if((this.detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||this.detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb')&&this.detailform.topInfoSectionList.length==0){
+          this.$message.error("请至少添加一条标段信息");
+          return false;
+        }
+        if(this.detailform.topInfoSiteList.length==0){
+          this.$message.error("请至少添加一个项目地点");
+          return false;
+        }
+        var hasMain=false;
+        this.detailform.topInfoSiteList.forEach((item)=>{
+          if(item.isMain=='1'){
+            hasMain=true;
+          }
+        });
+        if(!hasMain){
+          this.$message.error("请选择一个主地点");
+          return false;
+        }
         this.$refs[formName].validate((valid,object) => {
           if (valid) {
             this.$http
@@ -1581,7 +1655,7 @@
             path: '',
             contractAmount: '',
             isMain: ''
-          }
+          };
           this.detailform.topInfoSiteList.push(v);
         } else {
           v = {

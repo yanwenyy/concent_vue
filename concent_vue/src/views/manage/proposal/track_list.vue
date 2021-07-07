@@ -3,7 +3,7 @@
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
         <el-button @click="add('')" plain :disabled="trackStatus!=null" type="primary"><i class="el-icon-circle-check"></i>跟踪</el-button>
-        <el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
+        <el-button @click="totop" :disabled="trackStatus!='1'||flowStatus==2||flowStatus==3"  plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
         <el-button @click="add('fq')" :disabled="trackStatus!='1'" plain type="primary"><i class="el-icon-warning-outline"></i>放弃跟踪</el-button>
         <el-button @click="add('end')" :disabled="trackStatus!='1'" plain type="primary"><i class="el-icon-circle-close"></i>结束跟踪</el-button>
         <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
@@ -319,12 +319,10 @@
                 size="mini"
                 v-model="searchform.flowStatus"
               >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in flowStatusList"
-                ></el-option>
+                <el-option label="草稿" value="1"></el-option>
+                <el-option label="审核中" value="2"></el-option>
+                <el-option label="审核通过" value="3"></el-option>
+                <el-option label="审核退回" value="4"></el-option>
               </el-select>
               <!--<el-input-->
               <!--class="list-search-picker"-->
@@ -377,13 +375,13 @@
             </div>
           </template>
         </el-table-column>
-        <!-- <el-table-column
+        <el-table-column
           :width="80"
           align="center"
-          label="编制人"
-          prop="username"
+          label="预计中标概率"
+          prop="bidProbName"
           show-overflow-tooltip
-        ></el-table-column> -->
+        ></el-table-column>
         <!-- <el-table-column
           :width="120"
           align="center"
@@ -434,6 +432,7 @@
         orgTree: [],
         xqprojectType:[],//工程二级列表
         trackStatus:'',
+        flowStatus:''
       };
     },
     computed: {
@@ -530,6 +529,7 @@
       rowSelect(selection, row){
         if(selection.indexOf(row)!=-1){
           this.trackStatus=row.trackStatus;
+          this.flowStatus=row.flowStatus;
         }else{
           this.trackStatus='';
         }

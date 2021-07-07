@@ -499,7 +499,7 @@
         }
         let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          if(item.flowStatus==1||item.flowStatus==4){
+          if(item.flowStatus==1||item.flowStatus==4||item.flowStatus==null){
             uuids.push(item.topOrgId);
           }else{
             this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
