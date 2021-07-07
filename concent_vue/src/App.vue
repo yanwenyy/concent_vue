@@ -14,7 +14,7 @@ export default {
     return{
       origin:'',
       noView:true,
-      token:'eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiZGV0YWlscyI6eyJzdWIiOiJocnwzNTk4NTYiLCJwb3N0TmFtZSI6IuW8gOWPkee7j-eQhiIsInBvc3RQYXRoIjoi5YyX5Lqs5Lit6L2v5Zu96ZmF5L-h5oGv5oqA5pyv5pyJ6ZmQ5YWs5Y-4IiwicG9zdENvZGUiOiIwMDAwMTAwMDAxMDAwMTA3NzAwMTk5MDAxIiwiaWQiOiIzNTk4NTYiLCJ1c2VyTmFtZSI6IuWImOm5jyIsInBvc3RzIjpbeyJ0eXBlIjozLCJpZCI6Mjg2OTcyLCJuYW1lIjoi5byA5Y-R57uP55CGIiwiY29kZSI6IjAwMDAxMDAwMDEwMDAxMDc3MDAxOTkwMDEiLCJvcmRlciI6MSwibWFpblBvc2l0aW9uIjp0cnVlLCJwcm92aWRlcklkIjoiaHIiLCJwYXRoIjoi5oC76YOo5YyX5Lqs5Lit6L2v5Zu96ZmF5L-h5oGv5oqA5pyv5pyJ6ZmQ5YWs5Y-45byA5Y-R6YOo5byA5Y-R57uP55CGIiwienV6aGliaWFubWEiOiIwMDAwMTAwMDAxMDAwMTA3NzAwMTk5MDAxIiwiamlhbmNoZW5nIjoi5byA5Y-R57uP55CGIiwienV6aGlsdWppbmciOiLljJfkuqzkuK3ova_lm73pmYXkv6Hmga_mioDmnK_mnInpmZDlhazlj7gifV19LCJleHAiOjE2MjM4NDUwMTV9.SZwwNNsXaKHRb7gvdKnGCmJWkwAxk2gQ6eV5u-NSWw45a3RXcm8M7iMAWuMIK86L7W8TnAoijHkHcaOgyH7wFg'
+      token:'eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiZGV0YWlscyI6eyJzdWIiOiJocnwzNTk4NTYiLCJwb3N0TmFtZSI6IuW8gOWPkee7j-eQhiIsInBvc3RQYXRoIjoi5YyX5Lqs5Lit6L2v5Zu96ZmF5L-h5oGv5oqA5pyv5pyJ6ZmQ5YWs5Y-4IiwicG9zdENvZGUiOiIwMDAwMTAwMDAxMDAwMTA3NzAwMTk5MDAxIiwiaWQiOiIzNTk4NTYiLCJ1c2VyTmFtZSI6IuWImOm5jyIsInBvc3RzIjpbeyJ0eXBlIjozLCJpZCI6Mjg2OTcyLCJuYW1lIjoi5byA5Y-R57uP55CGIiwiY29kZSI6IjAwMDAxMDAwMDEwMDAxMDc3MDAxOTkwMDEiLCJvcmRlciI6MSwibWFpblBvc2l0aW9uIjp0cnVlLCJwcm92aWRlcklkIjoiaHIiLCJwYXRoIjoi5oC76YOo5YyX5Lqs5Lit6L2v5Zu96ZmF5L-h5oGv5oqA5pyv5pyJ6ZmQ5YWs5Y-45byA5Y-R6YOo5byA5Y-R57uP55CGIiwienV6aGliaWFubWEiOiIwMDAwMTAwMDAxMDAwMTA3NzAwMTk5MDAxIiwiamlhbmNoZW5nIjoi5byA5Y-R57uP55CGIiwienV6aGlsdWppbmciOiLljJfkuqzkuK3ova_lm73pmYXkv6Hmga_mioDmnK_mnInpmZDlhazlj7gifV19LCJleHAiOjE2MjU2NTc3ODB9.RBHYFfy-Mfl5m_MzuWPGF13ObRzeu5xEMzN6nKZp8q4hznRLzvDDpuBjhoRSe2caQ7RMdWd7BNV7ET9pHmfcCA'
     }
   },
   beforeCreate(){
@@ -60,13 +60,13 @@ export default {
         //   background:'transparent',
         // });
         window.addEventListener('message',function(e){
-          console.log(e)//子页面接收参数
+          // console.log(e)//子页面接收参数
           // sessionStorage.setItem("token",self!=top?e.data:GetQueryString("token"));
           sessionStorage.setItem("token",self!=top?e.data:that.token);
           resolve("1111")
         })
       }).then((data)=>{
-        console.log(data)
+        // console.log(data)
         // loading.close();
         that.noView=false;
         permissionRouter()

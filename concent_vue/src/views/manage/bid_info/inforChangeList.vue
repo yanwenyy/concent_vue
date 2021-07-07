@@ -49,7 +49,6 @@
         <el-table-column
           :width="500"
           label="项目名称"
-          fixed="left"
           prop="inforName"
           show-overflow-tooltip
         >

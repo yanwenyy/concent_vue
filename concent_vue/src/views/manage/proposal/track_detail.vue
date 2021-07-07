@@ -1039,11 +1039,11 @@
                   </el-table-column>
                 </el-table>
               </el-row>
-              <div v-if="!p.type&& p.trackStatus !=2&&p.trackStatus !=3 ">
+              <div v-if="!p.type&& p.trackStatus !=2&&p.trackStatus !=3">
                 <p v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'"  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>标段信息: </span>
                   <el-button
-                    v-show="p.actpoint != 'add'"
+                    v-show="p.actpoint != 'add'&&p.actpoint!== 'look'"
                     @click="add('bd')"
                     class="detatil-flie-btn"
                     type="primary"

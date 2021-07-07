@@ -10,28 +10,64 @@
       <el-form-item label="设计单位:">
         <el-input v-model="searchform.designOrg" placeholder="设计单位" clearable></el-input>
       </el-form-item>
-      <el-form-item label="创建日期:">
+      <!--<el-form-item label="创建日期:">-->
+        <!--<el-date-picker-->
+          <!--clearable-->
+          <!--v-model="searchform.createTime"-->
+          <!--type="daterange"-->
+          <!--@change="searchform.selectTimeType='01',searchform.planBidTime=''"-->
+          <!--value-format="timestamp"-->
+          <!--range-separator="至"-->
+          <!--start-placeholder="开始日期"-->
+          <!--end-placeholder="结束日期">-->
+        <!--</el-date-picker>-->
+      <!--</el-form-item>-->
+      <!--<el-form-item label="预计招标日期:">-->
+        <!--<el-date-picker-->
+          <!--clearable-->
+          <!--v-model="searchform.planBidTime"-->
+          <!--type="daterange"-->
+          <!--@change="searchform.selectTimeType='02',searchform.createTime=''"-->
+          <!--value-format="timestamp"-->
+          <!--range-separator="至"-->
+          <!--start-placeholder="开始日期"-->
+          <!--end-placeholder="结束日期">-->
+        <!--</el-date-picker>-->
+      <!--</el-form-item> -->
+      <el-form-item label="创建日期开始:">
         <el-date-picker
           clearable
-          v-model="searchform.createTime"
-          type="daterange"
-          @change="searchform.selectTimeType='01',searchform.planBidTime=''"
-          value-format="timestamp"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期">
+          v-model="searchform.createTimeStart"
+          type="date"
+          @change="searchform.selectTimeType='01',searchform.planBidTimeStart='',searchform.planBidTimeEnd=''"
+          value-format="timestamp">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="预计招标日期:">
+      <el-form-item label="创建日期结束:">
         <el-date-picker
           clearable
-          v-model="searchform.planBidTime"
-          type="daterange"
-          @change="searchform.selectTimeType='02',searchform.createTime=''"
-          value-format="timestamp"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期">
+          v-model="searchform.createTimeEnd"
+          type="date"
+          @change="searchform.selectTimeType='01',searchform.planBidTimeStart='',searchform.planBidTimeEnd=''"
+          value-format="timestamp">
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="预计招标日期开始:">
+        <el-date-picker
+          clearable
+          v-model="searchform.planBidTimeStart"
+          type="date"
+          @change="searchform.selectTimeType='02',searchform.createTimeStart='',searchform.createTimeEnd=''"
+          value-format="timestamp">
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="预计招标日期结束:">
+        <el-date-picker
+          clearable
+          v-model="searchform.planBidTimeEnd"
+          type="date"
+          @change="searchform.selectTimeType='02',searchform.createTimeStart='',searchform.createTimeEnd=''"
+          value-format="timestamp">
         </el-date-picker>
       </el-form-item>
       <el-form-item
@@ -250,6 +286,17 @@
             scope.row.createTime | dateformat
             }}</template>
         </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="跟踪状态"
+          prop="trackStatus"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+             {{scope.row.trackStatus==1?'持续跟踪中':scope.row.trackStatus==2?'放弃跟踪':scope.row.trackStatus==3?'结束跟踪':scope.row.trackStatus==4?'资审中':scope.row.trackStatus==5?'资审通过待投标':scope.row.trackStatus==6?'资审未通过':scope.row.trackStatus==7?'投标中':scope.row.trackStatus==8?'已开标':scope.row.trackStatus==9?'中标未新签':scope.row.trackStatus==10?'中标已新签':scope.row.trackStatus==11?'未中标':scope.row.trackStatus==12?'废标':scope.row.trackStatus==13?'流标':'待跟踪'}}
+          </template>
+        </el-table-column>
       </el-table>
     </div>
     <el-pagination
@@ -294,6 +341,10 @@
           selectTimeType:'',
           beginTime:"",
           endTime:'',
+          createTimeStart:"",
+          createTimeEnd:"",
+          planBidTimeStart:"",
+          planBidTimeEnd:"",
         },
         multipleSelection: [],
         xqprojectType:[],//工程二级列表
@@ -426,13 +477,24 @@
       },
       // 查询
       getData() {
-        console.log(this.searchform.selectTimeType)
-        if(this.searchform.selectTimeType=='01'&&this.searchform.createTime){
-          this.searchform.beginTime=this.searchform.createTime[0];
-          this.searchform.endTime=this.searchform.createTime[1];
-        }else if(this.searchform.selectTimeType=='02'&&this.searchform.planBidTime){
-          this.searchform.beginTime=this.searchform.planBidTime[0];
-          this.searchform.endTime=this.searchform.planBidTime[1];
+        // console.log(this.searchform.selectTimeType)
+        // if(this.searchform.selectTimeType=='01'&&this.searchform.createTime){
+        //   this.searchform.beginTime=this.searchform.createTime[0];
+        //   this.searchform.endTime=this.searchform.createTime[1];
+        // }else if(this.searchform.selectTimeType=='02'&&this.searchform.planBidTime){
+        //   this.searchform.beginTime=this.searchform.planBidTime[0];
+        //   this.searchform.endTime=this.searchform.planBidTime[1];
+        // }else{
+        //   this.searchform.selectTimeType='';
+        //   this.searchform.beginTime=null;
+        //   this.searchform.endTime=null;
+        // }
+        if(this.searchform.selectTimeType=='01'){
+          this.searchform.beginTime=this.searchform.createTimeStart;
+          this.searchform.endTime=this.searchform.createTimeEnd;
+        }else if(this.searchform.selectTimeType=='02'){
+          this.searchform.beginTime=this.searchform.planBidTimeStart;
+          this.searchform.endTime=this.searchform.planBidTimeEnd;
         }else{
           this.searchform.selectTimeType='';
           this.searchform.beginTime=null;
