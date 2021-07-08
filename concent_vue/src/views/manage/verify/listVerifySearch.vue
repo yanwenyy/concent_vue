@@ -261,6 +261,14 @@
             {{scope.row.createTime | dateformat}}
           </template>
         </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="资审结果"
+          prop="verify.verifyResult"
+          show-overflow-tooltip
+        >
+        </el-table-column>
       </el-table>
       <el-pagination
         :current-page="page.current"

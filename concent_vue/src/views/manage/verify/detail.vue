@@ -848,6 +848,7 @@
                   placeholder=""
                   size="mini"
                   v-model="scope.row.verifySection.jananInvestment"
+                  @input="calcTzys(scope.row.verifySection.jananInvestment,scope.row.verifySection.investmentReckon,scope.$index,detailform.verifySectionList)"
                 >
                   <template slot="prepend">¥</template>
                   <template slot="append">(万元)</template>
@@ -1054,6 +1055,14 @@ export default {
 
   },
   methods: {
+    //计算建安投资<=投资预算
+    calcTzys(val,tzval,index,list){
+      if(val>tzval){
+        this.$message.error("其中建安投资不能大于投资估算");
+        list[index].verifySection.jananInvestment='';
+        return false;
+      }
+    },
     //打开单位弹框
     addDw(type,list,ifChek,index,tableList){
       this.DwVisible = true;
@@ -1065,7 +1074,7 @@ export default {
     getDwInfo(data){
       this.$forceUpdate();
       var id=[],name=[];
-      if(data&&data.type!='单位名称'&&data.type!='承揽所属机构'){
+      if(data&&data.type!='参与投标单位'&&data.type!='编标拟配合单位'){
         data.forEach((item)=>{
           id.push(item.id);
           name.push(item.detailName);
@@ -1077,13 +1086,24 @@ export default {
       }else if(data.type=="外部联合体单位"){
         this.detailform.verify.outOrgId=id.join(",");
         this.detailform.verify.outOrg=name.join(",");
-      }else if(data.type=='单位名称'){
-        this.detailform.contractInfoAttachBO[data.tableList][data.index].orgId=data.code;
-        this.detailform.contractInfoAttachBO[data.tableList][data.index].orgName=data.name;
-        this.$set(this.detailform.contractInfoAttachBO[data.tableList][data.index],this.detailform.contractInfoAttachBO[data.tableList][data.index]);
-      }else if(data.type=="承揽所属机构"){
-        this.detailform.contractInfo.contractOrgId=data.id;
-        this.detailform.contractInfo.contractOrgName=data.name;
+      }else if(data.type=='参与投标单位'){
+        var _list=[];
+        data.forEach((item)=>{
+          _list.push({ orgId:item.id,orgName:item.detailName,orgType:"01"});
+          name.push(item.detailName);
+        })
+        this.detailform.verifySectionList[data.index].verifySectionOrgNameType01=name.join(",");
+        this.detailform.verifySectionList[data.index].verifySectionOrgListType01=_list;
+        this.$set(this.detailform.verifySectionList,this.detailform.verifySectionList);
+      }else if(data.type=="编标拟配合单位"){
+        var _list=[];
+        data.forEach((item)=>{
+          _list.push({ orgId:item.id,orgName:item.detailName,orgType:"02"});
+          name.push(item.detailName);
+        })
+        this.detailform.verifySectionList[data.index].verifySectionOrgNameType02=name.join(",");
+        this.detailform.verifySectionList[data.index].verifySectionOrgListType02=_list;
+        this.$set(this.detailform.verifySectionList,this.detailform.verifySectionList);
       }
       this.DwVisible=false;
     },
@@ -1164,6 +1184,11 @@ export default {
           this.$message.error("资格预审公告发布日期不能大于递交资格预审申请文件日期");
           return false;
         }
+        if(this.detailform.commonFilesList.length==0){
+          this.$message.error("附件必须上传");
+          return false;
+        }
+        this.detailform.verifyOrgList=[{orgId:this.detailform.verify.orgId,orgName:this.detailform.verify.orgName}];
        this.$refs[formName].validate((valid) => {
          //alert(valid);
         if (valid) {
@@ -1281,21 +1306,36 @@ export default {
       // this.key = this.key + 1;
     },
     selectOrg1(row, column, cell, event){
+      // console.log(row, column, cell, event)
       // alert(JSON.stringify(row));
       if(column.label==="参与投标单位"&&this.p.actpoint != 'look'&&this.p.actpoint!='task') {
-        this.myVerifySection = row;
-        this.treeOrgStatas1 = true;
-        //console.log(this.positionIndex);
-        this.$nextTick(() => {
-          this.$refs.addOrUpdate1.init()
-        })
+        // this.myVerifySection = row;
+        // this.treeOrgStatas1 = true;
+        // //console.log(this.positionIndex);
+        // this.$nextTick(() => {
+        //   this.$refs.addOrUpdate1.init()
+        // })
+        var id=[];
+        if(row.verifySectionOrgListType01!=''){
+          row.verifySectionOrgListType01.forEach((item)=>{
+            id.push(item.orgId)
+          });
+        }
+        this.addDw('参与投标单位',id.join(","),true,row.index,'verifySectionList')
       }else if(column.label==="编标拟配合单位"&&this.p.actpoint != 'look'&&this.p.actpoint!='task') {
-        this.myVerifySection1 = row;
-        this.treeOrgStatas2 = true;
-        //console.log(this.positionIndex);
-        this.$nextTick(() => {
-          this.$refs.addOrUpdate2.init()
-        })
+        // this.myVerifySection1 = row;
+        // this.treeOrgStatas2 = true;
+        // //console.log(this.positionIndex);
+        // this.$nextTick(() => {
+        //   this.$refs.addOrUpdate2.init()
+        // })
+        var id=[];
+        if(row.verifySectionOrgListType02!=''){
+          row.verifySectionOrgListType02.forEach((item)=>{
+            id.push(item.orgId)
+          });
+        }
+        this.addDw('编标拟配合单位',id.join(","),true,row.index,'verifySectionList')
       }
     },
     tableRowClassName({ row, rowIndex }) {
@@ -1526,6 +1566,8 @@ export default {
             verifyOrgLists:datas.verifyOrgLists,
             commonFilesList:datas.commonFilesList||[],
           };
+          this.detailform.verify.orgId=datas.verifyOrgList[0].orgId;
+          this.detailform.verify.orgName=datas.verifyOrgList[0].orgName;
           this.ifYq();
           // console.log( JSON.stringify(this.detailform.verifySectionList))
           // console.log( JSON.stringify(this.detailform.topInfor))

@@ -204,7 +204,7 @@
             <el-radio label="1">通过</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="通过时间"  prop="verifyResultTime" >
+        <el-form-item label="操作时间"  prop="verifyResultTime" >
           <el-date-picker
             value-format="timestamp"
             v-model="resultform.verifySection.verifyResultTime"
@@ -404,12 +404,16 @@ export default {
 
     },
     saveVerifyResult() {
-      this.dialogResult = false
+
       // var date = new Date(this.resultform.verifyResultTime);
       // var time1 = date.getTime();
       // this.resultform.verifySection.verifyResultTime = time1;
       // this.resultform.verifySection.verifyResult =
       // alert(JSON.stringify(this.multipleSelection[0]))
+      if(this.resultform.commonFilesList.length==0){
+        this.$message.error("附件列表不能为空");
+        return false;
+      }
       this.$http
         .post(
           '/api/contract/topInfo/Verify/detail/saveSectionResult',
@@ -422,7 +426,7 @@ export default {
                 message: "保存成功",
                 type: "success",
               });
-
+              this.dialogResult = false
             }
           }
           this.getData();

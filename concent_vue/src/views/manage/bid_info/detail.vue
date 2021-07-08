@@ -583,7 +583,14 @@
               </el-date-picker>
             </el-form-item>
 
-              <el-form-item class="formItem" label="招标文件发售截止日期">
+              <el-form-item class="formItem"
+                            prop="bidInfo.saleTime"
+                            :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+                            label="招标文件发售截止日期">
               <el-date-picker
                 @change="ifYq"
                 :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint=='task'"
@@ -599,6 +606,11 @@
               class="formItem"
               label="投标截止日期:"
               prop="bidInfo.endTime"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
             >
               <el-date-picker
                 @change="ifYq"

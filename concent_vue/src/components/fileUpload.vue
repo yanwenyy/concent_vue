@@ -13,8 +13,8 @@
       :on-error="handleChange"
       :on-remove="handleRemove"
       :on-change="fileChage1"
-      multiple
-      show-file-list>
+      :on-preview="handlePreview"
+      multiple>
       <el-button size="small" type="primary">选择文件</el-button>
     </el-upload>
     <div class="btn-group">
@@ -42,6 +42,9 @@
 
       },
       methods: {
+        handlePreview(file) {
+          console.log(file);
+        },
         close(){
           this.dialogVisible = false;
           this.$refs.fileList1.clearFiles();
@@ -84,10 +87,12 @@
         },
         //上传图片
         handleChange(response, file, fileList){
+          // this.$forceUpdate();
+          debugger
           if (response && response.code === 200) {
             this.fileList1.push(response.data);
             // this.$forceUpdate();
-            console.log(this.fileList1)
+            // console.log(this.fileList1)
             this.$message({
               message: '上传成功',
               type: 'success',
