@@ -56,7 +56,7 @@
           label="项目名称"
           prop="inforName"
           show-overflow-tooltip
-          fixed>
+          >
           <template slot="header" slot-scope="scope">
             <span>项目名称</span>
             <div>

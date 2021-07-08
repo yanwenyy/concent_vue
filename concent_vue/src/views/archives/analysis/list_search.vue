@@ -124,7 +124,7 @@
          <template slot-scope="scope">
           <el-button plain
                      type="primary"
-                     @click="selectUploadTable(scope.row.uuid)">上传附件</el-button>
+                     @click="selectUploadTable(scope.row.uuid,'look')">上传附件</el-button>
         </template>
         </el-table-column>
         <el-table-column

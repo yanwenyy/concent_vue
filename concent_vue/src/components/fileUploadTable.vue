@@ -84,7 +84,7 @@
               </el-table>
 
     </div>
-        <div slot="footer" class="dialog-footer">
+        <div slot="footer" class="dialog-footer" v-if="isShow=='1'">
       <el-button @click="close">取消</el-button>
       <el-button type="primary" @click="sub()">确定</el-button>
     </div>
@@ -113,6 +113,7 @@
           remarks:''
         },
         detailform:{
+          archivesInfo:{},
           commonFilesList:[]
         },
         selectbusinessId:"",
@@ -142,9 +143,10 @@
       },
       //选中数据
       sub() {
+        this.detailform.archivesInfoId=this.selectbusinessId;
          this.$http
               .post(
-                "/api/contract/archives/ArchivesInfo/detail/saveBo",
+                "/api/contract/archives/ArchivesInfo/detail/saveFiles",
                 JSON.stringify(this.detailform),
                 {useJson: true}
               )

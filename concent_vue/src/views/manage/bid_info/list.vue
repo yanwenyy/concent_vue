@@ -55,7 +55,7 @@
           label="项目名称"
           prop="inforName"
           show-overflow-tooltip
-          fixed>
+          >
           <template slot="header" slot-scope="scope">
             <span>项目名称</span>
             <div>
@@ -89,7 +89,7 @@
               <el-option
                 :key="index"
                 :label="item.detailName"
-                :value="item.id"
+                :value="item.detailName"
                 v-for="(item, index) in projectDomainType"
               ></el-option>
             </el-select>
@@ -116,7 +116,7 @@
               <el-option
                 :key="index"
                 :label="item.detailName"
-                :value="item.id"
+                :value="item.detailName"
                 v-for="(item, index) in xqprojectType"
               ></el-option>
             </el-select>

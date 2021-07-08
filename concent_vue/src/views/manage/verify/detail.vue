@@ -579,11 +579,13 @@
          />
         </el-form-item>
         <el-form-item  label="内部联合体单位:">
-          <el-input v-model="detailform.verifyOrgLists"
+          <el-input v-model="detailform.verify.orgName"
           :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否' || detailform.verify.isCoalitionBid==null">
-            <el-button slot="append" icon="el-icon-search"  @click="selectOrg()"
-
-            v-if="p.actpoint != 'look' && detailform.verify.isCoalitionBid != '否' && detailform.verify.isCoalitionBid != null"
+            <!--<el-button slot="append" icon="el-icon-search"  @click="selectOrg()"-->
+            <!--v-if="p.actpoint != 'look' && detailform.verify.isCoalitionBid != '否' && detailform.verify.isCoalitionBid != null"-->
+            <!--&gt;</el-button>-->
+            <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('内部联合体单位',detailform.verify.orgId)"
+                       v-if="p.actpoint != 'look' && detailform.verify.isCoalitionBid != '否' && detailform.verify.isCoalitionBid != null"
             ></el-button>
             <!-- :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否'|| detailform.verify.isCoalitionBid==null" -->
           </el-input>
@@ -595,8 +597,11 @@
             size="mini"
             :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否' || detailform.verify.isCoalitionBid==null||p.actpoint=='task'"
             v-model="detailform.verify.outOrg"
-          />
-
+          >
+          <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('外部联合体单位',detailform.verify.outOrgId)"
+                     v-if="p.actpoint != 'look' && detailform.verify.isCoalitionBid != '否' && detailform.verify.isCoalitionBid != null"
+          ></el-button>
+          </el-input>
         </el-form-item>
 
 <!-- 下拉 -->
@@ -949,6 +954,7 @@
     <TreeOrg v-if="treeOrgStatas1" ref="addOrUpdate1" @getPosition="getTreeOrg1"></TreeOrg>
    <TreeOrg v-if="treeOrgStatas2" ref="addOrUpdate2" @getPosition="getTreeOrg2"></TreeOrg>
     <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
+    <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
   </div>
 
 </template>
@@ -958,13 +964,15 @@ import TreeOrg from '@/components/treeOrg'
 import { isMoney } from '@/utils/validate'
 import AuditProcess from '@/components/auditProcess'
 import FileUpload from '@/components/fileUpload'
+import CompanyTree from '../contractManager/companyTree'
 export default {
 
   // name: '详情',
   components: {
     TreeOrg,
     AuditProcess,
-    FileUpload
+    FileUpload,
+    CompanyTree,
   },
   data() {
     var validateMoney = (rule, value, callback) => {
@@ -978,6 +986,7 @@ export default {
       }
     }
     return {
+      DwVisible:false,//选择单位弹框状态
       uploadVisible:false,//上传附件组件状态
       maxMoney:1000000,
       treeOrgStatas: false,
@@ -1045,6 +1054,39 @@ export default {
 
   },
   methods: {
+    //打开单位弹框
+    addDw(type,list,ifChek,index,tableList){
+      this.DwVisible = true;
+      this.$nextTick(() => {
+        this.$refs.infoDw.init(type,list,ifChek,index,tableList);
+      })
+    },
+    //获取单位的值
+    getDwInfo(data){
+      this.$forceUpdate();
+      var id=[],name=[];
+      if(data&&data.type!='单位名称'&&data.type!='承揽所属机构'){
+        data.forEach((item)=>{
+          id.push(item.id);
+          name.push(item.detailName);
+        })
+      }
+      if(data.type=="内部联合体单位"){
+        this.detailform.verify.orgId=id.join(",");
+        this.detailform.verify.orgName=name.join(",");
+      }else if(data.type=="外部联合体单位"){
+        this.detailform.verify.outOrgId=id.join(",");
+        this.detailform.verify.outOrg=name.join(",");
+      }else if(data.type=='单位名称'){
+        this.detailform.contractInfoAttachBO[data.tableList][data.index].orgId=data.code;
+        this.detailform.contractInfoAttachBO[data.tableList][data.index].orgName=data.name;
+        this.$set(this.detailform.contractInfoAttachBO[data.tableList][data.index],this.detailform.contractInfoAttachBO[data.tableList][data.index]);
+      }else if(data.type=="承揽所属机构"){
+        this.detailform.contractInfo.contractOrgId=data.id;
+        this.detailform.contractInfo.contractOrgName=data.name;
+      }
+      this.DwVisible=false;
+    },
     //判断是否逾期
     ifYq(){
       if(this.detailform.verify.saleTime||this.detailform.verify.subTime){
@@ -1114,7 +1156,14 @@ export default {
         }else{
           url="/api/contract/topInfo/Verify/process/start"
         }
-
+        if(this.detailform.verify.publishTime > this.detailform.verify.saleTime){
+          this.$message.error("资格预审公告发布日期不能大于资审文件发售截止日期");
+          return false;
+        }
+        if(this.detailform.verify.publishTime > this.detailform.verify.subTime){
+          this.$message.error("资格预审公告发布日期不能大于递交资格预审申请文件日期");
+          return false;
+        }
        this.$refs[formName].validate((valid) => {
          //alert(valid);
         if (valid) {
