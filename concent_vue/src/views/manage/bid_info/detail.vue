@@ -662,6 +662,12 @@
             <el-form-item
               label="内部联合体单位:"
               class="formItem1"
+              prop="bidInfo.innerOrgName"
+              :rules="detailform.bidInfo.isCoalitionBid=='0'?{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'change',
+              }:{}"
             >
               <el-input
                 :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"
@@ -685,6 +691,12 @@
             <el-form-item
               class="formItem1"
               label="外部联合体单位:"
+              prop="bidInfo.outOrgId"
+              :rules="detailform.bidInfo.isCoalitionBid=='0'?{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'change',
+              }:{}"
             >
               <!--<el-input-->
                 <!--:disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"-->
@@ -722,6 +734,11 @@
               class="neirong"
               label="投标说明(最多1000字):"
               prop="bidInfo.bidExplain"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
               style="width: 100%"
             >
               <el-input
@@ -776,8 +793,6 @@
                 <!--:file-list="detailform.bidInfo_01"-->
                 <!--:disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'"-->
                 <!--multiple-->
-              <!--&gt;-->
-                <!--<el-button-->
                   <!--size="small"-->
                   <!--type="primary"-->
                   <!--v-show="p.actpoint != 'look' && p.actpoint !== 'searchLook'"-->
@@ -1239,7 +1254,9 @@ export default {
       options1: [{ label: "值", value: "111" }],
       sjdwList:[],//共享单位库
       detailform: {
-        bidInfo: {},
+        bidInfo: {
+          innerOrgId:''
+        },
         bidInfoInnerOrgList: [],
         bidInfoSectionList: [],
         topInforBO: {
@@ -1371,6 +1388,7 @@ export default {
       var list = [];
       var id = [],
         name = [];
+      this.$forceUpdate();
       if (data) {
         data.forEach((item) => {
           id.push(item.id);
@@ -1385,7 +1403,7 @@ export default {
         this.detailform.bidInfo.innerOrgId = id.join(",");
         this.detailform.bidInfo.innerOrgName = name.join(",");
       }
-
+      this.$set(this.detailform.bidInfo,this.detailform.bidInfo)
       this.DwVisible = false;
     },
     //复选下拉框框获取name
@@ -1545,6 +1563,22 @@ export default {
         }else{
           url="/api/contract/topInfo/BidInfo/process/start"
         }
+        if(this.detailform.bidInfo.publishTime>this.detailform.bidInfo.saleTime){
+          this.$message.error("招标公告发布日期不能大于招标文件发售截止日期");
+          return false;
+        }
+        if(this.detailform.bidInfo.publishTime>this.detailform.bidInfo.endTime){
+          this.$message.error("招标公告发布日期不能大于投标截止日期");
+          return false;
+        }
+        if(this.detailform.bidInfo_01.length==0){
+          this.$message.error("附件不能为空");
+          return false;
+        }
+        if(this.detailform.bidInfoSectionList.length==0){
+          this.$message.error("标段信息不能为空");
+          return false;
+        }
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // this.detailform.bidInfo_02=[];
@@ -1676,8 +1710,9 @@ export default {
           id.push(item.innerOrgId);
           name.push(item.innerOrgName);
         });
-        this.detailform.bidInfo.innerOrgId = id.join(",");
-        this.detailform.bidInfo.innerOrgName = name.join(",");
+        this.detailform.bidInfo.innerOrgId = id!=''?id.join(","):'';
+        this.detailform.bidInfo.innerOrgName = name!=''?name.join(","):'';
+        console.log(this.detailform.bidInfo)
         //结束
         // this.detailform.nblht=datas.bidInfo.innerOrgId&&datas.contractInfo.innerOrgId.split(",");
       });

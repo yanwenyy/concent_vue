@@ -234,6 +234,7 @@
                         @clear="searchform.openBidPlaceId=''"
               >
                 <el-button
+                  :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
                   slot="append"
                   icon="el-icon-search"
                   @click="selectPosition()"
@@ -256,13 +257,13 @@
 
             <el-form-item label="参与投标单位:" class="list-item">
               <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.participatingUnitsName" class="input-with-select" :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'">
-                <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('参与投标单位',zbForm.bidInfoSection.participatingUnitsId)" ></el-button>
+                <el-button :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('参与投标单位',zbForm.bidInfoSection.participatingUnitsId)" ></el-button>
               </el-input>
             </el-form-item>
 
             <el-form-item label="编标拟配合单位:" class="list-item">
               <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.orgName" class="input-with-select" :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'">
-                <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('编标拟配合单位',zbForm.bidInfoSection.orgId)" ></el-button>
+                <el-button :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('编标拟配合单位',zbForm.bidInfoSection.orgId)" ></el-button>
               </el-input>
             </el-form-item>
             <br>
@@ -292,7 +293,7 @@
             </el-form-item>
             <el-form-item label="施工单位:" class="list-item">
               <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.constructionUnitName" class="input-with-select" :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'">
-                <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('施工单位',zbForm.bidInfoSection.constructionUnitId,false)" ></el-button>
+                <el-button :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('施工单位',zbForm.bidInfoSection.constructionUnitId,false)" ></el-button>
               </el-input>
             </el-form-item>
             <el-form-item v-if="isBidRates=='0'" label="投标费率(百分比):" class="list-item" prop="bidInfoSection.tenderRate"  :rules="rules.contractAmount">
@@ -947,6 +948,8 @@ export default {
         .then((res) => {
           var datas = res.data.data;
           console.log(datas);
+          this.zbForm.dataList=[];
+          this.zbForm.dataList2=[];
           this.zbType = "look";
           this.dialogFormVisible = true;
           this.zbForm.bidInfoSection = datas.bidInfoSection;

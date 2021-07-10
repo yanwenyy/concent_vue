@@ -777,9 +777,7 @@
           width="500">
 
           <template slot-scope="scope" v-show="p.actpoint != 'look'&&p.actpoint != 'task'">
-            <span  >
-              {{scope.row.verifySectionOrgNameType01}}
-            </span>
+            <el-input  disabled placeholder="请输入内容" v-model="scope.row.verifySectionOrgNameType01" class="input-with-select"/>
           </template>
         </el-table-column>
         <el-table-column
@@ -793,10 +791,7 @@
           width="500">
 
           <template slot-scope="scope" v-show="p.actpoint != 'look'">
-
-            <span  >
-              {{scope.row.verifySectionOrgNameType02}}
-            </span>
+            <el-input  disabled placeholder="请输入内容" v-model="scope.row.verifySectionOrgNameType02" class="input-with-select"/>
           </template>
         </el-table-column>
         <el-table-column

@@ -13,7 +13,12 @@
     </el-card>
     <div style="height: calc(100% - 50px);overflow: auto;padding: 0 50px;">
       <el-form :inline="true" :model="detailForm" :rules="rules" ref="detailForm" @keyup.enter.native="init()"  class="gcform">
-        <el-form-item label="标段名称:" class="list-item" >
+        <el-form-item label="标段名称:" class="list-item" prop="bidInfoSection.sectionId"
+                      :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: ['change','blur'],
+              }">
           <el-select
             clearable
             placeholder=""
@@ -87,7 +92,9 @@
             </el-select>
           </template>
         </el-form-item>
-        <el-form-item v-if="ifkb=='kbxq'" label="开标金额(万元):" class="list-item" prop="bidInfoSection.riskFee"  :rules="rules.contractAmount">
+        <el-form-item v-if="ifkb=='kbxq'" label="开标金额(万元):" class="list-item" prop="bidInfoSection.riskFee"
+
+        >
           <el-input
             v-model="detailForm.bidInfoSection.riskFee"
             clearable
@@ -99,7 +106,11 @@
           </el-input>
           <!-- <el-input v-model="detailForm.bidInfoSection.tenderSecurity" placeholder="投标保证金(万元)" clearable></el-input> -->
         </el-form-item>
-        <el-form-item label="开标地点:" class="list-item">
+        <el-form-item label="开标地点:" class="list-item" prop="bidInfoSection.openBidPlaceName" :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: ['change','blur'],
+              }">
           <el-input v-model="detailForm.bidInfoSection.openBidPlaceName"
           placeholder="开标地点"
           clearable
@@ -114,7 +125,13 @@
           </el-input>
         </el-form-item>
 <br>
-        <el-form-item label="开标日期:" class="list-item">
+        <el-form-item label="开标日期:" class="list-item"  prop="bidInfoSection.dateOfBidOpeningName"
+                      :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+        >
           <el-date-picker
             width="100%"
             filterable
@@ -128,11 +145,7 @@
         </el-form-item>
         <el-form-item label="参与投标单位:" class="list-item"
                 prop="bidInfoSection.participatingUnitsName"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: ['change','blur'],
-              }">
+                >
           <el-input  placeholder="请输入内容" v-model="detailForm.bidInfoSection.participatingUnitsName" class="input-with-select" :disabled="type === 'look'">
             <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('参与投标单位',detailForm.bidInfoSection.participatingUnitsId)" ></el-button>
           </el-input>
@@ -151,7 +164,7 @@
 
         <br>
 
-        <el-form-item label="投标保证金(万元):" class="list-item" prop="bidInfoSection.tenderSecurity"  :rules="rules.contractAmount">
+        <el-form-item label="投标保证金(万元):" class="list-item not-error" prop="bidInfoSection.tenderSecurity"  :rules="rules.contractAmount">
                 <el-input
                     v-model="detailForm.bidInfoSection.tenderSecurity"
                     clearable
@@ -164,7 +177,7 @@
           <!-- <el-input v-model="detailForm.bidInfoSection.tenderSecurity" placeholder="投标保证金(万元)" clearable></el-input> -->
         </el-form-item>
 
-        <el-form-item label="投标价(万元):" class="list-item" prop="bidInfoSection.bidPrice"  :rules="rules.contractAmount">
+        <el-form-item label="投标价(万元):" class="list-item" :class="type!='eidtnew'?'not-error':''" prop="bidInfoSection.bidPrice"  :rules="rules.contractAmount">
                 <el-input
                     v-model="detailForm.bidInfoSection.bidPrice"
                     clearable
@@ -176,7 +189,13 @@
               </el-input>
         </el-form-item>
 
-        <el-form-item v-if="isBidRates=='0'" label="投标费率(百分比):" class="list-item" prop="bidInfoSection.tenderRate"  :rules="rules.contractAmount">
+        <el-form-item v-if="isBidRates=='0'" label="投标费率(百分比):" class="list-item" prop="bidInfoSection.tenderRate"
+                      :rules="isBidRates=='0'?{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }:{}"
+        >
                 <el-input
                     v-model="detailForm.bidInfoSection.tenderRate"
                     clearable
@@ -191,25 +210,22 @@
           <br>
         <el-form-item label="项目经理:" class="list-item"
                 prop="bidInfoSection.projectManager"
-                :rules="{
+                      :rules="type=='eidtnew'?{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
-              }">
+              }:{}"
+              >
           <el-input v-model="detailForm.bidInfoSection.projectManager" placeholder="项目经理" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
 
         <el-form-item label="项目副经理:" class="list-item"
                 prop="bidInfoSection.deputyProjectManager"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }">
+               >
           <el-input v-model="detailForm.bidInfoSection.deputyProjectManager	" placeholder="项目副经理" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
 
-        <el-form-item v-if="isBidRates=='1'||isBidRates==''" label="风险费(万元):" class="list-item"  prop="bidInfoSection.riskFee"  :rules="rules.contractAmount">
+        <el-form-item v-if="isBidRates=='1'||isBidRates==''" label="风险费(万元):" class="list-item not-error"  prop="bidInfoSection.riskFee"  :rules="rules.contractAmount">
                 <el-input
                       v-model="detailForm.bidInfoSection.riskFee"
                       clearable
@@ -224,25 +240,27 @@
         <br>
         <el-form-item label="技术负责人:" class="list-item"
                 prop="bidInfoSection.technicalDirector"
-                :rules="{
+                      :rules="type=='eidtnew'?{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
-              }">
+              }:{}"
+        >
           <el-input v-model="detailForm.bidInfoSection.technicalDirector" placeholder="技术负责人" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
 
         <el-form-item label="安全负责人:" class="list-item"
                 prop="bidInfoSection.personInChargeOfSafety"
-                :rules="{
+                      :rules="type=='eidtnew'?{
                 required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
-              }">
+              }:{}"
+        >
           <el-input v-model="detailForm.bidInfoSection.personInChargeOfSafety" placeholder="安全负责人" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
 
-        <el-form-item v-if="isBidRates=='1'||isBidRates==''" label="安全费(万元):" class="list-item"  prop="bidInfoSection.safetyCost"  :rules="rules.contractAmount">
+        <el-form-item v-if="isBidRates=='1'||isBidRates==''" label="安全费(万元):" class="list-item not-error"  prop="bidInfoSection.safetyCost"  :rules="rules.contractAmount">
                 <el-input
                     v-model="detailForm.bidInfoSection.safetyCost"
                     clearable
@@ -258,25 +276,17 @@
 
         <el-form-item label="财务负责人:" class="list-item"
                 prop="bidInfoSection.personInChargeOfFinance"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }">
+                >
           <el-input v-model="detailForm.bidInfoSection.personInChargeOfFinance" placeholder="财务负责人" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
 
         <el-form-item label="成本负责人:" class="list-item"
                 prop="bidInfoSection.costOwner"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }">
+                >
           <el-input v-model="detailForm.bidInfoSection.costOwner" placeholder="成本负责人" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
 
-        <el-form-item v-if="isBidRates=='1'||isBidRates==''" label="投标限价(万元):" class="list-item" prop="bidInfoSection.biddingPriceLimit"  :rules="rules.contractAmount">
+        <el-form-item v-if="isBidRates=='1'||isBidRates==''" label="投标限价(万元):" class="list-item not-error" prop="bidInfoSection.biddingPriceLimit"  :rules="rules.contractAmount">
                 <el-input
                     v-model="detailForm.bidInfoSection.biddingPriceLimit"
                     clearable
@@ -289,13 +299,13 @@
           <!-- <el-input v-model="detailForm.bidInfoSection.biddingPriceLimit" placeholder="投标限价(万元)" clearable></el-input> -->
         </el-form-item>
           <br>
-          <el-form-item label="投资估算:" class="list-item" prop="bidInfoSection.investmentReckon" :rules="rules.contractAmount">
+          <el-form-item label="投资估算:" class="list-item not-error" prop="bidInfoSection.investmentReckon" :rules="rules.contractAmount">
           <el-input v-model="detailForm.bidInfoSection.investmentReckon" placeholder="投资估算" clearable :disabled="type === 'look'">
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
           </el-input>
         </el-form-item>
-          <el-form-item label="其中建安投资:" class="list-item" prop="bidInfoSection.jananInvestment" :rules="rules.contractAmount">
+          <el-form-item label="其中建安投资:" class="list-item not-error" prop="bidInfoSection.jananInvestment" :rules="rules.contractAmount">
           <el-input v-model="detailForm.bidInfoSection.jananInvestment" placeholder="其中建安投资" clearable :disabled="type === 'look'" >
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
@@ -394,7 +404,7 @@
             v-if="ifkb=='kbxq'"
             >
              <template slot-scope="scope">
-                <el-form-item class="tabelForm bd-table-item" :prop="'dataList.' + scope.$index + '.riskFee'" :rules='rules.contractAmount'>
+                <el-form-item class="tabelForm bd-table-item not-error" :prop="'dataList.' + scope.$index + '.riskFee'" :rules='rules.contractAmount'>
                  <el-input type="text" v-model="scope.row.riskFee" :disabled="type === 'look'&&ifkb!='kbxq'">
                     <template slot="prepend">¥</template>
                     <template slot="append">(万元)</template>
@@ -499,7 +509,7 @@
             v-if="ifkb=='kbxq'"
           >
             <template slot-scope="scope">
-              <el-form-item class="tabelForm bd-table-item" :prop="'dataList.' + scope.$index + '.riskFee'" :rules='rules.contractAmount'>
+              <el-form-item class="tabelForm bd-table-item not-error" :prop="'dataList.' + scope.$index + '.riskFee'" :rules='rules.contractAmount'>
                 <el-input type="text" v-model="scope.row.riskFee" :disabled="type === 'look'&&ifkb!='kbxq'">
                   <template slot="prepend">¥</template>
                   <template slot="append">(万元)</template>
@@ -554,10 +564,10 @@ import { isMoney } from '@/utils/validate'
     },
     data() {
         var validateMoney = (rule, value, callback) => {
-        // console.log(value)
-        if(value===''){
+        // console.log(this.type)
+        if(this.type=='eidtnew'&&value===''){
           callback(new Error('不能为空'))
-        }else if (!isMoney(value)) {
+        }else if (value!=''&&value!=null&&!isMoney(value)) {
           callback(new Error('请输入数字'))
         } else {
           callback()
@@ -742,7 +752,7 @@ import { isMoney } from '@/utils/validate'
         console.log(this.bdName)
         this.isBidRates=isBidRates;
         this.ifkb=ifkb;
-        if(type=='edit'||type=='look'){
+        if(type=='edit'||type=='look'||type=="eidtnew"){
 
           detail.bidInfoSectionOrgList.forEach((item, index) => {
           if (item.orgType == '1') {

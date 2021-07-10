@@ -558,9 +558,7 @@ export default {
 >>>.el-form-item__label{
   width: auto;
 }
->>>.el-upload-list{
-  display: none;
-}
+
 >>>.el-dialog__body{
   padding-top: 0px;
 }

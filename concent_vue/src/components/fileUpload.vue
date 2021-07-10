@@ -14,6 +14,7 @@
       :on-remove="handleRemove"
       :on-change="fileChage1"
       :on-preview="handlePreview"
+      show-file-list
       multiple>
       <el-button size="small" type="primary">选择文件</el-button>
     </el-upload>
@@ -88,7 +89,7 @@
         //上传图片
         handleChange(response, file, fileList){
           // this.$forceUpdate();
-          debugger
+          // debugger
           if (response && response.code === 200) {
             this.fileList1.push(response.data);
             // this.$forceUpdate();

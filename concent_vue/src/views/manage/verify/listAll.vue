@@ -624,13 +624,17 @@ export default {
     },
     searchformReset() {
       // this.$refs['searchform'].resetFields()
-      this.searchform.inforName = "";
-      this.searchform.enginTypeFirstName = "";
-      this.searchform.constructionOrg = "";
-      this.searchform.noticeTypeName = "";
-      this.searchform.status = "";
-      this.searchform.username = "";
-      this.searchform.saleTime = "";
+      this.searchform={
+          current: 1,
+          size: 20,
+          inforName: '',
+          enginTypeFirstName: '',
+          constructionOrg: '',
+          noticeTypeName: '',
+          status: '',
+          username: '',
+          saleTime: ''
+      };
       this.getData();
     },
 

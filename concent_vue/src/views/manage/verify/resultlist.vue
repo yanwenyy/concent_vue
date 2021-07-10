@@ -801,9 +801,9 @@ export default {
     margin: 0 27px 5px 0;
   }
 
-  .el-table--border {
-    min-height: auto !important;
-  }
+  /*.el-table--border {*/
+    /*min-height: auto !important;*/
+  /*}*/
   >>>.el-form-item__label{
     width: auto;
   }

@@ -265,9 +265,12 @@
           :width="150"
           align="center"
           label="资审结果"
-          prop="verify.verifyResult"
+          prop="verifyResult"
           show-overflow-tooltip
         >
+          <template slot-scope="scope">
+            <span> {{scope.row.verifyResult=='0'?'未通过':scope.row.verifyResult=='1'?'通过':'待通过'}}</span>
+          </template>
         </el-table-column>
       </el-table>
       <el-pagination
@@ -399,15 +402,15 @@
 
       projectStatus:[
         {
-          id:'0',
+          id:'1',
           detailName:'草稿'
         },
         {
-          id:'1',
+          id:'2',
           detailName:'审核中'
         },
         {
-          id:'2',
+          id:'3',
           detailName:'审核通过'
         }
       ],//项目状态列表
