@@ -2228,8 +2228,13 @@ export default {
      //打开标段弹框
     openBd(type,detail,index){
       this.BDCSVisible = true;
+      var tableList=[],bdList=[];
+      this.detailform.bidInfoSectionList.forEach((item)=>{
+        tableList.push(item.bidInfoSection.sectionName)
+      });
+      bdList=this.detailform.topInforBO.topInfoSectionList.filter(item => tableList.indexOf(item.sectionName)==-1);
       this.$nextTick(() => {
-        this.$refs.infoBD.init(this.detailform.topInforBO.topInfoSectionList,this.detailform.bidInfo.isBidRates,type,detail,index);
+        this.$refs.infoBD.init(bdList,this.detailform.bidInfo.isBidRates,type,detail,index);
       })
     },
     //查看标段弹框

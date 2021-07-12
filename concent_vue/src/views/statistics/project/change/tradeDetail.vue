@@ -214,7 +214,7 @@
             </el-row>
             <el-row>
               <el-form-item
-                label="预期收益率:"
+                label="预期收益率(%):"
                 prop="project.projectExpectedReturn"
                 :rules="rules.project.isNumber"
                 style="width:32.5%;">
@@ -233,7 +233,10 @@
                   clearable
                   :disabled="p.actpoint === 'look'||p.actpoint === 'look'"
                   placeholder="请输入"
-                  v-model="detailForm.project.projectYieid"/>
+                  v-model="detailForm.project.projectYieid">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
               </el-form-item>
             </el-row>
             <el-row>
@@ -790,7 +793,7 @@
             </el-row>
             <el-row>
               <el-form-item
-                label="预期收益率:"
+                label="预期收益率(%):"
                 style="width:32.5%;">
                 <el-input
                   clearable
@@ -805,7 +808,10 @@
                   clearable
                   disabled
                   placeholder="请输入"
-                  v-model="showDetailForm.project.projectYieid"/>
+                  v-model="showDetailForm.project.projectYieid">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
               </el-form-item>
             </el-row>
             <el-row>

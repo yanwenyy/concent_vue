@@ -775,7 +775,8 @@
           </div>
           <el-row>
             <p class="detail-title">
-              <span>附件: </span>
+              <span v-if="p.from!='kblist'">附件: </span>
+              <span v-if="p.from=='kblist'">开标记录（最大10MB）: </span>
               <el-button
                 v-show="p.actpoint != 'look' && p.actpoint !== 'searchLook'&& p.actpoint !== 'task'"
                 size="small"
@@ -1435,9 +1436,14 @@ export default {
     //打开标段弹框
     openBd(type, detail, index) {
       this.BDCSVisible = true;
+      var tableList=[],bdList=[];
+      this.detailform.bidInfoSectionList.forEach((item)=>{
+        tableList.push(item.bidInfoSection.sectionName)
+      });
+      bdList=this.detailform.topInforBO.topInfoSectionList.filter(item => tableList.indexOf(item.sectionName)==-1);
       this.$nextTick(() => {
         this.$refs.infoBD.init(
-          this.detailform.topInforBO.topInfoSectionList,
+          bdList,
           this.detailform.bidInfo.isBidRates,
           type,
           detail,

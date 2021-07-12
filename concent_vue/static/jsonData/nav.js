@@ -827,7 +827,7 @@ export default {
                 },
                 {
                   'name': '档案文件查询',
-                  'path': '/archives/archives/list_archivesSearch',
+                  'path': '/archives/archives/listArchivesSearch',
                   'component': '/archives/archives/list_archivesSearch',
                   'iconCls': 'el-icon-search',
                   'menushow': true,
@@ -854,7 +854,7 @@ export default {
                 },
                 {
                   'name': '统计分析查询',
-                  'path': '/archives/statistics/list_statisticsSearch',
+                  'path': '/archives/statistics/listStatisticsSearch',
                   'component': '/archives/statistics/list_statisticsSearch',
                   'iconCls': 'el-icon-search',
                   'menushow': true,
@@ -881,7 +881,7 @@ export default {
                 },
                 {
                   'name': '月度分析查询',
-                  'path': '/archives/analysis/list_search',
+                  'path': '/archives/analysis/ylistSearch',
                   'component': '/archives/analysis/list_search',
                   'iconCls': 'el-icon-search',
                   'menushow': true,
@@ -908,7 +908,7 @@ export default {
                 },
                 {
                   'name': '消息信息查询',
-                  'path': '/archives/news/list_search',
+                  'path': '/archives/news/xlistSearch',
                   'component': '/archives/news/list_search',
                   'iconCls': 'el-icon-search',
                   'menushow': true,

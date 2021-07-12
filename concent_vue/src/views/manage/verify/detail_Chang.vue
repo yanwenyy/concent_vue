@@ -984,6 +984,7 @@
             </el-form-item>
             <br>
               <el-form-item label="公告类型:"
+                            prop="topInfor.noticeTypeName"
                             :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -993,7 +994,7 @@
                 <el-input
                   disabled
                   placeholder="公告类型"
-                  v-model="detailformBefore.topInfor.noticeTypeName"
+                  v-model="detailformAfter.topInfor.noticeTypeName"
                 >
 
                 </el-input>
@@ -1079,6 +1080,7 @@
             </el-form-item>
 
             <el-form-item label="资金来源:"
+                          prop="capitalName"
                           :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -1120,6 +1122,7 @@
             <br>
 
             <el-form-item label="公告类型:"
+                          prop="topInfor.noticeTypeName"
                           :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -1170,6 +1173,7 @@
               </el-form-item>
 
               <el-form-item  class="formItem"  label="联系电话:"
+                             prop="topInfoOrg.contactMode"
                   :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -1689,7 +1693,9 @@ export default {
           publishTime: '',
           flowStatus: '0'
         },
-        'topInfor': {},
+        'topInfor': {
+          noticeTypeName:''
+        },
         'topInfoOrg':{},
         'sectionStr': [],
         'verifySectionList': [],
@@ -2097,6 +2103,7 @@ export default {
               }else if(item.verify.changeStatus==2)
               {
                 this.detailformAfter =item
+                this.detailformAfter.topInfor.noticeTypeName=item.topInfor.noticeTypeName
                 console.log( this.detailformAfter)
               }
             })

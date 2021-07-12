@@ -1719,7 +1719,7 @@
                 >
                   <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
                   <el-input clearable disabled  placeholder="请输入内容" v-model="detailform.contractInfo.signOrgName" class="input-with-select">
-                    <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('签约单位',detailform.contractInfo.signOrgId)" ></el-button>
+                    <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('签约单位',detailform.contractInfo.signOrgId)" ></el-button>
                   </el-input>
                 </el-form-item>
                 <div>
@@ -1781,7 +1781,7 @@
                       <el-form-item class="tabelForm" :prop="'topInfoSiteList.' + scope.$index + '.path'"  :rules="{required: true,message: '此项不能为空'}">
                         <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                         <el-input disabled placeholder="请输入内容" v-model="scope.row.path" class="input-with-select group-no-padding">
-                          <el-button v-if="p.actpoint != 'look'" slot="append" icon="el-icon-circle-plus" @click="selectPosition(),positionIndex=scope.$index"></el-button>
+                          <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus" @click="selectPosition(),positionIndex=scope.$index"></el-button>
                         </el-input>
                       </el-form-item>
                       <!--<i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>-->
@@ -2243,7 +2243,7 @@
                           :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                           v-model="scope.row.orgName"
                           class="input-el-input-group">
-                          <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'unionContractInfoAttachList')" ></el-button>
+                          <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'unionContractInfoAttachList')" ></el-button>
                         </el-input>
                         <!--<el-input-->
                         <!--class="input-el-input-group"-->
@@ -2450,7 +2450,7 @@
                           :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                           v-model="scope.row.orgName"
                           class="input-el-input-group">
-                          <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'innerContractInfoAttachList')" ></el-button>
+                          <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'innerContractInfoAttachList')" ></el-button>
                         </el-input>
                         <!--<el-input-->
                         <!--class="input-el-input-group"-->
@@ -2657,7 +2657,7 @@
                           :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                           v-model="scope.row.orgName"
                           class="input-el-input-group">
-                          <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outUnionContractInfoAttachList')" ></el-button>
+                          <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outUnionContractInfoAttachList')" ></el-button>
                         </el-input>
                         <!--<el-input-->
                         <!--class="input-el-input-group"-->
@@ -2864,7 +2864,7 @@
                           :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                           v-model="scope.row.orgName"
                           class="input-el-input-group">
-                          <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outContractInfoAttachList')" ></el-button>
+                          <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outContractInfoAttachList')" ></el-button>
                         </el-input>
                         <!--<el-input-->
                         <!--class="input-el-input-group"-->
@@ -3071,7 +3071,7 @@
                           :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                           v-model="scope.row.orgName"
                           class="input-el-input-group">
-                          <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'innerGroupContractInfoAttachList')" ></el-button>
+                          <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'innerGroupContractInfoAttachList')" ></el-button>
                         </el-input>
                         <!--<el-input-->
                         <!--class="input-el-input-group"-->

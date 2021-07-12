@@ -36,6 +36,9 @@
 
     <div style="margin-top: 10px">
       <el-table
+        class="tableStyle"
+        :max-height="$tableHeight"
+        :height="$tableHeight"
         ref="table"
         :data="page.records"
         :header-cell-style="{
