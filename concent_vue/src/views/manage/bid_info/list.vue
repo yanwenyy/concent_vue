@@ -547,6 +547,7 @@ export default {
     // this.getMenus();
     // this.getOrgTree();
     this.getData();
+    this.$store.dispatch("getConfig", {});
      this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
   },
 };

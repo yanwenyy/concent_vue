@@ -36,7 +36,7 @@
         <el-table-column
           :width="500"
           label="区域指挥部名称"
-          prop="orgFullName"
+          prop="orgName"
           show-overflow-tooltip
         >
         </el-table-column>

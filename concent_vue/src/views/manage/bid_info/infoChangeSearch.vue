@@ -123,10 +123,10 @@
       <el-pagination
         @size-change="sizeChangeHandle"
         @current-change="currentChangeHandle"
-        :current-page="pageIndex"
+        :current-page="page.current"
         :page-sizes="[10, 20, 50, 100]"
         :page-size="page.size"
-        :total="totalPage"
+        :total="page.total"
         layout="total, sizes, prev, pager, next, jumper">
       </el-pagination>
     </div>
@@ -211,15 +211,13 @@
       });
       },
       // 每页数
-      sizeChangeHandle(val) {
-        this.pageSize = val
-        this.pageIndex = 1
-        this.init()
+      handleSizeChange(val) {
+        this.searchFrom.size = val;
+        this.init();
       },
-      // 当前页
-      currentChangeHandle(val) {
-        this.pageIndex = val
-        this.init()
+      handleCurrentChange(val) {
+        this.searchFrom.current = val;
+        this.init();
       },
       // 单选
       handleCurrentChange(val) {

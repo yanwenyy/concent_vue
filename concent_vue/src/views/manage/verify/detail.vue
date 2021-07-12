@@ -580,12 +580,12 @@
         </el-form-item>
         <el-form-item  label="内部联合体单位:">
           <el-input v-model="detailform.verify.orgName"
-          :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否' || detailform.verify.isCoalitionBid==null">
+          :disabled="p.actpoint === 'look'||p.actpoint === 'task' || detailform.verify.isCoalitionBid=='否' || detailform.verify.isCoalitionBid==null">
             <!--<el-button slot="append" icon="el-icon-search"  @click="selectOrg()"-->
             <!--v-if="p.actpoint != 'look' && detailform.verify.isCoalitionBid != '否' && detailform.verify.isCoalitionBid != null"-->
             <!--&gt;</el-button>-->
             <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('内部联合体单位',detailform.verify.orgId)"
-                       v-if="p.actpoint != 'look' && detailform.verify.isCoalitionBid != '否' && detailform.verify.isCoalitionBid != null"
+                       v-if="p.actpoint != 'look'&&p.actpoint != 'task' && detailform.verify.isCoalitionBid != '否' && detailform.verify.isCoalitionBid != null"
             ></el-button>
             <!-- :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否'|| detailform.verify.isCoalitionBid==null" -->
           </el-input>
@@ -599,7 +599,7 @@
             v-model="detailform.verify.outOrg"
           >
           <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('外部联合体单位',detailform.verify.outOrgId)"
-                     v-if="p.actpoint != 'look' && detailform.verify.isCoalitionBid != '否' && detailform.verify.isCoalitionBid != null"
+                     v-if="p.actpoint != 'look' &&p.actpoint != 'task'&& detailform.verify.isCoalitionBid != '否' && detailform.verify.isCoalitionBid != null"
           ></el-button>
           </el-input>
         </el-form-item>
@@ -1052,7 +1052,7 @@ export default {
   methods: {
     //计算建安投资<=投资预算
     calcTzys(val,tzval,index,list){
-      if(val>tzval){
+      if(Number(val)>Number(tzval)){
         this.$message.error("其中建安投资不能大于投资估算");
         list[index].verifySection.jananInvestment='';
         return false;

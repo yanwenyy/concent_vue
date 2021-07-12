@@ -36,7 +36,7 @@
               :resizable="false"
               label="指挥部名称"
               align="center"
-              prop="orgFullName"
+              prop="orgName"
             >
             </el-table-column>
 

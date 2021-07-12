@@ -292,8 +292,8 @@
            disabled
            active-text="通过"
            v-model="resultform.verifySection.verifyResult"
-           active-value="true"
-           inactive-value="false"
+           active-value="1"
+           inactive-value="0"
          >
             </el-switch>
         </el-form-item>
@@ -352,7 +352,7 @@
     </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogResult = false">取 消</el-button>
-        <el-button type="primary" @click="saveVerifyResult">确 定</el-button>
+        <!--<el-button type="primary" @click="saveVerifyResult">确 定</el-button>-->
       </div>
     </el-dialog>
     </div>

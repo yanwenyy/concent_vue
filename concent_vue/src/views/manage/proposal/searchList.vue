@@ -418,7 +418,7 @@
       },
       // 查看
       rowshow(row) {
-        let p = {actpoint: "look", instid: row.uuid};
+        let p = {from:'searchlist',actpoint: "look", instid: row.uuid};
         this.$router.push({
           path: "./importDetail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},

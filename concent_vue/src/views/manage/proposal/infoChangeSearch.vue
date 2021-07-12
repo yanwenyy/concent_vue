@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     :visible.sync="visible"
-    :append-to-body="true">
+    :append-to-body="true" @close="reset()">
     <div>
       <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="init()">
         <el-form-item label="项目名称:">
@@ -73,10 +73,16 @@
           label="项目名称">
         </el-table-column>
         <el-table-column
+          prop="enginTypeFirstName"
+          header-align="center"
+          align="center"
+          label="工程类别(一级)">
+        </el-table-column>
+        <el-table-column
           prop="enginTypeSecondName"
           header-align="center"
           align="center"
-          label="工程类别">
+          label="工程类别(二级)">
         </el-table-column>
         <el-table-column
           prop="constructionOrg"
@@ -121,7 +127,7 @@
       ></el-pagination>
     </div>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="visible = false">取消</el-button>
+      <el-button @click="visible = false,reset()">取消</el-button>
       <el-button type="primary" @click="sub()">确定</el-button>
     </div>
   </el-dialog>
@@ -160,6 +166,16 @@
       this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
     },
     methods: {
+      reset(){
+        this.searchform={
+          inforName: '',
+            enginTypeFirstId: '',
+            enginTypeSecondId: '',
+            current: 1,
+            size: 20,
+            flowStatus:'3'
+        }
+      },
       //工程类别二级
       getTwo(id) {
         this.searchform.enginTypeSecondId='';
