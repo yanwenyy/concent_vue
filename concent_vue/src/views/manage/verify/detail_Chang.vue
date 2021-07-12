@@ -2079,8 +2079,10 @@ export default {
           )
           .then(res => {
             this.detailformBefore = res.data.data;
-            this.detailformAfter = res.data.data
-
+            // this.detailformAfter = res.data.data
+            for(var i in this.detailformBefore){
+              this.detailformAfter[i]=JSON.parse(JSON.stringify(this.detailformBefore[i]));
+            }
             // alert( JSON.stringify(this.detailformAfter.verifySectionList))
           })
       }else
