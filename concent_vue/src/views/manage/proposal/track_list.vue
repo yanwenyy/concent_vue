@@ -288,13 +288,29 @@
           <template slot="header" slot-scope="scope">
             <span>跟踪状态</span>
             <div>
-              <el-input
-
+              <el-select
                 class="list-search-picker"
-                style=" width: 100%"
-                v-model="searchform.trackStatus"
+                clearable
+                filterable
+                placeholder="请选择"
                 size="mini"
-              />
+                v-model="searchform.trackStatus"
+              >
+                <el-option label="持续跟踪中" value="1"></el-option>
+                <el-option label="放弃跟踪" value="2"></el-option>
+                <el-option label="结束跟踪" value="3"></el-option>
+                <el-option label="资审中" value="4"></el-option>
+                <el-option label="资审通过待投标" value="5"></el-option>
+                <el-option label="资审未通过" value="6"></el-option>
+                <el-option label="投标中" value="7"></el-option>
+                <el-option label="已开标" value="8"></el-option>
+                <el-option label="中标未新签" value="9"></el-option>
+                <el-option label="中标已新签" value="10"></el-option>
+                <el-option label="未中标" value="11"></el-option>
+                <el-option label="废标" value="12"></el-option>
+                <el-option label="流标" value="13"></el-option>
+                <el-option label="待跟踪" value="14"></el-option>
+              </el-select>
             </div>
           </template>
         </el-table-column>
@@ -366,12 +382,17 @@
           <template slot="header" slot-scope="scope">
             <span>是否导入</span>
             <div>
-              <el-input
+              <el-select
                 class="list-search-picker"
-                style=" width: 100%"
-                v-model="searchform.importFileRecordId"
+                clearable
+                filterable
+                placeholder="请选择"
                 size="mini"
-              />
+                v-model="searchform.importFileRecordId"
+              >
+                <el-option label="是" value="1"></el-option>
+                <el-option label="否" value="0"></el-option>
+              </el-select>
             </div>
           </template>
         </el-table-column>

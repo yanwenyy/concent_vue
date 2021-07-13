@@ -446,7 +446,13 @@
 
             <el-divider content-position="left" class="detailDivider">中标登记</el-divider>
             <el-form ref="zbForm" :model="zbForm" :rules="rules">
-              <el-form-item label="是否中标" :label-width="formLabelWidth" >
+              <el-form-item label="是否中标" :label-width="formLabelWidth"
+                            prop="bidInfoSection.isWinBid"
+                            :rules="{
+                              required: true,
+                              message: '此项不能为空',
+                              trigger: 'blur',
+                            }">
                 <template>
                   <el-radio-group @change="zbForm.bidInfoSection.isOutBidOrg='1'" class="detail-radio-group" v-model="zbForm.bidInfoSection.isWinBid"  :disabled="zbType=='look'">
                     <el-radio  label="1" value="1">中标</el-radio>

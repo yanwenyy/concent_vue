@@ -77,7 +77,7 @@
             }}</template>
         </el-table-column>
         <el-table-column
-          prop="createOrgId"
+          prop="createOrgName"
           header-align="center"
           align="center"
           label="填报单位">

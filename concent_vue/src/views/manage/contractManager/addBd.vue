@@ -54,7 +54,28 @@
             </el-input>
           </el-form-item>
           <el-form-item label="评标办法:" class="list-item">
-            <el-input v-model="detailForm.bidEvaluationMethodName" placeholder="评标办法" clearable></el-input>
+            <!--@change="-->
+            <!--getName(-->
+            <!--detailForm.bidEvaluationMethodName,-->
+            <!--bidMethod,-->
+            <!--'bidEvaluationMethodName',-->
+            <!--'bidEvaluationMethodCode'-->
+            <!--)-->
+            <!--"-->
+            <el-select
+              clearable
+              placeholder="评标办法"
+
+              v-model="detailForm.bidEvaluationMethodName">
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.detailName"
+                v-for="(item, index) in bidMethod"
+
+              ></el-option>
+            </el-select>
+            <!--<el-input v-model="detailForm.bidEvaluationMethodName" placeholder="评标办法" clearable></el-input>-->
           </el-form-item>
           <el-form-item label="开标日期:" class="list-item">
             <el-date-picker
@@ -132,27 +153,30 @@
               show-overflow-tooltip
               label="其他投标单位(系统内)">
               <template slot-scope="scope">
-                <el-select
-                  class="tabelForm-dete"
-                  clearable
-                  filterable
-                  placeholder="请选择"
-                  v-model="scope.row.orgId"
-                  @change="
-                  getBdName(
-                    scope.row.orgId,
-                    detailForm.dataList,
-                    scope.$index
-                  )
-                "
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in nameList"
-                  ></el-option>
-                </el-select>
+                <el-input  placeholder="请输入内容" v-model="scope.row.orgName" class="input-with-select" :disabled="type === 'look'||type=='eidtnew'">
+                  <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('其他投标单位(系统内)',scope.row.orgId,false,scope.$index,detailForm.dataList)" ></el-button>
+                </el-input>
+                <!--<el-select-->
+                  <!--class="tabelForm-dete"-->
+                  <!--clearable-->
+                  <!--filterable-->
+                  <!--placeholder="请选择"-->
+                  <!--v-model="scope.row.orgId"-->
+                  <!--@change="-->
+                  <!--getBdName(-->
+                    <!--scope.row.orgId,-->
+                    <!--detailForm.dataList,-->
+                    <!--scope.$index-->
+                  <!--)-->
+                <!--"-->
+                <!--&gt;-->
+                  <!--<el-option-->
+                    <!--:key="index"-->
+                    <!--:label="item.detailName"-->
+                    <!--:value="item.id"-->
+                    <!--v-for="(item, index) in nameList"-->
+                  <!--&gt;</el-option>-->
+                <!--</el-select>-->
               </template>
             </el-table-column>
             <el-table-column
@@ -340,30 +364,59 @@
     mounted() {
 
     },
+    computed:{
+      bidMethod (){
+        // console.log(this.$store.state.bidMethod)
+        return this.$store.state.bidMethod;
+      },
+    },
     methods: {
       close(){
         this.$refs['detailForm'].clearValidate();
         this.visible = false;
       },
       //打开单位弹框
-      addDw(type){
+      addDw(type,list,ifChek,index,tableList){
         this.DwVisible = true;
         this.$nextTick(() => {
-          this.$refs.infoDw.init();
-      })
+          this.$refs.infoDw.init(type,list,ifChek,index,tableList);
+        })
       },
       //获取单位的值
       getDwInfo(data){
         console.log(data);
-        this.DwVisible=false;
-        var participatingUnitsId='',participatingUnitsName='';
-        var i=0,len=data.length;
-        for(;i<len;i++){
-          participatingUnitsId+=data[i].detailCode+(i<len-1?",":"");
-          participatingUnitsName+=data[i].detailName+(i<len-1?",":"")
+
+        var id=[],name=[],code=[];
+        if(data&&data.type!="其他投标单位(系统内)"){
+          data.forEach((item)=>{
+            id.push(item.id);
+            name.push(item.detailName);
+            code.push(item.detailCode);
+          })
         }
-        this.detailForm.participatingUnitsId=participatingUnitsId;
-        this.detailForm.participatingUnitsName=participatingUnitsName;
+        if(data.type=="参与投标单位"){
+          this.detailForm.participatingUnitsId=code.join(",");
+          this.detailForm.participatingUnitsName=name.join(",");
+          this.$forceUpdate();
+        }else if(data.type=="其他投标单位(系统内)"){
+          this.$forceUpdate();
+          var ifRepeat=false;
+          this.detailForm.dataList.forEach((item, index) => {
+            if(item.orgId!=data.code&&!ifRepeat){
+              if (index == data.index) {
+                // item.detailName = _data.detailName;
+                item.orgId = data.code;
+                item.orgName = data.name;
+              }
+            }else{
+              this.$message.error("其他投标单位(系统内)不能重复");
+              ifRepeat=true;
+            }
+          });
+          // this.detailForm.dataList[data.index].orgId=data.code;
+          // this.detailForm.dataList[data.index].orgName=data.name;
+        }
+        this.DwVisible=false;
       },
       //获取项目地点的值
       getPositionTree(data) {

@@ -6535,6 +6535,7 @@
                 ><i class="el-icon-download"></i>导入
                 </el-button>
               </el-upload>
+              <el-link class="downFile"  type="primary" href="/static/实物工程量导入模板.xlsx" download="实物工程量导入模板.xlsx">实物工程量导入模板下载</el-link>
             </p>
             <el-table
               :data="detailform.contractInfoQuantityMachineList1"
@@ -6616,6 +6617,7 @@
                 ><i class="el-icon-download"></i>导入
                 </el-button>
               </el-upload>
+              <el-link class="downFile"  type="primary" href="/static/劳材机统计导入模板.xlsx" download="劳材机统计导入模板.xlsx">劳材机统计导入模板下载</el-link>
             </p>
             <el-table
               :data="detailform.contractInfoQuantityMachineList2"
@@ -7710,15 +7712,22 @@ export default {
       } else if (_data.fullDetailName.indexOf("境外") != -1) {
         country = '02';
       }
+      var ifRepeat=false;
       this.detailform.topInfoSiteList.forEach((item, index) => {
-        if (index == this.positionIndex) {
-        // item.detailName = _data.detailName;
-        item.country = country;
-        item.ffid = _data.fullDetailCode;
-        item.path = _data.fullDetailName;
-        item.placeId=_data.id;
+        if(item.ffid!=_data.fullDetailCode&&!ifRepeat){
+          if (index == this.positionIndex) {
+            // item.detailName = _data.detailName;
+            item.country = country;
+            item.ffid = _data.fullDetailCode;
+            item.path = _data.fullDetailName;
+            item.placeId=_data.id;
 
-      }
+          }
+        }else{
+          this.$message.error("项目地点不能重复");
+          ifRepeat=true;
+        }
+
     });
       this.key = this.key + 1;
     },
@@ -7851,6 +7860,10 @@ export default {
           }
           if(this.detailform.contractInfo.isOpenBid=='1'&&this.detailform.fileList4.length==0){
             this.$message.error("请上传招标公告文件");
+            return false;
+          }
+          if(this.detailform.contractInfo.startTime>this.detailform.contractInfo.endTime){
+            this.$message.error("合同竣工日期必须大于合同开工日期");
             return false;
           }
           this.$http

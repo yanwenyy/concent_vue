@@ -1582,6 +1582,17 @@
           this.$message.error("请选择一个主地点");
           return false;
         }
+        var ddSum=0,bdSum=0;
+        this.detailform.topInfoSiteList.forEach((item)=>{
+          ddSum+=Number(item.contractAmount)
+        });
+        this.detailform.topInfoSectionList.forEach((item)=>{
+          bdSum+=Number(item.projectScale)
+        });
+        if(ddSum!=bdSum){
+          this.$message.error("项目地点项目规模之和必须等于标段信息规模之和");
+          return false;
+        }
         this.$refs[formName].validate((valid,object) => {
           if (valid) {
             this.$http

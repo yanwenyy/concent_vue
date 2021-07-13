@@ -2425,15 +2425,23 @@
         } else if (_data.fullDetailName.indexOf("境外") != -1) {
           country = '02';
         }
+        var ifRepeat=false;
         this.detailform.topInfoSiteList.forEach((item, index) => {
-          if (index == this.positionIndex) {
-          // item.detailName = _data.detailName;
-          item.country = country;
-          item.ffid = _data.fullDetailCode;
-          item.path = _data.fullDetailName;
-          item.placeId=_data.id;
-        }
-      });
+          if(item.ffid!=_data.fullDetailCode&&!ifRepeat){
+            if (index == this.positionIndex) {
+              // item.detailName = _data.detailName;
+              item.country = country;
+              item.ffid = _data.fullDetailCode;
+              item.path = _data.fullDetailName;
+              item.placeId=_data.id;
+
+            }
+          }else{
+            this.$message.error("项目地点不能重复");
+            ifRepeat=true;
+          }
+
+        });
         this.key = this.key + 1;
       },
       //选择项目地点

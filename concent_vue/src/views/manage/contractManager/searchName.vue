@@ -100,19 +100,22 @@
           label="合同号">
         </el-table-column>
         <el-table-column
-          prop="constructionOrg"
+          prop="createOrgName"
           header-align="center"
           align="center"
           label="填报单位">
         </el-table-column>
         <el-table-column
-          prop="noticeTypeName"
+          prop="createTime"
           header-align="center"
           align="center"
           label="录入时间">
+          <template slot-scope="scope">{{
+            scope.row.createTime | dateformat
+            }}</template>
         </el-table-column>
         <el-table-column
-          prop="noticeTypeName"
+          prop="createUserName"
           header-align="center"
           align="center"
           label="填报人">
@@ -152,6 +155,7 @@
           contractType:'1',
           current: 1,
           size: 20,
+          flowStatus:'3'
         },
         contractType:'',
         dataList: [],

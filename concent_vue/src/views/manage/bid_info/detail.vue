@@ -1690,7 +1690,7 @@ export default {
       } else {
         var q =
           this.p.actpoint === "edit" ||
-          (this.p.actpoint === "look" && this.p.flowStatus != null)||this.p.actpoint === "task"
+          (this.p.actpoint === "look")||this.p.actpoint === "task"
             ? { id: this.id }
             : { topInfoOrgId: this.id };
         url = "/api/contract/topInfo/BidInfo/detail/entityInfo";

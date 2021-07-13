@@ -84,12 +84,12 @@
               placeholder="请选择"
               @change="getTwo"
               size="mini"
-              v-model="searchform.enginTypeFirstName"
+              v-model="searchform.enginTypeFirstId"
             >
               <el-option
                 :key="index"
                 :label="item.detailName"
-                :value="item.detailName"
+                :value="item.id"
                 v-for="(item, index) in projectDomainType"
               ></el-option>
             </el-select>
@@ -111,12 +111,12 @@
               filterable
               placeholder="请选择工程类别(一级)"
               size="mini"
-              v-model="searchform.enginTypeSecondName"
+              v-model="searchform.enginTypeSecondId"
             >
               <el-option
                 :key="index"
                 :label="item.detailName"
-                :value="item.detailName"
+                :value="item.id"
                 v-for="(item, index) in xqprojectType"
               ></el-option>
             </el-select>
@@ -184,12 +184,27 @@
               {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':scope.row.flowStatus==null?'待登记':'其他'}}
           </template>
           <template slot="header" slot-scope="scope">
-            <span>状态</span>
+            <span>审核状态</span>
             <div>
-              <el-input
-                style=" width: 100%"
+              <el-select
+                class="list-search-picker"
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
                 v-model="searchform.flowStatus"
-                size="mini"/>
+              >
+                <el-option label="草稿" value="1"></el-option>
+                <el-option label="审核中" value="2"></el-option>
+                <el-option label="审核通过" value="3"></el-option>
+                <el-option label="审核退回" value="4"></el-option>
+              </el-select>
+              <!--<el-input-->
+              <!--class="list-search-picker"-->
+              <!--style=" width: 100%"-->
+              <!--v-model="searchform.flowStatus"-->
+              <!--size="mini"-->
+              <!--/>-->
             </div>
           </template>
         </el-table-column>
@@ -300,7 +315,9 @@ export default {
         ptype: "",
         orgid: "",
         orgname: "",
-        version:''
+        version:'',
+        enginTypeFirstId: '',
+        enginTypeSecondId:'',
       },
       zbForm:{},
       menus: [],

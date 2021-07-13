@@ -87,7 +87,7 @@
               placeholder="请选择"
               @change="getTwo"
               size="mini"
-              v-model="searchform.enginTypeFirstName"
+              v-model="searchform.enginTypeFirstId"
             >
               <el-option
                 :key="index"
@@ -103,7 +103,7 @@
           </template> -->
         </el-table-column>
 
-                <el-table-column
+        <el-table-column
           :width="200"
           align="center"
           label="工程类别(二级)"
@@ -116,7 +116,7 @@
               filterable
               placeholder="请选择工程类别(一级)"
               size="mini"
-              v-model="searchform.enginTypeSecondName"
+              v-model="searchform.enginTypeSecondId"
             >
               <el-option
                 :key="index"
@@ -154,26 +154,26 @@
           prop="topInfor.noticeTypeName"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>公告类型</span>
-            <div>
-              <el-select
-              class="list-search-picker"
-              clearable
-              filterable
-              placeholder="请选择"
-              size="mini"
-              v-model="searchform.noticeTypeName"
-            >
-              <el-option
-                :key="index"
-                :label="item.detailName"
-                :value="item.id"
-                v-for="(item, index) in bulletinType"
-              ></el-option>
-            </el-select>
-            </div>
-          </template>
+          <!--<template slot="header" slot-scope="scope">-->
+            <!--<span>公告类型</span>-->
+            <!--<div>-->
+              <!--<el-select-->
+              <!--class="list-search-picker"-->
+              <!--clearable-->
+              <!--filterable-->
+              <!--placeholder="请选择"-->
+              <!--size="mini"-->
+              <!--v-model="searchform.noticeTypeName"-->
+            <!--&gt;-->
+              <!--<el-option-->
+                <!--:key="index"-->
+                <!--:label="item.detailName"-->
+                <!--:value="item.id"-->
+                <!--v-for="(item, index) in bulletinType"-->
+              <!--&gt;</el-option>-->
+            <!--</el-select>-->
+            <!--</div>-->
+          <!--</template>-->
           <template slot-scope="scope">
             {{ scope.row.noticeTypeName }}
           </template>
@@ -209,19 +209,33 @@
 
           show-overflow-tooltip
         >
+          <template slot="header" slot-scope="scope">
+            <span>审核状态</span>
+            <div>
+              <el-select
+                class="list-search-picker"
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="searchform.flowStatus"
+              >
+                <el-option label="草稿" value="1"></el-option>
+                <el-option label="审核中" value="2"></el-option>
+                <el-option label="审核通过" value="3"></el-option>
+                <el-option label="审核退回" value="4"></el-option>
+              </el-select>
+              <!--<el-input-->
+              <!--class="list-search-picker"-->
+              <!--style=" width: 100%"-->
+              <!--v-model="searchform.flowStatus"-->
+              <!--size="mini"-->
+              <!--/>-->
+            </div>
+          </template>
           <template slot-scope="scope">
               <!-- {{scope.row.uuid==null?'未通过':'通过'}} -->
               {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
-          </template>
-
-          <template slot="header" slot-scope="scope">
-            <span>状态</span>
-            <div>
-              <el-input
-                style=" width: 100%"
-                v-model="searchform.flowStatus"
-                size="mini"/>
-            </div>
           </template>
            <!-- <template slot-scope="scope">
             <el-tag v-if="scope.row.uuid===null" type="warning">未进行资审申请</el-tag>
@@ -261,9 +275,10 @@
             <div>
             <el-date-picker
               style=" width: 100%"
-              v-model="searchform.createTime"
+              v-model="searchform.querCreateTime"
               size="mini"
-              value-format="timestamp"
+              type="date"
+              value-format="yyyy-MM-dd"
               >
               </el-date-picker>
             </div>
@@ -355,7 +370,8 @@ export default {
         current: 1,
         size: 20,
         inforName: '',
-        enginTypeFirstName: '',
+        enginTypeFirstId: '',
+        enginTypeSecondId:'',
         constructionOrg: '',
         noticeTypeName: '',
         status: '',
@@ -693,6 +709,7 @@ export default {
     //this.getMenus()
     //this.getOrgTree()
     this.getData();
+    this.$store.dispatch("getConfig", {});
     this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
   },
 };

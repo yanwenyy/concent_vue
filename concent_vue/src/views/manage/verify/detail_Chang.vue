@@ -1328,10 +1328,13 @@
             </el-switch>
       </el-form-item>
         <el-form-item label="内部联合体单位:">
-          <el-input :disabled="p.actpoint === 'look'|| detailformAfter.verify.isCoalitionBid=='否' || detailformAfter.verify.isCoalitionBid==null||p.actpoint=='task'" v-model="detailformAfter.verifyOrgLists">
-            <el-button
-            v-if="p.actpoint != 'look' &&p.actpoint != 'task'&& detailformAfter.verify.isCoalitionBid != '否' && detailformAfter.verify.isCoalitionBid!=null"
-            slot="append" icon="el-icon-search" @click="selectOrg()"></el-button>
+          <el-input :disabled="p.actpoint === 'look'|| detailformAfter.verify.isCoalitionBid=='否' || detailformAfter.verify.isCoalitionBid==null||p.actpoint=='task'" v-model="detailformAfter.verify.orgName">
+            <!--<el-button-->
+            <!--v-if="p.actpoint != 'look' &&p.actpoint != 'task'&& detailformAfter.verify.isCoalitionBid != '否' && detailformAfter.verify.isCoalitionBid!=null"-->
+            <!--slot="append" icon="el-icon-search" @click="selectOrg()"></el-button>-->
+            <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('内部联合体单位',detailformAfter.verify.orgId)"
+                       v-if="p.actpoint != 'look'&&p.actpoint != 'task' && detailformAfter.verify.isCoalitionBid != '否' && detailformAfter.verify.isCoalitionBid != null"
+            ></el-button>
             <!-- :disabled="p.actpoint === 'look'|| detailformAfter.verify.isCoalitionBid=='否' || detailformAfter.verify.isCoalitionBid==null"  -->
           </el-input>
         </el-form-item>
@@ -1342,7 +1345,11 @@
             :disabled="p.actpoint === 'look'|| detailformAfter.verify.isCoalitionBid=='否' || detailformAfter.verify.isCoalitionBid==null||p.actpoint=='task'"
             size="mini"
             v-model="detailformAfter.verify.outOrg"
-          />
+          >
+            <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('外部联合体单位',detailformAfter.verify.outOrgId)"
+                       v-if="p.actpoint != 'look' &&p.actpoint != 'task'&& detailformAfter.verify.isCoalitionBid != '否' && detailformAfter.verify.isCoalitionBid != null"
+            ></el-button>
+          </el-input>
 
         </el-form-item>
 
@@ -1633,6 +1640,7 @@
       <TreeOrg v-if="treeOrgStatas1" ref="addOrUpdate1" @getPosition="getTreeOrg1"></TreeOrg>
     <TreeOrg v-if="treeOrgStatas2" ref="addOrUpdate2" @getPosition="getTreeOrg2"></TreeOrg>
       <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
+      <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
     </el-tab-pane>
     <el-tab-pane label="审批流程" name="lc" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
       <Audit-Process :task="p.task||{businessId:(p.changRecorUUid+'-'+p.topinfoid),businessType:'contract_qual_change'}"></Audit-Process>
@@ -1645,15 +1653,18 @@
 import TreeOrg from '@/components/treeOrg'
 import AuditProcess from '@/components/auditProcess'
 import FileUpload from '@/components/fileUpload'
+import CompanyTree from '../contractManager/companyTree'
 export default {
   // name: '详情',
   components: {
     TreeOrg,
     AuditProcess,
-    FileUpload
+    FileUpload,
+    CompanyTree
   },
   data() {
     return {
+      DwVisible:false,//选择单位弹框状态
       uploadVisible:false,//上传附件组件状态
       activeName:"after",
       maxMoney:1000000,
@@ -1742,6 +1753,50 @@ export default {
 
   },
   methods: {
+    //打开单位弹框
+    addDw(type,list,ifChek,index,tableList){
+      this.DwVisible = true;
+      this.$nextTick(() => {
+        this.$refs.infoDw.init(type,list,ifChek,index,tableList);
+      })
+    },
+    //获取单位的值
+    getDwInfo(data){
+      this.$forceUpdate();
+      var id=[],name=[];
+      if(data&&data.type!='参与投标单位'&&data.type!='编标拟配合单位'){
+        data.forEach((item)=>{
+          id.push(item.id);
+          name.push(item.detailName);
+        })
+      }
+      if(data.type=="内部联合体单位"){
+        this.detailformAfter.verify.orgId=id.join(",");
+        this.detailformAfter.verify.orgName=name.join(",");
+      }else if(data.type=="外部联合体单位"){
+        this.detailformAfter.verify.outOrgId=id.join(",");
+        this.detailformAfter.verify.outOrg=name.join(",");
+      }else if(data.type=='参与投标单位'){
+        var _list=[];
+        data.forEach((item)=>{
+          _list.push({ orgId:item.id,orgName:item.detailName,orgType:"01"});
+          name.push(item.detailName);
+        })
+        this.detailformAfter.verifySectionList[data.index].verifySectionOrgNameType01=name.join(",");
+        this.detailformAfter.verifySectionList[data.index].verifySectionOrgListType01=_list;
+        this.$set(this.detailformAfter.verifySectionList,this.detailformAfter.verifySectionList);
+      }else if(data.type=="编标拟配合单位"){
+        var _list=[];
+        data.forEach((item)=>{
+          _list.push({ orgId:item.id,orgName:item.detailName,orgType:"02"});
+          name.push(item.detailName);
+        })
+        this.detailformAfter.verifySectionList[data.index].verifySectionOrgNameType02=name.join(",");
+        this.detailformAfter.verifySectionList[data.index].verifySectionOrgListType02=_list;
+        this.$set(this.detailformAfter.verifySectionList,this.detailformAfter.verifySectionList);
+      }
+      this.DwVisible=false;
+    },
     //打开附件上传的组件
     openFileUp(url,list){
       this.uploadVisible = true;
@@ -1760,13 +1815,13 @@ export default {
       getName(id, list, name,code) {
           if(id){
               this.$forceUpdate()
-              this.detailform.verify[name] = list.find(
+              this.detailformAfter.verify[name] = list.find(
                   (item) => item.id == id
               ).detailName;
-              this.detailform.verify[code] = list.find(
+              this.detailformAfter.verify[code] = list.find(
                   (item) => item.id == id
               ).detailCode;
-              console.log(this.detailform.topInfor[name]);
+              console.log(this.detailformAfter.topInfor[name]);
           }
       },
       //流程操作
@@ -1863,19 +1918,33 @@ export default {
 
       if(column.label==="参与投标单位")
       {
-        this.myVerifySection=row;
-        this.treeOrgStatas1 = true;
-        console.log(this.positionIndex);
-        this.$nextTick(() => {
-          this.$refs.addOrUpdate1.init()
-        })
+        // this.myVerifySection=row;
+        // this.treeOrgStatas1 = true;
+        // console.log(this.positionIndex);
+        // this.$nextTick(() => {
+        //   this.$refs.addOrUpdate1.init()
+        // })
+        var id=[];
+        if(row.verifySectionOrgListType01!=''){
+          row.verifySectionOrgListType01.forEach((item)=>{
+            id.push(item.orgId)
+          });
+        }
+        this.addDw('参与投标单位',id.join(","),true,row.index,'verifySectionList')
       }else if(column.label==="编标拟配合单位") {
-        this.myVerifySection1 = row;
-        this.treeOrgStatas2 = true;
-        //console.log(this.positionIndex);
-        this.$nextTick(() => {
-          this.$refs.addOrUpdate2.init()
-        })
+        // this.myVerifySection1 = row;
+        // this.treeOrgStatas2 = true;
+        // //console.log(this.positionIndex);
+        // this.$nextTick(() => {
+        //   this.$refs.addOrUpdate2.init()
+        // })
+        var id=[];
+        if(row.verifySectionOrgListType02!=''){
+          row.verifySectionOrgListType02.forEach((item)=>{
+            id.push(item.orgId)
+          });
+        }
+        this.addDw('编标拟配合单位',id.join(","),true,row.index,'verifySectionList')
       }
 
     },
@@ -1901,6 +1970,19 @@ export default {
           url="/api/contract/topInfo/Verify/changeProcess/start";
           this.detailformAfter.verify.flowStatus = "2";
         }
+      if(this.detailformAfter.verify.publishTime > this.detailformAfter.verify.saleTime){
+        this.$message.error("资格预审公告发布日期不能大于资审文件发售截止日期");
+        return false;
+      }
+      if(this.detailformAfter.verify.publishTime > this.detailformAfter.verify.subTime){
+        this.$message.error("资格预审公告发布日期不能大于递交资格预审申请文件日期");
+        return false;
+      }
+      if(this.detailformAfter.commonFilesList.length==0){
+        this.$message.error("附件必须上传");
+        return false;
+      }
+      this.detailformAfter.verifyOrgList=[{orgId:this.detailformAfter.verify.orgId,orgName:this.detailformAfter.verify.orgName}];
       this.$refs[formName].validate((valid) => {
         //alert(valid);
         if (valid) {
@@ -2083,6 +2165,8 @@ export default {
             for(var i in this.detailformBefore){
               this.detailformAfter[i]=JSON.parse(JSON.stringify(this.detailformBefore[i]));
             }
+            this.detailformBefore.verify.orgId=datas.verifyOrgList[0].orgId;
+            this.detailformBefore.verify.orgName=datas.verifyOrgList[0].orgName;
             // alert( JSON.stringify(this.detailformAfter.verifySectionList))
           })
       }else
@@ -2105,7 +2189,9 @@ export default {
               }else if(item.verify.changeStatus==2)
               {
                 this.detailformAfter =item
-                this.detailformAfter.topInfor.noticeTypeName=item.topInfor.noticeTypeName
+                this.detailformAfter.topInfor.noticeTypeName=item.topInfor.noticeTypeName;
+                this.detailformBefore.verify.orgId=datas.verifyOrgList[0].orgId;
+                this.detailformBefore.verify.orgName=datas.verifyOrgList[0].orgName;
                 console.log( this.detailformAfter)
               }
             })

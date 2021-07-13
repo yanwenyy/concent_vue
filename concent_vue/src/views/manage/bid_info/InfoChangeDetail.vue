@@ -388,7 +388,17 @@
               >否</el-radio>
           </div> -->
           </el-form-item>
-
+          <el-form-item
+            v-show="detailFormBefore.topInforBO.topInfor.investment<maxMoney&&detailFormBefore.topInforBO.topInfor.isMajorProject=='0'"
+            label="重大项目说明"
+          >
+            <el-input
+              clearable
+              placeholder=""
+              disabled
+              v-model="detailFormBefore.topInforBO.topInfor.majorProjectExplain"
+            />
+          </el-form-item>
 
           <br>
           <!-- 下拉 -->
@@ -1357,6 +1367,17 @@
             >
             </el-switch>
             </el-form-item>
+            <el-form-item
+              v-show="detailform.topInforBO.topInfor.investment<maxMoney&&detailform.topInforBO.topInfor.isMajorProject=='0'"
+              label="重大项目说明"
+            >
+              <el-input
+                clearable
+                placeholder=""
+                disabled
+                v-model="detailform.topInforBO.topInfor.majorProjectExplain"
+              />
+            </el-form-item>
            <br>
               <el-form-item   class="formItem" label="项目跟踪负责人:"
                 :rules="{
@@ -2003,6 +2024,7 @@ export default {
   // name: "详情",
   data() {
     return {
+      maxMoney:1000000,
       uploadVisible:false,//上传附件组件状态
       activeName:"after",
       key:0,
