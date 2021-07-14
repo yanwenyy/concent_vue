@@ -25,7 +25,7 @@
                 }"
               >
                 <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.inforName" class="input-with-select">
-                  <el-button v-if="detailform.contractInfo.contractType!='2'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
+                  <el-button v-if="detailform.contractInfo.contractType!='2'&&p.actpoint!='task'&&p.actpoint!='look'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
                 </el-input>
               </el-form-item>
               <el-form-item
@@ -491,7 +491,10 @@
                   size="mini"
                   v-model="detailform.contractInfo.tradeExpectedIncome"
                   @input="detailform.contractInfo.tradeExpectedIncome = detailform.contractInfo.tradeExpectedIncome.replace(/[^\-?\d.]/g,'','')"
-                />
+                >
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
               </el-form-item>
               <br>
 
@@ -1090,6 +1093,7 @@
                 >
                   <template slot-scope="scope">
                     <el-date-picker
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                       class="tabelForm-dete"
                       v-model="scope.row.subjectMatterYear"
                       type="year"
@@ -1110,6 +1114,7 @@
                 >
                   <template slot-scope="scope">
                     <el-date-picker
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                       class="tabelForm-dete"
                       v-model="scope.row.subjectMatterMonth"
                       type="month"
@@ -1147,6 +1152,7 @@
                   "
                       >
                         <el-option
+                          v-if="bdwSelList.indexOf(item.subjectMatterName)==-1"
                           :key="index"
                           :label="item.subjectMatterName"
                           :value="item.subjectMatterName"
@@ -2189,6 +2195,7 @@ export default {
     return {
       userInfo: JSON.parse(sessionStorage.getItem('userdata')),
       bdwList:[],//标的物名称list
+      bdwSelList:[],//标的物选择list
       treeStatas: false,
       DwVisible:false,//选择单位弹框状态
       uploadVisible:false,//上传附件组件状态
@@ -2285,6 +2292,13 @@ export default {
     AuditProcess
   },
   methods: {
+    //获取已选择的标的物单位
+    getBdNameSel(){
+      this.bdwSelList=[];
+      this.detailform.contractInfoSubjectMatterList.forEach((item)=>{
+        this.bdwSelList.push(item.subjectMatterName)
+      });
+    },
     //获取标的物单位
     getBdwdw( name,list, index) {
       if(name){
@@ -2292,6 +2306,7 @@ export default {
         list[index].subjectMatterUnit=this.bdwList.find(
           (item) => item.subjectMatterName == name
         ).subjectMatterUnitName;
+        this.getBdNameSel();
       }
     },
     //设置我方份额含补充
@@ -2744,7 +2759,7 @@ export default {
           .then((res) => {
           if (res.data && res.data.code === 200) {
           list.splice(index, 1);
-          console.log(list)
+            this.bdwSelList.remove(item.subjectMatterName)
         } else {
           this.$message.error(data.msg)
         }
@@ -2772,6 +2787,9 @@ export default {
       }).catch(() => {})
       }else{
         list.splice(index, 1);
+        if(type=='bdw'){
+          this.bdwSelList.remove(item.subjectMatterName)
+        }
         this.getOurAmount()
       }
     },
@@ -2878,6 +2896,19 @@ export default {
 
   },
   mounted() {
+    //删除数组内某项的构造函数
+    Array.prototype.indexOf = function(val) {
+      for (var i = 0; i < this.length; i++) {
+        if (this[i] == val) return i;
+      }
+      return -1;
+    };
+    Array.prototype.remove = function(val) {
+      var index = this.indexOf(val);
+      if (index > -1) {
+        this.splice(index, 1);
+      }
+    };
     // eslint-disable-next-line no-unde
     this.id=this.p.instid;
     if (this.p.actpoint === "edit"||this.id) {

@@ -26,7 +26,7 @@
               }"
               >
                 <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.inforName" class="input-with-select">
-                  <el-button v-if="detailform.contractInfo.contractType!='2'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
+                  <el-button v-if="detailform.contractInfo.contractType!='2'&&p.actpoint!='task'&&p.actpoint!='look'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
                 </el-input>
               </el-form-item>
               <el-form-item
@@ -2590,7 +2590,16 @@
             innerGroupContractInfoAttachList:[]
           },
           contractInfoSectionList: [],
-          topInfoSiteList:[],
+          topInfoSiteList:[
+            {
+              country: '',
+              ffid: '',
+              path: '',
+              contractAmount: '',
+              isMain: '1',
+              placeId:''
+            }
+          ],
           fileList1:[],
           fileList2:[],
           fileList3:[],
@@ -3331,6 +3340,20 @@
         }
         if(this.detailform.contractInfo.isOpenBid=='1'&&this.detailform.fileList3.length==0){
           this.$message.error("请上传招标公告文件");
+          return false;
+        }
+        if(this.detailform.topInfoSiteList.length==0){
+          this.$message.error("请至少选择一个项目地点");
+          return false;
+        }
+        var hasMain=false;
+        this.detailform.topInfoSiteList.forEach((item)=>{
+          if(item.isMain=='1'){
+            hasMain=true;
+          }
+        });
+        if(!hasMain){
+          this.$message.error("请选择一个主地点");
           return false;
         }
         this.$refs[formName].validate((valid) => {

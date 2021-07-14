@@ -1206,6 +1206,8 @@ export default {
                     type: "success",
                   });
                   this.$router.back();
+                }else{
+                  this.$message.error(res.data.msg)
                 }
 
               });

@@ -10,7 +10,7 @@
           >保存</el-button
         >
         <el-button
-        v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.bidInfo.flowStatus==1||detailform.bidInfo.flowStatus==4)"
+        v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.bidInfo.flowStatus==1||detailform.bidInfo.flowStatus==4||detailform.bidInfo.bidFlowStatus==1||detailform.bidInfo.bidFlowStatus==4)"
           @click="saveInfo('detailform','sub')"
           class="detailbutton detail-back-tab sub-btn"
           >提交</el-button>

@@ -25,7 +25,7 @@
             }"
             >
               <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.inforName" class="input-with-select">
-                <el-button v-if="detailform.contractInfo.contractType!='2'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
+                <el-button v-if="detailform.contractInfo.contractType!='2'&&p.actpoint!='task'&&p.actpoint!='look'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
               </el-input>
             </el-form-item>
             <el-form-item
@@ -2819,6 +2819,7 @@
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -2831,7 +2832,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('铁路工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('铁路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -2936,6 +2937,7 @@
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -2948,7 +2950,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('铁路工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('铁路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -3053,6 +3055,7 @@
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -3065,7 +3068,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('铁路工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('铁路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -3170,6 +3173,7 @@
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden; margin-right: 30px">
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -3182,7 +3186,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('铁路工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('铁路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -3287,6 +3291,7 @@
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -3299,7 +3304,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('铁路工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('铁路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -3404,6 +3409,7 @@
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -3416,7 +3422,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('铁路工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('铁路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -3521,6 +3527,7 @@
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -3533,7 +3540,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('铁路工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('铁路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -3638,6 +3645,7 @@
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -3650,7 +3658,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('铁路工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('铁路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -3755,6 +3763,7 @@
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -3767,7 +3776,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('铁路工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('铁路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -3872,6 +3881,7 @@
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -3884,7 +3894,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('铁路工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('铁路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -3989,6 +3999,7 @@
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -4001,7 +4012,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('铁路工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('铁路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -4108,6 +4119,7 @@
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -4120,7 +4132,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('公路工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('公路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -4207,6 +4219,7 @@
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -4219,7 +4232,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('公路工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('公路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -4306,6 +4319,7 @@
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -4318,7 +4332,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('公路工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('公路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -4405,6 +4419,7 @@
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -4417,7 +4432,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('公路工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('公路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -4504,6 +4519,7 @@
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -4516,7 +4532,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('公路工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('公路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -4603,6 +4619,7 @@
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -4615,7 +4632,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('公路工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('公路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -4702,6 +4719,7 @@
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -4714,7 +4732,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('公路工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('公路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -4803,6 +4821,7 @@
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -4815,7 +4834,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('城市轨道工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('城市轨道工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -4967,6 +4986,7 @@
               <div class="htfs">
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -4979,7 +4999,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('市政工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('市政工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -5106,6 +5126,7 @@
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <span>电气工程列表: </span>
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -5118,7 +5139,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('房建工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('房建工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                 :data="gclList"
@@ -5234,6 +5255,7 @@
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <span>给排水工程列表: </span>
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -5246,7 +5268,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('房建工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('房建工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -5362,6 +5384,7 @@
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <span>基坑支护工程列表: </span>
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -5374,7 +5397,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('房建工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('房建工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -5490,6 +5513,7 @@
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <span>建筑工程列表: </span>
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -5502,7 +5526,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('房建工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('房建工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -5618,6 +5642,7 @@
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <span>空调水工程列表: </span>
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -5630,7 +5655,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('房建工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('房建工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -5746,6 +5771,7 @@
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <span>弱电列表: </span>
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -5758,7 +5784,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('房建工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('房建工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -5874,6 +5900,7 @@
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <span>通风空调列表: </span>
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -5886,7 +5913,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('房建工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('房建工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -6002,6 +6029,7 @@
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <span>土方工程列表: </span>
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -6014,7 +6042,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('房建工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('房建工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -6130,6 +6158,7 @@
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <span>消防电工程列表: </span>
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -6142,7 +6171,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('房建工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('房建工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -6258,6 +6287,7 @@
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <span>消防工程列表: </span>
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -6270,7 +6300,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('房建工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('房建工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -6386,6 +6416,7 @@
                 <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                   <span>装饰工程列表: </span>
                   <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                     class="inline-block"
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
@@ -6398,7 +6429,7 @@
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
-                  <el-button @click="exportGcl('房建工程')" type="primary" plain>下载模板</el-button>
+                  <el-button @click="exportGcl('房建工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
                 <el-table
                   :data="gclList"
@@ -6512,12 +6543,13 @@
           </el-tabs>
         </div>
       </el-tab-pane>
-      <el-tab-pane v-if="p.actpoint == 'edit'" label="实物工程量">
+      <el-tab-pane v-if="p.actpoint != 'add'" label="实物工程量">
         <div class="detailBoxBG htfs">
           <div>
             <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
               <span>实物工程量列表: </span>
               <el-upload
+                v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                 class="inline-block"
                 :action="'/api/contract/ContractInfoQuantityMachine/list/importQuantity'"
                 :on-success="importData"
@@ -6535,7 +6567,7 @@
                 ><i class="el-icon-download"></i>导入
                 </el-button>
               </el-upload>
-              <el-link class="downFile"  type="primary" href="/static/实物工程量导入模板.xlsx" download="实物工程量导入模板.xlsx">实物工程量导入模板下载</el-link>
+              <el-link  v-if="p.actpoint != 'look'&&p.actpoint != 'task'" class="downFile"  type="primary" href="/static/实物工程量导入模板.xlsx" download="实物工程量导入模板.xlsx">实物工程量导入模板下载</el-link>
             </p>
             <el-table
               :data="detailform.contractInfoQuantityMachineList1"
@@ -6594,12 +6626,13 @@
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane v-if="p.actpoint == 'edit'" label="劳材机统计">
+      <el-tab-pane v-if="p.actpoint != 'add'" label="劳材机统计">
         <div class="detailBoxBG htfs">
           <div>
             <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
               <span>劳材机统计列表: </span>
               <el-upload
+                v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                 class="inline-block"
                 :action="'/api/contract/ContractInfoQuantityMachine/list/importMachine'"
                 :on-success="importData"
@@ -6617,7 +6650,7 @@
                 ><i class="el-icon-download"></i>导入
                 </el-button>
               </el-upload>
-              <el-link class="downFile"  type="primary" href="/static/劳材机统计导入模板.xlsx" download="劳材机统计导入模板.xlsx">劳材机统计导入模板下载</el-link>
+              <el-link v-if="p.actpoint != 'look'&&p.actpoint != 'task'" class="downFile"  type="primary" href="/static/劳材机统计导入模板.xlsx" download="劳材机统计导入模板.xlsx">劳材机统计导入模板下载</el-link>
             </p>
             <el-table
               :data="detailform.contractInfoQuantityMachineList2"
@@ -6762,7 +6795,7 @@ export default {
           ffid: '',
           path: '',
           contractAmount: '',
-          isMain: '',
+          isMain: '1',
           placeId:''
         }],
         contractInfoQuantityMachineList1:[],//实物工程量列表
@@ -7845,9 +7878,18 @@ export default {
       }
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log(this.detailform.topInfoSiteList.length)
           if(this.detailform.topInfoSiteList.length==0){
             this.$message.error("请至少选择一个项目地点");
+            return false;
+          }
+          var hasMain=false;
+          this.detailform.topInfoSiteList.forEach((item)=>{
+            if(item.isMain=='1'){
+              hasMain=true;
+            }
+          });
+          if(!hasMain){
+            this.$message.error("请选择一个主地点");
             return false;
           }
           if(this.detailform.fileList1.length==0&&this.detailform.fileList2.length==0){

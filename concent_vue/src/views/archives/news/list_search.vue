@@ -26,17 +26,17 @@
           end-placeholder="结束日期">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="登记时间:">
-          <el-date-picker
-            v-model="searchform.createTime"
-            @change="searchform.selectTimeTypeCreateTime='01'"
-            type="daterange"
-            value-format="timestamp"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期">
-          </el-date-picker>
-        </el-form-item>
+      <!--<el-form-item label="登记时间:">-->
+          <!--<el-date-picker-->
+            <!--v-model="searchform.createTime"-->
+            <!--@change="searchform.selectTimeTypeCreateTime='01'"-->
+            <!--type="daterange"-->
+            <!--value-format="timestamp"-->
+            <!--range-separator="至"-->
+            <!--start-placeholder="开始日期"-->
+            <!--end-placeholder="结束日期">-->
+          <!--</el-date-picker>-->
+        <!--</el-form-item>-->
       <el-form-item
         label="是否发布:"
       >
@@ -490,4 +490,8 @@ export default {
   .queryForm >>>.el-button{
     margin-top: 5px;
   }
+>>>.queryForm .el-button{
+  float: right;
+  margin-left: 10px;
+}
 </style>

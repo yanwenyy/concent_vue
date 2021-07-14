@@ -329,7 +329,10 @@
                       placeholder=""
                       size="mini"
                       v-model="detailFormBefore.contractInfo.tradeExpectedIncome"
-                    />
+                    >
+                      <template slot="prepend">¥</template>
+                      <template slot="append">(万元)</template>
+                    </el-input>
                   </el-form-item>
                   <br>
 
@@ -1554,7 +1557,10 @@
                     placeholder="请输入"
                     size="mini"
                     v-model="detailform.contractInfo.tradeExpectedIncome"
-                  />
+                  >
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
                 </el-form-item>
                 <br>
 
@@ -2150,6 +2156,7 @@
                   >
                     <template slot-scope="scope">
                       <el-date-picker
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         class="tabelForm-dete"
                         v-model="scope.row.subjectMatterYear"
                         type="year"
@@ -2170,6 +2177,7 @@
                   >
                     <template slot-scope="scope">
                       <el-date-picker
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         class="tabelForm-dete"
                         v-model="scope.row.subjectMatterMonth"
                         type="month"
@@ -2207,6 +2215,7 @@
                   "
                         >
                           <el-option
+                            v-if="bdwSelList.indexOf(item.subjectMatterName)==-1"
                             :key="index"
                             :label="item.subjectMatterName"
                             :value="item.subjectMatterName"
@@ -3398,6 +3407,7 @@
       return {
         userInfo: JSON.parse(sessionStorage.getItem('userdata')),
         bdwList:[],//标的物名称list
+        bdwSelList:[],//标的物选择list
         activeName:"after",
         id:'',
         key: 0,
@@ -3574,6 +3584,13 @@
         });
     },
     methods: {
+      //获取已选择的标的物单位
+      getBdNameSel(){
+        this.bdwSelList=[];
+        this.detailform.contractInfoSubjectMatterList.forEach((item)=>{
+          this.bdwSelList.push(item.subjectMatterName)
+        });
+      },
       //获取标的物单位
       getBdwdw( name,list, index) {
         if(name){
@@ -3581,6 +3598,7 @@
           list[index].subjectMatterUnit=this.bdwList.find(
             (item) => item.subjectMatterName == name
           ).subjectMatterUnitName;
+          this.getBdNameSel();
         }
       },
       //隐藏标段信息某些行
@@ -4055,6 +4073,7 @@
             type: 'warning'
           }).then(() => {
             list[index].isDelete=1;
+            this.bdwSelList.remove(item.subjectMatterName)
         }).catch(() => {})
         // }else if(item.uuid&&(type=='lht'||type=='fb')){
         }else if(type=='lht'||type=='fb'){
@@ -4080,6 +4099,9 @@
         }).catch(() => {})
         }else{
           list.splice(index, 1);
+          if(type=='bdw'){
+            this.bdwSelList.remove(item.subjectMatterName)
+          }
           this.getOurAmount()
         }
         // var _self = this;

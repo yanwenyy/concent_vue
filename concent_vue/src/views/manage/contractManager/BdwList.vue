@@ -124,8 +124,8 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="sub('form','save')">保 存</el-button>
-        <el-button v-if="form.isSubmit=='0'" type="primary" @click="sub('form','sub')">提 交</el-button>
+        <el-button v-if="!look" type="primary" @click="sub('form','save')">保 存</el-button>
+        <el-button v-if="form.isSubmit=='0'&&!look" type="primary" @click="sub('form','sub')">提 交</el-button>
       </div>
     </el-dialog>
       <el-pagination

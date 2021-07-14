@@ -66,7 +66,7 @@
           type="index"
         ></el-table-column>
         <el-table-column
-          label="合同类型"
+          label="合同板块"
           prop="moduleName"
           show-overflow-tooltip
         >

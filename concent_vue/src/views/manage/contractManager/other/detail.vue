@@ -25,7 +25,7 @@
               }"
               >
                 <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.inforName" class="input-with-select">
-                  <el-button v-if="detailform.contractInfo.contractType!='2'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
+                  <el-button v-if="detailform.contractInfo.contractType!='2'&&p.actpoint!='task'&&p.actpoint!='look'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
                 </el-input>
               </el-form-item>
               <el-form-item
@@ -1081,6 +1081,7 @@
                   >
                     <template slot-scope="scope">
                       <el-date-picker
+                        @change="checkRepeat(scope.row.salesPerforMonth,scope.row.salesPerforYear,detailform.contractInfoHouseSalesList,scope.$index)"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         v-model="scope.row.salesPerforMonth"
                         type="month"
@@ -2105,7 +2106,14 @@
             outContractInfoAttachList:[],
             innerGroupContractInfoAttachList:[]
           },
-          topInfoSiteList:[],
+          topInfoSiteList:[{
+            country: '',
+            ffid: '',
+            path: '',
+            contractAmount: '',
+            isMain: '1',
+            placeId:''
+          }],
           zplx:[],//装配类型
           jzlx:[],//建筑类型
           jzjglx:[],//建筑结构类型
@@ -2172,6 +2180,16 @@
       },
     },
     methods: {
+      //查询销售业绩是否有同年同月
+      checkRepeat(mval,yval,list,index){
+        list.forEach((item,i)=>{
+          if(index!=i&&item.salesPerforYear==yval&&item.salesPerforMonth==mval){
+            this.$message.error("不能添加同年同月的年度合同收益");
+            list[index].salesPerforMonth='';
+            return false;
+          }
+        })
+      },
       //设置我方份额含补充
       getOurAmountSupply(){
         if(this.detailform.contractInfo.ourAmountSupply==null||this.ifOAS){
@@ -2704,6 +2722,20 @@
         }
         if(this.detailform.contractInfo.isOpenBid=='1'&&this.detailform.commonFilesList2.length==0){
           this.$message.error("请上传招标公告文件");
+          return false;
+        }
+        if(this.detailform.topInfoSiteList.length==0){
+          this.$message.error("请至少选择一个项目地点");
+          return false;
+        }
+        var hasMain=false;
+        this.detailform.topInfoSiteList.forEach((item)=>{
+          if(item.isMain=='1'){
+            hasMain=true;
+          }
+        });
+        if(!hasMain){
+          this.$message.error("请选择一个主地点");
           return false;
         }
         this.$refs[formName].validate((valid) => {

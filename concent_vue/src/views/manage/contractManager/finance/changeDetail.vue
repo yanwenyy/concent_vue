@@ -1970,6 +1970,7 @@
                     >
                       <template slot-scope="scope">
                         <el-date-picker
+                          @change="checkRepeat(scope.row.salesPerforMonth,scope.row.salesPerforYear,detailform.contractInfoHouseSalesList,scope.$index)"
                           class="tabelForm-dete"
                           :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                           v-model="scope.row.salesPerforMonth"
@@ -3271,6 +3272,16 @@
         });
     },
     methods: {
+      //查询销售业绩是否有同年同月
+      checkRepeat(mval,yval,list,index){
+        list.forEach((item,i)=>{
+          if(index!=i&&item.salesPerforYear==yval&&item.salesPerforMonth==mval){
+            this.$message.error("不能添加同年同月的年度合同收益");
+            list[index].salesPerforMonth='';
+            return false;
+          }
+        })
+      },
       //隐藏标段信息某些行
       tableRowClassName: function (row, index) {
         if (row.row.isDelete=='1') {

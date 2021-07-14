@@ -217,21 +217,17 @@
       });
       },
       handleSizeChange(val) {
-        this.searchFrom.size = val;
-        this.getData();
+        this.searchform.size = val;
+        this.init();
       },
       handleCurrentChange(val) {
-        this.searchFrom.current = val;
-        this.getData();
+        this.searchform.current = val;
+        this.init();
       },
       searchFromSubmit() {
-        this.searchFrom.current = 1;
-        this.getData();
+        this.searchform.current = 1;
+        this.init();
       },
-      // 单选
-      handleCurrentChange(val) {
-        this.currentRow = val;
-      }
     }
   }
 </script>

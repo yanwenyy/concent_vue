@@ -53,7 +53,7 @@
         <el-table-column
           prop="moduleName"
           show-overflow-tooltip
-          label="合同类型">
+          label="合同板块">
         </el-table-column>
         <el-table-column
           prop="contractName"

@@ -455,6 +455,11 @@
                 class="formItem1"
                 label="招标公告发布日期:"
                 prop="bidInfo.publishTime"
+                :rules="{
+                    required: true,
+                    message: '此项不能为空',
+                    trigger: 'blur',
+                  }"
                 value-format="timestamp"
               >
                 <el-date-picker
@@ -470,6 +475,11 @@
               <el-form-item
                 label="招标文件发售截止日期"
                 prop="bidInfo.saleTime"
+                :rules="{
+                    required: true,
+                    message: '此项不能为空',
+                    trigger: 'blur',
+                  }"
                 class="formItem1"
               >
                 <el-date-picker
@@ -486,6 +496,11 @@
               <el-form-item
                 label="投标截止日期:"
                 prop="bidInfo.endTime"
+                :rules="{
+                    required: true,
+                    message: '此项不能为空',
+                    trigger: 'blur',
+                  }"
                 class="formItem1"
               >
                 <el-date-picker

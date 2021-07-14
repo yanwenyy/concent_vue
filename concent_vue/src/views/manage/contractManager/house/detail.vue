@@ -1041,6 +1041,7 @@
                       <el-date-picker
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         v-model="scope.row.salesPerforMonth"
+                        @change="checkRepeat(scope.row.salesPerforMonth,scope.row.salesPerforYear,detailform.contractInfoHouseSalesList,scope.$index)"
                         type="month"
                         format="MM"
                         value-format="MM"
@@ -2142,7 +2143,7 @@ export default {
           ffid: '',
           path: '',
           contractAmount: '',
-          isMain: '',
+          isMain: '1',
           placeId:''
         }],
         commonFilesList1: [],
@@ -2215,6 +2216,26 @@ export default {
     },
   },
   methods: {
+    //查询销售业绩是否有同年同月
+    checkRepeat(mval,yval,list,index){
+      list.forEach((item,i)=>{
+        if(index!=i&&item.salesPerforYear==yval&&item.salesPerforMonth==mval){
+          this.$message.error("不能添加同年同月的销售业绩");
+          list[index].salesPerforMonth='';
+          return false;
+        }
+      })
+    },
+    //设置主地点
+    setMain(i,list){
+      list.forEach((item,index)=>{
+        if(index==i){
+          item.isMain="1"
+        }else{
+          item.isMain="0"
+        }
+      });
+    },
     //新增标段和地点
     add(type) {
       var v = {};
@@ -2761,6 +2782,20 @@ export default {
       }
       if(this.detailform.contractInfo.isOpenBid=='1'&&this.detailform.commonFilesList2.length==0){
         this.$message.error("请上传招标公告文件");
+        return false;
+      }
+      if(this.detailform.topInfoSiteList.length==0){
+        this.$message.error("请至少选择一个项目地点");
+        return false;
+      }
+      var hasMain=false;
+      this.detailform.topInfoSiteList.forEach((item)=>{
+        if(item.isMain=='1'){
+          hasMain=true;
+        }
+      });
+      if(!hasMain){
+        this.$message.error("请选择一个主地点");
         return false;
       }
       this.$refs[formName].validate((valid) => {

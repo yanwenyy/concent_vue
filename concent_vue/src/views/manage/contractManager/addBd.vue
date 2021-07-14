@@ -246,6 +246,7 @@
                   filterable
                   placeholder="请选择"
                   v-model="scope.row.orgId"
+                  @focus="getBdNameSel"
                   @change="
                   getBdName(
                     scope.row.orgId,
@@ -256,9 +257,10 @@
                 >
                   <el-option
                     :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in nameList"
+                    :label="item.companyName"
+                    :value="item.uuid"
+                    v-if="sjdwList!=[]&&selectSjdw.indexOf(item.companyName)==-1"
+                    v-for="(item, index) in sjdwList"
                   ></el-option>
                 </el-select>
               </template>
@@ -340,6 +342,8 @@
         dataListLoading: false,
         dataListSelections: [],
         currentRow: '',
+        sjdwList:[],//共享单位库
+        selectSjdw:[],//已选择的共享单位库
         nameList:[
           {
           id:'0',
@@ -362,7 +366,28 @@
       CompanyTree
     },
     mounted() {
+      //删除数组内某项的构造函数
+      Array.prototype.indexOf = function(val) {
+        for (var i = 0; i < this.length; i++) {
+          if (this[i] == val) return i;
+        }
+        return -1;
+      };
+      Array.prototype.remove = function(val) {
+        var index = this.indexOf(val);
+        if (index > -1) {
+          this.splice(index, 1);
+        }
+      };
+      //共享单位库列表
+      this.$http
+        .post(
+          "/api/contract/Companies/detail/findCompanies",
+        )
+        .then((res) => {
+          this.sjdwList = res.data.data;
 
+        });
     },
     computed:{
       bidMethod (){
@@ -435,14 +460,20 @@
           this.$refs.addOrUpdate.init()
       })
       },
+      //获取已选择的共享单位库
+      getBdNameSel(){
+        this.selectSjdw=[];
+        this.detailForm.dataList2.forEach((item)=>{
+          this.selectSjdw.push(item.orgName)
+        });
+      },
       //获取标段名字
       getBdName(id, list, index) {
         if(id){
           this.$forceUpdate()
-          list[index].orgName=this.nameList.find(
-            (item) => item.id == id
-        ).detailName;
-          console.log(list[index].orgName);
+          list[index].orgName=this.sjdwList.find(
+            (item) => item.uuid == id).companyName;
+          this.getBdNameSel();
         }
       },
       //选中数据
@@ -463,23 +494,26 @@
       },
       // 初始化
       init(type,detail,index) {
-        // console.log(detail)
+        console.log(detail)
         this.visible = true;
         this.type=type;
         if(type!='add'){
           this.detailForm=detail;
           this.detailForm.dataList=[];
           this.detailForm.dataList2=[];
+          // this.selectSjdw=[];
           this.index=index;
           if(detail.contractInfoSectionOrgList){
             detail.contractInfoSectionOrgList.forEach((item, index) => {
               if (item.orgType == '1') {
               // item.detailName = _data.detailName;
               this.detailForm.dataList.push(item)
-            }else{
-              this.detailForm.dataList2.push(item)
-            }
-            })
+              }else{
+                  this.detailForm.dataList2.push(item);
+                  // this.selectSjdw.push(item.orgName)
+              }
+            });
+            // this.getBdName();
           }
         }else{
           this.detailForm={
@@ -522,6 +556,7 @@
                 this.detailForm.dataList.splice(index, 1);
               }else{
                 this.detailForm.dataList2.splice(index, 1);
+                this.selectSjdw.remove(value.orgName)
               }
           } else {
             this.$message.error(data.msg)
@@ -533,6 +568,7 @@
             this.detailForm.dataList.splice(index, 1);
           }else{
             this.detailForm.dataList2.splice(index, 1);
+            this.selectSjdw.remove(value.orgName)
           }
         }
 
