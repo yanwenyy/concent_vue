@@ -383,7 +383,8 @@ export default {
         actpoint: 'editItem',
         instid: this.multipleSelection[0].uuid,
         changRecorUUid:this.multipleSelection[0].ccrUuid,
-        topinfoid: this.multipleSelection[0].topInfoOrgId
+        topinfoid: this.multipleSelection[0].topInfoOrgId,
+        flowStatus:this.multipleSelection[0].flowStatus
       }
       //alert(JSON.stringify(p));
       this.$router.push({
@@ -398,7 +399,8 @@ export default {
         instid: row.uuid,
         changRecorUUid:row.ccrUuid,
         topinfoid: row.topInfoOrgId,
-        uuid:row.topInfoOrgId
+        uuid:row.topInfoOrgId,
+        flowStatus:row.flowStatus
       }
       //alert(JSON.stringify(p));
       this.$router.push({

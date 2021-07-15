@@ -30,7 +30,7 @@
    @click="back">返回</el-button> -->
 
 <!-- ||detailform.verify.flowStatus==1 -->
-    <el-button v-show="p.actpoint != 'task'&&(p.actpoint == 'add'||detailformAfter.verify.flowStatus==1||detailformAfter.verify.flowStatus==4)" @click="saveInfo('detailformAfter','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint != 'task'&&(p.actpoint == 'add'||p.flowStatus==1||p.flowStatus==4)" @click="saveInfo('detailformAfter','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
     <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailformAfter','save')">保存</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
@@ -631,7 +631,8 @@
 
                           </el-table>
                 </div>
-              <p  v-if="detailformBefore.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailformBefore.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'" style="overflow:hidden;margin-right: 30px"><span style="font-size: 14px">标段信息: </span>
+              <p  v-if="detailformBefore.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailformBefore.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'" style="overflow:hidden;margin-right: 30px">
+                <span style="font-size: 14px">标段信息: </span>
               </p>
               <el-table
                 v-if="detailformBefore.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailformBefore.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'"
@@ -1642,7 +1643,7 @@
       <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
       <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
     </el-tab-pane>
-    <el-tab-pane label="审批流程" name="lc" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
+    <el-tab-pane label="审批流程" name="lc" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&detailformAfter.verify.flowStatus!=1&&detailformAfter.verify.flowStatus!=null">
       <Audit-Process :task="p.task||{businessId:(p.changRecorUUid+'-'+p.topinfoid),businessType:'contract_qual_change'}"></Audit-Process>
     </el-tab-pane>
   </el-tabs>

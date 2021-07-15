@@ -55,7 +55,7 @@
         border
         v-loading="dataListLoading"
         highlight-current-row
-        @current-change="handleCurrentChange"
+        @current-change="handleCurrentChange2"
         :header-cell-style="{
           'text-align': 'center',
           'background-color': 'whitesmoke',
@@ -121,7 +121,7 @@
       </el-table>
       <el-pagination
         @size-change="sizeChangeHandle"
-        @current-change="currentChangeHandle"
+        @current-change="handleCurrentChange"
         :current-page="page.current"
         :page-sizes="[10, 20, 50, 100]"
         :page-size="page.size"
@@ -219,7 +219,7 @@
         this.init();
       },
       // 单选
-      handleCurrentChange(val) {
+      handleCurrentChange2(val) {
         this.currentRow = val;
       }
     }

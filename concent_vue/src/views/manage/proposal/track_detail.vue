@@ -1163,7 +1163,6 @@
                         inactive-color="#ddd"
                         active-value="1"
                         inactive-value="0"
-
                       >
                         <!--@change="setMain(scope.$index,detailform.topInfoSectionList)"-->
                       </el-switch>
@@ -1175,7 +1174,7 @@
           </el-form>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&detailform.topInfoOrg.flowStatus!=1&&detailform.topInfoOrg.flowStatus!=null">
         <Audit-Process :task="p.task||{businessId:p.topOrgId,businessType:' contract_project_new'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>
@@ -1511,6 +1510,16 @@
                 }
             });
             this.detailform.topInforCapitalList=topInforCapitalList;
+            var hasGzbd=false;
+            this.detailform.topInfoSectionList.forEach((item)=>{
+              if(item.isTrack=='1'){
+                hasGzbd=true;
+              }
+            });
+            if(!hasGzbd){
+              this.$message.error("请至少选择一个跟踪标段");
+              return false;
+            }
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     this.$http
@@ -1552,6 +1561,16 @@
           }
         });
         this.detailform.topInforCapitalList=topInforCapitalList;
+        var hasGzbd=false;
+        this.detailform.topInfoSectionList.forEach((item)=>{
+          if(item.isTrack=='1'){
+            hasGzbd=true;
+          }
+        });
+        if(!hasGzbd){
+          this.$message.error("请至少选择一个跟踪标段");
+          return false;
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http

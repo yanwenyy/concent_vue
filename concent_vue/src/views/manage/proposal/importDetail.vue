@@ -921,7 +921,7 @@
                         clearable
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         v-model="scope.row.contractAmount"
-                        @input="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'?SummaryTze():checkTze(detailform.topInfoSiteList,scope.$index,'contractAmount')"
+                        @input="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null?SummaryTze():checkTze(detailform.topInfoSiteList,scope.$index,'contractAmount')"
                       >
                         <template slot="prepend">¥</template>
                         <template slot="append">(万元)</template>
@@ -969,7 +969,7 @@
                 <template slot-scope="scope">
                   <el-link
                     :underline="false"
-                    @click="del(scope.$index,scope.row,detailform.topInfoSiteList)"
+                    @click="del(scope.$index,scope.row,detailform.topInfoSiteList),detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null?SummaryTze():checkTze(detailform.topInfoSiteList,scope.$index,'contractAmount')"
                     type="warning"
                   >删除
                   </el-link
@@ -1100,7 +1100,7 @@
                 <template slot-scope="scope">
                   <el-link
                     :underline="false"
-                    @click="del(scope.$index,scope.row,detailform.topInfoSectionList,'bd')"
+                    @click="del(scope.$index,scope.row,detailform.topInfoSectionList,'bd'),checkTze(detailform.topInfoSectionList,scope.$index,'projectScale')"
                     type="warning">删除
                   </el-link>
                 </template>
@@ -1160,7 +1160,8 @@
           topInfor: {
             marketSecondId:'',
             constructionOrg:'',
-            isClientele:'1'
+            isClientele:'1',
+            investment:''
           },
           topInfoOrg: {},
           topInfoSiteList: [],
@@ -1323,7 +1324,8 @@
           sum=sum+Number(item.contractAmount);
         });
         this.$forceUpdate();
-        this.detailform.topInfor.investment=Number(sum);
+        this.detailform.topInfor.investment=sum;
+
       },
       tableRowClassName({row, rowIndex}) {
         if (row.noValidate == 1) {
@@ -1527,7 +1529,7 @@
            if(name=='moduleName'){//项目板块选择时
              if(id!='7f4fcba4255b43a8babf15afd6c04a53'&&id!='f6823a41e9354b81a1512155a5565aeb'){
                this.detailform.topInfor.noticeTypeId='9d70138b32d611eb8271a1606dfca13c'
-               this.detailform.topInfor.noticeTypeName='竞争性谈判'
+               this.detailform.topInfor.noticeTypeName='竞争性谈判';
              }
            }
         }

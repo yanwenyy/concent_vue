@@ -575,10 +575,16 @@
            v-model="detailform.verify.isCoalitionBid"
            active-value="是"
            inactive-value="否"
-           @change="detailform.verify.isCoalitionBid=='否'?(detailform.verifyOrgLists='',detailform.verify.outOrg=''):''"
+           @change="detailform.verify.isCoalitionBid=='否'?(detailform.verify.orgName='',detailform.verify.outOrg=''):''"
          />
         </el-form-item>
-        <el-form-item  label="内部联合体单位:">
+        <el-form-item  label="内部联合体单位:"
+                       prop="verify.orgName"
+                       :rules="detailform.verify.isCoalitionBid=='是'?{
+                        required: true,
+                        message: '此项不能为空',
+                        trigger: 'change',
+                      }:{}">
           <el-input v-model="detailform.verify.orgName"
           :disabled="p.actpoint === 'look'||p.actpoint === 'task' || detailform.verify.isCoalitionBid=='否' || detailform.verify.isCoalitionBid==null">
             <!--<el-button slot="append" icon="el-icon-search"  @click="selectOrg()"-->
@@ -591,7 +597,13 @@
           </el-input>
         </el-form-item>
 
-        <el-form-item label="外部联合体单位:" >
+        <el-form-item label="外部联合体单位:"
+                      prop="verify.outOrg"
+                      :rules="detailform.verify.isCoalitionBid=='是'?{
+                        required: true,
+                        message: '此项不能为空',
+                        trigger: 'change',
+                      }:{}">
           <el-input
             placeholder=""
             size="mini"
@@ -723,7 +735,8 @@
               </el-table>
     </div>
 <p  v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'" class="detail-title" style="overflow: hidden;margin-right:30px">
-     <span  >标段信息: </span>   <el-button
+     <span  >标段信息: </span>
+      <el-button
        @click="dialogTopInfoSection=true"
        v-show="p.actpoint != 'look'&&p.actpoint!='task'"
        class="detatil-flie-btn"
@@ -878,8 +891,8 @@
 
     </div>
     </el-tab-pane>
-      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
-        <Audit-Process :task="p.task||{businessId:p.uuid,businessType:' contract_qual_new'}"></Audit-Process>
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&detailform.verify.flowStatus!=1&&detailform.verify.flowStatus!=null">
+        <Audit-Process :task="p.task||{businessId:p.newUuid+'-'+p.uuid,businessType:' contract_qual_new'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>
     <el-dialog title="前期项目标段列表" :visible.sync="dialogTopInfoSection">
@@ -990,7 +1003,10 @@ export default {
       treeOrgStatas2: false,
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
       detailform: {
-         verify:{},
+         verify:{
+           orgName:'',
+           outOrg:''
+         },
         'topInfor': {
         },
         'sectionStr': [
@@ -1067,6 +1083,7 @@ export default {
     },
     //获取单位的值
     getDwInfo(data){
+      console.log(data)
       this.$forceUpdate();
       var id=[],name=[];
       if(data&&data.type!='参与投标单位'&&data.type!='编标拟配合单位'){
@@ -1078,13 +1095,15 @@ export default {
       if(data.type=="内部联合体单位"){
         this.detailform.verify.orgId=id.join(",");
         this.detailform.verify.orgName=name.join(",");
+        this.$set(this.detailform.verify,this.detailform.verify)
       }else if(data.type=="外部联合体单位"){
         this.detailform.verify.outOrgId=id.join(",");
         this.detailform.verify.outOrg=name.join(",");
+        this.$set(this.detailform.verify,this.detailform.verify)
       }else if(data.type=='参与投标单位'){
         var _list=[];
         data.forEach((item)=>{
-          _list.push({ orgId:item.id,orgName:item.detailName,orgType:"01"});
+          _list.push({ orgId:item.id,orgName:item.detailName,orgType:"01",uuid:item.uuid});
           name.push(item.detailName);
         })
         this.detailform.verifySectionList[data.index].verifySectionOrgNameType01=name.join(",");
@@ -1093,7 +1112,7 @@ export default {
       }else if(data.type=="编标拟配合单位"){
         var _list=[];
         data.forEach((item)=>{
-          _list.push({ orgId:item.id,orgName:item.detailName,orgType:"02"});
+          _list.push({ orgId:item.id,orgName:item.detailName,orgType:"02",uuid:item.uuid});
           name.push(item.detailName);
         })
         this.detailform.verifySectionList[data.index].verifySectionOrgNameType02=name.join(",");
@@ -1229,9 +1248,28 @@ export default {
     },
 
     del(index,item,list,type) {
-      console.log(index);
+      this.$confirm('确认删除该标段吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        if(item.verifySection.uuid!=''){
+          item.verifySection.isDelete='1';
+          // this.detailform.verifySectionList=list.filter((item)=> item.verifySection.isDelete!='1')
+          // console.log(this.detailform.verifySectionList)
+          list.splice(index, 1);
+        }else{
+          list.splice(index, 1);
+        }
+        // this.$set(this.detailform.verifySectionList,list);
+        this.$forceUpdate();
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
 
-        list.splice(index, 1);
       // console.log(index);
       // list.splice(index, 1);
 
@@ -1338,6 +1376,11 @@ export default {
     tableRowClassName({ row, rowIndex }) {
       //把每一行的索引放进row
       row.index = rowIndex;
+      // if (row.verifySection.isDelete == '1') {
+      //   return 'none-show';
+      // } else {
+      //   return '';
+      // }
     },
     addSection()
     {
@@ -1360,7 +1403,7 @@ export default {
         }
         var isadd = true;
         this.detailform.verifySectionList.forEach((item1, index1) => {
-          if (item.uuid == item1.verifySection.sectionId) {
+          if (item.uuid == item1.verifySection.sectionId&&item1.verifySection.isDelete!='1') {
             isadd = false;
           }
         })
@@ -1810,4 +1853,7 @@ export default {
 {
   padding-top:0px !important;
 }
+  >>>.none-show{
+    display: none!important;
+  }
 </style>

@@ -53,7 +53,7 @@
         border
         v-loading="dataListLoading"
         highlight-current-row
-        @current-change="handleCurrentChange"
+        @current-change="handleCurrentChange2"
         :header-cell-style="{
           'text-align': 'center',
           'background-color': 'whitesmoke',
@@ -199,6 +199,7 @@
       // 初始化
       init() {
         this.visible = true;
+        console.log(this.searchform)
         this.$http
           .post(
             "/api/contract/topInfo/TopInfor/list/loadPageDataForReg",
@@ -223,6 +224,10 @@
       handleCurrentChange(val) {
         this.searchform.current = val;
         this.init();
+      },
+      // 单选
+      handleCurrentChange2(val) {
+        this.currentRow = val;
       },
       searchFromSubmit() {
         this.searchform.current = 1;
