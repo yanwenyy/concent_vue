@@ -505,6 +505,16 @@
             inactive-value="1"
           />
       </el-form-item>
+      <el-form-item
+        v-if="detailform.verify.lateRegist=='0'"
+        label="逾期类型:"
+        class="formItem"
+      >
+        <el-input
+          disabled
+          v-model="detailform.verify.overdueType"
+        />
+      </el-form-item>
             <br>
         <el-form-item
           label="资格预审公告发布日期:"
@@ -790,7 +800,7 @@
           width="500">
 
           <template slot-scope="scope" v-show="p.actpoint != 'look'&&p.actpoint != 'task'">
-            <el-input  disabled placeholder="请输入内容" v-model="scope.row.verifySectionOrgNameType01" class="input-with-select"/>
+            <el-input  readonly placeholder="请输入内容" v-model="scope.row.verifySectionOrgNameType01" class="input-with-select"/>
           </template>
         </el-table-column>
         <el-table-column
@@ -804,7 +814,7 @@
           width="500">
 
           <template slot-scope="scope" v-show="p.actpoint != 'look'">
-            <el-input  disabled placeholder="请输入内容" v-model="scope.row.verifySectionOrgNameType02" class="input-with-select"/>
+            <el-input  readonly placeholder="请输入内容" v-model="scope.row.verifySectionOrgNameType02" class="input-with-select"/>
           </template>
         </el-table-column>
         <el-table-column
@@ -817,7 +827,8 @@
           width="260">
 
           <template slot-scope="scope" >
-            <el-form-item class="tabelForm" :prop="'verifySectionList.' + scope.$index + '.verifySection.investmentReckon'" :rules='rules.contractAmount'>
+            <!--:prop="'verifySectionList.' + scope.$index + '.verifySection.investmentReckon'" :rules='rules.contractAmount'-->
+            <el-form-item class="tabelForm">
               <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
               <el-tooltip popper-class="tooltip-class" :content="String(scope.row.verifySection.investmentReckon)" placement="bottom" :disabled="p.actpoint !== 'look'" effect="dark">
                 <el-input
@@ -847,7 +858,8 @@
           width="260">
 
           <template slot-scope="scope" >
-            <el-form-item class="tabelForm" :prop="'verifySectionList.' + scope.$index + '.verifySection.jananInvestment'" :rules='rules.contractAmount'>
+            <!--:prop="'verifySectionList.' + scope.$index + '.verifySection.jananInvestment'" :rules='rules.contractAmount'-->
+            <el-form-item class="tabelForm">
               <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
               <el-tooltip popper-class="tooltip-class" :content="String(scope.row.verifySection.jananInvestment)" placement="bottom" :disabled="p.actpoint !== 'look'" effect="dark">
                 <el-input
@@ -1019,6 +1031,7 @@ export default {
         verifyOrgLists:"111",
         commonFilesList:[]
       },
+      verifySectionListSplit:[],//删除的标段信息缓存数组
       detailform1: {
         topInfor: {},
         topInfoOrg: {},
@@ -1124,11 +1137,15 @@ export default {
     //判断是否逾期
     ifYq(){
       if(this.detailform.verify.saleTime||this.detailform.verify.subTime){
-        if(this.detailform.verify.saleTime>this.detailform1.topInfoOrg.trackingTime||this.detailform.verify.subTime>this.detailform1.topInfoOrg.createTime){
-
-          this.detailform.verify.lateRegist='1'
+        if(this.detailform.verify.saleTime>=this.detailform1.topInfoOrg.flowTime){
+          this.detailform.verify.lateRegist='1';
+          if(this.detailform.verify.subTime<this.detailform1.topInfoOrg.flowTime){
+            this.detailform.verify.lateRegist='0';
+            this.detailform.verify.overdueType='资审登记逾期';
+          }
         }else{
-          this.detailform.verify.lateRegist='0'
+          this.detailform.verify.lateRegist='0';
+          this.detailform.verify.overdueType=this.detailform.verify.saleTime<this.detailform1.topInfoOrg.flowTime?'跟踪逾期':this.detailform.verify.subTime<this.detailform1.topInfoOrg.flowTime?'资审登记逾期':''
         }
       }
     },
@@ -1210,6 +1227,7 @@ export default {
           if(this.detailform.verifySectionList.length==0){
             this.$message.error("标段信息不能为空");
           }else{
+            this.detailform.verifySectionList=this.detailform.verifySectionList.concat(this.verifySectionListSplit);
             var obj = Object.assign(this.detailform, this.detailform1);
             this.$http
               .post(
@@ -1257,7 +1275,9 @@ export default {
           item.verifySection.isDelete='1';
           // this.detailform.verifySectionList=list.filter((item)=> item.verifySection.isDelete!='1')
           // console.log(this.detailform.verifySectionList)
-          list.splice(index, 1);
+          this.verifySectionListSplit=list.splice(index, 1);
+          // list.splice(index, 1);
+          this.$set(this.detailform,this.detailform)
         }else{
           list.splice(index, 1);
         }
@@ -1376,11 +1396,11 @@ export default {
     tableRowClassName({ row, rowIndex }) {
       //把每一行的索引放进row
       row.index = rowIndex;
-      // if (row.verifySection.isDelete == '1') {
-      //   return 'none-show';
-      // } else {
-      //   return '';
-      // }
+      if (row.verifySection.isDelete == '1') {
+        return 'none-show';
+      } else {
+        return '';
+      }
     },
     addSection()
     {

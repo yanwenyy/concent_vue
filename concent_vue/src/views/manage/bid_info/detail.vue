@@ -561,6 +561,16 @@
                 inactive-value="1"
               />
             </el-form-item>
+            <el-form-item
+              v-if="detailform.bidInfo.lateRegist=='0'"
+              label="逾期类型:"
+              class="formItem"
+            >
+              <el-input
+                disabled
+                v-model="detailform.bidInfo.overdueType"
+              />
+            </el-form-item>
               <br>
 
             <el-form-item
@@ -1205,7 +1215,7 @@
                 </el-link>
                 <el-link
                   :underline="false"
-                  @click="openBd('edit', scope.row, scope.$index)"
+                  @click="openBd(p.from=='kblist'?'eidtnew':'edit', scope.row, scope.$index)"
                   type="warning"
                   >修改
                 </el-link>
@@ -1215,8 +1225,8 @@
         </el-form>
       </div>
 </el-tab-pane>
-      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
-        <Audit-Process :task="p.task||{businessId:p.uuid,businessType:'contract_bid_new'}"></Audit-Process>
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&detailform.bidInfo.flowStatus!=1&&detailform.bidInfo.flowStatus!=null&&detailform.topInforBO.topInfor.bidFlowStatus!=1&&detailform.topInforBO.topInfor.bidFlowStatus!=null">
+        <Audit-Process :task="p.task||p.from=='kblist'?{businessId:p.instid+'-kb',businessType:' contract_bid_register'}:{businessId:p.uuid,businessType:'contract_bid_new'}"></Audit-Process>
       </el-tab-pane>
       </el-tabs>
     <add-bd v-if="BDCSVisible" ref="infoBD" @refreshBD="getBdInfo"></add-bd>
@@ -1335,12 +1345,17 @@ export default {
     },
     //判断是否逾期
     ifYq(){
-      if(this.detailform.bidInfo.saleTime||detailform.bidInfo.subTime){
-        if(this.detailform.bidInfo.saleTime>this.detailform.bidInfo.trackingTime||this.getDaysAndHours(this.detailform.bidInfo.endTime,this.detailform.bidInfo.createTime)>15){
-
-          this.detailform.bidInfo.lateRegist='1'
+      if(this.detailform.bidInfo.saleTime||this.detailform.bidInfo.endTime){
+        console.log(this.detailform.bidInfo.saleTime<this.detailform.topInforBO.topInfoOrg.flowTime)
+        if(this.detailform.bidInfo.saleTime>=this.detailform.topInforBO.topInfoOrg.flowTime){
+          this.detailform.bidInfo.lateRegist='1';
+          if(this.detailform.bidInfo.endTime&&this.getDaysAndHours(this.detailform.topInforBO.topInfoOrg.flowTime,this.detailform.bidInfo.endTime)<15){
+            this.detailform.bidInfo.lateRegist='0';
+            this.detailform.bidInfo.overdueType='资审登记逾期';
+          }
         }else{
           this.detailform.bidInfo.lateRegist='0'
+          this.detailform.bidInfo.overdueType=this.detailform.bidInfo.saleTime<this.detailform.topInforBO.topInfoOrg.flowTime?'跟踪逾期':this.getDaysAndHours(this.detailform.topInforBO.topInfoOrg.flowTime,this.detailform.bidInfo.endTime)<15?'资审登记逾期':'';
         }
       }
     },
@@ -1447,7 +1462,8 @@ export default {
           this.detailform.bidInfo.isBidRates,
           type,
           detail,
-          index
+          index,
+          this.p.from=='kblist'?'kbxq':''
         );
       });
     },
@@ -1718,7 +1734,7 @@ export default {
         });
         this.detailform.bidInfo.innerOrgId = id!=''?id.join(","):'';
         this.detailform.bidInfo.innerOrgName = name!=''?name.join(","):'';
-        console.log(this.detailform.bidInfo)
+        // console.log(this.detailform.bidInfo)
         //结束
         // this.detailform.nblht=datas.bidInfo.innerOrgId&&datas.contractInfo.innerOrgId.split(",");
       });

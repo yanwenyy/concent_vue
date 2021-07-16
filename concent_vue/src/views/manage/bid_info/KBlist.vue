@@ -276,6 +276,7 @@ export default {
   data() {
 
     return {
+      bidFlowStatus:'',
       flowStatus:'',
       dialogFormVisible: false,
       infoCSVisible:false,
@@ -382,7 +383,7 @@ export default {
           this.$message.info("请选择一条记录进行修改操作！");uuid
           return false;
         }
-        let p = {actpoint: "edit", instid: this.multipleSelection[0].uuid};
+        let p = {from:'kblist',actpoint: "edit", instid: this.multipleSelection[0].uuid};
         this.$router.push({
           path: "./detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},

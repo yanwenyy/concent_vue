@@ -341,7 +341,7 @@
               <el-input
                 disabled
                 placeholder="请选择"
-                v-model="detailform.topInforBO.capitalName.capitalName"
+                v-model="detailform.topInforBO.capitalName"
               >
               </el-input>
             </el-form-item>
@@ -393,7 +393,7 @@
               <el-input
                 disabled
                 placeholder="请选择"
-                v-model="detailform.topInforBO.topInfor.bidProbName"
+                v-model="detailform.topInforBO.topInfoOrg.bidProbName"
               >
               </el-input>
             </el-form-item>
@@ -438,15 +438,25 @@
                 </el-select>
               </el-form-item>
               <el-form-item
-                v-if="detailform.bidInfo.lateRegist=='0'"
+                v-if="detailform.bidInfo.kbLateRegist=='0'"
                 label="是否逾期记录:"
                 class="formItem"
               >
                 <el-switch
                   disabled
-                  v-model="detailform.bidInfo.lateRegist"
+                  v-model="detailform.bidInfo.kbLateRegist"
                   active-value="0"
                   inactive-value="1"
+                />
+              </el-form-item>
+              <el-form-item
+                v-if="detailform.bidInfo.kbLateRegist=='0'"
+                label="逾期类型:"
+                class="formItem"
+              >
+                <el-input
+                  disabled
+                  v-model="detailform.bidInfo.kbOverdueType"
                 />
               </el-form-item>
               <br>
@@ -597,19 +607,23 @@
             </div>
             <div>
               <el-form-item
-                v-if="detailform.bidInfo.lateRegist=='0'"
+                v-if="detailform.bidInfo.kbLateRegist=='0'"
                 class="neirong"
                 label="逾期原因:"
-                prop="bidInfo.overdueReason"
+                prop="bidInfo.kbOverdueReason"
+                :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'blur',
+                }"
               >
                 <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                 <el-input
-                  disabled
                   clearable
                   placeholder="请输入"
                   type="textarea"
                   size="mini"
-                  v-model="detailform.bidInfo.overdueReason"
+                  v-model="detailform.bidInfo.kbOverdueReason"
                 />
               </el-form-item>
             </div>
@@ -1159,14 +1173,14 @@ export default {
     },
     //判断是否逾期
     ifYq(){
-      if(this.detailform.bidInfo.saleTime||detailform.bidInfo.subTime){
+      if(this.detailform.bidInfo.endTime){
         var dateNow = new Date().getTime();
-        console.log(this.getDaysAndHours(dateNow,this.detailform.bidInfo.endTime))
-        if(this.detailform.bidInfo.saleTime>this.detailform.bidInfo.trackingTime||this.detailform.bidInfo.endTime>this.detailform.bidInfo.createTime||this.getDaysAndHours(dateNow,this.detailform.bidInfo.endTime)>=0){
+        if(this.getDaysAndHours(this.detailform.topInforBO.topInfoOrg.flowTime,this.detailform.bidInfo.endTime)>=2){
 
-          this.detailform.bidInfo.lateRegist='1'
+          this.detailform.bidInfo.kbLateRegist='1'
         }else{
-          this.detailform.bidInfo.lateRegist='0'
+          this.detailform.bidInfo.kbLateRegist='0';
+          this.detailform.bidInfo.kbOverdueType='开标登记逾期';
         }
       }
     },

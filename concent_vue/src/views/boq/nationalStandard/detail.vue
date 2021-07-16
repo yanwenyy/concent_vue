@@ -255,13 +255,15 @@
           <div style="float: right">
         <el-upload
                 class="upload-demo detailUpload"
-                :action="'/api/contract/topInfo/CommonFiles/bidInfo/01/uploadFile'"
+                :action="'/api/contract/boq/BoqNationalStandard/detail/import'"
+                :data="{'uuid':detailform.boqNationalStandard.uuid}"
                 :on-success="handleChange"
                 :on-error="handleChange"
+                :headers="{'Authorization':Authorization}"
                 :show-file-list="false"
                 accept=".xls,.xlsx"
                 multiple
-                v-show="p.actpoint != 'look'"
+                v-show="p.actpoint == 'edit'"
               >
                 <el-button
                 class="small_size"
@@ -430,6 +432,7 @@ import AddBd  from "./addBd";
         }
       }
       return {
+        Authorization:sessionStorage.getItem("token"),
         maxMoney:1000000,
         selectIndex:'',
         id:'',
@@ -528,7 +531,33 @@ import AddBd  from "./addBd";
       //   }
       // },
       //导出函数
-      exportdata(){},
+      exportdata(){
+        this.$http
+          .post(
+            '/api/contract/boq/BoqNationalStandard/detail/downloadTemplate',
+            { responseType:'blob' }
+          )
+          .then((res) => {
+            // let blob = new Blob([res.data], {type: "application/vnd.ms-excel"});
+            // let objectUrl = URL.createObjectURL(blob);
+            // window.location.href = objectUrl;
+            const content = res.data;
+            const blob = new Blob([content])
+            const fileName = '工程量清单计量规则'+new Date().toLocaleDateString()+'.xlsx'
+            if ('download' in document.createElement('a')) { // 非IE下载
+              const elink = document.createElement('a')
+              elink.download = fileName;
+              elink.style.display = 'none'
+              elink.href = URL.createObjectURL(blob)
+              document.body.appendChild(elink)
+              elink.click()
+              URL.revokeObjectURL(elink.href) // 释放URL 对象
+              document.body.removeChild(elink)
+            } else { // IE10+下载
+              navigator.msSaveBlob(blob, fileName)
+            }
+          })
+      },
           //上传附件
     handleChange(response, file, fileList) {
       if (response && response.code === 200) {

@@ -93,7 +93,7 @@
           </template>
         </el-form-item>
         <el-form-item v-if="ifkb=='kbxq'" label="开标金额(万元):" class="list-item" prop="bidInfoSection.riskFee"
-
+                      :rules="type=='eidtnew'?rules.contractAmount:''"
         >
           <el-input
             v-model="detailForm.bidInfoSection.riskFee"
@@ -750,7 +750,7 @@ import { isMoney } from '@/utils/validate'
         // console.log(list,type)
         this.visible = true;
         this.bdName=list||[];
-        console.log(this.bdName)
+        // console.log(this.bdName)
         this.isBidRates=isBidRates;
         this.ifkb=ifkb;
         if(type=='edit'||type=='look'||type=="eidtnew"){
@@ -764,7 +764,7 @@ import { isMoney } from '@/utils/validate'
           }
          });
          this.detailForm.bidInfoSection=detail.bidInfoSection;
-          console.log(this.detailForm)
+          // console.log(this.detailForm)
         }else{
           this.detailForm={
             bidInfoSection:{participatingUnitsName:''},

@@ -220,6 +220,7 @@
                 size="mini"
                 v-model="searchform.flowStatus"
               >
+                <el-option label="待登记" value="0"></el-option>
                 <el-option label="草稿" value="1"></el-option>
                 <el-option label="审核中" value="2"></el-option>
                 <el-option label="审核通过" value="3"></el-option>
