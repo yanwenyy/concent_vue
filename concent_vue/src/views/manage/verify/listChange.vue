@@ -5,6 +5,7 @@
         <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>新增</el-button>
         <el-button :disabled="flowStatus==2 || flowStatus==3" @click="editItem" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
         <el-button @click="getData" type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>
+        <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
       </el-button-group>
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
@@ -311,6 +312,40 @@ export default {
       }
     },
   methods: {
+    // 删除
+    remove() {
+      if (this.multipleSelection.length < 1) {
+        this.$message.info("请选择一条记录进行删除操作！");
+        return false;
+      }
+      let uuids = [],itemStatus=true;
+      this.multipleSelection.forEach((item) => {
+        if(item.flowStatus==1||item.flowStatus==4){
+          uuids.push(item.ccrUuid);
+        }else{
+          this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
+          return itemStatus=false;
+        }
+      })
+
+      if(itemStatus){
+        this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$http
+            .post(
+              "/api/contract/topInfo/Verify/list/deleteChange",{ids: uuids}
+
+            )
+            .then((res) => {
+              this.getData()
+            });
+        }).catch(() => {})
+      }
+
+    },
     //行选择的时候
       rowSelect(selection, row){
         if(selection.indexOf(row)!=-1){

@@ -429,7 +429,7 @@ export default {
           }).then(() => {
             this.$http
             .post(
-              "/api/contract/topInfo/BidInfo/list/delete",{ids: uuids}
+              "/api/contract/topInfo/BidInfo/list/deleteBid2",{ids: uuids}
 
             )
             .then((res) => {

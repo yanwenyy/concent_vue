@@ -494,7 +494,7 @@
       // 删除
       remove() {
         if (this.multipleSelection.length < 1) {
-          this.$message.info("请选择一条记录进行查看操作！");
+          this.$message.info("请选择一条记录进行删除操作！");
           return false;
         }
         let uuids = [],itemStatus=true;

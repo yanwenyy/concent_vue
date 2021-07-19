@@ -88,8 +88,8 @@
             </el-date-picker>
           </el-form-item>
           <el-form-item label="参与投标单位:" class="list-item">
-            <el-input v-model="detailForm.participatingUnitsName" placeholder="评标办法" clearable>
-              <el-button slot="append" icon="el-icon-search" @click="addDw"></el-button>
+            <el-input v-model="detailForm.participatingUnitsName" placeholder="参与投标单位" clearable>
+              <el-button slot="append" icon="el-icon-search" @click="addDw('参与投标单位',detailForm.participatingUnitsId)"></el-button>
             </el-input>
           </el-form-item>
           <el-form-item label="项目经理:" class="list-item">
@@ -316,8 +316,8 @@
       var validateMoney = (rule, value, callback) => {
         // console.log(value)
         if(value===''){
-          callback(new Error('不能为空'))
-        }else if (!isMoney(value)) {
+          // callback(new Error('不能为空'))
+        }else if (value!=''&&value!=null&&!isMoney(value)) {
           callback(new Error('请输入数字'))
         } else {
           callback()

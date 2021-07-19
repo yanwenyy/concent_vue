@@ -564,26 +564,72 @@
               </el-form-item>
               <br>
               <el-form-item label="内部联合体单位:"
-                            prop="bidInfoInnerOrgList.innerOrgName"
-
+                            prop="bidInfo.innerOrgName"
+                            :rules="detailform.bidInfo.isCoalitionBid=='0'?{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'change',
+              }:{}"
                             class="formItem1" >
-                <el-input  disabled placeholder="请输入内容" v-model="detailform.bidInfo.innerOrgName" class="input-with-select">
-                  <!--<el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('内部联合体单位',detailform.bidInfo.innerOrgId)" ></el-button>-->
+                <el-input
+                  :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"
+                  placeholder="请输入内容"
+                  v-model="detailform.bidInfo.innerOrgName"
+                  class="input-with-select"
+                >
+                  <!-- :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''" -->
+
+                  <el-button
+                    v-if="p.actpoint != 'look' && p.actpoint != 'searchLook' && detailform.bidInfo.isCoalitionBid != '1' &&detailform.bidInfo.isCoalitionBid != ''||p.actpoint=='task'"
+                    slot="append"
+                    icon="el-icon-circle-plus-outline"
+                    @click="
+                    addDw('内部联合体单位', detailform.bidInfo.innerOrgId)
+                  "
+                  ></el-button>
                 </el-input>
+                <!--<el-input  disabled placeholder="请输入内容" v-model="detailform.bidInfo.innerOrgName" class="input-with-select">-->
+                  <!--&lt;!&ndash;<el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('内部联合体单位',detailform.bidInfo.innerOrgId)" ></el-button>&ndash;&gt;-->
+                <!--</el-input>-->
               </el-form-item>
 
               <el-form-item class="formItem1"
-
                             label="外部联合体单位:"
                             prop="bidInfo.outOrg"
+                            :rules="detailform.bidInfo.isCoalitionBid=='0'?{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'change',
+              }:{}"
               >
-                <el-input
-                  disabled
+                <!--<el-input-->
+                  <!--disabled-->
+                  <!--clearable-->
+                  <!--placeholder=""-->
+                  <!--size="mini"-->
+                  <!--v-model="detailform.bidInfo.outOrg"-->
+                <!--/>-->
+                <el-select
+                  :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"
                   clearable
-                  placeholder=""
-                  size="mini"
-                  v-model="detailform.bidInfo.outOrg"
-                />
+                  filterable
+                  placeholder="请选择"
+                  v-model="detailform.bidInfo.outOrgId"
+                  @change="
+                getName(
+                  detailform.bidInfo.outOrgId,
+                  sjdwList,
+                  'outOrg',
+                  'outOrgCode'
+                )"
+                >
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in sjdwList"
+                  ></el-option>
+                </el-select>
               </el-form-item>
 
             </div>
@@ -1099,6 +1145,7 @@ export default {
       }
     }
     return {
+      sjdwList:[],//共享单位库
       uploadVisible:false,//上传附件组件状态
       maxMoney:1000000,
       key:0,
@@ -1558,6 +1605,19 @@ export default {
         this.getDetail();
       }
 
+    //共享单位库列表
+    this.$http
+      .post(
+        "/api/contract/Companies/detail/findCompanies",
+      )
+      .then((res) => {
+        this.sjdwList = res.data.data;
+        this.sjdwList.forEach((item)=>{
+          item.id=item.uuid;
+          item.detailName=item.companyName;
+          item.detailCode=item.createOrgCode;
+        })
+      });
   },
 
 };

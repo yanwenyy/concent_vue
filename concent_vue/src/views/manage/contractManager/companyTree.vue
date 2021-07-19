@@ -15,6 +15,7 @@
       <el-tree
         :filter-node-method="filterNode"
         class="filter-tree"
+        :class="ifGFGS?'ifGFGS':''"
         ref="tree"
         show-checkbox
         :check-strictly="true"
@@ -60,6 +61,7 @@
     },
     data() {
       return {
+        ifGFGS:'',//是否可选择股份公司
         filterText: '',
         datas: [],
         list:[],
@@ -150,11 +152,16 @@
         // ifChek是否可多选
         //index table使用组件时的下标
         //tableList tabel使用组件时的list
+        //ifGFGS  是否可选择股份公司
         this.dialogVisible = true;
         this.ifChek=ifChek!=undefined?ifChek:true;
         this.type=type;
         this.index=index;
         this.tableList=tableList;
+        //可以选择股份公司的单位
+        if(type=='使用资质单位'){
+          this.ifGFGS=true;
+        }
         if(list&&list!=''){
           this.list=list.split(",")
         }
@@ -187,9 +194,13 @@
 </script>
 
 <style scoped>
-  /deep/ .el-tree > .el-tree-node > .el-tree-node__content .el-checkbox {
+  /deep/ .el-tree > .el-tree-node > .el-tree-node__content .el-checkbox{
 
     display: none;
+  }
+  /deep/ .ifGFGS > .el-tree-node > .el-tree-node__content .el-checkbox{
+
+    display: inline-block;
   }
   .tree-div{
     height: 300px;

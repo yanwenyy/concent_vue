@@ -1548,7 +1548,7 @@
               inactive-color="#ddd"
               active-value="0"
               inactive-value="1"
-              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+              :disabled="p.actpoint === 'look'||p.actpoint=='task'||(detailform.topInforBO.topInfor.noticeTypeName=='资审公告'&&detailform.bidInfo.bidFlowStatus=='3')"
               @change="detailform.bidInfo.isCoalitionBid=='1'?(detailform.bidInfo.innerOrgName='',detailform.bidInfo.outOrg=''):''"
             >
             </el-switch>

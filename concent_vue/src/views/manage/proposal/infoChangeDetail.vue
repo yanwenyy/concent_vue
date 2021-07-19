@@ -1345,7 +1345,7 @@
                   width="80">
                   <template slot-scope="scope">
                     <el-switch
-                      disabled
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                       class="inline-formitem-switch"
                       v-model="scope.row.isTrack"
                       active-color="#409EFF"
@@ -1670,12 +1670,23 @@
       });
         this.detailform.topInforCapitalList=topInforCapitalList;
         this.detailform.srcId=this.id;
+        var hasGzbd=false;
+        this.detailform.topInfoSectionList.forEach((item)=>{
+          if(item.isTrack=='1'){
+            hasGzbd=true;
+          }
+        });
+        if(!hasGzbd){
+          this.$message.error("请至少选择一个跟踪标段");
+          return false;
+        }
         var url='';
         if(type=='save'){
           url=`/api/contract/topInfo/TopInfor/detail/${this.p.actpoint === "add"?'saveChangeRecord':'updateChangeRecord'}`
         }else{
           url="/api/contract/topInfo/TopInfor/changeProcess/start"
         }
+
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http

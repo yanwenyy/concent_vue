@@ -514,6 +514,34 @@
               </el-select>
             </el-form-item>
           <el-form-item
+            v-if="detailform.contractInfo.constructionNatureId=='b5eeb5ab9ea0479ba08d0f7b420a8e77'"
+            class="inline-formitem"
+            label="所属央企:"
+            prop="contractInfo.belongEnterPrisesId"
+            :rules="{
+               required: true, message: '此项不能为空', trigger: 'blur'
+            }"
+
+          >
+            <el-select
+              class="multiple-sel"
+              :disabled="p.actpoint==='look'||p.actpoint=='task'"
+              @change="getName(detailform.contractInfo.belongEnterPrisesId,yqList ,'belongEnterPrises')"
+              clearable
+              filterable
+              placeholder="请选择"
+              size="mini"
+              v-model="detailform.contractInfo.belongEnterPrisesId"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.id"
+                v-for="(item, index) in yqList"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item
             label="设计单位"
           >
             <el-autocomplete
@@ -792,24 +820,24 @@
           </el-form-item>
           <br>
           <el-form-item
-            v-if="detailform.contractInfo.contractType!='2'"
-            label="我方份额含补充(万元)"
-          >
-            <el-input
-              :disabled="true"
-              v-model="detailform.contractInfo.ourAmountSupply"
-            >
-              <template slot="prepend">¥</template>
-              <template slot="append">(万元)</template>
-            </el-input>
-          </el-form-item>
-          <el-form-item
             label="初始我方份额(万元)"
             prop="contractInfo.ourAmount"
           >
             <el-input
               :disabled="true"
               v-model="detailform.contractInfo.ourAmount"
+            >
+              <template slot="prepend">¥</template>
+              <template slot="append">(万元)</template>
+            </el-input>
+          </el-form-item>
+          <el-form-item
+            v-if="detailform.contractInfo.contractType!='2'"
+            label="我方份额含补充(万元)"
+          >
+            <el-input
+              :disabled="true"
+              v-model="detailform.contractInfo.ourAmountSupply"
             >
               <template slot="prepend">¥</template>
               <template slot="append">(万元)</template>
@@ -832,8 +860,38 @@
                 <template slot="append">(万元)</template>
               </el-input>
             </el-form-item>
-            <br>
+          <div>
+            <el-form-item
+              v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
+              label="建安和勘察设计费(万元)"
+              prop="contractInfo.installDesignFee"
+              :rules="rules.contractAmount"
+            >
+              <el-input
+                @blur="getOther"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                clearable
 
+                v-model="detailform.contractInfo.installDesignFee">
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+              v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
+              label="其他投资(万元)"
+              prop="contractInfo.otherInvest"
+              :rules="rules.contractAmount"
+            >
+              <el-input
+                :disabled="true"
+                clearable
+                v-model="detailform.contractInfo.otherInvest">
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+          </div>
             <el-form-item
               v-if="detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'"
               label="未分配(万元)"
@@ -1083,45 +1141,12 @@
               </el-form-item>
             </div>
 
-           <div>
-             <el-form-item
-               v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
-               label="建安和勘察设计费(万元)"
-               prop="contractInfo.installDesignFee"
-               :rules="rules.contractAmount"
-             >
-               <el-input
-                 @blur="getOther"
-                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                 clearable
 
-                 v-model="detailform.contractInfo.installDesignFee">
-                 <template slot="prepend">¥</template>
-                 <template slot="append">(万元)</template>
-               </el-input>
-             </el-form-item>
-             <el-form-item
-               v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
-               label="其他投资(万元)"
-               prop="contractInfo.otherInvest"
-               :rules="rules.contractAmount"
-             >
-               <el-input
-                 :disabled="true"
-                 clearable
-                 v-model="detailform.contractInfo.otherInvest">
-                 <template slot="prepend">¥</template>
-                 <template slot="append">(万元)</template>
-               </el-input>
-             </el-form-item>
-           </div>
            <div>
              <el-form-item
                class="long-form-item"
                v-if="detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'"
                label="本企业实际应投入资本金"
-               prop="contractInfo.actualInvest"
-               :rules="rules.contractAmount"
              >
                <el-input
                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -1157,7 +1182,12 @@
            </div>
             <el-form-item
               label="承揽所属机构"
-
+              prop="contractInfo.contractOrgName"
+              :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
             >
               <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.contractOrgName" class="input-with-select">
                 <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('承揽所属机构',detailform.contractInfo.contractOrgId,false)" ></el-button>
@@ -1175,7 +1205,12 @@
             </el-form-item>
             <el-form-item
               label="承揽所属省市"
-
+              prop="contractInfo.contractProvinceId"
+              :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
             >
               <el-select
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -6752,6 +6787,7 @@ export default {
       }
     }
     return {
+      yqList:[],//所属央企list
       extendList:[],//扩展字段list
       Authorization:sessionStorage.getItem("token"),
       ifOAS:false,
@@ -6933,6 +6969,21 @@ export default {
       )
       .then((res) => {
         this.extendList = res.data.data;
+      });
+    //获取所属央企列表
+    this.$http
+      .post(
+        '/api/contract/Companies/detail/findCompaniesById',
+        {typeId:'9f19652f27a911ebad4bc5ee92e1a03f'}
+      )
+      .then((res) => {
+        if (res.data.code === 200) {
+          this.yqList=res.data.data
+          this.yqList.forEach((item)=>{
+            item.detailName=item.companyName;
+            item.id=item.uuid;
+          })
+        }
       });
   },
   methods: {
@@ -7876,6 +7927,7 @@ export default {
           }
         }
       }
+
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if(this.detailform.topInfoSiteList.length==0){
@@ -7906,6 +7958,14 @@ export default {
           }
           if(this.detailform.contractInfo.startTime>this.detailform.contractInfo.endTime){
             this.$message.error("合同竣工日期必须大于合同开工日期");
+            return false;
+          }
+          if(this.detailform.contractInfo.isInSystemSub=='0'&&this.detailform.contractInfoAttachBO.innerContractInfoAttachList.length=='0'){
+            this.$message.error("系统内分包单位列表不能为空");
+            return false;
+          }
+          if(this.detailform.contractInfo.isInGroupSub=='0'&&this.detailform.contractInfoAttachBO.innerGroupContractInfoAttachList.length=='0'){
+            this.$message.error("集团内分包单位列表不能为空");
             return false;
           }
           this.$http

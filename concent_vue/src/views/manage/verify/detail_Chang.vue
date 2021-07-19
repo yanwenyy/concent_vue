@@ -30,7 +30,7 @@
    @click="back">返回</el-button> -->
 
 <!-- ||detailform.verify.flowStatus==1 -->
-    <el-button v-show="p.actpoint != 'task'&&(p.actpoint == 'add'||p.flowStatus==1||p.flowStatus==4)" @click="saveInfo('detailformAfter','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||p.flowStatus==1||p.flowStatus==4)" @click="saveInfo('detailformAfter','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
     <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailformAfter','save')">保存</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
@@ -161,6 +161,7 @@
               </el-form-item>
               <br v-if="detailformBefore.topInfor.moduleId=='510ba0d79593418493eb1a11ed3e7df4'">
             <el-form-item  label="新兴市场(一级):"
+
                            :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -760,6 +761,7 @@
             >
              <el-divider content-position="left" class="detailDivider">项目前期信息</el-divider>
               <el-form-item  label="项目名称:"
+                             prop="topInfor.inforName"
                              :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -875,6 +877,7 @@
               <br v-if="detailformAfter.topInfor.moduleId=='510ba0d79593418493eb1a11ed3e7df4'">
 
             <el-form-item  label="新兴市场(一级):"
+                           prop="topInfor.marketFirstName"
                            :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -890,6 +893,7 @@
             </el-form-item>
 
             <el-form-item  label="新兴市场(二级):"
+                           prop="topInfor.marketSecondName"
                            :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -963,6 +967,7 @@
 
             <el-form-item
               :label="detailformAfter.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailformAfter.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'?'建设单位:':'客户名称:'"
+                          prop="topInfor.constructionOrg"
                            :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -983,36 +988,11 @@
                 v-model="detailformAfter.topInfor.designOrg"
               />
             </el-form-item>
-            <br>
-              <el-form-item label="公告类型:"
-                            prop="topInfor.noticeTypeName"
-                            :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              >
-                <el-input
-                  disabled
-                  placeholder="公告类型"
-                  v-model="detailformAfter.topInfor.noticeTypeName"
-                >
-
-                </el-input>
-              </el-form-item>
-
-              <el-form-item label="资审方式:">
-                <el-input
-                  disabled
-                  clearable
-                  placeholder="资审方式"
-                  v-model="detailformBefore.topInfor.verifyTypeName"
-                />
-              </el-form-item>
               <br>
             <el-form-item
               v-if="detailformAfter.topInfor.noticeTypeId!='9d70138b32d611eb8271a1606dfca13c'"
               label="招标人:"
+              prop="topInfor.bidPerson"
                           :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -1036,6 +1016,7 @@
 
             <el-form-item
               v-if="detailformAfter.topInfor.noticeTypeId!='9d70138b32d611eb8271a1606dfca13c'"
+              prop="topInfor.planBidTime"
               label="预计招标时间:"
                           :rules="{
                 required: true,
@@ -1189,6 +1170,7 @@
               </el-form-item>
 
             <el-form-item  label="预计中标概率:"
+                           prop="verify.bidProbName"
               :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -1446,13 +1428,13 @@
                           </el-table>
                 </div>
               <p  v-if="detailformAfter.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailformAfter.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'" style="overflow:hidden;margin-right: 30px"><span style="font-size: 14px">标段信息: </span>
-                <!--<el-button v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"-->
-                  <!--@click="dialogTopInfoSection = true"-->
-                  <!--size="mini"-->
-                  <!--class="detatil-flie-btn"-->
-                  <!--type="primary"-->
-                <!--&gt;新增-->
-                <!--</el-button>-->
+                <el-button v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
+                  @click="dialogTopInfoSection = true"
+                  size="mini"
+                  class="detatil-flie-btn"
+                  type="primary"
+                >新增
+                </el-button>
               </p>
 
               <el-table
@@ -1566,22 +1548,22 @@
           </el-input>
           </template>
         </el-table-column>
-                <!--<el-table-column-->
-                  <!--v-show="p.actpoint != 'look'&&p.actpoint != 'task'"-->
-                  <!--:resizable="false"-->
-                  <!--fixed="right"-->
-                  <!--label="操作"-->
-                  <!--align="center"-->
-                  <!--width="80"-->
-                  <!--show-overflow-tooltip>-->
-                  <!--<template slot-scope="scope">-->
-                    <!--<el-link  v-show="p.actpoint != 'look'&&p.actpoint != 'task'"-->
-                      <!--:underline="false"-->
-                      <!--@click="del(scope.$index,scope.row,detailformAfter.verifySectionList,'bd')"-->
-                      <!--type="warning">删除-->
-                    <!--</el-link>-->
-                  <!--</template>-->
-                <!--</el-table-column>-->
+                <el-table-column
+                  v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
+                  :resizable="false"
+                  fixed="right"
+                  label="操作"
+                  align="center"
+                  width="80"
+                  show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-link  v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
+                      :underline="false"
+                      @click="del(scope.$index,scope.row,detailformAfter.verifySectionList,'bd')"
+                      type="warning">删除
+                    </el-link>
+                  </template>
+                </el-table-column>
               </el-table>
 
 
@@ -1706,7 +1688,8 @@ export default {
           flowStatus: '0'
         },
         'topInfor': {
-          noticeTypeName:''
+          noticeTypeName:'',
+          marketSecondName:''
         },
         'topInfoOrg':{},
         'sectionStr': [],
@@ -1952,6 +1935,11 @@ export default {
     tableRowClassName({ row, rowIndex }) {
       //把每一行的索引放进row
       row.index = rowIndex;
+      if (row.verifySection.isDelete == '1') {
+        return 'none-show';
+      } else {
+        return '';
+      }
     },
     back() {
       this.$router.back()
@@ -1981,6 +1969,10 @@ export default {
       }
       if(this.detailformAfter.commonFilesList.length==0){
         this.$message.error("附件必须上传");
+        return false;
+      }
+      if(this.detailformAfter.verifySectionList.length==0){
+        this.$message.error("标段信息不能为空");
         return false;
       }
       this.detailformAfter.verifyOrgList=[{orgId:this.detailformAfter.verify.orgId,orgName:this.detailformAfter.verify.orgName}];
@@ -2030,11 +2022,33 @@ export default {
     partchg(row) {
       row.showinput = false
     },
+    del(index,item,list,type) {
+      this.$confirm('确认删除该标段吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        if(item.verifySection.uuid!=''){
+          item.verifySection.isDelete='1';
+          // this.detailform.verifySectionList=list.filter((item)=> item.verifySection.isDelete!='1')
+          // console.log(this.detailform.verifySectionList)
+          this.verifySectionListSplit=list.splice(index, 1);
+          // list.splice(index, 1);
+          this.$set(this.detailformAfter,this.detailformAfter)
+        }else{
+          list.splice(index, 1);
+        }
+        // this.$set(this.detailform.verifySectionList,list);
+        this.$forceUpdate();
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
 
-
-    del(index, item, list, type) {
-      console.log(index);
-      list.splice(index, 1);
+      // console.log(index);
+      // list.splice(index, 1);
 
     },
     addSection()
@@ -2442,5 +2456,8 @@ export default {
 {
   padding-top:0px !important;
 }
+    >>>.none-show{
+      display: none!important;
+    }
 </style>
 

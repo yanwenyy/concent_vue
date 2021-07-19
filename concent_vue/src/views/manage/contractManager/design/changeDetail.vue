@@ -2393,7 +2393,12 @@
                 </div>
                 <el-form-item
                   label="承揽所属机构:"
-
+                  prop="contractInfo.contractOrgName"
+                  :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
                 >
                   <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.contractOrgName" class="input-with-select">
                     <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('承揽所属机构',detailform.contractInfo.contractOrgId,false)" ></el-button>
@@ -2401,7 +2406,12 @@
                 </el-form-item>
                 <el-form-item
                   label="承揽所属省市:"
-
+                  prop="contractInfo.contractProvinceId"
+                  :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
                 >
                   <el-select
                     :disabled="p.actpoint==='look'||p.actpoint=='task'"
