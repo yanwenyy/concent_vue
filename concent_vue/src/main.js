@@ -27,6 +27,11 @@ Vue.prototype.$moment = moment
 Vue.prototype.$tableHeight = document.body.clientHeight - 213
 Vue.prototype.$getPermission = getPermission
 Vue.prototype.$getOrgPermission = getOrgPermission
+if (process.env.NODE_ENV === "development") {
+  Vue.prototype.downLoadUrl='/static';
+}else {
+  Vue.prototype.downLoadUrl='./static';
+}
     // var timerOne = window.setInterval(() => {
     //   if (
     //     sessionStorage.getItem("a") &&
@@ -80,6 +85,7 @@ Vue.filter('stateTranslate', function(code) {
 Vue.filter('datetoMonth', function(date) {
     return utils.datetoMonth(date)
 })
+
 // Vue.use(ElementUI)
 
 

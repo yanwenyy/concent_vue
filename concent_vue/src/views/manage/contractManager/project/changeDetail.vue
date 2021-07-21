@@ -5499,6 +5499,10 @@
           this.$message.error("集团内分包单位列表不能为空");
           return false;
         }
+        if(this.detailform.contractInfo.valueAddedTax<=0){
+          this.$message.error("增值税需要大于0");
+          return false;
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.detailform.commonFilesList=this.detailform.fileList1.concat(this.detailform.fileList2).concat(this.detailform.fileList3).concat(this.detailform.fileList4)

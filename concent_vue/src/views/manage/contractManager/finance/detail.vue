@@ -1956,7 +1956,8 @@ export default {
           moduleName:'金融保险',
           moduleCode:'finance',
           marketSecondId:'',
-          signOrgName:''
+          signOrgName:'',
+          isOpenBid:'0'
         },
         commonFilesList1: [],
         commonFilesList2: [],
@@ -2500,6 +2501,14 @@ export default {
       }
       if(this.detailform.contractInfo.isOpenBid=='1'&&this.detailform.commonFilesList2.length==0){
         this.$message.error("请上传招标公告文件");
+        return false;
+      }
+      if(this.detailform.contractInfo.valueAddedTax<=0){
+        this.$message.error("增值税需要大于0");
+        return false;
+      }
+      if(this.detailform.contractInfo.isYearContract=='0'&&this.detailform.contractInfoHouseSalesList.length=='0'){
+        this.$message.error("请至少添加一条年度合同收益");
         return false;
       }
       this.$refs[formName].validate((valid) => {

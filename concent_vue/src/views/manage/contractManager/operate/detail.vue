@@ -349,6 +349,7 @@
                 </el-input>
               </el-form-item>
               <el-form-item
+                v-if="detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'"
                 label="自留份额(万元)"
                 prop="contractInfo.selfCash"
                 :rules="rules.contractAmount"
@@ -908,9 +909,10 @@
                 <el-button
                   v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
                   class="detatil-flie-btn"
-                  @click="add('dd')"
+                  @click="add('dd'),checkTopInfoSiteList()"
                   type="primary"
                 >新增</el-button >
+                <span class="red" v-if="topInfoSiteListDifferent">合同地点与关联项目地点不一致</span>
               </p>
               <el-table
                 :data="detailform.topInfoSiteList"
@@ -960,6 +962,7 @@
                         clearable
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         v-model="scope.row.contractAmount"
+                        @input="checkTopInfoSiteList()"
                       >
                         <template slot="prepend">¥</template>
                         <template slot="append">(万元)</template>
@@ -985,7 +988,7 @@
                       inactive-color="#ddd"
                       active-value="1"
                       inactive-value="0"
-                      @change="setMain(scope.$index,detailform.topInfoSiteList)"
+                      @change="setMain(scope.$index,detailform.topInfoSiteList),checkTopInfoSiteList()"
                     >
                     </el-switch>
                     <!--<el-radio v-model="scope.row.isMain" label="1">是</el-radio>-->
@@ -1006,7 +1009,7 @@
                   <template slot-scope="scope">
                     <el-link
                       :underline="false"
-                      @click="del(scope.$index,scope.row,detailform.topInfoSiteList)"
+                      @click="del(scope.$index,scope.row,detailform.topInfoSiteList),checkTopInfoSiteList()"
                       type="warning"
                     >删除
                     </el-link
@@ -2116,6 +2119,8 @@
           jzjglx:[],//建筑结构类型
           cdmc:[],//场地名称
         },
+        topInfoSiteListCopy:[],//复制下来的项目地点列表,为了比对合同地点与关联项目地点不一致
+        topInfoSiteListDifferent:false,//合同地点与关联项目地点不一致
         emergingMarketTwo:[],
         yesOrNo:[
           {
@@ -2177,6 +2182,27 @@
       },
     },
     methods: {
+      //检查合同地点与关联项目地点是否不一致
+      checkTopInfoSiteList(){
+        if(this.detailform.searchProject==true){
+          this.topInfoSiteListDifferent=false;
+          if(this.topInfoSiteListCopy.length!=this.detailform.topInfoSiteList.length){
+            this.topInfoSiteListDifferent=true;
+          }else{
+            var i=0,len=this.topInfoSiteListCopy.length;
+            for(;i<len;i++){
+              if(this.topInfoSiteListCopy[i].isMain==null){
+                this.topInfoSiteListCopy[i].isMain='0'
+              }
+              this.topInfoSiteListCopy[i].contractAmount=Number(this.topInfoSiteListCopy[i].contractAmount);
+              this.detailform.topInfoSiteList[i].contractAmount=Number(this.detailform.topInfoSiteList[i].contractAmount);
+            };
+            if( JSON.stringify(this.topInfoSiteListCopy) != JSON.stringify(this.detailform.topInfoSiteList)){
+              this.topInfoSiteListDifferent=true;
+            }
+          }
+        }
+      },
       //查询销售业绩是否有同年同月
       checkRepeat(mval,yval,list,index){
         list.forEach((item,i)=>{
@@ -2245,6 +2271,7 @@
           for(var i in datas.bidInfoSectionBOList){
             var bidInfoSection=datas.bidInfoSectionBOList[i].bidInfoSection,
               bidInfoSectionOrgList=datas.bidInfoSectionBOList[i].bidInfoSectionOrgList;
+            // debugger;
             bidInfoSection.uuid='';
             for(var k in bidInfoSection.bidInfoSectionOrgList){
               bidInfoSection.bidInfoSectionOrgList[k].uuid='';
@@ -2252,10 +2279,12 @@
             bidInfoSection.contractInfoSectionOrgList=bidInfoSectionOrgList;
             this.detailform.contractInfoSectionList.push(bidInfoSection);
           }
-          for(var i in datas.topInfoSiteList){
-            datas.topInfoSiteList[i].uuid='';
+          for(var m in datas.topInfoSiteList){
+            datas.topInfoSiteList[m].uuid='';
           }
           this.detailform.topInfoSiteList=datas.topInfoSiteList;
+          this.topInfoSiteListDifferent=false;
+          this.topInfoSiteListCopy=JSON.parse(JSON.stringify(this.detailform.topInfoSiteList));
         });
           this.$forceUpdate();
           this.infoCSVisible=false;
@@ -2450,7 +2479,7 @@
               item.ffid = _data.fullDetailCode;
               item.path = _data.fullDetailName;
               item.placeId=_data.id;
-
+              this.checkTopInfoSiteList();
             }
           }else{
             this.$message.error("项目地点不能重复");
@@ -2555,7 +2584,7 @@
             list[index].contractAmount=''
           }
         }else{
-          this.detailform.contractInfo.contractAmount=this.detailform.contractInfo.contractAmount.replace(/[^\-?\d.]/g,'','');
+          this.detailform.contractInfo.contractAmount=this.detailform.contractInfo.contractAmount&&this.detailform.contractInfo.contractAmount.replace(/[^\-?\d.]/g,'','');
           //合同总金额输入计算我方份额和铁建金额
           this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
             tj_money+=Number(item.contractAmount);
@@ -2735,6 +2764,14 @@
         });
         if(!hasMain){
           this.$message.error("请选择一个主地点");
+          return false;
+        }
+        if(this.detailform.contractInfo.valueAddedTax<=0){
+          this.$message.error("增值税需要大于0");
+          return false;
+        }
+        if(this.detailform.contractInfo.isYearContract=='0'&&this.detailform.contractInfoHouseSalesList.length=='0'){
+          this.$message.error("请至少添加一条年度合同收益");
           return false;
         }
         this.$refs[formName].validate((valid) => {

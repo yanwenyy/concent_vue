@@ -339,6 +339,7 @@
                 <el-option label="审核中" value="2"></el-option>
                 <el-option label="审核通过" value="3"></el-option>
                 <el-option label="审核退回" value="4"></el-option>
+                <el-option label="待登记" value="0"></el-option>
               </el-select>
               <!--<el-input-->
               <!--class="list-search-picker"-->

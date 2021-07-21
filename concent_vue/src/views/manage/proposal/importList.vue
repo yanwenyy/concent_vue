@@ -25,7 +25,7 @@
         ><i class="el-icon-download"></i>导入
         </el-button>
         </el-upload>
-        <el-link class="downFile"  type="primary" href="/static/信息导入模板.xlsx" download="信息导入模板.xlsx">信息导入模板下载</el-link>
+        <el-link class="downFile"  type="primary" :href="downLoadUrl+'/importList.xlsx'" download="信息导入模板.xlsx">信息导入模板下载</el-link>
         <!--<el-button @click="exportdata" type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>-->
       </el-button-group>
       <div style="float: right">

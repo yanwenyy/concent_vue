@@ -4010,6 +4010,14 @@
           this.$message.error("请上传招标公告文件");
           return false;
         }
+        if(this.detailform.contractInfo.valueAddedTax<=0){
+          this.$message.error("增值税需要大于0");
+          return false;
+        }
+        if(this.detailform.contractInfo.isYearContract=='0'&&this.detailform.contractInfoHouseSalesList.length=='0'){
+          this.$message.error("请至少添加一条年度合同收益");
+          return false;
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             var datas=this.p.actpoint === "add"||(type!='save'&&this.detailform.contractInfo.flowStatus==1||this.detailform.contractInfo.flowStatus==4)?{

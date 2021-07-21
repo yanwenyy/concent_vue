@@ -433,6 +433,7 @@
                 </el-input>
               </el-form-item>
               <el-form-item
+                v-if="detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'"
                 label="自留份额(万元)"
                 prop="contractInfo.selfCash"
                 :rules="rules.contractAmount"
@@ -2775,6 +2776,10 @@ export default {
       }
       if(this.detailform.contractInfo.contractEndTime<this.detailform.contractInfo.contractStartTime){
         this.$message.error("合同结束日期不能小于合同开始日期");
+        return false;
+      }
+      if(this.detailform.contractInfo.valueAddedTax<=0){
+        this.$message.error("增值税需要大于0");
         return false;
       }
       this.$refs[formName].validate((valid) => {

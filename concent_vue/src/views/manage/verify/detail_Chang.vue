@@ -2176,12 +2176,13 @@ export default {
           )
           .then(res => {
             this.detailformBefore = res.data.data;
+            var datas=res.data.data;
             // this.detailformAfter = res.data.data
+            this.detailformBefore.verify.orgId=datas.verifyOrgList[0].orgId;
+            this.detailformBefore.verify.orgName=datas.verifyOrgList[0].orgName;
             for(var i in this.detailformBefore){
               this.detailformAfter[i]=JSON.parse(JSON.stringify(this.detailformBefore[i]));
             }
-            this.detailformBefore.verify.orgId=datas.verifyOrgList[0].orgId;
-            this.detailformBefore.verify.orgName=datas.verifyOrgList[0].orgName;
             // alert( JSON.stringify(this.detailformAfter.verifySectionList))
           })
       }else
@@ -2205,8 +2206,8 @@ export default {
               {
                 this.detailformAfter =item
                 this.detailformAfter.topInfor.noticeTypeName=item.topInfor.noticeTypeName;
-                this.detailformBefore.verify.orgId=datas.verifyOrgList[0].orgId;
-                this.detailformBefore.verify.orgName=datas.verifyOrgList[0].orgName;
+                this.detailformAfter.verify.orgId=item.verifyOrgList[0].orgId;
+                this.detailformAfter.verify.orgName=item.verifyOrgList[0].orgName;
                 console.log( this.detailformAfter)
               }
             })

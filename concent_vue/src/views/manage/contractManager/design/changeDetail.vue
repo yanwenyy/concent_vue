@@ -5012,6 +5012,10 @@
         }else{
           url='/api/contract/contract/ContractInfo/changeProcess/start';
         }
+        if(this.detailform.contractInfo.valueAddedTax<=0){
+          this.$message.error("增值税需要大于0");
+          return false;
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.detailform.commonFilesList=this.detailform.fileList1.concat(this.detailform.fileList2);

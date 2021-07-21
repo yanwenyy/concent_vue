@@ -580,7 +580,8 @@ import { isMoney } from '@/utils/validate'
         DwVisible:false,//选择单位弹框状态
         detailForm: {
           bidInfoSection:{
-            participatingUnitsName:''
+            participatingUnitsName:'',
+            openBidPlaceName:''
           },
           verifySection:{},
           bidInfoSectionOrgList:[],
@@ -739,7 +740,7 @@ import { isMoney } from '@/utils/validate'
       // 初始化
       init(list,isBidRates,type,detail,index,ifkb) {
         this.detailForm={
-            bidInfoSection:{ participatingUnitsName:''},
+            bidInfoSection:{ participatingUnitsName:'',openBidPlaceName:''},
             verifySection:{},
             bidInfoSectionOrgList:{},
             dataList: [],
@@ -767,7 +768,7 @@ import { isMoney } from '@/utils/validate'
           // console.log(this.detailForm)
         }else{
           this.detailForm={
-            bidInfoSection:{participatingUnitsName:''},
+            bidInfoSection:{participatingUnitsName:'',openBidPlaceName:''},
             verifySection:{},
             bidInfoSectionOrgList:{},
             dataList: [],

@@ -273,6 +273,9 @@ export default {
     'engineering_monthly_report':'/statistics/reportMonth/reportMDetail',
     'emr_valuation':'/statistics/projectCheck/reportMDetail',
     'project_plan':'/statistics/plan/proTjxDetail',
-    'engineering_monthly_report_not':'/statistics/notEMReport/detail'
+    'engineering_monthly_report_not':'/statistics/notEMReport/detail',
+    'contract_file_manager':'/archives/archives/detail_archives',
+    'contract_file_statistical':'/archives/statistics/detail_statistics',
+    'contract_file_message':'/archives/news/detail'
   }
 }

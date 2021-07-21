@@ -663,7 +663,7 @@ export default {
     var validateMoney = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("不能为空"));
-      } else if (!isMoney(value)) {
+      } else if (value&&!isMoney(value)) {
         callback(new Error("请输入正确的金额格式"));
       } else {
         callback();

@@ -4176,6 +4176,10 @@
           this.$message.error("合同开始日期不能大于合同结束日期");
           return false;
         }
+        if(this.detailform.contractInfo.valueAddedTax<=0){
+          this.$message.error("增值税需要大于0");
+          return false;
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             var datas=this.p.actpoint === "add"||(type!='save'&&this.detailform.contractInfo.flowStatus==1||this.detailform.contractInfo.flowStatus==4)?{
