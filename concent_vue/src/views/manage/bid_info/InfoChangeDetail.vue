@@ -774,6 +774,19 @@
 
             <el-table-column
               :resizable="false"
+              label="开标金额"
+              prop="bidInfoSection.openBidAmount"
+              show-overflow-tooltip
+              align="center"
+              :width="180"
+            >
+            <template slot-scope="scope">{{
+              scope.row.bidInfoSection.openBidAmount
+            }}</template>
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
               label="开标日期"
               prop="bidInfoSection.dateOfBidOpeningName"
               show-overflow-tooltip
@@ -781,7 +794,7 @@
               :width="180"
             >
           <template slot-scope="scope">{{
-            scope.row.dateOfBidOpeningName | dateformat
+            scope.row.bidInfoSection.dateOfBidOpeningName | dateformat
           }}</template>
             </el-table-column>
 
@@ -1602,7 +1615,29 @@
                 />
               </el-form-item>
             </el-row>
+            <el-row>
+              <el-form-item
+                  class="neirong"
+                  label="变更原因(最多1000字):"
+                  prop="bidInfo.changeReason"
+                  :rules="{
+                    required: true,
+                    message: '此项不能为空',
+                    trigger: 'blur',
+                  }"
+                  style="width: 100%"
+                >
+                  <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
+                  <el-input
+                    
+                    type="textarea"
+                    clearable
+                    placeholder="请输入"
 
+                    v-model="detailform.bidInfo.changeReason"
+                  />
+                </el-form-item>
+            </el-row>
             <el-row>
                 <p><span >附件: </span>
                   <el-button
@@ -1811,7 +1846,18 @@
                 :width="180"
               >
               </el-table-column>
-
+              <el-table-column
+                :resizable="false"
+                label="开标金额"
+                prop="bidInfoSection.openBidAmount"
+                show-overflow-tooltip
+                align="center"
+                :width="180"
+              >
+                <template slot-scope="scope">{{
+                  scope.row.bidInfoSection.openBidAmount
+                }}</template>
+              </el-table-column>
               <el-table-column
                 :resizable="false"
                 label="开标日期"

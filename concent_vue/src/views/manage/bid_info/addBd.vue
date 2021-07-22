@@ -92,11 +92,11 @@
             </el-select>
           </template>
         </el-form-item>
-        <el-form-item v-if="ifkb=='kbxq'" label="开标金额(万元):" class="list-item" prop="bidInfoSection.riskFee"
+        <el-form-item v-if="ifkb=='kbxq'" label="开标金额(万元):" class="list-item" prop="bidInfoSection.openBidAmount"
                       :rules="type=='eidtnew'?rules.contractAmount:''"
         >
           <el-input
-            v-model="detailForm.bidInfoSection.riskFee"
+            v-model="detailForm.bidInfoSection.openBidAmount"
             clearable
             placeholder="投标保证金(万元)"
             :disabled="type === 'look'&&ifkb!='kbxq'"
