@@ -340,7 +340,7 @@ export default {
       this.$router.back()
 
     },
-    saveInfo(formName) {
+    saveInfo(formName,type) {
       this.$refs[formName].validate((valid) => {
         //alert(valid);
         if (valid) {

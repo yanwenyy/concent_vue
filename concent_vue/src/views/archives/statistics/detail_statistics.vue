@@ -216,7 +216,6 @@
   import FileUpload from '@/components/fileUpload'
   import AuditProcess from '@/components/auditProcess'
 export default {
-  name: '详情',
   data() {
     return {
       uploadVisible:false,//上传附件组件状态
@@ -321,7 +320,7 @@ export default {
       this.$router.back()
 
     },
-    saveInfo(formName) {
+    saveInfo(formName,type) {
       this.$refs[formName].validate((valid) => {
         //alert(valid);
         if (valid) {

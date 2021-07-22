@@ -191,7 +191,6 @@
 <script>
   import FileUpload from '@/components/fileUpload'
 export default {
-  name: '详情',
   data() {
     return {
       uploadVisible:false,//上传附件组件状态

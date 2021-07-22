@@ -110,7 +110,7 @@
         <el-table-column
           :width="150"
           align="center"
-          filter-multiple="true"
+          :filter-multiple="true"
           label="提交时间"
           prop="submitTime"
           show-overflow-tooltip
@@ -217,7 +217,6 @@
 <script>
 import uploadTable from '@/components/fileUploadTable'
 export default {
-  name: "月度分析列表",
   components: {
     uploadTable
   },

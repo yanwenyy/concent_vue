@@ -1,6 +1,6 @@
 <!--资审结果操作列表-->
 <template>
-  <div>
+  <div class="searchListClass">
     <el-form :inline="true" :model="searchform" @keyup.enter.native="getData()" class="queryForm">
 
       <el-form-item label="项目名称:">

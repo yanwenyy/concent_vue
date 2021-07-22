@@ -30,7 +30,6 @@
 
                     </el-input>
                   </el-form-item>
-                  <br>
                   <el-form-item
                     label="合同编号:"
                   >
@@ -281,6 +280,49 @@
                       placeholder=""
                       size="mini"
                       v-model="detailFormBefore.contractInfo.valueAddedTax"
+                    >
+                      <template slot="prepend">¥</template>
+                      <template slot="append">(万元)</template>
+                    </el-input>
+                  </el-form-item>
+                  <br>
+                  <el-form-item
+                    v-if="detailFormBefore.contractInfo.isInSystemSub==='0'"
+                    label="未分配(万元)"
+                    prop="contractInfo.unAllocatedFee"
+                    :rules="rules.contractAmount"
+                  >
+                    <el-input
+                      disabled
+                      clearable
+                      v-model="detailFormBefore.contractInfo.unAllocatedFee">
+                      <template slot="prepend">¥</template>
+                      <template slot="append">(万元)</template>
+                    </el-input>
+                  </el-form-item>
+                  <el-form-item
+                    v-if="detailFormBefore.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'"
+                    label="自留份额(万元)"
+                    prop="contractInfo.selfCash"
+                    :rules="rules.contractAmount"
+                  >
+                    <el-input
+                      disabled
+                      clearable
+
+                      v-model="detailFormBefore.contractInfo.selfCash">
+                      <template slot="prepend">¥</template>
+                      <template slot="append">(万元)</template>
+                    </el-input>
+                  </el-form-item>
+                  <el-form-item
+                    v-if="detailFormBefore.contractInfo.isInSystemUnion==='1'"
+                    label="暂定金(万元)"
+
+                  >
+                    <el-input
+                      disabled
+                      v-model="detailFormBefore.contractInfo.designTempPrice"
                     >
                       <template slot="prepend">¥</template>
                       <template slot="append">(万元)</template>
@@ -1361,7 +1403,7 @@
                 >
                   <el-input
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    @input="getOurAmount"
+                    @input="getOurAmount(),getOurAmount('','','nfb')"
                     clearable
                     placeholder=""
                     size="mini"
@@ -1411,12 +1453,13 @@
                   </el-input>
                 </el-form-item>
                 <el-form-item
+                  v-if="detailform.contractInfo.isOutSystemUnion==='0'"
                   label="系统外份额（万元）:"
                   prop="contractInfo.outSystemAmount"
                   :rules="rules.contractAmount"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    disabled
                     clearable
                     placeholder="请输入"
                     size="mini"
@@ -1437,6 +1480,55 @@
                     placeholder="请输入"
                     size="mini"
                     v-model="detailform.contractInfo.valueAddedTax"
+                  >
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-form-item>
+                <br>
+                <el-form-item
+                  v-if="detailform.contractInfo.isInSystemSub==='0'"
+                  label="未分配(万元)"
+                  prop="contractInfo.unAllocatedFee"
+                  :rules="rules.contractAmount"
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'"
+                    clearable
+                    @input="getOurAmount('','','nfb')"
+                    v-model="detailform.contractInfo.unAllocatedFee">
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-form-item>
+                <el-form-item
+                  v-if="detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'"
+                  label="自留份额(万元)"
+                  prop="contractInfo.selfCash"
+                  :rules="rules.contractAmount"
+                >
+                  <el-input
+                    disabled
+                    clearable
+
+                    v-model="detailform.contractInfo.selfCash">
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-form-item>
+                <el-form-item
+                  v-if="detailform.contractInfo.isInSystemUnion==='1'"
+                  label="暂定金(万元)"
+                  prop="contractInfo.designTempPrice"
+                  :rules="rules.contractAmount"
+
+                >
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'"
+                    clearable
+                    placeholder=""
+
+                    v-model="detailform.contractInfo.designTempPrice"
                   >
                     <template slot="prepend">¥</template>
                     <template slot="append">(万元)</template>
@@ -2653,13 +2745,36 @@
                       show-overflow-tooltip
                     >
                       <template slot-scope="scope">
-                        <el-input
-                          clearable
+                        <el-select
+                          class="input-el-input-group"
                           :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                          v-model="scope.row.orgName"
-                          class="input-el-input-group">
-                          <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outUnionContractInfoAttachList')" ></el-button>
-                        </el-input>
+                          clearable
+                          filterable
+                          placeholder="请选择"
+                          size="mini"
+                          v-model="scope.row.orgId"
+                          @change="
+                    getXtwName(
+                      scope.row.orgId,
+                      sjdwList,
+                      scope.$index
+                    )
+                  "
+                        >
+                          <el-option
+                            :key="index"
+                            :label="item.detailName"
+                            :value="item.id"
+                            v-for="(item, index) in sjdwList"
+                          ></el-option>
+                        </el-select>
+                        <!--<el-input-->
+                        <!--clearable-->
+                        <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                        <!--v-model="scope.row.orgName"-->
+                        <!--class="input-el-input-group">-->
+                        <!--<el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outUnionContractInfoAttachList')" ></el-button>-->
+                        <!--</el-input>-->
                         <!--<el-input-->
                         <!--class="input-el-input-group"-->
                         <!--clearable-->
@@ -2860,13 +2975,36 @@
                       show-overflow-tooltip
                     >
                       <template slot-scope="scope">
-                        <el-input
-                          clearable
+                        <el-select
+                          class="input-el-input-group"
                           :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                          v-model="scope.row.orgName"
-                          class="input-el-input-group">
-                          <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outContractInfoAttachList')" ></el-button>
-                        </el-input>
+                          clearable
+                          filterable
+                          placeholder="请选择"
+                          size="mini"
+                          v-model="scope.row.orgId"
+                          @change="
+                    getXtwName(
+                      scope.row.orgId,
+                      sjdwList,
+                      scope.$index
+                    )
+                  "
+                        >
+                          <el-option
+                            :key="index"
+                            :label="item.detailName"
+                            :value="item.id"
+                            v-for="(item, index) in sjdwList"
+                          ></el-option>
+                        </el-select>
+                        <!--<el-input-->
+                        <!--clearable-->
+                        <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                        <!--v-model="scope.row.orgName"-->
+                        <!--class="input-el-input-group">-->
+                        <!--<el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outContractInfoAttachList')" ></el-button>-->
+                        <!--</el-input>-->
                         <!--<el-input-->
                         <!--class="input-el-input-group"-->
                         <!--clearable-->
@@ -3143,7 +3281,7 @@
                           <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                           <el-input
                             class="group-no-padding"
-                            @blur="getOurAmount(scope.$index,detailform.contractInfoAttachBO.innerGroupContractInfoAttachList,'wfb')"
+                            @blur="getOurAmount(scope.$index,detailform.contractInfoAttachBO.innerGroupContractInfoAttachList,'jtnfb')"
                             v-model="scope.row.contractAmount"
                             clearable
                             :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -3270,6 +3408,7 @@
         }
       }
       return {
+        sjdwList:[],
         activeName:"after",
         options1:[{label:"值",value:'111'}],
         id:'',
@@ -3404,8 +3543,30 @@
       this.$store.dispatch('getCategory', {name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3'});
       this.$store.dispatch('getCategory', {name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72'});
       // eslint-disable-next-line no-unde
+      //设计单位列表
+      this.$http
+        .post(
+          "/api/contract/Companies/detail/findCompanies",
+        )
+        .then((res) => {
+          this.sjdwList = res.data.data;
+          this.sjdwList.forEach((item)=>{
+            item.value=item.companyName;
+            item.detailName=item.companyName;
+            item.id=item.uuid;
+          })
+        });
     },
     methods: {
+      //获取系统外联合体,系统外分包的单位名称
+      getXtwName(id, list, index){
+        if(id){
+          this.$forceUpdate()
+          list[index].orgName=this.sjdwList.find(
+            (item) => item.id == id
+          ).detailName;
+        }
+      },
       //查询销售业绩是否有同年同月
       checkRepeat(mval,yval,list,index){
         list.forEach((item,i)=>{
@@ -3558,19 +3719,43 @@
                 list[index].isAmountChange=0;
               }
             });
-          }else if(type=='nfb'||type=='wfb'){
-            //判断内分包和外分包之和是否大于我方份额
+          }else if(type=='nfb'||type=='jtnfb'){
+            var jtnfbTotal=0;
+            //计算系统内分包和集团内分包的和
             this.detailform.contractInfoAttachBO.innerContractInfoAttachList.forEach((item)=>{
               our_money+=Number(item.contractAmount);
             });
-            this.detailform.contractInfoAttachBO.outContractInfoAttachList.forEach((item)=>{
+            this.detailform.contractInfoAttachBO.innerGroupContractInfoAttachList.forEach((item)=>{
               our_money+=Number(item.contractAmount);
+              jtnfbTotal+=Number(item.contractAmount);
             });
-            var ourAmount=this.detailform.contractInfo.ourAmount-our_money;
-            if(!ourAmount>0){
-              this.$message.error('我方份额需要大于0');
-              list[index].contractAmount=''
+            if(jtnfbTotal>this.detailform.contractInfo.contractAmount-(this.detailform.contractInfo.unAllocatedFee||0)){
+              this.$message.error('集团内分包之和需要大于总金额-未分配金额');
+              if(type=='jtnfb'){
+                list[index].contractAmount=''
+              }
+            }else{
+              //计算自留份额 初始我方份额 （非投融资，投融资使用建安和勘察设计费）- 未分配 - 系统内分包份额-集团内分包
+              var zile=(this.detailform.contractInfo.projectNatureFirstId=='7031076e7a5f4225b1a89f31ee017802'?this.detailform.contractInfo.installDesignFee||0:this.detailform.contractInfo.ourAmount||0)-(this.detailform.contractInfo.unAllocatedFee||0)-our_money;
+              this.detailform.contractInfo.selfCash=zile;
+              //计算本企业建安已分配和本企业建安未分配
+              this.detailform.contractInfo.installDesignAllocated=our_money;
+              this.detailform.contractInfo.installDesignUnallocat=our_money;
+              this.$forceUpdate();
             }
+            // else if(type=='nfb'||type=='wfb'){
+            // //判断内分包和外分包之和是否大于我方份额
+            // this.detailform.contractInfoAttachBO.innerContractInfoAttachList.forEach((item)=>{
+            //   our_money+=Number(item.contractAmount);
+            // });
+            // this.detailform.contractInfoAttachBO.outContractInfoAttachList.forEach((item)=>{
+            //   our_money+=Number(item.contractAmount);
+            // });
+            // var ourAmount=this.detailform.contractInfo.ourAmount-our_money;
+            // if(!ourAmount>0){
+            //   this.$message.error('我方份额需要大于0');
+            //   list[index].contractAmount=''
+            // }
             //变更后的内分包金额是否有变化
             this.detailFormBefore.contractInfoAttachBO.innerContractInfoAttachList.forEach((item)=>{
               if(this.p.actpoint == 'add'&&item.uuid==list[index].uuid&&item.contractAmount==list[index].contractAmount){
@@ -3621,8 +3806,138 @@
         }else{
           this.$message.error('合同总金额需要大于0');
         }
-
       },
+      // getOurAmount(index,list,type){
+      //   var tj_money=0,our_money=0;
+      //   if(this.detailform.contractInfo.contractAmount>0){
+      //     if(type=='wlht'||type=='nlht'){
+      //       //铁建金额计算
+      //       this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
+      //         tj_money+=Number(item.contractAmount);
+      //       });
+      //       var ourAmount=this.detailform.contractInfo.contractAmount-tj_money;
+      //
+      //       if(ourAmount>0){
+      //         // this.$set( this.detailform, "contractInfo.crccCash", ourAmount);
+      //         this.$forceUpdate();
+      //         this.detailform.contractInfo.crccCash=ourAmount;
+      //
+      //       }else{
+      //         this.$message.error('铁建份额需要大于0');
+      //         list[index].contractAmount=''
+      //       }
+      //       //我方份额计算
+      //       this.detailform.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
+      //         our_money+=Number(item.contractAmount);
+      //       });
+      //       var ourAmount2=this.detailform.contractInfo.crccCash-our_money;
+      //       if(ourAmount2>0){
+      //         this.$forceUpdate();
+      //         this.detailform.contractInfo.ourAmount=ourAmount2;
+      //         //项目地点的第一条数据金额默认是我方份额
+      //         this.getPositionMoney(0,this.detailform.topInfoSiteList);
+      //         // this.$set( this.detailform, "contractInfo.ourAmount", ourAmount2);
+      //       }else{
+      //         this.$message.error('我方份额需要大于0');
+      //         list[index].contractAmount=''
+      //       }
+      //       //变更后的内联合体金额是否有变化
+      //       this.detailFormBefore.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
+      //         if(this.p.actpoint == 'add'&&item.uuid==list[index].uuid&&item.contractAmount==list[index].contractAmount){
+      //           this.$forceUpdate();
+      //           list[index].isAmountChange=1
+      //         }else if(this.p.actpoint == 'add'&&item.uuid==list[index].uuid&&item.contractAmount!=list[index].contractAmount){
+      //           this.$forceUpdate();
+      //           list[index].isAmountChange=0
+      //         }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount==list[index].contractAmount){
+      //           this.$forceUpdate();
+      //           list[index].isAmountChange=1
+      //         }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount!=list[index].contractAmount){
+      //           this.$forceUpdate();
+      //           list[index].isAmountChange=0;
+      //         }
+      //       });
+      //       //变更后的外联合题金额是否有变化
+      //       this.detailFormBefore.contractInfoAttachBO.outUnionContractInfoAttachList	.forEach((item)=>{
+      //         if(this.p.actpoint == 'add'&&item.uuid==list[index].uuid&&item.contractAmount==list[index].contractAmount){
+      //           this.$forceUpdate();
+      //           list[index].isAmountChange=1
+      //         }else if(this.p.actpoint == 'add'&&item.uuid==list[index].uuid&&item.contractAmount!=list[index].contractAmount){
+      //           this.$forceUpdate();
+      //           list[index].isAmountChange=0
+      //         }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount==list[index].contractAmount){
+      //           this.$forceUpdate();
+      //           list[index].isAmountChange=1
+      //         }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount!=list[index].contractAmount){
+      //           this.$forceUpdate();
+      //           list[index].isAmountChange=0;
+      //         }
+      //       });
+      //     }else if(type=='nfb'||type=='wfb'){
+      //       //判断内分包和外分包之和是否大于我方份额
+      //       this.detailform.contractInfoAttachBO.innerContractInfoAttachList.forEach((item)=>{
+      //         our_money+=Number(item.contractAmount);
+      //       });
+      //       this.detailform.contractInfoAttachBO.outContractInfoAttachList.forEach((item)=>{
+      //         our_money+=Number(item.contractAmount);
+      //       });
+      //       var ourAmount=this.detailform.contractInfo.ourAmount-our_money;
+      //       if(!ourAmount>0){
+      //         this.$message.error('我方份额需要大于0');
+      //         list[index].contractAmount=''
+      //       }
+      //       //变更后的内分包金额是否有变化
+      //       this.detailFormBefore.contractInfoAttachBO.innerContractInfoAttachList.forEach((item)=>{
+      //         if(this.p.actpoint == 'add'&&item.uuid==list[index].uuid&&item.contractAmount==list[index].contractAmount){
+      //           this.$forceUpdate();
+      //           list[index].isAmountChange=1
+      //         }else if(this.p.actpoint == 'add'&&item.uuid==list[index].uuid&&item.contractAmount!=list[index].contractAmount){
+      //           this.$forceUpdate();
+      //           list[index].isAmountChange=0
+      //         }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount==list[index].contractAmount){
+      //           this.$forceUpdate();
+      //           list[index].isAmountChange=1
+      //         }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount!=list[index].contractAmount){
+      //           this.$forceUpdate();
+      //           list[index].isAmountChange=0;
+      //         }
+      //       });
+      //       //变更后的外联合题金额是否有变化
+      //       this.detailFormBefore.contractInfoAttachBO.outContractInfoAttachList	.forEach((item)=>{
+      //         if(this.p.actpoint == 'add'&&item.uuid==list[index].uuid&&item.contractAmount==list[index].contractAmount){
+      //           this.$forceUpdate();
+      //           list[index].isAmountChange=1
+      //         }else if(this.p.actpoint == 'add'&&item.uuid==list[index].uuid&&item.contractAmount!=list[index].contractAmount){
+      //           this.$forceUpdate();
+      //           list[index].isAmountChange=0
+      //         }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount==list[index].contractAmount){
+      //           this.$forceUpdate();
+      //           list[index].isAmountChange=1
+      //         }else if(this.p.actpoint == 'edit'&&item.srcUuid==list[index].srcUuid&&item.contractAmount!=list[index].contractAmount){
+      //           this.$forceUpdate();
+      //           list[index].isAmountChange=0;
+      //         }
+      //       });
+      //     }else{
+      //       //合同总金额输入计算我方份额和铁建金额
+      //       this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
+      //         tj_money+=Number(item.contractAmount);
+      //       });
+      //       this.$forceUpdate();
+      //       this.detailform.contractInfo.crccCash=this.detailform.contractInfo.contractAmount-tj_money;
+      //       this.detailform.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
+      //         our_money+=Number(item.contractAmount);
+      //       });
+      //       this.$forceUpdate();
+      //       this.detailform.contractInfo.ourAmount=this.detailform.contractInfo.crccCash-our_money;
+      //       //项目地点的第一条数据金额默认是我方份额
+      //       this.getPositionMoney(0,this.detailform.topInfoSiteList);
+      //     }
+      //   }else{
+      //     this.$message.error('合同总金额需要大于0');
+      //   }
+      //
+      // },
       //项目地点份额变动的时候
       getPositionMoney(index,list){
         if(list.length==1){

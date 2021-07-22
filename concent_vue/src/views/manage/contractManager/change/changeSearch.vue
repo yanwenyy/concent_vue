@@ -94,7 +94,7 @@
         :page-size="page.size"
         :page-sizes="[20, 50, 100]"
         :total="page.total"
-        @current-change="handleCurrentChange"
+        @current-change="handleCurrentChange2"
         @size-change="handleSizeChange"
         layout="total, sizes, prev, pager, next, jumper"
         style="margin-top: 5px"
@@ -204,7 +204,7 @@
         this.visible = true;
         this.$http
           .post(
-            "/api/contract/contract/ContractInfo/list/loadPageData",
+            "/api/contract/contract/ContractInfo/list/loadPageDataChangeRecord",
             this.searchform,
             {isLoading: false}
           )
@@ -221,12 +221,12 @@
       },
       // 每页数
       handleSizeChange(val) {
-        this.searchFrom.size = val;
-        this.getData();
+        this.searchform.size = val;
+        this.init();
       },
-      handleCurrentChange(val) {
-        this.searchFrom.current = val;
-        this.getData();
+      handleCurrentChange2(val) {
+        this.searchform.current = val;
+        this.init();
       },
       // 单选
       handleCurrentChange(val) {

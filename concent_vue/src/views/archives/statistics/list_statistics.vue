@@ -50,7 +50,7 @@
         <el-table-column
           :width="300"
           label="统计分析名称"
-          prop="Name"
+          prop="name"
           show-overflow-tooltip>
           <template slot-scope="scope">
             <span class="blue pointer"
@@ -73,9 +73,9 @@
           prop="createUserName"
           show-overflow-tooltip>
 
-          <template slot-scope="scope">
-            {{ scope.row.createUserName }}
-          </template>
+          <!--<template slot-scope="scope">-->
+            <!--{{ scope.row.createUserName }}-->
+          <!--</template>-->
         </el-table-column>
         <el-table-column
           :width="180"
@@ -102,7 +102,7 @@
         <el-table-column
           :width="150"
           align="center"
-          filter-multiple="true"
+          :filter-multiple="true"
           label="提交时间"
           prop="sumbitTime"
           show-overflow-tooltip
@@ -120,7 +120,7 @@
           show-overflow-tooltip
         >
         <template slot-scope="scope">
-          {{ scope.row.isShare | statusFormat }}
+          {{ scope.row.isShare=='1'?'是':'否'}}
         </template>
         </el-table-column>
 
@@ -150,7 +150,6 @@
 
 <script>
 export default {
-  name: "统计分析列表",
   data() {
     return {
       page: {current: 1, size: 20, total: 0, records: []},
@@ -168,8 +167,6 @@ export default {
         archivesInfoType: ''
       },
       multipleSelection: [],
-
-
     }
   },
   filters:{

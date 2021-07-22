@@ -631,6 +631,10 @@ pre {
 .red{
   color: red!important;
 }
+.searchListClass{
+  height: 96vh!important;
+  overflow: auto;
+}
 @media (min-width: 1500px) and (max-width: 1600px) {
   .xmbk-item .el-form-item__error{
     top:-20px!important;

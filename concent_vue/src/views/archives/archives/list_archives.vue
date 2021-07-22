@@ -97,7 +97,7 @@
         <el-table-column
           :width="150"
           align="center"
-          filter-multiple="true"
+          :filter-multiple="true"
           label="提交时间"
           prop="sumbitTime"
           show-overflow-tooltip
@@ -145,7 +145,6 @@
 
 <script>
 export default {
-  name: "档案列表",
   data() {
     return {
       page: {current: 1, size: 20, total: 0, records: []},
@@ -302,7 +301,7 @@ export default {
       this.multipleSelection = val
     },
     getData() {
-      console.log(JSON.stringify(this.searchform));
+      // console.log(JSON.stringify(this.searchform));
       this.$http
         .post(
           '/api/contract/archives/ArchivesInfo/list/loadPageDataByArchives',

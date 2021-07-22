@@ -579,9 +579,10 @@
                     </el-input>
                   </el-form-item>
                   <br>
+
+                  <!--v-show="detailFormBefore.contractInfo.isInSystemUnion==='1'"-->
                   <el-form-item
-                    label="暂定金(万元)"
-                    v-show="detailFormBefore.contractInfo.isInSystemUnion==='1'"
+                    label="暂列金(万元)"
                   >
                     <el-input
                       disabled
@@ -2257,7 +2258,7 @@
                     clearable
                     filterable
                     placeholder="请选择"
-                    @change="getTwoXZ"
+                    @change="getTwoXZ,detailform.contractInfo.contractAmount!=null&&detailform.contractInfo.contractAmount!=''?getOurAmount('','','nfb'):''"
 
                     v-model="detailform.contractInfo.projectNatureFirstId"
                   >
@@ -2311,7 +2312,7 @@
                 >
                   <el-input
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    @input="getOurAmount"
+                    @input="getOurAmount(),getOurAmount('','','nfb')"
                     clearable
                     placeholder=""
 
@@ -2400,7 +2401,7 @@
                     :rules="rules.contractAmount"
                   >
                     <el-input
-                      @blur="getOther"
+                      @input="getOther"
                       :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                       clearable
 
@@ -2425,11 +2426,12 @@
                     </el-input>
                   </el-form-item>
                 </div>
+
+                <!--v-if="detailform.contractInfo.isInSystemUnion==='1'"-->
                 <el-form-item
-                  v-if="detailform.contractInfo.isInSystemUnion==='1'"
-                  label="暂定金(万元)"
+
+                  label="暂列金(万元)"
                   prop="contractInfo.designTempPrice"
-                  :rules="rules.contractAmount"
 
                 >
                   <el-input
@@ -2465,7 +2467,7 @@
                   :rules="rules.contractAmount"
                 >
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    disabled
                     clearable
 
                     v-model="detailform.contractInfo.selfCash">
@@ -4891,21 +4893,29 @@
               }
             });
           }else if(type=='nfb'||type=='jtnfb'){
+            var jtnfbTotal=0;
             //计算系统内分包和集团内分包的和
             this.detailform.contractInfoAttachBO.innerContractInfoAttachList.forEach((item)=>{
               our_money+=Number(item.contractAmount);
             });
             this.detailform.contractInfoAttachBO.innerGroupContractInfoAttachList.forEach((item)=>{
               our_money+=Number(item.contractAmount);
+              jtnfbTotal+=Number(item.contractAmount);
             });
-            //计算自留份额 初始我方份额 （非投融资，投融资使用建安和勘察设计费）- 未分配 - 系统内分包份额-集团内分包
-            var zile=(this.detailform.contractInfo.projectNatureFirstId=='7031076e7a5f4225b1a89f31ee017802'?this.detailform.contractInfo.installDesignFee||0:this.detailform.contractInfo.ourAmount||0)-(this.detailform.contractInfo.unAllocatedFee||0)-our_money;
-            this.detailform.contractInfo.selfCash=zile;
-            //计算本企业建安已分配和本企业建安未分配
-            this.detailform.contractInfo.installDesignAllocated=our_money;
-            this.detailform.contractInfo.installDesignUnallocat=our_money;
-            this.$forceUpdate();
-
+            if(jtnfbTotal>this.detailform.contractInfo.contractAmount-(this.detailform.contractInfo.unAllocatedFee||0)){
+              this.$message.error('集团内分包之和需要大于总金额-未分配金额');
+              if(type=='jtnfb'){
+                list[index].contractAmount=''
+              }
+            }else{
+              //计算自留份额 初始我方份额 （非投融资，投融资使用建安和勘察设计费）- 未分配 - 系统内分包份额-集团内分包
+              var zile=(this.detailform.contractInfo.projectNatureFirstId=='7031076e7a5f4225b1a89f31ee017802'?this.detailform.contractInfo.installDesignFee||0:this.detailform.contractInfo.ourAmount||0)-(this.detailform.contractInfo.unAllocatedFee||0)-our_money;
+              this.detailform.contractInfo.selfCash=zile;
+              //计算本企业建安已分配和本企业建安未分配
+              this.detailform.contractInfo.installDesignAllocated=our_money;
+              this.detailform.contractInfo.installDesignUnallocat=our_money;
+              this.$forceUpdate();
+            }
             // else if(type=='nfb'||type=='wfb'){
             // //判断内分包和外分包之和是否大于我方份额
             // this.detailform.contractInfoAttachBO.innerContractInfoAttachList.forEach((item)=>{
@@ -4993,8 +5003,10 @@
       },
       //获取其他投资
       getOther(){
+        this.$forceUpdate();
         this.detailform.contractInfo.otherInvest=this.detailform.contractInfo.ourAmount-this.detailform.contractInfo.installDesignFee>0?this.detailform.contractInfo.ourAmount-this.detailform.contractInfo.installDesignFee:0;
-      },
+        this.getOurAmount('','','nfb');
+        },
       handleRemove1(file,index) {
         this.$http
           .post(
@@ -5157,7 +5169,7 @@
       getXtwName(id, list, index){
         if(id){
           this.$forceUpdate()
-          list[index].orgName=this.projectPlate.find(
+          list[index].orgName=this.sjdwList.find(
             (item) => item.id == id
           ).detailName;
         }

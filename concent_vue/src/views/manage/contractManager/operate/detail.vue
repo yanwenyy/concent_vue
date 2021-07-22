@@ -249,7 +249,7 @@
               >
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  @input="getOurAmount"
+                  @input="getOurAmount(),getOurAmount('','','nfb')"
                   clearable
                   placeholder=""
 
@@ -279,7 +279,7 @@
 
               >
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  disabled
                   clearable
                   placeholder=""
 
@@ -334,7 +334,7 @@
               <br>
 
               <el-form-item
-                v-if="detailform.contractInfo.isInSystemUnion==='0'"
+                v-if="detailform.contractInfo.isInSystemSub==='0'"
                 label="未分配(万元)"
                 prop="contractInfo.unAllocatedFee"
                 :rules="rules.contractAmount"
@@ -342,7 +342,7 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
-
+                  @input="getOurAmount('','','nfb')"
                   v-model="detailform.contractInfo.unAllocatedFee">
                   <template slot="prepend">¥</template>
                   <template slot="append">(万元)</template>
@@ -355,7 +355,7 @@
                 :rules="rules.contractAmount"
               >
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  disabled
                   clearable
 
                   v-model="detailform.contractInfo.selfCash">
@@ -381,8 +381,6 @@
                   <template slot="append">(万元)</template>
                 </el-input>
               </el-form-item>
-              <br>
-
               <br>
               <el-form-item
                 label="签约单位（使用资质单位）:"
@@ -1152,7 +1150,7 @@
               <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                 <span>系统内其他联合体单位列表: </span>
                 <el-button
-                  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
+                  v-show="p.actpoint != 'look'"
                   @click="addfs('nlht',1,1)"
 
                   style="
@@ -1203,7 +1201,7 @@
                       :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                       v-model="scope.row.orgName"
                       class="input-el-input-group">
-                      <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'unionContractInfoAttachList')" ></el-button>
+                      <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'unionContractInfoAttachList')" ></el-button>
                     </el-input>
                     <!--<el-input-->
                     <!--class="input-el-input-group"-->
@@ -1311,6 +1309,7 @@
                   </template>
                 </el-table-column>
                 <el-table-column
+                  v-show="!p.actpoint === 'look'"
                   :resizable="false"
                   label="操作"
                   align="center"
@@ -1331,7 +1330,7 @@
               <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                 <span>系统内分包单位列表: </span>
                 <el-button
-                  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
+                  v-show="p.actpoint != 'look'"
                   @click="addfs('nfb',2,1)"
 
                   style="
@@ -1489,6 +1488,7 @@
                   </template>
                 </el-table-column>
                 <el-table-column
+                  v-show="!p.actpoint === 'look'"
                   :resizable="false"
                   label="操作"
                   align="center"
@@ -1509,7 +1509,7 @@
               <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                 <span>系统外其他联合体单位列表: </span>
                 <el-button
-                  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
+                  v-show="p.actpoint != 'look'"
                   @click="addfs('wlht',3,1)"
 
                   style="
@@ -1555,13 +1555,38 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <el-input
-                      clearable
+                    <el-select
+                      class="input-el-input-group"
                       :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                      v-model="scope.row.orgName"
-                      class="input-el-input-group">
-                      <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outUnionContractInfoAttachList')" ></el-button>
-                    </el-input>
+                      clearable
+                      filterable
+                      placeholder="请选择"
+                      size="mini"
+                      v-model="scope.row.orgId"
+                      @change="
+                    getXtwName(
+                      scope.row.orgId,
+                      sjdwList,
+                      scope.$index
+                    )
+                  "
+                    >
+                      <el-option
+                        :key="index"
+                        :label="item.detailName"
+                        :value="item.id"
+                        v-for="(item, index) in sjdwList"
+                      ></el-option>
+                    </el-select>
+                    <!--<el-input-->
+                    <!--clearable-->
+                    <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                    <!--v-model="scope.row.orgName"-->
+                    <!--class="input-el-input-group">-->
+                    <!--<el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outUnionContractInfoAttachList')" ></el-button>-->
+                    <!--</el-input>-->
+
+
                     <!--<el-input-->
                     <!--class="input-el-input-group"-->
                     <!--clearable-->
@@ -1667,6 +1692,7 @@
                   </template>
                 </el-table-column>
                 <el-table-column
+                  v-show="!p.actpoint === 'look'"
                   :resizable="false"
                   label="操作"
                   align="center"
@@ -1687,7 +1713,7 @@
               <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                 <span>系统外分包单位列表: </span>
                 <el-button
-                  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
+                  v-show="p.actpoint != 'look'"
                   @click="addfs('wfb',4,1)"
 
                   style="
@@ -1733,13 +1759,38 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <el-input
-                      clearable
+                    <el-select
+                      class="input-el-input-group"
                       :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                      v-model="scope.row.orgName"
-                      class="input-el-input-group">
-                      <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outContractInfoAttachList')" ></el-button>
-                    </el-input>
+                      clearable
+                      filterable
+                      placeholder="请选择"
+                      size="mini"
+                      v-model="scope.row.orgId"
+                      @change="
+                    getXtwName(
+                      scope.row.orgId,
+                      sjdwList,
+                      scope.$index
+                    )
+                  "
+                    >
+                      <el-option
+                        :key="index"
+                        :label="item.detailName"
+                        :value="item.id"
+                        v-for="(item, index) in sjdwList"
+                      ></el-option>
+                    </el-select>
+                    <!--<el-input-->
+                    <!--clearable-->
+                    <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                    <!--v-model="scope.row.orgName"-->
+                    <!--class="input-el-input-group">-->
+                    <!--<el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'outContractInfoAttachList')" ></el-button>-->
+                    <!--</el-input>-->
+
+
                     <!--<el-input-->
                     <!--class="input-el-input-group"-->
                     <!--clearable-->
@@ -1845,6 +1896,7 @@
                   </template>
                 </el-table-column>
                 <el-table-column
+                  v-show="!p.actpoint === 'look'"
                   :resizable="false"
                   label="操作"
                   align="center"
@@ -1865,7 +1917,7 @@
               <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                 <span>集团内分包单位列表: </span>
                 <el-button
-                  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
+                  v-show="p.actpoint != 'look'"
                   @click="addfs('jtfb',5,1)"
 
                   style="
@@ -1989,6 +2041,7 @@
                       <el-input
                         class="group-no-padding"
                         v-model="scope.row.contractAmount"
+                        @input="getOurAmount(scope.$index,detailform.contractInfoAttachBO.innerGroupContractInfoAttachList,'jtnfb')"
                         clearable
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                       >
@@ -2022,6 +2075,7 @@
                   </template>
                 </el-table-column>
                 <el-table-column
+                  v-show="!p.actpoint === 'look'"
                   :resizable="false"
                   label="操作"
                   align="center"
@@ -2066,7 +2120,7 @@
         console.log(value)
         if(value===''){
           callback(new Error('不能为空'))
-        }else if (!isMoney(value)) {
+        }else if (value!=null&&!isMoney(value)) {
           callback(new Error('请输入正确的金额格式'))
         } else {
           callback()
@@ -2081,6 +2135,7 @@
         }
       }
       return {
+        sjdwList:[],
         ifOAS:false,
         key:0,
         options1:[{label:"值",value:'111'}],
@@ -2182,6 +2237,15 @@
       },
     },
     methods: {
+      //获取系统外联合体,系统外分包的单位名称
+      getXtwName(id, list, index){
+        if(id){
+          this.$forceUpdate()
+          list[index].orgName=this.sjdwList.find(
+            (item) => item.id == id
+          ).detailName;
+        }
+      },
       //检查合同地点与关联项目地点是否不一致
       checkTopInfoSiteList(){
         if(this.detailform.searchProject==true){
@@ -2541,64 +2605,98 @@
       //合同总金额获取我方份额和铁建
       getOurAmount(index,list,type){
         var tj_money=0,our_money=0;
-        if(type=='wlht'||type=='nlht'){
-          //铁建金额计算
-          this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
-            tj_money+=Number(item.contractAmount);
-          });
-          var ourAmount=this.detailform.contractInfo.contractAmount-tj_money;
+        if(this.detailform.contractInfo.contractAmount>0){
+          if(type=='wlht'||type=='nlht'){
+            //铁建金额计算
+            this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
+              tj_money+=Number(item.contractAmount);
+            });
+            this.detailform.contractInfo.outSystemAmount=tj_money;
+            var ourAmount=this.detailform.contractInfo.contractAmount-tj_money;
 
-          if(ourAmount>0){
-            // this.$set( this.detailform, "contractInfo.crccCash", ourAmount);
-            this.$forceUpdate();
-            this.detailform.contractInfo.crccCash=ourAmount;
+            if(ourAmount>0){
+              // this.$set( this.detailform, "contractInfo.crccCash", ourAmount);
+              this.$forceUpdate();
+              this.detailform.contractInfo.crccCash=ourAmount;
 
+            }else{
+              this.$message.error('铁建份额需要大于0');
+              list[index].contractAmount=''
+            }
+            //我方份额计算
+            this.detailform.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
+              our_money+=Number(item.contractAmount);
+            });
+            var ourAmount2=this.detailform.contractInfo.crccCash-our_money;
+            if(ourAmount2>0){
+              this.$forceUpdate();
+              this.detailform.contractInfo.ourAmount=ourAmount2;
+              //项目地点的第一条数据金额默认是我方份额
+              this.getPositionMoney(0,this.detailform.topInfoSiteList);
+              // this.$set( this.detailform, "contractInfo.ourAmount", ourAmount2);
+            }else{
+              this.$message.error('我方份额需要大于0');
+              list[index].contractAmount=''
+            }
+          }else if(type=='nfb'||type=='jtnfb'){
+            var jtnfbTotal=0;
+            //计算系统内分包和集团内分包的和
+            this.detailform.contractInfoAttachBO.innerContractInfoAttachList.forEach((item)=>{
+              our_money+=Number(item.contractAmount);
+            });
+            this.detailform.contractInfoAttachBO.innerGroupContractInfoAttachList.forEach((item)=>{
+              our_money+=Number(item.contractAmount);
+              jtnfbTotal+=Number(item.contractAmount);
+            });
+            if(jtnfbTotal>this.detailform.contractInfo.contractAmount-(this.detailform.contractInfo.unAllocatedFee||0)){
+              this.$message.error('集团内分包之和需要大于总金额-未分配金额');
+              if(type=='jtnfb'){
+                list[index].contractAmount=''
+              }
+            }else{
+              //计算自留份额 初始我方份额 （非投融资，投融资使用建安和勘察设计费）- 未分配 - 系统内分包份额-集团内分包
+              var zile=(this.detailform.contractInfo.projectNatureFirstId=='7031076e7a5f4225b1a89f31ee017802'?this.detailform.contractInfo.installDesignFee||0:this.detailform.contractInfo.ourAmount||0)-(this.detailform.contractInfo.unAllocatedFee||0)-our_money;
+              this.detailform.contractInfo.selfCash=zile;
+              //计算本企业建安已分配和本企业建安未分配
+              this.detailform.contractInfo.installDesignAllocated=our_money;
+              this.detailform.contractInfo.installDesignUnallocat=our_money;
+              this.$forceUpdate();
+            }
+            // else if(type=='nfb'||type=='wfb'){
+            //   //判断内分包和外分包之和是否大于我方份额
+            //   this.detailform.contractInfoAttachBO.innerContractInfoAttachList.forEach((item)=>{
+            //     our_money+=Number(item.contractAmount);
+            //   });
+            //   this.detailform.contractInfoAttachBO.outContractInfoAttachList.forEach((item)=>{
+            //     our_money+=Number(item.contractAmount);
+            //   });
+            //   var ourAmount=this.detailform.contractInfo.ourAmount-our_money;
+            //   if(!ourAmount>0){
+            //     this.$message.error('我方份额需要大于0');
+            //     list[index].contractAmount=''
+            //   }
           }else{
-            this.$message.error('铁建份额需要大于0');
-            list[index].contractAmount=''
-          }
-          //我方份额计算
-          this.detailform.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
-            our_money+=Number(item.contractAmount);
-          });
-          var ourAmount2=this.detailform.contractInfo.crccCash-our_money;
-          if(ourAmount2>0){
+            this.detailform.contractInfo.contractAmount=this.detailform.contractInfo.contractAmount.replace(/[^\-?\d.]/g,'','');
+            //合同总金额输入计算我方份额和铁建金额
+            this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
+              tj_money+=Number(item.contractAmount);
+            });
             this.$forceUpdate();
-            this.detailform.contractInfo.ourAmount=ourAmount2;
-            // this.$set( this.detailform, "contractInfo.ourAmount", ourAmount2);
-          }else{
-            this.$message.error('我方份额需要大于0');
-            list[index].contractAmount=''
+            this.detailform.contractInfo.crccCash=this.detailform.contractInfo.contractAmount!=''?this.detailform.contractInfo.contractAmount-tj_money:'';
+            this.detailform.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
+              our_money+=Number(item.contractAmount);
+            });
+            this.$forceUpdate();
+            this.detailform.contractInfo.ourAmount=this.detailform.contractInfo.contractAmount!=''?this.detailform.contractInfo.crccCash-our_money:'';
+            //项目地点的第一条数据金额默认是我方份额
+            this.getPositionMoney(0,this.detailform.topInfoSiteList);
+
           }
-        }else if(type=='nfb'||type=='wfb'){
-          //判断内分包和外分包之和是否大于我方份额
-          this.detailform.contractInfoAttachBO.innerContractInfoAttachList.forEach((item)=>{
-            our_money+=Number(item.contractAmount);
-          });
-          this.detailform.contractInfoAttachBO.outContractInfoAttachList.forEach((item)=>{
-            our_money+=Number(item.contractAmount);
-          });
-          var ourAmount=this.detailform.contractInfo.ourAmount-our_money;
-          if(!ourAmount>0){
-            this.$message.error('我方份额需要大于0');
-            list[index].contractAmount=''
-          }
+          this.getOurAmountSupply();
         }else{
-          this.detailform.contractInfo.contractAmount=this.detailform.contractInfo.contractAmount&&this.detailform.contractInfo.contractAmount.replace(/[^\-?\d.]/g,'','');
-          //合同总金额输入计算我方份额和铁建金额
-          this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
-            tj_money+=Number(item.contractAmount);
-          });
-          this.$forceUpdate();
-          this.detailform.contractInfo.crccCash=this.detailform.contractInfo.contractAmount!=''?this.detailform.contractInfo.contractAmount-tj_money:'';
-          this.detailform.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
-            our_money+=Number(item.contractAmount);
-          });
-          this.$forceUpdate();
-          this.detailform.contractInfo.ourAmount=this.detailform.contractInfo.contractAmount!=''?this.detailform.contractInfo.crccCash-our_money:'';
-
+          this.$message.error('合同总金额需要大于0');
         }
-        this.getOurAmountSupply();
+
       },
       handleRemove1(file,index) {
         this.$http
@@ -2889,6 +2987,19 @@
               item.id=item.uuid;
             })
           }
+        });
+      //设计单位列表
+      this.$http
+        .post(
+          "/api/contract/Companies/detail/findCompanies",
+        )
+        .then((res) => {
+          this.sjdwList = res.data.data;
+          this.sjdwList.forEach((item)=>{
+            item.value=item.companyName;
+            item.detailName=item.companyName;
+            item.id=item.uuid;
+          })
         });
     }
   }
