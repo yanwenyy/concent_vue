@@ -1105,6 +1105,28 @@
                   v-model="detailform.topInfor.inforContent"
                 />
               </el-form-item>
+
+              <el-form-item
+                class="neirong"
+                label="变更原因(最多1000字):"
+                prop="topInfor.changeReason"
+                :rules="{
+                    required: true,
+                    message: '此项不能为空',
+                    trigger: 'blur',
+                  }"
+                style="width: 100%"
+              >
+                <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
+                <el-input
+                  
+                  type="textarea"
+                  clearable
+                  placeholder="请输入"
+
+                  v-model="detailform.topInfor.changeReason"
+                />
+              </el-form-item>
               <p class="detail-title" style="overflow: hidden；margin-right: 30px">
                 <span>项目地点: </span>
                 <!--<el-button-->

@@ -1343,10 +1343,10 @@
                   prop="verify.verifyExplain"
 
                   :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
+                    required: true,
+                    message: '此项不能为空',
+                    trigger: 'blur',
+                  }"
                 >
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-input
@@ -1356,6 +1356,27 @@
                     type="textarea"
                     size="mini"
                     v-model="detailformAfter.verify.verifyExplain"
+                  />
+                </el-form-item>
+                <el-form-item
+                  class="neirong"
+                  label="变更原因(最多1000字):"
+                  prop="verify.changeReason"
+                  :rules="{
+                    required: true,
+                    message: '此项不能为空',
+                    trigger: 'blur',
+                  }"
+                  style="width: 100%"
+                >
+                  <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
+                  <el-input
+                    
+                    type="textarea"
+                    clearable
+                    placeholder="请输入"
+
+                    v-model="detailformAfter.verify.changeReason"
                   />
                 </el-form-item>
               </div>
@@ -2028,18 +2049,25 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        if(item.verifySection.uuid!=''){
-          item.verifySection.isDelete='1';
-          // this.detailform.verifySectionList=list.filter((item)=> item.verifySection.isDelete!='1')
-          // console.log(this.detailform.verifySectionList)
-          this.verifySectionListSplit=list.splice(index, 1);
-          // list.splice(index, 1);
-          this.$set(this.detailformAfter,this.detailformAfter)
+        if(list.length == 1){
+          this.$message({
+            type: 'info',
+            message: '必须保留一个标段'
+          });
         }else{
-          list.splice(index, 1);
+          if(item.verifySection.uuid!=''){
+            item.verifySection.isDelete='1';
+            // this.detailform.verifySectionList=list.filter((item)=> item.verifySection.isDelete!='1')
+            // console.log(this.detailform.verifySectionList)
+            this.verifySectionListSplit=list.splice(index, 1);
+            // list.splice(index, 1);
+            this.$set(this.detailformAfter,this.detailformAfter)
+          }else{
+            list.splice(index, 1);
+          }
+          // this.$set(this.detailform.verifySectionList,list);
+          this.$forceUpdate();
         }
-        // this.$set(this.detailform.verifySectionList,list);
-        this.$forceUpdate();
       }).catch(() => {
         this.$message({
           type: 'info',
