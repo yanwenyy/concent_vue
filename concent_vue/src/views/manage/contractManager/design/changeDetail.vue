@@ -248,6 +248,13 @@
                     </el-input>
                   </el-form-item>
                   <el-form-item
+                    label="所属央企:"
+                  >
+                    <el-input disabled placeholder="请输入内容" v-model="detailFormBefore.contractInfo.belongEnterPrises" class="input-with-select">
+
+                    </el-input>
+                  </el-form-item>
+                  <el-form-item
                     label="设计单位:"
                   >
                     <el-input
@@ -1885,6 +1892,34 @@
                       :label="item.detailName"
                       :value="item.id"
                       v-for="(item, index) in constructionUnitNature"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item
+                  v-if="detailform.contractInfo.constructionNatureId=='b5eeb5ab9ea0479ba08d0f7b420a8e77'"
+                  class="inline-formitem"
+                  label="所属央企:"
+                  prop="contractInfo.belongEnterPrisesId"
+                  :rules="{
+               required: true, message: '此项不能为空', trigger: 'blur'
+            }"
+
+                >
+                  <el-select
+                    class="multiple-sel"
+                    :disabled="p.actpoint==='look'||p.actpoint=='task'"
+                    @change="getName(detailform.contractInfo.belongEnterPrisesId,yqList ,'belongEnterPrises')"
+                    clearable
+                    filterable
+                    placeholder="请选择"
+                    size="mini"
+                    v-model="detailform.contractInfo.belongEnterPrisesId"
+                  >
+                    <el-option
+                      :key="index"
+                      :label="item.detailName"
+                      :value="item.id"
+                      v-for="(item, index) in yqList"
                     ></el-option>
                   </el-select>
                 </el-form-item>
@@ -4206,6 +4241,7 @@
         }
       }
       return {
+        yqList:[],
         sjdwList:[],
         extendList:[],//扩展字段list
         activeName:"after",
@@ -4373,6 +4409,21 @@
         )
         .then((res) => {
           this.extendList = res.data.data;
+        });
+      //获取所属央企列表
+      this.$http
+        .post(
+          '/api/contract/Companies/detail/findCompaniesById',
+          {typeId:'9f19652f27a911ebad4bc5ee92e1a03f'}
+        )
+        .then((res) => {
+          if (res.data.code === 200) {
+            this.yqList=res.data.data
+            this.yqList.forEach((item)=>{
+              item.detailName=item.companyName;
+              item.id=item.uuid;
+            })
+          }
         });
     },
     methods: {

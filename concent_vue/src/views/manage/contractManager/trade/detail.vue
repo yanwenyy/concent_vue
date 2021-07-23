@@ -2250,6 +2250,7 @@ export default {
       }
     }
     return {
+      yqList:[],
       sjdwList:[],
       userInfo: JSON.parse(sessionStorage.getItem('userdata')),
       bdwList:[],//标的物名称list
