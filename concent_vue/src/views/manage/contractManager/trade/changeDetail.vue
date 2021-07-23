@@ -78,17 +78,17 @@
                     />
                   </el-form-item>
                   <br>
-                  <el-form-item
-                    label="供货地点:"
-                  >
-                    <el-input
-                      disabled
-                      clearable
-                      placeholder=""
-                      size="mini"
-                      v-model="detailFormBefore.contractInfo.supplyPlace"
-                    />
-                  </el-form-item>
+                  <!--<el-form-item-->
+                    <!--label="供货地点:"-->
+                  <!--&gt;-->
+                    <!--<el-input-->
+                      <!--disabled-->
+                      <!--clearable-->
+                      <!--placeholder=""-->
+                      <!--size="mini"-->
+                      <!--v-model="detailFormBefore.contractInfo.supplyPlace"-->
+                    <!--/>-->
+                  <!--</el-form-item>-->
                   <el-form-item
                     label="使用资质单位:"
                   >
@@ -326,26 +326,27 @@
                   </el-form-item>
                   <br>
                   <el-form-item
-                    v-if="detailFormBefore.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'"
+                    v-if="detailFormBefore.contractInfo.isInSystemSub==='0'||detailFormBefore.contractInfo.isInGroupSub==='0'||detailFormBefore.contractInfo.isOutSystemSub==='0'"
                     label="未分配(万元)"
-
                   >
                     <el-input
                       disabled
                       clearable
+                      size="mini"
                       v-model="detailFormBefore.contractInfo.unAllocatedFee">
                       <template slot="prepend">¥</template>
                       <template slot="append">(万元)</template>
                     </el-input>
                   </el-form-item>
                   <el-form-item
-                    v-if="detailFormBefore.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'"
+                    v-if="detailFormBefore.contractInfo.isInSystemSub==='0'||detailFormBefore.contractInfo.isInGroupSub==='0'||detailFormBefore.contractInfo.isOutSystemSub==='0'"
                     label="自留份额(万元)"
                   >
+
                     <el-input
                       disabled
                       clearable
-
+                      size="mini"
                       v-model="detailFormBefore.contractInfo.selfCash">
                       <template slot="prepend">¥</template>
                       <template slot="append">(万元)</template>
@@ -804,6 +805,76 @@
 
                     <el-table-column align="center" :resizable="false" label="总价(万元)" prop="totalPrice" show-overflow-tooltip>
 
+                    </el-table-column>
+                  </el-table>
+                  <p>
+                    <span >供货地点: </span>
+                  </p>
+                  <el-table
+                    :data="detailFormBefore.topInfoSiteList"
+                    :key="key"
+                    :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                    @selection-change="handleSelectionChange"
+                    align="center"
+                    border
+                    class="contractInfoTable"
+                    ref="table"
+                    style="width: 100%;height: auto;"
+                  >
+                    <el-table-column
+                      :width="80"
+                      align="center"
+                      label="序号"
+                      show-overflow-tooltip
+                      type="index"
+                    ></el-table-column>
+                    <el-table-column
+                      :resizable="false"
+                      label="项目地点"
+                      align="center"
+                      prop="inforName"
+                    >
+                      <template slot-scope="scope">
+                        <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
+                        <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
+                      </template>
+                    </el-table-column>
+
+                    <el-table-column
+                      :resizable="false"
+                      label="份额(万元)"
+                      prop="contractAmount"
+                      show-overflow-tooltip
+                      align="center"
+                    >
+                    </el-table-column>
+
+                    <el-table-column
+                      :resizable="false"
+                      label="是否为主地点"
+                      prop="contractAmount"
+                      align="center"
+                      show-overflow-tooltip
+                    >
+                      <template slot-scope="scope">
+                        <el-switch
+                          disabled
+                          class="inline-formitem-switch"
+                          v-model="scope.row.isMain"
+                          active-color="#409EFF"
+                          inactive-color="#ddd"
+                          active-value="1"
+                          inactive-value="0"
+                        >
+                        </el-switch>
+                        <!--<el-radio disabled v-model="scope.row.isMain" label="1">是</el-radio>-->
+                        <!--<el-radio disabled v-model="scope.row.isMain" label="0">否</el-radio>-->
+                        <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                      </template>
                     </el-table-column>
                   </el-table>
                 </div>
@@ -1334,26 +1405,26 @@
                   />
                 </el-form-item>
                 <br>
-                <el-form-item
-                  label="供货地点:"
-                  prop="contractInfo.path"
-                  :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur'
-                }"
-                >
-                  <!-- <el-input
-                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                     clearable
-                     placeholder=""
-                     size="mini"
-                     v-model="detailform.contractInfo.supplyPlace"
-                   />-->
-                  <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.path" class="input-with-select">
-                    <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline" @click="selectPosition" ></el-button>
-                  </el-input>
-                </el-form-item>
+                <!--<el-form-item-->
+                  <!--label="供货地点:"-->
+                  <!--prop="contractInfo.path"-->
+                  <!--:rules="{-->
+                <!--required: true,-->
+                <!--message: '此项不能为空',-->
+                <!--trigger: 'blur'-->
+                <!--}"-->
+                <!--&gt;-->
+                  <!--&lt;!&ndash; <el-input-->
+                     <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                     <!--clearable-->
+                     <!--placeholder=""-->
+                     <!--size="mini"-->
+                     <!--v-model="detailform.contractInfo.supplyPlace"-->
+                   <!--/>&ndash;&gt;-->
+                  <!--<el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.path" class="input-with-select">-->
+                    <!--<el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline" @click="selectPosition" ></el-button>-->
+                  <!--</el-input>-->
+                <!--</el-form-item>-->
                 <el-form-item
                   label="使用资质单位:"
                   prop="contractInfo.qualityOrgNames"
@@ -1400,6 +1471,7 @@
                     inactive-color="#ddd"
                     active-value="0"
                     inactive-value="1"
+                    @change="changeMoney('unionContractInfoAttachList','nlht')"
                   >
                   </el-switch>
                   <!--<el-select-->
@@ -1425,6 +1497,7 @@
                     inactive-color="#ddd"
                     active-value="0"
                     inactive-value="1"
+                    @change="changeMoney('innerContractInfoAttachList','nfb')"
                   >
                   </el-switch>
                   <!--<el-select-->
@@ -1450,6 +1523,7 @@
                     inactive-color="#ddd"
                     active-value="0"
                     inactive-value="1"
+                    @change="changeMoney('outUnionContractInfoAttachList','wlht')"
                   >
                   </el-switch>
                   <!--<el-select-->
@@ -1475,6 +1549,7 @@
                     inactive-color="#ddd"
                     active-value="0"
                     inactive-value="1"
+                    @change="changeMoney('outUnionContractInfoAttachList','wfb')"
                   >
                   </el-switch>
                   <!--<el-select-->
@@ -1500,6 +1575,7 @@
                     inactive-color="#ddd"
                     active-value="0"
                     inactive-value="1"
+                    @change="changeMoney('innerGroupContractInfoAttachList','jtnfb')"
                   >
                   </el-switch>
                   <!--<el-select-->
@@ -1608,7 +1684,7 @@
                 </el-form-item>
                 <br>
                 <el-form-item
-                  v-if="detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'"
+                  v-if="detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'||detailform.contractInfo.isOutSystemSub==='0'"
                   label="未分配(万元)"
                   prop="contractInfo.unAllocatedFee"
                   :rules="rules.contractAmount"
@@ -1616,14 +1692,14 @@
                   <el-input
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     clearable
-                    @input="getOurAmount('','','nfb')"
+                    @input="getOurAmount('','','nfb','unAllocatedFee')"
                     v-model="detailform.contractInfo.unAllocatedFee">
                     <template slot="prepend">¥</template>
                     <template slot="append">(万元)</template>
                   </el-input>
                 </el-form-item>
                 <el-form-item
-                  v-if="detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'"
+                  v-if="detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'||detailform.contractInfo.isOutSystemSub==='0'"
                   label="自留份额(万元)"
                   prop="contractInfo.selfCash"
                   :rules="rules.contractAmount"
@@ -1631,7 +1707,6 @@
                   <el-input
                     disabled
                     clearable
-
                     v-model="detailform.contractInfo.selfCash">
                     <template slot="prepend">¥</template>
                     <template slot="append">(万元)</template>
@@ -2435,15 +2510,118 @@
                     </template>
                   </el-table-column>
                 </el-table>
+                <p>
+                  <span >供货地点: </span>
+                  <el-button
+                    v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
+                    class="detatil-flie-btn"
+                    @click="add('dd')"
+                    type="primary"
+                  >新增</el-button >
+                </p>
+                <el-table
+                  :data="detailform.topInfoSiteList"
+                  :key="key"
+                  :header-cell-style="{
+              'text-align': 'center',
+              'background-color': 'rgba(246,248,252,1)',
+              color: 'rgba(0,0,0,1)',
+            }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%;height: auto;"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="项目地点"
+                    align="center"
+                    prop="inforName"
+                  >
+                    <template slot-scope="scope">
+                      <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
+                      <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
+                    </template>
+                  </el-table-column>
 
+                  <el-table-column
+                    :resizable="false"
+                    label="份额(万元)"
+                    prop="contractAmount"
+                    show-overflow-tooltip
+                    align="center"
+                  >
+                    <template slot-scope="scope">
+                      <el-form-item class="tabelForm" :prop="'topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
+                        <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                        <el-input
+                          class="group-no-padding"
+                          clearable
+                          :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                          v-model="scope.row.contractAmount"
+                        >
+                          <template slot="prepend">¥</template>
+                          <template slot="append">(万元)</template>
+                        </el-input>
+                      </el-form-item>
+                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                    </template>
+                  </el-table-column>
 
-                <!--  -->
+                  <el-table-column
+                    :resizable="false"
+                    label="是否为主地点"
+                    prop="contractAmount"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                    <template slot-scope="scope">
+                      <el-switch
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        class="inline-formitem-switch"
+                        v-model="scope.row.isMain"
+                        active-color="#409EFF"
+                        inactive-color="#ddd"
+                        active-value="1"
+                        inactive-value="0"
+                        @change="setMain(scope.$index,detailform.topInfoSiteList)"
+                      >
+                      </el-switch>
+                      <!--<el-radio v-model="scope.row.isMain" label="1">是</el-radio>-->
+                      <!--<el-radio v-model="scope.row.isMain" label="0">否</el-radio>-->
+                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                    </template>
+                  </el-table-column>
 
-
-
-
-
-
+                  <el-table-column
+                    :resizable="false"
+                    fixed="right"
+                    label="操作"
+                    align="center"
+                    width="80"
+                    show-overflow-tooltip
+                    v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
+                  >
+                    <template slot-scope="scope">
+                      <el-link
+                        :underline="false"
+                        @click="del(scope.$index,scope.row,detailform.topInfoSiteList)"
+                        type="warning"
+                      >删除
+                      </el-link
+                      >
+                    </template>
+                  </el-table-column>
+                </el-table>
               </div>
             </el-tab-pane>
             <el-tab-pane v-if="detailform.contractInfo.isInSystemUnion==='0'||detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isOutSystemUnion==='0'||detailform.contractInfo.isOutSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'" label="合同附属信息">
@@ -3769,6 +3947,16 @@
         });
     },
     methods: {
+      //设置主地点
+      setMain(i,list){
+        list.forEach((item,index)=>{
+          if(index==i){
+            item.isMain="1"
+          }else{
+            item.isMain="0"
+          }
+        });
+      },
       //获取系统外联合体,系统外分包的单位名称
       getXtwName(id, list, index){
         if(id){
@@ -3872,8 +4060,14 @@
         this.detailform.contractInfo[name]=_name.join(",");
         console.log(this.detailform.contractInfo[id])
       },
-      //获取我方份额
-      getOurAmount(index,list,type){
+      //内联合体,内分包,外联合体,外分包,集团内分包改变计算金额
+      changeMoney(list,name){
+        this.detailform.contractInfoAttachBO[list]=[];
+        this.getOurAmount('','',name,'','switch');
+        this.$set(this.detailform,this.detailform)
+      },
+      //合同总金额获取我方份额和铁建
+      getOurAmount(index,list,type,name,ifswitch){
         var tj_money=0,our_money=0;
         if(this.detailform.contractInfo.contractAmount>0){
           if(type=='wlht'||type=='nlht'){
@@ -3939,29 +4133,61 @@
                 list[index].isAmountChange=0;
               }
             });
-          }else if(type=='nfb'||type=='jtnfb'){
+          }else if(type=='nfb'||type=='jtnfb'|| type=='wfb'){
             var jtnfbTotal=0;
             //计算系统内分包和集团内分包的和
             this.detailform.contractInfoAttachBO.innerContractInfoAttachList.forEach((item)=>{
               our_money+=Number(item.contractAmount);
             });
+            //计算系统外分包的和
+            this.detailform.contractInfoAttachBO.outContractInfoAttachList.forEach((item)=>{
+              our_money+=Number(item.contractAmount);
+            });
+            //计算集团内分包的和
             this.detailform.contractInfoAttachBO.innerGroupContractInfoAttachList.forEach((item)=>{
               our_money+=Number(item.contractAmount);
               jtnfbTotal+=Number(item.contractAmount);
             });
-            if(jtnfbTotal>this.detailform.contractInfo.contractAmount-(this.detailform.contractInfo.unAllocatedFee||0)){
+            if(this.detailform.contractInfo.unAllocatedFee&&jtnfbTotal>this.detailform.contractInfo.contractAmount-(this.detailform.contractInfo.unAllocatedFee)){
               this.$message.error('集团内分包之和需要大于总金额-未分配金额');
-              if(type=='jtnfb'){
-                list[index].contractAmount=''
+              if(list){
+                list[index].contractAmount='';
+                this.$forceUpdate();
+              }else{
+                this.detailform.contractInfo[name]='';
+                this.$forceUpdate();
+                // this.$set(this.detailform.contractInfo,this.detailform.contractInfo)
               }
             }else{
-              //计算自留份额 初始我方份额 （非投融资，投融资使用建安和勘察设计费）- 未分配 - 系统内分包份额-集团内分包
-              var zile=(this.detailform.contractInfo.projectNatureFirstId=='7031076e7a5f4225b1a89f31ee017802'?this.detailform.contractInfo.installDesignFee||0:this.detailform.contractInfo.ourAmount||0)-(this.detailform.contractInfo.unAllocatedFee||0)-our_money;
-              this.detailform.contractInfo.selfCash=zile;
-              //计算本企业建安已分配和本企业建安未分配
-              this.detailform.contractInfo.installDesignAllocated=our_money;
-              this.detailform.contractInfo.installDesignUnallocat=our_money;
-              this.$forceUpdate();
+              //计算自留份额 初始我方份额 （非投融资，投融资使用建安和勘察设计费）- 未分配 - 系统内分包份额-集团内分包-系统外分包
+              var zile=Number((this.detailform.contractInfo.projectNatureFirstId=='7031076e7a5f4225b1a89f31ee017802'?this.detailform.contractInfo.installDesignFee||0:this.detailform.contractInfo.ourAmount||0)-(this.detailform.contractInfo.unAllocatedFee||0)-our_money);
+              if(zile<0){
+                if(this.detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'){
+                  this.$message.error('自留份额+未分配+系统内分包份额之和+系统外分包份额之和+集团内分包份额之和不能大于建安和勘察设计费');
+                }else{
+                  this.$message.error('自留份额+未分配+系统内分包份额之和+系统外分包份额之和+集团内分包份额之和不能大于初始我方份额');
+                }
+                if(list){
+                  list[index].contractAmount='';
+                  this.$forceUpdate();
+                }else{
+                  this.detailform.contractInfo[name]='';
+                  this.$forceUpdate();
+                }
+              }else{
+                this.detailform.contractInfo.selfCash=zile;
+                //计算本企业建安已分配和本企业建安未分配
+                if(this.detailform.contractInfo.isInSystemSub!='0'&&this.detailform.contractInfo.isOutSystemSub!='0'&&this.detailform.contractInfo.isInGroupSub!='0'){
+                  //系统内分包和系统外分包和集团内分包都为否时,本企业建安已分配=建安和勘察设计费,本企业建安未分配等于0
+                  this.detailform.contractInfo.installDesignAllocated=this.detailform.contractInfo.installDesignFee;
+                  this.detailform.contractInfo.installDesignUnallocat=0;
+                }else{
+                  //系统内分包和系统外分包和集团内分包其中一个为是时,本企业建安已分配=集团内分包和+系统内分包和+系统外分包和+自留份额,本企业建安未分配等于建安和勘察设计费-本企业建安已分配(未分配=本企业建安未分配)
+                  this.detailform.contractInfo.installDesignAllocated=Number(our_money+zile);
+                  this.detailform.contractInfo.installDesignUnallocat=this.detailform.contractInfo.unAllocatedFee||0;
+                }
+                this.$forceUpdate();
+              }
             }
             // else if(type=='nfb'||type=='wfb'){
             // //判断内分包和外分包之和是否大于我方份额
@@ -4023,7 +4249,7 @@
             //项目地点的第一条数据金额默认是我方份额
             this.getPositionMoney(0,this.detailform.topInfoSiteList);
           }
-        }else{
+        }else if(ifswitch!='switch'){
           this.$message.error('合同总金额需要大于0');
         }
       },
@@ -4598,6 +4824,7 @@
           contractInfo: afterData.contractInfo,
           contractInfoAttachBO: afterData.contractInfoAttachBO,
           contractInfoSubjectMatterList: afterData.contractInfoSubjectMatterList,
+          topInfoSiteList:afterData.topInfoSiteList,
           zplx:[],//装配类型
           jzlx:[],//建筑类型
           jzjglx:[],//建筑结构类型
@@ -4613,6 +4840,7 @@
           contractInfo: beforData.contractInfo,
           contractInfoAttachBO: beforData.contractInfoAttachBO,
           contractInfoSubjectMatterList: beforData.contractInfoSubjectMatterList,
+          topInfoSiteList:beforData.topInfoSiteList,
           zplx:[],//装配类型
           jzlx:[],//建筑类型
           jzjglx:[],//建筑结构类型
@@ -4645,6 +4873,7 @@
           contractInfo: datas.contractInfo,
           contractInfoAttachBO: datas.contractInfoAttachBO,
           contractInfoSubjectMatterList: datas.contractInfoSubjectMatterList,
+          topInfoSiteList:datas.topInfoSiteList,
           zplx:[],//装配类型
           jzlx:[],//建筑类型
           jzjglx:[],//建筑结构类型

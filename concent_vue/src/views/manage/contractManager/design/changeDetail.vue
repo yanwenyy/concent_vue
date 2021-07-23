@@ -505,7 +505,7 @@
                     </el-input>
                   </el-form-item>
                   <el-form-item
-                    v-if="detailFormBefore.contractInfo.isInSystemSub==='0'||detailFormBefore.contractInfo.isInGroupSub==='0'"
+                    v-if="detailFormBefore.contractInfo.isInSystemSub==='0'||detailFormBefore.contractInfo.isInGroupSub==='0'||detailFormBefore.contractInfo.isOutSystemSub==='0'"
                     label="未分配(万元)"
                   >
                     <el-input
@@ -518,7 +518,7 @@
                     </el-input>
                   </el-form-item>
                   <el-form-item
-                    v-if="detailFormBefore.contractInfo.isInSystemSub==='0'||detailFormBefore.contractInfo.isInGroupSub==='0'"
+                    v-if="detailFormBefore.contractInfo.isInSystemSub==='0'||detailFormBefore.contractInfo.isInGroupSub==='0'||detailFormBefore.contractInfo.isOutSystemSub==='0'"
                     label="自留份额(万元)"
                   >
 
@@ -1971,6 +1971,7 @@
                     inactive-color="#ddd"
                     active-value="0"
                     inactive-value="1"
+                    @change="changeMoney('unionContractInfoAttachList','nlht')"
                   >
                   </el-switch>
                   <!--<el-select-->
@@ -1996,6 +1997,7 @@
                     inactive-color="#ddd"
                     active-value="0"
                     inactive-value="1"
+                    @change="changeMoney('innerContractInfoAttachList','nfb')"
                   >
                   </el-switch>
                   <!--<el-select-->
@@ -2021,6 +2023,7 @@
                     inactive-color="#ddd"
                     active-value="0"
                     inactive-value="1"
+                    @change="changeMoney('outUnionContractInfoAttachList','wlht')"
                   >
                   </el-switch>
                   <!--<el-select-->
@@ -2046,6 +2049,7 @@
                     inactive-color="#ddd"
                     active-value="0"
                     inactive-value="1"
+                    @change="changeMoney('outUnionContractInfoAttachList','wfb')"
                   >
                   </el-switch>
                   <!--<el-select-->
@@ -2071,6 +2075,7 @@
                     inactive-color="#ddd"
                     active-value="0"
                     inactive-value="1"
+                    @change="changeMoney('innerGroupContractInfoAttachList','jtnfb')"
                   >
                   </el-switch>
                   <!--<el-select-->
@@ -2178,7 +2183,7 @@
                 <br>
 
                 <el-form-item
-                  v-if="detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'"
+                  v-if="detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'||detailform.contractInfo.isOutSystemSub==='0'"
                   label="未分配(万元)"
                   prop="contractInfo.unAllocatedFee"
                   :rules="rules.contractAmount"
@@ -2186,14 +2191,14 @@
                   <el-input
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     clearable
-                    @input="getOurAmount('','','nfb')"
+                    @input="getOurAmount('','','nfb','unAllocatedFee')"
                     v-model="detailform.contractInfo.unAllocatedFee">
                     <template slot="prepend">¥</template>
                     <template slot="append">(万元)</template>
                   </el-input>
                 </el-form-item>
                 <el-form-item
-                  v-if="detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'"
+                  v-if="detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'||detailform.contractInfo.isOutSystemSub==='0'"
                   label="自留份额(万元)"
                   prop="contractInfo.selfCash"
                   :rules="rules.contractAmount"
@@ -2201,7 +2206,6 @@
                   <el-input
                     disabled
                     clearable
-
                     v-model="detailform.contractInfo.selfCash">
                     <template slot="prepend">¥</template>
                     <template slot="append">(万元)</template>
