@@ -858,7 +858,7 @@
               </template> -->
                <template slot-scope="scope">
                 <span v-for="(item,index ) in scope.row.bidInfoSectionOrgList">
-                    {{item.orgType==1?item.orgName:''}}
+                    {{item.orgType==2?item.orgName:''}}
                     {{scope.row.bidInfoSectionOrgList[index+1]&& index>0&&scope.row.bidInfoSectionOrgList[index-1].orgType==2 && scope.row.bidInfoSectionOrgList[index+1].orgType==2? ',':''}}
                 </span>
 
@@ -1629,7 +1629,7 @@
                 >
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-input
-                    
+
                     type="textarea"
                     clearable
                     placeholder="请输入"
@@ -1915,7 +1915,7 @@
               </template> -->
                <template slot-scope="scope">
                 <span v-for="(item,index ) in scope.row.bidInfoSectionOrgList">
-                    {{item.orgType==1?item.orgName:''}}
+                    {{item.orgType==2?item.orgName:''}}
                     {{scope.row.bidInfoSectionOrgList[index+1]&& index>0&&scope.row.bidInfoSectionOrgList[index-1].orgType==2 && scope.row.bidInfoSectionOrgList[index+1].orgType==2? ',':''}}
                 </span>
 
