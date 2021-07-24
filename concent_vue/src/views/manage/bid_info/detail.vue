@@ -1747,16 +1747,34 @@ export default {
           bidInfo_01: datas.bidInfo_01||[],
           value1: [],
           nblht: [],
+          verifyInfo:datas.verifyInfo
         };
-        //内部联合体回显
-        var id = [],
-          name = [];
-        this.detailform.bidInfoInnerOrgList.forEach((item) => {
-          id.push(item.innerOrgId);
-          name.push(item.innerOrgName);
-        });
-        this.detailform.bidInfo.innerOrgId = id!=''?id.join(","):'';
-        this.detailform.bidInfo.innerOrgName = name!=''?name.join(","):'';
+        if(this.detailform.bidInfo.isCoalitionBid === null || this.detailform.bidInfo.isCoalitionBid=== ''){
+          console.info(1111)
+          this.detailform.bidInfo.bidModeId = datas.verifyInfo.bidModeId;
+          this.detailform.bidInfo.bidModeCode = datas.verifyInfo.bidModeCode;
+          this.detailform.bidInfo.bidModeName = datas.verifyInfo.bidModeName;
+          if(datas.verifyInfo.isCoalitionBid === '是'){
+            this.detailform.bidInfo.isCoalitionBid = '0';
+          }else if(datas.verifyInfo.isCoalitionBid === '否'){
+            this.detailform.bidInfo.isCoalitionBid = '1';
+          }
+          this.detailform.bidInfo.innerOrgId = datas.verifyInfo.orgId;
+          this.detailform.bidInfo.innerOrgName = datas.verifyInfo.orgName;
+          // this.detailform.bidInfo.outOrg = datas.verifyInfo.outOrg;
+          // this.detailform.bidInfo.outOrgId = datas.verifyInfo.outOrgId;
+          // this.detailform.bidInfo.outOrgCode = datas.verifyInfo.outOrgCode;
+        }else{
+          //内部联合体回显
+          var id = [],
+            name = [];
+          this.detailform.bidInfoInnerOrgList.forEach((item) => {
+            id.push(item.innerOrgId);
+            name.push(item.innerOrgName);
+          });
+          this.detailform.bidInfo.innerOrgId = id!=''?id.join(","):'';
+          this.detailform.bidInfo.innerOrgName = name!=''?name.join(","):'';
+        }
         // console.log(this.detailform.bidInfo)
         //结束
         // this.detailform.nblht=datas.bidInfo.innerOrgId&&datas.contractInfo.innerOrgId.split(",");
