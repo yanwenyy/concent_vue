@@ -14,6 +14,7 @@ import moment from 'moment'
 import App from './App'
 import './assets/icon/iconfont.css'
 import router from './router'
+import exportXls from './utils/exportXls'
 
 import { message } from '@/utils/resetMessage.js'
 Vue.use(ElementUI)
@@ -24,9 +25,11 @@ Vue.prototype.$message = message
 Vue.config.productionTip = false
 Vue.prototype.$utils = utils
 Vue.prototype.$moment = moment
+Vue.prototype.$exportXls = exportXls
 Vue.prototype.$tableHeight = document.body.clientHeight - 213
 Vue.prototype.$getPermission = getPermission
 Vue.prototype.$getOrgPermission = getOrgPermission
+Vue.prototype.examineReviewMsg='通过';
 if (process.env.NODE_ENV === "development") {
   Vue.prototype.downLoadUrl='/static';
 }else {

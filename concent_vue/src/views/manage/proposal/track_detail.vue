@@ -1043,7 +1043,7 @@
                 <p v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'"  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>标段信息: </span>
                   <el-button
-                    v-show="p.actpoint != 'add'&&p.actpoint!== 'look'&&p.actpoint!== 'task'"
+                    v-show="p.actpoint != 'add'&&p.actpoint!== 'look'&&p.actpoint!== 'task'&&detailform.topInfoOrg.flowStatus!=1"
                     @click="add('bd')"
                     class="detatil-flie-btn"
                     type="primary"
@@ -1156,7 +1156,7 @@
                     width="80">
                     <template slot-scope="scope">
                       <el-switch
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint === 'add'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint === 'add'||detailform.topInfoOrg.flowStatus==1"
                         class="inline-formitem-switch"
                         v-model="scope.row.isTrack"
                         active-color="#409EFF"
@@ -1338,21 +1338,44 @@
     methods: {
       //流程操作
       operation(type){
-        this.$http
-          .post(
-            '/api/contract/topInfo/TopInfor/process/'+type,
-            JSON.stringify(this.p.task),
-            {useJson: true}
-          )
-          .then((res) => {
-            if (res.data.code === 200) {
-              this.$message({
-                message: "操作成功",
-                type: "success",
-              });
-              this.$router.back()
+        var msg='',that=this;
+        this.$prompt('请输入审核意见', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+        }).then(({ value }) => {
+          if(type=='back'){
+            if(value==null||value==''){
+              this.$message.error('审核意见不能为空');
+              return false;
             }
+          }else{
+            if(value==null||value==''){
+              value=that.examineReviewMsg;
+            }
+          }
+          this.p.task.remark=value;
+          this.$http
+            .post(
+              '/api/contract/topInfo/TopInfor/process/'+type,
+              JSON.stringify(this.p.task),
+              {useJson: true}
+            )
+            .then((res) => {
+              if (res.data.code === 200) {
+                this.$message({
+                  message: "操作成功",
+                  type: "success",
+                });
+                this.$router.back()
+              }
+            });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消输入'
           });
+        });
+
       },
       //设置是否为跟踪标段
       setMain(i,list){

@@ -568,6 +568,24 @@ export default {
                   'leaf': true,
                   'defaultpage': true
                 },
+                {
+                  'name': '合同信息核减',
+                  'path': '/manage/contractManager/examinationCut/list',
+                  'component': '/manage/contractManager/examinationCut/list',
+                  'iconCls': 'el-icon-search',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '合同信息核减详情',
+                  'path': '/manage/contractManager/examinationCut/detail',
+                  'component': '/manage/contractManager/examinationCut/detail',
+                  'iconCls': 'el-icon-search',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
               ]
             },
             {

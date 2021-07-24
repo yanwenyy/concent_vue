@@ -275,7 +275,7 @@
             scope.row.createTime | dateformat
             }}</template>
         </el-table-column>
-        
+
         <el-table-column
           :width="150"
           align="center"
@@ -352,7 +352,7 @@
       bulletinType() {
         return this.$store.state.bulletinType;
       },
-      
+
       projectPlate(){
         return this.$store.state.projectPlate;
       },
@@ -418,6 +418,46 @@
         }
       },
       exportdata() {
+        this.searchform.size=1000000000;
+        this.$http
+          .post(
+            "/api/contract/topInfo/TopInfor/list/loadPageDataForChangeRecord",
+            this.searchform
+          )
+          .then((res) => {
+            this.searchform.size=20;
+            var datas = res.data.data.records;
+            this.$exportXls.exportList({
+              thead:' <tr>\n' +
+              '<th>项目名称</th>\n' +
+              '<th>项目编码</th>\n' +
+              '<th>项目板块</th>\n' +
+              '<th>工程类别(一级)</th>\n' +
+              '<th>工程类别(二级)</th>\n' +
+              '<th>录入单位</th>\n' +
+              '<th>建设单位</th>\n' +
+              '<th>公告类型</th>\n' +
+              '<th>预计招标时间</th>\n' +
+              '<th>变更创建时间</th>\n' +
+              '<th>状态</th>\n' +
+              '</tr>',
+              jsonData:datas,
+              tdstr:['inforName','inforCode','moduleName',
+                'enginTypeFirstName','enginTypeSecondName','createOrgName','constructionOrg',
+                'noticeTypeName','planBidTime','createTime','flowStatus'],
+              tdstrFuc:{
+                flowStatus:function (str) {
+                  return str==1?'草稿':str==2?'审核中':str==3?'审核通过':str==4?'审核退回':'待登记';
+                },
+                planBidTime:function (str) {
+                  return str?new Date(str).toLocaleString().replace(/:\d{1,2}$/,' '):'';
+                },
+                createTime:function (str) {
+                  return str?new Date(str).toLocaleString().replace(/:\d{1,2}$/,' '):'';
+                }
+              }
+            })
+          });
       },
       search() {
         this.showinput = false;

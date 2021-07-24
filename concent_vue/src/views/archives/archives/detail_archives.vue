@@ -328,21 +328,44 @@ export default {
   methods: {
     //流程操作
     operation(type){
-      this.$http
-        .post(
-          '/api/contract/archives/ArchivesInfo/process/'+type,
-          JSON.stringify(this.p.task),
-          {useJson: true}
-        )
-        .then((res) => {
-          if (res.data.code === 200) {
-            this.$message({
-              message: "操作成功",
-              type: "success",
-            });
-            this.$router.back()
+      var msg='',that=this;
+      this.$prompt('请输入审核意见', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+      }).then(({ value }) => {
+        if(type=='back'){
+          if(value==null||value==''){
+            this.$message.error('审核意见不能为空');
+            return false;
           }
+        }else{
+          if(value==null||value==''){
+            value=that.examineReviewMsg;
+          }
+        }
+        this.p.task.remark=value;
+        this.$http
+          .post(
+            '/api/contract/archives/ArchivesInfo/process/'+type,
+            JSON.stringify(this.p.task),
+            {useJson: true}
+          )
+          .then((res) => {
+            if (res.data.code === 200) {
+              this.$message({
+                message: "操作成功",
+                type: "success",
+              });
+              this.$router.back()
+            }
+          });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消输入'
         });
+      });
+
     },
     //打开附件上传的组件
     openFileUp(url,list){

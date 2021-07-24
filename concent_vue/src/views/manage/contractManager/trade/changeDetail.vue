@@ -3996,21 +3996,44 @@
       },
       //流程操作
       operation(type){
-        this.$http
-          .post(
-            '/api/contract/contract/ContractInfo/changeProcess/'+type,
-            JSON.stringify(this.p.task),
-            {useJson: true}
-          )
-          .then((res) => {
-          if (res.data.code === 200) {
+        var msg='',that=this;
+        this.$prompt('请输入审核意见', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+        }).then(({ value }) => {
+          if(type=='back'){
+            if(value==null||value==''){
+              this.$message.error('审核意见不能为空');
+              return false;
+            }
+          }else{
+            if(value==null||value==''){
+              value=that.examineReviewMsg;
+            }
+          }
+          this.p.task.remark=value;
+          this.$http
+            .post(
+              '/api/contract/contract/ContractInfo/changeProcess/'+type,
+              JSON.stringify(this.p.task),
+              {useJson: true}
+            )
+            .then((res) => {
+              if (res.data.code === 200) {
+                this.$message({
+                  message: "操作成功",
+                  type: "success",
+                });
+                this.$router.back()
+              }
+            });
+        }).catch(() => {
           this.$message({
-            message: "操作成功",
-            type: "success",
+            type: 'info',
+            message: '取消输入'
           });
-          this.$router.back()
-        }
-      });
+        });
+
       },
       //新增标的物
       addXs(){
