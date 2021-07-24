@@ -1708,7 +1708,7 @@ export default {
           this.p.actpoint === "edit" ||
           (this.p.actpoint === "look")||this.p.actpoint === "task"
             ? { id: this.id }
-            : { topInfoOrgId: this.id };
+            : { topInfoOrgId: this.id ,verifyId: this.p.verifyId};
         url = "/api/contract/topInfo/BidInfo/detail/entityInfo";
       }
 

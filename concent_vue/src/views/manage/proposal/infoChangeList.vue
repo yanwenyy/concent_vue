@@ -94,14 +94,22 @@
         >
           <template slot="header" slot-scope="scope">
             <span>项目板块</span>
-            <div>
-              <el-input
-                class="list-search-picker"
-                style=" width: 100%"
-                v-model="searchform.moduleName"
-                size="mini"
-              />
-            </div>
+            <el-select
+              class="list-search-picker"
+              clearable
+              filterable
+              placeholder="请选择"
+              @change="getTwo"
+              size="mini"
+              v-model="searchform.moduleName"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.detailName"
+                v-for="(item, index) in projectPlate"
+              ></el-option>
+            </el-select>
           </template>
         </el-table-column>
         <el-table-column
@@ -234,7 +242,6 @@
                 type="date"
                 value-format="timestamp"
                 v-model="searchform.planBidTime"
-
               >
               </el-date-picker>
               </div>
@@ -243,6 +250,32 @@
             scope.row.planBidTime | dateformat
             }}</template>
         </el-table-column>
+        <el-table-column
+          :width="180"
+          align="center"
+          label="变更创建时间"
+          prop="createTime"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>变更创建时间</span>
+            <div>
+              <el-date-picker
+                class="list-search-picker"
+                filterable
+                clearable
+                type="date"
+                value-format="timestamp"
+                v-model="searchform.createTime"
+              >
+              </el-date-picker>
+              </div>
+          </template>
+          <template slot-scope="scope">{{
+            scope.row.createTime | dateformat
+            }}</template>
+        </el-table-column>
+        
         <el-table-column
           :width="150"
           align="center"
@@ -318,6 +351,10 @@
       },
       bulletinType() {
         return this.$store.state.bulletinType;
+      },
+      
+      projectPlate(){
+        return this.$store.state.projectPlate;
       },
     },
     methods: {

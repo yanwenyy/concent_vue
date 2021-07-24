@@ -111,14 +111,22 @@
         >
           <template slot="header" slot-scope="scope">
             <span>项目板块</span>
-            <div>
-              <el-input
-                class="list-search-picker"
-                style=" width: 100%"
-                v-model="searchform.moduleName"
-                size="mini"
-              />
-            </div>
+            <el-select
+              class="list-search-picker"
+              clearable
+              filterable
+              placeholder="请选择"
+              @change="getTwo"
+              size="mini"
+              v-model="searchform.moduleName"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.detailName"
+                v-for="(item, index) in projectPlate"
+              ></el-option>
+            </el-select>
           </template>
         </el-table-column>
         <el-table-column
@@ -304,7 +312,7 @@
                 filterable
                 placeholder="请选择"
                 size="mini"
-                v-model="searchform.importFileRecordName"
+                v-model="searchform.importFileRecordId"
               >
                 <el-option
                   label="是"
@@ -318,7 +326,7 @@
               <!--<el-input-->
               <!--class="list-search-picker"-->
               <!--style=" width: 100%"-->
-              <!--v-model="searchform.importFileRecordName"-->
+              <!--v-model="searchform.importFileRecordId"-->
               <!--size="mini"-->
               <!--/>-->
             </div>
@@ -421,6 +429,12 @@
       bulletinType() {
         return this.$store.state.bulletinType;
       },
+      projectPlate(){
+        return this.$store.state.projectPlate;
+      },
+    },
+    mounted() {
+      this.$store.dispatch("getConfig", {});
     },
     methods: {
       //上传附件

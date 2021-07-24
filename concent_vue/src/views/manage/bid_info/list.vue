@@ -381,7 +381,7 @@ export default {
           this.$message.info("请选择一条记录进行登记操作！");
           return false;
         }
-        let p = {actpoint: "add", instid: this.multipleSelection[0].topInfoOrgId};
+        let p = {actpoint: "add", instid: this.multipleSelection[0].topInfoOrgId,verifyId:this.multipleSelection[0].verifyId};
         this.$router.push({
           path: "./detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
