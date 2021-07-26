@@ -58,7 +58,19 @@
           'text-align': 'center',
           'background-color': 'whitesmoke',
         }"
-        style="width: 100%;">
+        style="width: 100%;"
+        height="400">
+
+        <el-table-column label="" width="40">
+        <template slot-scope="scope">
+          <el-radio
+            :label="scope.row.topOrgId"
+            v-model="radioRow"
+            @change="getCurrentRow(scope.row)"
+            style="color: #fff;"
+          ></el-radio>
+        </template>
+        </el-table-column>
         <el-table-column
           type="index"
           header-align="center"
@@ -67,40 +79,48 @@
           label="ID">
         </el-table-column>
         <el-table-column
-          :width="500"
+          :width="350"
           prop="inforName"
           show-overflow-tooltip
-          label="项目名称">
+          label="项目名称"
+          show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           prop="enginTypeFirstName"
           header-align="center"
           align="center"
-          label="工程类别(一级)">
+          label="工程类别(一级)"
+          :width="130"
+          show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           prop="enginTypeSecondName"
           header-align="center"
           align="center"
-          label="工程类别(二级)">
+          label="工程类别(二级)"
+          :width="130"
+          show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           prop="constructionOrg"
           header-align="center"
           align="center"
-          label="建设单位">
+          label="建设单位"
+          show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           prop="noticeTypeName"
           header-align="center"
           align="center"
-          label="公告类型">
+          label="公告类型"
+          show-overflow-tooltip>
         </el-table-column>
         <el-table-column
           prop="emissionStand"
           header-align="center"
           align="center"
-          label="截止日期">
+          label="截止日期"
+          show-overflow-tooltip>
         </el-table-column>
         <!--<el-table-column-->
         <!--fixed="right"-->
@@ -137,6 +157,7 @@
   export default {
     data() {
       return {
+        radioRow:null,
         page: { current: 1, size: 20, total: 0, records: [] },
         visible: false,
         searchform: {
@@ -228,6 +249,12 @@
       // 单选
       handleCurrentChange2(val) {
         this.currentRow = val;
+        this.radioRow = val.topOrgId
+      },
+      // 单选框
+      getCurrentRow(row) { // 这个 row == 上面的val
+        this.currentRow = row;  
+        this.radioRow = row.topOrgId
       },
       searchFromSubmit() {
         this.searchform.current = 1;
