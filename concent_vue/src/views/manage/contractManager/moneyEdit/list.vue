@@ -771,6 +771,44 @@
         }
       },
       exportdata() {
+        this.searchFrom.size=1000000000;
+        this.$http
+          .post(
+            "/api/contract/contract/ContractInfo/list/loadPageDataForContractInfoAdjust",
+            this.searchFrom
+          )
+          .then((res) => {
+            this.searchFrom.size=20;
+            var datas = res.data.data.records;
+            this.$exportXls.exportList({
+              thead:' <tr>\n' +
+              '<th>合同类型</th>\n' +
+              '<th>合同名称</th>\n' +
+              '<th>是否包含调整</th>\n' +
+              '<th>最后一次操作时间</th>\n' +
+              '<th>合同总金额</th>\n' +
+              '<th>我方份额</th>\n' +
+              '<th>增值税</th>\n' +
+              '<th>填报单位</th>\n' +
+              '<th>填报日期</th>\n' +
+              '</tr>',
+              jsonData:datas,
+              tdstr:['moduleName','contractName','enginTypeSecondName','lastMarkDate',
+                'contractAmount','ourAmount','valueAddedTax','createOrgName','createTime'
+              ],
+              tdstrFuc:{
+                enginTypeSecondName:function (str) {
+                  return str?'是':str==0?'否':'';
+                },
+                lastMarkDate:function (str) {
+                  return str?new Date(str).toLocaleString().replace(/:\d{1,2}$/,' '):'';
+                },
+                createTime:function (str) {
+                  return str?new Date(str).toLocaleString().replace(/:\d{1,2}$/,' '):'';
+                },
+              }
+            })
+          });
       },
       // 查看
       rowshow(row) {

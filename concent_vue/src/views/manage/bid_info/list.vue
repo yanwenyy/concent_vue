@@ -12,7 +12,7 @@
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
         <el-button @click="getData" type="primary" plain ><i class="el-icon-search"></i>查询</el-button>
-        <el-button @click="" type="primary" plain ><i class="el-icon-upload2"></i>导出</el-button>
+        <el-button @click="exportdata" type="primary" plain ><i class="el-icon-upload2"></i>导出</el-button>
       </div>
     </div>
 
@@ -177,7 +177,7 @@
           :width="150"
           align="center"
           label="状态"
-          prop="orgname"
+          prop="flowStatus"
 
           show-overflow-tooltip>
           <template slot-scope="scope">
@@ -340,6 +340,43 @@ export default {
       },
 },
   methods: {
+      exportdata() {
+      this.searchform.size=1000000000;
+      this.$http
+        .post(
+          "/api/contract/topInfo/BidInfo/detail/loadPageDataForReg",
+          this.searchform
+        )
+        .then((res) => {
+          this.searchform.size=20;
+          var datas = res.data.data.records;
+          this.$exportXls.exportList({
+            thead:' <tr>\n' +
+            '<th>项目名称</th>\n' +
+            '<th>工程类别(一级)</th>\n' +
+            '<th>工程类别(二级)</th>\n' +
+            '<th>建设单位</th>\n' +
+            '<th>公告类型</th>\n' +
+            '<th>状态</th>\n' +
+            '<th>投标截止日期</th>\n' +
+            '<th>填报人</th>\n' +
+            '<th>版本标识</th>\n' +
+            '</tr>',
+            jsonData:datas,
+            tdstr:['inforName','enginTypeFirstName','enginTypeSecondName',
+              'constructionOrg','noticeTypeName','flowStatus','endTime',
+              'createUserName','version'],
+            tdstrFuc:{
+              flowStatus:function (str) {
+                return str==1?'草稿':str==2?'审核中':str==3?'审核通过':str==4?'审核退回':'待登记';
+              },
+              endTime:function (str) {
+                return str?new Date(str).toLocaleString().replace(/:\d{1,2}$/,' '):'';
+              },
+            }
+          })
+        });
+    },
         //工程类别二级
       getTwo(id) {
         this.searchform.enginTypeSecondId='';

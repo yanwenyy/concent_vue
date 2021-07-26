@@ -75,15 +75,20 @@ var exportXls = {
     function toTabelStr(strValue) {
       var str = strValue.thead,tdstr=strValue.tdstr;
       var list = strValue.jsonData, i = 0, len = list.length;
-      console.log(strValue.jsonData)
+      // console.log(strValue.jsonData)
       for (; i < len; i++) {
         var v = list[i];
 
         // console.log(v);
         str += '<tr>';
         for (let item=0;item<tdstr.length;item++) {
-          var _item=tdstr[item];
-          var _itemStr=strValue.tdstrFuc&&strValue.tdstrFuc[_item]!=undefined? strValue.tdstrFuc[_item](v[_item]):v[_item];
+          var _item=tdstr[item],v_value=v[_item];
+          if(_item.indexOf(".")!=-1){
+           var s=_item.split(".");
+            // _item='['+s[0]+']'+'['+s[1]+']';
+            v_value=v[s[0]]+'['+s[1]+']';
+          }
+          var _itemStr=strValue.tdstrFuc&&strValue.tdstrFuc[_item]!=undefined? strValue.tdstrFuc[_item](v_value):v_value;
           //增加\t为了不让表格显示科学计数法或者其他格式
           str += `<td>${ _itemStr!==null?_itemStr:''+ '\t'}</td>`;
         }

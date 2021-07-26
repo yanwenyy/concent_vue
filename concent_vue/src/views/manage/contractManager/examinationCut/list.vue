@@ -32,7 +32,7 @@
         </el-form>
         <el-button @click="searchFromReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
         <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
-        <el-button type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>
+        <!--<el-button type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>-->
       </div>
     </div>
     <div style="margin-top: 10px">

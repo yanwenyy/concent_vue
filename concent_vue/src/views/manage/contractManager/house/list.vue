@@ -26,7 +26,7 @@
           <div style="float: right;">
             <el-button @click="searchFromReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
             <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
-            <el-button type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>
+            <el-button @click="exportdata" type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>
           </div>
         </div>
         <div style="margin-top: 10px">
@@ -541,6 +541,47 @@ export default {
     };
   },
   methods: {
+    exportdata() {
+      this.searchFrom.size=1000000000;
+      this.$http
+        .post(
+          "/api/contract/contract/ContractInfo/list/loadPageData",
+          this.searchFrom
+        )
+        .then((res) => {
+          this.searchFrom.size=20;
+          var datas = res.data.data.records;
+          this.$exportXls.exportList({
+            thead:' <tr>\n' +
+            '<th>合同名称</th>\n' +
+            '<th>合同号</th>\n' +
+            '<th>项目名称</th>\n' +
+            '<th>填报单位</th>\n' +
+            '<th>合同金额(万元)</th>\n' +
+            '<th>填报人</th>\n' +
+            '<th>录入时间</th>\n' +
+            '<th>状态</th>\n' +
+            '<th>版本标识</th>\n' +
+            '<th>是否招标公示</th>\n' +
+            '</tr>',
+            jsonData:datas,
+            tdstr:['contractName','contractCode','inforName',
+              'createOrgName','contractAmount','createUserName','createTime',
+              'flowStatus','version','isOpenBid'],
+            tdstrFuc:{
+              flowStatus:function (str) {
+                return str==1?'草稿':str==2?'审核中':str==3?'审核通过':str==4?'审核退回':'待登记';
+              },
+              createTime:function (str) {
+                return str?new Date(str).toLocaleString().replace(/:\d{1,2}$/,' '):'';
+              },
+              isOpenBid:function (str) {
+                return str==1?'是':str==0?'否':'';
+              }
+            }
+          })
+        });
+    },
     //table根据类型显示不一样的颜色
     tableRowClassName({row, rowIndex}) {
       if (row.projectNature == '2') {

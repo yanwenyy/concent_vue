@@ -2263,7 +2263,7 @@
                     clearable
                     filterable
                     placeholder="请选择"
-                    @change="getTwoXZ,detailform.contractInfo.contractAmount!=null&&detailform.contractInfo.contractAmount!=''?getOurAmount('','','nfb'):''"
+                    @change="getTwoXZ(detailform.contractInfo.projectNatureFirstId),detailform.contractInfo.contractAmount!=null&&detailform.contractInfo.contractAmount!=''?getOurAmount('','','nfb'):''"
 
                     v-model="detailform.contractInfo.projectNatureFirstId"
                   >

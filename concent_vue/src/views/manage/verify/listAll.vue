@@ -10,7 +10,7 @@
         ><i class="el-icon-edit"></i>修改</el-button>
 
         <el-button @click="remove" :disabled="flowStatus!=1&&flowStatus!=4" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
-        <el-button  type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>
+        <el-button @click="exportdata"  type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>
       </el-button-group>
             <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
@@ -403,6 +403,47 @@ export default {
       },
 },
   methods: {
+      exportdata() {
+        this.searchform.size=1000000000;
+        this.$http
+          .post(
+            "/api/contract/topInfo/Verify/list/loadPageDataForReg",
+            this.searchform
+          )
+          .then((res) => {
+            this.searchform.size=20;
+            var datas = res.data.data.records;
+            this.$exportXls.exportList({
+              thead:' <tr>\n' +
+              '<th>项目名称</th>\n' +
+              '<th>工程类别(一级)</th>\n' +
+              '<th>工程类别(二级)</th>\n' +
+              '<th>建设单位</th>\n' +
+              '<th>公告类型</th>\n' +
+              '<th>资审文件发售截止日期</th>\n' +
+              '<th>状态</th>\n' +
+              '<th>填报人</th>\n' +
+              '<th>填报时间</th>\n' +
+              '<th>版本标识</th>\n' +
+              '</tr>',
+              jsonData:datas,
+              tdstr:['inforName','enginTypeFirstName','enginTypeSecondName',
+                'constructionOrg','noticeTypeName','saleTime','flowStatus',
+                'createUserName','createTime','version'],
+              tdstrFuc:{
+                'flowStatus':function (str) {
+                  return str==1?'草稿':str==2?'审核中':str==3?'审核通过':str==4?'审核退回':'待登记';
+                },
+                'saleTime':function (str) {
+                  return str?new Date(str).toLocaleString().replace(/:\d{1,2}$/,' '):'';
+                },
+                'createTime':function (str) {
+                  return str?new Date(str).toLocaleString().replace(/:\d{1,2}$/,' '):'';
+                }
+              }
+            })
+          });
+    },
       //行选择的时候
       rowSelect(selection, row){
         if(selection.indexOf(row)!=-1){

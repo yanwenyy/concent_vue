@@ -504,6 +504,48 @@
       }
     },
     exportdata() {
+      this.searchform.size=1000000000;
+      this.$http
+        .post(
+          "/api/contract/topInfo/Verify/list/loadPageDataForSelect",
+          this.searchform
+        )
+        .then((res) => {
+          this.searchform.size=20;
+          var datas = res.data.data.records;
+          this.$exportXls.exportList({
+            thead:' <tr>\n' +
+            '<th>标段名称</th>\n' +
+            '<th>项目名称</th>\n' +
+            '<th>工程类别</th>\n' +
+            '<th>建设单位</th>\n' +
+            '<th>公告类型</th>\n' +
+            '<th>资审文件发售截止日期</th>\n' +
+            '<th>状态</th>\n' +
+            '<th>填报人</th>\n' +
+            '<th>填报时间</th>\n' +
+            '<th>资审结果</th>\n' +
+            '</tr>',
+            jsonData:datas,
+            tdstr:['sectionName','inforName','enginTypeFirstName',
+              'constructionOrg','noticeTypeName','saleTime','flowStatus',
+              'createUserName','createTime','verifyResult'],
+            tdstrFuc:{
+              flowStatus:function (str) {
+                return str==1?'草稿':str==2?'审核中':str==3?'审核通过':str==4?'审核退回':'待登记';
+              },
+              verifyResult:function (str) {
+                return str==0?'未通过':str==1?'通过':'待通过';
+              },
+              saleTime:function (str) {
+                return str?new Date(str).toLocaleString().replace(/:\d{1,2}$/,' '):'';
+              },
+              createTime:function (str) {
+                return str?new Date(str).toLocaleString().replace(/:\d{1,2}$/,' '):'';
+              }
+            }
+          })
+        });
     },
     // 查看
     rowshow(row) {
