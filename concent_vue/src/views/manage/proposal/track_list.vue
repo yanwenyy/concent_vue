@@ -508,7 +508,7 @@
           }).then(() => {
             this.$http
               .post(
-                "/api/contract/topInfo/TopInfor/list/delete",{ids: uuids}
+                "/api/contract/topInfo/TopInfor/list/deleteByOrgIds",{ids: uuids}
 
               )
               .then((res) => {

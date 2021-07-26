@@ -2,6 +2,7 @@
   <div style="position: relative">
     <el-button @click="back" class="detailbutton detail-back-tab" >返回</el-button>
     <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="saveInfo('detailform','save')" class="detailbutton detail-back-tab save-btn">保存</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="saveInfo('detailform','submit')" class="detailbutton detail-back-tab submit-btn">提交</el-button>
     <!--<el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.topInfoOrg.flowStatus==1||detailform.topInfoOrg.flowStatus==4)" @click="saveInfo('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>-->
     <!--<el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>-->
     <!--<el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>-->
@@ -528,6 +529,7 @@
               label="设计单位:"
               prop="topInfor.designOrg"
               :rules="{
+                required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
               }"
@@ -638,6 +640,7 @@
               label="招标代理公司:"
               prop="topInfor.bidAgentCompany"
               :rules="{
+              required: true,
               message: '此项不能为空',
               trigger: 'blur',
             }"
@@ -1552,7 +1555,11 @@
         if(type=='save'){
           url="/api/contract/topInfo/TopInfor/detail/saveOrUpdateImport"
         }else{
-          url="/api/contract/topInfo/TopInfor/process/start"
+          // url="/api/contract/topInfo/TopInfor/process/start"
+
+          // 提交传参 isSubmit 为 1，不可删除、修改
+          url="/api/contract/topInfo/TopInfor/detail/saveOrUpdateImport"
+          this.detailform.topInfor.isSubmit="1"
         }
         var topInforCapitalList = [];
         this.amountSource.forEach((item) => {
@@ -1756,6 +1763,11 @@
     right: 95px;
     background: #409EFF;
     color:#fff;
+  }
+  .submit-btn {
+    right: 177px;
+    background: #fff;
+    color:black;
   }
   .sub-btn{
     right: 175px;
