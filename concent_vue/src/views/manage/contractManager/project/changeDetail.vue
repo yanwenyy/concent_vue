@@ -2479,6 +2479,18 @@
                     <template slot="append">(万元)</template>
                   </el-input>
                 </el-form-item>
+                <el-form-item
+                  label="变更后初始我方份额(万元)"
+                  prop="contractInfo.changeOurAmount"
+                >
+                  <el-input
+                    :disabled="true"
+                    v-model="detailform.contractInfo.changeOurAmount"
+                  >
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-form-item>
                 <br>
                 <el-form-item
                   label="新兴市场类别(一级)"
@@ -5044,9 +5056,12 @@
         }else if(ifswitch!='switch'){
           this.$message.error('合同总金额需要大于0');
         }
+        //变更后我方份额，等于计算后的初始我方份额
+        this.detailform.contractInfo.changeOurAmount = this.detailform.contractInfo.ourAmount;
       },
       //项目地点份额变动的时候
       getPositionMoney(index,list){
+        console.info(111)
         if(list.length==1){
           list[0].contractAmount=this.detailform.contractInfo.ourAmount
         }else{
