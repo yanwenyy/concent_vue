@@ -1426,6 +1426,10 @@ export default {
         if(type=='save'){
           url="/api/contract/topInfo/BidInfo/detail/saveOrUpdateOpenBid"
         }else{
+          if(this.detailform.bidInfo_02.length==0){
+            this.$message.error("请上开标记录文件");
+            return false;
+          }
           url="/api/contract/topInfo/BidInfo/bidProcess/start"
         }
         this.$refs[formName].validate((valid) => {

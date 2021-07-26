@@ -10,7 +10,7 @@
         <el-input v-model="searchform.constructionOrg" placeholder="建设单位" clearable></el-input>
       </el-form-item>
 
-      <el-form-item label="资审截止日期:">
+      <!-- <el-form-item label="资审截止日期:">
         <el-date-picker
           v-model="searchform.saleTime"
           type="daterange"
@@ -20,7 +20,20 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期">
         </el-date-picker>
-      </el-form-item>
+      </el-form-item> -->
+      <el-form-item
+          label="资审文件发售截止日期:"
+          prop="searchform.saleTime"
+        >
+          <el-date-picker
+            clearable
+            value-format="timestamp"
+            v-model="searchform.saleTime"
+            align="right"
+            type="date"
+            placeholder="选择日期">
+          </el-date-picker>
+        </el-form-item>
       <el-form-item
         label="工程类别(一级):"
       >
@@ -86,12 +99,13 @@
           ></el-option>
         </el-select>
       </el-form-item>
+      <br>
       <el-form-item label="项目地点:">
         <el-input v-model="searchform.path" placeholder="项目地点">
           <el-button slot="append" icon="el-icon-search"  @click="selectPosition()"></el-button>
         </el-input>
       </el-form-item>
-        <el-form-item label="登记时间:">
+        <!-- <el-form-item label="登记时间:">
           <el-date-picker
             v-model="searchform.createTime"
             @change="searchform.selectTimeTypeCreateTime='01'"
@@ -101,7 +115,7 @@
             start-placeholder="开始日期"
             end-placeholder="结束日期">
           </el-date-picker>
-        </el-form-item>
+        </el-form-item> -->
 <!--        <el-form-item-->
 <!--          label="录入单位:"-->
 <!--        >-->

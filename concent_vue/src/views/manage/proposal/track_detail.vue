@@ -102,6 +102,11 @@
               v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null"
               label="工程类别(一级):"
               prop="topInfor.enginTypeFirstId"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
             >
               <el-select
                 disabled
@@ -124,6 +129,11 @@
               v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null"
               label="工程类别(二级):"
               prop="topInfor.enginTypeSecondId"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
             >
               <el-select
                 disabled
@@ -183,6 +193,11 @@
               v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null"
               label="项目性质(一级):"
               prop="topInfor.projectNatureFirstId"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
             >
               <el-select
                 disabled
@@ -205,6 +220,11 @@
               v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'||detailform.topInfor.moduleId==null"
               label="项目性质(二级):"
               prop="topInfor.projectNatureSecondId"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
             >
               <el-select
                 disabled
@@ -350,6 +370,7 @@
               label="设计单位:"
               prop="topInfor.designOrg"
               :rules="{
+                required: true,
                 message: '此项不能为空',
                 trigger: 'blur',
               }"
@@ -428,6 +449,7 @@
               label="招标代理公司:"
               prop="topInfor.bidAgentCompany"
               :rules="{
+              required: true,
               message: '此项不能为空',
               trigger: 'blur',
             }"
@@ -716,13 +738,20 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope" >
-                    <el-radio v-model="scope.row.isMain" label="1" disabled>是</el-radio>
-                    <el-radio v-model="scope.row.isMain" label="0" disabled>否</el-radio>
+                    <!-- <el-radio v-model="scope.row.isMain" label="1" disabled>是</el-radio>
+                    <el-radio v-model="scope.row.isMain" label="0" disabled>否</el-radio> -->
+                    <el-switch
+                      v-model="scope.row.isMain"
+                      active-color="#13ce66"
+                      active-value="1"
+                      inactive-value="0"
+                      disabled>
+                    </el-switch>
                     <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                   </template>
                 </el-table-column>
 
-                <el-table-column
+                <!-- <el-table-column
                   :disabled="p.actpoint !== 'look'"
                   :resizable="false"
                   fixed="right"
@@ -742,7 +771,7 @@
                     </el-link
                     >
                   </template>
-                </el-table-column>
+                </el-table-column> -->
               </el-table>
             </div>
 
@@ -1131,7 +1160,7 @@
                     </template>
                   </el-table-column>
 
-                  <el-table-column
+                  <!-- <el-table-column
                     :resizable="false"
                     fixed="right"
                     label="操作"
@@ -1146,7 +1175,7 @@
                         @click="del(scope.$index,scope.row,detailform.topInfoSectionList,'bd')"
                         type="warning">删除</el-link>
                     </template>
-                  </el-table-column>
+                  </el-table-column> -->
                   <el-table-column
                     :resizable="false"
                     fixed="right"
