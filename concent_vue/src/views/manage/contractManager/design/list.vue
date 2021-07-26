@@ -321,7 +321,7 @@ export default {
         this.$message.info("此条数据不可修改！");
         return false;
       }
-      let p = {actpoint: "edit", instid: this.multipleSelection[0].uuid};
+      let p = {actpoint: "edit", instid: this.multipleSelection[0].uuid,pushId:this.multipleSelection[0].pushId};
       this.$router.push({
         path: "./detail/",
         query: {p: this.$utils.encrypt(JSON.stringify(p))},

@@ -276,6 +276,7 @@ export default {
     'engineering_monthly_report_not':'/statistics/notEMReport/detail',
     'contract_file_manager':'/archives/archives/detail_archives',
     'contract_file_statistical':'/archives/statistics/detail_statistics',
-    'contract_file_message':'/archives/news/detail'
+    'contract_file_message':'/archives/news/detail',
+    'contract_cut_exam':'/manage/contractManager/examinationCut/detail'
   }
 }

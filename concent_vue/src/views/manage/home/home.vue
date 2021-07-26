@@ -211,6 +211,8 @@
         url='/api/contract/topInfo/BidInfo/bidProcess/recall'
       }else  if(val.businessType=='contract_file_manager'||val.businessType=='contract_file_message'||val.businessType=='contract_file_statistical'){
         url='/api/contract/archives/ArchivesInfo/process/recall'
+      }else  if(val.businessType=='contract_cut_exam'){
+        url='/api/contract/contractInfoCut/process/recall'
       }
       this.$http
         .post(

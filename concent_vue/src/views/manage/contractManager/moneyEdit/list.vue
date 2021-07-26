@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="searchListClass">
     <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
       <el-form-item label="审核通过时间:">
         <el-date-picker
