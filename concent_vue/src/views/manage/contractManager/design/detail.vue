@@ -25,7 +25,7 @@
                 trigger: 'blur',
               }"
               >
-                <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.inforName" class="input-with-select">
+                <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId" placeholder="请输入内容" v-model="detailform.contractInfo.inforName" class="input-with-select">
                   <el-button v-if="detailform.contractInfo.contractType!='2'&&p.actpoint!='task'&&p.actpoint!='look'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
                 </el-input>
               </el-form-item>
@@ -33,7 +33,7 @@
                 label="项目名称(外文):"
                 prop="contractInfo.inforNameForeign"
               >
-                <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.inforNameForeign" class="input-with-select">
+                <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId" placeholder="请输入内容" v-model="detailform.contractInfo.inforNameForeign" class="input-with-select">
 
                 </el-input>
               </el-form-item>
@@ -47,7 +47,7 @@
                 trigger: 'blur',
               }"
               >
-                <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.contractName" class="input-with-select">
+                <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId" placeholder="请输入内容" v-model="detailform.contractInfo.contractName" class="input-with-select">
                   <el-button v-if="detailform.contractInfo.contractType=='2'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
                 </el-input>
               </el-form-item>
@@ -55,7 +55,7 @@
                 label="合同名称(外文):"
                 prop="contractInfo.contractName"
               >
-                <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.contractNameForeign" class="input-with-select">
+                <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId" placeholder="请输入内容" v-model="detailform.contractInfo.contractNameForeign" class="input-with-select">
 
                 </el-input>
               </el-form-item>
@@ -82,7 +82,7 @@
               }"
               >
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                   clearable
                   filterable
                   placeholder="请选择"
@@ -108,7 +108,7 @@
               }"
               >
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                   clearable
                   filterable
                   placeholder="请选择"
@@ -300,8 +300,8 @@
                 trigger:['blur','change'],
               }"
               >
-                <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.qualityOrgNames" class="input-with-select">
-                  <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('使用资质单位',detailform.contractInfo.qualityOrgIds)" ></el-button>
+                <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId" placeholder="请输入内容" v-model="detailform.contractInfo.qualityOrgNames" class="input-with-select">
+                  <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&!p.pushId" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('使用资质单位',detailform.contractInfo.qualityOrgIds)" ></el-button>
                 </el-input>
               </el-form-item>
               <el-form-item
@@ -334,7 +334,7 @@
               }"
               >
                 <el-autocomplete
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                   v-model="detailform.contractInfo.constructionOrg"
                   :fetch-suggestions="detailform.contractInfo.isClientele=='1'?querySearchAsync:querySjdw"
                   placeholder="请输入内容"
@@ -374,7 +374,7 @@
               }"
               >
                 <el-autocomplete
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                   v-model="detailform.contractInfo.constructionOrg"
                   :fetch-suggestions="detailform.contractInfo.isClientele=='1'?querySearchAsync:querySjdw"
                   placeholder="请输入内容"
@@ -398,7 +398,7 @@
               }"
               >
                 <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                   class="inline-formitem-switch"
                   v-model="detailform.contractInfo.isClientele"
                   active-color="#409EFF"
@@ -419,7 +419,7 @@
               }"
               >
                 <el-select
-                  :disabled="p.actpoint==='look'||p.actpoint==='task'"
+                  :disabled="p.actpoint==='look'||p.actpoint==='task'||p.pushId"
                   clearable
                   filterable
                   placeholder="请选择"
@@ -512,7 +512,7 @@
                 label="是否为系统内联合体"
               >
                 <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                   class="inline-formitem-switch"
                   v-model="detailform.contractInfo.isInSystemUnion"
                   active-color="#409EFF"
@@ -564,7 +564,7 @@
                 label="是否为系统外联合体"
               >
                 <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                   class="inline-formitem-switch"
                   v-model="detailform.contractInfo.isOutSystemUnion"
                   active-color="#409EFF"
@@ -789,7 +789,7 @@
               }"
               >
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                   filterable
                   clearable
                   placeholder="请选择"
@@ -815,7 +815,7 @@
               }:{}"
               >
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                   filterable
                   clearable
                   placeholder="请选择"
@@ -1553,7 +1553,7 @@
               <p>
                 <span >项目地点: </span>
                 <el-button
-                  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
+                  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'&&!p.pushId"
                   class="detatil-flie-btn"
                   @click="add('dd'),checkTopInfoSiteList()"
                   type="primary"
@@ -1628,7 +1628,7 @@
                 >
                   <template slot-scope="scope">
                     <el-switch
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                       class="inline-formitem-switch"
                       v-model="scope.row.isMain"
                       active-color="#409EFF"
@@ -1651,7 +1651,7 @@
                   align="center"
                   width="80"
                   show-overflow-tooltip
-                  v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
+                  v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'&&!p.pushId"
                 >
                   <template slot-scope="scope">
                     <el-link
@@ -3410,7 +3410,7 @@
           this.infoCSVisible=false;
         }else{//合同名称查找回来的信息
           this.$http
-            .post("/api/contract/contract/ContractInfo/detail/entityInfo", {id :data.data.uuid})
+            .post("/api/contract/contract/ContractInfo/detail/entityInfo", {id :data.data.uuid,queryType:'1'})
             .then((res) => {
             var datas=res.data.data;
           this.detailform.contractInfo.supplyContractId=data.data.uuid;
