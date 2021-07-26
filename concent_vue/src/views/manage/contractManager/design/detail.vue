@@ -1472,7 +1472,9 @@
                 </el-table-column>
 
                 <el-table-column align="center" :width="200" :resizable="false" label="开标日期" prop="dateOfBidOpeningName" show-overflow-tooltip>
-
+                <template slot-scope="scope">{{
+                    scope.row.dateOfBidOpeningName | dateformat
+                  }}</template>
                 </el-table-column>
 
                 <el-table-column align="center" :width="200" :resizable="false" label="参与投标单位" prop="participatingUnitsName" show-overflow-tooltip>
