@@ -265,6 +265,17 @@
              {{scope.row.isOpenBid==1?'是':scope.row.isOpenBid==0?'否':''}}
           </template>
         </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="推送合同项目性质"
+          prop="isPushInsure"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+             {{scope.row.isPushInsure==1?'系统内联合体':scope.row.isPushInsure==2?'系统内分包':scope.row.isPushInsure==3?'系统外联合体':scope.row.isPushInsure==4?'系统外分包':scope.row.isPushInsure==5?'集团内分包':''}}
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         :current-page="page.current"
@@ -307,6 +318,15 @@ export default {
         return 'row_blue';
       }else if (row.projectNature == '5') {
         return 'row_green';
+      }
+      if(row.pushId!=''&&row.pushId!=null){
+        if (row.isPushInsure == '2') {
+          return 'row_red';
+        } else if (row.isPushInsure =='1') {
+          return 'row_blue';
+        }else if (row.isPushInsure == '5') {
+          return 'row_green';
+        }
       }
       return '';
     },

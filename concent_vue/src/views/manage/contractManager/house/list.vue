@@ -46,6 +46,7 @@
             ref="table"
             style="width: 100%"
             tooltip-effect="dark"
+            :row-class-name="tableRowClassName"
           >
             <el-table-column
               :width="50"
@@ -260,6 +261,17 @@
             >
               <template slot-scope="scope">
                  {{scope.row.isOpenBid==1?'是':scope.row.isOpenBid==0?'否':''}}
+              </template>
+            </el-table-column>
+            <el-table-column
+              :width="150"
+              align="center"
+              label="推送合同项目性质"
+              prop="isPushInsure"
+              show-overflow-tooltip
+            >
+              <template slot-scope="scope">
+                 {{scope.row.isPushInsure==1?'系统内联合体':scope.row.isPushInsure==2?'系统内分包':scope.row.isPushInsure==3?'系统外联合体':scope.row.isPushInsure==4?'系统外分包':scope.row.isPushInsure==5?'集团内分包':''}}
               </template>
             </el-table-column>
           </el-table>
@@ -480,6 +492,17 @@
                  {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':''}}
               </template>
             </el-table-column>
+            <el-table-column
+              :width="150"
+              align="center"
+              label="推送合同项目性质"
+              prop="isPushInsure"
+              show-overflow-tooltip
+            >
+              <template slot-scope="scope">
+                 {{scope.row.isPushInsure==1?'系统内联合体':scope.row.isPushInsure==2?'系统内分包':scope.row.isPushInsure==3?'系统外联合体':scope.row.isPushInsure==4?'系统外分包':scope.row.isPushInsure==5?'集团内分包':''}}
+              </template>
+            </el-table-column>
           </el-table>
 
         </div>
@@ -518,6 +541,26 @@ export default {
     };
   },
   methods: {
+    //table根据类型显示不一样的颜色
+    tableRowClassName({row, rowIndex}) {
+      if (row.projectNature == '2') {
+        return 'row_red';
+      } else if (row.projectNature =='1') {
+        return 'row_blue';
+      }else if (row.projectNature == '5') {
+        return 'row_green';
+      }
+      if(row.pushId!=''&&row.pushId!=null){
+        if (row.isPushInsure == '2') {
+          return 'row_red';
+        } else if (row.isPushInsure =='1') {
+          return 'row_blue';
+        }else if (row.isPushInsure == '5') {
+          return 'row_green';
+        }
+      }
+      return '';
+    },
     handleClick(tab, event) {
       this.page= { current: 1, size: 20, total: 0, records: [] };
       this.searchFrom={

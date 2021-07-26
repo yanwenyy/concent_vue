@@ -220,7 +220,7 @@
         // console.log(data);
         if(data.uuid){
           var url=this.getUrl(data.moduleId);
-          let p = {actpoint: "add",instid:data.uuid};
+          let p = {actpoint: "add",instid:data.uuid,isYearContract:data.isYearContract,pushId:data.pushId};
           this.$router.push({
             path: url,
             query: {p: this.$utils.encrypt(JSON.stringify(p))},
@@ -258,11 +258,11 @@
           this.$message.info("请选择一条记录进行查看操作！");
           return false;
         }
-        if(this.multipleSelection[0].flowStatus=='2'||this.multipleSelection[0].flowStatus=='3'){
+        if(this.multipleSelection[0].state=='2'||this.multipleSelection[0].state=='3'){
           this.$message.info("此条数据不可修改！");
           return false;
         }
-        let p = {actpoint: "edit", instid: this.multipleSelection[0].beforeId,afterId:this.multipleSelection[0].afterId,uuid:this.multipleSelection[0].uuid};
+        let p = {actpoint: "edit",isYearContract:this.multipleSelection[0].isYearContract,pushId:this.multipleSelection[0].pushId, instid: this.multipleSelection[0].beforeId,afterId:this.multipleSelection[0].afterId,uuid:this.multipleSelection[0].uuid};
         var url=this.getUrl(this.multipleSelection[0].moduleId);
         this.$router.push({
           path: url,
