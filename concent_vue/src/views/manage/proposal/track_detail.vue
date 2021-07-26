@@ -1185,13 +1185,14 @@
                     width="80">
                     <template slot-scope="scope">
                       <el-switch
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint === 'add'||detailform.topInfoOrg.flowStatus==1"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         class="inline-formitem-switch"
                         v-model="scope.row.isTrack"
                         active-color="#409EFF"
                         inactive-color="#ddd"
                         active-value="1"
                         inactive-value="0"
+                        @change="switchChange(scope.row.isTrack, scope.$index)"
                       >
                         <!--@change="setMain(scope.$index,detailform.topInfoSectionList)"-->
                       </el-switch>
@@ -1281,6 +1282,7 @@
             { required: true,validator: validatePhone, trigger: 'blur' }
           ]
         },//表单验证规则
+        isTracking: 0   // 判断 是否为跟踪标段 有几个已选中
       };
     },
     components: {
@@ -1365,6 +1367,17 @@
       // eslint-disable-next-line no-unde
     },
     methods: {
+      // 是否为跟踪标段 点击事件
+      switchChange(val, index) {
+        this.isTracking = 0
+        this.detailform.topInfoSectionList.forEach((element) => {
+          this.isTracking += Number(element.isTrack)
+        })
+        if (val == 0 && this.isTracking < 1) {
+          this.detailform.topInfoSectionList[index].isTrack = "1"
+          this.$message.error('跟踪标段至少为一个！');
+        }
+      },
       //流程操作
       operation(type){
         var msg='',that=this;
