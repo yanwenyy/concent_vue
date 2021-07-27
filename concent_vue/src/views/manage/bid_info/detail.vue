@@ -663,7 +663,7 @@
                 inactive-color="#ddd"
                 active-value="0"
                 inactive-value="1"
-                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint=='task'"
+                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint=='task'||detailform.topInforBO.topInfor.noticeTypeId=='864ceb6732d611eb8271459ce63f10a7'"
                 @change="detailform.bidInfo.isCoalitionBid=='1'?(detailform.bidInfo.innerOrgName='',detailform.bidInfo.outOrg=''):''"
               >
               </el-switch>
