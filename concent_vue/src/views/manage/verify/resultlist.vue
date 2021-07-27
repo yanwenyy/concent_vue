@@ -372,34 +372,36 @@ export default {
     verifyResultEdit(row,type) {
       if(row){
         this.type=type;
-         this.dialogResult = true;
-         this.$http
+        this.dialogResult = true;
+        this.$http
+          .post(
+            '/api/contract/topInfo/Verify/detail/entitySectionInfo',
+            {"id":row.verifySectionId}
+          )
+          .then(res => {
+            this.resultform = res.data.data;
+            if (this.resultform.verifySection.verifyResultTime === null) {
+              this.resultform.verifySection.verifyResultTime =new Date().getTime()
+            }
+          })
+      }else{
+        if (this.multipleSelection.length ==1) {
+          this.dialogResult = true;
+          this.$http
             .post(
               '/api/contract/topInfo/Verify/detail/entitySectionInfo',
-              {"id":row.verifySectionId}
+              {"id":this.multipleSelection[0].verifySectionId}
             )
             .then(res => {
               this.resultform = res.data.data;
-            })
-      }else{
-        if (this.multipleSelection.length ==1) {
-                this.dialogResult = true;
-                // console.log(this.multipleSelection[0].verifySectionId)
-                this.$http
-                  .post(
-                    '/api/contract/topInfo/Verify/detail/entitySectionInfo',
-                    {"id":this.multipleSelection[0].verifySectionId}
-                  )
-                  .then(res => {
-                    this.resultform = res.data.data;
-                    // console.log(JSON.stringify(this.resultform));
-
-                    //this.getData();
-                  })
-
-              } else {
-                this.$message.info("请选择一条内容进行操作！");
+              if (this.resultform.verifySection.verifyResultTime === null) {
+                this.resultform.verifySection.verifyResultTime =new Date().getTime()
               }
+              //this.getData();
+            })
+        } else {
+          this.$message.info("请选择一条内容进行操作！");
+        }
       }
 
     },
