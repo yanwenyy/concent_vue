@@ -404,13 +404,12 @@ export default {
 
     },
     saveVerifyResult() {
-
       // var date = new Date(this.resultform.verifyResultTime);
       // var time1 = date.getTime();
       // this.resultform.verifySection.verifyResultTime = time1;
       // this.resultform.verifySection.verifyResult =
       // alert(JSON.stringify(this.multipleSelection[0]))
-      if(this.resultform.commonFilesList.length==0){
+      if(this.resultform.commonFilesList.length==0 && this.resultform.verifySection.verifyResult === "1"){
         this.$message.error("附件列表不能为空");
         return false;
       }
@@ -420,8 +419,8 @@ export default {
           JSON.stringify(this.resultform), {useJson: true}
         )
         .then(res => {
-          if (res.data.code === 0) {
-            if (res.data.code === 0) {
+          if (res.data.code === 200) {
+            if (res.data.code === 200) {
               this.$message({
                 message: "保存成功",
                 type: "success",
