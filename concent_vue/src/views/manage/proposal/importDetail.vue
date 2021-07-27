@@ -479,7 +479,28 @@
                 </el-select>
               </el-form-item>
             </div>
+
             <el-form-item
+              v-if="detailform.topInfor.isClientele=='0'"
+              :label="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'?'建设单位:':'客户名称:'"
+              prop="topInfor.constructionOrg"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: ['blur','change'],
+              }"
+            >
+              <el-input
+                disabled
+                placeholder="请选择建设单位"
+                v-model="detailform.topInfor.constructionOrg"
+                :title="detailform.topInfor.constructionOrg"
+              >
+                <el-button v-if="p.actpoint!='task'&&p.actpoint!='look'" slot="append" icon="el-icon-search" @click="openComMul(detailform.topInfor.constructionOrgId,detailform.topInfor.constructionOrg,'/api/contract/Companies/detail/findCompanies','建设单位')"></el-button>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+              v-if="detailform.topInfor.isClientele=='1'"
               :label="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'?'建设单位:':'客户名称:'"
               prop="topInfor.constructionOrg"
               :rules="{
@@ -534,22 +555,25 @@
                 trigger: 'blur',
               }"
             >
-              <!--<el-input-->
-              <!--clearable-->
-              <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
-
-              <!--v-model="detailform.topInfor.designOrg"-->
-              <!--/>-->
-              <el-autocomplete
-                @input="getautoCompleteName(
-                detailform.topInfor.designOrg,
-                 'designOrgId'
-               )"
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+              <el-input
+                disabled
+                placeholder="请选择设计单位"
                 v-model="detailform.topInfor.designOrg"
-                :fetch-suggestions="querySjdw"
-                placeholder="请输入内容"
-              ></el-autocomplete>
+                :title="detailform.topInfor.designOrg"
+              >
+                <el-button v-if="p.actpoint!='task'&&p.actpoint!='look'" slot="append" icon="el-icon-search" @click="openComMul(detailform.topInfor.designOrgId,detailform.topInfor.designOrg,'/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
+              </el-input>
+
+              <!--<el-autocomplete-->
+                <!--@input="getautoCompleteName(-->
+                <!--detailform.topInfor.designOrg,-->
+                 <!--'designOrgId'-->
+               <!--)"-->
+                <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                <!--v-model="detailform.topInfor.designOrg"-->
+                <!--:fetch-suggestions="querySjdw"-->
+                <!--placeholder="请输入内容"-->
+              <!--&gt;</el-autocomplete>-->
             </el-form-item>
             <br>
             <el-form-item
@@ -1118,6 +1142,8 @@
       <!--</el-tab-pane>-->
     </el-tabs>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
+    <!--多选的单位列表组件-->
+    <company-mul v-if="companyMulStatus" ref="comAdd" @getComList="getComList"></company-mul>
   </div>
 </template>
 
@@ -1126,6 +1152,7 @@
   import FileUpload from '@/components/fileUpload'
   import { isMoney, isMobile} from '@/utils/validate'
   import AuditProcess from '@/components/auditProcess'
+  import companyMul from '@/components/companiesMultiple'
   export default {
     // name: "详情",
     data() {
@@ -1150,6 +1177,7 @@
         }
       }
       return {
+        companyMulStatus:false,//设计单位等多选列表状态
         timeout:  null,
         maxMoney:1000000,
         id:'',
@@ -1164,7 +1192,8 @@
             marketSecondId:'',
             constructionOrg:'',
             isClientele:'1',
-            investment:''
+            investment:'',
+            isMajorProject:'1'
           },
           topInfoOrg: {},
           topInfoSiteList: [],
@@ -1203,7 +1232,8 @@
     components: {
       Tree,
       FileUpload,
-      AuditProcess
+      AuditProcess,
+      companyMul,//多选的单位列表组件
     },
     computed: {
       projectDomainType() {
@@ -1302,13 +1332,32 @@
           "/api/contract/Companies/detail/findCompanies",
         )
         .then((res) => {
-          this.sjdwList = res.data.data;
+          this.sjdwList = res.data.data.records;
           this.sjdwList.forEach((item)=>{
             item.value=item.companyName;
           })
         });
     },
     methods: {
+      //打开多选的单位列表
+      openComMul(ids,names,url,type){
+        this.companyMulStatus=true;
+        this.$nextTick(() => {
+          this.$refs.comAdd.init(ids,names,url,type);
+        })
+      },
+      //获取拿过来的多选单位列表
+      getComList(data){
+        console.log(data)
+        this.$forceUpdate();
+        if(data.type=='设计单位'){
+          this.detailform.topInfor.designOrgId=data.selIdList.join(",");
+          this.detailform.topInfor.designOrg=data.selList.join(",");
+        }if(data.type=='建设单位'){
+          this.detailform.topInfor.constructionOrgId=data.selIdList.join(",");
+          this.detailform.topInfor.constructionOrg=data.selList.join(",");
+        }
+      },
       //检查项目地点或标段信息总和是否超过投资额
       checkTze(list,index,itemValueName){
         var val=0;
