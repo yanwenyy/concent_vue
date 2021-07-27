@@ -7,9 +7,9 @@
       <el-form-item label="建设单位:">
         <el-input v-model="searchform.constructionOrg" placeholder="建设单位" clearable></el-input>
       </el-form-item>
-      <el-form-item label="设计单位:">
+      <!-- <el-form-item label="设计单位:">
         <el-input v-model="searchform.designOrg" placeholder="设计单位" clearable></el-input>
-      </el-form-item>
+      </el-form-item> -->
       <!--<el-form-item label="创建日期:">-->
         <!--<el-date-picker-->
           <!--clearable-->
@@ -224,7 +224,15 @@
         <el-table-column
           :width="150"
           align="center"
-          label="工程类别"
+          label="工程类别（一级）"
+          prop="enginTypeFirstName"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="工程类别（二级）"
           prop="enginTypeSecondName"
           show-overflow-tooltip
         >
@@ -278,7 +286,7 @@
         <el-table-column
           :width="300"
           align="center"
-          label="登记时间(审核通过时间)"
+          label="跟踪通过时间"
           prop="createTime"
           show-overflow-tooltip
         >
