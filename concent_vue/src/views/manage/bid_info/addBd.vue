@@ -625,7 +625,7 @@ import { isMoney } from '@/utils/validate'
           "/api/contract/Companies/detail/findCompanies",
         )
         .then((res) => {
-          this.sjdwList = res.data.data;
+          this.sjdwList = res.data.data.records;
         });
     },
     computed:{

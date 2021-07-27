@@ -1638,7 +1638,7 @@ export default {
         "/api/contract/Companies/detail/findCompanies",
       )
       .then((res) => {
-        this.sjdwList = res.data.data;
+        this.sjdwList = res.data.data.records;
         this.sjdwList.forEach((item)=>{
           item.id=item.uuid;
           item.detailName=item.companyName;

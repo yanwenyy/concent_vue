@@ -3316,7 +3316,7 @@ export default {
         "/api/contract/Companies/detail/findCompanies",
       )
       .then((res) => {
-        this.sjdwList = res.data.data;
+        this.sjdwList = res.data.data.records;
         this.sjdwList.forEach((item)=>{
           item.value=item.companyName;
           item.detailName=item.companyName;
