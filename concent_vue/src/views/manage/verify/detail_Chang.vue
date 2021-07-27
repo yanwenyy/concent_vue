@@ -1371,7 +1371,7 @@
                 >
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-input
-
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     type="textarea"
                     clearable
                     placeholder="请输入"
@@ -1434,14 +1434,14 @@
 
                             </el-table-column>
 
-                            <el-table-column align="center" v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
+                            <el-table-column align="center"
                               :resizable="false"
                               label="操作"
                               show-overflow-tooltip
                               :width="150"
                             >
                               <template slot-scope="scope">
-                                <!-- <el-link  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'" :underline="false" @click="handleDownload(scope.row)" type="warning" style="color: #409EFF;margin-right: 33px;">下载</el-link> -->
+                                <el-link :underline="false" @click="handleDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;margin-right: 33px;':'color: #409EFF;'">下载</el-link>
                                 <el-link  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'" :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
                               </template>
                             </el-table-column>
@@ -1569,7 +1569,7 @@
           </template>
         </el-table-column>
                 <el-table-column
-                  v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
+                  v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                   :resizable="false"
                   fixed="right"
                   label="操作"
@@ -1942,7 +1942,9 @@ export default {
       // this.key = this.key + 1;
     },
     selectOrg1(row, column, cell, event){
-
+      if (this.p.actpoint === 'look') {
+        return false
+      }
       if(column.label==="参与投标单位")
       {
         // this.myVerifySection=row;
@@ -2306,13 +2308,13 @@ export default {
     // 下载
     handleDownload(file) {
       console.log(file)
-      var name = file.fileName;
-      var url = file.filePath;
-      const a = document.createElement('a')
-      a.setAttribute('download', name)
-      a.setAttribute('target', '_blank')
-      a.setAttribute('href', "接口?tPath=" + url)
-      a.click()
+      // var name = file.fileName;
+      // var url = file.filePath;
+      // const a = document.createElement('a')
+      // a.setAttribute('download', name)
+      // a.setAttribute('target', '_blank')
+      // a.setAttribute('href', "接口?tPath=" + url)
+      // a.click()
     }
 
   },
