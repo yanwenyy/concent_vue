@@ -10,11 +10,12 @@
         ><i class="el-icon-edit"></i>修改</el-button>
 
         <el-button @click="remove" :disabled="flowStatus!=1&&flowStatus!=4" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
-        <el-button @click="exportdata"  type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>
+        <!-- <el-button @click="exportdata" type="primary" plain><i class="el-icon-upload2"></i>导出</el-button> -->
       </el-button-group>
             <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
         <el-button @click="getData" type="primary" plain ><i class="el-icon-search"></i>查询</el-button>
+        <el-button @click="exportdata" type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>
       </div>
     </div>
     <div style="margin-top: 10px">
@@ -48,7 +49,6 @@
           label="序号"
           show-overflow-tooltip
           type="index"
-          fixed
         >
 
         </el-table-column>
