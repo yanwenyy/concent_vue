@@ -34,7 +34,7 @@
           <!--end-placeholder="结束日期">-->
         <!--</el-date-picker>-->
       <!--</el-form-item> -->
-      <el-form-item label="创建日期开始:">
+      <!-- <el-form-item label="创建日期开始:">
         <el-date-picker
           clearable
           v-model="searchform.createTimeStart"
@@ -51,8 +51,8 @@
           @change="searchform.selectTimeType='01',searchform.planBidTimeStart='',searchform.planBidTimeEnd=''"
           value-format="timestamp">
         </el-date-picker>
-      </el-form-item>
-      <el-form-item label="预计招标日期开始:">
+      </el-form-item> -->
+      <!-- <el-form-item label="预计招标日期开始:">
         <el-date-picker
           clearable
           v-model="searchform.planBidTimeStart"
@@ -67,6 +67,15 @@
           v-model="searchform.planBidTimeEnd"
           type="date"
           @change="searchform.selectTimeType='02',searchform.createTimeStart='',searchform.createTimeEnd=''"
+          value-format="timestamp">
+        </el-date-picker>
+      </el-form-item> -->
+      <el-form-item label="预计招标时间:">
+        <el-date-picker
+          clearable
+          v-model="searchform.planBidTime"
+          type="date"
+          @change="searchform.selectTimeType='02'"
           value-format="timestamp">
         </el-date-picker>
       </el-form-item>
@@ -353,6 +362,7 @@
           createTimeEnd:"",
           planBidTimeStart:"",
           planBidTimeEnd:"",
+          planBidTime:""
         },
         multipleSelection: [],
         xqprojectType:[],//工程二级列表
