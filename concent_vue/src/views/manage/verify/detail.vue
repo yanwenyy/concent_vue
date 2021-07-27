@@ -495,7 +495,7 @@
             </el-form-item>
         <el-form-item
           v-if="detailform.verify.flowStatus!=3&&detailform.verify.lateRegist=='0'"
-          label="是否逾期记录:"
+          label="是否逾期:"
           class="formItem"
         >
           <el-switch
@@ -1546,20 +1546,20 @@ export default {
         }
       });
     },
-    // handleRemove(file,index) {
-    //   this.$http
-    //     .post(
-    //       "/api/contract/topInfo/CommonFiles/list/delete",
-    //       {ids:[file.uuid]},
-    //     )
-    //     .then((res) => {
-    //       if (res.data.code === 200) {
-    //         this.detailform.commonFilesList.splice(index,1);
-    //       }
-    //
-    //     });
-    //   console.log(this.detailform.commonFilesList)
-    // },
+    handleRemove(file,index) {
+      this.$http
+        .post(
+          "/api/contract/topInfo/CommonFiles/list/delete",
+          {ids:[file.uuid]},
+        )
+        .then((res) => {
+          if (res.data.code === 200) {
+            this.detailform.commonFilesList.splice(index,1);
+          }
+    
+        });
+      console.log(this.detailform.commonFilesList)
+    },
     //上传附件
     // handleChange(response, file, fileList){
     //   if (response && response.code === 200) {
