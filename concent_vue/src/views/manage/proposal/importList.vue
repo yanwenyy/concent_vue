@@ -362,6 +362,39 @@
             scope.row.createtime | dateformat
           }}</template>
         </el-table-column> -->
+        <el-table-column
+          :width="150"
+          align="center"
+          label="是否提交"
+          prop="isSubmit"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+             {{scope.row.isSubmit==1?'是':'否'}}
+          </template>
+          <template slot="header" slot-scope="scope">
+            <span>是否提交</span>
+            <div>
+              <el-select
+                class="list-search-picker"
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="searchform.isSubmit"
+              >
+                <el-option
+                  label="是"
+                  value="1"
+                ></el-option>
+                <el-option
+                  label="否"
+                  value="0"
+                ></el-option>
+              </el-select>
+            </div>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
     <el-pagination
@@ -396,6 +429,7 @@
           enginTypeSecondId:'',
           constructionOrg: "",
           noticeTypeId: "",
+          isSubmit:""
         },
         menus: [],
         multipleSelection: [],
