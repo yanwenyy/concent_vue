@@ -272,7 +272,10 @@
                   >导入
                   </el-button>
                   </el-upload>
-        <el-button @click="exportdata" type="primary" plain v-show="p.actpoint != 'look'" class="small_size">导出</el-button>
+            <el-button type="primary" plain v-show="p.actpoint != 'look'" class="small_size">
+              <el-link class="downFile"  type="primary" :href="downLoadUrl+'/nationalStandard.xlsx'" download="工程量清单计量规则.xlsx">导出</el-link>
+            </el-button>
+        <!--<el-button @click="exportdata" type="primary" plain v-show="p.actpoint != 'look'" class="small_size">导出</el-button>-->
 
 </div>
 

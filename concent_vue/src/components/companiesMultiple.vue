@@ -81,9 +81,11 @@
         type:'',
         selList:[],
         selIdList:[],
+        selCodeList:[],
         httpUrl:'',
         ids:'',
         names:'',
+        codes:'',
         dataList: [],
         pageIndex: 1,
         pagesize: 20,
@@ -114,6 +116,7 @@
         var data={
           selList:this.selList,
           selIdList:this.selIdList,
+          selCodeList:this.selCodeList,
           type:this.type
         };
         this.$emit('getComList', data);
@@ -124,13 +127,14 @@
         // this.$refs.listTabel.clearSelection();
       },
       // 初始化
-      init(ids,names,url,type,from) {
+      init(ids,names,url,type,from,codes) {
 
         this.visible = true;
         this.type=type;
         this.httpUrl=url;
         this.ids=ids;
         this.names=names;
+        this.codes=codes;
         // this.selList=[];
         this.$http
           .post(
@@ -158,7 +162,9 @@
                   // item.checked=true;
                   this.$refs.listTabel.toggleRowSelection(item, true);
                   this.selList=idList;
-                  this.selIdList=ids.split(",");
+                  this.selIdList=ids?ids.split(","):[];
+                  this.selCodeList=codes?codes.split(","):[];
+                  console.log(this.selCodeList)
                 }
               });
 
@@ -180,11 +186,11 @@
       },
       handleSizeChange(val) {
         this.searchform.size = val;
-        this.init(this.selList,this.names,this.httpUrl,this.type,'sizeChange');
+        this.init(this.selList,this.names,this.httpUrl,this.type,'sizeChange',this.codes);
       },
       handleCurrentChange(val) {
         this.searchform.current = val;
-        this.init(this.selList,this.names,this.httpUrl,this.type,'sizeChange');
+        this.init(this.selList,this.names,this.httpUrl,this.type,'sizeChange',this.codes);
       },
       rowSel(selection){
         // this.selList=[];
@@ -193,7 +199,8 @@
           // this.selList = selection;
           selection.forEach((item)=>{
             this.selList.push(item.companyName);
-            this.selIdList.push(item.uuid)
+            this.selIdList.push(item.uuid);
+            this.selCodeList.push(item.createOrgCode);
           });
           // console.log(111)
         }else{
@@ -204,7 +211,8 @@
                 // console.log(selection,item)
                 item.checked=true;
                 this.selList.push(item.companyName);
-                this.selIdList.push(item.uuid)
+                this.selIdList.push(item.uuid);
+                this.selCodeList.push(item.createOrgCode);
               }
             })
           })
@@ -214,6 +222,7 @@
         if(selection.indexOf(row)==-1&&this.selList.indexOf(row.companyName)!=-1){
           this.selList.remove(row.companyName);
           this.selIdList.remove(row.uuid);
+          this.selCodeList.remove(row.createOrgCode);
           row.checked=false;
         }
         // console.log(this.selList)
@@ -255,6 +264,11 @@
         for(var i=0;i<this.selIdList.length;i++){
           if(i==D_index){
             this.selIdList.remove(this.selIdList[i])
+          }
+        }
+        for(var j=0;j<this.selCodeList.length;j++){
+          if(j==D_index){
+            this.selCodeList.remove(this.selCodeList[j])
           }
         }
       },

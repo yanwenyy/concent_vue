@@ -221,7 +221,7 @@
       });
       },
       // 每页数
-      handleSizeChange(val) {
+      sizeChangeHandle(val) {
         this.searchFrom.size = val;
         this.init();
       },

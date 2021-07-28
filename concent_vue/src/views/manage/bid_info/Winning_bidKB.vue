@@ -602,34 +602,35 @@
                 trigger: 'change',
               }:{}"
               >
-                <!--<el-input-->
-                  <!--disabled-->
-                  <!--clearable-->
-                  <!--placeholder=""-->
-                  <!--size="mini"-->
-                  <!--v-model="detailform.bidInfo.outOrg"-->
-                <!--/>-->
-                <el-select
+                <el-input
                   :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"
                   clearable
-                  filterable
-                  placeholder="请选择"
-                  v-model="detailform.bidInfo.outOrgId"
-                  @change="
-                getName(
-                  detailform.bidInfo.outOrgId,
-                  sjdwList,
-                  'outOrg',
-                  'outOrgCode'
-                )"
+                  placeholder="外部联合体单位"
+                  v-model="detailform.bidInfo.outOrg"
                 >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in sjdwList"
-                  ></el-option>
-                </el-select>
+                  <el-button v-if="p.actpoint!='task'&&p.actpoint!='look'&&detailform.bidInfo.isCoalitionBid != '1'&&p.actpoint != 'searchLook'&&detailform.bidInfo.isCoalitionBid !=''" slot="append" icon="el-icon-circle-plus-outline" @click="openComMul(detailform.bidInfo.outOrgId,detailform.bidInfo.outOrg,'/api/contract/Companies/detail/findCompanies','外部联合体单位',detailform.bidInfo.outOrgCode)"></el-button>
+                </el-input>
+                <!--<el-select-->
+                  <!--:disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"-->
+                  <!--clearable-->
+                  <!--filterable-->
+                  <!--placeholder="请选择"-->
+                  <!--v-model="detailform.bidInfo.outOrgId"-->
+                  <!--@change="-->
+                <!--getName(-->
+                  <!--detailform.bidInfo.outOrgId,-->
+                  <!--sjdwList,-->
+                  <!--'outOrg',-->
+                  <!--'outOrgCode'-->
+                <!--)"-->
+                <!--&gt;-->
+                  <!--<el-option-->
+                    <!--:key="index"-->
+                    <!--:label="item.detailName"-->
+                    <!--:value="item.id"-->
+                    <!--v-for="(item, index) in sjdwList"-->
+                  <!--&gt;</el-option>-->
+                <!--</el-select>-->
               </el-form-item>
 
             </div>
@@ -1123,6 +1124,8 @@
     <add-bd  v-if="BDCSVisible" ref="infoBD" @refreshBD="getBdInfo"></add-bd>
     <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
     <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
+    <!--多选的单位列表组件-->
+    <company-mul v-if="companyMulStatus" ref="comAdd" @getComList="getComList"></company-mul>
   </div>
 
 </template>
@@ -1133,6 +1136,7 @@ import CompanyTree from '../contractManager/companyTree'
 import AddBd from './addBd'
 import FileUpload from '@/components/fileUpload'
 import AuditProcess from '@/components/auditProcess'
+import companyMul from '@/components/companiesMultiple'
 export default {
   data() {
       var validateMoney = (rule, value, callback) => {
@@ -1145,6 +1149,7 @@ export default {
       }
     }
     return {
+      companyMulStatus:false,//设计单位等多选列表状态
       sjdwList:[],//共享单位库
       uploadVisible:false,//上传附件组件状态
       maxMoney:1000000,
@@ -1184,10 +1189,11 @@ export default {
     };
   },
     components: {
-    AddBd,
-    CompanyTree,
+      AddBd,
+      CompanyTree,
       FileUpload,
-      AuditProcess
+      AuditProcess,
+      companyMul,//多选的单位列表组件
   },
   computed: {
       bidType() {
@@ -1205,6 +1211,23 @@ export default {
 
   },
   methods: {
+    //打开多选的单位列表
+    openComMul(ids,names,url,type,codes){
+      this.companyMulStatus=true;
+      this.$nextTick(() => {
+        this.$refs.comAdd.init(ids,names,url,type,codes);
+      })
+    },
+    //获取拿过来的多选单位列表
+    getComList(data){
+      console.log(data)
+      this.$forceUpdate();
+      if(data.type=='外部联合体单位'){
+        this.detailform.bidInfo.outOrgId=data.selIdList.join(",");
+        this.detailform.bidInfo.outOrg=data.selList.join(",");
+        this.detailform.bidInfo.outOrgCode=data.selCodeList.join(",");
+      }
+    },
     //两个时间戳之间相隔的天数
     getDaysAndHours(startTime,endTime){
       let timeDiff = endTime - startTime;  // 时间差的毫秒数

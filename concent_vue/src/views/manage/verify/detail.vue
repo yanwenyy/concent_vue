@@ -620,9 +620,10 @@
             :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否' || detailform.verify.isCoalitionBid==null||p.actpoint=='task'"
             v-model="detailform.verify.outOrg"
           >
-          <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('外部联合体单位',detailform.verify.outOrgId)"
-                     v-if="p.actpoint != 'look' &&p.actpoint != 'task'&& detailform.verify.isCoalitionBid != '否' && detailform.verify.isCoalitionBid != null"
-          ></el-button>
+            <el-button v-if="p.actpoint != 'look' &&p.actpoint != 'task'&& detailform.verify.isCoalitionBid != '否' && detailform.verify.isCoalitionBid != null" slot="append" icon="el-icon-circle-plus-outline" @click="openComMul(detailform.verify.outOrgId,detailform.verify.outOrg,'/api/contract/Companies/detail/findCompanies','外部联合体单位')"></el-button>
+          <!--<el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('外部联合体单位',detailform.verify.outOrgId)"-->
+                     <!--v-if="p.actpoint != 'look' &&p.actpoint != 'task'&& detailform.verify.isCoalitionBid != '否' && detailform.verify.isCoalitionBid != null"-->
+          <!--&gt;</el-button>-->
           </el-input>
         </el-form-item>
 
@@ -976,6 +977,8 @@
    <TreeOrg v-if="treeOrgStatas2" ref="addOrUpdate2" @getPosition="getTreeOrg2"></TreeOrg>
     <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
     <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
+    <!--多选的单位列表组件-->
+    <company-mul v-if="companyMulStatus" ref="comAdd" @getComList="getComList"></company-mul>
   </div>
 
 </template>
@@ -986,6 +989,7 @@ import { isMoney } from '@/utils/validate'
 import AuditProcess from '@/components/auditProcess'
 import FileUpload from '@/components/fileUpload'
 import CompanyTree from '../contractManager/companyTree'
+import companyMul from '@/components/companiesMultiple'
 export default {
 
   // name: '详情',
@@ -994,6 +998,7 @@ export default {
     AuditProcess,
     FileUpload,
     CompanyTree,
+    companyMul,//多选的单位列表组件
   },
   data() {
     var validateMoney = (rule, value, callback) => {
@@ -1007,6 +1012,7 @@ export default {
       }
     }
     return {
+      companyMulStatus:false,//设计单位等多选列表状态
       DwVisible:false,//选择单位弹框状态
       uploadVisible:false,//上传附件组件状态
       maxMoney:1000000,
@@ -1079,6 +1085,22 @@ export default {
 
   },
   methods: {
+    //打开多选的单位列表
+    openComMul(ids,names,url,type){
+      this.companyMulStatus=true;
+      this.$nextTick(() => {
+        this.$refs.comAdd.init(ids,names,url,type);
+      })
+    },
+    //获取拿过来的多选单位列表
+    getComList(data){
+      console.log(data)
+      this.$forceUpdate();
+      if(data.type=='外部联合体单位'){
+        this.detailform.verify.outOrgId=data.selIdList.join(",");
+        this.detailform.verify.outOrg=data.selList.join(",");
+      }
+    },
     //计算建安投资<=投资预算
     calcTzys(val,tzval,index,list){
       if(Number(val)>Number(tzval)){
@@ -1556,7 +1578,7 @@ export default {
           if (res.data.code === 200) {
             this.detailform.commonFilesList.splice(index,1);
           }
-    
+
         });
       console.log(this.detailform.commonFilesList)
     },

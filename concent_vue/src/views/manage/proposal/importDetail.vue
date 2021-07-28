@@ -496,7 +496,7 @@
                 v-model="detailform.topInfor.constructionOrg"
                 :title="detailform.topInfor.constructionOrg"
               >
-                <el-button v-if="p.actpoint!='task'&&p.actpoint!='look'" slot="append" icon="el-icon-search" @click="openComMul(detailform.topInfor.constructionOrgId,detailform.topInfor.constructionOrg,'/api/contract/Companies/detail/findCompanies','建设单位')"></el-button>
+                <el-button v-if="p.actpoint!='task'&&p.actpoint!='look'" slot="append" icon="el-icon-circle-plus-outline" @click="openComMul(detailform.topInfor.constructionOrgId,detailform.topInfor.constructionOrg,'/api/contract/Companies/detail/findCompanies','建设单位')"></el-button>
               </el-input>
             </el-form-item>
             <el-form-item
@@ -561,7 +561,7 @@
                 v-model="detailform.topInfor.designOrg"
                 :title="detailform.topInfor.designOrg"
               >
-                <el-button v-if="p.actpoint!='task'&&p.actpoint!='look'" slot="append" icon="el-icon-search" @click="openComMul(detailform.topInfor.designOrgId,detailform.topInfor.designOrg,'/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
+                <el-button v-if="p.actpoint!='task'&&p.actpoint!='look'" slot="append" icon="el-icon-circle-plus-outline" @click="openComMul(detailform.topInfor.designOrgId,detailform.topInfor.designOrg,'/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
               </el-input>
 
               <!--<el-autocomplete-->
@@ -1193,7 +1193,8 @@
             constructionOrg:'',
             isClientele:'1',
             investment:'',
-            isMajorProject:'1'
+            isMajorProject:'1',
+            bidAgentCompany:''
           },
           topInfoOrg: {},
           topInfoSiteList: [],
