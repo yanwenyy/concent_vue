@@ -183,6 +183,17 @@
           </template>
         </el-table-column>
         <el-table-column
+          :width="150"
+          align="center"
+          label="预审结果"
+          prop="verifyResult"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+            <span> {{scope.row.verifyResult=='0'?'未通过':scope.row.verifyResult=='1'?'通过':'待通过'}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
           :width="300"
           label="项目名称"
           prop="inforName"
@@ -273,17 +284,6 @@
         >
           <template slot-scope="scope">
             {{scope.row.createTime | dateformat}}
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="资审结果"
-          prop="verifyResult"
-          show-overflow-tooltip
-        >
-          <template slot-scope="scope">
-            <span> {{scope.row.verifyResult=='0'?'未通过':scope.row.verifyResult=='1'?'通过':'待通过'}}</span>
           </template>
         </el-table-column>
       </el-table>
