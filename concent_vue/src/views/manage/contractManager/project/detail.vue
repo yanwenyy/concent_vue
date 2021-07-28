@@ -8212,13 +8212,13 @@ export default {
         var datas=res.data.data;
 
           datas.commonFilesList.forEach((item) => {
-            if(item.businessCode=='01'){
+            if(item.businessCode=='01'||item.businessCode=='zb'){
                fileList1.push(item)
-              }else if(item.businessCode=='02'){
+              }else if(item.businessCode=='02'||item.businessCode=='htfj'){
                 fileList2.push(item)
               }else if(item.businessCode=='04'){
                 fileList4.push(item)
-              }else{
+              }else if(item.businessCode=='03'||item.businessCode=='gclc'){
                 fileList3.push(item)
               }
           });

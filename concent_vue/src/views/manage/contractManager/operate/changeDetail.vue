@@ -4476,7 +4476,7 @@
             beforData.commonFilesList=beforData.commonFilesList||[];
             var fileList1=[],fileList2=[];
             afterData.commonFilesList.forEach((item) => {
-              if(item.businessCode=='01'){
+              if(item.businessCode=='01'||item.businessCode=='zmcl'){
                 fileList1.push(item)
               }else if(item.businessCode=='02'){
                 fileList2.push(item)
@@ -4484,7 +4484,7 @@
             });
             var _fileList1=[],_fileList2=[];
             beforData.commonFilesList.forEach((item) => {
-              if(item.businessCode=='01'){
+              if(item.businessCode=='01'||item.businessCode=='zmcl'){
                 _fileList1.push(item)
               }else if(item.businessCode=='02'){
                 _fileList2.push(item)
@@ -4537,7 +4537,7 @@
         this.getTwoSC(datas.contractInfo.marketFirstNameId);
             var fileList1=[],fileList2=[];
             datas.commonFilesList.forEach((item) => {
-              if(item.businessCode=='01'){
+              if(item.businessCode=='01'||item.businessCode=='zmcl'){
                 fileList1.push(item)
               }else if(item.businessCode=='02'){
                 fileList2.push(item)

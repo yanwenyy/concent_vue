@@ -5648,25 +5648,25 @@
         beforData.commonFilesList=beforData.commonFilesList||[];
         var fileList1=[],fileList2=[],fileList3=[],fileList4=[];
         afterData.commonFilesList.forEach((item) => {
-          if(item.businessCode=='01'){
+          if(item.businessCode=='01'||item.businessCode=='zb'){
           fileList1.push(item)
-        }else if(item.businessCode=='02'){
+          }else if(item.businessCode=='02'||item.businessCode=='htfj'){
           fileList2.push(item)
         }else if(item.businessCode=='04'){
             fileList4.push(item)
-          }else{
+          }else if(item.businessCode=='03'||item.businessCode=='gclc'){
           fileList3.push(item)
         }
       });
         var _fileList1=[],_fileList2=[],_fileList3=[],_fileList4=[];
         beforData.commonFilesList.forEach((item) => {
-          if(item.businessCode=='01'){
+          if(item.businessCode=='01'||item.businessCode=='zb'){
           _fileList1.push(item)
-          }else if(item.businessCode=='02'){
+          }else if(item.businessCode=='02'||item.businessCode=='htfj'){
             _fileList2.push(item)
           }else if(item.businessCode=='04'){
             _fileList4.push(item)
-          }else{
+          }else if(item.businessCode=='03'||item.businessCode=='gclc'){
           _fileList3.push(item)
         }
       });
@@ -5725,13 +5725,13 @@
         this.getTwoSC(datas.contractInfo.marketFirstNameId);
         this.getTwoXZ(datas.contractInfo.projectNatureFirstId);
         datas.commonFilesList.forEach((item) => {
-          if(item.businessCode=='01'){
+          if(item.businessCode=='01'||item.businessCode=='zb'){
           fileList1.push(item)
-        }else if(item.businessCode=='02'){
-          fileList2.push(item)
-        }else if(item.businessCode=='04'){
+          }else if(item.businessCode=='02'||item.businessCode=='htfj'){
+            fileList2.push(item)
+          }else if(item.businessCode=='04'){
             fileList4.push(item)
-          }else{
+          }else if(item.businessCode=='03'||item.businessCode=='gclc'){
           fileList3.push(item)
         }
       });
