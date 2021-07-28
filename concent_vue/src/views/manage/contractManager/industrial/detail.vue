@@ -100,7 +100,44 @@
                 />
 
               </el-form-item>
+              <el-form-item
+                class="inline-formitem"
+                label="客户性质:"
+                prop="contractInfo.customerNatureId"
+                :rules="{
+               required: true, message: '此项不能为空', trigger: 'blur'
+            }"
 
+              >
+                <el-select
+                  class="multiple-sel"
+                  :disabled="p.actpoint==='look'||p.actpoint=='task'"
+                  @change="getName(detailform.contractInfo.customerNatureId,customerNature ,'customerNature')"
+                  clearable
+                  filterable
+                  placeholder="请选择"
+                  size="mini"
+                  v-model="detailform.contractInfo.customerNatureId"
+                >
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in customerNature"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item
+                class="inline-formitem"
+                label="产品类型:"
+
+              >
+                <el-input
+                  disabled
+                  placeholder="保存后系统自动生成"
+                  v-model="detailform.contractInfo.productTypeName"
+                />
+              </el-form-item>
               <el-form-item
                 label="合同所属板块:"
                 prop="contractInfo.enginTypeFirstId"
@@ -844,44 +881,7 @@
                 >
                 </el-switch>
               </el-form-item>
-              <el-form-item
-                class="inline-formitem"
-                label="客户性质:"
-                prop="contractInfo.customerNatureId"
-                :rules="{
-               required: true, message: '此项不能为空', trigger: 'blur'
-            }"
-
-              >
-                <el-select
-                  class="multiple-sel"
-                  :disabled="p.actpoint==='look'||p.actpoint=='task'"
-                  @change="getName(detailform.contractInfo.customerNatureId,customerNature ,'customerNature')"
-                  clearable
-                  filterable
-                  placeholder="请选择"
-                  size="mini"
-                  v-model="detailform.contractInfo.customerNatureId"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in customerNature"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item
-                class="inline-formitem"
-                label="产品类型:"
-
-              >
-                <el-input
-                  disabled
-                  placeholder="保存后系统自动生成"
-                  v-model="detailform.contractInfo.productTypeName"
-                />
-              </el-form-item>
+              
               <el-form-item
                 v-if="detailform.contractInfo.customerNatureId=='9f19652f27a911ebad4bc5ee92e1a03f'"
                 class="inline-formitem"

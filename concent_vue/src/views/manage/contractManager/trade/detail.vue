@@ -125,7 +125,57 @@
                   v-model="detailform.contractInfo.constructionOrg"
                 />
               </el-form-item>
-
+              <br>
+              <el-form-item
+                    class="inline-formitem"
+                    label="客户性质:"
+                    prop="contractInfo.customerNatureId"
+                    :rules="{required: true, message: '此项不能为空', trigger: 'blur'}"
+                  >
+                  <el-select
+                    class="multiple-sel"
+                    :disabled="p.actpoint==='look'||p.actpoint=='task'"
+                    @change="getName(detailform.contractInfo.customerNatureId,customerNature ,'customerNature')"
+                    clearable
+                    filterable
+                    placeholder="请选择"
+                    size="mini"
+                    v-model="detailform.contractInfo.customerNatureId"
+                  >
+                    <el-option
+                      :key="index"
+                      :label="item.detailName"
+                      :value="item.id"
+                      v-for="(item, index) in customerNature"
+                    ></el-option>
+                  </el-select>
+              </el-form-item>
+                <el-form-item
+                  v-if="detailform.contractInfo.customerNatureId=='9f19652f27a911ebad4bc5ee92e1a03f'"
+                class="inline-formitem"
+                label="所属央企:"
+                prop="contractInfo.belongEnterPrisesId"
+                :rules="{required: true, message: '此项不能为空', trigger: 'blur'}"
+              >
+                <el-select
+                  class="multiple-sel"
+                  :disabled="p.actpoint==='look'||p.actpoint=='task'||p.pushId"
+                  @change="getName(detailform.contractInfo.belongEnterPrisesId,yqList ,'belongEnterPrises')"
+                  clearable
+                  filterable
+                  placeholder="请选择"
+                  size="mini"
+                  v-model="detailform.contractInfo.belongEnterPrisesId"
+                >
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in yqList"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+              <br>
               <el-form-item
                 v-if="false"
                 label="合同乙方:"
@@ -777,7 +827,7 @@
                   size="mini"
                   v-model="detailform.contractInfo.tradeInoutRoad"
                 >
-                  <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in outOrIn"></el-option>
+                  <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in roadOrIn"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item
@@ -800,61 +850,6 @@
                 >
                 </el-switch>
               </el-form-item>
-              <el-form-item
-                  class="inline-formitem"
-                  label="客户性质:"
-                  prop="contractInfo.customerNatureId"
-                  :rules="{
-               required: true, message: '此项不能为空', trigger: 'blur'
-            }"
-
-                >
-                <el-select
-                  class="multiple-sel"
-                  :disabled="p.actpoint==='look'||p.actpoint=='task'"
-                  @change="getName(detailform.contractInfo.customerNatureId,customerNature ,'customerNature')"
-                  clearable
-                  filterable
-                  placeholder="请选择"
-                  size="mini"
-                  v-model="detailform.contractInfo.customerNatureId"
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in customerNature"
-                  ></el-option>
-                </el-select>
-            </el-form-item>
-              <el-form-item
-                v-if="detailform.contractInfo.customerNatureId=='9f19652f27a911ebad4bc5ee92e1a03f'"
-              class="inline-formitem"
-              label="所属央企:"
-              prop="contractInfo.belongEnterPrisesId"
-              :rules="{
-               required: true, message: '此项不能为空', trigger: 'blur'
-            }"
-
-            >
-              <el-select
-                class="multiple-sel"
-                :disabled="p.actpoint==='look'||p.actpoint=='task'||p.pushId"
-                @change="getName(detailform.contractInfo.belongEnterPrisesId,yqList ,'belongEnterPrises')"
-                clearable
-                filterable
-                placeholder="请选择"
-                size="mini"
-                v-model="detailform.contractInfo.belongEnterPrisesId"
-              >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in yqList"
-                ></el-option>
-              </el-select>
-            </el-form-item>
               <div>
               <el-form-item
                 class="neirong not-error"
@@ -2415,11 +2410,21 @@ export default {
       outOrIn:[
         {
           id:'0',
-          detailName:'内'
+          detailName:'系统内'
         },
         {
           id:'1',
-          detailName:'外'
+          detailName:'系统外'
+        }
+      ],
+      roadOrIn:[
+        {
+          id:'0',
+          detailName:'路内'
+        },
+        {
+          id:'1',
+          detailName:'路外'
         }
       ],
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
