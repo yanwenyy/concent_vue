@@ -1828,7 +1828,7 @@
 
               </el-table-column>
 
-              <el-table-column align="center" width="200" :resizable="false" label="其他投标单位(系统内)" prop="part" show-overflow-tooltip>
+              <!-- <el-table-column align="center" width="200" :resizable="false" label="其他投标单位(系统内)" prop="part" show-overflow-tooltip>
                 <template slot-scope="scope">
               <span v-for="(item,index ) in scope.row.contractInfoSectionOrgList">
                   {{item.orgType==1?item.orgName:''}}
@@ -1849,7 +1849,7 @@
 
               <el-table-column align="center" width="200" :resizable="false" label="其他未列单位" prop="otherUnitsNotListed" show-overflow-tooltip>
 
-              </el-table-column>
+              </el-table-column> -->
 
               <el-table-column align="center" width="200" :resizable="false" label="项目经理" prop="projectManager" show-overflow-tooltip>
 
