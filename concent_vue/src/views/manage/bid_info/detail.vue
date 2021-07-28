@@ -1039,18 +1039,17 @@
             >
             </el-table-column>
 
-            <el-table-column
+            <!-- <el-table-column
               :resizable="false"
               label="其他投标单位(系统内)"
               show-overflow-tooltip
               align="center"
               :width="180"
-            >
+            > -->
               <!-- <template slot-scope="scope">
                 <span v-for="(item,index) in scope.row.bidInfoSectionOrgList">{{item.orgType==1?item.orgName:''}}{{index <scope.row.bidInfoSectionOrgList.length-1? ',':''}}</span>
-
               </template> -->
-              <template slot-scope="scope">
+              <!-- <template slot-scope="scope">
                 <span v-for="(item, index) in scope.row.bidInfoSectionOrgList">
                   {{ item.orgType == 1 ? item.orgName : "" }}
                   {{
@@ -1063,19 +1062,19 @@
                   }}
                 </span>
               </template>
-            </el-table-column>
+            </el-table-column> -->
 
-            <el-table-column
+            <!-- <el-table-column
               :resizable="false"
               label="其他投标单位(系统外)"
               show-overflow-tooltip
               align="center"
               :width="180"
-            >
+            > -->
               <!-- <template slot-scope="scope">
                 <span v-for="(item,index) in scope.row.bidInfoSectionOrgList">{{item.orgType==2?item.orgName:''}}{{index < scope.row.bidInfoSectionOrgList.length-1? ',':''}}</span>
               </template> -->
-              <template slot-scope="scope">
+              <!-- <template slot-scope="scope">
                 <span v-for="(item, index) in scope.row.bidInfoSectionOrgList">
                   {{ item.orgType == 2 ? item.orgName : "" }}
                   {{
@@ -1088,9 +1087,9 @@
                   }}
                 </span>
               </template>
-            </el-table-column>
+            </el-table-column> -->
 
-            <el-table-column
+            <!-- <el-table-column
               :resizable="false"
               label="其他未列出单位"
               prop="bidInfoSection.otherUnitsNotListed"
@@ -1098,7 +1097,7 @@
               align="center"
               :width="180"
             >
-            </el-table-column>
+            </el-table-column> -->
 
             <el-table-column
               :resizable="false"
