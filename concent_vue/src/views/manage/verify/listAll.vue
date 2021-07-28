@@ -586,6 +586,14 @@ export default {
         this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
         return;
       }
+      if(this.multipleSelection[0].flowStatus=='2'||this.multipleSelection[0].flowStatus=='3'){
+        this.$message.info("此条数据不可修改！");
+        return false;
+      }
+      if(this.multipleSelection[0].flowStatus==null){
+        this.$message.info("请先登记！");
+        return false;
+      }
       //是否在审核流程中判断
       //是否在变更流程中判断
       let p = {

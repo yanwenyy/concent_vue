@@ -2723,6 +2723,24 @@ export default {
         });
         this.key = this.key + 1;
       },
+    //检查合同地点与关联项目地点是否不一致
+    checkTopInfoSiteList(){
+      if(this.detailform.searchProject==true){
+        this.topInfoSiteListDifferent=false;
+        if(this.topInfoSiteListCopy.length!=this.detailform.topInfoSiteList.length){
+          this.topInfoSiteListDifferent=true;
+        }else{
+          var i=0,len=this.topInfoSiteListCopy.length;
+          for(;i<len;i++){
+            this.topInfoSiteListCopy[i].contractAmount=Number(this.topInfoSiteListCopy[i].contractAmount);
+            this.detailform.topInfoSiteList[i].contractAmount=Number(this.detailform.topInfoSiteList[i].contractAmount);
+          };
+          if( JSON.stringify(this.topInfoSiteListCopy) != JSON.stringify(this.detailform.topInfoSiteList)){
+            this.topInfoSiteListDifferent=true;
+          }
+        }
+      }
+    },
        //选择供货地点
       selectPosition() {
           this.treeStatas = true;

@@ -1317,7 +1317,8 @@ export default {
       this.detailform.bidInfoSectionList.forEach((item)=>{
         tableList.push(item.bidInfoSection.sectionName)
       });
-      bdList=this.detailform.topInforBO.topInfoSectionList.filter(item => tableList.indexOf(item.sectionName)==-1);
+      // bdList=this.detailform.topInforBO.topInfoSectionList.filter(item => tableList.indexOf(item.sectionName)==-1);
+      bdList=this.detailform.topInforBO.topInfoSectionList;
       this.$nextTick(() => {
         this.$refs.infoBD.init(bdList,this.detailform.bidInfo.isBidRates,type,detail,index,'kbxq');
       })

@@ -740,6 +740,7 @@ import AddBd  from "./addBd";
             this.detailform={
               boqNationalStandard: datas.boqNationalStandard,
               nationalStandardScheduleBOList: datas.nationalStandardScheduleBOList,
+              syfw:datas.boqNationalStandard.engineeringTypeId?datas.boqNationalStandard.engineeringTypeId.split(","):[]
             }
             this.detailform.boqNationalStandard.engineeringType1=this.detailform.boqNationalStandard.engineeringType?this.detailform.boqNationalStandard.engineeringType.split(","):[];
           });

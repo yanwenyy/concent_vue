@@ -586,6 +586,15 @@ export default {
                   'leaf': true,
                   'defaultpage': true
                 },
+                {
+                  'name': '合同信息核减查询',
+                  'path': '/manage/contractManager/examinationCut/searchList',
+                  'component': '/manage/contractManager/examinationCut/searchList',
+                  'iconCls': 'el-icon-search',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
               ]
             },
             {

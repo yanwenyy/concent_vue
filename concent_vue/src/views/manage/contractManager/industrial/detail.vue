@@ -804,22 +804,22 @@
                   v-model="detailform.contractInfo.industryProductUse"
                 />
               </el-form-item>
-              <el-form-item
-                label="供货地点:"
-                prop="contractInfo.path"
+              <!--<el-form-item-->
+                <!--label="供货地点:"-->
+                <!--prop="contractInfo.path"-->
 
-              >
-                <!--<el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-                  placeholder="请输入"
+              <!--&gt;-->
+                <!--&lt;!&ndash;<el-input-->
+                  <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                  <!--clearable-->
+                  <!--placeholder="请输入"-->
 
-                  v-model="detailform.contractInfo.supplyPlace"
-                />-->
-                <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.path" class="input-with-select">
-                  <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline" @click="selectPosition" ></el-button>
-                </el-input>
-              </el-form-item>
+                  <!--v-model="detailform.contractInfo.supplyPlace"-->
+                <!--/>&ndash;&gt;-->
+                <!--<el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.path" class="input-with-select">-->
+                  <!--<el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline" @click="selectPosition" ></el-button>-->
+                <!--</el-input>-->
+              <!--</el-form-item>-->
               <br>
               <el-form-item
                 class="inline-formitem"
@@ -881,7 +881,7 @@
                 >
                 </el-switch>
               </el-form-item>
-              
+
               <el-form-item
                 v-if="detailform.contractInfo.customerNatureId=='9f19652f27a911ebad4bc5ee92e1a03f'"
                 class="inline-formitem"
@@ -943,6 +943,118 @@
                   />
                 </el-form-item>
               </div>
+              <p>
+                <span >供货地点: </span>
+                <el-button
+                  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'&&!p.pushId"
+                  class="detatil-flie-btn"
+                  @click="add('dd')"
+                  type="primary"
+                >新增</el-button >
+              </p>
+              <el-table
+                :data="detailform.topInfoSiteList"
+                :header-cell-style="{
+              'text-align': 'center',
+              'background-color': 'rgba(246,248,252,1)',
+              color: 'rgba(0,0,0,1)',
+            }"
+                @selection-change="handleSelectionChange"
+                align="center"
+                border
+                class="detailTable"
+                ref="table"
+                style="width: 100%;height: auto;"
+              >
+                <el-table-column
+                  :width="80"
+                  align="center"
+                  label="序号"
+                  show-overflow-tooltip
+                  type="index"
+                ></el-table-column>
+                <el-table-column
+                  :resizable="false"
+                  label="项目地点"
+                  align="center"
+                  prop="inforName"
+                >
+                  <template slot-scope="scope">
+                    <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
+                    <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
+                  </template>
+                </el-table-column>
+
+                <el-table-column
+                  :resizable="false"
+                  label="份额(万元)"
+                  prop="contractAmount"
+                  show-overflow-tooltip
+                  align="center"
+                >
+                  <template slot-scope="scope">
+                    <el-form-item class="tabelForm" :prop="'topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
+                      <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                      <el-input
+                        class="group-no-padding"
+                        clearable
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        v-model="scope.row.contractAmount"
+                        @input="checkTopInfoSiteList()"
+                      >
+                        <template slot="prepend">¥</template>
+                        <template slot="append">(万元)</template>
+                      </el-input>
+                    </el-form-item>
+                    <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                  </template>
+                </el-table-column>
+
+                <el-table-column
+                  :resizable="false"
+                  label="是否为主地点"
+                  prop="contractAmount"
+                  align="center"
+                  show-overflow-tooltip
+                >
+                  <template slot-scope="scope">
+                    <el-switch
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
+                      class="inline-formitem-switch"
+                      v-model="scope.row.isMain"
+                      active-color="#409EFF"
+                      inactive-color="#ddd"
+                      active-value="1"
+                      inactive-value="0"
+                      @change="setMain(scope.$index,detailform.topInfoSiteList),checkTopInfoSiteList()"
+                    >
+                    </el-switch>
+                    <!--<el-radio v-model="scope.row.isMain" label="1">是</el-radio>-->
+                    <!--<el-radio v-model="scope.row.isMain" label="0">否</el-radio>-->
+                    <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                  </template>
+                </el-table-column>
+
+                <el-table-column
+                  :resizable="false"
+                  fixed="right"
+                  label="操作"
+                  align="center"
+                  width="80"
+                  show-overflow-tooltip
+                  v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'&&!p.pushId"
+                >
+                  <template slot-scope="scope">
+                    <el-link
+                      :underline="false"
+                      @click="del(scope.$index,scope.row,detailform.topInfoSiteList),checkTopInfoSiteList()"
+                      type="warning"
+                    >删除
+                    </el-link
+                    >
+                  </template>
+                </el-table-column>
+              </el-table>
               <p><span >证明文件: </span>
                 <el-button
                   v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
@@ -2269,6 +2381,11 @@ export default {
         jzlx:[],//建筑类型
         jzjglx:[],//建筑结构类型
         cdmc:[],//场地名称
+        topInfoSiteList:[{ country: '',
+          ffid: '',
+          path: '',
+          contractAmount: '',
+          isMain: '1'}],
       },
       emergingMarketTwo:[],
       cpxxList:[
@@ -2330,6 +2447,44 @@ export default {
     },
   },
   methods: {
+    //检查合同地点与关联项目地点是否不一致
+    checkTopInfoSiteList(){
+      if(this.detailform.searchProject==true){
+        this.topInfoSiteListDifferent=false;
+        if(this.topInfoSiteListCopy.length!=this.detailform.topInfoSiteList.length){
+          this.topInfoSiteListDifferent=true;
+        }else{
+          var i=0,len=this.topInfoSiteListCopy.length;
+          for(;i<len;i++){
+            this.topInfoSiteListCopy[i].contractAmount=Number(this.topInfoSiteListCopy[i].contractAmount);
+            this.detailform.topInfoSiteList[i].contractAmount=Number(this.detailform.topInfoSiteList[i].contractAmount);
+          };
+          if( JSON.stringify(this.topInfoSiteListCopy) != JSON.stringify(this.detailform.topInfoSiteList)){
+            this.topInfoSiteListDifferent=true;
+          }
+        }
+      }
+    },
+    //新增标段和地点
+    add(type) {
+      var v = {};
+      if (type == 'dd') {
+        v = {
+          country: '',
+          ffid: '',
+          path: '',
+          contractAmount: '',
+          isMain: ''
+        }
+        this.detailform.topInfoSiteList.push(v);
+      } else {
+        v = {
+          sectionName: '',
+          projectScale: '',
+        }
+        this.detailform.topInfoSectionList.push(v);
+      }
+    },
     //获取系统外联合体,系统外分包的单位名称
     getXtwName(id, list, index){
       if(id){
@@ -2504,13 +2659,41 @@ export default {
       this.$forceUpdate();
     },
 
-      //获取供货地点的值
+      // //获取供货地点的值
+      // getPositionTree(data) {
+      //     console.log(data)
+      //     this.treeStatas = false;
+      //     this.detailform.contractInfo.path=data.fullDetailCode;
+      //     this.detailform.contractInfo.path=data.fullDetailName;
+      //     this.detailform.contractInfo.placeId=data.id;
+      // },
+      //获取项目地点的值
       getPositionTree(data) {
-          console.log(data)
-          this.treeStatas = false;
-          this.detailform.contractInfo.path=data.fullDetailCode;
-          this.detailform.contractInfo.path=data.fullDetailName;
-          this.detailform.contractInfo.placeId=data.id;
+        console.log(data)
+        this.treeStatas = false;
+        var country = '', _data = data;
+        if (_data.fullDetailName.indexOf("境内") != -1) {
+          country = '01';
+        } else if (_data.fullDetailName.indexOf("境外") != -1) {
+          country = '02';
+        }
+        var ifRepeat=false;
+        this.detailform.topInfoSiteList.forEach((item, index) => {
+          if(item.ffid!=_data.fullDetailCode&&!ifRepeat){
+            if (index == this.positionIndex) {
+              // item.detailName = _data.detailName;
+              item.country = country;
+              item.ffid = _data.fullDetailCode;
+              item.path = _data.fullDetailName;
+              item.placeId=_data.id;
+              this.checkTopInfoSiteList();
+            }
+          }else{
+            this.$message.error("项目地点不能重复");
+            ifRepeat=true;
+          }
+        });
+        this.key = this.key + 1;
       },
       //选择供货地点
       selectPosition() {
@@ -3026,6 +3209,20 @@ export default {
         this.$message.error("产品信息列表总和需要等于合同总金额");
         return false;
       }
+      if(this.detailform.topInfoSiteList.length==0){
+        this.$message.error("请至少选择一个项目地点");
+        return false;
+      }
+      var hasMain=false;
+      this.detailform.topInfoSiteList.forEach((item)=>{
+        if(item.isMain=='1'){
+          hasMain=true;
+        }
+      });
+      if(!hasMain){
+        this.$message.error("请选择一个主地点");
+        return false;
+      }
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$http
@@ -3077,6 +3274,7 @@ export default {
         jzlx:[],//建筑类型
         jzjglx:[],//建筑结构类型
         cdmc:[],//场地名称
+        topInfoSiteList:datas.topInfoSiteList,
       }
       this.detailform.cdmc=datas.contractInfo.siteNameId&&datas.contractInfo.siteNameId.split(",");
       this.detailform.zplx=datas.contractInfo.otherAssemblyTypeId&&datas.contractInfo.otherAssemblyTypeId.split(",");

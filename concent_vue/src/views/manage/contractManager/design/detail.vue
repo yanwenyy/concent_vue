@@ -3362,7 +3362,9 @@
           this.detailform.contractInfo.topInforId=data.data.uuid;
           var _con={};
           this.getTwo(datas.topInfor.enginTypeFirstId);
-              this.getThree(datas.topInfor.enginTypeSecondId);
+          if(datas.topInfor.enginTypeSecondId){
+            this.getThree(datas.topInfor.enginTypeSecondId);
+          }
           this.getTwoSC(datas.topInfor.marketFirstNameId);
           for(var i in this.detailform.contractInfo){
             // i!='isImport'
@@ -3439,7 +3441,9 @@
           this.detailform.contractInfo.supplyContractId=data.data.uuid;
           var _con={};
           this.getTwo(datas.contractInfo.enginTypeFirstId);
-              this.getThree(datas.topInfor.enginTypeSecondId);
+              if(datas.contractInfo.enginTypeSecondId){
+                this.getThree(datas.contractInfo.enginTypeSecondId);
+              }
           this.getTwoSC(datas.contractInfo.marketFirstNameId);
           for(var i in this.detailform.contractInfo){
             // i!='isImport'

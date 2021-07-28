@@ -2957,6 +2957,19 @@
           this.$message.error("请至少添加一条年度合同收益");
           return false;
         }
+        if(this.detailform.contractInfo.isYearContract=='0'){
+          var ddMoney=0,syMoney=0;
+          this.detailform.topInfoSiteList.forEach((item)=>{
+            ddMoney+=Number(item.contractAmount)
+          });
+          this.detailform.contractInfoHouseSalesList.forEach((item)=>{
+            syMoney+=Number(item.contractAmount)
+          });
+          if(ddMoney!=syMoney){
+            this.$message.error("项目地点金额之和应等于年度合同收益列表中本月收益之和");
+            return false;
+          }
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.detailform.commonFilesList=this.detailform.commonFilesList1.concat(this.detailform.commonFilesList2)
