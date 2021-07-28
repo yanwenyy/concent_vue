@@ -484,7 +484,8 @@
         },
         });
         } else {
-          this.$message.error(response.msg);
+          // this.$message.error(response.msg);
+          this.$message.error("文件上传类型不符！");
         }
       },
       //工程类别二级
