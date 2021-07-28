@@ -1329,9 +1329,10 @@
             size="mini"
             v-model="detailformAfter.verify.outOrg"
           >
-            <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('外部联合体单位',detailformAfter.verify.outOrgId)"
-                       v-if="p.actpoint != 'look' &&p.actpoint != 'task'&& detailformAfter.verify.isCoalitionBid != '否' && detailformAfter.verify.isCoalitionBid != null"
-            ></el-button>
+            <el-button v-if="p.actpoint != 'look' &&p.actpoint != 'task'&& detailformAfter.verify.isCoalitionBid != '否' && detailformAfter.verify.isCoalitionBid != null" slot="append" icon="el-icon-circle-plus-outline" @click="openComMul(detailformAfter.verify.outOrgId,detailformAfter.verify.outOrg,'/api/contract/Companies/detail/findCompanies','外部联合体单位')"></el-button>
+            <!--<el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('外部联合体单位',detailformAfter.verify.outOrgId)"-->
+                       <!--v-if="p.actpoint != 'look' &&p.actpoint != 'task'&& detailformAfter.verify.isCoalitionBid != '否' && detailformAfter.verify.isCoalitionBid != null"-->
+            <!--&gt;</el-button>-->
           </el-input>
 
         </el-form-item>
@@ -1644,6 +1645,8 @@
     <TreeOrg v-if="treeOrgStatas2" ref="addOrUpdate2" @getPosition="getTreeOrg2"></TreeOrg>
       <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
       <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
+      <!--多选的单位列表组件-->
+      <company-mul v-if="companyMulStatus" ref="comAdd" @getComList="getComList"></company-mul>
     </el-tab-pane>
     <el-tab-pane label="审批流程" name="lc" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&detailformAfter.verify.flowStatus!=1&&detailformAfter.verify.flowStatus!=null">
       <Audit-Process :task="p.task||{businessId:(p.changRecorUUid+'-'+p.topinfoid),businessType:'contract_qual_change'}"></Audit-Process>
@@ -1657,16 +1660,19 @@ import TreeOrg from '@/components/treeOrg'
 import AuditProcess from '@/components/auditProcess'
 import FileUpload from '@/components/fileUpload'
 import CompanyTree from '../contractManager/companyTree'
+import companyMul from '@/components/companiesMultiple'
 export default {
   // name: '详情',
   components: {
     TreeOrg,
     AuditProcess,
     FileUpload,
-    CompanyTree
+    CompanyTree,
+    companyMul,//多选的单位列表组件
   },
   data() {
     return {
+      companyMulStatus:false,//设计单位等多选列表状态
       DwVisible:false,//选择单位弹框状态
       uploadVisible:false,//上传附件组件状态
       activeName:"after",
@@ -1757,6 +1763,22 @@ export default {
 
   },
   methods: {
+    //打开多选的单位列表
+    openComMul(ids,names,url,type){
+      this.companyMulStatus=true;
+      this.$nextTick(() => {
+        this.$refs.comAdd.init(ids,names,url,type);
+      })
+    },
+    //获取拿过来的多选单位列表
+    getComList(data){
+      console.log(data)
+      this.$forceUpdate();
+      if(data.type=='外部联合体单位'){
+        this.detailformAfter.verify.outOrgId=data.selIdList.join(",");
+        this.detailformAfter.verify.outOrg=data.selList.join(",");
+      }
+    },
     //打开单位弹框
     addDw(type,list,ifChek,index,tableList){
       this.DwVisible = true;

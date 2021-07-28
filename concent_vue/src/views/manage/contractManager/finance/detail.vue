@@ -2586,6 +2586,27 @@ export default {
         this.$message.error('合同总金额需要大于0');
       }
     },
+    //项目地点份额变动的时候
+    getPositionMoney(index,list){
+      if(list.length==1){
+        list[0].contractAmount=this.detailform.contractInfo.ourAmount
+      }else{
+        var money=0;
+        list.forEach((item,i)=>{
+          if(i>0){
+            money+=Number(item.contractAmount);
+          }
+        });
+        // console.log(this.detailform.contractInfo.ourAmount,money)
+        if(this.detailform.contractInfo.ourAmount-money>0){
+          list[0].contractAmount=this.detailform.contractInfo.ourAmount-money;
+        }else{
+          list[index].contractAmount='';
+          this.$message.error('项目地点份额之和不能大于初始我方份额');
+        }
+      }
+
+    },
     handleRemove1(file,index) {
       this.$http
         .post(

@@ -1587,7 +1587,9 @@
                   clearable
                   placeholder=""
                   v-model="detailform.bidInfo.outOrg"
-                />
+                >
+                  <el-button v-if="p.actpoint!='task'&&p.actpoint!='look'&&detailform.bidInfo.isCoalitionBid != '1'&&detailform.bidInfo.isCoalitionBid !=''" slot="append" icon="el-icon-circle-plus-outline" @click="openComMul(detailform.bidInfo.outOrgId,detailform.bidInfo.outOrg,'/api/contract/Companies/detail/findCompanies','外部联合体单位',detailform.bidInfo.outOrgCode)"></el-button>
+                </el-input>
               </el-form-item>
 
 
@@ -2051,6 +2053,8 @@
       <add-bd  v-if="BDCSVisible" ref="infoBD" @refreshBD="getBdInfo"></add-bd>
        <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
       <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
+      <!--多选的单位列表组件-->
+      <company-mul v-if="companyMulStatus" ref="comAdd" @getComList="getComList"></company-mul>
     </el-tab-pane>
     <el-tab-pane label="审批流程" name="lc" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
         <Audit-Process :task="p.task||{businessId:p.uuid,businessType:'contract_bid_change'}"></Audit-Process>
@@ -2066,10 +2070,12 @@ import Tree from "@/components/tree";
 import { isMoney } from "@/utils/validate";
 import AuditProcess from '@/components/auditProcess'
 import FileUpload from '@/components/fileUpload'
+import companyMul from '@/components/companiesMultiple'
 export default {
   // name: "详情",
   data() {
     return {
+      companyMulStatus:false,//设计单位等多选列表状态
       maxMoney:1000000,
       uploadVisible:false,//上传附件组件状态
       activeName:"after",
@@ -2133,7 +2139,8 @@ export default {
     AddBd,
     CompanyTree,
     AuditProcess,
-    FileUpload
+    FileUpload,
+    companyMul,//多选的单位列表组件
   },
   computed: {
     projectDomainType() {
@@ -2201,6 +2208,22 @@ export default {
     // eslint-disable-next-line no-unde
   },
   methods: {
+    //打开多选的单位列表
+    openComMul(ids,names,url,type,codes){
+      this.companyMulStatus=true;
+      this.$nextTick(() => {
+        this.$refs.comAdd.init(ids,names,url,type,codes);
+      })
+    },
+    //获取拿过来的多选单位列表
+    getComList(data){
+      this.$forceUpdate();
+      if(data.type=='外部联合体单位'){
+        this.detailform.bidInfo.outOrgId=data.selIdList.join(",");
+        this.detailform.bidInfo.outOrg=data.selList.join(",");
+        this.detailform.bidInfo.outOrgCode=data.selCodeList.join(",");
+      }
+    },
     //打开附件上传的组件
     openFileUp(url,list){
       this.uploadVisible = true;
