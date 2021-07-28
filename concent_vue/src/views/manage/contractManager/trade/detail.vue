@@ -2410,11 +2410,11 @@ export default {
       outOrIn:[
         {
           id:'0',
-          detailName:'内'
+          detailName:'系统内'
         },
         {
           id:'1',
-          detailName:'外'
+          detailName:'系统外'
         }
       ],
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
