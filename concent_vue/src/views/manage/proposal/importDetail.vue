@@ -718,6 +718,8 @@
                   clearable
                   placeholder=""
                   v-model="detailform.topInfor.investment"
+                  onkeyup="value=value.replace(/[^0-9.]/g,'')"
+                  placeholder="请输入数字"
                   @input="detailform.topInfor.investment>=maxMoney?detailform.topInfor.isMajorProject='0':detailform.topInfor.isMajorProject='1'"
                 >
                   <template slot="prepend">¥</template>
