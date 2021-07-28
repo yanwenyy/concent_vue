@@ -62,7 +62,7 @@
         <el-select
           clearable
           filterable
-          placeholder="请选择工程类别(一级)"
+          placeholder="请选择工程类别(二级)"
           size="mini"
           v-model="searchform.projectNatureSecondId"
         >
@@ -83,7 +83,7 @@
           placeholder="请选择"
           @change="getTwo"
           size="mini"
-          v-model="searchform.enginTypeFirstId"
+          v-model="searchform.flowStatus"
         >
           <el-option
             :key="index"
@@ -118,7 +118,7 @@
         <el-select
           clearable
           filterable
-          placeholder="请选择工程类别(一级)"
+          placeholder="请选择工程类别(二级)"
           size="mini"
           v-model="searchform.enginTypeSecondId"
         >
