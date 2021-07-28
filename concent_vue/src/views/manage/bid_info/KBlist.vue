@@ -202,7 +202,7 @@
           show-overflow-tooltip>
 
           <template slot="header" slot-scope="scope">
-            <span>截至投标日期</span>
+            <span>投标截止日期</span>
             <div>
               <el-date-picker
               style=" width: 100%"
