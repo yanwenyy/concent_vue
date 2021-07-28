@@ -32,7 +32,7 @@
       </div>
 
     <el-tabs type="border-card" >
-      <el-tab-pane label="投标管理详情">
+      <el-tab-pane label="开标信息详情">
       <div class="detailBox">
         <el-divider content-position="left" class="detailDivider"
           >项目前期信息</el-divider
