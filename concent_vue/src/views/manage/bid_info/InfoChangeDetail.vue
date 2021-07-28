@@ -2324,6 +2324,13 @@ export default {
         tableList.push(item.bidInfoSection.sectionName)
       });
       bdList=this.detailform.topInforBO.topInfoSectionList.filter(item => tableList.indexOf(item.sectionName)==-1);
+      if (bdList.length < 1) {
+        this.$message({
+          message: '无标段新增!',
+          type: 'warning'
+        });
+        return false
+      }
       this.$nextTick(() => {
         this.$refs.infoBD.init(bdList,this.detailform.bidInfo.isBidRates,type,detail,index);
       })
