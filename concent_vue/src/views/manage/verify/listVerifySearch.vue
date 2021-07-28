@@ -227,6 +227,17 @@
         <el-table-column
           :width="150"
           align="center"
+          label="招标代理机构"
+          prop="topInfor.bidAgentCompany"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+            {{scope.row.bidAgentCompany}}
+          </template>
+        </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
           label="公告类型"
           prop="topInfor.noticeTypeName"
           show-overflow-tooltip
