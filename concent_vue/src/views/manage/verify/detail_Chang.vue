@@ -2332,11 +2332,14 @@ export default {
       console.log(file)
       // var name = file.fileName;
       // var url = file.filePath;
+      var uuid = file.uuid;
       // const a = document.createElement('a')
       // a.setAttribute('download', name)
       // a.setAttribute('target', '_blank')
-      // a.setAttribute('href', "接口?tPath=" + url)
+      // a.setAttribute('href', "/api/contract/topInfo/CommonFiles/detail/downloadFile?uuid=" + uuid)
       // a.click()
+
+      window.open('/api/contract/topInfo/CommonFiles/detail/downloadFile?uuid='+ uuid);
     }
 
   },

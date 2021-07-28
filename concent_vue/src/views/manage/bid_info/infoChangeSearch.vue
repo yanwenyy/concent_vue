@@ -61,6 +61,16 @@
           'background-color': 'whitesmoke',
         }"
         style="width: 100%;">
+        <el-table-column label="" width="40">
+        <template slot-scope="scope">
+          <el-radio
+            :label="scope.row.topInfoOrgId"
+            v-model="radioRow"
+            @change="getCurrentRow(scope.row)"
+            style="color: #fff;"
+          ></el-radio>
+        </template>
+        </el-table-column>
         <el-table-column
           type="index"
           header-align="center"
@@ -156,7 +166,8 @@
         totalPage: 0,
         dataListLoading: false,
         dataListSelections: [],
-        currentRow: ''
+        currentRow: '',
+        radioRow: null,
       }
     },
     computed: {
@@ -221,6 +232,12 @@
       // 单选
       handleCurrentChange2(val) {
         this.currentRow = val;
+        this.radioRow = val.topInfoOrgId
+      },
+      // 单选按钮
+      getCurrentRow(val) {
+        this.currentRow = val;
+        this.radioRow = val.topInfoOrgId
       }
     }
   }

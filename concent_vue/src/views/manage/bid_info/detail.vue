@@ -32,7 +32,7 @@
       </div>
 
     <el-tabs type="border-card" >
-      <el-tab-pane label="投标管理详情">
+      <el-tab-pane label="开标信息详情">
       <div class="detailBox">
         <el-divider content-position="left" class="detailDivider"
           >项目前期信息</el-divider
@@ -1041,18 +1041,17 @@
             >
             </el-table-column>
 
-            <el-table-column
+            <!-- <el-table-column
               :resizable="false"
               label="其他投标单位(系统内)"
               show-overflow-tooltip
               align="center"
               :width="180"
-            >
+            > -->
               <!-- <template slot-scope="scope">
                 <span v-for="(item,index) in scope.row.bidInfoSectionOrgList">{{item.orgType==1?item.orgName:''}}{{index <scope.row.bidInfoSectionOrgList.length-1? ',':''}}</span>
-
               </template> -->
-              <template slot-scope="scope">
+              <!-- <template slot-scope="scope">
                 <span v-for="(item, index) in scope.row.bidInfoSectionOrgList">
                   {{ item.orgType == 1 ? item.orgName : "" }}
                   {{
@@ -1065,19 +1064,19 @@
                   }}
                 </span>
               </template>
-            </el-table-column>
+            </el-table-column> -->
 
-            <el-table-column
+            <!-- <el-table-column
               :resizable="false"
               label="其他投标单位(系统外)"
               show-overflow-tooltip
               align="center"
               :width="180"
-            >
+            > -->
               <!-- <template slot-scope="scope">
                 <span v-for="(item,index) in scope.row.bidInfoSectionOrgList">{{item.orgType==2?item.orgName:''}}{{index < scope.row.bidInfoSectionOrgList.length-1? ',':''}}</span>
               </template> -->
-              <template slot-scope="scope">
+              <!-- <template slot-scope="scope">
                 <span v-for="(item, index) in scope.row.bidInfoSectionOrgList">
                   {{ item.orgType == 2 ? item.orgName : "" }}
                   {{
@@ -1090,9 +1089,9 @@
                   }}
                 </span>
               </template>
-            </el-table-column>
+            </el-table-column> -->
 
-            <el-table-column
+            <!-- <el-table-column
               :resizable="false"
               label="其他未列出单位"
               prop="bidInfoSection.otherUnitsNotListed"
@@ -1100,7 +1099,7 @@
               align="center"
               :width="180"
             >
-            </el-table-column>
+            </el-table-column> -->
 
             <el-table-column
               :resizable="false"

@@ -636,9 +636,9 @@
             </el-form>
           </el-form>
         </div>
-        <div slot="footer" class="dialog-footer self-footer">
+        <div slot="footer" class="dialog-footer self-footer" v-show="zbType=='add'" >
           <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button v-show="zbType=='add'" type="primary" @click="saveInfo('zbForm')">确 定</el-button>
+          <el-button type="primary" @click="saveInfo('zbForm')">确 定</el-button>
         </div>
       </el-dialog>
     </div>
