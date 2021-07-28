@@ -347,6 +347,7 @@
             class="detatil-flie-btn"
             type="primary"
             :disabled="type === 'look'||type=='eidtnew'"
+            v-if="!(type === 'look'||type=='eidtnew')"
           >新增</el-button >
         </div>
         <el-table class="detailTable"
@@ -422,6 +423,7 @@
             align="center"
             width="100"
             :disabled="type === 'look'||type=='eidtnew'"
+            v-if="!(type === 'look'||type=='eidtnew')"
           >
             <template slot-scope="scope" >
               <el-link :underline="false" @click="del(scope.$index,'inside')" type="warning" :disabled="type === 'look'">删除</el-link>
@@ -436,6 +438,7 @@
             class="detatil-flie-btn"
             type="primary"
             :disabled="type === 'look'||type=='eidtnew'"
+            v-if="!(type === 'look'||type=='eidtnew')"
           >新增</el-button >
         </div>
 
@@ -526,6 +529,7 @@
             align="center"
             width="100"
             :disabled="type === 'look'||type=='eidtnew'"
+            v-if="!(type === 'look'||type=='eidtnew')"
           >
             <template slot-scope="scope">
               <el-link :underline="false" @click="del(scope.$index,'outside')" type="warning" :disabled="type === 'look'">删除</el-link>
