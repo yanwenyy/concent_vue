@@ -827,7 +827,7 @@
                   size="mini"
                   v-model="detailform.contractInfo.tradeInoutRoad"
                 >
-                  <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in outOrIn"></el-option>
+                  <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in roadOrIn"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item
@@ -2415,6 +2415,16 @@ export default {
         {
           id:'1',
           detailName:'系统外'
+        }
+      ],
+      roadOrIn:[
+        {
+          id:'0',
+          detailName:'路内'
+        },
+        {
+          id:'1',
+          detailName:'路外'
         }
       ],
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
