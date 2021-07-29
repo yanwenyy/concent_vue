@@ -15,7 +15,7 @@
                   placeholder="选择单位"
                   clearable></el-input>
       </el-form-item>
-      <el-form-item label="填报时间:">
+      <!-- <el-form-item label="填报时间:">
         <el-date-picker
           v-model="searchform.reportTime"
           type="daterange"
@@ -25,6 +25,16 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期">
         </el-date-picker>
+      </el-form-item> -->
+      <el-form-item label="填报时间:">
+        <el-date-picker
+            v-model="searchform.createTime"
+            type="date"
+            align="right"
+            value-format="timestamp"
+            placeholder="选择日期">
+            >
+          </el-date-picker>
       </el-form-item>
       <!--<el-form-item label="登记时间:">-->
           <!--<el-date-picker-->

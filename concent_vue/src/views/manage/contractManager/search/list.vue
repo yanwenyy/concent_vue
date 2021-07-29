@@ -163,7 +163,7 @@
           filterable
           placeholder="请选择"
           size="mini"
-          v-model="searchform.flowStatus"
+          v-model="searchform.changeStatus"
         >
           <el-option
             :key="index"
@@ -518,7 +518,7 @@
         projectNatureTwo:[],//项目性质二级
         projectStatus:[
           {
-            id:'1',
+            id:'',
             detailName:'全部'
           },
           {
