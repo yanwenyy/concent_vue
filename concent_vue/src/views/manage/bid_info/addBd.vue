@@ -657,7 +657,6 @@ import { isMoney } from '@/utils/validate'
           // 填入相关数据
           let data = []
           data = list.find( (item) => item.uuid == id )
-          console.info(data)
           this.detailForm.bidInfoSection.participatingUnitsName  = data.verifySectionOrgNameType01
           this.detailForm.bidInfoSection.orgName  = data.verifySectionOrgNameType02
           this.detailForm.bidInfoSection.investmentReckon  = data.investmentReckon
