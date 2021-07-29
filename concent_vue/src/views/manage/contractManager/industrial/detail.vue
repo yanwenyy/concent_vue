@@ -2407,6 +2407,9 @@ export default {
       rules:{
         contractAmount: [
           { required: true,validator: validateMoney, trigger: 'change' }
+        ],
+        bidNoticeWebsite:[
+          { required: true,validator: validateUrl, trigger: 'change' }
         ]
       },//表单验证规则
     }

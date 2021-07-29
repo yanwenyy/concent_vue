@@ -4,6 +4,7 @@
       <el-tabs v-model="activeName" @tab-click="getData(activeName)">
         <el-tab-pane label="待办" name="first">
           <div class="dbTabel">
+            <el-button class="sub-btn" @click="submit" plain type="primary"><i class="el-icon-plus"></i>批量审核</el-button>
             <el-table
               class="tableStyle"
               :max-height="$tableHeight"
@@ -12,10 +13,17 @@
               :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
               border
               @row-click="rowshow"
+              @selection-change="handleSelectionChange"
               highlight-current-row
               ref="table"
               tooltip-effect="dark"
             >
+              <el-table-column
+                :width="50"
+                align="center"
+                show-overflow-tooltip
+                type="selection"
+              ></el-table-column>
               <el-table-column
                 :width="70"
                 align="center"
@@ -174,6 +182,7 @@
       return {
         activeName:'first',
         page: {current: 1, size: 20, total: 0, records: []},
+        multipleSelection:[],
         searchform: {
           current: 1,
           size: 20,
@@ -185,6 +194,32 @@
       };
     },
     methods: {
+      //批量审核
+      submit(){
+        if (this.multipleSelection.length < 1) {
+          this.$message.info("请选择一条记录进行审核操作！");
+          return false;
+        }
+        this.$confirm(`确认审核这些数据吗?`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$http
+            .post(
+              "/api/statistics/StatisticsProject/commonProcess/complete",
+              JSON.stringify(this.multipleSelection), {useJson: true}
+
+            )
+            .then((res) => {
+              this.$message({
+                message: '操作成功',
+                type: 'success'
+              })
+              this.getData()
+            });
+        }).catch(() => {})
+      },
       //撤回
       withdraw(val){
         console.log(val)
@@ -309,7 +344,11 @@
     border-radius: 0;
   }
   .tableStyle{
-    min-height:calc(100vh - 136px)!important;
-    max-height:calc(100vh - 136px)!important ;
+    min-height:calc(100vh - 166px)!important;
+    max-height:calc(100vh - 166px)!important ;
+  }
+  .sub-btn{
+    float: right;
+    margin-bottom: 10px;
   }
 </style>

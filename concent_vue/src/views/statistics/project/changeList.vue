@@ -7,6 +7,7 @@
         <el-button @click="add" type="primary" plain><i class="el-icon-plus"></i>新增</el-button>
         <el-button @click="edit" type="primary" plain><i class="el-icon-edit"></i>修改</el-button>
         <el-button @click="del" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
+        <el-button @click="batchSub" type="primary" plain><i class="el-icon-plus"></i>批量提交</el-button>
       </el-button-group>
       <div style="float: right;">
         <el-button
@@ -297,6 +298,54 @@
       }
     },
     methods: {
+      //批量提交
+      batchSub(){
+        if (this.multipleSelection.length !== 1) {
+          this.$message.info("请选择一条记录进行提交操作！");
+          return false;
+        }
+        var list=[],itemStatus=true;
+        this.multipleSelection.forEach((item) => {
+          if(item.flowStatus==1||item.flowStatus==4){
+            var v={
+              businessId:item.recordUuid,
+              businessName:item.projectName,
+              businessType:'project_project_change'
+            }
+            list.push(v);
+          }else{
+            this.$message.info("当前所选数据中包含不可提交的选项,请检查后进行操作");
+            return itemStatus=false;
+          }
+        })
+        if(itemStatus){
+          this.$confirm(`确认提交这些数据吗`, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$http
+              .post(
+                "/api/statistics/StatisticsProject/commonProcess/start",
+                JSON.stringify(list),
+                {useJson: true}
+
+              )
+              .then((res) => {
+                if(res.data.code==200){
+                  this.$message({
+                    message: "操作成功",
+                    type: "success",
+                  });
+                  this.getData()
+                }else{
+                  this.$message.error(res.data.msg);
+                }
+
+              });
+          }).catch(() => {})
+        }
+      },
       getRoute(id) {
         var url = ''
         if (id === '7f4fcba4255b43a8babf15afd6c04a53') {

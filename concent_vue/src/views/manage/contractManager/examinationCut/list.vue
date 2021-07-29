@@ -5,6 +5,7 @@
         <el-button @click="add" type="primary" plain><i class="el-icon-plus"></i>新增</el-button>
         <el-button @click="totop" type="primary" plain><i class="el-icon-edit"></i>修改</el-button>
         <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
+        <el-button @click="batchSub" type="primary" plain><i class="el-icon-plus"></i>批量提交</el-button>
       </el-button-group>
       <div style="float: right;">
         <el-form class="search-form" :inline="true" :model="searchFrom" @keyup.enter.native="init()">
@@ -19,14 +20,14 @@
               clearable
               filterable
               placeholder="请选择"
-              v-model="searchFrom.state"
+              size="mini"
+              v-model="searchFrom.flowStatus"
             >
-              <el-option
-                :key="index"
-                :label="item.detailName"
-                :value="item.id"
-                v-for="(item, index) in shztList"
-              ></el-option>
+              <el-option label="待登记" value="0"></el-option>
+              <el-option label="草稿" value="1"></el-option>
+              <el-option label="审核中" value="2"></el-option>
+              <el-option label="审核通过" value="3"></el-option>
+              <el-option label="审核退回" value="4"></el-option>
             </el-select>
           </el-form-item>
         </el-form>
@@ -143,17 +144,17 @@
             scope.row.createTime | dateformat
             }}</template>
         </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="核减通过时间"
-          prop="approveTime"
-          show-overflow-tooltip
-        >
-          <template slot-scope="scope">{{
-            scope.row.approveTime | dateformat
-            }}</template>
-        </el-table-column>
+        <!--<el-table-column-->
+          <!--:width="150"-->
+          <!--align="center"-->
+          <!--label="核减通过时间"-->
+          <!--prop="approveTime"-->
+          <!--show-overflow-tooltip-->
+        <!--&gt;-->
+          <!--<template slot-scope="scope">{{-->
+            <!--scope.row.approveTime | dateformat-->
+            <!--}}</template>-->
+        <!--</el-table-column>-->
       </el-table>
       <el-pagination
         :current-page="page.current"
@@ -206,6 +207,54 @@
       ChangeSearch
     },
     methods: {
+      //批量提交
+      batchSub(){
+        if (this.multipleSelection.length !== 1) {
+          this.$message.info("请选择一条记录进行提交操作！");
+          return false;
+        }
+        var list=[],itemStatus=true;
+        this.multipleSelection.forEach((item) => {
+          if(item.flowStatus==1||item.flowStatus==4){
+            var v={
+              businessId:item.uuid,
+              businessName:item.contractName,
+              businessType:'contract_cut_exam'
+            }
+            list.push(v);
+          }else{
+            this.$message.info("当前所选数据中包含不可提交的选项,请检查后进行操作");
+            return itemStatus=false;
+          }
+        })
+        if(itemStatus){
+          this.$confirm(`确认提交这些数据吗`, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$http
+              .post(
+                "/api/contract/topInfo/Verify/commonProcess/start",
+                JSON.stringify(list),
+                {useJson: true}
+
+              )
+              .then((res) => {
+                if(res.data.code==200){
+                  this.$message({
+                    message: "操作成功",
+                    type: "success",
+                  });
+                  this.getData()
+                }else{
+                  this.$message.error(res.data.msg);
+                }
+
+              });
+          }).catch(() => {})
+        }
+      },
       //根据id跳页面
       getUrl(id){
         var url='';

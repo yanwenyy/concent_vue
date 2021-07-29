@@ -184,266 +184,267 @@
       <el-dialog  title="中标结果登记" :visible.sync="dialogFormVisible" >
         <div>
           <el-form :inline="true" :model="zbForm" :rules="rules" ref="zbForm" @keyup.enter.native="init()"  class="gcform">
-            <el-form-item label="标段名称:" class="list-item" >
-              <el-select
-                clearable
-                placeholder=""
-                v-model="zbForm.bidInfoSection.sectionName"
-                disabled>
-                <el-option
-                  :key="index"
-                  :label="item.sectionName"
-                  :value="item.sectionName"
-                  v-for="(item, index) in bdName"
-                ></el-option>
-              </el-select>
-            </el-form-item>
+            <div v-if="zbType=='look'">
+                <el-form-item label="标段名称:" class="list-item" >
+                  <el-select
+                    clearable
+                    placeholder=""
+                    v-model="zbForm.bidInfoSection.sectionName"
+                    disabled>
+                    <el-option
+                      :key="index"
+                      :label="item.sectionName"
+                      :value="item.sectionName"
+                      v-for="(item, index) in bdName"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
 
-            <el-form-item label="评标办法:" class="list-item">
-              <template slot-scope="scope">
-                <el-select
+                <el-form-item label="评标办法:" class="list-item">
+                  <template slot-scope="scope">
+                    <el-select
 
-                  clearable
-                  placeholder="评标办法"
-                  size="mini"
-                  :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
-                  @change="
-                getName(
-                  zbForm.bidInfoSection.bidEvaluationMethodId,
-                  bidMethod,
-                  'bidEvaluationMethodName'
-                )
-              "
-                  v-model="zbForm.bidInfoSection.bidEvaluationMethodName">
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in bidMethod"
+                      clearable
+                      placeholder="评标办法"
+                      size="mini"
+                      :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
+                      @change="
+                    getName(
+                      zbForm.bidInfoSection.bidEvaluationMethodId,
+                      bidMethod,
+                      'bidEvaluationMethodName'
+                    )
+                  "
+                      v-model="zbForm.bidInfoSection.bidEvaluationMethodName">
+                      <el-option
+                        :key="index"
+                        :label="item.detailName"
+                        :value="item.id"
+                        v-for="(item, index) in bidMethod"
 
-                  ></el-option>
-                </el-select>
-              </template>
-            </el-form-item>
+                      ></el-option>
+                    </el-select>
+                  </template>
+                </el-form-item>
 
-            <el-form-item label="开标地点:" class="list-item">
-              <el-input v-model="zbForm.bidInfoSection.openBidPlaceName"
-                        placeholder="开标地点"
-                        clearable
-                        :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
-                        @clear="searchform.openBidPlaceId=''"
-              >
-                <el-button
-                  :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
-                  slot="append"
-                  icon="el-icon-search"
-                  @click="selectPosition()"
-                ></el-button>
-              </el-input>
-            </el-form-item>
-            <br>
-            <el-form-item label="开标日期:" class="list-item">
-              <el-date-picker
-                width="100%"
-                filterable
-                clearable
-                type="date"
-                value-format="timestamp"
-                :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
-                v-model="zbForm.bidInfoSection.dateOfBidOpeningName"
-              >
-              </el-date-picker>
-            </el-form-item>
+                <el-form-item label="开标地点:" class="list-item">
+                  <el-input v-model="zbForm.bidInfoSection.openBidPlaceName"
+                            placeholder="开标地点"
+                            clearable
+                            :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
+                            @clear="searchform.openBidPlaceId=''"
+                  >
+                    <el-button
+                      :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
+                      slot="append"
+                      icon="el-icon-search"
+                      @click="selectPosition()"
+                    ></el-button>
+                  </el-input>
+                </el-form-item>
+                <br>
+                <el-form-item label="开标日期:" class="list-item">
+                  <el-date-picker
+                    width="100%"
+                    filterable
+                    clearable
+                    type="date"
+                    value-format="timestamp"
+                    :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
+                    v-model="zbForm.bidInfoSection.dateOfBidOpeningName"
+                  >
+                  </el-date-picker>
+                </el-form-item>
 
-            <el-form-item label="参与投标单位:" class="list-item">
-              <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.participatingUnitsName" class="input-with-select" :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'">
-                <el-button :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('参与投标单位',zbForm.bidInfoSection.participatingUnitsId)" ></el-button>
-              </el-input>
-            </el-form-item>
+                <el-form-item label="参与投标单位:" class="list-item">
+                  <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.participatingUnitsName" class="input-with-select" :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'">
+                    <el-button :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('参与投标单位',zbForm.bidInfoSection.participatingUnitsId)" ></el-button>
+                  </el-input>
+                </el-form-item>
 
-            <el-form-item label="编标拟配合单位:" class="list-item">
-              <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.orgName" class="input-with-select" :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'">
-                <el-button :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('编标拟配合单位',zbForm.bidInfoSection.orgId)" ></el-button>
-              </el-input>
-            </el-form-item>
-            <br>
+                <el-form-item label="编标拟配合单位:" class="list-item">
+                  <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.orgName" class="input-with-select" :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'">
+                    <el-button :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('编标拟配合单位',zbForm.bidInfoSection.orgId)" ></el-button>
+                  </el-input>
+                </el-form-item>
+                <br>
 
-            <el-form-item label="投标保证金(万元):" class="list-item" prop="bidInfoSection.tenderSecurity"  :rules="rules.contractAmount">
-              <el-input
-                v-model="zbForm.bidInfoSection.tenderSecurity"
-                clearable
-                placeholder="投标保证金(万元)"
-                :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
-              >
-                <template slot="prepend">¥</template>
-                <template slot="append">(万元)</template>
-              </el-input>
-            </el-form-item>
+                <el-form-item label="投标保证金(万元):" class="list-item" prop="bidInfoSection.tenderSecurity"  :rules="rules.contractAmount">
+                  <el-input
+                    v-model="zbForm.bidInfoSection.tenderSecurity"
+                    clearable
+                    placeholder="投标保证金(万元)"
+                    :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
+                  >
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-form-item>
 
-            <el-form-item label="投标价(万元):" class="list-item" prop="bidInfoSection.bidPrice"  :rules="rules.contractAmount">
-              <el-input
-                v-model="zbForm.bidInfoSection.bidPrice"
-                clearable
-                placeholder="投标价(万元)"
-                :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
-              >
-                <template slot="prepend">¥</template>
-                <template slot="append">(万元)</template>
-              </el-input>
-            </el-form-item>
-            <el-form-item label="施工单位:" class="list-item">
-              <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.constructionUnitName" class="input-with-select" :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'">
-                <el-button :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('施工单位',zbForm.bidInfoSection.constructionUnitId,false)" ></el-button>
-              </el-input>
-            </el-form-item>
-            <el-form-item v-if="isBidRates=='0'" label="投标费率(百分比):" class="list-item" prop="bidInfoSection.tenderRate"  :rules="rules.contractAmount">
-              <el-input
-                v-model="zbForm.bidInfoSection.tenderRate"
-                clearable
-                placeholder="投标费率(百分比)"
-                :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
-              >
-              </el-input>
-            </el-form-item>
-            <br>
-            <el-form-item label="项目经理:" class="list-item">
-              <el-input v-model="zbForm.bidInfoSection.projectManager" placeholder="项目经理" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"></el-input>
-            </el-form-item>
+                <el-form-item label="投标价(万元):" class="list-item" prop="bidInfoSection.bidPrice"  :rules="rules.contractAmount">
+                  <el-input
+                    v-model="zbForm.bidInfoSection.bidPrice"
+                    clearable
+                    placeholder="投标价(万元)"
+                    :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
+                  >
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-form-item>
+                <el-form-item label="施工单位:" class="list-item">
+                  <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.constructionUnitName" class="input-with-select" :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'">
+                    <el-button :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('施工单位',zbForm.bidInfoSection.constructionUnitId,false)" ></el-button>
+                  </el-input>
+                </el-form-item>
+                <el-form-item v-if="isBidRates=='0'" label="投标费率(百分比):" class="list-item" prop="bidInfoSection.tenderRate"  :rules="rules.contractAmount">
+                  <el-input
+                    v-model="zbForm.bidInfoSection.tenderRate"
+                    clearable
+                    placeholder="投标费率(百分比)"
+                    :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
+                  >
+                  </el-input>
+                </el-form-item>
+                <br>
+                <el-form-item label="项目经理:" class="list-item">
+                  <el-input v-model="zbForm.bidInfoSection.projectManager" placeholder="项目经理" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"></el-input>
+                </el-form-item>
 
-            <el-form-item label="项目副经理:" class="list-item">
-              <el-input v-model="zbForm.bidInfoSection.deputyProjectManager	" placeholder="项目副经理" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"></el-input>
-            </el-form-item>
+                <el-form-item label="项目副经理:" class="list-item">
+                  <el-input v-model="zbForm.bidInfoSection.deputyProjectManager	" placeholder="项目副经理" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"></el-input>
+                </el-form-item>
 
-            <el-form-item v-if="isBidRates=='1'" label="风险费(万元):" class="list-item"  prop="bidInfoSection.riskFee"  :rules="rules.contractAmount">
-              <el-input
-                v-model="zbForm.bidInfoSection.riskFee"
-                clearable
-                placeholder="风险费(万元)"
-                :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
-              >
-                <template slot="prepend">¥</template>
-                <template slot="append">(万元)</template>
-              </el-input>
-            </el-form-item>
-            <br>
-            <el-form-item label="技术负责人:" class="list-item">
-              <el-input v-model="zbForm.bidInfoSection.technicalDirector" placeholder="技术负责人" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"></el-input>
-            </el-form-item>
+                <el-form-item v-if="isBidRates=='1'" label="风险费(万元):" class="list-item"  prop="bidInfoSection.riskFee"  :rules="rules.contractAmount">
+                  <el-input
+                    v-model="zbForm.bidInfoSection.riskFee"
+                    clearable
+                    placeholder="风险费(万元)"
+                    :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
+                  >
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-form-item>
+                <br>
+                <el-form-item label="技术负责人:" class="list-item">
+                  <el-input v-model="zbForm.bidInfoSection.technicalDirector" placeholder="技术负责人" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"></el-input>
+                </el-form-item>
 
-            <el-form-item label="安全负责人:" class="list-item">
-              <el-input v-model="zbForm.bidInfoSection.personInChargeOfSafety" placeholder="安全负责人" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"></el-input>
-            </el-form-item>
+                <el-form-item label="安全负责人:" class="list-item">
+                  <el-input v-model="zbForm.bidInfoSection.personInChargeOfSafety" placeholder="安全负责人" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"></el-input>
+                </el-form-item>
 
-            <el-form-item v-if="isBidRates=='1'" label="安全费(万元):" class="list-item"  prop="bidInfoSection.safetyCost"  :rules="rules.contractAmount">
-              <el-input
-                v-model="zbForm.bidInfoSection.safetyCost"
-                clearable
-                placeholder="安全费(万元)"
-                :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
-              >
-                <template slot="prepend">¥</template>
-                <template slot="append">(万元)</template>
-              </el-input>
-            </el-form-item>
-            <br>
+                <el-form-item v-if="isBidRates=='1'" label="安全费(万元):" class="list-item"  prop="bidInfoSection.safetyCost"  :rules="rules.contractAmount">
+                  <el-input
+                    v-model="zbForm.bidInfoSection.safetyCost"
+                    clearable
+                    placeholder="安全费(万元)"
+                    :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
+                  >
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-form-item>
+                <br>
 
-            <el-form-item label="财务负责人:" class="list-item">
-              <el-input v-model="zbForm.bidInfoSection.personInChargeOfFinance" placeholder="财务负责人" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"></el-input>
-            </el-form-item>
+                <el-form-item label="财务负责人:" class="list-item">
+                  <el-input v-model="zbForm.bidInfoSection.personInChargeOfFinance" placeholder="财务负责人" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"></el-input>
+                </el-form-item>
 
-            <el-form-item label="成本负责人:" class="list-item">
-              <el-input v-model="zbForm.bidInfoSection.costOwner" placeholder="成本负责人" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"></el-input>
-            </el-form-item>
+                <el-form-item label="成本负责人:" class="list-item">
+                  <el-input v-model="zbForm.bidInfoSection.costOwner" placeholder="成本负责人" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"></el-input>
+                </el-form-item>
 
-            <el-form-item v-if="isBidRates=='1'" label="投标限价(万元):" class="list-item" prop="bidInfoSection.biddingPriceLimit"  :rules="rules.contractAmount">
-              <el-input
-                v-model="zbForm.bidInfoSection.biddingPriceLimit"
-                clearable
-                placeholder="投标限价(万元)"
-                :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
-              >
-                <template slot="prepend">¥</template>
-                <template slot="append">(万元)</template>
-              </el-input>
-            </el-form-item>
-            <br>
-            <el-form-item label="投资估算:" class="list-item" >
-              <el-input v-model="zbForm.bidInfoSection.investmentReckon" placeholder="投资估算" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'">
-                <template slot="prepend">¥</template>
-                <template slot="append">(万元)</template>
-              </el-input>
-            </el-form-item>
-            <el-form-item label="其中建安投资:" class="list-item" >
-              <el-input v-model="zbForm.bidInfoSection.jananInvestment" placeholder="其中建安投资" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'" >
-                <template slot="prepend">¥</template>
-                <template slot="append">(万元)</template>
-              </el-input>
-            </el-form-item>
-            <br>
-            <el-form-item label="其他未列出单位(单位与单位之间用英文逗号隔开):" >
-              <el-input
-                class="textarea_qt"
-                v-model="zbForm.bidInfoSection.otherUnitsNotListed"
-                placeholder="其他未列出单位(单位与单位之间用英文逗号隔开)"
-                clearable
-                :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
-                :autosize="{ minRows: 2, maxRows: 4}"
-                type="textarea"></el-input>
-            </el-form-item>
+                <el-form-item v-if="isBidRates=='1'" label="投标限价(万元):" class="list-item" prop="bidInfoSection.biddingPriceLimit"  :rules="rules.contractAmount">
+                  <el-input
+                    v-model="zbForm.bidInfoSection.biddingPriceLimit"
+                    clearable
+                    placeholder="投标限价(万元)"
+                    :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
+                  >
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-form-item>
+                <br>
+                <el-form-item label="投资估算:" class="list-item" >
+                  <el-input v-model="zbForm.bidInfoSection.investmentReckon" placeholder="投资估算" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'">
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-form-item>
+                <el-form-item label="其中建安投资:" class="list-item" >
+                  <el-input v-model="zbForm.bidInfoSection.jananInvestment" placeholder="其中建安投资" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'" >
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-form-item>
+                <br>
+                <el-form-item label="其他未列出单位(单位与单位之间用英文逗号隔开):" >
+                  <el-input
+                    class="textarea_qt"
+                    v-model="zbForm.bidInfoSection.otherUnitsNotListed"
+                    placeholder="其他未列出单位(单位与单位之间用英文逗号隔开)"
+                    clearable
+                    :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
+                    :autosize="{ minRows: 2, maxRows: 4}"
+                    type="textarea"></el-input>
+                </el-form-item>
 
-            <div class="detail-title">
-              其他投标单位(系统内):
+                <div class="detail-title">
+                  其他投标单位(系统内):
+                </div>
+                <el-table class="detailTable"
+                          :data="zbForm.dataList"
+                          border
+                          v-loading="dataListLoading"
+                          :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
+                          style="width: 100%;">
+                  <el-table-column
+                    type="index"
+                    header-align="center"
+                    align="center"
+                    width="80"
+                    label="序号">
+                  </el-table-column>
+                  <el-table-column
+
+                    prop="orgName"
+                    show-overflow-tooltip
+                    label="其他投标单位(系统内)">
+                  </el-table-column>
+
+                </el-table>
+
+                <div class="detail-title">
+                  其他投标单位(系统外):
+                </div>
+
+                <el-table class="detailTable"
+                          :data="zbForm.dataList2"
+                          border
+                          v-loading="dataListLoading"
+                          :header-cell-style="{
+              'text-align': 'center',
+              'background-color': 'whitesmoke',
+            }"
+                          style="width: 100%;">
+                  <el-table-column
+                    type="index"
+                    header-align="center"
+                    align="center"
+                    width="80"
+                    label="序号">
+                  </el-table-column>
+                  <el-table-column
+                    prop="orgName"
+                    show-overflow-tooltip
+                    label="其他投标单位(系统外)">
+                  </el-table-column>
+                </el-table>
+
             </div>
-            <el-table class="detailTable"
-                      :data="zbForm.dataList"
-                      border
-                      v-loading="dataListLoading"
-                      :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
-                      style="width: 100%;">
-              <el-table-column
-                type="index"
-                header-align="center"
-                align="center"
-                width="80"
-                label="序号">
-              </el-table-column>
-              <el-table-column
-
-                prop="orgName"
-                show-overflow-tooltip
-                label="其他投标单位(系统内)">
-              </el-table-column>
-
-            </el-table>
-
-            <div class="detail-title">
-              其他投标单位(系统外):
-            </div>
-
-            <el-table class="detailTable"
-                      :data="zbForm.dataList2"
-                      border
-                      v-loading="dataListLoading"
-                      :header-cell-style="{
-          'text-align': 'center',
-          'background-color': 'whitesmoke',
-        }"
-                      style="width: 100%;">
-              <el-table-column
-                type="index"
-                header-align="center"
-                align="center"
-                width="80"
-                label="序号">
-              </el-table-column>
-              <el-table-column
-                prop="orgName"
-                show-overflow-tooltip
-                label="其他投标单位(系统外)">
-              </el-table-column>
-            </el-table>
-
-
             <el-divider content-position="left" class="detailDivider">中标登记</el-divider>
             <el-form ref="zbForm" :model="zbForm" :rules="rules">
               <el-form-item label="是否中标" :label-width="formLabelWidth"

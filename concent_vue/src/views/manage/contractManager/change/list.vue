@@ -5,31 +5,32 @@
         <el-button @click="add" type="primary" plain><i class="el-icon-plus"></i>新增</el-button>
         <el-button @click="totop" type="primary" plain><i class="el-icon-edit"></i>修改</el-button>
         <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
+        <el-button @click="batchSub" type="primary" plain><i class="el-icon-plus"></i>批量提交</el-button>
       </el-button-group>
       <div style="float: right;">
-        <el-form class="search-form" :inline="true" :model="searchFrom" @keyup.enter.native="init()">
-          <el-form-item label="合同名称:">
-            <el-input  class="list-search-picker" v-model="searchFrom.contractName" placeholder="合同名称" clearable></el-input>
-          </el-form-item>
-          <el-form-item
-            label="审核状态:"
-          >
-            <el-select
-              class="list-search-picker"
-              clearable
-              filterable
-              placeholder="请选择"
-              v-model="searchFrom.state"
-            >
-              <el-option
-                :key="index"
-                :label="item.detailName"
-                :value="item.id"
-                v-for="(item, index) in shztList"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-        </el-form>
+        <!--<el-form class="search-form" :inline="true" :model="searchFrom" @keyup.enter.native="init()">-->
+          <!--<el-form-item label="合同名称:">-->
+            <!--<el-input  class="list-search-picker" v-model="searchFrom.contractName" placeholder="合同名称" clearable></el-input>-->
+          <!--</el-form-item>-->
+          <!--<el-form-item-->
+            <!--label="审核状态:"-->
+          <!--&gt;-->
+            <!--<el-select-->
+              <!--class="list-search-picker"-->
+              <!--clearable-->
+              <!--filterable-->
+              <!--placeholder="请选择"-->
+              <!--v-model="searchFrom.state"-->
+            <!--&gt;-->
+              <!--<el-option-->
+                <!--:key="index"-->
+                <!--:label="item.detailName"-->
+                <!--:value="item.id"-->
+                <!--v-for="(item, index) in shztList"-->
+              <!--&gt;</el-option>-->
+            <!--</el-select>-->
+          <!--</el-form-item>-->
+        <!--</el-form>-->
         <el-button @click="searchFromReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
         <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
         <el-button @click="exportdata" type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>
@@ -80,6 +81,17 @@
           prop="contractName"
           show-overflow-tooltip
         >
+          <template slot="header" slot-scope="scope">
+            <span>合同名称</span>
+            <div>
+              <el-input
+                class="list-search-picker"
+                style=" width: 100%"
+                v-model="searchFrom.contractName"
+                size="mini"
+              />
+            </div>
+          </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -120,6 +132,25 @@
           prop="flowStatus"
           show-overflow-tooltip
         >
+          <template slot="header" slot-scope="scope">
+            <span>状态</span>
+            <div>
+              <el-select
+                class="list-search-picker"
+                clearable
+                filterable
+                placeholder="请选择"
+                v-model="searchFrom.state"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in shztList"
+                ></el-option>
+              </el-select>
+            </div>
+          </template>
           <template slot-scope="scope">
              {{scope.row.state==1?'草稿':scope.row.state==2?'审核中':scope.row.state==3?'审核通过':scope.row.state==4?'审核退回':''}}
           </template>
@@ -186,6 +217,54 @@
       ChangeSearch
     },
     methods: {
+      //批量提交
+      batchSub(){
+        if (this.multipleSelection.length !== 1) {
+          this.$message.info("请选择一条记录进行提交操作！");
+          return false;
+        }
+        var list=[],itemStatus=true;
+        this.multipleSelection.forEach((item) => {
+          if(item.state==1||item.state==4){
+            var v={
+              businessId:item.uuid,
+              businessName:item.contractName,
+              businessType:'contract_contract_change'
+            }
+            list.push(v);
+          }else{
+            this.$message.info("当前所选数据中包含不可提交的选项,请检查后进行操作");
+            return itemStatus=false;
+          }
+        })
+        if(itemStatus){
+          this.$confirm(`确认提交这些数据吗`, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$http
+              .post(
+                "/api/contract/topInfo/Verify/commonProcess/start",
+                JSON.stringify(list),
+                {useJson: true}
+
+              )
+              .then((res) => {
+                if(res.data.code==200){
+                  this.$message({
+                    message: "操作成功",
+                    type: "success",
+                  });
+                  this.getData()
+                }else{
+                  this.$message.error(res.data.msg);
+                }
+
+              });
+          }).catch(() => {})
+        }
+      },
       exportdata() {
         this.searchFrom.size=1000000000;
         this.$http

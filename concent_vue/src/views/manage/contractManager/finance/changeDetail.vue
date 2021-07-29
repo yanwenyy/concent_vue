@@ -2271,7 +2271,7 @@
                         <el-form-item class="tabelForm" :prop="'contractInfoHouseSalesList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
                           <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                           <el-input
-                            @blur="setYearSale(scope.row.salesPerforYear)"
+                            @blur="setYearSale(scope.row.salesPerforYear,scope.$index)"
                             v-model="scope.row.contractAmount"
                             clearable
                             :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.isYearContract=='0'"
@@ -3686,18 +3686,23 @@
         });
 
       },
-      setYearSale(year){
-        var yearSale=0;
-        this.detailform.contractInfoHouseSalesList.forEach((item)=>{
-          if(item.salesPerforYear==year){
-          yearSale+=Number(item.contractAmount);
-        }
-      });
-        this.detailform.contractInfoHouseSalesList.forEach((item)=>{
-          if(item.salesPerforYear==year){
-          item.totalAmount=yearSale;
-        }
-      });
+      //年销售额
+      setYearSale(year,index){
+        var yearSale=0,yearSaleNext=0;
+        this.detailform.contractInfoHouseSalesList.forEach((item,i)=>{
+          if(item.salesPerforYear==year&&(i<index||i==index)){
+            yearSale+=Number(item.contractAmount);
+          }else if(i>index){
+            yearSaleNext+=Number(item.contractAmount);
+          }
+        });
+        this.detailform.contractInfoHouseSalesList.forEach((item,i)=>{
+          if(item.salesPerforYear==year&&index==i){
+            item.totalAmount=yearSale;
+          }else if(i>index){
+            item.totalAmount=yearSale+yearSaleNext;
+          }
+        });
       },
       //新增销售业绩
       addXs(){

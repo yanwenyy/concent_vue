@@ -11,6 +11,7 @@
         <el-button plain
                    type="primary"
                    @click="remove">删除</el-button>
+        <el-button @click="batchSub" type="primary" plain><i class="el-icon-plus"></i>批量提交</el-button>
       </el-button-group>
     </div>
 
@@ -126,6 +127,42 @@
           show-overflow-tooltip
         >
         </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="审核状态"
+          prop="flowStatus"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
+          </template>
+          <template slot="header" slot-scope="scope">
+            <span>审核状态</span>
+            <div>
+              <el-select
+                class="list-search-picker"
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="searchform.flowStatus"
+              >
+                <el-option label="草稿" value="1"></el-option>
+                <el-option label="审核中" value="2"></el-option>
+                <el-option label="审核通过" value="3"></el-option>
+                <el-option label="审核退回" value="4"></el-option>
+                <el-option label="待登记" value="0"></el-option>
+              </el-select>
+              <!--<el-input-->
+              <!--class="list-search-picker"-->
+              <!--style=" width: 100%"-->
+              <!--v-model="searchform.flowStatus"-->
+              <!--size="mini"-->
+              <!--/>-->
+            </div>
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         :current-page="page.current"
@@ -158,7 +195,7 @@ export default {
         remarks: '',
         submitTime: '',
         reportTime: '',
-        archivesInfoType: ''
+        archivesInfoType: '4'
       },
       multipleSelection: [],
     }
@@ -173,7 +210,54 @@ export default {
     },
   },
   methods: {
+    //批量提交
+    batchSub(){
+      if (this.multipleSelection.length !== 1) {
+        this.$message.info("请选择一条记录进行提交操作！");
+        return false;
+      }
+      var list=[],itemStatus=true;
+      this.multipleSelection.forEach((item) => {
+        if(item.flowStatus==1||item.flowStatus==4){
+          var v={
+            businessId:item.uuid,
+            businessName:item.name,
+            businessType:'contract_file_message'
+          }
+          list.push(v);
+        }else{
+          this.$message.info("当前所选数据中包含不可提交的选项,请检查后进行操作");
+          return itemStatus=false;
+        }
+      })
+      if(itemStatus){
+        this.$confirm(`确认提交这些数据吗`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$http
+            .post(
+              "/api/contract/topInfo/Verify/commonProcess/start",
+              JSON.stringify(list),
+              {useJson: true}
 
+            )
+            .then((res) => {
+              if(res.data.code==200){
+                this.$message({
+                  message: "操作成功",
+                  type: "success",
+                });
+                this.getData()
+              }else{
+                this.$message.error(res.data.msg);
+              }
+
+            });
+        }).catch(() => {})
+      }
+    },
 
     add() {
       // console.log(JSON.stringify(this.multipleSelection[0].uuid));

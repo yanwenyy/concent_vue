@@ -6,24 +6,24 @@
           <el-form-item label="合同名称:">
             <el-input  class="list-search-picker" v-model="searchFrom.contractName" placeholder="合同名称" clearable></el-input>
           </el-form-item>
-          <el-form-item
-            label="审核状态:"
-          >
-            <el-select
-              class="list-search-picker"
-              clearable
-              filterable
-              placeholder="请选择"
-              v-model="searchFrom.state"
-            >
-              <el-option
-                :key="index"
-                :label="item.detailName"
-                :value="item.id"
-                v-for="(item, index) in shztList"
-              ></el-option>
-            </el-select>
-          </el-form-item>
+          <!--<el-form-item-->
+            <!--label="审核状态:"-->
+          <!--&gt;-->
+            <!--<el-select-->
+              <!--class="list-search-picker"-->
+              <!--clearable-->
+              <!--filterable-->
+              <!--placeholder="请选择"-->
+              <!--size="mini"-->
+              <!--v-model="searchFrom.flowStatus"-->
+            <!--&gt;-->
+              <!--<el-option label="待登记" value="0"></el-option>-->
+              <!--<el-option label="草稿" value="1"></el-option>-->
+              <!--<el-option label="审核中" value="2"></el-option>-->
+              <!--<el-option label="审核通过" value="3"></el-option>-->
+              <!--<el-option label="审核退回" value="4"></el-option>-->
+            <!--</el-select>-->
+          <!--</el-form-item>-->
         </el-form>
         <el-button @click="searchFromReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
         <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>

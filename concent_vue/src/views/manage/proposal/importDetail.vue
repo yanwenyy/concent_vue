@@ -552,7 +552,7 @@
               :rules="{
                 required: true,
                 message: '此项不能为空',
-                trigger: 'blur',
+                trigger: 'change',
               }"
             >
               <el-input
@@ -1196,7 +1196,8 @@
             isClientele:'1',
             investment:'',
             isMajorProject:'1',
-            bidAgentCompany:''
+            bidAgentCompany:'',
+            designOrg:''
           },
           topInfoOrg: {},
           topInfoSiteList: [],
