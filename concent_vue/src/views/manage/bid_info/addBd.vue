@@ -13,7 +13,7 @@
     </el-card>
     <div style="height: calc(100% - 50px);overflow: auto;padding: 0 50px;">
       <el-form :inline="true" :model="detailForm" :rules="rules" ref="detailForm" @keyup.enter.native="init()"  class="gcform">
-        <el-form-item label="标段名称:" class="list-item" prop="bidInfoSection.sectionId"
+        <el-form-item label="标段名称:" class="list-item" prop="bidInfoSection.sectionName"
                       :rules="{
                 required: true,
                 message: '此项不能为空',
@@ -22,7 +22,7 @@
           <el-select
             clearable
             placeholder=""
-            v-model="detailForm.bidInfoSection.sectionId"
+            v-model="detailForm.bidInfoSection.sectionName"
             @change="
                 getName2(
                   detailForm.bidInfoSection.sectionId,
