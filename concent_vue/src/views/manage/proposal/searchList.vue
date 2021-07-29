@@ -181,6 +181,7 @@
     </el-form>
     <div style="margin-top: 10px">
       <el-table
+        :max-height="$tableHeight"
         class="tableStyle"
         :data="page.records"
         :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
