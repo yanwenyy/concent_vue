@@ -223,7 +223,6 @@
     <div style="margin-top: 10px">
       <el-table
         class=""
-        :max-height="$tableHeight"
         :data="page.records"
         :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
         @row-dblclick="rowshow"
