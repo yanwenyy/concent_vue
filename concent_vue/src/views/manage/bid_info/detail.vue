@@ -1496,6 +1496,7 @@ export default {
     },
     //打开标段弹框
     openBd(type, detail, index) {
+      console.info("type",type)
       this.BDCSVisible = true;
       var tableList=[],bdList=[];
       this.detailform.bidInfoSectionList.forEach((item)=>{

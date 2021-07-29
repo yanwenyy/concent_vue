@@ -345,8 +345,8 @@
             @click="add('inside',1)"
             class="detatil-flie-btn"
             type="primary"
-            :disabled="type === 'look'||type=='eidtnew'"
-            v-if="!(type === 'look'||type=='eidtnew')"
+            :disabled="type === 'look'"
+            v-if="!(type === 'look')"
           >新增</el-button >
         </div>
         <el-table class="detailTable"
@@ -390,7 +390,7 @@
                   <!--v-for="(item, index) in nameList"-->
                 <!--&gt;</el-option>-->
               <!--</el-select>-->
-              <el-input  placeholder="请输入内容" v-model="scope.row.orgName" class="input-with-select" :disabled="type === 'look'||type=='eidtnew'">
+              <el-input  placeholder="请输入内容" v-model="scope.row.orgName" class="input-with-select" :disabled="type === 'look'">
                 <el-button v-if="type != 'look'&&type != 'eidtnew'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('其他投标单位(系统内)',scope.row.orgId,false,scope.$index,detailForm.dataList)" ></el-button>
               </el-input>
             </template>
@@ -436,8 +436,8 @@
             @click="add('outside',2)"
             class="detatil-flie-btn"
             type="primary"
-            :disabled="type === 'look'||type=='eidtnew'"
-            v-if="!(type === 'look'||type=='eidtnew')"
+            :disabled="type === 'look'"
+            v-if="!(type === 'look')"
           >新增</el-button >
         </div>
 
@@ -474,7 +474,7 @@
                     scope.$index
                   )
                 "
-                :disabled="type === 'look'||type=='eidtnew'"
+                :disabled="type === 'look'"
               >
                 <el-option
                   :key="index"
@@ -666,6 +666,8 @@ import { isMoney } from '@/utils/validate'
     close(){
         this.$refs['detailForm'].clearValidate();
         this.visible = false;
+        // 回传参与投标单位
+        console.info(this.detailForm.bidInfoSection.participatingUnitsName)
       },
     //打开单位弹框
     addDw(type,list,ifChek,index,tableList){
@@ -742,7 +744,8 @@ import { isMoney } from '@/utils/validate'
           if (valid) {
             this.visible = false;
             this.$emit('refreshBD', this.detailForm);
-
+            // 回传参与投标单位
+            console.info(this.detailForm.bidInfoSection.participatingUnitsName)
           }
         });
 
@@ -757,6 +760,7 @@ import { isMoney } from '@/utils/validate'
             dataList2: []
           };
         this.type=type;
+        console.info("type", type)
         this.index=index;
         // console.log(list,type)
         this.visible = true;
