@@ -217,6 +217,18 @@
                 <template slot="append">(万元)</template>
               </el-input>
         </el-form-item>
+        <el-form-item label="投标限价(万元):" class="list-item" :class="type!='eidtnew'?'not-error':''" prop="bidInfoSection.biddingPriceLimit"  :rules="rules.contractAmount">
+          <el-input
+              v-model="detailForm.bidInfoSection.biddingPriceLimit"
+              clearable
+              placeholder="投标限价(万元)"
+              :disabled="type === 'look'"
+            >
+          <template slot="prepend">¥</template>
+          <template slot="append">(万元)</template>
+        </el-input>
+        </el-form-item>
+        
 
         <el-form-item v-if="isBidRates=='0'" label="投标费率(百分比):" class="list-item" prop="bidInfoSection.tenderRate"
                       :rules="isBidRates=='0'?{
@@ -584,7 +596,8 @@ import { isMoney } from '@/utils/validate'
         detailForm: {
           bidInfoSection:{
             participatingUnitsName:'',
-            openBidPlaceName:''
+            openBidPlaceName:'',
+            biddingPriceLimit:''
           },
           verifySection:{},
           bidInfoSectionOrgList:[],
