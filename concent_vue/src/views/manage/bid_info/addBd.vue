@@ -40,6 +40,52 @@
             </el-select>
         </el-form-item>
 
+          <el-form-item label="参与投标单位:" class="list-item"
+           prop="bidInfoSection.participatingUnitsName"
+          >
+          <el-input  placeholder="请输入内容" v-model="detailForm.bidInfoSection.participatingUnitsName" class="input-with-select" :disabled="type === 'look'">
+            <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('参与投标单位',detailForm.bidInfoSection.participatingUnitsId)" ></el-button>
+          </el-input>
+          <!-- <el-input
+          v-model="detailForm.bidInfoSection.participatingUnitsName"
+          placeholder="参与投标单位"
+          clearable :disabled="type === 'look'">
+            <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="selectPosition()"
+          ></el-button>
+          </el-input> -->
+        </el-form-item>
+        <el-form-item label="编标拟配合单位:" class="list-item">
+          <el-input  placeholder="请输入内容" v-model="detailForm.bidInfoSection.orgName" class="input-with-select" :disabled="type === 'look'||type=='eidtnew'">
+            <el-button v-if="type != 'look'&&type != 'eidtnew'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('编标拟配合单位',detailForm.bidInfoSection.orgId)" ></el-button>
+          </el-input>
+          <!-- <el-input
+          v-model="detailForm.bidInfoSection.orgName"
+          placeholder="编标拟配合单位"
+          clearable
+          :disabled="type === 'look'">
+            <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="selectPosition()"
+          ></el-button>
+          </el-input> -->
+        </el-form-item>
+        <el-form-item label="投资估算:" class="list-item not-error" prop="bidInfoSection.investmentReckon" :rules="rules.contractAmount">
+          <el-input v-model="detailForm.bidInfoSection.investmentReckon" placeholder="投资估算" clearable :disabled="type === 'look'">
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+          </el-input>
+        </el-form-item>
+          <el-form-item label="其中建安投资:" class="list-item not-error" prop="bidInfoSection.jananInvestment" :rules="rules.contractAmount">
+          <el-input v-model="detailForm.bidInfoSection.jananInvestment" placeholder="其中建安投资" clearable :disabled="type === 'look'" >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+          </el-input>
+        </el-form-item>
+
         <el-form-item v-if="ifkb!='kbxq'" label="评标办法:" class="list-item">
                 <template slot-scope="scope">
                  <el-select
@@ -125,7 +171,6 @@
           ></el-button>
           </el-input>
         </el-form-item>
-<br>
         <el-form-item label="开标日期:" class="list-item"  prop="bidInfoSection.dateOfBidOpeningName"
                       :rules="{
                 required: true,
@@ -143,23 +188,6 @@
             v-model="detailForm.bidInfoSection.dateOfBidOpeningName"
           >
           </el-date-picker>
-        </el-form-item>
-        <el-form-item label="参与投标单位:" class="list-item"
-                prop="bidInfoSection.participatingUnitsName"
-                >
-          <el-input  placeholder="请输入内容" v-model="detailForm.bidInfoSection.participatingUnitsName" class="input-with-select" :disabled="type === 'look'">
-            <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('参与投标单位',detailForm.bidInfoSection.participatingUnitsId)" ></el-button>
-          </el-input>
-          <!-- <el-input
-          v-model="detailForm.bidInfoSection.participatingUnitsName"
-          placeholder="参与投标单位"
-          clearable :disabled="type === 'look'">
-            <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="selectPosition()"
-          ></el-button>
-          </el-input> -->
         </el-form-item>
 
 
@@ -298,35 +326,6 @@
                 <template slot="append">(万元)</template>
               </el-input>
           <!-- <el-input v-model="detailForm.bidInfoSection.biddingPriceLimit" placeholder="投标限价(万元)" clearable></el-input> -->
-        </el-form-item>
-          <br>
-          <el-form-item label="投资估算:" class="list-item not-error" prop="bidInfoSection.investmentReckon" :rules="rules.contractAmount">
-          <el-input v-model="detailForm.bidInfoSection.investmentReckon" placeholder="投资估算" clearable :disabled="type === 'look'">
-                <template slot="prepend">¥</template>
-                <template slot="append">(万元)</template>
-          </el-input>
-        </el-form-item>
-          <el-form-item label="其中建安投资:" class="list-item not-error" prop="bidInfoSection.jananInvestment" :rules="rules.contractAmount">
-          <el-input v-model="detailForm.bidInfoSection.jananInvestment" placeholder="其中建安投资" clearable :disabled="type === 'look'" >
-                <template slot="prepend">¥</template>
-                <template slot="append">(万元)</template>
-          </el-input>
-        </el-form-item>
-        <el-form-item label="编标拟配合单位:" class="list-item">
-          <el-input  placeholder="请输入内容" v-model="detailForm.bidInfoSection.orgName" class="input-with-select" :disabled="type === 'look'||type=='eidtnew'">
-            <el-button v-if="type != 'look'&&type != 'eidtnew'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('编标拟配合单位',detailForm.bidInfoSection.orgId)" ></el-button>
-          </el-input>
-          <!-- <el-input
-          v-model="detailForm.bidInfoSection.orgName"
-          placeholder="编标拟配合单位"
-          clearable
-          :disabled="type === 'look'">
-            <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="selectPosition()"
-          ></el-button>
-          </el-input> -->
         </el-form-item>
 <br>
         <el-form-item label="其他未列出单位(单位与单位之间用英文逗号隔开):" >
@@ -655,7 +654,15 @@ import { isMoney } from '@/utils/validate'
           this.detailForm.bidInfoSection[name] = list.find(
             (item) => item.uuid == id
           ).sectionName;
-        }
+          // 填入相关数据
+          let data = []
+          data = list.find( (item) => item.uuid == id )
+          console.info(data)
+          this.detailForm.bidInfoSection.participatingUnitsName  = data.verifySectionOrgNameType01
+          this.detailForm.bidInfoSection.orgName  = data.verifySectionOrgNameType02
+          this.detailForm.bidInfoSection.investmentReckon  = data.investmentReckon
+          this.detailForm.bidInfoSection.jananInvestment  = data.jananInvestment
+        } 
       },
     close(){
         this.$refs['detailForm'].clearValidate();
