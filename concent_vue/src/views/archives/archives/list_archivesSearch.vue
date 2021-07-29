@@ -59,13 +59,12 @@
         </el-form-item>
         <el-form-item label="填报时间:">
           <el-date-picker
-            v-model="searchform.reportTime"
-            type="daterange"
-            @change="searchform.selectTimeTypeReportTime='01'"
+            v-model="searchform.createTime"
+            type="date"
+            align="right"
             value-format="timestamp"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期">
+            placeholder="选择日期">
+            >
           </el-date-picker>
         </el-form-item>
         <!--<el-form-item label="登记时间:">-->
