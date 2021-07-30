@@ -1214,7 +1214,7 @@
                   <template slot-scope="scope">
                     <el-input
                       clearable
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                      disabled
                       v-model="scope.row.orgName"
                       class="input-el-input-group">
                       <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'unionContractInfoAttachList')" ></el-button>
@@ -1394,7 +1394,7 @@
                   <template slot-scope="scope">
                     <el-input
                       clearable
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                      disabled
                       v-model="scope.row.orgName"
                       class="input-el-input-group">
                       <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'innerContractInfoAttachList')" ></el-button>
@@ -1981,7 +1981,7 @@
                   <template slot-scope="scope">
                     <el-input
                       clearable
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                      disabled
                       v-model="scope.row.orgName"
                       class="input-el-input-group">
                       <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'innerGroupContractInfoAttachList')" ></el-button>

@@ -774,5 +774,14 @@ pre {
 .form-item-five{
   width: 19.5%!important;
 }
+.tableStyle .row_red{
+  background: rgba(255,0,0,.1);
+}
+.tableStyle .row_blue{
+  background: rgba(0,51,204,.1);
+}
+.tableStyle .row_green{
+  background: rgba(0,204,0,.1);
+}
 /**/
 
