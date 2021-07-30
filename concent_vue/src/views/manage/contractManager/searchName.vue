@@ -30,10 +30,16 @@
           label="ID">
         </el-table-column>
         <el-table-column
-          :width="500"
+          :width="300"
           prop="inforName"
           show-overflow-tooltip
           label="项目名称">
+        </el-table-column>
+        <el-table-column
+          :width="200"
+          prop="sectionName"
+          show-overflow-tooltip
+          label="标段名称">
         </el-table-column>
         <el-table-column
           prop="enginTypeSecondName"
