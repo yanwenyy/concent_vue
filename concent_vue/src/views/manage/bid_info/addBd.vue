@@ -675,6 +675,12 @@ import { isMoney } from '@/utils/validate'
           this.detailForm.bidInfoSection.investmentReckon  = data.investmentReckon
           this.detailForm.bidInfoSection.jananInvestment  = data.jananInvestment
         } 
+        // 填入正确的名字
+        list.forEach((element) => {
+          if (element.uuid == this.detailForm.bidInfoSection.sectionName) {
+            this.detailForm.bidInfoSection.sectionName = element.sectionName
+          }
+        })
       },
     close(){
         this.$refs['detailForm'].clearValidate();

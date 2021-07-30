@@ -1527,13 +1527,13 @@ export default {
     },
     //获取新增的标段
     getBdInfo(data) {
-      console.log(data);
+      // console.log(data);
       if (data.type == "add") {
         this.detailform.bidInfoSectionList.push(data);
       } else if (data.type == "edit") {
         this.detailform.bidInfoSectionList[data.index] = data;
       }
-      console.log(this.detailform.bidInfoSectionList);
+      // console.log(this.detailform.bidInfoSectionList);
       this.BDCSVisible = false;
       this.key = this.key + 1;
     },
