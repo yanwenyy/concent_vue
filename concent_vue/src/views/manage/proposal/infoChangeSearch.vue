@@ -307,4 +307,8 @@
     width: 100%;
     box-sizing: border-box;
   }
+  .el-radio__label {
+    font-size: 14px;
+    padding-left: 130px;
+  }
 </style>
