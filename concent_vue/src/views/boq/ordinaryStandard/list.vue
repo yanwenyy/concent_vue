@@ -194,7 +194,7 @@
           </el-form-item>
 
           <el-form-item
-            label="单位:"
+            label="计量单位:"
             prop="boqOrdinaryStandard.unit"
             :rules="{
                 required: true,
@@ -202,11 +202,30 @@
                 trigger: 'blur',
               }"
           >
-            <el-input
+            <el-select
               :disabled="ifLook==true"
+              filterable
               clearable
-              size="mini"
-              v-model="form.boqOrdinaryStandard.unit"/>
+              placeholder="请选择"
+              v-model="form.boqOrdinaryStandard.measuringUnitId"
+              @change="getName(
+                form.boqOrdinaryStandard.measuringUnitId,
+                  unit,
+                  'unit',
+                  'measuringUnitCode'
+                )"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.id"
+                v-for="(item, index) in unit"/>
+            </el-select>
+            <!--<el-input-->
+              <!--:disabled="ifLook==true"-->
+              <!--clearable-->
+              <!--size="mini"-->
+              <!--v-model="form.boqOrdinaryStandard.unit"/>-->
           </el-form-item>
 
           <!-- 下拉 -->
@@ -530,6 +549,9 @@
       projectType(){
         return this.$store.state.category.projectDomainType;
       },
+      unit() {
+        return this.$store.state.measureUnit
+      },
     },
     methods: {
       //获取下拉框id和name的公共方法
@@ -539,6 +561,9 @@
           this.form.boqOrdinaryStandard[name] = list.find(
             (item) => item.id == id
           ).detailName;
+          this.form.boqOrdinaryStandard[code] = list.find(
+            (item) => item.id == id
+          ).detailCode;
         }
       },
         //保存特征

@@ -1398,7 +1398,9 @@
                 message: '此项不能为空',
                 trigger: 'blur',
               }">
+
               <el-input
+
                 disabled
                 placeholder="请选择"
                 v-model="detailform.topInforBO.topInfoOrg.projectTrackResponPerson"

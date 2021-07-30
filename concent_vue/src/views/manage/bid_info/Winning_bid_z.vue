@@ -472,11 +472,34 @@
                 <!-- </el-select> -->
 
               </el-form-item>
+              <!--<el-form-item label="系统内施工单位:" class="list-item" v-if="zbForm.bidInfoSection.isWinBid=='1'"-->
+                              <!--prop="bidInfoSection.participatingUnitsName"-->
+                              <!--:rules="{-->
+                                <!--required: true,-->
+                                <!--message: '此项不能为空',-->
+                                <!--trigger: 'change',-->
+                              <!--}">-->
+                <!--<el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.participatingUnitsName" class="input-with-select" :disabled="zbType=='look'">-->
+                  <!--<el-button :disabled="zbType=='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('系统内施工单位',zbForm.bidInfoSection.participatingUnitsId)" ></el-button>-->
+                <!--</el-input>-->
+              <!--</el-form-item>-->
+              <!--<el-form-item label="中标单位:" class="list-item" v-if="zbForm.bidInfoSection.isWinBid=='1'"-->
+                            <!--prop="bidInfoSection.participatingUnitsName"-->
+                            <!--:rules="{-->
+                                <!--required: true,-->
+                                <!--message: '此项不能为空',-->
+                                <!--trigger: 'change',-->
+                              <!--}">-->
+                <!--<el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.participatingUnitsName" class="input-with-select" :disabled="zbType=='look'">-->
+                  <!--<el-button :disabled="zbType=='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('中标单位',zbForm.bidInfoSection.participatingUnitsId)" ></el-button>-->
+                <!--</el-input>-->
+              <!--</el-form-item>-->
               <el-form-item
                 class="list-item"
                 label="中标公示网站:"
                 prop="bidInfoSection.bidNoticeWebsite"
                 :rules="rules.bidNoticeWebsite"
+                v-if="zbForm.bidInfoSection.isWinBid=='1'"
               >
                 <el-input
                   :disabled="zbType === 'look'"
@@ -489,7 +512,7 @@
               <el-form-item
                 label="是否系统外单位中标:"
                 class="inline-formitem formItem"
-                v-if="zbForm.bidInfoSection.isWinBid!=='1'">
+                v-if="zbForm.bidInfoSection.isWinBid=='4'">
                 <el-switch
                   class="inline-formitem-switch"
                   v-model="zbForm.bidInfoSection.isOutBidOrg"
@@ -507,12 +530,20 @@
                 v-if="zbForm.bidInfoSection.isOutBidOrg === '0'"
                 label="系统外中标单位:"
               >
+                <!--<el-input-->
+                  <!--:disabled="zbType === 'look'"-->
+                  <!--clearable-->
+                  <!--placeholder="系统外中标单位"-->
+                  <!--v-model="zbForm.bidInfoSection.outBidOrg"-->
+                <!--/>-->
                 <el-input
-                  :disabled="zbType === 'look'"
-                  clearable
-                  placeholder="系统外中标单位"
+                  disabled
+                  placeholder="请选择系统外中标单位"
                   v-model="zbForm.bidInfoSection.outBidOrg"
-                />
+                  :title="zbForm.bidInfoSection.outBidOrg"
+                >
+                  <el-button v-if="zbType != 'look'" slot="append" icon="el-icon-circle-plus-outline" @click="openComMul(zbForm.bidInfoSection.outBidOrgId,zbForm.bidInfoSection.outBidOrg,'/api/contract/Companies/detail/findCompanies','系统外中标单位')"></el-button>
+                </el-input>
               </el-form-item>
 
               <el-form-item
@@ -533,8 +564,14 @@
               <el-form-item
                 width="100%"
                 class="list-item_textarea"
-                v-if="zbForm.bidInfoSection.isOutBidOrg === '0'"
+                v-if="zbForm.bidInfoSection.isWinBid=='4'"
                 label="未中标原因:"
+                prop="bidInfoSection.notBidReason"
+                :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'change',
+                }"
               >
                 <el-input
                   type="textarea"
@@ -645,6 +682,8 @@
     </div>
     <Tree v-if="treeStatas" ref="addOrUpdate"  @getPosition="getPositionTree" ></Tree>
     <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
+    <!--多选的单位列表组件-->
+    <company-mul v-if="companyMulStatus" ref="comAdd" @getComList="getComList"></company-mul>
   </div>
 </template>
 
@@ -653,11 +692,13 @@ import InfoChangeSearch from "../proposal/infoChangeSearch";
 import CompanyTree from '../contractManager/companyTree'
 import Tree from "@/components/tree";
 import { isMoney,isURL } from '@/utils/validate'
+import companyMul from '@/components/companiesMultiple'
 export default {
     components: {
         Tree,
         CompanyTree,
-        InfoChangeSearch
+        InfoChangeSearch,
+        companyMul,//多选的单位列表组件
     },
   name: "proposal-list-look",
   data() {
@@ -680,6 +721,7 @@ export default {
       }
     }
     return {
+      companyMulStatus:false,//设计单位等多选列表状态
       treeStatas:false,
       DwVisible:false,//选择单位弹框状态
       Authorization:sessionStorage.getItem("token"),
@@ -742,6 +784,22 @@ export default {
     },
   },
   methods: {
+    //打开多选的单位列表
+    openComMul(ids,names,url,type){
+      this.companyMulStatus=true;
+      this.$nextTick(() => {
+        this.$refs.comAdd.init(ids,names,url,type);
+      })
+    },
+    //获取拿过来的多选单位列表
+    getComList(data){
+      console.log(data)
+      this.$forceUpdate();
+      if(data.type=='系统外中标单位'){
+        this.zbForm.bidInfoSection.outBidOrgId=data.selIdList.join(",");
+        this.zbForm.bidInfoSection.outBidOrg=data.selList.join(",");
+      }
+    },
 
       //选择项目地点
       selectPosition() {

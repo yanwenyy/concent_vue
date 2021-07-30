@@ -1030,6 +1030,7 @@
                 }"
                 >
                   <el-input
+                    :class="detailform.topInfoOrg.projectTrackResponPerson!=detailFormBefore.topInfoOrg.projectTrackResponPerson?'changeRed':''"
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     clearable
                     placeholder=""
@@ -1047,6 +1048,7 @@
                 }"
                 >
                   <el-input
+                    :class="detailform.topInfoOrg.contactMode!=detailFormBefore.topInfoOrg.contactMode?'changeRed':''"
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     clearable
                     placeholder=""
@@ -1065,6 +1067,7 @@
               }"
               >
                 <el-select
+                  :class="detailform.topInfoOrg.bidProbId!=detailFormBefore.topInfoOrg.bidProbId?'changeRed':''"
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   filterable
                   clearable
@@ -1378,6 +1381,17 @@
                     >
                       <!--@change="setTrack(scope.$index,detailform.topInfoSectionList)"-->
                     </el-switch>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  :resizable="false"
+                  fixed="right"
+                  label="是否变动"
+                  align="center"
+                  show-overflow-tooltip
+                  width="80">
+                  <template slot-scope="scope">
+                    <span :class="scope.row.isTrack!=detailFormBefore.topInfoSectionList[scope.$index].isTrack?'changeRed':''">{{scope.row.isTrack!=detailFormBefore.topInfoSectionList[scope.$index].isTrack?'是':'否'}}</span>
                   </template>
                 </el-table-column>
               </el-table>
@@ -2095,6 +2109,9 @@
     >>>.detailTable td{
       padding: 5px 0!important;
     }
+  }
+  .changeRed >>>input,.changeRed >>>select,.changeRed{
+    color:red!important;
   }
 </style>
 

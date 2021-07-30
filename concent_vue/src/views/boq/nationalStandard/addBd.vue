@@ -178,7 +178,7 @@ import { isMoney } from '@/utils/validate'
     },
     computed:{
       unit() {
-        return this.$store.state.unit
+        return this.$store.state.measureUnit
       },
     },
     methods: {

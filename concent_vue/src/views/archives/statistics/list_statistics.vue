@@ -218,7 +218,7 @@ export default {
   methods: {
     //批量提交
     batchSub(){
-      if (this.multipleSelection.length !== 1) {
+      if (this.multipleSelection.length <1) {
         this.$message.info("请选择一条记录进行提交操作！");
         return false;
       }
