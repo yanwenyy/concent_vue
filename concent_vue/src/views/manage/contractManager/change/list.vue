@@ -113,7 +113,7 @@
           :width="150"
           align="center"
           label="主推单位"
-          prop="contractMianOrg"
+          prop="pushOrgName"
           show-overflow-tooltip
         >
         </el-table-column>
