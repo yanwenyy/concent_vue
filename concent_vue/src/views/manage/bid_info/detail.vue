@@ -777,7 +777,7 @@
             >
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint==='edit'"
                 clearable
                 placeholder="请输入"
                 type="textarea"
