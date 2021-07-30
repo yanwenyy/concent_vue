@@ -145,6 +145,25 @@
             <el-table-column
               :width="150"
               align="center"
+              label="主推单位"
+              prop="pushOrgName"
+              show-overflow-tooltip
+            >
+              <template slot="header" slot-scope="scope">
+                <span>主推单位</span>
+                <div>
+                  <el-input
+                    class="list-search-picker"
+                    style=" width: 100%"
+                    v-model="searchFrom.pushOrgName"
+                    size="mini"
+                  />
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              :width="150"
+              align="center"
               label="合同总金额"
               prop="contractAmount"
               show-overflow-tooltip
