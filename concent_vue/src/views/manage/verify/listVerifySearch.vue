@@ -278,6 +278,17 @@
         <el-table-column
           :width="150"
           align="center"
+          label="项目地点"
+          prop="verify.path"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+            {{scope.row.path}}
+          </template>
+        </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
           label="填报人"
           prop="verify.createUserName"
           show-overflow-tooltip
