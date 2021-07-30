@@ -1061,17 +1061,16 @@
               <el-form-item
                 label="资质类型:"
                 prop="contractInfo.designQualityTypeId"
-
-                @change="
-                  getName(
-                    detailform.contractInfo.designQualityTypeId,
-                    emergingMarketTwo,
-                    'designQualityType',
-                    'designQualityTypeCode'
-                  )
-                "
               >
                 <el-select
+                  @change="
+                    getName(
+                      detailform.contractInfo.designQualityTypeId,
+                      emergingMarketTwo,
+                      'designQualityType',
+                      'designQualityTypeCode'
+                    )
+                  "
                   :disabled="p.actpoint==='look'||p.actpoint=='task'"
                   filterable
                   clearable

@@ -2503,16 +2503,17 @@
 
                   <el-table-column width="150" :resizable="false" label="规格型号" prop="specificationAndModel" show-overflow-tooltip>
                     <template slot-scope="scope">
-                      <el-form-item
-                        class="tabelForm"
-                        :prop="'contractInfoProductInformtList.'+scope.$index+'.specificationAndModel'"
-                        :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
-                        label-width="0"
-                      >
-                        <el-input max-length=50 clearable :disabled="p.actpoint==='look'||p.actpoint=='task'" v-model="scope.row.specificationAndModel"></el-input>
-                      </el-form-item>
+                      {{scope.row.specificationAndModel}}
+                      <!--<el-form-item-->
+                        <!--class="tabelForm"-->
+                        <!--:prop="'contractInfoProductInformtList.'+scope.$index+'.specificationAndModel'"-->
+                        <!--:rules="{-->
+      <!--required: true, message: '此项不能为空', trigger: 'blur'-->
+    <!--}"-->
+                        <!--label-width="0"-->
+                      <!--&gt;-->
+                        <!--<el-input max-length=50 clearable :disabled="p.actpoint==='look'||p.actpoint=='task'" v-model="scope.row.specificationAndModel"></el-input>-->
+                      <!--</el-form-item>-->
                       <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                     </template>
                   </el-table-column>
@@ -3819,6 +3820,14 @@
       },
     },
     mounted() {
+      //产品类型级联数据
+      this.$http
+        .post(
+          "/api/contract/contract/ContractInfo/list/getProductSelectData",
+        )
+        .then((res) => {
+          this.cplxList=res.data.data;
+        });
       var list=datas[0].children;
       list.forEach((item)=>{
         item.children.forEach((i)=>{
@@ -3870,14 +3879,7 @@
             item.id=item.uuid;
           })
         });
-      //产品类型级联数据
-      this.$http
-        .post(
-          "/api/contract/contract/ContractInfo/list/getProductSelectData",
-        )
-        .then((res) => {
-          this.cplxList=res.data.data;
-        });
+
     },
     methods: {
       //设置主地点
@@ -3911,6 +3913,9 @@
           this.detailform.contractInfoProductInformtList[index].productUnit= list.find(
             (item) => item.id == id
           ).vmeasurename;
+          this.detailform.contractInfoProductInformtList[index].specificationAndModel= list.find(
+            (item) => item.id == id
+          ).specificationAndModel;
         }
       },
       //获取系统外联合体,系统外分包的单位名称
@@ -4780,6 +4785,7 @@
               }
             });
         this.getTwoSC(afterData.contractInfo.marketFirstNameId);
+
         this.detailform={
           changeRecordUuid:afterData.changeRecordUuid,
           commonFilesList1: fileList1,
@@ -4793,27 +4799,31 @@
           cdmc:[],//场地名称
           topInfoSiteList:afterData.topInfoSiteList
         };
-        this.detailform.cdmc=afterData.contractInfo.siteNameId&&afterData.contractInfo.siteNameId.split(",");
-        this.detailform.zplx=afterData.contractInfo.otherAssemblyTypeId&&afterData.contractInfo.otherAssemblyTypeId.split(",");
-        this.detailform.jzlx=afterData.contractInfo.otherBuildingTypeId&&afterData.contractInfo.otherBuildingTypeId.split(",");
-        this.detailform.jzjglx=afterData.contractInfo.otherBuildingStructureTypeId&&afterData.contractInfo.otherBuildingStructureTypeId.split(",");
-        this.detailFormBefore={
-          commonFilesList1: _fileList1,
-          commonFilesList2: _fileList2,
-          contractInfo: beforData.contractInfo,
-          contractInfoAttachBO: beforData.contractInfoAttachBO,
-          contractInfoProductInformtList: beforData.contractInfoProductInformtList,
-          zplx:[],//装配类型
-          jzlx:[],//建筑类型
-          jzjglx:[],//建筑结构类型
-          cdmc:[],//场地名称
-          topInfoSiteList:beforData.topInfoSiteList
-        }
-        this.detailFormBefore.cdmc=beforData.contractInfo.siteNameId&&beforData.contractInfo.siteNameId.split(",");
-        this.detailFormBefore.zplx=beforData.contractInfo.otherAssemblyTypeId&&beforData.contractInfo.otherAssemblyTypeId.split(",");
-        this.detailFormBefore.jzlx=beforData.contractInfo.otherBuildingTypeId&&beforData.contractInfo.otherBuildingTypeId.split(",");
-        this.detailFormBefore.jzjglx=beforData.contractInfo.otherBuildingStructureTypeId&&beforData.contractInfo.otherBuildingStructureTypeId.split(",");
-      });
+        this.detailform.contractInfoProductInformtList.forEach((item,index)=>{
+          this.getcpxx(item.productTypeId,this.detailform.contractInfoProductInformtList,index,'getDetail')
+        });
+          this.detailform.cdmc=afterData.contractInfo.siteNameId&&afterData.contractInfo.siteNameId.split(",");
+          this.detailform.zplx=afterData.contractInfo.otherAssemblyTypeId&&afterData.contractInfo.otherAssemblyTypeId.split(",");
+          this.detailform.jzlx=afterData.contractInfo.otherBuildingTypeId&&afterData.contractInfo.otherBuildingTypeId.split(",");
+          this.detailform.jzjglx=afterData.contractInfo.otherBuildingStructureTypeId&&afterData.contractInfo.otherBuildingStructureTypeId.split(",");
+          this.detailFormBefore={
+            commonFilesList1: _fileList1,
+            commonFilesList2: _fileList2,
+            contractInfo: beforData.contractInfo,
+            contractInfoAttachBO: beforData.contractInfoAttachBO,
+            contractInfoProductInformtList: beforData.contractInfoProductInformtList,
+            zplx:[],//装配类型
+            jzlx:[],//建筑类型
+            jzjglx:[],//建筑结构类型
+            cdmc:[],//场地名称
+            topInfoSiteList:beforData.topInfoSiteList
+          }
+          this.detailFormBefore.cdmc=beforData.contractInfo.siteNameId&&beforData.contractInfo.siteNameId.split(",");
+          this.detailFormBefore.zplx=beforData.contractInfo.otherAssemblyTypeId&&beforData.contractInfo.otherAssemblyTypeId.split(",");
+          this.detailFormBefore.jzlx=beforData.contractInfo.otherBuildingTypeId&&beforData.contractInfo.otherBuildingTypeId.split(",");
+          this.detailFormBefore.jzjglx=beforData.contractInfo.otherBuildingStructureTypeId&&beforData.contractInfo.otherBuildingStructureTypeId.split(",");
+
+          });
       },
       //新增的时候详情
       getAddDetail(){
@@ -4830,6 +4840,9 @@
                 fileList2.push(item)
               }
             });
+        datas.contractInfoProductInformtList.forEach((item,index)=>{
+          this.getcpxx(item.productTypeId,datas.contractInfoProductInformtList,index,'getDetail')
+        });
         this.detailform={
           commonFilesList1: fileList1,
           commonFilesList2: fileList2,

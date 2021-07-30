@@ -2513,7 +2513,9 @@
                   label="资质类型:"
                   prop="contractInfo.designQualityTypeId"
 
-                  @change="
+                >
+                  <el-select
+                    @change="
                   getName(
                     detailform.contractInfo.designQualityTypeId,
                     emergingMarketTwo,
@@ -2521,8 +2523,6 @@
                     'designQualityTypeCode'
                   )
                 "
-                >
-                  <el-select
                     :disabled="p.actpoint==='look'||p.actpoint=='task'"
                     filterable
                     clearable

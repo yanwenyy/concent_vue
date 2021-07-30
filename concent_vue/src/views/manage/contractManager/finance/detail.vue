@@ -641,36 +641,47 @@
                   <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&!p.pushId" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('签约单位',detailform.contractInfo.signOrgId)" ></el-button>
                 </el-input>
               </el-form-item>
+              <!--<el-form-item-->
+                <!--label="合同类型:"-->
+                <!--prop="contractInfo.enginTypeFirstId"-->
+                <!--:rules="{-->
+      <!--required: true, message: '此项不能为空', trigger: 'blur'-->
+    <!--}"-->
+              <!--&gt;-->
+                <!--<el-select-->
+                  <!--:disabled="p.actpoint==='look'||p.actpoint=='task'"-->
+                  <!--clearable-->
+                  <!--filterable-->
+                  <!--placeholder="请选择"-->
+                  <!--size="mini"-->
+                  <!--v-model="detailform.contractInfo.enginTypeFirstId"-->
+                  <!--@change="-->
+                  <!--getName(-->
+                    <!--detailform.contractInfo.enginTypeFirstId,-->
+                    <!--contractType,-->
+                    <!--'enginTypeFirstName',-->
+                    <!--'enginTypeFirstCode'-->
+                  <!--)-->
+                <!--"-->
+                <!--&gt;-->
+                  <!--<el-option-->
+                    <!--:key="index"-->
+                    <!--:label="item.detailName"-->
+                    <!--:value="item.id"-->
+                    <!--v-for="(item, index) in contractType"-->
+                  <!--&gt;</el-option>-->
+                <!--</el-select>-->
+              <!--</el-form-item>-->
               <el-form-item
-                label="合同类型:"
-                prop="contractInfo.enginTypeFirstId"
-                :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
+                label="合同类型"
               >
-                <el-select
-                  :disabled="p.actpoint==='look'||p.actpoint=='task'"
+                <el-input
+                  disabled
                   clearable
-                  filterable
-                  placeholder="请选择"
-                  size="mini"
-                  v-model="detailform.contractInfo.enginTypeFirstId"
-                  @change="
-                  getName(
-                    detailform.contractInfo.enginTypeFirstId,
-                    contractType,
-                    'enginTypeFirstName',
-                    'enginTypeFirstCode'
-                  )
-                "
-                >
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in contractType"
-                  ></el-option>
-                </el-select>
+                  placeholder="请输入"
+
+                  v-model="detailform.contractInfo.contractType=='2'?'补充合同':'主合同'"
+                />
               </el-form-item>
               <br>
               <el-form-item

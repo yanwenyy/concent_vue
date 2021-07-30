@@ -1286,16 +1286,17 @@
 
                 <el-table-column width="150" :resizable="false" label="规格型号" prop="specificationAndModel" show-overflow-tooltip>
                   <template slot-scope="scope">
-                    <el-form-item
-                      class="tabelForm"
-                      :prop="'contractInfoProductInformtList.'+scope.$index+'.specificationAndModel'"
-                      :rules="{
-      required: true, message: '此项不能为空', trigger: 'blur'
-    }"
-                      label-width="0"
-                    >
-                      <el-input max-length=50 clearable :disabled="p.actpoint==='look'||p.actpoint==='task'" v-model="scope.row.specificationAndModel"></el-input>
-                    </el-form-item>
+                    {{scope.row.specificationAndModel}}
+                    <!--<el-form-item-->
+                      <!--class="tabelForm"-->
+                      <!--:prop="'contractInfoProductInformtList.'+scope.$index+'.specificationAndModel'"-->
+                      <!--:rules="{-->
+      <!--required: true, message: '此项不能为空', trigger: 'blur'-->
+    <!--}"-->
+                      <!--label-width="0"-->
+                    <!--&gt;-->
+                      <!--<el-input max-length=50 clearable :disabled="p.actpoint==='look'||p.actpoint==='task'" v-model="scope.row.specificationAndModel"></el-input>-->
+                    <!--</el-form-item>-->
                     <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                   </template>
                 </el-table-column>
@@ -2772,6 +2773,9 @@ export default {
         this.detailform.contractInfoProductInformtList[index].productUnit= list.find(
           (item) => item.id == id
       ).vmeasurename;
+        this.detailform.contractInfoProductInformtList[index].specificationAndModel= list.find(
+          (item) => item.id == id
+        ).specificationAndModel;
       }
     },
     //新增附属合同

@@ -470,6 +470,15 @@ export default {
                   'defaultpage': true
                 },
                 {
+                  'name': '合同信息变更查询',
+                  'path': '/manage/contractManager/change/searchList',
+                  'component': '/manage/contractManager/change/searchList',
+                  'iconCls': 'el-icon-edit-outline',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
                   'name': '工程承包变更',
                   'path': '/manage/contractManager/project/changeDetail',
                   'component': '/manage/contractManager/project/changeDetail',

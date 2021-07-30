@@ -14,6 +14,7 @@
       :on-remove="handleRemove"
       :on-change="fileChage1"
       :on-preview="handlePreview"
+      :before-upload="beforeAvatarUpload"
       show-file-list
       multiple>
       <el-button size="small" type="primary">选择文件</el-button>
@@ -43,6 +44,19 @@
 
       },
       methods: {
+        beforeAvatarUpload(file) {
+          const isJPG = file.type === 'image/jpeg';
+          const isLt100M = file.size / (1024 *100) < 100;
+
+          // if (!isJPG) {
+          //   this.$message.error('上传头像图片只能是 JPG 格式!');
+          // }
+          if (!isLt100M) {
+            this.$message.error('上传文件大小不能超过 100MB!');
+          }
+          // return isJPG && isLt2M;
+          return isLt100M;
+        },
         handlePreview(file) {
           console.log(file);
         },

@@ -44,7 +44,7 @@
           clearable
           filterable
           placeholder="请选择"
-          @change="getTwo"
+          @change="getTwoXZ"
           size="mini"
           v-model="searchform.projectNatureFirstId"
         >
@@ -508,6 +508,8 @@
           current: 1,
           size: 20,
           changeStatus:'0',
+          projectNatureSecondId:'',
+          enginTypeSecondId:''
         },
         moneyform:{
           contractInfoAdjustLogList:[],
@@ -660,13 +662,13 @@
       },
       //项目性质二级
       getTwoXZ(id){
-        this.detailform.topInfor.projectNatureSecondId='';
+        this.searchform.projectNatureSecondId='';
         this.projectNatureTwo=[];
         if(id!=''){
           this.projectNature.find(
             (item)=>{
             if (item.id == id) {
-            this.detailform.topInfor.projectNatureFirstName = item.detailName;
+            this.searchform.projectNatureFirstName = item.detailName;
             this.projectNatureTwo = item.children;
           }
         }
