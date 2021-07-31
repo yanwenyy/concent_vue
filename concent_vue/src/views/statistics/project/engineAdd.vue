@@ -2043,7 +2043,7 @@
         })
       },
       getShow() {
-        let params = { topInfoId: this.p.uuid ||this.p.instid}
+        let params = { topInfoId: this.p.uuid ||this.p.instid ,contractNumber: this.p.contractNumber}
         this.$http
           .post('/api/statistics/StatisticsProject/detail/entityInfo', params)
           .then((res) => {
