@@ -42,7 +42,7 @@
               style="width: 32.5%">
               <el-input
                 clearable
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 placeholder="请输入"
                 v-model="detailForm.project.projectName"/>
             </el-form-item>
@@ -51,7 +51,7 @@
               prop="project.projectForeginName"
               style="width: 32.5%">
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.projectForeginName"/>
@@ -74,7 +74,7 @@
               prop="project.projectNatureFirstId"
               style="width: 32.5%">
               <el-select
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 filterable
                 placeholder="请选择"
@@ -92,7 +92,7 @@
               prop="project.projectNatureSecondId"
               style="width: 32.5%">
               <el-select
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 filterable
                 @change="getName(detailForm.project.projectNatureSecondId, projectNatureTwo, 'projectNatureSecond','projectNatureSecondCode')"
@@ -148,7 +148,7 @@
               :rules="rules.project.isMustMoney"
               style="width: 32.5%">
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.investmentContract">
@@ -196,7 +196,7 @@
               prop="project.projectTypeFirstId"
               style="width: 32.5%">
               <el-select
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 filterable
                 placeholder="请选择"
@@ -215,7 +215,7 @@
               style="width: 32.5%">
               <!--@change="getName(detailForm.project.projectTypeSecondId, projectTypeTwo, 'projectTypeSecond','projectTypeSecondCode')"-->
               <el-select
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 filterable
                 @change="getThree"
@@ -241,7 +241,7 @@
             }"
             >
               <el-select
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
                 clearable
                 filterable
                 placeholder="请选择"
@@ -324,7 +324,7 @@
             </el-form-item>
             <!--父项目暂无-->
             <el-form-item
-              v-if="detailForm.project.projectTypeId==='22038e576c2242d5acc93f6c3c8e48ad' || 
+              v-if="detailForm.project.projectTypeId==='22038e576c2242d5acc93f6c3c8e48ad' ||
                     detailForm.project.projectTypeId==='393a07bda2244b03a24590e076a421df'"
               label="父项目名称:"
               prop="project.fatherProjectName"
@@ -458,7 +458,7 @@
               prop="project.marketFirstId"
               style="width: 32.5%">
               <el-select
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 filterable
                 placeholder="请选择"
@@ -483,7 +483,7 @@
               <!--multiple-->
               <!--collapse-tags-->
               <el-select
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'"
+                :disabled="p.actpoint === 'look'||detailForm.project.contractInfoList!=''||p.actpoint === 'task'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'"
                 filterable
                 clearable
                 @change="getName(detailForm.project.marketSecondId, emergingMarketTwo, 'marketSecondName','marketSecondCode')"
@@ -602,7 +602,7 @@
               :rules="rules.project.isMustMoney"
               style="width: 32.5%">
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 @change="getCount"
                 clearable
                 placeholder="请输入"
@@ -648,7 +648,7 @@
               :rules="rules.project.isMoney"
               style="width: 32.5%">
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.contractAmountTotal">
@@ -665,7 +665,7 @@
               :rules="rules.project.isMoney"
               style="width: 32.5%">
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.realInvest">
@@ -679,7 +679,7 @@
               :rules="rules.project.isMustMoney"
               style="width: 32.5%">
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 placeholder="请输入"
                 @change="getOutputTax"
@@ -710,7 +710,7 @@
               prop="project.contractStartTime"
               style="width: 32.5%">
               <el-date-picker
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 v-model="detailForm.project.contractStartTime"
                 type="date"
                 value-format="timestamp"
@@ -721,7 +721,7 @@
               prop="project.contractEndTime"
               style="width: 32.5%">
               <el-date-picker
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 v-model="detailForm.project.contractEndTime"
                 type="date"
                 value-format="timestamp"
@@ -1962,6 +1962,10 @@
         }else{
           url="/api/statistics/StatisticsProject/process/start"
         }
+        if(Number(this.detailForm.project.contractAmountInitial)!=Number(this.detailForm.project.contractAmountEngine)&&this.p.actpoint=='add'){
+          this.$message.error("初始合同额要等于工程合同额");
+          return false;
+        }
         if(this.detailForm.project.topInfoSiteList.length==0){
           this.$message.error("请至少选择一个项目地点");
           return false;
@@ -1976,6 +1980,7 @@
           this.$message.error("请选择一个主地点");
           return false;
         }
+
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
@@ -2051,7 +2056,7 @@
       console.info(data)
     },
       getShow() {
-        let params = { topInfoId: this.p.uuid ||this.p.instid}
+        let params = { topInfoId: this.p.uuid ||this.p.instid ,contractNumber: this.p.contractNumber}
         this.$http
           .post('/api/statistics/StatisticsProject/detail/entityInfo', params)
           .then((res) => {
@@ -2072,7 +2077,11 @@
               if (res.data.data.topInfoSiteList.length < 1) {
                 this.detailForm.project.topInfoSiteList = [{ path: '', placeId: '', uuid: '' }]
               }
-              this.getShowTwo()
+              this.getShowTwo();
+              if(this.detailForm.project.contractInfoList!=''){
+                this.detailForm.project.investmentContract=this.detailForm.project.contractAmountInitial;
+                this.detailForm.project.contractAmountTotal=this.detailForm.project.contractAmountInitial;
+              }
             }
           })
       }

@@ -559,7 +559,7 @@
           this.$message.info("不能修改正在审核中或审核通过的数据！");
           return false;
         }
-        let p = { actpoint: 'edit', uuid: this.multipleSelection[0].uuid }
+        let p = { actpoint: 'edit', uuid: this.multipleSelection[0].uuid  ,contractNumber: this.multipleSelection[0].contractNumber }
         this.$router.push({
           path: './engineAdd/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
