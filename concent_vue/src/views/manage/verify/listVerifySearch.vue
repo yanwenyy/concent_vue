@@ -558,13 +558,14 @@
             '<th>公告类型</th>\n' +
             '<th>资审文件发售截止日期</th>\n' +
             '<th>状态</th>\n' +
+            '<th>项目地点</th>\n' +
             '<th>填报人</th>\n' +
             '<th>填报时间</th>\n' +
             '<th>资审结果</th>\n' +
             '</tr>',
             jsonData:datas,
             tdstr:['sectionName','inforName','enginTypeFirstName',
-              'constructionOrg','noticeTypeName','saleTime','flowStatus',
+              'constructionOrg','noticeTypeName','saleTime','flowStatus','path',
               'createUserName','createTime','verifyResult'],
             tdstrFuc:{
               flowStatus:function (str) {
