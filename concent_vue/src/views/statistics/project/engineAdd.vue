@@ -131,14 +131,14 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 clearable
                 filterable
-                @change="getName(detailForm.project.investmentModelId, investmentModel, 'investmentModel','investmentModelCode')"
+                @change="getName(detailForm.project.investmentModelId, projectNatureTwo, 'investmentModel','investmentModelCode')"
                 placeholder="请选择"
                 v-model="detailForm.project.investmentModelId">
                 <el-option
                   :key="index"
                   :label="item.detailName"
                   :value="item.id"
-                  v-for="(item, index) in investmentModel"/>
+                  v-for="(item, index) in projectNatureTwo"/>
               </el-select>
             </el-form-item>
             <el-form-item
@@ -321,7 +321,8 @@
             </el-form-item>
             <!--父项目暂无-->
             <el-form-item
-              v-if="detailForm.project.projectTypeId==='22038e576c2242d5acc93f6c3c8e48ad'"
+              v-if="detailForm.project.projectTypeId==='22038e576c2242d5acc93f6c3c8e48ad' || 
+                    detailForm.project.projectTypeId==='393a07bda2244b03a24590e076a421df'"
               label="父项目名称:"
               prop="project.fatherProjectName"
               style="width: 32.5%">
