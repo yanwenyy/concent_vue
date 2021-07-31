@@ -422,20 +422,20 @@
               </el-select>
             </el-form-item>
             <!--所在地-->
-            <el-form-item
-              label="项目所在地"
-              prop="project.topInfoSiteList[0].path"
-              :rules="{
-                required: true, message: '此项不能为空', trigger: 'change'
-              }"
-              style="width: 32.5%"
-            >
-              <el-input v-model="detailForm.project.topInfoSiteList[0].path" placeholder="项目所在地"
-                        :disabled="p.actpoint === 'look'||p.actpoint === 'task'" clearable>
-                <el-button slot="append" :disabled="p.actpoint === 'look'||p.actpoint === 'task'" icon="el-icon-search"
-                           @click="selectPosition()"></el-button>
-              </el-input>
-            </el-form-item>
+            <!--<el-form-item-->
+              <!--label="项目所在地"-->
+              <!--prop="project.topInfoSiteList[0].path"-->
+              <!--:rules="{-->
+                <!--required: true, message: '此项不能为空', trigger: 'change'-->
+              <!--}"-->
+              <!--style="width: 32.5%"-->
+            <!--&gt;-->
+              <!--<el-input v-model="detailForm.project.topInfoSiteList[0].path" placeholder="项目所在地"-->
+                        <!--:disabled="p.actpoint === 'look'||p.actpoint === 'task'" clearable>-->
+                <!--<el-button slot="append" :disabled="p.actpoint === 'look'||p.actpoint === 'task'" icon="el-icon-search"-->
+                           <!--@click="selectPosition()"></el-button>-->
+              <!--</el-input>-->
+            <!--</el-form-item>-->
             <el-form-item
               label="签约/使用资质单位:"
               prop="project.companyName"
@@ -911,6 +911,121 @@
                 v-model="detailForm.project.projectRemark"/>
             </el-form-item>
           </el-row>
+          <p>
+            <span >项目地点: </span>
+            <el-button
+              v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'&&detailForm.project.contractInfoList==''"
+              class="detatil-flie-btn"
+              @click="add('dd')"
+              type="primary"
+            >新增</el-button >
+          </p>
+          <el-table
+            :data="detailForm.project.topInfoSiteList"
+            :header-cell-style="{
+              'text-align': 'center',
+              'background-color': 'rgba(246,248,252,1)',
+              color: 'rgba(0,0,0,1)',
+            }"
+            align="center"
+            border
+            class="detailTable"
+            ref="table"
+            style="width: 100%;height: auto;"
+          >
+            <el-table-column
+              :width="80"
+              align="center"
+              label="序号"
+              show-overflow-tooltip
+              type="index"
+            ></el-table-column>
+            <el-table-column
+              :resizable="false"
+              label="项目地点"
+              align="center"
+              prop="path"
+            >
+              <template slot-scope="scope">
+                <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.path'"  :rules="{required: true,message: '此项不能为空'}">
+                  <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                  <el-input disabled placeholder="请输入内容" v-model="scope.row.path" class="input-with-select group-no-padding">
+                    <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append" icon="el-icon-circle-plus" @click="selectPosition(),positionIndex=scope.$index"></el-button>
+                  </el-input>
+                </el-form-item>
+              </template>
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="份额(万元)"
+              prop="contractAmount"
+              show-overflow-tooltip
+              align="center"
+            >
+              <template slot-scope="scope">
+                <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
+                  <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                  <el-input
+                    class="group-no-padding"
+                    clearable
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
+                    v-model="scope.row.contractAmount"
+                  >
+                    <!--@input="getPositionMoney(scope.$index,detailForm.project.topInfoSiteList)"-->
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-form-item>
+                <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+              </template>
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              label="是否为主地点"
+              prop="contractAmount"
+              align="center"
+              show-overflow-tooltip
+            >
+              <template slot-scope="scope">
+                <el-switch
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
+                  class="inline-formitem-switch"
+                  v-model="scope.row.isMain"
+                  active-color="#409EFF"
+                  inactive-color="#ddd"
+                  active-value="1"
+                  inactive-value="0"
+                  @change="setMain(scope.$index,detailForm.project.topInfoSiteList)"
+                >
+                </el-switch>
+                <!--<el-radio v-model="scope.row.isMain" label="1">是</el-radio>-->
+                <!--<el-radio v-model="scope.row.isMain" label="0">否</el-radio>-->
+                <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+              </template>
+            </el-table-column>
+
+            <el-table-column
+              :resizable="false"
+              fixed="right"
+              label="操作"
+              align="center"
+              width="80"
+              show-overflow-tooltip
+              v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'&&detailForm.project.contractInfoList==''"
+            >
+              <template slot-scope="scope">
+                <el-link
+                  :underline="false"
+                  @click="del(scope.$index,scope.row,detailForm.project.topInfoSiteList)"
+                  type="warning"
+                >删除
+                </el-link
+                >
+              </template>
+            </el-table-column>
+          </el-table>
           <!--附件-->
           <p>
             <span>相关附件: </span>
@@ -1365,7 +1480,9 @@
                 path: '',
                 placeId: '',
                 ffid:'',
-                uuid: ''
+                uuid: '',
+                isMain: '1',
+                country: '',
               }
             ]
           }
@@ -1461,6 +1578,60 @@
       }
     },
     methods: {
+      //设置主地点
+      setMain(i,list){
+        list.forEach((item,index)=>{
+          if(index==i){
+            item.isMain="1"
+          }else{
+            item.isMain="0"
+          }
+        });
+      },
+      // 获取项目地点的值
+      getPositionTree(data) {
+        console.log(data)
+        this.treeStatas = false;
+        var country = '', _data = data;
+        if (_data.fullDetailName.indexOf("境内") != -1) {
+          country = '01';
+        } else if (_data.fullDetailName.indexOf("境外") != -1) {
+          country = '02';
+        }
+        var ifRepeat=false;
+        this.detailForm.project.topInfoSiteList.forEach((item, index) => {
+          if(item.ffid!=_data.fullDetailCode&&!ifRepeat){
+            if (index == this.positionIndex) {
+              // item.detailName = _data.detailName;
+              item.country = country;
+              item.ffid = _data.fullDetailCode;
+              item.path = _data.fullDetailName;
+              item.placeId=_data.id;
+            }
+          }else{
+            this.$message.error("项目地点不能重复");
+            ifRepeat=true;
+          }
+
+        });
+        this.key = this.key + 1;
+      },
+      //新增标段和地点
+      add(type) {
+        var v = {};
+        if (type == 'dd') {
+          v = {
+            country: '',
+            ffid: '',
+            path: '',
+            contractAmount: '',
+            isMain: '',
+            placeId:''
+          }
+          this.detailForm.project.topInfoSiteList.push(v);
+        }
+      },
+
       //新增关联合同
       addContract(){
         this.contractStatas = true;
@@ -1636,13 +1807,13 @@
           this.$refs.addOrUpdate.init()
         })
       },
-      // 获取项目地点的值
-      getPositionTree(data) {
-        this.treeStatas = false
-        this.detailForm.project.topInfoSiteList[0].placeId = data.id
-        this.detailForm.project.topInfoSiteList[0].path = data.fullDetailName
-        this.detailForm.project.topInfoSiteList[0].ffid = data.fullDetailCode
-      },
+      // // 获取项目地点的值
+      // getPositionTree(data) {
+      //   this.treeStatas = false
+      //   this.detailForm.project.topInfoSiteList[0].placeId = data.id
+      //   this.detailForm.project.topInfoSiteList[0].path = data.fullDetailName
+      //   this.detailForm.project.topInfoSiteList[0].ffid = data.fullDetailCode
+      // },
       resetFuDai(id, list, name,code) {
         this.detailForm.project.fatherProjectName = ''
         this.detailForm.project.isBureauIndex = ''
@@ -1785,7 +1956,20 @@
         }else{
           url="/api/statistics/StatisticsProject/process/start"
         }
-
+        if(this.detailForm.project.topInfoSiteList.length==0){
+          this.$message.error("请至少选择一个项目地点");
+          return false;
+        }
+        var hasMain=false;
+        this.detailForm.project.topInfoSiteList.forEach((item)=>{
+          if(item.isMain=='1'){
+            hasMain=true;
+          }
+        });
+        if(!hasMain){
+          this.$message.error("请选择一个主地点");
+          return false;
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
