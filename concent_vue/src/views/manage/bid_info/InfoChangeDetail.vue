@@ -1644,6 +1644,7 @@
             </el-row>
             <el-row>
                 <p><span >附件: </span>
+                   <!-- <span>开标记录: </span> -->
                   <el-button
                     v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                     size="small"
