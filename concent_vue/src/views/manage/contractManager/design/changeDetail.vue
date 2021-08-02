@@ -1596,7 +1596,7 @@
               }"
                 >
                   <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailform.searchProject||p.pushId" placeholder="请输入内容" v-model="detailform.contractInfo.inforName" class="input-with-select">
-                    <el-button v-if="detailform.contractInfo.contractType!='2'&&!detailform.searchProject&&!p.pushId" slot="append" icon="el-icon-search" @click="searchName"></el-button>
+                    <el-button v-if="detailform.contractInfo.contractType!='2'&&p.actpoint!='task'&&p.actpoint!='look'&&!detailform.searchProject&&!p.pushId" slot="append" icon="el-icon-search" @click="searchName"></el-button>
                   </el-input>
                 </el-form-item>
                 <el-form-item
@@ -1856,7 +1856,7 @@
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     clearable
                     placeholder="请输入"
-
+                    @input="detailform.contractInfo.contractPeriod=detailform.contractInfo.contractPeriod.replace(/[^\-?\d.]/g,'','')"
                     v-model="detailform.contractInfo.contractPeriod"
                   />
                 </el-form-item>
@@ -5399,13 +5399,13 @@
       searchName() {
         this.infoCSVisible = true;
         this.$nextTick(() => {
-          this.$refs.infoCS.init(this.detailform.contractInfo.moduleId);
-      })
+          this.$refs.infoCS.init(this.detailform.contractInfo.moduleId,this.detailform.contractInfo.contractType);
+        })
       },
       //项目名称查询回来的数据
       goAddDetail(data){
         this.$http
-          .post("/api/contract/topInfo/TopInfor/detail/entityInfoByIdForContract", {uuid :data.uuid})
+          .post("/api/contract/topInfo/TopInfor/detail/entityInfoByIdForContract", {uuid :data.data.uuid})
           .then((res) => {
           var datas=res.data.data;
         this.detailform.searchProject=true;

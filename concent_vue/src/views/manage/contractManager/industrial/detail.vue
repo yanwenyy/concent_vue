@@ -1369,7 +1369,7 @@
               <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                 <span>系统内其他联合体单位列表: </span>
                 <el-button
-                  v-show="p.actpoint != 'look'"
+                  v-show="p.actpoint != 'look'&&p.actpoint!='task'"
                   @click="addfs('nlht',1,1)"
 
                   style="
@@ -1420,7 +1420,7 @@
                       disabled
                       v-model="scope.row.orgName"
                       class="input-el-input-group">
-                      <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'unionContractInfoAttachList')" ></el-button>
+                      <el-button  v-if="p.actpoint != 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'unionContractInfoAttachList')" ></el-button>
                     </el-input>
                     <!--<el-input-->
                     <!--class="input-el-input-group"-->
@@ -1549,7 +1549,7 @@
               <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                 <span>系统内分包单位列表: </span>
                 <el-button
-                  v-show="p.actpoint != 'look'"
+                  v-if="p.actpoint != 'look'&&p.actpoint!='task'"
                   @click="addfs('nfb',2,1)"
 
                   style="
@@ -1728,7 +1728,7 @@
               <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                 <span>系统外其他联合体单位列表: </span>
                 <el-button
-                  v-show="p.actpoint != 'look'"
+                  v-if="p.actpoint != 'look'&&p.actpoint!='task'"
                   @click="addfs('wlht',3,1)"
 
                   style="
@@ -1932,7 +1932,7 @@
               <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                 <span>系统外分包单位列表: </span>
                 <el-button
-                  v-show="p.actpoint != 'look'"
+                  v-if="p.actpoint != 'look'&&p.actpoint!='task'"
                   @click="addfs('wfb',4,1)"
 
                   style="
@@ -2136,7 +2136,7 @@
               <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
                 <span>集团内分包单位列表: </span>
                 <el-button
-                  v-show="p.actpoint != 'look'"
+                  v-if="p.actpoint != 'look'&&p.actpoint!='task'"
                   @click="addfs('jtfb',5,1)"
 
                   style="

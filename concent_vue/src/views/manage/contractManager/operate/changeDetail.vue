@@ -15,7 +15,21 @@
           <el-tabs type="border-card">
             <el-tab-pane label="运营维管">
                 <div class="detailBoxBG">
+                  <el-form-item
+                    label="项目名称(中文)"
+                  >
+                    <el-input disabled placeholder="请输入内容" v-model="detailFormBefore.contractInfo.inforName" class="input-with-select">
 
+                    </el-input>
+                  </el-form-item>
+                  <el-form-item
+                    label="项目名称(外文)"
+                  >
+                    <el-input disabled placeholder="请输入内容" v-model="detailFormBefore.contractInfo.inforNameForeign" class="input-with-select">
+
+                    </el-input>
+                  </el-form-item>
+                  <br>
                   <el-form-item
                     label="合同名称(中文):"
                   >
@@ -1153,6 +1167,28 @@
           <el-tabs type="border-card">
             <el-tab-pane label="运营维管">
               <div class="detailBoxBG">
+                <el-form-item
+                  label="项目名称(中文)"
+                  prop="contractInfo.inforName"
+                  :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'blur',
+            }"
+                >
+                  <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailform.searchProject||p.pushId" placeholder="请输入内容" v-model="detailform.contractInfo.inforName" class="input-with-select">
+                    <el-button v-if="detailform.contractInfo.contractType!='2'&&p.actpoint!='task'&&p.actpoint!='look'&&!detailform.searchProject&&!p.pushId" slot="append" icon="el-icon-search" @click="searchName"></el-button>
+                  </el-input>
+                </el-form-item>
+                <el-form-item
+                  label="项目名称(外文)"
+                  prop="contractInfo.inforNameForeign"
+                >
+                  <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailform.searchProject||p.pushId" placeholder="请输入内容" v-model="detailform.contractInfo.inforNameForeign" class="input-with-select">
+
+                  </el-input>
+                </el-form-item>
+                <br>
                 <el-form-item
                   label="合同名称(中文):"
                   prop="contractInfo.contractName"
@@ -4153,12 +4189,52 @@
       searchName() {
         this.infoCSVisible = true;
         this.$nextTick(() => {
-          this.$refs.infoCS.init();
-      })
+          this.$refs.infoCS.init(this.detailform.contractInfo.moduleId,this.detailform.contractInfo.contractType);
+        })
       },
       //项目名称查询回来的数据
       goAddDetail(data){
-        console.log(data);
+        this.$http
+          .post("/api/contract/topInfo/TopInfor/detail/entityInfoByIdForContract", {uuid :data.data.uuid})
+          .then((res) => {
+            var datas=res.data.data;
+            this.detailform.searchProject=true;
+            var _con={};
+            // this.getTwo(datas.topInfor.enginTypeFirstId);
+            // this.getThree(datas.topInfor.enginTypeSecondId);
+            this.getTwoSC(datas.topInfor.marketFirstNameId);
+            for(var i in this.detailform.contractInfo){
+              // i!='isImport'
+              _con[i]=JSON.parse(JSON.stringify(this.detailform.contractInfo[i]));
+            }
+            for(var i in datas.topInfor){
+              // i!='isImport'
+              if(datas.topInfor[i]&&i!='uuid'){
+                _con[i]=JSON.parse(JSON.stringify(datas.topInfor[i]));
+              }
+            }
+            this.detailform.contractInfo=_con;
+            this.detailform.contractInfoSectionList=[];
+            for(var i in datas.bidInfoSectionBOList){
+              var bidInfoSection=datas.bidInfoSectionBOList[i].bidInfoSection,
+                bidInfoSectionOrgList=datas.bidInfoSectionBOList[i].bidInfoSectionOrgList;
+              //参见单位把前期中标中的施工单位直接带过来
+              this.detailform.contractInfo.buildOrgNames=bidInfoSection.constructionUnitName;
+              this.detailform.contractInfo.buildOrgIds=bidInfoSection.constructionUnitId;
+              bidInfoSection.uuid='';
+              for(var k in bidInfoSection.bidInfoSectionOrgList){
+                bidInfoSection.bidInfoSectionOrgList[k].uuid='';
+              }
+              bidInfoSection.bidInfoSectionOrgList=bidInfoSectionOrgList;
+              this.detailform.contractInfoSectionList.push(bidInfoSection);
+            }
+
+            for(var i in datas.topInfoSiteList){
+              datas.topInfoSiteList[i].uuid='';
+            }
+            this.detailform.topInfoSiteList=datas.topInfoSiteList;
+          });
+        this.$forceUpdate();
         this.infoCSVisible=false;
       },
       //金额过滤

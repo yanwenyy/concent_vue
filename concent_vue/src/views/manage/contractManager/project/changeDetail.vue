@@ -1869,7 +1869,7 @@
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     clearable
                     placeholder=""
-
+                    @input="detailform.contractInfo.lineLength=detailform.contractInfo.lineLength.replace(/[^\-?\d.]/g,'','')"
                     v-model="detailform.contractInfo.lineLength"
                   />
                 </el-form-item>
@@ -1887,7 +1887,7 @@
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     clearable
                     placeholder=""
-
+                    @input="detailform.contractInfo.contractBuiltArea=detailform.contractInfo.contractBuiltArea.replace(/[^\-?\d.]/g,'','')"
                     v-model="detailform.contractInfo.contractBuiltArea"
                   />
                 </el-form-item>
@@ -1927,7 +1927,7 @@
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     clearable
                     placeholder="请输入"
-
+                    @input="detailform.contractInfo.contractPeriod=detailform.contractInfo.contractPeriod.replace(/[^\-?\d.]/g,'','')"
                     v-model="detailform.contractInfo.contractPeriod"
                   />
                 </el-form-item>
