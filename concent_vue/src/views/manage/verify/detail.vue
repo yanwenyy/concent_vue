@@ -590,7 +590,7 @@
         </el-form-item>
         <el-form-item  label="内部联合体单位:"
                        prop="verify.orgName"
-                       :rules="detailform.verify.isCoalitionBid=='是'?{
+                       :rules="detailform.verify.isCoalitionBid=='是'&&(detailform.verify.outOrg==''||detailform.verify.outOrg==null)?{
                         required: true,
                         message: '此项不能为空',
                         trigger: 'change',
@@ -609,7 +609,7 @@
 
         <el-form-item label="外部联合体单位:"
                       prop="verify.outOrg"
-                      :rules="detailform.verify.isCoalitionBid=='是'?{
+                      :rules="detailform.verify.isCoalitionBid=='是'&&(detailform.verify.orgName==''||detailform.verify.orgName==null)?{
                         required: true,
                         message: '此项不能为空',
                         trigger: 'change',
@@ -1264,6 +1264,10 @@ export default {
           this.$message.error("附件必须上传");
           return false;
         }
+        // if(this.detailform.verify.isCoalitionBid=='是'&&this.detailform.verify.orgName==''&&this.detailform.verify.outOrg==''){
+        //   this.$message.error("内部联合体单位和外部联合体单位至少有一个不能为空");
+        //   return false;
+        // }
         this.detailform.verifyOrgList=[{orgId:this.detailform.verify.orgId,orgName:this.detailform.verify.orgName}];
        this.$refs[formName].validate((valid) => {
          //alert(valid);
