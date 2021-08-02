@@ -346,8 +346,13 @@
       },
       //去新增详情页面
       goAddDetail(data){
-        console.log(data);
-        let p = {actpoint: "add",instid:data.topInfoOrgId,uuid:data.uuid};
+        // console.log(data);
+        let p = {from:'', actpoint: "add",instid:data.topInfoOrgId,uuid:data.uuid};
+        if (data.flowStatus === "3") {
+          if (data.bidFlowStatus === "3") {
+            p = {from:'kblist', actpoint: "add",instid:data.topInfoOrgId,uuid:data.uuid};
+          }
+        }
         this.$router.push({
           path: "./InfoChangeDetail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},

@@ -275,6 +275,32 @@
         </el-table-column>
 
         <el-table-column
+          :width="180"
+          align="center"
+          label="变更通过时间"
+          prop="approveTime"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>变更通过时间</span>
+            <div>
+              <el-date-picker
+                class="list-search-picker"
+                filterable
+                clearable
+                type="date"
+                value-format="timestamp"
+                v-model="searchform.approveTime"
+              >
+              </el-date-picker>
+              </div>
+          </template>
+          <template slot-scope="scope">{{
+            scope.row.approveTime | dateformat
+            }}</template>
+        </el-table-column>
+
+        <el-table-column
           :width="150"
           align="center"
           label="状态"
@@ -485,6 +511,7 @@
               '<th>公告类型</th>\n' +
               '<th>预计招标时间</th>\n' +
               '<th>变更创建时间</th>\n' +
+              '<th>变更通过时间</th>\n' +
               '<th>状态</th>\n' +
               '</tr>',
               jsonData:datas,

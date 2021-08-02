@@ -1643,8 +1643,11 @@
                 </el-form-item>
             </el-row>
             <el-row>
-                <p><span >附件: </span>
-                   <!-- <span>开标记录: </span> -->
+                <p>
+                  <!-- <span >附件: </span> -->
+                  <!-- <span>开标记录: </span> -->
+                  <span span v-if="p.from!='kblist'">附件: </span>
+                  <span v-if="p.from=='kblist'">开标记录（最大10MB）: </span>
                   <el-button
                     v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                     size="small"

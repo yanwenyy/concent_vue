@@ -162,11 +162,14 @@
               :label="detailForm.project.projectNatureFirstId === '7031076e7a5f4225b1a89f31ee017802'?'投资单位:':'承建单位:'"
               prop="project.companyBuiltName"
               style="width: 32.5%">
-              <el-input
+              <!-- <el-input
                 clearable
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 placeholder="请输入"
-                v-model="detailForm.project.companyBuiltName"/>
+                v-model="detailForm.project.companyBuiltName"/> -->
+                <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailForm.project.companyBuiltName" class="input-with-select">
+                  <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('承建单位')" ></el-button>
+                </el-input>
             </el-form-item>
             <el-form-item
               label="所属铁路局:"
@@ -1339,11 +1342,13 @@
     <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
     <Separate-Dialog v-if="infoCSVisible" ref="infoCS" @refreshDataList="goSeparate"></Separate-Dialog>
     <related-contract  v-if="contractStatas" ref="infoCS" @getPosition="goAddDetail"></related-contract>
+    <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
   </div>
 </template>
 
 <script>
   import Tree from '@/components/tree'
+  import CompanyTree from '../companyTree'
   import FileUpload from '@/components/fileUpload'
   import { isMoney, isMobile, isPhone } from '@/utils/validate'
   import SeparateDialog from '@/components/separateDialog'
@@ -1352,7 +1357,7 @@
   export default {
     name: 'InvestMode',
     components: {
-      Tree, FileUpload, SeparateDialog,RelatedContract
+      Tree, FileUpload, SeparateDialog,RelatedContract,CompanyTree
     },
     data() {
       const validateMoney = (rule, value, callback) => {
@@ -2079,8 +2084,16 @@
           this.$refs.infoDw.init(type, list)
         })
       },
+      //获取单位的值
+      getDwInfo(data){
+      this.$forceUpdate();
+      this.detailForm.project.companyBuiltName=data.name;
+      this.detailForm.project.companyBuiltId=data.id;
+      this.DwVisible=false;
+      console.info(data)
+    },
       getShow() {
-        let params = { topInfoId: this.p.uuid ||this.p.instid}
+        let params = { topInfoId: this.p.uuid ||this.p.instid ,contractNumber: this.p.contractNumber}
         this.$http
           .post('/api/statistics/StatisticsProject/detail/entityInfo', params)
           .then((res) => {
