@@ -7706,7 +7706,7 @@ export default {
         this.detailform.contractInfo.qualityOrgIds=id.join(",");
         this.detailform.contractInfo.qualityOrgNames=name.join(",");
       }else if(data.type=='单位名称'){
-        this.detailform.contractInfoAttachBO[data.tableList][data.index].orgId=data.code;
+        this.detailform.contractInfoAttachBO[data.tableList][data.index].orgId=data.id;
         this.detailform.contractInfoAttachBO[data.tableList][data.index].orgName=data.name;
         this.$set(this.detailform.contractInfoAttachBO[data.tableList][data.index],this.detailform.contractInfoAttachBO[data.tableList][data.index]);
       }else if(data.type=="承揽所属机构"){
