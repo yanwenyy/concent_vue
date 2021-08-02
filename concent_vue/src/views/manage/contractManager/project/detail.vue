@@ -1960,7 +1960,7 @@
                     disabled
                     v-model="scope.row.orgName"
                     class="input-el-input-group">
-                    <el-button slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'unionContractInfoAttachList')" ></el-button>
+                    <el-button v-if="!(p.actpoint === 'look'||p.actpoint=='task')" slot="append" icon="el-icon-circle-plus-outline"  @click="addDw('单位名称','',false,scope.$index,'unionContractInfoAttachList')" ></el-button>
                   </el-input>
                   <!--<el-input-->
                   <!--class="input-el-input-group"-->
