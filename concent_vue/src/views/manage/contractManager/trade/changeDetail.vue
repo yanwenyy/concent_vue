@@ -577,6 +577,15 @@
                     </el-select>
                   </el-form-item>
                   <el-form-item
+                    label="业务类别:"
+                  >
+                    <el-input
+                      disabled
+                      clearable
+                      size="mini"
+                      v-model="detailFormBefore.contractInfo.businessType"/>
+                  </el-form-item>
+                  <el-form-item
                     v-if="detailFormBefore.contractInfo.customerNatureId=='9f19652f27a911ebad4bc5ee92e1a03f'"
                     class="inline-formitem"
                     label="所属央企:"
@@ -2089,6 +2098,29 @@
                   </el-select>
                 </el-form-item>
                 <el-form-item
+                  label="业务类别:"
+
+                >
+                  <el-select
+                    :disabled="p.actpoint==='look'||p.actpoint=='task'"
+                    filterable
+                    clearable
+                    placeholder="请选择"
+
+                    v-model="detailform.contractInfo.businessTypeId"
+                    @change="
+                  getName(
+                    detailform.contractInfo.businessTypeId,
+                    bizTypeCode,
+                    'businessType',
+                    'businessTypeCode'
+                  )
+                "
+                  >
+                    <el-option :key="index" :label="item.detailName" v-if="item.parentDetailId=='0f333a962655480c8ef668a8ce129d41'" :value="item.id" v-for="(item,index) in bizTypeCode"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item
                   v-if="detailform.contractInfo.customerNatureId=='9f19652f27a911ebad4bc5ee92e1a03f'"
                   class="inline-formitem"
                   label="所属央企:"
@@ -3500,7 +3532,7 @@
                     </el-table-column>
                   </el-table>
                 </div>
-                <div  v-if="detailform.contractInfo.isOutSystemSub==='0'">
+                <div  v-if="detailform.contractInfo.isInGroupSub==='0'">
                   <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                     <span>集团内分包单位列表: </span>
                     <el-button
@@ -3844,6 +3876,9 @@
       AuditProcess
     },
     computed: {
+      bizTypeCode(){
+        return this.$store.state.bizTypeCode;//业务类别
+      },
       //客户性质
       customerNature() {
         return this.$store.state.customerNature;

@@ -461,7 +461,8 @@
           actpoint: 'edit',
           afterId: this.multipleSelection[0].afterId,
           beforeId: this.multipleSelection[0].beforeId,
-          uuid: this.multipleSelection[0].recordUuid
+          uuid: this.multipleSelection[0].recordUuid,
+          pushId:this.multipleSelection[0].pushId
         }
         this.$router.push({
           path: url,

@@ -448,6 +448,15 @@
                     >
                     </el-switch>
                   </el-form-item>
+                  <el-form-item
+                    label="业务类别:"
+                  >
+                    <el-input
+                      disabled
+                      clearable
+                      size="mini"
+                      v-model="detailFormBefore.contractInfo.businessType"/>
+                  </el-form-item>
                   <br>
                   <el-form-item
                     label="建设用地面积（万平方米）:"
@@ -1786,6 +1795,29 @@
                     inactive-value="0"
                   >
                   </el-switch>
+                </el-form-item>
+                <el-form-item
+                  label="业务类别:"
+
+                >
+                  <el-select
+                    :disabled="p.actpoint==='look'||p.actpoint=='task'"
+                    filterable
+                    clearable
+                    placeholder="请选择"
+
+                    v-model="detailform.contractInfo.businessTypeId"
+                    @change="
+                  getName(
+                    detailform.contractInfo.businessTypeId,
+                    bizTypeCode,
+                    'businessType',
+                    'businessTypeCode'
+                  )
+                "
+                  >
+                    <el-option :key="index" :label="item.detailName" v-if="item.parentDetailId=='0f333a962655480c8ef668a8ce129d41'" :value="item.id" v-for="(item,index) in bizTypeCode"></el-option>
+                  </el-select>
                 </el-form-item>
                 <br>
                 <el-form-item
@@ -3156,7 +3188,7 @@
                     </el-table-column>
                   </el-table>
                 </div>
-                <div  v-if="detailform.contractInfo.isOutSystemSub==='0'">
+                <div  v-if="detailform.contractInfo.isInGroupSub==='0'">
                   <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                     <span>集团内分包单位列表: </span>
                     <el-button
@@ -3433,6 +3465,7 @@
             unionContractInfoAttachList:[]
           },
           contractInfoSectionList: [],
+          contractInfoHouseSalesList:[],
           topInfoSiteList:[],
           zplx:[],//装配类型
           jzlx:[],//建筑类型
@@ -3448,6 +3481,7 @@
             unionContractInfoAttachList:[]
           },
           contractInfoSectionList: [],
+          contractInfoHouseSalesList:[],
           topInfoSiteList:[],
           zplx:[],//装配类型
           jzlx:[],//建筑类型
@@ -3488,6 +3522,9 @@
       AuditProcess
     },
     computed: {
+      bizTypeCode(){
+        return this.$store.state.bizTypeCode;//业务类别
+      },
       projectDomainType() {
         // console.log(this.$store.state.category.projectDomainType)
         return this.$store.state.category.projectDomainType;

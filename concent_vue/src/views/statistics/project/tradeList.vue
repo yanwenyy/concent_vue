@@ -448,7 +448,7 @@
         }else if(this.multipleSelection[0].flowStatus==3){
           this.$message.info('当前数据不能进行修改！')
         }else{
-          let p = { actpoint: 'edit', uuid: this.multipleSelection[0].uuid }
+          let p = { actpoint: 'edit', uuid: this.multipleSelection[0].uuid,pushId:this.multipleSelection[0].pushId }
           this.$router.push({
             path: './tradeAdd/',
             query: { p: this.$utils.encrypt(JSON.stringify(p)) }

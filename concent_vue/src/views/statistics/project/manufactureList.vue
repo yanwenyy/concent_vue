@@ -443,7 +443,7 @@
           this.$message.info('不可修改审核中或者审核通过的数据！')
           return false
         }
-        let p = { actpoint: 'edit', uuid: this.multipleSelection[0].uuid }
+        let p = { actpoint: 'edit', uuid: this.multipleSelection[0].uuid,pushId:this.multipleSelection[0].pushId }
         this.$router.push({
           path: './manufactureAdd/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }

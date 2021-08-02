@@ -217,7 +217,7 @@
                 <template slot="append">(万元)</template>
               </el-input>
         </el-form-item>
-        <el-form-item label="投标限价(万元):" class="list-item" :class="type!='eidtnew'?'not-error':''" prop="bidInfoSection.biddingPriceLimit"  :rules="rules.contractAmount">
+        <el-form-item label="投标限价(万元):" class="list-item" v-if="isBidRates=='1'||isBidRates==''" :class="type!='eidtnew'?'not-error':''" prop="bidInfoSection.biddingPriceLimit"  :rules="rules.contractAmount">
           <el-input
               v-model="detailForm.bidInfoSection.biddingPriceLimit"
               clearable
@@ -228,7 +228,7 @@
           <template slot="append">(万元)</template>
         </el-input>
         </el-form-item>
-        
+
 
         <el-form-item v-if="isBidRates=='0'" label="投标费率(百分比):" class="list-item" prop="bidInfoSection.tenderRate"
                       :rules="isBidRates=='0'?{
@@ -266,7 +266,7 @@
           <el-input v-model="detailForm.bidInfoSection.deputyProjectManager	" placeholder="项目副经理" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
 
-        <el-form-item v-if="isBidRates=='1'||isBidRates==''" label="风险费(万元):" class="list-item not-error"  prop="bidInfoSection.riskFee"  :rules="rules.contractAmount">
+        <el-form-item v-if="isBidRates=='0'||isBidRates==''" label="风险费(万元):" class="list-item not-error"  prop="bidInfoSection.riskFee"  :rules="rules.contractAmount">
                 <el-input
                       v-model="detailForm.bidInfoSection.riskFee"
                       clearable
@@ -327,18 +327,18 @@
           <el-input v-model="detailForm.bidInfoSection.costOwner" placeholder="成本负责人" clearable :disabled="type === 'look'"></el-input>
         </el-form-item>
 
-        <el-form-item v-if="isBidRates=='1'||isBidRates==''" label="投标限价(万元):" class="list-item not-error" prop="bidInfoSection.biddingPriceLimit"  :rules="rules.contractAmount">
-                <el-input
-                    v-model="detailForm.bidInfoSection.biddingPriceLimit"
-                    clearable
-                    placeholder="投标限价(万元)"
-                    :disabled="type === 'look'"
-                  >
-                <template slot="prepend">¥</template>
-                <template slot="append">(万元)</template>
-              </el-input>
-          <!-- <el-input v-model="detailForm.bidInfoSection.biddingPriceLimit" placeholder="投标限价(万元)" clearable></el-input> -->
-        </el-form-item>
+        <!--<el-form-item v-if="isBidRates=='1'||isBidRates==''" label="投标限价(万元):" class="list-item not-error" prop="bidInfoSection.biddingPriceLimit"  :rules="rules.contractAmount">-->
+                <!--<el-input-->
+                    <!--v-model="detailForm.bidInfoSection.biddingPriceLimit"-->
+                    <!--clearable-->
+                    <!--placeholder="投标限价(万元)"-->
+                    <!--:disabled="type === 'look'"-->
+                  <!--&gt;-->
+                <!--<template slot="prepend">¥</template>-->
+                <!--<template slot="append">(万元)</template>-->
+              <!--</el-input>-->
+          <!--&lt;!&ndash; <el-input v-model="detailForm.bidInfoSection.biddingPriceLimit" placeholder="投标限价(万元)" clearable></el-input> &ndash;&gt;-->
+        <!--</el-form-item>-->
 <br>
         <el-form-item label="其他未列出单位(单位与单位之间用英文逗号隔开):" >
           <el-input
@@ -553,7 +553,7 @@
     <div slot="footer" class="dialog-footer">
       <el-button @click="close">取消</el-button>
       <el-button v-if="type!='look'&&type!='eidtnew'" type="primary" @click="sub()">确定</el-button>
-      <el-button v-if="ifkb=='kbxq'" type="primary" @click="sub()">确定</el-button>
+      <el-button v-if="ifkb=='kbxq'&&type=='eidtnew'" type="primary" @click="sub()">确定</el-button>
     </div>
 
     </el-dialog>
@@ -674,7 +674,7 @@ import { isMoney } from '@/utils/validate'
           this.detailForm.bidInfoSection.orgName  = data.verifySectionOrgNameType02
           this.detailForm.bidInfoSection.investmentReckon  = data.investmentReckon
           this.detailForm.bidInfoSection.jananInvestment  = data.jananInvestment
-        } 
+        }
         // 填入正确的名字
         list.forEach((element) => {
           if (element.uuid == this.detailForm.bidInfoSection.sectionName) {

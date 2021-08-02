@@ -472,28 +472,28 @@
                 <!-- </el-select> -->
 
               </el-form-item>
-              <!--<el-form-item label="系统内施工单位:" class="list-item" v-if="zbForm.bidInfoSection.isWinBid=='1'"-->
-                              <!--prop="bidInfoSection.participatingUnitsName"-->
-                              <!--:rules="{-->
-                                <!--required: true,-->
-                                <!--message: '此项不能为空',-->
-                                <!--trigger: 'change',-->
-                              <!--}">-->
-                <!--<el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.participatingUnitsName" class="input-with-select" :disabled="zbType=='look'">-->
-                  <!--<el-button :disabled="zbType=='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('系统内施工单位',zbForm.bidInfoSection.participatingUnitsId)" ></el-button>-->
-                <!--</el-input>-->
-              <!--</el-form-item>-->
-              <!--<el-form-item label="中标单位:" class="list-item" v-if="zbForm.bidInfoSection.isWinBid=='1'"-->
-                            <!--prop="bidInfoSection.participatingUnitsName"-->
-                            <!--:rules="{-->
-                                <!--required: true,-->
-                                <!--message: '此项不能为空',-->
-                                <!--trigger: 'change',-->
-                              <!--}">-->
-                <!--<el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.participatingUnitsName" class="input-with-select" :disabled="zbType=='look'">-->
-                  <!--<el-button :disabled="zbType=='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('中标单位',zbForm.bidInfoSection.participatingUnitsId)" ></el-button>-->
-                <!--</el-input>-->
-              <!--</el-form-item>-->
+              <el-form-item label="系统内施工单位:" class="list-item" v-if="zbForm.bidInfoSection.isWinBid=='1'"
+                              prop="bidInfoSection.constructionUnitName"
+                              :rules="{
+                                required: true,
+                                message: '此项不能为空',
+                                trigger: 'change',
+                              }">
+                <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.constructionUnitName" class="input-with-select" :disabled="zbType=='look'">
+                  <el-button :disabled="zbType=='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('系统内施工单位',zbForm.bidInfoSection.constructionUnitId)" ></el-button>
+                </el-input>
+              </el-form-item>
+              <el-form-item label="中标单位:" class="list-item" v-if="zbForm.bidInfoSection.isWinBid=='1'"
+                            prop="bidInfoSection.inBinOrgName"
+                            :rules="{
+                                required: true,
+                                message: '此项不能为空',
+                                trigger: 'change',
+                              }">
+                <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.inBinOrgName" class="input-with-select" :disabled="zbType=='look'">
+                  <el-button :disabled="zbType=='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('中标单位',zbForm.bidInfoSection.inBinOrgId)" ></el-button>
+                </el-input>
+              </el-form-item>
               <el-form-item
                 class="list-item"
                 label="中标公示网站:"
@@ -743,7 +743,10 @@ export default {
       },
       zbType: "add", //中标弹框打开的方式
       zbForm: {
-        bidInfoSection: {},
+        bidInfoSection: {
+          inBinOrgName:'',
+          constructionUnitName:''
+        },
         bidInfo_03: [],
         dataList:[],
         dataList2:[]
@@ -845,6 +848,12 @@ export default {
           }else if(data.type=="施工单位"){
             this.zbForm.bidInfoSection.constructionUnitId=id.join(",");
             this.zbForm.bidInfoSection.constructionUnitName=name.join(",");
+          }else if(data.type=="系统内施工单位"){
+            this.zbForm.bidInfoSection.constructionUnitId=id.join(",");
+            this.zbForm.bidInfoSection.constructionUnitName=name.join(",");
+          }else if(data.type=="中标单位"){
+            this.zbForm.bidInfoSection.inBinOrgId=id.join(",");
+            this.zbForm.bidInfoSection.inBinOrgName=name.join(",");
           }
           this.DwVisible=false;
       },
@@ -871,6 +880,8 @@ export default {
           this.isBidRates = isBidRates;
           this.dialogFormVisible = true;
           this.zbForm.bidInfoSection = datas.bidInfoSection;
+          this.zbForm.bidInfoSection.inBinOrgName=datas.bidInfoSection.inBinOrgName||'';
+          this.zbForm.bidInfoSection.inBinOrgId=datas.bidInfoSection.inBinOrgId||'';
           // this.zbForm.bidInfoSectionOrgList = datas.bidInfoSectionOrgList;
           datas.bidInfoSectionOrgList.forEach((item)=>{
             if(item.orgType=='1'){

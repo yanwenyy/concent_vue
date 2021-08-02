@@ -187,6 +187,22 @@
                     </el-input>
                   </el-form-item>
                   <el-form-item
+                    class="inline-formitem"
+                    label="是否年度合同:"
+
+                  >
+                    <el-switch
+                      disabled
+                      class="inline-formitem-switch"
+                      v-model="detailFormBefore.contractInfo.isYearContract"
+                      active-color="#409EFF"
+                      inactive-color="#ddd"
+                      active-value="0"
+                      inactive-value="1"
+                    >
+                    </el-switch>
+                  </el-form-item>
+                  <el-form-item
                     label="施工单位:"
                   >
                     <el-input disabled placeholder="请输入内容" v-model="detailFormBefore.contractInfo.buildOrgNames" class="input-with-select">
@@ -411,7 +427,7 @@
                     label="合同总金额(万元):"
                   >
                     <el-input
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                       @input="getOurAmount(),getOurAmount('','','nfb')"
                       clearable
                       placeholder=""
@@ -1031,6 +1047,107 @@
                         <!--<el-radio disabled v-model="scope.row.isMain" label="1">是</el-radio>-->
                         <!--<el-radio disabled v-model="scope.row.isMain" label="0">否</el-radio>-->
                         <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                      </template>
+                    </el-table-column>
+                  </el-table>
+                  <p>
+                    <span >销售业绩: </span>
+                  </p>
+                  <el-table
+                    :data="detailFormBefore.contractInfoHouseSalesList"
+                    :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+                    @selection-change="handleSelectionChange"
+                    align="center"
+                    border
+                    class="detailTable"
+                    ref="table"
+                    style="width: 100%;height: auto;"
+                  >
+                    <el-table-column
+                      :width="80"
+                      align="center"
+                      label="序号"
+                      show-overflow-tooltip
+                      type="index"
+                    ></el-table-column>
+
+                    <el-table-column
+                      class="listTabel"
+                      :resizable="false"
+                      label="年份"
+                      prop="salesPerforYear"
+                      align="center"
+                      width="150"
+                      show-overflow-tooltip
+                    >
+
+                    </el-table-column>
+                    <el-table-column
+                      class="listTabel"
+                      :resizable="false"
+                      label="月份"
+                      width="150"
+                      prop="salesPerforMonth"
+                      align="center"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      :resizable="false"
+                      label="本月销售金额(万元)"
+                      align="center"
+                      prop="monthSales"
+                      width="150"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      :resizable="false"
+                      label="本月营业收入(万元)"
+                      width="150"
+                      align="center"
+                      prop="monthIncome"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      :resizable="false"
+                      label="本年销售金额(万元)"
+                      align="center"
+                      width="150"
+                      prop="yearSales"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      :resizable="false"
+                      label="本年营业收入(万元)"
+                      width="150"
+                      align="center"
+                      prop="yearIncome"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      :resizable="false"
+                      label="开发进度描述"
+                      width="150"
+                      align="center"
+                      prop="description"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      :resizable="false"
+                      label="是否完工"
+                      width="150"
+                      align="center"
+                      prop="isFinish"
+                      show-overflow-tooltip
+                    >
+                      <template slot-scope="scope">
+                        <el-radio disabled v-model="scope.row.isFinish" label="0">是</el-radio>
+                        <el-radio disabled v-model="scope.row.isFinish" label="1">否</el-radio>
                       </template>
                     </el-table-column>
                   </el-table>
@@ -1756,6 +1873,25 @@
                   <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId" placeholder="请输入内容" v-model="detailform.contractInfo.qualityOrgNames" class="input-with-select">
                     <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&!p.pushId" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('使用资质单位',detailform.contractInfo.qualityOrgIds)" ></el-button>
                   </el-input>
+                </el-form-item>
+                <el-form-item
+                  class="inline-formitem"
+                  label="是否年度合同:"
+                  prop="contractInfo.isYearContract"
+                  :rules="{
+      required: true, message: '此项不能为空', trigger: 'blur'
+    }"
+                >
+                  <el-switch
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.isYearContract=='0'"
+                    class="inline-formitem-switch"
+                    v-model="detailform.contractInfo.isYearContract"
+                    active-color="#409EFF"
+                    inactive-color="#ddd"
+                    active-value="0"
+                    inactive-value="1"
+                  >
+                  </el-switch>
                 </el-form-item>
                 <el-form-item
                   label="参建单位:"
@@ -3113,6 +3249,201 @@
                     </template>
                   </el-table-column>
                 </el-table>
+                <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+                  <span>销售业绩:</span>
+                  <!--<el-button-->
+                  <!--v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"-->
+                  <!--@click="addXs()"-->
+                  <!--class="upload-demo detailUpload detatil-flie-btn"-->
+                  <!--type="primary"-->
+                  <!--&gt;新增-->
+                  <!--</el-button-->
+                  <!--&gt;-->
+                </p>
+                <el-table
+                  :data="detailform.contractInfoHouseSalesList"
+                  :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%; min-height: calc(100vh - 370px)"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="年份"
+                    prop="salesPerforYear"
+                    align="center"
+                    width="150"
+                    show-overflow-tooltip
+                    v-if="detailform.contractInfo.isYearContract=='0'"
+                  >
+                    <template slot-scope="scope">
+                      <el-date-picker
+                        disabled
+                        v-model="scope.row.salesPerforYear"
+                        type="year"
+                        value-format="yyyy"
+                        placeholder="选择年">
+                      </el-date-picker>
+                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="月份"
+                    width="150"
+                    prop="salesPerforMonth"
+                    align="center"
+                    show-overflow-tooltip
+                    v-if="detailform.contractInfo.isYearContract=='0'"
+                  >
+                    <template slot-scope="scope">
+                      <el-date-picker
+                        @change="checkRepeat(scope.row.salesPerforMonth,scope.row.salesPerforYear,detailform.contractInfoHouseSalesList,scope.$index)"
+                        disabled
+                        v-model="scope.row.salesPerforMonth"
+                        type="month"
+                        format="MM"
+                        value-format="MM"
+                        placeholder="选择月">
+                      </el-date-picker>
+                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="本月销售金额(万元)"
+                    align="center"
+                    prop="monthSales"
+                    width="400"
+                    show-overflow-tooltip
+                  >
+                    <template slot-scope="scope">
+                      <el-form-item class="tabelForm" :prop="'contractInfoHouseSalesList.' + scope.$index + '.monthSales'" :rules='rules.contractAmount'>
+                        <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                        <el-input
+                          @blur="setYearSale(scope.row.salesPerforMonth,scope.row.salesPerforYear)"
+                          v-model="scope.row.monthSales"
+                          clearable
+                          disabled
+                        >
+                          <template slot="prepend">¥</template>
+                          <template slot="append">(万元)</template>
+                        </el-input>
+                      </el-form-item>
+                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="本月营业收入(万元)"
+                    width="400"
+                    align="center"
+                    prop="monthIncome"
+                    show-overflow-tooltip
+                  >
+                    <template slot-scope="scope">
+                      <el-form-item class="tabelForm" :prop="'contractInfoHouseSalesList.' + scope.$index + '.monthIncome'" :rules='rules.contractAmount'>
+                        <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                        <el-input
+                          @blur="setYearTurnover(scope.row.salesPerforMonth,scope.row.salesPerforYear)"
+                          v-model="scope.row.monthIncome"
+                          clearable
+                          disabled
+                        >
+                          <template slot="prepend">¥</template>
+                          <template slot="append">(万元)</template>
+                        </el-input>
+                      </el-form-item>
+                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="本年销售金额(万元)"
+                    align="center"
+                    width="200"
+                    prop="yearSales"
+                    show-overflow-tooltip
+                  >
+                    <template slot-scope="scope">
+                      {{scope.row.yearSales}}
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="本年营业收入(万元)"
+                    width="200"
+                    align="center"
+                    prop="yearIncome"
+                    show-overflow-tooltip
+                  >
+                    <template slot-scope="scope">
+                      {{scope.row.yearIncome}}
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="开发进度描述"
+                    width="150"
+                    align="center"
+                    prop="description"
+                    show-overflow-tooltip
+                  >
+                    <template slot-scope="scope">
+                      <el-input
+                        clearable
+                        disabled
+                        v-model="scope.row.description"
+                      ></el-input>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="是否完工"
+                    width="150"
+                    align="center"
+                    prop="isFinish"
+                    show-overflow-tooltip
+                  >
+                    <template slot-scope="scope">
+                      <el-radio disabled v-model="scope.row.isFinish" label="0">是</el-radio>
+                      <el-radio disabled v-model="scope.row.isFinish" label="1">否</el-radio>
+                    </template>
+                  </el-table-column>
+                  <!--<el-table-column-->
+                  <!--:resizable="false"-->
+                  <!--fixed="right"-->
+                  <!--label="操作"-->
+                  <!--align="center"-->
+                  <!--show-overflow-tooltip-->
+                  <!--v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"-->
+                  <!--width="80">-->
+                  <!--<template slot-scope="scope">-->
+                  <!--<el-link-->
+                  <!--:underline="false"-->
+                  <!--@click="del(scope.$index,scope.row,detailform.contractInfoHouseSalesList,'yj')"-->
+                  <!--type="warning">删除-->
+                  <!--</el-link>-->
+                  <!--</template>-->
+                  <!--</el-table-column>-->
+                </el-table>
               </div>
             </el-tab-pane>
             <el-tab-pane v-if="detailform.contractInfo.isInSystemUnion==='0'||detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isOutSystemUnion==='0'||detailform.contractInfo.isOutSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'" label="合同附属信息">
@@ -3991,7 +4322,7 @@
                     </el-table-column>
                   </el-table>
                 </div>
-                <div  v-if="detailform.contractInfo.isOutSystemSub==='0'">
+                <div  v-if="detailform.contractInfo.isInGroupSub==='0'">
                   <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                     <span>集团内分包单位列表: </span>
                     <el-button
@@ -4268,6 +4599,7 @@
             unionContractInfoAttachList:[]
           },
           contractInfoSectionList: [],
+          contractInfoHouseSalesList:[],
           topInfoSiteList:[],
           fileList1:[],
           fileList2:[],
@@ -4285,6 +4617,7 @@
             unionContractInfoAttachList:[]
           },
           contractInfoSectionList: [],
+          contractInfoHouseSalesList:[],
           topInfoSiteList:[],
           fileList1:[],
           fileList2:[],
@@ -4431,6 +4764,58 @@
         });
     },
     methods: {
+      //年销售额
+      setYearSale(month,year){
+        var yearSale=0;
+        this.detailform.contractInfoHouseSalesList.forEach((item)=>{
+          if(item.salesPerforMonth==month&&item.salesPerforYear==year){
+            yearSale+=Number(item.monthSales);
+          }
+        });
+        this.detailform.contractInfoHouseSalesList.forEach((item)=>{
+          if(item.salesPerforMonth==month&&item.salesPerforYear==year){
+            item.yearSales=yearSale;
+          }
+        });
+      },
+      //年营业收入
+      setYearTurnover(month,year){
+        var yearTurnover=0;
+        this.detailform.contractInfoHouseSalesList.forEach((item)=>{
+          if(item.salesPerforMonth==month&&item.salesPerforYear==year){
+            yearTurnover+=Number(item.monthIncome);
+          }
+        });
+        this.detailform.contractInfoHouseSalesList.forEach((item)=>{
+          if(item.salesPerforMonth==month&&item.salesPerforYear==year){
+            item.yearIncome=yearTurnover;
+          }
+        });
+      },
+      //查询销售业绩是否有同年同月
+      checkRepeat(mval,yval,list,index){
+        list.forEach((item,i)=>{
+          if(index!=i&&item.salesPerforYear==yval&&item.salesPerforMonth==mval){
+            this.$message.error("不能添加同年同月的销售业绩");
+            list[index].salesPerforMonth='';
+            return false;
+          }
+        })
+      },
+      //新增销售业绩
+      addXs(){
+        var v={
+          salesPerforYear:'',
+          salesPerforMonth:'',
+          monthSales:'',
+          monthIncome:'',
+          yearSales:'',
+          yearIncome:'',
+          description:'',
+          isFinish:''
+        };
+        this.detailform.contractInfoHouseSalesList.push(v);
+      },
       //获取系统外联合体,系统外分包的单位名称
       getXtwName(id, list, index){
         if(id){
@@ -5383,6 +5768,7 @@
           contractInfoAttachBO: afterData.contractInfoAttachBO,
           contractInfoSectionList: afterData.contractInfoSectionList,
           topInfoSiteList:afterData.topInfoSiteList,
+          contractInfoHouseSalesList: afterData.contractInfoHouseSalesList,
           fileList1:fileList1,
           fileList2:fileList2,
           fileList3:fileList3,
@@ -5400,6 +5786,7 @@
           contractInfo: beforData.contractInfo,
           contractInfoAttachBO: beforData.contractInfoAttachBO,
           contractInfoSectionList: beforData.contractInfoSectionList,
+          contractInfoHouseSalesList: beforData.contractInfoHouseSalesList,
           topInfoSiteList:beforData.topInfoSiteList,
           fileList1:_fileList1,
           fileList2:_fileList2,
@@ -5440,6 +5827,7 @@
           contractInfoAttachBO: datas.contractInfoAttachBO,
           contractInfoSectionList: datas.contractInfoSectionList,
           topInfoSiteList:datas.topInfoSiteList,
+          contractInfoHouseSalesList: datas.contractInfoHouseSalesList,
           fileList1:fileList1,
           fileList2:fileList2,
           fileList3:fileList3,

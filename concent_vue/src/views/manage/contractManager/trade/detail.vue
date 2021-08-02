@@ -150,6 +150,29 @@
                     ></el-option>
                   </el-select>
               </el-form-item>
+              <el-form-item
+              label="业务类别:"
+
+            >
+              <el-select
+                :disabled="p.actpoint==='look'||p.actpoint=='task'"
+                filterable
+                clearable
+                placeholder="请选择"
+
+                v-model="detailform.contractInfo.businessTypeId"
+                @change="
+                  getName(
+                    detailform.contractInfo.businessTypeId,
+                    bizTypeCode,
+                    'businessType',
+                    'businessTypeCode'
+                  )
+                "
+              >
+                <el-option :key="index" :label="item.detailName" v-if="item.parentDetailId=='0f333a962655480c8ef668a8ce129d41'" :value="item.id" v-for="(item,index) in bizTypeCode"></el-option>
+              </el-select>
+            </el-form-item>
                 <el-form-item
                   v-if="detailform.contractInfo.customerNatureId=='9f19652f27a911ebad4bc5ee92e1a03f'"
                 class="inline-formitem"
@@ -2440,6 +2463,9 @@ export default {
     }
   },
   computed: {
+    bizTypeCode(){
+      return this.$store.state.bizTypeCode;//业务类别
+    },
     //客户性质
     customerNature() {
       return this.$store.state.customerNature;

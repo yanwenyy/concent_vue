@@ -472,6 +472,7 @@ export default {
         let p = {from:'kblist',actpoint: "edit", instid: this.multipleSelection[0].uuid};
         this.$router.push({
           path: "./detail/",
+          // path: "./Winning_bidKB/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
 

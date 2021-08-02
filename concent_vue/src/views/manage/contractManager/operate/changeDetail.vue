@@ -3124,7 +3124,7 @@
                     </el-table-column>
                   </el-table>
                 </div>
-                <div  v-if="detailform.contractInfo.isOutSystemSub==='0'">
+                <div  v-if="detailform.contractInfo.isInGroupSub==='0'">
                   <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                     <span>集团内分包单位列表: </span>
                     <el-button

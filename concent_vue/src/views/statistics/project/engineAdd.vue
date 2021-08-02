@@ -1249,18 +1249,19 @@
               </el-table-column>
             </el-table>
           </div>
-          <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+          <p  v-if="p.actpoint != 'add'" class="detail-title" style="overflow: hidden;margin-right:30px">
             <span>关联合同: </span>
-            <el-button
-              v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
-              @click="addContract()"
-              class="detatil-flie-btn"
-              type="primary"
-            >新增
-            </el-button
-            >
+            <!--<el-button-->
+              <!--v-show="p.actpoint != 'look'&&p.actpoint != 'task'"-->
+              <!--@click="addContract()"-->
+              <!--class="detatil-flie-btn"-->
+              <!--type="primary"-->
+            <!--&gt;新增-->
+            <!--</el-button-->
+            <!--&gt;-->
           </p>
           <el-table
+            v-if="p.actpoint != 'add'"
             :data="detailForm.project.contractInfoList"
             :header-cell-style="{
                 'text-align': 'center',
@@ -1309,19 +1310,24 @@
             >
             </el-table-column>
             <el-table-column
-              v-show="!p.actpoint === 'look'"
+              v-show="!p.actpoint === 'add'"
               :resizable="false"
               fixed="right"
               label="操作"
               align="center"
               show-overflow-tooltip
-              v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
+              v-if="p.actpoint !== 'add'&&p.actpoint !== 'task'"
               width="80">
               <template slot-scope="scope">
+                <!--<el-link-->
+                  <!--:underline="false"-->
+                  <!--@click="del(scope.$index,scope.row,detailForm.project.contractInfoList,'glht')"-->
+                  <!--type="warning">删除-->
+                <!--</el-link>-->
                 <el-link
                   :underline="false"
-                  @click="del(scope.$index,scope.row,detailForm.project.contractInfoList,'glht')"
-                  type="warning">删除
+                  @click="look(scope.row)"
+                  type="warning">查看合同
                 </el-link>
               </template>
             </el-table-column>
@@ -1579,6 +1585,37 @@
       }
     },
     methods: {
+      //根据id跳页面
+      getUrl(id){
+        var url='';
+        if(id=='7f4fcba4255b43a8babf15afd6c04a53'){
+          url= '/manage/contractManager/project/detail/';
+        }else if(id=='f6823a41e9354b81a1512155a5565aeb'){
+          url= '/manage/contractManager/design/detail/';
+        }else if(id=='510ba0d79593418493eb1a11ea4e7af6'){
+          url=  '/manage/contractManager/house/detail/';
+        }else if(id=='510ba0d79593418493eb1a11ea4e7af4'){
+          url=  '/manage/contractManager/trade/detail/';
+        }else if(id=='510ba0d79593418493eb1a11ed3e7df4'){
+          url=  '/manage/contractManager/industrial/detail/';
+        }else if(id=='510ba0d79593418493eb1a11ea4e7df4'){
+          url=  '/manage/contractManager/finance/detail/';
+        }else if(id=='510ba0d79593418493eb1a11ed4e7df4'){
+          url=  '/manage/contractManager/operate/detail/';
+        }else if(id=='510ba0d79593419493eb1a11ed3e7df4'){
+          url=  '/manage/contractManager/other/detail/';
+        }
+        return url;
+      },
+      //查看关联合同
+      look(row){
+        let p = {actpoint: "look", instid : row.uuid};
+        var url=this.getUrl(row.moduleId);
+        this.$router.push({
+          path: url,
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        });
+      },
       //设置主地点
       setMain(i,list){
         list.forEach((item,index)=>{
