@@ -835,126 +835,6 @@ export default {
               ]
             },
             {
-              'name': '档案管理',
-              'path': '/archives',
-              'component': '/router',
-              'iconCls': 'el-icon-printer',
-              'menushow': true,
-              'leaf': false,
-              'defaultpage': false,
-              'children': [
-                {
-                  'name': '档案文件录入',
-                  'path': '/archives/archives/list_archives',
-                  'component': '/archives/archives/list_archives',
-                  'iconCls': 'el-icon-edit',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': true
-                },
-                {
-                  'name': '档案文件详细',
-                  'path': '/archives/archives/detail_archives',
-                  'component': '/archives/archives/detail_archives',
-                  'iconCls': 'el-icon-printer',
-                  'menushow': false,
-                  'leaf': true,
-                  'defaultpage': true
-                },
-                {
-                  'name': '档案文件查询',
-                  'path': '/archives/archives/listArchivesSearch',
-                  'component': '/archives/archives/list_archivesSearch',
-                  'iconCls': 'el-icon-search',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': true
-                },
-                {
-                  'name': '统计分析录入',
-                  'path': '/archives/statistics/list_statistics',
-                  'component': '/archives/statistics/list_statistics',
-                  'iconCls': 'el-icon-edit',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': true
-                },
-                {
-                  'name': '统计分析详细',
-                  'path': '/archives/statistics/detail_statistics',
-                  'component': '/archives/statistics/detail_statistics',
-                  'iconCls': 'el-icon-printer',
-                  'menushow': false,
-                  'leaf': true,
-                  'defaultpage': true
-                },
-                {
-                  'name': '统计分析查询',
-                  'path': '/archives/statistics/listStatisticsSearch',
-                  'component': '/archives/statistics/list_statisticsSearch',
-                  'iconCls': 'el-icon-search',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': true
-                },
-                {
-                  'name': '月度分析录入',
-                  'path': '/archives/analysis/list',
-                  'component': '/archives/analysis/list',
-                  'iconCls': 'el-icon-edit',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': true
-                },
-                {
-                  'name': '月度分析详细',
-                  'path': '/archives/analysis/detail',
-                  'component': '/archives/analysis/detail',
-                  'iconCls': 'el-icon-printer',
-                  'menushow': false,
-                  'leaf': true,
-                  'defaultpage': true
-                },
-                {
-                  'name': '月度分析查询',
-                  'path': '/archives/analysis/ylistSearch',
-                  'component': '/archives/analysis/list_search',
-                  'iconCls': 'el-icon-search',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': true
-                },
-                {
-                  'name': '消息信息录入',
-                  'path': '/archives/news/list',
-                  'component': '/archives/news/list',
-                  'iconCls': 'el-icon-edit',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': true
-                },
-                {
-                  'name': '消息信息详细',
-                  'path': '/archives/news/detail',
-                  'component': '/archives/news/detail',
-                  'iconCls': 'el-icon-printer',
-                  'menushow': false,
-                  'leaf': true,
-                  'defaultpage': true
-                },
-                {
-                  'name': '消息信息查询',
-                  'path': '/archives/news/xlistSearch',
-                  'component': '/archives/news/list_search',
-                  'iconCls': 'el-icon-search',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': true
-                }
-
-              ]
-            },
-            {
               'name': '区域信息录入',
               'path': '/manage/regionEntry/list',
               'component': '/manage/regionEntry/list',
@@ -2028,6 +1908,126 @@ export default {
                   'defaultpage': false
                 },
                 ]
+            },
+            {
+              'name': '档案管理',
+              'path': '/archives',
+              'component': '/router',
+              'iconCls': 'el-icon-printer',
+              'menushow': true,
+              'leaf': false,
+              'defaultpage': false,
+              'children': [
+                {
+                  'name': '档案文件录入',
+                  'path': '/archives/archives/list_archives',
+                  'component': '/archives/archives/list_archives',
+                  'iconCls': 'el-icon-edit',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '档案文件详细',
+                  'path': '/archives/archives/detail_archives',
+                  'component': '/archives/archives/detail_archives',
+                  'iconCls': 'el-icon-printer',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '档案文件查询',
+                  'path': '/archives/archives/listArchivesSearch',
+                  'component': '/archives/archives/list_archivesSearch',
+                  'iconCls': 'el-icon-search',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '统计分析录入',
+                  'path': '/archives/statistics/list_statistics',
+                  'component': '/archives/statistics/list_statistics',
+                  'iconCls': 'el-icon-edit',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '统计分析详细',
+                  'path': '/archives/statistics/detail_statistics',
+                  'component': '/archives/statistics/detail_statistics',
+                  'iconCls': 'el-icon-printer',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '统计分析查询',
+                  'path': '/archives/statistics/listStatisticsSearch',
+                  'component': '/archives/statistics/list_statisticsSearch',
+                  'iconCls': 'el-icon-search',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '月度分析录入',
+                  'path': '/archives/analysis/list',
+                  'component': '/archives/analysis/list',
+                  'iconCls': 'el-icon-edit',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '月度分析详细',
+                  'path': '/archives/analysis/detail',
+                  'component': '/archives/analysis/detail',
+                  'iconCls': 'el-icon-printer',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '月度分析查询',
+                  'path': '/archives/analysis/ylistSearch',
+                  'component': '/archives/analysis/list_search',
+                  'iconCls': 'el-icon-search',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '消息信息录入',
+                  'path': '/archives/news/list',
+                  'component': '/archives/news/list',
+                  'iconCls': 'el-icon-edit',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '消息信息详细',
+                  'path': '/archives/news/detail',
+                  'component': '/archives/news/detail',
+                  'iconCls': 'el-icon-printer',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '消息信息查询',
+                  'path': '/archives/news/xlistSearch',
+                  'component': '/archives/news/list_search',
+                  'iconCls': 'el-icon-search',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                }
+
+              ]
             },
           ]
         },
