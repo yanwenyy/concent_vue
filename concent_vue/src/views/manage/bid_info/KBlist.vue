@@ -48,8 +48,7 @@
           align="center"
           label="序号"
           show-overflow-tooltip
-          type="index"
-          fixed>
+          type="index">
         </el-table-column>
 
         <el-table-column
