@@ -4,8 +4,8 @@
       <el-form-item label="区指挥部名称:">
         <el-input v-model="searchform.orgFullName" placeholder="区指挥部名称" clearable></el-input>
       </el-form-item>
-      <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
-      <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
+      <el-button @click="searchformReset" type="info" plain style="color:black;background:none;float:right; margin-right:20px;"><i class="el-icon-refresh-right"></i>重置</el-button>
+      <el-button @click="getData" type="primary" plain style="float:right;margin-right:5px;"><i class="el-icon-search"></i>查询</el-button>
       <!--<el-button @click="exportdata" type="primary" plain><i class="el-icon-top"></i>导出</el-button>-->
     </el-form>
     <div style="margin-top: 10px">

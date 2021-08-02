@@ -108,7 +108,7 @@
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>合同金额（万元）</span>
+            <span>合同总金额（万元）</span>
             <div>
               <el-input
                 class="list-search-picker"
