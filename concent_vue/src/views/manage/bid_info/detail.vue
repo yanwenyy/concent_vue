@@ -788,13 +788,94 @@
           </div>
           <el-row>
             <p class="detail-title">
-              <span v-if="p.from!='kblist'">附件: </span>
-              <span v-if="p.from=='kblist'">开标记录（最大10MB）: </span>
-              <el-button
+              <span>附件: </span>
+              <!-- <el-button
                 v-show="p.actpoint != 'look' && p.actpoint !== 'searchLook'&& p.actpoint !== 'task'"
                 size="small"
                 type="primary"
                 @click="openFileUp('/api/contract/topInfo/CommonFiles/bidInfo/01/uploadFile','bidInfo_01')">
+                点击上传
+              </el-button> -->
+            </p>
+            <el-table
+              :data="detailform.bidInfo_01"
+              :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+              align="center"
+              border
+              ref="table"
+              style="width: 100%; min-height: calc(100vh - 370px)"
+            >
+              <el-table-column
+                :width="55"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+              <el-table-column
+                align="center"
+                :resizable="false"
+                label="文件名"
+                prop="fileName"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+
+              <el-table-column
+                align="center"
+                :resizable="false"
+                label="大小(KB)"
+                prop="fileSize"
+                show-overflow-tooltip
+                width="160"
+              >
+                <template slot-scope="scope">
+                  {{ (scope.row.fileSize / 1024).toFixed(2) }}
+                </template>
+              </el-table-column>
+              <el-table-column
+                align="center"
+                :resizable="false"
+                label="类型"
+                prop="fileType"
+                show-overflow-tooltip
+                width="100"
+              >
+              </el-table-column>
+
+              <!-- <el-table-column
+                align="center"
+                :resizable="false"
+                fixed="right"
+                label="操作"
+                show-overflow-tooltip
+
+                v-if="p.actpoint !== 'look' && p.actpoint !== 'searchLook'&& p.actpoint !== 'task'"
+                width="60"
+              >
+                <template slot-scope="scope">
+                  <el-link
+                    :underline="false"
+                    @click="handleRemove1(scope.row, scope.$index)"
+                    type="warning"
+                    >删除</el-link
+                  >
+                </template>
+              </el-table-column> -->
+            </el-table>
+          </el-row>
+          <el-row v-if="p.from=='kblist'">
+            <p class="detail-title">
+              <span >开标记录（最大10MB）: </span>
+              <el-button
+                v-show="p.actpoint != 'look' && p.actpoint !== 'searchLook'&& p.actpoint !== 'task'"
+                size="small"
+                type="primary"
+                @click="openFileUp('/api/contract/topInfo/CommonFiles/bidInfo/02/uploadFile','bidInfo_02')">
                 点击上传
               </el-button>
               <!--<el-upload-->
@@ -816,7 +897,7 @@
                 </p>
 
             <el-table
-              :data="detailform.bidInfo_01"
+              :data="detailform.bidInfo_02"
               :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -1282,6 +1363,7 @@ export default {
           topInfoOrg: {},
         },
         bidInfo_01: [],
+        bidInfo_02: [],
         value1: [],
         nblht: [], //内部联合体单位列表
       },
@@ -1490,7 +1572,7 @@ export default {
         })
         .then((res) => {
           if (res.data.code === 200) {
-            this.detailform.bidInfo_01.splice(index, 1);
+            this.detailform.bidInfo_02.splice(index, 1);
           }
         });
     },
@@ -1769,6 +1851,7 @@ export default {
           bidInfoSectionList: datas.bidInfoSectionList || [],
           topInforBO: this.nullToStr(datas.topInforBO),
           bidInfo_01: datas.bidInfo_01||[],
+          bidInfo_02: datas.bidInfo_02||[],
           value1: [],
           nblht: [],
           verifyInfo:datas.verifyInfo

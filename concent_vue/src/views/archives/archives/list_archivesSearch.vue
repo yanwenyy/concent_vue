@@ -91,7 +91,7 @@
     </el-form>
     </div>
 
-    <div style="margin-top: 10px">
+    <div style="margin-top: 10px;overflow-y: hidden;overflow-x: scroll;">
       <el-table
         class="tableStyle"
         :max-height="$tableHeight"
