@@ -359,7 +359,7 @@
         <el-table-column
           :width="150"
           align="center"
-          label="地点"
+          label="主地点"
           prop="placeName"
           show-overflow-tooltip
         >
