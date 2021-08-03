@@ -206,7 +206,7 @@
           <!-- <el-input v-model="detailForm.bidInfoSection.tenderSecurity" placeholder="投标保证金(万元)" clearable></el-input> -->
         </el-form-item>
 
-        <el-form-item label="投标价(万元):" class="list-item" :class="type!='eidtnew'?'not-error':''" prop="bidInfoSection.bidPrice"  :rules="rules.contractAmount">
+        <el-form-item label="投标价(万元):" class="list-item" :class="type!='eidtnew'?'not-error':''" prop="bidInfoSection.bidPrice"  :rules="rules.contractAmount_01">
                 <el-input
                     v-model="detailForm.bidInfoSection.bidPrice"
                     clearable
@@ -217,7 +217,7 @@
                 <template slot="append">(万元)</template>
               </el-input>
         </el-form-item>
-        <el-form-item label="投标限价(万元):" class="list-item" v-if="isBidRates=='1'||isBidRates==''" :class="type!='eidtnew'?'not-error':''" prop="bidInfoSection.biddingPriceLimit"  :rules="rules.contractAmount">
+        <el-form-item label="投标限价(万元):" class="list-item" v-if="isBidRates=='1'||isBidRates==''" :class="type!='eidtnew'?'not-error':''" prop="bidInfoSection.biddingPriceLimit"  :rules="rules.contractAmount_01">
           <el-input
               v-model="detailForm.bidInfoSection.biddingPriceLimit"
               clearable
@@ -589,6 +589,16 @@ import { isMoney } from '@/utils/validate'
           callback()
         }
       }
+        var validateMoney_01 = (rule, value, callback) => {
+        // console.log(this.type,value)
+        if(this.type=='eidtnew'&&(value===''||value === null)){
+          callback(new Error('不能为空'))
+        }else if (value!=''&&value!=null&&!isMoney(value)) {
+          callback(new Error('请输入数字'))
+        } else {
+          callback()
+        }
+      }
       return {
         treeStatas:false,
         visible: false,
@@ -630,6 +640,9 @@ import { isMoney } from '@/utils/validate'
          rules:{
           contractAmount: [
             { required: true,validator: validateMoney, trigger: 'change' }
+          ],
+          contractAmount_01: [
+            { required: true,validator: validateMoney_01, trigger: 'change' }
           ]
         },//表单验证规则
       }
