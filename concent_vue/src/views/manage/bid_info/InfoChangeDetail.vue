@@ -1904,7 +1904,8 @@
                 <template slot-scope="scope">
                 <span v-for="(item,index ) in scope.row.bidInfoSectionOrgList">
                     {{item.orgType==1?item.orgName:''}}
-                    {{scope.row.bidInfoSectionOrgList[index+1]&& index>0&&scope.row.bidInfoSectionOrgList[index-1].orgType==1 && scope.row.bidInfoSectionOrgList[index+1].orgType==1? ',':''}}
+                    {{(item.orgType==1&&scope.row.bidInfoSectionOrgList[index+1]&&scope.row.bidInfoSectionOrgList[index+1].orgType==2)||(item.orgType==1&&!scope.row.bidInfoSectionOrgList[index+1])||item.orgType==2?'':','}}
+                    <!-- {{scope.row.bidInfoSectionOrgList[index+1]&& index>0&&scope.row.bidInfoSectionOrgList[index-1].orgType==1 && scope.row.bidInfoSectionOrgList[index+1].orgType==1? ',':''}} -->
                 </span>
 
                   </template>
@@ -1924,7 +1925,8 @@
                <template slot-scope="scope">
                 <span v-for="(item,index ) in scope.row.bidInfoSectionOrgList">
                     {{item.orgType==2?item.orgName:''}}
-                    {{scope.row.bidInfoSectionOrgList[index+1]&& index>0&&scope.row.bidInfoSectionOrgList[index-1].orgType==2 && scope.row.bidInfoSectionOrgList[index+1].orgType==2? ',':''}}
+                    {{item.orgType==2&&scope.row.bidInfoSectionOrgList[index+1]?',':''}}
+                    <!-- {{scope.row.bidInfoSectionOrgList[index+1]&& index>0&&scope.row.bidInfoSectionOrgList[index-1].orgType==2 && scope.row.bidInfoSectionOrgList[index+1].orgType==2? ',':''}} -->
                 </span>
 
                   </template>
