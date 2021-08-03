@@ -2329,17 +2329,25 @@ export default {
     },
     // 下载
     handleDownload(file) {
-      console.log(file)
-      // var name = file.fileName;
-      // var url = file.filePath;
       var uuid = file.uuid;
-      // const a = document.createElement('a')
-      // a.setAttribute('download', name)
-      // a.setAttribute('target', '_blank')
-      // a.setAttribute('href', "/api/contract/topInfo/CommonFiles/detail/downloadFile?uuid=" + uuid)
-      // a.click()
-
-      window.open('/api/contract/topInfo/CommonFiles/detail/downloadFile?uuid='+ uuid);
+      this.$http
+        .post(
+          '/api/contract/topInfo/CommonFiles/detail/downloadFile',
+          {uuid:uuid},
+          { responseType:'blob' }
+        )
+        .then((res) => {
+          const content = res.data;
+          const blob = new Blob([content])
+          let url = window.URL.createObjectURL(blob);
+          let link = document.createElement('a');
+          link.style.display = 'none';
+          link.href = url;
+          link.setAttribute('download', file.fileName);
+          document.body.appendChild(link);
+          link.click();
+        })
+        // window.open('/api/contract/topInfo/CommonFiles/detail/downloadFile?uuid='+ uuid);
     }
 
   },
