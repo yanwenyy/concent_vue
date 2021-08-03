@@ -718,7 +718,7 @@
                   clearable
                   placeholder=""
                   v-model="detailform.topInfor.investment"
-                  onkeyup="value=value.replace(/[^0-9.]/g,'')"
+                  @keyup.native="proving()"
                   placeholder="请输入数字"
                   @input="detailform.topInfor.investment>=maxMoney?detailform.topInfor.isMajorProject='0':detailform.topInfor.isMajorProject='1'"
                 >
@@ -1343,6 +1343,27 @@
         });
     },
     methods: {
+      proving() {
+        // 先把非数字的都替换掉，除了数字和.
+        this.detailform.topInfor.investment = this.detailform.topInfor.investment.replace(/[^\d.]/g, '');
+        // 必须保证第一个为数字而不是.
+        this.detailform.topInfor.investment = this.detailform.topInfor.investment.replace(/^\./g, '');
+        // 保证只有出现一个.而没有多个.
+        this.detailform.topInfor.investment = this.detailform.topInfor.investment.replace(/\.{2,}/g, '');
+        // 保证.只出现一次，而不能出现两次以上
+        this.detailform.topInfor.investment = this.detailform.topInfor.investment.replace('.', '$#$').replace(/\./g, '').replace('$#$', '.');
+        let index = -1
+        for (let i in this.detailform.topInfor.investment) {
+          if (this.detailform.topInfor.investment[i] === '.') {
+            index = i
+          }
+          if (index !== -1) {
+            if (i - index > 1) {
+              this.detailform.topInfor.investment = this.detailform.topInfor.investment.substring(0, this.form.skus[e].Price.length - 1)
+            }
+          }
+        }
+      },
       //打开多选的单位列表
       openComMul(ids,names,url,type){
         this.companyMulStatus=true;
