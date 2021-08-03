@@ -196,6 +196,7 @@
             size: 20,
             flowStatus:'3'
         }
+        this.radioRow = null
       },
       //工程类别二级
       getTwo(id) {
@@ -215,6 +216,7 @@
       //选中数据
       sub() {
         this.visible = false;
+        this.radioRow = null
         this.$emit('refreshDataList', this.currentRow)
       },
       // 初始化
