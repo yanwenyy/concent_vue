@@ -58,7 +58,7 @@
           </el-input> -->
         </el-form-item>
         <el-form-item label="编标拟配合单位:" class="list-item">
-          <el-input  placeholder="请输入内容" v-model="detailForm.bidInfoSection.orgName" class="input-with-select" :disabled="type === 'look'||type=='eidtnew'">
+          <el-input  placeholder="请输入内容" v-model="detailForm.bidInfoSection.orgName" class="input-with-select" :disabled="type === 'look'">
             <el-button v-if="type != 'look'&&type != 'eidtnew'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('编标拟配合单位',detailForm.bidInfoSection.orgId)" ></el-button>
           </el-input>
           <!-- <el-input
@@ -346,7 +346,7 @@
           v-model="detailForm.bidInfoSection.otherUnitsNotListed"
           placeholder="其他未列出单位(单位与单位之间用英文逗号隔开)"
           clearable
-          :disabled="type === 'look'||type=='eidtnew'"
+          :disabled="type === 'look'"
           :autosize="{ minRows: 2, maxRows: 4}"
           type="textarea"></el-input>
         </el-form-item>
