@@ -643,7 +643,68 @@
                 </el-table-column> -->
               </el-table>
           </el-row>
+          <el-row>
+            <p><span >开标记录（最大10MB）: </span>
+                <el-upload
+                  class="upload-demo detailUpload"
+                  :action="'/api/contract/topInfo/CommonFiles/bidInfo/02/uploadFile'"
+                  :on-success="handleChange_02"
+                  :on-error="handleChange_02"
+                  :on-remove="handleRemove_02"
+                  :show-file-list="false"
+                  :file-list="detailFormBefore.bidInfo_02"
+                  disabled
+                  multiple
+                >
+                  <!-- <el-button size="small" type="primary">点击上传</el-button> -->
+                </el-upload>
+              </p>
+              <el-table
+                :data="detailFormBefore.bidInfo_02"
+                :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
 
+                @selection-change="handleSelectionChange"
+                align="center"
+                border
+                class="clothSizeTable"
+                ref="table"
+                style="width: 100%;min-height: calc(100vh - 370px);"
+              >
+                <el-table-column
+                  :width="55"
+                  align="center"
+                  label="序号"
+                  show-overflow-tooltip
+                  type="index"
+                ></el-table-column>
+                <el-table-column align="center" :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+
+                </el-table-column>
+
+                <el-table-column align="center" :resizable="false" label="大小" prop="fileSize" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    {{(scope.row.fileSize/1024).toFixed(2)}}
+                  </template>
+                </el-table-column>
+                <el-table-column align="center" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+
+                </el-table-column>
+
+                <!-- <el-table-column
+                  align="center"
+                  :resizable="false"
+                  fixed="right"
+                  label="操作"
+                  show-overflow-tooltip
+                  v-if="p.actpoint!=='look'"
+                  width="60"
+                >
+                  <template slot-scope="scope">
+                    <el-link :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
+                  </template>
+                </el-table-column> -->
+              </el-table>
+          </el-row>
 
           <p v-if="detailFormBefore.topInforBO.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailFormBefore.topInforBO.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'" class="detail-title" style="overflow: hidden；">
             <span style="float: left">标段信息:</span>
@@ -1644,10 +1705,10 @@
             </el-row>
             <el-row>
                 <p>
-                  <!-- <span >附件: </span> -->
+                  <span >附件: </span>
                   <!-- <span>开标记录: </span> -->
-                  <span span v-if="p.from!='kblist'">附件: </span>
-                  <span v-if="p.from=='kblist'">开标记录（最大10MB）: </span>
+                  <!-- <span span v-if="p.from!='kblist'">附件: </span>
+                  <span v-if="p.from=='kblist'">开标记录（最大10MB）: </span> -->
                   <el-button
                     v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                     size="small"
@@ -1715,7 +1776,65 @@
                 </el-table-column>
               </el-table>
             </el-row>
+            <el-row>
+                <p>
+                  <!-- <span >附件: </span> -->
+                  <span>开标记录（最大10MB）: </span>
+                  <!-- <span span v-if="p.from!='kblist'">附件: </span>
+                  <span v-if="p.from=='kblist'">开标记录（最大10MB）: </span> -->
+                  <el-button
+                    v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
+                    size="small"
+                    type="primary"
+                    @click="openFileUp('/api/contract/topInfo/CommonFiles/bidInfo/02/uploadFile','bidInfo_02')">
+                    点击上传
+                  </el-button>
+              </p>
+              <el-table
+                :data="detailform.bidInfo_02"
+                :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
 
+                @selection-change="handleSelectionChange"
+                align="center"
+                border
+                class="clothSizeTable"
+                ref="table"
+                style="width: 100%;min-height: calc(100vh - 370px);"
+              >
+                <el-table-column
+                  :width="55"
+                  align="center"
+                  label="序号"
+                  show-overflow-tooltip
+                  type="index"
+                ></el-table-column>
+                <el-table-column align="center" :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+
+                </el-table-column>
+
+                <el-table-column align="center" :resizable="false" label="大小(KB)" prop="fileSize" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    {{(scope.row.fileSize/1024).toFixed(2)}}
+                  </template>
+                </el-table-column>
+                <el-table-column align="center" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
+
+                </el-table-column>
+
+                <el-table-column
+                  align="center"
+
+
+                  label="操作"
+                  v-if="p.actpoint!=='look'&&p.actpoint!=='task'"
+                  width="60"
+                >
+                  <template slot-scope="scope">
+                    <el-link @click="handleRemove_02(scope.row,scope.$index)" type="warning">删除</el-link>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </el-row>
             <p v-if="detailform.topInforBO.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInforBO.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'" class="detail-title" style="overflow: hidden；margin-right: 30px">
               <span >标段信息: </span>
               <el-button
@@ -2104,12 +2223,12 @@ export default {
         bidInfoSectionList: [],
         bidInfoSectionOrgList:[],
         bidInfo_01: [],
+        bidInfo_02: [],
         value1: [],
         topInforBO:{
           topInfor:{},
           topInfoOrg:{},
         }
-
       },
       detailFormBefore: {
         bidInfo: {},
@@ -2117,6 +2236,7 @@ export default {
         bidInfoSectionList: [],
         bidInfoSectionOrgList:[],
         bidInfo_01: [],
+        bidInfo_02: [],
         topInforBO:{
           topInfor:{},
           topInfoOrg:{},
@@ -2241,7 +2361,6 @@ export default {
     },
     //获取上传的附件列表
     getUpInfo(data){
-      this.$forceUpdate();
       this.detailform[data.list]=this.detailform[data.list].concat(data.fileList);
       this.uploadVisible = false;
     },
@@ -2331,9 +2450,23 @@ export default {
         this.$message.error(response.msg)
       }
     },
-
+    handleChange_02(response, file, fileList) {
+      if (response && response.code === 200) {
+        this.$message({
+          message: '上传成功',
+          type: 'success',
+          duration: 1500,
+          onClose: () => {
+            this.detailform.bidInfo_02.push(response.data);
+            console.log(fileList)
+          }
+        })
+      } else {
+        this.$message.error(response.msg)
+      }
+    },
 // 上传附件的删除
-        handleRemove(file,index) {
+    handleRemove(file,index) {
       this.$http
         .post(
           "/api/contract/topInfo/CommonFiles/list/delete",
@@ -2346,7 +2479,18 @@ export default {
 
     });
     },
-
+    handleRemove_02(file,index) {
+      this.$http
+        .post(
+          "/api/contract/topInfo/CommonFiles/list/delete",
+          {ids:[file.uuid]},
+        )
+        .then((res) => {
+        if (res.data.code === 200) {
+        this.detailform.bidInfo_02.splice(index,1);
+      }
+    });
+    },
      //打开标段弹框
     openBd(type,detail,index){
       this.BDCSVisible = true;
@@ -2589,6 +2733,7 @@ export default {
             bidInfoInnerOrgList: afterData.bidInfoInnerOrgList,
             bidInfoSectionList: afterData.bidInfoSectionList,
             bidInfo_01: afterData.bidInfo_01||[],
+            bidInfo_02: afterData.bidInfo_02||[],
             topInforBO:afterData.topInforBO,
             value1:[]
           };
@@ -2600,6 +2745,7 @@ export default {
             bidInfoInnerOrgList: beforData.bidInfoInnerOrgList,
             bidInfoSectionList: beforData.bidInfoSectionList,
             bidInfo_01: beforData.bidInfo_01||[],
+            bidInfo_02: beforData.bidInfo_02||[],
             topInforBO:beforData  .topInforBO,
             value1:[],
             nblht:[],
@@ -2638,6 +2784,7 @@ export default {
             bidInfoInnerOrgList: datas.bidInfoInnerOrgList,
             bidInfoSectionList: datas.bidInfoSectionList,
             bidInfo_01: datas.bidInfo_01||[],
+            bidInfo_02: datas.bidInfo_02||[],
             topInforBO:datas.topInforBO,
             value1:[],
             nblht:[],
