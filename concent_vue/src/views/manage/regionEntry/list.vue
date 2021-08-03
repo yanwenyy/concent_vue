@@ -19,6 +19,8 @@
         highlight-current-row
         ref="table"
         tooltip-effect="dark"
+        :max-height="$tableHeight+300"
+        :height="$tableHeight+300"
       >
         <!--<el-table-column-->
           <!--:width="50"-->
