@@ -141,7 +141,7 @@
       <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
       <el-button @click="exportData" type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>
     </el-form>
-    <div style="margin-top: 10px">
+    <div style="margin-top: 10px;overflow-x: scroll;overflow-y: scroll;">
       <el-table
         class=""
         :data="page.records"
@@ -152,6 +152,8 @@
         highlight-current-row
         ref="table"
         tooltip-effect="dark"
+        :max-height="$tableHeight+100"
+        :height="$tableHeight+100"
       >
         <el-table-column
           :width="50"

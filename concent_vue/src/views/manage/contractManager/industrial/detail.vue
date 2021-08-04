@@ -2578,7 +2578,7 @@ export default {
     goAddDetail(data){
       if(data.type=='1'){//项目名称查找回来的信息
         this.$http
-          .post("/api/contract/topInfo/TopInfor/detail/entityInfoByIdForContract", {uuid :data.data.uuid})
+          .post("/api/contract/topInfo/TopInfor/detail/entityInfoByIdForContract", {uuid :data.data.uuid,sectionId:data.data.sectionIdList})
           .then((res) => {
           var datas=res.data.data;
         this.detailform.searchProject=true;
