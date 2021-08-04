@@ -17,17 +17,24 @@
         v-loading="dataListLoading"
         highlight-current-row
         @current-change="rowSel"
+        
         :header-cell-style="{
           'text-align': 'center',
           'background-color': 'whitesmoke',
         }"
         style="width: 100%;">
+        <!-- <el-table-column
+          :width="50"
+          align="center"
+          show-overflow-tooltip
+          type="selection"
+        ></el-table-column> -->
         <el-table-column
           type="index"
           header-align="center"
           align="center"
           width="80"
-          label="ID">
+          label="序号">
         </el-table-column>
         <el-table-column
           :width="300"
@@ -170,16 +177,35 @@
         totalPage: 0,
         dataListLoading: false,
         dataListSelections: [],
-        currentRow: ''
+        currentRow: '',
+        multipleSelection:[]
       }
     },
     mounted() {
 
     },
     methods: {
+      // 列表选项数据
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
       //选中数据
       sub() {
-        this.visible = false;
+        // if (this.multipleSelection.length <1) {
+        //   this.$message.info("请选择一条记录进行提交操作！");
+        //   return false;
+        // }else if(this.multipleSelection.length >1){
+        //   if(this.multipleSelection[0].uuid != this.multipleSelection[1].uuid){
+        //     this.$message.info("多选请选择同一个项目不同标段");
+        //     return false;
+        //   }
+        // }
+        // this.currentRow = this.multipleSelection[0];
+        // var list = [];
+        // this.multipleSelection.forEach((item) => {
+        //   list.push(item.sectionId);
+        // })
+        // this.currentRow.sectionIdList = list.join(',');
         var data={
           data:this.currentRow,
           type:this.contractType
