@@ -157,11 +157,9 @@
                 :label="detailForm.project.projectNatureFirstId === '7031076e7a5f4225b1a89f31ee017802'?'投资单位:':'承建单位:'"
                 prop="project.companyBuiltName"
                 style="width: 32.5%">
-                <el-input
-                  clearable
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                  placeholder="请输入"
-                  v-model="detailForm.project.companyBuiltName"/>
+                <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailForm.project.companyBuiltName" class="input-with-select">
+                  <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('承建单位',detailForm.project.companyBuiltId,false)" ></el-button>
+                </el-input>
               </el-form-item>
               <el-form-item
                 label="所属铁路局:"
@@ -332,7 +330,9 @@
                   :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   placeholder="请输入"
-                  v-model="detailForm.project.companyName"/>
+                  v-model="detailForm.project.companyName">
+                  <el-button v-if="p.actpoint!='task'&&p.actpoint!='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('签约/使用资质单位',detailForm.project.companyId)"></el-button>
+                </el-input>
               </el-form-item>
             </el-row>
             <el-row>
@@ -383,6 +383,24 @@
                     :label="item.detailName"
                     :value="item.id"
                     v-for="(item, index) in projectStatus"/>
+                </el-select>
+              </el-form-item>
+              <el-form-item
+                label="项目类型:"
+                prop="project.projectTypeId"
+                style="width: 32.5%">
+                <el-select
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  filterable
+                  clearable
+                  placeholder="请选择"
+                  @change="resetFuDai(detailForm.project.projectTypeId, projectType, 'projectTypeName','projectTypeCode')"
+                  v-model="detailForm.project.projectTypeId">
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in projectType"/>
                 </el-select>
               </el-form-item>
               <!--所在地、使用资质单位暂无-->
@@ -606,20 +624,20 @@
             </el-row>
             <!--增值税-->
             <el-row>
-              <el-form-item
-                label="实际投资额(万元):"
-                prop="project.realInvest"
-                :rules="rules.project.isMoney"
-                style="width: 32.5%">
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                  clearable
-                  placeholder="请输入"
-                  v-model="detailForm.project.realInvest">
-                  <template slot="prepend">¥</template>
-                  <template slot="append">(万元)</template>
-                </el-input>
-              </el-form-item>
+              <!--<el-form-item-->
+                <!--label="实际投资额(万元):"-->
+                <!--prop="project.realInvest"-->
+                <!--:rules="rules.project.isMoney"-->
+                <!--style="width: 32.5%">-->
+                <!--<el-input-->
+                  <!--:disabled="p.actpoint === 'look'||p.actpoint === 'task'"-->
+                  <!--clearable-->
+                  <!--placeholder="请输入"-->
+                  <!--v-model="detailForm.project.realInvest">-->
+                  <!--<template slot="prepend">¥</template>-->
+                  <!--<template slot="append">(万元)</template>-->
+                <!--</el-input>-->
+              <!--</el-form-item>-->
               <el-form-item
                 label="增值税(万元):"
                 prop="project.valueAddedTax"
@@ -1227,6 +1245,21 @@
                     v-for="(item, index) in projectStatus"/>
                 </el-select>
               </el-form-item>
+              <el-form-item
+                label="项目类型:"
+                style="width: 32.5%">
+                <el-select
+                  disabled
+                  placeholder="请选择"
+                  @change="resetFuDai(showDetailForm.project.projectTypeId, projectType, 'projectTypeName')"
+                  v-model="showDetailForm.project.projectTypeId">
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in projectType"/>
+                </el-select>
+              </el-form-item>
               <!--所在地、使用资质单位暂无-->
               <!--<el-form-item-->
                 <!--label="项目所在地"-->
@@ -1420,18 +1453,18 @@
             </el-row>
             <!--增值税-->
             <el-row>
-              <el-form-item
-                label="实际投资额(万元):"
-                style="width: 32.5%">
-                <el-input
-                  disabled
-                  clearable
-                  placeholder="请输入"
-                  v-model="showDetailForm.project.realInvest">
-                  <template slot="prepend">¥</template>
-                  <template slot="append">(万元)</template>
-                </el-input>
-              </el-form-item>
+              <!--<el-form-item-->
+                <!--label="实际投资额(万元):"-->
+                <!--style="width: 32.5%">-->
+                <!--<el-input-->
+                  <!--disabled-->
+                  <!--clearable-->
+                  <!--placeholder="请输入"-->
+                  <!--v-model="showDetailForm.project.realInvest">-->
+                  <!--<template slot="prepend">¥</template>-->
+                  <!--<template slot="append">(万元)</template>-->
+                <!--</el-input>-->
+              <!--</el-form-item>-->
               <el-form-item
                 label="增值税(万元):"
                 style="width: 32.5%">
@@ -1658,6 +1691,7 @@
     </el-tabs>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
     <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
+    <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
   </div>
 </template>
 
@@ -1665,6 +1699,7 @@
   import Tree from '@/components/tree'
   import FileUpload from '@/components/fileUpload'
   import { isMoney, isMobile, isPhone } from '@/utils/validate'
+  import CompanyTree from '../../companyTree'
 
   export default {
     name: 'change',
@@ -1888,7 +1923,7 @@
       }
     },
     components: {
-      Tree, FileUpload
+      Tree, FileUpload,CompanyTree
     },
     computed: {
       emergingMarket() {
@@ -2059,7 +2094,14 @@
       },
       // 工程合同额-初始合同额=合同额增减
       getCount() {
-        this.detailForm.project.contractAmountChange = this.detailForm.project.contractAmountEngine - this.detailForm.project.contractAmountInitial
+        var money=Number(this.detailForm.project.contractAmountEngine) - Number(this.detailForm.project.contractAmountInitial);
+        if(money<0){
+          this.$message.error("工程合同额减去初始合同额不能小于0");
+          this.detailForm.project.contractAmountEngine='';
+        }else{
+          this.detailForm.project.contractAmountChange = money
+        }
+
       },
       // 增值税改变，上报产值是否含税联动
       getOutputTax() {
@@ -2273,12 +2315,31 @@
         })
       },
 
-      // 打开单位弹框
-      addDw(type, list) {
-        this.DwVisible = true
+      //打开单位弹框
+      addDw(type,list,ifChek,index,tableList){
+        this.DwVisible = true;
         this.$nextTick(() => {
-          this.$refs.infoDw.init(type, list)
+          this.$refs.infoDw.init(type,list,ifChek,index,tableList);
         })
+      },
+      //获取单位的值
+      getDwInfo(data){
+        this.$forceUpdate();
+        var id=[],name=[];
+        if(data&&data.type!='承建单位'){
+          data.forEach((item)=>{
+            id.push(item.id);
+            name.push(item.detailName);
+          })
+        }
+        if(data.type=="承建单位"){
+          this.detailForm.project.companyBuiltName=data.name;
+          this.detailForm.project.companyBuiltId=data.id;
+        }else if(data.type=="签约/使用资质单位"){
+          this.detailForm.project.companyId=id.join(",");
+          this.detailForm.project.companyName=name.join(",");
+        }
+        this.DwVisible=false;
       },
       // 修改和查看时的时候详情
       getDetail() {

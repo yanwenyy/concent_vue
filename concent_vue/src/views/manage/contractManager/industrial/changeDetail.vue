@@ -522,6 +522,21 @@
                       v-model="detailFormBefore.contractInfo.industryProductUse"
                     />
                   </el-form-item>
+                  <el-form-item
+                    label="是否年度合同:"
+
+                  >
+                    <el-switch
+                      disabled
+                      class="inline-formitem-switch"
+                      v-model="detailFormBefore.contractInfo.isYearContract"
+                      active-color="#409EFF"
+                      inactive-color="#ddd"
+                      active-value="0"
+                      inactive-value="1"
+                    >
+                    </el-switch>
+                  </el-form-item>
                   <!--<el-form-item-->
                     <!--label="供货地点:"-->
 
@@ -2019,6 +2034,26 @@
 
                     v-model="detailform.contractInfo.industryProductUse"
                   />
+                </el-form-item>
+                <el-form-item
+                  class="inline-formitem"
+                  label="是否年度合同:"
+                  prop="contractInfo.isYearContract"
+                  :rules="{
+           required: true, message: '此项不能为空', trigger: 'blur'
+        }"
+
+                >
+                  <el-switch
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    class="inline-formitem-switch"
+                    v-model="detailform.contractInfo.isYearContract"
+                    active-color="#409EFF"
+                    inactive-color="#ddd"
+                    active-value="0"
+                    inactive-value="1"
+                  >
+                  </el-switch>
                 </el-form-item>
                 <!--<el-form-item-->
                   <!--label="供货地点:"-->

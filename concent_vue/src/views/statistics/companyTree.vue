@@ -66,16 +66,14 @@
         datas: [],
         list:[],
         dialogVisible:true,
-        ifChek:false,
+        ifChek:true,
         userInfo:{},
         defaultProps: {
           children: 'children',
           label: 'name',
           // isLeaf: 'leaf'
         },
-        notSelect:['0','1','01','02','03','04','05','06','101','102','103','105','106','108'],
-        name:'',
-        id:null,
+        notSelect:['0','1','01','02','03','04','05','06','101','102','103','105','106','108']
       };
     },
     mounted(){
@@ -156,8 +154,7 @@
         //tableList tabel使用组件时的list
         //ifGFGS  是否可选择股份公司
         this.dialogVisible = true;
-        // this.ifChek=ifChek!=undefined?ifChek:true;
-        this.ifChek = false
+        this.ifChek=ifChek!=undefined?ifChek:true;
         this.type=type;
         this.index=index;
         this.tableList=tableList;
@@ -170,29 +167,26 @@
         }
       },
       handleNodeClick(data) {
-        // if(this.notSelect.indexOf(data.detailCode)=='-1'){
-        //   this.dialogVisible = false;
-        //   data.type=this.type;
-        //   data.index=this.index;
-        //   data.tableList=this.tableList;
-        //   this.$emit('refreshBD',data)
-        // }
-        this.name = data.name
-        this.id = data.id
+        // console.log(data);
+        if(this.notSelect.indexOf(data.detailCode)=='-1'){
+          this.dialogVisible = false;
+          data.type=this.type;
+          data.index=this.index;
+          data.tableList=this.tableList;
+          this.$emit('refreshBD',data)
+        }
       },
       getCheckedNodes() {
-        // var list=this.$refs.tree.getCheckedNodes();
-        // list.forEach((item)=>{
-        //   item.detailName=item.name;
-        //   item.id=item.code;
-        // })
-        // var data=list;
-        // data.type=this.type;
-        // data.index=this.index;
-        // data.tableList=this.tableList;
-        let data = []
-        data.name=this.name;
-        data.id=this.id;        
+        var list=this.$refs.tree.getCheckedNodes();
+        list.forEach((item)=>{
+          item.detailName=item.name;
+          item.id=item.code;
+        })
+        var data=list;
+        data.type=this.type;
+        data.index=this.index;
+        data.tableList=this.tableList;
+        // console.log(this.$refs.tree.getCheckedNodes());
         this.$emit('refreshBD',data)
       },
     }
