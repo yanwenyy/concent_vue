@@ -1232,7 +1232,7 @@
                 )
               "
               >
-                <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in ssList"></el-option>
+                <el-option :key="index" :label="item.NAME" :value="item.CODE" v-for="(item,index) in ssList"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item
@@ -6937,7 +6937,7 @@ export default {
           detailName:i.detailName,
           id:i.id
         }
-        this.ssList.push(_v)
+        // this.ssList.push(_v)
       })
     })
     // this.$store.commit("setCategory", 'projectDomainType');
@@ -7712,6 +7712,9 @@ export default {
       }else if(data.type=="承揽所属机构"){
         this.detailform.contractInfo.contractOrgId=data.id;
         this.detailform.contractInfo.contractOrgName=data.name;
+        this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion",{orgCode:data.id},).then((res) => {
+          this.ssList = res.data.data
+        });
       }
       this.DwVisible=false;
     },
