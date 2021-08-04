@@ -2894,6 +2894,21 @@
                     />
                   </el-form-item>
                 </div>
+                <div>
+                    <el-form-item
+                      class="neirong"
+                      label="变更原因:"
+                      style="width: 33%"
+                    >
+                      <el-input
+                        type="textarea"
+                        clearable
+                        placeholder="请输入"
+                        size="mini"
+                        v-model="detailform.contractInfo.changeReason"
+                      />
+                    </el-form-item>
+                  </div>
                 <p>
                   <span >项目地点: </span>
                   <el-button
