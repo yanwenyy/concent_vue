@@ -17,18 +17,18 @@
         v-loading="dataListLoading"
         highlight-current-row
         @current-change="rowSel"
-        
+        @selection-change="handleSelectionChange"
         :header-cell-style="{
           'text-align': 'center',
           'background-color': 'whitesmoke',
         }"
         style="width: 100%;">
-        <!-- <el-table-column
+        <el-table-column
           :width="50"
           align="center"
           show-overflow-tooltip
           type="selection"
-        ></el-table-column> -->
+        ></el-table-column>
         <el-table-column
           type="index"
           header-align="center"
@@ -191,21 +191,21 @@
       },
       //选中数据
       sub() {
-        // if (this.multipleSelection.length <1) {
-        //   this.$message.info("请选择一条记录进行提交操作！");
-        //   return false;
-        // }else if(this.multipleSelection.length >1){
-        //   if(this.multipleSelection[0].uuid != this.multipleSelection[1].uuid){
-        //     this.$message.info("多选请选择同一个项目不同标段");
-        //     return false;
-        //   }
-        // }
-        // this.currentRow = this.multipleSelection[0];
-        // var list = [];
-        // this.multipleSelection.forEach((item) => {
-        //   list.push(item.sectionId);
-        // })
-        // this.currentRow.sectionIdList = list.join(',');
+        if (this.multipleSelection.length <1) {
+          this.$message.info("请选择一条记录进行提交操作！");
+          return false;
+        }else if(this.multipleSelection.length >1){
+          if(this.multipleSelection[0].uuid != this.multipleSelection[1].uuid){
+            this.$message.info("多选请选择同一个项目不同标段");
+            return false;
+          }
+        }
+        this.currentRow = this.multipleSelection[0];
+        var list = [];
+        this.multipleSelection.forEach((item) => {
+          list.push(item.sectionId);
+        })
+        this.currentRow.sectionIdList = list.join(',');
         var data={
           data:this.currentRow,
           type:this.contractType
