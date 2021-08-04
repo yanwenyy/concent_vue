@@ -139,6 +139,9 @@
               bb.push(this.data.map(row => row.value)[i])
             }
           }
+          // console.info(bb, index)
+          // veditable，venabled 都为 "1"，则不会参与增加
+          // a的sumTarget == b的uuid， a的值会加到b上
           var sum=(bb.reduce((acc, cur) => (parseFloat(cur) + acc), 0) === 0 ? '' : bb.reduce((acc, cur) => (parseFloat(cur) + acc), 0));
           list[index][name]=sum;
           // this.$forceUpdate();
