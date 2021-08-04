@@ -321,8 +321,8 @@
     padding: 10px;
     width: 100%;
     box-sizing: border-box;
-    max-height: calc(100vh - 175px)!important;
-    min-height: calc(100vh - 175px)!important;
+    max-height: calc(100vh - 70px)!important;
+    min-height: calc(100vh - 70px)!important;
     /*overflow: scroll;*/
   }
   .tableStyle{
