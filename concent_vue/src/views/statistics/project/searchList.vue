@@ -282,14 +282,6 @@
         <el-table-column
           :width="150"
           align="center"
-          label="项目所在地"
-          prop="projectLocation"
-          show-overflow-tooltip
-        >
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
           label="所属铁路局"
           prop="railwayName"
           show-overflow-tooltip

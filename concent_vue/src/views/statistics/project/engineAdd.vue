@@ -1459,7 +1459,7 @@
             projectModuleCode:"engineering",//项目板块code
             projectModuleName: '工程承包', // 项目板块
             businessId: '', // 业务板块
-            isConsortion: '', // 是否联合体项目
+            isConsortion: '1', // 是否联合体项目
             projectTypeId: '', // 项目类型
             projectStatusId: '', // 项目状态
             projectLocationId: '', // 项目所在地
@@ -1573,7 +1573,13 @@
         return this.$store.state.projectType
       },
       projectStatus() {
-        return this.$store.state.projectStatus
+        var projectStatusCheck = [];
+        this.$store.state.projectStatus.forEach((item) => {
+          if(item.detailName == '在建' || item.detailName == '未开工'){
+            projectStatusCheck.push(item);
+          }
+        });
+        return projectStatusCheck
       },
       architecturalType() {
         return this.$store.state.architecturalType
