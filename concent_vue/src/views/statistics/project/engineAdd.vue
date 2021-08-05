@@ -325,7 +325,8 @@
                 <!--父项目暂无-->
                 <el-form-item
                   v-if="detailForm.project.projectTypeId==='22038e576c2242d5acc93f6c3c8e48ad' ||
-                    detailForm.project.projectTypeId==='393a07bda2244b03a24590e076a421df'"
+                  detailForm.project.projectTypeId==='625a3ee0728a4f45b792d022b8bb36d9' ||
+                  detailForm.project.projectTypeId==='393a07bda2244b03a24590e076a421df'"
                   label="父项目名称:"
                   prop="project.fatherProjectName"
                   style="width: 32.5%">
