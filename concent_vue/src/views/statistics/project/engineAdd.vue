@@ -26,14 +26,14 @@
         <!--<span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'look'"><b>工程承包项目查看</b></span>-->
         <!--<span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'task'"><b>工程承包项目审核</b></span>-->
       <!--</div>-->
+      <el-form
+        :model="detailForm"
+        :rules="rules"
+        class="gcform"
+        ref="detailForm">
       <el-tabs type="border-card">
-        <el-tab-pane label="工程承包合同">
+        <el-tab-pane label="工程承包项目">
           <div class="detailBox">
-            <el-form
-              :model="detailForm"
-              :rules="rules"
-              class="gcform"
-              ref="detailForm">
               <!--项目名称-->
               <el-row>
                 <el-form-item
@@ -159,7 +159,7 @@
               </el-row>
               <el-row>
                 <el-form-item
-                  :label="detailForm.project.projectNatureFirstId === '7031076e7a5f4225b1a89f31ee017802'?'投资单位:':'承建单位:'"
+                  label="承建单位"
                   prop="project.companyBuiltName"
                   style="width: 32.5%">
                   <!-- <el-input
@@ -853,10 +853,12 @@
                   prop="project.companySupervisor"
                   style="width: 32.5%">
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                    disabled
                     clearable
-                    placeholder="请输入"
-                    v-model="detailForm.project.companySupervisor"/>
+                    placeholder="请选择监理单位"
+                    v-model="detailForm.project.companySupervisor">
+                    <el-button slot="append" icon="el-icon-circle-plus-outline" @click="openComMul('','','/api/contract/Companies/detail/findCompanies','监理单位')"></el-button>
+                  </el-input>
                 </el-form-item>
               </el-row>
               <!--项目经理-->
@@ -1339,13 +1341,79 @@
                   </template>
                 </el-table-column>
               </el-table>
-            </el-form>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="实物工程量计划">
+          <div class="detailBoxBG htfs">
+            <div>
+              <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
+                <span>实物工程量列表: </span>
+              </p>
+              <el-table
+                :data="detailForm.project.quantityPlanList"
+                :header-cell-style="{
+                  'text-align': 'center',
+                  'background-color': 'rgba(246,248,252,1)',
+                  color: 'rgba(0,0,0,1)',
+                }"
+                @selection-change="handleSelectionChange"
+                align="center"
+                border
+                class="detailTable"
+                ref="table"
+                style="width: 100%; min-height: calc(100vh - 370px)"
+              >
+                <el-table-column
+                  :width="80"
+                  align="center"
+                  label="序号"
+                  show-overflow-tooltip
+                  type="index"
+                ></el-table-column>
+
+                <el-table-column
+                  class="listTabel"
+                  :resizable="false"
+                  label="统计项名称"
+                  prop="vname"
+                  width="300"
+                  align="center"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  class="listTabel"
+                  :resizable="false"
+                  label="计量单位"
+                  prop="vjldwName"
+                  align="center"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  class="listTabel"
+                  :resizable="false"
+                  label="计划"
+                  prop="planName"
+                  align="center"
+                  show-overflow-tooltip
+                >
+                  <template slot-scope="scope">
+                    <el-input 
+                    :disabled="scope.row.veditable != '1'"
+                    v-model="scope.row.planName" 
+                    @input="scope.row.vsum=parseInt(scope.row.vsum.replace(/[^\d]/g,''))"/>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
           </div>
         </el-tab-pane>
         <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&(detailForm.project.flowStatus!=1)">
           <Audit-Process :task="p.task||{businessId:p.uuid,businessType:' project_project_new'}"></Audit-Process>
         </el-tab-pane>
       </el-tabs>
+      </el-form>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
     <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
     <Separate-Dialog v-if="infoCSVisible" ref="infoCS" @refreshDataList="goSeparate"></Separate-Dialog>
@@ -1511,7 +1579,8 @@
                 isMain: '1',
                 country: '',
               }
-            ]
+            ],
+            quantityPlanList: []
           }
         },
         rules: {
@@ -1625,6 +1694,9 @@
         if(data.type=='签约/使用资质单位'){
           this.detailForm.project.companyId=data.selIdList.join(",");
           this.detailForm.project.companyName=data.selList.join(",");
+        }else if (data.type == "监理单位") {
+          this.detailForm.project.companySupervisor=data.selList.join(",");
+          // id数组 = data.selIdList.join(",");
         }
       },
       //根据id跳页面
@@ -2198,7 +2270,7 @@
         .post('/api/statistics/StatisticsProject/detail/findProjectFather')
         .then(res => {
         this.fatherList = res.data.data
-    })
+      })
     }
   }
 </script>

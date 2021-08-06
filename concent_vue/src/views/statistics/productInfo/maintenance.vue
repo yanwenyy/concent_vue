@@ -211,7 +211,7 @@
     <el-dialog title="产品信息" :visible.sync="dialogFormVisible">
       <el-form :model="form"  ref="form" class="proForm">
         <el-form-item label="产品编码:">
-          <el-input v-model="form.vcode" autocomplete="off" :disabled="true"></el-input>
+          <el-input v-model="form.vcode" autocomplete="off" :disabled="look"></el-input>
         </el-form-item>
         <el-form-item label="产品名称:">
           <el-input v-model="form.vname" autocomplete="off" :disabled="look"></el-input>
@@ -222,7 +222,7 @@
                           measureUnit,
                           'vmeasurename',
                           'vmeasureunit'
-                        )" placeholder="请选择计量单位" :disabled="true">
+                        )" placeholder="请选择计量单位" :disabled="look">
             <el-option
               :key="index"
               :label="item.detailName"
@@ -231,7 +231,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="启用状态:">
+        <!-- <el-form-item label="启用状态:">
           <el-select v-model="form.venabled" placeholder="请选择启用状态" :disabled="look">
             <el-option
               label="启用"
@@ -290,14 +290,14 @@
               value="0"
             ></el-option>
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="业务类型:">
           <el-select v-model="form.ywtypeid"  @change="getName(
                           form.ywtypeid,
                           bizTypeCode,
                           'ywtypename',
                           'ywtypecode'
-                        )" placeholder="请选择业务类型" :disabled="true">
+                        )" placeholder="请选择业务类型" :disabled="look">
             <el-option
               :key="index"
               :label="item.detailName"
@@ -314,7 +314,7 @@
                           'productTypeName',
                           'productTypeCode'
                         )"
-                     placeholder="请选择产品类型" :disabled="true">
+                     placeholder="请选择产品类型" :disabled="look">
             <el-option
               :key="index"
               :label="item.detailName"
@@ -324,7 +324,7 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="排序:">
+        <!-- <el-form-item label="排序:">
           <el-input v-model="form.vsort" autocomplete="off" :disabled="look"></el-input>
         </el-form-item>
         <el-form-item label="备注:">
@@ -335,7 +335,7 @@
             placeholder="请输入内容"
             v-model="form.vremark">
           </el-input>
-        </el-form-item>
+        </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer" v-if="!look">
         <el-button @click="dialogFormVisible = false">取 消</el-button>

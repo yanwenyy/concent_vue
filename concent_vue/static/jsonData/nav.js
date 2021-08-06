@@ -1162,13 +1162,22 @@ export default {
               'defaultpage': false,
               'children': [
                 {
+                  'name': '产品信息维护',
+                  'path': '/statistics/productInfo/maintenance',
+                  'component': '/statistics/productInfo/maintenance',
+                  'iconCls': 'el-icon-school',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
                   'name': '产品信息列表',
                   'path': '/statistics/productInfo/list',
                   'component': '/statistics/productInfo/list',
                   'iconCls': 'el-icon-school',
                   'menushow': true,
                   'leaf': true,
-                  'defaultpage': true
+                  'defaultpage': false
                 }
               ]
             },
