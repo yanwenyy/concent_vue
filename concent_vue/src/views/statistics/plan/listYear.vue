@@ -4,12 +4,13 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
+        <el-button @click="dialogFormVisible=true" type="primary" plain><i class="el-icon-plus "></i>新增</el-button>
         <el-button @click="edit" type="primary" plain><i class="el-icon-edit"></i>修改</el-button>
         <el-button @click="del" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
         <el-button @click="searchformSubmit" type="primary" plain><i class="el-icon-refresh-right"></i>刷新</el-button>
         <el-button @click="back" type="primary" plain>返回</el-button>
       </el-button-group>
-      <!--<label style="margin-left: 10px;line-height: 32px;font-size: 15px;">项目名称：{{p.projectName}}</label>-->
+      <label style="margin-left: 10px;line-height: 32px;font-size: 15px;">项目名称：{{p.projectName}}</label>
     </div>
 
     <div style="margin-top: 10px">
@@ -128,6 +129,22 @@
         v-if="page.total !== 0"
       ></el-pagination>
     </div>
+    <el-dialog title="新增" :visible.sync="dialogFormVisible">
+      <el-form :model="searchform">
+        <el-form-item label="填报时间"  :label-width="formLabelWidth">
+          <el-date-picker
+            v-model="searchform.year"
+            value-format="yyyy"
+            type="year"
+            placeholder="填报时间">
+          </el-date-picker>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="add">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -138,6 +155,8 @@
     },
     data() {
       return {
+        dialogFormVisible:false,
+        formLabelWidth:'150px',
         treeStatas: false,
         projectTypeTwo: [], // 工程类别(二级)
         projectStatus: '',
@@ -211,6 +230,40 @@
         }).catch(() => {
         })
       },
+      add(){
+        this.dialogFormVisible = false;
+        console.log(this.p)
+        this.$http
+          .post(
+            '/api/statistics/planPrjTjxDetail/list/checkIsCreate',
+            JSON.stringify({ planYear: this.searchform.year,projectId: this.p.projectId,planType:'2'}),
+            {useJson: true}
+          )
+          .then((res) => {
+            if(res.data.data==null||res.data.data==''){
+              var row=this.p.row;
+              let planId ='';
+              let flowStatus = row.flowStatus;
+              let projectName = row.projectName;
+              let projecttypeCode = row.projectTypeFirstId;
+              let projectId = row.projectPlanId;
+              let createOrgCode=row.createOrgCode;
+              if (planId == null || planId === '') {
+                flowStatus = '1'
+              }
+              //修改成当前选择的年月-20210805-aty修改
+             let currentYear=this.searchform.year;
+              let p = {actpoint: 'edit', planInfo: {planId: planId, projectName: projectName, planTypeName: '年计划', projectStatus: flowStatus, planProjectTjx: {projectId: projectId, planYear: currentYear, planType: 2, projecttypeCode: projecttypeCode,createOrgCode:createOrgCode}}}
+              this.$router.push({
+                path: '../proTjxDetail/',
+                query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+              })
+              this.searchform.year='';
+            }else{
+              this.$message.error('当前年已经创建项目,不能再创建了')
+            }
+          })
+      },
       // 修改
       edit() {
         if (this.multipleSelection.length !== 1) {
@@ -276,7 +329,7 @@
       // 获取分页数据
       getData() {
         this.$http
-          .post('/api/statistics/PlanProjectTjx/list/loadPageData', this.searchform)
+          .post('/api/statistics/PlanProjectTjx/list/loadPageDataYear', this.searchform)
           .then(res => {
             this.page = res.data.data
           })

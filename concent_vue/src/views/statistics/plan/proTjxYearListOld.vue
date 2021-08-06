@@ -3,24 +3,17 @@
 <template>
   <div>
     <div style="width: 100%; overflow: hidden">
-      <el-form class="search-form" :inline="true" :model="searchform" @keyup.enter.native="getData()">
-        <el-form-item label="项目简称:">
-          <el-input v-model="searchform.projectOmit" placeholder="项目简称" clearable></el-input>
-        </el-form-item>
-        <el-form-item label="项目状态:">
-          <el-select
-            filterable
-            clearable
-            placeholder="请选择"
-            v-model="searchform.projectStatusId">
-            <el-option
-              :key="index"
-              :label="item.detailName"
-              :value="item.id"
-              v-for="(item, index) in projectStatus"/>
-          </el-select>
-        </el-form-item>
-      </el-form>
+      <el-popover v-if="isPrompt"
+        placement="top"
+        trigger="hover">
+        <span style="font-size: 12px;">双击列表行填报更方便。<label @click="doNotPopover(1)" style="color:#67c23a;cursor:pointer;">不再提示</label></span>
+        <el-button slot="reference" style="float: left;margin-right: 5px" icon="el-icon-edit" @click="edit" type="primary" plain>填报年计划</el-button>
+      </el-popover>
+      <el-button v-else style="float: left;margin-right: 5px" icon="el-icon-edit" @click="edit" type="primary" plain>填报年计划</el-button>
+      <!-- <el-button-group style="float: left">
+        <el-button icon="el-icon-delete" @click="del" type="primary" plain>删除</el-button>
+      </el-button-group>-->
+
       <div style="float: right;">
         <el-button
           @click="searchformReset"
@@ -51,7 +44,7 @@
           'background-color': 'whitesmoke'
         }"
         :row-class-name="tableRowClassName"
-        @row-dblclick="toListYear"
+        @row-dblclick="rowEdit"
         @selection-change="handleSelectionChange"
         border
         highlight-current-row
@@ -74,20 +67,49 @@
           :index="computeTableIndex"
         ></el-table-column>
         <el-table-column
+          :width="150"
+          align="left"
+          label="计划年份"
+          prop="planYear"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>计划年份</span>
+            <div>
+              <el-date-picker
+                class="list-search-picker"
+                clearable
+                type="year"
+                value-format="yyyy"
+                size="large"
+                @change="queryList"
+                v-model="searchform.planYear"
+              >
+              </el-date-picker>
+            </div>
+          </template>
+          <template  slot-scope="scope">
+            <div v-if="scope.row.planYear != null ">
+              {{
+              scope.row.planYear
+              }}
+            </div>
+              <div v-else>{{mrTime}}</div>
+          </template>
+        </el-table-column>
+        <el-table-column
           :width="250"
           align="left"
           label="项目简称"
           prop="projectOmit"
           show-overflow-tooltip
         >
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="工程行业类别"
-          prop="projectTypeSecond"
-          show-overflow-tooltip
-        >
+          <template slot="header" slot-scope="scope">
+            <span>项目简称</span>
+            <div>
+                <el-input @keypress.native.enter="searchformSubmit"  v-model="searchform.projectOmit" size="mini"/>
+            </div>
+          </template>
         </el-table-column>
         <el-table-column
           :min-width="250"
@@ -96,8 +118,68 @@
           prop="projectName"
           show-overflow-tooltip
         >
+          <template slot-scope="scope">
+            <span @click="toListYear(scope.row)" style="cursor: pointer;text-decoration:underline;color:#3c75ff;">{{scope.row.projectName}}</span>
+          </template>
+          <template slot="header" slot-scope="scope">
+            <span>项目名称</span>
+            <div>
+              <el-input @keypress.native.enter="searchformSubmit" v-model="searchform.projectName" size="mini"/>
+            </div>
+          </template>
         </el-table-column>
 
+        <el-table-column
+          :width="150"
+          align="center"
+          label="工程类别(一级)"
+          prop="projectTypeFirst"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>工程类别(一级)</span>
+            <div>
+              <el-select
+                clearable
+                filterable
+                placeholder="请选择"
+                @change="getProjectTwo"
+                size="mini"
+                v-model="searchform.projectTypeFirstId">
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectDomainType"/>
+              </el-select>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="工程类别(二级)"
+          prop="projectTypeSecond"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>工程类别(二级)</span>
+            <el-select
+              clearable
+              filterable
+              @change="searchformSubmit"
+              placeholder="请先选择一级类别"
+              size="mini"
+              :disabled="searchform.projectTypeFirstId==''"
+              v-model="searchform.projectTypeSecondId">
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.id"
+                v-for="(item, index) in projectTypeTwo"/>
+            </el-select>
+          </template>
+        </el-table-column>
         <el-table-column
           :width="150"
           align="center"
@@ -106,6 +188,42 @@
           show-overflow-tooltip
           clearable
         >
+          <template slot="header" slot-scope="scope">
+            <span>所属单位</span>
+            <div>
+              <el-input @keypress.native.enter="searchformSubmit"  v-model="searchform.companyBelongName" size="mini"/>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="状态"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+            <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核驳回':'未创建'}}
+            </div>
+          </template>
+          <template slot="header" slot-scope="scope">
+            <span>状态</span>
+            <div>
+              <el-select
+                filterable
+                clearable
+                size="mini"
+                @clear="searchform.flowStatus=''"
+                @change="searchformSubmit"
+                placeholder="请选择"
+                v-model="searchform.flowStatus">
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in flowStatus"/>
+              </el-select>
+            </div>
+          </template>
         </el-table-column>
       </el-table>
       <el-pagination
@@ -188,10 +306,7 @@
     computed: {
       projectDomainType() {
         return this.$store.state.category.projectDomainType
-      },
-      projectStatus() {
-        return this.$store.state.projectStatus
-      },
+      }
     },
     methods: {
       getdatatime(){//默认显示今天
@@ -354,7 +469,7 @@
       // 获取分页数据
       getData() {
         this.$http
-          .post('/api/statistics/PlanProjectTjx/list/queryProject', this.searchform)
+          .post('/api/statistics/PlanProjectTjx/list/loadPageTjxAllData', this.searchform)
           .then(res => {
             this.page = res.data.data
             for (var i = 1; i <= this.page.total; i++) {
@@ -410,7 +525,7 @@
         row.index = this.computeTableIndex(rowIndex)
       },
       toListYear(row) {
-        let p = {projectId: row.projectPlanId, projectName: row.projectName,row:row}
+        let p = {projectId: row.projectId, projectName: row.projectName}
         this.$router.push({
           path: './listYear/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
@@ -438,40 +553,10 @@
       }
     },
     mounted() {
-      this.$store.dispatch('getConfig', {});
       this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
     }
   }
 </script>
 <style scoped>
-  .el-table__row {
-    cursor: pointer;
-  }
-  .add-group .new-add-btn{
-    border-radius: 0;
-  }
-  .search-form{
-    display: inline-block;
-    float: left;
-  }
-  .search-form >>>.el-form-item{
-    margin-bottom: 0;
-  }
-  .search-form >>>.el-form-item__content,.search-form >>>.el-form-item__label{
-    line-height: 30px;
-  }
-  .search-form{
-    display: inline-block;
-    float: left;
-  }
-  >>>.search-form .el-form-item__label{
-    width:auto;
-  }
-  >>>.search-form .el-input__inner{
-    height: auto;
-    line-height: inherit;
-  }
-  >>>.el-icon-date{
-    line-height: 30px;
-  }
+
 </style>

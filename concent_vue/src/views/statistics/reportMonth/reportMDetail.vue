@@ -144,7 +144,7 @@
                      <template slot-scope="scope">
                        <!--<div v-if="scope.row.monthPlan && scope.row.monthValue">{{Math.round(scope.row.monthPlan /scope.row.monthValue) / 100+"%"}}-->
                        <!--</div>-->
-                       <div v-if="scope.row.monthRate!=null">{{scope.row.monthRate+"%"}}
+                       <div v-if="scope.row.monthRate!=null&&scope.row.monthRate!=''">{{scope.row.monthRate+"%"}}
                        </div>
                      </template>
                    </el-table-column>
@@ -178,7 +178,7 @@
                      <template slot-scope="scope">
  <!--                    <div v-if="scope.row.yearPlan&&scope.row.yearValue">{{Math.round(scope.row.yearPlan /scope.row.yearValue) / 100+"%"}}
                        </div>-->
-                       <div v-if="scope.row.yearRate!=null">{{scope.row.yearRate+"%"}}
+                       <div v-if="scope.row.yearRate!=null&&scope.row.yearRate!=''">{{scope.row.yearRate+"%"}}
                        </div>
                      </template>
                    </el-table-column>
@@ -195,7 +195,7 @@
                <el-table-column
                  :width="150"
                  align="center"
-                 label="开累计划"
+                 label="总设计量"
                  show-overflow-tooltip
                >
                  <template slot-scope="scope">
@@ -300,6 +300,7 @@
     },
     data() {
       return {
+        projectList:{},
         tableHeight:"100vh - 110px",
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         key:0,
@@ -359,6 +360,42 @@
       }*/
     },
     methods: {
+      //计算比较实物工程量
+      calcValue(list){
+        var i=0,len=list.length,canWrite=true;
+        var zszx=0,//其中其中：装饰装修
+            jzgc=0,//建筑工程
+            jgcz=0,//竣工产值
+            sgcz=0;//施工产值
+        for(;i<len;i++){
+         var v=list[i];
+         switch (v.tjxCode){
+           case '001001002001':
+             zszx=Number(v.monthValue);
+             break;
+           case '001001002':
+             jzgc=Number(v.monthValue);
+             break;
+           case '001009':
+             jgcz=Number(v.monthValue);
+             break;
+           case '001001':
+             sgcz=Number(v.totalValue);
+             break;
+         }
+        }
+        //其中：装饰装修要小于等于建筑工程
+        if(zszx>jzgc){
+          this.$message.error("其中：装饰装修要小于等于建筑工程");
+          canWrite=false;
+        }
+        //竣工产值要小于等于施工产值的开累完成
+        if(jgcz>sgcz){
+          this.$message.error("竣工产值要小于等于施工产值的开累完成");
+          canWrite=false;
+        }
+        return canWrite;
+      },
       //流程操作
       operation(type){
         var msg='',that=this;
@@ -402,29 +439,59 @@
       },
       //设置当年的完成值
       getYear(list,index,code){
-        var num=0;
-        var num1=0;
-        var num2=0;
-        list[index].yearValue=list[index].oldYearValue?Number(list[index].oldYearValue)+Number(list[index].monthValue):list[index].monthValue;
-        list[index].totalValue=list[index].oldTotalValue?Number(list[index].oldTotalValue)+Number(list[index].monthValue):list[index].monthValue;
-        list[index].yearRate=list[index].yearValue&&list[index].yearPlan?(Number(list[index].yearValue)/Number(list[index].yearPlan)/ 100).toFixed(4):0;
-        list[index].monthRate=list[index].monthPlan>0?(Number(list[index].monthValue)/Number(list[index].monthPlan) / 100).toFixed(4):Number(list[index].monthValue)*100;
-        list[index].totalRate=list[index].totalValue&&list[index].totalPlan?(Number(list[index].totalValue)/Number(list[index].totalPlan) / 100).toFixed(4):0;
-        console.log(list[index])
-        list.forEach((item,i)=>{
-          if(item.sumTarget==code) {
-            num= Number(item.monthValue)+num;
-            num1=Number(item.yearValue)+num1;
-            num2=Number(item.totalValue)+num2;
+        var canWrite=this.calcValue(list);
+        if(canWrite){
+          if(Number(list[index].oldTotalValue)+Number(list[index].monthValue)>Number(this.projectList.contractAmountEngine)){
+            this.$message.error("施工产值的开累完成不能大于项目的工程合同额");
+            list[index].monthValue='';
+            return false;
           }
-        });
-        this.data.forEach((item,i)=>{
-          if(item.tjxId==list[index].sumTarget){
-            item.monthValue=num;
-            item.yearValue=num1;
-            item.totalValue=num2;
+          var treeSum=0,parentNum=0,canCalc=false;
+          list.forEach((item)=>{
+            if(item.tjxCode.length>=12&&item.sumTarget==code){
+              treeSum+=Number(item.monthValue);
+              canCalc=true;
+            }
+            if(item.tjxId==code&&item.tjxCode.length==9){
+              parentNum=Number(item.monthValue);
+            }
+          });
+          console.log(list[index].tjxCode.length)
+          if(canCalc&&list[index].tjxCode.length>=12&&treeSum>parentNum){
+            this.$message.error("该级本月完成之和不能大于上级本月完成");
+            list[index].monthValue='';
+            return false;
           }
-        });
+          var num=0;
+          var num1=0;
+          var num2=0;
+          list[index].yearValue=list[index].oldYearValue?Number(list[index].oldYearValue)+Number(list[index].monthValue):list[index].monthValue;
+          list[index].totalValue=list[index].oldTotalValue?Number(list[index].oldTotalValue)+Number(list[index].monthValue):list[index].monthValue;
+          // list[index].yearRate=list[index].yearValue&&list[index].yearPlan?(Number(list[index].yearValue)/Number(list[index].yearPlan)/ 100).toFixed(4):0;
+          list[index].yearRate=list[index].yearValue&&list[index].yearPlan?(Number(list[index].yearValue)/Number(list[index].yearPlan)*100).toFixed(4):'';
+          // list[index].monthRate=list[index].monthPlan>0?(Number(list[index].monthValue)/Number(list[index].monthPlan) / 100).toFixed(4):Number(list[index].monthValue)*100;
+          list[index].monthRate=list[index].monthValue&&list[index].monthPlan>0?(Number(list[index].monthValue)/Number(list[index].monthPlan) *100).toFixed(4):'';
+          list[index].totalRate=list[index].totalValue&&list[index].totalPlan?(Number(list[index].totalValue)/Number(list[index].totalPlan) / 100).toFixed(4):0;
+          // console.log(list[index])
+          //code3位 一级  code6位  二级  code9位  三级  code12位 四级
+          list.forEach((item,i)=>{
+            if(item.sumTarget==code) {
+              num= Number(item.monthValue)+num;
+              num1=Number(item.yearValue)+num1;
+              num2=Number(item.totalValue)+num2;
+            }
+          });
+          this.data.forEach((item,i)=>{
+            if(item.tjxId==list[index].sumTarget&&item.tjxCode.length<=6){
+              item.monthValue=num;
+              item.yearValue=num1;
+              item.totalValue=num2;
+            }
+          });
+        }else{
+          list[index].monthValue='';
+        }
+
       },
       // 保存
       save(type) {
@@ -530,6 +597,7 @@
           }), {useJson: true})
           .then(res => {
             var datas=res.data.data;
+            this.projectList=datas.projectList;
             this.data = datas.projectReportDetaiList
             this.dataReport=datas.projectreport
             this.dataReport.yearDateS=this.dataReport.reportYear+"-"+this.dataReport.reportMonth
@@ -538,7 +606,10 @@
             if(this.projectName=='' || this.projectName==null){
               this.projectName=this.p.projectName;
             }
-            console.log('data', this.data)
+           this.data.forEach((item)=>{
+             item.yearRate=item.yearValue&&item.yearPlan?(Number(item.yearValue)/Number(item.yearPlan)*100).toFixed(4):'';
+             item.monthRate=item.monthValue&&item.monthPlan>0?(Number(item.monthValue)/Number(item.monthPlan)*100).toFixed(4):'';
+           })
             // this.reportVo=this.data;
           })
       }

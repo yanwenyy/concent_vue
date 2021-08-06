@@ -274,6 +274,24 @@
                   <span style="color:red;font-size:12px" v-if="show && (form1.endreporttime == ''||form1.endreporttime == null)">此项不能为空</span>
                 </td>
               </tr>
+              <tr>
+                <td><span style="color: red;font-weight:bold">*</span>限制对象:</td>
+                <td style="width:80%;text-align:left;padding:10px">
+                  <el-select
+                    class="selcet-show"
+                    clearable
+                    filterable
+                    placeholder="请选择"
+                    v-model="form1.restrictedobjectsType"
+                  >
+                    <el-option v-if="userdata.managerOrgType=='11'" label="集团" value="12"></el-option>
+                    <el-option v-if="userdata.managerOrgType=='12'" label="局指挥部" value="23"></el-option>
+                    <el-option v-if="userdata.managerOrgType=='12'" label="工程公司" value="13"></el-option>
+                    <el-option v-if="userdata.managerOrgType=='13'" label="项目部" value="17"></el-option>
+                  </el-select>
+                  <span style="color:red;font-size:12px" v-if="show && (form1.restrictedobjectsType == ''||form1.restrictedobjectsType == null)">此项不能为空</span>
+                </td>
+              </tr>
             </table>
           </div>
           <div style="text-align:right;margin-top:10px">
@@ -410,6 +428,8 @@
         params.createUserId =this.userdata.id;
         params.createOrgCode =this.userdata.createOrgCode;
         params.reportType ='1';
+        params.restrictedobjectsType=this.form1.restrictedobjectsType;
+        params.restrictedobjects=this.form1.restrictedobjectsType=='12'?'集团':this.form1.restrictedobjectsType=='23'?'局指挥部':this.form1.restrictedobjectsType=='13'?'工程公司':this.form1.restrictedobjectsType=='17'?'项目部':'';
         if(this.type == 'edit') {
           params.uuid = this.form1.uuid;
         }
@@ -557,5 +577,8 @@
 <style scoped>
   .el-table__row {
     cursor: pointer;
+  }
+  .selcet-show{
+    width: 70%;
   }
 </style>
