@@ -211,7 +211,7 @@
     <el-dialog title="产品信息" :visible.sync="dialogFormVisible">
       <el-form :model="form"  ref="form" class="proForm">
         <el-form-item label="产品编码:">
-          <el-input v-model="form.vcode" autocomplete="off" :disabled="look"></el-input>
+          <el-input v-model="form.vcode" autocomplete="off" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item label="产品名称:">
           <el-input v-model="form.vname" autocomplete="off" :disabled="look"></el-input>
@@ -222,7 +222,7 @@
                           measureUnit,
                           'vmeasurename',
                           'vmeasureunit'
-                        )" placeholder="请选择计量单位" :disabled="look">
+                        )" placeholder="请选择计量单位" :disabled="true">
             <el-option
               :key="index"
               :label="item.detailName"
@@ -297,7 +297,7 @@
                           bizTypeCode,
                           'ywtypename',
                           'ywtypecode'
-                        )" placeholder="请选择业务类型" :disabled="look">
+                        )" placeholder="请选择业务类型" :disabled="true">
             <el-option
               :key="index"
               :label="item.detailName"
@@ -314,7 +314,7 @@
                           'productTypeName',
                           'productTypeCode'
                         )"
-                     placeholder="请选择产品类型" :disabled="look">
+                     placeholder="请选择产品类型" :disabled="true">
             <el-option
               :key="index"
               :label="item.detailName"

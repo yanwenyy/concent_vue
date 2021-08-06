@@ -231,7 +231,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="启用状态:">
+        <!-- <el-form-item label="启用状态:">
           <el-select v-model="form.venabled" placeholder="请选择启用状态" :disabled="look">
             <el-option
               label="启用"
@@ -290,7 +290,7 @@
               value="0"
             ></el-option>
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="业务类型:">
           <el-select v-model="form.ywtypeid"  @change="getName(
                           form.ywtypeid,
@@ -324,7 +324,7 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="排序:">
+        <!-- <el-form-item label="排序:">
           <el-input v-model="form.vsort" autocomplete="off" :disabled="look"></el-input>
         </el-form-item>
         <el-form-item label="备注:">
@@ -335,7 +335,7 @@
             placeholder="请输入内容"
             v-model="form.vremark">
           </el-input>
-        </el-form-item>
+        </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer" v-if="!look">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
