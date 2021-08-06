@@ -1,31 +1,33 @@
 <!--金融保险项目登记-->
 <template>
-  <div>
-    <el-card class="box-card">
-      <div slot="header" class="clearfix">
-        <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'add'"><b>金融保险项目新增</b></span>
-        <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'edit'"><b>金融保险项目修改</b></span>
-        <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'look'"><b>金融保险项目查看</b></span>
-        <span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'task'"><b>金融保险项目审核</b></span>
-        <el-button @click="back" class="detailbutton">返回</el-button>
-        <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="submitForm('detailForm','save')" class="detailbutton">
-          保存
-        </el-button>
-        <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailForm.project.flowStatus==1||detailForm.project.flowStatus==4)" @click="submitForm('detailForm','sub')" class="detailbutton">提交
-        </el-button>
-        <el-button
-            v-show="p.actpoint == 'task'&&p.task.edit==false"
-            class="detailbutton detail-back-tab bh"
-            @click="operation('back')"
-            type="warning"
-          >驳回</el-button>
-          <el-button
-            v-show="p.actpoint == 'task'&&p.task.edit==false"
-            class="detailbutton detail-back-tab tg"
-            @click="operation('complete')"
-            type="success"
-          >通过</el-button>
-      </div>
+  <div style="position: relative">
+    <el-button @click="back" class="detail-back-tab">返回</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="submitForm('detailForm','save')"  class="detailbutton detail-back-tab save-btn">
+      保存
+    </el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailForm.project.flowStatus==1||detailForm.project.flowStatus==4)" @click="submitForm('detailForm','sub')"  class="detailbutton detail-back-tab sub-btn">提交
+    </el-button>
+    <el-button
+      v-show="p.actpoint == 'task'&&p.task.edit==false"
+      class="detailbutton detail-back-tab tg"
+      @click="operation('complete')"
+      type="success"
+    >通过</el-button>
+    <el-button
+      v-show="p.actpoint == 'task'&&p.task.edit==false"
+      class="detailbutton detail-back-tab bh"
+      @click="operation('back')"
+      type="warning"
+    >驳回</el-button>
+      <!--<div class="clearfix el-card__header">-->
+        <!--<span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'add'"><b>工程承包项目新增</b></span>-->
+        <!--<span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'edit'"><b>工程承包项目修改</b></span>-->
+        <!--<span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'look'"><b>工程承包项目查看</b></span>-->
+        <!--<span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'task'"><b>工程承包项目审核</b></span>-->
+      <!--</div>-->
+      <el-tabs type="border-card">
+      <el-tab-pane label="金融保险项目">
+  
       <div class="detailBox">
         <el-form
           :inline="false"
@@ -534,7 +536,11 @@
           </el-table>
         </el-form>
       </div>
-    </el-card>
+      </el-tab-pane>
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&(detailForm.project.flowStatus!=1)">
+        <Audit-Process :task="p.task||{businessId:p.uuid,businessType:' project_project_new'}"></Audit-Process>
+      </el-tab-pane>
+    </el-tabs>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
   </div>
 </template>
@@ -542,11 +548,12 @@
 <script>
   import Tree from '@/components/tree'
   import { isMoney, isMobile, isPhone } from '@/utils/validate'
+  import AuditProcess from '@/components/auditProcess'
 
   export default {
     name: 'estateMode',
     components: {
-      Tree
+      Tree,AuditProcess
     },
     data() {
       const validateMoney = (rule, value, callback) => {
@@ -620,6 +627,7 @@
             projectModuleId: '510ba0d79593418493eb1a11ea4e7df4', // 项目板块
             projectModuleCode:"finance",//项目板块code
             projectModuleName: '金融保险', // 项目板块
+            businessId: '', // 业务板块
             projectName: '',
             projectForeginName: '',
             valueAddedTax: '',
@@ -961,6 +969,16 @@
   }
 </script>
 <style lang="scss" scoped>
+  .detail-back-tab{
+    padding: 10px 20px ;
+    border:1px solid #ddd;
+    color: black;
+    position: absolute;
+    top:1px;
+    right:15px;
+    z-index: 999999999;
+    background: #fff;
+  }
   .gcform {
     margin-top: 10px;
     > > > .el-form-item__error {

@@ -27,7 +27,7 @@
         <!--<span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'task'"><b>工程承包项目审核</b></span>-->
       <!--</div>-->
       <el-tabs type="border-card">
-        <el-tab-pane label="工程承包合同">
+        <el-tab-pane label="工程承包项目">
           <div class="detailBox">
             <el-form
               :model="detailForm"
@@ -2203,7 +2203,7 @@
         .post('/api/statistics/StatisticsProject/detail/findProjectFather')
         .then(res => {
         this.fatherList = res.data.data
-    })
+      })
     }
   }
 </script>
