@@ -887,6 +887,16 @@
                   v-model="detailForm.project.projectRemark"/>
               </el-form-item>
             </el-row>
+            <el-row>
+              <el-form-item
+                class="neirong"
+                label="变更原因:">
+                <el-input
+                  type="textarea"
+                  placeholder="请输入"
+                  v-model="detailForm.project.changeReason"/>
+              </el-form-item>
+            </el-row>
             <p>
               <span >项目地点: </span>
               <el-button

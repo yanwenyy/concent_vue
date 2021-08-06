@@ -70,11 +70,19 @@
         >
         </el-table-column>
         <el-table-column
-          :width="500"
+          :width="400"
           prop="projectName"
           align="center"
           show-overflow-tooltip
           label="项目名称"
+        >
+        </el-table-column>
+        <el-table-column
+          :width="150"
+          prop="projectModuleName"
+          align="center"
+          show-overflow-tooltip
+          label="项目板块"
         >
         </el-table-column>
         <el-table-column

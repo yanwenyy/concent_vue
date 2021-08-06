@@ -169,9 +169,25 @@
           type="index"
         ></el-table-column>
         <el-table-column
+          :width="150"
+          align="center"
+          label="板块"
+          prop="projectModuleName"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+        <el-table-column
           :width="200"
           label="项目简称"
           prop="projectOmit"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+        <el-table-column
+          :width="300"
+          align="center"
+          label="项目名称"
+          prop="projectName"
           show-overflow-tooltip
         >
         </el-table-column>
@@ -186,6 +202,22 @@
         <el-table-column
           :width="150"
           align="center"
+          label="初始合同额"
+          prop="contractAmountInitial"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="工程合同额"
+          prop="contractAmountEngine"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
           label="签约单位"
           prop="companyName"
           show-overflow-tooltip
@@ -194,27 +226,20 @@
         <el-table-column
           :width="150"
           align="center"
-          label="新兴市场一级类别"
-          prop="marketFirstName"
+          label="工程类别(一级)"
+          prop="projectTypeFirst"
           show-overflow-tooltip
         >
         </el-table-column>
         <el-table-column
           :width="150"
           align="center"
-          label="新兴市场二级类别"
-          prop="marketSecondName"
+          label="工程类别(二级)"
+          prop="projectTypeSecond"
           show-overflow-tooltip
         >
         </el-table-column>
-        <el-table-column
-          :width="300"
-          align="center"
-          label="项目名称"
-          prop="projectName"
-          show-overflow-tooltip
-        >
-        </el-table-column>
+
         <el-table-column
           :width="300"
           align="center"
@@ -234,24 +259,16 @@
         <el-table-column
           :width="150"
           align="center"
-          label="板块"
-          prop="projectModuleName"
+          label="新兴市场一级类别"
+          prop="marketFirstName"
           show-overflow-tooltip
         >
         </el-table-column>
         <el-table-column
           :width="150"
           align="center"
-          label="工程类别(一级)"
-          prop="projectTypeFirst"
-          show-overflow-tooltip
-        >
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="工程类别(二级)"
-          prop="projectTypeSecond"
+          label="新兴市场二级类别"
+          prop="marketSecondName"
           show-overflow-tooltip
         >
         </el-table-column>
@@ -282,32 +299,8 @@
         <el-table-column
           :width="150"
           align="center"
-          label="项目所在地"
-          prop="projectLocation"
-          show-overflow-tooltip
-        >
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
           label="所属铁路局"
           prop="railwayName"
-          show-overflow-tooltip
-        >
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="初始合同额"
-          prop="contractAmountInitial"
-          show-overflow-tooltip
-        >
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="工程合同额"
-          prop="contractAmountEngine"
           show-overflow-tooltip
         >
         </el-table-column>

@@ -401,6 +401,8 @@
         if (planId == null || planId === '') {
           flowStatus = '1'
         }
+        //修改成当前选择的年月-20210805-aty修改
+        currentYear=this.searchform.planYear
         let p = {actpoint: 'edit', planInfo: {planId: planId, projectName: projectName, planTypeName: '年计划', projectStatus: flowStatus, planProjectTjx: {projectId: projectId, planYear: currentYear, planType: 2, projecttypeCode: projecttypeCode,createOrgCode:createOrgCode}}}
         this.$router.push({
           path: './proTjxDetail/',
