@@ -102,7 +102,9 @@
       },
       loadNode(node, resolve) {
           if (node.level === 0) {
-            this.getFrist(resolve)
+            setTimeout(()=> {
+              this.getFrist(resolve)
+            }, 500)
           }
         if (node.level >= 1) {
           // 注意！把resolve传到你自己的异步中去
@@ -120,13 +122,13 @@
         //  })
 
         //假数据,解决不稳定,测试完得换
-        var datas=[{code: "0000100001",
+        var datas=[{code: this.userInfo.managerOrgCode,
           fullname: "股份公司总部",
           hookOrgName: "中国铁建股份有限公司",
           id: 986436,
           ifLastNode: "0",
           ifUse: "1",
-          name: "股份公司",
+          name: this.userInfo.managerOrgName,
           order: 1,
           path: "股份公司",
           providerId: "hr",
@@ -139,7 +141,7 @@
       getChildren(node, resolve){
         this.$http
           .get(
-            '/jsonapi/System/system/supmanage/org/v1.0/tree/'+node.data.code+'/'+this.userInfo.currentPostCode+'?type=orgAuth',
+            '/jsonapi/System/system/supmanage/org/v1.0/tree/'+this.userInfo.managerOrgCode+'/'+this.userInfo.currentPostCode+'?type=orgAuth',
           )
           .then(res => {
               var datas= res.data.data;

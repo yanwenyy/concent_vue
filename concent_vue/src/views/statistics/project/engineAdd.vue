@@ -159,7 +159,7 @@
               </el-row>
               <el-row>
                 <el-form-item
-                  :label="detailForm.project.projectNatureFirstId === '7031076e7a5f4225b1a89f31ee017802'?'投资单位:':'承建单位:'"
+                  label="承建单位"
                   prop="project.companyBuiltName"
                   style="width: 32.5%">
                   <!-- <el-input
@@ -853,10 +853,12 @@
                   prop="project.companySupervisor"
                   style="width: 32.5%">
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                    disabled
                     clearable
-                    placeholder="请输入"
-                    v-model="detailForm.project.companySupervisor"/>
+                    placeholder="请选择监理单位"
+                    v-model="detailForm.project.companySupervisor">
+                    <el-button slot="append" icon="el-icon-circle-plus-outline" @click="openComMul('','','/api/contract/Companies/detail/findCompanies','监理单位')"></el-button>
+                  </el-input>
                 </el-form-item>
               </el-row>
               <!--项目经理-->
@@ -1625,6 +1627,9 @@
         if(data.type=='签约/使用资质单位'){
           this.detailForm.project.companyId=data.selIdList.join(",");
           this.detailForm.project.companyName=data.selList.join(",");
+        }else if (data.type == "监理单位") {
+          this.detailForm.project.companySupervisor=data.selList.join(",");
+          // id数组 = data.selIdList.join(",");
         }
       },
       //根据id跳页面
