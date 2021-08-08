@@ -294,23 +294,23 @@
         flowStatus:[
           {
             detailName:"草稿",
-            id:'1'
+            id:'edit'
           },
           {
             detailName:"审核中",
-            id:'2'
+            id:'check'
           },
           {
             detailName:"审核通过",
-            id:'3'
+            id:'pass'
           },
           {
             detailName:"审核驳回",
-            id:'4'
+            id:'reject'
           },
           {
             detailName:"未创建",
-            id:'0'
+            id:'edit'
           }
         ],
         selectYears: [],
