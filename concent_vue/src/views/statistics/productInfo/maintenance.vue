@@ -95,115 +95,16 @@
             </div>
           </template>
         </el-table-column>
-
-        <el-table-column
-          :width="300"
-          align="center"
-          label="单位名称"
-          prop="createOrgName"
-          show-overflow-tooltip>
-        </el-table-column>
-        <el-table-column
-          width="150"
-          align="center"
-          label="启用状态"
-          prop="venabled"
-
-          show-overflow-tooltip>
-          <template slot="header" slot-scope="scope">
-            <span>启用状态</span>
-            <el-select
-              class="list-search-picker"
-              clearable
-              filterable
-              placeholder="请选择"
-              size="mini"
-              v-model="searchform.venabled"
-            >
-              <el-option
-                label="启用"
-                value="1"
-              ></el-option>
-              <el-option
-                label="禁用"
-                value="0"
-              ></el-option>
-            </el-select>
-          </template>
-          <template slot-scope="scope">{{scope.row.venabled=='1'?'启用':scope.row.venabled=='0'?'禁用':''}}</template>
-          <!--<template slot-scope="scope">-->
-              <!--{{scope.row.bidFlowStatus==1?'草稿':scope.row.bidFlowStatus==2?'审核中':scope.row.bidFlowStatus==3?'审核通过':scope.row.bidFlowStatus==4?'审核退回':'待登记'}}-->
-          <!--</template>-->
-        </el-table-column>
-        <el-table-column
-          width="150"
-          align="center"
-          label="境内/外"
-          prop="vjnw"
-          show-overflow-tooltip>
-
-          <template slot="header" slot-scope="scope">
-            <span>境内/外</span>
-            <el-select
-              class="list-search-picker"
-              clearable
-              filterable
-              placeholder="请选择"
-              size="mini"
-              v-model="searchform.vjnw"
-            >
-              <el-option
-                label="境内"
-                value="境内"
-              ></el-option>
-              <el-option
-                label="境外"
-                value="境外"
-              ></el-option>
-            </el-select>
-          </template>
-           <!--<template slot-scope="scope">{{-->
-            <!--scope.row.endTime | dateformat-->
-          <!--}}</template>-->
-        </el-table-column>
         <el-table-column
           align="center"
-          label="是否包含增值税"
-          prop="vincludevat"
+          label="业务类型"
+          prop="ywtypename"
           show-overflow-tooltip>
-          <template slot-scope="scope">{{scope.row.vincludevat=='1'?'包含':scope.row.vincludevat=='0'?'不包含':''}}</template>
-        </el-table-column>
-        <el-table-column
-          align="center"
-          label="新签是否显示"
-          prop="isXqShow"
-          show-overflow-tooltip>
-          <template slot-scope="scope">{{scope.row.isXqShow=='1'?'是':scope.row.isXqShow=='0'?'否':''}}</template>
-        </el-table-column>
-        <el-table-column
-          align="center"
-          label="产值是否填月报"
-          prop="isTb"
-          show-overflow-tooltip>
-          <template slot-scope="scope">{{scope.row.isTb=='1'?'是':scope.row.isTb=='0'?'否':''}}</template>
         </el-table-column>
         <el-table-column
           align="center"
           label="产品类型"
           prop="productTypeName"
-          show-overflow-tooltip>
-        </el-table-column>
-        <el-table-column
-          align="center"
-          label="排序"
-          prop="vsort"
-          show-overflow-tooltip>
-        </el-table-column>
-        <el-table-column
-          :width="300"
-          align="center"
-          label="备注"
-          prop="vremark"
           show-overflow-tooltip>
         </el-table-column>
       </el-table>
@@ -231,66 +132,6 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <!-- <el-form-item label="启用状态:">
-          <el-select v-model="form.venabled" placeholder="请选择启用状态" :disabled="look">
-            <el-option
-              label="启用"
-              value="1"
-            ></el-option>
-            <el-option
-              label="禁用"
-              value="0"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="境内/外:">
-          <el-select v-model="form.vjnw" placeholder="请选择境内/外" :disabled="look">
-            <el-option
-              label="境内"
-              value="境内"
-            ></el-option>
-            <el-option
-              label="境外"
-              value="境外"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="是否包含增值税:">
-          <el-select v-model="form.vincludevat" placeholder="请选择" :disabled="look">
-            <el-option
-              label="包含"
-              value="1"
-            ></el-option>
-            <el-option
-              label="不包含"
-              value="0"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="新签是否显示:">
-          <el-select v-model="form.isXqShow" placeholder="请选择" :disabled="look">
-            <el-option
-              label="是"
-              value="1"
-            ></el-option>
-            <el-option
-              label="否"
-              value="0"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="产值是否填月报:">
-          <el-select v-model="form.isTb" placeholder="请选择" :disabled="look">
-            <el-option
-              label="是"
-              value="1"
-            ></el-option>
-            <el-option
-              label="否"
-              value="0"
-            ></el-option>
-          </el-select>
-        </el-form-item> -->
         <el-form-item label="业务类型:">
           <el-select v-model="form.ywtypeid"  @change="getName(
                           form.ywtypeid,
@@ -300,8 +141,8 @@
                         )" placeholder="请选择业务类型" :disabled="look">
             <el-option
               :key="index"
-              :label="item.detailName"
-              :value="item.id"
+              :label="item.DETAIL_NAME"
+              :value="item.ID"
               v-for="(item, index) in bizTypeCode"
             ></el-option>
           </el-select>
@@ -317,25 +158,12 @@
                      placeholder="请选择产品类型" :disabled="look">
             <el-option
               :key="index"
-              :label="item.detailName"
-              :value="item.id"
+              :label="item.DETAIL_NAME"
+              :value="item.ID"
               v-for="(item, index) in cplxList"
             ></el-option>
           </el-select>
         </el-form-item>
-
-        <!-- <el-form-item label="排序:">
-          <el-input v-model="form.vsort" autocomplete="off" :disabled="look"></el-input>
-        </el-form-item>
-        <el-form-item label="备注:">
-          <el-input
-            :disabled="look"
-            type="textarea"
-            :rows="2"
-            placeholder="请输入内容"
-            v-model="form.vremark">
-          </el-input>
-        </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer" v-if="!look">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -359,6 +187,7 @@
 export default {
   data() {
     return {
+      bizTypeCode:[],
       cplxList:[],
       formLabelWidth:'120px',
       dialogFormVisible: false,
@@ -368,8 +197,6 @@ export default {
         vname: '',
         vmeasure: '',
         venabled: '',
-        vjnw: '',
-        vsort: '',
         vremark: ''
       },
       page: { current: 1, size: 20, total: 0, records: [] },
@@ -378,10 +205,6 @@ export default {
         size: 20,
         vcode: "",
         vname: "",
-        vmeasure: "",
-        vjnw:'',
-        venabled:'1',
-        isTb:'1'
       },
       multipleSelection: [],
     };
@@ -393,18 +216,7 @@ export default {
       measureUnit() {
         return this.$store.state.measureUnit;
       },
-      //业务类型
-      bizTypeCode() {
-        // console.log(this.$store.state.category.bizTypeCode)
-        var list=[];
-        this.$store.state.bizTypeCode.forEach((item)=>{
-          if(item.parentDetailId==null){
-            list.push(item)
-          }
-        });
-        return list;
-      },
-},
+  },
   methods: {
     //获取产品类型列表
     getCplx(code){
@@ -412,18 +224,13 @@ export default {
         .post(
           '/api/statistics/product/list/sysDic',
           {
-            categoryName:"业务类别",
+            parentDetailId:"",
             detailCode:code
           }
         )
         .then((res) => {
           if (res.data.code === 200) {
             this.cplxList=res.data.data;
-            this.cplxList.forEach((item)=>{
-              item.detailCode=item.DETAIL_CODE;
-              item.detailName=item.DETAIL_NAME;
-              item.id=item.ID;
-            })
           }
         });
     },
@@ -431,17 +238,22 @@ export default {
     getName(id, list, name,code) {
       if(id){
         this.$forceUpdate();
-        this.form[name] = list.find(
-          (item) => item.id == id
-        ).detailName;
-        this.form[code] = list.find(
-          (item) => item.id == id
-        ).detailCode;
-        if(name=='ywtypename'){
-         this.getCplx(this.form[code])
+        if (name=='vmeasurename') {
+          this.form[name] = list.find(
+            (item) => item.id == id
+          ).detailName;
+          this.form[code] = list.find(
+            (item) => item.id == id
+          ).detailCode;
+        }else{
+          this.form[name] = list.find(
+            (item) => item.ID == id
+          ).DETAIL_NAME;
+          this.form[code] = list.find(
+            (item) => item.ID == id
+          ).DETAIL_CODE;
+          this.getCplx(this.form[code])
         }
-        // console.log(this.form[name]);
-        // console.log(this.form[code]);
       }
     },
     //保存
@@ -450,7 +262,7 @@ export default {
         if (valid) {
           this.$http
             .post(
-              '/api/statistics/product/list/saveOrUpdate',
+              '/api/statistics/productbase/list/saveOrUpdate',
               JSON.stringify(this.form),
               {useJson: true}
             )
@@ -525,7 +337,7 @@ export default {
           }).then(() => {
             this.$http
             .post(
-              "/api/statistics/product/list/delete",{ids: uuids}
+              "/api/statistics/productbase/list/delete",{ids: uuids}
 
             )
             .then((res) => {
@@ -588,7 +400,7 @@ export default {
     getData() {
       this.$http
         .post(
-         "/api/statistics/product/list/loadPageData",
+         "/api/statistics/productbase/list/loadPageData",
           this.searchform
         )
         .then((res) => {
@@ -601,7 +413,20 @@ export default {
   mounted() {
     this.getData();
     this.$store.dispatch("getConfig", {});
-    // this.$store.dispatch('getCategory', {name: 'bizTypeCode', id: '238a917eb2b111e9a1746778b5c1173f'});
+    // 业务类型
+    this.$http
+    .post(
+      '/api/statistics/product/list/sysDic',
+      {
+        parentDetailId:"f01fc41388d14663ac8873113f55cdd5",
+        detailCode:''
+      }
+    )
+    .then((res) => {
+      if (res.data.code === 200) {
+        this.bizTypeCode = res.data.data
+      }
+    });
   },
 };
 </script>
