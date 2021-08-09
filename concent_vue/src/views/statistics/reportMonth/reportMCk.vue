@@ -3,36 +3,68 @@
 <template>
   <div>
     <div style="width: 100%; overflow: hidden">
-     <!-- <div style="float: left;">
-        <el-form class="search-form" :inline="true" :model="searchform" @keyup.enter.native="init()">
+        <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="init()">
+          <!--<el-form-item label="上报年月起:">-->
+            <!--<el-date-picker-->
+              <!--type="month"-->
+              <!--value-format="yyyy-MM"-->
+              <!--v-model="searchform.yearDateS"-->
+              <!--placeholder="选择月">-->
+            <!--</el-date-picker>-->
+          <!--</el-form-item>-->
+          <!--<el-form-item label="上报年月止:">-->
+            <!--<el-date-picker-->
+              <!--v-model="searchform.yearDatesEnd"-->
+              <!--type="month"-->
+              <!--value-format="yyyy-MM"-->
+              <!--placeholder="选择月">-->
+            <!--</el-date-picker>-->
+          <!--</el-form-item>-->
           <el-form-item label="上报年月起:">
             <el-date-picker
               type="month"
               value-format="yyyy-MM"
-              v-model="searchform.yearDateS"
+              v-model="searchform.beginDate"
               placeholder="选择月">
             </el-date-picker>
           </el-form-item>
           <el-form-item label="上报年月止:">
             <el-date-picker
-              v-model="searchform.yearDatesEnd"
+              v-model="searchform.fullDate"
               type="month"
               value-format="yyyy-MM"
               placeholder="选择月">
             </el-date-picker>
           </el-form-item>
+          <el-form-item label="只看当月:">
+            <el-checkbox v-model="searchform.isCk" true-label="1"></el-checkbox>
+          </el-form-item>
+          <el-form-item label="统计项名称:">
+            <el-input v-model="searchform.tjxName" placeholder="统计项名称" clearable @clear="searchform.tjxCode=''">
+              <el-button slot="append" icon="el-icon-search"  @click="openStatisticalTree('统计项名称',searchform.tjxCode)"></el-button>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="可选择单位:">
+            <el-input v-model="searchform.createOrgName" placeholder="可选择单位" clearable @clear="searchform.createOrgCode=''">
+              <el-button slot="append" icon="el-icon-search"  @click="addDw('可选择单位','',false)"></el-button>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="项目类型:">
+             <el-select  placeholder="请选择" v-model="searchform.projectTypeCode">
+               <el-option value="017001,017003" label="局指+自揽"></el-option>
+               <el-option value="017002,017003" label="局指+自揽"></el-option>
+             </el-select>
+          </el-form-item>
+          <el-button
+            @click="searchformReset"
+            type="info"
+            plain
+            style="color:black;background:none">
+            <i class="el-icon-refresh-right"></i> 重置
+          </el-button>
+          <el-button @click="searchformSubmit" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
+          <el-button @click="getMx" type="primary" plain><i class="el-icon-search"></i>台账明细</el-button>
         </el-form>
-      </div>-->
-      <div style="float: right;">
-        <el-button
-          @click="searchformReset"
-          type="info"
-          plain
-          style="color:black;background:none">
-          <i class="el-icon-refresh-right"></i> 重置
-        </el-button>
-        <el-button @click="searchformSubmit" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
-      </div>
     </div>
 
     <div style="margin-top: 10px">
@@ -264,25 +296,39 @@
     </div>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
     <State ref="stateUpdate" :data="projectStatus" @resetState="getData"></State>
+    <Statistcal-tree v-if="statistStatus"  ref="statistUpdate" @getStatistical="getStatisticalTree"></Statistcal-tree>
+    <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
   </div>
 </template>
 
 <script>
   import Tree from '@/components/tree'
   import State from '@/components/state'
+  import StatistcalTree from '@/components/statisticalTree'
+  import CompanyTree from '../companyTree'
 
   export default {
     name: 'proposal-list-look',
     components: {
-      Tree, State
+      Tree, State,StatistcalTree,CompanyTree
     },
     data() {
       return {
+        DwVisible:false,//选择单位弹框状态
+        statistStatus:false,//选择统计项状态
         userdata:{},
         setTimes:[],
         treeStatas: false,
         page: { current: 1, size: 20, total: 0, records: [] },
         searchform: {
+          createOrgName:'',
+          createOrgCode:'',
+          tjxCode:'001001',
+          tjxName:'',
+          beginDate:"",
+          fullDate:'',
+          isCk:"1",
+          projectTypeCode:'',
           current: 1,
           size: 20,
           createOrgCode: '',
@@ -328,6 +374,56 @@
       }
     },
     methods: {
+      //查看台账明细
+      getMx(){
+        if (this.multipleSelection.length < 1) {
+          this.$message.info("请选择一条记录进行查看操作！");
+          return false;
+        }
+        this.openStatisticalTree('台账明细');
+      },
+      //打开单位弹框
+      addDw(type,list,ifChek,index,tableList){
+        this.DwVisible = true;
+        this.$nextTick(() => {
+          this.$refs.infoDw.init(type,list,ifChek,index,tableList);
+        })
+      },
+      //获取单位的值
+      getDwInfo(data){
+        this.$forceUpdate();
+        if(data.type=="可选择单位"){
+          this.searchform.createOrgCode=data.id;
+          this.searchform.createOrgName=data.name;
+        }
+        this.DwVisible=false;
+      },
+      //打开统计项选择
+      openStatisticalTree(type,list){
+        this.statistStatus = true;
+        this.$nextTick(() => {
+          this.$refs.statistUpdate.init(type,list)
+        })
+      },
+      //获取选中的统计项
+      getStatisticalTree(data){
+        // console.log(data)
+        var name=[],code=[];
+        data.forEach((item)=>{
+          name.push(item.vname);
+          code.push(item.vcode);
+        });
+        if(data.type=='统计项名称'){
+          this.searchform.tjxCode=code.join(",");
+          this.searchform.tjxName=name.join(",");
+        }else if(data.type=='台账明细'){
+          this.$router.push({
+            path: "../../reportForm/list",
+            query: {resid: '','项目ID':this.multipleSelection[0].projectId,'台账报表用统计项参数':code.join(",")},
+          });
+        }
+
+      },
       // 选中查看
       show() {
         if (this.multipleSelection.length !== 1) {
@@ -358,6 +454,8 @@
         var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
         var time=y + '-' + m;
         this.searchform.yearDateS= time;
+        this.searchform.beginDate=(y-1)+'-'+m;
+        this.searchform.fullDate= time;
       },
       searchformReset() {
         this.searchform = {
@@ -421,7 +519,6 @@
       let that = this;
       that.getdatatime();
       this.getData();
-      console.log(JSON.parse(sessionStorage.getItem('userdata')))
       this.userdata=JSON.parse(sessionStorage.getItem('userdata'))
     },
 
@@ -461,5 +558,18 @@
   }
   .list-search-picker >>>.el-range-separator{
     line-height: 23px!important;
+  }
+  .queryForm>.el-button{
+    margin-top: 5px;
+  }
+  >>>.el-form-item__label{
+    width: auto;
+  }
+  >>>.el-input--mini .el-input__inner{
+    height: auto;
+    line-height: inherit;
+  }
+  .el-table__row {
+    cursor: pointer;
   }
 </style>

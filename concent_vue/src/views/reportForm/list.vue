@@ -29,11 +29,24 @@
         });
         sessionStorage.setItem("fromReportJump",false)
       }else{
-        sessionStorage.setItem("fromReportJump",true)
+        sessionStorage.setItem("fromReportJump",true);
+        var v_params={};
+        if(this.$route.query['项目ID']){
+          v_params={
+            "resid":this.$route.query.resid,
+            '项目ID':this.$route.query['项目ID'],
+            '台账报表用统计项参数':this.$route.query['台账报表用统计项参数'],
+          }
+          console.log(v_params)
+        }else{
+          v_params={
+            "resid":this.$route.query.resid
+          }
+        }
         this.$http
           .post(
             "/api/contract/ReportManage/loadReportPage",
-            {"resid":this.$route.query.resid}
+            v_params
           )
           .then((res) => {
             this.url=res.data.data.url;

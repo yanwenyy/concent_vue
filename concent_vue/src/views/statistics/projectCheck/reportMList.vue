@@ -152,7 +152,7 @@
             </div>
           </template>
         </el-table-column>
-       <!-- <el-table-column
+        <el-table-column
           :width="150"
           align="center"
           label="批复状态"
@@ -165,7 +165,26 @@
               <el-input style=" width: 100%" v-model="searchform.pfStatus" size="mini"/>
             </div>
           </template>
-        </el-table-column>-->
+        </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="批复金额"
+          prop="pfMoney"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+        <el-table-column
+          :width="120"
+          align="center"
+          label="审核通过时间"
+          prop="checkfinishTime"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">{{
+            scope.row.checkfinishTime | dateformat
+            }}</template>
+        </el-table-column>
       </el-table>
       <el-pagination
         :current-page="page.current"
