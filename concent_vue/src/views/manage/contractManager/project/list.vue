@@ -253,7 +253,7 @@
             </div>
           </template>
           <template slot-scope="scope">
-             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
+             {{scope.row.flowStatus=='notpass'?'草稿':scope.row.flowStatus=='edit'?'审核中':scope.row.flowStatus=='reject'?'审核通过':scope.row.flowStatus=='check'?'审核退回':'待登记'}}
           </template>
         </el-table-column>
         <el-table-column
@@ -338,7 +338,7 @@ export default {
       }
       var list=[],itemStatus=true;
       this.multipleSelection.forEach((item) => {
-        if(item.flowStatus==1||item.flowStatus==4){
+        if(item.flowStatus=='notpass'||item.flowStatus=='check'){
           var v={
             businessId:item.uuid,
             businessName:item.contractName,
@@ -447,7 +447,7 @@ export default {
       }
       let uuids = [],itemStatus=true;
       this.multipleSelection.forEach((item) => {
-        if(item.flowStatus==1||item.flowStatus==4){
+        if(item.flowStatus=='notpass'||item.flowStatus=='check'){
         uuids.push(item.uuid);
       }else{
         this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
@@ -478,7 +478,7 @@ export default {
         this.$message.info("请选择一条记录进行查看操作！");
         return false;
       }
-      if(this.multipleSelection[0].flowStatus=='2'||this.multipleSelection[0].flowStatus=='3'){
+      if(this.multipleSelection[0].flowStatus=='edit'||this.multipleSelection[0].flowStatus=='reject'){
         this.$message.info("此条数据不可修改！");
         return false;
       }

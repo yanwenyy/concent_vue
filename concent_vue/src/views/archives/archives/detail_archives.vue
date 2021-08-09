@@ -10,7 +10,7 @@
       >保存</el-button
       >
       <el-button
-        v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.archivesInfo.flowStatus==1||detailform.archivesInfo.flowStatus==4||detailform.archivesInfo.bidFlowStatus==1||detailform.archivesInfo.bidFlowStatus==4)"
+        v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.archivesInfo.flowStatus=="notpass"||detailform.archivesInfo.flowStatus=="check"||detailform.archivesInfo.bidFlowStatus==1||detailform.archivesInfo.bidFlowStatus==4)"
         @click="saveInfo('detailform','sub')"
         class="detailbutton detail-back-tab sub-btn"
       >提交</el-button>
@@ -223,7 +223,7 @@
 
         </div>
       </el-tab-pane>
-      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&detailform.archivesInfo.flowStatus!=1&&detailform.archivesInfo.flowStatus!=null">
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&detailform.archivesInfo.flowStatus!='notpass'&&detailform.archivesInfo.flowStatus!=null">
         <Audit-Process :task="p.task||{businessId:p.instid,businessType:' contract_file_manager'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>

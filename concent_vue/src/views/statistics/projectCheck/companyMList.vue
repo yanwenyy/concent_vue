@@ -212,7 +212,7 @@
                          prop="flowStatus" show-overflow-tooltip
         >
           <template slot-scope="scope">
-               <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核驳回':'未创建'}}
+               <div>{{scope.row.flowStatus=='notpass'?'草稿':scope.row.flowStatus=='edit'?'审核中':scope.row.flowStatus=='reject'?'审核通过':scope.row.flowStatus=='check'?'审核驳回':'未创建'}}
           </div>
           </template>
           <template slot="header"
@@ -513,7 +513,7 @@
           this.$message.info("不允许对下级进行任何操作", "提示")
           return false
         }
-        if((this.multipleSelection[0].flowStatus!=''||this.multipleSelection[0].flowStatus!=null)&& (this.multipleSelection[0].flowStatus=='2'|| this.multipleSelection[0].flowStatus=='3')){
+        if((this.multipleSelection[0].flowStatus!=''||this.multipleSelection[0].flowStatus!=null)&& (this.multipleSelection[0].flowStatus=='edit'|| this.multipleSelection[0].flowStatus=='reject')){
           this.$message.info("只允许修改草稿和审核退回状态的数据", "提示")
           return false
         }

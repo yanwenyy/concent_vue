@@ -3,7 +3,7 @@
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
         <el-button @click="add('')" plain :disabled="trackStatus!=null" type="primary"><i class="el-icon-circle-check"></i>跟踪</el-button>
-        <el-button @click="totop" :disabled="trackStatus!='1'||flowStatus==2||flowStatus==3"  plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
+        <el-button @click="totop" :disabled="trackStatus!='1'||flowStatus=='edit'||flowStatus=='reject'"  plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
         <el-button @click="add('fq')" :disabled="trackStatus!='1'" plain type="primary"><i class="el-icon-warning-outline"></i>放弃跟踪</el-button>
         <el-button @click="add('end')" :disabled="trackStatus!='1'" plain type="primary"><i class="el-icon-circle-close"></i>结束跟踪</el-button>
         <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
@@ -323,7 +323,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
+             {{scope.row.flowStatus=='notpass'?'草稿':scope.row.flowStatus=='edit'?'审核中':scope.row.flowStatus=='reject'?'审核通过':scope.row.flowStatus=='check'?'审核退回':'待登记'}}
           </template>
           <template slot="header" slot-scope="scope">
             <span>审核状态</span>
@@ -476,7 +476,7 @@
         }
         var list=[],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          if(item.flowStatus==1||item.flowStatus==4){
+          if(item.flowStatus=='notpass'||item.flowStatus=='check'){
            var v={
              businessId:item.topOrgId,
              businessName:item.inforName,
@@ -522,7 +522,7 @@
           this.$message.info("请选择一条记录进行查看操作！");
           return false;
         }
-        if(this.multipleSelection[0].flowStatus=='2'||this.multipleSelection[0].flowStatus=='3'){
+        if(this.multipleSelection[0].flowStatus=='edit'||this.multipleSelection[0].flowStatus=='reject'){
           this.$message.info("此条数据不可修改！");
           return false;
         }
@@ -541,7 +541,7 @@
         }
         let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          if(item.flowStatus==1||item.flowStatus==4){
+          if(item.flowStatus=='notpass'||item.flowStatus=='check'){
             uuids.push(item.topOrgId);
           }else{
             this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");

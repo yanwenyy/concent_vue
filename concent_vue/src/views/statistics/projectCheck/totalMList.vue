@@ -229,7 +229,7 @@
                 </div>
               </template>
              <template  slot-scope="scope">
-                {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核驳回':'未创建'}}
+                {{scope.row.flowStatus=='notpass'?'草稿':scope.row.flowStatus=='edit'?'审核中':scope.row.flowStatus=='reject'?'审核通过':scope.row.flowStatus=='check'?'审核驳回':'未创建'}}
              </template>
             </el-table-column>
       </el-table>

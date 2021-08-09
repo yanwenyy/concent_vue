@@ -123,7 +123,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核驳回':'未创建'}}
+             {{scope.row.flowStatus=='notpass'?'草稿':scope.row.flowStatus=='edit'?'审核中':scope.row.flowStatus=='reject'?'审核通过':scope.row.flowStatus=='check'?'审核驳回':'未创建'}}
           </template>
           <template slot="header" slot-scope="scope">
             <span>状态</span>
@@ -385,7 +385,7 @@
         }
         let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          if(item.flowStatus<='1'||item.flowStatus=='4'){
+          if(item.flowStatus<='1'||item.flowStatus=='check'){
           uuids.push(item.uuid)}
           else{
             this.$message.info('只允许删除未上报的数据！')

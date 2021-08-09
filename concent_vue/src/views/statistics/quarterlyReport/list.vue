@@ -99,7 +99,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':scope.row.flowStatus==5?'未创建':scope.row.flowStatus==null?'待登记':'其他'}}
+            {{scope.row.flowStatus=='notpass'?'草稿':scope.row.flowStatus=='edit'?'审核中':scope.row.flowStatus=='reject'?'审核通过':scope.row.flowStatus=='check'?'审核退回':scope.row.flowStatus=='edit'?'未创建':scope.row.flowStatus==null?'待登记':'其他'}}
           </template>
           <template slot="header" slot-scope="scope">
             <span>审核状态</span>

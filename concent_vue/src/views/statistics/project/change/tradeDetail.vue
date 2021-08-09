@@ -5,7 +5,7 @@
  <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="saveInfo('detailForm','save')" class="detailbutton detail-back-tab save-btn">
           保存
         </el-button>
-        <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailForm.project.flowStatus==1||detailForm.project.flowStatus==4)" @click="saveInfo('detailForm','sub')" class="detailbutton detail-back-tab sub-btn">提交
+        <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailForm.project.flowStatus=='notpass'||detailForm.project.flowStatus=='check')" @click="saveInfo('detailForm','sub')" class="detailbutton detail-back-tab sub-btn">提交
         </el-button>
         <el-button
             v-show="p.actpoint == 'task'&&p.task.edit==false"
