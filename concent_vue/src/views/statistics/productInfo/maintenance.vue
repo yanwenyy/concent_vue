@@ -252,6 +252,9 @@ export default {
           this.form[code] = list.find(
             (item) => item.ID == id
           ).DETAIL_CODE;
+          if (name == "ywtypename") {
+            this.form.productTypeId = ''
+          }
           this.getCplx(this.form[code])
         }
       }
