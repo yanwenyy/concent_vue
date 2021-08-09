@@ -4,7 +4,7 @@
     <div
       style="
         display: inline-block;
-        width: 16%;
+        width: 20%;
         vertical-align: top;
         overflow: auto;
         border: 1px solid #eee
@@ -34,7 +34,7 @@
     <div
       style="
         display: inline-block;
-        width: 83%;
+        width: 79%;
         vertical-align: top;
         padding-left: 4px;
       "
