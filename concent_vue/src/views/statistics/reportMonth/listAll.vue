@@ -232,6 +232,14 @@
                 {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核驳回':'未创建'}}
              </template>
             </el-table-column>
+            <el-table-column
+              :width="200"
+              align="center"
+              label="批复意见"
+              prop="remark"
+              show-overflow-tooltip
+            >
+            </el-table-column>
       </el-table>
       <el-pagination
         :current-page="page.current"

@@ -368,12 +368,6 @@
     methods: {
       // 保存
       save(type) {
-        var url='';
-        if(type=='save'){
-          url="/api/statistics/Projectcheck/detail/saveOrUpdate"
-        }else{
-          url="/api/statistics/Projectcheck/process/start"
-        }
         // this.dataReport.status="1"
         // this.dataReport.flowStatus="1"
         this.commonFilesList.businessId=this.dataReport.uuid
@@ -382,18 +376,54 @@
           projectcheck:this.dataReport,
           commonFilesList:this.commonFilesList,
         }
-        this.$http
-          .post(url, JSON.stringify(tableData), {useJson: true})
-          .then(res => {
-          if (res.data.code === 200) {
-          this.$message({
-            message:  `${type=='save'?'保存':'提交'}成功`,
-            duration: 1000,
-            type: 'success',
-            onClose: () => { this.$router.back() }
-        })
+        var url='';
+        if(type=='save'){
+          url="/api/statistics/Projectcheck/detail/saveOrUpdate";
+          this.$http
+            .post(url, JSON.stringify(tableData), {useJson: true})
+            .then(res => {
+              if (res.data.code === 200) {
+                this.$message({
+                  message:  `${type=='save'?'保存':'提交'}成功`,
+                  duration: 1000,
+                  type: 'success',
+                  onClose: () => { this.$router.back() }
+                })
+              }
+            })
+        }else{
+          url="/api/statistics/Projectcheck/process/start";
+          var sj=new Date().toLocaleDateString().split('/');
+          // sj[1]=sj[1]<10?'0'+sj[1]:sj[1];
+          this.$http
+            .post('/api/statistics/projectMonthlyReport/ReportEndtime/detail/checkReportTime',
+              JSON.stringify({
+                'restrictedobjectsType':this.userdata.orgtype,
+                'orgtype,reportType':'2',
+                'endreporttime':sj[2],
+              }),
+              {useJson: true})
+            .then(res => {
+              if (res.data.data === null) {
+                this.$http
+                  .post(url, JSON.stringify(tableData), {useJson: true})
+                  .then(res => {
+                    if (res.data.code === 200) {
+                      this.$message({
+                        message:  `${type=='save'?'保存':'提交'}成功`,
+                        duration: 1000,
+                        type: 'success',
+                        onClose: () => { this.$router.back() }
+                      })
+                    }
+                  })
+              }else{
+                this.$message.error(res.data.msg)
+              }
+            })
         }
-      })
+
+
       },
       // 返回上一页
       back() {
