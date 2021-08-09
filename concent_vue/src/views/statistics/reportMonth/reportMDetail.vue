@@ -13,7 +13,7 @@
 -->
       <div style="margin-top: 9px;color: red;position: absolute;top: 1px;right: 279px;z-index: 999;font-size: 15px;">项目名称：<span style="color: red !important;margin-right: 50px;">{{projectName.length>20?projectName.slice(0,20)+'...':projectName}}</span></div>
 
-      <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus==1||dataReport.flowStatus==4)" @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+      <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus=='edit'||dataReport.flowStatus=='reject')" @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
       <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="save('save')" class="detailbutton detail-back-tab save-btn">保存</el-button>
     <!--<el-button v-if="isCk!='1'" @click="save" type="primary"  class="detailbutton detail-back-tab" style="float: left; margin-right: 185px;" plain>保存</el-button>-->
     <!--<el-button v-if="isCk!='1'" @click="submit" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>-->

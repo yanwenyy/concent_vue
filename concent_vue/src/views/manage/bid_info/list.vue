@@ -180,7 +180,7 @@
 
           show-overflow-tooltip>
           <template slot-scope="scope">
-              {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':scope.row.flowStatus==null?'待登记':'其他'}}
+              {{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核退回':scope.row.flowStatus==null?'待登记':'其他'}}
           </template>
           <template slot="header" slot-scope="scope">
             <span>审核状态</span>
@@ -347,7 +347,7 @@ export default {
         }
         var list=[],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          if(item.flowStatus==1||item.flowStatus==4){
+          if(item.flowStatus=='edit'||item.flowStatus=='reject'){
             var v={
               businessId:item.uuid,
               businessName:item.inforName,
@@ -514,7 +514,7 @@ export default {
         }
         let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          if(item.flowStatus==1||item.flowStatus==4){
+          if(item.flowStatus=='edit'||item.flowStatus=='reject'){
             uuids.push(item.uuid);
           }else{
             this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");

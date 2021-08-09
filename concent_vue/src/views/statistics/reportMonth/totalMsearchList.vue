@@ -441,7 +441,7 @@
         }
         let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          if(item.createOrgCode==this.userdata.managerOrgCode && (item.flowStatus=='1'||item.flowStatus!=''||item.flowStatus=='4'|| item.flowStatus!=null)){
+          if(item.createOrgCode==this.userdata.managerOrgCode && (item.flowStatus=='edit'||item.flowStatus!=''||item.flowStatus=='reject'|| item.flowStatus!=null)){
             uuids.push(item.uuid);
           }else{
           this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");

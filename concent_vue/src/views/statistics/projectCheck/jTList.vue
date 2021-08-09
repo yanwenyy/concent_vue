@@ -137,7 +137,7 @@
             </div>
           </template>-->
           <template slot-scope="scope">
-            <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核驳回':'未创建'}}
+            <div>{{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核驳回':'未创建'}}
             </div>
           </template>
         </el-table-column>
@@ -403,7 +403,7 @@
         }
         let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          if(item.createOrgCode==this.userdata.managerOrgCode && (item.flowStatus=='1'||item.flowStatus!=''|| item.flowStatus!=null)){
+          if(item.createOrgCode==this.userdata.managerOrgCode && (item.flowStatus=='edit'||item.flowStatus!=''|| item.flowStatus!=null)){
             uuids.push(item.uuid);
           }else{
           this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");

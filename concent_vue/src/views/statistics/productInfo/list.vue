@@ -211,13 +211,21 @@
     <el-dialog title="产品信息" :visible.sync="dialogFormVisible">
       <el-form :model="form"  ref="form" class="proForm">
         <el-form-item label="产品编码:">
-          <el-input v-model="form.vcode" autocomplete="off" :disabled="true"></el-input>
+          <el-input v-model="productData.vcode" autocomplete="off" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item label="产品名称:">
-          <el-input v-model="form.vname" autocomplete="off" :disabled="look"></el-input>
+          <!-- <el-input v-model="form.vname" autocomplete="off" :disabled="look"></el-input> -->
+          <el-select v-model="form.productId" @change="getProduct(form.productId,productNames)" placeholder="请选择产品名称" :disabled="look">
+            <el-option
+              :key="index"
+              :label="item.vname"
+              :value="item.id"
+              v-for="(item, index) in productNames"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="计量单位:">
-          <el-select v-model="form.vmeasureunitid"  @change="getName(
+          <el-select v-model="productData.vmeasurename"  @change="getName(
                           form.vmeasureunitid,
                           measureUnit,
                           'vmeasurename',
@@ -267,7 +275,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="新签是否显示:">
+        <!-- <el-form-item label="新签是否显示:">
           <el-select v-model="form.isXqShow" placeholder="请选择" :disabled="look">
             <el-option
               label="是"
@@ -278,7 +286,7 @@
               value="0"
             ></el-option>
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="产值是否填月报:">
           <el-select v-model="form.isTb" placeholder="请选择" :disabled="look">
             <el-option
@@ -291,8 +299,11 @@
             ></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="规格型号:">
+          <el-input v-model="form.specificationAndModel" autocomplete="off" :disabled="look"></el-input>
+        </el-form-item>
         <el-form-item label="业务类型:">
-          <el-select v-model="form.ywtypeid"  @change="getName(
+          <el-select v-model="productData.ywtypename"  @change="getName(
                           form.ywtypeid,
                           bizTypeCode,
                           'ywtypename',
@@ -307,7 +318,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="产品类型:">
-          <el-select v-model="form.productTypeId"
+          <el-select v-model="productData.productTypeName"
                      @change="getName(
                           form.productTypeId,
                           cplxList,
@@ -363,14 +374,16 @@ export default {
       formLabelWidth:'120px',
       dialogFormVisible: false,
       look:false,
+      productData:{},
       form: {
-        vcode: '',
-        vname: '',
-        vmeasure: '',
+        vmeasurename: '',
         venabled: '',
         vjnw: '',
         vsort: '',
-        vremark: ''
+        vremark: '',
+        specificationAndModel:'',
+        productId:null,
+        isXqShow:'1',
       },
       page: { current: 1, size: 20, total: 0, records: [] },
       searchform: {
@@ -378,12 +391,14 @@ export default {
         size: 20,
         vcode: "",
         vname: "",
-        vmeasure: "",
         vjnw:'',
         venabled:'1',
-        isTb:'1'
+        isTb:'1',
+        vmeasurename:''
       },
       multipleSelection: [],
+      // 产品名称
+      productNames:[],
     };
   },
    components: {
@@ -440,8 +455,6 @@ export default {
         if(name=='ywtypename'){
          this.getCplx(this.form[code])
         }
-        // console.log(this.form[name]);
-        // console.log(this.form[code]);
       }
     },
     //保存
@@ -474,16 +487,9 @@ export default {
     //新增
     add() {
       this.look=false;
-       this.form={
-         // vcode: '',
-         // vname: '',
-         // vmeasure: '',
-         // venabled: '',
-         // vjnw: '',
-         // vsort: '',
-         // vremark: ''
-       };
-       this.dialogFormVisible=true;
+      this.form={};
+      this.productData = {},
+      this.dialogFormVisible=true;
     },
     // 修改
       totop() {
@@ -494,17 +500,8 @@ export default {
         this.look=false;
         var row=this.multipleSelection[0];
         this.form=row;
-        // this.form={
-        //   vcode: row.vcode,
-        //   vname:  row.vname,
-        //   vmeasure:  row.vmeasure,
-        //   venabled: row.venabled,
-        //   vjnw:  row.vjnw,
-        //   vsort:  row.vsort,
-        //   vremark: row.vremark,
-        //   id:row.id
-        // };
-        this.getCplx(this.form.ywtypecode)
+        this.productData=row;
+        this.form.productId = row.productId
         this.dialogFormVisible=true;
       },
       // 删除
@@ -594,14 +591,25 @@ export default {
         .then((res) => {
           this.page = res.data.data;
         });
+      // 获取产品下拉信息
+      this.$http.post("/api/statistics/productbase/list/entityList").then((res) => {
+        this.productNames = res.data.data
+      });
     },
-
-    // list通用方法结束
+    // 选择产品名称
+    getProduct(id,list) {
+      if (id) {
+        this.$forceUpdate();
+        let item = list.find(
+          (item) => item.id == id
+        );
+        this.productData = item
+      }
+    }
   },
   mounted() {
     this.getData();
     this.$store.dispatch("getConfig", {});
-    // this.$store.dispatch('getCategory', {name: 'bizTypeCode', id: '238a917eb2b111e9a1746778b5c1173f'});
   },
 };
 </script>

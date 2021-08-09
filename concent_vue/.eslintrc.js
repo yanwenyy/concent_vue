@@ -2,6 +2,7 @@
 
 module.exports = {
   root: true,
+  "indent": ["off", 2],
   parserOptions: {
     parser: 'babel-eslint'
   },

@@ -98,9 +98,9 @@
         >
           <template slot-scope="scope">
             <!--<span v-if="scope.row.flowStatus=='0'" style="color:#909399;">未提交</span>
-            <span v-else-if="scope.row.flowStatus=='1'" style="color:#67c23a;">已提交</span>
+            <span v-else-if="scope.row.flowStatus=='edit'" style="color:#67c23a;">已提交</span>
             <span v-else>未填报</span>-->
-            <div>{{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核驳回':'未创建'}}
+            <div>{{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核驳回':'未创建'}}
             </div>
           </template>
         </el-table-column>
@@ -154,7 +154,7 @@
       //   }
       //   var list=[],itemStatus=true;
       //   this.multipleSelection.forEach((item) => {
-      //     if(item.flowStatus==1||item.flowStatus==4){
+      //     if(item.flowStatus=='edit'||item.flowStatus=='reject'){
       //       var v={
       //         businessId:item.uuid,
       //         businessName:item.projectName,
@@ -243,7 +243,7 @@
           this.$message.info('请选择一条记录进行查看操作！')
           return false
         }
-        if ((this.multipleSelection[0].flowStatus!=null || this.multipleSelection[0].flowStatus!='') && (this.multipleSelection[0].flowStatus=='2'||this.multipleSelection[0].flowStatus=='3')) {
+        if ((this.multipleSelection[0].flowStatus!=null || this.multipleSelection[0].flowStatus!='') && (this.multipleSelection[0].flowStatus=='check'||this.multipleSelection[0].flowStatus=='pass')) {
           this.$message.info('只可以编编未创建的和草稿状态的数据！')
           return false
         }

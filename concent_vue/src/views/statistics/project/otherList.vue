@@ -172,7 +172,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-              <span> {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':''}}</span>
+              <span> {{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核退回':''}}</span>
           </template>
           <template slot="header" slot-scope="scope">
             <span>状态</span>
@@ -295,7 +295,7 @@
         }
         var list=[],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          if(item.flowStatus==1||item.flowStatus==4){
+          if(item.flowStatus=='edit'||item.flowStatus=='reject'){
             var v={
               businessId:item.uuid,
               businessName:item.projectName,
