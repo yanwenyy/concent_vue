@@ -8051,6 +8051,10 @@ export default {
             this.$message.error("中标通知书和合同附件必须传一个");
             return false;
           }
+          if(this.detailform.fileList3.length<2){
+            this.$message.error("工程量清单和劳材机两个文件必须都要上传");
+            return false;
+          }
           if(this.detailform.contractInfo.isImport=='0'&&this.detailform.fileList3.length==0){
             this.$message.error("导入清单为是的时候，工程量清单和劳材机两个文件必须都要上传");
             return false;
