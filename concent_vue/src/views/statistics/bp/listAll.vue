@@ -173,6 +173,7 @@
             placeholder="请选择"
             class="bp_height multiple-sel"
             v-model="itemform.vprojecttypes"
+            @change="handleSelectChange"
           >
             <el-option
               :key="index"
@@ -589,6 +590,9 @@ export default {
       this.dialogtitle = "新增统计项";
       this.itemform = {};
       this.dialogResult = true;
+    },
+    handleSelectChange() {
+      this.$forceUpdate()
     },
     editItem() {
       if (this.multipleSelection.length == 0) {
