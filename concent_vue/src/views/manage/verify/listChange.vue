@@ -3,7 +3,7 @@
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
         <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>新增</el-button>
-        <el-button :disabled="flowStatus==2 || flowStatus==3" @click="editItem" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
+        <el-button :disabled="flowStatus=='check' || flowStatus=='pass'" @click="editItem" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
 
         <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
         <el-button @click="batchSub" type="primary" plain><i class="el-icon-plus"></i>批量提交</el-button>
@@ -194,7 +194,7 @@
         >
           <template slot-scope="scope">
             <!-- {{scope.row.uuid==null?'未通过':'通过'}} -->
-             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'其他情况'}}
+             {{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核退回':'其他情况'}}
           </template>
          <template slot="header" slot-scope="scope">
             <span>资格预审结果</span>
@@ -322,7 +322,7 @@ export default {
       }
       var list=[],itemStatus=true;
       this.multipleSelection.forEach((item) => {
-        if(item.flowStatus==1||item.flowStatus==4){
+        if(item.flowStatus=='edit'||item.flowStatus=='reject'){
           var v={
             businessId:item.ccrUuid+'-'+item.topInfoOrgId,
             businessName:item.inforName,
@@ -410,7 +410,7 @@ export default {
       }
       let uuids = [],itemStatus=true;
       this.multipleSelection.forEach((item) => {
-        if(item.flowStatus==1||item.flowStatus==4){
+        if(item.flowStatus=='edit'||item.flowStatus=='reject'){
           uuids.push(item.ccrUuid);
         }else{
           this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");

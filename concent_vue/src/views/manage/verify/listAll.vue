@@ -5,7 +5,7 @@
         <el-button @click="add" :disabled="flowStatus!=1&&flowStatus!=null" plain type="primary" ><i class="el-icon-plus"></i>登记</el-button>
 
         <el-button @click="editItem"
-        :disabled="flowStatus==2 || flowStatus==3"
+        :disabled="flowStatus=='check' || flowStatus=='pass'"
         plain type="primary"
         ><i class="el-icon-edit"></i>修改</el-button>
 
@@ -236,7 +236,7 @@
           </template>
           <template slot-scope="scope">
               <!-- {{scope.row.uuid==null?'未通过':'通过'}} -->
-              {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
+              {{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核退回':'待登记'}}
           </template>
            <!-- <template slot-scope="scope">
             <el-tag v-if="scope.row.uuid===null" type="warning">未进行资审申请</el-tag>
@@ -411,7 +411,7 @@ export default {
       }
       var list=[],itemStatus=true;
       this.multipleSelection.forEach((item) => {
-        if(item.flowStatus==1||item.flowStatus==4){
+        if(item.flowStatus=='edit'||item.flowStatus=='reject'){
           var v={
             businessId:item.uuid+'-'+item.topInfoOrgId,
             businessName:item.inforName,
@@ -634,7 +634,7 @@ export default {
         this.$message.info("当前登记的项目信息没有添加的资审信息，请添加资审信息后修改！");
         return;
       }
-      if(this.multipleSelection[0].flowStatus=='2'||this.multipleSelection[0].flowStatus=='3'){
+      if(this.multipleSelection[0].flowStatus=='check'||this.multipleSelection[0].flowStatus=='pass'){
         this.$message.info("此条数据不可修改！");
         return false;
       }

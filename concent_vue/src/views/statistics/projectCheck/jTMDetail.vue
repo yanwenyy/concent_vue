@@ -5,7 +5,7 @@
 <!--
     <el-button  @click="submit" v-if="dataReport.flowStatus!='1'" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>
 -->
-    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus==1||dataReport.flowStatus==4)" @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus=='edit'||dataReport.flowStatus=='reject')" @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
     <el-button  @click="back" type="primary"  class="detailbutton detail-back-tab " plain>返回</el-button>
     <el-tabs type="border-card" v-model="activeName">
       <el-tab-pane label="整体进度" name="ztjd">
@@ -51,7 +51,7 @@
                 class="detatil-flie-btn"
                 size="small"
                 type="primary"
-                v-if="dataReport.flowStatus==1||dataReport.flowStatus==4"
+                v-if="dataReport.flowStatus=='edit'||dataReport.flowStatus=='reject'"
                 @click="openFileUp('/api/statistics/projectCheck/CommonFiles/projectCheck/01/uploadFile','fileList')">
                 点击上传
               </el-button>
@@ -90,7 +90,7 @@
                 :resizable="false"
                 fixed="right"
                 label="操作"
-                v-if="dataReport.flowStatus==1||dataReport.flowStatus==4"
+                v-if="dataReport.flowStatus=='edit'||dataReport.flowStatus=='reject'"
                 show-overflow-tooltip
                 width="80"
               >

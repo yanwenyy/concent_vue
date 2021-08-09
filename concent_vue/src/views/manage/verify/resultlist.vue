@@ -141,7 +141,7 @@
           show-overflow-tooltip
         >
           <!-- <template slot-scope="scope">
-             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'通过审核':'其他情况'}}
+             {{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'通过审核':'其他情况'}}
           </template> -->
           <template slot-scope="scope">
             <span> {{scope.row.verifyResult=='0'?'未通过':scope.row.verifyResult=='1'?'通过':'待通过'}}</span>

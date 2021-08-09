@@ -3,7 +3,7 @@
   <!-- <el-button class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform')" v-if="p.actpoint!='look'">保存</el-button>
   <el-button class="detail-back-tab detailbutton sub-btn" @click="submit" v-if="p.actpoint!='look'">提交</el-button>
   <el-button class="detail-back-tab detailbutton" @click="back"  type="text">返回</el-button> -->
-    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.bidInfo.flowStatus==1||detailform.bidInfo.flowStatus==4)" @click="saveInfo('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.bidInfo.flowStatus=='edit'||detailform.bidInfo.flowStatus=='reject')" @click="saveInfo('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
     <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailform','save')">保存</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>

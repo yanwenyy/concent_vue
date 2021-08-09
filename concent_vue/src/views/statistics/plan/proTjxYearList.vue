@@ -267,7 +267,7 @@
           this.$message.info('请选择一条记录进行查看操作！')
           return false
         }
-        if ((this.multipleSelection[0].flowStatus!=null || this.multipleSelection[0].flowStatus!='') && (this.multipleSelection[0].flowStatus=='2'||this.multipleSelection[0].flowStatus=='3')) {
+        if ((this.multipleSelection[0].flowStatus!=null || this.multipleSelection[0].flowStatus!='') && (this.multipleSelection[0].flowStatus=='check'||this.multipleSelection[0].flowStatus=='pass')) {
           this.$message.info('只可以编编未创建的和草稿状态的数据！')
           return false
         }
