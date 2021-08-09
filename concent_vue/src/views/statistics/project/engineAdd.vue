@@ -669,7 +669,6 @@
                   :rules="rules.project.isMoney"
                   style="width: 32.5%">
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                     clearable
                     placeholder="请输入"
                     v-model="detailForm.project.realInvest">
@@ -752,7 +751,7 @@
                   prop="project.contractSignTime"
                   style="width: 32.5%">
                   <el-date-picker
-                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                    disabled
                     v-model="detailForm.project.contractSignTime"
                     type="date"
                     value-format="timestamp"
@@ -2250,6 +2249,9 @@
                 this.detailForm.project.investmentContract=this.detailForm.project.contractAmountInitial;
                 this.detailForm.project.contractAmountTotal=this.detailForm.project.contractAmountInitial;
                 this.detailForm.project.projectStatusId='6530437b0a6f49a59b047eb4eb4f9201';
+                this.detailForm.project.projectTypeCode='017003';
+                this.detailForm.project.projectTypeId='393a07bda2244b03a24590e076a421df';
+                this.detailForm.project.projectTypeName='自揽项目';
                 this.getCount()
               }
             }
