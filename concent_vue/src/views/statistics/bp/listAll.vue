@@ -595,6 +595,10 @@ export default {
         this.$message.info("请选择统计项进行修改！");
         return;
       }
+      if (this.multipleSelection.length > 1) {
+        this.$message.info("请只选择一条统计项进行修改！");
+        return;
+      }
       if (
         this.multipleSelection[0].uuid == "" ||
         this.multipleSelection[0].uuid == null
