@@ -1796,6 +1796,15 @@ export default {
                   'defaultpage': false
                 },
                 {
+                  'name': '月报查看',
+                  'path': '/statistics/notEMReport/view',
+                  'component': '/statistics/notEMReport/view',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
                   'name': '月报填报详情',
                   'path': '/statistics/notEMReport/detail',
                   'component': '/statistics/notEMReport/detail',

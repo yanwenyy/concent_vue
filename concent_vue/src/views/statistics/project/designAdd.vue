@@ -64,7 +64,7 @@
           </el-row>
           <!--项目性质-->
           <el-row>
-            <el-form-item
+            <!-- <el-form-item
               label="项目性质(一级):"
               prop="project.projectNatureFirstId"
               style="width: 32.5%">
@@ -99,7 +99,7 @@
                   :value="item.id" v-if="item.isUse==1"
                   v-for="(item, index) in projectNatureTwo"/>
               </el-select>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item
               v-if="detailForm.project.projectNatureSecondId === 'd4b6c373a60246a8a5166ddb0bf46c21' || detailForm.project.projectNatureSecondId === '7369abc48e264096a37783de01b0d4cc'"
               label="是否为联合体:"
@@ -291,7 +291,7 @@
             <el-form-item
               label="项目板块:"
               prop="project.projectModuleId"
-              style="width: 32.5%">
+              style="width: 32.5%"> 
               <el-select
                 disabled
                 clearable
@@ -694,7 +694,7 @@
                 value-format="timestamp"
                 placeholder="选择日期时间"/>
             </el-form-item>
-            <el-form-item
+            <!-- <el-form-item
               label="是否托管:"
               class="inline-formitem"
               prop="project.isTrusteeship"
@@ -707,7 +707,7 @@
                 inactive-color="#ddd"
                 active-value="0"
                 inactive-value="1"/>
-            </el-form-item>
+            </el-form-item> -->
           </el-row>
           <el-row>
             <el-form-item
@@ -732,7 +732,7 @@
                 value-format="timestamp"
                 placeholder="选择日期时间"/>
             </el-form-item>
-            <el-form-item
+            <!-- <el-form-item
               label="是否代管:"
               class="inline-formitem"
               prop="project.isEscrow"
@@ -745,7 +745,7 @@
                 inactive-color="#ddd"
                 active-value="0"
                 inactive-value="1"/>
-            </el-form-item>
+            </el-form-item> -->
           </el-row>
           <!--备注(最多2000字)-->
           <el-row>

@@ -4,7 +4,7 @@
     <div
       style="
         display: inline-block;
-        width: 16%;
+        width: 20%;
         vertical-align: top;
         overflow: auto;
         border: 1px solid #eee
@@ -34,7 +34,7 @@
     <div
       style="
         display: inline-block;
-        width: 83%;
+        width: 79%;
         vertical-align: top;
         padding-left: 4px;
       "
@@ -173,6 +173,7 @@
             placeholder="请选择"
             class="bp_height multiple-sel"
             v-model="itemform.vprojecttypes"
+            @change="handleSelectChange"
           >
             <el-option
               :key="index"
@@ -590,9 +591,16 @@ export default {
       this.itemform = {};
       this.dialogResult = true;
     },
+    handleSelectChange() {
+      this.$forceUpdate()
+    },
     editItem() {
       if (this.multipleSelection.length == 0) {
         this.$message.info("请选择统计项进行修改！");
+        return;
+      }
+      if (this.multipleSelection.length > 1) {
+        this.$message.info("请只选择一条统计项进行修改！");
         return;
       }
       if (
