@@ -12,7 +12,7 @@
           <el-button
             class="detailbutton detail-back-tab sub-btn"
             @click="saveInfo('detailform','sub')"
-            v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.verify.flowStatus=='notpass'||detailform.verify.flowStatus=='check')"
+            v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.verify.flowStatus==1||detailform.verify.flowStatus==4)"
           >提交</el-button>
           <el-button
             v-show="p.actpoint == 'task'&&p.task.edit==false"

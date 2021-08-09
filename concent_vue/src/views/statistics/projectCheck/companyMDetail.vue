@@ -2,7 +2,7 @@
 <template>
   <div style="position: relative">
       <div style="margin-top: 9px;color: red;position: absolute;top: 1px;right: 279px;z-index: 999;font-size: 15px;">项目名称：<span style="color: red !important;margin-right: 50px;">{{projectName}}</span></div>
-    <el-button v-show="p.actpoint != 'look'&& p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus=='notpass'||dataReport.flowStatus=='check')" @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint != 'look'&& p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus==1||dataReport.flowStatus==4)" @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
       <el-button  @click="back" type="primary"  class="detailbutton detail-back-tab " plain>返回</el-button>
     <el-tabs type="border-card" v-model="activeName">
       <el-tab-pane label="整体进度" name="ztjd">
@@ -88,7 +88,7 @@
                 :resizable="false"
                 fixed="right"
                 label="操作"
-                v-if="dataReport.flowStatus=='notpass'||dataReport.flowStatus=='check'"
+                v-if="dataReport.flowStatus==1||dataReport.flowStatus==4"
                 show-overflow-tooltip
                 width="80"
               >

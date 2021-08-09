@@ -100,7 +100,7 @@
           prop="flowStatus"
         >
           <template slot-scope="scope">
-             {{scope.row.flowStatus=='notpass'?'草稿':scope.row.flowStatus=='edit'?'审核中':scope.row.flowStatus=='reject'?'审核通过':scope.row.flowStatus=='check'?'审核退回':'待登记'}}
+             {{scope.row.flowStatus==1?'草稿':scope.row.flowStatus==2?'审核中':scope.row.flowStatus==3?'审核通过':scope.row.flowStatus==4?'审核退回':'待登记'}}
           </template>
         </el-table-column>
       </el-table>
@@ -163,7 +163,7 @@
         }
         let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          if(item.flowStatus=='notpass'||item.flowStatus=='check'){
+          if(item.flowStatus==1||item.flowStatus==4){
             var v={
               uuid:item.projectreportuuid,
               reportYear:item.reportYear,
