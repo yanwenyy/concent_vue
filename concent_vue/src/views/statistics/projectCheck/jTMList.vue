@@ -288,7 +288,7 @@
           },
           {
             detailName:"未创建",
-            id:'edit'
+            id:'0'
           }
         ],
         flowStatusNameList:[

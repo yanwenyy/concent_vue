@@ -438,17 +438,17 @@
 
       projectStatus:[
         {
-          id:'1',
-          detailName:'草稿'
-        },
-        {
-          id:'2',
-          detailName:'审核中'
-        },
-        {
-          id:'3',
-          detailName:'审核通过'
-        }
+            detailName:"草稿",
+            id:'edit'
+          },
+          {
+            detailName:"审核中",
+            id:'check'
+          },
+          {
+            detailName:"审核通过",
+            id:'pass'
+          }
       ],//项目状态列表
       formLabelWidth: '120px',
       resultform:{

@@ -368,16 +368,16 @@
         xqprojectType:[],//工程二级列表
         projectStatus:[
           {
-            id:'1',
-            detailName:'草稿'
+            detailName:"草稿",
+            id:'edit'
           },
           {
-            id:'2',
-            detailName:'审核中'
+            detailName:"审核中",
+            id:'check'
           },
           {
-            id:'3',
-            detailName:'审核通过'
+            detailName:"审核通过",
+            id:'pass'
           }
         ],//项目状态列表
       };
