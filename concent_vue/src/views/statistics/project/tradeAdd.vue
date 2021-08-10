@@ -275,9 +275,23 @@
                 ></el-option>
               </el-select>
             </el-form-item>
+            <el-form-item
+              label="是否框架协议:"
+              prop="isFrameIn"
+              class="inline-formitem"
+              style="width:32.5%;">
+              <el-switch
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                class="inline-formitem-switch"
+                v-model="detailForm.project.isFrameIn"
+                active-color="#409EFF"
+                inactive-color="#ddd"
+                active-value="1"
+                inactive-value="0"/>
+            </el-form-item>
           </el-row>
           <el-row>
-            <el-form-item
+            <!-- <el-form-item
               label="业务类别:"
               prop="categorySecondId"
               style="width: 32.5%">
@@ -294,21 +308,8 @@
                   :value="item.id"
                   v-for="(item, index) in material"/>
               </el-select>
-            </el-form-item>
-            <el-form-item
-              label="是否框架协议:"
-              prop="isFrameIn"
-              class="inline-formitem"
-              style="width:32.5%;">
-              <el-switch
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                class="inline-formitem-switch"
-                v-model="detailForm.project.isFrameIn"
-                active-color="#409EFF"
-                inactive-color="#ddd"
-                active-value="0"
-                inactive-value="1"/>
-            </el-form-item>
+            </el-form-item> -->
+            
           </el-row>
           <el-row>
             <el-form-item
