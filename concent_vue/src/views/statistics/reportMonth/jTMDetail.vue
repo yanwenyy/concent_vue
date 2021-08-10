@@ -199,6 +199,12 @@
               </template>
             </el-table-column>
           </el-table>
+          <div class="cwjswgcl-bottom">
+            <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009003'"><span>{{item.tjxName+"("+item.jldw+")"}}:<el-input disabled v-model="item.monthValue" /></span></div>
+            <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009003001'"><span>{{item.tjxName}}:<el-input disabled  v-model="item.monthValue" /></span></div>
+            <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009005'"><span>{{item.tjxName+"("+item.jldw+")"}}:<el-input  disabled :value="item.monthValue"/></span></div>
+            <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009005001'"><span>{{item.tjxName}}:<el-input  disabled  :value="item.monthValue"/></span></div>
+          </div>
         </div>
       </el-tab-pane>
       <el-tab-pane label="下月计划" v-if="projectList.uuid!=''&& projectList.uuid!=null" name="xyjh">
@@ -505,6 +511,41 @@
       }
     },
     methods: {
+      //计算房建施工面积和其中投标承包面积
+      clacFjsg(list){
+        var sgVal=0,qztbVal=0;
+        list.forEach((item,index)=>{
+          if(item.tjxCode=='002009001'){
+            sgVal+=Number(item.totalValue)
+          }
+          if(item.tjxCode=='002009002'){
+            sgVal+=Number(item.yearValue)
+          }
+          if(item.tjxCode=='002009001001'){
+            qztbVal+=Number(item.totalValue)
+          }
+          if(item.tjxCode=='002009002001'){
+            qztbVal+=Number(item.yearValue)
+          }
+        });
+        list.forEach((item,index)=>{
+          if(item.tjxCode=='002009002'){
+            sgVal=sgVal-Number(item.totalValue)
+          }
+          if(item.tjxCode=='002009002001'){
+            qztbVal=qztbVal-Number(item.totalValue)
+          }
+        });
+        list.forEach((item,index)=>{
+
+          if(item.tjxCode=='002009005'){
+            item.monthValue=sgVal;
+          }
+          if(item.tjxCode=='002009005001'){
+            item.monthValue=qztbVal;
+          }
+        });
+      },
       // 保存
       save(type) {
         this.dataReport.status="3"//集团创建
@@ -617,6 +658,7 @@
               }else{
                 this.activeName="cwjswgcl"
               }
+              this.clacFjsg(this.data);
               // this.reportVo=this.data;
             })
       }
@@ -850,8 +892,8 @@
     padding: 10px;
     width: 100%;
     box-sizing: border-box;
-    max-height: calc(100vh - 175px)!important;
-    min-height: calc(100vh - 175px)!important;
+    max-height: calc(100vh - 110px)!important;
+    min-height: calc(100vh - 110px)!important;
     overflow: scroll;
   }
   .sub-btn{

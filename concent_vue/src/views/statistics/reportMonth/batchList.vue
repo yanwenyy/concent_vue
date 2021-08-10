@@ -224,10 +224,10 @@
       // 获取分页数据
       getData() {
 
-        this.searchform.flowStatus="1";
+        this.searchform.flowStatus="edit";
 
         this.$http
-          .post('/api/statistics/projectMonthlyReport/Projectreport/list/reportMQuery', this.searchform)
+          .post('/api/statistics/projectMonthlyReport/Projectreport/list/reportMQueryCommit', this.searchform)
           .then(res => {
             this.page = res.data.data
           })

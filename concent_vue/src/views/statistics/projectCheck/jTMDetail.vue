@@ -682,5 +682,9 @@
   .sub-btn{
     right: 95px!important;
   }
+  .tableStyle{
+    max-height: calc(100vh - 110px)!important;
+    overflow: auto;
+  }
   /**/
 </style>

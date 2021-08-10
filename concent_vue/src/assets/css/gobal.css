@@ -783,5 +783,24 @@ pre {
 .tableStyle .row_green{
   background: rgba(0,204,0,.1);
 }
+.el-table .hidden-row{
+  display: none!important;
+}
+.cwjswgcl-bottom>div{
+  width: 24%;
+  margin-right: 0.6%;
+  box-sizing: border-box;
+}
+.cwjswgcl-bottom>div .el-input{
+  width: 38%;
+}
+.cwjswgcl-bottom{
+  padding-left: 10px;
+  width: 100%;
+  position: absolute;
+  bottom:5px;
+  left: 0;
+  box-sizing: border-box;
+}
 /**/
 

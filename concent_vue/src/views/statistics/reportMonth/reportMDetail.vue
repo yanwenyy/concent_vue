@@ -62,7 +62,7 @@
               </div>
            </el-tab-pane>
        <el-tab-pane label="产物及实物工程量" name="cwjswgcl">
-            <div class="detailBoxBG">
+            <div class="detailBoxBG" style="position: relative">
              <el-table
                     class="tableStyle"
                     :height="tableHeight"
@@ -77,7 +77,7 @@
                     highlight-current-row
                     ref="table"
                     style="width: 100%"
-
+                    :row-class-name="tableRowClassName"
                     tooltip-effect="dark"
                   >
                     <el-table-column
@@ -216,6 +216,12 @@
                  </template>
                </el-table-column>
                   </el-table>
+              <div class="cwjswgcl-bottom">
+                <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009003'"><span>{{item.tjxName+"("+item.jldw+")"}}:<el-input v-model="item.monthValue" /></span></div>
+                <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009003001'"><span>{{item.tjxName}}:<el-input   v-model="item.monthValue" /></span></div>
+                <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009005'"><span>{{item.tjxName+"("+item.jldw+")"}}:<el-input  disabled :value="item.monthValue"/></span></div>
+                <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009005001'"><span>{{item.tjxName}}:<el-input  disabled  :value="item.monthValue"/></span></div>
+              </div>
            </div>
         </el-tab-pane>
        <el-tab-pane label="下月计划"  name="xyjh">
@@ -361,6 +367,48 @@
       }*/
     },
     methods: {
+      //计算房建施工面积和其中投标承包面积
+      clacFjsg(list){
+        var sgVal=0,qztbVal=0;
+        list.forEach((item,index)=>{
+          if(item.tjxCode=='002009001'){
+            sgVal+=Number(item.totalValue)
+          }
+          if(item.tjxCode=='002009002'){
+            sgVal+=Number(item.yearValue)
+          }
+          if(item.tjxCode=='002009001001'){
+            qztbVal+=Number(item.totalValue)
+          }
+          if(item.tjxCode=='002009002001'){
+            qztbVal+=Number(item.yearValue)
+          }
+        });
+        list.forEach((item,index)=>{
+          if(item.tjxCode=='002009002'){
+            sgVal=sgVal-Number(item.totalValue)
+          }
+          if(item.tjxCode=='002009002001'){
+            qztbVal=qztbVal-Number(item.totalValue)
+          }
+        });
+        list.forEach((item,index)=>{
+
+          if(item.tjxCode=='002009005'){
+            item.monthValue=sgVal;
+          }
+          if(item.tjxCode=='002009005001'){
+            item.monthValue=qztbVal;
+          }
+        });
+      },
+      //隐藏某些行
+      tableRowClassName: function (row, index) {
+        if (row.row.tjxCode=='002009003'||row.row.tjxCode=='002009003001'||row.row.tjxCode=='002009005'||row.row.tjxCode=='002009005001') {
+          return 'hidden-row';
+        }
+        return '';
+      },
       //计算比较实物工程量
       calcValue(list){
         var i=0,len=list.length,canWrite=true;
@@ -455,10 +503,11 @@
             }
             if(item.tjxId==code&&item.tjxCode.length==9){
               parentNum=Number(item.monthValue);
+              // console.log(item.tjxName)
             }
           });
-          console.log(list[index].tjxCode.length)
-          if(canCalc&&list[index].tjxCode.length>=12&&treeSum>parentNum){
+          // console.log(list[index].tjxCode.length,treeSum,parentNum)
+          if(canCalc&&list[index].tjxCode.length>=12&&(treeSum>parentNum)){
             this.$message.error("该级本月完成之和不能大于上级本月完成");
             list[index].monthValue='';
             return false;
@@ -489,6 +538,9 @@
               item.totalValue=num2;
             }
           });
+          if(list[index].tjxCode=='002009001'||list[index].tjxCode=='002009002'||list[index].tjxCode=='002009001001'||list[index].tjxCode=='002009002001'){
+            this.clacFjsg(list);
+          }
         }else{
           list[index].monthValue='';
         }
@@ -498,6 +550,14 @@
       save(type) {
         // this.dataReport.status="1"
         // this.dataReport.flowStatus="1"
+        this.data.forEach((item,index)=>{
+          if(item.tjxCode=='002009003'){
+            this.dataReport.fjJe=Number(item.monthValue);
+          }
+          if(item.tjxCode=='002009003001'){
+            this.dataReport.qzmjJe=Number(item.monthValue);
+          }
+        });
           let tableData = {
             projectReportDetaiList:this.data,
             projectreport:this.dataReport,
@@ -641,6 +701,7 @@
              item.yearRate=item.yearValue&&item.yearPlan?(Number(item.yearValue)/Number(item.yearPlan)*100).toFixed(4):'';
              item.monthRate=item.monthValue&&item.monthPlan>0?(Number(item.monthValue)/Number(item.monthPlan)*100).toFixed(4):'';
            })
+            this.clacFjsg(this.data);
             // this.reportVo=this.data;
           })
       }
@@ -659,6 +720,8 @@
   }
 </script>
 <style lang="scss" scoped>
+
+
   .two-left{
     margin-left: 50px!important;
   }

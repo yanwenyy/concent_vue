@@ -342,7 +342,7 @@
         params.reportYear = years[0]
         params.reportMonth = years[1]
         params.status='1'
-        params.flowStatus='1'
+        params.flowStatus='edit'
         params.yearDateS=this.form1.year
        this.$http.post(
         url,
@@ -392,7 +392,7 @@
              this.$message.info("请选择一条数据，进行编辑", "提示")
              return false
             }
-          if ((this.multipleSelection[0].flowStatus!=null||this.multipleSelection[0].flowStatus!='')&& this.multipleSelection[0].flowStatus!='1'&& this.multipleSelection[0].flowStatus!='4'){
+          if ((this.multipleSelection[0].flowStatus!=null||this.multipleSelection[0].flowStatus!='')&& this.multipleSelection[0].flowStatus!='edit'&& this.multipleSelection[0].flowStatus!='reject'){
             this.$message.info("只允许修改草稿和审核驳回数据", "提示")
             return false
           }

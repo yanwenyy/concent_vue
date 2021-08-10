@@ -191,11 +191,11 @@
         <el-table-column
           :width="160"
           align="center"
-          label="创建时间"
+          label="变更时间"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>创建时间</span>
+            <span>变更时间</span>
             <div>
               <el-date-picker
                 v-model="searchform.createTime"
@@ -218,23 +218,6 @@
         >
           <template slot-scope="scope">
                 <span> {{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核退回':''}}</span>
-          </template>
-          <template slot="header" slot-scope="scope">
-            <span>状态</span>
-            <div>
-              <el-select
-                filterable
-                clearable
-                size="mini"
-                placeholder="请选择"
-                v-model="searchform.flowStatus">
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in projectStatusType"/>
-              </el-select>
-            </div>
           </template>
         </el-table-column>
       </el-table>

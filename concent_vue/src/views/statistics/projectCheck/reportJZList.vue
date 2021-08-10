@@ -529,9 +529,8 @@
           this.searchform.reportYear = this.searchform.yearDateS.split('-')[0];
           this.searchform.reportMonth = this.searchform.yearDateS.split('-')[1];
         }
-        this.searchform.projectId=this.p.projectId;
         this.$http
-            .post('/api/statistics/projectMonthlyReport/Projectreport/list/cxHzList', this.searchform)
+            .post('/api/statistics/projectMonthlyReport/Projectreport/list/companyMonthlyReportList', this.searchform)
             .then(res => {
               this.data = res.data.data;
             });
