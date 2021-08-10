@@ -3797,7 +3797,7 @@
         })
         obj[name]=num;
         // 自动计算房地产板块的房地产营业收入
-        if (name === "inRevenue") {
+        if (name === "inRevenue" || name === "offRevenue") {
           // 执行修改方法
           let num=0;
           this.detailform.fdc_list.forEach((item)=>{
@@ -3807,14 +3807,16 @@
             num=num+Number(item.income||0);
           })
           this.detailform.sumByMon_3.income=num;
-          console.info(this.detailform.fdc_list)
-          console.info(this.detailform.sumByMon_3)
-        }else if (name === "inRevenueHw") {
-          obj.overseasIncome = obj.inRevenueHw + obj.offRevenueHw
-        }else if (name === "offRevenue") {
-          obj.income = obj.inRevenue + obj.offRevenue
-        }else if (name === "offRevenueHw") {
-          obj.overseasIncome = obj.inRevenueHw + obj.offRevenueHw
+        }else if (name === "inRevenueHw" || name === "offRevenueHw") {
+          // 执行修改方法
+          let num=0;
+          this.detailform.fdc_list.forEach((item)=>{
+            item.overseasIncome = Number(item.inRevenueHw) + Number(item.offRevenueHw)
+          })
+          this.detailform.fdc_list.forEach((item)=>{
+            num=num+Number(item.overseasIncome||0);
+          })
+          this.detailform.sumByMon_3.overseasIncome=num;
         }
         this.$forceUpdate();
       },
