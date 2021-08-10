@@ -117,8 +117,8 @@
                     v-model="detailForm.project.isConsortion"
                     active-color="#409EFF"
                     inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"/>
+                    active-value="1"
+                    inactive-value="0"/>
                 </el-form-item>
               </el-row>
               <el-row>
@@ -361,8 +361,8 @@
                     v-model="detailForm.project.isBureauIndex"
                     active-color="#409EFF"
                     inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"/>
+                    active-value="1"
+                    inactive-value="0"/>
                 </el-form-item>
               </el-row>
               <el-row>
@@ -702,8 +702,8 @@
                     v-model="detailForm.project.isOutputTax"
                     active-color="#409EFF"
                     inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"/>
+                    active-value="1"
+                    inactive-value="0"/>
                 </el-form-item>
               </el-row>
               <!--合同开工期-->
@@ -741,8 +741,8 @@
                     v-model="detailForm.project.isTrusteeship"
                     active-color="#409EFF"
                     inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"/>
+                    active-value="1"
+                    inactive-value="0"/>
                 </el-form-item>
               </el-row>
               <el-row>
@@ -779,8 +779,8 @@
                     v-model="detailForm.project.isEscrow"
                     active-color="#409EFF"
                     inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"/>
+                    active-value="1"
+                    inactive-value="0"/>
                 </el-form-item>
               </el-row>
               <!--实际开工日期-->
@@ -980,8 +980,8 @@
                         clearable
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
                         v-model="scope.row.contractAmount"
+                        @input="getPositionMoney(scope.$index,detailForm.project.topInfoSiteList)"
                       >
-                        <!--@input="getPositionMoney(scope.$index,detailForm.project.topInfoSiteList)"-->
                         <template slot="prepend">¥</template>
                         <template slot="append">(万元)</template>
                       </el-input>
@@ -1521,7 +1521,7 @@
             projectModuleCode:"engineering",//项目板块code
             projectModuleName: '工程承包', // 项目板块
             businessId: '', // 业务板块
-            isConsortion: '1', // 是否联合体项目
+            isConsortion: '0', // 是否联合体项目
             projectTypeId: '', // 项目类型
             projectStatusId: '', // 项目状态
             projectLocationId: '', // 项目所在地
@@ -1735,7 +1735,6 @@
       },
       // 获取项目地点的值
       getPositionTree(data) {
-        console.log(data)
         this.treeStatas = false;
         var country = '', _data = data;
         if (_data.fullDetailName.indexOf("境内") != -1) {
@@ -1752,6 +1751,7 @@
               item.ffid = _data.fullDetailCode;
               item.path = _data.fullDetailName;
               item.placeId=_data.id;
+              // this.checkTopInfoSiteList();
             }
           }else{
             this.$message.error("项目地点不能重复");
@@ -1760,6 +1760,26 @@
 
         });
         this.key = this.key + 1;
+      },
+      //项目地点份额变动的时候
+      getPositionMoney(index,list){
+        if(list.length==1){
+          list[0].contractAmount=this.detailform.contractAmountEngine
+        }else{
+          var money=0;
+          list.forEach((item,i)=>{
+            if(i>0){
+              money+=Number(item.contractAmount);
+            }
+          });
+          if(this.detailform.contractAmountEngine-money>0){
+            list[0].contractAmount=this.detailform.contractAmountEngine-money;
+          }else{
+            list[index].contractAmount='';
+            this.$message.error('项目地点份额之和不能大于初始我方份额');
+          }
+        }
+
       },
       //新增标段和地点
       add(type) {
@@ -1921,9 +1941,9 @@
       // 增值税改变，上报产值是否含税联动
       getOutputTax() {
         if (this.detailForm.project.valueAddedTax && this.detailForm.project.valueAddedTax !== '0') {
-          this.detailForm.project.isOutputTax = '0'
-        } else {
           this.detailForm.project.isOutputTax = '1'
+        } else {
+          this.detailForm.project.isOutputTax = '0'
         }
       },
       handleRemove(file, index) {
