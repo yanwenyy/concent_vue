@@ -244,7 +244,7 @@
         }
         var list=[],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          if(item.stauts==1||item.stauts==4){
+          if(item.stauts=='edit'||item.stauts=='reject'){
             var v={
               businessId:item.uuid,
               businessName:'非工程月报——'+item.reportDate+item.createOrgName,
@@ -370,7 +370,7 @@
         let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
           // uuids.push(item.uuid);
-          if(item.stauts==1||item.stauts==4){
+          if(item.stauts=='edit'||item.stauts=='reject'){
           uuids.push(item.uuid);
         }else{
           this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
