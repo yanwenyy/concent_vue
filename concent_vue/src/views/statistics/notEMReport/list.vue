@@ -120,7 +120,7 @@
             <!--</div>-->
           <!--</template>-->
           <template slot-scope="scope">
-            {{scope.row.stauts==1?'草稿':scope.row.stauts==2?'审核中':scope.row.stauts==3?'审核通过':scope.row.stauts==4?'审核退回':scope.row.stauts==0?'未创建':''}}
+            {{scope.row.stauts=='edit'?'草稿':scope.row.stauts=='check'?'审核中':scope.row.stauts=='pass'?'审核通过':scope.row.stauts=='reject'?'审核退回':scope.row.stauts==0?'未创建':''}}
           </template>
         </el-table-column>
         <el-table-column
