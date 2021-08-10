@@ -1043,6 +1043,15 @@ export default {
                   'defaultpage': false
                 },
                 {
+                  'name': '项目信息变更查询',
+                  'path': '/statistics/project/ListChangeSearch',
+                  'component': '/statistics/project/ListChangeSearch',
+                  'iconCls': 'el-icon-edit-outline',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
                   'name': '项目信息变更',
                   'path': '/statistics/project/changeAdd',
                   'component': '/statistics/project/changeAdd',
@@ -1451,6 +1460,15 @@ export default {
                   'name': '项目部月报二级list',
                   'path': '/statistics/reportMonth/reportMList',
                   'component': '/statistics/reportMonth/reportMList',
+                  'iconCls': 'el-icon-switch-button',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '项目部月报局指list',
+                  'path': '/statistics/reportMonth/reportJZList',
+                  'component': '/statistics/reportMonth/reportJZList',
                   'iconCls': 'el-icon-switch-button',
                   'menushow': false,
                   'leaf': true,

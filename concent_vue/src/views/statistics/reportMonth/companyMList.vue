@@ -181,18 +181,27 @@
           </template>
         </el-table-column>
         <el-table-column :width="150"
+                                           align="center"
+                                           label="开累(万元)"
+                                           prop="totalValue" show-overflow-tooltip
+      >
+        <template slot="header"
+                  slot-scope="scope">
+          <span>开累(万元)</span>
+          <div>
+            <el-input style=" width: 100%"
+                      v-model="searchform.totalValue"
+                      size="mini"/>
+          </div>
+        </template>
+      </el-table-column>
+        <el-table-column :width="150"
                          align="center"
-                         label="开累(万元)"
+                         label="剩余合同额(万元)"
                          prop="totalValue" show-overflow-tooltip
         >
-          <template slot="header"
-                    slot-scope="scope">
-            <span>开累(万元)</span>
-            <div>
-              <el-input style=" width: 100%"
-                        v-model="searchform.totalValue"
-                        size="mini"/>
-            </div>
+          <template slot-scope="scope">
+            <span v-if="scope.row.contractAmountTotal&&scope.row.totalValue">{{scope.row.contractAmountTotal-scope.row.totalValue}}</span>
           </template>
         </el-table-column>
       <!--  <el-table-column
@@ -237,6 +246,17 @@
             </div>
           </template>
         </el-table-column>
+        <el-table-column
+         :width="120"
+         align="center"
+         label="审核通过时间"
+         prop="checkfinishTime"
+         show-overflow-tooltip
+       >
+         <template slot-scope="scope">{{
+           scope.row.checkfinishTime | dateformat
+         }}</template>
+       </el-table-column>
       </el-table>
       <el-dialog :title="addTitle"
                  :visible.sync="showTqDialog" append-to-body

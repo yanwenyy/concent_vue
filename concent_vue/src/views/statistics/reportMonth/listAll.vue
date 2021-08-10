@@ -380,9 +380,15 @@
           })
       },
       rowShow(row){
+        var url='';
+        if(row.projectTypeName=='局指项目'){
+          url='./reportJZList/';
+        }else{
+          url='./reportMList/';
+        }
             let p = {projectId: row.projectId, orgCode: row.createOrgCode,projectName:row.projectName}
               this.$router.push({
-                    path: './reportMList/',
+                    path: url,
                     query: {p: this.$utils.encrypt(JSON.stringify(p))}
                   })
 
