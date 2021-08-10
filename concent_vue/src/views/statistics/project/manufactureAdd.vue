@@ -51,7 +51,7 @@
             </el-form-item>
           </el-row>
           <el-row>
-            <el-form-item
+            <!-- <el-form-item
               label="产品名称:"
               style="width: 32.5%">
               <el-input
@@ -59,7 +59,7 @@
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.productName"/>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item
               label="客户名称:"
               prop="project.customerName"
@@ -96,9 +96,23 @@
                 <template slot="append">(万元)</template>
               </el-input>
             </el-form-item>
+            <el-form-item
+              label="是否系统内采购:"
+              prop="isSystemPurchase"
+              class="inline-formitem"
+              style="width:32.5%;">
+              <el-switch
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                class="inline-formitem-switch"
+                v-model="detailForm.project.isSystemPurchase"
+                active-color="#409EFF"
+                inactive-color="#ddd"
+                active-value="0"
+                inactive-value="1"/>
+            </el-form-item>
           </el-row>
           <el-row>
-            <el-form-item
+            <!-- <el-form-item
               label="合同所属板块:"
               prop="project.ocontractModel"
               style="width: 32.5%">
@@ -128,21 +142,7 @@
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
               </el-input>
-            </el-form-item>
-            <el-form-item
-              label="是否系统内采购:"
-              prop="isSystemPurchase"
-              class="inline-formitem"
-              style="width:32.5%;">
-              <el-switch
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                class="inline-formitem-switch"
-                v-model="detailForm.project.isSystemPurchase"
-                active-color="#409EFF"
-                inactive-color="#ddd"
-                active-value="0"
-                inactive-value="1"/>
-            </el-form-item>
+            </el-form-item> -->
           </el-row>
           <el-row>
             <el-form-item
