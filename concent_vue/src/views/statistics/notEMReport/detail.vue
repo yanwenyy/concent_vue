@@ -347,7 +347,7 @@
                 <el-table-column
                   class="listTabel"
                   :resizable="false"
-                  label="本月完成(万元)"
+                  label="本月完成"
                   prop="monthComplete"
                   align="center"
                   show-overflow-tooltip
@@ -357,7 +357,7 @@
                 <el-table-column
                   class="listTabel"
                   :resizable="false"
-                  label="本年完成(万元)"
+                  label="本年完成"
                   prop="yearComplete"
                   align="center"
                   show-overflow-tooltip
@@ -740,16 +740,17 @@
                     width="150"
                   >
                     <template slot-scope="scope">
+                      <!-- :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1" -->
                       <el-input
                         @input="isFloor(scope.row.industry,scope.$index,detailform.gy_list,'industry'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'industry')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                        :disabled="true"
                         clearable
                         v-model="scope.row.industry"/>
                       <el-input
                         @input="isFloor(scope.row.overseasIndustry,scope.$index,detailform.gy_list,'overseasIndustry'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'overseasIndustry')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                        :disabled="true"
                         clearable
                         v-model="scope.row.overseasIndustry"/>
                     </template>
@@ -3796,27 +3797,45 @@
           num=num+Number(item[name]||0);
         })
         obj[name]=num;
+        // 工业制造板块 主要项目管理 工业总产值 自动计算
+        if (name === "equipmentManufacturin"|| name === "componentManufacturin"|| name === "otherIndustrayProduct") {
+          let num=0;
+          list.forEach((item)=>{
+            item.industry = Number(item.equipmentManufacturin) + Number(item.componentManufacturin) + Number(item.otherIndustrayProduct)
+          })
+          list.forEach((item)=>{
+            num=num+Number(item.industry||0);
+          })
+          obj.industry=num;
+        } else if (name === "equipmentManufacturinHw"|| name === "componentManufacturinHw"|| name === "otherIndustrayProductHw") {
+          let num=0;
+          list.forEach((item)=>{
+            item.overseasIndustry = Number(item.equipmentManufacturinHw) + Number(item.componentManufacturinHw) + Number(item.otherIndustrayProductHw)
+          })
+          list.forEach((item)=>{
+            num=num+Number(item.overseasIndustry||0);
+          })
+          obj.overseasIndustry=num;
+        }
         // 自动计算房地产板块的房地产营业收入
         if (name === "inRevenue" || name === "offRevenue") {
-          // 执行修改方法
           let num=0;
-          this.detailform.fdc_list.forEach((item)=>{
+          list.forEach((item)=>{
             item.income = Number(item.inRevenue) + Number(item.offRevenue)
           })
-          this.detailform.fdc_list.forEach((item)=>{
+          list.forEach((item)=>{
             num=num+Number(item.income||0);
           })
-          this.detailform.sumByMon_3.income=num;
+          obj.income=num;
         }else if (name === "inRevenueHw" || name === "offRevenueHw") {
-          // 执行修改方法
           let num=0;
-          this.detailform.fdc_list.forEach((item)=>{
+          list.forEach((item)=>{
             item.overseasIncome = Number(item.inRevenueHw) + Number(item.offRevenueHw)
           })
-          this.detailform.fdc_list.forEach((item)=>{
+          list.forEach((item)=>{
             num=num+Number(item.overseasIncome||0);
           })
-          this.detailform.sumByMon_3.overseasIncome=num;
+          obj.overseasIncome=num;
         }
         this.$forceUpdate();
       },
