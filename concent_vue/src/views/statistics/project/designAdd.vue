@@ -202,7 +202,7 @@
               prop="project.projectTypeFirstId"
               style="width: 32.5%">
               <el-select
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 filterable
                 placeholder="请选择"
@@ -220,7 +220,7 @@
               prop="project.projectTypeSecondId"
               style="width: 32.5%">
               <el-select
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 filterable
                 @change="getThree"
@@ -236,7 +236,6 @@
             <el-form-item
               v-if="detailForm.project.projectTypeFirstId=='193b4d4003d04899a1d09c8d5f7877fe'&&xqprojectTypeThree.length>0"
               label="工程类别(三级)"
-              :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
               prop="project.enginTypeThirdId"
               style="width: 32.5%"
               :rules="{
@@ -550,18 +549,22 @@
               prop="project.fieldId"
               style="width: 32.5%">
               <el-select
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                filterable
-                clearable
-                @change="getName(detailForm.project.fieldId, siteName, 'fieldName','fieldCode')"
-                placeholder="请选择"
-                v-model="detailForm.project.fieldId">
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in siteName"/>
-              </el-select>
+                  class="multiple-sel"
+                  :disabled="p.actpoint==='look'||p.actpoint==='task'||detailForm.project.contractInfoList!=''"
+                  multiple
+                  clearable
+                  filterable
+                  placeholder="请选择"
+                  v-model="detailForm.cdmc"
+                  @change="getMultipleName(detailForm.cdmc, siteName, 'fieldId','fieldName')"
+                >
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in siteName"
+                  ></el-option>
+                </el-select>
             </el-form-item>
           </el-row>
           <el-row>
@@ -932,6 +935,89 @@
               </template>
             </el-table-column>
           </el-table>
+          <p  v-if="p.actpoint != 'add'" class="detail-title" style="overflow: hidden;margin-right:30px">
+                <span>关联合同: </span>
+                <!--<el-button-->
+                <!--v-show="p.actpoint != 'look'&&p.actpoint != 'task'"-->
+                <!--@click="addContract()"-->
+                <!--class="detatil-flie-btn"-->
+                <!--type="primary"-->
+                <!--&gt;新增-->
+                <!--</el-button-->
+                <!--&gt;-->
+              </p>
+              <el-table
+                v-if="p.actpoint != 'add'"
+                :data="detailForm.project.contractInfoList"
+                :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+                align="center"
+                border
+                class="detailTable"
+                ref="table"
+                style="width: 100%;"
+              >
+                <el-table-column
+                  :width="80"
+                  align="center"
+                  label="序号"
+                  show-overflow-tooltip
+                  type="index"
+                ></el-table-column>
+
+                <el-table-column
+                  class="listTabel"
+                  :resizable="false"
+                  label="合同名称"
+                  prop="contractName"
+                  align="center"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  class="listTabel"
+                  :resizable="false"
+                  label="合同编号"
+                  prop="contractCode"
+                  align="center"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  class="listTabel"
+                  :resizable="false"
+                  label="合同金额"
+                  prop="contractAmount"
+                  align="center"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  v-show="!p.actpoint === 'add'"
+                  :resizable="false"
+                  fixed="right"
+                  label="操作"
+                  align="center"
+                  show-overflow-tooltip
+                  v-if="p.actpoint !== 'add'&&p.actpoint !== 'task'"
+                  width="80">
+                  <template slot-scope="scope">
+                    <!--<el-link-->
+                    <!--:underline="false"-->
+                    <!--@click="del(scope.$index,scope.row,detailForm.project.contractInfoList,'glht')"-->
+                    <!--type="warning">删除-->
+                    <!--</el-link>-->
+                    <el-link
+                      :underline="false"
+                      @click="look(scope.row)"
+                      type="warning">查看合同
+                    </el-link>
+                  </template>
+                </el-table-column>
+              </el-table>
         </el-form>
       </div>
     <!-- </el-card> -->
@@ -1009,12 +1095,14 @@
         DwVisible: false,
         treeStatas: false,
         uploadVisible: false,
+        contractStatas:false,//关联合同状态
         emergingMarketTwo: [], // 新兴市场二级类别
         projectTypeTwo: [], // 工程类别二级
         projectNatureTwo: [], // 项目性质二级
         xqprojectTypeThree:[],//工程类别三级
         bizTypeCodeTwo: [], // 业务类别二级
         detailForm: {
+          cdmc:[],
           project: {
             contractInfoList:[],//关联合同列表
             projectSubContractList: [], // 分包承建
@@ -1119,6 +1207,7 @@
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
       }
     },
+    
     computed: {
       emergingMarket() {
         return this.$store.state.category.emergingMarket
@@ -1181,6 +1270,37 @@
           }else{
             item.isMain="0"
           }
+        });
+      },
+      //根据id跳页面
+      getUrl(id){
+        var url='';
+        if(id=='7f4fcba4255b43a8babf15afd6c04a53'){
+          url= '/manage/contractManager/project/detail/';
+        }else if(id=='f6823a41e9354b81a1512155a5565aeb'){
+          url= '/manage/contractManager/design/detail/';
+        }else if(id=='510ba0d79593418493eb1a11ea4e7af6'){
+          url=  '/manage/contractManager/house/detail/';
+        }else if(id=='510ba0d79593418493eb1a11ea4e7af4'){
+          url=  '/manage/contractManager/trade/detail/';
+        }else if(id=='510ba0d79593418493eb1a11ed3e7df4'){
+          url=  '/manage/contractManager/industrial/detail/';
+        }else if(id=='510ba0d79593418493eb1a11ea4e7df4'){
+          url=  '/manage/contractManager/finance/detail/';
+        }else if(id=='510ba0d79593418493eb1a11ed4e7df4'){
+          url=  '/manage/contractManager/operate/detail/';
+        }else if(id=='510ba0d79593419493eb1a11ed3e7df4'){
+          url=  '/manage/contractManager/other/detail/';
+        }
+        return url;
+      },
+     //查看关联合同
+      look(row){
+        let p = {actpoint: "look", instid : row.uuid};
+        var url=this.getUrl(row.moduleId);
+        this.$router.push({
+          path: url,
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       },
       // 获取项目地点的值
@@ -1338,6 +1458,19 @@
             ).detailCode
           console.log(this.detailForm)
         }
+      },
+      //复选下拉框框获取name
+      getMultipleName(valueList,list,id,name){
+        var _id=[],_name=[];
+        list.forEach((item)=>{
+          if(valueList.indexOf(item.id)!=-1){
+          _id.push(item.id);
+          _name.push(item.detailName)
+        }
+      });
+        this.detailForm.project[id]=_id.join(",");
+        this.detailForm.project[name]=_name.join(",");
+        console.log(this.detailForm.project[id])
       },
       getShowTwo() {
         this.emergingMarket.find((item) => {
@@ -1571,6 +1704,9 @@
                   uuid: ''
                 }]
               }
+              //场地名称
+              this.detailForm.cdmc = [];
+              this.detailForm.cdmc = res.data.data.fieldId && res.data.data.fieldId.split(",");
               this.getShowTwo();
               if(this.detailForm.project.contractInfoList!=''){
                 this.detailForm.project.investmentContract=this.detailForm.project.contractAmountInitial;
