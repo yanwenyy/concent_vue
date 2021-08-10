@@ -1133,11 +1133,11 @@
                         clearable
                         v-model="scope.row.ngyvalueJn"/>
                       <el-input
-                        @input="isFloor(scope.row.nygjvalueJw,scope.$index,detailform.gycp_list,'nygjvalueJw'),getGyzzCz(detailform.gycp_list,detailform.sumByMon_cp,'nygjvalueJw')"
+                        @input="isFloor(scope.row.ngyvalueJw,scope.$index,detailform.gycp_list,'ngyvalueJw'),getGyzzCz(detailform.gycp_list,detailform.sumByMon_cp,'ngyvalueJw')"
                         v-if="scope.row.vjnw=='境外'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
-                        v-model="scope.row.nygjvalueJw"/>
+                        v-model="scope.row.ngyvalueJw"/>
                     </template>
                   </el-table-column>
                   <el-table-column
