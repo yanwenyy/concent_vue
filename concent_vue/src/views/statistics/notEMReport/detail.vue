@@ -712,11 +712,14 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="includeVat"
                     align="center"
                     show-overflow-tooltip
                     width="200"
                   >
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
+                      <span v-else>否</span>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
@@ -1227,11 +1230,14 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="includeVat"
                     align="center"
                     show-overflow-tooltip
                     width="200"
                   >
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
+                      <span v-else>否</span>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
@@ -1455,11 +1461,14 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="includeVat"
                     align="center"
                     show-overflow-tooltip
                     width="200"
                   >
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
+                      <span v-else>否</span>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
@@ -1839,11 +1848,14 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="includeVat"
                     align="center"
                     show-overflow-tooltip
                     width="200"
                   >
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
+                      <span v-else>否</span>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
@@ -2287,11 +2299,14 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="includeVat"
                     align="center"
                     show-overflow-tooltip
                     width="200"
                   >
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
+                      <span v-else>否</span>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
@@ -2752,11 +2767,14 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="includeVat"
                     align="center"
                     show-overflow-tooltip
                     width="200"
                   >
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
+                      <span v-else>否</span>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
@@ -3364,11 +3382,14 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="includeVat"
                     align="center"
                     show-overflow-tooltip
                     width="200"
                   >
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
+                      <span v-else>否</span>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
