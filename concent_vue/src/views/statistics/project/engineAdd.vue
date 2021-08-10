@@ -2282,7 +2282,6 @@
         this.getShow()
       }
       if(this.p.actpoint == 'add'){
-        console.info('add');
         this.detailForm.project.companyBuiltId=this.userInfo.managerOrgId;
         this.detailForm.project.companyBuiltName=this.userInfo.managerOrgName;
       }
