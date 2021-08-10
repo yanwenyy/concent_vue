@@ -1349,7 +1349,6 @@
                   'background-color': 'rgba(246,248,252,1)',
                   color: 'rgba(0,0,0,1)',
                 }"
-                @selection-change="handleSelectionChange"
                 align="center"
                 border
                 class="detailTable"
@@ -1764,7 +1763,7 @@
       //项目地点份额变动的时候
       getPositionMoney(index,list){
         if(list.length==1){
-          list[0].contractAmount=this.detailform.contractAmountEngine
+          list[0].contractAmount=this.detailForm.project.contractAmountEngine
         }else{
           var money=0;
           list.forEach((item,i)=>{
@@ -1772,8 +1771,8 @@
               money+=Number(item.contractAmount);
             }
           });
-          if(this.detailform.contractAmountEngine-money>0){
-            list[0].contractAmount=this.detailform.contractAmountEngine-money;
+          if(this.detailForm.project.contractAmountEngine-money>0){
+            list[0].contractAmount=this.detailForm.project.contractAmountEngine-money;
           }else{
             list[index].contractAmount='';
             this.$message.error('项目地点份额之和不能大于初始我方份额');
