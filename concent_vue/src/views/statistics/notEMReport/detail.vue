@@ -712,7 +712,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="isOutputTax"
+                    prop="includeVat"
                     align="center"
                     show-overflow-tooltip
                     width="200"
@@ -1227,7 +1227,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="isOutputTax"
+                    prop="includeVat"
                     align="center"
                     show-overflow-tooltip
                     width="200"
@@ -1455,7 +1455,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="isOutputTax"
+                    prop="includeVat"
                     align="center"
                     show-overflow-tooltip
                     width="200"
@@ -1839,7 +1839,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="isOutputTax"
+                    prop="includeVat"
                     align="center"
                     show-overflow-tooltip
                     width="200"
@@ -2287,7 +2287,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="isOutputTax"
+                    prop="includeVat"
                     align="center"
                     show-overflow-tooltip
                     width="200"
@@ -2752,7 +2752,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="isOutputTax"
+                    prop="includeVat"
                     align="center"
                     show-overflow-tooltip
                     width="200"
@@ -3364,7 +3364,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="isOutputTax"
+                    prop="includeVat"
                     align="center"
                     show-overflow-tooltip
                     width="200"
