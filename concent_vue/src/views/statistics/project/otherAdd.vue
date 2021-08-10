@@ -533,7 +533,13 @@
     },
     computed: {
       projectStatus() {
-        return this.$store.state.projectStatus
+        var projectStatusCheck = [];
+        this.$store.state.projectStatus.forEach((item) => {
+          if(item.detailCode == '028001' || item.detailCode == '028002'){
+            projectStatusCheck.push(item);
+          }
+        });
+        return projectStatusCheck
       },
       emergingMarket() {
         return this.$store.state.category.emergingMarket
