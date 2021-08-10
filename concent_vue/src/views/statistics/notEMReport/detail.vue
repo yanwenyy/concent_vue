@@ -1866,16 +1866,17 @@
                     width="150"
                   >
                     <template slot-scope="scope">
+                      <!-- :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1" -->
                       <el-input
                         @input="isFloor(scope.row.income,scope.$index,detailform.fdc_list,'income'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'income')"
                         v-if="scope.row.country=='01'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                        :disabled="true"
                         clearable
                         v-model="scope.row.income"/>
                       <el-input
                         @input="isFloor(scope.row.overseasIncome,scope.$index,detailform.fdc_list,'overseasIncome'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'overseasIncome')"
                         v-if="scope.row.country=='02'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                        :disabled="true"
                         clearable
                         v-model="scope.row.overseasIncome"/>
                     </template>
@@ -3795,6 +3796,28 @@
           num=num+Number(item[name]||0);
         })
         obj[name]=num;
+        // 自动计算房地产板块的房地产营业收入
+        if (name === "inRevenue" || name === "offRevenue") {
+          // 执行修改方法
+          let num=0;
+          this.detailform.fdc_list.forEach((item)=>{
+            item.income = Number(item.inRevenue) + Number(item.offRevenue)
+          })
+          this.detailform.fdc_list.forEach((item)=>{
+            num=num+Number(item.income||0);
+          })
+          this.detailform.sumByMon_3.income=num;
+        }else if (name === "inRevenueHw" || name === "offRevenueHw") {
+          // 执行修改方法
+          let num=0;
+          this.detailform.fdc_list.forEach((item)=>{
+            item.overseasIncome = Number(item.inRevenueHw) + Number(item.offRevenueHw)
+          })
+          this.detailform.fdc_list.forEach((item)=>{
+            num=num+Number(item.overseasIncome||0);
+          })
+          this.detailform.sumByMon_3.overseasIncome=num;
+        }
         this.$forceUpdate();
       },
       //重置

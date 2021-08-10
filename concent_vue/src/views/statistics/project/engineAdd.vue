@@ -117,8 +117,8 @@
                     v-model="detailForm.project.isConsortion"
                     active-color="#409EFF"
                     inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"/>
+                    active-value="1"
+                    inactive-value="0"/>
                 </el-form-item>
               </el-row>
               <el-row>
@@ -361,8 +361,8 @@
                     v-model="detailForm.project.isBureauIndex"
                     active-color="#409EFF"
                     inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"/>
+                    active-value="1"
+                    inactive-value="0"/>
                 </el-form-item>
               </el-row>
               <el-row>
@@ -702,8 +702,8 @@
                     v-model="detailForm.project.isOutputTax"
                     active-color="#409EFF"
                     inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"/>
+                    active-value="1"
+                    inactive-value="0"/>
                 </el-form-item>
               </el-row>
               <!--合同开工期-->
@@ -741,8 +741,8 @@
                     v-model="detailForm.project.isTrusteeship"
                     active-color="#409EFF"
                     inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"/>
+                    active-value="1"
+                    inactive-value="0"/>
                 </el-form-item>
               </el-row>
               <el-row>
@@ -751,7 +751,7 @@
                   prop="project.contractSignTime"
                   style="width: 32.5%">
                   <el-date-picker
-                    disabled
+                    :disabled="detailForm.project.contractInfoList!=''"
                     v-model="detailForm.project.contractSignTime"
                     type="date"
                     value-format="timestamp"
@@ -779,8 +779,8 @@
                     v-model="detailForm.project.isEscrow"
                     active-color="#409EFF"
                     inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"/>
+                    active-value="1"
+                    inactive-value="0"/>
                 </el-form-item>
               </el-row>
               <!--实际开工日期-->
@@ -980,8 +980,8 @@
                         clearable
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
                         v-model="scope.row.contractAmount"
+                        @input="getPositionMoney(scope.$index,detailForm.project.topInfoSiteList)"
                       >
-                        <!--@input="getPositionMoney(scope.$index,detailForm.project.topInfoSiteList)"-->
                         <template slot="prepend">¥</template>
                         <template slot="append">(万元)</template>
                       </el-input>
@@ -1257,89 +1257,83 @@
                   </el-table-column>
                 </el-table>
               </div>
-              <p  v-if="p.actpoint != 'add'" class="detail-title" style="overflow: hidden;margin-right:30px">
-                <span>关联合同: </span>
-                <!--<el-button-->
-                <!--v-show="p.actpoint != 'look'&&p.actpoint != 'task'"-->
-                <!--@click="addContract()"-->
-                <!--class="detatil-flie-btn"-->
-                <!--type="primary"-->
-                <!--&gt;新增-->
-                <!--</el-button-->
-                <!--&gt;-->
-              </p>
-              <el-table
-                v-if="p.actpoint != 'add'"
-                :data="detailForm.project.contractInfoList"
-                :header-cell-style="{
-                'text-align': 'center',
-                'background-color': 'rgba(246,248,252,1)',
-                color: 'rgba(0,0,0,1)',
-              }"
-                align="center"
-                border
-                class="detailTable"
-                ref="table"
-                style="width: 100%;"
-              >
-                <el-table-column
-                  :width="80"
+              <div v-show="detailForm.project.contractInfoList!=''">
+                <p  v-if="p.actpoint != 'add'" class="detail-title" style="overflow: hidden;margin-right:30px">
+                  <span>关联合同: </span>
+                </p>
+                <el-table
+                  v-if="p.actpoint != 'add'"
+                  :data="detailForm.project.contractInfoList"
+                  :header-cell-style="{
+                  'text-align': 'center',
+                  'background-color': 'rgba(246,248,252,1)',
+                  color: 'rgba(0,0,0,1)',
+                }"
                   align="center"
-                  label="序号"
-                  show-overflow-tooltip
-                  type="index"
-                ></el-table-column>
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%;"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
 
-                <el-table-column
-                  class="listTabel"
-                  :resizable="false"
-                  label="合同名称"
-                  prop="contractName"
-                  align="center"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                  class="listTabel"
-                  :resizable="false"
-                  label="合同编号"
-                  prop="contractCode"
-                  align="center"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                  class="listTabel"
-                  :resizable="false"
-                  label="合同金额"
-                  prop="contractAmount"
-                  align="center"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                  v-show="!p.actpoint === 'add'"
-                  :resizable="false"
-                  fixed="right"
-                  label="操作"
-                  align="center"
-                  show-overflow-tooltip
-                  v-if="p.actpoint !== 'add'&&p.actpoint !== 'task'"
-                  width="80">
-                  <template slot-scope="scope">
-                    <!--<el-link-->
-                    <!--:underline="false"-->
-                    <!--@click="del(scope.$index,scope.row,detailForm.project.contractInfoList,'glht')"-->
-                    <!--type="warning">删除-->
-                    <!--</el-link>-->
-                    <el-link
-                      :underline="false"
-                      @click="look(scope.row)"
-                      type="warning">查看合同
-                    </el-link>
-                  </template>
-                </el-table-column>
-              </el-table>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合同名称"
+                    prop="contractName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合同编号"
+                    prop="contractCode"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合同金额"
+                    prop="contractAmount"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    v-show="!p.actpoint === 'add'"
+                    :resizable="false"
+                    fixed="right"
+                    label="操作"
+                    align="center"
+                    show-overflow-tooltip
+                    v-if="p.actpoint !== 'add'&&p.actpoint !== 'task'"
+                    width="80">
+                    <template slot-scope="scope">
+                      <!--<el-link-->
+                      <!--:underline="false"-->
+                      <!--@click="del(scope.$index,scope.row,detailForm.project.contractInfoList,'glht')"-->
+                      <!--type="warning">删除-->
+                      <!--</el-link>-->
+                      <el-link
+                        :underline="false"
+                        @click="look(scope.row)"
+                        type="warning">查看合同
+                      </el-link>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
           </div>
         </el-tab-pane>
         <el-tab-pane label="实物工程量计划">
@@ -1355,7 +1349,6 @@
                   'background-color': 'rgba(246,248,252,1)',
                   color: 'rgba(0,0,0,1)',
                 }"
-                @selection-change="handleSelectionChange"
                 align="center"
                 border
                 class="detailTable"
@@ -1527,7 +1520,7 @@
             projectModuleCode:"engineering",//项目板块code
             projectModuleName: '工程承包', // 项目板块
             businessId: '', // 业务板块
-            isConsortion: '1', // 是否联合体项目
+            isConsortion: '0', // 是否联合体项目
             projectTypeId: '', // 项目类型
             projectStatusId: '', // 项目状态
             projectLocationId: '', // 项目所在地
@@ -1741,7 +1734,6 @@
       },
       // 获取项目地点的值
       getPositionTree(data) {
-        console.log(data)
         this.treeStatas = false;
         var country = '', _data = data;
         if (_data.fullDetailName.indexOf("境内") != -1) {
@@ -1758,6 +1750,7 @@
               item.ffid = _data.fullDetailCode;
               item.path = _data.fullDetailName;
               item.placeId=_data.id;
+              // this.checkTopInfoSiteList();
             }
           }else{
             this.$message.error("项目地点不能重复");
@@ -1766,6 +1759,26 @@
 
         });
         this.key = this.key + 1;
+      },
+      //项目地点份额变动的时候
+      getPositionMoney(index,list){
+        if(list.length==1){
+          list[0].contractAmount=this.detailForm.project.contractAmountEngine
+        }else{
+          var money=0;
+          list.forEach((item,i)=>{
+            if(i>0){
+              money+=Number(item.contractAmount);
+            }
+          });
+          if(this.detailForm.project.contractAmountEngine-money>0){
+            list[0].contractAmount=this.detailForm.project.contractAmountEngine-money;
+          }else{
+            list[index].contractAmount='';
+            this.$message.error('项目地点份额之和不能大于初始我方份额');
+          }
+        }
+
       },
       //新增标段和地点
       add(type) {
@@ -1927,9 +1940,9 @@
       // 增值税改变，上报产值是否含税联动
       getOutputTax() {
         if (this.detailForm.project.valueAddedTax && this.detailForm.project.valueAddedTax !== '0') {
-          this.detailForm.project.isOutputTax = '0'
-        } else {
           this.detailForm.project.isOutputTax = '1'
+        } else {
+          this.detailForm.project.isOutputTax = '0'
         }
       },
       handleRemove(file, index) {
