@@ -236,6 +236,7 @@
             <el-form-item
               v-if="detailForm.project.projectTypeFirstId=='193b4d4003d04899a1d09c8d5f7877fe'&&xqprojectTypeThree.length>0"
               label="工程类别(三级)"
+              :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
               prop="project.enginTypeThirdId"
               style="width: 32.5%"
               :rules="{
