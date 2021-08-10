@@ -71,9 +71,23 @@
                 placeholder="请输入"
                 v-model="detailForm.project.contractFirstParty"/>
             </el-form-item>
+            <el-form-item
+              label="合同金额(万元):"
+              prop="project.contractMoney"
+              :rules="rules.project.isMoney"
+              style="width:32.5%;">
+              <el-input
+                clearable
+                placeholder="请输入"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                v-model="detailForm.project.contractMoney">
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
           </el-row>
           <el-row>
-            <el-form-item
+            <!-- <el-form-item
               label="合同所属板块:"
               prop="project.ocontractModel"
               style="width: 32.5%">
@@ -89,21 +103,7 @@
                   :value="item.detailName"
                   v-for="(item, index) in wumoveType"/>
               </el-select>
-            </el-form-item>
-            <el-form-item
-              label="合同金额(万元):"
-              prop="project.contractMoney"
-              :rules="rules.project.isMoney"
-              style="width:32.5%;">
-              <el-input
-                clearable
-                placeholder="请输入"
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                v-model="detailForm.project.contractMoney">
-                <template slot="prepend">¥</template>
-                <template slot="append">(万元)</template>
-              </el-input>
-            </el-form-item>
+            </el-form-item> -->
           </el-row>
           <el-row>
             <el-form-item
@@ -880,7 +880,13 @@
         return this.$store.state.wumoveType
       },
       projectStatus() {
-        return this.$store.state.projectStatus
+        var projectStatusCheck = [];
+        this.$store.state.projectStatus.forEach((item) => {
+          if(item.detailCode == '028001' || item.detailCode == '028002'){
+            projectStatusCheck.push(item);
+          }
+        });
+        return projectStatusCheck
       },
       emergingMarket() {
         return this.$store.state.category.emergingMarket

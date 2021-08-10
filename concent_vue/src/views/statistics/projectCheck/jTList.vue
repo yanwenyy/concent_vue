@@ -253,7 +253,7 @@
           },
           {
             detailName:"未创建",
-            id:'edit'
+            id:'0'
           }
         ]
       };

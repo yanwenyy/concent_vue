@@ -272,7 +272,7 @@
           },
           {
             detailName:"未创建",
-            id:'edit'
+            id:'0'
           }
         ],
         page: { current: 1, size: 20, total: 0, records: [] },

@@ -172,7 +172,8 @@
                       :key="index"
                       :label="item.detailName"
                       :value="item.id"
-                      v-for="(item, index) in projectStatus"
+                      v-if="item.parentDetailId=='0f333a962655480c8ef668a8ce129d41'"
+                      v-for="(item, index) in bizTypeCode"
                     ></el-option>
                   </el-select>
                 </el-form-item>
@@ -711,11 +712,14 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="isOutputTax"
                     align="center"
                     show-overflow-tooltip
                     width="200"
                   >
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
+                      <span v-else>否</span>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
@@ -1132,11 +1136,11 @@
                         clearable
                         v-model="scope.row.ngyvalueJn"/>
                       <el-input
-                        @input="isFloor(scope.row.nygjvalueJw,scope.$index,detailform.gycp_list,'nygjvalueJw'),getGyzzCz(detailform.gycp_list,detailform.sumByMon_cp,'nygjvalueJw')"
+                        @input="isFloor(scope.row.ngyvalueJw,scope.$index,detailform.gycp_list,'ngyvalueJw'),getGyzzCz(detailform.gycp_list,detailform.sumByMon_cp,'ngyvalueJw')"
                         v-if="scope.row.vjnw=='境外'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
-                        v-model="scope.row.nygjvalueJw"/>
+                        v-model="scope.row.ngyvalueJw"/>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -1226,11 +1230,14 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="isOutputTax"
                     align="center"
                     show-overflow-tooltip
                     width="200"
                   >
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
+                      <span v-else>否</span>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
@@ -1454,11 +1461,14 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="isOutputTax"
                     align="center"
                     show-overflow-tooltip
                     width="200"
                   >
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
+                      <span v-else>否</span>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
@@ -1838,11 +1848,14 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="isOutputTax"
                     align="center"
                     show-overflow-tooltip
                     width="200"
                   >
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
+                      <span v-else>否</span>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
@@ -2286,11 +2299,14 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="isOutputTax"
                     align="center"
                     show-overflow-tooltip
                     width="200"
                   >
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
+                      <span v-else>否</span>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
@@ -2751,11 +2767,14 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="isOutputTax"
                     align="center"
                     show-overflow-tooltip
                     width="200"
                   >
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
+                      <span v-else>否</span>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
@@ -3363,11 +3382,14 @@
                     class="listTabel"
                     :resizable="false"
                     label="上报产值是否含增值税"
-                    prop="isOutputTax"
                     align="center"
                     show-overflow-tooltip
                     width="200"
                   >
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
+                      <span v-else>否</span>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
@@ -3594,7 +3616,28 @@
       }
       return {
         Authorization:sessionStorage.getItem("token"),
-        projectStatus:[],//项目状态
+        projectStatus:[
+          {
+            detailName:"草稿",
+            id:'edit'
+          },
+          {
+            detailName:"审核中",
+            id:'check'
+          },
+          {
+            detailName:"审核通过",
+            id:'pass'
+          },
+          {
+            detailName:"审核驳回",
+            id:'reject'
+          },
+          {
+            detailName:"未创建",
+            id:'0'
+          }
+        ],//项目状态
         timeout:  null,
         maxMoney:1000000,
         id:'',
@@ -3697,12 +3740,13 @@
       AuditProcess
     },
     computed: {
+      bizTypeCode() {
+        return this.$store.state.bizTypeCode;
+      },
       projectDomainType() {
-        // console.log(this.$store.state.category.projectDomainType)
         return this.$store.state.category.projectDomainType;
       },
       emergingMarket() {
-        // console.log(this.$store.state.category.emergingMarket)
         return this.$store.state.category.emergingMarket;
       },
       projectNature(){

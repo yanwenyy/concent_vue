@@ -318,23 +318,23 @@
         data:[],
         flowStatusList:[
           {
-            detailName:'草稿',
-            id:'1'
+            detailName:"草稿",
+            id:'edit'
           },
           {
-            detailName:'审核中',
-            id:'2'
+            detailName:"审核中",
+            id:'check'
           },
           {
-            detailName:'审核通过',
-            id:'3'
+            detailName:"审核通过",
+            id:'pass'
           },
           {
-            detailName:'审核驳回',
-            id:'4'
+            detailName:"审核驳回",
+            id:'reject'
           },
           {
-            detailName:'未创建',
+            detailName:"未创建",
             id:'0'
           }
         ],

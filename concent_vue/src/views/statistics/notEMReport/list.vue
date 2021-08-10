@@ -227,7 +227,7 @@
           },
           {
             detailName:"未创建",
-            id:'edit'
+            id:'0'
           }
         ]
       };
@@ -337,7 +337,7 @@
           this.$message.info("请选择一条记录进行修改操作！");
           return false;
         }
-        if(this.multipleSelection[0].stauts=='2'||this.multipleSelection[0].stauts=='3'||this.multipleSelection[0].stauts=='0'){
+        if(this.multipleSelection[0].stauts=='check'||this.multipleSelection[0].stauts=='pass'||this.multipleSelection[0].stauts=='0'){
           this.$message.info("此条数据不可修改！");
           return false;
         }

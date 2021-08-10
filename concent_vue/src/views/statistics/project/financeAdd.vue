@@ -102,7 +102,7 @@
               </el-select>
             </el-form-item>
             <el-form-item
-              label="对方名称:"
+              label="客户名称:"
               prop="project.otherPartyName"
               style="width:32.5%;">
               <el-input
@@ -450,7 +450,7 @@
             ></el-table-column>
             <el-table-column
               :resizable="false"
-              label="项目地点"
+              label="项目生效地点"
               align="center"
               prop="path"
             >
@@ -632,7 +632,7 @@
             projectForeginName: '',
             valueAddedTax: '',
             contractNumber: '',
-            otherPartyName: '', // 对方名称
+            otherPartyName: '', // 客户名称
             amountSignup: '',
             amountWe: '',
             contractSignTime: '',
@@ -671,7 +671,13 @@
     },
     computed: {
       projectStatus() {
-        return this.$store.state.projectStatus
+        var projectStatusCheck = [];
+        this.$store.state.projectStatus.forEach((item) => {
+          if(item.detailCode == '028001' || item.detailCode == '028002'){
+            projectStatusCheck.push(item);
+          }
+        });
+        return projectStatusCheck
       },
       emergingMarket() {
         return this.$store.state.category.emergingMarket

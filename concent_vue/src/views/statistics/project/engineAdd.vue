@@ -1480,6 +1480,7 @@
         }
       }
       return {
+        userInfo: JSON.parse(sessionStorage.getItem('userdata')),
         companyMulStatus:false,//设计单位等多选列表状态
         contractStatas:false,//关联合同状态
         fatherList:[],
@@ -1637,7 +1638,7 @@
       projectStatus() {
         var projectStatusCheck = [];
         this.$store.state.projectStatus.forEach((item) => {
-          if(item.detailName == '在建' || item.detailName == '未开工'){
+          if(item.detailCode == '028001' || item.detailCode == '028002'){
             projectStatusCheck.push(item);
           }
         });
@@ -2279,6 +2280,10 @@
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
       if (this.p.actpoint === 'look' || this.p.actpoint === 'edit'||this.p.actpoint=='task') {
         this.getShow()
+      }
+      if(this.p.actpoint == 'add'){
+        this.detailForm.project.companyBuiltId=this.userInfo.managerOrgId;
+        this.detailForm.project.companyBuiltName=this.userInfo.managerOrgName;
       }
       //获取父项目名称列表
       this.$http
