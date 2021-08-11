@@ -1038,14 +1038,14 @@
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_cp.nqigyvalueJw"/>
+                    v-model="detailform.sumByMon_cp.ngyvalueJw"/>
                 </el-form-item>
                 <el-form-item
                   label="工业总产值年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_cp.nqigyvalueJw||0)+(detailform.sumByYear_cp.nqigyvalueJw||0)"/>
+                    :value="(detailform.sumByMon_cp.ngyvalueJw||0)+(detailform.sumByYear_cp.ngyvalueJw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="装备制造(万元):"
@@ -3706,9 +3706,6 @@
             </div>
           </el-tab-pane>
         </el-tabs>
-      </el-tab-pane>
-      <el-tab-pane label="审批流程" v-if="p.stauts!='1'&&(p.actpoint == 'task'||p.actpoint == 'look')">
-        <Audit-Process :task="p.task||{businessId:p.instid||p.statId,businessType:' engineering_monthly_report_not'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>

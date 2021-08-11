@@ -1039,14 +1039,14 @@
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByMon_cp.nqigyvalueJw"/>
+                    v-model="detailform.sumByMon_cp.ngyvalueJw"/>
                 </el-form-item>
                 <el-form-item
                   label="工业总产值年累(万元):"
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_cp.nqigyvalueJw||0)+(detailform.sumByYear_cp.nqigyvalueJw||0)"/>
+                    :value="(detailform.sumByMon_cp.ngyvalueJw||0)+(detailform.sumByYear_cp.ngyvalueJw||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="装备制造(万元):"
