@@ -101,12 +101,12 @@
               ref="table"
               tooltip-effect="dark"
             >
-              <el-table-column
+              <!-- <el-table-column
                 :width="50"
                 align="center"
                 show-overflow-tooltip
                 type="selection"
-              ></el-table-column>
+              ></el-table-column> -->
               <el-table-column
                 :width="70"
                 align="center"
@@ -221,12 +221,12 @@
               ref="table"
               tooltip-effect="dark"
             >
-              <el-table-column
+              <!-- <el-table-column
                 :width="50"
                 align="center"
                 show-overflow-tooltip
                 type="selection"
-              ></el-table-column>
+              ></el-table-column> -->
               <el-table-column
                 :width="70"
                 align="center"
@@ -341,12 +341,12 @@
               ref="table"
               tooltip-effect="dark"
             >
-              <el-table-column
+              <!-- <el-table-column
                 :width="50"
                 align="center"
                 show-overflow-tooltip
                 type="selection"
-              ></el-table-column>
+              ></el-table-column> -->
               <el-table-column
                 :width="70"
                 align="center"
@@ -461,12 +461,12 @@
               ref="table"
               tooltip-effect="dark"
             >
-              <el-table-column
+              <!-- <el-table-column
                 :width="50"
                 align="center"
                 show-overflow-tooltip
                 type="selection"
-              ></el-table-column>
+              ></el-table-column> -->
               <el-table-column
                 :width="70"
                 align="center"
@@ -581,12 +581,12 @@
               ref="table"
               tooltip-effect="dark"
             >
-              <el-table-column
+              <!-- <el-table-column
                 :width="50"
                 align="center"
                 show-overflow-tooltip
                 type="selection"
-              ></el-table-column>
+              ></el-table-column> -->
               <el-table-column
                 :width="70"
                 align="center"
@@ -701,12 +701,12 @@
               ref="table"
               tooltip-effect="dark"
             >
-              <el-table-column
+              <!-- <el-table-column
                 :width="50"
                 align="center"
                 show-overflow-tooltip
                 type="selection"
-              ></el-table-column>
+              ></el-table-column> -->
               <el-table-column
                 :width="70"
                 align="center"
@@ -832,7 +832,7 @@
         searchform: {
           current: 1,
           size: 20,
-          gyType:"",
+          gyType:"1",
           reportDate:'',
           projectName:'',
           projectLocation:'',
@@ -946,10 +946,11 @@
       },
       searchformReset() {
         // this.$refs["searchform"].resetFields();
+        let gyType = this.searchform.gyType
         this.searchform={
           current: 1,
           size: 20,
-          gyType:"",
+          gyType:gyType,
           reportDate:'',
           projectName:'',
           projectLocation:'',
@@ -1004,6 +1005,7 @@
       }
     },
     created() {
+      this.gyTypeChange();
       this.setDate();
       this.getData();
     },
