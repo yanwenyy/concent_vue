@@ -35,6 +35,7 @@
         :data="tableData"
         :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
         @row-dblclick="rowshow"
+        @expand-change="rowClick"
         @selection-change="handleSelectionChange"
         border
         highlight-current-row
@@ -174,9 +175,10 @@
               <!--</el-date-picker>-->
             <!--</div>-->
           <!--</template>-->
-          <template slot-scope="scope">{{
-            scope.row.auditDate | dateformat
-            }}</template>
+          <template slot-scope="scope">
+            <span v-if="scope.row.timeout" style="color:red">{{scope.row.auditDate | dateformat}}</span>
+            <span v-else>{{scope.row.auditDate | dateformat}}</span>
+          </template>
         </el-table-column>
       </el-table>
     </div>
@@ -461,8 +463,22 @@
           )
           .then((res) => {
           this.tableData = res.data.data;
+          this.rowClick(this.tableData[0],true)
       });
       },
+      // 判断审核时间是否标红
+      rowClick(row,boolean) {
+        if (boolean && row.chirldList) { // 如果是展开 并且有子集
+          row.chirldList.forEach((element)=>{
+            console.info(element.state, row.createTime)
+            if (element.auditDate > row.createTime) {
+              element.timeout = true
+            } else {
+              element.timeout = false
+            }
+          })
+        }
+      }
     },
     created() {
       //获取当前月份

@@ -28,6 +28,7 @@
         :data="tableData"
         :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
         @row-dblclick="rowshow"
+        @expand-change="rowClick"
         @selection-change="handleSelectionChange"
         border
         highlight-current-row
@@ -55,20 +56,6 @@
           prop="createOrgName"
           show-overflow-tooltip
         >
-          <!--<template slot="header" slot-scope="scope">-->
-            <!--<span>填报单位</span>-->
-            <!--<div>-->
-              <!--<el-input-->
-                <!--class="list-search-picker"-->
-                <!--style=" width: 100%"-->
-                <!--v-model="searchform.createOrgName"-->
-                <!--size="mini"-->
-              <!--/>-->
-            <!--</div>-->
-          <!--</template>-->
-          <!--<template slot-scope="scope">-->
-            <!--<span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.inforName}}</span>-->
-          <!--</template>-->
         </el-table-column>
         <el-table-column
           :width="200"
@@ -84,34 +71,7 @@
           label="审核状态"
           prop="stauts"
           show-overflow-tooltip
-
         >
-          <!--<template slot="header" slot-scope="scope">-->
-            <!--<span>审核状态</span>-->
-            <!--<div>-->
-              <!--<el-select-->
-                <!--class="list-search-picker"-->
-                <!--clearable-->
-                <!--filterable-->
-                <!--placeholder="请选择"-->
-                <!--size="mini"-->
-                <!--v-model="searchform.stauts"-->
-              <!--&gt;-->
-                <!--<el-option-->
-                  <!--:key="index"-->
-                  <!--:label="item.detailName"-->
-                  <!--:value="item.id"-->
-                  <!--v-for="(item, index) in flowStatusList"-->
-                <!--&gt;</el-option>-->
-              <!--</el-select>-->
-              <!--&lt;!&ndash;<el-input&ndash;&gt;-->
-              <!--&lt;!&ndash;class="list-search-picker"&ndash;&gt;-->
-              <!--&lt;!&ndash;style=" width: 100%"&ndash;&gt;-->
-              <!--&lt;!&ndash;v-model="searchform.flowStatus"&ndash;&gt;-->
-              <!--&lt;!&ndash;size="mini"&ndash;&gt;-->
-              <!--&lt;!&ndash;/>&ndash;&gt;-->
-            <!--</div>-->
-          <!--</template>-->
           <template slot-scope="scope">
             {{scope.row.stauts=='edit'?'草稿':scope.row.stauts=='check'?'审核中':scope.row.stauts=='pass'?'审核通过':scope.row.stauts=='reject'?'审核退回':scope.row.stauts==0?'未创建':''}}
           </template>
@@ -123,21 +83,6 @@
           prop="createTime"
           show-overflow-tooltip
         >
-          <!--<template slot="header" slot-scope="scope">-->
-            <!--<span>创建时间</span>-->
-            <!--<div>-->
-              <!--<el-date-picker-->
-                <!--class="list-search-picker"-->
-                <!--filterable-->
-                <!--clearable-->
-                <!--type="date"-->
-                <!--value-format="timestamp"-->
-                <!--v-model="searchform.createTime"-->
-
-              <!--&gt;-->
-              <!--</el-date-picker>-->
-            <!--</div>-->
-          <!--</template>-->
           <template slot-scope="scope">{{
             scope.row.createTime | dateformat
             }}</template>
@@ -149,27 +94,10 @@
           prop="state"
           show-overflow-tooltip
         >
-          <!--<template slot="header" slot-scope="scope">-->
-            <!--<span>审核通过时间</span>-->
-            <!--<div>-->
-              <!--<el-date-picker-->
-                <!--class="list-search-picker"-->
-                <!--filterable-->
-                <!--clearable-->
-                <!--type="daterange"-->
-                <!--range-separator="-"-->
-                <!--start-placeholder="开始日期"-->
-                <!--end-placeholder="结束日期"-->
-                <!--value-format="timestamp"-->
-                <!--v-model="prossDate"-->
-
-              <!--&gt;-->
-              <!--</el-date-picker>-->
-            <!--</div>-->
-          <!--</template>-->
-          <template slot-scope="scope">{{
-            scope.row.auditDate | dateformat
-            }}</template>
+          <template slot-scope="scope">
+            <span v-if="scope.row.timeout" style="color:red">{{scope.row.auditDate | dateformat}}</span>
+            <span v-else>{{scope.row.auditDate | dateformat}}</span>
+          </template>
         </el-table-column>
       </el-table>
     </div>
@@ -410,8 +338,22 @@
           )
           .then((res) => {
           this.tableData = res.data.data;
+          this.rowClick(this.tableData[0],true)
       });
       },
+      // 判断审核时间是否标红
+      rowClick(row,boolean) {
+        if (boolean && row.chirldList) { // 如果是展开 并且有子集
+          row.chirldList.forEach((element)=>{
+            console.info(element.state, row.createTime)
+            if (element.auditDate > row.createTime) {
+              element.timeout = true
+            } else {
+              element.timeout = false
+            }
+          })
+        }
+      }
     },
     created() {
       //获取当前月份
