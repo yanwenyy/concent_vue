@@ -832,7 +832,7 @@
         searchform: {
           current: 1,
           size: 20,
-          gyType:"",
+          gyType:"1",
           reportDate:'',
           projectName:'',
           projectLocation:'',
@@ -946,10 +946,11 @@
       },
       searchformReset() {
         // this.$refs["searchform"].resetFields();
+        let gyType = this.searchform.gyType
         this.searchform={
           current: 1,
           size: 20,
-          gyType:"",
+          gyType:gyType,
           reportDate:'',
           projectName:'',
           projectLocation:'',
@@ -1004,6 +1005,7 @@
       }
     },
     created() {
+      this.gyTypeChange();
       this.setDate();
       this.getData();
     },
