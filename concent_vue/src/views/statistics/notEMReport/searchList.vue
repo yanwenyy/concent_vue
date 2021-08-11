@@ -3,6 +3,7 @@
     <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
       <el-form-item
         label="填报方式:"
+        v-if="gyTypeShow"
       >
         <el-select
           clearable
@@ -10,6 +11,7 @@
           placeholder="请选择"
           size="mini"
           v-model="searchform.gyType"
+          @change="gyTypeChange"
         >
           <el-option
             label="项目"
@@ -80,8 +82,8 @@
       <el-button @click="exportdata" type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>
     </el-form>
     <div style="margin-top: 10px">
-      <el-tabs type="border-card" >
-        <el-tab-pane label="工业制造">
+      <el-tabs type="border-card" @tab-click="tabChange" >
+        <el-tab-pane :label="industrial">
           <div style="margin-top: 10px">
             <el-table
               default-expand-all
@@ -854,6 +856,8 @@
             id:'pass'
           },
         ],//项目状态列表
+        industrial:"工业制造",
+        gyTypeShow:true
       };
     },
     mounted() {
@@ -980,6 +984,24 @@
         sj[1]=sj[1]<10?'0'+sj[1]:sj[1];
         this.searchform.reportDate=sj[0]+"-"+sj[1];
       },
+      // 修改的功能 **************************************************************************************************************************************
+      // 监听填报方式
+      gyTypeChange() {
+        if (this.searchform.gyType == 1) {
+          this.industrial = "工业制造项目"
+        } else {
+          this.industrial = "工业制造"
+        }
+      },
+      // 标签改变方法
+      tabChange(val) {
+        console.info(val.label)
+        if (val.label == "工业制造" || val.label == "工业制造项目") {
+          this.gyTypeShow = true
+        } else {
+          this.gyTypeShow = false
+        }
+      }
     },
     created() {
       this.setDate();
