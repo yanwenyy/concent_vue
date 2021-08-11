@@ -581,12 +581,11 @@
           }else{
             url="/api/statistics/projectMonthlyReport/Projectreport/process/start";
             var sj=new Date().toLocaleDateString().split('/');
-            // sj[1]=sj[1]<10?'0'+sj[1]:sj[1];
             this.$http
               .post('/api/statistics/projectMonthlyReport/ReportEndtime/detail/checkReportTime',
                 JSON.stringify({
-                  'restrictedobjectsType':this.userdata.orgtype,
-                  'orgtype,reportType':'1',
+                  'restrictedobjectsType':this.userdata.managerOrgType,
+                  'reportType':'1',
                   'endreporttime':sj[2],
                 }),
                 {useJson: true})
