@@ -1696,6 +1696,14 @@ export default {
                   'menushow': true,
                   'leaf': true,
                   'defaultpage': false
+                },{
+                  'name': '验工计价补录配置表',
+                  'path': '/statistics/projectCheck/recordSet',
+                  'component': '/statistics/projectCheck/recordSet',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
                 },
                 {
                   'name': '集团公司月报',
