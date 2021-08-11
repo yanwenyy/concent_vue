@@ -1201,13 +1201,13 @@
                       <el-input
                         @input="isFloor(scope.row.ngyvalueJn,scope.$index,detailform.gycp_list,'ngyvalueJn'),getGyzzCz(detailform.gycp_list,detailform.sumByMon_cp,'ngyvalueJn')"
                         v-if="scope.row.vjnw=='境内'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                        :disabled="true"
                         clearable
                         v-model="scope.row.ngyvalueJn"/>
                       <el-input
                         @input="isFloor(scope.row.ngyvalueJw,scope.$index,detailform.gycp_list,'ngyvalueJw'),getGyzzCz(detailform.gycp_list,detailform.sumByMon_cp,'ngyvalueJw')"
                         v-if="scope.row.vjnw=='境外'"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                        :disabled="true"
                         clearable
                         v-model="scope.row.ngyvalueJw"/>
                     </template>
@@ -3977,6 +3977,26 @@
             num=num+Number(item.overseasIndustry||0);
           })
           obj.overseasIndustry=num;
+        }
+        // 工业制造板块 主要产品管理 工业总产值 自动计算
+        if (name === "nzbsbvalueJn"|| name === "nygjvalueJn"|| name === "nqigyvalueJn") {
+          let num=0;
+          list.forEach((item)=>{
+            item.ngyvalueJn = Number(item.nzbsbvalueJn) + Number(item.nygjvalueJn) + Number(item.nqigyvalueJn)
+          })
+          list.forEach((item)=>{
+            num=num+Number(item.ngyvalueJn||0);
+          })
+          obj.ngyvalueJn=num;
+        } else if (name === "nzbsbvalueJw"|| name === "nygjvalueJw"|| name === "nqigyvalueJw") {
+          let num=0;
+          list.forEach((item)=>{
+            item.ngyvalueJw = Number(item.nzbsbvalueJw) + Number(item.nygjvalueJw) + Number(item.nqigyvalueJw)
+          })
+          list.forEach((item)=>{
+            num=num+Number(item.ngyvalueJw||0);
+          })
+          obj.ngyvalueJw=num;
         }
         // 自动计算房地产板块的房地产营业收入
         if (name === "inRevenue" || name === "offRevenue") {
