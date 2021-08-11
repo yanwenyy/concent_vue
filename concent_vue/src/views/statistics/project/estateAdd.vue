@@ -88,7 +88,7 @@
               <el-input
                 clearable
                 placeholder="请输入"
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 v-model="detailForm.project.contractNumber"/>
             </el-form-item>
             <el-form-item
@@ -126,7 +126,7 @@
               <el-input
                 clearable
                 placeholder="请输入"
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 v-model="detailForm.project.amountSignup">
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
@@ -140,7 +140,7 @@
               <el-input
                 clearable
                 placeholder="请输入"
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 v-model="detailForm.project.amountWe">
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
@@ -351,7 +351,8 @@
               }"
               style="width: 32.5%">
               <el-select
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                multiple
                 filterable
                 clearable
                 @change="getName(detailForm.project.fieldId, siteName, 'fieldName')"

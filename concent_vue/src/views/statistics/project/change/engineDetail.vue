@@ -957,8 +957,8 @@
                       clearable
                       :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
                       v-model="scope.row.contractAmount"
+                      @input="getPositionMoney(scope.$index,detailForm.project.topInfoSiteList)"
                     >
-                      <!--@input="getPositionMoney(scope.$index,detailForm.project.topInfoSiteList)"-->
                       <template slot="prepend">¥</template>
                       <template slot="append">(万元)</template>
                     </el-input>
@@ -2746,6 +2746,26 @@
           this.detailForm.project.contractAmountEngine='';
         }else{
           this.detailForm.project.contractAmountChange = money
+        }
+
+      },
+      //项目地点份额变动的时候
+      getPositionMoney(index,list){
+        if(list.length==1){
+          list[0].contractAmount=this.detailForm.project.contractAmountEngine
+        }else{
+          var money=0;
+          list.forEach((item,i)=>{
+            if(i>0){
+              money+=Number(item.contractAmount);
+            }
+          });
+          if(this.detailForm.project.contractAmountEngine-money>0){
+            list[0].contractAmount=this.detailForm.project.contractAmountEngine-money;
+          }else{
+            list[index].contractAmount='';
+            this.$message.error('项目地点份额之和不能大于初始我方份额');
+          }
         }
 
       },
