@@ -1813,6 +1813,14 @@ export default {
                   'leaf': true,
                   'defaultpage': false
                 }, {
+                  'name': '月报查看详情',
+                  'path': '/statistics/notEMReport/detailView',
+                  'component': '/statistics/notEMReport/detailView',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                }, {
                   'name': '新兴市场月报查询',
                   'path': '/statistics/notEMReport/searchList',
                   'component': '/statistics/notEMReport/searchList',
