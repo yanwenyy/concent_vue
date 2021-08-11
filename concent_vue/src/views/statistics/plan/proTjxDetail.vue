@@ -12,9 +12,9 @@
           <el-card class="box-card" v-if="p.actpoint != 'task'">
             <div class="clearfix el-card__header">
               <span style="color: #2a2a7d;line-height: 32px">
-                <b>项目计划</b>
-                <span style="color:#0a469d !important;margin-left: 20px;margin-right: 20px;font-size:14px;">{{p.planInfo.projectName}}</span>
+                <b>计划类型:</b>
                 <span style="color:#0a469d !important;font-size:14px;margin-right: 20px;">{{p.planInfo.planTypeName}}</span>
+                <span style="color:#0a469d !important;margin-left: 20px;margin-right: 20px;font-size:14px;">{{p.planInfo.projectName}}</span>
                 <span v-show="p.planInfo.planProjectTjx.planType === 2" style="color:#0a469d !important;font-size:14px;">{{p.planInfo.planProjectTjx.planYear}}年</span>
                 <span v-show="p.planInfo.planProjectTjx.planType === 1" style="color:#0a469d !important;font-size:14px;">{{p.planInfo.planProjectTjx.planYear}}年{{p.planInfo.planProjectTjx.planMonth}}月</span>
               </span>
@@ -150,6 +150,37 @@
       }
     },
     methods: {
+      //判断某些值是否相等
+      checkVal(){
+        var cansub=true;
+        var fjbfsg=0,//房建部分施工产值
+            fjbfjg=0,//房建部分竣工产值
+            sgcz=0,//施工产值
+            jgcz=0;//竣工产值
+        this.data.forEach((item,i)=>{
+          if(item.tjxCode=='001007'){
+            fjbfsg=Number(item.value);
+          }
+          if(item.tjxCode=='001008'){
+            fjbfjg=Number(item.value);
+          }
+          if(item.tjxCode=='001001'){
+            sgcz=Number(item.value);
+          }
+          if(item.tjxCode=='001009'){
+            jgcz=Number(item.value);
+          }
+        })
+        if(fjbfsg!=fjbfjg){
+          this.$message.error("房建部分施工产值应该和房建部分竣工产值相等");
+          cansub=false;
+        }
+        if(sgcz!=jgcz){
+          this.$message.error("竣工产值应该和施工产值相等");
+          cansub=false;
+        }
+        return cansub;
+      },
       // 只允许输入金额类型，最大两位小数（如：3.88）
       formatValue(val,index,list,name){
         val = val.replace(/(^\s*)|(\s*$)/g, "");
@@ -208,6 +239,10 @@
       },
       // 保存
       save() {
+        var cansub=this.checkVal();
+        if(!cansub){
+          return false;
+        }
         let planId = ''
         if (this.data.length > 0) {
           planId = this.data[0].planId
@@ -280,7 +315,7 @@
           }), {useJson: true})
           .then(res => {
             this.data = res.data.data
-            consloe.log(JSON.parse(this.$utils.decrypt(this.$route.query.p)));
+            console.log(JSON.parse(this.$utils.decrypt(this.$route.query.p)));
             if (this.data) {
               this.data.forEach((obj) => {
                 if (obj.value === 0) {
@@ -324,12 +359,14 @@
     padding: 10px;
     width: 100%;
     box-sizing: border-box;
-    max-height: calc(100vh - 65px)!important;
-    min-height: calc(100vh - 65px)!important;
+    max-height: calc(100vh - 80px)!important;
+    min-height: calc(100vh - 80px)!important;
     /*overflow: scroll;*/
   }
   .tableStyle{
     width: 100%;
+    max-height: calc(100vh - 180px)!important;
+    min-height: calc(100vh - 180px)!important;
   }
   .detail-back-tab{
     padding: 10px 20px ;

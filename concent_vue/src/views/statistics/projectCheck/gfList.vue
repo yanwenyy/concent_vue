@@ -307,7 +307,7 @@
       },
       // 查看
       rowshow(row) {
-      debugger
+      // debugger
         let p = {actpoint: "look", params: row};
         if(row.flowStatus==''||row.flowStatus==null){
           this.$message.info("该项目月报还未完成上报,无法查看");
