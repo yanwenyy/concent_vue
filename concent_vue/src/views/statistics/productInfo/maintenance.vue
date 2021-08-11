@@ -341,11 +341,14 @@ export default {
             this.$http
             .post(
               "/api/statistics/productbase/list/delete",{ids: uuids}
-
             )
             .then((res) => {
-            this.getData()
-        });
+              this.$message({
+                showClose: true,
+                message: res.data.data.info,
+              });
+              this.getData()
+          });
         }).catch(() => {})
         }
 
