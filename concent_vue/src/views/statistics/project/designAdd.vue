@@ -589,7 +589,7 @@
               :rules="rules.project.isMustMoney"
               style="width: 32.5%">
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 @change="getCount"
                 clearable
                 placeholder="请输入"
