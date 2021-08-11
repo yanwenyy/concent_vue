@@ -599,6 +599,72 @@
                   </el-button>
                 </el-upload>
               </el-form>
+              <el-dialog 
+                :visible.sync="workAmountShow"
+                title="标的物信息"
+                width="70%"
+              > 
+                <el-table
+                  :data="workAmountList"
+                  :header-cell-style="{
+                    'text-align': 'center', 
+                    'background-color': 'rgba(246,248,252,1)',
+                    color: 'rgba(0,0,0,1)',
+                  }"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%;"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"/>
+                  <el-table-column
+                    :resizable="false"
+                    label="产品名称"
+                    align="center"
+                    prop="productName"
+                    min-width="150"
+                    show-overflow-tooltip
+                  ></el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="规格型号"
+                    width="150"
+                    align="center"
+                    prop="specificationAndModel"
+                    show-overflow-tooltip
+                  ></el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="产品数量"
+                    width="150"
+                    align="center"
+                    prop="productQuantity"
+                    show-overflow-tooltip
+                  ></el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="产品单位"
+                    align="center"
+                    prop="productUnit"
+                    width="150"
+                    show-overflow-tooltip
+                  ></el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="总金额"
+                    align="center"
+                    prop="productTotalPrice"
+                    width="150"
+                    show-overflow-tooltip
+                  ></el-table-column>
+                </el-table>
+              </el-dialog>
               <el-table
                 :data="detailform.gy_list"
                 :header-cell-style="{
@@ -666,10 +732,13 @@
                     class="listTabel"
                     :resizable="false"
                     label="项目内容"
-                    prop="workAmount"
                     align="center"
                     show-overflow-tooltip
                   >
+                    <template slot-scope="scope">
+                      <!-- <span>{{scope.row.workAmount}}</span> -->
+                      <span @click="getWorkAmount(scope.row)" style="cursor:pointer;color:#409EFF;text-decoration:underline;">产品信息</span>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
@@ -1347,6 +1416,64 @@
                   </el-button>
                 </el-upload>
               </el-form>
+              <el-dialog 
+                :visible.sync="projectContentShow"
+                title="标的物信息"
+                width="70%"
+              > 
+                <el-table
+                  :data="projectContentList"
+                  :header-cell-style="{
+                    'text-align': 'center', 
+                    'background-color': 'rgba(246,248,252,1)',
+                    color: 'rgba(0,0,0,1)',
+                  }"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%;"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"/>
+                  <el-table-column
+                    :resizable="false"
+                    label="标的物名称"
+                    align="center"
+                    prop="subjectMatterName"
+                    min-width="200"
+                    show-overflow-tooltip
+                  ></el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="标的物数量"
+                    width="200"
+                    align="center"
+                    prop="subjectMatterNo"
+                    show-overflow-tooltip
+                  ></el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="标的物单位"
+                    width="150"
+                    align="center"
+                    prop="subjectMatterUnit"
+                    show-overflow-tooltip
+                  ></el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="总价(万元)"
+                    align="center"
+                    prop="totalPrice"
+                    width="300"
+                    show-overflow-tooltip
+                  ></el-table-column>
+                </el-table>
+              </el-dialog>
               <el-table
                 :data="detailform.wz_list"
                 :header-cell-style="{
@@ -1408,6 +1535,9 @@
                     align="center"
                     show-overflow-tooltip
                   >
+                    <template slot-scope="scope">
+                      <span @click="getProjectContent(scope.row)" style="cursor:pointer;color:#409EFF;text-decoration:underline;">标的物</span>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     :resizable="false"
@@ -3616,28 +3746,12 @@
       }
       return {
         Authorization:sessionStorage.getItem("token"),
-        projectStatus:[
-          {
-            detailName:"草稿",
-            id:'edit'
-          },
-          {
-            detailName:"审核中",
-            id:'check'
-          },
-          {
-            detailName:"审核通过",
-            id:'pass'
-          },
-          {
-            detailName:"审核驳回",
-            id:'reject'
-          },
-          {
-            detailName:"未创建",
-            id:'0'
-          }
-        ],//项目状态
+        // 查询产品信息
+        workAmountShow: false,
+        workAmountList:[],
+        // 查询标的物信息
+        projectContentShow: false,
+        projectContentList:[],
         timeout:  null,
         maxMoney:1000000,
         id:'',
@@ -3740,6 +3854,9 @@
       AuditProcess
     },
     computed: {
+      projectStatus() {
+        return this.$store.state.projectStatus.slice(8,12)
+      },
       bizTypeCode() {
         return this.$store.state.bizTypeCode;
       },
@@ -4274,6 +4391,22 @@
       handleSelectionChange(val) {
         this.multipleSelection = val;
       },
+      // 工业制造板块 项目管理 点击项目内容 获取产品信息列表
+      getWorkAmount(row){
+        this.$http.post("/api/statistics/productbase/list/getInfoProduct",{projectId: [row.projectId]} )
+          .then((res) => {
+            this.workAmountList = res.data.data
+          })
+        this.workAmountShow = true
+      },
+      // 物资贸易板块 项目内容 查询标的物
+      getProjectContent(row) {
+        this.$http.post("/api/statistics/productbase/list/getBdwProduct",{projectId: [row.projectId]} )
+          .then((res) => {
+            this.projectContentList = res.data.data
+          })
+        this.projectContentShow = true
+      }
     },
   };
 </script>
