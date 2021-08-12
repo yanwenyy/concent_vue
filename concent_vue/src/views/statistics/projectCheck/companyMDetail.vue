@@ -101,7 +101,7 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="产值(验工计价)" name="cwjswgcl">
-        <div class="detailBoxBG">
+        <div class="table-div showOrHiddenTabel">
           <el-table
             class="tableStyle"
             :max-height="$tableHeight"
@@ -115,7 +115,7 @@
             border
             highlight-current-row
             ref="table"
-            style="width: 100%"
+            style="width: 99%"
 
             tooltip-effect="dark"
           >
@@ -262,6 +262,7 @@
               </template>
             </el-table-column>-->
             <el-table-column
+              v-if="showKL"
               :width="150"
               align="center"
               label="开累合计"
@@ -272,6 +273,7 @@
               </template>
             </el-table-column>
             <el-table-column
+              v-if="showKL"
               :width="150"
               align="center"
               label="开累计价额"
@@ -282,6 +284,7 @@
               </template>
             </el-table-column>
             <el-table-column
+              v-if="showKL"
               :width="150"
               align="center"
               label="开累税额"
@@ -305,6 +308,7 @@
               </template>
             </el-table-column>-->
           </el-table>
+          <i :title="!showKL?'点击显示开累':'点击隐藏开累'" :class="!showKL?'el-icon-d-arrow-right':'el-icon-d-arrow-left'" class=" tabel-show-icon" @click="setShowKl()"></i>
         </div>
       </el-tab-pane>
       <el-tab-pane label="审批流程" v-if="dataReport.flowStatus!=1&&(p.actpoint == 'task'||p.actpoint == 'look')">
@@ -326,6 +330,7 @@
     },
     data() {
       return {
+        showKL:false,//是否显示开累
         key:0,
         data:[],
         dataReport:{
@@ -368,6 +373,14 @@
       }
     },
     methods: {
+      //点击显示或隐藏开累
+      setShowKl(){
+        this.showKL=!this.showKL;
+        this.$nextTick(() => {
+          this.$refs.table.doLayout();
+          // el-table添加ref="tableName"
+        });
+      },
       // 保存
       save(type) {
         // this.dataReport.status="1"
@@ -786,6 +799,14 @@
   }
   .detailBoxBG{
     overflow: hidden!important;
+  }
+  .table-div{
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    max-height: calc(100vh - 80px)!important;
+    min-height: calc(100vh - 80px)!important;
+    /*overflow: scroll;*/
   }
   /**/
 </style>

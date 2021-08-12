@@ -180,8 +180,7 @@
                 <el-button @click="searchform.design={},searchform.design.type='design',searchDate('design','kc_list')" type="info" plain style="color:black;background:none">重置</el-button>
                 <el-button @click="searchDate('design','kc_list')" type="primary" plain>查询</el-button>
                 <el-button @click="exportdata('design','勘察设计板块')" type="primary" plain>导出</el-button>
-                <!--<el-button @click="importData('designDetail')" type="primary" plain>导入</el-button>-->
-                <el-upload
+                <!-- <el-upload
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/designDetail'"
                   :on-success="importData"
@@ -198,7 +197,7 @@
                     class="new-add-btn"
                   ><i class="el-icon-download"></i>导入
                   </el-button>
-                </el-upload>
+                </el-upload> -->
               </el-form>
               <el-table
                 :data="detailform.kc_list"
@@ -580,7 +579,7 @@
                 <el-button @click="searchform.industry.projectName='',searchDate('industry','gy_list')" type="info" plain style="color:black;background:none">重置</el-button>
                 <el-button @click="searchDate('industry','gy_list')" type="primary" plain>查询</el-button>
                 <el-button @click="exportdata('industry','工业制造板块')" type="primary" plain>导出</el-button>
-                <el-upload
+                <!-- <el-upload
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/industryDetail'"
                   :on-success="importData"
@@ -597,7 +596,7 @@
                     class="new-add-btn"
                   ><i class="el-icon-download"></i>导入
                   </el-button>
-                </el-upload>
+                </el-upload> -->
               </el-form>
               <el-dialog 
                 :visible.sync="workAmountShow"
@@ -1097,7 +1096,7 @@
             <div class="table-div">
               <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
                 <el-button @click="exportdata('product','工业制造板块')" type="primary" plain>导出</el-button>
-                <el-upload
+                <!-- <el-upload
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/productDetail'"
                   :on-success="importData"
@@ -1114,7 +1113,7 @@
                     class="new-add-btn"
                   ><i class="el-icon-download"></i>导入
                   </el-button>
-                </el-upload>
+                </el-upload> -->
               </el-form>
               <el-table
                 :data="detailform.gycp_list"
@@ -1397,7 +1396,7 @@
                 <el-button @click="searchform.material.projectName='',searchDate('material','wz_list')" type="info" plain style="color:black;background:none">重置</el-button>
                 <el-button @click="searchDate('material','wz_list')" type="primary" plain>查询</el-button>
                 <el-button @click="exportdata('material','物资贸易板块')" type="primary" plain>导出</el-button>
-                <el-upload
+                <!-- <el-upload
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/materialDetail'"
                   :on-success="importData"
@@ -1414,7 +1413,7 @@
                     class="new-add-btn"
                   ><i class="el-icon-download"></i>导入
                   </el-button>
-                </el-upload>
+                </el-upload> -->
               </el-form>
               <el-dialog 
                 :visible.sync="projectContentShow"
@@ -1846,7 +1845,7 @@
                 <el-button @click="searchform.realty.projectName='',searchDate('realty','fdc_list')" type="info" plain style="color:black;background:none">重置</el-button>
                 <el-button @click="searchDate('realty','fdc_list')" type="primary" plain>查询</el-button>
                 <el-button @click="exportdata('realty','房地产板块')" type="primary" plain>导出</el-button>
-                <el-upload
+                <!-- <el-upload
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/realtyDetail'"
                   :on-success="importData"
@@ -1863,7 +1862,7 @@
                     class="new-add-btn"
                   ><i class="el-icon-download"></i>导入
                   </el-button>
-                </el-upload>
+                </el-upload> -->
               </el-form>
               <el-table
                 :data="detailform.fdc_list"
@@ -2306,7 +2305,7 @@
                 <el-button @click="searchform.secure.projectName='',searchDate('secure','jrbx_list')" type="info" plain style="color:black;background:none">重置</el-button>
                 <el-button @click="searchDate('secure','jrbx_list')" type="primary" plain>查询</el-button>
                 <el-button @click="exportdata('secure','金融保险')" type="primary" plain>导出</el-button>
-                <el-upload
+                <!-- <el-upload
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/secureDetail'"
                   :on-success="importData"
@@ -2323,7 +2322,7 @@
                     class="new-add-btn"
                   ><i class="el-icon-download"></i>导入
                   </el-button>
-                </el-upload>
+                </el-upload> -->
               </el-form>
               <el-table
                 :data="detailform.jrbx_list"
@@ -2774,7 +2773,7 @@
                 <el-button @click="searchform.service.projectName='',searchDate('service','yy_list')" type="info" plain style="color:black;background:none">重置</el-button>
                 <el-button @click="searchDate('service','yy_list')" type="primary" plain>查询</el-button>
                 <el-button @click="exportdata('service','运营维管')" type="primary" plain>导出</el-button>
-                <el-upload
+                <!-- <el-upload
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/serviceDetail'"
                   :on-success="importData"
@@ -2791,7 +2790,7 @@
                     class="new-add-btn"
                   ><i class="el-icon-download"></i>导入
                   </el-button>
-                </el-upload>
+                </el-upload> -->
               </el-form>
               <el-table
                 :data="detailform.yy_list"
@@ -3389,7 +3388,7 @@
                 <el-button @click="searchform.other.projectName='',searchDate('other','qt_list')" type="info" plain style="color:black;background:none">重置</el-button>
                 <el-button @click="searchDate('other','qt_list')" type="primary" plain>查询</el-button>
                 <el-button @click="exportdata('other','其他产值板块')" type="primary" plain>导出</el-button>
-                <el-upload
+                <!-- <el-upload
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/otherDetail'"
                   :on-success="importData"
@@ -3406,7 +3405,7 @@
                     class="new-add-btn"
                   ><i class="el-icon-download"></i>导入
                   </el-button>
-                </el-upload>
+                </el-upload> -->
               </el-form>
               <el-table
                 :data="detailform.qt_list"
@@ -3707,9 +3706,6 @@
             </div>
           </el-tab-pane>
         </el-tabs>
-      </el-tab-pane>
-      <el-tab-pane label="审批流程" v-if="p.stauts!='1'&&(p.actpoint == 'task'||p.actpoint == 'look')">
-        <Audit-Process :task="p.task||{businessId:p.instid||p.statId,businessType:' engineering_monthly_report_not'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
@@ -4074,20 +4070,20 @@
         })
       },
       //导入
-      importData(response, file, fileList) {
-        if (response && response.code === 200) {
-          this.$message({
-            message: "导入成功",
-            type: "success",
-            duration: 1500,
-            onClose: () => {
-            this.getDetail();
-        },
-        });
-        } else {
-          this.$message.error(response.msg);
-        }
-      },
+      // importData(response, file, fileList) {
+      //   if (response && response.code === 200) {
+      //     this.$message({
+      //       message: "导入成功",
+      //       type: "success",
+      //       duration: 1500,
+      //       onClose: () => {
+      //       this.getDetail();
+      //   },
+      //   });
+      //   } else {
+      //     this.$message.error(response.msg);
+      //   }
+      // },
       //复选下拉框框获取name
       getMultipleName(valueList,list,id,name){
         var _id=[],_name=[];

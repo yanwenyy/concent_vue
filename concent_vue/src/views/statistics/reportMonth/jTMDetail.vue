@@ -166,6 +166,7 @@
               </template>
             </el-table-column>
             <el-table-column
+              v-if="showKL"
               :width="150"
               align="center"
               label="开累完成"
@@ -176,6 +177,7 @@
               </template>
             </el-table-column>
             <el-table-column
+              v-if="showKL"
               :width="150"
               align="center"
               label="开累计划"
@@ -186,6 +188,7 @@
               </template>
             </el-table-column>
             <el-table-column
+              v-if="showKL"
               :width="150"
               align="center"
               label="开累%"
@@ -199,6 +202,7 @@
               </template>
             </el-table-column>
           </el-table>
+          <i :title="!showKL?'点击显示开累':'点击隐藏开累'" :class="!showKL?'el-icon-d-arrow-right':'el-icon-d-arrow-left'" class=" tabel-show-icon" @click="setShowKl()"></i>
           <div class="cwjswgcl-bottom">
             <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009003'"><span>{{item.tjxName+"("+item.jldw+")"}}:<el-input disabled v-model="item.monthValue" /></span></div>
             <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009003001'"><span>{{item.tjxName}}:<el-input disabled  v-model="item.monthValue" /></span></div>
@@ -472,6 +476,7 @@
     },
     data() {
       return {
+        showKL:false,//是否显示开累
         key:0,
         data:[],
         projectList:{},
@@ -511,6 +516,14 @@
       }
     },
     methods: {
+      //点击显示或隐藏开累
+      setShowKl(){
+        this.showKL=!this.showKL;
+        this.$nextTick(() => {
+          this.$refs.table.doLayout();
+          // el-table添加ref="tableName"
+        });
+      },
       //计算房建施工面积和其中投标承包面积
       clacFjsg(list){
         var sgVal=0,qztbVal=0;
@@ -898,6 +911,12 @@
   }
   .sub-btn{
     right: 95px!important;
+  }
+  .tableStyle{
+    min-height: calc(100vh - 160px)!important;
+    height:calc(100vh - 160px)!important;
+    max-height: calc(100vh - 160px)!important;
+    overflow: auto;
   }
   /**/
 </style>

@@ -113,8 +113,8 @@
               v-model="p.pushId?'1':detailform.contractInfo.isImport"
               active-color="#409EFF"
               inactive-color="#ddd"
-              active-value="0"
-              inactive-value="1"
+              active-value="1"
+              inactive-value="0"
             >
             </el-switch>
             <!--<el-select-->
@@ -390,12 +390,11 @@
               disabled
               clearable
               placeholder="请输入"
-
               v-model="detailform.contractInfo.contractType=='2'?'补充合同':'主合同'"
             />
           </el-form-item>
             <br>
-            <el-form-item
+            <!-- <el-form-item
               v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
               label="建设单位"
               prop="contractInfo.constructionOrg"
@@ -411,30 +410,8 @@
                 :fetch-suggestions="detailform.contractInfo.isClientele=='1'?querySearchAsync:querySjdw"
                 placeholder="请输入内容"
               ></el-autocomplete>
-              <!--<el-select-->
-                <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
-                <!--clearable-->
-                <!--filterable-->
-                <!--placeholder="请选择"-->
-
-                <!--@change="-->
-                <!--getName(-->
-                  <!--detailform.contractInfo.constructionOrgId,-->
-                  <!--xqprojectType,-->
-                  <!--'constructionOrg'-->
-                <!--)-->
-              <!--"-->
-                <!--v-model="detailform.contractInfo.constructionOrgId"-->
-              <!--&gt;-->
-                <!--<el-option-->
-                  <!--:key="index"-->
-                  <!--:label="item.detailName"-->
-                  <!--:value="item.id"-->
-                  <!--v-for="(item, index) in xqprojectType"-->
-                <!--&gt;</el-option>-->
-              <!--</el-select>-->
-            </el-form-item>
-            <el-form-item
+            </el-form-item> -->
+            <!-- <el-form-item
               v-if="detailform.contractInfo.enginTypeFirstId!='17ff5c08d36b41ea8f2dc2e9d3029cac'"
               label="建设单位"
               prop="contractInfo.constructionOrg"
@@ -445,19 +422,50 @@
             }"
             >
               <el-autocomplete
+                multiple
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                 v-model="detailform.contractInfo.constructionOrg"
                 :fetch-suggestions="detailform.contractInfo.isClientele=='1'?querySearchAsync:querySjdw"
                 placeholder="请输入内容"
               ></el-autocomplete>
-              <!--<el-input-->
-                <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
-                <!--clearable-->
-                <!--placeholder="请输入"-->
-
-                <!--v-model="detailform.contractInfo.constructionOrg"-->
-              <!--/>-->
-            </el-form-item>
+            </el-form-item> -->
+            <el-form-item
+                label="建设单位:"
+                prop="contractInfo.constructionOrgId"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: ['blur','change'],
+              }">
+                <el-select
+                  v-model="constructionOrgList"
+                  v-if="detailform.contractInfo.isClientele=='1'"
+                  multiple
+                  filterable
+                  collapse-tags
+                  placeholder="请选择">
+                  <el-option
+                    v-for="item in pubCustomers"
+                    :key="item.customerId"
+                    :label="item.customerName"
+                    :value="item.customerId">
+                  </el-option>
+                </el-select>
+                <el-select
+                  v-model="constructionOrgList"
+                  v-if="detailform.contractInfo.isClientele!='1'"
+                  multiple
+                  filterable
+                  collapse-tags
+                  placeholder="请选择">
+                    <el-option
+                      :key="index"
+                      :label="item.detailName"
+                      :value="item.id"
+                      v-for="(item, index) in sjdwList"
+                    ></el-option>
+                </el-select>
+              </el-form-item>
           <el-form-item
             class="inline-formitem"
             label="是否客户:"
@@ -476,7 +484,7 @@
               inactive-color="#ddd"
               active-value="1"
               inactive-value="0"
-              @change="detailform.contractInfo.constructionOrg=''"
+              @change="constructionOrgList=''"
             >
             </el-switch>
           </el-form-item>
@@ -521,7 +529,6 @@
             :rules="{
                required: true, message: '此项不能为空', trigger: 'blur'
             }"
-
           >
             <el-select
               class="multiple-sel"
@@ -542,25 +549,17 @@
             </el-select>
           </el-form-item>
           <el-form-item
-            label="设计单位"
-          >
-            <el-autocomplete
-              @input="getautoCompleteName(
-                detailform.contractInfo.designOrg,
-                 'designOrgId'
-               )"
-              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-              v-model="detailform.contractInfo.designOrg"
-              :fetch-suggestions="querySjdw"
-              placeholder="请输入内容"
-            ></el-autocomplete>
-            <!--<el-input-->
-              <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
-              <!--clearable-->
-              <!--placeholder="请输入"-->
-
-              <!--v-model="detailform.contractInfo.designOrg"-->
-            <!--/>-->
+            label="设计单位:"
+            prop="contractInfo.designOrg"
+            style="width: 32.5%">
+            <el-input
+              disabled
+              clearable
+              placeholder="请选择设计单位"
+              v-model="detailform.contractInfo.designOrg">
+              <el-button slot="append" icon="el-icon-circle-plus-outline" 
+              @click="openComMul(detailform.contractInfo.designOrgId,detailform.contractInfo.designOrg,'/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
+            </el-input>
           </el-form-item>
           <el-form-item
             class="inline-formitem"
@@ -594,8 +593,8 @@
               v-model="detailform.contractInfo.isInSystemUnion"
               active-color="#409EFF"
               inactive-color="#ddd"
-              active-value="0"
-              inactive-value="1"
+              active-value="1"
+              inactive-value="0"
               @change="changeMoney('unionContractInfoAttachList','nlht')"
             >
             </el-switch>
@@ -620,8 +619,8 @@
               v-model="detailform.contractInfo.isInSystemSub"
               active-color="#409EFF"
               inactive-color="#ddd"
-              active-value="0"
-              inactive-value="1"
+              active-value="1"
+              inactive-value="0"
               @change="changeMoney('innerContractInfoAttachList','nfb')"
             >
             </el-switch>
@@ -646,8 +645,8 @@
               v-model="detailform.contractInfo.isOutSystemUnion"
               active-color="#409EFF"
               inactive-color="#ddd"
-              active-value="0"
-              inactive-value="1"
+              active-value="1"
+              inactive-value="0"
               @change="changeMoney('outUnionContractInfoAttachList','wlht')"
             >
             </el-switch>
@@ -672,8 +671,8 @@
               v-model="detailform.contractInfo.isOutSystemSub"
               active-color="#409EFF"
               inactive-color="#ddd"
-              active-value="0"
-              inactive-value="1"
+              active-value="1"
+              inactive-value="0"
               @change="changeMoney('outUnionContractInfoAttachList','wfb')"
             >
             </el-switch>
@@ -698,8 +697,8 @@
               v-model="detailform.contractInfo.isInGroupSub"
               active-color="#409EFF"
               inactive-color="#ddd"
-              active-value="0"
-              inactive-value="1"
+              active-value="1"
+              inactive-value="0"
               @change="changeMoney('innerGroupContractInfoAttachList','jtnfb')"
             >
             </el-switch>
@@ -2060,8 +2059,8 @@
                     v-model="scope.row.isAdd"
                     active-color="#409EFF"
                     inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"
+                    active-value="1"
+                    inactive-value="0"
                   >
                   </el-switch>
                   <!--{{scope.row.isAdd=='1'?'否':'是'}}-->
@@ -2240,8 +2239,8 @@
                     v-model="scope.row.isAdd"
                     active-color="#409EFF"
                     inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"
+                    active-value="1"
+                    inactive-value="0"
                   >
                   </el-switch>
                 </template>
@@ -2444,8 +2443,8 @@
                     v-model="scope.row.isAdd"
                     active-color="#409EFF"
                     inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"
+                    active-value="1"
+                    inactive-value="0"
                   >
                   </el-switch>
                 </template>
@@ -2648,8 +2647,8 @@
                     v-model="scope.row.isAdd"
                     active-color="#409EFF"
                     inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"
+                    active-value="1"
+                    inactive-value="0"
                   >
                   </el-switch>
                 </template>
@@ -2827,8 +2826,8 @@
                     v-model="scope.row.isAdd"
                     active-color="#409EFF"
                     inactive-color="#ddd"
-                    active-value="0"
-                    inactive-value="1"
+                    active-value="1"
+                    inactive-value="0"
                   >
                   </el-switch>
                 </template>
@@ -6760,6 +6759,8 @@
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
     <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
     <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
+    <!--多选的单位列表组件-->
+    <company-mul v-if="companyMulStatus" ref="comAdd" @getComList="getComList"></company-mul>
   </div>
 </template>
 
@@ -6772,6 +6773,7 @@
   import datas from '@/utils/position'
   import FileUpload from '@/components/fileUpload'
   import AuditProcess from '@/components/auditProcess'
+  import companyMul from '@/components/companiesMultiple'
 export default {
   data() {
     var validateMoney = (rule, value, callback) => {
@@ -6793,6 +6795,8 @@ export default {
       }
     }
     return {
+      constructionOrgList: [],
+      companyMulStatus:false,//设计单位等多选列表状态
       yqList:[],//所属央企list
       extendList:[],//扩展字段list
       Authorization:sessionStorage.getItem("token"),
@@ -6822,7 +6826,11 @@ export default {
           marketSecondId:'',
           qualityOrgNames:'',
           enginTypeSecondId:'',
-          isClientele:'1'
+          isClientele:'1',
+          designOrg: '',//设计单位
+          designOrgId: '',
+          constructionOrg:'',//建设单位
+          constructionOrgId:''
         },
         contractInfoAttachBO: {
           innerContractInfoAttachList:[],
@@ -6887,7 +6895,8 @@ export default {
     AddBd,
     CompanyTree,
     FileUpload,
-    AuditProcess
+    AuditProcess,
+    companyMul
   },
   computed: {
     railwayBureau(){//所属铁路局
@@ -6996,6 +7005,21 @@ export default {
       });
   },
   methods: {
+    //打开多选的单位列表
+      openComMul(ids,names,url,type){
+        this.companyMulStatus=true;
+        this.$nextTick(() => {
+          this.$refs.comAdd.init(ids,names,url,type);
+        })
+      },
+      //获取拿过来的多选单位列表
+      getComList(data){
+        this.$forceUpdate();
+         if (data.type == "设计单位") {
+          this.detailform.contractInfo.designOrgId=data.selIdList.join(",");
+          this.detailform.contractInfo.designOrg=data.selList.join(",");
+        }
+      },
     //检查合同地点与关联项目地点是否不一致
     checkTopInfoSiteList(){
       if(this.detailform.searchProject==true){
@@ -8018,6 +8042,7 @@ export default {
 
       this.detailform.commonFilesList=this.detailform.fileList1.concat(this.detailform.fileList2).concat(this.detailform.fileList3).concat(this.detailform.fileList4)
       var url='';
+      this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
       if(this.detailform.searchProject==true&&(this.p.actpoint === "edit")){
         url='/api/contract/contract/ContractInfo/detail/update';
       }else{
@@ -8257,6 +8282,7 @@ export default {
       this.detailform.zplx=datas.contractInfo.otherAssemblyTypeId&&datas.contractInfo.otherAssemblyTypeId.split(",");
       this.detailform.jzlx=datas.contractInfo.otherBuildingTypeId&&datas.contractInfo.otherBuildingTypeId.split(",");
       this.detailform.jzjglx=datas.contractInfo.otherBuildingStructureTypeId&&datas.contractInfo.otherBuildingStructureTypeId.split(",");
+      this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
     });
     },
 

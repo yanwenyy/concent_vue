@@ -52,7 +52,7 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="产物及实物工程量" name="cwjswgcl">
-        <div class="table-div"  style="position: relative">
+        <div class="table-div showOrHiddenTabel"  style="position: relative">
           <el-table
             class="tableStyle"
             :max-height="$tableHeight"
@@ -66,8 +66,8 @@
             border
             highlight-current-row
             ref="table"
-            style="width: 100%"
-            cell-style="padding:5px 0"
+            style="width: 99%"
+            cell-class-name="table-padding5"
             tooltip-effect="dark"
           >
             <el-table-column
@@ -167,6 +167,7 @@
               </template>
             </el-table-column>
             <el-table-column
+              v-if="showKL"
               :width="150"
               align="center"
               label="开累完成"
@@ -177,6 +178,7 @@
               </template>
             </el-table-column>
             <el-table-column
+              v-if="showKL"
               :width="150"
               align="center"
               label="开累计划"
@@ -187,6 +189,7 @@
               </template>
             </el-table-column>
             <el-table-column
+              v-if="showKL"
               :width="150"
               align="center"
               label="开累%"
@@ -200,6 +203,7 @@
               </template>
             </el-table-column>
           </el-table>
+          <i :title="!showKL?'点击显示开累':'点击隐藏开累'" :class="!showKL?'el-icon-d-arrow-right':'el-icon-d-arrow-left'" class=" tabel-show-icon" @click="setShowKl()"></i>
           <div class="cwjswgcl-bottom">
             <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009003'"><span>{{item.tjxName+"("+item.jldw+")"}}:<el-input disabled v-model="item.monthValue" /></span></div>
             <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009003001'"><span>{{item.tjxName}}:<el-input disabled  v-model="item.monthValue" /></span></div>
@@ -473,6 +477,7 @@
     },
     data() {
       return {
+        showKL:false,//是否显示开累
         data:[],
         projectList:{},
         dataReport:{
@@ -518,6 +523,14 @@
       }
     },
     methods: {
+      //点击显示或隐藏开累
+      setShowKl(){
+        this.showKL=!this.showKL;
+        this.$nextTick(() => {
+          this.$refs.table.doLayout();
+          // el-table添加ref="tableName"
+        });
+      },
       //计算房建施工面积和其中投标承包面积
       clacFjsg(list){
         var sgVal=0,qztbVal=0;
@@ -924,7 +937,9 @@
     right: 95px!important;
   }
   .tableStyle{
-    max-height: calc(100vh - 110px)!important;
+    min-height: calc(100vh - 160px)!important;
+    height:calc(100vh - 160px)!important;
+    max-height: calc(100vh - 160px)!important;
     overflow: auto;
   }
   /**/

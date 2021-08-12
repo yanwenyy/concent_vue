@@ -1696,6 +1696,14 @@ export default {
                   'menushow': true,
                   'leaf': true,
                   'defaultpage': false
+                },{
+                  'name': '验工计价补录配置表',
+                  'path': '/statistics/projectCheck/recordSet',
+                  'component': '/statistics/projectCheck/recordSet',
+                  'iconCls': 'el-icon-office-building',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
                 },
                 {
                   'name': '集团公司月报',
@@ -1808,6 +1816,14 @@ export default {
                   'name': '月报填报详情',
                   'path': '/statistics/notEMReport/detail',
                   'component': '/statistics/notEMReport/detail',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                }, {
+                  'name': '月报查看详情',
+                  'path': '/statistics/notEMReport/detailView',
+                  'component': '/statistics/notEMReport/detailView',
                   'iconCls': 'el-icon-reading',
                   'menushow': false,
                   'leaf': true,

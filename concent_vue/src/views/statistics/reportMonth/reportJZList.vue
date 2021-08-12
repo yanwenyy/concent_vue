@@ -8,8 +8,8 @@
                    type="primary" plain>查询</el-button>-->
         <!--<el-button @click="add"-->
                    <!--type="primary" plain><i class="el-icon-plus"></i>新增</el-button>-->
-        <el-button @click="edit"
-                   type="primary" plain><i class="el-icon-edit"></i>修改</el-button>
+        <!--<el-button @click="edit"-->
+                   <!--type="primary" plain><i class="el-icon-edit"></i>修改</el-button>-->
         <!--<el-button @click="del"-->
                    <!--type="primary" plain><i class="el-icon-delete"></i>删除</el-button>-->
         <!--<el-button @click="batchT"-->
@@ -24,6 +24,7 @@
       <div style="float: right;">
         <el-button @click="searchformSubmit"
                    type="primary" plain><i class="el-icon-search"></i>查询</el-button>
+        <el-button  @click="back" type="info"  style="color:black;background:none" plain><i class="el-icon-search"></i>返回</el-button>
       </div>
     </div>
 
@@ -105,63 +106,76 @@
         <el-table-column :width="150"
                          align="center"
                          label="所属单位"
-                         prop="contractAmountTotal" show-overflow-tooltip
+                         prop="createOrgName" show-overflow-tooltip
         >
           <template slot="header"
                     slot-scope="scope">
             <span>所属单位</span>
             <div>
               <el-input style=" width: 100%"
-                        v-model="searchform.contractAmountTotal"
+                        v-model="searchform.createOrgName"
                         size="mini"/>
             </div>
           </template>
         </el-table-column>
 
-        <el-table-column :width="150"
-                         align="center"
-                         label="状态"
-                         prop="monthValue" show-overflow-tooltip
+        <el-table-column
+          :width="150"
+          align="center"
+          label="状态"
+          prop="flowStatus"
+          show-overflow-tooltip
         >
-          <template slot="header"
-                    slot-scope="scope">
+          <template slot-scope="scope">
+             {{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核驳回':'待登记'}}
+          </template>
+          <template slot="header" slot-scope="scope">
             <span>状态</span>
             <div>
-              <el-input style=" width: 100%"
-                        v-model="searchform.monthValue"
-                        size="mini"/>
+              <el-select
+                class="list-search-picker"
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="searchform.flowStatus"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in flowStatusList"
+                ></el-option>
+              </el-select>
+              <!--<el-input-->
+              <!--class="list-search-picker"-->
+              <!--style=" width: 100%"-->
+              <!--v-model="searchform.flowStatus"-->
+              <!--size="mini"-->
+              <!--/>-->
             </div>
           </template>
         </el-table-column>
         <el-table-column :width="150"
                          align="center"
                          label="批复状态"
-                         prop="yearValue" show-overflow-tooltip
+                         prop="pfStatus" show-overflow-tooltip
         >
           <template slot="header"
                     slot-scope="scope">
             <span>批复状态</span>
             <div>
               <el-input style=" width: 100%"
-                        v-model="searchform.yearValue"
+                        v-model="searchform.pfStatus"
                         size="mini"/>
             </div>
           </template>
         </el-table-column>
         <el-table-column :width="150"
-                                           align="center"
-                                           label="批复金额(万元)"
-                                           prop="totalValue" show-overflow-tooltip
+           align="center"
+           label="批复金额(万元)"
+           prop="pfMoney" show-overflow-tooltip
       >
-        <template slot="header"
-                  slot-scope="scope">
-          <span>批复金额(万元)</span>
-          <div>
-            <el-input style=" width: 100%"
-                      v-model="searchform.totalValue"
-                      size="mini"/>
-          </div>
-        </template>
       </el-table-column>
         <el-table-column
          :width="120"
@@ -285,6 +299,10 @@
       }
     },
     methods: {
+      // 返回上一页
+      back() {
+        this.$router.back()
+      },
       getdatatime(){//默认显示今天
         var date = new Date();
         var y = date.getFullYear();

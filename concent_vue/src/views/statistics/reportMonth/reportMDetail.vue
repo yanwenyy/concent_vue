@@ -581,17 +581,16 @@
           }else{
             url="/api/statistics/projectMonthlyReport/Projectreport/process/start";
             var sj=new Date().toLocaleDateString().split('/');
-            // sj[1]=sj[1]<10?'0'+sj[1]:sj[1];
             this.$http
               .post('/api/statistics/projectMonthlyReport/ReportEndtime/detail/checkReportTime',
                 JSON.stringify({
-                  'restrictedobjectsType':this.userdata.orgtype,
-                  'orgtype,reportType':'1',
+                  'restrictedobjectsType':this.userdata.managerOrgType,
+                  'reportType':'1',
                   'endreporttime':sj[2],
                 }),
                 {useJson: true})
               .then(res => {
-                if (res.data.data === null) {
+                if (res.data.data.length<=0) {
                   this.$http
                     .post(url, JSON.stringify(tableData), {useJson: true})
                     .then(res => {
@@ -605,7 +604,7 @@
                       }
                     })
                 }else{
-                  this.$message.error(res.data.msg)
+                  this.$message.error('当前月报已经过了上报截止日期,不能提交!')
                 }
               })
 
