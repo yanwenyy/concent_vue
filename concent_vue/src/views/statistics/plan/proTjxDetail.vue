@@ -12,11 +12,11 @@
           <el-card class="box-card" v-if="p.actpoint != 'task'">
             <div class="clearfix el-card__header">
               <span style="color: #2a2a7d;line-height: 32px">
-                <b>计划类型:</b>
-                <span style="color:#0a469d !important;font-size:14px;margin-right: 20px;">{{p.planInfo.planTypeName}}</span>
-                <span style="color:#0a469d !important;margin-left: 20px;margin-right: 20px;font-size:14px;">{{p.planInfo.projectName}}</span>
-                <span v-show="p.planInfo.planProjectTjx.planType === 2" style="color:#0a469d !important;font-size:14px;">{{p.planInfo.planProjectTjx.planYear}}年</span>
-                <span v-show="p.planInfo.planProjectTjx.planType === 1" style="color:#0a469d !important;font-size:14px;">{{p.planInfo.planProjectTjx.planYear}}年{{p.planInfo.planProjectTjx.planMonth}}月</span>
+                <b style="color:red">计划类型:</b>
+                <span style="color:red !important;font-size:14px;margin-right: 20px;">{{p.planInfo.planTypeName}}</span>
+                <span style="color:red !important;margin-left: 20px;margin-right: 20px;font-size:14px;">{{p.planInfo.projectName}}</span>
+                <span v-show="p.planInfo.planProjectTjx.planType === 2" style="color:red !important;font-size:14px;">{{p.planInfo.planProjectTjx.planYear}}年</span>
+                <span v-show="p.planInfo.planProjectTjx.planType === 1" style="color:red !important;font-size:14px;">{{p.planInfo.planProjectTjx.planYear}}年{{p.planInfo.planProjectTjx.planMonth}}月</span>
               </span>
             </div>
           </el-card>

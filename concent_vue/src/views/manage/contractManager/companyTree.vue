@@ -167,7 +167,7 @@
         }
       },
       handleNodeClick(data) {
-        // console.log(data);
+         console.log(data);
         if(this.notSelect.indexOf(data.detailCode)=='-1'){
           this.dialogVisible = false;
           data.type=this.type;

@@ -460,7 +460,7 @@
           </el-form>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="审批流程" v-if="dataReport.flowStatus!=1&&(p.actpoint == 'task'||p.actpoint == 'look')">
+      <el-tab-pane label="审批流程" v-if="dataReport.flowStatus!='edit'&&(p.actpoint == 'task'||p.actpoint == 'look')">
         <Audit-Process :task="p.task||{businessId:p.params.uuid||p.instid,businessType:' engineering_monthly_report'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>
@@ -476,6 +476,7 @@
     },
     data() {
       return {
+        userdata:JSON.parse(sessionStorage.getItem('userdata')),
         showKL:false,//是否显示开累
         key:0,
         data:[],
@@ -562,7 +563,7 @@
       // 保存
       save(type) {
         this.dataReport.status="3"//集团创建
-        this.dataReport.flowStatus="1"
+        this.dataReport.flowStatus="edit"
         let tableData = {
           projectReportDetaiList:this.data,
           projectreport:this.dataReport,
@@ -590,13 +591,13 @@
           this.$http
             .post('/api/statistics/projectMonthlyReport/ReportEndtime/detail/checkReportTime',
               JSON.stringify({
-                'restrictedobjectsType':this.userdata.orgtype,
-                'orgtype,reportType':'1',
+                'restrictedobjectsType':this.userdata.managerOrgType,
+                'reportType':'1',
                 'endreporttime':sj[2],
               }),
               {useJson: true})
             .then(res => {
-              if (res.data.data === null) {
+              if (res.data.data.length<=0) {
                 this.$http
                   .post(url, JSON.stringify(tableData), {useJson: true})
                   .then(res => {
@@ -610,7 +611,7 @@
                     }
                   })
               }else{
-                this.$message.error(res.data.msg)
+                this.$message.error('当前月报已经过了上报截止日期,不能提交!')
               }
             })
         }
@@ -619,7 +620,7 @@
       },
       submit() {
         this.dataReport.status="3"
-        this.dataReport.flowStatus="2"
+        this.dataReport.flowStatus="check"
         let tableData = {
           projectReportDetaiList:this.data,
           projectreport:this.dataReport,

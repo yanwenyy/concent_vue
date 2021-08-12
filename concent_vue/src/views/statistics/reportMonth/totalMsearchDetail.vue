@@ -284,7 +284,7 @@
               </el-table>
            </div>
          </el-tab-pane>
-       <el-tab-pane label="审批流程" v-if="dataReport.flowStatus!=1&&(p.actpoint == 'task'||p.actpoint == 'look')">
+       <el-tab-pane label="审批流程" v-if="dataReport.flowStatus!='edit'&&(p.actpoint == 'task'||p.actpoint == 'look')">
          <Audit-Process :task="p.task||{businessId:p.uuid,businessType:' engineering_monthly_report'}"></Audit-Process>
        </el-tab-pane>
      </el-tabs>
@@ -299,6 +299,7 @@
     },
     data() {
       return {
+        userdata:JSON.parse(sessionStorage.getItem('userdata')),
         tableHeight:"100vh - 110px",
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         key:0,
@@ -456,13 +457,13 @@
           this.$http
             .post('/api/statistics/projectMonthlyReport/ReportEndtime/detail/checkReportTime',
               JSON.stringify({
-                'restrictedobjectsType':this.userdata.orgtype,
-                'orgtype,reportType':'1',
-                'endreporttime':sj[2],
+                  'restrictedobjectsType':this.userdata.managerOrgType,
+                  'reportType':'1',
+                  'endreporttime':sj[2],
               }),
               {useJson: true})
             .then(res => {
-              if (res.data.data === null) {
+              if (res.data.data.length<=0) {
                 this.$http
                   .post(url, JSON.stringify(tableData), {useJson: true})
                   .then(res => {
@@ -476,7 +477,7 @@
                     }
                   })
               }else{
-                this.$message.error(res.data.msg)
+                this.$message.error('当前月报已经过了上报截止日期,不能提交!')
               }
             })
         }
@@ -511,7 +512,7 @@
       },
       submit() {
         this.dataReport.status="1"
-        this.dataReport.flowStatus="2"
+        this.dataReport.flowStatus="check"
         let tableData = {
           projectReportDetaiList:this.data,
           projectreport:this.dataReport,

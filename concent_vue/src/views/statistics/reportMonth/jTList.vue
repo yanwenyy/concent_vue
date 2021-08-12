@@ -457,16 +457,23 @@
           this.$message.info("只能选择一条记录！");
           return false;
         }
-
+        if (this.multipleSelection[0].flowStatus!='pass') {
+            this.$message.info("只能汇总审核通过的数据！");
+            return false;
+        }
+          if (this.multipleSelection[0].createOrgType!='12' || this.multipleSelection[0].createOrgType!='13' ) {
+              this.$message.info("只能汇总集团跟工程公司数据！");
+              return false;
+          }
         // this.multipleSelection[0].status='3'//集团创建
         // this.multipleSelection[0].flowStatus='3'
-        this.multipleSelection[0].projectId=this.multipleSelection[0].createOrgId
+        //this.multipleSelection[0].projectId=this.multipleSelection[0].createOrgId
         this.multipleSelection[0].reportYear= this.searchform.yearDateS.split("-")[0]
         this.multipleSelection[0].reportMonth= this.searchform.yearDateS.split("-")[1]
         // let datas=this.multipleSelection[0];
         var datas={
           status:'3',
-          flowStatus:'3',
+          flowStatus:'pass',
           projectId:this.multipleSelection[0].projectId,
           createOrgId:this.multipleSelection[0].createOrgId,
           createOrgCode:this.multipleSelection[0].createOrgCode,
