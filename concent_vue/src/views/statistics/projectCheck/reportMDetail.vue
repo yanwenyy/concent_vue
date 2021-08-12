@@ -327,6 +327,7 @@
     },
     data() {
       return {
+        userdata:JSON.parse(sessionStorage.getItem('userdata')),
         key:0,
         data:[],
         dataReport:{
@@ -431,7 +432,7 @@
           }
         });
         this.data.forEach((item,i)=>{
-          if(item.tjxId==list[index].sumTarget){
+          if(item.tjxId==code){
             item.valuationFee=num;
             item.yearValuationFee=num1;
             item.totalValuationFee=num2;
@@ -521,7 +522,7 @@
               }),
               {useJson: true})
             .then(res => {
-              if (res.data.data === null) {
+              if (res.data.data === null||res.data.data == '') {
                 this.$http
                   .post(url, JSON.stringify(tableData), {useJson: true})
                   .then(res => {

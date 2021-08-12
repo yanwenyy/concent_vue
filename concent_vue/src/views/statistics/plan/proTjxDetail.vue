@@ -70,7 +70,7 @@
                 <template slot-scope="scope">
                   <div v-if="scope.row.veditable === '1' && scope.row.venabled === '1' && p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '3'&&p.actpoint!='task' ">
                     <!--<el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')"/>-->
-                    <el-input v-model="scope.row.value" @input="formatValue(scope.row.value,scope.$index,data,'value')"/>
+                    <el-input v-model="scope.row.value" @input="formatValue(scope.row.value,scope.$index,data,'value'),checkParnt(data,scope.$index,scope.row.sumTarget)"/>
                   </div>
                   <div v-else-if="scope.row.uuid != '149'&&p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '3' " style="text-align: right">
                     <!--<el-input style="visibility: hidden;width: 0" :value="sonCount(scope.row)"/>-->
@@ -167,6 +167,25 @@
       }
     },
     methods: {
+      //判断是否大于父级值
+      checkParnt(list,index,code){
+        var treeSum=0,parentNum=0,canCalc=false;
+        list.forEach((item)=>{
+          if(item.tjxCode.length>=12&&item.sumTarget==code){
+            treeSum+=Number(item.value);
+            canCalc=true;
+          }
+          if(item.uuid==code&&item.tjxCode.length>=9){
+            parentNum=Number(item.value);
+          }
+        });
+        console.log(list[index].sumTarget,list[index].tjxCode.length,treeSum,parentNum)
+        if(list[index].sumTarget&&canCalc&&list[index].tjxCode.length>=12&&(treeSum>parentNum)){
+          this.$message.error("该级计划之和不能大于上级计划");
+          list[index].value='';
+          return false;
+        }
+      },
       //判断某些值是否相等
       checkVal(){
         var cansub=true;

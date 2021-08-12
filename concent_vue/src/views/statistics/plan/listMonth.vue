@@ -127,6 +127,7 @@
     },
     data() {
       return {
+        userdata:JSON.parse(sessionStorage.getItem('userdata')),
         treeStatas: false,
         projectTypeTwo: [], // 工程类别(二级)
         projectStatus: '',
@@ -245,6 +246,10 @@
         }
         if ((this.multipleSelection[0].flowStatus!=null || this.multipleSelection[0].flowStatus!='') && (this.multipleSelection[0].flowStatus=='check'||this.multipleSelection[0].flowStatus=='pass')) {
           this.$message.info('只可以编编未创建的和草稿状态的数据！')
+          return false
+        }
+        if(this.userdata.managerOrgCode!=this.multipleSelection[0].createOrgCode){
+          this.$message.info('不能修改非本单位创建的计划！')
           return false
         }
         let planId = this.multipleSelection[0].uuid

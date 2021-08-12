@@ -419,7 +419,7 @@
               }),
               {useJson: true})
             .then(res => {
-              if (res.data.data === null) {
+              if (res.data.data === null||res.data.data == '') {
                 this.$http
                   .post(url, JSON.stringify(tableData), {useJson: true})
                   .then(res => {
