@@ -1080,7 +1080,6 @@
         }
         this.detailForm.project.infoSubjectMatterList.push(v)
       },
-<<<<<<< HEAD
         //复选下拉框框获取name
       getMultipleName(valueList,list,id,name){
         var _id=[],_name=[];
@@ -1094,9 +1093,6 @@
         this.detailForm.project[name]=_name.join(",");
         console.log(this.detailForm.project[id])
       },
-=======
-     
->>>>>>> origin/chinasofti
       del(index, item, list) {
         console.log(index)
         if (item.uuid && item.uuid !== '') {
