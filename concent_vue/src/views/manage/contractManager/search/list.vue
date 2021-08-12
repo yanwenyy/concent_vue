@@ -419,7 +419,7 @@
           :width="150"
           align="center"
           label="主推单位"
-          prop="contractMianOrg"
+          prop="pushOrgName"
           show-overflow-tooltip
         >
         </el-table-column>
@@ -720,7 +720,7 @@
                 'ourAmountSupply','enginTypeFirstName','marketFirstName','marketSecondName',
                 'contractSignTime','placeName','createOrgName','signOrgName',
                 'constructionOrg','createOrgName','createTime','createUserName',
-                'contractMianOrg','bidTime','version','isOpenBid',
+                'pushOrgName','bidTime','version','isOpenBid',
               ],
               tdstrFuc:{
                 isOpenBid:function (str) {

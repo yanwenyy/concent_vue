@@ -87,12 +87,19 @@
         border
         v-loading="dataListLoading"
         highlight-current-row
+        @selection-change="handleSelectionChange"
         @current-change="rowSel"
         :header-cell-style="{
           'text-align': 'center',
           'background-color': 'whitesmoke',
         }"
         style="width: 100%;">
+        <el-table-column
+          :width="50"
+          align="center"
+          show-overflow-tooltip
+          type="selection"
+        ></el-table-column>
         <el-table-column
           type="index"
           header-align="center"
