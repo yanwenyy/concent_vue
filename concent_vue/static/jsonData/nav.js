@@ -578,6 +578,24 @@ export default {
                   'defaultpage': true
                 },
                 {
+                  'name': '劳材机维护',
+                  'path': '/manage/contractManager/machineList',
+                  'component': '/manage/contractManager/machineList',
+                  'iconCls': 'el-icon-search',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '实物工程量维护',
+                  'path': '/manage/contractManager/physicalList',
+                  'component': '/manage/contractManager/physicalList',
+                  'iconCls': 'el-icon-search',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
                   'name': '合同信息核减',
                   'path': '/manage/contractManager/examinationCut/list',
                   'component': '/manage/contractManager/examinationCut/list',
