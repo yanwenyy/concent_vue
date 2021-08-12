@@ -304,7 +304,7 @@
           </el-table>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="审批流程" v-if="dataReport.flowStatus!=1&&(p.actpoint == 'task'||p.actpoint == 'look')">
+      <el-tab-pane label="审批流程" v-if="dataReport.flowStatus!='edit'&&(p.actpoint == 'task'||p.actpoint == 'look')">
         <Audit-Process :task="p.task||{businessId:p.uuid,businessType:'emr_valuation'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>
@@ -465,7 +465,7 @@
                     }
                   })
               }else{
-                this.$message.error(res.data.msg)
+                this.$message.error('当前月报已经过了上报截止日期,不能提交!')
               }
             })
         }

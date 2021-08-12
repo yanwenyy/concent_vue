@@ -236,19 +236,19 @@
         flowStatusList:[
           {
             detailName:'草稿',
-            id:'1'
+            id:'edit'
           },
           {
             detailName:'审核中',
-            id:'2'
+            id:'check'
           },
           {
             detailName:'审核通过',
-            id:'3'
+            id:'pass'
           },
           {
             detailName:'审核驳回',
-            id:'4'
+            id:'reject'
           },
           {
             detailName:'未创建',
@@ -314,7 +314,7 @@
         params.reportMonth=this.searchform.yearDateS.split('-')[1];
         params.reportType='1';
         params.status='2';
-        params.flowStatus='1';
+        params.flowStatus='edit';
         this.$http.post(
             url,
             JSON.stringify(params),
@@ -392,7 +392,7 @@
         this.multipleSelection.forEach((item) => {
           let a=this.userdata.managerOrgId;
           if(item.projectId==null||item.projectId==''){
-            if(item.flowStatus!='1'&&item.flowStatus!=null&&item.flowStatus!='4'){
+            if(item.flowStatus!='edit'&&item.flowStatus!=null&&item.flowStatus!='reject'){
             this.$message.info('只允许删除未上报的数据！');
             return itemStatus=false;
             }else{
@@ -455,7 +455,7 @@
           this.$message.info("请选择一条数据，进行编辑", "提示")
           return false
         }
-        if ((this.multipleSelection[0].flowStatus!=null||this.multipleSelection[0].flowStatus!='')&& this.multipleSelection[0].flowStatus!='1'&& this.multipleSelection[0].flowStatus!='4'){
+        if ((this.multipleSelection[0].flowStatus!=null||this.multipleSelection[0].flowStatus!='')&& this.multipleSelection[0].flowStatus!='edit'&& this.multipleSelection[0].flowStatus!='reject'){
           this.$message.info("只允许修改草稿和审核驳回数据", "提示")
           return false
         }
