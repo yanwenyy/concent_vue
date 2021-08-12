@@ -299,6 +299,7 @@
     },
     data() {
       return {
+        userdata:JSON.parse(sessionStorage.getItem('userdata')),
         tableHeight:"100vh - 110px",
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         key:0,
@@ -456,9 +457,9 @@
           this.$http
             .post('/api/statistics/projectMonthlyReport/ReportEndtime/detail/checkReportTime',
               JSON.stringify({
-                'restrictedobjectsType':this.userdata.orgtype,
-                'orgtype,reportType':'1',
-                'endreporttime':sj[2],
+                  'restrictedobjectsType':this.userdata.managerOrgType,
+                  'reportType':'1',
+                  'endreporttime':sj[2],
               }),
               {useJson: true})
             .then(res => {

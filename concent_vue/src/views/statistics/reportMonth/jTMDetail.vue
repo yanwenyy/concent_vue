@@ -476,6 +476,7 @@
     },
     data() {
       return {
+        userdata:JSON.parse(sessionStorage.getItem('userdata')),
         showKL:false,//是否显示开累
         key:0,
         data:[],
@@ -590,8 +591,8 @@
           this.$http
             .post('/api/statistics/projectMonthlyReport/ReportEndtime/detail/checkReportTime',
               JSON.stringify({
-                'restrictedobjectsType':this.userdata.orgtype,
-                'orgtype,reportType':'1',
+                'restrictedobjectsType':this.userdata.managerOrgType,
+                'reportType':'1',
                 'endreporttime':sj[2],
               }),
               {useJson: true})

@@ -413,9 +413,9 @@
           this.$http
             .post('/api/statistics/projectMonthlyReport/ReportEndtime/detail/checkReportTime',
               JSON.stringify({
-                'restrictedobjectsType':this.userdata.orgtype,
-                'orgtype,reportType':'2',
-                'endreporttime':sj[2],
+                  'restrictedobjectsType':this.userdata.managerOrgType,
+                  'reportType':'1',
+                  'endreporttime':sj[2],
               }),
               {useJson: true})
             .then(res => {
