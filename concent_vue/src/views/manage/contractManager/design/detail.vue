@@ -370,6 +370,7 @@
                   v-model="constructionOrgList"
                   v-if="detailform.contractInfo.isClientele=='1'"
                   multiple
+                  filterable
                   collapse-tags
                   placeholder="请选择">
                   <el-option
@@ -383,6 +384,7 @@
                   v-model="constructionOrgList"
                   v-if="detailform.contractInfo.isClientele!='1'"
                   multiple
+                  filterable
                   collapse-tags
                   placeholder="请选择">
                     <el-option
