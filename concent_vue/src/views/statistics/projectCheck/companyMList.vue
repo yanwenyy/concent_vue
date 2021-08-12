@@ -391,7 +391,7 @@
         params.reportMonth=this.searchform.yearDateS.split("-")[1];
         params.reportType='1';
         params.status='2'//公司创建
-        params.flowStatus='1'
+        params.flowStatus='edit'
         this.$http.post(
             url,
             JSON.stringify(params),
@@ -469,7 +469,7 @@
         this.multipleSelection.forEach((item) => {
           let a=this.userdata.managerOrgId;
           if(item.projectId==null ||item.projectId==''){
-            if(item.flowStatus!='1'&&item.flowStatus!=null&&item.flowStatus!='4'){
+            if(item.flowStatus!='edit'&&item.flowStatus!=null&&item.flowStatus!='reject'){
             this.$message.info('只允许删除未上报的数据！')
               return itemStatus=false;
             }else{

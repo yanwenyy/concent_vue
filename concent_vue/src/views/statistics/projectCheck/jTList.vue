@@ -440,7 +440,7 @@
           return false;
         }
         this.multipleSelection[0].status='3'//集团创建
-        this.multipleSelection[0].flowStatus='1'
+        this.multipleSelection[0].flowStatus='edit'
         this.multipleSelection[0].projectId=this.multipleSelection[0].createOrgId
         this.multipleSelection[0].reportYear= this.searchform.yearDateS.split("-")[0]
         this.multipleSelection[0].reportMonth= this.searchform.yearDateS.split("-")[1]

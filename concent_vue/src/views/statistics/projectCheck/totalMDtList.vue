@@ -375,7 +375,7 @@
         this.searchform.projectcheck.reportYear = sj[0]
         this.searchform.projectcheck.reportMonth = sj[1]
         this.searchform.projectcheck.status='1'
-        this.searchform.projectcheck.flowStatus='1'
+        this.searchform.projectcheck.flowStatus='edit'
         this.searchform.projectcheck.yearDateS=years
         this.$http
           .post('/api/statistics/inspectMonthReportFill/list/queryProject',
