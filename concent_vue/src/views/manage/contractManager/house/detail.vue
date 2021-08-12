@@ -60,7 +60,7 @@
                   <!--size="mini"-->
                   <!--v-model="detailform.contractInfo.contractName"-->
                 <!--/>-->
-                <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'||p.pushId" placeholder="请输入内容" v-model="detailform.contractInfo.contractName" class="input-with-select">
+                <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'||p.pushId||p.type == 'bq'" placeholder="请输入内容" v-model="detailform.contractInfo.contractName" class="input-with-select">
                   <el-button v-if="detailform.contractInfo.contractType=='2'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
                 </el-input>
               </el-form-item>
@@ -144,8 +144,8 @@
                   v-model="detailform.contractInfo.isMergeEstate"
                   active-color="#409EFF"
                   inactive-color="#ddd"
-                  active-value="1"
-                  inactive-value="0"
+                  active-value="0"
+                  inactive-value="1"
                 >
                 </el-switch>
                 <!--<el-select-->
@@ -172,8 +172,8 @@
                   v-model="detailform.contractInfo.isInSystemUnion"
                   active-color="#409EFF"
                   inactive-color="#ddd"
-                  active-value="1"
-                  inactive-value="0"
+                  active-value="0"
+                  inactive-value="1"
                   @change="changeMoney('unionContractInfoAttachList','nlht')"
                 >
                 </el-switch>
@@ -198,8 +198,8 @@
                   v-model="detailform.contractInfo.isInSystemSub"
                   active-color="#409EFF"
                   inactive-color="#ddd"
-                  active-value="1"
-                  inactive-value="0"
+                  active-value="0"
+                  inactive-value="1"
                   @change="changeMoney('innerContractInfoAttachList','nfb')"
                 >
                 </el-switch>
@@ -224,8 +224,8 @@
                   v-model="detailform.contractInfo.isOutSystemUnion"
                   active-color="#409EFF"
                   inactive-color="#ddd"
-                  active-value="1"
-                  inactive-value="0"
+                  active-value="0"
+                  inactive-value="1"
                   @change="changeMoney('outUnionContractInfoAttachList','wlht')"
                 >
                 </el-switch>
@@ -250,8 +250,8 @@
                   v-model="detailform.contractInfo.isOutSystemSub"
                   active-color="#409EFF"
                   inactive-color="#ddd"
-                  active-value="1"
-                  inactive-value="0"
+                  active-value="0"
+                  inactive-value="1"
                   @change="changeMoney('outUnionContractInfoAttachList','wfb')"
                 >
                 </el-switch>
@@ -276,8 +276,8 @@
                   v-model="detailform.contractInfo.isInGroupSub"
                   active-color="#409EFF"
                   inactive-color="#ddd"
-                  active-value="1"
-                  inactive-value="0"
+                  active-value="0"
+                  inactive-value="1"
                   @change="changeMoney('innerGroupContractInfoAttachList','jtnfb')"
                 >
                 </el-switch>
@@ -1358,8 +1358,8 @@
                       v-model="scope.row.isAdd"
                       active-color="#409EFF"
                       inactive-color="#ddd"
-                      active-value="1"
-                      inactive-value="0"
+                      active-value="0"
+                      inactive-value="1"
                     >
                     </el-switch>
                     <!--{{scope.row.isAdd=='1'?'否':'是'}}-->
@@ -1538,8 +1538,8 @@
                       v-model="scope.row.isAdd"
                       active-color="#409EFF"
                       inactive-color="#ddd"
-                      active-value="1"
-                      inactive-value="0"
+                      active-value="0"
+                      inactive-value="1"
                     >
                     </el-switch>
                   </template>
@@ -1742,8 +1742,8 @@
                       v-model="scope.row.isAdd"
                       active-color="#409EFF"
                       inactive-color="#ddd"
-                      active-value="1"
-                      inactive-value="0"
+                      active-value="0"
+                      inactive-value="1"
                     >
                     </el-switch>
                   </template>
@@ -1946,8 +1946,8 @@
                       v-model="scope.row.isAdd"
                       active-color="#409EFF"
                       inactive-color="#ddd"
-                      active-value="1"
-                      inactive-value="0"
+                      active-value="0"
+                      inactive-value="1"
                     >
                     </el-switch>
                   </template>
@@ -2125,8 +2125,8 @@
                       v-model="scope.row.isAdd"
                       active-color="#409EFF"
                       inactive-color="#ddd"
-                      active-value="1"
-                      inactive-value="0"
+                      active-value="0"
+                      inactive-value="1"
                     >
                     </el-switch>
                   </template>
