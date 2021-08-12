@@ -72,9 +72,13 @@
                     <!--<el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')"/>-->
                     <el-input v-model="scope.row.value" @input="formatValue(scope.row.value,scope.$index,data,'value')"/>
                   </div>
-                  <div v-else-if="p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '3' " style="text-align: right">
+                  <div v-else-if="scope.row.uuid != '149'&&p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '3' " style="text-align: right">
                     <!--<el-input style="visibility: hidden;width: 0" :value="sonCount(scope.row)"/>-->
                     {{sonCount(scope.row,scope.$index,data,'value')}}
+                  </div>
+                  <div v-else-if="scope.row.uuid == '149'&&p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '3' " style="text-align: right">
+                    <!--<el-input style="visibility: hidden;width: 0" :value="sonCount(scope.row)"/>-->
+                    {{sonCountSD(scope.row,scope.$index,data,'value')}}
                   </div>
                   <div v-else>{{scope.row.value}}</div>
                 </template>
@@ -133,19 +137,32 @@
       },
       sonCount () {
         return (rowData,index,list,name) => {
-          var bb = []
+          var bb = [];
           for (var i in this.data.map(row => row.value)) {
-            if (this.data.map(row => row.value)[i] && this.data.map(row => row.sumTarget)[i] === rowData.uuid) {
+            if (this.data.map(row => row.veditable=='1')[i]&&this.data.map(row => row.venabled=='1')[i]&&this.data.map(row => row.value)[i] && this.data.map(row => row.sumTarget)[i] === rowData.uuid) {
               bb.push(this.data.map(row => row.value)[i])
             }
           }
           // console.info(bb, index)
           // veditable，venabled 都为 "1"，则不会参与增加
           // a的sumTarget == b的uuid， a的值会加到b上
-          var sum=(bb.reduce((acc, cur) => (parseFloat(cur) + acc), 0) === 0 ? '' : bb.reduce((acc, cur) => (parseFloat(cur) + acc), 0));
+          var sum=(bb.reduce((acc, cur) => (parseFloat(cur) + parseFloat(acc)), 0) === 0 ? '' : bb.reduce((acc, cur) => (parseFloat(cur) + parseFloat(acc)), 0));
           list[index][name]=sum;
           // this.$forceUpdate();
           return sum
+        }
+      },
+      sonCountSD () {
+        return (rowData,index,list,name) => {
+          var _sum = 0;
+         list.forEach((item)=>{
+           if(item.sumTarget=='149'){
+             _sum+=Number(item.value)
+           }
+         });
+          list[index][name]=_sum;
+          // this.$forceUpdate();
+          return _sum
         }
       }
     },
