@@ -445,6 +445,7 @@
         this.multipleSelection[0].reportYear= this.searchform.yearDateS.split("-")[0]
         this.multipleSelection[0].reportMonth= this.searchform.yearDateS.split("-")[1]
         let datas=this.multipleSelection[0];
+       delete datas.fullDate;
           this.$confirm(`该操作会重新生成工程公司月报 如果该公司已经上报过月报 将被新生成的月报替代 确认重新生成月报?`, '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',

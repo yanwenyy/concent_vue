@@ -12,11 +12,11 @@
           <el-card class="box-card" v-if="p.actpoint != 'task'">
             <div class="clearfix el-card__header">
               <span style="color: #2a2a7d;line-height: 32px">
-                <b>计划类型:</b>
-                <span style="color:#0a469d !important;font-size:14px;margin-right: 20px;">{{p.planInfo.planTypeName}}</span>
-                <span style="color:#0a469d !important;margin-left: 20px;margin-right: 20px;font-size:14px;">{{p.planInfo.projectName}}</span>
-                <span v-show="p.planInfo.planProjectTjx.planType === 2" style="color:#0a469d !important;font-size:14px;">{{p.planInfo.planProjectTjx.planYear}}年</span>
-                <span v-show="p.planInfo.planProjectTjx.planType === 1" style="color:#0a469d !important;font-size:14px;">{{p.planInfo.planProjectTjx.planYear}}年{{p.planInfo.planProjectTjx.planMonth}}月</span>
+                <b style="color:red">计划类型:</b>
+                <span style="color:red !important;font-size:14px;margin-right: 20px;">{{p.planInfo.planTypeName}}</span>
+                <span style="color:red !important;margin-left: 20px;margin-right: 20px;font-size:14px;">{{p.planInfo.projectName}}</span>
+                <span v-show="p.planInfo.planProjectTjx.planType === 2" style="color:red !important;font-size:14px;">{{p.planInfo.planProjectTjx.planYear}}年</span>
+                <span v-show="p.planInfo.planProjectTjx.planType === 1" style="color:red !important;font-size:14px;">{{p.planInfo.planProjectTjx.planYear}}年{{p.planInfo.planProjectTjx.planMonth}}月</span>
               </span>
             </div>
           </el-card>
@@ -70,11 +70,15 @@
                 <template slot-scope="scope">
                   <div v-if="scope.row.veditable === '1' && scope.row.venabled === '1' && p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '3'&&p.actpoint!='task' ">
                     <!--<el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')"/>-->
-                    <el-input v-model="scope.row.value" @input="formatValue(scope.row.value,scope.$index,data,'value')"/>
+                    <el-input v-model="scope.row.value" @input="formatValue(scope.row.value,scope.$index,data,'value'),checkParnt(data,scope.$index,scope.row.sumTarget)"/>
                   </div>
-                  <div v-else-if="p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '3' " style="text-align: right">
+                  <div v-else-if="scope.row.uuid != '149'&&p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '3' " style="text-align: right">
                     <!--<el-input style="visibility: hidden;width: 0" :value="sonCount(scope.row)"/>-->
                     {{sonCount(scope.row,scope.$index,data,'value')}}
+                  </div>
+                  <div v-else-if="scope.row.uuid == '149'&&p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '3' " style="text-align: right">
+                    <!--<el-input style="visibility: hidden;width: 0" :value="sonCount(scope.row)"/>-->
+                    {{sonCountSD(scope.row,scope.$index,data,'value')}}
                   </div>
                   <div v-else>{{scope.row.value}}</div>
                 </template>
@@ -133,23 +137,55 @@
       },
       sonCount () {
         return (rowData,index,list,name) => {
-          var bb = []
+          var bb = [];
           for (var i in this.data.map(row => row.value)) {
-            if (this.data.map(row => row.value)[i] && this.data.map(row => row.sumTarget)[i] === rowData.uuid) {
+            if (this.data.map(row => row.veditable=='1')[i]&&this.data.map(row => row.venabled=='1')[i]&&this.data.map(row => row.value)[i] && this.data.map(row => row.sumTarget)[i] === rowData.uuid) {
               bb.push(this.data.map(row => row.value)[i])
             }
           }
           // console.info(bb, index)
           // veditable，venabled 都为 "1"，则不会参与增加
           // a的sumTarget == b的uuid， a的值会加到b上
-          var sum=(bb.reduce((acc, cur) => (parseFloat(cur) + acc), 0) === 0 ? '' : bb.reduce((acc, cur) => (parseFloat(cur) + acc), 0));
+          var sum=(bb.reduce((acc, cur) => (parseFloat(cur) + parseFloat(acc)), 0) === 0 ? '' : bb.reduce((acc, cur) => (parseFloat(cur) + parseFloat(acc)), 0));
           list[index][name]=sum;
           // this.$forceUpdate();
           return sum
         }
+      },
+      sonCountSD () {
+        return (rowData,index,list,name) => {
+          var _sum = 0;
+         list.forEach((item)=>{
+           if(item.sumTarget=='149'){
+             _sum+=Number(item.value)
+           }
+         });
+          list[index][name]=_sum;
+          // this.$forceUpdate();
+          return _sum
+        }
       }
     },
     methods: {
+      //判断是否大于父级值
+      checkParnt(list,index,code){
+        var treeSum=0,parentNum=0,canCalc=false;
+        list.forEach((item)=>{
+          if(item.tjxCode.length>=12&&item.sumTarget==code){
+            treeSum+=Number(item.value);
+            canCalc=true;
+          }
+          if(item.uuid==code&&item.tjxCode.length>=9){
+            parentNum=Number(item.value);
+          }
+        });
+        console.log(list[index].sumTarget,list[index].tjxCode.length,treeSum,parentNum)
+        if(list[index].sumTarget&&canCalc&&list[index].tjxCode.length>=12&&(treeSum>parentNum)){
+          this.$message.error("该级计划之和不能大于上级计划");
+          list[index].value='';
+          return false;
+        }
+      },
       //判断某些值是否相等
       checkVal(){
         var cansub=true;

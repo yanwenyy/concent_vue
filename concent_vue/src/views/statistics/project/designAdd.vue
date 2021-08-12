@@ -194,6 +194,70 @@
                 inactive-value="1"/>
             </el-form-item>
           </el-row>
+          <!--建设单位-->
+          <el-row>
+            <el-form-item
+              label="建设单位:"
+              prop="project.companyBuildId"
+                style="width: 32.5%"
+              :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: ['blur','change'],
+            }">
+              <el-select
+                v-model="constructionOrgList"
+                v-if="detailForm.project.isClientele=='1'"
+                multiple
+                collapse-tags
+                placeholder="请选择">
+                <el-option
+                  v-for="item in pubCustomers"
+                  :key="item.customerId"
+                  :label="item.customerName"
+                  :value="item.customerId">
+                </el-option>
+              </el-select>
+              <el-select
+                v-model="constructionOrgList"
+                v-if="detailForm.project.isClientele!='1'"
+                multiple
+                collapse-tags
+                placeholder="请选择">
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in sjdwList"
+                  ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-col :span="8">
+              <el-form-item
+                class="inline-formitem"
+                style="width: 32.5%"
+                label="是否客户:"
+                prop="project.isClientele"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+              >
+                <el-switch
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  class="inline-formitem-switch"
+                  v-model="detailForm.project.isClientele"
+                  active-color="#409EFF"
+                  inactive-color="#ddd"
+                  active-value="1"
+                  inactive-value="0"
+                  @change="constructionOrgList=''"
+                >
+                </el-switch>
+              </el-form-item>
+            </el-col>
+          </el-row>
           <!--工程类别(一级)-->
           <el-row>
 
@@ -324,6 +388,20 @@
                   v-for="(item, index) in bizTypeCodeTwo"/>
               </el-select>
             </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item
+                  label="设计单位:"
+                  prop="project.companyDesign"
+                  style="width: 32.5%">
+                  <el-input
+                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                    clearable
+                    placeholder="请选择设计单位"
+                    v-model="detailForm.project.companyDesign">
+                    <el-button slot="append" icon="el-icon-circle-plus-outline" @click="openComMul('','','/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
+                  </el-input>
+                </el-form-item>
             <el-form-item
               label="签约/使用资质单位:"
               prop="project.companyName"
@@ -1029,6 +1107,8 @@
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
     <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
     <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
+    <!--多选的单位列表组件-->
+    <company-mul v-if="companyMulStatus" ref="comAdd" @getComList="getComList"></company-mul>
   </div>
 </template>
 
@@ -1038,11 +1118,12 @@
   import { isMoney, isMobile, isPhone } from '@/utils/validate'
   import CompanyTree from '../companyTree'
   import AuditProcess from '@/components/auditProcess'
+  import companyMul from '@/components/companiesMultiple'
 
   export default {
     name: 'InvestMode',
     components: {
-      Tree, FileUpload,CompanyTree,AuditProcess
+      Tree, FileUpload,CompanyTree,AuditProcess,companyMul
     },
     data() {
       const validateMoney = (rule, value, callback) => {
@@ -1101,6 +1182,9 @@
         projectNatureTwo: [], // 项目性质二级
         xqprojectTypeThree:[],//工程类别三级
         bizTypeCodeTwo: [], // 业务类别二级
+        constructionOrgList:[], //建设单位选中ID列表
+        sjdwList: [],
+        companyMulStatus:false,//设计单位等多选列表状态
         detailForm: {
           cdmc:[],
           project: {
@@ -1157,6 +1241,10 @@
             isEscrow: '', // 是否代管
             realInvest: '', // 实际投资额(万元)
             projectRemark: '', // 备注(最多2000字)
+            companyBuild: '', // 建设单位
+            companyBuildId: '', // 建设单位id
+            companyDesign: '', // 设计单位
+            companyDesignId: '', // 设计单位id
             topInfoSiteList: [
               {
                 path: '',
@@ -1209,6 +1297,9 @@
     },
     
     computed: {
+      pubCustomers() {//客户名称
+        return this.$store.state.pubCustomers;
+      },
       emergingMarket() {
         return this.$store.state.category.emergingMarket
       },
@@ -1268,6 +1359,13 @@
       }
     },
     methods: {
+      //打开多选的单位列表
+      openComMul(ids,names,url,type){
+        this.companyMulStatus=true;
+        this.$nextTick(() => {
+          this.$refs.comAdd.init(ids,names,url,type);
+        })
+      },
       //设置主地点
       setMain(i,list){
         list.forEach((item,index)=>{
@@ -1601,6 +1699,7 @@
           this.$message.error("请选择一个主地点");
           return false;
         }
+        this.detailForm.project.companyBuildId = this.constructionOrgList.join(",")
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
@@ -1668,7 +1767,7 @@
         })
       },
       //获取单位的值
-      getDwInfo(data){
+      getComList(data){
         this.$forceUpdate();
         var id=[],name=[];
         if(data&&data.type!='承建单位'){
@@ -1683,6 +1782,9 @@
         }else if(data.type=="签约/使用资质单位"){
           this.detailForm.project.companyId=id.join(",");
           this.detailForm.project.companyName=name.join(",");
+        }else if (data.type == "设计单位") {
+          this.detailForm.project.companyDesignId=data.selIdList.join(",");
+          this.detailForm.project.companyDesign=data.selList.join(",");
         }
         this.DwVisible=false;
       },
@@ -1720,6 +1822,9 @@
                 this.detailForm.project.projectStatusId='6530437b0a6f49a59b047eb4eb4f9201';
                 this.getCount()
               }
+              if(this.detailForm.project.companyBuildId != ''){
+                this.constructionOrgList = this.detailForm.project.companyBuildId.split(",");
+              }
             }
           })
       }
@@ -1738,6 +1843,18 @@
           this.bizTypeCodeTwo.push(item)
         }
       })
+      this.$http
+      .post(
+        "/api/contract/Companies/detail/findCompanies",
+      )
+      .then((res) => {
+        this.sjdwList = res.data.data.records;
+        this.sjdwList.forEach((item)=>{
+          item.value=item.companyName;
+          item.detailName=item.companyName;
+          item.id=item.uuid;
+        })
+      });
     }
   }
 </script>

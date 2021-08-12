@@ -12,9 +12,8 @@
 
 -->
       <div style="margin-top: 9px;color: red;position: absolute;top: 1px;right: 279px;z-index: 999;font-size: 15px;">项目名称：<span style="color: red !important;margin-right: 50px;">{{projectName.length>20?projectName.slice(0,20)+'...':projectName}}</span></div>
-
-      <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus=='edit'||dataReport.flowStatus=='reject')" @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
-      <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="save('save')" class="detailbutton detail-back-tab save-btn">保存</el-button>
+      <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus=='edit'||dataReport.flowStatus=='reject')&&(userdata.managerOrgType!='23'||(userdata.managerOrgType=='23'&&projectList.monthReportTypeCode!='1'))" @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+      <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(userdata.managerOrgType!='23'||(userdata.managerOrgType=='23'&&projectList.monthReportTypeCode!='1'))" type="primary" @click="save('save')" class="detailbutton detail-back-tab save-btn">保存</el-button>
     <!--<el-button v-if="isCk!='1'" @click="save" type="primary"  class="detailbutton detail-back-tab" style="float: left; margin-right: 185px;" plain>保存</el-button>-->
     <!--<el-button v-if="isCk!='1'" @click="submit" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>-->
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
@@ -217,8 +216,8 @@
                </el-table-column>
                   </el-table>
               <div class="cwjswgcl-bottom">
-                <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009003'"><span>{{item.tjxName+"("+item.jldw+")"}}:<el-input v-model="item.monthValue" /></span></div>
-                <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009003001'"><span>{{item.tjxName}}:<el-input   v-model="item.monthValue" /></span></div>
+                <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009003'"><span>{{item.tjxName+"("+item.jldw+")"}}:<el-input v-model="item.monthValue" :disabled="p.actpoint == 'look'||p.actpoint == 'task'" /></span></div>
+                <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009003001'"><span>{{item.tjxName}}:<el-input   v-model="item.monthValue"  :disabled="p.actpoint == 'look'||p.actpoint == 'task'" /></span></div>
                 <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009005'"><span>{{item.tjxName+"("+item.jldw+")"}}:<el-input  disabled :value="item.monthValue"/></span></div>
                 <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009005001'"><span>{{item.tjxName}}:<el-input  disabled  :value="item.monthValue"/></span></div>
               </div>
@@ -550,12 +549,17 @@
       save(type) {
         // this.dataReport.status="1"
         // this.dataReport.flowStatus="1"
+        var fjjgmj=0,//房建竣工面积
+            fjjgcz=0;//房建竣工产值
         this.data.forEach((item,index)=>{
           if(item.tjxCode=='002009003'){
             this.dataReport.fjJe=Number(item.monthValue);
           }
           if(item.tjxCode=='002009003001'){
             this.dataReport.qzmjJe=Number(item.monthValue);
+          }
+          if(item.tjxCode=='002009003001'){
+            fjjgmj=Number(item.monthValue);
           }
         });
           let tableData = {
@@ -952,6 +956,7 @@
   }
   .tableStyle{
     max-height: calc(100vh - 110px)!important;
+    min-height: calc(100vh - 110px)!important;
     overflow: auto;
   }
   /**/

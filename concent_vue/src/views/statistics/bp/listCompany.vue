@@ -6,9 +6,9 @@
 
 
 <!--   style="height: calc(100% - 60px); border: 1px solid #eee"-->
-  <div style="display: inline-block;vertical-align: top;overflow: auto; border-right: 1px solid #DCDFE6;width:14%" >
-  <div style="position:relative;margin:10px">
-  <el-select
+  <div style="display: inline-block;vertical-align: top;overflow: auto; border-right: 1px solid #DCDFE6;width:14%;box-sizing: border-box" >
+    <div style="position:relative;margin:10px">
+      <el-select
     style="height:42px"
     filterable
     placeholder="请选择工程(行业)类别"
@@ -25,7 +25,7 @@
             ></el-option>
           </el-select>
   <!-- <el-button  class="detail-back-tab detailbutton save-btn"  @click="saveInfo">保存</el-button> -->
-</div>
+    </div>
     <!--@check-change="handleCheckChange"-->
     <el-tree
       :key="key"
@@ -43,13 +43,14 @@
       @node-click="handleNodeClick"
       @node-expand="handleNodeExpand"
       @node-collapse = "handleNodeCollapse">
-    <!--      show-checkbox-->
-    <span class="custom-tree-node" slot-scope="{ node, data }">
+      <!--      show-checkbox-->
+      <span class="custom-tree-node" slot-scope="{ node, data }">
             <span>
                 <i :class="data.icon"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ node.label }}
             </span>
         </span>
     </el-tree>
+
   </div>
     <div style="display: inline-block;width:85%;vertical-align: top" >
       <div style="width: 100%; overflow: hidden;margin-top: 10px;">
@@ -665,8 +666,13 @@ export default {
   right:-5px!important;
 }
 .el-tree{
-  height:calc(100vh - 223px)!important;
-  max-height:calc(100vh - 223px)!important;
+  height:calc(100vh - 150px)!important;
+  max-height:calc(100vh - 150px)!important;
+}
+>>>.el-tree-node{
+  > .el-tree-node__children{
+    overflow:visible !important
+  }
 }
 .gcform {
   margin-top: 10px;

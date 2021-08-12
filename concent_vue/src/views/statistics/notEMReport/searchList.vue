@@ -6,7 +6,6 @@
         v-if="gyTypeShow"
       >
         <el-select
-          clearable
           filterable
           placeholder="请选择"
           size="mini"
@@ -34,10 +33,26 @@
       <el-form-item label="项目名称:">
         <el-input v-model="searchform.projectName" placeholder="项目名称" clearable></el-input>
       </el-form-item>
-      <el-form-item label="项目所在地:">
+      <el-form-item label="项目所在地:" v-show="industrial==='工业制造项目'|| !gyTypeShow">
         <el-input v-model="searchform.projectLocation" placeholder="项目地点" clearable @clear="searchform.ffid=''">
           <el-button slot="append" icon="el-icon-search"  @click="selectPosition()"></el-button>
         </el-input>
+      </el-form-item>
+      <el-form-item label="境内/外:" v-show="industrial==='工业制造'&&gyTypeShow">
+        <el-select
+          class="list-search-picker"
+          placeholder="请选择"
+          v-model="searchform.vjnw"
+        >
+          <el-option
+            label="境内"
+            value="境内"
+          ></el-option>
+          <el-option
+            label="境外"
+            value="境外"
+          ></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item
         label="工程类别(一级):"
@@ -84,7 +99,7 @@
     <div style="margin-top: 10px">
       <el-tabs type="border-card" @tab-click="tabChange" >
         <el-tab-pane :label="industrial">
-          <div style="margin-top: 10px">
+          <div style="margin-top: 10px" v-show="industrial==='工业制造项目'">
             <el-table
               default-expand-all
               row-key="uuid"
@@ -183,6 +198,97 @@
                 prop="htquantity"
                 show-overflow-tooltip
               >
+              </el-table-column>
+              <el-table-column
+                :width="180"
+                align="center"
+                label="本月工业总产值"
+                prop="monthCzSum"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                :width="180"
+                align="center"
+                label="本年工业总产值"
+                prop="yearCzSum"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+            </el-table>
+          </div>
+          <div style="margin-top: 10px" v-show="industrial==='工业制造'">
+            <el-table
+              default-expand-all
+              row-key="uuid"
+              :tree-props="{children: 'chirldList', hasChildren: 'hasChildren'}"
+              class="tableStyle"
+              :max-height="$tableHeight"
+              :height="$tableHeight"
+              :data="tableData.gycp_list"
+              :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
+              @row-dblclick="rowshow"
+              @selection-change="handleSelectionChange"
+              border
+              highlight-current-row
+              ref="table"
+              tooltip-effect="dark"
+            >
+              <el-table-column
+                :width="70"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+              <el-table-column
+                :width="300"
+                label="产品编码"
+                prop="vcode"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                :width="200"
+                align="center"
+                label="产品名称"
+                prop="vname"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                :width="200"
+                align="center"
+                label="计量单位"
+                prop="vmeasure"
+                show-overflow-tooltip
+
+              >
+              </el-table-column>
+              <el-table-column
+                :width="180"
+                align="center"
+                label="所属单位"
+                prop="orgName"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                :width="180"
+                align="center"
+                label="境/内外"
+                prop="vjnw"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                :width="180"
+                align="center"
+                label="是否包含增值税"
+                prop="vincludevat"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">{{scope.row.vincludevat=='1'?'是':scope.row.vincludevat=='0'?'否':''}}</template>
               </el-table-column>
               <el-table-column
                 :width="180"
@@ -837,7 +943,8 @@
           projectName:'',
           projectLocation:'',
           projectTypeFirstId:'',
-          projectTypeSecondId:''
+          projectTypeSecondId:'',
+          vjnw:''
         },
         tableData:{},
         multipleSelection: [],
@@ -856,8 +963,9 @@
             id:'pass'
           },
         ],//项目状态列表
-        industrial:"工业制造",
-        gyTypeShow:true
+        industrial:"",
+        gyTypeShow:true,
+        tabLabel:"工业制造项目"
       };
     },
     mounted() {
@@ -886,6 +994,7 @@
         this.treeStatas = false;
         this.searchform.ffid=data.fullDetailCode;
         this.searchform.path=data.fullDetailName;
+        this.searchform.projectLocation = data.detailName;
         this.key = this.key + 1;
       },
       //选择项目地点
@@ -911,6 +1020,47 @@
         }
       },
       exportdata() {
+        let type = ''
+        if (this.tabLabel === "工业制造") {
+          type = 'product'
+        } else if (this.tabLabel === "工业制造项目") {
+          type = 'industry'
+        } else if (this.tabLabel === "物资贸易") {
+          type = 'material'
+        } else if (this.tabLabel === "房地产") {
+          type = 'realty'
+        } else if (this.tabLabel === "金融保险") {
+          type = 'secure'
+        } else if (this.tabLabel === "运营维管") {
+          type = 'service'
+        } else if (this.tabLabel === "其他") {
+          type = 'other'
+        }
+        let name = this.tabLabel
+        this.searchform.type = type
+        this.$http
+          .post(
+            '/api/statistics/unProjectReport/xxsc/export/exportDataToExcel',
+            this.searchform,
+            { responseType: 'blob' }
+          )
+          .then((res) => {
+          const content = res.data;
+          const blob = new Blob([content])
+          const fileName = name+new Date().toLocaleDateString()+'.xlsx'
+          if ('download' in document.createElement('a')) { // 非IE下载
+            const elink = document.createElement('a')
+            elink.download = fileName
+            elink.style.display = 'none'
+            elink.href = URL.createObjectURL(blob)
+            document.body.appendChild(elink)
+            elink.click()
+            URL.revokeObjectURL(elink.href) // 释放URL 对象
+            document.body.removeChild(elink)
+          } else { // IE10+下载
+            navigator.msSaveBlob(blob, fileName)
+          }
+        })
       },
       // 查看
       rowshow(row) {
@@ -993,10 +1143,12 @@
         } else {
           this.industrial = "工业制造"
         }
+        this.tabLabel = this.industrial
+        this.getData();
       },
       // 标签改变方法
       tabChange(val) {
-        console.info(val.label)
+        this.tabLabel = val.label
         if (val.label == "工业制造" || val.label == "工业制造项目") {
           this.gyTypeShow = true
         } else {
@@ -1005,9 +1157,9 @@
       }
     },
     created() {
-      this.gyTypeChange();
       this.setDate();
       this.getData();
+      this.gyTypeChange();
     },
   };
 </script>
