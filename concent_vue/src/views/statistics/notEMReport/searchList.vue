@@ -963,8 +963,9 @@
             id:'pass'
           },
         ],//项目状态列表
-        industrial:"工业制造",
-        gyTypeShow:true
+        industrial:"",
+        gyTypeShow:true,
+        tabLabel:"工业制造项目"
       };
     },
     mounted() {
@@ -1019,6 +1020,47 @@
         }
       },
       exportdata() {
+        let type = ''
+        if (this.tabLabel === "工业制造") {
+          type = 'product'
+        } else if (this.tabLabel === "工业制造项目") {
+          type = 'industry'
+        } else if (this.tabLabel === "物资贸易") {
+          type = 'material'
+        } else if (this.tabLabel === "房地产") {
+          type = 'realty'
+        } else if (this.tabLabel === "金融保险") {
+          type = 'secure'
+        } else if (this.tabLabel === "运营维管") {
+          type = 'service'
+        } else if (this.tabLabel === "其他") {
+          type = 'other'
+        }
+        let name = this.tabLabel
+        this.searchform.type = type
+        this.$http
+          .post(
+            '/api/statistics/unProjectReport/xxsc/export/exportDataToExcel',
+            this.searchform,
+            { responseType: 'blob' }
+          )
+          .then((res) => {
+          const content = res.data;
+          const blob = new Blob([content])
+          const fileName = name+new Date().toLocaleDateString()+'.xlsx'
+          if ('download' in document.createElement('a')) { // 非IE下载
+            const elink = document.createElement('a')
+            elink.download = fileName
+            elink.style.display = 'none'
+            elink.href = URL.createObjectURL(blob)
+            document.body.appendChild(elink)
+            elink.click()
+            URL.revokeObjectURL(elink.href) // 释放URL 对象
+            document.body.removeChild(elink)
+          } else { // IE10+下载
+            navigator.msSaveBlob(blob, fileName)
+          }
+        })
       },
       // 查看
       rowshow(row) {
@@ -1101,10 +1143,12 @@
         } else {
           this.industrial = "工业制造"
         }
+        this.tabLabel = this.industrial
+        this.getData();
       },
       // 标签改变方法
       tabChange(val) {
-        console.info(val.label)
+        this.tabLabel = val.label
         if (val.label == "工业制造" || val.label == "工业制造项目") {
           this.gyTypeShow = true
         } else {
@@ -1113,9 +1157,9 @@
       }
     },
     created() {
-      this.gyTypeChange();
       this.setDate();
       this.getData();
+      this.gyTypeChange();
     },
   };
 </script>
