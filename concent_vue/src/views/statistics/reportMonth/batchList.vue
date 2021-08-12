@@ -73,7 +73,7 @@
             :min-width="200"
             align="center"
             label="填报单位"
-            prop="createOrgName"
+            prop="projectName"
             show-overflow-tooltip
           >
             </el-table-column>
