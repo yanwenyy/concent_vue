@@ -1040,7 +1040,7 @@
         this.searchform.type = type
         this.$http
           .post(
-            '/api/statistics/unProjectReport/export/exportDataToExcel',
+            '/api/statistics/unProjectReport/xxsc/export/exportDataToExcel',
             this.searchform,
             { responseType: 'blob' }
           )
