@@ -823,36 +823,85 @@
               <el-row>
                 <el-form-item
                   label="建设单位:"
-                  prop="project.companyBuild"
-                  style="width: 32.5%">
-                  <el-autocomplete
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    v-model="detailForm.project.companyBuild"
-                    :fetch-suggestions="querySearchAsync"
-                    placeholder="请输入内容"
-                  ></el-autocomplete>
-                  <!--<el-input-->
-                  <!--:disabled="p.actpoint === 'look'||p.actpoint === 'task'"-->
-                  <!--clearable-->
-                  <!--placeholder="请输入"-->
-                  <!--v-model="detailForm.project.companyBuild"/>-->
+                  prop="project.companyBuildId"
+                    style="width: 32.5%"
+                  :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: ['blur','change'],
+                }">
+                  <el-select
+                    v-model="constructionOrgList"
+                    v-if="detailForm.project.isClientele=='1'"
+                    multiple
+                    collapse-tags
+                    placeholder="请选择">
+                    <el-option
+                      v-for="item in pubCustomers"
+                      :key="item.customerId"
+                      :label="item.customerName"
+                      :value="item.customerId">
+                    </el-option>
+                  </el-select>
+                  <el-select
+                    v-model="constructionOrgList"
+                    v-if="detailForm.project.isClientele!='1'"
+                    multiple
+                    collapse-tags
+                    placeholder="请选择">
+                      <el-option
+                        :key="index"
+                        :label="item.detailName"
+                        :value="item.id"
+                        v-for="(item, index) in sjdwList"
+                      ></el-option>
+                  </el-select>
                 </el-form-item>
+                <el-col :span="8">
+                  <el-form-item
+                    class="inline-formitem"
+                    style="width: 32.5%"
+                    label="是否客户:"
+                    prop="project.isClientele"
+                    :rules="{
+                    required: true,
+                    message: '此项不能为空',
+                    trigger: 'blur',
+                  }"
+                  >
+                    <el-switch
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                      class="inline-formitem-switch"
+                      v-model="detailForm.project.isClientele"
+                      active-color="#409EFF"
+                      inactive-color="#ddd"
+                      active-value="1"
+                      inactive-value="0"
+                      @change="constructionOrgList=''"
+                    >
+                    </el-switch>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
                 <el-form-item
                   label="设计单位:"
                   prop="project.companyDesign"
                   style="width: 32.5%">
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                     clearable
-                    placeholder="请输入"
-                    v-model="detailForm.project.companyDesign"/>
+                    placeholder="请选择设计单位"
+                    v-model="detailForm.project.companyDesign">
+                    <el-button slot="append" icon="el-icon-circle-plus-outline" @click="openComMul('','','/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
+                  </el-input>
                 </el-form-item>
                 <el-form-item
                   label="监理单位:"
                   prop="project.companySupervisor"
                   style="width: 32.5%">
                   <el-input
-                    disabled
+                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                     clearable
                     placeholder="请选择监理单位"
                     v-model="detailForm.project.companySupervisor">
@@ -1482,8 +1531,10 @@
       return {
         userInfo: JSON.parse(sessionStorage.getItem('userdata')),
         companyMulStatus:false,//设计单位等多选列表状态
+        constructionOrgList:[], //建设单位选中ID列表
         contractStatas:false,//关联合同状态
         fatherList:[],
+        sjdwList: [],
         uuid: null,
         DwVisible: false,
         infoCSVisible: false,
@@ -1509,7 +1560,7 @@
             projectNatureId: '', // 项目性质
             projectNatureFirstId: '', // 项目性质(一级)
             projectNatureSecondId: '', // 项目性质(二级)
-            // companyId: '', // 签约/使用资质单位
+            companyId: '', // 签约/使用资质单位
             companyName: '', // 签约/使用资质名称
             companyBuiltName: '', // 承建单位
             railwayId: '', // 所属铁路局
@@ -1552,8 +1603,12 @@
             realEndTime: '', // 实际竣工日期
             projectEndTime: '', // 竣工日期
             companyBuild: '', // 建设单位
+            companyBuildId: '', // 建设单位id
+            isClientele: '1',   //是否客户
             companyDesign: '', // 设计单位
+            companyDesignId: '', // 设计单位id
             companySupervisor: '', // 监理单位
+            companySupervisorId: '', // 监理单位id
             projectManagerName: '', // 项目经理
             completedOutputValue: '', // 竣工产值
             isTrusteeship: '', // 是否托管
@@ -1688,8 +1743,11 @@
           this.detailForm.project.companyId=data.selIdList.join(",");
           this.detailForm.project.companyName=data.selList.join(",");
         }else if (data.type == "监理单位") {
+          this.detailForm.project.companySupervisorId=data.selIdList.join(",");
           this.detailForm.project.companySupervisor=data.selList.join(",");
-          // id数组 = data.selIdList.join(",");
+        }else if (data.type == "设计单位") {
+          this.detailForm.project.companyDesignId=data.selIdList.join(",");
+          this.detailForm.project.companyDesign=data.selList.join(",");
         }
       },
       //根据id跳页面
@@ -1819,10 +1877,23 @@
 
         clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
-          this.$forceUpdate();
-        cb(results);
-      }, 500 * Math.random());
+            this.$forceUpdate();
+          cb(results);
+        }, 500 * Math.random());
       },
+
+      querySjdw(queryString, cb) {
+        var restaurants = this.sjdwList;
+        var results = queryString ? restaurants.filter(this.createStateFilter2(queryString)) : restaurants;
+
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+          this.$forceUpdate();
+          cb(results);
+        }, 500 * Math.random());
+      },
+      
+      
       createStateFilter(queryString) {
         return (restaurants) => {
           return (restaurants.value.toLowerCase().indexOf(queryString.toLowerCase()) != -1);
@@ -2150,7 +2221,7 @@
           this.$message.error("请选择一个主地点");
           return false;
         }
-
+        this.detailForm.project.companyBuildId = this.constructionOrgList.join(",")
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
@@ -2268,6 +2339,9 @@
                 this.detailForm.project.projectTypeName='自揽项目';
                 this.getCount()
               }
+              if(this.detailForm.project.companyBuildId != ''){
+                this.constructionOrgList = this.detailForm.project.companyBuildId.split(",");
+              }
             }
           })
       }
@@ -2291,6 +2365,18 @@
         .then(res => {
         this.fatherList = res.data.data
       })
+      this.$http
+      .post(
+        "/api/contract/Companies/detail/findCompanies",
+      )
+      .then((res) => {
+        this.sjdwList = res.data.data.records;
+        this.sjdwList.forEach((item)=>{
+          item.value=item.companyName;
+          item.detailName=item.companyName;
+          item.id=item.uuid;
+        })
+      });
     }
   }
 </script>

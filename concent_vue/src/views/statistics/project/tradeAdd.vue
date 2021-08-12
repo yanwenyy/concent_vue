@@ -22,13 +22,14 @@
       <el-tabs type="border-card">
       <el-tab-pane label="物资贸易项目">
       <div class="detailBox">
+
         <el-form
           :inline="false"
           :model="detailForm"
           class="gcform"
           ref="detailForm"
           style="background: white">
-          <el-row>
+            <el-row>
             <el-form-item
               label="项目名称:"
               prop="project.projectName"
@@ -49,40 +50,82 @@
                 placeholder="请输入"
                 v-model="detailForm.project.projectForeginName"/>
             </el-form-item>
-          </el-row>
-          <el-row>
             <el-form-item
               label="合同号:"
+              v-show="detailForm.project.contractInfoList!=''"
               prop="project.contractNumber"
               style="width:32.5%;">
               <el-input
                 clearable
+                disabled
                 placeholder="请输入"
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 v-model="detailForm.project.contractNumber"/>
             </el-form-item>
-            <el-form-item
-              label="合同甲方:"
-              prop="project.contractFirstParty"
-              v-show="detailForm.project.contractInfoList==''"
-              style="width: 32.5%">
-              <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                clearable
-                placeholder="请输入"
-                v-model="detailForm.project.contractFirstParty"/>
-            </el-form-item>
-            <el-form-item
-              label="客户名称:"
-              prop="project.customerName"
-              v-show="detailForm.project.contractInfoList!=''"
-              style="width: 32.5%">
-              <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                clearable
-                placeholder="请输入"
-                v-model="detailForm.project.customerName"/>
-            </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                label="客户名称:"
+                prop="project.companyBuildId"
+                :rules="{
+                    required: true,
+                    message: '此项不能为空',
+                    trigger: 'blur',
+                  }"
+                style="width: 32.5%">
+                  <el-select
+                    v-model="constructionOrgList"
+                    v-if="detailForm.project.isClientele=='1'"
+                    multiple
+                    filterable
+                    collapse-tags
+                    placeholder="请选择">
+                    <el-option
+                      v-for="item in pubCustomers"
+                      :key="item.customerId"
+                      :label="item.customerName"
+                      :value="item.customerId">
+                    </el-option>
+                  </el-select>
+                  <el-select
+                    v-model="constructionOrgList"
+                    v-if="detailForm.project.isClientele!='1'"
+                    multiple
+                    filterable
+                    collapse-tags
+                    placeholder="请选择">
+                      <el-option
+                        :key="index"
+                        :label="item.detailName"
+                        :value="item.id"
+                        v-for="(item, index) in sjdwList"
+                      ></el-option>
+                  </el-select>
+              </el-form-item>
+              <el-col :span="8">
+              <el-form-item
+                class="inline-formitem"
+                label="是否客户:"
+                prop="project.isClientele"
+                :rules="{
+                    required: true,
+                    message: '此项不能为空',
+                    trigger: 'blur',
+                  }"
+              >
+                <el-switch
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  class="inline-formitem-switch"
+                  v-model="detailForm.project.isClientele"
+                  active-color="#409EFF"
+                  inactive-color="#ddd"
+                  active-value="1"
+                  inactive-value="0"
+                  @change="constructionOrgList=''"
+                >
+                </el-switch>
+              </el-form-item>
+              </el-col>
+            </el-row>
             <el-form-item
               label="合同金额(万元):"
               prop="project.contractMoney"
@@ -97,27 +140,6 @@
                 <template slot="append">(万元)</template>
               </el-input>
             </el-form-item>
-          </el-row>
-          <el-row>
-            <!-- <el-form-item
-              label="合同所属板块:"
-              prop="project.ocontractModel"
-              style="width: 32.5%">
-              <el-select
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                filterable
-                clearable
-                placeholder="请选择"
-                v-model="detailForm.project.ocontractModel">
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.detailName"
-                  v-for="(item, index) in wumoveType"/>
-              </el-select>
-            </el-form-item> -->
-          </el-row>
-          <el-row>
             <el-form-item
               label="项目状态:"
               prop="project.projectStatusId"
@@ -151,20 +173,6 @@
                 <template slot="append">(万元)</template>
               </el-input>
             </el-form-item>
-          </el-row>
-          <el-row>
-            <!--<el-form-item-->
-              <!--label="供方地点"-->
-              <!--style="width: 32.5%"-->
-              <!--prop="project.topInfoSiteList[0].path"-->
-              <!--:rules="rules.project.must"-->
-            <!--&gt;-->
-              <!--<el-input v-model="detailForm.project.topInfoSiteList[0].path" placeholder="供方地点"-->
-                        <!--:disabled="p.actpoint === 'look'||p.actpoint === 'task'" clearable>-->
-                <!--<el-button slot="append" :disabled="p.actpoint === 'look'||p.actpoint === 'task'" icon="el-icon-search"-->
-                           <!--@click="selectPosition()"></el-button>-->
-              <!--</el-input>-->
-            <!--</el-form-item>-->
             <el-form-item
               label="合同签订时间:"
               prop="project.contractSignTime"
@@ -176,8 +184,6 @@
                 value-format="timestamp"
                 placeholder="选择日期时间"/>
             </el-form-item>
-          </el-row>
-          <el-row>
             <el-form-item
               label="合同开始时间:"
               prop="project.ocontractStartTime"
@@ -200,21 +206,31 @@
                 value-format="timestamp"
                 placeholder="选择日期时间"/>
             </el-form-item>
-          </el-row>
           <el-row>
             <el-form-item
-              label="签约单位:"
-              prop="amountCompanyName"
-              style="width:32.5%;">
-              <el-input
-                clearable
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
-                placeholder="请输入"
-                v-model="detailForm.project.amountCompanyName"/>
+              label="签约单位(使用资质单位):"
+              prop="project.amountCompanyName"
+              style="width: 32.5%"
+              :rules="{
+                required: true, message: '此项不能为空', trigger: ['blur','change']
+              }"
+            >
+              <el-input 
+                clearable 
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''" 
+                placeholder="请输入内容" 
+                v-model="detailForm.project.amountCompanyName" class="input-with-select">
+                <el-button 
+                  v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" 
+                  icon="el-icon-circle-plus-outline" 
+                  @click="addDw('签约单位(使用资质单位)',detailForm.project.amountCompanyId)" 
+                  >
+                </el-button>
+              </el-input>
             </el-form-item>
             <el-form-item
               label="所属单位:"
-              prop="companyBelongName"
+              prop="project.companyBelongName"
               style="width:32.5%;">
               <el-input
                 clearable
@@ -750,6 +766,7 @@
       </el-tab-pane>
     </el-tabs>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
+    <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
   </div>
 </template>
 
@@ -757,11 +774,12 @@
   import Tree from '@/components/tree'
   import { isMoney, isMobile, isPhone } from '@/utils/validate'
   import AuditProcess from '@/components/auditProcess'
+  import CompanyTree from '../companyTree'
 
   export default {
     name: 'estateMode',
     components: {
-      Tree,AuditProcess
+      Tree,AuditProcess,CompanyTree
     },
     data() {
       const validateMoney = (rule, value, callback) => {
@@ -815,6 +833,9 @@
         treeStatas: false,
         emergingMarketTwo: [],
         bizTypeCodeTwo: [],
+        constructionOrgList: [], 
+        sjdwList: [],
+        DwVisible:false,//选择单位弹框状态
         inOut: [
           { label: '系统内', value: '0' },
           { label: '系统外', value: '1' }
@@ -846,7 +867,6 @@
             businessId: '', // 业务板块
             projectName: '',
             projectForeginName: '',
-            contractFirstParty: '',   //合同甲方
             customerName: '',  //客户名称
             contractNumber: '',
             contractMoney: '',
@@ -865,6 +885,7 @@
             companyBelongName: '', // 6
             projectStatusId: '',
             amountCompanyName: '',
+            amountCompanyId: '',
             marketFirstId: '',
             marketSecondId: '',
             assemblyRate: '',
@@ -874,7 +895,9 @@
             fieldId: '',
             projectPusher: '',
             projectRemark: '',
-            projectPusherPhone: ''
+            projectPusherPhone: '',
+            isClientele:'1',
+            companyBuildId:''
           }
         },
         rules: {
@@ -902,6 +925,9 @@
           }
         });
         return projectStatusCheck
+      },
+      pubCustomers() {//客户名称
+        return this.$store.state.pubCustomers;
       },
       emergingMarket() {
         return this.$store.state.category.emergingMarket
@@ -960,6 +986,28 @@
 
         });
         this.key = this.key + 1;
+      },
+      //打开单位弹框
+      addDw(type,list,ifChek,index,tableList){
+        this.DwVisible = true;
+        this.$nextTick(() => {
+          this.$refs.infoDw.init(type,list,ifChek,index,tableList);
+        })
+      },
+      //获取单位的值
+      getDwInfo(data){
+        var id=[],name=[];
+        if(data&&data.type!='单位名称'){
+          data.forEach((item)=>{
+            id.push(item.id);
+            name.push(item.detailName);
+          })
+        }
+        if(data.type=="签约单位(使用资质单位)"){
+          this.detailForm.project.amountCompanyId=id.join(",");
+          this.detailForm.project.amountCompanyName=name.join(",");
+        }
+        this.DwVisible=false;
       },
       //新增标段和地点
       add(type) {
@@ -1029,6 +1077,7 @@
         }
         this.detailForm.project.infoSubjectMatterList.push(v)
       },
+     
       del(index, item, list) {
         console.log(index)
         if (item.uuid && item.uuid !== '') {
@@ -1132,6 +1181,7 @@
           this.$message.error("请选择一个主地点");
           return false;
         }
+        this.detailForm.project.companyBuildId = this.constructionOrgList.join(",")
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
@@ -1216,6 +1266,9 @@
                 }]
               }
               this.getShowTwo()
+              if(this.detailForm.project.companyBuildId != ''){
+                this.constructionOrgList = this.detailForm.project.companyBuildId.split(",");
+              }
             }
           })
       }
@@ -1228,6 +1281,19 @@
       if (this.p.actpoint === 'look' || this.p.actpoint === 'edit' || this.p.actpoint === 'task') {
         this.getShow()
       }
+       //设计单位列表
+      this.$http
+        .post(
+          "/api/contract/Companies/detail/findCompanies",
+        )
+        .then((res) => {
+          this.sjdwList = res.data.data.records;
+          this.sjdwList.forEach((item)=>{
+            item.value=item.companyName;
+            item.detailName=item.companyName;
+            item.id=item.uuid;
+          })
+        });
     }
   }
 </script>
