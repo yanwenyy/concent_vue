@@ -269,7 +269,7 @@
                 :width="180"
                 align="center"
                 label="所属单位"
-                prop="createOrgName"
+                prop="orgName"
                 show-overflow-tooltip
               >
               </el-table-column>
@@ -288,7 +288,7 @@
                 prop="vincludevat"
                 show-overflow-tooltip
               >
-                <template slot-scope="scope">{{scope.row.vincludevat=='1'?'包含':scope.row.vincludevat=='0'?'不包含':''}}</template>
+                <template slot-scope="scope">{{scope.row.vincludevat=='1'?'是':scope.row.vincludevat=='0'?'否':''}}</template>
               </el-table-column>
               <el-table-column
                 :width="180"
