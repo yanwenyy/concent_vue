@@ -284,7 +284,7 @@
               </el-table>
            </div>
          </el-tab-pane>
-       <el-tab-pane label="审批流程" v-if="dataReport.flowStatus!=1&&(p.actpoint == 'task'||p.actpoint == 'look')">
+       <el-tab-pane label="审批流程" v-if="dataReport.flowStatus!='edit'&&(p.actpoint == 'task'||p.actpoint == 'look')">
          <Audit-Process :task="p.task||{businessId:p.uuid,businessType:' engineering_monthly_report'}"></Audit-Process>
        </el-tab-pane>
      </el-tabs>
@@ -511,7 +511,7 @@
       },
       submit() {
         this.dataReport.status="1"
-        this.dataReport.flowStatus="2"
+        this.dataReport.flowStatus="check"
         let tableData = {
           projectReportDetaiList:this.data,
           projectreport:this.dataReport,

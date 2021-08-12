@@ -290,7 +290,7 @@
               </el-table>
            </div>
          </el-tab-pane>
-       <el-tab-pane label="审批流程" v-if="dataReport.flowStatus!=1&&(p.actpoint == 'task'||p.actpoint == 'look')">
+       <el-tab-pane label="审批流程" v-if="dataReport.flowStatus!='edit'&&(p.actpoint == 'task'||p.actpoint == 'look')">
          <Audit-Process :task="p.task||{businessId:p.uuid,businessType:' engineering_monthly_report'}"></Audit-Process>
        </el-tab-pane>
      </el-tabs>
@@ -507,7 +507,7 @@
             }
           });
           // console.log(list[index].tjxCode.length,treeSum,parentNum)
-          if(canCalc&&list[index].tjxCode.length>=12&&(treeSum>parentNum)){
+          if(list[index].sumTarget&&canCalc&&list[index].tjxCode.length>=12&&(treeSum>parentNum)){
             this.$message.error("该级本月完成之和不能大于上级本月完成");
             list[index].monthValue='';
             return false;
@@ -639,7 +639,7 @@
       },
       submit() {
         this.dataReport.status="1"
-        this.dataReport.flowStatus="2"
+        this.dataReport.flowStatus="check"
         let tableData = {
           projectReportDetaiList:this.data,
           projectreport:this.dataReport,

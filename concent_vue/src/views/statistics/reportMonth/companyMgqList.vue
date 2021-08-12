@@ -393,7 +393,7 @@
         params.reportMonth=this.searchform.yearDateS.split("-")[1]
         params.reportType='2'
         params.status='2'
-        params.flowStatus='1'
+        params.flowStatus='edit'
         this.$http.post(
             url,
             JSON.stringify(params),
@@ -471,7 +471,7 @@
         this.multipleSelection.forEach((item) => {
           let a=this.userdata.managerOrgId;
           if(item.projectId==null||item.projectId==''){
-            if(item.flowStatus!='1'&&item.flowStatus!=null&&item.flowStatus!='4'){
+            if(item.flowStatus!='edit'&&item.flowStatus!=null&&item.flowStatus!='reject'){
               this.$message.info('只允许删除未上报的数据！')
               return itemStatus=false
             }else{
@@ -538,7 +538,7 @@
           this.$message.info("不允许对下级进行任何操作", "提示")
           return false
         }
-        if(this.multipleSelection[0].flowStatus==''&& this.multipleSelection[0].flowStatus==null &&this.multipleSelection[0].flowStatus!='1'&&this.multipleSelection[0].flowStatus!='3'){
+        if(this.multipleSelection[0].flowStatus==''&& this.multipleSelection[0].flowStatus==null &&this.multipleSelection[0].flowStatus!='edit'&&this.multipleSelection[0].flowStatus!='pass'){
           this.$message.info("只允许修改草稿和审核驳回状态的数据", "提示")
           return false
         }

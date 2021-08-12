@@ -7715,6 +7715,7 @@ export default {
     },
     //获取单位的值
     getDwInfo(data){
+        console.log(data);
       this.$forceUpdate();
       var id=[],name=[];
       if(data&&data.type!='单位名称'&&data.type!='承揽所属机构'){
@@ -7730,13 +7731,13 @@ export default {
         this.detailform.contractInfo.qualityOrgIds=id.join(",");
         this.detailform.contractInfo.qualityOrgNames=name.join(",");
       }else if(data.type=='单位名称'){
-        this.detailform.contractInfoAttachBO[data.tableList][data.index].orgId=data.id;
+        this.detailform.contractInfoAttachBO[data.tableList][data.index].orgId=data.code;
         this.detailform.contractInfoAttachBO[data.tableList][data.index].orgName=data.name;
         this.$set(this.detailform.contractInfoAttachBO[data.tableList][data.index],this.detailform.contractInfoAttachBO[data.tableList][data.index]);
       }else if(data.type=="承揽所属机构"){
-        this.detailform.contractInfo.contractOrgId=data.id;
+        this.detailform.contractInfo.contractOrgId=data.code;
         this.detailform.contractInfo.contractOrgName=data.name;
-        this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion",{orgCode:data.id},).then((res) => {
+        this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion",{orgCode:data.code},).then((res) => {
           this.ssList = res.data.data
         });
       }

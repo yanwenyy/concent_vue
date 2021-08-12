@@ -83,14 +83,14 @@
         <el-table-column
           :width="150"
           align="center"
-          label="限制对象"
-          prop="restrictedobjects"
+          label="被授权单位"
+          prop="orgName"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>限制对象</span>
+            <span>被授权单位</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.restrictedobjects" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.orgName" size="mini"/>
             </div>
           </template>
         </el-table-column>
@@ -98,12 +98,12 @@
         <el-table-column
           :width="150"
           align="center"
-          label="状态"
+          label="是否启用"
           prop="startStatus"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>状态</span>
+            <span>是否启用</span>
             <div>
               <el-select
                 class="list-search-picker"
@@ -111,13 +111,15 @@
                 filterable
                 placeholder="请选择"
                 size="mini"
-                v-model="searchform.startStatus"
+                v-model="searchform.isEnable"
               >
                 <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in flowStatusList"
+                  label="是"
+                  value="1"
+                ></el-option>
+                <el-option
+                  label="否"
+                  value="0"
                 ></el-option>
               </el-select>
               <!--<el-input-->
@@ -129,25 +131,25 @@
             </div>
           </template>
           <template slot-scope="scope">
-            {{scope.row.startStatus==1?'启用':'未启用'}}
+            {{scope.row.isEnable==1?'启用':'未启用'}}
           </template>
         </el-table-column>
         <el-table-column
           :width="150"
           align="center"
-          label="标准上报时间"
-          prop="standardreporttime"
+          label="补录开始日期"
+          prop="startDate"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>标准上报时间</span>
+            <span>补录开始日期</span>
             <div>
               <el-date-picker
-                v-model="searchform.standardreporttime"
+                v-model="searchform.startDate"
                 type="date"
-                format="dd"
-                value-format="dd"
-                placeholder="选择日" style=" width: 100%" size="mini">
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
+                placeholder="选择" style=" width: 100%" size="mini">
               </el-date-picker>
             </div>
           </template>
@@ -155,19 +157,19 @@
         <el-table-column
           :width="150"
           align="center"
-          label="截止上报时间"
-          prop="endreporttime"
+          label="补录截至日期"
+          prop="endDate"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>截止上报时间</span>
+            <span>补录截至日期</span>
             <div>
               <el-date-picker
-                v-model="searchform.endreporttime"
+                v-model="searchform.endDate"
                 type="date"
-                format="dd"
-                value-format="dd"
-                placeholder="选择日" style=" width: 100%" size="mini">
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
+                placeholder="选择" style=" width: 100%" size="mini">
               </el-date-picker>
             </div>
           </template>
@@ -175,31 +177,22 @@
         <el-table-column
           :width="150"
           align="center"
-          label="创建时间"
-          prop="createTime"
+          label="补录年月"
+          prop="yearMonth"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>创建时间</span>
+            <span>补录年月</span>
             <div>
               <el-date-picker
                 style=" width: 100%"
-                v-model="searchform.createTime"
+                v-model="searchform.yearMonth"
                 size="mini"
-                type="datetime"
-                value-format="timestamp"
+                type="month"
+                value-format="yyyy-MM"
               >
               </el-date-picker>
             </div>
-          </template>
-          <template slot-scope="scope">
-            <!-- <div>{{scope.row.monthValue}}</div>-->
-            <div>
-              {{
-              scope.row.createTime | dateformat
-              }}
-            </div>
-
           </template>
         </el-table-column>
       </el-table>
@@ -224,7 +217,7 @@
                 <td style="width:80%;text-align:left;padding:10px">
                   <el-input  :disabled="true" v-model.trim="form1.orgName" placeholder="被授权单位" min="0" max="500" type="text"
                              style="width:70%" >
-                    <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('被授权单位',form1.orgId,false)"></el-button>
+                    <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('被授权单位',form1.orgId)"></el-button>
                   </el-input>
                   <span style="color:red;font-size:12px;float:left" v-if="this.show && this.form1.orgName == ''">此项不能为空</span>
                 </td>
@@ -382,12 +375,20 @@
       },
       //获取单位的值
       getDwInfo(data){
+        console.log(data);
         this.$forceUpdate();
-       console.log(data);
+        var id=[],name=[],code=[];
+        if(data){
+          data.forEach((item)=>{
+            id.push(item.id);
+            name.push(item.detailName);
+            code.push(item.code)
+          })
+        }
         if(data.type=="被授权单位"){
-          this.form1.orgName=data.name;
-          this.form1.orgId=data.id;
-          this.form1.orgCode=data.code;
+          this.form1.orgName=name.join(",");
+          this.form1.orgId=id.join(",");
+          this.form1.orgCode=code.join(",");
         }
         this.DwVisible=false;
       },
@@ -402,6 +403,15 @@
         this.form1.createOrgName=this.userdata.managerOrgName;
         this.form1.createOrgType=this.userdata.managerOrgType;
         this.form1.createUserName=this.userdata.username;
+        this.form1={
+          orgId: '',
+          orgCode: '',
+          orgName: '',
+          isEnable: '',
+          startDate: '',
+          endDate: '',
+          yearMonth: '',
+        };
         this.showCfclAddDialog1 = true;
       },
       jyShow(){
