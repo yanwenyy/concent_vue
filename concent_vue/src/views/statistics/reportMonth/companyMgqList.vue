@@ -200,7 +200,7 @@
                          prop="totalValue" show-overflow-tooltip
         >
           <template slot-scope="scope">
-            <span v-if="scope.row.contractAmountTotal&&scope.row.totalValue">{{scope.row.contractAmountTotal-scope.row.totalValue}}</span>
+            <span v-if="scope.row.contractAmountTotal!=null&&scope.row.totalValue!=null">{{scope.row.contractAmountTotal-scope.row.totalValue}}</span>
           </template>
         </el-table-column>
         <!--  <el-table-column
