@@ -465,7 +465,7 @@
                     }
                   })
               }else{
-                this.$message.error(res.data.msg)
+                this.$message.error('当前月报已经过了上报截止日期,不能提交!')
               }
             })
         }
