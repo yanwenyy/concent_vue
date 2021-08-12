@@ -360,7 +360,7 @@
               <el-form-item
                 v-if="detailform.contractInfo.enginTypeFirstId!='17ff5c08d36b41ea8f2dc2e9d3029cac'"
                 label="建设单位:"
-                prop="contractInfo.constructionOrg"
+                prop="contractInfo.constructionOrgId"
                 :rules="{
                 required: true,
                 message: '此项不能为空',
