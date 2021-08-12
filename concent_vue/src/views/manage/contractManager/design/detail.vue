@@ -370,6 +370,7 @@
                   v-model="constructionOrgList"
                   v-if="detailform.contractInfo.isClientele=='1'"
                   multiple
+                  filterable
                   collapse-tags
                   placeholder="请选择">
                   <el-option
@@ -383,6 +384,7 @@
                   v-model="constructionOrgList"
                   v-if="detailform.contractInfo.isClientele!='1'"
                   multiple
+                  filterable
                   collapse-tags
                   placeholder="请选择">
                     <el-option
@@ -536,8 +538,8 @@
                   v-model="detailform.contractInfo.isInSystemUnion"
                   active-color="#409EFF"
                   inactive-color="#ddd"
-                  active-value="0"
-                  inactive-value="1"
+                  active-value="1"
+                  inactive-value="0"
                   @change="changeMoney('unionContractInfoAttachList','nlht')"
                 >
                 </el-switch>
@@ -562,8 +564,8 @@
                   v-model="detailform.contractInfo.isInSystemSub"
                   active-color="#409EFF"
                   inactive-color="#ddd"
-                  active-value="0"
-                  inactive-value="1"
+                  active-value="1"
+                  inactive-value="0"
                   @change="changeMoney('innerContractInfoAttachList','nfb')"
                 >
                 </el-switch>
@@ -588,8 +590,8 @@
                   v-model="detailform.contractInfo.isOutSystemUnion"
                   active-color="#409EFF"
                   inactive-color="#ddd"
-                  active-value="0"
-                  inactive-value="1"
+                  active-value="1"
+                  inactive-value="0"
                   @change="changeMoney('outUnionContractInfoAttachList','wlht')"
                 >
                 </el-switch>
@@ -614,8 +616,8 @@
                   v-model="detailform.contractInfo.isOutSystemSub"
                   active-color="#409EFF"
                   inactive-color="#ddd"
-                  active-value="0"
-                  inactive-value="1"
+                  active-value="1"
+                  inactive-value="0"
                   @change="changeMoney('outUnionContractInfoAttachList','wfb')"
                 >
                 </el-switch>
@@ -640,8 +642,8 @@
                   v-model="detailform.contractInfo.isInGroupSub"
                   active-color="#409EFF"
                   inactive-color="#ddd"
-                  active-value="0"
-                  inactive-value="1"
+                  active-value="1"
+                  inactive-value="0"
                   @change="changeMoney('innerGroupContractInfoAttachList','jtnfb')"
                 >
                 </el-switch>
@@ -1119,8 +1121,8 @@
                   v-model="detailform.contractInfo.isYearContract"
                   active-color="#409EFF"
                   inactive-color="#ddd"
-                  active-value="0"
-                  inactive-value="1"
+                  active-value="1"
+                  inactive-value="0"
                 >
                 </el-switch>
               </el-form-item>
@@ -2057,8 +2059,8 @@
                       v-model="scope.row.isAdd"
                       active-color="#409EFF"
                       inactive-color="#ddd"
-                      active-value="0"
-                      inactive-value="1"
+                      active-value="1"
+                      inactive-value="0"
                     >
                     </el-switch>
                     <!--{{scope.row.isAdd=='1'?'否':'是'}}-->
@@ -2237,8 +2239,8 @@
                       v-model="scope.row.isAdd"
                       active-color="#409EFF"
                       inactive-color="#ddd"
-                      active-value="0"
-                      inactive-value="1"
+                      active-value="1"
+                      inactive-value="0"
                     >
                     </el-switch>
                   </template>
@@ -2441,8 +2443,8 @@
                       v-model="scope.row.isAdd"
                       active-color="#409EFF"
                       inactive-color="#ddd"
-                      active-value="0"
-                      inactive-value="1"
+                      active-value="1"
+                      inactive-value="0"
                     >
                     </el-switch>
                   </template>
@@ -2645,8 +2647,8 @@
                       v-model="scope.row.isAdd"
                       active-color="#409EFF"
                       inactive-color="#ddd"
-                      active-value="0"
-                      inactive-value="1"
+                      active-value="1"
+                      inactive-value="0"
                     >
                     </el-switch>
                   </template>
@@ -2824,8 +2826,8 @@
                       v-model="scope.row.isAdd"
                       active-color="#409EFF"
                       inactive-color="#ddd"
-                      active-value="0"
-                      inactive-value="1"
+                      active-value="1"
+                      inactive-value="0"
                     >
                     </el-switch>
                   </template>
@@ -3611,9 +3613,9 @@
           this.detailform.contractInfoAttachBO[data.tableList][data.index].orgName=data.name;
           this.$set(this.detailform.contractInfoAttachBO[data.tableList][data.index],this.detailform.contractInfoAttachBO[data.tableList][data.index]);
         }else if(data.type=="承揽所属机构"){
-          this.detailform.contractInfo.contractOrgId=data.id;
+          this.detailform.contractInfo.contractOrgId=data.code;
           this.detailform.contractInfo.contractOrgName=data.name;
-          this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion",{orgCode:data.id},).then((res) => {
+          this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion",{orgCode:data.code},).then((res) => {
             this.ssList = res.data.data
           });
         }
