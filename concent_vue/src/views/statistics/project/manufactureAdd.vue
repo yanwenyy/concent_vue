@@ -404,16 +404,20 @@
             <el-form-item
               v-if="detailForm.project.marketFirstId === '50cd5e9992ac4653920fac8c1f2eb2e3'"
               label="场地名称:"
-              prop="project.fieldId"
-              :rules="rules.project.must"
+              prop="cdmc"
+              :rules="{
+                required: true, message: '此项不能为空', trigger: 'blur'
+              }"
               style="width: 32.5%">
               <el-select
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                class="multiple-sel"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                multiple
                 filterable
                 clearable
-                @change="getName(detailForm.project.fieldId, siteName, 'fieldName')"
+              @change="getMultipleName(detailForm.cdmc,siteName,'fieldId','fieldName')"
                 placeholder="请选择"
-                v-model="detailForm.project.fieldId">
+                v-model="detailForm.cdmc">
                 <el-option
                   :key="index"
                   :label="item.detailName"
@@ -800,6 +804,7 @@
           { label: '路外', value: 1 }
         ],
         detailForm: {
+          cdmc:[],
           project: {
             contractInfoList:[],//关联合同列表
             projectSubContractList: [], // 分包字段
@@ -1039,6 +1044,19 @@
           this.detailForm.project.topInfoSiteList.push(v);
         }
       },
+        //复选下拉框框获取name
+      getMultipleName(valueList,list,id,name){
+        var _id=[],_name=[];
+        list.forEach((item)=>{
+          if(valueList.indexOf(item.id)!=-1){
+          _id.push(item.id);
+          _name.push(item.detailName)
+        }
+      });
+        this.detailForm.project[id]=_id.join(",");
+        this.detailForm.project[name]=_name.join(",");
+        console.log(this.detailForm.project[id])
+      },
       getName(id, list, name) {
         if (id) {
           this.$forceUpdate()
@@ -1176,6 +1194,7 @@
               if (!res.data.data.projectSubContractList) {
                 this.detailForm.project.projectSubContractList = []
               }
+              this.detailForm.cdmc=res.data.data.fieldId&&res.data.data.fieldId.split(",");
               if (!res.data.data.topInfoSiteList|| res.data.data.topInfoSiteList=='') {
                 this.detailForm.project.topInfoSiteList = [{
                   path: '',

@@ -175,7 +175,7 @@
           contractType:'1',
           current: 1,
           size: 20,
-          flowStatus:'3'
+          flowStatus:'pass'
         },
         contractType:'',
         dataList: [],

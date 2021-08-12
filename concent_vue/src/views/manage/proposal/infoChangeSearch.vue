@@ -166,7 +166,7 @@
           enginTypeSecondId: '',
           current: 1,
           size: 20,
-          flowStatus:'3'
+          flowStatus:'pass'
         },
         xqprojectType:[],
         dataList: [],
@@ -194,7 +194,7 @@
             enginTypeSecondId: '',
             current: 1,
             size: 20,
-            flowStatus:'3'
+            flowStatus:'pass'
         }
         this.radioRow = null
       },
