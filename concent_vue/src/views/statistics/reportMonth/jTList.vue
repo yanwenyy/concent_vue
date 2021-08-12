@@ -466,7 +466,7 @@
         // let datas=this.multipleSelection[0];
         var datas={
           status:'3',
-          flowStatus:'3',
+          flowStatus:'pass',
           projectId:this.multipleSelection[0].projectId,
           createOrgId:this.multipleSelection[0].createOrgId,
           createOrgCode:this.multipleSelection[0].createOrgCode,

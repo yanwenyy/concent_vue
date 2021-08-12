@@ -408,7 +408,7 @@
         }
         let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
-          if(item.flowStatus<='1'||item.flowStatus=='reject'){
+          if(item.flowStatus=='edit'||item.flowStatus=='reject'){
           uuids.push(item.uuid)}
           else{
             this.$message.info('只允许删除未上报的数据！')
