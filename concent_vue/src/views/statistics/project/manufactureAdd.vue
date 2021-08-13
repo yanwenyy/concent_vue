@@ -219,10 +219,24 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 placeholder="请输入"
+                  @change="getOutputTax"
                 v-model="detailForm.project.valueAddedTax">
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
               </el-input>
+            </el-form-item>
+            <el-form-item
+              label="上报产值是否含税:"
+              class="inline-formitem"
+              prop="project.isOutputTax"
+              style="width: 32.5%">
+              <el-switch
+                disabled
+                v-model="detailForm.project.isOutputTax"
+                active-color="#409EFF"
+                inactive-color="#ddd"
+                active-value="1"
+                inactive-value="0"/>
             </el-form-item>
           </el-row>
           <el-row>
@@ -891,6 +905,7 @@
             ocontractStartTime: '',
             ocontractEndTime: '',
             valueAddedTax: '', // 增值税
+            isOutputTax: '',
             categoryFirstId: 'f01fc41388d14663ac8873113f55cdd5', // 业务类别（一级）
             categorySecondId: '', // 业务类别（二级）
             ocontractModel: '', // 合同所属板块
@@ -971,6 +986,14 @@
       }
     },
     methods: {
+      // 增值税改变，上报产值是否含税联动
+      getOutputTax() {
+        if (this.detailForm.project.valueAddedTax && this.detailForm.project.valueAddedTax !== '0') {
+          this.detailForm.project.isOutputTax = '1'
+        } else {
+          this.detailForm.project.isOutputTax = '0'
+        }
+      },
            //流程操作
       operation(type){
         var msg='',that=this;
@@ -1294,6 +1317,7 @@
                 }]
               }
               this.getShowTwo()
+              this.getOutputTax()
               if(this.detailForm.project.companyBuildId != ''&& this.detailForm.project.companyBuildId != null ){
                 this.constructionOrgList = this.detailForm.project.companyBuildId.split(",");
               }

@@ -776,8 +776,8 @@
                 v-model="detailForm.project.isOutputTax"
                 active-color="#409EFF"
                 inactive-color="#ddd"
-                active-value="0"
-                inactive-value="1"/>
+                active-value="1"
+                inactive-value="0"/>
             </el-form-item>
           </el-row>
           <!--合同开工期-->
@@ -1535,9 +1535,9 @@
       // 增值税改变，上报产值是否含税联动
       getOutputTax() {
         if (this.detailForm.project.valueAddedTax && this.detailForm.project.valueAddedTax !== '0') {
-          this.detailForm.project.isOutputTax = '0'
-        } else {
           this.detailForm.project.isOutputTax = '1'
+        } else {
+          this.detailForm.project.isOutputTax = '0'
         }
       },
       handleRemove(file, index) {

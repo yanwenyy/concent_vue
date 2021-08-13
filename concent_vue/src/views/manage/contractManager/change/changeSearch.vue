@@ -33,6 +33,8 @@
         </el-form-item>
       </el-form>
       <el-table
+        :max-height="$tableHeight-250"
+        :height="$tableHeight-250"
         :data="dataList"
         border
         v-loading="dataListLoading"
