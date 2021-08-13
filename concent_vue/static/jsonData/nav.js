@@ -1654,6 +1654,15 @@ export default {
                   'defaultpage': false
                 },
                 {
+                  'name': '项目部月报局指list',
+                  'path': '/statistics/projectCheck/reportJZList',
+                  'component': '/statistics/projectCheck/reportJZList',
+                  'iconCls': 'el-icon-switch-button',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
                   'name': '项目部月报批量提交',
                   'path': '/statistics/projectCheck/batchList',
                   'component': '/statistics/projectCheck/batchList',

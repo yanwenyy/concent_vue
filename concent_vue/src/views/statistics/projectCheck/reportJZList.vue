@@ -8,8 +8,8 @@
                    type="primary" plain>查询</el-button>-->
         <!--<el-button @click="add"-->
                    <!--type="primary" plain><i class="el-icon-plus"></i>新增</el-button>-->
-        <el-button @click="edit"
-                   type="primary" plain><i class="el-icon-edit"></i>修改</el-button>
+        <!--<el-button @click="edit"-->
+                   <!--type="primary" plain><i class="el-icon-edit"></i>修改</el-button>-->
         <!--<el-button @click="del"-->
                    <!--type="primary" plain><i class="el-icon-delete"></i>删除</el-button>-->
         <!--<el-button @click="batchT"-->
@@ -22,8 +22,9 @@
 
       </el-button-group>
       <div style="float: right;">
-        <el-button @click="searchformSubmit"
-                   type="primary" plain><i class="el-icon-search"></i>查询</el-button>
+        <!--<el-button @click="searchformSubmit"-->
+                   <!--type="primary" plain><i class="el-icon-search"></i>查询</el-button>-->
+        <el-button  @click="back" type="info"  style="color:black;background:none" plain><i class="el-icon-search"></i>返回</el-button>
       </div>
     </div>
 
@@ -64,19 +65,19 @@
                          label="月报日期"
                          prop="yearDateS" show-overflow-tooltip
         >
-          <template slot="header"
-                    slot-scope="scope">
-            <span>月报日期</span>
-            <div>
-              <el-date-picker class="list-search-picker" filterable clearable
-                              type="month"
-                              value-format="yyyy-MM"
-                              @change="queryList"
-                              v-model="searchform.yearDateS"
-              >
-              </el-date-picker>
-            </div>
-          </template>
+          <!--<template slot="header"-->
+                    <!--slot-scope="scope">-->
+            <!--<span>月报日期</span>-->
+            <!--<div>-->
+              <!--<el-date-picker class="list-search-picker" filterable clearable-->
+                              <!--type="month"-->
+                              <!--value-format="yyyy-MM"-->
+                              <!--@change="queryList"-->
+                              <!--v-model="searchform.yearDateS"-->
+              <!--&gt;-->
+              <!--</el-date-picker>-->
+            <!--</div>-->
+          <!--</template>-->
           <template slot-scope="scope">
             <!-- <div>{{scope.row.monthValue}}</div>-->
             <div v-if="scope.row.reportYear != null && scope.row.reportMonth != null">
@@ -90,78 +91,95 @@
         <el-table-column :min-width="200"
                          align="center"
                          label="填报单位"
-                         prop="projectName" show-overflow-tooltip
+                         prop="unitId" show-overflow-tooltip
         >
-          <template slot="header"
-                    slot-scope="scope">
-            <span>填报单位</span>
-            <div>
-              <el-input style=" width: 100%"
-                        v-model="searchform.projectName"
-                        size="mini"/>
-            </div>
-          </template>
+          <!--<template slot="header"-->
+                    <!--slot-scope="scope">-->
+            <!--<span>填报单位</span>-->
+            <!--<div>-->
+              <!--<el-input style=" width: 100%"-->
+                        <!--v-model="searchform.projectName"-->
+                        <!--size="mini"/>-->
+            <!--</div>-->
+          <!--</template>-->
         </el-table-column>
         <el-table-column :width="150"
                          align="center"
                          label="所属单位"
-                         prop="contractAmountTotal" show-overflow-tooltip
+                         prop="createOrgName" show-overflow-tooltip
         >
-          <template slot="header"
-                    slot-scope="scope">
-            <span>所属单位</span>
-            <div>
-              <el-input style=" width: 100%"
-                        v-model="searchform.contractAmountTotal"
-                        size="mini"/>
-            </div>
-          </template>
+          <!--<template slot="header"-->
+                    <!--slot-scope="scope">-->
+            <!--<span>所属单位</span>-->
+            <!--<div>-->
+              <!--<el-input style=" width: 100%"-->
+                        <!--v-model="searchform.createOrgName"-->
+                        <!--size="mini"/>-->
+            <!--</div>-->
+          <!--</template>-->
         </el-table-column>
 
-        <el-table-column :width="150"
-                         align="center"
-                         label="状态"
-                         prop="monthValue" show-overflow-tooltip
+        <el-table-column
+          :width="150"
+          align="center"
+          label="状态"
+          prop="flowStatus"
+          show-overflow-tooltip
         >
-          <template slot="header"
-                    slot-scope="scope">
-            <span>状态</span>
-            <div>
-              <el-input style=" width: 100%"
-                        v-model="searchform.monthValue"
-                        size="mini"/>
-            </div>
+          <template slot-scope="scope">
+              <span class=" pointer" :class="scope.row.resultType=='1'?'blue':''" @click="rowShow(scope.row)">{{scope.row.resultType=='1'?'汇总查询':scope.row.resultType=='2'?'已上报':''}}</span>
+             
           </template>
+          <!--<template slot="header" slot-scope="scope">-->
+            <!--<span>状态</span>-->
+            <!--<div>-->
+              <!--<el-select-->
+                <!--class="list-search-picker"-->
+                <!--clearable-->
+                <!--filterable-->
+                <!--placeholder="请选择"-->
+                <!--size="mini"-->
+                <!--v-model="searchform.flowStatus"-->
+              <!--&gt;-->
+                <!--<el-option-->
+                  <!--:key="index"-->
+                  <!--:label="item.detailName"-->
+                  <!--:value="item.id"-->
+                  <!--v-for="(item, index) in flowStatusList"-->
+                <!--&gt;</el-option>-->
+              <!--</el-select>-->
+              <!--&lt;!&ndash;<el-input&ndash;&gt;-->
+              <!--&lt;!&ndash;class="list-search-picker"&ndash;&gt;-->
+              <!--&lt;!&ndash;style=" width: 100%"&ndash;&gt;-->
+              <!--&lt;!&ndash;v-model="searchform.flowStatus"&ndash;&gt;-->
+              <!--&lt;!&ndash;size="mini"&ndash;&gt;-->
+              <!--&lt;!&ndash;/>&ndash;&gt;-->
+            <!--</div>-->
+          <!--</template>-->
         </el-table-column>
         <el-table-column :width="150"
                          align="center"
                          label="批复状态"
-                         prop="yearValue" show-overflow-tooltip
+                         prop="pfStatus" show-overflow-tooltip
         >
-          <template slot="header"
-                    slot-scope="scope">
-            <span>批复状态</span>
-            <div>
-              <el-input style=" width: 100%"
-                        v-model="searchform.yearValue"
-                        size="mini"/>
-            </div>
+          <template slot-scope="scope">
+             {{scope.row.flowStatus=='pass'?'已批复':'未批复'}}
           </template>
+          <!--<template slot="header"-->
+                    <!--slot-scope="scope">-->
+            <!--<span>批复状态</span>-->
+            <!--<div>-->
+              <!--<el-input style=" width: 100%"-->
+                        <!--v-model="searchform.pfStatus"-->
+                        <!--size="mini"/>-->
+            <!--</div>-->
+          <!--</template>-->
         </el-table-column>
         <el-table-column :width="150"
-                                           align="center"
-                                           label="批复金额(万元)"
-                                           prop="totalValue" show-overflow-tooltip
+           align="center"
+           label="批复金额(万元)"
+           prop="pfMoney" show-overflow-tooltip
       >
-        <template slot="header"
-                  slot-scope="scope">
-          <span>批复金额(万元)</span>
-          <div>
-            <el-input style=" width: 100%"
-                      v-model="searchform.totalValue"
-                      size="mini"/>
-          </div>
-        </template>
       </el-table-column>
         <el-table-column
          :width="120"
@@ -213,6 +231,7 @@
     },
     data() {
       return {
+        p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         userdata:{},
         mrTime:'',
         treeStatas: false,
@@ -220,38 +239,28 @@
         addTitle:'请注意',
         page: { current: 1, size: 20, total: 0, records: [] },
         searchform: {
-          createOrgCode: '',
-          createOrgId: '',
-          createOrgName: '',
-          createOrgType: '',
-          createTime: '',
-          createUserId: '',
-          createUserName: '',
-          projectTypeName:'',
-          //fillDate:'',
-          reportType:'1',
-          yearDateS:''
+          uuid:'',
         },
         data:[],
         flowStatusList:[
           {
-            detailName:'草稿',
+            detailName:"草稿",
             id:'edit'
           },
           {
-            detailName:'审核中',
+            detailName:"审核中",
             id:'check'
           },
           {
-            detailName:'审核通过',
+            detailName:"审核通过",
             id:'pass'
           },
           {
-            detailName:'审核驳回',
+            detailName:"审核驳回",
             id:'reject'
           },
           {
-            detailName:'未创建',
+            detailName:"未创建",
             id:'0'
           }
         ],
@@ -285,6 +294,10 @@
       }
     },
     methods: {
+      // 返回上一页
+      back() {
+        this.$router.back()
+      },
       getdatatime(){//默认显示今天
         var date = new Date();
         var y = date.getFullYear();
@@ -336,14 +349,6 @@
             });
           }
         });
-      },
-      // 查看
-      rowShow(row) {
-        let p = { actpoint: 'look', projectId: row.projectId,uuid:row.uuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.status }
-        this.$router.push({
-          path: '../reportMDetail/',
-          query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-        })
       },
       //未上报批量填0
       batchT(){
@@ -497,25 +502,7 @@
       },
       searchformReset() {
         this.searchform = {
-          createOrgCode: '',
-          createOrgId: '',
-          createOrgName: '',
-          createOrgType: '',
-          createTime: '',
-          createUserId: '',
-          createUserName: '',
-          projectTypeName:'',
-          categorySecondName:'',
-          createOrgName:'',
-          totalValue:'',
-          yearValue:'',
-          monthValue:'',
-          contractAmountTotal:'',
-          projectStatusName:'',
-          projectName:'',
-          projectOmit:'',
-          projectId:'',
-          reportType:'1'
+          uuid:'',
         };
         this.getData();
       },
@@ -525,30 +512,21 @@
       },
       // 获取分页数据
       getData() {
-        if(this.searchform.yearDateS!='' && this.searchform.yearDateS!=null && this.searchform.yearDateS!=undefined) {
-          this.searchform.reportYear = this.searchform.yearDateS.split('-')[0];
-          this.searchform.reportMonth = this.searchform.yearDateS.split('-')[1];
-        }
+        this.searchform.uuid=this.p.projectId;
         this.$http
-            .post('/api/statistics/projectMonthlyReport/Projectreport/list/companyMonthlyReportList', this.searchform)
+            .post('/api/statistics/Projectcheck/list/childProjectCheckReport', this.searchform)
             .then(res => {
-              this.data = res.data.data;
+              this.data = res.data.data.records;
             });
       },
-      rowShow(row){
-        let p = {actpoint: 'look',projectId: row.projectId, orgCode: row.createOrgCode,projectName:row.projectName,createOrgId:row.createOrgId,createOrgName:row.createOrgName,
-          reportYear:row.reportYear,reportMonth:row.reportMonth,projectreportuuid:row.projectreportuuid,reportType:row.reportType,createOrgType:row.createOrgType
-        };
-        if((row.flowStatus==''||row.flowStatus==null) && (row.projectId!=''||row.projectId!=null)){
-          this.$message.info('该项目月报还未进行创建，无法进行操作', '提示');
-          return false;
-        }else{
+      // 查看
+      rowShow(row) {
+        let p = { actpoint: 'eidt', projectId: row.projectId,uuid:row.uuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.flowStatus }
         this.$router.push({
-          path: './companyMDetail/',
-          query: {p: this.$utils.encrypt(JSON.stringify(p))}
-        });
-
-      }}
+          path: '../reportMDetail/',
+          query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+        })
+      },
     },
     created() {
       let that = this;

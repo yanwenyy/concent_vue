@@ -41,6 +41,7 @@
         lazy
         :load="load"
         default-expand-all
+        :row-class-name="tableRowClassName"
       >
         <el-table-column
           :width="50"
@@ -73,9 +74,9 @@
             </div>
           </template>-->
           <template slot-scope="scope">
-            <spam class="blue pointer" v-if="scope.row.reportType != null && scope.row.reportType != ''">
+            <span class="blue pointer" v-if="scope.row.reportType != null && scope.row.reportType != ''">
               {{scope.row.createOrgName+"("+(scope.row.reportType==1?'自揽':scope.row.reportType==2?'工区':'')+")"}}
-            </spam>
+            </span>
             <span class="blue pointer"v-if="scope.row.reportType== null || scope.row.reportType == ''">
               {{scope.row.createOrgName}}
             </span>
@@ -272,6 +273,26 @@
 
     },
     methods: {
+
+      //如果项目上报月报，公司没有上报，那这一条数据就要显示成红色
+      checkRed(row,childreList){
+        var allReport=false,showRed=false;
+        childreList.forEach((item)=>{
+          if(item.createTime){
+            allReport=true;
+          }
+        })
+        if(allReport==true&&(row.createTime==null||row.createTime=='')){
+          showRed=true;
+        }
+        return showRed;
+      },
+      tableRowClassName({row, rowIndex}){
+        if(row.red==true){
+          return 'row_red';
+        }
+      },
+
       exportdata() {
       },
       load(tree, treeNode, resolve) {
@@ -294,7 +315,9 @@
                 datas
               )
               .then((res) => {
-                var datas=res.data.data.list
+                var datas=res.data.data.list;
+                var showRed=datas?this.checkRed(tree,datas):false;
+                tree.red=showRed?true:false;
                 resolve(datas)
               });
 
@@ -553,7 +576,12 @@
             this.searchform
           )
           .then((res) => {
-          this.tableData = res.data.data;
+            var datas=res.data.data;
+            datas.forEach((item)=>{
+              var showRed=item.chirldList?this.checkRed(item,item.chirldList):false;
+              item.red=showRed?true:false;
+            });
+            this.tableData = datas;
       });
       },
     },

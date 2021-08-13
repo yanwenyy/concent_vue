@@ -227,6 +227,7 @@
     },
     data() {
       return {
+        p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         userdata:{},
         mrTime:'',
         treeStatas: false,
@@ -354,14 +355,6 @@
             });
           }
         });
-      },
-      // 查看
-      rowShow(row) {
-        let p = { actpoint: 'look', projectId: row.projectId,uuid:row.uuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.status }
-        this.$router.push({
-          path: '../reportMDetail/',
-          query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-        })
       },
       //未上报批量填0
       batchT(){
@@ -554,20 +547,14 @@
               this.data = res.data.data;
             });
       },
-      rowShow(row){
-        let p = {actpoint: 'look',projectId: row.projectId, orgCode: row.createOrgCode,projectName:row.projectName,createOrgId:row.createOrgId,createOrgName:row.createOrgName,
-          reportYear:row.reportYear,reportMonth:row.reportMonth,projectreportuuid:row.projectreportuuid,reportType:row.reportType,createOrgType:row.createOrgType
-        };
-        if((row.flowStatus==''||row.flowStatus==null) && (row.projectId!=''||row.projectId!=null)){
-          this.$message.info('该项目月报还未进行创建，无法进行操作', '提示');
-          return false;
-        }else{
+      // 查看
+      rowShow(row) {
+        let p = { actpoint: 'eidt', projectId: row.projectId,uuid:row.uuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.flowStatus }
         this.$router.push({
-          path: './companyMDetail/',
-          query: {p: this.$utils.encrypt(JSON.stringify(p))}
-        });
-
-      }}
+          path: '../reportMDetail/',
+          query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+        })
+      },
     },
     created() {
       let that = this;

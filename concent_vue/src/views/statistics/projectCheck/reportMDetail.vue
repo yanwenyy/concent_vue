@@ -2,8 +2,8 @@
 <template>
   <div style="position: relative">
       <div  v-if="dataReport.status==1" style="margin-top: 9px;color: red;position: absolute;top: 1px;right: 279px;z-index: 999;font-size: 15px;">项目名称：<span style="color: red !important;margin-right: 50px;">{{projectName.length>20?projectName.slice(0,20)+'...':projectName}}</span></div>
-    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus=='edit'||dataReport.flowStatus=='reject')" @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
-    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="save('save')" class="detailbutton detail-back-tab save-btn">保存</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus=='edit'||dataReport.flowStatus=='reject')&&dataReport.isEdit=='1'" @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&dataReport.isEdit=='1'" type="primary" @click="save('save')" class="detailbutton detail-back-tab save-btn">保存</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
       <el-button  @click="back" type="primary"  class="detailbutton detail-back-tab " plain>返回</el-button>
@@ -332,6 +332,7 @@
         data:[],
         dataReport:{
         },
+        projectList:{},
         commonFilesList:[],
         uploadVisible:false,//上传附件组件状态
         nextData:[],
@@ -495,6 +496,18 @@
           commonFilesList:this.commonFilesList,
         }
         var url='';
+        if(this.projectList.projectTypeCode=='017002'||this.projectList.projectTypeCode=='017003'){
+          var money=0;
+          this.data.forEach((item)=>{
+            if(item.tjxCode=='001001'){
+              money=Number(item.monthValue);
+            }
+          });
+          if(money==0&&this.commonFilesList.length==0){
+            this.$message.error("请上传附件!");
+            return false;
+          }
+        }
         if(type=='save'){
           url="/api/statistics/Projectcheck/detail/saveOrUpdate";
           this.$http
@@ -644,6 +657,7 @@
             this.dataReport=datas.projectcheck
             this.dataReport.yearDateS=this.dataReport.reportYear+"-"+this.dataReport.reportMonth
             this.commonFilesList=datas.commonFilesList;
+            this.projectList=datas.projectList;
             if(this.dataReport.status==1){
               this.activeName='ztjd'
             }else{

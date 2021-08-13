@@ -211,11 +211,11 @@
             jgcz=Number(item.value);
           }
         })
-        if(fjbfsg!=fjbfjg){
+        if(fjbfsg!=0&&fjbfjg!=0&&fjbfsg!=fjbfjg){
           this.$message.error("房建部分施工产值应该和房建部分竣工产值相等");
           cansub=false;
         }
-        if(sgcz!=jgcz){
+        if(sgcz!=0&&jgcz!=0&&sgcz!=jgcz){
           this.$message.error("竣工产值应该和施工产值相等");
           cansub=false;
         }
