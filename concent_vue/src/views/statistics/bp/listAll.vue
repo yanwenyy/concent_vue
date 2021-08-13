@@ -267,7 +267,7 @@
         </div>
         <span slot="footer" class="dialog-footer">
           <el-button @click="tjx = false">取 消</el-button>
-          <el-button type="primary" @click="tjx = false">确 定</el-button>
+          <el-button type="primary" @click="tjxAdd()">确 定</el-button>
         </span>
 </el-dialog>
 
@@ -362,6 +362,10 @@ export default {
     },
   },
   methods: {
+      tjxAdd(){
+        this.tjx = false
+        this.getOrgTree()
+      },
       //打开统计项汇总指标
       openhzzb(){
         this.tjx = true;
@@ -677,7 +681,6 @@ export default {
               ) {
                 this.$refs.tree.store._getAllNodes()[i].expanded = false;
               }
-
               this.loadNode(this.node, this.resolve);
             });
         })
