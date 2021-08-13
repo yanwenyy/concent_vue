@@ -117,7 +117,7 @@
             </el-form-item>
           </el-row>
           <el-row>
-            <el-form-item
+            <!-- <el-form-item
               v-if="detailForm.project.projectNatureFirstId === '7031076e7a5f4225b1a89f31ee017802'"
               label="投资模式:"
               prop="project.investmentModelId"
@@ -135,7 +135,7 @@
                   :value="item.id"  v-if="item.isUse==1"
                   v-for="(item, index) in projectNatureTwo"/>
               </el-select>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item
               v-if="detailForm.project.projectNatureFirstId === '7031076e7a5f4225b1a89f31ee017802'"
               label="投资合同总额(万元):"
