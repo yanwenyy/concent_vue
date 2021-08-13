@@ -1303,7 +1303,7 @@
                     width="200"
                   >
                     <template slot-scope="scope">
-                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
+                      <span v-if="scope.row.vincludevat == 1">是</span>
                       <span v-else>否</span>
                     </template>
                   </el-table-column>
@@ -1927,7 +1927,7 @@
                       {{scope.row.country=='01'?'境内':'境外'}}
                     </template>
                   </el-table-column>
-                  <el-table-column
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="项目内容"
@@ -1935,7 +1935,7 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
+                  </el-table-column> -->
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
