@@ -364,7 +364,6 @@ export default {
   methods: {
       tjxAdd(){
         this.tjx = false
-        this.getOrgTree()
       },
       //打开统计项汇总指标
       openhzzb(){
@@ -517,9 +516,12 @@ export default {
     saveVerifyResult() {
       this.dialogResult = false;
       var str = "";
-      this.itemform.vprojecttypes.forEach((item) => {
-        str += item + ",";
-      });
+      try {
+        this.itemform.vprojecttypes.forEach((item) => {
+          str += item + ",";
+        });
+      }
+      catch(err) {console.info(err)}
       str = str.substring(0, str.length - 1);
       //排序
       this.itemform.vxh = "0";
