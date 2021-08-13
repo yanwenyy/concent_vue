@@ -224,6 +224,8 @@
     </el-form>
     <div style="margin-top: 10px">
       <el-table
+        :max-height="$tableHeight+200"
+        :height="$tableHeight+200"
         class=""
         :data="page.records"
         :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
@@ -678,14 +680,14 @@
         }
       },
       exportdata() {
-        this.searchFrom.size=1000000000;
+        this.searchform.size=1000000000;
         this.$http
           .post(
             "/api/contract/contract/ContractInfo/list/loadPageDataForContractInfoAdjust",
-            this.searchFrom
+            this.searchform
           )
           .then((res) => {
-            this.searchFrom.size=20;
+            this.searchform.size=20;
             var datas = res.data.data.records;
             this.$exportXls.exportList({
               thead:' <tr>\n' +
