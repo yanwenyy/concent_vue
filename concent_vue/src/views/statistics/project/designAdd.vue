@@ -1886,6 +1886,7 @@
     },
     mounted() {
       this.$store.dispatch('getConfig', {})
+      this.$store.dispatch("getPubCustomers", {});
       this.$store.dispatch('getCategory', { name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3' })
       this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })

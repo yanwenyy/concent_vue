@@ -63,6 +63,7 @@
                   <el-select
                     v-model="constructionOrgList"
                     v-if="detailForm.project.isClientele=='1'"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
                     multiple
                     filterable
                     collapse-tags
@@ -77,6 +78,7 @@
                   <el-select
                     v-model="constructionOrgList"
                     v-if="detailForm.project.isClientele!='1'"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
                     multiple
                     filterable
                     collapse-tags
@@ -101,7 +103,7 @@
                   }"
               >
                 <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
                   class="inline-formitem-switch"
                   v-model="detailForm.project.isClientele"
                   active-color="#409EFF"
@@ -122,7 +124,7 @@
               <el-input
                 clearable
                 placeholder="请输入"
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 v-model="detailForm.project.contractNumber"/>
             </el-form-item>
             <el-form-item
@@ -286,7 +288,7 @@
                 placeholder="请输入内容" 
                 v-model="detailForm.project.amountCompanyName" class="input-with-select">
                 <el-button 
-                  v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" 
+                  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList!=''" slot="append" 
                   icon="el-icon-circle-plus-outline" 
                   @click="addDw('签约单位(使用资质单位)',detailForm.project.amountCompanyId)" 
                   >
@@ -346,7 +348,7 @@
               <el-select
                 clearable
                 filterable
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 placeholder="请选择"
                 @change="getMarketTwo"
                 v-model="detailForm.project.marketFirstId">
@@ -364,7 +366,7 @@
               <el-select
                 filterable
                 clearable
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'||detailForm.project.contractInfoList!=''"
                 placeholder="请选择"
                 @change="getName(detailForm.project.marketSecondId, emergingMarketTwo, 'marketSecondName')"
                 v-model="detailForm.project.marketSecondId">
@@ -677,7 +679,7 @@
                     <el-input
                       v-model="scope.row.productName"
                       clearable
-                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'"/>
+                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"/>
                   </el-form-item>
                 </template>
               </el-table-column>
@@ -693,7 +695,7 @@
                   <el-form-item class="tabelForm">
                     <el-input
                       clearable
-                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                       v-model="scope.row.specificationAndModel"/>
                   </el-form-item>
                 </template>
@@ -712,7 +714,7 @@
                                 :rules="rules.project.isNumber">
                     <el-input
                       clearable
-                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                       v-model="scope.row.productQuantity"/>
                   </el-form-item>
                 </template>
@@ -729,7 +731,7 @@
                   <el-form-item class="tabelForm">
                     <el-input
                       clearable
-                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                       v-model="scope.row.productUnit"/>
                   </el-form-item>
                 </template>
@@ -750,7 +752,7 @@
                       class="group-no-padding"
                       v-model="scope.row.productTotalPrice"
                       clearable
-                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                     >
                       <template slot="prepend">¥</template>
                       <template slot="append">(万元)</template>
@@ -759,7 +761,7 @@
                 </template>
               </el-table-column>
               <el-table-column
-                v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
+                v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'&&detailForm.project.contractInfoList==''"
                 :resizable="false"
                 fixed="right"
                 label="操作"
@@ -1300,6 +1302,7 @@
     },
     mounted() {
       this.$store.dispatch('getConfig', {})
+      this.$store.dispatch("getPubCustomers", {});
       this.$store.dispatch('getCategory', { name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3' })
       this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
