@@ -270,7 +270,7 @@
           <el-row>
             <el-form-item
               label="业务类别:"
-              prop="categorySecondId"
+              prop="project.categorySecondName"
               style="width: 32.5%">
               <el-select
                 filterable
@@ -310,7 +310,7 @@
               <el-select
                 clearable
                 filterable
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 placeholder="请选择"
                 @change="getMarketTwo"
                 v-model="detailForm.project.marketFirstId">
@@ -328,7 +328,7 @@
               <el-select
                 filterable
                 clearable
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'||detailForm.project.contractInfoList!=''"
                 placeholder="请选择"
                 @change="getName(detailForm.project.marketSecondId, emergingMarketTwo, 'marketSecondName')"
                 v-model="detailForm.project.marketSecondId">
@@ -699,6 +699,7 @@
             contractValidity: '', // 合同有效期
             categoryFirstId: '41829bce85db42c1be8f5e763678b855', // 业务类别（一级）
             categorySecondId: '', // 业务类别二级
+            categorySecondName: '', // 业务类别二级name
             isOverseasContract: '',
             projectStatusId: '',
             isAnnualContract: '',
@@ -777,7 +778,6 @@
       },
       // 获取项目地点的值
       getPositionTree(data) {
-        console.log(data)
         this.treeStatas = false;
         var country = '', _data = data;
         if (_data.fullDetailName.indexOf("境内") != -1) {
@@ -852,7 +852,6 @@
       });
         this.detailForm.project[id]=_id.join(",");
         this.detailForm.project[name]=_name.join(",");
-        console.log(this.detailForm.project[id])
       },
        //流程操作
       operation(type){
@@ -1057,7 +1056,7 @@
                 }]
               }
               this.getShowTwo()
-              if(this.detailForm.project.companyBuildId != ''){
+              if(this.detailForm.project.companyBuildId != ''&& this.detailForm.project.companyBuildId != null ){
                 this.constructionOrgList = this.detailForm.project.companyBuildId.split(",");
               }
             }
@@ -1066,6 +1065,7 @@
     },
     mounted() {
       this.$store.dispatch('getConfig', {})
+      this.$store.dispatch("getPubCustomers", {});
       this.$store.dispatch('getCategory', { name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3' })
       this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
@@ -1078,6 +1078,18 @@
           this.bizTypeCodeTwo.push(item)
         }
       })
+      this.$http
+      .post(
+        "/api/contract/Companies/detail/findCompanies",
+      )
+      .then((res) => {
+        this.sjdwList = res.data.data.records;
+        this.sjdwList.forEach((item)=>{
+          item.value=item.companyName;
+          item.detailName=item.companyName;
+          item.id=item.uuid;
+        })
+      });
     }
   }
 </script>

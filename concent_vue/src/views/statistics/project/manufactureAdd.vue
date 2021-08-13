@@ -63,7 +63,7 @@
                   <el-select
                     v-model="constructionOrgList"
                     v-if="detailForm.project.isClientele=='1'"
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     multiple
                     filterable
                     collapse-tags
@@ -78,7 +78,7 @@
                   <el-select
                     v-model="constructionOrgList"
                     v-if="detailForm.project.isClientele!='1'"
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     multiple
                     filterable
                     collapse-tags
@@ -103,7 +103,7 @@
                   }"
               >
                 <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   class="inline-formitem-switch"
                   v-model="detailForm.project.isClientele"
                   active-color="#409EFF"
@@ -128,7 +128,8 @@
                 v-model="detailForm.project.contractNumber"/>
             </el-form-item>
             <el-form-item
-              label="合同金额(万元):"
+              label="'合同金额(万元):'"
+              :label="detailForm.project.contractInfoList!='' ? '合同总金额(万元):' : '合同金额(万元):'" 
               prop="project.contractMoney"
               :rules="rules.project.isMoney"
               style="width:32.5%;">
@@ -288,7 +289,7 @@
                 placeholder="请输入内容" 
                 v-model="detailForm.project.amountCompanyName" class="input-with-select">
                 <el-button 
-                  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList!=''" slot="append" 
+                  v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" 
                   icon="el-icon-circle-plus-outline" 
                   @click="addDw('签约单位(使用资质单位)',detailForm.project.amountCompanyId)" 
                   >
@@ -1293,7 +1294,7 @@
                 }]
               }
               this.getShowTwo()
-              if(this.detailForm.project.companyBuildId != ''){
+              if(this.detailForm.project.companyBuildId != ''&& this.detailForm.project.companyBuildId != null ){
                 this.constructionOrgList = this.detailForm.project.companyBuildId.split(",");
               }
             }

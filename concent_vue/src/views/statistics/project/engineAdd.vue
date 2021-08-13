@@ -2373,7 +2373,7 @@
                 this.detailForm.project.projectTypeName='自揽项目';
                 this.getCount()
               }
-              if(this.detailForm.project.companyBuildId != ''){
+              if(this.detailForm.project.companyBuildId != ''&& this.detailForm.project.companyBuildId != null ){
                 this.constructionOrgList = this.detailForm.project.companyBuildId.split(",");
               }
             }
