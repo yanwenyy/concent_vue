@@ -219,6 +219,10 @@
           this.$message.error("竣工产值应该和施工产值相等");
           cansub=false;
         }
+        if(sgcz!=0&&sgcz>this.p.contractAmountEngine){
+          this.$message.error("施工产值不能超过工程合同额");
+          cansub=false;
+        }
         return cansub;
       },
       // 只允许输入金额类型，最大两位小数（如：3.88）

@@ -335,6 +335,7 @@
         data:[],
         dataReport:{
         },
+        projectList:{},
         uploadVisible:false,//上传附件组件状态
         nextData:[],
         commonFilesList:[],
@@ -392,6 +393,18 @@
           commonFilesList:this.commonFilesList,
         }
         var url='';
+        if(this.projectList.projectTypeCode=='017002'||this.projectList.projectTypeCode=='017003'){
+          var money=0;
+          this.data.forEach((item)=>{
+            if(item.tjxCode=='001001'){
+              money=Number(item.monthValue);
+            }
+          });
+          if(money==0&&this.commonFilesList.length==0){
+            this.$message.error("请上传附件!");
+            return false;
+          }
+        }
         if(type=='save'){
           url="/api/statistics/Projectcheck/detail/saveOrUpdate";
           this.$http
@@ -559,7 +572,8 @@
             this.dataReport=res.data.data.projectcheck
             this.dataReport.yearDateS=this.dataReport.reportYear+"-"+this.dataReport.reportMonth
             this.dataReport.projectName=JSON.parse(this.$utils.decrypt(this.$route.query.p)).projectName
-            this.commonFilesList=res.data.data.commonFilesList
+            this.commonFilesList=res.data.data.commonFilesList;
+            this.projectList=datas.projectList;
           })
       }
     },

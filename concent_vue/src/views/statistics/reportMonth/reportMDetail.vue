@@ -12,8 +12,8 @@
 
 -->
       <div style="margin-top: 9px;color: red;position: absolute;top: 1px;right: 279px;z-index: 999;font-size: 15px;">项目名称：<span style="color: red !important;margin-right: 50px;">{{projectName.length>20?projectName.slice(0,20)+'...':projectName}}</span></div>
-      <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus=='edit'||dataReport.flowStatus=='reject')&&(userdata.managerOrgType!='23'||(userdata.managerOrgType=='23'&&projectList.monthReportTypeCode!='1'))" @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
-      <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(userdata.managerOrgType!='23'||(userdata.managerOrgType=='23'&&projectList.monthReportTypeCode!='1'))" type="primary" @click="save('save')" class="detailbutton detail-back-tab save-btn">保存</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus=='edit'||dataReport.flowStatus=='reject')||(dataReport.flowStatus!='check'&&dataReport.flowStatus!='pass'&&dataReport.uuid!=''&&dataReport.isEdit=='1')" @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(dataReport.flowStatus!='check'&&dataReport.flowStatus!='pass'&&dataReport.uuid!=''&&dataReport.isEdit=='1')" type="primary" @click="save('save')" class="detailbutton detail-back-tab save-btn">保存</el-button>
     <!--<el-button v-if="isCk!='1'" @click="save" type="primary"  class="detailbutton detail-back-tab" style="float: left; margin-right: 185px;" plain>保存</el-button>-->
     <!--<el-button v-if="isCk!='1'" @click="submit" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>-->
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
@@ -687,7 +687,8 @@
             uuid: this.p.uuid||this.p.instid,
             reportYear: this.p.reportYear,
             reportMonth: this.p.reportMonth,
-            createOrgCode: this.p.orgCode
+            createOrgCode: this.p.orgCode,
+            flowStatus:this.p.projectStatus
           }), {useJson: true})
           .then(res => {
             var datas=res.data.data;

@@ -2,8 +2,8 @@
 <template>
   <div style="position: relative">
       <div  v-if="dataReport.status==1" style="margin-top: 9px;color: red;position: absolute;top: 1px;right: 279px;z-index: 999;font-size: 15px;">项目名称：<span style="color: red !important;margin-right: 50px;">{{projectName.length>20?projectName.slice(0,20)+'...':projectName}}</span></div>
-    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus=='edit'||dataReport.flowStatus=='reject')&&dataReport.isEdit=='1'" @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
-    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&dataReport.isEdit=='1'" type="primary" @click="save('save')" class="detailbutton detail-back-tab save-btn">保存</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus=='edit'||dataReport.flowStatus=='reject')||(dataReport.uuid!=''&&dataReport.isEdit=='1')" @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'||(dataReport.uuid!=''&&dataReport.isEdit=='1')" type="primary" @click="save('save')" class="detailbutton detail-back-tab save-btn">保存</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
       <el-button  @click="back" type="primary"  class="detailbutton detail-back-tab " plain>返回</el-button>

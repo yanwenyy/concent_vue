@@ -22,8 +22,8 @@
 
       </el-button-group>
       <div style="float: right;">
-        <el-button @click="searchformSubmit"
-                   type="primary" plain><i class="el-icon-search"></i>查询</el-button>
+        <!--<el-button @click="searchformSubmit"-->
+                   <!--type="primary" plain><i class="el-icon-search"></i>查询</el-button>-->
         <el-button  @click="back" type="info"  style="color:black;background:none" plain><i class="el-icon-search"></i>返回</el-button>
       </div>
     </div>
@@ -65,19 +65,19 @@
                          label="月报日期"
                          prop="yearDateS" show-overflow-tooltip
         >
-          <template slot="header"
-                    slot-scope="scope">
-            <span>月报日期</span>
-            <div>
-              <el-date-picker class="list-search-picker" filterable clearable
-                              type="month"
-                              value-format="yyyy-MM"
-                              @change="queryList"
-                              v-model="searchform.yearDateS"
-              >
-              </el-date-picker>
-            </div>
-          </template>
+          <!--<template slot="header"-->
+                    <!--slot-scope="scope">-->
+            <!--<span>月报日期</span>-->
+            <!--<div>-->
+              <!--<el-date-picker class="list-search-picker" filterable clearable-->
+                              <!--type="month"-->
+                              <!--value-format="yyyy-MM"-->
+                              <!--@change="queryList"-->
+                              <!--v-model="searchform.yearDateS"-->
+              <!--&gt;-->
+              <!--</el-date-picker>-->
+            <!--</div>-->
+          <!--</template>-->
           <template slot-scope="scope">
             <!-- <div>{{scope.row.monthValue}}</div>-->
             <div v-if="scope.row.reportYear != null && scope.row.reportMonth != null">
@@ -91,32 +91,32 @@
         <el-table-column :min-width="200"
                          align="center"
                          label="填报单位"
-                         prop="projectName" show-overflow-tooltip
+                         prop="unitId" show-overflow-tooltip
         >
-          <template slot="header"
-                    slot-scope="scope">
-            <span>填报单位</span>
-            <div>
-              <el-input style=" width: 100%"
-                        v-model="searchform.projectName"
-                        size="mini"/>
-            </div>
-          </template>
+          <!--<template slot="header"-->
+                    <!--slot-scope="scope">-->
+            <!--<span>填报单位</span>-->
+            <!--<div>-->
+              <!--<el-input style=" width: 100%"-->
+                        <!--v-model="searchform.projectName"-->
+                        <!--size="mini"/>-->
+            <!--</div>-->
+          <!--</template>-->
         </el-table-column>
         <el-table-column :width="150"
                          align="center"
                          label="所属单位"
                          prop="createOrgName" show-overflow-tooltip
         >
-          <template slot="header"
-                    slot-scope="scope">
-            <span>所属单位</span>
-            <div>
-              <el-input style=" width: 100%"
-                        v-model="searchform.createOrgName"
-                        size="mini"/>
-            </div>
-          </template>
+          <!--<template slot="header"-->
+                    <!--slot-scope="scope">-->
+            <!--<span>所属单位</span>-->
+            <!--<div>-->
+              <!--<el-input style=" width: 100%"-->
+                        <!--v-model="searchform.createOrgName"-->
+                        <!--size="mini"/>-->
+            <!--</div>-->
+          <!--</template>-->
         </el-table-column>
 
         <el-table-column
@@ -127,49 +127,53 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-             {{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核驳回':'待登记'}}
+              <span class=" pointer" :class="scope.row.resultType=='1'?'blue':''" @click="rowShow(scope.row)">{{scope.row.resultType=='1'?'汇总查询':scope.row.resultType=='2'?'已上报':''}}</span>
+             
           </template>
-          <template slot="header" slot-scope="scope">
-            <span>状态</span>
-            <div>
-              <el-select
-                class="list-search-picker"
-                clearable
-                filterable
-                placeholder="请选择"
-                size="mini"
-                v-model="searchform.flowStatus"
-              >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in flowStatusList"
-                ></el-option>
-              </el-select>
-              <!--<el-input-->
-              <!--class="list-search-picker"-->
-              <!--style=" width: 100%"-->
-              <!--v-model="searchform.flowStatus"-->
-              <!--size="mini"-->
-              <!--/>-->
-            </div>
-          </template>
+          <!--<template slot="header" slot-scope="scope">-->
+            <!--<span>状态</span>-->
+            <!--<div>-->
+              <!--<el-select-->
+                <!--class="list-search-picker"-->
+                <!--clearable-->
+                <!--filterable-->
+                <!--placeholder="请选择"-->
+                <!--size="mini"-->
+                <!--v-model="searchform.flowStatus"-->
+              <!--&gt;-->
+                <!--<el-option-->
+                  <!--:key="index"-->
+                  <!--:label="item.detailName"-->
+                  <!--:value="item.id"-->
+                  <!--v-for="(item, index) in flowStatusList"-->
+                <!--&gt;</el-option>-->
+              <!--</el-select>-->
+              <!--&lt;!&ndash;<el-input&ndash;&gt;-->
+              <!--&lt;!&ndash;class="list-search-picker"&ndash;&gt;-->
+              <!--&lt;!&ndash;style=" width: 100%"&ndash;&gt;-->
+              <!--&lt;!&ndash;v-model="searchform.flowStatus"&ndash;&gt;-->
+              <!--&lt;!&ndash;size="mini"&ndash;&gt;-->
+              <!--&lt;!&ndash;/>&ndash;&gt;-->
+            <!--</div>-->
+          <!--</template>-->
         </el-table-column>
         <el-table-column :width="150"
                          align="center"
                          label="批复状态"
                          prop="pfStatus" show-overflow-tooltip
         >
-          <template slot="header"
-                    slot-scope="scope">
-            <span>批复状态</span>
-            <div>
-              <el-input style=" width: 100%"
-                        v-model="searchform.pfStatus"
-                        size="mini"/>
-            </div>
+          <template slot-scope="scope">
+             {{scope.row.flowStatus=='pass'?'已批复':'未批复'}}
           </template>
+          <!--<template slot="header"-->
+                    <!--slot-scope="scope">-->
+            <!--<span>批复状态</span>-->
+            <!--<div>-->
+              <!--<el-input style=" width: 100%"-->
+                        <!--v-model="searchform.pfStatus"-->
+                        <!--size="mini"/>-->
+            <!--</div>-->
+          <!--</template>-->
         </el-table-column>
         <el-table-column :width="150"
            align="center"
@@ -235,17 +239,7 @@
         addTitle:'请注意',
         page: { current: 1, size: 20, total: 0, records: [] },
         searchform: {
-          createOrgCode: '',
-          createOrgId: '',
-          createOrgName: '',
-          createOrgType: '',
-          createTime: '',
-          createUserId: '',
-          createUserName: '',
-          projectTypeName:'',
-          //fillDate:'',
-          reportType:'1',
-          yearDateS:''
+          uuid:'',
         },
         data:[],
         flowStatusList:[
@@ -508,25 +502,7 @@
       },
       searchformReset() {
         this.searchform = {
-          createOrgCode: '',
-          createOrgId: '',
-          createOrgName: '',
-          createOrgType: '',
-          createTime: '',
-          createUserId: '',
-          createUserName: '',
-          projectTypeName:'',
-          categorySecondName:'',
-          createOrgName:'',
-          totalValue:'',
-          yearValue:'',
-          monthValue:'',
-          contractAmountTotal:'',
-          projectStatusName:'',
-          projectName:'',
-          projectOmit:'',
-          projectId:'',
-          reportType:'1'
+          uuid:'',
         };
         this.getData();
       },
@@ -536,20 +512,17 @@
       },
       // 获取分页数据
       getData() {
-        if(this.searchform.yearDateS!='' && this.searchform.yearDateS!=null && this.searchform.yearDateS!=undefined) {
-          this.searchform.reportYear = this.searchform.yearDateS.split('-')[0];
-          this.searchform.reportMonth = this.searchform.yearDateS.split('-')[1];
-        }
-        this.searchform.projectId=this.p.projectId;
+        this.searchform.uuid=this.p.projectId;
         this.$http
-            .post('/api/statistics/projectMonthlyReport/Projectreport/list/cxHzList', this.searchform)
+            .post('/api/statistics/projectMonthlyReport/Projectreport/list/childProjectCheckReport', this.searchform)
             .then(res => {
-              this.data = res.data.data;
+              this.data = res.data.data.records;
             });
       },
       // 查看
       rowShow(row) {
-        let p = { actpoint: 'eidt', projectId: row.projectId,uuid:row.uuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.flowStatus }
+        // let p = { actpoint: 'eidt', projectId: row.projectId,uuid:row.uuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.flowStatus }
+        let p = { actpoint: 'eidt', projectId: row.projectId,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.flowStatus }
         this.$router.push({
           path: '../reportMDetail/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }

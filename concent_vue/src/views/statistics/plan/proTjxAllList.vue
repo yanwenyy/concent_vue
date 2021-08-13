@@ -405,10 +405,11 @@
         let projecttypeCode = this.multipleSelection[0].projecttypeCode
         let projectId = this.multipleSelection[0].projectId
         let createOrgCode=this.multipleSelection[0].createOrgCode
+        let contractAmountEngine=this.multipleSelection[0].contractAmountEngine
         if (planId == null || planId === '') {
           flowStatus = '1'
         }
-        let p = {actpoint: 'edit', planInfo: {planId: planId, projectName: projectName, planTypeName: '开累计划', projectStatus: flowStatus, planProjectTjx: {projectId: projectId, projecttypeCode: projecttypeCode, planType: 3,createOrgCode:createOrgCode}}}
+        let p = {contractAmountEngine:contractAmountEngine,actpoint: 'edit', planInfo: {planId: planId, projectName: projectName, planTypeName: '开累计划', projectStatus: flowStatus, planProjectTjx: {projectId: projectId, projecttypeCode: projecttypeCode, planType: 3,createOrgCode:createOrgCode}}}
         this.$router.push({
           path: './proTjxDetail/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
