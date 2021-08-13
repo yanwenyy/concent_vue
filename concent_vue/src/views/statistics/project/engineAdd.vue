@@ -326,7 +326,8 @@
                 <el-form-item
                   v-if="detailForm.project.projectTypeId==='22038e576c2242d5acc93f6c3c8e48ad' ||
                   detailForm.project.projectTypeId==='625a3ee0728a4f45b792d022b8bb36d9' ||
-                  detailForm.project.projectTypeId==='393a07bda2244b03a24590e076a421df'"
+                  detailForm.project.projectTypeId==='393a07bda2244b03a24590e076a421df' ||
+                  detailForm.project.projectTypeId==='393a07bda2244b03a24590e076a421de' "
                   label="父项目名称:"
                   prop="project.fatherProjectName"
                   style="width: 32.5%">
@@ -2068,6 +2069,18 @@
         this.detailForm.project.fatherProjectName = ''
         this.detailForm.project.isBureauIndex = ''
         this.getName(id, list, name,code)
+          //获取父项目名称列表
+        this.$http
+          .post('/api/statistics/StatisticsProject/detail/findProjectFather',
+             {projectTypeCode:this.detailForm.project.projectTypeCode,projectModuleId:this.detailForm.project.projectModuleId}
+          )
+          .then(res => {
+            if(res.data.code  === 200){
+              this.fatherList = res.data.data
+            }else{
+               this.fatherList = []
+            }
+        })
       },
       getFatherName(id, list, name) {
         if (id) {
@@ -2380,12 +2393,7 @@
         this.detailForm.project.companyBuiltId=this.userInfo.managerOrgId;
         this.detailForm.project.companyBuiltName=this.userInfo.managerOrgName;
       }
-      //获取父项目名称列表
-      this.$http
-        .post('/api/statistics/StatisticsProject/detail/findProjectFather')
-        .then(res => {
-        this.fatherList = res.data.data
-      })
+      
       this.$http
       .post(
         "/api/contract/Companies/detail/findCompanies",

@@ -484,6 +484,34 @@
                   v-for="(item, index) in projectType"/>
               </el-select>
             </el-form-item>
+            <!--父项目暂无-->
+                <el-form-item
+                  v-if="detailForm.project.projectTypeId==='22038e576c2242d5acc93f6c3c8e48ad' ||
+                  detailForm.project.projectTypeId==='625a3ee0728a4f45b792d022b8bb36d9' ||
+                  detailForm.project.projectTypeId==='393a07bda2244b03a24590e076a421df' ||
+                  detailForm.project.projectTypeId==='393a07bda2244b03a24590e076a421de' "
+                  label="父项目名称:"
+                  prop="project.fatherProjectName"
+                  style="width: 32.5%">
+                  <el-select
+                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                    filterable
+                    clearable
+                    placeholder="请选择"
+                    @change="getFatherName(detailForm.project.fatherProjectId, fatherList, 'fatherProjectName')"
+                    v-model="detailForm.project.fatherProjectId">
+                    <el-option
+                      :key="index"
+                      :label="item.projectName"
+                      :value="item.uuid"
+                      v-for="(item, index) in fatherList"/>
+                  </el-select>
+                  <!--<el-input-->
+                  <!--:disabled="p.actpoint === 'look'||p.actpoint === 'task'"-->
+                  <!--clearable-->
+                  <!--placeholder="请输入"-->
+                  <!--v-model="detailForm.project.fatherProjectName"/>-->
+                </el-form-item>
             <!--所在地、使用资质单位暂无-->
             <!--<el-form-item-->
               <!--label="项目所在地"-->
@@ -1175,6 +1203,7 @@
         uuid: null,
         DwVisible: false,
         treeStatas: false,
+        fatherList:[],
         uploadVisible: false,
         contractStatas:false,//关联合同状态
         emergingMarketTwo: [], // 新兴市场二级类别
@@ -1551,6 +1580,32 @@
       //   this.detailForm.project.topInfoSiteList[0].path = data.fullDetailName
       //   this.detailForm.project.topInfoSiteList[0].ffid = data.fullDetailCode
       // },
+      
+      resetFuDai(id, list, name,code) {
+        this.detailForm.project.fatherProjectName = ''
+        this.detailForm.project.isBureauIndex = ''
+        this.getName(id, list, name,code)
+          //获取父项目名称列表
+        this.$http
+          .post('/api/statistics/StatisticsProject/detail/findProjectFather',
+             {projectTypeCode:this.detailForm.project.projectTypeCode,projectModuleId:this.detailForm.project.projectModuleId}
+          )
+          .then(res => {
+            if(res.data.code  === 200){
+              this.fatherList = res.data.data
+            }else{
+               this.fatherList = []
+            }
+        })
+      },
+      getFatherName(id, list, name) {
+        if (id) {
+          this.$forceUpdate()
+          this.detailForm.project[name] = list.find(
+            (item) => item.uuid === id
+        ).projectName
+        }
+      },
       getName(id, list, name,code) {
         if (id) {
           this.$forceUpdate()
