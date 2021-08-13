@@ -638,6 +638,10 @@ export default {
 
     remove() {
       //console.log(JSON.stringify(this.multipleSelection[0].uuid));
+      if (this.multipleSelection.length == 0) {
+        this.$message.info("请选择统计项进行删除！");
+        return false;
+      }
       if (
         this.multipleSelection[0].uuid == "" ||
         this.multipleSelection[0].uuid == null
