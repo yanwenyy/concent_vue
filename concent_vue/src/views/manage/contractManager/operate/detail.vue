@@ -92,7 +92,7 @@
                   placeholder="选择日期">
                 </el-date-picker>
               </el-form-item>
-              <el-form-item
+              <!-- <el-form-item
                 label="客户名称:"
                 prop="contractInfo.constructionOrg"
                 :rules="{
@@ -102,6 +102,65 @@
                 <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.constructionOrg" class="input-with-select">
 
                 </el-input>
+              </el-form-item> -->
+                <el-form-item
+                  label="客户名称:"
+                  prop="contractInfo.constructionOrgId"
+                  :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: ['blur','change'],
+                }">
+                  <el-select
+                    v-model="constructionOrgList"
+                    v-if="detailform.contractInfo.isClientele=='1'"
+                    multiple
+                    filterable
+                    collapse-tags
+                    placeholder="请选择">
+                    <el-option
+                      v-for="item in pubCustomers"
+                      :key="item.customerId"
+                      :label="item.customerName"
+                      :value="item.customerId">
+                    </el-option>
+                  </el-select>
+                  <el-select
+                    v-model="constructionOrgList"
+                    v-if="detailform.contractInfo.isClientele!='1'"
+                    multiple
+                    filterable
+                    collapse-tags
+                    placeholder="请选择">
+                      <el-option
+                        :key="index"
+                        :label="item.detailName"
+                        :value="item.id"
+                        v-for="(item, index) in sjdwList"
+                      ></el-option>
+                  </el-select>
+                </el-form-item>
+              <el-form-item
+                class="inline-formitem"
+                label="是否客户:"
+                prop="contractInfo.isClientele"
+                :rules="{
+                    required: true,
+                    message: '此项不能为空',
+                    trigger: 'blur',
+                  }"
+              >
+                <el-switch
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
+                  class="inline-formitem-switch"
+                  v-model="detailform.contractInfo.isClientele"
+                  active-color="#409EFF"
+                  inactive-color="#ddd"
+                  active-value="1"
+                  inactive-value="0"
+                  @change="constructionOrgList=''"
+                >
+                </el-switch>
               </el-form-item>
               <el-form-item
                 v-if="false"
@@ -2130,6 +2189,7 @@
   import FileUpload from '@/components/fileUpload'
   import SearchName from '../searchName'
   import AuditProcess from '@/components/auditProcess'
+  import companyMul from '@/components/companiesMultiple'
   export default {
     data() {
       var validateMoney = (rule, value, callback) => {
@@ -2151,6 +2211,8 @@
         }
       }
       return {
+        constructionOrgList: [],
+        companyMulStatus:false,//设计单位等多选列表状态
         sjdwList:[],
         ifOAS:false,
         key:0,
@@ -2165,7 +2227,12 @@
             moduleName:'运营维管',
             moduleCode:'operation',
             marketSecondId:'',
-            signOrgName:''
+            signOrgName:'',
+            isClientele:'1',
+            designOrg: '',//设计单位
+            designOrgId: '',
+            constructionOrg:'',//建设单位
+            constructionOrgId:''
           },
           commonFilesList1: [],
           commonFilesList2: [],
@@ -2219,9 +2286,13 @@
       CompanyTree,
       FileUpload,
       SearchName,
-      AuditProcess
+      AuditProcess,
+      companyMul
     },
     computed: {
+      pubCustomers() {//客户名称
+        return this.$store.state.pubCustomers;
+      },
       //客户性质
       customerNature() {
         return this.$store.state.customerNature;
@@ -2253,6 +2324,21 @@
       },
     },
     methods: {
+      //打开多选的单位列表
+      openComMul(ids,names,url,type){
+        this.companyMulStatus=true;
+        this.$nextTick(() => {
+          this.$refs.comAdd.init(ids,names,url,type);
+        })
+      },
+      //获取拿过来的多选单位列表
+      getComList(data){
+        this.$forceUpdate();
+         if (data.type == "设计单位") {
+          this.detailform.contractInfo.designOrgId=data.selIdList.join(",");
+          this.detailform.contractInfo.designOrg=data.selList.join(",");
+        }
+      },
       //获取系统外联合体,系统外分包的单位名称
       getXtwName(id, list, index){
         if(id){
@@ -2942,6 +3028,7 @@
       },
       saveInfo(formName,type) {
         var url='';
+        this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
         if(type=='save'){
           url='/api/contract/contract/ContractInfo/detail/saveOrUpdate';
         }else{
@@ -3062,6 +3149,9 @@
         this.detailform.zplx=datas.contractInfo.otherAssemblyTypeId&&datas.contractInfo.otherAssemblyTypeId.split(",");
         this.detailform.jzlx=datas.contractInfo.otherBuildingTypeId&&datas.contractInfo.otherBuildingTypeId.split(",");
         this.detailform.jzjglx=datas.contractInfo.otherBuildingStructureTypeId&&datas.contractInfo.otherBuildingStructureTypeId.split(",");
+        if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
+          this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
+        }
       });
       },
 
@@ -3071,6 +3161,7 @@
 
     },
     mounted() {
+      this.$store.dispatch("getPubCustomers", {});
       // eslint-disable-next-line no-unde
       this.id=this.p.instid;
       if (this.p.actpoint === "edit"||this.id) {
