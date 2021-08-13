@@ -126,6 +126,7 @@
               </el-form-item>
               </el-col>
             </el-row>
+            <el-row>
             <el-form-item
               label="合同金额(万元):"
               prop="project.contractMoney"
@@ -143,7 +144,6 @@
             <el-form-item
               label="项目状态:"
               prop="project.projectStatusId"
-              :rules="rules.project.must"
               style="width:32.5%;">
               <el-select
                 filterable
@@ -159,20 +159,37 @@
                   v-for="(item, index) in projectStatus"/>
               </el-select>
             </el-form-item>
-            <el-form-item
-              label="增值税(万元):"
-              prop="project.valueAddedTax"
-              :rules="rules.project.isMoney"
-              style="width: 32.5%">
-              <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
-                clearable
-                placeholder="请输入"
-                v-model="detailForm.project.valueAddedTax">
-                <template slot="prepend">¥</template>
-                <template slot="append">(万元)</template>
-              </el-input>
-            </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                label="增值税(万元):"
+                prop="project.valueAddedTax"
+                :rules="rules.project.isMoney"
+                style="width: 32.5%">
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                  clearable
+                  placeholder="请输入"
+                  @change="getOutputTax"
+                  v-model="detailForm.project.valueAddedTax">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                label="上报产值是否含税:"
+                class="inline-formitem"
+                prop="project.isOutputTax"
+                style="width: 32.5%">
+                <el-switch
+                  disabled
+                  v-model="detailForm.project.isOutputTax"
+                  active-color="#409EFF"
+                  inactive-color="#ddd"
+                  active-value="1"
+                  inactive-value="0"/>
+              </el-form-item>
+            </el-row>
             <el-form-item
               label="合同签订时间:"
               prop="project.contractSignTime"
@@ -879,6 +896,7 @@
             ocontractStartTime: '',
             ocontractEndTime: '',
             valueAddedTax: '', // 增值税
+            isOutputTax: '',
             ocontractModel: '', // 合同所属板块
             projectExpectedReturn: '', // 1
             projectYieid: '', // 2
@@ -1025,6 +1043,14 @@
             placeId:''
           }
           this.detailForm.project.topInfoSiteList.push(v);
+        }
+      },
+      // 增值税改变，上报产值是否含税联动
+      getOutputTax() {
+        if (this.detailForm.project.valueAddedTax && this.detailForm.project.valueAddedTax !== '0') {
+          this.detailForm.project.isOutputTax = '1'
+        } else {
+          this.detailForm.project.isOutputTax = '0'
         }
       },
       //流程操作
@@ -1282,6 +1308,7 @@
                 }]
               }
               this.getShowTwo()
+              this.getOutputTax()
               if(this.detailForm.project.companyBuildId != '' && this.detailForm.project.companyBuildId != null ){
                 this.constructionOrgList = this.detailForm.project.companyBuildId.split(",");
               }

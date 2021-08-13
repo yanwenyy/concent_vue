@@ -193,10 +193,24 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 placeholder="请输入"
+                @change="getOutputTax"
                 v-model="detailForm.project.valueAddedTax">
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
               </el-input>
+            </el-form-item>
+            <el-form-item
+              label="上报产值是否含税:"
+              class="inline-formitem"
+              prop="project.isOutputTax"
+              style="width: 32.5%">
+              <el-switch
+                disabled
+                v-model="detailForm.project.isOutputTax"
+                active-color="#409EFF"
+                inactive-color="#ddd"
+                active-value="1"
+                inactive-value="0"/>
             </el-form-item>
           </el-row>
           <el-row>
@@ -617,6 +631,7 @@
             projectName: '',
             projectForeginName: '',
             valueAddedTax: '',
+            isOutputTax: '',
             projectLandArea: '',
             contractNumber: '',
             amountSignup: '',
@@ -756,7 +771,14 @@
           this.detailForm.project.topInfoSiteList.push(v);
         }
       },
-
+      // 增值税改变，上报产值是否含税联动
+      getOutputTax() {
+        if (this.detailForm.project.valueAddedTax && this.detailForm.project.valueAddedTax !== '0') {
+          this.detailForm.project.isOutputTax = '1'
+        } else {
+          this.detailForm.project.isOutputTax = '0'
+        }
+      },
       //流程操作
       operation(type){
         var msg='',that=this;
@@ -972,6 +994,7 @@
                 }]
               }
               this.getShowTwo()
+              this.getOutputTax()
             }
           })
       }
