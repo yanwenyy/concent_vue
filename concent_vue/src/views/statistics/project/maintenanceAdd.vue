@@ -10,13 +10,13 @@
     <el-button
       v-show="p.actpoint == 'task'&&p.task.edit==false"
       class="detailbutton detail-back-tab tg"
-      @click="operation('complete')"
+      @click="operation2('complete')"
       type="success"
     >通过</el-button>
     <el-button
       v-show="p.actpoint == 'task'&&p.task.edit==false"
       class="detailbutton detail-back-tab bh"
-      @click="operation('back')"
+      @click="operation2('back')"
       type="warning"
     >驳回</el-button>
       <!--<div class="clearfix el-card__header">-->
@@ -280,15 +280,15 @@
                 required: true, message: '此项不能为空', trigger: ['blur','change']
               }"
             >
-              <el-input 
-                clearable 
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''" 
-                placeholder="请输入内容" 
+              <el-input
+                clearable
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
+                placeholder="请输入内容"
                 v-model="detailForm.project.amountCompanyName" class="input-with-select">
-                <el-button 
-                  v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" 
-                  icon="el-icon-circle-plus-outline" 
-                  @click="addDw('签约单位(使用资质单位)',detailForm.project.amountCompanyId)" 
+                <el-button
+                  v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append"
+                  icon="el-icon-circle-plus-outline"
+                  @click="addDw('签约单位(使用资质单位)',detailForm.project.amountCompanyId)"
                   >
                 </el-button>
               </el-input>
@@ -729,7 +729,7 @@
         treeStatas: false,
         emergingMarketTwo: [],
         bizTypeCodeTwo: [],
-        constructionOrgList: [], 
+        constructionOrgList: [],
         sjdwList: [],
         DwVisible:false,//选择单位弹框状态
         uploadVisible:false,
@@ -991,7 +991,7 @@
           console.log(this.detailForm)
         }
       },
-      
+
         //复选下拉框框获取name
       getMultipleName(valueList,list,id,name){
         var _id=[],_name=[];
@@ -1161,7 +1161,7 @@
       if (this.p.actpoint === 'look' || this.p.actpoint === 'edit' || this.p.actpoint === 'task') {
         this.getShow()
       }
-      
+
       this.$http
       .post(
         "/api/contract/Companies/detail/findCompanies",
