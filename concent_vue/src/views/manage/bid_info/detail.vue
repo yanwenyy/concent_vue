@@ -789,13 +789,13 @@
           <el-row>
             <p class="detail-title">
               <span>附件: </span>
-              <!-- <el-button
+              <el-button
                 v-show="p.actpoint != 'look' && p.actpoint !== 'searchLook'&& p.actpoint !== 'task'"
                 size="small"
                 type="primary"
                 @click="openFileUp('/api/contract/topInfo/CommonFiles/bidInfo/01/uploadFile','bidInfo_01')">
                 点击上传
-              </el-button> -->
+              </el-button>
             </p>
             <el-table
               :data="detailform.bidInfo_01"
