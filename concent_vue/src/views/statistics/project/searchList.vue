@@ -566,7 +566,7 @@
                 inactive-color="#ddd"
                 active-value="1"
                 inactive-value="0"
-                @change="monthReportChange(scope.row.monthReport,scope.row.uuid)"
+                @change="monthReportChange(scope.row.monthReport,scope.row.uuid,scope.$index)"
               >
               </el-switch>
             </template>
@@ -726,15 +726,17 @@ export default {
         });
       }
     },
-    monthReportChange(data,id){
-      console.log(data,id)
+    monthReportChange(data,id,index){
       this.$http
         .post(
           "/api/statistics/StatisticsProject/detail/isFillReport",
           {projectId:id,isFillReport:data}
         )
         .then(res => {
-          console.log(res)
+          if(res.data.data === 1){
+            this.page[index].monthReport = 0;
+            this.$message.info("该项目本年本月已填过月报不可选择");
+          }
         });
     },
     getRoute(id) {
@@ -759,7 +761,76 @@ export default {
       return url;
     },
     exportData() {
-      console.log("导出");
+      this.searchform.size=1000000000;
+        this.$http
+          .post(
+            "/api/statistics/StatisticsProject/list/loadPageData",
+            this.searchform
+          )
+          .then((res) => {
+            this.searchform.size=20;
+            var datas = res.data.data.records;
+            this.$exportXls.exportList({
+              thead:' <tr>\n' +
+              '<th>项目名称</th>\n' +
+              '<th>项目简称</th>\n' +
+              '<th>项目板块</th>\n' +
+              '<th>承建单位</th>\n' +
+              '<th>初始合同额</th>\n' +
+              '<th>工程合同额</th>\n' +
+              '<th>签约单位</th>\n' +
+              '<th>工程类别(一级)</th>\n' +
+              '<th>工程类别(二级)</th>\n' +
+              '<th>项目状态</th>\n' +
+              '<th>新兴市场(一级)</th>\n' +
+              '<th>新兴市场(二级)</th>\n' +
+              '<th>项目性质(一级)</th>\n' +
+              '<th>项目性质(二级)</th>\n' +
+              '<th>项目所在地</th>\n' +
+              '<th>所属铁路局</th>\n' +
+              '<th>开累完成</th>\n' +
+              '<th>本年完成</th>\n' +
+              '<th>本月完成</th>\n' +
+              '<th>剩余额</th>\n' +
+              '<th>计量单位</th>\n' +
+              '<th>工程合同数量</th>\n' +
+              '<th>合同开工日期</th>\n' +
+              '<th>合同竣工日期</th>\n' +
+              '<th>合同签订日期</th>\n' +
+              '<th>实际开工日期</th>\n' +
+              '<th>实际竣工日期</th>\n' +
+              '<th>建设单位</th>\n' +
+              '<th>设计单位</th>\n' +
+              '<th>监理单位</th>\n' +
+              '<th>工程标段</th>\n' +
+              '<th>项目经理</th>\n' +
+              '<th>起讫地点</th>\n' +
+              '<th>竣工产值</th>\n' +
+              '<th>竣工日期</th>\n' +
+              '<th>增值税</th>\n' +
+              '<th>是否托管</th>\n' +
+              '<th>不填月报</th>\n' +
+              '<th>是否代管</th>\n' +
+              '<th>工程概况</th>\n' +
+              '<th>本月完成（验工计价）</th>\n' +
+              '<th>本年完成（验工计价）</th>\n' +
+              '<th>开累完成（验工计价）</th>\n' +
+              '<th>备注</th>\n' +
+              '</tr>',
+              jsonData:datas,
+              tdstr:['projectName','projectOmit','projectModuleName',
+                'companyBuiltName','contractAmountInitial','contractAmountEngine','amountCompanyName',
+                'projectTypeFirst','projectTypeSecond','projectStatusName','marketFirstName','marketSecondName'
+                ,'projectNatureFirst','projectNatureSecond','projectLocation','railwayName',''
+                ,'','','','unitName','contractCount'
+                ,'contractStartTime','contractEndTime','contractSignTime','realStartTime','realEndTime'
+                ,'companyBuild','companyDesign','companySupervisor','projectBidSection','projectManagerName'
+                ,'beginAddress','completedOutputValue','projectEndTime','valueAddedTax','isTrusteeship'
+                ,'monthReport','isEscrow','engineSurvey','','','','projectRemark'],
+              tdstrFuc:{
+              }
+            })
+          });
     },
     // 查看
     rowShow(row) {
