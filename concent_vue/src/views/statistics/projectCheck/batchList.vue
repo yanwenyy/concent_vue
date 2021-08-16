@@ -227,7 +227,7 @@
         this.searchform.flowStatus="edit";
 
         this.$http
-          .post('/api/statistics/Projectcheck/list/reportMQueryCommit', this.searchform)
+          .post('/api/statistics/Projectcheck/list/reportMQuery', this.searchform)
           .then(res => {
             this.page = res.data.data
           })

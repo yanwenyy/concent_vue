@@ -117,7 +117,7 @@
               </el-form-item>
             </el-row>
             <el-row>
-              <el-form-item
+              <!-- <el-form-item
                 v-if="detailForm.project.projectNatureFirstId === '7031076e7a5f4225b1a89f31ee017802'"
                 label="投资模式:"
                 prop="project.investmentModelId"
@@ -135,7 +135,7 @@
                     :value="item.id"
                     v-for="(item, index) in investmentModel"/>
                 </el-select>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item
                 v-if="detailForm.project.projectNatureFirstId === '7031076e7a5f4225b1a89f31ee017802'"
                 label="投资合同总额(万元):"
@@ -1018,7 +1018,7 @@
               </el-form-item>
             </el-row>
             <el-row>
-              <el-form-item
+              <!-- <el-form-item
                 v-if="showDetailForm.project.projectNatureFirstId === '7031076e7a5f4225b1a89f31ee017802'"
                 label="投资模式:"
                 style="width: 32.5%">
@@ -1034,7 +1034,7 @@
                     :value="item.id"
                     v-for="(item, index) in investmentModel"/>
                 </el-select>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item
                 v-if="showDetailForm.project.projectNatureFirstId === '7031076e7a5f4225b1a89f31ee017802'"
                 label="投资合同总额(万元):"

@@ -96,6 +96,69 @@
           </el-row>
           <el-row>
             <el-form-item
+              label="客户名称:"
+              prop="project.companyBuildId"
+                style="width: 32.5%"
+              :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: ['blur','change'],
+            }">
+              <el-select
+                v-model="constructionOrgList"
+                v-if="detailForm.project.isClientele=='1'"
+                multiple
+                collapse-tags
+                placeholder="请选择">
+                <el-option
+                  v-for="item in pubCustomers"
+                  :key="item.customerId"
+                  :label="item.customerName"
+                  :value="item.customerId">
+                </el-option>
+              </el-select>
+              <el-select
+                v-model="constructionOrgList"
+                v-if="detailForm.project.isClientele!='1'"
+                multiple
+                collapse-tags
+                placeholder="请选择">
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in sjdwList"
+                  ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-col :span="8">
+              <el-form-item
+                class="inline-formitem"
+                style="width: 32.5%"
+                label="是否客户:"
+                prop="project.isClientele"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+              >
+                <el-switch
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  class="inline-formitem-switch"
+                  v-model="detailForm.project.isClientele"
+                  active-color="#409EFF"
+                  inactive-color="#ddd"
+                  active-value="1"
+                  inactive-value="0"
+                  @change="constructionOrgList=''"
+                >
+                </el-switch>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-form-item
               label="合同金额(万元):"
               prop="project.contractMoney"
               :rules="rules.project.isMoney"
@@ -152,11 +215,25 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 placeholder="请输入"
+                @change="getOutputTax"
                 v-model="detailForm.project.valueAddedTax">
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
               </el-input>
             </el-form-item>
+              <el-form-item
+                label="上报产值是否含税:"
+                class="inline-formitem"
+                prop="project.isOutputTax"
+                style="width: 32.5%">
+                <el-switch
+                  disabled
+                  v-model="detailForm.project.isOutputTax"
+                  active-color="#409EFF"
+                  inactive-color="#ddd"
+                  active-value="1"
+                  inactive-value="0"/>
+              </el-form-item>
           </el-row>
           <el-row>
             <el-form-item
@@ -595,6 +672,8 @@
         treeStatas: false,
         emergingMarketTwo: [],
         bizTypeCodeTwo: [],
+        constructionOrgList: [], 
+        sjdwList: [],
         DwVisible:false,//选择单位弹框状态
         detailForm: {
           cdmc:[],
@@ -621,6 +700,7 @@
             projectName: '',
             projectForeginName: '',
             valueAddedTax: '',
+            isOutputTax: '',
             contractNumber: '',
             contractMoney: '',
             amountWe: '',
@@ -641,6 +721,7 @@
             projectPusher: '',
             projectRemark: '',
             projectPusherPhone: '',
+            isClientele:'1',
             companyBuildId:''
           }
         },
@@ -668,6 +749,9 @@
         });
         return projectStatusCheck
       },
+      pubCustomers() {//客户名称
+        return this.$store.state.pubCustomers;
+      },
       emergingMarket() {
         return this.$store.state.category.emergingMarket
       },
@@ -688,6 +772,14 @@
       }
     },
     methods: {
+      // 增值税改变，上报产值是否含税联动
+      getOutputTax() {
+        if (this.detailForm.project.valueAddedTax && this.detailForm.project.valueAddedTax !== '0') {
+          this.detailForm.project.isOutputTax = '1'
+        } else {
+          this.detailForm.project.isOutputTax = '0'
+        }
+      },
       //流程操作
       operation(type){
         var msg='',that=this;
@@ -885,7 +977,7 @@
         }else{
           url="/api/statistics/StatisticsProject/process/start"
         }
-        console.log(this.detailForm.project.reportOutputValue)
+        this.detailForm.project.companyBuildId = this.constructionOrgList.join(",")
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
@@ -971,18 +1063,36 @@
                 }]
               }
               this.getShowTwo()
+              this.getOutputTax()
+              if(this.detailForm.project.companyBuildId != ''&& this.detailForm.project.companyBuildId != null ){
+                this.constructionOrgList = this.detailForm.project.companyBuildId.split(",");
+              }
             }
           })
       }
     },
     mounted() {
       this.$store.dispatch('getConfig', {})
+      this.$store.dispatch("getPubCustomers", {});
       this.$store.dispatch('getCategory', { name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3' })
       this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
       if (this.p.actpoint === 'look' || this.p.actpoint === 'edit'|| this.p.actpoint === 'task') {
         this.getShow()
       }
+      
+      this.$http
+      .post(
+        "/api/contract/Companies/detail/findCompanies",
+      )
+      .then((res) => {
+        this.sjdwList = res.data.data.records;
+        this.sjdwList.forEach((item)=>{
+          item.value=item.companyName;
+          item.detailName=item.companyName;
+          item.id=item.uuid;
+        })
+      });
     }
   }
 </script>

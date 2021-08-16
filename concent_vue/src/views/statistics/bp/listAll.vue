@@ -267,7 +267,7 @@
         </div>
         <span slot="footer" class="dialog-footer">
           <el-button @click="tjx = false">取 消</el-button>
-          <el-button type="primary" @click="tjx = false">确 定</el-button>
+          <el-button type="primary" @click="tjxAdd()">确 定</el-button>
         </span>
 </el-dialog>
 
@@ -362,6 +362,9 @@ export default {
     },
   },
   methods: {
+      tjxAdd(){
+        this.tjx = false
+      },
       //打开统计项汇总指标
       openhzzb(){
         this.tjx = true;
@@ -513,9 +516,12 @@ export default {
     saveVerifyResult() {
       this.dialogResult = false;
       var str = "";
-      this.itemform.vprojecttypes.forEach((item) => {
-        str += item + ",";
-      });
+      try {
+        this.itemform.vprojecttypes.forEach((item) => {
+          str += item + ",";
+        });
+      }
+      catch(err) {console.info(err)}
       str = str.substring(0, str.length - 1);
       //排序
       this.itemform.vxh = "0";
@@ -638,6 +644,10 @@ export default {
 
     remove() {
       //console.log(JSON.stringify(this.multipleSelection[0].uuid));
+      if (this.multipleSelection.length == 0) {
+        this.$message.info("请选择统计项进行删除！");
+        return false;
+      }
       if (
         this.multipleSelection[0].uuid == "" ||
         this.multipleSelection[0].uuid == null
@@ -673,7 +683,6 @@ export default {
               ) {
                 this.$refs.tree.store._getAllNodes()[i].expanded = false;
               }
-
               this.loadNode(this.node, this.resolve);
             });
         })

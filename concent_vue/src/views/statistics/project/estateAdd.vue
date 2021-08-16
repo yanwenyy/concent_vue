@@ -193,10 +193,24 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 placeholder="请输入"
+                @change="getOutputTax"
                 v-model="detailForm.project.valueAddedTax">
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
               </el-input>
+            </el-form-item>
+            <el-form-item
+              label="上报产值是否含税:"
+              class="inline-formitem"
+              prop="project.isOutputTax"
+              style="width: 32.5%">
+              <el-switch
+                disabled
+                v-model="detailForm.project.isOutputTax"
+                active-color="#409EFF"
+                inactive-color="#ddd"
+                active-value="1"
+                inactive-value="0"/>
             </el-form-item>
           </el-row>
           <el-row>
@@ -517,6 +531,62 @@
               </template>
             </el-table-column>
           </el-table>
+          <!--附件-->
+          <p>
+            <span>相关附件: </span>
+            <el-button
+              v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
+              size="small"
+              type="primary"
+              @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','commonFilesList')">
+              点击上传
+            </el-button>
+          </p>
+          <el-table
+            :data="detailForm.project.commonFilesList"
+            :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+            align="center"
+            border
+            class="detailTable"
+            ref="table"
+            style="width: 100%;height: auto;"
+          >
+            <el-table-column
+              :width="55"
+              align="center"
+              label="序号"
+              show-overflow-tooltip
+              type="index"
+            ></el-table-column>
+            <el-table-column align="center" :resizable="false" label="文件名" prop="fileName" show-overflow-tooltip>
+
+            </el-table-column>
+
+            <el-table-column align="center" width="200" :resizable="false" label="大小(KB)" prop="fileSize"
+                             show-overflow-tooltip>
+              <template slot-scope="scope">
+                {{(scope.row.fileSize/1024).toFixed(2)}}
+              </template>
+            </el-table-column>
+            <el-table-column align="center" width="100" :resizable="false" label="类型" prop="fileType"
+                             show-overflow-tooltip>
+
+            </el-table-column>
+
+            <el-table-column
+              align="center"
+              :resizable="false"
+              fixed="right"
+              label="操作"
+              show-overflow-tooltip
+              v-if="p.actpoint!=='look'&&p.actpoint !== 'task'"
+              width="80"
+            >
+              <template slot-scope="scope">
+                <el-link :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
+              </template>
+            </el-table-column>
+          </el-table>
         </el-form>
       </div>
     </el-tab-pane>
@@ -526,6 +596,7 @@
     </el-tabs>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
     <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
+    <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
   </div>
 </template>
 
@@ -534,11 +605,12 @@
   import { isMoney, isMobile, isPhone } from '@/utils/validate'
   import AuditProcess from '@/components/auditProcess'
   import CompanyTree from '../companyTree'
+  import FileUpload from '@/components/fileUpload'
 
   export default {
     name: 'estateMode',
     components: {
-      Tree,AuditProcess,CompanyTree
+      Tree,AuditProcess,CompanyTree,FileUpload
     },
     data() {
       const validateMoney = (rule, value, callback) => {
@@ -592,6 +664,7 @@
         treeStatas: false,
         emergingMarketTwo: [],
         DwVisible:false,//选择单位弹框状态
+        uploadVisible: false,
         detailForm: {
           cdmc:[],
           project: {
@@ -617,6 +690,7 @@
             projectName: '',
             projectForeginName: '',
             valueAddedTax: '',
+            isOutputTax: '',
             projectLandArea: '',
             contractNumber: '',
             amountSignup: '',
@@ -756,7 +830,14 @@
           this.detailForm.project.topInfoSiteList.push(v);
         }
       },
-
+      // 增值税改变，上报产值是否含税联动
+      getOutputTax() {
+        if (this.detailForm.project.valueAddedTax && this.detailForm.project.valueAddedTax !== '0') {
+          this.detailForm.project.isOutputTax = '1'
+        } else {
+          this.detailForm.project.isOutputTax = '0'
+        }
+      },
       //流程操作
       operation(type){
         var msg='',that=this;
@@ -797,6 +878,20 @@
           });
         });
 
+      },
+      
+      // 打开附件上传的组件
+      openFileUp(url, list) {
+        this.uploadVisible = true
+        this.$nextTick(() => {
+          this.$refs.infoUp.init(url, list)
+        })
+      },
+      // 获取上传的附件列表
+      getUpInfo(data) {
+        this.$forceUpdate()
+        this.detailForm.project[data.list] = this.detailForm.project[data.list].concat(data.fileList)
+        this.uploadVisible = false
       },
       // 选择项目地点
       selectPosition() {
@@ -972,6 +1067,7 @@
                 }]
               }
               this.getShowTwo()
+              this.getOutputTax()
             }
           })
       }

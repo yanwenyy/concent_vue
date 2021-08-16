@@ -117,7 +117,7 @@
             </el-form-item>
           </el-row>
           <el-row>
-            <el-form-item
+            <!-- <el-form-item
               v-if="detailForm.project.projectNatureFirstId === '7031076e7a5f4225b1a89f31ee017802'"
               label="投资模式:"
               prop="project.investmentModelId"
@@ -135,7 +135,7 @@
                   :value="item.id"  v-if="item.isUse==1"
                   v-for="(item, index) in projectNatureTwo"/>
               </el-select>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item
               v-if="detailForm.project.projectNatureFirstId === '7031076e7a5f4225b1a89f31ee017802'"
               label="投资合同总额(万元):"
@@ -776,8 +776,8 @@
                 v-model="detailForm.project.isOutputTax"
                 active-color="#409EFF"
                 inactive-color="#ddd"
-                active-value="0"
-                inactive-value="1"/>
+                active-value="1"
+                inactive-value="0"/>
             </el-form-item>
           </el-row>
           <!--合同开工期-->
@@ -1535,9 +1535,9 @@
       // 增值税改变，上报产值是否含税联动
       getOutputTax() {
         if (this.detailForm.project.valueAddedTax && this.detailForm.project.valueAddedTax !== '0') {
-          this.detailForm.project.isOutputTax = '0'
-        } else {
           this.detailForm.project.isOutputTax = '1'
+        } else {
+          this.detailForm.project.isOutputTax = '0'
         }
       },
       handleRemove(file, index) {
@@ -1821,6 +1821,26 @@
           this.$refs.infoDw.init(type,list,ifChek,index,tableList);
         })
       },
+      
+      //获取单位的值
+      getDwInfo(data){
+        this.$forceUpdate();
+        var id=[],name=[];
+        if(data&&data.type!='承建单位'){
+          data.forEach((item)=>{
+            id.push(item.id);
+            name.push(item.detailName);
+          })
+        }
+        if(data.type=="承建单位"){
+          this.detailForm.project.companyBuiltName=data.name;
+          this.detailForm.project.companyBuiltId=data.id;
+        }else if(data.type=="签约/使用资质单位"){
+          this.detailForm.project.companyId=id.join(",");
+          this.detailForm.project.companyName=name.join(",");
+        }
+      this.DwVisible=false;
+    },
       //获取单位的值
       getComList(data){
         this.$forceUpdate();
