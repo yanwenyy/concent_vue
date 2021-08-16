@@ -1787,7 +1787,18 @@
                     <template slot="append">(万元)</template>
                   </el-input>
                 </el-form-item>
-                <br>
+                <el-form-item
+                  label="变更后我方份额(万元)"
+                  prop="contractInfo.changeOurAmount"
+                >
+                  <el-input
+                    :disabled="true"
+                    v-model="detailform.contractInfo.changeOurAmount"
+                  >
+                    <template slot="prepend">¥</template>
+                    <template slot="append">(万元)</template>
+                  </el-input>
+                </el-form-item>
                 <el-form-item
                   v-if="detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'||detailform.contractInfo.isOutSystemSub==='0'"
                   label="未分配(万元)"
@@ -4252,12 +4263,12 @@
             this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
               tj_money+=Number(item.contractAmount);
             });
-            var ourAmount=this.detailform.contractInfo.contractAmount-tj_money;
+            var changeOurAmount=this.detailform.contractInfo.contractAmount-tj_money;
 
-            if(ourAmount>0){
-              // this.$set( this.detailform, "contractInfo.crccCash", ourAmount);
+            if(changeOurAmount>0){
+              // this.$set( this.detailform, "contractInfo.crccCash", changeOurAmount);
               this.$forceUpdate();
-              this.detailform.contractInfo.crccCash=ourAmount;
+              this.detailform.contractInfo.crccCash=changeOurAmount;
 
             }else{
               this.$message.error('铁建份额需要大于0');
@@ -4267,13 +4278,13 @@
             this.detailform.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
               our_money+=Number(item.contractAmount);
             });
-            var ourAmount2=this.detailform.contractInfo.crccCash-our_money;
-            if(ourAmount2>0){
+            var changeOurAmount2=this.detailform.contractInfo.crccCash-our_money;
+            if(changeOurAmount2>0){
               this.$forceUpdate();
-              this.detailform.contractInfo.ourAmount=ourAmount2;
+              this.detailform.contractInfo.changeOurAmount=changeOurAmount2;
               //项目地点的第一条数据金额默认是我方份额
-              this.getPositionMoney(0,this.detailform.topInfoSiteList);
-              // this.$set( this.detailform, "contractInfo.ourAmount", ourAmount2);
+              // this.getPositionMoney(0,this.detailform.topInfoSiteList);
+              // this.$set( this.detailform, "contractInfo.changeOurAmount", changeOurAmount2);
             }else{
               this.$message.error('我方份额需要大于0');
               list[index].contractAmount=''
@@ -4337,7 +4348,7 @@
               }
             }else{
               //计算自留份额 初始我方份额 （非投融资，投融资使用建安和勘察设计费）- 未分配 - 系统内分包份额-集团内分包-系统外分包
-              var zile=Number((this.detailform.contractInfo.projectNatureFirstId=='7031076e7a5f4225b1a89f31ee017802'?this.detailform.contractInfo.installDesignFee||0:this.detailform.contractInfo.ourAmount||0)-(this.detailform.contractInfo.unAllocatedFee||0)-our_money);
+              var zile=Number((this.detailform.contractInfo.projectNatureFirstId=='7031076e7a5f4225b1a89f31ee017802'?this.detailform.contractInfo.installDesignFee||0:this.detailform.contractInfo.changeOurAmount||0)-(this.detailform.contractInfo.unAllocatedFee||0)-our_money);
               if(zile<0){
                 if(this.detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'){
                   this.$message.error('自留份额+未分配+系统内分包份额之和+系统外分包份额之和+集团内分包份额之和不能大于建安和勘察设计费');
@@ -4374,8 +4385,8 @@
             // this.detailform.contractInfoAttachBO.outContractInfoAttachList.forEach((item)=>{
             //   our_money+=Number(item.contractAmount);
             // });
-            // var ourAmount=this.detailform.contractInfo.ourAmount-our_money;
-            // if(!ourAmount>0){
+            // var changeOurAmount=this.detailform.contractInfo.changeOurAmount-our_money;
+            // if(!changeOurAmount>0){
             //   this.$message.error('我方份额需要大于0');
             //   list[index].contractAmount=''
             // }
@@ -4422,9 +4433,9 @@
               our_money+=Number(item.contractAmount);
             });
             this.$forceUpdate();
-            this.detailform.contractInfo.ourAmount=this.detailform.contractInfo.crccCash-our_money;
+            this.detailform.contractInfo.changeOurAmount=this.detailform.contractInfo.crccCash-our_money;
             //项目地点的第一条数据金额默认是我方份额
-            this.getPositionMoney(0,this.detailform.topInfoSiteList);
+            // this.getPositionMoney(0,this.detailform.topInfoSiteList);
           }
         }else if(ifswitch!='switch'){
           this.$message.error('合同总金额需要大于0');
@@ -5071,6 +5082,7 @@
         if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
           this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
         }
+        this.detailform.contractInfo.changeOurAmount = this.detailform.contractInfo.ourAmount;
       });
       },
       //新增的时候详情
@@ -5107,6 +5119,7 @@
         for(var i in this.detailform){
           this.detailFormBefore[i]=JSON.parse(JSON.stringify(this.detailform[i]));
         }
+        this.detailform.contractInfo.changeOurAmount = this.detailform.contractInfo.ourAmount;
        console.log(this.detailform)
       });
       },
