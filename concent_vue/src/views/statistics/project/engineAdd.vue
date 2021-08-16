@@ -900,7 +900,8 @@
                     clearable
                     placeholder="请选择设计单位"
                     v-model="detailForm.project.companyDesign">
-                    <el-button slot="append" icon="el-icon-circle-plus-outline" @click="openComMul('','','/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
+                    <el-button slot="append" icon="el-icon-circle-plus-outline" 
+                    @click="openComMul(detailForm.project.companyDesignId,detailForm.project.companyDesign,'/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
                   </el-input>
                 </el-form-item>
                 <el-form-item
@@ -912,7 +913,8 @@
                     clearable
                     placeholder="请选择监理单位"
                     v-model="detailForm.project.companySupervisor">
-                    <el-button slot="append" icon="el-icon-circle-plus-outline" @click="openComMul('','','/api/contract/Companies/detail/findCompanies','监理单位')"></el-button>
+                    <el-button slot="append" icon="el-icon-circle-plus-outline" 
+                    @click="openComMul(detailForm.project.companySupervisorId,detailForm.project.companySupervisor,'/api/contract/Companies/detail/findCompanies','监理单位')"></el-button>
                   </el-input>
                 </el-form-item>
               </el-row>
