@@ -1,20 +1,31 @@
 <template>
   <div>
-    <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+    <el-form
+      class="queryForm"
+      :inline="true"
+      :model="searchform"
+      @keyup.enter.native="getData()"
+    >
       <el-form-item label="项目名称:">
-        <el-input v-model="searchform.projectName" placeholder="项目名称" clearable></el-input>
+        <el-input
+          v-model="searchform.projectName"
+          placeholder="项目名称"
+          clearable
+        ></el-input>
       </el-form-item>
       <el-form-item label="项目板块:">
         <el-select
           clearable
           filterable
           placeholder="请选择"
-          v-model="searchform.projectModuleId">
+          v-model="searchform.projectModuleId"
+        >
           <el-option
             :key="index"
             :label="item.detailName"
             :value="item.id"
-            v-for="(item, index) in projectPlate"/>
+            v-for="(item, index) in projectPlate"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="项目状态:">
@@ -22,12 +33,14 @@
           filterable
           clearable
           placeholder="请选择"
-          v-model="searchform.projectStatusId">
+          v-model="searchform.projectStatusId"
+        >
           <el-option
             :key="index"
             :label="item.detailName"
             :value="item.id"
-            v-for="(item, index) in projectStatus"/>
+            v-for="(item, index) in projectStatus"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="工程类别(一级):">
@@ -36,51 +49,73 @@
           filterable
           placeholder="请选择"
           @change="getProjectTwo"
-          v-model="searchform.projectTypeFirstId">
+          v-model="searchform.projectTypeFirstId"
+        >
           <el-option
             :key="index"
             :label="item.detailName"
             :value="item.id"
-            v-for="(item, index) in projectDomainType"/>
+            v-for="(item, index) in projectDomainType"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="工程类别(二级):">
         <el-select
           clearable
           filterable
-          :disabled="searchform.projectTypeFirstId==''"
+          :disabled="searchform.projectTypeFirstId == ''"
           placeholder="请先选择一级类别"
-          v-model="searchform.projectTypeSecondId">
+          v-model="searchform.projectTypeSecondId"
+        >
           <el-option
             :key="index"
             :label="item.detailName"
             :value="item.id"
-            v-for="(item, index) in projectTypeTwo"/>
+            v-for="(item, index) in projectTypeTwo"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="所属单位:">
-        <el-input v-model="searchform.companyBelongName" placeholder="所属单位" clearable></el-input>
+        <el-input
+          v-model="searchform.companyBelongName"
+          placeholder="所属单位"
+          clearable
+        ></el-input>
       </el-form-item>
       <el-form-item label="签约/使用资质单位:">
-        <el-input v-model="searchform.companyName" placeholder="签约/使用资质单位" clearable></el-input>
+        <el-input
+          v-model="searchform.companyName"
+          placeholder="签约/使用资质单位"
+          clearable
+        ></el-input>
       </el-form-item>
       <el-form-item label="建设单位:">
-        <el-input v-model="searchform.companyBuild" placeholder="建设单位" clearable></el-input>
+        <el-input
+          v-model="searchform.companyBuild"
+          placeholder="建设单位"
+          clearable
+        ></el-input>
       </el-form-item>
       <el-form-item label="设计单位:">
-        <el-input v-model="searchform.companyDesign" placeholder="设计单位" clearable></el-input>
+        <el-input
+          v-model="searchform.companyDesign"
+          placeholder="设计单位"
+          clearable
+        ></el-input>
       </el-form-item>
       <el-form-item label="项目类型:">
         <el-select
           filterable
           clearable
           placeholder="请选择"
-          v-model="searchform.projectTypeId">
+          v-model="searchform.projectTypeId"
+        >
           <el-option
             :key="index"
             :label="item.detailName"
             :value="item.id"
-            v-for="(item, index) in projectType"/>
+            v-for="(item, index) in projectType"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="新兴市场类别(一级):">
@@ -89,26 +124,30 @@
           filterable
           placeholder="请选择"
           @change="getMarketTwo"
-          v-model="searchform.marketFirstId">
+          v-model="searchform.marketFirstId"
+        >
           <el-option
             :key="index"
             :label="item.detailName"
             :value="item.id"
-            v-for="(item, index) in emergingMarket"/>
+            v-for="(item, index) in emergingMarket"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="新兴市场类别(二级):">
         <el-select
           filterable
           clearable
-          :disabled="searchform.marketFirstId==''"
+          :disabled="searchform.marketFirstId == ''"
           placeholder="请先选择一级类别"
-          v-model="searchform.marketSecondId">
+          v-model="searchform.marketSecondId"
+        >
           <el-option
             :key="index"
             :label="item.detailName"
             :value="item.id"
-            v-for="(item, index) in emergingMarketTwo"/>
+            v-for="(item, index) in emergingMarketTwo"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="是否托管:">
@@ -116,12 +155,14 @@
           filterable
           clearable
           placeholder="请选择"
-          v-model="searchform.isTrusteeship">
+          v-model="searchform.isTrusteeship"
+        >
           <el-option
             :key="index"
             :label="item.detailName"
             :value="item.id"
-            v-for="(item, index) in yesOrNo"/>
+            v-for="(item, index) in yesOrNo"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="是否代管:">
@@ -129,31 +170,46 @@
           filterable
           clearable
           placeholder="请选择"
-          v-model="searchform.isEscrow">
+          v-model="searchform.isEscrow"
+        >
           <el-option
             :key="index"
             :label="item.detailName"
             :value="item.id"
-            v-for="(item, index) in yesOrNo"/>
+            v-for="(item, index) in yesOrNo"
+          />
         </el-select>
       </el-form-item>
-      <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
-      <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
-      <el-button @click="exportData" type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>
+      <el-button
+        @click="searchformReset"
+        type="info"
+        plain
+        style="color:black;background:none"
+        ><i class="el-icon-refresh-right"></i>重置</el-button
+      >
+      <el-button @click="getData" type="primary" plain
+        ><i class="el-icon-search"></i>查询</el-button
+      >
+      <el-button @click="exportData" type="primary" plain
+        ><i class="el-icon-upload2"></i>导出</el-button
+      >
     </el-form>
     <div style="margin-top: 10px;overflow-x: scroll;overflow-y: scroll;">
       <el-table
         class=""
         :data="page.records"
-        :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
+        :header-cell-style="{
+          'text-align': 'center',
+          'background-color': 'whitesmoke'
+        }"
         @row-dblclick="rowShow"
         @selection-change="handleSelectionChange"
         border
         highlight-current-row
         ref="table"
         tooltip-effect="dark"
-        :max-height="$tableHeight+100"
-        :height="$tableHeight+100"
+        :max-height="$tableHeight + 100"
+        :height="$tableHeight + 100"
       >
         <el-table-column
           :width="50"
@@ -359,7 +415,9 @@
           prop="contractStartTime"
           show-overflow-tooltip
         >
-          <template slot-scope="scope">{{scope.row.contractStartTime | dateformat}}</template>
+          <template slot-scope="scope">{{
+            scope.row.contractStartTime | dateformat
+          }}</template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -368,7 +426,9 @@
           prop="contractEndTime"
           show-overflow-tooltip
         >
-          <template slot-scope="scope">{{scope.row.contractEndTime | dateformat}}</template>
+          <template slot-scope="scope">{{
+            scope.row.contractEndTime | dateformat
+          }}</template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -377,7 +437,9 @@
           prop="contractSignTime"
           show-overflow-tooltip
         >
-          <template slot-scope="scope">{{scope.row.contractSignTime | dateformat}}</template>
+          <template slot-scope="scope">{{
+            scope.row.contractSignTime | dateformat
+          }}</template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -386,7 +448,9 @@
           prop="realStartTime"
           show-overflow-tooltip
         >
-          <template slot-scope="scope">{{scope.row.realStartTime | dateformat}}</template>
+          <template slot-scope="scope">{{
+            scope.row.realStartTime | dateformat
+          }}</template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -395,7 +459,9 @@
           prop="realEndTime"
           show-overflow-tooltip
         >
-          <template slot-scope="scope">{{scope.row.realEndTime | dateformat}}</template>
+          <template slot-scope="scope">{{
+            scope.row.realEndTime | dateformat
+          }}</template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -460,7 +526,9 @@
           prop="projectEndTime"
           show-overflow-tooltip
         >
-          <template slot-scope="scope">{{scope.row.projectEndTime | dateformat}}</template>
+          <template slot-scope="scope">{{
+            scope.row.projectEndTime | dateformat
+          }}</template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -477,8 +545,32 @@
           prop="isTrusteeship"
           show-overflow-tooltip
         >
-          <template slot-scope="scope">{{scope.row.isTrusteeship == '0'? '是': '否' }}</template>
+          <template slot-scope="scope">{{
+            scope.row.isTrusteeship == "0" ? "是" : "否"
+          }}</template>
+         
         </el-table-column>
+         <el-table-column
+            property="menusstate"
+            :width="150"
+            align="center"
+            prop="monthReport"
+            show-overflow-tooltip
+            label="不填月报"
+          >
+            <template slot-scope="scope">
+              <el-switch
+                class="inline-formitem-switch"
+                v-model="scope.row.monthReport"
+                active-color="#409EFF"
+                inactive-color="#ddd"
+                active-value="1"
+                inactive-value="0"
+                @change="monthReportChange(scope.row.monthReport,scope.row.uuid)"
+              >
+              </el-switch>
+            </template>
+          </el-table-column>
         <el-table-column
           :width="150"
           align="center"
@@ -486,7 +578,9 @@
           prop="isEscrow"
           show-overflow-tooltip
         >
-          <template slot-scope="scope">{{scope.row.isEscrow == '0'? '是': '否' }}</template>
+          <template slot-scope="scope">{{
+            scope.row.isEscrow == "0" ? "是" : "否"
+          }}</template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -543,212 +637,235 @@
 </template>
 
 <script>
-
-  export default {
-    data() {
-      return {
-        projectTypeTwo: [], // 工程类别(二级)
-        emergingMarketTwo: [], // 新兴市场(二级)
-        yesOrNo: [{ id: '0', detailName: '是' }, { id: '1', detailName: '否' }],
-        page: { current: 1, size: 20, total: 0, records: [] },
-        searchform: {
-          current: 1,
-          size: 20,
-          projectName: '', // 项目名称
-          projectModuleId: '', // 项目板块
-          projectStatusId: '', // 项目状态
-          projectTypeFirstId: '', // 工程类别(一级)
-          projectTypeSecondId: '', // 工程类别(二级)
-          companyBelongName: '', // 所属单位
-          companyName: '', // 签约/使用资质单位
-          companyBuild: '', // 建设单位
-          companyDesign: '', // 设计单位
-          projectTypeId: '', // 项目类型
-          marketFirstId: '', // 新兴市场类别(一级)
-          marketSecondId: '', // 新兴市场类别(二级)
-          isTrusteeship: '', // 是否托管
-          isEscrow: '' // 是否代管
-        },
-        multipleSelection: []
-      }
+export default {
+  data() {
+    return {
+      projectTypeTwo: [], // 工程类别(二级)
+      emergingMarketTwo: [], // 新兴市场(二级)
+      yesOrNo: [
+        { id: "0", detailName: "是" },
+        { id: "1", detailName: "否" }
+      ],
+      page: { current: 1, size: 20, total: 0, records: [] },
+      searchform: {
+        current: 1,
+        size: 20,
+        projectName: "", // 项目名称
+        projectModuleId: "", // 项目板块
+        projectStatusId: "", // 项目状态
+        projectTypeFirstId: "", // 工程类别(一级)
+        projectTypeSecondId: "", // 工程类别(二级)
+        companyBelongName: "", // 所属单位
+        companyName: "", // 签约/使用资质单位
+        companyBuild: "", // 建设单位
+        companyDesign: "", // 设计单位
+        projectTypeId: "", // 项目类型
+        marketFirstId: "", // 新兴市场类别(一级)
+        marketSecondId: "", // 新兴市场类别(二级)
+        isTrusteeship: "", // 是否托管
+        isEscrow: "", // 是否代管
+        monthReport:""
+      },
+      multipleSelection: []
+    };
+  },
+  mounted() {
+    this.$store.dispatch("getConfig", {});
+    this.$store.dispatch("getCategory", {
+      name: "emergingMarket",
+      id: "33de2e063b094bdf980c77ac7284eff3"
+    });
+    this.$store.dispatch("getCategory", {
+      name: "projectDomainType",
+      id: "238a917eb2b111e9a1746778b5c1167e"
+    });
+    this.$store.dispatch("getCategory", {
+      name: "projectNature",
+      id: "99239d3a143947498a5ec896eaba4a72"
+    });
+  },
+  computed: {
+    projectPlate() {
+      return this.$store.state.projectPlate; // 项目板块
     },
-    mounted() {
-      this.$store.dispatch('getConfig', {})
-      this.$store.dispatch('getCategory', { name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3' })
-      this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
-      this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
+    projectStatus() {
+      return this.$store.state.projectStatus; // 项目状态
     },
-    computed: {
-      projectPlate() {
-        return this.$store.state.projectPlate // 项目板块
-      },
-      projectStatus() {
-        return this.$store.state.projectStatus // 项目状态
-      },
-      projectDomainType() {
-        return this.$store.state.category.projectDomainType // 工程类别
-      },
-      emergingMarket() {
-        return this.$store.state.category.emergingMarket // 新兴市场
-      },
-      projectType() {
-        return this.$store.state.projectType // 项目类型
-      }
+    projectDomainType() {
+      return this.$store.state.category.projectDomainType; // 工程类别
     },
-    methods: {
-      // 获取工程类别(二级)
-      getProjectTwo(id) {
-        this.searchform.projectTypeSecondId = ''
-        this.projectTypeTwo = []
-        if (id !== '') {
-          this.projectDomainType.find(
-            (item) => {
-              if (item.id === id) {
-                this.projectTypeTwo = item.children
-              }
-            }
-          )
-        }
-      },
-      // 获取新兴市场(二级)
-      getMarketTwo(id) {
-        this.searchform.marketSecondId = ''
-        this.emergingMarketTwo = []
-        if (id !== '') {
-          this.emergingMarket.find(
-            (item) => {
-              if (item.id === id) {
-                this.emergingMarketTwo = item.children
-              }
-            }
-          )
-        }
-      },
-      getRoute(id) {
-        var url = null
-        if (id === '7f4fcba4255b43a8babf15afd6c04a53') {
-          url = './engineAdd/'
-        } else if (id === 'f6823a41e9354b81a1512155a5565aeb') {
-          url = './designAdd/'
-        } else if (id === '510ba0d79593418493eb1a11ea4e7af6') {
-          url = './estateAdd/'
-        } else if (id === '510ba0d79593418493eb1a11ea4e7af4') {
-          url = './tradeAdd/'
-        } else if (id === '510ba0d79593418493eb1a11ed3e7df4') {
-          url = './manufactureAdd/'
-        } else if (id === '510ba0d79593418493eb1a11ea4e7df4') {
-          url = './financeAdd/'
-        } else if (id === '510ba0d79593418493eb1a11ed4e7df4') {
-          url = './maintenanceAdd/'
-        } else if (id === '510ba0d79593419493eb1a11ed3e7df4') {
-          url = './otherAdd/'
-        }
-        return url
-      },
-      exportData() {
-        console.log('导出')
-      },
-      // 查看
-      rowShow(row) {
-        let p = { actpoint: 'look', uuid: row.uuid }
-        let url = this.getRoute(row.projectModuleId)
-        if (!url) {
-          this.$message({
-            message: '该项目存在问题',
-            type: 'error'
-          })
-          return
-        }
-        this.$router.push({
-          path: url,
-          query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-        })
-      },
-      // 选中查看
-      show() {
-        if (this.multipleSelection.length !== 1) {
-          this.$message.info('请选择一条记录进行查看操作!')
-          return false
-        }
-        let p = { actpoint: 'look', uuid: this.multipleSelection[0].uuid }
-        let url = this.getRoute(this.multipleSelection[0].projectModuleId)
-        if (!url) {
-          this.$message({
-            message: '该项目存在问题',
-            type: 'error'
-          })
-          return
-        }
-        this.$router.push({
-          path: url,
-          query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-        })
-      },
-      handleSizeChange(val) {
-        this.searchform.size = val
-        this.getData()
-      },
-      handleCurrentChange(val) {
-        this.searchform.current = val
-        this.getData()
-      },
-      searchformSubmit() {
-        this.searchform.current = 1
-        this.getData()
-      },
-      searchformReset() {
-        this.searchform = {
-          current: 1,
-          size: 20,
-          projectName: '', // 项目名称
-          projectModuleId: '', // 项目板块
-          projectStatusId: '', // 项目状态
-          projectTypeFirstId: '', // 工程类别(一级)
-          projectTypeSecondId: '', // 工程类别(二级)
-          companyBelongName: '', // 所属单位
-          companyName: '', // 签约/使用资质单位
-          companyBuild: '', // 建设单位
-          companyDesign: '', // 设计单位
-          projectTypeId: '', // 项目类型
-          marketFirstId: '', // 新兴市场类别(一级)
-          isTrusteeship: '', // 是否托管
-          isEscrow: '' // 是否代管
-        }
-        this.getData()
-      },
-      // 列表选项数据
-      handleSelectionChange(val) {
-        this.multipleSelection = val
-      },
-      // 分页查询
-      getData() {
-        this.$http
-          .post('/api/statistics/StatisticsProject/list/loadPageData', this.searchform)
-          .then(res => {
-            this.page = res.data.data
-          })
-      }
+    emergingMarket() {
+      return this.$store.state.category.emergingMarket; // 新兴市场
     },
-    created() {
-      this.getData()
+    projectType() {
+      return this.$store.state.projectType; // 项目类型
     }
+  },
+  methods: {
+    // 获取工程类别(二级)
+    getProjectTwo(id) {
+      this.searchform.projectTypeSecondId = "";
+      this.projectTypeTwo = [];
+      if (id !== "") {
+        this.projectDomainType.find(item => {
+          if (item.id === id) {
+            this.projectTypeTwo = item.children;
+          }
+        });
+      }
+    },
+    // 获取新兴市场(二级)
+    getMarketTwo(id) {
+      this.searchform.marketSecondId = "";
+      this.emergingMarketTwo = [];
+      if (id !== "") {
+        this.emergingMarket.find(item => {
+          if (item.id === id) {
+            this.emergingMarketTwo = item.children;
+          }
+        });
+      }
+    },
+    monthReportChange(data,id){
+      console.log(data,id)
+      this.$http
+        .post(
+          "/api/statistics/StatisticsProject/detail/isFillReport",
+          {projectId:id,isFillReport:data}
+        )
+        .then(res => {
+          console.log(res)
+        });
+    },
+    getRoute(id) {
+      var url = null;
+      if (id === "7f4fcba4255b43a8babf15afd6c04a53") {
+        url = "./engineAdd/";
+      } else if (id === "f6823a41e9354b81a1512155a5565aeb") {
+        url = "./designAdd/";
+      } else if (id === "510ba0d79593418493eb1a11ea4e7af6") {
+        url = "./estateAdd/";
+      } else if (id === "510ba0d79593418493eb1a11ea4e7af4") {
+        url = "./tradeAdd/";
+      } else if (id === "510ba0d79593418493eb1a11ed3e7df4") {
+        url = "./manufactureAdd/";
+      } else if (id === "510ba0d79593418493eb1a11ea4e7df4") {
+        url = "./financeAdd/";
+      } else if (id === "510ba0d79593418493eb1a11ed4e7df4") {
+        url = "./maintenanceAdd/";
+      } else if (id === "510ba0d79593419493eb1a11ed3e7df4") {
+        url = "./otherAdd/";
+      }
+      return url;
+    },
+    exportData() {
+      console.log("导出");
+    },
+    // 查看
+    rowShow(row) {
+      let p = { actpoint: "look", uuid: row.uuid };
+      let url = this.getRoute(row.projectModuleId);
+      if (!url) {
+        this.$message({
+          message: "该项目存在问题",
+          type: "error"
+        });
+        return;
+      }
+      this.$router.push({
+        path: url,
+        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+      });
+    },
+    // 选中查看
+    show() {
+      if (this.multipleSelection.length !== 1) {
+        this.$message.info("请选择一条记录进行查看操作!");
+        return false;
+      }
+      let p = { actpoint: "look", uuid: this.multipleSelection[0].uuid };
+      let url = this.getRoute(this.multipleSelection[0].projectModuleId);
+      if (!url) {
+        this.$message({
+          message: "该项目存在问题",
+          type: "error"
+        });
+        return;
+      }
+      this.$router.push({
+        path: url,
+        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+      });
+    },
+    handleSizeChange(val) {
+      this.searchform.size = val;
+      this.getData();
+    },
+    handleCurrentChange(val) {
+      this.searchform.current = val;
+      this.getData();
+    },
+    searchformSubmit() {
+      this.searchform.current = 1;
+      this.getData();
+    },
+    searchformReset() {
+      this.searchform = {
+        current: 1,
+        size: 20,
+        projectName: "", // 项目名称
+        projectModuleId: "", // 项目板块
+        projectStatusId: "", // 项目状态
+        projectTypeFirstId: "", // 工程类别(一级)
+        projectTypeSecondId: "", // 工程类别(二级)
+        companyBelongName: "", // 所属单位
+        companyName: "", // 签约/使用资质单位
+        companyBuild: "", // 建设单位
+        companyDesign: "", // 设计单位
+        projectTypeId: "", // 项目类型
+        marketFirstId: "", // 新兴市场类别(一级)
+        isTrusteeship: "", // 是否托管
+        isEscrow: "", // 是否代管
+        monthReport:""
+      };
+      this.getData();
+    },
+    // 列表选项数据
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
+    // 分页查询
+    getData() {
+      this.$http
+        .post(
+          "/api/statistics/StatisticsProject/list/loadPageData",
+          this.searchform
+        )
+        .then(res => {
+          this.page = res.data.data;
+        });
+    }
+  },
+  created() {
+    this.getData();
   }
+};
 </script>
 <style scoped>
-  .queryForm > .el-button {
-    margin-top: 5px;
-  }
+.queryForm > .el-button {
+  margin-top: 5px;
+}
 
-  >>> .el-form-item__label {
-    width: auto;
-  }
+>>> .el-form-item__label {
+  width: auto;
+}
 
-  >>> .el-input--mini .el-input__inner {
-    height: auto;
-    line-height: inherit;
-  }
+>>> .el-input--mini .el-input__inner {
+  height: auto;
+  line-height: inherit;
+}
 
-  .el-table__row {
-    cursor: pointer;
-  }
+.el-table__row {
+  cursor: pointer;
+}
 </style>
