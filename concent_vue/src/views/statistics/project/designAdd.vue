@@ -1821,6 +1821,26 @@
           this.$refs.infoDw.init(type,list,ifChek,index,tableList);
         })
       },
+      
+      //获取单位的值
+      getDwInfo(data){
+        this.$forceUpdate();
+        var id=[],name=[];
+        if(data&&data.type!='承建单位'){
+          data.forEach((item)=>{
+            id.push(item.id);
+            name.push(item.detailName);
+          })
+        }
+        if(data.type=="承建单位"){
+          this.detailForm.project.companyBuiltName=data.name;
+          this.detailForm.project.companyBuiltId=data.id;
+        }else if(data.type=="签约/使用资质单位"){
+          this.detailForm.project.companyId=id.join(",");
+          this.detailForm.project.companyName=name.join(",");
+        }
+      this.DwVisible=false;
+    },
       //获取单位的值
       getComList(data){
         this.$forceUpdate();
