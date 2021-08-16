@@ -399,7 +399,8 @@
                     clearable
                     placeholder="请选择设计单位"
                     v-model="detailForm.project.companyDesign">
-                    <el-button slot="append" icon="el-icon-circle-plus-outline" @click="openComMul('','','/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
+                    <el-button slot="append" icon="el-icon-circle-plus-outline" 
+                    @click="openComMul('','','/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
                   </el-input>
                 </el-form-item>
             <el-form-item
@@ -1841,27 +1842,20 @@
         }
       this.DwVisible=false;
     },
-      //获取单位的值
+      //获取拿过来的多选单位列表
       getComList(data){
+        console.log(data)
         this.$forceUpdate();
-        var id=[],name=[];
-        if(data&&data.type!='承建单位'){
-          data.forEach((item)=>{
-            id.push(item.id);
-            name.push(item.detailName);
-          })
-        }
-        if(data.type=="承建单位"){
-          this.detailForm.project.companyBuiltName=data.name;
-          this.detailForm.project.companyBuiltId=data.id;
-        }else if(data.type=="签约/使用资质单位"){
-          this.detailForm.project.companyId=id.join(",");
-          this.detailForm.project.companyName=name.join(",");
+        if(data.type=='签约/使用资质单位'){
+          this.detailForm.project.companyId=data.selIdList.join(",");
+          this.detailForm.project.companyName=data.selList.join(",");
+        }else if (data.type == "监理单位") {
+          this.detailForm.project.companySupervisorId=data.selIdList.join(",");
+          this.detailForm.project.companySupervisor=data.selList.join(",");
         }else if (data.type == "设计单位") {
           this.detailForm.project.companyDesignId=data.selIdList.join(",");
           this.detailForm.project.companyDesign=data.selList.join(",");
         }
-        this.DwVisible=false;
       },
       getShow() {
         let params = { topInfoId: this.p.uuid ||this.p.instid}
