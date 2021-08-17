@@ -42,7 +42,7 @@
       <div style="width: 100%; overflow: hidden;">
         <el-button-group style="float: left">
           <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>新增</el-button>
-          <el-button @click="editItem" plain type="primary"><i class="el-icon-edit"></i>暂存</el-button>
+          <el-button @click="editItem" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
           <el-button @click="remove" plain type="primary"><i class="el-icon-delete"></i>删除</el-button>
           <el-button @click="searchformReset" plain type="primary"
             ><i class="el-icon-refresh-right"></i>刷新</el-button
@@ -513,15 +513,19 @@ export default {
     saveVerifyResult() {
       this.dialogResult = false;
       var str = "";
-      this.itemform.vprojecttypes.forEach((item) => {
-        str += item + ",";
-      });
+      try {
+        this.itemform.vprojecttypes.forEach((item) => {
+          str += item + ",";
+        });
+      }
+      catch(err) {console.info(err)}
       str = str.substring(0, str.length - 1);
       //排序
       this.itemform.vxh = "0";
       this.itemform.vprojecttype = str;
       // this.itemform.vParentid=this.itemform.sumTarget;
       // this.itemform.uuid = this.node.data.uuid;
+      this.itemform.qfType = "XQ"
       this.$http
         .post(
           "/api/statistics/bp/BpTjx/detail/save",
@@ -638,6 +642,10 @@ export default {
 
     remove() {
       //console.log(JSON.stringify(this.multipleSelection[0].uuid));
+      if (this.multipleSelection.length == 0) {
+        this.$message.info("请选择统计项进行删除！");
+        return false;
+      }
       if (
         this.multipleSelection[0].uuid == "" ||
         this.multipleSelection[0].uuid == null
@@ -673,7 +681,6 @@ export default {
               ) {
                 this.$refs.tree.store._getAllNodes()[i].expanded = false;
               }
-
               this.loadNode(this.node, this.resolve);
             });
         })
@@ -715,8 +722,16 @@ export default {
       this.multipleSelection = val;
     },
     getTableData(val) {
+      let req = {
+        qfType:"XQ",
+        current: val.current,
+        size: val.size,
+        uuid:val.uuid,
+        vname:val.vname
+      }
+      console.info(val)
       this.$http
-        .post("/api/statistics/bp/BpTjx/list/loadPageData", val)
+        .post("/api/statistics/bp/BpTjx/list/loadPageData", req)
         .then((res) => {
           this.page = res.data.data;
         });
@@ -734,6 +749,7 @@ export default {
         this.$http
           .post("/api/statistics/bp/BpTjx/list/getBpTjxListByParentId", {
             parentid: node.data.uuid,
+            qfType:"XQ"
           })
           .then((res) => {
             node.data.current=this.searchform.current;

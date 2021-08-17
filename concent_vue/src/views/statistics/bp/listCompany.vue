@@ -575,7 +575,7 @@ export default {
            this.$http
           .post(
             '/api/statistics/bp/BpTjx/list/getBpTjxListByParentId1',
-            {"parentid":node.data.uuid,'projectType':this.itemform.vprojecttypes}
+            {"parentid":node.data.uuid,'projectType':this.itemform.vprojecttypes,'qfType':"JH"}
           )
           .then(res => {
 
