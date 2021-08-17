@@ -6,7 +6,7 @@
         width: 20%;
         vertical-align: top;
         overflow: auto;
-        border: 1px solid #eee
+        border: 1px solid #eee;
       "
     >
       <el-tree
@@ -40,7 +40,7 @@
       <div style="width: 100%; overflow: hidden;">
         <el-button-group style="float: left">
           <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>新增</el-button>
-          <el-button @click="editItem" plain type="primary"><i class="el-icon-edit"></i>暂存</el-button>
+          <el-button @click="editItem" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
           <el-button @click="remove" plain type="primary"><i class="el-icon-delete"></i>删除</el-button>
           <el-button @click="searchformReset" plain type="primary"
             ><i class="el-icon-refresh-right"></i>刷新</el-button
@@ -76,10 +76,16 @@
         >
         </el-table-column>
         <el-table-column
+          show-overflow-tooltip
+          type="index"
+          label="编码"
+          :width="150"
+          align="center"
+        >
+        </el-table-column>
+        <el-table-column
           prop="vname"
-          label="统计名称"
-          width="160"
-
+          label="名称"
           show-overflow-tooltip
         >
         </el-table-column>
@@ -87,32 +93,14 @@
           prop="vjldw"
           label="计量单位"
           width="120"
-
           align="center"
           :formatter="vjldwFormatter"
           show-overflow-tooltip
         >
         </el-table-column>
         <el-table-column
-          prop="vprojecttype"
-          label="工程（行业）类别"
-
-          :formatter="vprojecttypeFormatter"
-          show-overflow-tooltip
-        >
-        </el-table-column>
-        <el-table-column
-          prop="vtype"
-          label="使用设置"
-          width="90"
-          align="center"
-          :formatter="vtypeFormatter"
-          show-overflow-tooltip
-        >
-        </el-table-column>
-        <el-table-column
           prop="veditable"
-          label="是否填报"
+          label="是否可用"
           width="90"
           align="center"
           :formatter="veditableFormatter"
@@ -121,7 +109,7 @@
         </el-table-column>
         <el-table-column
           prop="vdisable"
-          label="是否隐藏"
+          label="是否可写"
           width="90"
           align="center"
           :formatter="vdisableFormatter"
@@ -141,9 +129,15 @@
       layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
 <!-- 新增统计项的弹框 -->
-    <el-dialog :title="dialogtitle" :visible.sync="dialogResult" width="30%">
+    <el-dialog :title="dialogtitle" :visible.sync="dialogResult" width="40%">
       <el-form :model="itemform">
-        <el-form-item label="统计名称" prop="vname" >
+        <el-form-item label="序号" prop="vname" >
+          <el-input placeholder="" class="bp_height" disabled  :value="page.records.length+1"/>
+        </el-form-item>
+        <el-form-item label="编码" prop="vname" >
+          <el-input placeholder="" class="bp_height" disabled  v-model="itemform.vname" />
+        </el-form-item>
+        <el-form-item label="名称" prop="vname" >
           <el-input placeholder="" class="bp_height"  v-model="itemform.vname" />
         </el-form-item>
         <el-form-item label="计量单位" prop="vjldw">
@@ -164,49 +158,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="工程（行业）类别" prop="vprojecttypes" style="">
-          <el-select
-            multiple
-            filterable
-            placeholder="请选择"
-            class="bp_height multiple-sel"
-            v-model="itemform.vprojecttypes"
-            @change="handleSelectChange"
-          >
-            <el-option
-              :key="index"
-              :label="item.detailName"
-              :value="item.id"
-              v-for="(item, index) in projectDomainType"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-
-        <el-form-item label="所属汇总指标" prop="sumTarget">
-          <el-input
-          v-model="itemform.sumTargetName"
-          placeholder="所属汇总指标"
-          clearable
-          >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="openhzzb"
-          ></el-button>
-          </el-input>
-
-        </el-form-item>
-
-        <el-form-item label="使用设置" prop="vtype">
-          <!--         <el-radio-group class="detail-radio-group" v-model="itemform.vtype"  @change="getName(itemform.vtype,-->
-          <!--         this.vtype, 'moduleName')">-->
-          <!--             <el-radio   v-for="(item, index) in this.vtype" :label="item.id" :key="index">{{item.detailName}}</el-radio>-->
-          <!--         </el-radio-group>-->
-          <el-radio v-model="itemform.vtype" label="0">全部</el-radio>
-          <el-radio v-model="itemform.vtype" label="2">仅年报</el-radio>
-          <el-radio v-model="itemform.vtype" label="1">仅月报</el-radio>
-        </el-form-item>
-        <el-form-item label="是否填报" prop="veditable">
+        <el-form-item label="是否可用" prop="veditable">
           <el-switch
             class="inline-formitem-switch"
             v-model="itemform.veditable"
@@ -219,7 +171,7 @@
           <!--          <el-radio v-model="itemform.veditable" label="1" >是</el-radio>-->
           <!--          <el-radio v-model="itemform.veditable" label="0" >否</el-radio>-->
         </el-form-item>
-        <el-form-item label="是否隐藏" prop="vdisable">
+        <el-form-item label="是否可写" prop="vdisable">
           <el-switch
             class="inline-formitem-switch"
             v-model="itemform.vdisable"
@@ -585,7 +537,7 @@ export default {
       this.showinput = false;
     },
     add() {
-      this.dialogtitle = "新增统计项";
+      this.dialogtitle = "新增劳材机";
       this.itemform = {};
       this.dialogResult = true;
     },
@@ -594,21 +546,21 @@ export default {
     },
     editItem() {
       if (this.multipleSelection.length == 0) {
-        this.$message.info("请选择统计项进行修改！");
+        this.$message.info("请选择数据进行修改！");
         return;
       }
       if (this.multipleSelection.length > 1) {
-        this.$message.info("请只选择一条统计项进行修改！");
+        this.$message.info("请只选择一条数据进行修改！");
         return;
       }
       if (
         this.multipleSelection[0].uuid == "" ||
         this.multipleSelection[0].uuid == null
       ) {
-        this.$message.info("请选择统计项进行修改！");
+        this.$message.info("请选择数据进行修改！");
         return;
       }
-      this.dialogtitle = "修改统计项";
+      this.dialogtitle = "修改劳材机";
       this.dialogResult = true;
       this.$forceUpdate();
       //是否有资审信息判断
@@ -640,7 +592,7 @@ export default {
         this.multipleSelection[0].uuid == "" ||
         this.multipleSelection[0].uuid == null
       ) {
-        this.$message.info("请选择统计项进行删除！");
+        this.$message.info("请选择数据进行删除！");
         return;
       }
       let uuids = [];
@@ -649,7 +601,7 @@ export default {
           uuids.push(item.uuid);
         }
       });
-      this.$confirm("此操作将永久删除该统计项, 是否继续?", "提示", {
+      this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
@@ -815,8 +767,13 @@ export default {
 <style lang="scss" scoped>
 .el-tree {
   font-size:13px !important;
-  height: calc(100vh - 193px) !important;
+  height: calc(100vh - 70px) !important;
   // max-height: calc(100vh - 223px) !important;
+}
+>>>.el-tree-node{
+  > .el-tree-node__children{
+    overflow:visible !important
+  }
 }
 .gcform {
   margin-top: 10px;
@@ -898,7 +855,8 @@ export default {
   margin-left: 0px;
 }
 >>> .el-form-item__label {
-  width: auto;
+  width: 15%;
+  text-align: right;
 }
 >>> .el-tree-node:focus > .el-tree-node__content {
   background-color: #409eff;
@@ -917,6 +875,7 @@ export default {
 // }
 .bp_height{
   height: 40px!important;
+  width: 80%;
 }
 >>>.el-input__inner{
   height: 32px!important;
@@ -927,8 +886,8 @@ export default {
 >>>.el-table__row{
   height: 40px !important;
 }
->>>.el-dialog__body{
-  height: 500px !important;
-  overflow: auto;
-}
+/*>>>.el-dialog__body{*/
+  /*height: 500px !important;*/
+  /*overflow: auto;*/
+/*}*/
 </style>

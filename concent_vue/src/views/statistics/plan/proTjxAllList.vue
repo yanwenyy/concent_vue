@@ -395,7 +395,7 @@
           this.$message.info('只可以编编未创建的和草稿状态的数据！')
           return false
         }
-        if(this.userdata.managerOrgCode!=this.multipleSelection[0].createOrgCode){
+        if(this.userdata.managerOrgCode!=this.multipleSelection[0].createOrgCode&&this.multipleSelection[0].flowStatus!=null){
           this.$message.info('不能修改非本单位创建的计划！')
           return false
         }

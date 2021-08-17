@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="searchListClass">
     <el-form
       class="queryForm"
       :inline="true"
@@ -548,7 +548,7 @@
           <template slot-scope="scope">{{
             scope.row.isTrusteeship == "0" ? "是" : "否"
           }}</template>
-         
+
         </el-table-column>
          <el-table-column
             property="menusstate"

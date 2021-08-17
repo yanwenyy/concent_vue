@@ -72,11 +72,11 @@
                     <!--<el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')"/>-->
                     <el-input v-model="scope.row.value" @input="formatValue(scope.row.value,scope.$index,data,'value'),checkParnt(data,scope.$index,scope.row.sumTarget)"/>
                   </div>
-                  <div v-else-if="scope.row.uuid != '149'&&scope.row.uuid != '150'&&p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '3' " style="text-align: right">
+                  <div v-else-if="scope.row.uuid != '154'&&scope.row.uuid != '150'&&p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '3' " style="text-align: right">
                     <!--<el-input style="visibility: hidden;width: 0" :value="sonCount(scope.row)"/>-->
                     {{sonCount(scope.row,scope.$index,data,'value')}}
                   </div>
-                  <div v-else-if="scope.row.uuid == '149'&&p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '3' " style="text-align: right">
+                  <div v-else-if="scope.row.uuid == '154'&&p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '3' " style="text-align: right">
                     <!--<el-input style="visibility: hidden;width: 0" :value="sonCount(scope.row)"/>-->
                     {{sonCountSD(scope.row,scope.$index,data,'value','149')}}
                   </div>
