@@ -572,4 +572,8 @@
   .el-table__row {
     cursor: pointer;
   }
+  .tableStyle{
+    min-height: calc(100vh - 165px)!important;
+    max-height: calc(100vh - 165px)!important;
+  }
 </style>
