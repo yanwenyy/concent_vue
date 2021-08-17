@@ -918,6 +918,7 @@
               }"
       @selection-change="handleSelectionChange"
       align="center"
+      :row-class-name="tableSection"
       border
       ref="table"
       style="width: 98%;"
@@ -1091,6 +1092,13 @@ export default {
       this.$nextTick(() => {
         this.$refs.comAdd.init(ids,names,url,type);
       })
+    },
+    tableSection({ row, rowIndex }){
+      if(this.detailform1.topInfoSectionList[rowIndex] != null && this.detailform1.topInfoSectionList[rowIndex].isTrack === "0"){
+        return "none-show"
+      }else{
+        return "";
+      }
     },
     //获取拿过来的多选单位列表
     getComList(data){
