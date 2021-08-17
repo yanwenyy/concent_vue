@@ -622,6 +622,24 @@ export default {
                   'leaf': true,
                   'defaultpage': true
                 },
+                {
+                  'name': '投标查询',
+                  'path': '/manage/contractManager/tender/list',
+                  'component': '/manage/contractManager/tender/list',
+                  'iconCls': 'el-icon-edit',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '投标查询详情',
+                  'path': '/manage/contractManager/tender/detail',
+                  'component': '/manage/contractManager/tender/detail',
+                  'iconCls': 'el-icon-edit',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
               ]
             },
             {

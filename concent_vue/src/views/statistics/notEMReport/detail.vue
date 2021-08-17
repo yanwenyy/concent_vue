@@ -4406,6 +4406,7 @@
           this.detailform.sumByMon_6=datas.sumByMon_6||{};
           this.detailform.sumByYear_6=datas.sumByYear_6||{};
           this.detailform.statId=this.p.statId;
+          this.p.gyType = datas.gyType
         });
       },
       handleSelectionChange(val) {
