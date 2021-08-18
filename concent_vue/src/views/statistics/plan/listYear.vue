@@ -202,34 +202,39 @@
           this.$message.info('请选择一条记录进行删除操作！')
           return false
         }
+        if(this.userdata.managerOrgCode!=this.multipleSelection[0].createOrgCode&&this.multipleSelection[0].flowStatus!=null){
+          this.$message.info('不能删除非本单位创建的计划！')
+          return false
+        }
         let uuids = []
         var isSubmit=true
         this.multipleSelection.forEach((item) => {
           uuids.push(item.uuid)
-          if (item.flowStatus === '1'||item.flowStatus === '4') {
+          if (item.flowStatus === 'edit'||item.flowStatus === 'reject') {
             isSubmit = false
-            return false
+          }else{
+            this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
+            return isSubmit=true;
           }
-          if (item.flowStatus ===null) {
-            isSubmit = false
-            return false
-          }
-        })
-        this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$http
-            .post(
-              '/api/statistics/PlanProjectTjx/list/delete',
-              { ids: uuids }
-            )
-            .then((res) => {
-              this.getData()
-            })
-        }).catch(() => {
-        })
+        });
+        if(!isSubmit){
+          this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$http
+              .post(
+                '/api/statistics/PlanProjectTjx/list/delete',
+                { ids: uuids }
+              )
+              .then((res) => {
+                this.getData()
+              })
+          }).catch(() => {
+          })
+        }
+
       },
       add(){
         this.dialogFormVisible = false;

@@ -178,22 +178,19 @@
     methods: {
       //判断是否大于父级值
       checkParnt(list,index,code){
-        var treeSum='',parentNum='',canCalc=false;
+        var treeSum=0,parentNum=0,canCalc=false,parentCanCalc=false;
         list.forEach((item)=>{
           if(item.tjxCode.length>=12&&item.sumTarget==code){
             treeSum+=Number(item.value);
             canCalc=true;
-          }else{
-            canCalc=false;
           }
           if(item.uuid==code&&item.tjxCode.length>=9&&item.veditable=='1'&&item.venabled=='1'){
             parentNum=Number(item.value);
-          }else{
-            canCalc=false;
+            parentCanCalc=true;
           }
         });
-        console.log(list[index].sumTarget,list[index].tjxCode.length,treeSum,parentNum)
-        if(treeSum!=''&&parentNum!=''&&list[index].sumTarget&&canCalc&&list[index].tjxCode.length>=12&&(treeSum>parentNum)){
+        console.log(canCalc,list[index].sumTarget,list[index].tjxCode.length,treeSum,parentNum)
+        if(treeSum!=0&&parentNum!=0&&list[index].sumTarget&&canCalc&&parentCanCalc&&list[index].tjxCode.length>=12&&(treeSum>parentNum)){
           this.$message.error("该级计划之和不能大于上级计划");
           list[index].value='';
           return false;
@@ -301,7 +298,7 @@
           planId = this.data[0].planId
           let tableData = {
             planId: planId,
-            planProjectTjx: {uuid: planId, flowStatus: 1},
+            planProjectTjx: {uuid: planId, flowStatus:'edit'},
             planPrjTjxDetailList: this.data
           }
           this.$http
@@ -324,7 +321,7 @@
           planId = this.data[0].planId
           let tableData = {
             planId: planId,
-            planProjectTjx: {uuid: planId, flowStatus: 2,planProjectName:this.p.planInfo.projectName},
+            planProjectTjx: {uuid: planId, flowStatus: 'check',planProjectName:this.p.planInfo.projectName},
             planPrjTjxDetailList: this.data
           }
           this.$http
