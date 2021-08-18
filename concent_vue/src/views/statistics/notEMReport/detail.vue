@@ -3956,7 +3956,13 @@
       },
       //勘察设计月末进度
       setCcsjYmjd(list,obj,name,index){
-        console.log(index)
+        // console.log(list,obj,name,index) detailform.kc_list
+        let num = Number(list[index].monthValue)-Number(list[index].monthStart)
+        if (num < 0) {
+          num = 0
+        }
+        list[index].monthFinish = num*list[index].contractMoney/100
+        list[index].monthComplete = num*list[index].physicalQuantity/100
       },
       //修改产值
       getGyzzCz(list,obj,name){
