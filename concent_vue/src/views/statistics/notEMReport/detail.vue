@@ -179,9 +179,10 @@
                 </el-form-item>
                 <el-button @click="searchform.design={},searchform.design.type='design',searchDate('design','kc_list')" type="info" plain style="color:black;background:none">重置</el-button>
                 <el-button @click="searchDate('design','kc_list')" type="primary" plain>查询</el-button>
-                <el-button @click="exportdata('design','勘察设计板块')" type="primary" plain>导出</el-button>
+                <el-button v-show="p.actpoint!=='task'" @click="exportdata('design','勘察设计板块')" type="primary" plain>导出</el-button>
                 <!--<el-button @click="importData('designDetail')" type="primary" plain>导入</el-button>-->
                 <el-upload
+                  v-show="p.actpoint!=='task'"
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/designDetail'"
                   :on-success="importData"
@@ -579,8 +580,9 @@
                 </el-form-item>
                 <el-button @click="searchform.industry.projectName='',searchDate('industry','gy_list')" type="info" plain style="color:black;background:none">重置</el-button>
                 <el-button @click="searchDate('industry','gy_list')" type="primary" plain>查询</el-button>
-                <el-button @click="exportdata('industry','工业制造板块')" type="primary" plain>导出</el-button>
+                <el-button v-show="p.actpoint!=='task'" @click="exportdata('industry','工业制造板块')" type="primary" plain>导出</el-button>
                 <el-upload
+                  v-show="p.actpoint!=='task'"
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/industryDetail'"
                   :on-success="importData"
@@ -1096,8 +1098,9 @@
           <el-tab-pane v-if="p.gyType=='2'" label="主要产品管理">
             <div class="table-div">
               <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
-                <el-button @click="exportdata('product','工业制造板块')" type="primary" plain>导出</el-button>
+                <el-button v-show="p.actpoint!=='task'" @click="exportdata('product','工业制造板块')" type="primary" plain>导出</el-button>
                 <el-upload
+                  v-show="p.actpoint!=='task'"
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/productDetail'"
                   :on-success="importData"
@@ -1396,8 +1399,9 @@
                 </el-form-item>
                 <el-button @click="searchform.material.projectName='',searchDate('material','wz_list')" type="info" plain style="color:black;background:none">重置</el-button>
                 <el-button @click="searchDate('material','wz_list')" type="primary" plain>查询</el-button>
-                <el-button @click="exportdata('material','物资贸易板块')" type="primary" plain>导出</el-button>
+                <el-button v-show="p.actpoint!=='task'" @click="exportdata('material','物资贸易板块')" type="primary" plain>导出</el-button>
                 <el-upload
+                  v-show="p.actpoint!=='task'"
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/materialDetail'"
                   :on-success="importData"
@@ -1845,8 +1849,9 @@
                 </el-form-item>
                 <el-button @click="searchform.realty.projectName='',searchDate('realty','fdc_list')" type="info" plain style="color:black;background:none">重置</el-button>
                 <el-button @click="searchDate('realty','fdc_list')" type="primary" plain>查询</el-button>
-                <el-button @click="exportdata('realty','房地产板块')" type="primary" plain>导出</el-button>
+                <el-button v-show="p.actpoint!=='task'" @click="exportdata('realty','房地产板块')" type="primary" plain>导出</el-button>
                 <el-upload
+                  v-show="p.actpoint!=='task'"
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/realtyDetail'"
                   :on-success="importData"
@@ -2305,8 +2310,9 @@
                 </el-form-item>
                 <el-button @click="searchform.secure.projectName='',searchDate('secure','jrbx_list')" type="info" plain style="color:black;background:none">重置</el-button>
                 <el-button @click="searchDate('secure','jrbx_list')" type="primary" plain>查询</el-button>
-                <el-button @click="exportdata('secure','金融保险')" type="primary" plain>导出</el-button>
+                <el-button v-show="p.actpoint!=='task'" @click="exportdata('secure','金融保险')" type="primary" plain>导出</el-button>
                 <el-upload
+                  v-show="p.actpoint!=='task'"
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/secureDetail'"
                   :on-success="importData"
@@ -2773,8 +2779,9 @@
                 </el-form-item>
                 <el-button @click="searchform.service.projectName='',searchDate('service','yy_list')" type="info" plain style="color:black;background:none">重置</el-button>
                 <el-button @click="searchDate('service','yy_list')" type="primary" plain>查询</el-button>
-                <el-button @click="exportdata('service','运营维管')" type="primary" plain>导出</el-button>
+                <el-button v-show="p.actpoint!=='task'" @click="exportdata('service','运营维管')" type="primary" plain>导出</el-button>
                 <el-upload
+                  v-show="p.actpoint!=='task'"
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/serviceDetail'"
                   :on-success="importData"
@@ -3388,8 +3395,9 @@
                 </el-form-item>
                 <el-button @click="searchform.other.projectName='',searchDate('other','qt_list')" type="info" plain style="color:black;background:none">重置</el-button>
                 <el-button @click="searchDate('other','qt_list')" type="primary" plain>查询</el-button>
-                <el-button @click="exportdata('other','其他产值板块')" type="primary" plain>导出</el-button>
+                <el-button v-show="p.actpoint!=='task'" @click="exportdata('other','其他产值板块')" type="primary" plain>导出</el-button>
                 <el-upload
+                  v-show="p.actpoint!=='task'"
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/otherDetail'"
                   :on-success="importData"
