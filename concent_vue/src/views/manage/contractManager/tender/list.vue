@@ -113,7 +113,7 @@
             :key="index"
             :label="item.detailName"
             :value="item.id"
-            v-for="(item, index) in projectDomainType"
+            v-for="(item, index) in isTender"
           ></el-option>
         </el-select>
       </el-form-item>
@@ -374,7 +374,15 @@
       },
       multipleSelection: [],
       xqprojectType:[],//工程二级列表
-
+      isTender:[
+        {
+          detailName:"是",
+          id:'1'
+        },{
+          detailName:"否",
+          id:'0'
+        },
+      ],
       projectStatus:[
         {
             detailName:"草稿",
