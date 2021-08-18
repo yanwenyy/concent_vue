@@ -36,6 +36,7 @@
             "resid":this.$route.query.resid,
             '项目ID':this.$route.query['项目ID'],
             '台账报表用统计项参数':this.$route.query['台账报表用统计项参数'],
+            '台账报表用月报年月':this.$route.query['台账报表用月报年月'],
           }
           console.log(v_params)
         }else{
@@ -46,7 +47,8 @@
         this.$http
           .post(
             "/api/contract/ReportManage/loadReportPage",
-            v_params
+            JSON.stringify(v_params),
+            {useJson: true}
           )
           .then((res) => {
             this.url=res.data.data.url;
