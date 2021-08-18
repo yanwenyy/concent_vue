@@ -187,11 +187,26 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint === 'look'||detailForm.project.contractInfoList!=''"
                   clearable
-                  placeholder="请输入"
+                  placeholder="请输入" 
+                  @change="getOutputTax"
                   v-model="detailForm.project.valueAddedTax">
                   <template slot="prepend">¥</template>
                   <template slot="append">(万元)</template>
                 </el-input>
+              </el-form-item>
+              <el-form-item
+                label="上报产值是否含税:"
+                prop="project.isOutputTax"
+                class="inline-formitem"
+                style="width: 32.5%">
+                <el-switch
+                  disabled
+                  class="inline-formitem-switch"
+                  v-model="detailForm.project.isOutputTax"
+                  active-color="#409EFF"
+                  inactive-color="#ddd"
+                  active-value="1"
+                  inactive-value="0"/>
               </el-form-item>
             </el-row>
             <el-row>
@@ -913,13 +928,13 @@
                     align="center"
                     show-overflow-tooltip
                     v-if="p.actpoint !== 'add'&&p.actpoint !== 'task'"
-                    width="80">
+                    width="150">
                     <template slot-scope="scope">
-                      <!--<el-link-->
-                      <!--:underline="false"-->
-                      <!--@click="del(scope.$index,scope.row,detailForm.project.contractInfoList,'glht')"-->
-                      <!--type="warning">删除-->
-                      <!--</el-link>-->
+                      <el-link
+                        :underline="false"
+                        @click="del(scope.$index,scope.row,detailForm.project.contractInfoList,'glht')"
+                        type="warning">删除
+                      </el-link>
                       <el-link
                         :underline="false"
                         @click="look(scope.row)"
@@ -1062,6 +1077,20 @@
                   <template slot="prepend">¥</template>
                   <template slot="append">(万元)</template>
                 </el-input>
+              </el-form-item>
+              <el-form-item
+                label="上报产值是否含税:"
+                prop="project.isOutputTax"
+                class="inline-formitem"
+                style="width: 32.5%">
+                <el-switch
+                  disabled
+                  class="inline-formitem-switch"
+                  v-model="detailForm.project.isOutputTax"
+                  active-color="#409EFF"
+                  inactive-color="#ddd"
+                  active-value="1"
+                  inactive-value="0"/>
               </el-form-item>
             </el-row>
             <el-row>
@@ -2063,6 +2092,14 @@
         this.detailForm.project[data.list] = this.detailForm.project[data.list].concat(data.fileList)
         this.uploadVisible = false
       },
+      // 增值税改变，上报产值是否含税联动
+      getOutputTax() {
+        if (this.detailForm.project.valueAddedTax && this.detailForm.project.valueAddedTax !== '0') {
+          this.detailForm.project.isOutputTax = '1'
+        } else {
+          this.detailForm.project.isOutputTax = '0'
+        }
+      },
       // 选择项目地点
       selectPosition() {
         this.treeStatas = true
@@ -2204,6 +2241,12 @@
                       uuid: ''
                     }]
                   }
+                  //上报产值是否含税
+                  if(this.showDetailForm.project.valueAddedTax > 0){
+                     this.showDetailForm.project.isOutputTax = '1';
+                  }else{
+                     this.showDetailForm.project.isOutputTax = '0';
+                  }
                 } else if (item.project.changeStatus == '2') {
                   this.changeRecordUuid=item.changeRecordUuid;
                   this.detailForm.project = item.project
@@ -2225,6 +2268,12 @@
                   }
                   if(this.detailForm.project.companyBuildId != ''&& this.detailForm.project.companyBuildId != null ){
                     this.constructionOrgList = this.detailForm.project.companyBuildId.split(",");
+                  }
+                  //上报产值是否含税
+                  if(this.detailForm.project.valueAddedTax > 0){
+                     this.detailForm.project.isOutputTax = '1';
+                  }else{
+                     this.detailForm.project.isOutputTax = '0';
                   }
                 }
               })
