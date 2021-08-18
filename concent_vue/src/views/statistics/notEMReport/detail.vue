@@ -2704,7 +2704,7 @@
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_5.overseasSum||0)+(detailform.sumByYear_5.overseasSum||0)"/>
+                    :value="(detailform.sumByMon_5.engineeringOperationHw||0)+(detailform.sumByMon_5.informationOperationHw||0)+(detailform.sumByMon_5.estateManagementHw||0)+(detailform.sumByMon_5.overseasOtherOperation||0)+(detailform.sumByYear_5.overseasSum||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="工程运营维管(万元):"
@@ -3277,7 +3277,7 @@
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_6.overseasSum||0)+(detailform.sumByYear_6.overseasSum||0)"/>
+                    :value="(detailform.sumByMon_6.equipmentLeasingHw||0)+(detailform.sumByMon_6.leaseHousesHw||0)+(detailform.sumByMon_6.transportationHw||0)+(detailform.sumByMon_6.accommodationCateringHw||0)+(detailform.sumByMon_6.educationTrainingHw||0)+(detailform.sumByMon_6.informationConstructionHw||0)+(detailform.sumByMon_6.otherProjectHw||0)+(detailform.sumByYear_6.overseasSum||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="设备租赁(万元):"
