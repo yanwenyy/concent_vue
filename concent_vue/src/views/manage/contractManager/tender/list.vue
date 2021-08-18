@@ -5,7 +5,7 @@
       <el-form-item label="项目名称:">
         <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
       </el-form-item>
-      <el-form-item label="工程类别(一级):" >
+      <el-form-item label="工程类别:" >
         <el-select
           clearable
           filterable
@@ -19,22 +19,6 @@
             :label="item.detailName"
             :value="item.id"
             v-for="(item, index) in projectDomainType"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="工程类别(二级):" >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          size="mini"
-          v-model="searchform.enginTypeSecondId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in xqprojectType"
           ></el-option>
         </el-select>
       </el-form-item>
@@ -81,26 +65,16 @@
             :key="index"
             :label="item.detailName"
             :value="item.id"
-            v-for="(item, index) in projectDomainType"
+            v-for="(item, index) in bulletinType"
           ></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="录入单位:" >
-        <el-select
+        <el-input
+          v-model="searchform.createOrgName"
+          placeholder="录入单位"
           clearable
-          filterable
-          placeholder="请选择"
-          @change="getTwo"
-          size="mini"
-          v-model="searchform.enginTypeFirstId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in projectDomainType"
-          ></el-option>
-        </el-select>
+        ></el-input>
       </el-form-item>
       <div class="el-form-item">
         <el-form-item label="资审截止日期:" prop="searchform.saleTime" >
@@ -181,16 +155,13 @@
           label="序号"
           show-overflow-tooltip
           type="index"
-        >
-
-        </el-table-column>
+        ></el-table-column>
         <el-table-column
           :width="300"
           label="标段名称"
           prop="sectionName"
           show-overflow-tooltip
         >
-
           <template slot-scope="scope">
             <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.sectionName}}</span>
           </template>
@@ -200,107 +171,76 @@
           label="项目名称"
           prop="inforName"
           show-overflow-tooltip
-        >
-        </el-table-column>
+        ></el-table-column>
         <el-table-column
           :width="150"
           align="center"
           label="工程类别"
-          prop="topInfor.enginTypeFirstName"
+          prop="enginTypeFirstName"
           show-overflow-tooltip
-        >
-          <template slot-scope="scope">
-            {{scope.row.enginTypeFirstName}}
-          </template>
-        </el-table-column>
+        ></el-table-column>
         <el-table-column
           :width="150"
           align="center"
           label="建设单位"
-          prop="topInfor.constructionOrg"
+          prop="constructionOrg"
           show-overflow-tooltip
-        >
-          <template slot-scope="scope">
-            {{scope.row.constructionOrg}}
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="招标代理机构"
-          prop="topInfor.bidAgentCompany"
-          show-overflow-tooltip
-        >
-          <template slot-scope="scope">
-            {{scope.row.bidAgentCompany}}
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="公告类型"
-          prop="topInfor.noticeTypeName"
-          show-overflow-tooltip
-        >
-          <template slot-scope="scope">
-            {{scope.row.noticeTypeName}}
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="180"
-          align="center"
-          label="资审文件发售截止日期"
-          prop="verify.saleTime"
-          show-overflow-tooltip
-        >
-
-          <template slot-scope="scope" :value-format="timestamp">
-            {{scope.row.saleTime | dateformat}}
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="状态"
-          prop="verify.flowStatus"
-          filter-multiple="true"
-          show-overflow-tooltip
-        >
-          <template slot-scope="scope">
-            <!-- {{scope.row.uuid==null?'未通过':'通过'}} -->
-             {{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'通过审核':'其他情况'}}
-          </template>
-          <!-- <template slot-scope="scope">
-            <el-tag  v-if="scope.row.uuid===null" type="warning">未进行资审申请</el-tag>
-            <el-tag  v-else type="success">已进行资审申请</el-tag>
-          </template> -->
-        </el-table-column>
+        ></el-table-column>
         <el-table-column
           :width="150"
           align="center"
           label="项目地点"
-          prop="verify.path"
+          prop="path"
           show-overflow-tooltip
         >
-          <template slot-scope="scope">
-            {{scope.row.path}}
-          </template>
+        </el-table-column>
+        <el-table-column
+        :width="150"
+          label="参与投标单位"
+          prop="bidAgentCompany"
+          align="center"
+          show-overflow-tooltip
+        >
         </el-table-column>
         <el-table-column
           :width="150"
           align="center"
-          label="填报人"
-          prop="verify.createUserName"
+          label="录入单位"
+          prop="noticeTypeName"
           show-overflow-tooltip
-        >
-          <template slot-scope="scope">
-            {{scope.row.createUserName}}
-          </template>
-        </el-table-column>
+        ></el-table-column>
         <el-table-column
           :width="150"
           align="center"
-          label="填报时间"
+          label="公告类型"
+          prop="noticeTypeName"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          :width="180"
+          align="center"
+          label="资审截止日期"
+          prop="createTime"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          :width="180"
+          align="center"
+          label="开标日期"
+          prop="createTime"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          :width="180"
+          align="center"
+          label="审核通过日期"
+          prop="createTime"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="登记时间"
           prop="verify.createTime"
           show-overflow-tooltip
         >
@@ -481,7 +421,10 @@
     },
     railwayLine(){
       return this.$store.state.railwayLine;
-    }
+    },
+    bulletinType() {
+      return this.$store.state.bulletinType;
+    },
   },
   methods: {
     saveVerifyResult() {
@@ -526,17 +469,17 @@
     },
     //工程类别二级
     getTwo(id) {
-      this.searchform.enginTypeSecondId='';
-      this.xqprojectType =[];
-      if(id!=''){
-        this.projectDomainType.find(
-          (item) => {
-            if (item.id == id) {
-              this.xqprojectType = item.children;
-            }
-          }
-        )
-      }
+      // this.searchform.enginTypeSecondId='';
+      // this.xqprojectType =[];
+      // if(id!=''){
+      //   this.projectDomainType.find(
+      //     (item) => {
+      //       if (item.id == id) {
+      //         this.xqprojectType = item.children;
+      //       }
+      //     }
+      //   )
+      // }
     },
     exportdata() {
       this.searchform.size=1000000000;
