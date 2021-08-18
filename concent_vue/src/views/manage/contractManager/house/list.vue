@@ -815,7 +815,14 @@ export default {
       this.getData();
     },
     searchFromReset() {
-      this.$refs["searchFrom"].resetFields();
+
+      this.searchFrom={
+        current: 1,
+        size: 20,
+        changeStatus:'0',
+        moduleId:'510ba0d79593418493eb1a11ea4e7af6'
+      };
+      this.getData();
     },
     // 列表选项数据
     handleSelectionChange(val) {
