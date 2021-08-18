@@ -431,18 +431,20 @@
             </el-form-item> -->
             <el-form-item
                 label="建设单位:"
-                prop="contractInfo.constructionOrgId"
+                prop="constructionOrgList"
                 :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: ['blur','change'],
+                  type:'array',
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: ['blur','change'],
               }">
                 <el-select
-                  v-model="constructionOrgList"
+                  v-model="detailform.constructionOrgList"
                   v-if="detailform.contractInfo.isClientele=='1'"
                   multiple
                   filterable
                   collapse-tags
+                  :change="cs"
                   placeholder="请选择">
                   <el-option
                     v-for="item in pubCustomers"
@@ -452,7 +454,7 @@
                   </el-option>
                 </el-select>
                 <el-select
-                  v-model="constructionOrgList"
+                  v-model="detailform.constructionOrgList"
                   v-if="detailform.contractInfo.isClientele!='1'"
                   multiple
                   filterable
@@ -484,7 +486,7 @@
               inactive-color="#ddd"
               active-value="1"
               inactive-value="0"
-              @change="constructionOrgList=''"
+              @change="detailform.constructionOrgList=[]"
             >
             </el-switch>
           </el-form-item>
@@ -1006,7 +1008,7 @@
             </el-form-item>
             <el-form-item
             label="场地名称"
-            prop="cdmc"
+            prop="detailform.cdmc"
             :rules="{
               required: true,
               message: '此项不能为空',
@@ -6795,7 +6797,6 @@ export default {
       }
     }
     return {
-      constructionOrgList: [],
       companyMulStatus:false,//设计单位等多选列表状态
       yqList:[],//所属央企list
       extendList:[],//扩展字段list
@@ -6819,6 +6820,7 @@ export default {
       options1:[{label:"值",value:'111'}],
       detailform: {
         commonFilesList: [],
+        constructionOrgList: [],
         contractInfo: {
           moduleId:'7f4fcba4255b43a8babf15afd6c04a53',
           moduleName:'工程承包',
@@ -6830,7 +6832,8 @@ export default {
           designOrg: '',//设计单位
           designOrgId: '',
           constructionOrg:'',//建设单位
-          constructionOrgId:''
+          constructionOrgId:'',
+          contractOrgName:''
         },
         contractInfoAttachBO: {
           innerContractInfoAttachList:[],
@@ -8042,7 +8045,7 @@ export default {
 
       this.detailform.commonFilesList=this.detailform.fileList1.concat(this.detailform.fileList2).concat(this.detailform.fileList3).concat(this.detailform.fileList4)
       var url='';
-      this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
+      this.detailform.contractInfo.constructionOrgId = this.detailform.constructionOrgList.join(",")
       if(this.detailform.searchProject==true&&(this.p.actpoint === "edit")){
         url='/api/contract/contract/ContractInfo/detail/update';
       }else{
@@ -8283,7 +8286,7 @@ export default {
       this.detailform.jzlx=datas.contractInfo.otherBuildingTypeId&&datas.contractInfo.otherBuildingTypeId.split(",");
       this.detailform.jzjglx=datas.contractInfo.otherBuildingStructureTypeId&&datas.contractInfo.otherBuildingStructureTypeId.split(",");
       if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
-        this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
+        this.detailform.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
       }
     });
     },

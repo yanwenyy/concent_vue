@@ -162,7 +162,7 @@
             </el-select>
           </template>
         </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           :width="150"
           align="center"
           label="录入单位"
@@ -179,7 +179,7 @@
               />
             </div>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column
           :width="300"
           align="center"
@@ -274,7 +274,7 @@
             }}</template>
         </el-table-column>
 
-        <el-table-column
+        <!-- <el-table-column
           :width="180"
           align="center"
           label="变更通过时间"
@@ -298,12 +298,12 @@
           <template slot-scope="scope">{{
             scope.row.approveTime | dateformat
             }}</template>
-        </el-table-column>
+        </el-table-column> -->
 
         <el-table-column
           :width="150"
           align="center"
-          label="状态"
+          label="审核状态"
           prop="flowStatus"
           show-overflow-tooltip
         >
@@ -311,13 +311,27 @@
              {{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核退回':'待登记'}}
           </template>
           <template slot="header" slot-scope="scope">
-            <span>状态</span>
+            <span>审核状态</span>
             <div>
-              <el-input
-                style=" width: 100%"
-                v-model="sousuo"
+              <el-select
+                class="list-search-picker"
+                clearable
+                filterable
+                placeholder="请选择"
                 size="mini"
-              />
+                v-model="searchform.flowStatus"
+              >
+                <el-option label="草稿" value="edit"></el-option>
+                <el-option label="审核中" value="check"></el-option>
+                <el-option label="审核通过" value="pass"></el-option>
+                <el-option label="审核退回" value="reject"></el-option>
+              </el-select>
+              <!--<el-input-->
+              <!--class="list-search-picker"-->
+              <!--style=" width: 100%"-->
+              <!--v-model="searchform.flowStatus"-->
+              <!--size="mini"-->
+              <!--/>-->
             </div>
           </template>
         </el-table-column>
@@ -506,21 +520,19 @@
               '<th>项目板块</th>\n' +
               '<th>工程类别(一级)</th>\n' +
               '<th>工程类别(二级)</th>\n' +
-              '<th>录入单位</th>\n' +
               '<th>建设单位</th>\n' +
               '<th>公告类型</th>\n' +
               '<th>预计招标时间</th>\n' +
               '<th>变更创建时间</th>\n' +
-              '<th>变更通过时间</th>\n' +
               '<th>状态</th>\n' +
               '</tr>',
               jsonData:datas,
               tdstr:['inforName','inforCode','moduleName',
-                'enginTypeFirstName','enginTypeSecondName','createOrgName','constructionOrg',
+                'enginTypeFirstName','enginTypeSecondName','constructionOrg',
                 'noticeTypeName','planBidTime','createTime','flowStatus'],
               tdstrFuc:{
                 flowStatus:function (str) {
-                  return str==1?'草稿':str==2?'审核中':str==3?'审核通过':str==4?'审核退回':'待登记';
+                  return str=='edit'?'草稿':str=='check'?'审核中':str=='pass'?'审核通过':str=='reject'?'审核退回':'待登记';
                 },
                 planBidTime:function (str) {
                   return str?new Date(str).toLocaleString().replace(/:\d{1,2}$/,' '):'';
