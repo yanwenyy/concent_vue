@@ -426,6 +426,16 @@
                   <!--v-model="detailForm.project.projectPusherPhone"/>-->
               <!--</el-form-item>-->
             <!--</el-row>-->
+            <el-row>
+              <el-form-item
+                class="neirong"
+                label="变更原因:">
+                <el-input
+                  type="textarea"
+                  placeholder="请输入"
+                  v-model="detailForm.project.changeReason"/>
+              </el-form-item>
+            </el-row>
             <p>
               <span >项目地点: </span>
               <el-button
@@ -665,7 +675,7 @@
                     <template slot-scope="scope">
                       <el-link
                         :underline="false"
-                        @click="del(scope.$index,scope.row,detailForm.project.contractInfoList,'glht')"
+                        @click="removeContract(scope.$index,scope.row)"
                         type="warning">删除
                       </el-link>
                       <el-link
@@ -1326,6 +1336,18 @@
         this.$nextTick(() => {
           this.$refs.infoCS.init(this.detailForm.project.projectModuleId);
         })
+      },
+      //删除关联合同
+      removeContract(row){
+        this.$confirm(`确认删除该关联合同吗?`, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.detailForm.project.contractInfoList.splice(row,1);
+          }).catch(() => {
+                  this.$message.error('删除失败')
+          })
       },
       //获取新增的关联合同
       goAddDetail(data){

@@ -193,6 +193,69 @@
                   inactive-value="1"/>
               </el-form-item>
             </el-row>
+
+              <el-form-item
+                label="建设单位:"
+                prop="project.companyBuildId"
+                :rules="{
+                    required: true,
+                    message: '此项不能为空',
+                    trigger: 'blur',
+                  }"
+                style="width: 32.5%">
+                  <el-select
+                    v-model="constructionOrgList"
+                    v-if="detailForm.project.isClientele=='1'"
+                    multiple
+                    filterable
+                    collapse-tags
+                    placeholder="请选择">
+                    <el-option
+                      v-for="item in pubCustomers"
+                      :key="item.customerId"
+                      :label="item.customerName"
+                      :value="item.customerId">
+                    </el-option>
+                  </el-select>
+                  <el-select
+                    v-model="constructionOrgList"
+                    v-if="detailForm.project.isClientele!='1'"
+                    multiple
+                    filterable
+                    collapse-tags
+                    placeholder="请选择">
+                      <el-option
+                        :key="index"
+                        :label="item.customerName"
+                        :value="item.customerId"
+                        v-for="(item, index) in sjdwList"
+                      ></el-option>
+                  </el-select>
+              </el-form-item>
+              <el-col :span="8">
+                <el-form-item
+                  class="inline-formitem"
+                  label="是否客户:"
+                  prop="project.isClientele"
+                  :rules="{
+                      required: true,
+                      message: '此项不能为空',
+                      trigger: 'blur',
+                    }"
+                >
+                  <el-switch
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    class="inline-formitem-switch"
+                    v-model="detailForm.project.isClientele"
+                    active-color="#409EFF"
+                    inactive-color="#ddd"
+                    active-value="1"
+                    inactive-value="0"
+                    @change="constructionOrgList=''"
+                  >
+                  </el-switch>
+                </el-form-item>
+              </el-col>
             <!--工程类别(一级)-->
             <el-row>
               <el-form-item
@@ -757,6 +820,17 @@
                   v-model="detailForm.project.projectRemark"/>
               </el-form-item>
             </el-row>
+            
+            <el-row>
+              <el-form-item
+                class="neirong"
+                label="变更原因:">
+                <el-input
+                  type="textarea"
+                  placeholder="请输入"
+                  v-model="detailForm.project.changeReason"/>
+              </el-form-item>
+            </el-row>
             <p>
               <span >项目地点: </span>
               <el-button
@@ -928,6 +1002,89 @@
                 </template>
               </el-table-column>
             </el-table>
+            <div >
+                <p  v-if="p.actpoint != 'add'" class="detail-title" style="overflow: hidden;margin-right:30px">
+                  <span>关联合同: </span>
+                  <el-button
+                    v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    @click="addContract()"
+                    class="detatil-flie-btn"
+                    type="primary">新增
+                  </el-button>
+                </p>
+                <el-table
+                  v-if="p.actpoint != 'add'"
+                  :data="detailForm.project.contractInfoList"
+                  :header-cell-style="{
+                  'text-align': 'center',
+                  'background-color': 'rgba(246,248,252,1)',
+                  color: 'rgba(0,0,0,1)',
+                }"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%;"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合同名称"
+                    prop="contractName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合同编号"
+                    prop="contractCode"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合同金额"
+                    prop="contractAmount"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    v-show="!p.actpoint === 'add'"
+                    :resizable="false"
+                    fixed="right"
+                    label="操作"
+                    align="center"
+                    show-overflow-tooltip
+                    v-if="p.actpoint !== 'add'&&p.actpoint !== 'task'"
+                    width="150">
+                    <template slot-scope="scope">
+                      <el-link
+                        :underline="false"
+                        @click="removeContract(scope.$index,scope.row)"
+                        type="warning">删除
+                      </el-link>
+                      <el-link
+                        :underline="false"
+                        @click="look(scope.row)"
+                        type="warning">查看合同
+                      </el-link>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
           </el-form>
         </div>
       </el-tab-pane>
@@ -1089,6 +1246,38 @@
                   inactive-value="1"/>
               </el-form-item>
             </el-row>
+            <el-form-item
+                label="建设单位:"
+                style="width: 32.5%">
+                <el-input
+                  disabled
+                  clearable
+                  placeholder="请输入"
+                  v-model="showDetailForm.project.companyBuild"/>
+              </el-form-item>
+              <el-col :span="8">
+                <el-form-item
+                  class="inline-formitem"
+                  label="是否客户:"
+                  prop="project.isClientele"
+                  :rules="{
+                      required: true,
+                      message: '此项不能为空',
+                      trigger: 'blur',
+                    }"
+                >
+                  <el-switch
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    class="inline-formitem-switch"
+                    v-model="showDetailForm.project.isClientele"
+                    active-color="#409EFF"
+                    inactive-color="#ddd"
+                    active-value="1"
+                    inactive-value="0"
+                  >
+                  </el-switch>
+                </el-form-item>
+              </el-col>
             <!--工程类别(一级)-->
             <el-row>
               <el-form-item
@@ -1692,6 +1881,7 @@
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
     <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
     <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
+    <related-contract  v-if="contractStatas" ref="infoCS" @getPosition="goAddDetail"></related-contract>
   </div>
 </template>
 
@@ -1700,9 +1890,13 @@
   import FileUpload from '@/components/fileUpload'
   import { isMoney, isMobile, isPhone } from '@/utils/validate'
   import CompanyTree from '../../companyTree'
+  import RelatedContract from '../relatedContract'
 
   export default {
     name: 'change',
+    components: {
+      Tree, FileUpload,CompanyTree,RelatedContract
+    },
     data() {
       const validateMoney = (rule, value, callback) => {
         if (!value || value === '') {
@@ -1754,11 +1948,14 @@
         DwVisible: false,
         treeStatas: false,
         uploadVisible: false,
+        contractStatas:false,//关联合同状态
         emergingMarketTwo: [], // 新兴市场二级类别
         projectTypeTwo: [], // 工程类别二级
         projectNatureTwo: [], // 项目性质二级
         xqprojectTypeThree:[],//工程类别三级
         bizTypeCodeTwo: [], // 业务类别二级
+        constructionOrgList: [], 
+        sjdwList: [],
         detailForm: {
           project: {
             projectSubContractList: [], // 分包承建
@@ -1818,7 +2015,10 @@
                 placeId: '',
                 uuid: ''
               }
-            ]
+            ],
+            isClientele:'1',
+            companyBuild:'',
+            companyBuildId:''
           }
         },
         showDetailForm: {
@@ -1881,7 +2081,10 @@
                 ffid:'',
                 uuid: ''
               }
-            ]
+            ],
+            isClientele:'1',
+            companyBuild:'',
+            companyBuildId:''
           }
         },
         rules: {
@@ -1922,10 +2125,10 @@
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
       }
     },
-    components: {
-      Tree, FileUpload,CompanyTree
-    },
     computed: {
+      pubCustomers() {//客户名称
+        return this.$store.state.pubCustomers;
+      },
       emergingMarket() {
         return this.$store.state.category.emergingMarket
       },
@@ -1987,6 +2190,7 @@
         this.getAddDetail()
       }
       this.$store.dispatch('getConfig', {})
+      this.$store.dispatch("getPubCustomers", {});
       this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
       this.$store.dispatch('getCategory', { name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3' })
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
@@ -1996,6 +2200,19 @@
           this.bizTypeCodeTwo.push(item)
         }
       })
+       //设计单位列表
+      this.$http
+        .post(
+          "/api/contract/Companies/detail/findCompanies",
+        )
+        .then((res) => {
+          this.sjdwList = res.data.data.records;
+          this.sjdwList.forEach((item)=>{
+            item.value=item.companyName;
+            item.customerName=item.companyName;
+            item.customerId=item.uuid;
+          })
+        });
     },
     methods: {
       //设置主地点
@@ -2092,6 +2309,32 @@
         });
 
       },
+      //新增关联合同
+      addContract(){
+        this.contractStatas = true;
+        this.$nextTick(() => {
+          this.$refs.infoCS.init(this.detailForm.project.projectModuleId);
+        })
+      },
+      //删除关联合同
+      removeContract(row){
+        this.$confirm(`确认删除该关联合同吗?`, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.detailForm.project.contractInfoList.splice(row,1);
+          }).catch(() => {
+                  this.$message.error('删除失败')
+          })
+      },
+      //获取新增的关联合同
+      goAddDetail(data){
+        this.$forceUpdate();
+        this.detailForm.project.contractInfoList.push(data);
+        console.info(this.detailForm.project.contractInfoList)
+        this.contractStatas = false;
+      },
       // 工程合同额-初始合同额=合同额增减
       getCount() {
         var money=Number(this.detailForm.project.contractAmountEngine) - Number(this.detailForm.project.contractAmountInitial);
@@ -2132,6 +2375,7 @@
           this.detailForm.project.isOutputTax = '1'
         }
       },
+      
       handleRemove(file, index) {
         this.$http
           .post(
@@ -2300,7 +2544,21 @@
         }else{
           url="/api/statistics/StatisticsProject/changeProcess/start"
         }
+        this.detailForm.project.companyBuildId = this.constructionOrgList.join(",")
+        var nameList = []
+        var customerList = this.pubCustomers
+        this.constructionOrgList.forEach(idCheck => {
+          let customer = customerList.find(item1=>item1.customerId===idCheck)
+          if(customer){
+            nameList.push(customer.customerName)
+          }
+          let outside = this.sjdwList.find(item2=>item2.customerId===idCheck)
+          if(outside){
+            nameList.push(outside.customerName)
+          }
 
+        })
+        this.detailForm.project.companyBuild = nameList.join(",")
         this.$refs[formName].validate((valid) => {
           if (valid) {
             let params = {afterProjectBo: {project: this.detailForm.project}, beforeProjectBo: {project: this.showDetailForm.project},changeRecordUuid: this.changeRecordUuid}
@@ -2386,13 +2644,16 @@
                   if (!this.detailForm.project.projectSubContractList) {
                     this.detailForm.project.projectSubContractList = []
                   }
-                  if (!res.data.data.topInfoSiteList|| res.data.data.topInfoSiteList=='') {
+                  if (!item.project.topInfoSiteList|| item.project.topInfoSiteList=='') {
                     this.detailForm.project.topInfoSiteList = [{
                       path: '',
                       placeId: '',
                       ffid:'',
                       uuid: ''
                     }]
+                  }
+                  if(this.detailForm.project.companyBuildId != ''&& this.detailForm.project.companyBuildId != null ){
+                    this.constructionOrgList = this.detailForm.project.companyBuildId.split(",");
                   }
                 }
               })

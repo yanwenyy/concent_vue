@@ -788,43 +788,96 @@
                   v-model="detailForm.project.completedOutputValue"/>
               </el-form-item>
             </el-row>
-            <!--建设单位-->
             <el-row>
               <el-form-item
                 label="建设单位:"
-                prop="project.companyBuild"
+                prop="project.companyBuildId"
+                :rules="{
+                    required: true,
+                    message: '此项不能为空',
+                    trigger: 'blur',
+                  }"
                 style="width: 32.5%">
-                <el-autocomplete
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  v-model="detailForm.project.companyBuild"
-                  :fetch-suggestions="querySearchAsync"
-                  placeholder="请输入内容"
-                ></el-autocomplete>
-                <!--<el-input-->
-                  <!--:disabled="p.actpoint === 'look'||p.actpoint === 'task'"-->
-                  <!--clearable-->
-                  <!--placeholder="请输入"-->
-                  <!--v-model="detailForm.project.companyBuild"/>-->
+                  <el-select
+                    v-model="constructionOrgList"
+                    v-if="detailForm.project.isClientele=='1'"
+                    multiple
+                    filterable
+                    collapse-tags
+                    placeholder="请选择">
+                    <el-option
+                      v-for="item in pubCustomers"
+                      :key="item.customerId"
+                      :label="item.customerName"
+                      :value="item.customerId">
+                    </el-option>
+                  </el-select>
+                  <el-select
+                    v-model="constructionOrgList"
+                    v-if="detailForm.project.isClientele!='1'"
+                    multiple
+                    filterable
+                    collapse-tags
+                    placeholder="请选择">
+                      <el-option
+                        :key="index"
+                        :label="item.customerName"
+                        :value="item.customerId"
+                        v-for="(item, index) in sjdwList"
+                      ></el-option>
+                  </el-select>
               </el-form-item>
+              <el-col :span="8">
+                <el-form-item
+                  class="inline-formitem"
+                  label="是否客户:"
+                  prop="project.isClientele"
+                  :rules="{
+                      required: true,
+                      message: '此项不能为空',
+                      trigger: 'blur',
+                    }"
+                >
+                  <el-switch
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    class="inline-formitem-switch"
+                    v-model="detailForm.project.isClientele"
+                    active-color="#409EFF"
+                    inactive-color="#ddd"
+                    active-value="1"
+                    inactive-value="0"
+                    @change="constructionOrgList=''"
+                  >
+                  </el-switch>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
               <el-form-item
                 label="设计单位:"
                 prop="project.companyDesign"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   clearable
-                  placeholder="请输入"
-                  v-model="detailForm.project.companyDesign"/>
+                  placeholder="请选择设计单位"
+                  v-model="detailForm.project.companyDesign">
+                  <el-button slot="append" icon="el-icon-circle-plus-outline" 
+                  @click="openComMul(detailForm.project.companyDesignId,detailForm.project.companyDesign,'/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
+                </el-input>
               </el-form-item>
               <el-form-item
                 label="监理单位:"
                 prop="project.companySupervisor"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   clearable
-                  placeholder="请输入"
-                  v-model="detailForm.project.companySupervisor"/>
+                  placeholder="请选择监理单位"
+                  v-model="detailForm.project.companySupervisor">
+                  <el-button slot="append" icon="el-icon-circle-plus-outline" 
+                  @click="openComMul(detailForm.project.companySupervisorId,detailForm.project.companySupervisor,'/api/contract/Companies/detail/findCompanies','监理单位')"></el-button>
+                </el-input>
               </el-form-item>
             </el-row>
             <!--项目经理-->
@@ -1067,88 +1120,7 @@
                 </template>
               </el-table-column>
             </el-table>
-            <div v-show="detailForm.project.contractInfoList!=''">
-                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
-                  <span>关联合同: </span>
-                  <el-button
-                    v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
-                    @click="addContract()"
-                    class="detatil-flie-btn"
-                    type="primary">
-                    新增
-                    </el-button>
-                </p>
-                  <el-table
-                  :data="detailForm.project.contractInfoList"
-                  :header-cell-style="{
-                  'text-align': 'center',
-                  'background-color': 'rgba(246,248,252,1)',
-                  color: 'rgba(0,0,0,1)',
-                }"
-                  align="center"
-                  border
-                  class="detailTable"
-                  ref="table"
-                  style="width: 100%;"
-                >
-                  <el-table-column
-                    :width="80"
-                    align="center"
-                    label="序号"
-                    show-overflow-tooltip
-                    type="index"
-                  ></el-table-column>
-
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="合同名称"
-                    prop="contractName"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="合同编号"
-                    prop="contractCode"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    class="listTabel"
-                    :resizable="false"
-                    label="合同金额"
-                    prop="contractAmount"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    align="center"
-                    :resizable="false"
-                    label="操作"
-                    show-overflow-tooltip
-                    v-if="p.actpoint!=='look'&&p.actpoint!=='task'"
-                    width="80"
-                    >
-                    <template slot-scope="scope">
-                      <el-link
-                      :underline="false"
-                      @click="del(scope.$index,scope.row,detailForm.project.contractInfoList,'glht')"
-                      type="warning">删除
-                      </el-link>
-                      <!-- <el-link
-                        :underline="false"
-                        @click="look(scope.row)"
-                        type="warning">查看合同
-                      </el-link> -->
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </div>
+            
             <!--分包承建单位-->
             <div v-if="detailForm.project.projectNatureSecondId === 'd4b6c373a60246a8a5166ddb0bf46c21' || detailForm.project.projectNatureSecondId === '7369abc48e264096a37783de01b0d4cc'">
               <p class="detail-title" style="overflow:hidden;margin-right:30px">
@@ -1315,6 +1287,89 @@
                 </el-table-column>
               </el-table>
             </div>
+            <div >
+                <p  v-if="p.actpoint != 'add'" class="detail-title" style="overflow: hidden;margin-right:30px">
+                  <span>关联合同: </span>
+                  <el-button
+                    v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    @click="addContract()"
+                    class="detatil-flie-btn"
+                    type="primary">新增
+                  </el-button>
+                </p>
+                <el-table
+                  v-if="p.actpoint != 'add'"
+                  :data="detailForm.project.contractInfoList"
+                  :header-cell-style="{
+                  'text-align': 'center',
+                  'background-color': 'rgba(246,248,252,1)',
+                  color: 'rgba(0,0,0,1)',
+                }"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%;"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合同名称"
+                    prop="contractName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合同编号"
+                    prop="contractCode"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合同金额"
+                    prop="contractAmount"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    v-show="!p.actpoint === 'add'"
+                    :resizable="false"
+                    fixed="right"
+                    label="操作"
+                    align="center"
+                    show-overflow-tooltip
+                    v-if="p.actpoint !== 'add'&&p.actpoint !== 'task'"
+                    width="150">
+                    <template slot-scope="scope">
+                      <el-link
+                        :underline="false"
+                        @click="removeContract(scope.$index,scope.row)"
+                        type="warning">删除
+                      </el-link>
+                      <el-link
+                        :underline="false"
+                        @click="look(scope.row)"
+                        type="warning">查看合同
+                      </el-link>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
           </el-form>
         </div>
       </el-tab-pane>
@@ -1945,16 +2000,41 @@
                   v-model="showDetailForm.project.completedOutputValue"/>
               </el-form-item>
             </el-row>
-            <!--建设单位-->
             <el-row>
               <el-form-item
                 label="建设单位:"
                 style="width: 32.5%">
                 <el-input
                   disabled
+                  clearable
                   placeholder="请输入"
                   v-model="showDetailForm.project.companyBuild"/>
               </el-form-item>
+              <el-col :span="8">
+                <el-form-item
+                  class="inline-formitem"
+                  label="是否客户:"
+                  prop="project.isClientele"
+                  :rules="{
+                      required: true,
+                      message: '此项不能为空',
+                      trigger: 'blur',
+                    }"
+                >
+                  <el-switch
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    class="inline-formitem-switch"
+                    v-model="showDetailForm.project.isClientele"
+                    active-color="#409EFF"
+                    inactive-color="#ddd"
+                    active-value="1"
+                    inactive-value="0"
+                  >
+                  </el-switch>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
               <el-form-item
                 label="设计单位:"
                 style="width: 32.5%">
@@ -2260,6 +2340,9 @@
     <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
     <Separate-Dialog v-if="infoCSVisible" ref="infoCS" @refreshDataList="goSeparate"></Separate-Dialog>
     <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
+    <related-contract  v-if="contractStatas" ref="infoCS" @getPosition="goAddDetail"></related-contract>
+    <!--多选的单位列表组件-->
+    <company-mul v-if="companyMulStatus" ref="comAdd" @getComList="getComList"></company-mul>
   </div>
 </template>
 
@@ -2269,8 +2352,13 @@
   import SeparateDialog from '@/components/separateDialog'
   import { isMoney, isMobile, isPhone } from '@/utils/validate'
   import CompanyTree from '../../companyTree'
+  import RelatedContract from '../relatedContract'
+  import companyMul from '@/components/companiesMultiple'
   export default {
     name: 'change',
+    components: {
+      Tree, FileUpload,SeparateDialog,CompanyTree,RelatedContract,companyMul
+    },
     data() {
       const validateMoney = (rule, value, callback) => {
         if (!value || value === '') {
@@ -2324,12 +2412,16 @@
         DwVisible: false,
         treeStatas: false,
         uploadVisible: false,
+        contractStatas:false,//关联合同状态
+        companyMulStatus:false,//设计单位等多选列表状态
         emergingMarketTwo: [], // 新兴市场二级类别
         projectTypeTwo: [], // 工程类别二级
         projectNatureTwo: [], // 项目性质二级
         xqprojectTypeThree:[],//工程类别三级
         isOutputTax: [{ label: '是' }, { label: '否' }], // 上报产值是否含税
         options1: [{ label: '测试所在地', value: 'testabcd' }],
+        constructionOrgList: [], 
+        sjdwList: [],
         detailForm: {
           project: {
             projectSubContractList: [], // 分包字段
@@ -2386,9 +2478,10 @@
             realStartTime: '', // 实际开工日期
             realEndTime: '', // 实际竣工日期
             projectEndTime: '', // 竣工日期
-            companyBuild: '', // 建设单位
             companyDesign: '', // 设计单位
+            companyDesignId: '', // 设计单位
             companySupervisor: '', // 监理单位
+            companySupervisorId: '', // 监理单位
             projectManagerName: '', // 项目经理
             completedOutputValue: '', // 竣工产值
             isTrusteeship: '', // 是否托管
@@ -2404,7 +2497,10 @@
                 placeId: '',
                 uuid: ''
               }
-            ]
+            ],
+            isClientele:'1',
+            companyBuild:'',
+            companyBuildId:''
           }
         },
         showDetailForm: {
@@ -2463,9 +2559,10 @@
             realStartTime: '', // 实际开工日期
             realEndTime: '', // 实际竣工日期
             projectEndTime: '', // 竣工日期
-            companyBuild: '', // 建设单位
             companyDesign: '', // 设计单位
+            companyDesignId: '', // 设计单位
             companySupervisor: '', // 监理单位
+            companySupervisorId: '', // 监理单位
             projectManagerName: '', // 项目经理
             completedOutputValue: '', // 竣工产值
             isTrusteeship: '', // 是否托管
@@ -2482,7 +2579,10 @@
                 ffid:'',
                 uuid: ''
               }
-            ]
+            ],
+            isClientele:'1',
+            companyBuild:'',
+            companyBuildId:''
           }
         },
         rules: {
@@ -2521,9 +2621,6 @@
         },
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
       }
-    },
-    components: {
-      Tree, FileUpload,SeparateDialog,CompanyTree
     },
     computed: {
       pubCustomers() {//客户名称
@@ -2591,8 +2688,28 @@
       this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
       this.$store.dispatch('getCategory', { name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3' })
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
+       //设计单位列表
+      this.$http
+        .post(
+          "/api/contract/Companies/detail/findCompanies",
+        )
+        .then((res) => {
+          this.sjdwList = res.data.data.records;
+          this.sjdwList.forEach((item)=>{
+            item.value=item.companyName;
+            item.customerName=item.companyName;
+            item.customerId=item.uuid;
+          })
+        });
     },
     methods: {
+      //打开多选的单位列表
+      openComMul(ids,names,url,type){
+        this.companyMulStatus=true;
+        this.$nextTick(() => {
+          this.$refs.comAdd.init(ids,names,url,type);
+        })
+      },
       //设置主地点
       setMain(i,list){
         list.forEach((item,index)=>{
@@ -2737,6 +2854,32 @@
       },
       del(index, item, list) {
         list.splice(index, 1)
+      }, 
+      //新增关联合同
+      addContract(){
+        this.contractStatas = true;
+        this.$nextTick(() => {
+          this.$refs.infoCS.init(this.detailForm.project.projectModuleId);
+        })
+      },
+      //删除关联合同
+      removeContract(row){
+        this.$confirm(`确认删除该关联合同吗?`, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.detailForm.project.contractInfoList.splice(row,1);
+          }).catch(() => {
+                  this.$message.error('删除失败')
+          })
+      },
+      //获取新增的关联合同
+      goAddDetail(data){
+        this.$forceUpdate();
+        this.detailForm.project.contractInfoList.push(data);
+        console.info(this.detailForm.project.contractInfoList)
+        this.contractStatas = false;
       },
       // 工程合同额-初始合同额=合同额增减
       getCount() {
@@ -2944,6 +3087,21 @@
         }else{
           url="/api/statistics/StatisticsProject/changeProcess/start"
         }
+        this.detailForm.project.companyBuildId = this.constructionOrgList.join(",")
+        var nameList = []
+        var customerList = this.pubCustomers
+        this.constructionOrgList.forEach(idCheck => {
+          let customer = customerList.find(item1=>item1.customerId===idCheck)
+          if(customer){
+            nameList.push(customer.customerName)
+          }
+          let outside = this.sjdwList.find(item2=>item2.customerId===idCheck)
+          if(outside){
+            nameList.push(outside.customerName)
+          }
+
+        })
+        this.detailForm.project.companyBuild = nameList.join(",")
 
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -3023,7 +3181,7 @@
                   this.showDetailForm.project = JSON.parse(JSON.stringify(item.project))
                   this.showDetailForm.project.beforeId = this.p.beforeId
                   this.showDetailForm.project.afterId = this.p.afterId
-                  if (!item.topInfoSiteList|| item.topInfoSiteList=='') {
+                  if (!item.project.topInfoSiteList|| item.project.topInfoSiteList=='') {
                     this.showDetailForm.project.topInfoSiteList = [{
                       path: '',
                       placeId: '',
@@ -3039,13 +3197,16 @@
                   if (!this.detailForm.project.projectSubContractList) {
                     this.detailForm.project.projectSubContractList = []
                   }
-                  if (!item.topInfoSiteList|| item.topInfoSiteList=='') {
+                  if (!item.project.topInfoSiteList|| item.project.topInfoSiteList=='') {
                     this.showDetailForm.project.topInfoSiteList = [{
                       path: '',
                       placeId: '',
                       ffid:'',
                       uuid: ''
                     }]
+                  }
+                  if(this.detailForm.project.companyBuildId != ''&& this.detailForm.project.companyBuildId != null ){
+                    this.constructionOrgList = this.detailForm.project.companyBuildId.split(",");
                   }
                 }
               })
