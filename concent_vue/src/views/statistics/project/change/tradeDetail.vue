@@ -589,9 +589,9 @@
                 >
                   <template slot-scope="scope">
                     <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.path'"  :rules="{required: true,message: '此项不能为空'}">
-                      <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                       <el-input disabled placeholder="请输入内容" v-model="scope.row.path" class="input-with-select group-no-padding">
-                        <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append" icon="el-icon-circle-plus" @click="selectPosition(),positionIndex=scope.$index"></el-button>
+                        <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append" icon="el-icon-circle-plus" 
+                        @click="selectPosition(),positionIndex=scope.$index"></el-button>
                       </el-input>
                     </el-form-item>
                   </template>
@@ -606,19 +606,16 @@
                 >
                   <template slot-scope="scope">
                     <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
-                      <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                       <el-input
                         class="group-no-padding"
                         clearable
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
                         v-model="scope.row.contractAmount"
                       >
-                        <!--@input="getPositionMoney(scope.$index,detailForm.project.topInfoSiteList)"-->
                         <template slot="prepend">¥</template>
                         <template slot="append">(万元)</template>
                       </el-input>
                     </el-form-item>
-                    <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                   </template>
                 </el-table-column>
 
@@ -1414,6 +1411,12 @@
                   align="center"
                   prop="path"
                 >
+                  <template slot-scope="scope">
+                    <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.path'"  :rules="{required: true,message: '此项不能为空'}">
+                      <el-input disabled placeholder="请输入内容" v-model="scope.row.path" class="input-with-select group-no-padding">
+                      </el-input>
+                    </el-form-item>
+                  </template>
                 </el-table-column>
 
                 <el-table-column
@@ -2193,7 +2196,7 @@
                   this.showDetailForm.project = JSON.parse(JSON.stringify(item.project))
                   this.showDetailForm.project.beforeId = this.p.beforeId
                   this.showDetailForm.project.afterId = this.p.afterId
-                  if (!item.topInfoSiteList|| item.topInfoSiteList=='') {
+                  if (!item.project.topInfoSiteList|| item.project.topInfoSiteList=='') {
                     this.showDetailForm.project.topInfoSiteList = [{
                       path: '',
                       placeId: '',
@@ -2209,7 +2212,7 @@
                   if (!this.detailForm.project.projectSubContractList) {
                     this.detailForm.project.projectSubContractList = []
                   }
-                  if (!item.topInfoSiteList|| item.topInfoSiteList=='') {
+                  if (!item.project.topInfoSiteList|| item.project.topInfoSiteList=='') {
                     this.showDetailForm.project.topInfoSiteList = [{
                       path: '',
                       placeId: '',
