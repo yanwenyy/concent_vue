@@ -272,14 +272,21 @@
         userdata:{},
         treeStatas: false,
           flowStatusNameList:[
-        {
-          detailPrjStaName:'在建',
-          id:'在建'
-        },
-        {
-          detailPrjStaName:'竣工未结算',
-          id:'竣工未结算'
-        }
+            {
+              detailPrjStaName:'在建',
+              id:'在建'
+            },
+            {
+              detailPrjStaName:'竣工未结算',
+              id:'竣工未结算'
+            },
+            {
+              detailPrjStaName:'正在开展',
+              id:'正在开展'
+            }, {
+              detailPrjStaName:'未开工',
+              id:'未开工'
+            }
       ],
         page: { current: 1, size: 20, total: 0, records: [] },
         searchform: {

@@ -220,19 +220,24 @@
           this.$message.info('请选择一条记录进行删除操作！')
           return false
         }
+        if(this.userdata.managerOrgCode!=this.multipleSelection[0].createOrgCode&&this.multipleSelection[0].flowStatus!=null){
+          this.$message.info('不能删除非本单位创建的计划！')
+          return false
+        }
         var isSubmit = false
         let uuids = []
         this.multipleSelection.forEach(function(item) {
           uuids.push(item.uuid)
-          if (item.flowStatus === '1') {
-            isSubmit = true
-            return false
+          if (item.flowStatus === 'edit'||item.flowStatus === 'reject') {
+            isSubmit = false;
+          }else{
+            return isSubmit = true;
           }
         })
         console.log(isSubmit)
         if (isSubmit) {
           this.$message({
-            message: '选中项包含已提交项目，请重新选择',
+            message: '当前所选数据中包含不可删除的选项,请检查后进行操作',
             duration: 2000,
             type: 'warning',
             onClose: () => { this.getData() }

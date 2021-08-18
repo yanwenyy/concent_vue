@@ -497,23 +497,20 @@
             list[index].monthValue='';
             return false;
           }
-          var treeSum=0,parentNum=0,canCalc=false;
+          var treeSum=0,parentNum=0,canCalc=false,parentCanCalc=false;
           list.forEach((item)=>{
             if(item.tjxCode.length>=12&&item.sumTarget==code){
               treeSum+=Number(item.monthValue);
               canCalc=true;
-            }else{
-              canCalc=false;
             }
             if(item.tjxId==code&&item.tjxCode.length==9){
               parentNum=Number(item.monthValue);
+              parentCanCalc=true;
               // console.log(item.tjxName)
-            }else{
-              canCalc=false;
             }
           });
           // console.log(list[index].tjxCode.length,treeSum,parentNum)
-          if(list[index].sumTarget!=null&&list[index].sumTarget!=''&&canCalc&&list[index].tjxCode.length>=12&&(treeSum>parentNum)){
+          if(treeSum!=0&&parentNum!=0&&list[index].sumTarget&&canCalc&&list[index].tjxCode.length>=12&&(treeSum>parentNum)){
             this.$message.error("该级本月完成之和不能大于上级本月完成");
             list[index].monthValue='';
             return false;
@@ -538,7 +535,7 @@
             }
           });
           this.data.forEach((item,i)=>{
-            if(item.tjxId==list[index].sumTarget&&item.tjxCode.length<=6){
+            if(item.tjxId==list[index].sumTarget&&item.veditable=='0'){
               item.monthValue=num;
               item.yearValue=num1;
               item.totalValue=num2;
