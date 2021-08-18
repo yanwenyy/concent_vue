@@ -2854,7 +2854,7 @@
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="工程量清单" v-if="p.actpoint != 'add'&&!p.pushId&&(detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'||detailform.contractInfo.enginTypeFirstId=='24ebba9f2f3447579d0086209aff6ecd'||detailform.contractInfo.enginTypeFirstId=='f6f5188458ab4c5ba1e0bc12a9a4188b'||detailform.contractInfo.enginTypeFirstId=='0f16c387f17b402db45c4de58e1cf8b4'||detailform.contractInfo.enginTypeFirstId=='193b4d4003d04899a1d09c8d5f7877fe')">
+      <el-tab-pane label="工程量清单" v-if="!p.pushId&&(detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'||detailform.contractInfo.enginTypeFirstId=='24ebba9f2f3447579d0086209aff6ecd'||detailform.contractInfo.enginTypeFirstId=='f6f5188458ab4c5ba1e0bc12a9a4188b'||detailform.contractInfo.enginTypeFirstId=='0f16c387f17b402db45c4de58e1cf8b4'||detailform.contractInfo.enginTypeFirstId=='193b4d4003d04899a1d09c8d5f7877fe')">
         <div class="detailBoxBG gclqd">
           <el-tabs v-model="gclName" @tab-click="getRailwayList" v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'" type="border-card">
             <el-tab-pane name="0" label="第一章">
@@ -6585,7 +6585,7 @@
           </el-tabs>
         </div>
       </el-tab-pane>
-      <el-tab-pane v-if="p.actpoint != 'add'" label="实物工程量">
+      <el-tab-pane label="实物工程量">
         <div class="detailBoxBG htfs">
           <div>
             <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
@@ -6668,7 +6668,7 @@
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane v-if="p.actpoint != 'add'" label="劳材机统计">
+      <el-tab-pane label="劳材机统计">
         <div class="detailBoxBG htfs">
           <div>
             <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
