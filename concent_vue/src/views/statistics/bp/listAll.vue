@@ -462,7 +462,7 @@ export default {
         strs.forEach((itemstr) => {
           this.projectDomainType.forEach((item) => {
             //console.log(row);
-            if (itemstr == item.id) {
+            if (itemstr == item.detailCode) {
               str += item.detailName + ", ";
             }
           });
