@@ -71,28 +71,28 @@
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByYear_0.kcsjYear"/>
+                    v-model="detailform.sumByYear_0.kcsjYear+detailform.sumByMon_0.kcsjMonth"/>
                 </el-form-item>
                 <el-form-item
                   label="工程监理:"
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByYear_0.gcjlYear"/>
+                    v-model="detailform.sumByYear_0.gcjlYear+detailform.sumByMon_0.gcjlMonth"/>
                 </el-form-item>
                 <el-form-item
                   label="技术咨询与转让:"
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByYear_0.jszxYear"/>
+                    v-model="detailform.sumByYear_0.jszxYear+detailform.sumByMon_0.jszxMonth"/>
                 </el-form-item>
                 <el-form-item
                   label="其他:"
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByYear_0.qtYear"/>
+                    v-model="detailform.sumByYear_0.qtYear+detailform.sumByMon_0.qtMonth"/>
                 </el-form-item>
               </el-form>
             </div>
@@ -3963,6 +3963,23 @@
         }
         list[index].monthFinish = num*list[index].contractMoney/100
         list[index].monthComplete = num*list[index].physicalQuantity/100
+        // 改了哪个，产值的哪个变动
+        let kind = list[index].categorySecondName
+        let money = 0
+        list.forEach((element)=> {
+          if (element.categorySecondName === kind) {
+            money += element.monthFinish
+          }
+        })
+        if (kind === "勘察设计") {
+          this.detailform.sumByMon_0.kcsjMonth = money
+        } else if (kind === "工程监理") {
+          this.detailform.sumByMon_0.gcjlMonth = money
+        } else if (kind === "工程咨询") {
+          this.detailform.sumByMon_0.jszxMonth = money
+        } else if (kind === "其它") {
+          this.detailform.sumByMon_0.qtMonth = money
+        }
       },
       //修改产值
       getGyzzCz(list,obj,name){
