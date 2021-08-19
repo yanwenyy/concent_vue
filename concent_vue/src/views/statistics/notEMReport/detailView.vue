@@ -182,6 +182,8 @@
                 <el-button @click="exportdata('design','勘察设计板块')" type="primary" plain>导出</el-button>
               </el-form>
               <el-table
+                :max-height="$tableHeight-20"
+                :height="$tableHeight-20"
                 :data="detailform.kc_list"
                 :header-cell-style="{
                 'text-align': 'center',
@@ -568,6 +570,8 @@
                 width="70%"
               > 
                 <el-table
+                  :max-height="$tableHeight-20"
+                  :height="$tableHeight-20"
                   :data="workAmountList"
                   :header-cell-style="{
                     'text-align': 'center', 
@@ -1062,6 +1066,8 @@
                 <el-button @click="exportdata('product','工业制造板块')" type="primary" plain>导出</el-button>
               </el-form>
               <el-table
+                :max-height="$tableHeight-20"
+                :height="$tableHeight-20"
                 :data="detailform.gycp_list"
                 :header-cell-style="{
                 'text-align': 'center',
@@ -1349,6 +1355,8 @@
                 width="70%"
               > 
                 <el-table
+                  :max-height="$tableHeight-20"
+                  :height="$tableHeight-20"
                   :data="projectContentList"
                   :header-cell-style="{
                     'text-align': 'center', 
@@ -1775,6 +1783,8 @@
                 <el-button @click="exportdata('realty','房地产板块')" type="primary" plain>导出</el-button>
               </el-form>
               <el-table
+                :max-height="$tableHeight-20"
+                :height="$tableHeight-20"
                 :data="detailform.fdc_list"
                 :header-cell-style="{
                 'text-align': 'center',
@@ -2217,6 +2227,8 @@
                 <el-button @click="exportdata('secure','金融保险')" type="primary" plain>导出</el-button>
               </el-form>
               <el-table
+                :max-height="$tableHeight-20"
+                :height="$tableHeight-20"
                 :data="detailform.jrbx_list"
                 :header-cell-style="{
                 'text-align': 'center',
@@ -2667,6 +2679,8 @@
                 <el-button @click="exportdata('service','运营维管')" type="primary" plain>导出</el-button>
               </el-form>
               <el-table
+                :max-height="$tableHeight-20"
+                :height="$tableHeight-20"
                 :data="detailform.yy_list"
                 :header-cell-style="{
                 'text-align': 'center',
@@ -3264,6 +3278,8 @@
                 <el-button @click="exportdata('other','其他产值板块')" type="primary" plain>导出</el-button>
               </el-form>
               <el-table
+                :max-height="$tableHeight-20"
+                :height="$tableHeight-20"
                 :data="detailform.qt_list"
                 :header-cell-style="{
                 'text-align': 'center',

@@ -202,6 +202,8 @@
                 </el-upload>
               </el-form>
               <el-table
+                :max-height="$tableHeight-20"
+                :height="$tableHeight-20"
                 :data="detailform.kc_list"
                 :header-cell-style="{
                 'text-align': 'center',
@@ -607,6 +609,8 @@
                 width="70%"
               > 
                 <el-table
+                  :max-height="$tableHeight-20"
+                  :height="$tableHeight-20"
                   :data="workAmountList"
                   :header-cell-style="{
                     'text-align': 'center', 
@@ -1120,6 +1124,8 @@
                 </el-upload>
               </el-form>
               <el-table
+                :max-height="$tableHeight-20"
+                :height="$tableHeight-20"
                 :data="detailform.gycp_list"
                 :header-cell-style="{
                 'text-align': 'center',
@@ -1426,6 +1432,8 @@
                 width="70%"
               > 
                 <el-table
+                  :max-height="$tableHeight-20"
+                  :height="$tableHeight-20"
                   :data="projectContentList"
                   :header-cell-style="{
                     'text-align': 'center', 
@@ -1871,6 +1879,8 @@
                 </el-upload>
               </el-form>
               <el-table
+                :max-height="$tableHeight-20"
+                :height="$tableHeight-20"
                 :data="detailform.fdc_list"
                 :header-cell-style="{
                 'text-align': 'center',
@@ -2332,6 +2342,8 @@
                 </el-upload>
               </el-form>
               <el-table
+                :max-height="$tableHeight-20"
+                :height="$tableHeight-20"
                 :data="detailform.jrbx_list"
                 :header-cell-style="{
                 'text-align': 'center',
@@ -2801,6 +2813,8 @@
                 </el-upload>
               </el-form>
               <el-table
+                :max-height="$tableHeight-20"
+                :height="$tableHeight-20"
                 :data="detailform.yy_list"
                 :header-cell-style="{
                 'text-align': 'center',
@@ -3417,6 +3431,8 @@
                 </el-upload>
               </el-form>
               <el-table
+                :max-height="$tableHeight-20"
+                :height="$tableHeight-20"
                 :data="detailform.qt_list"
                 :header-cell-style="{
                 'text-align': 'center',
