@@ -1,4 +1,3 @@
-<!--资审结果操作列表-->
 <template>
   <div class="searchListClass">
     <el-form :inline="true" :model="searchform" @keyup.enter.native="getData()" class="queryForm">
@@ -28,15 +27,10 @@
       <el-form-item
         label="建设单位:"
         prop="contractInfo.constructionOrgId"
-        :rules="{
-          required: true,
-          message: '此项不能为空',
-          trigger: ['blur','change'],
-        }">
+      >
         <el-select
           v-model="constructionOrgList"
           v-if="detailform.contractInfo.isClientele=='1'"
-          multiple
           filterable
           collapse-tags
           placeholder="请选择">
@@ -50,7 +44,6 @@
         <el-select
           v-model="constructionOrgList"
           v-if="detailform.contractInfo.isClientele!='1'"
-          multiple
           filterable
           collapse-tags
           placeholder="请选择">
@@ -400,8 +393,9 @@
     },
   data() {
     return {
-      constructionOrgList: [],
+      constructionOrgList: '',
       companyMulStatus:false,//设计单位等多选列表状态
+      sjdwList:[],
       treeStatas: false,
       dialogResult:false,
       page: { current: 1, size: 20, total: 0, records: [] },
@@ -480,6 +474,15 @@
     this.$store.dispatch("getPubCustomers", {});
     this.$store.dispatch("getConfig", {});
     this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
+    //设计单位列表
+    this.$http.post("/api/contract/Companies/detail/findCompanies").then((res) => {
+      this.sjdwList = res.data.data.records;
+      this.sjdwList.forEach((item)=>{
+        item.value=item.companyName;
+        item.detailName=item.companyName;
+        item.id=item.uuid;
+      })
+    });
   },
   computed: {
     pubCustomers() {//客户名称
@@ -548,7 +551,7 @@
     },
     //工程类别二级
     getTwo(id) {
-      this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
+      this.detailform.contractInfo.constructionOrgId = this.constructionOrgList
     },
     exportdata() {
       this.searchform.size=1000000000;
