@@ -178,7 +178,7 @@
                >
                  <template slot-scope="scope">
                    <div v-if="scope.row.veditable == '1' && isCk!='1'&&p.actpoint!='task' ">
-                     <el-input v-model="scope.row.valuationFee" @input="scope.row.value = scope.row.valuationFee.replace(/[^\-?\d.]/g,'','')" @blur="getYear(data,scope.$index,scope.row.sumTarget)"/>
+                     <el-input v-model="scope.row.valuationFee" @input="scope.row.value = scope.row.valuationFee.replace(/[^\-?\d.]/g,'','')" @blur="getYear(data,scope.$index,scope.row.sumTarget,'valuationFee','计价额')"/>
                    </div>
                    <div  v-if="scope.row.veditable != '1'">{{scope.row.valuationFee}}</div>
                  </template>
@@ -191,7 +191,7 @@
                >
              <template slot-scope="scope">
                <div v-if="scope.row.veditable == '1' && isCk!='1' &&p.actpoint!='task'">
-                 <el-input v-model="scope.row.taxFee"  @input="scope.row.value = scope.row.taxFee.replace(/[^\-?\d.]/g,'','')" @blur="getYearSe(data,scope.$index,scope.row.sumTarget)"/>
+                 <el-input v-model="scope.row.taxFee"  @input="scope.row.value = scope.row.taxFee.replace(/[^\-?\d.]/g,'','')" @blur="getYearSe(data,scope.$index,scope.row.sumTarget,'taxFee','税额')"/>
                </div>
                <div  v-if="scope.row.veditable != '1'">{{scope.row.taxFee}}</div>
              </template>
@@ -411,8 +411,29 @@
         });
 
       },
+      //检查是否大于上级产值
+      checkCz(list,index,code,scopeName,messageName){
+        var treeSum=0,parentNum=0,canCalc=false,parentCanCalc=false;
+        list.forEach((item)=>{
+          if(item.tjxCode.length>=12&&item.sumTarget==code){
+            treeSum+=Number(item[scopeName]);
+            canCalc=true;
+          }
+          if(item.tjxId==code&&item.tjxCode.length==9){
+            parentNum=Number(item[scopeName]);
+            parentCanCalc=true;
+            // console.log(item.tjxName)
+          }
+        });
+        if(list[index].sumTarget&&canCalc&&parentCanCalc&&list[index].tjxCode.length>=12&&(treeSum>parentNum)){
+          this.$message.error("该级本月"+messageName+"不能大于上级本月"+messageName);
+          list[index][scopeName]='';
+          return false;
+        }
+      },
       //设置当月额度，计算计价额
-      getYear(list,index,code){
+      getYear(list,index,code,scopeName,messageName){
+       this.checkCz(list,index,code,scopeName,messageName);
         var num=0;
         var num1=0;
         var num2=0;
@@ -433,7 +454,7 @@
           }
         });
         this.data.forEach((item,i)=>{
-          if(item.tjxId==code){
+          if(item.tjxId==code&&item.veditable=='0'){
             item.valuationFee=num;
             item.yearValuationFee=num1;
             item.totalValuationFee=num2;
@@ -449,7 +470,8 @@
         });
       },
       //设置当月额度，计算税额
-      getYearSe(list,index,code){
+      getYearSe(list,index,code,scopeName,messageName){
+        this.checkCz(list,index,code,scopeName,messageName);
         var num=0;
         var num1=0;
         var num2=0;
@@ -470,7 +492,7 @@
           }
         });
         this.data.forEach((item,i)=>{
-          if(item.tjxId==list[index].sumTarget){
+          if(item.tjxId==list[index].sumTarget&&item.veditable=='0'){
             item.taxFee=num;
             item.yearTaxFee=num1;
             item.totalTaxFee=num2;

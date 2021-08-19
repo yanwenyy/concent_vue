@@ -179,73 +179,52 @@
             scope.row.contractAmountTotal
             }}</template>
         </el-table-column>
+        <el-table-column
+          v-if="page.records[0]"
+          v-for="(item,s) in page.records[0].monthStrList"
+          :key="Math.random()"
+          :width="150"
+          align="center"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>{{ item.name+'本月'}}</span>
+          </template>
+          <template slot-scope="scope">
+            <span v-for="vtem in scope.row.monthStrList" v-if="vtem.name==item.name">{{vtem.val||0}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          v-if="page.records[0]"
+          v-for="(item,s) in page.records[0].yearStrList"
+          :key="Math.random()"
+          :width="150"
+          align="center"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>{{ item.name+'本年'}}</span>
+          </template>
+          <template slot-scope="scope">
+            <span v-for="vtem in scope.row.yearStrList" v-if="vtem.name==item.name">{{vtem.val||0}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          v-if="page.records[0]"
+          v-for="(item,v) in page.records[0].totalStrList"
+          :key="Math.random()"
+          :width="150"
+          align="center"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>{{ item.name+'开累'}}</span>
+          </template>
+          <template slot-scope="scope">
+            <span v-for="vtem in scope.row.totalStrList" v-if="vtem.name==item.name">{{vtem.val||0}}</span>
+          </template>
+        </el-table-column>
 
-        <el-table-column
-          :width="150"
-          align="center"
-          label="施工产值本月"
-          prop="monthValue"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>施工产值本月</span>
-            <div>
-              <el-input style=" width: 100%" v-model="searchform.monthValue" size="mini"/>
-            </div>
-          </template>
-          <template slot-scope="scope">
-            <div v-if="scope.row.monthValue==null">
-              0
-            </div>
-            <div v-else>
-              {{scope.row.monthValue}}
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="施工产值本年"
-          prop="yearValue"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>施工产值本年</span>
-            <div>
-              <el-input style=" width: 100%" v-model="searchform.yearValue" size="mini"/>
-            </div>
-          </template>
-          <template slot-scope="scope">
-            <div v-if="scope.row.yearValue==null">
-              0
-            </div>
-            <div v-else>
-              {{scope.row.yearValue}}
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="施工产值开累"
-          prop="totalValue"
-          show-overflow-tooltip
-        >
-          <template slot="header" slot-scope="scope">
-            <span>施工产值开累</span>
-            <div>
-              <el-input style=" width: 100%" v-model="searchform.totalValue" size="mini"/>
-            </div>
-          </template>
-          <template slot-scope="scope">
-            <div v-if="scope.row.totalValue==null">
-              0
-            </div>
-            <div v-else>
-              {{scope.row.totalValue}}
-            </div>
-          </template>
-        </el-table-column>
         <el-table-column
           :width="150"
           align="center"
@@ -320,6 +299,7 @@
         setTimes:[],
         treeStatas: false,
         page: { current: 1, size: 20, total: 0, records: [] },
+        tjxNameList:[],//选择的统计项数组
         searchform: {
           createOrgName:'',
           createOrgCode:'',
@@ -331,14 +311,11 @@
           projectTypeCode:'',
           current: 1,
           size: 20,
-          createOrgCode: '',
           createOrgId: '',
-          createOrgName: '',
           createOrgType: '',
           createTime: '',
           createUserId: '',
           createUserName: '',
-          createOrgName:'',
           totalValue:'',
           yearValue:'',
           monthValue:'',
@@ -374,6 +351,37 @@
       }
     },
     methods: {
+      //处理选择的统计项数组
+      setTjxList(strs){
+        var list=[],strList=strs.split(",");
+        if(this.tjxNameList.length==0){
+          var _s=strList[0].split("@");
+          list.push({
+            name:'施工产值',
+            code:_s[0],
+            val:_s[1]
+          })
+        }else{
+          strList.forEach((item)=>{
+            var _s=item.split("@");
+            this.tjxNameList.forEach((vtem)=>{
+              var _tjxS=vtem.split("@");
+              if(_s[0]===_tjxS[0]){
+                var v={
+                  name:_tjxS[1],
+                  code:_s[0],
+                  val:_s[1]
+                };
+                // 如果数组里面本身不存在这个对象则把这个加进去
+                if(JSON.stringify(list).indexOf(JSON.stringify(v))===-1){
+                  list.push(v);
+                }
+              }
+            });
+          })
+        }
+        return list;
+      },
       //查看台账明细
       getMx(){
         if (this.multipleSelection.length < 1) {
@@ -412,10 +420,13 @@
         data.forEach((item)=>{
           name.push(item.vname);
           code.push(item.vcode);
+          this.tjxNameList.push(item.vcode+"@"+item.vname);
+          this.headerList.push({name:item.vname})
         });
         if(data.type=='统计项名称'){
           this.searchform.tjxCode=code.join(",");
           this.searchform.tjxName=name.join(",");
+          this.getData();
         }else if(data.type=='台账明细'){
           this.$router.push({
             path: "../../reportForm/list",
@@ -463,7 +474,6 @@
           size: 20,
           createOrgCode: '',
           createOrgId: '',
-          createOrgName: '',
           createOrgType: '',
           createUserId: '',
           createUserName: '',
@@ -499,10 +509,18 @@
         }
         this.searchform.reportYear=this.searchform.yearDateS.split("-")[0];
         this.searchform.reportMonth=this.searchform.yearDateS.split("-")[1];
+        // this.searchform.tjxCode='002007001001,002007002001';
         this.$http
             .post('/api/statistics/projectMonthlyReport/Projectreport/list/reportMQuery', this.searchform)
             .then(res => {
-              this.page = res.data.data
+              var datas=res.data.data;
+              datas.records.forEach((item)=>{
+                item.monthStrList=this.setTjxList(item.monthStr);
+                item.yearStrList=this.setTjxList(item.yearStr);
+                item.totalStrList=this.setTjxList(item.totalStr)
+              });
+              this.page =datas;
+              // console.log(this.page.records)
             })
       },
       rowShow(row){

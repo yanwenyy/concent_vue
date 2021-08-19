@@ -451,36 +451,42 @@
       },
       //未上报批量填0点击是
       submit(){
-        var dataInfo=[];
-        this.data.forEach((item) => {
-          if(item.projectId!=''&&item.projectId!=null ){
-            dataInfo.push(item);
+        var dataInfo=[],cansub=true;
+        if(cansub){
+          cansub=false;
+          this.data.forEach((item) => {
+            if(item.projectId!=''&&item.projectId!=null ){
+              dataInfo.push(item);
+            }
+          })
+          let tableData = {
+            prjAndPrjReportAndDetailList:dataInfo,
+            yearVo:this.searchform.yearDateS.split("-")[0],
+            monthVo:this.searchform.yearDateS.split("-")[1],
+            reportTypeVo:"2"
           }
-        })
-        let tableData = {
-          prjAndPrjReportAndDetailList:dataInfo,
-          yearVo:this.searchform.yearDateS.split("-")[0],
-          monthVo:this.searchform.yearDateS.split("-")[1],
-          reportTypeVo:"2"
-        }
-        var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/batchUpdateValue'
-        this.$http.post(
+          var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/batchUpdateValue'
+          this.$http.post(
             url,
             JSON.stringify(tableData),
             {useJson: true,timeout:600000}
-        ).then((res) => {
-          if (res.data.code === 200) {
-            this.showTqDialog=false;
-            this.$message({
-              message: "批量上报成功"
-            })
-            this.getData()
-          }else{
-            this.$message({
-              message: "批量处理失败"
-            })
-          }
-        })
+          ).then((res) => {
+            if (res.data.code === 200) {
+              this.showTqDialog=false;
+              this.$message({
+                message: "批量上报成功"
+              })
+              this.getData();
+              cansub=true;
+            }else{
+              this.$message({
+                message: "批量处理失败"
+              });
+              cansub=true;
+            }
+          })
+        }
+
       },
       // 删除
       del() {
