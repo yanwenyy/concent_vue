@@ -381,6 +381,9 @@
             }else if(this.data[i].projectId==this.userdata.managerOrgId && this.data[i].reportType=='2'){
               this.$message.info('该单位已在本月创建过月报请尝试修改或下月再进行尝试！')
               return false;
+            }else if(this.data[i].flowStatus=='check'){
+                this.$message.info('该单位下存在审核中的月报,请该单位下所有项目月报审核通过后再进行尝试！')
+                return false;
             };
           };
         }

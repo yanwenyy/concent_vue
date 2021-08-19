@@ -52,7 +52,7 @@
           type="selection"
         ></el-table-column>
         <el-table-column label="projectId" align="center" prop="projectId" v-if="false" />
-        <el-table-column label="projectreportuuid" align="center" prop="projectreportuuid" v-if="false" />
+        <el-table-column label="projectCheckUuid" align="center" prop="projectCheckUuid" v-if="false" />
         <el-table-column
           :width="70"
           align="center"
@@ -165,7 +165,7 @@
         this.multipleSelection.forEach((item) => {
           if(item.flowStatus=='edit'||item.flowStatus=='reject'){
             var v={
-              uuid:item.projectreportuuid,
+              uuid:item.projectCheckUuid,
               reportYear:item.reportYear,
               reportMonth:item.reportMonth,
               reportProjectName:item.createOrgName,
@@ -190,6 +190,14 @@
 
               )
               .then((res) => {
+                  if (res.data.code === 200) {
+                      this.$message({
+                          message: '提交成功',
+                          duration: 1000,
+                          type: 'success',
+                          onClose: () => { this.$router.back() }
+                      })
+                  }
                 this.getData()
               });
           }).catch(() => {})
