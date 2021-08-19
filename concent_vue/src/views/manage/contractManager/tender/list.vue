@@ -23,10 +23,64 @@
         </el-select>
       </el-form-item>
       <el-form-item label="标段名称:">
-        <el-input v-model="searchform.inforName" placeholder="标段名称" clearable></el-input>
+        <el-input v-model="searchform.sectionName" placeholder="标段名称" clearable></el-input>
       </el-form-item>
-      <el-form-item label="建设单位:">
-        <el-input v-model="searchform.constructionOrg" placeholder="建设单位" clearable></el-input>
+      <el-form-item
+        label="建设单位:"
+        prop="contractInfo.constructionOrgId"
+        :rules="{
+          required: true,
+          message: '此项不能为空',
+          trigger: ['blur','change'],
+        }">
+        <el-select
+          v-model="constructionOrgList"
+          v-if="detailform.contractInfo.isClientele=='1'"
+          multiple
+          filterable
+          collapse-tags
+          placeholder="请选择">
+          <el-option
+            v-for="item in pubCustomers"
+            :key="item.customerId"
+            :label="item.customerName"
+            :value="item.customerId">
+          </el-option>
+        </el-select>
+        <el-select
+          v-model="constructionOrgList"
+          v-if="detailform.contractInfo.isClientele!='1'"
+          multiple
+          filterable
+          collapse-tags
+          placeholder="请选择">
+            <el-option
+              :key="index"
+              :label="item.detailName"
+              :value="item.id"
+              v-for="(item, index) in sjdwList"
+            ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item
+        class="inline-formitem"
+        label="是否客户:"
+        prop="contractInfo.isClientele"
+        :rules="{
+          required: true,
+          message: '此项不能为空',
+          trigger: 'blur',
+        }">
+        <el-switch
+          class="inline-formitem-switch"
+          v-model="detailform.contractInfo.isClientele"
+          active-color="#409EFF"
+          inactive-color="#ddd"
+          active-value="1"
+          inactive-value="0"
+          @change="constructionOrgList=''"
+        >
+        </el-switch>
       </el-form-item>
       <div class="el-form-item">
         <el-form-item label="开标日期:" prop="searchform.saleTime" >
@@ -34,7 +88,7 @@
             style="width: 145px;"
             clearable
             value-format="timestamp"
-            v-model="searchform.saleTime"
+            v-model="searchform.bidBeginTime"
             align="right"
             type="date"
             placeholder="选择日期">
@@ -45,7 +99,7 @@
             style="width: 145px;"
             clearable
             value-format="timestamp"
-            v-model="searchform.saleTime"
+            v-model="searchform.bidEndTime"
             align="right"
             type="date"
             placeholder="选择日期">
@@ -59,7 +113,7 @@
           placeholder="请选择"
           @change="getTwo"
           size="mini"
-          v-model="searchform.enginTypeFirstId"
+          v-model="searchform.noticeTypeId"
         >
           <el-option
             :key="index"
@@ -71,7 +125,7 @@
       </el-form-item>
       <el-form-item label="录入单位:" >
         <el-input
-          v-model="searchform.createOrgName"
+          v-model="searchform.createOrgCode"
           placeholder="录入单位"
           clearable
         ></el-input>
@@ -82,7 +136,7 @@
             style="width: 145px;"
             clearable
             value-format="timestamp"
-            v-model="searchform.saleTime"
+            v-model="searchform.saleTimeBeginTime"
             align="right"
             type="date"
             placeholder="选择日期">
@@ -93,7 +147,7 @@
             style="width: 145px;"
             clearable
             value-format="timestamp"
-            v-model="searchform.saleTime"
+            v-model="searchform.saleTimeEndTime"
             align="right"
             type="date"
             placeholder="选择日期">
@@ -107,7 +161,7 @@
           placeholder="请选择"
           @change="getTwo"
           size="mini"
-          v-model="searchform.enginTypeFirstId"
+          v-model="searchform.isWinBid"
         >
           <el-option
             :key="index"
@@ -337,40 +391,50 @@
 
 <script>
   import Tree from '@/components/tree'
+  import companyMul from '@/components/companiesMultiple'
   export default {
   name: "proposal-list-look",
     components: {
-      Tree
+      Tree,
+      companyMul
     },
   data() {
     return {
+      constructionOrgList: [],
+      companyMulStatus:false,//设计单位等多选列表状态
       treeStatas: false,
       dialogResult:false,
       page: { current: 1, size: 20, total: 0, records: [] },
       searchform: {
         current: 1,
         size: 20,
-        inforName: "",
+        inforName:"",
         enginTypeFirstId: "",
-        enginTypeSecondId: "",
-        constructionOrg: "",
-        noticeTypeId: "",
-        belongLineId: "",
-        designOrg:"",
-        ffid:'',
-        flowStatus:'',
-        saleTime:'',
-        createTime:'',
-        planBidTime:'',
-        bidAgentCompany:'',
-        sectionName:'',
-        path:'',
-        selectTimeTypeSaleTime:'',
+        sectionName:"",
+        constructionOrgId:"",
+        bidBeginTime:"",
+        bidEndTime:"",
+        noticeTypeId:"",
+        createOrgCode:"",
         saleTimeBeginTime:"",
-        saleTimeEndTime:'',
-        selectTimeTypeCreateTime:'',
-        createTimeBeginTime:"",
-        createTimeEndTime:''
+        saleTimeEndTime:"",
+        isWinBid:"",
+        path:"",
+      },
+      detailform: {
+        commonFilesList1: [],
+        commonFilesList2: [],
+        contractInfo: {},
+        contractInfoAttachBO: {
+          innerContractInfoAttachList:[],
+          unionContractInfoAttachList:[]
+        },
+        contractInfoSectionList: [],
+        topInfoSiteList:[],
+        zplx:[],//装配类型
+        jzlx:[],//建筑类型
+        jzjglx:[],//建筑结构类型
+        cdmc:[],//场地名称
       },
       multipleSelection: [],
       xqprojectType:[],//工程二级列表
@@ -413,12 +477,19 @@
     }
   },
   mounted() {
+    this.$store.dispatch("getPubCustomers", {});
     this.$store.dispatch("getConfig", {});
     this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
   },
   computed: {
+    pubCustomers() {//客户名称
+      return this.$store.state.pubCustomers;
+    },
+    //客户性质
+    customerNature() {
+      return this.$store.state.customerNature;
+    },
     projectDomainType() {
-      // console.log(this.$store.state.category["projectDomainType"])
       return this.$store.state.category.projectDomainType;
     },
     bulletinType() {
@@ -477,17 +548,7 @@
     },
     //工程类别二级
     getTwo(id) {
-      // this.searchform.enginTypeSecondId='';
-      // this.xqprojectType =[];
-      // if(id!=''){
-      //   this.projectDomainType.find(
-      //     (item) => {
-      //       if (item.id == id) {
-      //         this.xqprojectType = item.children;
-      //       }
-      //     }
-      //   )
-      // }
+      this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
     },
     exportdata() {
       this.searchform.size=1000000000;

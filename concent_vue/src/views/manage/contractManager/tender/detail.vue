@@ -1,9 +1,5 @@
 <template>
   <div style="position: relative">
-    <!-- <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="saveInfo('detailform','save')" class="detailbutton detail-back-tab save-btn">保存</el-button>
-    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.contractInfo.flowStatus=='edit'||detailform.contractInfo.flowStatus=='reject')" @click="saveInfo('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
-    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
-    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button> -->
     <el-button class="detail-back-tab" @click="back" type="text">返回</el-button>
     <el-form
       :inline="false"
@@ -2430,47 +2426,6 @@ export default {
         this.ifOAS=true;
       }
     },
-    //流程操作
-    // operation(type){
-    //   var msg='',that=this;
-    //   this.$prompt('请输入审核意见', '提示', {
-    //     confirmButtonText: '确定',
-    //     cancelButtonText: '取消',
-    //   }).then(({ value }) => {
-    //     if(type=='back'){
-    //       if(value==null||value==''){
-    //         this.$message.error('审核意见不能为空');
-    //         return false;
-    //       }
-    //     }else{
-    //       if(value==null||value==''){
-    //         value=that.examineReviewMsg;
-    //       }
-    //     }
-    //     this.p.task.remark=value;
-    //     this.$http
-    //       .post(
-    //         '/api/contract/contract/ContractInfo/process/'+type,
-    //         JSON.stringify(this.p.task),
-    //         {useJson: true}
-    //       )
-    //       .then((res) => {
-    //         if (res.data.code === 200) {
-    //           this.$message({
-    //             message: "操作成功",
-    //             type: "success",
-    //           });
-    //           this.$router.back()
-    //         }
-    //       });
-    //   }).catch(() => {
-    //     this.$message({
-    //       type: 'info',
-    //       message: '取消输入'
-    //     });
-    //   });
-
-    // },
     // 搜索名字
     searchName() {
       this.infoCSVisible = true;
@@ -3093,64 +3048,6 @@ export default {
     resetform(formName) {
       this.$refs[formName].resetFields()
     },
-    // saveInfo(formName,type) {
-    //   this.detailform.commonFilesList=this.detailform.commonFilesList1.concat(this.detailform.commonFilesList2)
-    //   var url='';
-    //   this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
-    //   if(type=='save'){
-    //     url='/api/contract/contract/ContractInfo/detail/saveOrUpdate';
-    //   }else{
-    //     url='/api/contract/contract/ContractInfo/process/start';
-    //   }
-    //   if(this.detailform.contractInfo.isOpenBid=='1'&&this.detailform.commonFilesList2.length==0){
-    //     this.$message.error("请上传招标公告文件");
-    //     return false;
-    //   }
-    //   if(this.detailform.contractInfo.contractStartTime>this.detailform.contractInfo.contractEndTime){
-    //     this.$message.error("合同开始日期不能大于合同结束日期");
-    //     return false;
-    //   }
-    //   if(this.detailform.contractInfo.valueAddedTax<=0){
-    //     this.$message.error("增值税需要大于0");
-    //     return false;
-    //   }
-    //   if(this.detailform.topInfoSiteList.length==0){
-    //     this.$message.error("请至少选择一个项目地点");
-    //     return false;
-    //   }
-    //   var hasMain=false;
-    //   this.detailform.topInfoSiteList.forEach((item)=>{
-    //     if(item.isMain=='1'){
-    //       hasMain=true;
-    //     }
-    //   });
-    //   if(!hasMain){
-    //     this.$message.error("请选择一个主地点");
-    //     return false;
-    //   }
-    //   this.$refs[formName].validate((valid) => {
-    //     if (valid) {
-    //       this.$http
-    //         .post(
-    //           url,
-    //           JSON.stringify(this.detailform),
-    //           {useJson: true}
-    //         )
-    //         .then((res) => {
-    //         if (res.data.code === 200) {
-    //         this.$message({
-    //           message:  `${type=='save'?'保存':'提交'}成功`,
-    //           type: "success",
-    //         });
-    //         this.$router.back()
-    //       }
-    //     });
-    //     } else {
-    //       this.$message.error("请添加必填项和正确的数据格式");
-    //   return false;
-    // }
-    // });
-    // },
 // 加载列表
     getDetail() {
       this.$http
