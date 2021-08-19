@@ -64,35 +64,35 @@
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_0.kcsjMonth||0)+(detailform.sumByMon_0.gcjlMonth||0)+(detailform.sumByMon_0.jszxMonth||0)+(detailform.sumByMon_0.qtMonth||0)+(detailform.sumByYear_0.kcsjMonth||0)+(detailform.sumByYear_0.gcjlMonth||0)+(detailform.sumByYear_0.jszxMonth||0)+(detailform.sumByYear_0.qtMonth||0)"/>
+                    :value="(detailform.sumByMon_0.kcsjMonth||0)+(detailform.sumByMon_0.gcjlMonth||0)+(detailform.sumByMon_0.jszxMonth||0)+(detailform.sumByMon_0.qtMonth||0)+(detailform.sumByYear_0.kcsjYear||0)+(detailform.sumByYear_0.gcjlYear||0)+(detailform.sumByYear_0.jszxYear||0)+(detailform.sumByYear_0.qtYear||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其中勘察设计:"
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByYear_0.kcsjYear"/>
+                    v-model="detailform.sumByYear_0.kcsjYear+detailform.sumByMon_0.kcsjMonth"/>
                 </el-form-item>
                 <el-form-item
                   label="工程监理:"
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByYear_0.gcjlYear"/>
+                    v-model="detailform.sumByYear_0.gcjlYear+detailform.sumByMon_0.gcjlMonth"/>
                 </el-form-item>
                 <el-form-item
                   label="技术咨询与转让:"
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByYear_0.jszxYear"/>
+                    v-model="detailform.sumByYear_0.jszxYear+detailform.sumByMon_0.jszxMonth"/>
                 </el-form-item>
                 <el-form-item
                   label="其他:"
                 >
                   <el-input
                     disabled
-                    v-model="detailform.sumByYear_0.qtYear"/>
+                    v-model="detailform.sumByYear_0.qtYear+detailform.sumByMon_0.qtMonth"/>
                 </el-form-item>
               </el-form>
             </div>
@@ -179,9 +179,10 @@
                 </el-form-item>
                 <el-button @click="searchform.design={},searchform.design.type='design',searchDate('design','kc_list')" type="info" plain style="color:black;background:none">重置</el-button>
                 <el-button @click="searchDate('design','kc_list')" type="primary" plain>查询</el-button>
-                <el-button @click="exportdata('design','勘察设计板块')" type="primary" plain>导出</el-button>
+                <el-button v-show="p.actpoint!=='task'" @click="exportdata('design','勘察设计板块')" type="primary" plain>导出</el-button>
                 <!--<el-button @click="importData('designDetail')" type="primary" plain>导入</el-button>-->
                 <el-upload
+                  v-show="p.actpoint!=='task'"
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/designDetail'"
                   :on-success="importData"
@@ -579,8 +580,9 @@
                 </el-form-item>
                 <el-button @click="searchform.industry.projectName='',searchDate('industry','gy_list')" type="info" plain style="color:black;background:none">重置</el-button>
                 <el-button @click="searchDate('industry','gy_list')" type="primary" plain>查询</el-button>
-                <el-button @click="exportdata('industry','工业制造板块')" type="primary" plain>导出</el-button>
+                <el-button v-show="p.actpoint!=='task'" @click="exportdata('industry','工业制造板块')" type="primary" plain>导出</el-button>
                 <el-upload
+                  v-show="p.actpoint!=='task'"
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/industryDetail'"
                   :on-success="importData"
@@ -1096,8 +1098,9 @@
           <el-tab-pane v-if="p.gyType=='2'" label="主要产品管理">
             <div class="table-div">
               <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
-                <el-button @click="exportdata('product','工业制造板块')" type="primary" plain>导出</el-button>
+                <el-button v-show="p.actpoint!=='task'" @click="exportdata('product','工业制造板块')" type="primary" plain>导出</el-button>
                 <el-upload
+                  v-show="p.actpoint!=='task'"
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/productDetail'"
                   :on-success="importData"
@@ -1396,8 +1399,9 @@
                 </el-form-item>
                 <el-button @click="searchform.material.projectName='',searchDate('material','wz_list')" type="info" plain style="color:black;background:none">重置</el-button>
                 <el-button @click="searchDate('material','wz_list')" type="primary" plain>查询</el-button>
-                <el-button @click="exportdata('material','物资贸易板块')" type="primary" plain>导出</el-button>
+                <el-button v-show="p.actpoint!=='task'" @click="exportdata('material','物资贸易板块')" type="primary" plain>导出</el-button>
                 <el-upload
+                  v-show="p.actpoint!=='task'"
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/materialDetail'"
                   :on-success="importData"
@@ -1845,8 +1849,9 @@
                 </el-form-item>
                 <el-button @click="searchform.realty.projectName='',searchDate('realty','fdc_list')" type="info" plain style="color:black;background:none">重置</el-button>
                 <el-button @click="searchDate('realty','fdc_list')" type="primary" plain>查询</el-button>
-                <el-button @click="exportdata('realty','房地产板块')" type="primary" plain>导出</el-button>
+                <el-button v-show="p.actpoint!=='task'" @click="exportdata('realty','房地产板块')" type="primary" plain>导出</el-button>
                 <el-upload
+                  v-show="p.actpoint!=='task'"
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/realtyDetail'"
                   :on-success="importData"
@@ -2305,8 +2310,9 @@
                 </el-form-item>
                 <el-button @click="searchform.secure.projectName='',searchDate('secure','jrbx_list')" type="info" plain style="color:black;background:none">重置</el-button>
                 <el-button @click="searchDate('secure','jrbx_list')" type="primary" plain>查询</el-button>
-                <el-button @click="exportdata('secure','金融保险')" type="primary" plain>导出</el-button>
+                <el-button v-show="p.actpoint!=='task'" @click="exportdata('secure','金融保险')" type="primary" plain>导出</el-button>
                 <el-upload
+                  v-show="p.actpoint!=='task'"
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/secureDetail'"
                   :on-success="importData"
@@ -2773,8 +2779,9 @@
                 </el-form-item>
                 <el-button @click="searchform.service.projectName='',searchDate('service','yy_list')" type="info" plain style="color:black;background:none">重置</el-button>
                 <el-button @click="searchDate('service','yy_list')" type="primary" plain>查询</el-button>
-                <el-button @click="exportdata('service','运营维管')" type="primary" plain>导出</el-button>
+                <el-button v-show="p.actpoint!=='task'" @click="exportdata('service','运营维管')" type="primary" plain>导出</el-button>
                 <el-upload
+                  v-show="p.actpoint!=='task'"
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/serviceDetail'"
                   :on-success="importData"
@@ -3388,8 +3395,9 @@
                 </el-form-item>
                 <el-button @click="searchform.other.projectName='',searchDate('other','qt_list')" type="info" plain style="color:black;background:none">重置</el-button>
                 <el-button @click="searchDate('other','qt_list')" type="primary" plain>查询</el-button>
-                <el-button @click="exportdata('other','其他产值板块')" type="primary" plain>导出</el-button>
+                <el-button v-show="p.actpoint!=='task'" @click="exportdata('other','其他产值板块')" type="primary" plain>导出</el-button>
                 <el-upload
+                  v-show="p.actpoint!=='task'"
                   class="inline-block"
                   :action="'/api/statistics/unProjectReport/import/otherDetail'"
                   :on-success="importData"
@@ -3948,7 +3956,30 @@
       },
       //勘察设计月末进度
       setCcsjYmjd(list,obj,name,index){
-        console.log(index)
+        // console.log(list,obj,name,index) detailform.kc_list
+        let num = Number(list[index].monthValue)-Number(list[index].monthStart)
+        if (num < 0) {
+          num = 0
+        }
+        list[index].monthFinish = num*list[index].contractMoney/100
+        list[index].monthComplete = num*list[index].physicalQuantity/100
+        // 改了哪个，产值的哪个变动
+        let kind = list[index].categorySecondName
+        let money = 0
+        list.forEach((element)=> {
+          if (element.categorySecondName === kind) {
+            money += element.monthFinish
+          }
+        })
+        if (kind === "勘察设计") {
+          this.detailform.sumByMon_0.kcsjMonth = money
+        } else if (kind === "工程监理") {
+          this.detailform.sumByMon_0.gcjlMonth = money
+        } else if (kind === "工程咨询") {
+          this.detailform.sumByMon_0.jszxMonth = money
+        } else if (kind === "其它") {
+          this.detailform.sumByMon_0.qtMonth = money
+        }
       },
       //修改产值
       getGyzzCz(list,obj,name){
@@ -4406,7 +4437,9 @@
           this.detailform.sumByMon_6=datas.sumByMon_6||{};
           this.detailform.sumByYear_6=datas.sumByYear_6||{};
           this.detailform.statId=this.p.statId;
-          this.p.gyType = datas.gyType
+          if(this.p.actpoint!=='add'){
+           this.p.gyType = datas.gyType
+          }
         });
       },
       handleSelectionChange(val) {

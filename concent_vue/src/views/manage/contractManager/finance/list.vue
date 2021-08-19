@@ -198,14 +198,27 @@
             scope.row.state === '0' ? '草稿' : '已上报'
           }}</template> -->
           <template slot="header" slot-scope="scope">
-            <span>状态</span>
+             <span>审核状态</span>
             <div>
-              <el-input
+              <el-select
                 class="list-search-picker"
-                style=" width: 100%"
-                v-model="searchFrom.flowStatus"
+                clearable
+                filterable
+                placeholder="请选择"
                 size="mini"
-              />
+                v-model="searchFrom.flowStatus"
+              >
+                <el-option label="草稿" value="edit"></el-option>
+                <el-option label="审核中" value="check"></el-option>
+                <el-option label="审核通过" value="pass"></el-option>
+                <el-option label="审核退回" value="reject"></el-option>
+              </el-select>
+              <!--<el-input-->
+              <!--class="list-search-picker"-->
+              <!--style=" width: 100%"-->
+              <!--v-model="searchform.flowStatus"-->
+              <!--size="mini"-->
+              <!--/>-->
             </div>
           </template>
           <template slot-scope="scope">

@@ -490,7 +490,7 @@
       },
       //工程类别二级
       getTwo(id) {
-        this.searchform.enginTypeSecondId='';
+        this.searchform.enginTypeSecondId = ""
         this.xqprojectType =[];
         if(id!=''){
           this.projectDomainType.find(
@@ -605,8 +605,15 @@
         // this.searchform.noticeTypeId = "";
         this.searchform={
           current: 1,
-          size: 20
-        };
+            size: 20,
+            orgid: "",
+            orgname: "",
+            inforName: "",
+            enginTypeFirstId: "",
+            enginTypeSecondId:'',
+            constructionOrg: "",
+            noticeTypeId: "",
+        },
         this.getData();
       },
       // 列表选项数据

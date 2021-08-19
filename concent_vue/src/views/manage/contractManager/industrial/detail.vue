@@ -96,14 +96,14 @@
               </el-form-item> -->
               <el-form-item
                   label="客户名称:"
-                  prop="contractInfo.constructionOrgId"
+                  prop="constructionOrgList"
                   :rules="{
                   required: true,
                   message: '此项不能为空',
                   trigger: ['blur','change'],
                 }">
                   <el-select
-                    v-model="constructionOrgList"
+                    v-model="detailform.constructionOrgList"
                     v-if="detailform.contractInfo.isClientele=='1'"
                     multiple
                     filterable
@@ -117,7 +117,7 @@
                     </el-option>
                   </el-select>
                   <el-select
-                    v-model="constructionOrgList"
+                    v-model="detailform.constructionOrgList"
                     v-if="detailform.contractInfo.isClientele!='1'"
                     multiple
                     filterable
@@ -149,7 +149,7 @@
                   inactive-color="#ddd"
                   active-value="1"
                   inactive-value="0"
-                  @change="constructionOrgList=''"
+                  @change="detailform.constructionOrgList=''"
                 >
                 </el-switch>
               </el-form-item>
@@ -2428,7 +2428,6 @@ export default {
       }
     }
     return {
-      constructionOrgList: [],
       companyMulStatus:false,//设计单位等多选列表状态
       sjdwList:[],
       ifOAS:false,
@@ -2438,6 +2437,7 @@ export default {
       infoCSVisible:false,//项目名称查询的状态
       options1:[{label:"值",value:'111'}],
       detailform: {
+      constructionOrgList: [],
         contractInfo: {
           moduleId:'510ba0d79593418493eb1a11ed3e7df4',
           moduleName:'工业制造',
@@ -2445,6 +2445,11 @@ export default {
           marketSecondId:'',
           qualityOrgNames:'',
           isClientele:'1',
+          isInSystemUnion:'1',
+          isInSystemSub:'1',
+          isOutSystemUnion:'1',
+          isYearContract:'1',
+          isInGroupSub:'1',
           designOrg: '',//设计单位
           designOrgId: '',
           constructionOrg:'',//建设单位
@@ -3292,7 +3297,7 @@ export default {
     saveInfo(formName,type) {
       var url='';
       this.detailform.commonFilesList=this.detailform.commonFilesList1.concat(this.detailform.commonFilesList2)
-      this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
+      this.detailform.contractInfo.constructionOrgId = this.detailform.constructionOrgList.join(",")
       if(type=='save'){
         url='/api/contract/contract/ContractInfo/detail/saveOrUpdate';
       }else{
@@ -3319,9 +3324,23 @@ export default {
         return false;
       }
       if(this.detailform.topInfoSiteList.length==0){
-        this.$message.error("请至少选择一个项目地点");
-        return false;
-      }
+          this.$message.error("请至少选择一个供货地点");
+          return false;
+        }else{
+          let k = 0;
+          for(let i=0;i<this.detailform.topInfoSiteList.length;i++){
+            if(this.detailform.topInfoSiteList[i].country === null 
+            || this.detailform.topInfoSiteList[i].path === null
+            || this.detailform.topInfoSiteList[i].path === ""
+            || this.detailform.topInfoSiteList[i].country === ""){
+              k=1;
+            }
+          }
+          if(k===1){
+            this.$message.error("请正确选择供货地点");
+            return false;
+          }
+        }
       var hasMain=false;
       this.detailform.topInfoSiteList.forEach((item)=>{
         if(item.isMain=='1'){
@@ -3390,7 +3409,7 @@ export default {
       this.detailform.jzlx=datas.contractInfo.otherBuildingTypeId&&datas.contractInfo.otherBuildingTypeId.split(",");
       this.detailform.jzjglx=datas.contractInfo.otherBuildingStructureTypeId&&datas.contractInfo.otherBuildingStructureTypeId.split(",");
       if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
-        this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
+        this.detailform.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
       }
     });
     },

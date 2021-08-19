@@ -356,6 +356,13 @@
           {
             detailPrjStaName:'竣工未结算',
             id:'竣工未结算'
+          },
+          {
+            detailPrjStaName:'正在开展',
+            id:'正在开展'
+          }, {
+            detailPrjStaName:'未开工',
+            id:'未开工'
           }
         ],
         menus: [],

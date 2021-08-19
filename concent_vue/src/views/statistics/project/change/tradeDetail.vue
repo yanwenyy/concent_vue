@@ -187,11 +187,26 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint === 'look'||detailForm.project.contractInfoList!=''"
                   clearable
-                  placeholder="请输入"
+                  placeholder="请输入" 
+                  @change="getOutputTax"
                   v-model="detailForm.project.valueAddedTax">
                   <template slot="prepend">¥</template>
                   <template slot="append">(万元)</template>
                 </el-input>
+              </el-form-item>
+              <el-form-item
+                label="上报产值是否含税:"
+                prop="project.isOutputTax"
+                class="inline-formitem"
+                style="width: 32.5%">
+                <el-switch
+                  disabled
+                  class="inline-formitem-switch"
+                  v-model="detailForm.project.isOutputTax"
+                  active-color="#409EFF"
+                  inactive-color="#ddd"
+                  active-value="1"
+                  inactive-value="0"/>
               </el-form-item>
             </el-row>
             <el-row>
@@ -551,6 +566,16 @@
                   v-model="detailForm.project.projectRemark"/>
               </el-form-item>
             </el-row>
+            <el-row>
+              <el-form-item
+                class="neirong"
+                label="变更原因:">
+                <el-input
+                  type="textarea"
+                  placeholder="请输入"
+                  v-model="detailForm.project.changeReason"/>
+              </el-form-item>
+            </el-row>
             <div>
               <p>
                 <span >项目地点: </span>
@@ -589,9 +614,9 @@
                 >
                   <template slot-scope="scope">
                     <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.path'"  :rules="{required: true,message: '此项不能为空'}">
-                      <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                       <el-input disabled placeholder="请输入内容" v-model="scope.row.path" class="input-with-select group-no-padding">
-                        <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append" icon="el-icon-circle-plus" @click="selectPosition(),positionIndex=scope.$index"></el-button>
+                        <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append" icon="el-icon-circle-plus" 
+                        @click="selectPosition(),positionIndex=scope.$index"></el-button>
                       </el-input>
                     </el-form-item>
                   </template>
@@ -606,19 +631,16 @@
                 >
                   <template slot-scope="scope">
                     <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
-                      <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                       <el-input
                         class="group-no-padding"
                         clearable
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
                         v-model="scope.row.contractAmount"
                       >
-                        <!--@input="getPositionMoney(scope.$index,detailForm.project.topInfoSiteList)"-->
                         <template slot="prepend">¥</template>
                         <template slot="append">(万元)</template>
                       </el-input>
                     </el-form-item>
-                    <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                   </template>
                 </el-table-column>
 
@@ -916,13 +938,13 @@
                     align="center"
                     show-overflow-tooltip
                     v-if="p.actpoint !== 'add'&&p.actpoint !== 'task'"
-                    width="80">
+                    width="150">
                     <template slot-scope="scope">
-                      <!--<el-link-->
-                      <!--:underline="false"-->
-                      <!--@click="del(scope.$index,scope.row,detailForm.project.contractInfoList,'glht')"-->
-                      <!--type="warning">删除-->
-                      <!--</el-link>-->
+                      <el-link
+                        :underline="false"
+                        @click="removeContract(scope.$index,scope.row)"
+                        type="warning">删除
+                      </el-link>
                       <el-link
                         :underline="false"
                         @click="look(scope.row)"
@@ -1065,6 +1087,20 @@
                   <template slot="prepend">¥</template>
                   <template slot="append">(万元)</template>
                 </el-input>
+              </el-form-item>
+              <el-form-item
+                label="上报产值是否含税:"
+                prop="project.isOutputTax"
+                class="inline-formitem"
+                style="width: 32.5%">
+                <el-switch
+                  disabled
+                  class="inline-formitem-switch"
+                  v-model="detailForm.project.isOutputTax"
+                  active-color="#409EFF"
+                  inactive-color="#ddd"
+                  active-value="1"
+                  inactive-value="0"/>
               </el-form-item>
             </el-row>
             <el-row>
@@ -1414,6 +1450,12 @@
                   align="center"
                   prop="path"
                 >
+                  <template slot-scope="scope">
+                    <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.path'"  :rules="{required: true,message: '此项不能为空'}">
+                      <el-input disabled placeholder="请输入内容" v-model="scope.row.path" class="input-with-select group-no-padding">
+                      </el-input>
+                    </el-form-item>
+                  </template>
                 </el-table-column>
 
                 <el-table-column
@@ -1990,6 +2032,18 @@
           this.$refs.infoCS.init(this.detailForm.project.projectModuleId);
         })
       },
+      //删除关联合同
+      removeContract(row){
+        this.$confirm(`确认删除该关联合同吗?`, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.detailForm.project.contractInfoList.splice(row,1);
+          }).catch(() => {
+                  this.$message.error('删除失败')
+          })
+      },
       //获取新增的关联合同
       goAddDetail(data){
         this.$forceUpdate();
@@ -2059,6 +2113,14 @@
         this.$forceUpdate()
         this.detailForm.project[data.list] = this.detailForm.project[data.list].concat(data.fileList)
         this.uploadVisible = false
+      },
+      // 增值税改变，上报产值是否含税联动
+      getOutputTax() {
+        if (this.detailForm.project.valueAddedTax && this.detailForm.project.valueAddedTax !== '0') {
+          this.detailForm.project.isOutputTax = '1'
+        } else {
+          this.detailForm.project.isOutputTax = '0'
+        }
       },
       // 选择项目地点
       selectPosition() {
@@ -2193,13 +2255,19 @@
                   this.showDetailForm.project = JSON.parse(JSON.stringify(item.project))
                   this.showDetailForm.project.beforeId = this.p.beforeId
                   this.showDetailForm.project.afterId = this.p.afterId
-                  if (!item.topInfoSiteList|| item.topInfoSiteList=='') {
+                  if (!item.project.topInfoSiteList|| item.project.topInfoSiteList=='') {
                     this.showDetailForm.project.topInfoSiteList = [{
                       path: '',
                       placeId: '',
                       ffid:'',
                       uuid: ''
                     }]
+                  }
+                  //上报产值是否含税
+                  if(this.showDetailForm.project.valueAddedTax > 0){
+                     this.showDetailForm.project.isOutputTax = '1';
+                  }else{
+                     this.showDetailForm.project.isOutputTax = '0';
                   }
                 } else if (item.project.changeStatus == '2') {
                   this.changeRecordUuid=item.changeRecordUuid;
@@ -2209,7 +2277,7 @@
                   if (!this.detailForm.project.projectSubContractList) {
                     this.detailForm.project.projectSubContractList = []
                   }
-                  if (!item.topInfoSiteList|| item.topInfoSiteList=='') {
+                  if (!item.project.topInfoSiteList|| item.project.topInfoSiteList=='') {
                     this.showDetailForm.project.topInfoSiteList = [{
                       path: '',
                       placeId: '',
@@ -2222,6 +2290,12 @@
                   }
                   if(this.detailForm.project.companyBuildId != ''&& this.detailForm.project.companyBuildId != null ){
                     this.constructionOrgList = this.detailForm.project.companyBuildId.split(",");
+                  }
+                  //上报产值是否含税
+                  if(this.detailForm.project.valueAddedTax > 0){
+                     this.detailForm.project.isOutputTax = '1';
+                  }else{
+                     this.detailForm.project.isOutputTax = '0';
                   }
                 }
               })

@@ -92,14 +92,22 @@
         >
           <template slot="header" slot-scope="scope">
             <span>项目板块</span>
-            <div>
-              <el-input
-                class="list-search-picker"
-                style=" width: 100%"
-                v-model="searchform.moduleName"
-                size="mini"
-              />
-            </div>
+            <el-select
+              class="list-search-picker"
+              clearable
+              filterable
+              placeholder="请选择"
+              @change="getTwo"
+              size="mini"
+              v-model="searchform.moduleName"
+            >
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.detailName"
+                v-for="(item, index) in projectPlate"
+              ></el-option>
+            </el-select>
           </template>
         </el-table-column>
         <el-table-column
@@ -323,7 +331,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-             {{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核退回':'待登记'}}
+             {{scope.row.flowStatus=='edit'?'待登记':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核退回':'待登记'}}
           </template>
           <template slot="header" slot-scope="scope">
             <span>审核状态</span>
@@ -337,7 +345,6 @@
                 v-model="searchform.flowStatus"
               >
                 <el-option label="待登记" value="edit"></el-option>
-                <el-option label="草稿" value="edit"></el-option>
                 <el-option label="审核中" value="check"></el-option>
                 <el-option label="审核通过" value="pass"></el-option>
                 <el-option label="审核退回" value="reject"></el-option>
@@ -466,6 +473,9 @@
       bulletinType() {
         return this.$store.state.bulletinType;
       },
+      projectPlate(){
+        return this.$store.state.projectPlate;
+      },
     },
     methods: {
       //批量提交
@@ -569,7 +579,7 @@
       },
       //工程类别二级
       getTwo(id) {
-        this.searchform.enginTypeSecondId='';
+        this.searchform.enginTypeSecondId = '';
         this.xqprojectType =[];
         if(id!=''){
           this.projectDomainType.find(

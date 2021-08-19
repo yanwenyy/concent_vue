@@ -135,6 +135,51 @@
         </el-select>
       </el-form-item>
       <el-form-item
+        label="所属板块:"
+      >
+        <el-select
+          clearable
+          filterable
+          placeholder="请选择"
+          size="mini"
+          v-model="searchform.moduleId"
+        >
+          <el-option
+            :key="index"
+            :label="item.detailName"
+            :value="item.id"
+            v-for="(item, index) in projectPlate"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item
+        label="跟踪状态:">
+       <el-select
+                class="list-search-picker"
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="searchform.trackStatus"
+              >
+                <el-option label="持续跟踪中" value="1"></el-option>
+                <el-option label="放弃跟踪" value="2"></el-option>
+                <el-option label="结束跟踪" value="3"></el-option>
+                <el-option label="资审中" value="4"></el-option>
+                <el-option label="资审通过待投标" value="5"></el-option>
+                <el-option label="资审未通过" value="6"></el-option>
+                <el-option label="投标中" value="7"></el-option>
+                <el-option label="已开标" value="8"></el-option>
+                <el-option label="中标未新签" value="9"></el-option>
+                <el-option label="中标已新签" value="10"></el-option>
+                <el-option label="未中标" value="11"></el-option>
+                <el-option label="废标" value="12"></el-option>
+                <el-option label="流标" value="13"></el-option>
+                <el-option label="待跟踪" value="14"></el-option>
+              </el-select>
+      </el-form-item>
+      
+      <el-form-item
         label="所属线路:"
       >
         <el-select
@@ -175,9 +220,9 @@
           <el-button slot="append" icon="el-icon-search"  @click="selectPosition()"></el-button>
         </el-input>
       </el-form-item>
-      <el-button @click="searchformReset" type="info" plain style="color:black;background:none;float:right; margin-right:20px;"><i class="el-icon-refresh-right"></i>重置</el-button>
-      <el-button @click="getData" type="primary" plain style="float:right;margin-right:5px;"><i class="el-icon-search"></i>查询</el-button>
-      <!--<el-button @click="exportdata" type="primary" plain><i class="el-icon-top"></i>导出</el-button>-->
+      <el-button @click="exportdata" type="primary" plain style="float:right;margin-right:20px;"><i class="el-icon-top"></i>导出</el-button>
+      <el-button @click="searchformReset" type="info" plain style="color:black;background:none;float:right; margin-right:5px;"><i class="el-icon-refresh-right"></i>重置</el-button>
+      <el-button @click="getData" type="primary" plain style="float:right"><i class="el-icon-search"></i>查询</el-button>
     </el-form>
     <div style="margin-top: 10px">
       <el-table
@@ -276,6 +321,14 @@
         <el-table-column
           :width="150"
           align="center"
+          label="所属线路"
+          prop="belongLineName"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
           label="项目地点"
           prop="placeName"
           show-overflow-tooltip
@@ -364,6 +417,7 @@
           planBidTimeEnd:"",
           planBidTime:""
         },
+        trackStatus:"",
         multipleSelection: [],
         xqprojectType:[],//工程二级列表
         projectStatus:[
@@ -399,7 +453,10 @@
       },
       railwayLine(){
         return this.$store.state.railwayLine;
-      }
+      },
+      projectPlate(){
+        return this.$store.state.projectPlate;
+      },
     },
     methods: {
       //获取项目地点的值
@@ -433,6 +490,53 @@
         }
       },
       exportdata() {
+        this.searchform.size=1000000000;
+        this.$http
+          .post(
+            "/api/contract/topInfo/TopInfor/list/loadPageDataForSelect",
+            this.searchform
+          )
+          .then((res) => {
+            this.searchform.size=20;
+            var datas = res.data.data.records;
+            this.$exportXls.exportList({
+              thead:' <tr>\n' +
+              '<th>项目名称</th>\n' +
+              '<th>项目编码</th>\n' +
+              '<th>项目板块</th>\n' +
+              '<th>工程类别(一级)</th>\n' +
+              '<th>工程类别(二级)</th>\n' +
+              '<th>建设单位</th>\n' +
+              '<th>所属线路</th>\n' +
+              '<th>项目地点</th>\n' +
+              '<th>公告类型</th>\n' +
+              '<th>预计招标时间</th>\n' +
+              '<th>跟踪状态</th>\n' +
+              '<th>状态</th>\n' +
+              '</tr>',
+              jsonData:datas,
+              tdstr:['inforName','inforCode','moduleName',
+                'enginTypeFirstName','enginTypeSecondName','constructionOrg','belongLineName','placeName',
+                'noticeTypeName','planBidTime','trackStatus','flowStatus'],
+              tdstrFuc:{
+                flowStatus:function (str) {
+                  return str=='edit'?'草稿':str=='check'?'审核中':str=='pass'?'审核通过':str=='reject'?'审核退回':'待登记';
+                },
+                trackStatus:function(str){
+                  return str==1?'持续跟踪中':str==2?'放弃跟踪':str==3?'结束跟踪':str==4?
+                  '资审中':str==5?'资审通过待投标':str==6?'资审未通过':str==7?'投标中':
+                  str==8?'已开标':str==9?'中标未新签':str==10?'中标已新签':str==11?'未中标':
+                  str==12?'废标':str==13?'流标':'待跟踪'
+                },
+                planBidTime:function (str) {
+                  return str?new Date(str).toLocaleString().replace(/:\d{1,2}$/,' '):'';
+                },
+                createTime:function (str) {
+                  return str?new Date(str).toLocaleString().replace(/:\d{1,2}$/,' '):'';
+                }
+              }
+            })
+          });
       },
       // 查看
       rowshow(row) {

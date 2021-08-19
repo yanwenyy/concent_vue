@@ -113,7 +113,7 @@
             :key="index"
             :label="item.detailName"
             :value="item.id"
-            v-for="(item, index) in projectDomainType"
+            v-for="(item, index) in isTender"
           ></el-option>
         </el-select>
       </el-form-item>
@@ -374,7 +374,15 @@
       },
       multipleSelection: [],
       xqprojectType:[],//工程二级列表
-
+      isTender:[
+        {
+          detailName:"是",
+          id:'1'
+        },{
+          detailName:"否",
+          id:'0'
+        },
+      ],
       projectStatus:[
         {
             detailName:"草稿",
@@ -598,13 +606,13 @@
         this.searchform.createTimeBeginTime=this.searchform.createTime[0];
         this.searchform.createTimeEndTime=this.searchform.createTime[1];
       }
-      // this.searchform.createTime=null;
-      // this.searchform.saleTime=null;
-
-      console.log(this.searchform)
+      this.searchform = {
+        current: 1,
+        size: 20,
+      }
       this.$http
         .post(
-          "/api/contract/topInfo/Verify/list/loadPageDataForSelect",
+          "/api/contract/topInfo/BidInfo/list/bidInfoQuery",
           this.searchform
         )
         .then((res)=>{

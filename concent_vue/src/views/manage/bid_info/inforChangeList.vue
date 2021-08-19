@@ -44,7 +44,6 @@
           :width="70"
           align="center"
           label="序号"
-          fixed="left"
           show-overflow-tooltip
           type="index"
         ></el-table-column>
@@ -236,13 +235,27 @@
             {{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核退回':'待登记'}}
           </template>
           <template slot="header" slot-scope="scope">
-            <span>状态</span>
+            <span>审核状态</span>
             <div>
-              <el-input
-                style=" width: 100%"
-                v-model="searchform.flowStatus"
+              <el-select
+                class="list-search-picker"
+                clearable
+                filterable
+                placeholder="请选择"
                 size="mini"
-              />
+                v-model="searchform.flowStatus"
+              >
+                <el-option label="草稿" value="edit"></el-option>
+                <el-option label="审核中" value="check"></el-option>
+                <el-option label="审核通过" value="pass"></el-option>
+                <el-option label="审核退回" value="reject"></el-option>
+              </el-select>
+              <!--<el-input-->
+              <!--class="list-search-picker"-->
+              <!--style=" width: 100%"-->
+              <!--v-model="searchform.flowStatus"-->
+              <!--size="mini"-->
+              <!--/>-->
             </div>
           </template>
         </el-table-column>

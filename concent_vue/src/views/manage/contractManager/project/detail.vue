@@ -431,18 +431,20 @@
             </el-form-item> -->
             <el-form-item
                 label="建设单位:"
-                prop="contractInfo.constructionOrgId"
+                prop="constructionOrgList"
                 :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: ['blur','change'],
+                  type:'array',
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: ['blur','change'],
               }">
                 <el-select
-                  v-model="constructionOrgList"
+                  v-model="detailform.constructionOrgList"
                   v-if="detailform.contractInfo.isClientele=='1'"
                   multiple
                   filterable
                   collapse-tags
+                  :change="cs"
                   placeholder="请选择">
                   <el-option
                     v-for="item in pubCustomers"
@@ -452,7 +454,7 @@
                   </el-option>
                 </el-select>
                 <el-select
-                  v-model="constructionOrgList"
+                  v-model="detailform.constructionOrgList"
                   v-if="detailform.contractInfo.isClientele!='1'"
                   multiple
                   filterable
@@ -484,7 +486,7 @@
               inactive-color="#ddd"
               active-value="1"
               inactive-value="0"
-              @change="constructionOrgList=''"
+              @change="detailform.constructionOrgList=[]"
             >
             </el-switch>
           </el-form-item>
@@ -1006,7 +1008,7 @@
             </el-form-item>
             <el-form-item
             label="场地名称"
-            prop="cdmc"
+            prop="detailform.cdmc"
             :rules="{
               required: true,
               message: '此项不能为空',
@@ -2852,7 +2854,7 @@
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="工程量清单" v-if="p.actpoint != 'add'&&!p.pushId&&(detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'||detailform.contractInfo.enginTypeFirstId=='24ebba9f2f3447579d0086209aff6ecd'||detailform.contractInfo.enginTypeFirstId=='f6f5188458ab4c5ba1e0bc12a9a4188b'||detailform.contractInfo.enginTypeFirstId=='0f16c387f17b402db45c4de58e1cf8b4'||detailform.contractInfo.enginTypeFirstId=='193b4d4003d04899a1d09c8d5f7877fe')">
+      <el-tab-pane label="工程量清单" v-if="!p.pushId&&(detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'||detailform.contractInfo.enginTypeFirstId=='24ebba9f2f3447579d0086209aff6ecd'||detailform.contractInfo.enginTypeFirstId=='f6f5188458ab4c5ba1e0bc12a9a4188b'||detailform.contractInfo.enginTypeFirstId=='0f16c387f17b402db45c4de58e1cf8b4'||detailform.contractInfo.enginTypeFirstId=='193b4d4003d04899a1d09c8d5f7877fe')">
         <div class="detailBoxBG gclqd">
           <el-tabs v-model="gclName" @tab-click="getRailwayList" v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'" type="border-card">
             <el-tab-pane name="0" label="第一章">
@@ -6583,7 +6585,7 @@
           </el-tabs>
         </div>
       </el-tab-pane>
-      <el-tab-pane v-if="p.actpoint != 'add'" label="实物工程量">
+      <el-tab-pane label="实物工程量">
         <div class="detailBoxBG htfs">
           <div>
             <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
@@ -6666,7 +6668,7 @@
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane v-if="p.actpoint != 'add'" label="劳材机统计">
+      <el-tab-pane label="劳材机统计">
         <div class="detailBoxBG htfs">
           <div>
             <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
@@ -6795,7 +6797,6 @@ export default {
       }
     }
     return {
-      constructionOrgList: [],
       companyMulStatus:false,//设计单位等多选列表状态
       yqList:[],//所属央企list
       extendList:[],//扩展字段list
@@ -6819,6 +6820,7 @@ export default {
       options1:[{label:"值",value:'111'}],
       detailform: {
         commonFilesList: [],
+        constructionOrgList: [],
         contractInfo: {
           moduleId:'7f4fcba4255b43a8babf15afd6c04a53',
           moduleName:'工程承包',
@@ -6830,7 +6832,8 @@ export default {
           designOrg: '',//设计单位
           designOrgId: '',
           constructionOrg:'',//建设单位
-          constructionOrgId:''
+          constructionOrgId:'',
+          contractOrgName:''
         },
         contractInfoAttachBO: {
           innerContractInfoAttachList:[],
@@ -8042,7 +8045,7 @@ export default {
 
       this.detailform.commonFilesList=this.detailform.fileList1.concat(this.detailform.fileList2).concat(this.detailform.fileList3).concat(this.detailform.fileList4)
       var url='';
-      this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
+      this.detailform.contractInfo.constructionOrgId = this.detailform.constructionOrgList.join(",")
       if(this.detailform.searchProject==true&&(this.p.actpoint === "edit")){
         url='/api/contract/contract/ContractInfo/detail/update';
       }else{
@@ -8283,7 +8286,7 @@ export default {
       this.detailform.jzlx=datas.contractInfo.otherBuildingTypeId&&datas.contractInfo.otherBuildingTypeId.split(",");
       this.detailform.jzjglx=datas.contractInfo.otherBuildingStructureTypeId&&datas.contractInfo.otherBuildingStructureTypeId.split(",");
       if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
-        this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
+        this.detailform.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
       }
     });
     },
