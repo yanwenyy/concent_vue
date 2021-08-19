@@ -606,13 +606,13 @@
         this.searchform.createTimeBeginTime=this.searchform.createTime[0];
         this.searchform.createTimeEndTime=this.searchform.createTime[1];
       }
-      // this.searchform.createTime=null;
-      // this.searchform.saleTime=null;
-
-      console.log(this.searchform)
+      this.searchform = {
+        current: 1,
+        size: 20,
+      }
       this.$http
         .post(
-          "/api/contract/topInfo/Verify/list/loadPageDataForSelect",
+          "/api/contract/topInfo/BidInfo/list/bidInfoQuery",
           this.searchform
         )
         .then((res)=>{
