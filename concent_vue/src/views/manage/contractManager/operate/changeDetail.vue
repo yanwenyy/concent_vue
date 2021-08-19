@@ -367,6 +367,40 @@
                     />
                   </el-form-item>
                   <el-form-item
+                label="合同性质"
+                prop="contractInfo.contractCharacterCode"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+              >
+                <el-select
+                  :disabled="p.actpoint==='look'||p.actpoint=='task'"
+                  filterable
+                  clearable
+                  placeholder="请选择"
+                  size="mini"
+                  v-model="detailform.contractInfo.contractCharacterCode"
+                  @change="
+                  getName(
+                    detailform.contractInfo.contractCharacterCode,
+                    contractCharacterCode,
+                    'contractCharacter',
+                    'contractCharacterId'
+                  )
+                "
+                >
+                  <el-option
+                   v-if="item.parentDetailId=='85e14741f36211eb9cbff18633651e56'"
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in contractCharacterCode"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+                  <el-form-item
                     label="业务类别:"
 
                   >
@@ -1666,6 +1700,7 @@
                     <el-option
                       :key="index"
                       :label="item.detailName"
+                   v-if="item.parentDetailId=='6057ec5a77dc4a10988fd7eb3469c9da'"
                       :value="item.id"
                       v-for="(item, index) in bizTypeCode"
                     ></el-option>
@@ -3574,6 +3609,9 @@
     computed: {
       pubCustomers() {//客户名称
         return this.$store.state.pubCustomers;
+      },
+      contractCharacterCode(){
+        return this.$store.state.ContractCharacter;
       },
       //客户性质
       customerNature() {

@@ -1811,6 +1811,7 @@
                   >
                     <el-option
                       :key="index"
+                    v-if="item.parentDetailId=='41829bce85db42c1be8f5e763678b855'"
                       :label="item.detailName"
                       :value="item.id"
                       v-for="(item, index) in bizTypeCode"
@@ -1840,6 +1841,40 @@
                   />
                 </el-form-item>
                 <br>
+                <el-form-item
+                label="合同性质"
+                prop="contractInfo.contractCharacterCode"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+              >
+                <el-select
+                  :disabled="p.actpoint==='look'||p.actpoint=='task'"
+                  filterable
+                  clearable
+                  placeholder="请选择"
+                  size="mini"
+                  v-model="detailform.contractInfo.contractCharacterCode"
+                  @change="
+                  getName(
+                    detailform.contractInfo.contractCharacterCode,
+                    contractCharacterCode,
+                    'contractCharacter',
+                    'contractCharacterId'
+                  )
+                "
+                >
+                  <el-option
+                    :key="index"
+                    v-if="item.parentDetailId=='7e96367ff36211eb9cbfa7cb978cd0c5'"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in contractCharacterCode"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
                 <!-- <el-form-item
                   label="客户名称:"
                   prop="contractInfo.insureOtherName"
@@ -3626,6 +3661,11 @@
       customerNature() {
         return this.$store.state.customerNature;
       },
+      
+    contractCharacterCode(){
+      
+      return this.$store.state.ContractCharacter;//合同性质
+    },
       emergingMarket() {
         // console.log(this.$store.state.category.emergingMarket)
         return this.$store.state.category.emergingMarket;

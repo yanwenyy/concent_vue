@@ -499,6 +499,40 @@
                 <!--</el-select>-->
               <!--</el-form-item>-->
               <el-form-item
+                label="合同性质"
+                prop="contractInfo.contractCharacterCode"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+              >
+                <el-select
+                  :disabled="p.actpoint==='look'||p.actpoint=='task'"
+                  filterable
+                  clearable
+                  placeholder="请选择"
+                  size="mini"
+                  v-model="detailform.contractInfo.contractCharacterCode"
+                  @change="
+                  getName(
+                    detailform.contractInfo.contractCharacterCode,
+                    contractCharacterCode,
+                    'contractCharacter',
+                    'contractCharacterId'
+                  )
+                "
+                >
+                  <el-option
+                   v-if="item.parentDetailId=='85e14741f36211eb9cbff18633651e56'"
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in contractCharacterCode"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item
                 label="业务类别:"
                 prop="contractInfo.businessTypeId"
                 :rules="{
@@ -526,6 +560,7 @@
                 >
                   <el-option
                     :key="index"
+                   v-if="item.parentDetailId=='6057ec5a77dc4a10988fd7eb3469c9da'"
                     :label="item.detailName"
                     :value="item.id"
                     v-for="(item, index) in bizTypeCode"
@@ -2309,6 +2344,9 @@
       contractType(){
         return this.$store.state.contractType;//合同类型
       },
+      contractCharacterCode(){
+        return this.$store.state.ContractCharacter;
+      },
       assemblyType(){
         return this.$store.state.assemblyType;//装配类型
       },
@@ -3035,6 +3073,9 @@
           url='/api/contract/contract/ContractInfo/detail/saveOrUpdate';
         }else{
           url='/api/contract/contract/ContractInfo/process/start';
+        }
+        if(this.detailform.contractInfo.isClientele === null){
+            this.detailform.contractInfo.isClientele=0
         }
         if(this.detailform.contractInfo.isOpenBid=='1'&&this.detailform.commonFilesList2.length==0){
           this.$message.error("请上传招标公告文件");

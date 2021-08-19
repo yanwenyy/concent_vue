@@ -818,7 +818,7 @@
                 "
                 >
                   <el-option
-                    v-if="item.parentDetailId=='0f333a962655480c8ef668a8ce129d41'"
+                    v-if="item.parentDetailId=='f01fc41388d14663ac8873113f55cdd5'"
                     :key="index"
                     :label="item.detailName"
                     :value="item.id"

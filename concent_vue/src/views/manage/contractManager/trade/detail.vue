@@ -230,7 +230,7 @@
                   )
                 "
               >
-                <el-option :key="index" :label="item.detailName" v-if="item.parentDetailId=='0f333a962655480c8ef668a8ce129d41'" :value="item.id" v-for="(item,index) in bizTypeCode"></el-option>
+                <el-option :key="index" :label="item.detailName" v-if="item.parentDetailId=='e48fb8caeba411ebb7cb3f94d2235901'" :value="item.id" v-for="(item,index) in bizTypeCode"></el-option>
               </el-select>
             </el-form-item>
                 <el-form-item

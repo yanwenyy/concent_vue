@@ -1638,6 +1638,40 @@
                     v-model="detailform.contractInfo.contractType=='2'?'补充合同':'主合同'"
                   />
                 </el-form-item>
+                 <el-form-item
+                label="合同性质"
+                prop="contractInfo.contractCharacterCode"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+              >
+                <el-select
+                  :disabled="p.actpoint==='look'||p.actpoint=='task'"
+                  filterable
+                  clearable
+                  placeholder="请选择"
+                  size="mini"
+                  v-model="detailform.contractInfo.contractCharacterCode"
+                  @change="
+                  getName(
+                    detailform.contractInfo.contractCharacterCode,
+                    contractCharacterCode,
+                    'contractCharacter',
+                    'contractCharacterId'
+                  )
+                "
+                >
+                  <el-option
+                    :key="index"
+                    v-if="item.parentDetailId==='7ca465d8f36411eb9cbfe764671a1623'"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in contractCharacterCode"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
                 <el-form-item
                   label="业务类别:"
                   prop="contractInfo.businessTypeId"
@@ -1666,6 +1700,7 @@
                   >
                     <el-option
                       :key="index"
+                    v-if="item.parentDetailId==='42449dbfbe97473483efbafba1eee67e'"
                       :label="item.detailName"
                       :value="item.id"
                       v-for="(item, index) in bizTypeCode"
@@ -3576,6 +3611,9 @@
     computed: {
       pubCustomers() {//客户名称
         return this.$store.state.pubCustomers;
+      },
+      contractCharacterCode(){
+        return this.$store.state.ContractCharacter;
       },
       //客户性质
       customerNature() {

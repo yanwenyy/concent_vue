@@ -624,6 +624,7 @@
                 >
                   <el-option
                     :key="index"
+                    v-if="item.parentDetailId=='41829bce85db42c1be8f5e763678b855'"
                     :label="item.detailName"
                     :value="item.id"
                     v-for="(item, index) in bizTypeCode"
@@ -684,6 +685,40 @@
                 />
               </el-form-item>
               <br>
+              <el-form-item
+                label="合同性质"
+                prop="contractInfo.contractCharacterCode"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }"
+              >
+                <el-select
+                  :disabled="p.actpoint==='look'||p.actpoint=='task'"
+                  filterable
+                  clearable
+                  placeholder="请选择"
+                  size="mini"
+                  v-model="detailform.contractInfo.contractCharacterCode"
+                  @change="
+                  getName(
+                    detailform.contractInfo.contractCharacterCode,
+                    contractCharacterCode,
+                    'contractCharacter',
+                    'contractCharacterId'
+                  )
+                "
+                >
+                  <el-option
+                    :key="index"
+                    v-if="item.parentDetailId=='7e96367ff36211eb9cbfa7cb978cd0c5'"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in contractCharacterCode"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
               <!-- <el-form-item
                 label="客户名称:"
                 prop="contractInfo.insureOtherName"
@@ -2329,6 +2364,10 @@ export default {
     contractType(){
       return this.$store.state.contractType;//合同类型
     },
+    contractCharacterCode(){
+      
+      return this.$store.state.ContractCharacter;//合同性质
+    },
     assemblyType(){
       return this.$store.state.assemblyType;//装配类型
     },
@@ -2961,6 +3000,9 @@ export default {
         console.log(this.detailform.contractInfo[name]);
       }
     },
+    getContractCharacter(id, list, name,code){
+        console.log(list)
+    },
     //新兴市场二级
     getTwoSC(id) {
       this.detailform.contractInfo.marketSecondId='';
@@ -3031,6 +3073,9 @@ export default {
         url='/api/contract/contract/ContractInfo/detail/saveOrUpdate';
       }else{
         url='/api/contract/contract/ContractInfo/process/start';
+      }
+      if(this.detailform.contractInfo.isClientele === null){
+        this.detailform.contractInfo.isClientele = 0
       }
       if(this.detailform.contractInfo.isOpenBid=='1'&&this.detailform.commonFilesList2.length==0){
         this.$message.error("请上传招标公告文件");

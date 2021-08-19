@@ -18,6 +18,7 @@ const state = {
   wumoveType:[],//物资贸易合同所属类别
   eacode:[],//代码对照表
   projectNature:[],//项目性质类别
+  ContractCharacter:[],//合同性质
   projectProperties:[],//项目性质类别概况
   bizTypeCode:[],//业务类别
   material:[],//物流物资
@@ -158,6 +159,9 @@ const mutations = {
       case 'projectProperties':
         state.projectProperties=item.sysCategoryDetailList;
         break;
+        case 'ContractCharacter':
+          state.ContractCharacter=item.sysCategoryDetailList;
+          break;
       case 'bizTypeCode':
         state.bizTypeCode=item.sysCategoryDetailList;
         break;
@@ -341,6 +345,9 @@ const mutations = {
       case 'projectNature':
         state.projectNature=item.sysCategoryDetailList;
         break;
+        case 'ContractCharacter':
+          state.ContractCharacter=item.sysCategoryDetailList;
+          break;
       case 'projectProperties':
         state.projectProperties=item.sysCategoryDetailList;
         break;
