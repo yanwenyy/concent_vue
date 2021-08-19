@@ -162,13 +162,13 @@
                   label="承建单位"
                   prop="project.companyBuiltName"
                   style="width: 32.5%">
-                  <!-- <el-input
-                    clearable
-                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                    placeholder="请输入"
-                    v-model="detailForm.project.companyBuiltName"/> -->
-                  <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailForm.project.companyBuiltName" class="input-with-select">
-                    <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('承建单位',detailForm.project.companyBuiltId,false)" ></el-button>
+                  <el-input clearable disabled placeholder="请输入内容" v-model="detailForm.project.companyBuiltName" class="input-with-select">
+                    <el-button  
+                      v-if="p.actpoint !== 'look'&&p.actpoint!='task'" 
+                      slot="append" 
+                      icon="el-icon-circle-plus-outline" 
+                      @click="addDw('承建单位',detailForm.project.companyBuiltId,false)" >
+                    </el-button>
                   </el-input>
                 </el-form-item>
                 <el-form-item
@@ -329,8 +329,14 @@
                   detailForm.project.projectTypeId==='393a07bda2244b03a24590e076a421df' ||
                   detailForm.project.projectTypeId==='393a07bda2244b03a24590e076a421de' "
                   label="父项目名称:"
-                  prop="project.fatherProjectName"
-                  style="width: 32.5%">
+                  prop="project.fatherProjectId"
+                  style="width: 32.5%"
+                  :rules="{
+                    required: true,
+                    message: '此项不能为空',
+                    trigger: ['blur','change'],
+                  }"
+                  >
                   <el-select
                     :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                     filterable
@@ -447,7 +453,7 @@
                   prop="project.companyName"
                   style="width: 32.5%">
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                    disabled
                     clearable
                     placeholder="请输入"
                     v-model="detailForm.project.companyName">
@@ -677,6 +683,7 @@
                   style="width: 32.5%">
                   <el-input
                     clearable
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     placeholder="请输入"
                     v-model="detailForm.project.realInvest">
                     <template slot="prepend">¥</template>
@@ -758,7 +765,7 @@
                   prop="project.contractSignTime"
                   style="width: 32.5%">
                   <el-date-picker
-                    :disabled="detailForm.project.contractInfoList!=''"
+                    :disabled="detailForm.project.contractInfoList!=''||p.actpoint === 'look'||p.actpoint === 'task'"
                     v-model="detailForm.project.contractSignTime"
                     type="date"
                     value-format="timestamp"
@@ -839,7 +846,9 @@
                 }">
                   <el-select
                     v-model="constructionOrgList"
+                    @change="companyBuildChange"
                     v-if="detailForm.project.isClientele=='1'"
+                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                     multiple
                     collapse-tags
                     placeholder="请选择">
@@ -852,7 +861,9 @@
                   </el-select>
                   <el-select
                     v-model="constructionOrgList"
+                    @change="companyBuildChange"
                     v-if="detailForm.project.isClientele!='1'"
+                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                     multiple
                     collapse-tags
                     placeholder="请选择">
@@ -884,7 +895,7 @@
                       inactive-color="#ddd"
                       active-value="1"
                       inactive-value="0"
-                      @change="constructionOrgList=''"
+                      @change="companyBuildClear"
                     >
                     </el-switch>
                   </el-form-item>
@@ -896,11 +907,11 @@
                   prop="project.companyDesign"
                   style="width: 32.5%">
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                    disabled
                     clearable
                     placeholder="请选择设计单位"
                     v-model="detailForm.project.companyDesign">
-                    <el-button slot="append" icon="el-icon-circle-plus-outline" 
+                    <el-button slot="append" icon="el-icon-circle-plus-outline" :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     @click="openComMul(detailForm.project.companyDesignId,detailForm.project.companyDesign,'/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
                   </el-input>
                 </el-form-item>
@@ -909,11 +920,11 @@
                   prop="project.companySupervisor"
                   style="width: 32.5%">
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                    disabled
                     clearable
                     placeholder="请选择监理单位"
                     v-model="detailForm.project.companySupervisor">
-                    <el-button slot="append" icon="el-icon-circle-plus-outline" 
+                    <el-button slot="append" icon="el-icon-circle-plus-outline" :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     @click="openComMul(detailForm.project.companySupervisorId,detailForm.project.companySupervisor,'/api/contract/Companies/detail/findCompanies','监理单位')"></el-button>
                   </el-input>
                 </el-form-item>
@@ -1566,6 +1577,7 @@
             projectName: '', // 项目名称(中文)
             projectForeginName: '', // 项目名称(外文)
             fatherProjectName: '', // 父项目名称
+            fatherProjectId: '', // 父项目名称id
             projectOmit: '', // 项目简称
             projectNatureId: '', // 项目性质
             projectNatureFirstId: '', // 项目性质(一级)
@@ -1954,7 +1966,7 @@
         console.log(data)
         let v = {
           uuid: data.uuid, // ID新增为空，但必须传
-          subContractName: data.companyBuiltName, // 承包单位名称
+          subContractName: data.companyBuiltName, // 承建单位名称
           projectName: data.projectName, // 项目名称
           projectTypeId: data.projectTypeId, // 项目类型ID
           projectTypeName: data.projectTypeName, // 项目类型名称
@@ -2038,7 +2050,6 @@
               this.detailForm.project.commonFilesList.splice(index, 1)
             }
           })
-        console.log(this.detailForm.project.commonFilesList)
       },
       // 打开附件上传的组件
       openFileUp(url, list) {
@@ -2226,6 +2237,16 @@
           )
         }
       },
+      //建设单位下拉赋值
+      companyBuildChange(){
+        this.detailForm.project.companyBuildId = this.constructionOrgList.join(",")
+        
+      },
+      //切换是否客户
+      companyBuildClear(){
+        this.detailForm.project.companyBuildId = '',
+        this.constructionOrgList = []
+      },
       // 保存
       submitForm(formName, type) {
          var url='';
@@ -2256,7 +2277,22 @@
           this.$message.error("请选择一个主地点");
           return false;
         }
-        this.detailForm.project.companyBuildId = this.constructionOrgList.join(",")
+
+        var nameList = []
+        var customerList = this.pubCustomers
+        this.constructionOrgList.forEach(idCheck => {
+          let customer = customerList.find(item1=>item1.customerId===idCheck)
+          if(customer){
+            nameList.push(customer.customerName)
+          }
+          let outside = this.sjdwList.find(item2=>item2.customerId===idCheck)
+          if(outside){
+            nameList.push(outside.customerName)
+          }
+
+        })
+        this.detailForm.project.companyBuild = nameList.join(",")
+
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
@@ -2391,10 +2427,10 @@
       if (this.p.actpoint === 'look' || this.p.actpoint === 'edit'||this.p.actpoint=='task') {
         this.getShow()
       }
-      if(this.p.actpoint == 'add'){
-        this.detailForm.project.companyBuiltId=this.userInfo.managerOrgId;
-        this.detailForm.project.companyBuiltName=this.userInfo.managerOrgName;
-      }
+      // if(this.p.actpoint == 'add'){
+      //   this.detailForm.project.companyBuiltId=this.userInfo.managerOrgId;
+      //   this.detailForm.project.companyBuiltName=this.userInfo.managerOrgName;
+      // }
       
       this.$http
       .post(
@@ -2408,6 +2444,18 @@
           item.id=item.uuid;
         })
       });
+        //获取父项目名称列表
+      this.$http
+        .post('/api/statistics/StatisticsProject/detail/findProjectFather',
+            {projectTypeCode:this.detailForm.project.projectTypeCode,projectModuleId:this.detailForm.project.projectModuleId}
+        )
+        .then(res => {
+          if(res.data.code  === 200){
+            this.fatherList = res.data.data
+          }else{
+              this.fatherList = []
+          }
+      })
     }
   }
 </script>

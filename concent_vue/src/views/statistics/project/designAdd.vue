@@ -157,7 +157,10 @@
               :label="detailForm.project.projectNatureFirstId === '7031076e7a5f4225b1a89f31ee017802'?'投资单位:':'承建单位:'"
               prop="project.companyBuiltName"
               style="width: 32.5%">
-              <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailForm.project.companyBuiltName" class="input-with-select">
+              <el-input clearable disabled
+                placeholder="请输入内容" 
+                v-model="detailForm.project.companyBuiltName" 
+                class="input-with-select">
                 <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('承建单位',detailForm.project.companyBuiltId,false)" ></el-button>
               </el-input>
             </el-form-item>
@@ -207,6 +210,7 @@
             }">
               <el-select
                 v-model="constructionOrgList"
+                @change="companyBuildChange"
                 v-if="detailForm.project.isClientele=='1'"
                 multiple
                 collapse-tags
@@ -220,6 +224,7 @@
               </el-select>
               <el-select
                 v-model="constructionOrgList"
+                @change="companyBuildChange"
                 v-if="detailForm.project.isClientele!='1'"
                 multiple
                 collapse-tags
@@ -252,7 +257,7 @@
                   inactive-color="#ddd"
                   active-value="1"
                   inactive-value="0"
-                  @change="constructionOrgList=''"
+                  @change="companyBuildClear"
                 >
                 </el-switch>
               </el-form-item>
@@ -399,8 +404,8 @@
                     clearable
                     placeholder="请选择设计单位"
                     v-model="detailForm.project.companyDesign">
-                    <el-button slot="append" icon="el-icon-circle-plus-outline" 
-                    @click="openComMul('','','/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
+                    <el-button slot="append" icon="el-icon-circle-plus-outline"  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                    @click="openComMul(detailForm.project.companyDesignId,detailForm.project.companyDesign,'/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
                   </el-input>
                 </el-form-item>
             <el-form-item
@@ -493,6 +498,11 @@
                   detailForm.project.projectTypeId==='393a07bda2244b03a24590e076a421de' "
                   label="父项目名称:"
                   prop="project.fatherProjectName"
+                  :rules="{
+                    required: true,
+                    message: '此项不能为空',
+                    trigger: ['blur','change'],
+                  }"
                   style="width: 32.5%">
                   <el-select
                     :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
@@ -1294,7 +1304,6 @@
             projectNatureFirstId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
             investmentModelId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
             investmentContract: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
-            companyBuiltId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
             projectTypeFirstId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
             projectTypeSecondId: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
             projectLineId: [{ required: true, message: '此项不能为空', trigger: 'change' }],
@@ -1552,7 +1561,6 @@
               this.detailForm.project.commonFilesList.splice(index, 1)
             }
           })
-        console.log(this.detailForm.project.commonFilesList)
       },
       // 打开附件上传的组件
       openFileUp(url, list) {
@@ -1732,6 +1740,16 @@
           )
         }
       },
+      //建设单位下拉赋值
+      companyBuildChange(){
+        this.detailForm.project.companyBuildId = this.constructionOrgList.join(",")
+        
+      },
+      //切换是否客户
+      companyBuildClear(){
+        this.detailForm.project.companyBuildId = '',
+        this.constructionOrgList = []
+      },
       // 保存
       submitForm(formName, type) {
 
@@ -1755,7 +1773,22 @@
           this.$message.error("请选择一个主地点");
           return false;
         }
-        this.detailForm.project.companyBuildId = this.constructionOrgList.join(",")
+        
+        var nameList = []
+        var customerList = this.pubCustomers
+        this.constructionOrgList.forEach(idCheck => {
+          let customer = customerList.find(item1=>item1.customerId===idCheck)
+          if(customer){
+            nameList.push(customer.customerName)
+          }
+          let outside = this.sjdwList.find(item2=>item2.customerId===idCheck)
+          if(outside){
+            nameList.push(outside.customerName)
+          }
+
+        })
+        this.detailForm.project.companyBuild = nameList.join(",")
+
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
@@ -1834,6 +1867,7 @@
           })
         }
         if(data.type=="承建单位"){
+          console.info(data)
           this.detailForm.project.companyBuiltName=data.name;
           this.detailForm.project.companyBuiltId=data.id;
         }else if(data.type=="签约/使用资质单位"){
@@ -1925,6 +1959,18 @@
           item.id=item.uuid;
         })
       });
+      //获取父项目名称列表
+      this.$http
+        .post('/api/statistics/StatisticsProject/detail/findProjectFather',
+            {projectTypeCode:this.detailForm.project.projectTypeCode,projectModuleId:this.detailForm.project.projectModuleId}
+        )
+        .then(res => {
+          if(res.data.code  === 200){
+            this.fatherList = res.data.data
+          }else{
+              this.fatherList = []
+          }
+      })
     }
   }
 </script>

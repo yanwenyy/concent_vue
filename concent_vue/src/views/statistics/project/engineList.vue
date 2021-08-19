@@ -387,7 +387,7 @@
         projectTypeTwo: [], // 工程类别(二级)
         projectNatureTwo: [], // 项目性质(二级)
         yesOrNo: [{ id: 0, detailName: '是' }, { id: 1, detailName: '否' }],
-        flowStatus: [{ id: 1, detailName: '草稿' }, { id: 2, detailName: '审核中' }, { id: 3, detailName: '审核通过' }, { id: 4, detailName: '审核退回' }],
+        flowStatus: [{ id: 'edit', detailName: '草稿' }, { id: 'check', detailName: '审核中' }, { id: 'pass', detailName: '审核通过' }, { id: 'reject', detailName: '审核退回' }],
         sousuo: '',
         page: { current: 1, size: 20, total: 0, records: [] },
         searchform: {
@@ -487,6 +487,7 @@
       },
       getProjectTwo(id) {
         this.searchform.projectTypeSecond = ''
+        this.searchform.projectTypeSecondId = ''
         this.projectTypeTwo = []
         if (id !== '') {
           this.projectDomainType.find(
@@ -525,7 +526,7 @@
           this.$message.info('请选择一条记录进行删除操作！')
           return false
         }
-        if(this.multipleSelection[0].flowStatus == '2'|| this.multipleSelection[0].flowStatus == '3'){
+        if(this.multipleSelection[0].flowStatus == 'check'|| this.multipleSelection[0].flowStatus == 'pass'){
           this.$message.info('不能删除审核中或审核通过的数据！')
           return false
         }

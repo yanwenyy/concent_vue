@@ -879,6 +879,18 @@
         });
 
       },
+      handleRemove(file, index) {
+        this.$http
+          .post(
+            '/api/contract/topInfo/CommonFiles/list/delete',
+            { ids: [file.uuid] }
+          )
+          .then((res) => {
+            if (res.data.code === 200) {
+              this.detailForm.project.commonFilesList.splice(index, 1)
+            }
+          })
+      },
       
       // 打开附件上传的组件
       openFileUp(url, list) {

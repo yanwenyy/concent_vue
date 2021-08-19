@@ -484,6 +484,7 @@
       },
       getProjectTwo(id) {
         this.searchform.projectTypeSecond = ''
+        this.searchform.projectTypeSecondId = ''
         this.projectTypeTwo = []
         if (id !== '') {
           this.projectDomainType.find(

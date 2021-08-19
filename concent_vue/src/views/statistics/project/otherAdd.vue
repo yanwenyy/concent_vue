@@ -73,7 +73,7 @@
               prop="contractSignTime"
               style="width: 32.5%">
               <el-date-picker
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 v-model="detailForm.project.contractSignTime"
                 type="date"
                 value-format="timestamp"
@@ -106,6 +106,7 @@
             }">
               <el-select
                 v-model="constructionOrgList"
+                @change="companyBuildChange"
                 v-if="detailForm.project.isClientele=='1'"
                 multiple
                 collapse-tags
@@ -119,6 +120,7 @@
               </el-select>
               <el-select
                 v-model="constructionOrgList"
+                @change="companyBuildChange"
                 v-if="detailForm.project.isClientele!='1'"
                 multiple
                 collapse-tags
@@ -151,7 +153,7 @@
                   inactive-color="#ddd"
                   active-value="1"
                   inactive-value="0"
-                  @change="constructionOrgList=''"
+                  @change="companyBuildClear"
                 >
                 </el-switch>
               </el-form-item>
@@ -166,7 +168,7 @@
               <el-input
                 clearable
                 placeholder="请输入"
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 v-model="detailForm.project.contractMoney">
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
@@ -180,7 +182,7 @@
               <el-input
                 clearable
                 placeholder="请输入"
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 v-model="detailForm.project.amountWe">
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
@@ -961,6 +963,18 @@
           }
         });
       },
+      handleRemove(file, index) {
+        this.$http
+          .post(
+            '/api/contract/topInfo/CommonFiles/list/delete',
+            { ids: [file.uuid] }
+          )
+          .then((res) => {
+            if (res.data.code === 200) {
+              this.detailForm.project.commonFilesList.splice(index, 1)
+            }
+          })
+      },
       // 打开附件上传的组件
       openFileUp(url, list) {
         this.uploadVisible = true
@@ -1041,6 +1055,16 @@
           )
         }
       },
+      //建设单位下拉赋值
+      companyBuildChange(){
+        this.detailForm.project.companyBuildId = this.constructionOrgList.join(",")
+        
+      },
+      //切换是否客户
+      companyBuildClear(){
+        this.detailForm.project.companyBuildId = '',
+        this.constructionOrgList = []
+      },
       // 保存
       submitForm(formName, type) {
         var url='';
@@ -1049,7 +1073,20 @@
         }else{
           url="/api/statistics/StatisticsProject/process/start"
         }
-        this.detailForm.project.companyBuildId = this.constructionOrgList.join(",")
+        var nameList = []
+        var customerList = this.pubCustomers
+        this.constructionOrgList.forEach(idCheck => {
+          let customer = customerList.find(item1=>item1.customerId===idCheck)
+          if(customer){
+            nameList.push(customer.customerName)
+          }
+          let outside = this.sjdwList.find(item2=>item2.customerId===idCheck)
+          if(outside){
+            nameList.push(outside.customerName)
+          }
+
+        })
+        this.detailForm.project.companyBuild = nameList.join(",")
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http

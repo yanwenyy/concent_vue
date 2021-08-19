@@ -115,6 +115,7 @@
                 style="width: 32.5%">
                   <el-select
                     v-model="constructionOrgList"
+                    @change="companyBuildChange"
                     v-if="detailForm.project.isClientele=='1'"
                     multiple
                     filterable
@@ -129,6 +130,7 @@
                   </el-select>
                   <el-select
                     v-model="constructionOrgList"
+                    @change="companyBuildChange"
                     v-if="detailForm.project.isClientele!='1'"
                     multiple
                     filterable
@@ -161,7 +163,7 @@
                   inactive-color="#ddd"
                   active-value="1"
                   inactive-value="0"
-                  @change="constructionOrgList=''"
+                  @change="companyBuildClear"
                 >
                 </el-switch>
               </el-form-item>
@@ -976,6 +978,18 @@
         });
 
       },
+      handleRemove(file, index) {
+        this.$http
+          .post(
+            '/api/contract/topInfo/CommonFiles/list/delete',
+            { ids: [file.uuid] }
+          )
+          .then((res) => {
+            if (res.data.code === 200) {
+              this.detailForm.project.commonFilesList.splice(index, 1)
+            }
+          })
+      },
       // 打开附件上传的组件
       openFileUp(url, list) {
         this.uploadVisible = true
@@ -1043,6 +1057,16 @@
           )
         }
       },
+      //建设单位下拉赋值
+      companyBuildChange(){
+        this.detailForm.project.companyBuildId = this.constructionOrgList.join(",")
+        
+      },
+      //切换是否客户
+      companyBuildClear(){
+        this.detailForm.project.companyBuildId = '',
+        this.constructionOrgList = []
+      },
       // 保存
       submitForm(formName, type) {
         var url='';
@@ -1065,7 +1089,22 @@
           this.$message.error("请选择一个主地点");
           return false;
         }
-        this.detailForm.project.companyBuildId = this.constructionOrgList.join(",")
+        
+        var nameList = []
+        var customerList = this.pubCustomers
+        this.constructionOrgList.forEach(idCheck => {
+          let customer = customerList.find(item1=>item1.customerId===idCheck)
+          if(customer){
+            nameList.push(customer.customerName)
+          }
+          let outside = this.sjdwList.find(item2=>item2.customerId===idCheck)
+          if(outside){
+            nameList.push(outside.customerName)
+          }
+
+        })
+        this.detailForm.project.companyBuild = nameList.join(",")
+        
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
