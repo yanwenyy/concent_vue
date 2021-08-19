@@ -38,12 +38,6 @@
         :load="load"
       >
         <el-table-column
-          :width="50"
-          align="center"
-          show-overflow-tooltip
-          type="selection"
-        ></el-table-column>
-        <el-table-column
           :width="70"
           align="center"
           label="序号"
