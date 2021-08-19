@@ -559,7 +559,7 @@
               clearable
               placeholder="请选择设计单位"
               v-model="detailform.contractInfo.designOrg">
-              <el-button slot="append" icon="el-icon-circle-plus-outline" 
+              <el-button slot="append" icon="el-icon-circle-plus-outline"
               @click="openComMul(detailform.contractInfo.designOrgId,detailform.contractInfo.designOrg,'/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
             </el-input>
           </el-form-item>
@@ -6692,7 +6692,8 @@
                 ><i class="el-icon-download"></i>导入
                 </el-button>
               </el-upload>
-              <el-link v-if="p.actpoint != 'look'&&p.actpoint != 'task'" class="downFile"  type="primary" href="/static/lcjtj.xlsx" download="劳材机统计导入模板.xlsx">劳材机统计导入模板下载</el-link>
+              <!--<el-link v-if="p.actpoint != 'look'&&p.actpoint != 'task'" class="downFile"  type="primary" href="/static/lcjtj.xlsx" download="劳材机统计导入模板.xlsx">劳材机统计导入模板下载</el-link>-->
+              <el-link v-if="p.actpoint != 'look'&&p.actpoint != 'task'" class="downFile"  type="primary" @click="downModel('/api/contract/ContractInfoQuantityMachine/wood/downloadTemplate','劳材机统计导入模板')">劳材机统计导入模板下载</el-link>
             </p>
             <el-table
               :data="detailform.contractInfoQuantityMachineList2"
@@ -7008,6 +7009,25 @@ export default {
       });
   },
   methods: {
+    //劳材机模板下载
+    downModel(url,name){
+      this.$http
+        .post(
+          url,
+          { responseType:'blob' }
+        )
+        .then((res) => {
+          const content = res.data;
+          const blob = new Blob([content])
+          let url = window.URL.createObjectURL(blob);
+          let link = document.createElement('a');
+          link.style.display = 'none';
+          link.href = url;
+          link.setAttribute('download', name+'.xls');
+          document.body.appendChild(link);
+          link.click();
+        })
+    },
     //打开多选的单位列表
       openComMul(ids,names,url,type){
         this.companyMulStatus=true;

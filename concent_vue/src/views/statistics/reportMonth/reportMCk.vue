@@ -180,8 +180,7 @@
             }}</template>
         </el-table-column>
         <el-table-column
-          v-if="page.records[0]"
-          v-for="(item,s) in page.records[0].monthStrList"
+          v-for="(item,s) in headerList"
           :key="Math.random()"
           :width="150"
           align="center"
@@ -195,8 +194,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          v-if="page.records[0]"
-          v-for="(item,s) in page.records[0].yearStrList"
+          v-for="(item,s) in headerList"
           :key="Math.random()"
           :width="150"
           align="center"
@@ -210,8 +208,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          v-if="page.records[0]"
-          v-for="(item,v) in page.records[0].totalStrList"
+          v-for="(item,v) in headerList"
           :key="Math.random()"
           :width="150"
           align="center"
@@ -299,6 +296,7 @@
         setTimes:[],
         treeStatas: false,
         page: { current: 1, size: 20, total: 0, records: [] },
+        headerList:[{name:'施工产值'}],
         tjxNameList:[],//选择的统计项数组
         searchform: {
           createOrgName:'',
@@ -417,6 +415,7 @@
       getStatisticalTree(data){
         // console.log(data)
         var name=[],code=[];
+        this.headerList=[];
         data.forEach((item)=>{
           name.push(item.vname);
           code.push(item.vcode);

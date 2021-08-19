@@ -77,7 +77,7 @@
         </el-table-column>
         <el-table-column
           show-overflow-tooltip
-          type="index"
+          prop="vcode"
           label="编码"
           :width="150"
           align="center"
@@ -94,27 +94,30 @@
           label="计量单位"
           width="120"
           align="center"
-          :formatter="vjldwFormatter"
           show-overflow-tooltip
         >
         </el-table-column>
         <el-table-column
-          prop="veditable"
+          prop="isUsed"
           label="是否可用"
           width="90"
           align="center"
-          :formatter="veditableFormatter"
           show-overflow-tooltip
         >
+          <template slot-scope="scope">
+            {{scope.row.isUsed=='1'?'可用':scope.row.isUsed=='0'?'不可用':''}}
+          </template>
         </el-table-column>
         <el-table-column
-          prop="vdisable"
+          prop="isEdit"
           label="是否可写"
           width="90"
           align="center"
-          :formatter="vdisableFormatter"
           show-overflow-tooltip
         >
+          <template slot-scope="scope">
+            {{scope.row.isEdit=='1'?'可写':scope.row.isEdit=='0'?'不可写':''}}
+          </template>
         </el-table-column>
       </el-table>
       </div>
@@ -131,23 +134,23 @@
 <!-- 新增统计项的弹框 -->
     <el-dialog :title="dialogtitle" :visible.sync="dialogResult" width="40%">
       <el-form :model="itemform">
-        <el-form-item label="序号" prop="vname" >
+        <el-form-item label="序号" >
           <el-input placeholder="" class="bp_height" disabled  :value="page.records.length+1"/>
         </el-form-item>
-        <el-form-item label="编码" prop="vname" >
-          <el-input placeholder="" class="bp_height" disabled  v-model="itemform.vname" />
+        <el-form-item label="编码" prop="vCode" >
+          <el-input placeholder="" class="bp_height" :maxlength="parentid=='0'?3:100000000000000" :disabled="parentid!='0'||page.records.length!=0"  v-model="itemform.vCode" />
         </el-form-item>
-        <el-form-item label="名称" prop="vname" >
-          <el-input placeholder="" class="bp_height"  v-model="itemform.vname" />
+        <el-form-item label="名称" prop="vName" >
+          <el-input placeholder="" class="bp_height"  v-model="itemform.vName" />
         </el-form-item>
-        <el-form-item label="计量单位" prop="vjldw">
+        <el-form-item label="计量单位" prop="vJldw">
           <el-select
             filterable
             placeholder="请选择"
             class="bp_height"
-            v-model="itemform.vjldw"
+            v-model="itemform.vJldwId"
             @change="
-              getName(itemform.vjldw, measureUnit, 'vjldwName')
+              getName(itemform.vJldwId, measureUnit, 'vJldw')
             "
           >
             <el-option
@@ -158,10 +161,10 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="是否可用" prop="veditable">
+        <el-form-item label="是否可用" prop="isUsed">
           <el-switch
             class="inline-formitem-switch"
-            v-model="itemform.veditable"
+            v-model="itemform.isUsed"
             active-color="#409EFF"
             inactive-color="#ddd"
             active-value="1"
@@ -171,10 +174,10 @@
           <!--          <el-radio v-model="itemform.veditable" label="1" >是</el-radio>-->
           <!--          <el-radio v-model="itemform.veditable" label="0" >否</el-radio>-->
         </el-form-item>
-        <el-form-item label="是否可写" prop="vdisable">
+        <el-form-item label="是否可写" prop="isEdit">
           <el-switch
             class="inline-formitem-switch"
-            v-model="itemform.vdisable"
+            v-model="itemform.isEdit"
             active-color="#409EFF"
             inactive-color="#ddd"
             active-value="1"
@@ -190,37 +193,6 @@
         <el-button type="primary" @click="saveVerifyResult">确 定</el-button>
       </div>
     </el-dialog>
-
-<!-- 所属汇总指标的弹框 -->
-    <el-dialog
-        title="所属汇总指标"
-        :visible.sync="tjx"
-        width="30%"
-       >
-        <div>
-        <el-tree
-            :key="tjxKey"
-            :props="props"
-            lazy
-            ref="tree"
-            :default-expanded-keys="['']"
-            node-key="uuid"
-            :load="loadNode1"
-            @node-click="setTjx"
-          >
-        <span class="custom-tree-node" slot-scope="{ node, data }">
-          <span>
-            <i :class="data.icon" style="margin-right: 5px"></i>{{ node.label }}
-          </span>
-        </span>
-      </el-tree>
-        </div>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="tjx = false">取 消</el-button>
-          <el-button type="primary" @click="tjx = false">确 定</el-button>
-        </span>
-</el-dialog>
-
   </div>
 </template>
 
@@ -257,26 +229,12 @@ export default {
       resolve: {},
 
       itemform: {
-        uuid: "",
-        vname: "",
-        vjldw: "",
-        vprojecttype: "",
-        vprojecttypes: [],
-        vleaf: "",
-        vparentid: "",
-        vxh: "",
-        vsbpc: "",
-        venabled: "",
-        vcode: "",
-        nnamelength: "",
-        vtype: "",
-        veditable: "",
-        vhjtjx: "",
-        voptional: "",
-        valtername: "",
-        vdisable: "",
-        sumTarget:'',//汇总指标id
-        sumTargetName:'',
+        vCode:'',
+        vName:'',
+        vjldwId:'',
+        vJldw:'',
+        isUsed:'',
+        isEdit:'',
       },
 
       menus: [],
@@ -312,56 +270,6 @@ export default {
     },
   },
   methods: {
-      //打开统计项汇总指标
-      openhzzb(){
-        this.tjx = true;
-        this.tjxKey+=1;
-      // this.$http
-      //   .post(
-      //     "/api/statistics/bp/BpTjx/detail/save",
-      //     JSON.stringify(this.itemform),
-      //     // this.itemform,
-      //     { useJson: true }
-      //   )
-      //   .then((res) => {
-      //
-      //   });
-    },
-      loadNode1(node, resolve){
-        this.getData1(node, resolve);
-      },
-
-    getData1(node, resolve) {
-      // console.log(node)
-      this.node = node;
-      this.resolve = resolve;
-      if (node.level === 0) {
-        return resolve([
-          { vname: "统计项", uuid: "",},
-        ]);
-      }
-      setTimeout(() => {
-        this.$http
-          .post("/api/statistics/bp/BpTjx/list/getBpTjxListUpdateByParentId", {
-            // parentId:node.data.uuid||this.itemform.vparentid,
-            parentId:node.data.uuid,
-          })
-          .then((res) => {
-            var datas=res.data.data;
-            resolve(datas);
-
-          });
-      });
-    },
-
-      //设置统计项汇总指标
-      setTjx(obj,node,data){
-        this.itemform.sumTarget=obj.uuid;
-        this.itemform.sumTargetName=obj.vname;
-       /* this.itemform.vparentid=obj.vparentid;*/
-        this.tjx = false
-
-      },
     //获取下拉框id和name的公共方法
     getName(id, list, name) {
       if (id) {
@@ -461,23 +369,14 @@ export default {
       }
     },
     saveVerifyResult() {
-      this.dialogResult = false;
-      var str = "";
-      this.itemform.vprojecttypes.forEach((item) => {
-        str += item + ",";
-      });
-      str = str.substring(0, str.length - 1);
-      //排序
-      this.itemform.vxh = "0";
-      this.itemform.vprojecttype = str;
-      // this.itemform.vParentid=this.itemform.sumTarget;
-      // this.itemform.uuid = this.node.data.uuid;
+
       this.$http
         .post(
-          "/api/statistics/bp/BpTjx/detail/save",
-          JSON.stringify(this.itemform),
+          "/api/contract/ContractInfoQuantityMachine/wood/save",
+          this.itemform
+          // JSON.stringify(this.itemform),
           // this.itemform,
-          { useJson: true }
+          // { useJson: true }
         )
         .then((res) => {
           if (res.data.code === 200) {
@@ -485,6 +384,7 @@ export default {
               message: "保存成功",
               type: "success",
             });
+            this.dialogResult = false;
             for (
               let i = 0;
               i < this.$refs.tree.store._getAllNodes().length;
@@ -537,9 +437,29 @@ export default {
       this.showinput = false;
     },
     add() {
-      this.dialogtitle = "新增劳材机";
-      this.itemform = {};
-      this.dialogResult = true;
+      if(this.parentid!=''){
+        this.dialogtitle = "新增劳材机";
+        this.itemform = {
+          pId:this.parentid,
+          vCode:'',
+          vName:'',
+          vjldwId:'',
+          vJldw:'',
+          isUsed:'',
+          isEdit:'',
+        };
+        var listParentId=this.parentid!='0'?this.vcode:this.page.records[this.page.records.length-1].vcode.indexOf("00")!=-1?'00':'0';
+        // console.log(this.page.records[this.page.records.length-1].vcode.indexOf("00"))
+        if(this.parentid!='0'&&this.page.records.length==0){
+          this.itemform.vCode=listParentId+'001';
+        }else{
+          this.itemform.vCode=this.page.records.length>0?listParentId+(parseInt(this.page.records[this.page.records.length-1].vcode)+1):'';
+        }
+        this.dialogResult = true;
+      }else{
+        this.$message.error("请选择左侧树")
+      }
+
     },
     handleSelectChange() {
       this.$forceUpdate()
@@ -612,7 +532,7 @@ export default {
           //   message: '删除成功!'
           // });
           this.$http
-            .post("/api/statistics/bp/BpTjx/list/delete", { ids: uuids })
+            .post("/api/contract/ContractInfoQuantityMachine/wood/delete", { ids: uuids })
             .then((res) => {
               //this.$refs.tree.store.root
               //var nodeall = this.$refs.tree.store.root;
@@ -666,7 +586,8 @@ export default {
     },
     getTableData(val) {
       this.$http
-        .post("/api/statistics/bp/BpTjx/list/loadPageData", val)
+        .post("/api/contract/ContractInfoQuantityMachine/wood/loadPageData",
+          {pId:val.uuid})
         .then((res) => {
           this.page = res.data.data;
         });
@@ -676,14 +597,14 @@ export default {
       this.resolve = resolve;
       if (node.level === 0) {
         return resolve([
-          { vname: "统计项", uuid: "",},
+          { vname: "劳材机", uuid: "0",},
         ]);
       }
       setTimeout(() => {
         //console.log(node);
         this.$http
-          .post("/api/statistics/bp/BpTjx/list/getBpTjxListByParentId", {
-            parentid: node.data.uuid,
+          .post("/api/contract/ContractInfoQuantityMachine/wood/loadTreeData", {
+            pid: node.data.uuid,
           })
           .then((res) => {
             node.data.current=this.searchform.current;
@@ -691,6 +612,7 @@ export default {
             this.getTableData(node.data);
             //this.page = res.data.data
             this.parentid = node.data.uuid;
+            this.vcode=node.data.vcode;
             const data = [];
             //console.log(res.data.data);
             var itemDatas = res.data.data;
@@ -719,19 +641,6 @@ export default {
             resolve(data);
           });
       });
-    },
-    getMenus() {
-      this.$http
-        .post("api/base/loadcascader", { typecode: "XMLX" })
-        .then((res) => {
-          if (res.data.code === 0) {
-            this.menus = res.data.data;
-          }
-        });
-    },
-    currentMenu(selVal) {
-      let selMenuObj = this.menus.filter((item) => item.value === selVal);
-      this.searchform.menu = selMenuObj[0].label;
     },
     // 获取上级单位树信息
     getOrgTree() {
