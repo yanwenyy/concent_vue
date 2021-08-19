@@ -64,7 +64,7 @@
                 >
                   <el-input
                     disabled
-                    :value="(detailform.sumByMon_0.kcsjMonth||0)+(detailform.sumByMon_0.gcjlMonth||0)+(detailform.sumByMon_0.jszxMonth||0)+(detailform.sumByMon_0.qtMonth||0)+(detailform.sumByYear_0.kcsjMonth||0)+(detailform.sumByYear_0.gcjlMonth||0)+(detailform.sumByYear_0.jszxMonth||0)+(detailform.sumByYear_0.qtMonth||0)"/>
+                    :value="(detailform.sumByMon_0.kcsjMonth||0)+(detailform.sumByMon_0.gcjlMonth||0)+(detailform.sumByMon_0.jszxMonth||0)+(detailform.sumByMon_0.qtMonth||0)+(detailform.sumByYear_0.kcsjYear||0)+(detailform.sumByYear_0.gcjlYear||0)+(detailform.sumByYear_0.jszxYear||0)+(detailform.sumByYear_0.qtYear||0)"/>
                 </el-form-item>
                 <el-form-item
                   label="其中勘察设计:"
