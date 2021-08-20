@@ -215,6 +215,12 @@
           type="index"
         ></el-table-column>
         <el-table-column
+          :width="100"
+          label="是否中标"
+          prop="isWinBid"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
           :width="300"
           label="标段名称"
           prop="sectionName"
@@ -250,12 +256,11 @@
           label="项目地点"
           prop="path"
           show-overflow-tooltip
-        >
-        </el-table-column>
+        ></el-table-column>
         <el-table-column
-        :width="150"
+          :width="150"
           label="参与投标单位"
-          prop="bidAgentCompany"
+          prop="participatingUnitsName"
           align="center"
           show-overflow-tooltip
         >
@@ -264,7 +269,7 @@
           :width="150"
           align="center"
           label="录入单位"
-          prop="noticeTypeName"
+          prop="createOrgName"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
@@ -278,32 +283,32 @@
           :width="180"
           align="center"
           label="资审截止日期"
-          prop="createTime"
+          prop="endTime"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           :width="180"
           align="center"
           label="开标日期"
-          prop="createTime"
+          prop="dateOfBidOpeningName"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           :width="180"
           align="center"
           label="审核通过日期"
-          prop="createTime"
+          prop="approvalTime"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
           :width="150"
           align="center"
           label="登记时间"
-          prop="verify.createTime"
+          prop="createTime"
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{scope.row.createTime | dateformat}}
+            <span>{{formatDate(scope.row.createTime)}}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -655,27 +660,22 @@
       this.getData();
     },
     searchformReset() {
-      // this.$refs["searchform"].resetFields();
       this.searchform={
-        inforName: "",
+        current: 1,
+        size: 20,
+        inforName:"",
         enginTypeFirstId: "",
-        enginTypeSecondId: "",
-        constructionOrg: "",
-        noticeTypeId: "",
-        belongLineId: "",
-        designOrg:"",
-        ffid:'',
-        flowStatus:'',
-        saleTime:'',
-        createTime:'',
-        bidAgentCompany:'',
-        sectionName:'',
-        selectTimeTypeSaleTime:'',
+        sectionName:"",
+        constructionOrgId:"",
+        bidBeginTime:"",
+        bidEndTime:"",
+        noticeTypeId:"",
+        createOrgCode:"",
         saleTimeBeginTime:"",
-        saleTimeEndTime:'',
-        selectTimeTypeCreateTime:'',
-        createTimeBeginTime:"",
-        createTimeEndTime:'',
+        saleTimeEndTime:"",
+        isWinBid:"",
+        path:"",
+        isClientele:"0"
       }
       this.getData();
     },
@@ -685,18 +685,6 @@
     },
     // 查询
     getData() {
-      if(this.searchform.selectTimeTypeSaleTime=='01'){
-        this.searchform.saleTimeBeginTime=this.searchform.saleTime[0];
-        this.searchform.saleTimeEndTime=this.searchform.saleTime[1];
-      }
-      if(this.searchform.selectTimeTypeCreateTime=='01'){
-        this.searchform.createTimeBeginTime=this.searchform.createTime[0];
-        this.searchform.createTimeEndTime=this.searchform.createTime[1];
-      }
-      this.searchform = {
-        current: 1,
-        size: 20,
-      }
       this.$http
         .post(
           "/api/contract/topInfo/BidInfo/list/bidInfoQuery",
@@ -706,8 +694,17 @@
           this.page = res.data.data;
           console.log(this.page)
         });
+    },
+    formatDate(date) {
+      var date = new Date(date);
+      var YY = date.getFullYear() + '-';
+      var MM = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+      var DD = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate());
+      var hh = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+      var mm = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+      var ss = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+      return YY + MM + DD +" "+hh + mm + ss;
     }
-
   },
   created() {
     this.getData();
