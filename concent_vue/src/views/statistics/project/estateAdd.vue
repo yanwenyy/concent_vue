@@ -994,6 +994,8 @@
           this.$message.error("请选择一个主地点");
           return false;
         }
+        //上报产值是否含税
+        this.getOutputTax();
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
@@ -1029,6 +1031,8 @@
       },
       // 提交
       submit() {
+        //上报产值是否含税
+        this.getOutputTax();
         const id = this.p.uuid || this.uuid
         this.$http
           .post('/api/statistics/StatisticsProject/process/start',

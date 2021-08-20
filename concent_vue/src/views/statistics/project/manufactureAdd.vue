@@ -51,6 +51,7 @@
             </el-form-item>
           </el-row>
           <el-row>
+            <el-col :span="8">
               <el-form-item
                 label="客户名称:"
                 prop="project.companyBuildId"
@@ -58,8 +59,7 @@
               required: true,
               message: '此项不能为空',
               trigger: ['blur','change']
-            }"
-                style="width: 32.5%">
+            }">
                   <el-select
                     v-model="constructionOrgList"
                     @change="companyBuildChange"
@@ -93,6 +93,7 @@
                       ></el-option>
                   </el-select>
               </el-form-item>
+              </el-col>
               <el-col :span="8">
               <el-form-item
                 class="inline-formitem"
@@ -1300,6 +1301,23 @@
       companyBuildChange(){
         this.detailForm.project.companyBuildId = this.constructionOrgList.join(",")
       },
+      //建设单位通过ID查找NAME
+      getBuildName(){
+        var nameList = []
+        var customerList = this.pubCustomers
+        this.constructionOrgList.forEach(idCheck => {
+          let customer = customerList.find(item1=>item1.customerId===idCheck)
+          if(customer){
+            nameList.push(customer.customerName)
+          }
+          let outside = this.sjdwList.find(item2=>item2.customerId===idCheck)
+          if(outside){
+            nameList.push(outside.customerName)
+          }
+
+        })
+        this.detailForm.project.companyBuild = nameList.join(",")
+      },
       //切换是否客户
       companyBuildClear(){
         this.detailForm.project.companyBuildId = '',
@@ -1327,20 +1345,9 @@
           this.$message.error("请选择一个主地点");
           return false;
         }
-        var nameList = []
-        var customerList = this.pubCustomers
-        this.constructionOrgList.forEach(idCheck => {
-          let customer = customerList.find(item1=>item1.customerId===idCheck)
-          if(customer){
-            nameList.push(customer.customerName)
-          }
-          let outside = this.sjdwList.find(item2=>item2.customerId===idCheck)
-          if(outside){
-            nameList.push(outside.customerName)
-          }
-
-        })
-        this.detailForm.project.companyBuild = nameList.join(",")
+        this.getBuildName();
+        //上报产值是否含税
+        this.getOutputTax();
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
@@ -1376,6 +1383,9 @@
       },
       // 提交
       submit() {
+        this.getBuildName();
+        //上报产值是否含税
+        this.getOutputTax();
         const id = this.p.uuid || this.uuid
         this.$http
           .post('/api/statistics/StatisticsProject/process/start',
