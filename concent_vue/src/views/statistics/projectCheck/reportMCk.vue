@@ -512,7 +512,7 @@
         this.searchform.reportMonth=this.searchform.yearDateS.split("-")[1];
         // this.searchform.tjxCode='002007001001,002007002001';
         this.$http
-            .post('/api/statistics/projectMonthlyReport/Projectreport/list/reportMQuery', this.searchform)
+            .post('/api/statistics/Projectcheck/list/reportMCheckQuery', this.searchform)
             .then(res => {
               var datas=res.data.data;
               datas.records.forEach((item)=>{
