@@ -138,8 +138,8 @@
                     placeholder="请选择">
                       <el-option
                         :key="index"
-                        :label="item.detailName"
-                        :value="item.id"
+                        :label="item.customerName"
+                        :value="item.customerId"
                         v-for="(item, index) in sjdwList"
                       ></el-option>
                   </el-select>
@@ -1221,8 +1221,8 @@
         this.sjdwList = res.data.data.records;
         this.sjdwList.forEach((item)=>{
           item.value=item.companyName;
-          item.detailName=item.companyName;
-          item.id=item.uuid;
+          item.customerName=item.companyName;
+          item.customerId=item.uuid;
         })
       });
     }
