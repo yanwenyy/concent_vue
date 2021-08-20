@@ -118,7 +118,7 @@
             highlight-current-row
             ref="table"
             style="width: 99%"
-
+            :row-class-name="tableRowClassName"
             tooltip-effect="dark"
           >
             <el-table-column
@@ -371,6 +371,13 @@
       }
     },
     methods: {
+      //隐藏某些行
+      tableRowClassName: function (row, index) {
+        if (row.row.tjxCode=='002009003'||row.row.tjxCode=='002009003001'||row.row.tjxCode=='002009005'||row.row.tjxCode=='002009005001') {
+          return 'hidden-row';
+        }
+        return '';
+      },
       //点击显示或隐藏开累
       setShowKl(){
         this.showKL=!this.showKL;
