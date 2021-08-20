@@ -304,7 +304,25 @@ export default {
                   'menushow': false,
                   'leaf': false,
                   'defaultpage': false
-                }
+                },
+                {
+                  'name': '投标查询',
+                  'path': '/manage/bid_info/tender/list',
+                  'component': '/manage/bid_info/tender/list',
+                  'iconCls': 'el-icon-edit',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
+                {
+                  'name': '投标查询详情',
+                  'path': '/manage/bid_info/tender/detail',
+                  'component': '/manage/bid_info/tender/detail',
+                  'iconCls': 'el-icon-edit',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
               ]
             },
             {
@@ -618,24 +636,6 @@ export default {
                   'path': '/manage/contractManager/examinationCut/searchList',
                   'component': '/manage/contractManager/examinationCut/searchList',
                   'iconCls': 'el-icon-search',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': true
-                },
-                {
-                  'name': '投标查询',
-                  'path': '/manage/contractManager/tender/list',
-                  'component': '/manage/contractManager/tender/list',
-                  'iconCls': 'el-icon-edit',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': true
-                },
-                {
-                  'name': '投标查询详情',
-                  'path': '/manage/contractManager/tender/detail',
-                  'component': '/manage/contractManager/tender/detail',
-                  'iconCls': 'el-icon-edit',
                   'menushow': true,
                   'leaf': true,
                   'defaultpage': true
