@@ -1073,7 +1073,7 @@
                 <p v-if="detailform.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'"  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>标段信息: </span>
                   <el-button
-                    v-show="p.actpoint != 'add'&&p.actpoint!== 'look'&&p.actpoint!== 'task'&&detailform.topInfoOrg.flowStatus!=1"
+                    v-show="p.actpoint != 'add'&&p.actpoint!== 'look'&&p.actpoint!== 'task'&&detailform.topInfoOrg.flowStatus!='edit'"
                     @click="add('bd')"
                     class="detatil-flie-btn"
                     type="primary"
@@ -1205,7 +1205,7 @@
           </el-form>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&detailform.topInfoOrg.flowStatus!=1&&detailform.topInfoOrg.flowStatus!=null">
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&detailform.topInfoOrg.flowStatus!='edit'&&detailform.topInfoOrg.flowStatus!=null">
         <Audit-Process :task="p.task||{businessId:p.topOrgId,businessType:' contract_project_new'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>

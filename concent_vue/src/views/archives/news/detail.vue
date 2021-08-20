@@ -194,7 +194,7 @@
                 </el-form>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&detailform.archivesInfo.flowStatus!=1&&detailform.archivesInfo.flowStatus!=null">
+            <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&detailform.archivesInfo.flowStatus!='edit'&&detailform.archivesInfo.flowStatus!=null">
               <Audit-Process :task="p.task||{businessId:p.instid,businessType:' contract_file_message'}"></Audit-Process>
             </el-tab-pane>
           </el-tabs>

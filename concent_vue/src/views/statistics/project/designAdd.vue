@@ -1139,7 +1139,7 @@
       </div>
     <!-- </el-card> -->
     </el-tab-pane>
-    <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&(detailForm.project.flowStatus!=1)">
+    <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&(detailForm.project.flowStatus!='edit')">
       <Audit-Process :task="p.task||{businessId:p.uuid,businessType:' project_project_new'}"></Audit-Process>
     </el-tab-pane>
     </el-tabs>
