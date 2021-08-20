@@ -2182,10 +2182,10 @@
 
 <script>
   import Tree from '@/components/tree'
-  import CompanyTree from '../companyTree'
+  import CompanyTree from '../../contractManager/companyTree.vue'
   import { isMoney,isURL } from '@/utils/validate'
   import FileUpload from '@/components/fileUpload'
-  import SearchName from '../searchName'
+  import SearchName from '../../contractManager/searchName'
   import AuditProcess from '@/components/auditProcess'
   import companyMul from '@/components/companiesMultiple'
 export default {

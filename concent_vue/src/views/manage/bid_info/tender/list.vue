@@ -30,7 +30,7 @@
       >
         <el-select
           v-model="constructionOrgList"
-          v-if="detailform.contractInfo.isClientele=='1'"
+          v-if="searchform.isClientele=='1'"
           filterable
           collapse-tags
           placeholder="请选择">
@@ -43,7 +43,7 @@
         </el-select>
         <el-select
           v-model="constructionOrgList"
-          v-if="detailform.contractInfo.isClientele!='1'"
+          v-if="searchform.isClientele!='1'"
           filterable
           collapse-tags
           placeholder="请选择">
@@ -56,7 +56,6 @@
         </el-select>
       </el-form-item>
       <el-form-item
-        class="inline-formitem"
         label="是否客户:"
         prop="contractInfo.isClientele"
         :rules="{
@@ -64,16 +63,28 @@
           message: '此项不能为空',
           trigger: 'blur',
         }">
-        <el-switch
+        <el-select
+          v-model="searchform.isClientele"
+          filterable
+          collapse-tags
+          placeholder="请选择">
+            <el-option
+              :key="index"
+              :label="item.detailName"
+              :value="item.id"
+              v-for="(item, index) in isClientele"
+            ></el-option>
+        </el-select>
+        <!-- <el-switch
           class="inline-formitem-switch"
-          v-model="detailform.contractInfo.isClientele"
+          v-model="searchform.isClientele"
           active-color="#409EFF"
           inactive-color="#ddd"
           active-value="1"
           inactive-value="0"
           @change="constructionOrgList=''"
         >
-        </el-switch>
+        </el-switch> -->
       </el-form-item>
       <div class="el-form-item">
         <el-form-item label="开标日期:" prop="searchform.saleTime" >
@@ -414,11 +425,14 @@
         saleTimeEndTime:"",
         isWinBid:"",
         path:"",
+        isClientele:"0"
       },
       detailform: {
         commonFilesList1: [],
         commonFilesList2: [],
-        contractInfo: {},
+        contractInfo: {
+          isClientele:"0"
+        },
         contractInfoAttachBO: {
           innerContractInfoAttachList:[],
           unionContractInfoAttachList:[]
@@ -430,6 +444,15 @@
         jzjglx:[],//建筑结构类型
         cdmc:[],//场地名称
       },
+      isClientele:[
+        {
+          detailName:"是",
+          id:"1"
+        },{
+          detailName:"否",
+          id:"0"
+        },
+      ],
       multipleSelection: [],
       xqprojectType:[],//工程二级列表
       isTender:[
