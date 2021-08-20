@@ -6693,7 +6693,8 @@
                 </el-button>
               </el-upload>
               <!--<el-link v-if="p.actpoint != 'look'&&p.actpoint != 'task'" class="downFile"  type="primary" href="/static/lcjtj.xlsx" download="劳材机统计导入模板.xlsx">劳材机统计导入模板下载</el-link>-->
-              <el-link v-if="p.actpoint != 'look'&&p.actpoint != 'task'" class="downFile"  type="primary" @click="downModel('/api/contract/ContractInfoQuantityMachine/wood/downloadTemplate','劳材机统计导入模板')">劳材机统计导入模板下载</el-link>
+              <!--<el-link v-if="p.actpoint != 'look'&&p.actpoint != 'task'" class="downFile"  type="primary" @click="downModel('/api/contract/ContractInfoQuantityMachine/wood/downloadTemplate','劳材机统计导入模板')">劳材机统计导入模板下载</el-link>-->
+              <el-link v-if="p.actpoint != 'look'&&p.actpoint != 'task'" class="downFile"  type="primary" href="/api/download/woodMachine" >劳材机统计导入模板下载</el-link>
             </p>
             <el-table
               :data="detailform.contractInfoQuantityMachineList2"
