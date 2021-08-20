@@ -462,7 +462,7 @@ export default {
         strs.forEach((itemstr) => {
           this.projectDomainType.forEach((item) => {
             //console.log(row);
-            if (itemstr == item.detailCode) {
+            if (itemstr == item.id) {
               str += item.detailName + ", ";
             }
           });
@@ -477,7 +477,7 @@ export default {
       var str = "";
       this.measureUnit.forEach((item) => {
         //console.log(row);
-        if (row.vjldw == item.detailCode) {
+        if (row.vjldw == item.id) {
           str = item.detailName;
         }
       });
