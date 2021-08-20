@@ -97,8 +97,8 @@
                     placeholder="请选择">
                       <el-option
                         :key="index"
-                        :label="item.detailName"
-                        :value="item.id"
+                        :label="item.customerName"
+                        :value="item.customerId"
                         v-for="(item, index) in sjdwList"
                       ></el-option>
                   </el-select>
@@ -948,7 +948,6 @@
             businessId: '', // 业务板块
             projectName: '',
             projectForeginName: '',
-            customerName: '',  //客户名称
             contractNumber: '',
             contractMoney: '',
             supplierAddress: '', // 供方地点
@@ -1442,8 +1441,8 @@
           this.sjdwList = res.data.data.records;
           this.sjdwList.forEach((item)=>{
             item.value=item.companyName;
-            item.detailName=item.companyName;
-            item.id=item.uuid;
+            item.customerName=item.companyName;
+            item.customerId=item.uuid;
           })
         });
     }

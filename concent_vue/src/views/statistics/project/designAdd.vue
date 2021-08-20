@@ -230,14 +230,13 @@
                 collapse-tags
                 placeholder="请选择">
                   <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in sjdwList"
+                      :key="index"
+                      :label="item.customerName"
+                      :value="item.customerId"
+                      v-for="(item, index) in sjdwList"
                   ></el-option>
               </el-select>
             </el-form-item>
-            <el-col :span="8">
               <el-form-item
                 class="inline-formitem"
                 style="width: 32.5%"
@@ -261,7 +260,6 @@
                 >
                 </el-switch>
               </el-form-item>
-            </el-col>
           </el-row>
           <!--工程类别(一级)-->
           <el-row>
@@ -1925,7 +1923,7 @@
                 this.detailForm.project.projectStatusId='6530437b0a6f49a59b047eb4eb4f9201';
                 this.getCount()
               }
-              if(this.detailForm.project.companyBuildId != ''){
+              if(this.detailForm.project.companyBuildId != ''&& this.detailForm.project.companyBuildId != null){
                 this.constructionOrgList = this.detailForm.project.companyBuildId.split(",");
               }
             }
@@ -1955,8 +1953,8 @@
         this.sjdwList = res.data.data.records;
         this.sjdwList.forEach((item)=>{
           item.value=item.companyName;
-          item.detailName=item.companyName;
-          item.id=item.uuid;
+          item.customerName=item.companyName;
+          item.customerId=item.uuid;
         })
       });
       //获取父项目名称列表

@@ -869,13 +869,13 @@
                     placeholder="请选择">
                       <el-option
                         :key="index"
-                        :label="item.detailName"
-                        :value="item.id"
+                        :label="item.customerName"
+                        :value="item.customerId"
                         v-for="(item, index) in sjdwList"
                       ></el-option>
                   </el-select>
                 </el-form-item>
-                <el-col :span="8">
+                <el-col :span="12">
                   <el-form-item
                     class="inline-formitem"
                     style="width: 32.5%"
@@ -992,7 +992,7 @@
               <p>
                 <span >项目地点: </span>
                 <el-button
-                  v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'&&detailForm.project.contractInfoList==''"
+                  v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                   class="detatil-flie-btn"
                   @click="add('dd')"
                   type="primary"
@@ -1028,7 +1028,7 @@
                     <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.path'"  :rules="{required: true,message: '此项不能为空'}">
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                       <el-input disabled placeholder="请输入内容" v-model="scope.row.path" class="input-with-select group-no-padding">
-                        <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append" icon="el-icon-circle-plus" @click="selectPosition(),positionIndex=scope.$index"></el-button>
+                        <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus" @click="selectPosition(),positionIndex=scope.$index"></el-button>
                       </el-input>
                     </el-form-item>
                   </template>
@@ -1047,7 +1047,7 @@
                       <el-input
                         class="group-no-padding"
                         clearable
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         v-model="scope.row.contractAmount"
                         @input="getPositionMoney(scope.$index,detailForm.project.topInfoSiteList)"
                       >
@@ -2080,6 +2080,7 @@
       // },
       resetFuDai(id, list, name,code) {
         this.detailForm.project.fatherProjectName = ''
+        this.detailForm.project.fatherProjectId = ''
         this.detailForm.project.isBureauIndex = ''
         this.getName(id, list, name,code)
           //获取父项目名称列表
@@ -2267,6 +2268,19 @@
           this.$message.error("请至少选择一个项目地点");
           return false;
         }
+        if(this.detailForm.project.topInfoSiteList.length>0){
+          var money=0;
+          var list = this.detailForm.project.topInfoSiteList;
+          list.forEach((item,i)=>{
+            if(i>0){
+              money+=Number(item.contractAmount);
+            }
+          });
+          if(this.detailForm.project.contractAmountEngine-money<0){
+            this.$message.error("项目地点份额之和要小于等于工程合同额");
+            return false;
+          }
+        }
         var hasMain=false;
         this.detailForm.project.topInfoSiteList.forEach((item)=>{
           if(item.isMain=='1'){
@@ -2440,8 +2454,8 @@
         this.sjdwList = res.data.data.records;
         this.sjdwList.forEach((item)=>{
           item.value=item.companyName;
-          item.detailName=item.companyName;
-          item.id=item.uuid;
+          item.customerName=item.companyName;
+          item.customerId=item.uuid;
         })
       });
         //获取父项目名称列表
