@@ -9,7 +9,7 @@
           clearable
           filterable
           placeholder="请选择"
-          @change="getTwo"
+          @change="getEngineering"
           size="mini"
           v-model="searchform.enginTypeFirstId"
         >
@@ -75,16 +75,6 @@
               v-for="(item, index) in isClientele"
             ></el-option>
         </el-select>
-        <!-- <el-switch
-          class="inline-formitem-switch"
-          v-model="searchform.isClientele"
-          active-color="#409EFF"
-          inactive-color="#ddd"
-          active-value="1"
-          inactive-value="0"
-          @change="constructionOrgList=''"
-        >
-        </el-switch> -->
       </el-form-item>
       <div class="el-form-item">
         <el-form-item label="开标日期:" prop="searchform.saleTime" >
@@ -285,21 +275,33 @@
           label="资审截止日期"
           prop="endTime"
           show-overflow-tooltip
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{formatDate(scope.row.endTime)}}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           :width="180"
           align="center"
           label="开标日期"
           prop="dateOfBidOpeningName"
           show-overflow-tooltip
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{formatDate(scope.row.dateOfBidOpeningName)}}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           :width="180"
           align="center"
           label="审核通过日期"
           prop="approvalTime"
           show-overflow-tooltip
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{formatDate(scope.row.dateOfBidOpeningName)}}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           :width="150"
           align="center"
@@ -390,7 +392,6 @@
     </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogResult = false">取 消</el-button>
-        <!--<el-button type="primary" @click="saveVerifyResult">确 定</el-button>-->
       </div>
     </el-dialog>
     </div>
@@ -410,7 +411,6 @@
   data() {
     return {
       constructionOrgList: '',
-      companyMulStatus:false,//设计单位等多选列表状态
       sjdwList:[],
       treeStatas: false,
       dialogResult:false,
@@ -430,24 +430,7 @@
         saleTimeEndTime:"",
         isWinBid:"",
         path:"",
-        isClientele:"0"
-      },
-      detailform: {
-        commonFilesList1: [],
-        commonFilesList2: [],
-        contractInfo: {
-          isClientele:"0"
-        },
-        contractInfoAttachBO: {
-          innerContractInfoAttachList:[],
-          unionContractInfoAttachList:[]
-        },
-        contractInfoSectionList: [],
-        topInfoSiteList:[],
-        zplx:[],//装配类型
-        jzlx:[],//建筑类型
-        jzjglx:[],//建筑结构类型
-        cdmc:[],//场地名称
+        isClientele:"1"
       },
       isClientele:[
         {
@@ -459,7 +442,6 @@
         },
       ],
       multipleSelection: [],
-      xqprojectType:[],//工程二级列表
       isTender:[
         {
           detailName:"是",
@@ -469,21 +451,6 @@
           id:'0'
         },
       ],
-      projectStatus:[
-        {
-            detailName:"草稿",
-            id:'edit'
-          },
-          {
-            detailName:"审核中",
-            id:'check'
-          },
-          {
-            detailName:"审核通过",
-            id:'pass'
-          }
-      ],//项目状态列表
-      formLabelWidth: '120px',
       resultform:{
         verifySection:{
           uuid:'',
@@ -537,9 +504,13 @@
     },
   },
   methods: {
-    saveVerifyResult() {
-      this.dialogResult = false
-
+    //工程类别二级
+    getTwo(id) {
+      console.info(this.constructionOrgList)
+    },
+    // 选择工程类别
+    getEngineering() {
+      console.info(this.searchform.enginTypeFirstId, this.projectDomainType)
     },
     verifyResultEdit() {
       if (this.multipleSelection.length > 0) {
@@ -576,10 +547,6 @@
       this.$nextTick(() => {
         this.$refs.addOrUpdate.init()
       })
-    },
-    //工程类别二级
-    getTwo(id) {
-      this.detailform.contractInfo.constructionOrgId = this.constructionOrgList
     },
     exportdata() {
       this.searchform.size=1000000000;
@@ -675,7 +642,7 @@
         saleTimeEndTime:"",
         isWinBid:"",
         path:"",
-        isClientele:"0"
+        isClientele:"1"
       }
       this.getData();
     },
@@ -692,18 +659,17 @@
         )
         .then((res)=>{
           this.page = res.data.data;
-          console.log(this.page)
         });
     },
     formatDate(date) {
+      if (date == '' || date == null) {
+        return ''
+      }
       var date = new Date(date);
       var YY = date.getFullYear() + '-';
       var MM = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
       var DD = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate());
-      var hh = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
-      var mm = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
-      var ss = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
-      return YY + MM + DD +" "+hh + mm + ss;
+      return YY + MM + DD;
     }
   },
   created() {
