@@ -55,10 +55,10 @@
                 label="客户名称:"
                 prop="project.companyBuildId"
                 :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
+              required: true,
+              message: '此项不能为空',
+              trigger: ['blur','change']
+            }"
                 style="width: 32.5%">
                   <el-select
                     v-model="constructionOrgList"
@@ -87,8 +87,8 @@
                     placeholder="请选择">
                       <el-option
                         :key="index"
-                        :label="item.detailName"
-                        :value="item.id"
+                        :label="item.customerName"
+                        :value="item.customerId"
                         v-for="(item, index) in sjdwList"
                       ></el-option>
                   </el-select>
@@ -928,7 +928,6 @@
         treeStatas: false,
         emergingMarketTwo: [],
         bizTypeCodeTwo: [],
-        companyBuildId:'',
         sjdwList: [],
         constructionOrgList:[],
         DwVisible:false,//选择单位弹框状态
@@ -995,7 +994,9 @@
                 isMain: '1',
                 country: '',
               }
-            ]
+            ],
+            companyBuild: '', // 客户名称
+            companyBuildId: ''
           }
         },
         rules: {
@@ -1298,7 +1299,6 @@
       //建设单位下拉赋值
       companyBuildChange(){
         this.detailForm.project.companyBuildId = this.constructionOrgList.join(",")
-        
       },
       //切换是否客户
       companyBuildClear(){
@@ -1458,8 +1458,8 @@
           this.sjdwList = res.data.data.records;
           this.sjdwList.forEach((item)=>{
             item.value=item.companyName;
-            item.detailName=item.companyName;
-            item.id=item.uuid;
+            item.customerName=item.companyName;
+            item.customerId=item.uuid;
           })
         });
     }
