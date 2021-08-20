@@ -306,6 +306,7 @@
                       @input="scope.row.monthValue = scope.row.monthValue.replace(/[^\d.]/g,'','').replace( /([0-9]+\.[0-9]{2})[0-9]*/,'$1'),setCcsjYmjd(detailform.kc_list,detailform.sumByMon_0,'categorySecondName',scope.$index)"
                       :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                       clearable
+                      @change="monthChange(detailform.kc_list,scope.$index)"
                       v-model="scope.row.monthValue"/>
                   </template>
                 </el-table-column>
@@ -3970,15 +3971,28 @@
         this.detailform.sumByMon_1.industry=Number(this.detailform.sumByMon_1.industry||0)+1;
         this.$forceUpdate();
       },
-      //勘察设计月末进度
-      setCcsjYmjd(list,obj,name,index){
-        // console.log(list,obj,name,index) detailform.kc_list
+      // 月末
+      monthChange(list,index){
         let num = Number(list[index].monthValue)-Number(list[index].monthStart)
         if (num < 0) {
           num = 0
+          list[index].monthValue = 0
+          this.$message({
+            showClose: true,
+            message: '月末进度应大于月初进度！'
+          });
         }
         list[index].monthFinish = num*list[index].contractMoney/100
         list[index].monthComplete = num*list[index].physicalQuantity/100
+      },
+      //勘察设计月末进度
+      setCcsjYmjd(list,obj,name,index){
+        // let num = Number(list[index].monthValue)-Number(list[index].monthStart)
+        // if (num < 0) {
+        //   num = 0
+        // }
+        // list[index].monthFinish = num*list[index].contractMoney/100
+        // list[index].monthComplete = num*list[index].physicalQuantity/100
         // 改了哪个，产值的哪个变动
         let kind = list[index].categorySecondName
         let money = 0
@@ -4326,6 +4340,12 @@
         }
       },
       saveInfo(formName,type) {
+        console.info(this.detailform.kc_list)
+        this.detailform.kc_list.forEach((element)=>{
+          if (element.monthValue < element.monthStart) {
+            element.monthValue = element.monthStart
+          }
+        })
         var url='';
         if(type=='save'){
           url="/api/statistics/unProjectReport/save/batch/addDetail"
