@@ -473,15 +473,13 @@ export default {
       }
     },
     vjldwFormatter: function (row, column) {
-      // console.log(this.measureUnit);
-      var str = "";
-      this.measureUnit.forEach((item) => {
-        //console.log(row);
-        if (row.vjldw == item.id) {
-          str = item.detailName;
-        }
-      });
-      return str;
+      // var str = "";
+      // this.measureUnit.forEach((item) => {
+      //   if (row.vjldw == item.id) {
+      //     str = item.detailName;
+      //   }
+      // });
+      return row.vjldwName;
     },
     handleNodeExpand(data, note) {
       // console.log(note);
