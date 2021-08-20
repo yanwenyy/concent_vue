@@ -331,6 +331,7 @@
     },
     data() {
       return {
+        userdata:JSON.parse(sessionStorage.getItem('userdata')),
         showKL:false,//是否显示开累
         key:0,
         data:[],

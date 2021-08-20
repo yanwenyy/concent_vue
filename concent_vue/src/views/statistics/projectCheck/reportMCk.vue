@@ -52,7 +52,7 @@
           <el-form-item label="项目类型:">
              <el-select  placeholder="请选择" v-model="searchform.projectTypeCode">
                <el-option value="017001,017003" label="局指+自揽"></el-option>
-               <el-option value="017002,017003" label="局指+自揽"></el-option>
+               <el-option value="017002,017003" label="局指子+自揽"></el-option>
              </el-select>
           </el-form-item>
           <el-button

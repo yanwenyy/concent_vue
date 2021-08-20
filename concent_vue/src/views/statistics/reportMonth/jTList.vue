@@ -357,6 +357,7 @@
       },
       // 增加
       add() {
+        console.log(this.tableData)
         if (this.multipleSelection.length !== 1) {
           this.$message.info("请选择一条记录进行创建操作！");
           return false;
@@ -369,39 +370,58 @@
           this.$message.info("无权操作下级单位月报！");
           return false;
         }
+
         //判断是否存在未上报的数据，如果存在就提示，不存在就创建
-        if(this.tableData.length>0){
-          for (var i=0; i < this.tableData.length; i++) {
-            if((this.tableData[i].flowStatus ==''||this.tableData[i].flowStatus ==null)){
-              this.$message.info('该单位下存在未提交的月报,请提交该单位下所有项目月报后再进行尝试！')
-              return false;
-            }
-          };
-        }
+        // if(this.tableData.length>0){
+        //   for (var i=0; i < this.tableData.length; i++) {
+        //     if((this.tableData[i].flowStatus ==''||this.tableData[i].flowStatus ==null||this.tableData[i].flowStatus !='pass')&&this.multipleSelection[0].uuid!=this.tableData[i].uuid){
+        //       this.$message.info('该单位下存在未提交的月报,请提交该单位下所有项目月报后再进行尝试！')
+        //       return false;
+        //     }
+        //   };
+        // }
         if (this.multipleSelection[0].createOrgCode==this.userdata.managerOrgCode && (this.multipleSelection[0].flowStatus==''||this.multipleSelection[0].flowStatus==null)) {
           var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/jtReportEntityInfo';
-        var params =  this.multipleSelection[0];
-        this.$http.post(
-            url,
-            JSON.stringify(params),
-            {useJson: true}
-        ).then((res) => {
-          if (res.data.code === 200) {
-            this.$message({
-              message: '创建成功'
+          var params =  this.multipleSelection[0];
+          //判断是否存在未上报的数据，如果存在就提示，不存在就创建
+          this.$http
+            .post(
+              "/api/statistics/projectMonthlyReport/Projectreport/detail/checkJtChildData",
+              JSON.stringify( {
+                reportYear:this.multipleSelection[0].reportYear,
+                reportMonth:this.multipleSelection[0].reportMonth
+              }),
+              {useJson: true}
+            )
+            .then((res) => {
+              if(res.data.data=='1'){
+                this.$http.post(
+                  url,
+                  JSON.stringify(params),
+                  {useJson: true}
+                ).then((res) => {
+                  if (res.data.code === 200) {
+                    this.$message({
+                      message: '创建成功'
+                    });
+                    this.getData();
+                  }else if(res.data.code === 400){
+                    this.$message({
+                      message: '该单位已在本月创建过月报请尝试修改或于下月再进行尝试'
+                    });
+                    this.getData();
+                  }else{
+                    this.$message({
+                      message: '创建失败'
+                    });
+                  }
+                });
+              }else{
+                this.$message.info('该单位下存在未提交的月报,请提交该单位下所有项目月报后再进行尝试！')
+              }
             });
-            this.getData();
-          }else if(res.data.code === 400){
-            this.$message({
-              message: '该单位已在本月创建过月报请尝试修改或于下月再进行尝试'
-            });
-            this.getData();
-          }else{
-            this.$message({
-              message: '创建失败'
-            });
-          }
-        });}
+
+        }
       },
       // 修改
       totop() {
