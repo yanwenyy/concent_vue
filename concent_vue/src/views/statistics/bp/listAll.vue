@@ -477,7 +477,7 @@ export default {
       var str = "";
       this.measureUnit.forEach((item) => {
         //console.log(row);
-        if (row.vjldw == item.id) {
+        if (row.vjldw == item.detailCode) {
           str = item.detailName;
         }
       });
