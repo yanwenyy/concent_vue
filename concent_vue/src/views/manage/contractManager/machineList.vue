@@ -453,7 +453,9 @@ export default {
         if(this.parentid!='0'&&this.page.records.length==0){
           this.itemform.vCode=listParentId+'001';
         }else{
-          this.itemform.vCode=this.page.records.length>0?listParentId+(parseInt(this.page.records[this.page.records.length-1].vcode)+1):'';
+          var chilVcode=Number(this.page.records[this.page.records.length-1].vcode)+1;
+          console.log(chilVcode,chilVcode.toString().length)
+          this.itemform.vCode=this.page.records.length>0?(chilVcode.toString().length==4||chilVcode.toString().length==1?'00'+chilVcode:'0'+chilVcode):'';
         }
         this.dialogResult = true;
       }else{
