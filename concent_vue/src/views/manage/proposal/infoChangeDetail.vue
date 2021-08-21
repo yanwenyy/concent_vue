@@ -1125,6 +1125,7 @@
 
                   type="textarea"
                   clearable
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   placeholder="请输入"
 
                   v-model="detailform.topInfor.changeReason"

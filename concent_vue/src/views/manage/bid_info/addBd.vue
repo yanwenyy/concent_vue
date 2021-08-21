@@ -31,7 +31,6 @@
                 )"
             :disabled="type === 'look'||type=='eidtnew'">
           <el-option
-              v-if="item.isTrack=='1'"
               :key="index"
               :label="item.sectionName"
               :value="item.uuid"

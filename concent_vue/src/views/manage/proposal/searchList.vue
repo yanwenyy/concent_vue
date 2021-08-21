@@ -4,9 +4,9 @@
       <el-form-item label="项目名称:">
         <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
       </el-form-item>
-      <el-form-item label="建设单位:">
+      <!-- <el-form-item label="建设单位:">
         <el-input v-model="searchform.constructionOrg" placeholder="建设单位" clearable></el-input>
-      </el-form-item>
+      </el-form-item> -->
       <!-- <el-form-item label="设计单位:">
         <el-input v-model="searchform.designOrg" placeholder="设计单位" clearable></el-input>
       </el-form-item> -->
@@ -220,8 +220,8 @@
           <el-button slot="append" icon="el-icon-search"  @click="selectPosition()"></el-button>
         </el-input>
       </el-form-item>
-      <el-button @click="exportdata" type="primary" plain style="float:right;margin-right:20px;"><i class="el-icon-top"></i>导出</el-button>
-      <el-button @click="searchformReset" type="info" plain style="color:black;background:none;float:right; margin-right:5px;"><i class="el-icon-refresh-right"></i>重置</el-button>
+      <el-button @click="searchformReset" type="info" plain style="color:black;background:none;float:right; margin-right:20px;"><i class="el-icon-refresh-right"></i>重置</el-button>
+      <el-button @click="exportdata" type="primary" plain style="float:right;margin-right:5px;"><i class="el-icon-top"></i>导出</el-button>
       <el-button @click="getData" type="primary" plain style="float:right"><i class="el-icon-search"></i>查询</el-button>
     </el-form>
     <div style="margin-top: 10px">
