@@ -331,7 +331,7 @@
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-             {{scope.row.flowStatus=='edit'?'待登记':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核退回':'待登记'}}
+             {{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核退回':'待登记'}}
           </template>
           <template slot="header" slot-scope="scope">
             <span>审核状态</span>

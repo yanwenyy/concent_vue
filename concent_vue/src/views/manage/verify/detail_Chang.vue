@@ -1229,6 +1229,15 @@
                 ></el-option>
               </el-select>
             </el-form-item>
+            <el-form-item
+              label="逾期类型:"
+              class="formItem"
+            >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                v-model="detailformAfter.verify.overdueType"
+              />
+            </el-form-item>
             <br>
 
         <el-form-item

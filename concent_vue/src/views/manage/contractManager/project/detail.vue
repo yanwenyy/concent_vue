@@ -108,6 +108,7 @@
             label="是否导入清单"
           >
             <el-switch
+              @change="isImportChange"
               :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
               class="inline-formitem-switch"
               v-model="p.pushId?'1':detailform.contractInfo.isImport"
@@ -1223,7 +1224,7 @@
                 filterable
                 placeholder="请选择"
 
-                v-model="detailform.contractInfo.contractProvinceId"
+                v-model="detailform.contractInfo.contractProvinceName"
                 @change="
                 getName(
                   detailform.contractInfo.contractProvinceId,
@@ -2854,7 +2855,7 @@
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="工程量清单" v-if="!p.pushId&&(detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'||detailform.contractInfo.enginTypeFirstId=='24ebba9f2f3447579d0086209aff6ecd'||detailform.contractInfo.enginTypeFirstId=='f6f5188458ab4c5ba1e0bc12a9a4188b'||detailform.contractInfo.enginTypeFirstId=='0f16c387f17b402db45c4de58e1cf8b4'||detailform.contractInfo.enginTypeFirstId=='193b4d4003d04899a1d09c8d5f7877fe')">
+      <el-tab-pane label="工程量清单" v-if="isImportChangeVal&&!p.pushId&&(detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'||detailform.contractInfo.enginTypeFirstId=='24ebba9f2f3447579d0086209aff6ecd'||detailform.contractInfo.enginTypeFirstId=='f6f5188458ab4c5ba1e0bc12a9a4188b'||detailform.contractInfo.enginTypeFirstId=='0f16c387f17b402db45c4de58e1cf8b4'||detailform.contractInfo.enginTypeFirstId=='193b4d4003d04899a1d09c8d5f7877fe')">
         <div class="detailBoxBG gclqd">
           <el-tabs v-model="gclName" @tab-click="getRailwayList" v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'" type="border-card">
             <el-tab-pane name="0" label="第一章">
@@ -6799,6 +6800,7 @@ export default {
       }
     }
     return {
+      isImportChangeVal:false,
       companyMulStatus:false,//设计单位等多选列表状态
       yqList:[],//所属央企list
       extendList:[],//扩展字段list
@@ -8315,6 +8317,14 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
+    // 是否导入清单
+    isImportChange(val) {
+      if(val == "1") {
+        this.isImportChangeVal = false
+      }else {
+        this.isImportChangeVal = true
+      }
+    }
   },
 }
 </script>
