@@ -115,6 +115,7 @@
             border
             highlight-current-row
             ref="table"
+            :row-class-name="tableRowClassName"
             style="width: 99%"
 
             tooltip-effect="dark"
@@ -330,6 +331,7 @@
     },
     data() {
       return {
+        userdata:JSON.parse(sessionStorage.getItem('userdata')),
         showKL:false,//是否显示开累
         key:0,
         data:[],
@@ -374,6 +376,13 @@
       }
     },
     methods: {
+      //隐藏某些行
+      tableRowClassName: function (row, index) {
+        if (row.row.tjxCode=='002009003'||row.row.tjxCode=='002009003001'||row.row.tjxCode=='002009005'||row.row.tjxCode=='002009005001') {
+          return 'hidden-row';
+        }
+        return '';
+      },
       //点击显示或隐藏开累
       setShowKl(){
         this.showKL=!this.showKL;

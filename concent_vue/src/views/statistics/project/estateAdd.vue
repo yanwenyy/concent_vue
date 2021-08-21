@@ -590,7 +590,7 @@
         </el-form>
       </div>
     </el-tab-pane>
-    <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&(detailForm.project.flowStatus!=1)">
+    <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&(detailForm.project.flowStatus!='edit')">
       <Audit-Process :task="p.task||{businessId:p.uuid,businessType:' project_project_new'}"></Audit-Process>
     </el-tab-pane>
     </el-tabs>
@@ -994,6 +994,8 @@
           this.$message.error("请选择一个主地点");
           return false;
         }
+        //上报产值是否含税
+        this.getOutputTax();
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
@@ -1029,6 +1031,8 @@
       },
       // 提交
       submit() {
+        //上报产值是否含税
+        this.getOutputTax();
         const id = this.p.uuid || this.uuid
         this.$http
           .post('/api/statistics/StatisticsProject/process/start',

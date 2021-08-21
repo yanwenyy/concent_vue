@@ -95,48 +95,48 @@
             </el-form-item>
           </el-row>
           <el-row>
-            <el-form-item
-              label="客户名称:"
-              prop="project.companyBuildId"
-                style="width: 32.5%"
-              :rules="{
-              required: true,
-              message: '此项不能为空',
-              trigger: ['blur','change'],
-            }">
-              <el-select
-                v-model="constructionOrgList"
-                @change="companyBuildChange"
-                v-if="detailForm.project.isClientele=='1'"
-                multiple
-                collapse-tags
-                placeholder="请选择">
-                <el-option
-                  v-for="item in pubCustomers"
-                  :key="item.customerId"
-                  :label="item.customerName"
-                  :value="item.customerId">
-                </el-option>
-              </el-select>
-              <el-select
-                v-model="constructionOrgList"
-                @change="companyBuildChange"
-                v-if="detailForm.project.isClientele!='1'"
-                multiple
-                collapse-tags
-                placeholder="请选择">
+            <el-col :span="8">
+              <el-form-item
+                label="客户名称:"
+                prop="project.companyBuildId"
+                :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: ['blur','change'],
+              }">
+                <el-select
+                  v-model="constructionOrgList"
+                  @change="companyBuildChange"
+                  v-if="detailForm.project.isClientele=='1'"
+                  multiple
+                  collapse-tags
+                  placeholder="请选择">
                   <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in sjdwList"
-                  ></el-option>
-              </el-select>
-            </el-form-item>
+                    v-for="item in pubCustomers"
+                    :key="item.customerId"
+                    :label="item.customerName"
+                    :value="item.customerId">
+                  </el-option>
+                </el-select>
+                <el-select
+                  v-model="constructionOrgList"
+                  @change="companyBuildChange"
+                  v-if="detailForm.project.isClientele!='1'"
+                  multiple
+                  collapse-tags
+                  placeholder="请选择">
+                    <el-option
+                        :key="index"
+                        :label="item.customerName"
+                        :value="item.customerId"
+                      v-for="(item, index) in sjdwList"
+                    ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
             <el-col :span="8">
               <el-form-item
                 class="inline-formitem"
-                style="width: 32.5%"
                 label="是否客户:"
                 prop="project.isClientele"
                 :rules="{
@@ -658,7 +658,7 @@
         </el-form>
       </div>
       </el-tab-pane>
-      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&(detailForm.project.flowStatus!=1)">
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&(detailForm.project.flowStatus!='edit')">
         <Audit-Process :task="p.task||{businessId:p.uuid,businessType:' project_project_new'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>
@@ -1058,21 +1058,9 @@
       //建设单位下拉赋值
       companyBuildChange(){
         this.detailForm.project.companyBuildId = this.constructionOrgList.join(",")
-        
       },
-      //切换是否客户
-      companyBuildClear(){
-        this.detailForm.project.companyBuildId = '',
-        this.constructionOrgList = []
-      },
-      // 保存
-      submitForm(formName, type) {
-        var url='';
-        if(type=='save'){
-          url="/api/statistics/StatisticsProject/detail/save"
-        }else{
-          url="/api/statistics/StatisticsProject/process/start"
-        }
+      //建设单位通过ID查找NAME
+      getBuildName(){
         var nameList = []
         var customerList = this.pubCustomers
         this.constructionOrgList.forEach(idCheck => {
@@ -1087,6 +1075,23 @@
 
         })
         this.detailForm.project.companyBuild = nameList.join(",")
+      },
+      //切换是否客户
+      companyBuildClear(){
+        this.detailForm.project.companyBuildId = '',
+        this.constructionOrgList = []
+      },
+      // 保存
+      submitForm(formName, type) {
+        var url='';
+        if(type=='save'){
+          url="/api/statistics/StatisticsProject/detail/save"
+        }else{
+          url="/api/statistics/StatisticsProject/process/start"
+        }
+        this.getBuildName();
+        //上报产值是否含税
+        this.getOutputTax();
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
@@ -1122,6 +1127,9 @@
       },
       // 提交
       submit() {
+        this.getBuildName();
+        //上报产值是否含税
+        this.getOutputTax();
         const id = this.p.uuid || this.uuid
         this.$http
           .post('/api/statistics/StatisticsProject/process/start',
@@ -1198,8 +1206,8 @@
         this.sjdwList = res.data.data.records;
         this.sjdwList.forEach((item)=>{
           item.value=item.companyName;
-          item.detailName=item.companyName;
-          item.id=item.uuid;
+          item.customerName=item.companyName;
+          item.customerId=item.uuid;
         })
       });
     }

@@ -215,6 +215,23 @@
             </div>
           </template>
         </el-table-column>-->
+        <el-table-column
+          :width="150"
+          align="center"
+          label="填报类型"
+          prop="monthReportType"
+          show-overflow-tooltip
+        >
+          <template slot="header" slot-scope="scope">
+            <span>填报类型</span>
+            <div>
+              <el-input style=" width: 100%" v-model="searchform.monthReportType" size="mini"/>
+            </div>
+          </template>
+          <template  slot-scope="scope">
+             {{scope.row.monthReportType=='1'?'工程公司':scope.row.monthReportType=='2'?'局指挥部':'全部'}}
+          </template>
+        </el-table-column>
         <el-table-column :width="150"
                          align="center"
                          label="状态"

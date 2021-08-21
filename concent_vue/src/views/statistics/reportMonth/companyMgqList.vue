@@ -230,6 +230,9 @@
               <el-input style=" width: 100%" v-model="searchform.monthReportType" size="mini"/>
             </div>
           </template>
+          <template  slot-scope="scope">
+             {{scope.row.monthReportType=='1'?'工程公司':scope.row.monthReportType=='2'?'局指挥部':'全部'}}
+          </template>
         </el-table-column>
         <el-table-column :width="150"
                          align="center"

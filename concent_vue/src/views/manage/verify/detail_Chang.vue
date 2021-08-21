@@ -1648,7 +1648,7 @@
       <!--多选的单位列表组件-->
       <company-mul v-if="companyMulStatus" ref="comAdd" @getComList="getComList"></company-mul>
     </el-tab-pane>
-    <el-tab-pane label="审批流程" name="lc" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&detailformAfter.verify.flowStatus!=1&&detailformAfter.verify.flowStatus!=null">
+    <el-tab-pane label="审批流程" name="lc" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&detailformAfter.verify.flowStatus!='edit'&&detailformAfter.verify.flowStatus!=null">
       <Audit-Process :task="p.task||{businessId:(p.changRecorUUid+'-'+p.topinfoid),businessType:'contract_qual_change'}"></Audit-Process>
     </el-tab-pane>
   </el-tabs>

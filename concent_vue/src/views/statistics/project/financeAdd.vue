@@ -104,6 +104,7 @@
             </el-form-item>
           </el-row>
           <el-row>
+            <el-col :span="8">
               <el-form-item
                 label="客户名称:"
                 prop="project.companyBuildId"
@@ -111,8 +112,7 @@
                     required: true,
                     message: '此项不能为空',
                     trigger: 'blur',
-                  }"
-                style="width: 32.5%">
+                  }">
                   <el-select
                     v-model="constructionOrgList"
                     @change="companyBuildChange"
@@ -138,35 +138,36 @@
                     placeholder="请选择">
                       <el-option
                         :key="index"
-                        :label="item.detailName"
-                        :value="item.id"
+                        :label="item.customerName"
+                        :value="item.customerId"
                         v-for="(item, index) in sjdwList"
                       ></el-option>
                   </el-select>
-              </el-form-item>
+                </el-form-item>
+              </el-col>
               <el-col :span="8">
-              <el-form-item
-                class="inline-formitem"
-                label="是否客户:"
-                prop="project.isClientele"
-                :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: 'blur',
-                  }"
-              >
-                <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  class="inline-formitem-switch"
-                  v-model="detailForm.project.isClientele"
-                  active-color="#409EFF"
-                  inactive-color="#ddd"
-                  active-value="1"
-                  inactive-value="0"
-                  @change="companyBuildClear"
+                <el-form-item
+                  class="inline-formitem"
+                  label="是否客户:"
+                  prop="project.isClientele"
+                  :rules="{
+                      required: true,
+                      message: '此项不能为空',
+                      trigger: 'blur',
+                    }"
                 >
-                </el-switch>
-              </el-form-item>
+                  <el-switch
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    class="inline-formitem-switch"
+                    v-model="detailForm.project.isClientele"
+                    active-color="#409EFF"
+                    inactive-color="#ddd"
+                    active-value="1"
+                    inactive-value="0"
+                    @change="companyBuildClear"
+                  >
+                  </el-switch>
+                </el-form-item>
               </el-col>
             </el-row>
           <el-row>
@@ -663,7 +664,7 @@
         </el-form>
       </div>
       </el-tab-pane>
-      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&(detailForm.project.flowStatus!=1)">
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&(detailForm.project.flowStatus!='edit')">
         <Audit-Process :task="p.task||{businessId:p.uuid,businessType:' project_project_new'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>
@@ -1060,7 +1061,23 @@
       //建设单位下拉赋值
       companyBuildChange(){
         this.detailForm.project.companyBuildId = this.constructionOrgList.join(",")
-        
+      },
+      //建设单位通过ID查找NAME
+      getBuildName(){
+        var nameList = []
+        var customerList = this.pubCustomers
+        this.constructionOrgList.forEach(idCheck => {
+          let customer = customerList.find(item1=>item1.customerId===idCheck)
+          if(customer){
+            nameList.push(customer.customerName)
+          }
+          let outside = this.sjdwList.find(item2=>item2.customerId===idCheck)
+          if(outside){
+            nameList.push(outside.customerName)
+          }
+
+        })
+        this.detailForm.project.companyBuild = nameList.join(",")
       },
       //切换是否客户
       companyBuildClear(){
@@ -1090,21 +1107,9 @@
           return false;
         }
         
-        var nameList = []
-        var customerList = this.pubCustomers
-        this.constructionOrgList.forEach(idCheck => {
-          let customer = customerList.find(item1=>item1.customerId===idCheck)
-          if(customer){
-            nameList.push(customer.customerName)
-          }
-          let outside = this.sjdwList.find(item2=>item2.customerId===idCheck)
-          if(outside){
-            nameList.push(outside.customerName)
-          }
-
-        })
-        this.detailForm.project.companyBuild = nameList.join(",")
-        
+        this.getBuildName();
+        //上报产值是否含税
+        this.getOutputTax();
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
@@ -1140,6 +1145,9 @@
       },
       // 提交
       submit() {
+        this.getBuildName();
+        //上报产值是否含税
+        this.getOutputTax();
         const id = this.p.uuid || this.uuid
         this.$http
           .post('/api/statistics/StatisticsProject/process/start',
@@ -1221,8 +1229,8 @@
         this.sjdwList = res.data.data.records;
         this.sjdwList.forEach((item)=>{
           item.value=item.companyName;
-          item.detailName=item.companyName;
-          item.id=item.uuid;
+          item.customerName=item.companyName;
+          item.customerId=item.uuid;
         })
       });
     }

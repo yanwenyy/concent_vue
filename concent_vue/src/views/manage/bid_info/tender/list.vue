@@ -9,7 +9,7 @@
           clearable
           filterable
           placeholder="请选择"
-          @change="getTwo"
+          @change="getEngineering"
           size="mini"
           v-model="searchform.enginTypeFirstId"
         >
@@ -75,16 +75,6 @@
               v-for="(item, index) in isClientele"
             ></el-option>
         </el-select>
-        <!-- <el-switch
-          class="inline-formitem-switch"
-          v-model="searchform.isClientele"
-          active-color="#409EFF"
-          inactive-color="#ddd"
-          active-value="1"
-          inactive-value="0"
-          @change="constructionOrgList=''"
-        >
-        </el-switch> -->
       </el-form-item>
       <div class="el-form-item">
         <el-form-item label="开标日期:" prop="searchform.saleTime" >
@@ -215,6 +205,12 @@
           type="index"
         ></el-table-column>
         <el-table-column
+          :width="100"
+          label="是否中标"
+          prop="isWinBid"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
           :width="300"
           label="标段名称"
           prop="sectionName"
@@ -250,12 +246,11 @@
           label="项目地点"
           prop="path"
           show-overflow-tooltip
-        >
-        </el-table-column>
+        ></el-table-column>
         <el-table-column
-        :width="150"
+          :width="150"
           label="参与投标单位"
-          prop="bidAgentCompany"
+          prop="participatingUnitsName"
           align="center"
           show-overflow-tooltip
         >
@@ -264,7 +259,7 @@
           :width="150"
           align="center"
           label="录入单位"
-          prop="noticeTypeName"
+          prop="createOrgName"
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
@@ -278,32 +273,44 @@
           :width="180"
           align="center"
           label="资审截止日期"
-          prop="createTime"
+          prop="endTime"
           show-overflow-tooltip
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{formatDate(scope.row.endTime)}}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           :width="180"
           align="center"
           label="开标日期"
-          prop="createTime"
+          prop="dateOfBidOpeningName"
           show-overflow-tooltip
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{formatDate(scope.row.dateOfBidOpeningName)}}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           :width="180"
           align="center"
           label="审核通过日期"
-          prop="createTime"
+          prop="approvalTime"
           show-overflow-tooltip
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <span>{{formatDate(scope.row.dateOfBidOpeningName)}}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           :width="150"
           align="center"
           label="登记时间"
-          prop="verify.createTime"
+          prop="createTime"
           show-overflow-tooltip
         >
           <template slot-scope="scope">
-            {{scope.row.createTime | dateformat}}
+            <span>{{formatDate(scope.row.createTime)}}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -385,7 +392,6 @@
     </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogResult = false">取 消</el-button>
-        <!--<el-button type="primary" @click="saveVerifyResult">确 定</el-button>-->
       </div>
     </el-dialog>
     </div>
@@ -405,7 +411,6 @@
   data() {
     return {
       constructionOrgList: '',
-      companyMulStatus:false,//设计单位等多选列表状态
       sjdwList:[],
       treeStatas: false,
       dialogResult:false,
@@ -425,24 +430,7 @@
         saleTimeEndTime:"",
         isWinBid:"",
         path:"",
-        isClientele:"0"
-      },
-      detailform: {
-        commonFilesList1: [],
-        commonFilesList2: [],
-        contractInfo: {
-          isClientele:"0"
-        },
-        contractInfoAttachBO: {
-          innerContractInfoAttachList:[],
-          unionContractInfoAttachList:[]
-        },
-        contractInfoSectionList: [],
-        topInfoSiteList:[],
-        zplx:[],//装配类型
-        jzlx:[],//建筑类型
-        jzjglx:[],//建筑结构类型
-        cdmc:[],//场地名称
+        isClientele:"1"
       },
       isClientele:[
         {
@@ -454,7 +442,6 @@
         },
       ],
       multipleSelection: [],
-      xqprojectType:[],//工程二级列表
       isTender:[
         {
           detailName:"是",
@@ -464,21 +451,6 @@
           id:'0'
         },
       ],
-      projectStatus:[
-        {
-            detailName:"草稿",
-            id:'edit'
-          },
-          {
-            detailName:"审核中",
-            id:'check'
-          },
-          {
-            detailName:"审核通过",
-            id:'pass'
-          }
-      ],//项目状态列表
-      formLabelWidth: '120px',
       resultform:{
         verifySection:{
           uuid:'',
@@ -532,9 +504,13 @@
     },
   },
   methods: {
-    saveVerifyResult() {
-      this.dialogResult = false
-
+    //工程类别二级
+    getTwo(id) {
+      console.info(this.constructionOrgList)
+    },
+    // 选择工程类别
+    getEngineering() {
+      console.info(this.searchform.enginTypeFirstId, this.projectDomainType)
     },
     verifyResultEdit() {
       if (this.multipleSelection.length > 0) {
@@ -571,10 +547,6 @@
       this.$nextTick(() => {
         this.$refs.addOrUpdate.init()
       })
-    },
-    //工程类别二级
-    getTwo(id) {
-      this.detailform.contractInfo.constructionOrgId = this.constructionOrgList
     },
     exportdata() {
       this.searchform.size=1000000000;
@@ -655,27 +627,22 @@
       this.getData();
     },
     searchformReset() {
-      // this.$refs["searchform"].resetFields();
       this.searchform={
-        inforName: "",
+        current: 1,
+        size: 20,
+        inforName:"",
         enginTypeFirstId: "",
-        enginTypeSecondId: "",
-        constructionOrg: "",
-        noticeTypeId: "",
-        belongLineId: "",
-        designOrg:"",
-        ffid:'',
-        flowStatus:'',
-        saleTime:'',
-        createTime:'',
-        bidAgentCompany:'',
-        sectionName:'',
-        selectTimeTypeSaleTime:'',
+        sectionName:"",
+        constructionOrgId:"",
+        bidBeginTime:"",
+        bidEndTime:"",
+        noticeTypeId:"",
+        createOrgCode:"",
         saleTimeBeginTime:"",
-        saleTimeEndTime:'',
-        selectTimeTypeCreateTime:'',
-        createTimeBeginTime:"",
-        createTimeEndTime:'',
+        saleTimeEndTime:"",
+        isWinBid:"",
+        path:"",
+        isClientele:"1"
       }
       this.getData();
     },
@@ -685,18 +652,6 @@
     },
     // 查询
     getData() {
-      if(this.searchform.selectTimeTypeSaleTime=='01'){
-        this.searchform.saleTimeBeginTime=this.searchform.saleTime[0];
-        this.searchform.saleTimeEndTime=this.searchform.saleTime[1];
-      }
-      if(this.searchform.selectTimeTypeCreateTime=='01'){
-        this.searchform.createTimeBeginTime=this.searchform.createTime[0];
-        this.searchform.createTimeEndTime=this.searchform.createTime[1];
-      }
-      this.searchform = {
-        current: 1,
-        size: 20,
-      }
       this.$http
         .post(
           "/api/contract/topInfo/BidInfo/list/bidInfoQuery",
@@ -704,10 +659,18 @@
         )
         .then((res)=>{
           this.page = res.data.data;
-          console.log(this.page)
         });
+    },
+    formatDate(date) {
+      if (date == '' || date == null) {
+        return ''
+      }
+      var date = new Date(date);
+      var YY = date.getFullYear() + '-';
+      var MM = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+      var DD = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate());
+      return YY + MM + DD;
     }
-
   },
   created() {
     this.getData();

@@ -2,14 +2,14 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-button-group style="float: left">
-        <el-button @click="add" :disabled="flowStatus!=1&&flowStatus!=null" plain type="primary" ><i class="el-icon-plus"></i>登记</el-button>
+        <el-button @click="add" :disabled="flowStatus!='edit'&&flowStatus!=null" plain type="primary" ><i class="el-icon-plus"></i>登记</el-button>
 
         <el-button @click="editItem"
         :disabled="flowStatus=='check' || flowStatus=='pass'"
         plain type="primary"
         ><i class="el-icon-edit"></i>修改</el-button>
 
-        <el-button @click="remove" :disabled="flowStatus!=1&&flowStatus!=4" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
+        <el-button @click="remove" :disabled="flowStatus!='edit'&&flowStatus!='reject'" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
         <el-button @click="batchSub" type="primary" plain><i class="el-icon-plus"></i>批量提交</el-button>
       </el-button-group>
             <div style="float: right">

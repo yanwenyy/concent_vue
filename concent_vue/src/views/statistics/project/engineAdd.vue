@@ -835,50 +835,50 @@
               </el-row>
               <!--建设单位-->
               <el-row>
-                <el-form-item
-                  label="建设单位:"
-                  prop="project.companyBuildId"
-                    style="width: 32.5%"
-                  :rules="{
-                  required: true,
-                  message: '此项不能为空',
-                  trigger: ['blur','change'],
-                }">
-                  <el-select
-                    v-model="constructionOrgList"
-                    @change="companyBuildChange"
-                    v-if="detailForm.project.isClientele=='1'"
-                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                    multiple
-                    collapse-tags
-                    placeholder="请选择">
-                    <el-option
-                      v-for="item in pubCustomers"
-                      :key="item.customerId"
-                      :label="item.customerName"
-                      :value="item.customerId">
-                    </el-option>
-                  </el-select>
-                  <el-select
-                    v-model="constructionOrgList"
-                    @change="companyBuildChange"
-                    v-if="detailForm.project.isClientele!='1'"
-                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                    multiple
-                    collapse-tags
-                    placeholder="请选择">
+                <el-col :span="8">
+                  <el-form-item
+                    label="建设单位:"
+                    prop="project.companyBuildId"
+                    :rules="{
+                    required: true,
+                    message: '此项不能为空',
+                    trigger: ['blur','change'],
+                  }">
+                    <el-select
+                      v-model="constructionOrgList"
+                      @change="companyBuildChange"
+                      v-if="detailForm.project.isClientele=='1'"
+                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                      multiple
+                      collapse-tags
+                      placeholder="请选择">
                       <el-option
-                        :key="index"
-                        :label="item.detailName"
-                        :value="item.id"
-                        v-for="(item, index) in sjdwList"
-                      ></el-option>
-                  </el-select>
-                </el-form-item>
+                        v-for="item in pubCustomers"
+                        :key="item.customerId"
+                        :label="item.customerName"
+                        :value="item.customerId">
+                      </el-option>
+                    </el-select>
+                    <el-select
+                      v-model="constructionOrgList"
+                      @change="companyBuildChange"
+                      v-if="detailForm.project.isClientele!='1'"
+                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                      multiple
+                      collapse-tags
+                      placeholder="请选择">
+                        <el-option
+                          :key="index"
+                          :label="item.customerName"
+                          :value="item.customerId"
+                          v-for="(item, index) in sjdwList"
+                        ></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
                 <el-col :span="8">
                   <el-form-item
                     class="inline-formitem"
-                    style="width: 32.5%"
                     label="是否客户:"
                     prop="project.isClientele"
                     :rules="{
@@ -992,7 +992,7 @@
               <p>
                 <span >项目地点: </span>
                 <el-button
-                  v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'&&detailForm.project.contractInfoList==''"
+                  v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                   class="detatil-flie-btn"
                   @click="add('dd')"
                   type="primary"
@@ -1028,7 +1028,7 @@
                     <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.path'"  :rules="{required: true,message: '此项不能为空'}">
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                       <el-input disabled placeholder="请输入内容" v-model="scope.row.path" class="input-with-select group-no-padding">
-                        <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append" icon="el-icon-circle-plus" @click="selectPosition(),positionIndex=scope.$index"></el-button>
+                        <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus" @click="selectPosition(),positionIndex=scope.$index"></el-button>
                       </el-input>
                     </el-form-item>
                   </template>
@@ -1047,7 +1047,7 @@
                       <el-input
                         class="group-no-padding"
                         clearable
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         v-model="scope.row.contractAmount"
                         @input="getPositionMoney(scope.$index,detailForm.project.topInfoSiteList)"
                       >
@@ -1470,7 +1470,7 @@
             </div>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&(detailForm.project.flowStatus!=1)">
+        <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&(detailForm.project.flowStatus!='edit')">
           <Audit-Process :task="p.task||{businessId:p.uuid,businessType:' project_project_new'}"></Audit-Process>
         </el-tab-pane>
       </el-tabs>
@@ -2080,6 +2080,7 @@
       // },
       resetFuDai(id, list, name,code) {
         this.detailForm.project.fatherProjectName = ''
+        this.detailForm.project.fatherProjectId = ''
         this.detailForm.project.isBureauIndex = ''
         this.getName(id, list, name,code)
           //获取父项目名称列表
@@ -2240,7 +2241,23 @@
       //建设单位下拉赋值
       companyBuildChange(){
         this.detailForm.project.companyBuildId = this.constructionOrgList.join(",")
-        
+      },
+      //建设单位通过ID查找NAME
+      getBuildName(){
+        var nameList = []
+        var customerList = this.pubCustomers
+        this.constructionOrgList.forEach(idCheck => {
+          let customer = customerList.find(item1=>item1.customerId===idCheck)
+          if(customer){
+            nameList.push(customer.customerName)
+          }
+          let outside = this.sjdwList.find(item2=>item2.customerId===idCheck)
+          if(outside){
+            nameList.push(outside.customerName)
+          }
+
+        })
+        this.detailForm.project.companyBuild = nameList.join(",")
       },
       //切换是否客户
       companyBuildClear(){
@@ -2267,6 +2284,19 @@
           this.$message.error("请至少选择一个项目地点");
           return false;
         }
+        if(this.detailForm.project.topInfoSiteList.length>0){
+          var money=0;
+          var list = this.detailForm.project.topInfoSiteList;
+          list.forEach((item,i)=>{
+            if(i>0){
+              money+=Number(item.contractAmount);
+            }
+          });
+          if(this.detailForm.project.contractAmountEngine-money<0){
+            this.$message.error("项目地点份额之和要小于等于工程合同额");
+            return false;
+          }
+        }
         var hasMain=false;
         this.detailForm.project.topInfoSiteList.forEach((item)=>{
           if(item.isMain=='1'){
@@ -2277,22 +2307,9 @@
           this.$message.error("请选择一个主地点");
           return false;
         }
-
-        var nameList = []
-        var customerList = this.pubCustomers
-        this.constructionOrgList.forEach(idCheck => {
-          let customer = customerList.find(item1=>item1.customerId===idCheck)
-          if(customer){
-            nameList.push(customer.customerName)
-          }
-          let outside = this.sjdwList.find(item2=>item2.customerId===idCheck)
-          if(outside){
-            nameList.push(outside.customerName)
-          }
-
-        })
-        this.detailForm.project.companyBuild = nameList.join(",")
-
+        this.getBuildName();
+        //上报产值是否含税
+        this.getOutputTax();
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
@@ -2328,6 +2345,9 @@
       },
       // 提交
       submit() {
+        this.getBuildName();
+        //上报产值是否含税
+        this.getOutputTax();
         const id = this.p.uuid || this.uuid
         this.$http
           .post('/api/statistics/StatisticsProject/process/start',
@@ -2440,8 +2460,8 @@
         this.sjdwList = res.data.data.records;
         this.sjdwList.forEach((item)=>{
           item.value=item.companyName;
-          item.detailName=item.companyName;
-          item.id=item.uuid;
+          item.customerName=item.companyName;
+          item.customerId=item.uuid;
         })
       });
         //获取父项目名称列表

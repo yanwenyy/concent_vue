@@ -494,7 +494,7 @@
               </el-select>
             </el-form-item>
         <el-form-item
-          v-if="detailform.verify.flowStatus!=3&&detailform.verify.lateRegist=='0'"
+          v-if="detailform.verify.flowStatus!='pass'&&detailform.verify.lateRegist=='0'"
           label="是否逾期:"
           class="formItem"
         >
@@ -657,7 +657,7 @@
             </div>
             <div>
               <el-form-item
-                v-if="detailform.verify.flowStatus!=3&&detailform.verify.lateRegist=='0'"
+                v-if="detailform.verify.flowStatus!='pass'&&detailform.verify.lateRegist=='0'"
                 class="neirong"
                 label="逾期原因:"
                 prop="verify.overdueReason"
@@ -904,7 +904,7 @@
 
     </div>
     </el-tab-pane>
-      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&detailform.verify.flowStatus!=1&&detailform.verify.flowStatus!=null">
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&detailform.verify.flowStatus!='edit'&&detailform.verify.flowStatus!=null">
         <Audit-Process :task="p.task||{businessId:p.newUuid+'-'+p.uuid,businessType:' contract_qual_new'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>
