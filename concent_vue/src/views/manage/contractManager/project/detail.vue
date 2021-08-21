@@ -8082,7 +8082,12 @@ export default {
           }
         }
       }
-
+      if(this.detailform.contractInfo.isClientele === null){
+        this.detailform.contractInfo.isClientele = 0
+      }
+      if(this.detailform.contractInfo.isOpenBid === null){
+        this.detailform.contractInfo.isOpenBid = 0
+      }
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if(this.detailform.topInfoSiteList.length==0){

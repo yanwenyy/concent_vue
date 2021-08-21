@@ -524,10 +524,6 @@
                 </el-date-picker>
               </el-form-item>
               <br>
-
-
-
-
               <el-form-item
                 class="inline-formitem formItem"
                 label="是否为费率招标:"

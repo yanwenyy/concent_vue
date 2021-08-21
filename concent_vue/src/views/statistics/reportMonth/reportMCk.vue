@@ -470,15 +470,23 @@
         this.searchform.fullDate= time;
       },
       searchformReset() {
+
         this.searchform = {
+          createOrgName:'',
+          createOrgCode:'',
+          tjxCode:'001001',
+          tjxName:'',
+          beginDate:"",
+          fullDate:'',
+          isCk:"1",
+          projectTypeCode:'',
           current: 1,
           size: 20,
-          createOrgCode: '',
           createOrgId: '',
           createOrgType: '',
+          createTime: '',
           createUserId: '',
           createUserName: '',
-          createOrgName:'',
           totalValue:'',
           yearValue:'',
           monthValue:'',
@@ -486,7 +494,11 @@
           projectStatusName:'',
           projectName:'',
           projectOmit:'',
+          projectId:'',
+          projectreportuuid:'',
           htquantity:'',
+          reportYear:'',
+          reportMonth:'',
           yearDatesEnd:'',
           yearDateS:''
         }
@@ -495,7 +507,8 @@
         var y = date.getFullYear();
         var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
         var time=y + '-' + m;
-        this.searchform.yearDateS=time
+        this.searchform.yearDateS=time;
+        this.getdatatime();
         this.getData()
       },
       // 列表选项数据

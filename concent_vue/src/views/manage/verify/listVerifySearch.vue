@@ -6,9 +6,9 @@
       <el-form-item label="项目名称:">
         <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
       </el-form-item>
-      <el-form-item label="建设单位:">
+      <!-- <el-form-item label="建设单位:">
         <el-input v-model="searchform.constructionOrg" placeholder="建设单位" clearable></el-input>
-      </el-form-item>
+      </el-form-item> -->
 
       <!-- <el-form-item label="资审截止日期:">
         <el-date-picker

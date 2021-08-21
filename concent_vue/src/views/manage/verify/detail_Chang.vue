@@ -177,11 +177,6 @@
             </el-form-item>
 
             <el-form-item  label="新兴市场(二级):"
-                           :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
             >
               <el-input
                 disabled
@@ -894,11 +889,6 @@
 
             <el-form-item  label="新兴市场(二级):"
                            prop="topInfor.marketSecondName"
-                           :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
             >
               <el-input
                 disabled
