@@ -22,7 +22,7 @@
           <el-select
             clearable
             placeholder=""
-            v-model="detailForm.bidInfoSection.sectionName"
+            v-model="detailForm.bidInfoSection.sectionId"
             @change="
                 getName2(
                   detailForm.bidInfoSection.sectionId,
@@ -686,16 +686,12 @@ import { isMoney } from '@/utils/validate'
           let data = []
           data = list.find( (item) => item.uuid == id )
           this.detailForm.bidInfoSection.participatingUnitsName  = data.verifySectionOrgNameType01
+          this.detailForm.bidInfoSection.participatingUnitsId  = data.verifySectionOrgCodeType01
+          this.detailForm.bidInfoSection.orgId  = data.verifySectionOrgCodeType02
           this.detailForm.bidInfoSection.orgName  = data.verifySectionOrgNameType02
           this.detailForm.bidInfoSection.investmentReckon  = data.investmentReckon
           this.detailForm.bidInfoSection.jananInvestment  = data.jananInvestment
         }
-        // 填入正确的名字
-        list.forEach((element) => {
-          if (element.uuid == this.detailForm.bidInfoSection.sectionName) {
-            this.detailForm.bidInfoSection.sectionName = element.sectionName
-          }
-        })
       },
     close(){
         this.$refs['detailForm'].clearValidate();

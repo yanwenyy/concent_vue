@@ -1582,9 +1582,9 @@ export default {
       this.BDCSVisible = true;
       var tableList=[],bdList=[];
       this.detailform.bidInfoSectionList.forEach((item)=>{
-        tableList.push(item.bidInfoSection.sectionName)
+        tableList.push(item.bidInfoSection.sectionId)
       });
-      bdList=this.detailform.topInforBO.topInfoSectionList.filter(item => tableList.indexOf(item.sectionName)==-1);
+      bdList=this.detailform.topInforBO.topInfoSectionList.filter(item => tableList.indexOf(item.sectionId)==-1);
       this.$nextTick(() => {
         this.$refs.infoBD.init(
           bdList,
@@ -1868,9 +1868,9 @@ export default {
           }
           this.detailform.bidInfo.innerOrgId = datas.verifyInfo.orgId;
           this.detailform.bidInfo.innerOrgName = datas.verifyInfo.orgName;
-          // this.detailform.bidInfo.outOrg = datas.verifyInfo.outOrg;
-          // this.detailform.bidInfo.outOrgId = datas.verifyInfo.outOrgId;
-          // this.detailform.bidInfo.outOrgCode = datas.verifyInfo.outOrgCode;
+          this.detailform.bidInfo.outOrg = datas.verifyInfo.outOrg;
+          this.detailform.bidInfo.outOrgId = datas.verifyInfo.outOrgId;
+          this.detailform.bidInfo.outOrgCode = datas.verifyInfo.outOrgCode;
         }else{
           //内部联合体回显
           var id = [],
