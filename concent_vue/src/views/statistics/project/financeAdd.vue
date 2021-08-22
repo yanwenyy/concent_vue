@@ -172,6 +172,37 @@
             </el-row>
           <el-row>
             <el-form-item
+              label="初始合同额(万元):"
+              prop="project.contractAmountInitial"
+              :rules="rules.project.isMustMoney"
+              style="width: 32.5%">
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                @change="getCount"
+                clearable
+                placeholder="请输入"
+                v-model="detailForm.project.contractAmountInitial">
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+              label="合同金额(万元):"
+              prop="project.contractMoney"
+              :rules="rules.project.isMustMoney"
+              style="width:32.5%;">
+              <el-input
+                clearable
+                placeholder="请输入"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                v-model="detailForm.project.contractMoney">
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+          </el-row>
+          <el-row>
+            <el-form-item
               label="签约总金额(万元):"
               prop="project.amountSignup"
               :rules="rules.project.isMoney"
@@ -769,9 +800,11 @@
             valueAddedTax: '',
             isOutputTax: '',
             contractNumber: '',
+            contractMoney: '',
             otherPartyName: '', // 客户名称
             amountSignup: '',
             amountWe: '',
+            contractAmountInitial: '', // 初始合同额(万元)
             contractSignTime: '',
             contractValidity: '', // 合同有效期
             categoryFirstId: '41829bce85db42c1be8f5e763678b855', // 业务类别（一级）

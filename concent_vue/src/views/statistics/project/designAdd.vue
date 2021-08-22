@@ -715,6 +715,20 @@
                 <template slot="append">(万元)</template>
               </el-input>
             </el-form-item>
+            <el-form-item
+                label="初始我方份额(万元)"
+                prop="project.amountWe"
+                :rules="rules.project.isMustMoney"
+                style="width: 32.5%"
+              >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                v-model="detailForm.project.amountWe"
+              >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
           </el-row>
           <!--合同总额(万元)-->
           <el-row>
@@ -1268,6 +1282,7 @@
             houseTypeId: '', // 房屋结构类型
             contractAmountInitial: '', // 初始合同额(万元)
             contractAmountEngine: '', // 工程合同额(万元)
+            amountWe: '', //初始我方份额
             contractAmountTotal: '', // 合总同额(万元)
             contractAmountChange: '', // 合总额增减(万元)
             valueAddedTax: '', // 增值税(万元)
