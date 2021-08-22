@@ -1925,6 +1925,8 @@
               this.detailForm.cdmc = [];
               this.detailForm.cdmc = res.data.data.fieldId && res.data.data.fieldId.split(",");
               this.getShowTwo();
+              //上报产值是否含税
+              this.getOutputTax();
               if(this.detailForm.project.contractInfoList!=''){
                 this.detailForm.project.investmentContract=this.detailForm.project.contractAmountInitial;
                 this.detailForm.project.contractAmountTotal=this.detailForm.project.contractAmountInitial;

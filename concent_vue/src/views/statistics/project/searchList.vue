@@ -89,20 +89,20 @@
           clearable
         ></el-input>
       </el-form-item>
-      <el-form-item label="建设单位:">
+      <!-- <el-form-item label="建设单位:">
         <el-input
           v-model="searchform.companyBuild"
           placeholder="建设单位"
           clearable
         ></el-input>
-      </el-form-item>
-      <el-form-item label="设计单位:">
+      </el-form-item> -->
+      <!-- <el-form-item label="设计单位:">
         <el-input
           v-model="searchform.companyDesign"
           placeholder="设计单位"
           clearable
         ></el-input>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="项目类型:">
         <el-select
           filterable
@@ -150,7 +150,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="是否托管:">
+      <!-- <el-form-item label="是否托管:">
         <el-select
           filterable
           clearable
@@ -164,8 +164,8 @@
             v-for="(item, index) in yesOrNo"
           />
         </el-select>
-      </el-form-item>
-      <el-form-item label="是否代管:">
+      </el-form-item> -->
+      <!-- <el-form-item label="是否代管:">
         <el-select
           filterable
           clearable
@@ -179,7 +179,7 @@
             v-for="(item, index) in yesOrNo"
           />
         </el-select>
-      </el-form-item>
+      </el-form-item> -->
       <el-button
         @click="searchformReset"
         type="info"
@@ -571,6 +571,30 @@
               </el-switch>
             </template>
           </el-table-column>
+          
+         <el-table-column
+            property="menusstate"
+            :width="150"
+            align="center"
+            prop="monthReportTypeCode"
+            show-overflow-tooltip
+            label="填报类型"
+          >
+            <template slot-scope="scope">
+              <el-select
+                clearable
+                filterable
+                placeholder="请选择"
+                @change="reportTypeChange(scope.row.uuid,scope.row.monthReportTypeCode)"
+                v-model="scope.row.monthReportTypeCode">
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.detailCode"
+                  v-for="(item, index) in projectFillType"/>
+              </el-select>
+            </template>
+          </el-table-column>
         <el-table-column
           :width="150"
           align="center"
@@ -699,6 +723,9 @@ export default {
     },
     projectType() {
       return this.$store.state.projectType; // 项目类型
+    },
+    projectFillType(){
+      return this.$store.state.projectFillType; // 填报类型
     }
   },
   methods: {
@@ -736,6 +763,23 @@ export default {
           if(res.data.data === 1){
             this.page[index].monthReport = 0;
             this.$message.info("该项目本年本月已填过月报不可选择");
+          }
+        });
+    },
+    reportTypeChange(id,code){
+      // this.projectFillType.find(item => {
+      //   if (item.detailCode === code) {
+      //     this.projectTypeTwo = item.children;
+      //   }
+      // });
+        this.$http
+        .post(
+          "/api/statistics/StatisticsProject/detail/updateReportType",
+          {id:id,monthReportTypeCode:code}
+        )
+        .then(res => {
+          if(res.data.data === 1){
+            this.$message.info("修改成功");
           }
         });
     },
@@ -810,6 +854,7 @@ export default {
               '<th>增值税</th>\n' +
               '<th>是否托管</th>\n' +
               '<th>不填月报</th>\n' +
+              '<th>填报类型</th>\n' +
               '<th>是否代管</th>\n' +
               '<th>工程概况</th>\n' +
               '<th>本月完成（验工计价）</th>\n' +
@@ -826,7 +871,7 @@ export default {
                 ,'contractStartTime','contractEndTime','contractSignTime','realStartTime','realEndTime'
                 ,'companyBuild','companyDesign','companySupervisor','projectBidSection','projectManagerName'
                 ,'beginAddress','completedOutputValue','projectEndTime','valueAddedTax','isTrusteeship'
-                ,'monthReport','isEscrow','engineSurvey','','','','projectRemark'],
+                ,'monthReport','monthReportTypeCode','isEscrow','engineSurvey','','','','projectRemark'],
               tdstrFuc:{
               }
             })

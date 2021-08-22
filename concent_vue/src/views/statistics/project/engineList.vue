@@ -275,7 +275,7 @@
             </div>
           </template>
           <template slot-scope="scope">
-            <span> {{ scope.row.isConsortion == 0?'是':'否' }} </span>
+            <span> {{ scope.row.isConsortion == 1?'是':'否' }} </span>
           </template>
         </el-table-column>
         <el-table-column
@@ -386,7 +386,7 @@
         treeStatas: false,
         projectTypeTwo: [], // 工程类别(二级)
         projectNatureTwo: [], // 项目性质(二级)
-        yesOrNo: [{ id: 0, detailName: '是' }, { id: 1, detailName: '否' }],
+        yesOrNo: [{ id: 1, detailName: '是' }, { id: 0, detailName: '否' }],
         flowStatus: [{ id: 'edit', detailName: '草稿' }, { id: 'check', detailName: '审核中' }, { id: 'pass', detailName: '审核通过' }, { id: 'reject', detailName: '审核退回' }],
         sousuo: '',
         page: { current: 1, size: 20, total: 0, records: [] },

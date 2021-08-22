@@ -317,25 +317,16 @@
                     v-model="detailForm.project.projectTypeId">
                     <el-option
                       :key="index"
-                      :label="item.detailName"
-                      :value="item.id"
+                      :label="item.DETAIL_NAME"
+                      :value="item.DETAIL_CODE"
                       v-for="(item, index) in projectType"/>
                   </el-select>
                 </el-form-item>
                 <!--父项目暂无-->
                 <el-form-item
-                  v-if="detailForm.project.projectTypeId==='22038e576c2242d5acc93f6c3c8e48ad' ||
-                  detailForm.project.projectTypeId==='625a3ee0728a4f45b792d022b8bb36d9' ||
-                  detailForm.project.projectTypeId==='393a07bda2244b03a24590e076a421df' ||
-                  detailForm.project.projectTypeId==='393a07bda2244b03a24590e076a421de' "
                   label="父项目名称:"
                   prop="project.fatherProjectId"
                   style="width: 32.5%"
-                  :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                    trigger: ['blur','change'],
-                  }"
                   >
                   <el-select
                     :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
@@ -992,7 +983,7 @@
               <p>
                 <span >项目地点: </span>
                 <el-button
-                  v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
+                  v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'&&detailForm.project.contractInfoList==''"
                   class="detatil-flie-btn"
                   @click="add('dd')"
                   type="primary"
@@ -1028,7 +1019,8 @@
                     <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.path'"  :rules="{required: true,message: '此项不能为空'}">
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                       <el-input disabled placeholder="请输入内容" v-model="scope.row.path" class="input-with-select group-no-padding">
-                        <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus" @click="selectPosition(),positionIndex=scope.$index"></el-button>
+                        <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" 
+                          slot="append" icon="el-icon-circle-plus" @click="selectPosition(),positionIndex=scope.$index"></el-button>
                       </el-input>
                     </el-form-item>
                   </template>
@@ -1234,8 +1226,8 @@
                           v-model="scope.row.projectTypeId">
                           <el-option
                             :key="index"
-                            :label="item.detailName"
-                            :value="item.id"
+                            :label="item.DETAIL_NAME"
+                            :value="item.DETAIL_CODE"
                             v-for="(item, index) in projectType"/>
                         </el-select>
                       </el-form-item>
@@ -1566,6 +1558,7 @@
         projectNatureTwo: [], // 项目性质二级
         isOutputTax: [{ label: '是' }, { label: '否' }], // 上报产值是否含税
         options1: [{ label: '测试所在地', value: 'testabcd' }],
+        projectType:[], //项目类型下拉
         detailForm: {
           cdmc:[],
           project: {
@@ -1708,9 +1701,6 @@
       },
       railwayLine() {
         return this.$store.state.railwayLine
-      },
-      projectType() {
-        return this.$store.state.projectType
       },
       projectStatus() {
         var projectStatusCheck = [];
@@ -2086,7 +2076,10 @@
           //获取父项目名称列表
         this.$http
           .post('/api/statistics/StatisticsProject/detail/findProjectFather',
-             {projectTypeCode:this.detailForm.project.projectTypeCode,projectModuleId:this.detailForm.project.projectModuleId}
+             {
+               projectTypeCode:this.detailForm.project.projectTypeCode,
+               projectModuleId:this.detailForm.project.projectModuleId
+             }
           )
           .then(res => {
             if(res.data.code  === 200){
@@ -2272,10 +2265,10 @@
         }else{
           url="/api/statistics/StatisticsProject/process/start"
         }
-        if(this.detailForm.project.projectName!=this.detailForm.project.projectOmit){
-          this.$message.error("项目简称和项目名称（中文）保持一致。");
-          return false;
-        }
+        // if(this.detailForm.project.projectName!=this.detailForm.project.projectOmit){
+        //   this.$message.error("项目简称和项目名称（中文）保持一致。");
+        //   return false;
+        // }
         if(Number(this.detailForm.project.contractAmountInitial)!=Number(this.detailForm.project.contractAmountEngine)&&this.p.actpoint=='add'){
           this.$message.error("初始合同额要等于工程合同额");
           return false;
@@ -2422,6 +2415,8 @@
               }
               this.detailForm.cdmc=res.data.data.fieldId&&res.data.data.fieldId.split(",");
               this.getShowTwo();
+              //上报产值是否含税
+              this.getOutputTax();
               if(this.detailForm.project.contractInfoList!=''){
                 this.detailForm.project.investmentContract=this.detailForm.project.contractAmountInitial;
                 this.detailForm.project.contractAmountTotal=this.detailForm.project.contractAmountInitial;
@@ -2476,6 +2471,20 @@
               this.fatherList = []
           }
       })
+      //获取项目类型
+      this.$http
+          .post(
+            ' /api/statistics/StatisticsProject/detail/findProjectType?projectId'+'c7a788994b32e48f272e5c0e5271338a',
+            {useJson: true}
+          )
+          .then((res) => {
+            if (res.data.code === 200) {
+              this.projectType = res.data.data
+              console.info(this.projectType)
+            }else{
+              this.projectType = []
+            }
+          });
     }
   }
 </script>
