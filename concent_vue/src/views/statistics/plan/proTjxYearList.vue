@@ -97,6 +97,14 @@
           show-overflow-tooltip
         >
         </el-table-column>
+          <el-table-column
+            :min-width="250"
+            align="left"
+            label="项目状态"
+            prop="projectStatusName"
+            show-overflow-tooltip
+          >
+        </el-table-column>
 
         <el-table-column
           :width="150"
