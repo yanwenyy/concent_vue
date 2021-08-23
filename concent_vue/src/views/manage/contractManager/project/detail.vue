@@ -7911,25 +7911,34 @@ export default {
           this.getTwo(datas.contractInfo.enginTypeFirstId);
           this.getTwoSC(datas.contractInfo.marketFirstNameId);
           this.getTwoXZ(datas.contractInfo.projectNatureFirstId);
-            for(var i in this.detailform.contractInfo){
-              // i!='isImport'
-              _con[i]=JSON.parse(JSON.stringify(this.detailform.contractInfo[i]));
+          for(var i in this.detailform.contractInfo){
+            // i!='isImport'
+            _con[i]=JSON.parse(JSON.stringify(this.detailform.contractInfo[i]));
+          }
+          for(var i in datas.contractInfo){
+            // i!='isImport'
+            if(datas.contractInfo[i]&&i!='contractType'&&i!='uuid'&&i!='contractAmount'&&i!='crccCash'&&i!='ourAmount'&&i!='outSystemAmount'&&i!='valueAddedTax'&&i!='designTempPrice'&&i!='unAllocatedFee'&&i!='selfCash'){
+              _con[i]=JSON.parse(JSON.stringify(datas.contractInfo[i]));
             }
-            for(var i in datas.contractInfo){
-              // i!='isImport'
-              if(datas.contractInfo[i]&&i!='contractType'&&i!='uuid'&&i!='contractAmount'&&i!='crccCash'&&i!='ourAmount'&&i!='outSystemAmount'&&i!='valueAddedTax'&&i!='designTempPrice'&&i!='unAllocatedFee'&&i!='selfCash'){
-                _con[i]=JSON.parse(JSON.stringify(datas.contractInfo[i]));
-              }
-            }
-            this.detailform.contractInfo=_con;
-            this.detailform.cdmc=datas.contractInfo.siteNameId&&datas.contractInfo.siteNameId.split(",");
-            this.detailform.zplx=datas.contractInfo.otherAssemblyTypeId&&datas.contractInfo.otherAssemblyTypeId.split(",");
-            this.detailform.jzlx=datas.contractInfo.otherBuildingTypeId&&datas.contractInfo.otherBuildingTypeId.split(",");
-            this.detailform.jzjglx=datas.contractInfo.otherBuildingStructureTypeId&&datas.contractInfo.otherBuildingStructureTypeId.split(",");
-            for(var i in datas.topInfoSiteList){
-              datas.topInfoSiteList[i].uuid='';
-            }
-            this.detailform.topInfoSiteList=datas.topInfoSiteList;
+          }
+          this.detailform.contractInfo=_con;
+          this.detailform.cdmc=datas.contractInfo.siteNameId&&datas.contractInfo.siteNameId.split(",");
+          this.detailform.zplx=datas.contractInfo.otherAssemblyTypeId&&datas.contractInfo.otherAssemblyTypeId.split(",");
+          this.detailform.jzlx=datas.contractInfo.otherBuildingTypeId&&datas.contractInfo.otherBuildingTypeId.split(",");
+          this.detailform.jzjglx=datas.contractInfo.otherBuildingStructureTypeId&&datas.contractInfo.otherBuildingStructureTypeId.split(",");
+          for(var i in datas.topInfoSiteList){
+            datas.topInfoSiteList[i].uuid='';
+          }
+          this.detailform.topInfoSiteList=datas.topInfoSiteList;
+          if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
+            this.detailform.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
+          }
+          this.detailform.contractInfo.installDesignUnallocat=datas.contractInfo.installDesignUnallocat;
+          if (this.detailform.contractInfo.contractOrgName) {
+           this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion",{orgCode:this.detailform.contractInfo.contractOrgId},).then((res) => {
+              this.ssList = res.data.data
+            }); 
+          }
         });
         this.$forceUpdate();
         this.infoCSVisible=false;
