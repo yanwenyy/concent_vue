@@ -1606,11 +1606,11 @@
                 fixed="right"
                 label="操作"
                 show-overflow-tooltip
-                v-if="p.actpoint!=='look'&&p.actpoint!=='task'"
                 width="80"
               >
                 <template slot-scope="scope">
-                  <el-link :underline="false" @click="handleRemove4(scope.row,scope.$index)" type="warning">删除</el-link>
+                  <el-link :underline="false" @click="attachmentDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;margin-right: 3px;':'color: #409EFF;'">下载</el-link>
+                  <el-link v-show="p.actpoint!=='look'&&p.actpoint!=='task'" :underline="false" @click="handleRemove4(scope.row,scope.$index)" type="warning">删除</el-link>
                 </template>
               </el-table-column>
             </el-table>
@@ -1673,11 +1673,11 @@
                 fixed="right"
                 label="操作"
                 show-overflow-tooltip
-                v-if="p.actpoint!=='look'&&p.actpoint!=='task'"
                 width="80"
               >
                 <template slot-scope="scope">
-                  <el-link :underline="false" @click="handleRemove2(scope.row,scope.$index)" type="warning">删除</el-link>
+                  <el-link :underline="false" @click="attachmentDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;margin-right: 3px;':'color: #409EFF;'">下载</el-link>
+                  <el-link v-show="p.actpoint!=='look'&&p.actpoint!=='task'" :underline="false" @click="handleRemove2(scope.row,scope.$index)" type="warning">删除</el-link>
                 </template>
               </el-table-column>
             </el-table>
@@ -1740,11 +1740,11 @@
                 fixed="right"
                 label="操作"
                 show-overflow-tooltip
-                v-if="p.actpoint!=='look'&&p.actpoint!=='task'"
                 width="80"
               >
                 <template slot-scope="scope">
-                  <el-link :underline="false" @click="handleRemove3(scope.row,scope.$index)" type="warning">删除</el-link>
+                  <el-link :underline="false" @click="attachmentDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;margin-right: 3px;':'color: #409EFF;'">下载</el-link>
+                  <el-link v-show="p.actpoint!=='look'&&p.actpoint!=='task'" :underline="false" @click="handleRemove3(scope.row,scope.$index)" type="warning">删除</el-link>
                 </template>
               </el-table-column>
             </el-table>
@@ -7012,6 +7012,10 @@ export default {
       });
   },
   methods: {
+    // 附件下载
+    attachmentDownload(file){
+      this.$handleDownload(file)
+    },
     //劳材机模板下载
     downModel(url,name){
       this.$http
