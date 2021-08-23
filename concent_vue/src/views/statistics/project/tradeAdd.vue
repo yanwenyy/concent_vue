@@ -137,7 +137,6 @@
               style="width: 32.5%">
               <el-input
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
-                @change="getCount"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.contractAmountInitial">
@@ -427,6 +426,26 @@
                   v-for="(item, index) in emergingMarketTwo"/>
               </el-select>
             </el-form-item>
+            <el-form-item
+                class="inline-formitem"
+                label="是否年度合同:"
+                prop="project.isAnnualContract"
+                style="width: 32.5%"
+                :rules="{
+                  required: true, message: '此项不能为空', trigger: 'blur'
+                }"
+              >
+                <el-switch
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  class="inline-formitem-switch"
+                  v-model="detailForm.project.isAnnualContract"
+                  active-color="#409EFF"
+                  inactive-color="#ddd"
+                  active-value="0"
+                  inactive-value="1"
+                >
+                </el-switch>
+              </el-form-item>
           </el-row>
           <el-row>
             <el-form-item
@@ -770,22 +789,80 @@
                 show-overflow-tooltip
                 type="index"/>
               <el-table-column
+                  v-if="detailForm.project.isAnnualContract==='0'"
+                  class="listTabel"
+                  :resizable="false"
+                  label="年份"
+                  prop="subjectMatterYear"
+                  align="center"
+                  show-overflow-tooltip
+                  width="150"
+                >
+                  <template slot-scope="scope">
+                    <el-date-picker
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                      class="tabelForm-dete"
+                      v-model="scope.row.subjectMatterYear"
+                      type="year"
+                      format="yyyy"
+                      value-format="yyyy"
+                      placeholder="选择年">
+                    </el-date-picker>
+                  </template>
+                </el-table-column>
+              <el-table-column
+                v-if="detailForm.project.isAnnualContract==='0'"
+                class="listTabel"
                 :resizable="false"
-                label="标的物名称"
+                label="月份"
+                prop="subjectMatterMonth"
                 align="center"
-                prop="subjectMatterName"
-                min-width="200"
                 show-overflow-tooltip
+                width="150"
               >
                 <template slot-scope="scope">
-                  <!--:prop="'project.productInfoList[' + scope.$index + '].productName'"-->
-                  <!--:rules="{required: true, message: '此项不能为空', trigger: 'blur'}"-->
-                  <el-form-item class="tabelForm">
-                    <el-input
+                  <el-date-picker
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    class="tabelForm-dete"
+                    v-model="scope.row.subjectMatterMonth"
+                    type="month"
+                    format="MM"
+                    value-format="MM"
+                    placeholder="选择月">
+                  </el-date-picker>
+                </template>
+              </el-table-column>
+              <el-table-column width="200"  class="listTabel"  align="center" :resizable="false" label="标的物名称" prop="subjectMatterName" show-overflow-tooltip>
+                <template slot-scope="scope">
+                  <el-form-item
+                    class="tabelformItem tabelForm"
+                    :prop="'project.infoSubjectMatterList[' + scope.$index + '].subjectMatterName'"
+                    :rules="{
+                      required: true, message: '此项不能为空', trigger: 'blur'
+                    }"
+                    label-width="0"
+                  >
+                    <el-select
+                      class="input-el-input-group"
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                      filterable
+                      placeholder="请选择"
+                      size="mini"
                       v-model="scope.row.subjectMatterName"
-                      clearable
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
-                      />
+                      @change="
+                      getBdwdw(
+                        scope.row.subjectMatterName,
+                        scope.$index
+                      )"
+                  >
+                      <el-option
+                        v-if="bdwSelList.indexOf(item.subjectMatterName)==-1"
+                        :key="index"
+                        :label="item.subjectMatterName"
+                        :value="item.subjectMatterName"
+                        v-for="(item, index) in bdwList"
+                      ></el-option>
+                    </el-select>
                   </el-form-item>
                 </template>
               </el-table-column>
@@ -799,8 +876,8 @@
               >
                 <template slot-scope="scope">
                   <el-form-item class="tabelForm"
-                                :prop="'project.infoSubjectMatterList[' + scope.$index + '].subjectMatterNo'"
-                                :rules="rules.project.isNumber">
+                    :prop="'project.infoSubjectMatterList[' + scope.$index + '].subjectMatterNo'"
+                    :rules="rules.project.isNumber">
                     <el-input
                       clearable
                       :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
@@ -817,10 +894,15 @@
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  <el-form-item class="tabelForm">
+                  <el-form-item class="tabelForm" 
+                  :prop="'project.infoSubjectMatterList[' + scope.$index + '].subjectMatterUnit'"
+                  :rules="{
+                    required: true, message: '此项不能为空', trigger: 'blur'
+                  }"
+                  >
                     <el-input
                       clearable
-                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                      disabled
                       v-model="scope.row.subjectMatterUnit"/>
                   </el-form-item>
                 </template>
@@ -860,7 +942,7 @@
                 <template slot-scope="scope">
                   <el-link
                     :underline="false"
-                    @click="del(scope.$index,scope.row,detailForm.project.infoSubjectMatterList)"
+                    @click="del(scope.$index,scope.row,detailForm.project.infoSubjectMatterList,'bdw')"
                     type="warning">删除
                   </el-link>
                 </template>
@@ -939,6 +1021,7 @@
         }
       }
       return {
+        userInfo: JSON.parse(sessionStorage.getItem('userdata')),
         uuid: null,
         switchvalue: true,
         treeStatas: false,
@@ -948,6 +1031,11 @@
         sjdwList: [],
         DwVisible:false,//选择单位弹框状态
         uploadVisible: false,
+        bdwList:[
+          { subjectMatterName: '标的物1',subjectMatterUnitName:'元'},
+          { subjectMatterName: '标的物2',subjectMatterUnitName:'吨'}
+        ],//标的物名称list
+        bdwSelList:[],//标的物选择list
         inOut: [
           { label: '系统内', value: '0' },
           { label: '系统外', value: '1' }
@@ -974,6 +1062,7 @@
                 country: '',
               }
             ],
+            isAnnualContract:'1',
             projectModuleId: '510ba0d79593418493eb1a11ea4e7af4', // 项目板块
             projectModuleCode:"material",//项目板块code
             projectModuleName: '物资贸易', // 项目板块
@@ -1076,7 +1165,6 @@
       },
       // 获取项目地点的值
       getPositionTree(data) {
-        console.log(data)
         this.treeStatas = false;
         var country = '', _data = data;
         if (_data.fullDetailName.indexOf("境内") != -1) {
@@ -1101,6 +1189,25 @@
 
         });
         this.key = this.key + 1;
+      },
+      
+      //获取标的物单位
+      getBdwdw( name,index) {
+        var list = this.detailForm.project.infoSubjectMatterList
+        if(name){
+          this.$forceUpdate();
+          list[index].subjectMatterUnit=this.bdwList.find(
+            (item) => item.subjectMatterName == name
+          ).subjectMatterUnitName;
+          this.getBdNameSel();
+        }
+      },
+      //获取已选择的标的物单位
+      getBdNameSel(){
+        this.bdwSelList=[];
+        this.detailForm.project.infoSubjectMatterList.forEach((item)=>{
+          this.bdwSelList.push(item.subjectMatterName)
+        });
       },
       //打开单位弹框
       addDw(type,list,ifChek,index,tableList){
@@ -1211,10 +1318,8 @@
       });
         this.detailForm.project[id]=_id.join(",");
         this.detailForm.project[name]=_name.join(",");
-        console.log(this.detailForm.project[id])
       },
-      del(index, item, list) {
-        console.log(index)
+      del(index, item, list,type) {
         if (item.uuid && item.uuid !== '') {
           this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
             confirmButtonText: '确定',
@@ -1229,7 +1334,6 @@
               .then((res) => {
                 if (res.data && res.data.code === 200) {
                   list.splice(index, 1)
-                  console.log(list)
                 } else {
                   this.$message.error('删除失败')
                 }
@@ -1238,6 +1342,14 @@
           })
         } else {
           list.splice(index, 1)
+          if(type=='bdw'){
+            var num = this.bdwSelList.findIndex(subject =>{
+              if(subject.subjectMatterName==item.subjectMatterName){
+                return true
+              }
+            })
+            this.bdwSelList.splice(num,1)
+          }
         }
       },
       handleRemove(file, index) {
@@ -1251,7 +1363,6 @@
               this.detailForm.project.commonFilesList.splice(index, 1)
             }
           })
-        console.log(this.detailForm.project.commonFilesList)
       },
       // 打开附件上传的组件
       openFileUp(url, list) {
@@ -1286,7 +1397,6 @@
           this.detailForm.project[name] = list.find(
             (item) => item.id === id
           ).detailName
-          console.log(this.detailForm)
         }
       },
       getShowTwo() {
@@ -1469,6 +1579,7 @@
     },
     mounted() {
       this.$store.dispatch('getConfig', {})
+      this.$store.dispatch("getPubCustomers", {});
       this.$store.dispatch('getCategory', { name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3' })
       this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
@@ -1488,10 +1599,21 @@
             item.customerId=item.uuid;
           })
         });
+      //获取标的物名称列表
+      // this.$http.post(
+      //   "/api/contract/SubjectMatter/list/loadPageData",
+      //   {createOrgId:this.userInfo.managerOrgId,isEnable:'1'}
+      // )
+      // .then((res) => {
+      //   this.bdwList = res.data.data.records;
+      // });
     }
   }
 </script>
 <style lang="scss" scoped>
+  .el-date-editor.el-input, .el-date-editor.el-input__inner {
+    width: 95%;
+  }
   .detail-back-tab{
     padding: 10px 20px ;
     border:1px solid #ddd;
@@ -1502,18 +1624,24 @@
     z-index: 999999999;
     background: #fff;
   }
+  .el-input--mini .el-input__inner {
+    height: 40px;
+    width: 100%;
+    box-sizing: border-box;
+    // margin: 10px 0 0 10px;
+  }
   .gcform {
     margin-top: 10px;
     .group-no-padding{
       vertical-align: middle;
     }
     .neirong {
-      > > > .el-form-item__error {
+      .el-form-item__error {
         top: 4% !important;
       }
     }
 
-    > > > .el-form-item__error {
+    .el-form-item__error {
       padding-top: 0px;
       width: 95%;
       margin-left: 0;
@@ -1521,12 +1649,12 @@
       top: 0%;
     }
 
-    > > > .el-form-item__label:before {
+    .el-form-item__label:before {
       position: initial;
       left: -10px;
     }
 
-    > > > .inline-formitem {
+    .inline-formitem {
       margin-top: 30px;
     }
 
