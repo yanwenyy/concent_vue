@@ -15,6 +15,7 @@ import App from './App'
 import './assets/icon/iconfont.css'
 import router from './router'
 import exportXls from './utils/exportXls'
+import { handleDownload } from '@/views/manage/download.js'
 
 import { message } from '@/utils/resetMessage.js'
 Vue.use(ElementUI)
@@ -30,6 +31,7 @@ Vue.prototype.$tableHeight = document.body.clientHeight - 213
 Vue.prototype.$getPermission = getPermission
 Vue.prototype.$getOrgPermission = getOrgPermission
 Vue.prototype.examineReviewMsg='通过';
+Vue.prototype.$handleDownload = handleDownload;
 if (process.env.NODE_ENV === "development") {
   Vue.prototype.downLoadUrl='/static';
 }else {
