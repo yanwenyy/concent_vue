@@ -65,6 +65,7 @@ const state = {
   bidMethod:[],//评标办法
   projectPlate:[],//项目板块
   investmentModel:[],//投资模式
+  projectFillType:[],//填报类型
 
   optiondata:[],
   dialogState: 'edit',
@@ -291,6 +292,9 @@ const mutations = {
       case 'investmentModel':
         state.investmentModel=item.sysCategoryDetailList;
         break;
+      case 'projectFillType':
+        state.projectFillType=item.sysCategoryDetailList;
+        break;
       }
     })
     })
@@ -479,6 +483,9 @@ const mutations = {
         break;
       case 'investmentModel':
         state.investmentModel=item.sysCategoryDetailList;
+        break;
+      case 'projectFillType':
+        state.projectFillType=item.sysCategoryDetailList;
         break;
       }
     })

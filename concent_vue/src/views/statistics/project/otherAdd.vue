@@ -161,9 +161,24 @@
           </el-row>
           <el-row>
             <el-form-item
+              label="初始合同额(万元):"
+              prop="project.contractAmountInitial"
+              :rules="rules.project.isMustMoney"
+              style="width: 32.5%">
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                @change="getCount"
+                clearable
+                placeholder="请输入"
+                v-model="detailForm.project.contractAmountInitial">
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+            <el-form-item
               label="合同金额(万元):"
               prop="project.contractMoney"
-              :rules="rules.project.isMoney"
+              :rules="rules.project.isMustMoney"
               style="width:32.5%;">
               <el-input
                 clearable
@@ -175,9 +190,9 @@
               </el-input>
             </el-form-item>
             <el-form-item
-              label="我方份额(万元):"
+              label="初始我方份额(万元):"
               prop="project.amountWe"
-              :rules="rules.project.isMoney"
+              :rules="rules.project.isMustMoney"
               style="width:32.5%;">
               <el-input
                 clearable
@@ -765,6 +780,7 @@
             contractNumber: '',
             contractMoney: '',
             amountWe: '',
+            contractAmountInitial: '', // 初始合同额(万元)
             contractSignTime: '',
             categoryFirstId: '', // 业务类别（一级）
             projectStatusId: '',

@@ -134,7 +134,7 @@
               </el-input>
             </el-form-item>
             <el-form-item
-              label="我方份额(万元):"
+              label="初始我方份额(万元):"
               prop="project.amountWe"
               :rules="rules.project.isMoney"
               style="width:32.5%;">
@@ -162,6 +162,23 @@
                 inactive-value="1"/>
             </el-form-item>
           </el-row>
+           <el-row>
+              <el-form-item
+                label="初始合同额(万元):"
+                prop="project.contractAmountInitial"
+                :rules="rules.project.isMustMoney"
+                style="width: 32.5%">
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                  @change="getCount"
+                  clearable
+                  placeholder="请输入"
+                  v-model="detailForm.project.contractAmountInitial">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+            </el-row>
           <el-row>
             <el-form-item
               label="项目状态:"
@@ -687,6 +704,8 @@
             projectModuleCode:"realty",//项目板块code
             projectModuleName: '房地产开发', // 项目板块
             businessId: '', // 业务板块
+            amountWe: '',
+            contractAmountInitial: '', // 初始合同额(万元)
             projectName: '',
             projectForeginName: '',
             valueAddedTax: '',
@@ -694,7 +713,6 @@
             projectLandArea: '',
             contractNumber: '',
             amountSignup: '',
-            amountWe: '',
             contractSignTime: '',
             isOverseasContract: '',
             projectStatusId: '',
