@@ -2773,6 +2773,15 @@ export default {
         for(var i in datas.topInfoSiteList){
           datas.topInfoSiteList[i].uuid='';
         }
+        if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
+          this.detailform.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
+        }
+        this.detailform.contractInfo.installDesignUnallocat=datas.contractInfo.installDesignUnallocat;
+        if (this.detailform.contractInfo.contractOrgName) {
+          this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion",{orgCode:this.detailform.contractInfo.contractOrgId},).then((res) => {
+            this.ssList = res.data.data
+          }); 
+        }
         this.detailform.topInfoSiteList=datas.topInfoSiteList;
       });
         this.$forceUpdate();
