@@ -1874,17 +1874,17 @@
         };
         afterData.topInforCapitalList.forEach((item)=>{
           this.detailform.value1.push(item.capitalId)
-      });
-            afterData.topInfoSectionList.forEach((item)=>{
-              item.isDelete="0"
-            });
-          this.detailFormBefore={
-            capitalName: beforData.capitalName,
-            topInfor: beforData.topInfor,
-            topInfoOrg: beforData.topInfoOrg,
-            topInfoSiteList: beforData.topInfoSiteList,
-            topInfoSectionList: beforData.topInfoSectionList
-          }
+        });
+        afterData.topInfoSectionList.forEach((item)=>{
+          item.isDelete="0"
+        });
+        this.detailFormBefore={
+          capitalName: beforData.capitalName,
+          topInfor: beforData.topInfor,
+          topInfoOrg: beforData.topInfoOrg,
+          topInfoSiteList: beforData.topInfoSiteList,
+          topInfoSectionList: beforData.topInfoSectionList
+        }
       });
       },
       //新增的时候详情
