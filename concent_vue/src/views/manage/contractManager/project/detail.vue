@@ -560,7 +560,7 @@
               clearable
               placeholder="请选择设计单位"
               v-model="detailform.contractInfo.designOrg">
-              <el-button slot="append" icon="el-icon-circle-plus-outline"
+              <el-button slot="append" icon="el-icon-circle-plus-outline" :disabled="p.actpoint === 'look'||p.actpoint=='task'"
               @click="openComMul(detailform.contractInfo.designOrgId,detailform.contractInfo.designOrg,'/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
             </el-input>
           </el-form-item>
