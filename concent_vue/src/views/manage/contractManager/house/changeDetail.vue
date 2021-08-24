@@ -2101,11 +2101,11 @@
                     :resizable="false"
                     label="操作"
                     show-overflow-tooltip
-                    v-if="p.actpoint!=='look'&&p.actpoint !== 'task'"
                     width="80"
                   >
                     <template slot-scope="scope">
-                      <el-link :underline="false" @click="handleRemove1(scope.row,scope.$index)" type="warning">删除</el-link>
+                       <el-link :underline="false" @click="attachmentDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;margin-right: 3px;':'color: #409EFF;'">下载</el-link>
+                      <el-link v-if="p.actpoint!=='look'&&p.actpoint !== 'task'" :underline="false" @click="handleRemove1(scope.row,scope.$index)" type="warning">删除</el-link>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -2166,11 +2166,11 @@
                     :resizable="false"
                     label="操作"
                     show-overflow-tooltip
-                    v-if="p.actpoint!=='look'&&p.actpoint!='Yjedit'&&p.actpoint!='task'"
                     width="80"
                   >
                     <template slot-scope="scope">
-                      <el-link :underline="false" @click="handleRemove2(scope.row,scope.$index)" type="warning">删除</el-link>
+                       <el-link :underline="false" @click="attachmentDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;margin-right: 3px;':'color: #409EFF;'">下载</el-link>
+                      <el-link v-if="p.actpoint!=='look'&&p.actpoint!='Yjedit'&&p.actpoint!='task'" :underline="false" @click="handleRemove2(scope.row,scope.$index)" type="warning">删除</el-link>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -3660,6 +3660,10 @@
         });
     },
     methods: {
+      // 附件下载
+      attachmentDownload(file){
+        this.$handleDownload(file)
+      },
       //获取系统外联合体,系统外分包的单位名称
       getXtwName(id, list, index){
         if(id){
