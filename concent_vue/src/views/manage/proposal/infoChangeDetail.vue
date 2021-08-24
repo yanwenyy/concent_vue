@@ -169,11 +169,29 @@
                 </el-tooltip>
 
               </el-form-item>
+              <el-form-item label="资金来源:" prop="value1"  :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: 'blur',
+              }">
+                <el-select
+                  class="multiple-sel"
+                  disabled
+                  filterable
+                  clearable
+                  multiple
+                  placeholder="请选择"
 
-              <el-form-item label="资金来源:" prop="capitalId">
-                <el-input v-model="detailFormBefore.capitalName" disabled></el-input>
+                  v-model="detailform.value1"
+                >
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in amountSource"
+                  ></el-option>
+                </el-select>
               </el-form-item>
-
               <el-form-item
                 label="是否为重大项目:"
                 prop="topInfor.isMajorProject"
@@ -1729,6 +1747,7 @@
         }
       });
         this.detailform.topInforCapitalList=topInforCapitalList;
+        this.detailFormBefore.topInforCapitalList=topInforCapitalList;
         this.detailform.srcId=this.id;
         var hasGzbd=false;
         this.detailform.topInfoSectionList.forEach((item)=>{
@@ -1879,7 +1898,6 @@
           item.isDelete="0"
         });
         this.detailFormBefore={
-          capitalName: beforData.capitalName,
           topInfor: beforData.topInfor,
           topInfoOrg: beforData.topInfoOrg,
           topInfoSiteList: beforData.topInfoSiteList,
@@ -1912,7 +1930,7 @@
           for(var i in this.detailform){
             this.detailFormBefore[i]=JSON.parse(JSON.stringify(this.detailform[i]));
           }
-          this.detailFormBefore.capitalName=datas.capitalName;
+          //this.detailFormBefore.capitalName=datas.capitalName;
           // this.detailFormBefore={
           //   capitalName:datas.capitalName,
           //   topInfor: datas.topInfor,
