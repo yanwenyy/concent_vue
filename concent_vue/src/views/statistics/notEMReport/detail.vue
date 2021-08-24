@@ -300,7 +300,6 @@
                   label="月末进度%"
                   prop="monthValue"
                   align="center"
-                  show-overflow-tooltip
                   width="150"
                 >
                   <template slot-scope="scope">
@@ -819,7 +818,6 @@
                     label="工业总产值"
                     prop="industry"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -844,7 +842,6 @@
                     label="装备制造"
                     prop="equipmentManufacturin"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -868,7 +865,6 @@
                     label="预购件"
                     prop="tempPrice"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -892,7 +888,6 @@
                     label="其他工业产品"
                     prop="otherIndustrayProduct"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -1210,7 +1205,6 @@
                     label="工业总产值"
                     prop="industry"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -1234,7 +1228,6 @@
                     label="装备制造"
                     prop="equipmentManufacturin"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -1258,7 +1251,6 @@
                     label="预购件"
                     prop="tempPrice"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -1282,7 +1274,6 @@
                     label="其他工业产品"
                     prop="otherIndustrayProduct"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -1640,7 +1631,6 @@
                     label="物资贸易产值"
                     prop="materialTrade"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -2033,7 +2023,6 @@
                     label="房地产营业收入"
                     prop="realEstateIncome"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -2058,7 +2047,6 @@
                     label="表内营收"
                     prop="inRevenue"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -2082,7 +2070,6 @@
                     label="表外权益"
                     prop="offRevenue"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -2106,7 +2093,6 @@
                     label="表外非权益"
                     prop="offRevenueNon"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -2490,7 +2476,6 @@
                     label="金融收入"
                     prop="financialIncome"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -2514,7 +2499,6 @@
                     label="保险收入"
                     prop="insuranceIncome"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -2538,7 +2522,6 @@
                     label="其他金融收入"
                     prop="otherFinance"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -2964,7 +2947,6 @@
                     label="工程运营维管"
                     prop="engineeringOperation"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -2988,7 +2970,6 @@
                     label="信息化运营维管"
                     prop="informationOperation"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -3012,7 +2993,6 @@
                     label="物业管理"
                     prop="estateManagement"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -3036,7 +3016,6 @@
                     label="其他运营收入"
                     prop="otherOperation"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -3585,7 +3564,6 @@
                     label="设备租赁"
                     prop="equipmentLeasing"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -3609,7 +3587,6 @@
                     label="交通运输"
                     prop="transportation"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -3633,7 +3610,6 @@
                     label="住宿餐饮"
                     prop="accommodationCatering"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -3657,7 +3633,6 @@
                     label="教育培训"
                     prop="educationTraining"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -3681,7 +3656,6 @@
                     label="信息化建设"
                     prop="informationConstruction"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -3705,7 +3679,6 @@
                     label="房屋租赁"
                     prop="leaseHouses"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -3729,7 +3702,6 @@
                     label="其它项目"
                     prop="other"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
