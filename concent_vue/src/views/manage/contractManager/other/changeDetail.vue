@@ -3525,6 +3525,7 @@
         }
       }
       return {
+        changeRecordUuid:"",
         constructionOrgList: [],
         companyMulStatus:false,//设计单位等多选列表状态
         sjdwList:[],
@@ -4615,6 +4616,7 @@
       },
       saveInfo(formName,type) {
         this.detailform.srcId=this.id;
+        this.detailform.changeRecordUuid = this.changeRecordUuid;
         this.detailform.commonFilesList=this.detailform.commonFilesList1.concat(this.detailform.commonFilesList2)
         var url='';
         this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
@@ -4707,6 +4709,7 @@
           }
         });
         this.getTwoSC(afterData.contractInfo.marketFirstNameId);
+        this.changeRecordUuid = afterData.changeRecordUuid
         this.detailform={
           changeRecordUuid:afterData.changeRecordUuid,
           commonFilesList1: fileList1,
@@ -4742,8 +4745,8 @@
         this.detailFormBefore.zplx=beforData.contractInfo.otherAssemblyTypeId&&beforData.contractInfo.otherAssemblyTypeId.split(",");
         this.detailFormBefore.jzlx=beforData.contractInfo.otherBuildingTypeId&&beforData.contractInfo.otherBuildingTypeId.split(",");
         this.detailFormBefore.jzjglx=beforData.contractInfo.otherBuildingStructureTypeId&&beforData.contractInfo.otherBuildingStructureTypeId.split(",");
-        if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
-          this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
+        if(this.detailFormBefore.contractInfo.constructionOrgId != '' ||this.detailFormBefore.contractInfo.constructionOrgId != null){
+          this.constructionOrgList = this.detailFormBefore.contractInfo.constructionOrgId.split(",");
         }
         this.detailform.contractInfo.changeOurAmount = this.detailform.contractInfo.ourAmount;
       });
