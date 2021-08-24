@@ -14,7 +14,7 @@
               <span style="color: #2a2a7d;line-height: 32px">
                 <b style="color:red">计划类型:</b>
                 <span style="color:red !important;font-size:14px;margin-right: 20px;">{{p.planInfo.planTypeName}}</span>
-                <span style="color:red !important;margin-left: 20px;margin-right: 20px;font-size:14px;">{{p.planInfo.projectName}}</span>
+                <span style="color:red !important;margin-left: 20px;margin-right: 20px;"><b style="color:red">项目名称:</b><span style="font-size:14px;">{{p.planInfo.projectName}}</span></span>
                 <span v-show="p.planInfo.planProjectTjx.planType === 2" style="color:red !important;font-size:14px;">{{p.planInfo.planProjectTjx.planYear}}年</span>
                 <span v-show="p.planInfo.planProjectTjx.planType === 1" style="color:red !important;font-size:14px;">{{p.planInfo.planProjectTjx.planYear}}年{{p.planInfo.planProjectTjx.planMonth}}月</span>
               </span>
@@ -101,7 +101,7 @@
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&p.planInfo.projectStatus!='edit'&&p.planInfo.projectStatus!=null">
         <Audit-Process :task="p.task||{businessId:p.planInfo.planId||p.instid,businessType:'project_plan'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>

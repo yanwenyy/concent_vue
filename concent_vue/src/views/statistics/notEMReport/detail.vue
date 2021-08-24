@@ -2452,7 +2452,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="剩余合同额"
-                    prop="htquantity"
+                    prop="htquantity_after"
                     align="center"
                     show-overflow-tooltip
                     width="150"
@@ -2467,8 +2467,8 @@
                     width="200"
                   >
                     <template slot-scope="scope">
-                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
-                      <span v-else>否</span>
+                      <span v-if="scope.row.includEvat == 1">是</span>
+                      <span v-if="scope.row.includEvat == 0">否</span>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -2494,12 +2494,14 @@
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.jrbx_list, scope.$index, 'finance')"
                         @input="isFloor(scope.row.finance,scope.$index,detailform.jrbx_list,'finance'),getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'finance')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.finance"/>
                       <el-input
+                        @change="suppliesChange(detailform.jrbx_list, scope.$index, 'overseasFinance')"
                         @input="isFloor(scope.row.overseasFinance,scope.$index,detailform.jrbx_list,'overseasFinance'),getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'overseasFinance')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -2517,12 +2519,14 @@
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.jrbx_list, scope.$index, 'finance')"
                         @input="isFloor(scope.row.secure,scope.$index,detailform.jrbx_list,'secure'),getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'secure')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.secure"/>
                       <el-input
+                        @change="suppliesChange(detailform.jrbx_list, scope.$index, 'overseasFinance')"
                         @input="isFloor(scope.row.overseasSecure,scope.$index,detailform.jrbx_list,'overseasSecure'),getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'overseasSecure')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -2540,12 +2544,14 @@
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.jrbx_list, scope.$index, 'finance')"
                         @input="isFloor(scope.row.otherFinance,scope.$index,detailform.jrbx_list,'otherFinance'),getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'otherFinance')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.otherFinance"/>
                       <el-input
+                        @change="suppliesChange(detailform.jrbx_list, scope.$index, 'overseasFinance')"
                         @input="isFloor(scope.row.otherFinanceHw,scope.$index,detailform.jrbx_list,'otherFinanceHw'),getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'otherFinanceHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -4020,15 +4026,20 @@
       // 计算剩余合同额
       suppliesChange(list, index, name){
         if (name == "sale") { // 修改物资贸易
-          list[index].htquantity_after = list[index].htquantity  - list[index].sale
+          list[index].htquantity_after = list[index].htquantity - list[index].sale
+        }else if ( name == "overseasSale") {
+          list[index].htquantity_after = list[index].htquantity - list[index].overseasSale
         }
-        if ( name == "overseasSale") {
-          list[index].htquantity_after = list[index].htquantity  - list[index].overseasSale
+        if (name == "inRevenue") { // 房地产
+          list[index].htquantity_after = list[index].htquantity - list[index].inRevenue - list[index].offRevenue - list[index].offRevenueNon
+        } else if (name == "inRevenueHw") {
+          list[index].htquantity_after = list[index].htquantity - list[index].inRevenueHw - list[index].offRevenueHw - list[index].offRevenueNonHw
         }
-        // if (name == "inRevenue") { // 房地产
-        //   list[index].htquantity_after = list[index].htquantity
-        // }
-
+        if (name == "finance") { // 金融保险
+          list[index].htquantity_after = list[index].htquantity - list[index].finance - list[index].secure - list[index].otherFinance
+        } else if (name == "overseasFinance") {
+          list[index].htquantity_after = list[index].htquantity - list[index].overseasFinance - list[index].overseasSecure - list[index].otherFinanceHw
+        }
       },
       //修改产值
       getGyzzCz(list,obj,name){
@@ -4462,6 +4473,22 @@
             } else {
               element.htquantity_after = Number(element.htquantity) - Number(element.overseasSale)
             }
+            // 房地产
+            res.data.data.fdc_list.forEach((element)=>{
+              if (element.country == "01") {
+                element.htquantity_after = Number(element.htquantity) - Number(element.inRevenue)- Number(element.offRevenue)- Number(element.offRevenueNon)
+              } else {
+                element.htquantity_after = Number(element.htquantity) - Number(element.inRevenueHw)- Number(element.offRevenueHw)- Number(element.offRevenueNonHw)
+              }
+            })
+            // 金融保险 
+            res.data.data.jrbx_list.forEach((element)=>{
+              if (element.country == "01") {
+                element.htquantity_after = Number(element.htquantity) - Number(element.finance)- Number(element.secure)- Number(element.otherFinance)
+              } else {
+                element.htquantity_after = Number(element.htquantity) - Number(element.overseasFinance)- Number(element.overseasSecure)- Number(element.otherFinanceHw)
+              }
+            })
           })
           var datas=res.data.data;
           this.detailform[name]=datas[name];
@@ -4481,12 +4508,28 @@
         this.$http
           .post("/api/statistics/unProjectReport/list/queryAllInfo",data )
           .then((res) => {
+          // 物资贸易
           res.data.data.wz_list.forEach((element)=>{
-            // 物资贸易
             if (element.country == "01") {
               element.htquantity_after = Number(element.htquantity) - Number(element.sale)
             } else {
               element.htquantity_after = Number(element.htquantity) - Number(element.overseasSale)
+            }
+          })
+          // 房地产
+          res.data.data.fdc_list.forEach((element)=>{
+            if (element.country == "01") {
+              element.htquantity_after = Number(element.htquantity) - Number(element.inRevenue)- Number(element.offRevenue)- Number(element.offRevenueNon)
+            } else {
+              element.htquantity_after = Number(element.htquantity) - Number(element.inRevenueHw)- Number(element.offRevenueHw)- Number(element.offRevenueNonHw)
+            }
+          })
+          // 金融保险 
+          res.data.data.jrbx_list.forEach((element)=>{
+            if (element.country == "01") {
+              element.htquantity_after = Number(element.htquantity) - Number(element.finance)- Number(element.secure)- Number(element.otherFinance)
+            } else {
+              element.htquantity_after = Number(element.htquantity) - Number(element.overseasFinance)- Number(element.overseasSecure)- Number(element.otherFinanceHw)
             }
           })
           var datas=res.data.data;

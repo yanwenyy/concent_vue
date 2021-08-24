@@ -247,30 +247,46 @@
               <tr>
                 <td><span style="color: red;font-weight:bold">*</span>标准上报时间:</td>
                 <td style="width:80%;text-align:left;padding:10px">
-                  <el-date-picker
-                    v-model="form1.standardreporttime"
-                    type="date"
-                    style="width:70%;display: inline-block"
-                    format="d"
-                    @change="jyShow"
-                    value-format="dd"
-                    placeholder="选择日">
-                  </el-date-picker>
+                  <el-select v-model="form1.standardreporttime" placeholder="请选择" style="width: 70%">
+                    <el-option
+                      v-for="item in 31"
+                      :key="item"
+                      :label="item"
+                      :value="item">
+                    </el-option>
+                  </el-select>
+                  <!--<el-date-picker-->
+                    <!--v-model="form1.standardreporttime"-->
+                    <!--type="date"-->
+                    <!--style="width:70%;display: inline-block"-->
+                    <!--format="d"-->
+                    <!--@change="jyShow"-->
+                    <!--value-format="dd"-->
+                    <!--placeholder="选择日">-->
+                  <!--</el-date-picker>-->
                   <span style="color:red;font-size:12px" v-if="show && (form1.standardreporttime == ''||form1.standardreporttime == null)">此项不能为空</span>
                 </td>
               </tr>
               <tr>
                 <td><span style="color: red;font-weight:bold">*</span>下月标准截止时间:</td>
                 <td style="width:80%;text-align:left;padding:10px">
-                  <el-date-picker
-                    v-model="form1.endreporttime"
-                    type="date"
-                    format="d"
-                    style="width:70%;display: inline-block"
-                    value-format="dd"
-                    @change="jyShowEnd"
-                    placeholder="选择日">
-                  </el-date-picker>
+                  <el-select v-model="form1.endreporttime" placeholder="请选择" style="width: 70%">
+                    <el-option
+                      v-for="item in 31"
+                      :key="item"
+                      :label="item"
+                      :value="item">
+                    </el-option>
+                  </el-select>
+                  <!--<el-date-picker-->
+                    <!--v-model="form1.endreporttime"-->
+                    <!--type="date"-->
+                    <!--format="d"-->
+                    <!--style="width:70%;display: inline-block"-->
+                    <!--value-format="dd"-->
+                    <!--@change="jyShowEnd"-->
+                    <!--placeholder="选择日">-->
+                  <!--</el-date-picker>-->
                   <span style="color:red;font-size:12px" v-if="show && (form1.endreporttime == ''||form1.endreporttime == null)">此项不能为空</span>
                 </td>
               </tr>
