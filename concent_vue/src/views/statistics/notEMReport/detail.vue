@@ -4020,14 +4020,15 @@
       // 计算剩余合同额
       suppliesChange(list, index, name){
         if (name == "sale") { // 修改物资贸易
-          list[index].htquantity_after = list[index].htquantity  - list[index].sale
+          list[index].htquantity_after = list[index].htquantity - list[index].sale
+        }else if ( name == "overseasSale") {
+          list[index].htquantity_after = list[index].htquantity - list[index].overseasSale
         }
-        if ( name == "overseasSale") {
-          list[index].htquantity_after = list[index].htquantity  - list[index].overseasSale
+        if (name == "inRevenue") { // 房地产
+          list[index].htquantity_after = list[index].htquantity - list[index].inRevenue - list[index].offRevenue - list[index].offRevenueNon
+        } else if (name == "inRevenueHw") {
+          list[index].htquantity_after = list[index].htquantity - list[index].inRevenueHw - list[index].offRevenueHw - list[index].offRevenueNonHw
         }
-        // if (name == "inRevenue") { // 房地产
-        //   list[index].htquantity_after = list[index].htquantity
-        // }
 
       },
       //修改产值
@@ -4462,6 +4463,14 @@
             } else {
               element.htquantity_after = Number(element.htquantity) - Number(element.overseasSale)
             }
+            // 房地产
+            res.data.data.fdc_list.forEach((element)=>{
+              if (element.country == "01") {
+                element.htquantity_after = Number(element.htquantity) - Number(element.inRevenue)- Number(element.offRevenue)- Number(element.offRevenueNon)
+              } else {
+                element.htquantity_after = Number(element.htquantity) - Number(element.inRevenueHw)- Number(element.offRevenueHw)- Number(element.offRevenueNonHw)
+              }
+            })
           })
           var datas=res.data.data;
           this.detailform[name]=datas[name];
@@ -4481,12 +4490,20 @@
         this.$http
           .post("/api/statistics/unProjectReport/list/queryAllInfo",data )
           .then((res) => {
+          // 物资贸易
           res.data.data.wz_list.forEach((element)=>{
-            // 物资贸易
             if (element.country == "01") {
               element.htquantity_after = Number(element.htquantity) - Number(element.sale)
             } else {
               element.htquantity_after = Number(element.htquantity) - Number(element.overseasSale)
+            }
+          })
+          // 房地产
+          res.data.data.fdc_list.forEach((element)=>{
+            if (element.country == "01") {
+              element.htquantity_after = Number(element.htquantity) - Number(element.inRevenue)- Number(element.offRevenue)- Number(element.offRevenueNon)
+            } else {
+              element.htquantity_after = Number(element.htquantity) - Number(element.inRevenueHw)- Number(element.offRevenueHw)- Number(element.offRevenueNonHw)
             }
           })
           var datas=res.data.data;
