@@ -239,6 +239,10 @@
       add(){
         this.dialogFormVisible = false;
         console.log(this.p)
+        if(this.searchform.year==''||this.searchform.year==null){
+          this.$message.error("请选择填报时间");
+          return false;
+        }
         this.$http
           .post(
             '/api/statistics/planPrjTjxDetail/list/checkIsCreate',

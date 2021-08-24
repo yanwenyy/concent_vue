@@ -1,9 +1,11 @@
 <template>
   <div>
+    <!--<form :action="url" ref="itForm" method="post" id="itForm" style="display: none" target="nm_iframe">-->
     <form :action="url" ref="itForm" method="post" id="itForm" style="display: none" target="_top">
       <input id="paramsInfo" ref="paramsInfo" type="hidden" name="paramsInfo">
       <input type="hidden" v-for="(item,i) in paramMap" :value="item" :name="i" >
     </form>
+    <!--<iframe id="id_iframe" name="nm_iframe" width="100%" height="100%"></iframe>-->
   </div>
 </template>
 
@@ -53,6 +55,7 @@
           )
           .then((res) => {
             this.url=res.data.data.url;
+            console.log(this.url);
             this.paramMap = res.data.data;
             console.log(this.paramMap)
             return new Promise((resolve, reject) => {
@@ -95,8 +98,8 @@
   };
 </script>
 <style scoped>
-  .iframe-body{
+  #id_iframe{
     width: 100%;
-    height: 100%;
+    height: 100vh;
   }
 </style>
