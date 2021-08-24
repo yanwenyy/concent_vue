@@ -85,7 +85,7 @@
               placeholder="请选择"
               @change="getTwo"
               size="mini"
-              v-model="searchform.enginTypeFirstName"
+              v-model="searchform.enginTypeFirstId"
             >
               <el-option
                 :key="index"
@@ -112,7 +112,7 @@
               filterable
               placeholder="请选择工程类别(一级)"
               size="mini"
-              v-model="searchform.enginTypeSecondName"
+              v-model="searchform.enginTypeSecondId"
             >
               <el-option
                 :key="index"

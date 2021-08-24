@@ -168,7 +168,6 @@
               style="width: 32.5%">
               <el-input
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
-                @change="getCount"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.contractAmountInitial">
@@ -744,7 +743,7 @@
               <span>产品信息:</span>
               <el-button
                 v-if="p.actpoint !== 'look'&&p.actpoint!= 'task'"
-                @click="addProduct()"
+                @click="addXs()"
                 class="upload-demo detailUpload detatil-flie-btn"
                 type="primary">
                 新增
@@ -771,6 +770,40 @@
                 type="index"/>
               <el-table-column
                 :resizable="false"
+                label="产品类型"
+                align="center"
+                prop="productId"
+                min-width="150"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-form-item class="tabelForm"
+                    :prop="'project.infoProductList.'+scope.$index+'.productTypeId'"
+                    :rules="{
+                      required: true, message: '此项不能为空', trigger: 'blur'
+                    }"
+                    label-width="0"
+                  >
+                    <el-select
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                      clearable
+                      filterable
+                      placeholder="请选择"
+                      @change="getcpxx(scope.row.productTypeId,detailForm.project.infoProductList,scope.$index)"
+                      v-model="scope.row.productTypeId"
+                    >
+                      <el-option
+                        :key="index"
+                        :label="item.productTypeName"
+                        :value="item.productTypeId"
+                        v-for="(item, index) in cplxList"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+                </template>
+              </el-table-column>
+              <el-table-column
+                :resizable="false"
                 label="产品名称"
                 align="center"
                 prop="productName"
@@ -778,13 +811,33 @@
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  <!--:prop="'project.productInfoList[' + scope.$index + '].productName'"-->
-                  <!--:rules="{required: true, message: '此项不能为空', trigger: 'blur'}"-->
-                  <el-form-item class="tabelForm">
-                    <el-input
-                      v-model="scope.row.productName"
+                  <el-form-item class="tabelForm"
+                    :prop="'project.infoProductList.'+scope.$index+'.productName'"
+                    :rules="{
+                      required: true, message: '此项不能为空', trigger: 'blur'
+                    }"
+                    label-width="0"
+                  >
+                    <el-select
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                       clearable
-                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"/>
+                      filterable
+                      placeholder="请选择"
+                      @change="getNameTable(
+                        scope.row.productId,
+                        scope.row.cpxxList,
+                        'productName',
+                        scope.$index
+                      )"
+                      v-model="scope.row.productId"
+                    >
+                      <el-option
+                        :key="index"
+                        :label="item.vname"
+                        :value="item.id"
+                        v-for="(item, index) in scope.row.cpxxList"
+                      ></el-option>
+                    </el-select>
                   </el-form-item>
                 </template>
               </el-table-column>
@@ -835,8 +888,7 @@
                 <template slot-scope="scope">
                   <el-form-item class="tabelForm">
                     <el-input
-                      clearable
-                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                      disabled
                       v-model="scope.row.productUnit"/>
                   </el-form-item>
                 </template>
@@ -972,6 +1024,67 @@
           { label: '路内', value: 0 },
           { label: '路外', value: 1 }
         ],
+        cpxxList:[],//产品信息列表
+        cplxList:[
+          {
+            childredList: [{
+              createOrgCode: "00001000010000100001",
+              createOrgId: "7ccea0f4843911ea8bd27927a4b81ba7",
+              createOrgName: "十一局一公司",
+              createOrgType: "13",
+              createTime: 1628673259886,
+              createUserId: "359856",
+              createUserName: "刘鹏",
+              id: "d6bf1d37284e87c42593d35e34d39d5c",
+              isTb: "1",
+              isXqShow: "0",
+              productTypeCode: "002003005",
+              productTypeId: null,
+              productTypeName: null,
+              specificationAndModel: null,
+              vcode: "1",
+              venabled: "1",
+              vincludevat: "1",
+              vjnw: "境内",
+              vmeasurename: "吨",
+              vmeasureunit: "003",
+              vmeasureunitid: "854f4643aed346ca9fabd5517dea1a5e",
+              vname: "水泥",
+              vremark: null,
+              vsort: "1",
+              ywtypecode: "002003",
+              ywtypeid: "0cdd7ddd39b14091a5630de2a16f545b",
+              ywtypename: "其它产品"
+            }],
+            createOrgCode: "00001000010000100001",
+            createOrgId: "7ccea0f4843911ea8bd27927a4b81ba7",
+            createOrgName: "十一局一公司",
+            createOrgType: "13",
+            createTime: 1628673259886,
+            createUserId: "359856",
+            createUserName: "刘鹏",
+            id: null,
+            isTb: "1",
+            isXqShow: "0",
+            productTypeCode: "002003005",
+            productTypeId: "bc4fd8b0d98111eb8a856bd6a77a343b",
+            productTypeName: "其他产品",
+            specificationAndModel: null,
+            vcode: "1",
+            venabled: "1",
+            vincludevat: "1",
+            vjnw: "境内",
+            vmeasurename: null,
+            vmeasureunit: "003",
+            vmeasureunitid: null,
+            vname: null,
+            vremark: null,
+            vsort: "1",
+            ywtypecode: "002003",
+            ywtypeid: "0cdd7ddd39b14091a5630de2a16f545b",
+            ywtypename: "其它产品"
+          }
+        ],//产品类型列表
         detailForm: {
           cdmc:[],
           project: {
@@ -1131,7 +1244,7 @@
         });
 
       },
-      addProduct() {
+      addXs() {
         let v = {
           uuid: '', // ID新增为空，但必须传
           productId: '', // ID新增为空，但必须传
@@ -1261,6 +1374,33 @@
           this.detailForm.project.amountCompanyName=name.join(",");
         }
         this.DwVisible=false;
+      },
+      //获取产品名称
+      getcpxx(id,list,index,from){
+        console.info(id,list,index,from)
+        if(id){
+          if(from!='getDetail'){
+            list[index].productName='';
+            list[index].productId='';
+          }
+          list[index].productTypeName=this.cplxList.find((item)=>item.productTypeId==id).productTypeName;
+          list[index].cpxxList=this.cplxList.find((item)=>item.productTypeId==id).childredList;
+        }
+      },
+      //table获取name
+      getNameTable(id,list,name,index){
+        if(id){
+          this.$forceUpdate()
+          this.detailForm.project.infoProductList[index].productName= list.find(
+            (item) => item.id == id
+        ).vname;
+          this.detailForm.project.infoProductList[index].productUnit= list.find(
+            (item) => item.id == id
+        ).vmeasurename;
+          this.detailForm.project.infoProductList[index].specificationAndModel= list.find(
+            (item) => item.id == id
+          ).specificationAndModel;
+        }
       },
       //新增标段和地点
       add(type) {
@@ -1505,6 +1645,13 @@
             item.customerId=item.uuid;
           })
         });
+      //产品类型级联数据
+      this.$http.post(
+        "/api/contract/contract/ContractInfo/list/getProductSelectData",
+      )
+      .then((res) => {
+        this.cplxList=res.data.data;
+      });
     }
   }
 </script>
@@ -1525,12 +1672,12 @@
       vertical-align: middle;
     }
     .neirong {
-      > > > .el-form-item__error {
+      .el-form-item__error {
         top: 4% !important;
       }
     }
 
-    > > > .el-form-item__error {
+    .el-form-item__error {
       padding-top: 0px;
       width: 95%;
       margin-left: 0;
@@ -1538,12 +1685,12 @@
       top: 0%;
     }
 
-    > > > .el-form-item__label:before {
+    .el-form-item__label:before {
       position: initial;
       left: -10px;
     }
 
-    > > > .inline-formitem {
+    .inline-formitem {
       margin-top: 30px;
     }
 

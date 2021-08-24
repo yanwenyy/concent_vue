@@ -716,9 +716,7 @@ import { isMoney } from '@/utils/validate'
           name.push(item.detailName);
         })
       }
-
       if(data.type=="参与投标单位"){
-
         this.detailForm.bidInfoSection.participatingUnitsId=id.join(",");
         this.detailForm.bidInfoSection.participatingUnitsName=name.join(",");
         this.$forceUpdate();
@@ -766,11 +764,14 @@ import { isMoney } from '@/utils/validate'
         this.detailForm.bidInfoSectionOrgList=bidInfoSectionOrgList;
 
          this.detailForm.type=this.type;
+
+         
         if(this.type=='edit'){
           this.detailForm.index=this.index;
 
         }
           this.$refs.detailForm.validate((valid) => {
+            console.log(this.detailForm)
           if (valid) {
             this.visible = false;
             this.$emit('refreshBD', this.detailForm);

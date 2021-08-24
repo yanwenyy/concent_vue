@@ -830,7 +830,7 @@
                 :rules="rules.contractAmount"
                 :resizable="false"
                 label="开标金额"
-                prop="bidInfoSection.riskFee"
+                prop="bidInfoSection.openBidAmount"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
@@ -839,7 +839,7 @@
                   <el-input
                     disabled
                     clearable
-                    v-model="scope.row.bidInfoSection.riskFee"
+                    v-model="scope.row.bidInfoSection.openBidAmount"
                   ></el-input>
                 </template>
               </el-table-column>
@@ -959,7 +959,7 @@
 
                 </template> -->
                 <template slot-scope="scope">
-                <span v-for="(item,index ) in scope.row.bidInfoSectionOrgList">
+                <span v-for="(item,index ) in scope.row.bidInfoSectionOrgList" :key="index">
                     {{item.orgType==1?item.orgName:''}}
                     {{scope.row.bidInfoSectionOrgList[index+1]&& index>0&&scope.row.bidInfoSectionOrgList[index-1].orgType==1 && scope.row.bidInfoSectionOrgList[index+1].orgType==1? ',':''}}
                 </span>
@@ -980,8 +980,8 @@
                 <span v-for="(item,index) in scope.row.bidInfoSectionOrgList">{{item.orgType==2?item.orgName:''}}{{index < scope.row.bidInfoSectionOrgList.length-1? ',':''}}</span>
               </template> -->
                 <template slot-scope="scope">
-                <span v-for="(item,index ) in scope.row.bidInfoSectionOrgList">
-                    {{item.orgType==1?item.orgName:''}}
+                <span v-for="(item,index ) in scope.row.bidInfoSectionOrgList" :key="index">
+                    {{item.orgType==2?item.orgName:''}}
                     {{scope.row.bidInfoSectionOrgList[index+1]&& index>0&&scope.row.bidInfoSectionOrgList[index-1].orgType==2 && scope.row.bidInfoSectionOrgList[index+1].orgType==2? ',':''}}
                 </span>
 
@@ -1065,7 +1065,7 @@
               <el-table-column
                 :resizable="false"
                 label="编标拟配合单位"
-                prop="bidInfoSection.costOwner"
+                prop="bidInfoSection.orgName"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
@@ -1075,7 +1075,7 @@
               <el-table-column
                 :resizable="false"
                 label="投资估算"
-                prop="bidInfoSection.costOwner"
+                prop="bidInfoSection.investmentReckon"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
@@ -1085,7 +1085,7 @@
               <el-table-column
                 :resizable="false"
                 label="其中建安投资"
-                prop="bidInfoSection.costOwner"
+                prop="bidInfoSection.jananInvestment"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
@@ -1326,6 +1326,8 @@ export default {
         this.detailform.bidInfoSectionList.push(data)
       }else if(data.type=='edit'){
         this.detailform.bidInfoSectionList[data.index]=data;
+      }else if(data.type=='eidtnew'){
+        this.detailform.bidInfoSectionList[0].bidInfoSectionOrgList=data.bidInfoSectionOrgList;
       }
       console.log(this.detailform.bidInfoSectionList)
       this.BDCSVisible=false;
@@ -1385,7 +1387,7 @@ export default {
       var v = {};
       v = {
             bidInfoSection:{},
-            bidInfoSectionOrgList:{},
+            bidInfoSectionOrgList:{}
           }
           this.detailform.bidInfoSectionList.push(v);
           console.log(v)
