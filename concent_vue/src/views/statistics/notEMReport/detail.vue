@@ -1599,7 +1599,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="剩余合同额"
-                    prop="htquantity"
+                    prop="htquantity_after"
                     align="center"
                     show-overflow-tooltip
                     width="150"
@@ -1614,8 +1614,8 @@
                     width="200"
                   >
                     <template slot-scope="scope">
-                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
-                      <span v-else>否</span>
+                      <span v-if="scope.row.includEvat == 1">是</span>
+                      <span v-if="scope.row.includEvat == 0">否</span>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -1641,12 +1641,14 @@
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.wz_list, scope.$index, 'sale')"
                         @input="isFloor(scope.row.sale,scope.$index,detailform.wz_list,'sale'),getGyzzCz(detailform.wz_list,detailform.sumByMon_2,'sale')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.sale"/>
                       <el-input
+                        @change="suppliesChange(detailform.wz_list, scope.$index, 'overseasSale')"
                         @input="isFloor(scope.row.overseasSale,scope.$index,detailform.wz_list,'overseasSale'),getGyzzCz(detailform.wz_list,detailform.sumByMon_2,'overseasSale')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -1991,7 +1993,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="剩余合同额"
-                    prop="htquantity"
+                    prop="htquantity_after"
                     align="center"
                     show-overflow-tooltip
                     width="150"
@@ -2006,8 +2008,8 @@
                     width="200"
                   >
                     <template slot-scope="scope">
-                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
-                      <span v-else>否</span>
+                      <span v-if="scope.row.includEvat == 1">是</span>
+                      <span v-if="scope.row.includEvat == 0">否</span>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -2057,12 +2059,14 @@
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.fdc_list, scope.$index, 'inRevenue')"
                         @input="isFloor(scope.row.inRevenue,scope.$index,detailform.fdc_list,'inRevenue'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'inRevenue')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.inRevenue"/>
                       <el-input
+                        @change="suppliesChange(detailform.fdc_list, scope.$index, 'inRevenueHw')"
                         @input="isFloor(scope.row.inRevenueHw,scope.$index,detailform.fdc_list,'inRevenueHw'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'inRevenueHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -2080,12 +2084,14 @@
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.fdc_list, scope.$index, 'inRevenue')"
                         @input="isFloor(scope.row.offRevenue,scope.$index,detailform.fdc_list,'offRevenue'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenue')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.offRevenue"/>
                       <el-input
+                        @change="suppliesChange(detailform.fdc_list, scope.$index, 'inRevenueHw')"
                         @input="isFloor(scope.row.offRevenueHw,scope.$index,detailform.fdc_list,'offRevenueHw'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenueHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -2103,12 +2109,14 @@
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.fdc_list, scope.$index, 'inRevenue')"
                         @input="isFloor(scope.row.offRevenueNon,scope.$index,detailform.fdc_list,'offRevenueNon'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenueNon')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.offRevenueNon"/>
                       <el-input
+                        @change="suppliesChange(detailform.fdc_list, scope.$index, 'inRevenueHw')"
                         @input="isFloor(scope.row.offRevenueNonHw,scope.$index,detailform.fdc_list,'offRevenueNonHw'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenueNonHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -4009,6 +4017,19 @@
           this.detailform.sumByMon_0.qtMonth = money
         }
       },
+      // 计算剩余合同额
+      suppliesChange(list, index, name){
+        if (name == "sale") { // 修改物资贸易
+          list[index].htquantity_after = list[index].htquantity  - list[index].sale
+        }
+        if ( name == "overseasSale") {
+          list[index].htquantity_after = list[index].htquantity  - list[index].overseasSale
+        }
+        // if (name == "inRevenue") { // 房地产
+        //   list[index].htquantity_after = list[index].htquantity
+        // }
+
+      },
       //修改产值
       getGyzzCz(list,obj,name){
       //  list 列表数据 obj 修改哪个对象 name 修改对象里的哪个值
@@ -4086,21 +4107,6 @@
           size: 20
         };
         this.getData();
-      },
-      //查询
-      searchDate(type,name){
-        this.searchform[type].reportDate=this.p.reportDate;
-        this.$http
-          .post(
-            '/api/statistics/unProjectReport/list/detail/queryInfo',
-            this.searchform[type],
-          )
-          .then((res) => {
-          var datas=res.data.data;
-          // this.$forceUpdate();
-          this.detailform[name]=datas[name];
-
-        })
       },
       //导出
       exportdata(type,name){
@@ -4440,6 +4446,28 @@
           showinput: true,
         };
       },
+      //查询
+      searchDate(type,name){
+        this.searchform[type].reportDate=this.p.reportDate;
+        this.$http
+          .post(
+            '/api/statistics/unProjectReport/list/detail/queryInfo',
+            this.searchform[type],
+          )
+          .then((res) => {
+          res.data.data.wz_list.forEach((element)=>{
+            // 物资贸易
+            if (element.country == "01") {
+              element.htquantity_after = Number(element.htquantity) - Number(element.sale)
+            } else {
+              element.htquantity_after = Number(element.htquantity) - Number(element.overseasSale)
+            }
+          })
+          var datas=res.data.data;
+          this.detailform[name]=datas[name];
+
+        })
+      },
       // 加载列表
       getDetail() {
         var data={};
@@ -4453,6 +4481,14 @@
         this.$http
           .post("/api/statistics/unProjectReport/list/queryAllInfo",data )
           .then((res) => {
+          res.data.data.wz_list.forEach((element)=>{
+            // 物资贸易
+            if (element.country == "01") {
+              element.htquantity_after = Number(element.htquantity) - Number(element.sale)
+            } else {
+              element.htquantity_after = Number(element.htquantity) - Number(element.overseasSale)
+            }
+          })
           var datas=res.data.data;
           this.detailform=datas;
           this.detailform.sumByMon_0=datas.sumByMon_0||{};
