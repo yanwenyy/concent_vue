@@ -232,6 +232,7 @@
                   prop="companyBelongName"
                   align="center"
                   show-overflow-tooltip
+                  width="150"
                 >
                 </el-table-column>
                 <el-table-column
@@ -241,6 +242,7 @@
                   prop="projectOmit"
                   align="center"
                   show-overflow-tooltip
+                  width="150"
                 >
                 </el-table-column>
                 <el-table-column
@@ -250,6 +252,7 @@
                   prop="projectName"
                   align="center"
                   show-overflow-tooltip
+                  width="150"
                 >
                 </el-table-column>
                 <el-table-column
@@ -1158,6 +1161,7 @@
                     prop="createOrgName"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -1167,6 +1171,7 @@
                     prop="vcode"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -1176,6 +1181,7 @@
                     prop="vname"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -1528,6 +1534,7 @@
                     prop="projectName"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
 
@@ -1538,6 +1545,7 @@
                     prop="companyBelongName"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -1913,6 +1921,7 @@
                     prop="projectName"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -1922,6 +1931,7 @@
                     prop="contractNumber"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -1931,6 +1941,7 @@
                     prop="companyBelongName"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -2376,6 +2387,7 @@
                     prop="projectName"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -2385,6 +2397,7 @@
                     prop="contractNumber"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -2394,6 +2407,7 @@
                     prop="companyBelongName"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -2847,6 +2861,7 @@
                     prop="projectName"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -2856,6 +2871,7 @@
                     prop="contractNumber"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -2865,6 +2881,7 @@
                     prop="companyBelongName"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -3465,6 +3482,7 @@
                     prop="projectName"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -3474,6 +3492,7 @@
                     prop="contractNumber"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -3483,6 +3502,7 @@
                     prop="companyBelongName"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
