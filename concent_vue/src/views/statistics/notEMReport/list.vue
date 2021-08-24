@@ -336,15 +336,24 @@
       // 修改
       totop() {
         if (this.multipleSelection.length !== 1) {
-          this.$message.info("请选择一条记录进行修改操作！");
+          this.$message({
+            showClose: true,
+            message: '请选择一条记录进行修改操作！'
+          });
           return false;
         }
         if(this.multipleSelection[0].stauts=='check'||this.multipleSelection[0].stauts=='pass'||this.multipleSelection[0].stauts=='0'){
-          this.$message.info("此条数据不可修改！");
+          this.$message({
+            showClose: true,
+            message: '此条数据不可修改！'
+          });
           return false;
         }
         if(this.multipleSelection[0].createOrgCode!=this.userdata.managerOrgCode){
-          this.$message.info("无权操作下级单位月报！");
+          this.$message({
+            showClose: true,
+            message: '无权操作下级单位月报！'
+          });
           return false;
         }
         let p = {'gyType': this.userdata.managerOrgList[0].principalCode||'2',actpoint: "edit", statId: this.multipleSelection[0].uuid,reportDate: this.multipleSelection[0].reportDate,stauts:this.multipleSelection[0].stauts,createOrgCode:this.multipleSelection[0].createOrgCode};
@@ -366,7 +375,10 @@
       // 删除
       remove() {
         if (this.multipleSelection.length < 1) {
-          this.$message.info("请选择一条记录进行查看操作！");
+          this.$message({
+            showClose: true,
+            message: '请选择一条记录进行查看操作！'
+          });
           return false;
         }
         let uuids = [],itemStatus=true;
@@ -375,7 +387,10 @@
           if(item.stauts=='edit'||item.stauts=='reject'){
           uuids.push(item.uuid);
         }else{
-          this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
+          this.$message({
+            showClose: true,
+            message: '当前所选数据中包含不可删除的选项'
+          });
           return itemStatus=false;
         }
       })
