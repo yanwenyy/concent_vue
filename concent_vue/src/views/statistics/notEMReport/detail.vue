@@ -786,7 +786,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="剩余合同额"
-                    prop="htquantity"
+                    prop="htquantity_after"
                     align="center"
                     show-overflow-tooltip
                     width="150"
@@ -801,8 +801,8 @@
                     width="200"
                   >
                     <template slot-scope="scope">
-                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
-                      <span v-else>否</span>
+                      <span v-if="scope.row.includEvat == 1">是</span>
+                      <span v-if="scope.row.includEvat == 0">否</span>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -829,12 +829,14 @@
                     <template slot-scope="scope">
                       <!-- :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1" -->
                       <el-input
+                        @change="suppliesChange(detailform.gy_list, scope.$index, 'industry')"
                         @input="isFloor(scope.row.industry,scope.$index,detailform.gy_list,'industry'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'industry')"
                         v-if="scope.row.country=='01'"
                         :disabled="true"
                         clearable
                         v-model="scope.row.industry"/>
                       <el-input
+                        @change="suppliesChange(detailform.gy_list, scope.$index, 'overseasIndustry')"
                         @input="isFloor(scope.row.overseasIndustry,scope.$index,detailform.gy_list,'overseasIndustry'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'overseasIndustry')"
                         v-if="scope.row.country=='02'"
                         :disabled="true"
@@ -852,12 +854,14 @@
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.gy_list, scope.$index, 'industry')"
                         @input="isFloor(scope.row.equipmentManufacturin,scope.$index,detailform.gy_list,'equipmentManufacturin'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'equipmentManufacturin')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.equipmentManufacturin"/>
                       <el-input
+                        @change="suppliesChange(detailform.gy_list, scope.$index, 'overseasIndustry')"
                         @input="isFloor(scope.row.equipmentManufacturinHw,scope.$index,detailform.gy_list,'equipmentManufacturinHw'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'equipmentManufacturinHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -875,12 +879,14 @@
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.gy_list, scope.$index, 'industry')"
                         @input="isFloor(scope.row.componentManufacturin,scope.$index,detailform.gy_list,'componentManufacturin'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'componentManufacturin')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.componentManufacturin"/>
                       <el-input
+                        @change="suppliesChange(detailform.gy_list, scope.$index, 'overseasIndustry')"
                         @input="isFloor(scope.row.componentManufacturinHw,scope.$index,detailform.gy_list,'componentManufacturinHw'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'componentManufacturinHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -898,12 +904,14 @@
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.gy_list, scope.$index, 'industry')"
                         @input="isFloor(scope.row.otherIndustrayProduct,scope.$index,detailform.gy_list,'otherIndustrayProduct'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'otherIndustrayProduct')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.otherIndustrayProduct"/>
                       <el-input
+                        @change="suppliesChange(detailform.gy_list, scope.$index, 'overseasIndustry')"
                         @input="isFloor(scope.row.otherIndustrayProductHw,scope.$index,detailform.gy_list,'otherIndustrayProductHw'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'otherIndustrayProductHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -4047,7 +4055,12 @@
       },
       // 计算剩余合同额
       suppliesChange(list, index, name){
-        if (name == "sale") { // 修改物资贸易
+        if (name == "industry") { // 工业制造
+          list[index].htquantity_after = list[index].htquantity - list[index].industry - list[index].equipmentManufacturin - list[index].componentManufacturin - list[index].otherIndustrayProduct
+        }else if ( name == "overseasIndustry") {
+          list[index].htquantity_after = list[index].htquantity - list[index].overseasIndustry - list[index].equipmentManufacturinHw - list[index].componentManufacturinHw - list[index].otherIndustrayProductHw
+        }       
+        if (name == "sale") { // 物资贸易
           list[index].htquantity_after = list[index].htquantity - list[index].sale
         }else if ( name == "overseasSale") {
           list[index].htquantity_after = list[index].htquantity - list[index].overseasSale
@@ -4499,6 +4512,14 @@
           )
           .then((res) => {
           res.data.data.wz_list.forEach((element)=>{
+            // 工业制造
+            res.data.data.gy_list.forEach((element)=>{
+              if (element.country == "01") {
+                element.htquantity_after = Number(element.htquantity) - Number(element.industry)- Number(element.equipmentManufacturin)- Number(element.componentManufacturin)- Number(element.otherIndustrayProduct)
+              } else {
+                element.htquantity_after = Number(element.htquantity) - Number(element.overseasIndustry)- Number(element.equipmentManufacturinHw)- Number(element.componentManufacturinHw)- Number(element.otherIndustrayProductHw)
+              }
+            })
             // 物资贸易
             if (element.country == "01") {
               element.htquantity_after = Number(element.htquantity) - Number(element.sale)
@@ -4556,6 +4577,14 @@
         this.$http
           .post("/api/statistics/unProjectReport/list/queryAllInfo",data )
           .then((res) => {
+          // 工业制造
+          res.data.data.gy_list.forEach((element)=>{
+            if (element.country == "01") {
+              element.htquantity_after = Number(element.htquantity) - Number(element.industry)- Number(element.equipmentManufacturin)- Number(element.componentManufacturin)- Number(element.otherIndustrayProduct)
+            } else {
+              element.htquantity_after = Number(element.htquantity) - Number(element.overseasIndustry)- Number(element.equipmentManufacturinHw)- Number(element.componentManufacturinHw)- Number(element.otherIndustrayProductHw)
+            }
+          })
           // 物资贸易
           res.data.data.wz_list.forEach((element)=>{
             if (element.country == "01") {
