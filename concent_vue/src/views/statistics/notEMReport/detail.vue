@@ -4270,6 +4270,7 @@
       },
       //工程类别二级
       getTwo(id) {
+        this.searchform.design.projectTypeSecondId = ''
         this.detailform.sumByMon_3.enginTypeSecondId='';
         this.detailform.sumByMon_3.enginTypeSecondName='';
         this.detailform.sumByMon_3.enginTypeFirstName='';
