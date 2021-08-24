@@ -2929,7 +2929,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="剩余合同额"
-                    prop="htquantity"
+                    prop="htquantity_after"
                     align="center"
                     show-overflow-tooltip
                     width="150"
@@ -2944,8 +2944,8 @@
                     width="200"
                   >
                     <template slot-scope="scope">
-                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
-                      <span v-else>否</span>
+                      <span v-if="scope.row.includEvat == 1">是</span>
+                      <span v-if="scope.row.includEvat == 0">否</span>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -2971,12 +2971,14 @@
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.yy_list, scope.$index, 'engineeringOperation')"
                         @input="isFloor(scope.row.engineeringOperation,scope.$index,detailform.yy_list,'engineeringOperation'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'engineeringOperation')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.engineeringOperation"/>
                       <el-input
+                        @change="suppliesChange(detailform.yy_list, scope.$index, 'engineeringOperationHw')"
                         @input="isFloor(scope.row.engineeringOperationHw,scope.$index,detailform.yy_list,'engineeringOperationHw'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'engineeringOperationHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -2994,12 +2996,14 @@
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.yy_list, scope.$index, 'engineeringOperation')"
                         @input="isFloor(scope.row.informationOperation,scope.$index,detailform.yy_list,'informationOperation'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'informationOperation')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.informationOperation"/>
                       <el-input
+                        @change="suppliesChange(detailform.yy_list, scope.$index, 'engineeringOperationHw')"
                         @input="isFloor(scope.row.informationOperationHw,scope.$index,detailform.yy_list,'informationOperationHw'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'informationOperationHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -3017,12 +3021,14 @@
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.yy_list, scope.$index, 'engineeringOperation')"
                         @input="isFloor(scope.row.estateManagement,scope.$index,detailform.yy_list,'estateManagement'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'estateManagement')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.estateManagement"/>
                       <el-input
+                        @change="suppliesChange(detailform.yy_list, scope.$index, 'engineeringOperationHw')"
                         @input="isFloor(scope.row.estateManagementHw,scope.$index,detailform.yy_list,'estateManagementHw'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'estateManagementHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -3040,12 +3046,14 @@
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.yy_list, scope.$index, 'engineeringOperation')"
                         @input="isFloor(scope.row.otherOperation,scope.$index,detailform.yy_list,'otherOperation'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'otherOperation')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.otherOperation"/>
                       <el-input
+                        @change="suppliesChange(detailform.yy_list, scope.$index, 'engineeringOperationHw')"
                         @input="isFloor(scope.row.overseasOtherOperation,scope.$index,detailform.yy_list,'overseasOtherOperation'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'overseasOtherOperation')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -4040,6 +4048,11 @@
         } else if (name == "overseasFinance") {
           list[index].htquantity_after = list[index].htquantity - list[index].overseasFinance - list[index].overseasSecure - list[index].otherFinanceHw
         }
+        if (name == "engineeringOperation") { // 运营维管
+          list[index].htquantity_after = list[index].htquantity - list[index].engineeringOperation - list[index].informationOperation - list[index].estateManagement - list[index].otherOperation
+        } else if (name == "engineeringOperationHw") {
+          list[index].htquantity_after = list[index].htquantity - list[index].engineeringOperationHw - list[index].informationOperationHw - list[index].estateManagementHw - list[index].overseasOtherOperation
+        }
       },
       //修改产值
       getGyzzCz(list,obj,name){
@@ -4489,6 +4502,14 @@
                 element.htquantity_after = Number(element.htquantity) - Number(element.overseasFinance)- Number(element.overseasSecure)- Number(element.otherFinanceHw)
               }
             })
+            // 运营维管
+            res.data.data.yy_list.forEach((element)=>{
+              if (element.country == "01") {
+                element.htquantity_after = Number(element.htquantity) - Number(element.engineeringOperation)- Number(element.informationOperation)- Number(element.estateManagement)- Number(element.otherOperation)
+              } else {
+                element.htquantity_after = Number(element.htquantity) - Number(element.engineeringOperationHw)- Number(element.informationOperationHw)- Number(element.estateManagementHw)- Number(element.overseasOtherOperation)
+              }
+            })
           })
           var datas=res.data.data;
           this.detailform[name]=datas[name];
@@ -4530,6 +4551,14 @@
               element.htquantity_after = Number(element.htquantity) - Number(element.finance)- Number(element.secure)- Number(element.otherFinance)
             } else {
               element.htquantity_after = Number(element.htquantity) - Number(element.overseasFinance)- Number(element.overseasSecure)- Number(element.otherFinanceHw)
+            }
+          })
+          // 运营维管
+          res.data.data.yy_list.forEach((element)=>{
+            if (element.country == "01") {
+              element.htquantity_after = Number(element.htquantity) - Number(element.engineeringOperation)- Number(element.informationOperation)- Number(element.estateManagement)- Number(element.otherOperation)
+            } else {
+              element.htquantity_after = Number(element.htquantity) - Number(element.engineeringOperationHw)- Number(element.informationOperationHw)- Number(element.estateManagementHw)- Number(element.overseasOtherOperation)
             }
           })
           var datas=res.data.data;
