@@ -378,9 +378,15 @@
                   prop="remark"
                   align="center"
                   show-overflow-tooltip
+                  width="200"
                 >
+                  <template slot-scope="scope">
+                    <el-input
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                      clearable
+                      v-model="scope.row.remark"/>
+                  </template>
                 </el-table-column>
-
               </el-table>
             </div>
           </el-tab-pane>
@@ -4437,7 +4443,6 @@
       // 加载列表
       getDetail() {
         var data={};
-        console.info(this.p)
         if(this.p.actpoint=='add'){
           data={reportDate: this.p.reportDate,isAdd:'0',uuid:this.p.statId,gyType:this.p.gyType}
         }else if(this.p.actpoint=='edit'||this.p.actpoint=='look'){
