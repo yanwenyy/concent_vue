@@ -755,7 +755,7 @@
                       <span @click="getWorkAmount(scope.row)" style="cursor:pointer;color:#409EFF;text-decoration:underline;">产品信息</span>
                     </template>
                   </el-table-column>
-                  <el-table-column
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="推送人"
@@ -763,8 +763,8 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
-                  <el-table-column
+                  </el-table-column> -->
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="联系方式"
@@ -772,7 +772,7 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
+                  </el-table-column> -->
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
@@ -1576,7 +1576,7 @@
                       {{scope.row.country=='01'?'境内':'境外'}}
                     </template>
                   </el-table-column>
-                  <el-table-column
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="推送人"
@@ -1584,8 +1584,8 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
-                  <el-table-column
+                  </el-table-column> -->
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="联系方式"
@@ -1593,7 +1593,7 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
+                  </el-table-column> -->
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
@@ -1970,7 +1970,7 @@
                     show-overflow-tooltip
                   >
                   </el-table-column> -->
-                  <el-table-column
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="推送人"
@@ -1978,8 +1978,8 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
-                  <el-table-column
+                  </el-table-column> -->
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="联系方式"
@@ -1987,7 +1987,7 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
+                  </el-table-column> -->
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
@@ -2429,7 +2429,7 @@
                       {{scope.row.country=='01'?'境内':'境外'}}
                     </template>
                   </el-table-column>
-                  <el-table-column
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="推送人"
@@ -2437,8 +2437,8 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
-                  <el-table-column
+                  </el-table-column> -->
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="联系方式"
@@ -2446,7 +2446,7 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
+                  </el-table-column> -->
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
@@ -2906,7 +2906,7 @@
                       {{scope.row.country=='01'?'境内':'境外'}}
                     </template>
                   </el-table-column>
-                  <el-table-column
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="推送人"
@@ -2914,8 +2914,8 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
-                  <el-table-column
+                  </el-table-column> -->
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="联系方式"
@@ -2923,7 +2923,7 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
+                  </el-table-column> -->
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
@@ -3531,7 +3531,7 @@
                       {{scope.row.country=='01'?'境内':'境外'}}
                     </template>
                   </el-table-column>
-                  <el-table-column
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="推送人"
@@ -3539,8 +3539,8 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
-                  <el-table-column
+                  </el-table-column> -->
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="联系方式"
@@ -3548,7 +3548,7 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
+                  </el-table-column> -->
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
