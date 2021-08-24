@@ -470,6 +470,28 @@
                 ></el-option>
               </el-select>
             </el-form-item>
+            <el-form-item
+          v-if="detailformBefore.verify.lateRegist=='0'"
+          label="是否逾期:"
+          class="formItem"
+        >
+          <el-switch
+            disabled
+            v-model="detailformBefore.verify.lateRegist"
+            active-value="0"
+            inactive-value="1"
+          />
+      </el-form-item>
+            <el-form-item
+              v-if="detailformBefore.verify.lateRegist=='0'"
+              label="逾期类型:"
+              class="formItem"
+            >
+              <el-input
+                disabled
+                v-model="detailformBefore.verify.overdueType"
+              />
+            </el-form-item>
               <br>
         <el-form-item
           label="资格预审公告发布日期:"
@@ -493,7 +515,6 @@
         <el-form-item
           label="资审文件发售截止日期:"
           prop="verify.saleTime"
-
           :rules="{
           required: true, message: '此项不能为空', trigger: 'blur'
         }"
@@ -1220,11 +1241,24 @@
               </el-select>
             </el-form-item>
             <el-form-item
+          v-if="detailformAfter.verify.lateRegist=='0'"
+          label="是否逾期:"
+          class="formItem"
+        >
+          <el-switch
+            disabled
+            v-model="detailformAfter.verify.lateRegist"
+            active-value="0"
+            inactive-value="1"
+          />
+      </el-form-item>
+            <el-form-item
+              v-if="detailformAfter.verify.lateRegist=='0'"
               label="逾期类型:"
               class="formItem"
             >
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                disabled
                 v-model="detailformAfter.verify.overdueType"
               />
             </el-form-item>
@@ -1258,6 +1292,7 @@
         }"
         >
           <el-date-picker
+            @change="ifYq"
             clearable
             :disabled="p.actpoint === 'look'||p.actpoint=='task'"
             value-format="timestamp"
@@ -1602,6 +1637,7 @@
                 color: 'rgba(0,0,0,1)',
               }"
             @selection-change="handleSelectionChange"
+            :row-class-name="tableSection"
             align="center"
             border
             ref="table"
@@ -1690,7 +1726,7 @@ export default {
           subTime: '',
           designOrg: '',
           publishTime: '',
-          flowStatus: '0'
+          flowStatus: ''
         },
         'topInfor': {},
         'topInfoOrg':{},
@@ -1710,7 +1746,7 @@ export default {
           subTime: '',
           designOrg: '',
           publishTime: '',
-          flowStatus: '0'
+          flowStatus: ''
         },
         'topInfor': {
           noticeTypeName:'',
@@ -1749,7 +1785,11 @@ export default {
     }
   },
   computed: {
-
+    topInfoSectionList(){
+      return this.detailform1.topInfoSectionList.filter((data) => {
+        return data.isTrack== '1'
+      })
+    },
     bidType() {
       return this.$store.state.bidType
     },
@@ -2013,6 +2053,36 @@ export default {
       //   path: "/manage/proposal/list",
       // });
     },
+    //判断是否逾期
+    ifYq(){
+      if(this.detailformAfter.verify.saleTime||this.detailformAfter.verify.subTime){
+        if(this.detailformAfter.verify.saleTime>=this.detailform1.topInfoOrg.flowTime){
+          this.detailformAfter.verify.lateRegist='1';
+          if(this.detailformAfter.verify.subTime<this.detailform1.topInfoOrg.flowTime){
+            this.detailformAfter.verify.lateRegist='0';
+            this.detailformAfter.verify.overdueType='资审登记逾期';
+          }
+        }else{
+          this.detailformAfter.verify.lateRegist='0';
+          this.detailformAfter.verify.overdueType=this.detailformAfter.verify.saleTime<this.detailform1.topInfoOrg.flowTime?'跟踪逾期':this.detailformAfter.verify.subTime<this.detailform1.topInfoOrg.flowTime?'资审登记逾期':''
+        }
+      }
+    },
+    //判断是否逾期
+    ifYqBefore(){
+      if(this.detailformBefore.verify.saleTime||this.detailformBefore.verify.subTime){
+        if(this.detailformBefore.verify.saleTime>=this.detailform1.topInfoOrg.flowTime){
+          this.detailformBefore.verify.lateRegist='1';
+          if(this.detailformBefore.verify.subTime<this.detailform1.topInfoOrg.flowTime){
+            this.detailformBefore.verify.lateRegist='0';
+            this.detailformBefore.verify.overdueType='资审登记逾期';
+          }
+        }else{
+          this.detailformBefore.verify.lateRegist='0';
+          this.detailformBefore.verify.overdueType=this.detailformBefore.verify.saleTime<this.detailform1.topInfoOrg.flowTime?'跟踪逾期':this.detailformBefore.verify.subTime<this.detailform1.topInfoOrg.flowTime?'资审登记逾期':''
+        }
+      }
+    },
     saveInfo(formName,type) {
       //alert(formName);
       //alert(this.$refs.formName.validate())
@@ -2020,10 +2090,10 @@ export default {
         var url='';
         if(type=='save'){
           url=`/api/contract/topInfo/Verify/detail/${this.p.actpoint === "add"? "saveChange": "updateChangeRecord"}`
-          this.detailformAfter.verify.flowStatus = "1";
+          this.detailformAfter.verify.flowStatus = "edit";
         }else{
           url="/api/contract/topInfo/Verify/changeProcess/start";
-          this.detailformAfter.verify.flowStatus = "2";
+          this.detailformAfter.verify.flowStatus = "check";
         }
       if(this.detailformAfter.verify.publishTime > this.detailformAfter.verify.saleTime){
         this.$message.error("资格预审公告发布日期不能大于资审文件发售截止日期");
@@ -2231,6 +2301,14 @@ export default {
     handleSelectionChange1(val) {
       this.multipleSelection1 = val
     },
+    
+    tableSection({ row, rowIndex }){
+      if(this.detailform1.topInfoSectionList[rowIndex] != null && this.detailform1.topInfoSectionList[rowIndex].isTrack === "0"){
+        return "none-show"
+      }else{
+        return "";
+      }
+    },
     //加载本页面数据
 
 
@@ -2256,6 +2334,9 @@ export default {
             for(var i in this.detailformBefore){
               this.detailformAfter[i]=JSON.parse(JSON.stringify(this.detailformBefore[i]));
             }
+                
+            this.ifYq();
+            this.ifYqBefore();
             // alert( JSON.stringify(this.detailformAfter.verifySectionList))
           })
       }else
@@ -2275,12 +2356,14 @@ export default {
               if(item.verify.changeStatus==1) // 第一个是之前
               {
                 this.detailformBefore =item;
+                this.ifYqBefore();
               }else if(item.verify.changeStatus==2) // 第二个是之后
               {
                 this.detailformAfter =item
                 this.detailformAfter.topInfor.noticeTypeName=item.topInfor.noticeTypeName;
                 this.detailformAfter.verify.orgId=item.verifyOrgList[0].orgId;
                 this.detailformAfter.verify.orgName=item.verifyOrgList[0].orgName;
+                this.ifYq();
                 console.log( this.detailformAfter)
               }
             })
@@ -2305,6 +2388,8 @@ export default {
             topInfoSiteList: datas.topInfoSiteList,
             topInfoSectionList: datas.topInfoSectionList,
           }
+        this.ifYq();
+        this.ifYqBefore();
           //alert( JSON.stringify(this.detailform1.topInfoSiteList))
         });
     },
