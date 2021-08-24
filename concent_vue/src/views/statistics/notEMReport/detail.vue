@@ -99,7 +99,7 @@
           </el-tab-pane>
           <el-tab-pane label="主要项目管理">
             <div class="table-div">
-              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+              <el-form v-show="p.actpoint !== 'task'" class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
                 <el-form-item label="项目简称:">
                   <el-input v-model="searchform.design.projectOmit" placeholder="项目简称" clearable></el-input>
                 </el-form-item>
@@ -579,7 +579,7 @@
           </el-tab-pane>
           <el-tab-pane v-if="p.gyType=='1'" label="主要项目管理">
             <div class="table-div">
-              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+              <el-form v-show="p.actpoint !== 'task'" class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
                 <el-form-item label="项目名称:">
                   <el-input v-model="searchform.industry.projectName" placeholder="项目名称" clearable></el-input>
                 </el-form-item>
@@ -1100,7 +1100,7 @@
           </el-tab-pane>
           <el-tab-pane v-if="p.gyType=='2'" label="主要产品管理">
             <div class="table-div">
-              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+              <el-form v-show="p.actpoint !== 'task'" class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
                 <el-button v-show="p.actpoint!=='task'" @click="exportdata('product','工业制造板块')" type="primary" plain>导出</el-button>
                 <el-upload
                   v-show="p.actpoint!=='task'&&p.stauts!=='pass'"
@@ -1397,7 +1397,7 @@
           </el-tab-pane>
           <el-tab-pane label="主要项目管理">
             <div class="table-div">
-              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+              <el-form v-show="p.actpoint !== 'task'" class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
                 <el-form-item label="项目名称:">
                   <el-input v-model="searchform.material.projectName" placeholder="项目名称" clearable></el-input>
                 </el-form-item>
@@ -1850,7 +1850,7 @@
           </el-tab-pane>
           <el-tab-pane label="主要项目管理">
             <div class="table-div">
-              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+              <el-form v-show="p.actpoint !== 'task'" class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
                 <el-form-item label="项目名称:">
                   <el-input v-model="searchform.realty.projectName" placeholder="项目名称" clearable></el-input>
                 </el-form-item>
@@ -2312,7 +2312,7 @@
           </el-tab-pane>
           <el-tab-pane label="主要项目管理">
             <div class="table-div">
-              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+              <el-form v-show="p.actpoint !== 'task'" class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
                 <el-form-item label="项目名称:">
                   <el-input v-model="searchform.secure.projectName" placeholder="项目名称" clearable></el-input>
                 </el-form-item>
@@ -2783,7 +2783,7 @@
           </el-tab-pane>
           <el-tab-pane label="主要项目管理">
             <div class="table-div">
-              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+              <el-form v-show="p.actpoint !== 'task'" class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
                 <el-form-item label="项目名称:">
                   <el-input v-model="searchform.service.projectName" placeholder="项目名称" clearable></el-input>
                 </el-form-item>
@@ -3400,7 +3400,7 @@
           </el-tab-pane>
           <el-tab-pane label="主要项目管理">
             <div class="table-div">
-              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+              <el-form v-show="p.actpoint !== 'task'" class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
                 <el-form-item label="项目名称:">
                   <el-input v-model="searchform.other.projectName" placeholder="项目名称" clearable></el-input>
                 </el-form-item>
@@ -4437,6 +4437,7 @@
       // 加载列表
       getDetail() {
         var data={};
+        console.info(this.p)
         if(this.p.actpoint=='add'){
           data={reportDate: this.p.reportDate,isAdd:'0',uuid:this.p.statId,gyType:this.p.gyType}
         }else if(this.p.actpoint=='edit'||this.p.actpoint=='look'){
