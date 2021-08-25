@@ -691,7 +691,7 @@
                   v-if="p.actpoint != 'look' && p.actpoint != 'searchLook' && detailform.bidInfo.isCoalitionBid != '1' &&detailform.bidInfo.isCoalitionBid != ''||p.actpoint=='task'"
                   slot="append"
                   icon="el-icon-circle-plus-outline"
-                  :disabled="p.actpoint ==='edit'"
+                  :disabled="p.actpoint ==='look'"
                   @click="
                     addDw('内部联合体单位', detailform.bidInfo.innerOrgId)
                   "
@@ -715,7 +715,7 @@
                 placeholder="外部联合体单位"
                 v-model="detailform.bidInfo.outOrg"
               >
-                <el-button :disabled="p.actpoint ==='edit'" v-if="p.actpoint!='task'&&p.actpoint!='look'&&detailform.bidInfo.isCoalitionBid != '1'&&p.actpoint != 'searchLook'&&detailform.bidInfo.isCoalitionBid !=''" slot="append" icon="el-icon-circle-plus-outline" @click="openComMul(detailform.bidInfo.outOrgId,detailform.bidInfo.outOrg,'/api/contract/Companies/detail/findCompanies','外部联合体单位',detailform.bidInfo.outOrgCode)"></el-button>
+                <el-button :disabled="p.actpoint ==='look'" v-if="p.actpoint!='task'&&p.actpoint!='look'&&detailform.bidInfo.isCoalitionBid != '1'&&p.actpoint != 'searchLook'&&detailform.bidInfo.isCoalitionBid !=''" slot="append" icon="el-icon-circle-plus-outline" @click="openComMul(detailform.bidInfo.outOrgId,detailform.bidInfo.outOrg,'/api/contract/Companies/detail/findCompanies','外部联合体单位',detailform.bidInfo.outOrgCode)"></el-button>
               </el-input>
               <!--<el-select-->
                 <!--:disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"-->

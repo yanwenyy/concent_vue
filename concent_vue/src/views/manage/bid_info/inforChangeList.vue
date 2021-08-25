@@ -463,6 +463,10 @@
           this.$message.info("请选择一条记录进行查看操作！");
           return false;
         }
+        if (this.multipleSelection[0].flowStatus == "check") {
+          this.$message.info("审核中记录禁止删除！");
+          return false;
+        }
         let uuids = [],itemStatus=true;
         this.multipleSelection.forEach((item) => {
           uuids.push(item.uuid);

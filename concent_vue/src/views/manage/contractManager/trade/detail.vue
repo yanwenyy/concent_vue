@@ -583,7 +583,7 @@
               </el-input>
             </el-form-item>
             <el-form-item
-              v-if="detailform.contractInfo.isInSystemUnion==='1'"
+              v-if="!(detailform.contractInfo.isInSystemUnion==='1')"
               label="暂定金(万元)"
               prop="contractInfo.designTempPrice"
               :rules="rules.contractAmount"

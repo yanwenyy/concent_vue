@@ -484,6 +484,10 @@ export default {
           this.$message.info("请选择一条记录进行登记操作！");
           return false;
         }
+        if (this.multipleSelection[0].bidFlowStatus == 1) {
+          this.$message.info("草稿无法登记！");
+          return false;
+        }
         let p = {actpoint: "addk", instid: this.multipleSelection[0].uuid};
         this.$router.push({
           path: "./Winning_bidKB/",
