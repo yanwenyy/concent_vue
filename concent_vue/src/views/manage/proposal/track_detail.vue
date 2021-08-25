@@ -1651,10 +1651,10 @@
                     message: "保存成功",
                     type: "success",
                   });
-                  this.$refs[formName].resetFields();
                   this.$router.push({
                     path: "/manage/proposal/track_list",
                   });
+                  this.$refs[formName].resetFields();
                 }
               });
           } else {
