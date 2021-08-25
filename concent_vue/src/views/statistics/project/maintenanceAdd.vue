@@ -101,7 +101,7 @@
                 prop="project.companyBuildId"
                 :rules="{
                     required: true,
-                    message: '此项不能为空1',
+                    message: '此项不能为空',
                     trigger: 'blur',
                   }">
                   <el-select

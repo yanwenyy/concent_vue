@@ -495,7 +495,7 @@
             <!--父项目暂无-->
                 <el-form-item
                   label="父项目名称:"
-                  prop="project.fatherProjectName"
+                  prop="project.fatherProjectId"
                   :rules="{
                     required: true,
                     message: '此项不能为空',
@@ -1605,6 +1605,20 @@
         this.getName(id, list, name,code);
         this.getProjectFather();
       },
+      //获取父项目名称列表
+      getProjectFather(){
+        this.$http
+          .post('/api/statistics/StatisticsProject/detail/findProjectFather',
+              {projectTypeCode:this.detailForm.project.projectTypeCode,projectModuleId:this.detailForm.project.projectModuleId}
+          )
+          .then(res => {
+            if(res.data.code  === 200){
+              this.fatherList = res.data.data
+            }else{
+              this.fatherList = []
+            }
+        })
+      },
       getFatherName(id, list, name) {
         if (id) {
           this.$forceUpdate()
@@ -1856,20 +1870,6 @@
           this.$refs.infoDw.init(type,list,ifChek,index,tableList);
         })
       },
-      //获取父项目名称列表
-      getProjectFather(){
-        this.$http
-          .post('/api/statistics/StatisticsProject/detail/findProjectFather',
-              {projectTypeCode:this.detailForm.project.projectTypeCode,projectModuleId:this.detailForm.project.projectModuleId}
-          )
-          .then(res => {
-            if(res.data.code  === 200){
-              this.fatherList = res.data.data
-            }else{
-              this.fatherList = []
-            }
-        })
-      },
       //获取单位的值
       getDwInfo(data){
         this.$forceUpdate();
@@ -1938,6 +1938,7 @@
                 this.detailForm.project.investmentContract=this.detailForm.project.contractAmountInitial;
                 this.detailForm.project.contractAmountTotal=this.detailForm.project.contractAmountInitial;
                 this.detailForm.project.projectStatusId='6530437b0a6f49a59b047eb4eb4f9201';
+                this.detailForm.project.projectOmit=this.detailForm.project.projectName;
                 this.getCount()
               }
               if(this.detailForm.project.companyBuildId != ''&& this.detailForm.project.companyBuildId != null){

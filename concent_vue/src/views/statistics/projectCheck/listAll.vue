@@ -191,13 +191,13 @@
            :width="150"
            align="center"
            label="行业类别"
-           prop="categorySecondName"
+           prop="projectTypeFirst"
            show-overflow-tooltip
          >
            <template slot="header" slot-scope="scope">
              <span>行业类别</span>
              <div>
-               <el-input style=" width: 100%" v-model="searchform.categorySecondName" size="mini"/>
+               <el-input style=" width: 100%" v-model="searchform.projectTypeFirst" size="mini"/>
              </div>
            </template>
          </el-table-column>

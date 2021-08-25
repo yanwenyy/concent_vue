@@ -2416,6 +2416,7 @@
                 this.detailForm.project.projectTypeCode='017003';
                 this.detailForm.project.projectTypeId='393a07bda2244b03a24590e076a421df';
                 this.detailForm.project.projectTypeName='自揽项目';
+                this.detailForm.project.projectOmit=this.detailForm.project.projectName;
                 this.getCount()
               }
               if(this.detailForm.project.companyBuildId != ''&& this.detailForm.project.companyBuildId != null ){
@@ -2487,12 +2488,12 @@
       vertical-align: middle;
     }
     .neirong {
-      > > > .el-form-item__error {
+      .el-form-item__error {
         top: 4% !important;
       }
     }
 
-    > > > .el-form-item__error {
+    .el-form-item__error {
       padding-top: 0px;
       width: 95%;
       margin-left: 0;
@@ -2500,20 +2501,20 @@
       top: 0%;
     }
 
-    > > > .el-main {
+    .el-main {
       overflow: hidden;
     }
 
-    > > > .el-form-item__label:before {
+    .el-form-item__label:before {
       position: initial;
       left: -10px;
     }
 
-    > > > .inline-formitem {
+    .inline-formitem {
       margin-top: 30px;
     }
 
-    >>>.el-autocomplete{
+    .el-autocomplete{
       width: 95%!important;
     }
     .el-form-item {

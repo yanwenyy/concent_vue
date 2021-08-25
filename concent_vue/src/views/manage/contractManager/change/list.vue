@@ -166,7 +166,7 @@
             </div>
           </template>
           <template slot-scope="scope">
-             {{scope.row.state==1?'草稿':scope.row.state==2?'审核中':scope.row.state==3?'审核通过':scope.row.state==4?'审核退回':''}}
+             {{scope.row.state=='edit'?'草稿':scope.row.state=='check'?'审核中':scope.row.state=='pass'?'审核通过':scope.row.state=='reject'?'驳回':'待登记'}}
           </template>
         </el-table-column>
         <el-table-column
@@ -307,7 +307,7 @@
                 ],
               tdstrFuc:{
                 flowStatus:function (str) {
-                  return str==1?'草稿':str==2?'审核中':str==3?'审核通过':str==4?'审核退回':'待登记';
+                  return str=='edit'?'草稿':str=='check'?'审核中':str=='pass'?'审核通过':str=='reject'?'审核退回':'待登记';
                 },
                 createTime:function (str) {
                   return str?new Date(str).toLocaleString().replace(/:\d{1,2}$/,' '):'';

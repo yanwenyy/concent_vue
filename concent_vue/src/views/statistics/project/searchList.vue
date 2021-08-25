@@ -1,185 +1,213 @@
 <template>
-  <div class="searchListClass" style="margin-bottom: -50px;">
+  <div class="searchListClass" style="margin-bottom: -100px;">
+    <el-menu default-active="2" class="el-menu-vertical-demo" >
+      <el-submenu index="1">
+        <template slot="title">
+          <span>查询条件</span>
+        </template>
+        <el-menu-item-group>
+          <el-form
+            class="queryForm"
+            :inline="true"
+            :model="searchform"
+            @keyup.enter.native="getData()"
+          >
+            <el-form-item label="项目名称:">
+              <el-input
+                v-model="searchform.projectName"
+                placeholder="项目名称"
+                clearable
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="项目板块:">
+              <el-select
+                clearable
+                filterable
+                placeholder="请选择"
+                v-model="searchform.projectModuleId"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectPlate"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="项目状态:">
+              <el-select
+                filterable
+                clearable
+                placeholder="请选择"
+                v-model="searchform.projectStatusId"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectStatus"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="工程类别(一级):">
+              <el-select
+                clearable
+                filterable
+                placeholder="请选择"
+                @change="getProjectTwo"
+                v-model="searchform.projectTypeFirstId"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectDomainType"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="工程类别(二级):">
+              <el-select
+                clearable
+                filterable
+                :disabled="searchform.projectTypeFirstId == ''"
+                placeholder="请先选择一级类别"
+                v-model="searchform.projectTypeSecondId"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectTypeTwo"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="所属单位:">
+              <el-input
+                v-model="searchform.companyBelongName"
+                placeholder="所属单位"
+                clearable
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="签约/使用资质单位:">
+              <el-input
+                v-model="searchform.companyName"
+                placeholder="签约/使用资质单位"
+                clearable
+              ></el-input>
+            </el-form-item>
+            <!-- <el-form-item label="建设单位:">
+              <el-input
+                v-model="searchform.companyBuild"
+                placeholder="建设单位"
+                clearable
+              ></el-input>
+            </el-form-item> -->
+            <!-- <el-form-item label="设计单位:">
+              <el-input
+                v-model="searchform.companyDesign"
+                placeholder="设计单位"
+                clearable
+              ></el-input>
+            </el-form-item> -->
+            <el-form-item label="项目类型:">
+              <el-select
+                filterable
+                clearable
+                placeholder="请选择"
+                v-model="searchform.projectTypeId"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectType"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="新兴市场类别(一级):">
+              <el-select
+                clearable
+                filterable
+                placeholder="请选择"
+                @change="getMarketTwo"
+                v-model="searchform.marketFirstId"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in emergingMarket"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="新兴市场类别(二级):">
+              <el-select
+                filterable
+                clearable
+                :disabled="searchform.marketFirstId == ''"
+                placeholder="请先选择一级类别"
+                v-model="searchform.marketSecondId"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in emergingMarketTwo"
+                />
+              </el-select>
+            </el-form-item>
+            <!-- <el-form-item label="是否托管:">
+              <el-select
+                filterable
+                clearable
+                placeholder="请选择"
+                v-model="searchform.isTrusteeship"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in yesOrNo"
+                />
+              </el-select>
+            </el-form-item> -->
+            <!-- <el-form-item label="是否代管:">
+              <el-select
+                filterable
+                clearable
+                placeholder="请选择"
+                v-model="searchform.isEscrow"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in yesOrNo"
+                />
+              </el-select>
+            </el-form-item> -->
+            <!-- <el-button
+              @click="searchformReset"
+              type="info"
+              plain
+              style="color:black;background:none"
+              ><i class="el-icon-refresh-right"></i>重置</el-button
+            >
+            <el-button @click="getData" type="primary" plain
+              ><i class="el-icon-search"></i>查询</el-button
+            >
+            <el-button @click="exportData" type="primary" plain
+              ><i class="el-icon-upload2"></i>导出</el-button
+            > -->
+          </el-form>
+        </el-menu-item-group>
+      </el-submenu>
+    </el-menu>
     <el-form
       class="queryForm"
       :inline="true"
       :model="searchform"
-      @keyup.enter.native="getData()"
-    >
-      <el-form-item label="项目名称:">
-        <el-input
-          v-model="searchform.projectName"
-          placeholder="项目名称"
-          clearable
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="项目板块:">
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          v-model="searchform.projectModuleId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in projectPlate"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="项目状态:">
-        <el-select
-          filterable
-          clearable
-          placeholder="请选择"
-          v-model="searchform.projectStatusId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in projectStatus"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="工程类别(一级):">
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          @change="getProjectTwo"
-          v-model="searchform.projectTypeFirstId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in projectDomainType"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="工程类别(二级):">
-        <el-select
-          clearable
-          filterable
-          :disabled="searchform.projectTypeFirstId == ''"
-          placeholder="请先选择一级类别"
-          v-model="searchform.projectTypeSecondId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in projectTypeTwo"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="所属单位:">
-        <el-input
-          v-model="searchform.companyBelongName"
-          placeholder="所属单位"
-          clearable
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="签约/使用资质单位:">
-        <el-input
-          v-model="searchform.companyName"
-          placeholder="签约/使用资质单位"
-          clearable
-        ></el-input>
-      </el-form-item>
-      <!-- <el-form-item label="建设单位:">
-        <el-input
-          v-model="searchform.companyBuild"
-          placeholder="建设单位"
-          clearable
-        ></el-input>
-      </el-form-item> -->
-      <!-- <el-form-item label="设计单位:">
-        <el-input
-          v-model="searchform.companyDesign"
-          placeholder="设计单位"
-          clearable
-        ></el-input>
-      </el-form-item> -->
-      <el-form-item label="项目类型:">
-        <el-select
-          filterable
-          clearable
-          placeholder="请选择"
-          v-model="searchform.projectTypeId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in projectType"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="新兴市场类别(一级):">
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          @change="getMarketTwo"
-          v-model="searchform.marketFirstId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in emergingMarket"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="新兴市场类别(二级):">
-        <el-select
-          filterable
-          clearable
-          :disabled="searchform.marketFirstId == ''"
-          placeholder="请先选择一级类别"
-          v-model="searchform.marketSecondId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in emergingMarketTwo"
-          />
-        </el-select>
-      </el-form-item>
-      <!-- <el-form-item label="是否托管:">
-        <el-select
-          filterable
-          clearable
-          placeholder="请选择"
-          v-model="searchform.isTrusteeship"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in yesOrNo"
-          />
-        </el-select>
-      </el-form-item> -->
-      <!-- <el-form-item label="是否代管:">
-        <el-select
-          filterable
-          clearable
-          placeholder="请选择"
-          v-model="searchform.isEscrow"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in yesOrNo"
-          />
-        </el-select>
-      </el-form-item> -->
+    >      
       <el-button
         @click="searchformReset"
         type="info"
@@ -208,8 +236,8 @@
         highlight-current-row
         ref="table"
         tooltip-effect="dark"
-        :max-height="$tableHeight - 50"
-        :height="$tableHeight - 50"
+        :max-height="$tableHeight - 100"
+        :height="$tableHeight - 100"
       >
         <el-table-column
           :width="50"
