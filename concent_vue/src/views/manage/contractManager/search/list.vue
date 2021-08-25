@@ -1,5 +1,5 @@
 <template>
-  <div class="searchListClass" style="margin-bottom: -150px;">
+  <div class="searchListClass" style="margin-bottom: -50px;">
     <el-menu default-active="2" class="el-menu-vertical-demo" >
       <el-submenu index="1">
         <template slot="title">

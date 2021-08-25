@@ -1,5 +1,15 @@
 <template>
   <div class="searchListClass" style="margin-bottom: -50px;">
+    <!-- <el-menu default-active="2" class="el-menu-vertical-demo" >
+      <el-submenu index="1">
+        <template slot="title">
+          <span>查询条件</span>
+        </template>
+        <el-menu-item-group>
+
+        </el-menu-item-group>
+      </el-submenu>
+    </el-menu>   -->
     <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
       <el-form-item label="项目名称:">
         <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
@@ -235,8 +245,8 @@
         highlight-current-row
         ref="table"
         tooltip-effect="dark"
-        :max-height="$tableHeight - 50"
-        :height="$tableHeight - 50"
+        :max-height="$tableHeight - 100"
+        :height="$tableHeight - 100"
       >
         <el-table-column
           :width="50"
