@@ -241,7 +241,7 @@
             >
               <el-input 
                 clearable 
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''" 
+                disabled 
                 placeholder="请输入内容" 
                 v-model="detailForm.project.amountCompanyName" class="input-with-select">
                 <el-button 
@@ -410,7 +410,7 @@
               </el-select>
             </el-form-item>
           </el-row>
-          <!-- <el-row>
+          <el-row>
             <el-form-item
               label="推送人:"
               prop="project.projectPusher"
@@ -432,7 +432,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 v-model="detailForm.project.projectPusherPhone"/>
             </el-form-item>
-          </el-row> -->
+          </el-row>
           <p>
             <span >项目地点: </span>
             <el-button

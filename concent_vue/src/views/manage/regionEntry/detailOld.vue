@@ -13,89 +13,127 @@
           class="gcform"
           ref="detailform"
         >
-          <el-form-item
-            label="指挥部:"
-            prop="orgName"
+          <el-table
+            :data="detailform.list"
+            :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+            align="center"
+            border
+            class="detailTable"
+            ref="table"
           >
-            <el-select
-              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-              clearable
-              filterable
-              placeholder="请选择"
-              @change="getMsg"
-              v-model="detailform.orgCode"
+            <el-table-column
+              :width="80"
+              align="center"
+              label="序号"
+              show-overflow-tooltip
+              type="index"
+            ></el-table-column>
+            <el-table-column
+              :resizable="false"
+              label="指挥部名称"
+              align="center"
+              prop="orgName"
             >
-              <el-option
-                :key="index"
-                :label="item.orgName"
-                :value="item.orgCode"
-                v-for="(item, index) in zhbList"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item
-            label="管辖省市:"
-          >
-            <el-input
-              disabled
-              clearable
+            </el-table-column>
 
-              v-model="detailform.governingProvinceName"/>
-          </el-form-item>
-          <el-form-item
-            label="指挥长姓名:"
-          >
-            <el-input
-              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-              clearable
-
-              v-model="detailform.principalName"/>
-          </el-form-item>
-          <el-form-item
-            label="指挥长电话:"
-          >
-            <el-input
-              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-              clearable
-
-              v-model="detailform.principalContactNumber"/>
-          </el-form-item>
-          <el-form-item
-            label="指挥长级别:"
-          >
-            <el-input
-              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-              clearable
-
-              v-model="detailform.principalGrade"/>
-          </el-form-item>
-          <el-form-item
-            label="省市负责人姓名:"
-          >
-            <el-input
-              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-              clearable
-
-              v-model="detailform.provinceName"/>
-          </el-form-item>
-          <el-form-item
-            label="省市负责人电话:"
-          >
-            <el-input
-              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-              clearable
-
-              v-model="detailform.provinceContactNumber"/>
-          </el-form-item>
-          <el-form-item
-            label="省市负责人级别:"
-          >
-            <el-input
-              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-              clearable
-
-              v-model="detailform.provinceGrade"/>
-          </el-form-item>
+            <el-table-column
+              :resizable="false"
+              label="管辖省市"
+              prop="governingProvinceName"
+              align="center"
+            >
+            </el-table-column>
+            <el-table-column
+              label="指挥长"
+            >
+              <el-table-column
+                :resizable="false"
+                label="姓名"
+                prop="principalName"
+                align="center"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                :resizable="false"
+                label="电话"
+                prop="contactNumber"
+                align="center"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                :resizable="false"
+                label="级别"
+                prop="grade"
+                align="center"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+            </el-table-column>
+            <el-table-column
+              label="省市负责人"
+            >
+              <el-table-column
+                :resizable="false"
+                label="姓名"
+                prop="provinceName"
+                align="center"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    v-model="scope.row.provinceName"
+                  ></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column
+                :resizable="false"
+                label="级别"
+                prop="provinceGrade"
+                align="center"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    v-model="scope.row.provinceGrade"
+                  ></el-input>
+                </template>
+              </el-table-column>
+              <el-table-column
+                :resizable="false"
+                label="电话"
+                prop="provinceContactNumber"
+                align="center"
+                show-overflow-tooltip
+              >
+                <template slot-scope="scope">
+                  <el-input
+                    clearable
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    v-model="scope.row.provinceContactNumber"
+                  ></el-input>
+                </template>
+              </el-table-column>
+            </el-table-column>
+          </el-table>
+          <!--<el-pagination-->
+            <!--:current-page="page.current"-->
+            <!--:page-size="page.size"-->
+            <!--:page-sizes="[20, 50, 100]"-->
+            <!--:total="page.total"-->
+            <!--@current-change="handleCurrentChange"-->
+            <!--@size-change="handleSizeChange"-->
+            <!--layout="total, sizes, prev, pager, next, jumper"-->
+          <!--&gt;</el-pagination>-->
         </el-form>
       </div>
     </el-card>
@@ -133,9 +171,8 @@
           size: 20,
           orgCode:''
         },
-        zhbList:[],
         detailform: {
-
+          list:[]
         },
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         page: {current: 1, size: 20, total: 0, records: []},
@@ -156,21 +193,10 @@
 
     },
     mounted() {
-     //获取指挥部列表
-      this.$http
-        .post("/api/contract/regionalInfo/list/loadPageDataSysOrg", this.searchform)
-        .then((res) => {
-          var datas=res.data.data;
-          this.zhbList=datas.records;
-          // this.page = datas;
-        });
+      this.searchform.orgCode=this.p.orgCode;
       this.getDetail();
     },
     methods: {
-      //获取指挥部信息
-      getMsg(id){
-
-      },
       handleSizeChange(val) {
         this.searchform.size = val;
         this.getDetail();
@@ -222,7 +248,13 @@
           .post("/api/contract/regionalInfo/list/loadPageDataOrgCode", this.searchform)
           .then((res) => {
             var datas=res.data.data;
-            this.detailform=datas;
+            datas.forEach((item,index)=>{
+              item.index=index;
+              item.orgCode=this.p.orgCode;
+            });
+            this.detailform={
+              list: datas,
+            };
             // this.page = datas;
           });
       },

@@ -241,7 +241,10 @@
       //批量提交
       batchSub(){
         if (this.multipleSelection.length <1) {
-          this.$message.info("请选择一条记录进行提交操作！");
+          this.$message({
+              showClose: true,
+              message: '请选择一条记录进行提交操作！'
+            });
           return false;
         }
         var list=[],itemStatus=true;
@@ -254,7 +257,10 @@
             }
             list.push(v);
           }else{
-            this.$message.info("当前所选数据中包含不可提交的选项,请检查后进行操作");
+            this.$message({
+              showClose: true,
+              message: '当前所选数据中包含不可提交的选项,请检查后进行操作'
+            });
             return itemStatus=false;
           }
         })
@@ -318,7 +324,10 @@
             .then((res) => {
             var datas=res.data.data;
           if(datas.isExist=="0"){
-            this.$message.info("该填报年下已有相应的该月份的月报数据 无法创建新的填报记录");
+            this.$message({
+              showClose: true,
+              message: '该填报年下已有相应的该月份的月报数据 无法创建新的填报记录'
+            });
           }else{
             let p = {actpoint: "add",reportDate: this.searchform.reportDate,statId:datas.uuid,gyType:datas.gyType};
             this.$router.push({
