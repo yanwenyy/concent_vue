@@ -1,5 +1,5 @@
 <template>
-  <div class="searchListClass">
+  <div class="searchListClass" style="margin-bottom: -50px;">
     <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
       <el-form-item label="审核通过时间:">
         <el-date-picker
@@ -222,10 +222,14 @@
         <el-button @click="exportdata" type="primary" style="float:right;margin-right:5px;" plain><i class="el-icon-upload2"></i>导出</el-button>
       </el-form-item>
     </el-form>
+    <div style="color:red;">
+      总计{{titleInfo.mapTotal.total}}个合同（其中不含分包{{titleInfo.mapNotSub['COUNTNOTSUB']}}个，系统内分包{{titleInfo.mapSystemSub['COUNTSYSTEMSUB']}}个，集团内分包{{titleInfo.mapGroupSub['COUNTGROUPSUB']}}个）；
+      我方份额总计{{titleInfo.mapTotal.totalAmount}}亿元（其中不含分包{{titleInfo.mapNotSub['SUMNOTSUB']}}亿元，系统内分包{{titleInfo.mapSystemSub['SUMSYSTEMSUB']}}亿元，集团内分包{{titleInfo.mapGroupSub['SUMGROUPSUB']}}亿元
+    </div>
     <div style="margin-top: 10px">
       <el-table
-        :max-height="$tableHeight+200"
-        :height="$tableHeight+200"
+        :max-height="$tableHeight-100"
+        :height="$tableHeight-100"
         class=""
         :data="page.records"
         :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
@@ -503,6 +507,12 @@
     },
     data() {
       return {
+        titleInfo:{
+          mapGroupSub: {COUNTGROUPSUB: null, SUMGROUPSUB: null},
+          mapNotSub: {COUNTNOTSUB: null, SUMNOTSUB: null},
+          mapSystemSub: {COUNTSYSTEMSUB: null, SUMSYSTEMSUB: null},
+          mapTotal: { total: null, totalAmount: null}
+        },
         dialogVisible:false,//弹框状态
         contractInfoId:"",//合同id
         treeStatas: false,
@@ -557,6 +567,10 @@
       this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
       this.$store.dispatch('getCategory', {name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3'});
       this.$store.dispatch('getCategory', {name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72'});
+      // 查询数据
+      this.$http.post("/api/contract/contract/ContractInfo/list/getContractInformation",).then((res)=>{
+        this.titleInfo = res.data.data
+      });
     },
     computed: {
       projectDomainType() {
@@ -800,7 +814,7 @@
           )
           .then((res)=>{
           this.page = res.data.data;
-      });
+        });
       },
 
     },

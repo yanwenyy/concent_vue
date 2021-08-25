@@ -466,21 +466,25 @@
                     v-for="(item, index) in projectType"/>
                 </el-select>
               </el-form-item>
-              <!--所在地、使用资质单位暂无-->
-              <!--<el-form-item-->
-                <!--label="项目所在地"-->
-                <!--prop="project.topInfoSiteList[0].path"-->
-                <!--:rules="{-->
-                <!--required: true, message: '此项不能为空', trigger: 'change'-->
-              <!--}"-->
-                <!--style="width: 32.5%"-->
-              <!--&gt;-->
-                <!--<el-input v-model="detailForm.project.topInfoSiteList[0].path" placeholder="项目所在地"-->
-                          <!--:disabled="p.actpoint === 'look'||p.actpoint === 'task'" clearable>-->
-                  <!--<el-button slot="append" :disabled="p.actpoint === 'look'||p.actpoint === 'task'" icon="el-icon-search"-->
-                             <!--@click="selectPosition()"></el-button>-->
-                <!--</el-input>-->
-              <!--</el-form-item>-->
+              <el-form-item
+                  label="父项目名称:"
+                  prop="project.fatherProjectId"
+                  style="width: 32.5%"
+                  >
+                  <el-select
+                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                    filterable
+                    clearable
+                    placeholder="请选择"
+                    @change="getFatherName(detailForm.project.fatherProjectId, fatherList, 'fatherProjectName')"
+                    v-model="detailForm.project.fatherProjectId">
+                    <el-option
+                      :key="index"
+                      :label="item.projectName"
+                      :value="item.uuid"
+                      v-for="(item, index) in fatherList"/>
+                  </el-select>
+                </el-form-item>
             </el-row>
             <!--新兴市场(一级)-->
             <el-row>
@@ -1449,16 +1453,26 @@
                     v-for="(item, index) in projectType"/>
                 </el-select>
               </el-form-item>
-              <!--所在地、使用资质单位暂无-->
-              <!--<el-form-item-->
-                <!--label="项目所在地"-->
-                <!--style="width: 32.5%"-->
-              <!--&gt;-->
-                <!--<el-input v-model="showDetailForm.project.topInfoSiteList[0].path" placeholder="项目所在地" disabled>-->
-                  <!--<el-button slot="append" disabled icon="el-icon-search"-->
-                             <!--@click="selectPosition()"></el-button>-->
-                <!--</el-input>-->
-              <!--</el-form-item>-->
+              
+              <el-form-item
+                  label="父项目名称:"
+                  prop="project.fatherProjectId"
+                  style="width: 32.5%"
+                  >
+                  <el-select
+                    disabled
+                    filterable
+                    clearable
+                    placeholder="请选择"
+                    @change="getFatherName(showDetailForm.project.fatherProjectId, fatherList, 'fatherProjectName')"
+                    v-model="showDetailForm.project.fatherProjectId">
+                    <el-option
+                      :key="index"
+                      :label="item.projectName"
+                      :value="item.uuid"
+                      v-for="(item, index) in fatherList"/>
+                  </el-select>
+                </el-form-item>
             </el-row>
             <!--新兴市场(一级)-->
             <el-row>
@@ -1956,6 +1970,8 @@
         bizTypeCodeTwo: [], // 业务类别二级
         constructionOrgList: [], 
         sjdwList: [],
+        projectType:[], //项目类型下拉
+        fatherList:[],
         detailForm: {
           project: {
             projectSubContractList: [], // 分包承建
@@ -2009,6 +2025,8 @@
             isEscrow: '', // 是否代管
             realInvest: '', // 实际投资额(万元)
             projectRemark: '', // 备注(最多2000字)
+            fatherProjectName: '', // 父项目名称
+            fatherProjectId: '', // 父项目名称id
             topInfoSiteList: [
               {
                 path: '',
@@ -2074,6 +2092,8 @@
             isEscrow: '', // 是否代管
             realInvest: '', // 实际投资额(万元)
             projectRemark: '', // 备注(最多2000字)
+            fatherProjectName: '', // 父项目名称
+            fatherProjectId: '', // 父项目名称id
             topInfoSiteList: [
               {
                 path: '',
@@ -2144,9 +2164,6 @@
       railwayLine() {
         return this.$store.state.railwayLine
       },
-      projectType() {
-        return this.$store.state.projectType
-      },
       projectStatus() {
         return this.$store.state.projectStatus
       },
@@ -2212,6 +2229,27 @@
             item.customerName=item.companyName;
             item.customerId=item.uuid;
           })
+        });
+      //获取项目类型
+      this.$http
+        .post(
+          ' /api/statistics/StatisticsProject/detail/findProjectType?projectId'+'c7a788994b32e48f272e5c0e5271338a',
+          {useJson: true}
+        )
+        .then((res) => {
+          if (res.data.code === 200) {
+            this.projectType = []
+            var list = res.data.data
+            list.forEach(item=>{
+              var type = {id:'',detailName:''}
+              type.id = item.DETAIL_CODE
+              type.detailCode = item.DETAIL_CODE
+              type.detailName = item.DETAIL_NAME
+              this.projectType.push(type)
+            })
+          }else{
+            this.projectType = []
+          }
         });
     },
     methods: {
@@ -2409,17 +2447,35 @@
           this.$refs.addOrUpdate.init()
         })
       },
-      // // 获取项目地点的值
-      // getPositionTree(data) {
-      //   this.treeStatas = false
-      //   this.detailForm.project.topInfoSiteList[0].placeId = data.id
-      //   this.detailForm.project.topInfoSiteList[0].path = data.fullDetailName
-      //   this.detailForm.project.topInfoSiteList[0].ffid = data.fullDetailCode
-      // },
       resetFuDai(id, list, name,code) {
-        this.detailForm.project.fatherProjectId = ''
-        this.detailForm.project.isBureauIndex = ''
-        this.getName(id, list, name,code)
+        this.fatherList = [];
+        this.detailForm.project.fatherProjectId = '';
+        this.detailForm.project.fatherProjectName = '';
+        this.detailForm.project.isBureauIndex = '';
+        this.getName(id, list, name,code);
+        this.getProjectFather();
+      },
+      //获取父项目名称列表
+      getProjectFather(){
+        this.$http
+          .post('/api/statistics/StatisticsProject/detail/findProjectFather',
+              {projectTypeCode:this.detailForm.project.projectTypeCode,projectModuleId:this.detailForm.project.projectModuleId}
+          )
+          .then(res => {
+            if(res.data.code  === 200){
+              this.fatherList = res.data.data
+            }else{
+              this.fatherList = []
+            }
+        })
+      },
+      getFatherName(id, list, name) {
+        if (id) {
+          this.$forceUpdate()
+          this.detailForm.project[name] = list.find(
+            (item) => item.uuid === id
+        ).projectName
+        }
       },
       getName(id, list, name,code) {
         if (id) {
@@ -2657,6 +2713,7 @@
                   }
                 }
               })
+              this.getProjectFather()
               this.getShowTwo()
             }
           })
@@ -2669,6 +2726,7 @@
           .post('/api/statistics/StatisticsProject/detail/entityInfo', params)
           .then((res) => {
             if (res.data.code === 200) {
+              this.getProjectFather()
               this.detailForm.project = res.data.data
               this.showDetailForm.project = JSON.parse(JSON.stringify(res.data.data))
               if (!res.data.data.infoProductList) {

@@ -5,6 +5,8 @@
         <el-input v-model="searchform.orgFullName" placeholder="区指挥部名称" clearable></el-input>
       </el-form-item>
       <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>新增</el-button>
+      <el-button @click="totop" type="primary" plain><i class="el-icon-edit"></i>修改</el-button>
+      <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
       <el-button @click="searchformReset" type="info" plain style="color:black;background:none;float:right; margin-right:20px;"><i class="el-icon-refresh-right"></i>重置</el-button>
       <el-button @click="getData" type="primary" plain style="float:right;margin-right:5px;"><i class="el-icon-search"></i>查询</el-button>
       <!--<el-button @click="exportdata" type="primary" plain><i class="el-icon-top"></i>导出</el-button>-->
@@ -21,7 +23,15 @@
         border
         class="detailTable"
         ref="table"
+        @row-dblclick="rowshow"
+        @selection-change="handleSelectionChange"
       >
+        <el-table-column
+          :width="50"
+          align="center"
+          show-overflow-tooltip
+          type="selection"
+        ></el-table-column>
         <el-table-column
           :width="80"
           align="center"
@@ -58,7 +68,7 @@
           <el-table-column
             :resizable="false"
             label="电话"
-            prop="contactNumber"
+            prop="principalContactNumber"
             align="center"
             show-overflow-tooltip
           >
@@ -66,7 +76,7 @@
           <el-table-column
             :resizable="false"
             label="级别"
-            prop="grade"
+            prop="principalGrade"
             align="center"
             show-overflow-tooltip
           >
@@ -160,6 +170,47 @@
 
     },
     methods: {
+      // 删除
+      remove() {
+        if (this.multipleSelection.length < 1) {
+          this.$message.info("请选择一条记录进行删除操作！");
+          return false;
+        }
+        let uuids = [],itemStatus=true;
+        this.multipleSelection.forEach((item) => {
+          uuids.push(item.uuid);
+        })
+        if(itemStatus){
+          this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$http
+              .post(
+                "/api/contract/regionalInfo/list/delete",
+                {ids: uuids}
+              )
+              .then((res) => {
+                this.getData()
+              });
+          }).catch(() => {})
+        }
+
+      },
+      // 修改
+      totop() {
+        if (this.multipleSelection.length != 1) {
+          this.$message.info("请选择一条记录进行查看操作！");
+          return false;
+        }
+        let p = {actpoint: "eidt", msg: this.multipleSelection[0]};
+        this.$router.push({
+          path: "./detail/",
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        });
+
+      },
       add(){
         let p = {actpoint: "add"};
         this.$router.push({
@@ -171,7 +222,7 @@
       },
       // 查看
       rowshow(row) {
-        let p = {actpoint: "edit", orgCode: row.orgCode};
+        let p = {actpoint: "look", msg: row};
         this.$router.push({
           path: "./detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},

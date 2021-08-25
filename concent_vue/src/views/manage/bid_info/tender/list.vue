@@ -1,5 +1,5 @@
 <template>
-  <div class="searchListClass">
+  <div class="searchListClass" style="margin-bottom: -50px;">
     <el-form :inline="true" :model="searchform" @keyup.enter.native="getData()" class="queryForm">
       <el-form-item label="项目名称:">
         <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>

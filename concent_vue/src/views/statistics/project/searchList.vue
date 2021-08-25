@@ -1,5 +1,5 @@
 <template>
-  <div class="searchListClass">
+  <div class="searchListClass" style="margin-bottom: -50px;">
     <el-form
       class="queryForm"
       :inline="true"
@@ -208,8 +208,8 @@
         highlight-current-row
         ref="table"
         tooltip-effect="dark"
-        :max-height="$tableHeight + 100"
-        :height="$tableHeight + 100"
+        :max-height="$tableHeight - 50"
+        :height="$tableHeight - 50"
       >
         <el-table-column
           :width="50"

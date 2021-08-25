@@ -829,14 +829,12 @@
                     <template slot-scope="scope">
                       <!-- :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1" -->
                       <el-input
-                        @change="suppliesChange(detailform.gy_list, scope.$index, 'industry')"
                         @input="isFloor(scope.row.industry,scope.$index,detailform.gy_list,'industry'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'industry')"
                         v-if="scope.row.country=='01'"
                         :disabled="true"
                         clearable
                         v-model="scope.row.industry"/>
                       <el-input
-                        @change="suppliesChange(detailform.gy_list, scope.$index, 'overseasIndustry')"
                         @input="isFloor(scope.row.overseasIndustry,scope.$index,detailform.gy_list,'overseasIndustry'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'overseasIndustry')"
                         v-if="scope.row.country=='02'"
                         :disabled="true"
@@ -1210,8 +1208,14 @@
                     label="产品数量"
                     align="center"
                     prop="ncount"
-                    show-overflow-tooltip
+                    width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                      clearable
+                      v-model="scope.row.ncount"/>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
@@ -1335,8 +1339,14 @@
                     label="增值税"
                     prop="nvat"
                     align="center"
-                    show-overflow-tooltip
+                    width="150"
                   >
+                    <template v-if="scope.row.vincludevat == 0" slot-scope="scope">
+                      <el-input
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                      clearable
+                      v-model="scope.row.nvat"/>
+                    </template>
                   </el-table-column>
                 </el-table-column>
               </el-table>
@@ -1441,7 +1451,7 @@
               <el-dialog 
                 :visible.sync="projectContentShow"
                 title="标的物信息"
-                width="70%"
+                width="83%"
               > 
                 <el-table
                   :max-height="$tableHeight-10"
@@ -1486,6 +1496,24 @@
                     width="150"
                     align="center"
                     prop="subjectMatterUnit"
+                    show-overflow-tooltip
+                  ></el-table-column>
+                  <el-table-column
+                    v-if="timeShow"
+                    :resizable="false"
+                    label="标的物年份"
+                    width="150"
+                    align="center"
+                    prop="subjectMatterYear"
+                    show-overflow-tooltip
+                  ></el-table-column>
+                  <el-table-column
+                    v-if="timeShow"
+                    :resizable="false"
+                    label="标的物月份"
+                    width="150"
+                    align="center"
+                    prop="subjectMatterMonth"
                     show-overflow-tooltip
                   ></el-table-column>
                   <el-table-column
@@ -3812,6 +3840,7 @@
         }
       }
       return {
+        timeShow:true,
         Authorization:sessionStorage.getItem("token"),
         // 查询产品信息
         workAmountShow: false,
@@ -4513,13 +4542,15 @@
           .then((res) => {
           res.data.data.wz_list.forEach((element)=>{
             // 工业制造
-            res.data.data.gy_list.forEach((element)=>{
-              if (element.country == "01") {
-                element.htquantity_after = Number(element.htquantity) - Number(element.industry)- Number(element.equipmentManufacturin)- Number(element.componentManufacturin)- Number(element.otherIndustrayProduct)
-              } else {
-                element.htquantity_after = Number(element.htquantity) - Number(element.overseasIndustry)- Number(element.equipmentManufacturinHw)- Number(element.componentManufacturinHw)- Number(element.otherIndustrayProductHw)
-              }
-            })
+            if (res.data.data.gy_lis) {
+              res.data.data.gy_list.forEach((element)=>{
+                if (element.country == "01") {
+                  element.htquantity_after = Number(element.htquantity) - Number(element.equipmentManufacturin)- Number(element.componentManufacturin)- Number(element.otherIndustrayProduct)
+                } else {
+                  element.htquantity_after = Number(element.htquantity) - Number(element.equipmentManufacturinHw)- Number(element.componentManufacturinHw)- Number(element.otherIndustrayProductHw)
+                }
+              })            
+            }
             // 物资贸易
             if (element.country == "01") {
               element.htquantity_after = Number(element.htquantity) - Number(element.sale)
@@ -4578,13 +4609,15 @@
           .post("/api/statistics/unProjectReport/list/queryAllInfo",data )
           .then((res) => {
           // 工业制造
-          res.data.data.gy_list.forEach((element)=>{
-            if (element.country == "01") {
-              element.htquantity_after = Number(element.htquantity) - Number(element.industry)- Number(element.equipmentManufacturin)- Number(element.componentManufacturin)- Number(element.otherIndustrayProduct)
-            } else {
-              element.htquantity_after = Number(element.htquantity) - Number(element.overseasIndustry)- Number(element.equipmentManufacturinHw)- Number(element.componentManufacturinHw)- Number(element.otherIndustrayProductHw)
-            }
-          })
+          if (res.data.data.gy_lis) {
+            res.data.data.gy_list.forEach((element)=>{
+              if (element.country == "01") {
+                element.htquantity_after = Number(element.htquantity) - Number(element.equipmentManufacturin)- Number(element.componentManufacturin)- Number(element.otherIndustrayProduct)
+              } else {
+                element.htquantity_after = Number(element.htquantity) - Number(element.equipmentManufacturinHw)- Number(element.componentManufacturinHw)- Number(element.otherIndustrayProductHw)
+              }
+            })            
+          }
           // 物资贸易
           res.data.data.wz_list.forEach((element)=>{
             if (element.country == "01") {
@@ -4665,6 +4698,11 @@
         this.$http.post("/api/statistics/productbase/list/getBdwProduct",{projectId: [row.projectId]} )
           .then((res) => {
             this.projectContentList = res.data.data
+            if ((this.projectContentList[0].subjectMatterYear && this.projectContentList[0].subjectMatterMonth)!== null) {
+              this.timeShow = true
+            } else {
+              this.timeShow = false
+            }
           })
         this.projectContentShow = true
       }
