@@ -17,21 +17,24 @@
             label="指挥部:"
             prop="orgName"
           >
-            <el-select
-              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-              clearable
-              filterable
-              placeholder="请选择"
-              @change="getMsg"
-              v-model="detailform.orgCode"
-            >
-              <el-option
-                :key="index"
-                :label="item.orgName"
-                :value="item.orgCode"
-                v-for="(item, index) in zhbList"
-              ></el-option>
-            </el-select>
+            <el-input clearable disabled placeholder="请输入内容" v-model="detailform.orgName" class="input-with-select">
+              <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline" @click="addZhb" ></el-button>
+            </el-input>
+            <!--<el-select-->
+              <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+              <!--clearable-->
+              <!--filterable-->
+              <!--placeholder="请选择"-->
+              <!--@change="getMsg"-->
+              <!--v-model="detailform.orgCode"-->
+            <!--&gt;-->
+              <!--<el-option-->
+                <!--:key="index"-->
+                <!--:label="item.orgName"-->
+                <!--:value="item.orgCode"-->
+                <!--v-for="(item, index) in zhbList"-->
+              <!--&gt;</el-option>-->
+            <!--</el-select>-->
           </el-form-item>
           <el-form-item
             label="管辖省市:"
@@ -135,7 +138,16 @@
         },
         zhbList:[],
         detailform: {
-
+          orgName:'',
+          orgCode:'',
+          orgType:'',
+          governingProvinceName:'',
+          principalName:'',
+          principalContactNumber:'',
+          principalGrade:'',
+          provinceName:'',
+          provinceContactNumber:'',
+          provinceGrade:'',
         },
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         page: {current: 1, size: 20, total: 0, records: []},
@@ -156,17 +168,33 @@
 
     },
     mounted() {
-     //获取指挥部列表
-      this.$http
-        .post("/api/contract/regionalInfo/list/loadPageDataSysOrg", this.searchform)
-        .then((res) => {
-          var datas=res.data.data;
-          this.zhbList=datas.records;
-          // this.page = datas;
-        });
-      this.getDetail();
+      // this.getDetail();
+      if(this.p.actpoint=='addZhb'||this.p.actpoint=='eidt'||this.p.actpoint=='look'){
+        var msg=this.p.msg;
+        // console.log(msg)
+        this.detailform.orgName=msg.orgName;
+        this.detailform.orgCode=msg.orgCode;
+        this.detailform.orgType=msg.orgType;
+        this.detailform.governingProvinceName=msg.governingProvinceName;
+        this.detailform.principalName=msg.principalName;
+        this.detailform.principalContactNumber=msg.principalContactNumber;
+        this.detailform.principalGrade=msg.principalGrade;
+        this.detailform.provinceName=msg.provinceName;
+        this.detailform.provinceContactNumber=msg.provinceContactNumber;
+        this.detailform.provinceGrade=msg.provinceGrade;
+        this.$forceUpdate();
+        // console.log(this.detailform)
+      }
     },
     methods: {
+      //选择指挥部
+      addZhb(){
+        let p = {actpoint: "add"};
+        this.$router.push({
+          path: "../listOld/",
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        });
+      },
       //获取指挥部信息
       getMsg(id){
 
@@ -195,7 +223,7 @@
             this.$http
               .post(
                 url,
-                JSON.stringify(this.detailform.list),
+                JSON.stringify(this.detailform),
                 {useJson: true}
               )
               .then((res) => {
@@ -214,7 +242,7 @@
         });
       },
       back() {
-        this.$router.back()
+        this.$router.push({  path: "../list",})
       },
       // 加载列表
       getDetail() {
@@ -222,8 +250,9 @@
           .post("/api/contract/regionalInfo/list/loadPageDataOrgCode", this.searchform)
           .then((res) => {
             var datas=res.data.data;
-            this.detailform=datas;
-            // this.page = datas;
+            if(this.p.actpoint!='addZhb'){
+              this.detailform=datas;
+            }
           });
       },
 

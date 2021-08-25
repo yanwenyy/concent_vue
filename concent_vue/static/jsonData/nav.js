@@ -880,6 +880,15 @@ export default {
               'defaultpage': true
             },
             {
+              'name': '指挥部列表',
+              'path': '/manage/regionEntry/listOld',
+              'component': '/manage/regionEntry/listOld',
+              'iconCls': 'el-icon-edit',
+              'menushow': true,
+              'leaf': true,
+              'defaultpage': true
+            },
+            {
               'name': '区域信息录入详情',
               'path': '/manage/regionEntry/detail',
               'component': '/manage/regionEntry/detail',
