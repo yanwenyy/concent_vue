@@ -211,7 +211,7 @@
     <el-dialog title="产品信息" :visible.sync="dialogFormVisible">
       <el-form :model="form"  ref="form" class="proForm">
         <el-form-item label="产品编码:">
-          <el-input v-model="productData.vcode" autocomplete="off" :disabled="true"></el-input>
+          <el-input v-model="form.vcode" autocomplete="off" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item label="产品名称:">
           <!-- <el-input v-model="form.vname" autocomplete="off" :disabled="look"></el-input> -->
@@ -225,7 +225,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="计量单位:">
-          <el-select v-model="productData.vmeasurename"  @change="getName(
+          <el-select v-model="form.vmeasurename"  @change="getName(
                           form.vmeasureunitid,
                           measureUnit,
                           'vmeasurename',
@@ -303,7 +303,7 @@
           <el-input v-model="form.specificationAndModel" autocomplete="off" :disabled="look"></el-input>
         </el-form-item>
         <el-form-item label="业务类型:">
-          <el-select v-model="productData.ywtypename"  @change="getName(
+          <el-select v-model="form.ywtypename"  @change="getName(
                           form.ywtypeid,
                           bizTypeCode,
                           'ywtypename',
@@ -318,7 +318,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="产品类型:">
-          <el-select v-model="productData.productTypeName"
+          <el-select v-model="form.productTypeName"
                      @change="getName(
                           form.productTypeId,
                           cplxList,
@@ -546,8 +546,13 @@ export default {
         isXqShow:  row.isXqShow,
         isTb:  row.isTb,
         productTypeId: row.productTypeId,
-        prodectTypeCode: row.prodectTypeCode,
-        prodectTypeName: row.prodectTypeName
+        prodectTypeName: row.prodectTypeName,
+        productId:row.productId,
+        vmeasurename:row.vmeasurename,
+        specificationAndModel:row.specificationAndModel,
+        ywtypename:row.ywtypename,
+        productTypeName:row.productTypeName,
+
       };
       this.getCplx(this.form.ywtypecode)
       this.dialogFormVisible=true;
