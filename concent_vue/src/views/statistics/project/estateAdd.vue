@@ -241,7 +241,7 @@
             >
               <el-input 
                 clearable 
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''" 
+                disabled 
                 placeholder="请输入内容" 
                 v-model="detailForm.project.amountCompanyName" class="input-with-select">
                 <el-button 

@@ -117,6 +117,7 @@
                     v-model="constructionOrgList"
                     @change="companyBuildChange"
                     v-if="detailForm.project.isClientele=='1'"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     multiple
                     filterable
                     collapse-tags
@@ -132,6 +133,7 @@
                     v-model="constructionOrgList"
                     @change="companyBuildChange"
                     v-if="detailForm.project.isClientele!='1'"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     multiple
                     filterable
                     collapse-tags

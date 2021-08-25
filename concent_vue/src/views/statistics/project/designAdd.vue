@@ -214,6 +214,7 @@
                   v-if="detailForm.project.isClientele=='1'"
                   multiple
                   collapse-tags
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   placeholder="请选择">
                   <el-option
                     v-for="item in pubCustomers"
@@ -228,6 +229,7 @@
                   v-if="detailForm.project.isClientele!='1'"
                   multiple
                   collapse-tags
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   placeholder="请选择">
                     <el-option
                         :key="index"
@@ -400,7 +402,7 @@
                   prop="project.companyDesign"
                   style="width: 32.5%">
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                    disabled
                     clearable
                     placeholder="请选择设计单位"
                     v-model="detailForm.project.companyDesign">
@@ -413,7 +415,7 @@
               prop="project.companyName"
               style="width: 32.5%">
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                disabled
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.companyName">
@@ -1556,6 +1558,9 @@
           this.detailForm.project.contractAmountChange = money
         }
 
+      },
+      del(index, item, list) {
+          list.splice(index, 1)
       },
       // 增值税改变，上报产值是否含税联动
       getOutputTax() {
