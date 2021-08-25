@@ -1,5 +1,5 @@
 <template>
-  <div class="searchListClass">
+  <div class="searchListClass" style="margin-bottom: -50px;">
     <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
       <el-form-item label="审核通过时间:">
         <el-date-picker
@@ -224,8 +224,8 @@
     </el-form>
     <div style="margin-top: 10px">
       <el-table
-        :max-height="$tableHeight+200"
-        :height="$tableHeight+200"
+        :max-height="$tableHeight-100"
+        :height="$tableHeight-100"
         class=""
         :data="page.records"
         :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
