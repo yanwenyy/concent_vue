@@ -2,11 +2,12 @@
   <div>
     <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
       <el-form-item label="区指挥部名称:">
-        <el-input v-model="searchform.orgFullName" placeholder="区指挥部名称" clearable></el-input>
+        <el-input v-model="searchform.orgName" placeholder="区指挥部名称" clearable></el-input>
       </el-form-item>
-      <el-button @click="searchformReset" type="info" plain style="color:black;background:none;float:right; margin-right:20px;"><i class="el-icon-refresh-right"></i>重置</el-button>
-      <el-button @click="getData" type="primary" plain style="float:right;margin-right:5px;"><i class="el-icon-search"></i>查询</el-button>
-      <!--<el-button @click="exportdata" type="primary" plain><i class="el-icon-top"></i>导出</el-button>-->
+      <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
+      <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
+      <el-button @click="back" class="detailbutton detail-back-tab" >返回</el-button>
+      <el-button type="primary" @click="add" class="detailbutton detail-back-tab save-btn">确定</el-button>
     </el-form>
     <div style="margin-top: 10px">
       <el-table
@@ -22,12 +23,12 @@
         :max-height="$tableHeight+300"
         :height="$tableHeight+300"
       >
-        <!--<el-table-column-->
-          <!--:width="50"-->
-          <!--align="center"-->
-          <!--show-overflow-tooltip-->
-          <!--type="selection"-->
-        <!--&gt;</el-table-column>-->
+        <el-table-column
+          :width="50"
+          align="center"
+          show-overflow-tooltip
+          type="selection"
+        ></el-table-column>
         <el-table-column
           :width="70"
           align="center"
@@ -76,7 +77,7 @@
         searchform: {
           current: 1,
           size: 20,
-          orgFullName: "",
+          orgName: "",
         },
         multipleSelection: [],
       };
@@ -88,6 +89,20 @@
 
     },
     methods: {
+      add(){
+        if(this.multipleSelection.length!=1){
+          this.$message.error("请选择一条数据");
+          return false;
+        }
+        let p = {actpoint: "addZhb", msg: this.multipleSelection[0]};
+        this.$router.push({
+          path: "../detail/",
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        });
+      },
+      back(){
+        this.$router.back();
+      },
       exportdata() {
       },
       // 查看
@@ -115,7 +130,7 @@
         this.searchform={
           current: 1,
           size: 20,
-          orgFullName: "",
+          orgName: "",
         }
         this.getData();
       },

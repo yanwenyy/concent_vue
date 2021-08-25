@@ -60,6 +60,7 @@
       style="width: 100%;"
       tooltip-effect="dark"
       @selection-change="handleSelectionChange"
+      :row-class-name="tableRowClassName"
       >
         <el-table-column
           :width="50"
@@ -134,8 +135,11 @@
 <!-- 新增统计项的弹框 -->
     <el-dialog :title="dialogtitle" :visible.sync="dialogResult" width="40%">
       <el-form :model="itemform">
-        <el-form-item label="序号" >
+        <el-form-item label="序号"  v-if="dialogtitle=='新增劳材机'">
           <el-input placeholder="" class="bp_height" disabled  :value="page.records.length+1"/>
+        </el-form-item>
+        <el-form-item label="序号"   v-if="dialogtitle=='修改劳材机'">
+          <el-input placeholder="" class="bp_height" disabled  :value="currentRowIndex"/>
         </el-form-item>
         <el-form-item label="编码" prop="vCode" >
           <el-input placeholder="" class="bp_height" :maxlength="parentid=='0'?3:100000000000000" :disabled="parentid!='0'||page.records.length!=0"  v-model="itemform.vCode" />
@@ -201,6 +205,7 @@ export default {
   name: "proposal-list-look",
   data() {
     return {
+      currentRowIndex:'',
       props: {
         label: "vname",
         isLeaf: "vleaf",
@@ -270,6 +275,9 @@ export default {
     },
   },
   methods: {
+    tableRowClassName({row, rowIndex}) {
+      row.row_index = rowIndex;
+    },
     //获取下拉框id和name的公共方法
     getName(id, list, name) {
       if (id) {
@@ -485,16 +493,19 @@ export default {
       this.dialogtitle = "修改劳材机";
       this.dialogResult = true;
       this.$forceUpdate();
-      //是否有资审信息判断
-
-      var item = this.multipleSelection[0];
-      item.vprojecttypes = item.vprojecttype.split(",");
-
-      this.itemform = item;
-      //是否在审核流程中判断
-      //是否在变更流程中判断
-
-      //alert(JSON.stringify(p));
+      var item= this.multipleSelection[0];
+      this.currentRowIndex=this.multipleSelection[0].row_index+1;
+      this.itemform = {
+        vCode:item.vcode,
+        vName:item.vname,
+        vJldwId:item.vjldwId,
+        vJldw:item.vjldw,
+        isUsed:item.isUsed,
+        isEdit:item.isEdit,
+        pId:item.pid,
+        uuid:item.uuid,
+      };
+      console.log(this.itemform)
     },
     // changeTreeNodeStatus(node) {
     //   node.expanded = false;
