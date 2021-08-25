@@ -5855,6 +5855,9 @@
         for(var i in this.detailform){
           this.detailFormBefore[i]=JSON.parse(JSON.stringify(this.detailform[i]));
         }
+        if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
+          this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
+        }
         this.detailform.contractInfo.changeOurAmount = this.detailform.contractInfo.ourAmount;
        // console.log(this.detailform)
       });

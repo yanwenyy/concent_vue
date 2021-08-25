@@ -68,7 +68,7 @@
             v-model="radioRow"
             @change="getCurrentRow(scope.row)"
             style="color: #fff;"
-          ></el-radio>
+          >{{""}}</el-radio>
         </template>
         </el-table-column>
         <el-table-column

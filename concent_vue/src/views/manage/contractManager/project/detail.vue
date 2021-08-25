@@ -8078,7 +8078,7 @@ export default {
       }
     },
     saveInfo(formName,type) {
-
+      console.log(this.detailform)
       this.detailform.commonFilesList=this.detailform.fileList1.concat(this.detailform.fileList2).concat(this.detailform.fileList3).concat(this.detailform.fileList4)
       var url='';
       this.detailform.contractInfo.constructionOrgId = this.detailform.constructionOrgList.join(",")

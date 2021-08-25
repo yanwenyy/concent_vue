@@ -643,7 +643,9 @@
                 </el-table-column> -->
               </el-table>
           </el-row>
-          <el-row>
+          <el-row
+              v-if="detailform.bidInfo.bidFlowStatus === '3'"
+          >
             <p><span >开标记录（最大10MB）: </span>
                 <el-upload
                   class="upload-demo detailUpload"
@@ -835,6 +837,7 @@
 
             <el-table-column
               :resizable="false"
+              v-if="detailform.bidInfo.bidFlowStatus === '3'"
               label="开标金额"
               prop="bidInfoSection.openBidAmount"
               show-overflow-tooltip
@@ -1776,14 +1779,16 @@
                 </el-table-column>
               </el-table>
             </el-row>
-            <el-row>
+            <el-row
+              v-if="detailform.bidInfo.bidFlowStatus === '3'"
+            >
                 <p>
                   <!-- <span >附件: </span> -->
                   <span>开标记录（最大10MB）: </span>
                   <!-- <span span v-if="p.from!='kblist'">附件: </span>
                   <span v-if="p.from=='kblist'">开标记录（最大10MB）: </span> -->
                   <el-button
-                    v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
+                    v-show="p.actpoint !== 'look'&&p.actpoint !== 'task' "
                     size="small"
                     type="primary"
                     @click="openFileUp('/api/contract/topInfo/CommonFiles/bidInfo/02/uploadFile','bidInfo_02')">
@@ -1975,6 +1980,7 @@
               </el-table-column>
               <el-table-column
                 :resizable="false"
+              v-if="detailform.bidInfo.bidFlowStatus === '3'"
                 label="开标金额"
                 prop="bidInfoSection.openBidAmount"
                 show-overflow-tooltip
