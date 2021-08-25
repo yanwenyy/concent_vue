@@ -108,12 +108,6 @@
           prop="emissionStand"
           header-align="center"
           align="center"
-          label="截止日期">
-        </el-table-column>
-        <el-table-column
-          prop="emissionStand"
-          header-align="center"
-          align="center"
           label="投标进度">
           <template slot-scope="scope">
             {{scope.row.bidFlowStatus==3?'开标审核通过':'投标审核通过'}}
