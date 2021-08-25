@@ -1451,7 +1451,7 @@
               <el-dialog 
                 :visible.sync="projectContentShow"
                 title="标的物信息"
-                width="70%"
+                width="83%"
               > 
                 <el-table
                   :max-height="$tableHeight-10"
@@ -1496,6 +1496,24 @@
                     width="150"
                     align="center"
                     prop="subjectMatterUnit"
+                    show-overflow-tooltip
+                  ></el-table-column>
+                  <el-table-column
+                    v-if="timeShow"
+                    :resizable="false"
+                    label="标的物年份"
+                    width="150"
+                    align="center"
+                    prop="subjectMatterYear"
+                    show-overflow-tooltip
+                  ></el-table-column>
+                  <el-table-column
+                    v-if="timeShow"
+                    :resizable="false"
+                    label="标的物月份"
+                    width="150"
+                    align="center"
+                    prop="subjectMatterMonth"
                     show-overflow-tooltip
                   ></el-table-column>
                   <el-table-column
@@ -3822,6 +3840,7 @@
         }
       }
       return {
+        timeShow:true,
         Authorization:sessionStorage.getItem("token"),
         // 查询产品信息
         workAmountShow: false,
@@ -4679,6 +4698,11 @@
         this.$http.post("/api/statistics/productbase/list/getBdwProduct",{projectId: [row.projectId]} )
           .then((res) => {
             this.projectContentList = res.data.data
+            if ((this.projectContentList[0].subjectMatterYear && this.projectContentList[0].subjectMatterMonth)!== null) {
+              this.timeShow = true
+            } else {
+              this.timeShow = false
+            }
           })
         this.projectContentShow = true
       }
