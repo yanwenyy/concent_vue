@@ -1208,8 +1208,14 @@
                     label="产品数量"
                     align="center"
                     prop="ncount"
-                    show-overflow-tooltip
+                    width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                      clearable
+                      v-model="scope.row.ncount"/>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
@@ -1333,8 +1339,14 @@
                     label="增值税"
                     prop="nvat"
                     align="center"
-                    show-overflow-tooltip
+                    width="150"
                   >
+                    <template v-if="scope.row.vincludevat == 0" slot-scope="scope">
+                      <el-input
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                      clearable
+                      v-model="scope.row.nvat"/>
+                    </template>
                   </el-table-column>
                 </el-table-column>
               </el-table>
