@@ -7,17 +7,22 @@
         </template>
         <el-menu-item-group>
       <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
-      <el-form-item label="审核通过时间:">
-        <el-date-picker
-          clearable
-          v-model="searchform.createTime"
-          type="daterange"
-          value-format="timestamp"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期">
-        </el-date-picker>
-      </el-form-item>
+        <el-form-item label="填报日期开始:">
+          <el-date-picker
+            clearable
+            v-model="searchform.beginTime"
+            type="date"
+            value-format="timestamp">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="填报日期结束:">
+          <el-date-picker
+            clearable
+            v-model="searchform.stopTime"
+            type="date"
+            value-format="timestamp">
+          </el-date-picker>
+        </el-form-item>
       <el-form-item label="合同类型:">
         <el-select
           clearable
@@ -520,6 +525,7 @@
         contractInfoId:"",//合同id
         treeStatas: false,
         DwVisible:false,//选择单位弹框状态
+        titleInfo:{},
         page: {current: 1, size: 20, total: 0, records: []},
         searchform: {
           current: 1,
@@ -570,6 +576,10 @@
       this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
       this.$store.dispatch('getCategory', {name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3'});
       this.$store.dispatch('getCategory', {name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72'});
+      // 查询数据
+      this.$http.post("/api/contract/contract/ContractInfo/list/getContractInformation",).then((res)=>{
+        this.titleInfo = res.data.data
+      });
     },
     computed: {
       projectDomainType() {
