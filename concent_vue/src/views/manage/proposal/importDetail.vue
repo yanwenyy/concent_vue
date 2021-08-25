@@ -1607,6 +1607,9 @@
              if(id!='7f4fcba4255b43a8babf15afd6c04a53'&&id!='f6823a41e9354b81a1512155a5565aeb'){
                this.detailform.topInfor.noticeTypeId='9d70138b32d611eb8271a1606dfca13c'
                this.detailform.topInfor.noticeTypeName='竞争性谈判';
+             } else {
+               this.detailform.topInfor.noticeTypeId=''
+               this.detailform.topInfor.noticeTypeName='';
              }
            }
         }
