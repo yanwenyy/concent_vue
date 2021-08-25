@@ -4,122 +4,50 @@
       <el-form-item label="区指挥部名称:">
         <el-input v-model="searchform.orgFullName" placeholder="区指挥部名称" clearable></el-input>
       </el-form-item>
-      <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>新增</el-button>
       <el-button @click="searchformReset" type="info" plain style="color:black;background:none;float:right; margin-right:20px;"><i class="el-icon-refresh-right"></i>重置</el-button>
       <el-button @click="getData" type="primary" plain style="float:right;margin-right:5px;"><i class="el-icon-search"></i>查询</el-button>
       <!--<el-button @click="exportdata" type="primary" plain><i class="el-icon-top"></i>导出</el-button>-->
     </el-form>
     <div style="margin-top: 10px">
       <el-table
+        class=""
         :data="page.records"
-        :header-cell-style="{
-                'text-align': 'center',
-                'background-color': 'rgba(246,248,252,1)',
-                color: 'rgba(0,0,0,1)',
-              }"
-        align="center"
+        :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
+        @row-dblclick="rowshow"
+        @selection-change="handleSelectionChange"
         border
-        class="detailTable"
+        highlight-current-row
         ref="table"
+        tooltip-effect="dark"
+        :max-height="$tableHeight+300"
+        :height="$tableHeight+300"
       >
+        <!--<el-table-column-->
+          <!--:width="50"-->
+          <!--align="center"-->
+          <!--show-overflow-tooltip-->
+          <!--type="selection"-->
+        <!--&gt;</el-table-column>-->
         <el-table-column
-          :width="80"
+          :width="70"
           align="center"
           label="序号"
           show-overflow-tooltip
           type="index"
         ></el-table-column>
         <el-table-column
-          :resizable="false"
-          label="指挥部名称"
-          align="center"
+          :width="500"
+          label="区域指挥部名称"
           prop="orgName"
+          show-overflow-tooltip
         >
         </el-table-column>
-
         <el-table-column
-          :resizable="false"
-          label="管辖省市"
-          prop="governingProvinceName"
           align="center"
-        >
-        </el-table-column>
-        <el-table-column
           label="指挥长"
+          prop="principalName"
+          show-overflow-tooltip
         >
-          <el-table-column
-            :resizable="false"
-            label="姓名"
-            prop="principalName"
-            align="center"
-            show-overflow-tooltip
-          >
-          </el-table-column>
-          <el-table-column
-            :resizable="false"
-            label="电话"
-            prop="contactNumber"
-            align="center"
-            show-overflow-tooltip
-          >
-          </el-table-column>
-          <el-table-column
-            :resizable="false"
-            label="级别"
-            prop="grade"
-            align="center"
-            show-overflow-tooltip
-          >
-          </el-table-column>
-        </el-table-column>
-        <el-table-column
-          label="省市负责人"
-        >
-          <el-table-column
-            :resizable="false"
-            label="姓名"
-            prop="provinceName"
-            align="center"
-            show-overflow-tooltip
-          >
-            <!--<template slot-scope="scope">-->
-              <!--<el-input-->
-                <!--clearable-->
-                <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
-                <!--v-model="scope.row.provinceName"-->
-              <!--&gt;</el-input>-->
-            <!--</template>-->
-          </el-table-column>
-          <el-table-column
-            :resizable="false"
-            label="级别"
-            prop="provinceGrade"
-            align="center"
-            show-overflow-tooltip
-          >
-            <!--<template slot-scope="scope">-->
-              <!--<el-input-->
-                <!--clearable-->
-                <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
-                <!--v-model="scope.row.provinceGrade"-->
-              <!--&gt;</el-input>-->
-            <!--</template>-->
-          </el-table-column>
-          <el-table-column
-            :resizable="false"
-            label="电话"
-            prop="provinceContactNumber"
-            align="center"
-            show-overflow-tooltip
-          >
-            <!--<template slot-scope="scope">-->
-              <!--<el-input-->
-                <!--clearable-->
-                <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
-                <!--v-model="scope.row.provinceContactNumber"-->
-              <!--&gt;</el-input>-->
-            <!--</template>-->
-          </el-table-column>
         </el-table-column>
       </el-table>
     </div>
@@ -160,13 +88,6 @@
 
     },
     methods: {
-      add(){
-        let p = {actpoint: "add"};
-        this.$router.push({
-          path: "./detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
-      },
       exportdata() {
       },
       // 查看
@@ -206,12 +127,12 @@
       getData() {
         this.$http
           .post(
-            "/api/contract/regionalInfo/list/loadPageDataOrgCode",
+            "/api/contract/regionalInfo/list/loadPageDataSysOrg",
             this.searchform
           )
           .then((res)=>{
             this.page = res.data.data;
-          });
+      });
       },
 
     },
