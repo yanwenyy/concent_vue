@@ -394,7 +394,7 @@
               {useJson: true}
             )
             .then((res) => {
-              if(res.data.data=='1'){
+              if(res.data.data==''||res.data.data==null){
                 this.$http.post(
                   url,
                   JSON.stringify(params),
@@ -416,8 +416,10 @@
                     });
                   }
                 });
-              }else{
-                this.$message.info('该单位下存在未提交的月报,请提交该单位下所有项目月报后再进行尝试！')
+              }else if(res.data.data=='1'){
+                this.$message.info('公司月报必须审核通过才能创建集团月报')
+              }else if(res.data.data=='2'){
+                this.$message.info('项目部上报时间大于公司月报，请重新汇总公司月报，然后再创建集团月报')
               }
             });
 
@@ -426,12 +428,16 @@
       // 修改
       totop() {
         if (this.multipleSelection.length !== 1) {
-          this.$message.info("请选择一条记录进行查看操作！");
+          this.$message.info("请选择一条记录进行修改操作！");
           return false;
         }
          if(this.multipleSelection[0].createOrgCode!=this.userdata.managerOrgCode){
            this.$message.info("无权操作下级单位数据！");
            return false;
+        }
+        if(this.multipleSelection[0].flowStatus!='edit'&&this.multipleSelection[0].flowStatus!='reject'){
+          this.$message.info("只能修改草稿和审核驳回的数据！");
+          return false;
         }
         if (this.multipleSelection[0].createOrgCode==this.userdata.managerOrgCode && (this.multipleSelection[0].flowStatus!='' && this.multipleSelection[0].flowStatus!=null)){
           let p = {actpoint: "edit", params: this.multipleSelection[0]};

@@ -1,6 +1,6 @@
 <!--资审结果操作列表-->
 <template>
-  <div class="searchListClass">
+  <div class="searchListClass" style="margin-bottom: -50px;">
     <el-form :inline="true" :model="searchform" @keyup.enter.native="getData()" class="queryForm">
 
       <el-form-item label="项目名称:">
@@ -155,6 +155,8 @@
         ref="table"
         style="width: 100%"
         tooltip-effect="dark"
+        :max-height="$tableHeight - 50"
+        :height="$tableHeight - 50"
       >
         <el-table-column
           :width="50"

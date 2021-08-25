@@ -121,7 +121,7 @@
                         </div>
 
                        <!-- <div v-else-if="projectStatus != '2' " style="text-align: right">{{sumCount(scope.row)}}</div>-->
-                        <div  v-else>{{scope.row.monthValue}}</div>
+                        <div  v-else v-show="scope.row.monthValue!=0">{{scope.row.monthValue}}</div>
                       </template>
                     </el-table-column>
                    <el-table-column
@@ -131,7 +131,7 @@
                      show-overflow-tooltip
                    >
                      <template slot-scope="scope">
-                       <div>{{scope.row.monthPlan}}</div>
+                       <div v-show="scope.row.monthPlan!=0">{{scope.row.monthPlan}}</div>
                      </template>
                    </el-table-column>
                    <el-table-column
@@ -154,7 +154,7 @@
                      show-overflow-tooltip
                    >
                      <template slot-scope="scope">
-                      <div>{{scope.row.yearValue}}</div>
+                      <div v-show="scope.row.yearValue!=0">{{scope.row.yearValue}}</div>
                       <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
                      </template>
                    </el-table-column>
@@ -165,7 +165,7 @@
                      show-overflow-tooltip
                    >
                      <template slot-scope="scope">
-                       <div>{{scope.row.yearPlan}}</div>
+                       <div v-show="scope.row.yearPlan!=0">{{scope.row.yearPlan}}</div>
                      </template>
                    </el-table-column>
                    <el-table-column
@@ -188,7 +188,7 @@
                  show-overflow-tooltip
                >
                  <template slot-scope="scope">
-                   <div>{{scope.row.totalValue}}</div>
+                   <div v-show="scope.row.totalValue!=0">{{scope.row.totalValue}}</div>
                  </template>
                </el-table-column>
                <el-table-column
@@ -198,7 +198,7 @@
                  show-overflow-tooltip
                >
                  <template slot-scope="scope">
-                   <div>{{scope.row.totalPlan}}</div>
+                   <div v-show="scope.row.totalPlan!=0">{{scope.row.totalPlan}}</div>
                  </template>
                </el-table-column>
                <el-table-column
@@ -528,7 +528,7 @@
           // console.log(list[index])
           //code3位 一级  code6位  二级  code9位  三级  code12位 四级
           list.forEach((item,i)=>{
-            if(item.sumTarget==code) {
+            if(item.sumTarget==code&&item.tjxId!='192'&&item.tjxId!='126') {
               num= Number(item.monthValue)+num;
               num1=Number(item.yearValue)+num1;
               num2=Number(item.totalValue)+num2;
@@ -640,7 +640,7 @@
           }
         });
         this.nextData.forEach((item,i)=>{
-          if(item.tjxId==list[index].sumTarget){
+          if(item.tjxId==list[index].sumTarget&&item.veditable=='0'){
             item.value=num;
           }
         });

@@ -214,6 +214,7 @@
                   v-if="detailForm.project.isClientele=='1'"
                   multiple
                   collapse-tags
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   placeholder="请选择">
                   <el-option
                     v-for="item in pubCustomers"
@@ -228,6 +229,7 @@
                   v-if="detailForm.project.isClientele!='1'"
                   multiple
                   collapse-tags
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   placeholder="请选择">
                     <el-option
                         :key="index"
@@ -400,7 +402,7 @@
                   prop="project.companyDesign"
                   style="width: 32.5%">
                   <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                    disabled
                     clearable
                     placeholder="请选择设计单位"
                     v-model="detailForm.project.companyDesign">
@@ -413,7 +415,7 @@
               prop="project.companyName"
               style="width: 32.5%">
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                disabled
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.companyName">
@@ -492,10 +494,6 @@
             </el-form-item>
             <!--父项目暂无-->
                 <el-form-item
-                  v-if="detailForm.project.projectTypeId==='22038e576c2242d5acc93f6c3c8e48ad' ||
-                  detailForm.project.projectTypeId==='625a3ee0728a4f45b792d022b8bb36d9' ||
-                  detailForm.project.projectTypeId==='393a07bda2244b03a24590e076a421df' ||
-                  detailForm.project.projectTypeId==='393a07bda2244b03a24590e076a421de' "
                   label="父项目名称:"
                   prop="project.fatherProjectName"
                   :rules="{
@@ -1228,7 +1226,6 @@
         uuid: null,
         DwVisible: false,
         treeStatas: false,
-        fatherList:[],
         uploadVisible: false,
         contractStatas:false,//关联合同状态
         emergingMarketTwo: [], // 新兴市场二级类别
@@ -1239,6 +1236,8 @@
         constructionOrgList:[], //建设单位选中ID列表
         sjdwList: [],
         companyMulStatus:false,//设计单位等多选列表状态
+        projectType:[], //项目类型下拉
+        fatherList:[],
         detailForm: {
           cdmc:[],
           project: {
@@ -1264,6 +1263,8 @@
             projectModuleId: 'f6823a41e9354b81a1512155a5565aeb', // 项目板块
             projectModuleCode:"design",//项目板块code
             projectModuleName: '勘察设计咨询', // 项目板块
+            projectTypeCode: '',
+            projectTypeName: '',
             businessId: '', // 业务板块
             categoryFirstId: '0f333a962655480c8ef668a8ce129d41', // 业务类别（一级）
             categorySecondId: '', // 业务类别二级
@@ -1369,9 +1370,6 @@
       railwayLine() {
         return this.$store.state.railwayLine
       },
-      projectType() {
-        return this.$store.state.projectType
-      },
       projectStatus() {
         var projectStatusCheck = [];
         this.$store.state.projectStatus.forEach((item) => {
@@ -1463,7 +1461,6 @@
       },
       // 获取项目地点的值
       getPositionTree(data) {
-        console.log(data)
         this.treeStatas = false;
         var country = '', _data = data;
         if (_data.fullDetailName.indexOf("境内") != -1) {
@@ -1557,6 +1554,9 @@
         }
 
       },
+      del(index, item, list) {
+          list.splice(index, 1)
+      },
       // 增值税改变，上报产值是否含税联动
       getOutputTax() {
         if (this.detailForm.project.valueAddedTax && this.detailForm.project.valueAddedTax !== '0') {
@@ -1597,30 +1597,13 @@
           this.$refs.addOrUpdate.init()
         })
       },
-      // // 获取项目地点的值
-      // getPositionTree(data) {
-      //   this.treeStatas = false
-      //   this.detailForm.project.topInfoSiteList[0].placeId = data.id
-      //   this.detailForm.project.topInfoSiteList[0].path = data.fullDetailName
-      //   this.detailForm.project.topInfoSiteList[0].ffid = data.fullDetailCode
-      // },
-      
       resetFuDai(id, list, name,code) {
-        this.detailForm.project.fatherProjectName = ''
-        this.detailForm.project.isBureauIndex = ''
-        this.getName(id, list, name,code)
-          //获取父项目名称列表
-        this.$http
-          .post('/api/statistics/StatisticsProject/detail/findProjectFather',
-             {projectTypeCode:this.detailForm.project.projectTypeCode,projectModuleId:this.detailForm.project.projectModuleId}
-          )
-          .then(res => {
-            if(res.data.code  === 200){
-              this.fatherList = res.data.data
-            }else{
-               this.fatherList = []
-            }
-        })
+        this.fatherList = [];
+        this.detailForm.project.fatherProjectId = '';
+        this.detailForm.project.fatherProjectName = '';
+        this.detailForm.project.isBureauIndex = '';
+        this.getName(id, list, name,code);
+        this.getProjectFather();
       },
       getFatherName(id, list, name) {
         if (id) {
@@ -1634,12 +1617,11 @@
         if (id) {
           this.$forceUpdate()
           this.detailForm.project[name] = list.find(
-            (item) => item.id === id
+            (item) => item.detailCode === id
           ).detailName
             this.detailForm.project[code] = list.find(
                 (item) => item.id === id
             ).detailCode
-          console.log(this.detailForm)
         }
       },
       //复选下拉框框获取name
@@ -1653,7 +1635,6 @@
       });
         this.detailForm.project[id]=_id.join(",");
         this.detailForm.project[name]=_name.join(",");
-        console.log(this.detailForm.project[id])
       },
       getShowTwo() {
         this.emergingMarket.find((item) => {
@@ -1731,7 +1712,6 @@
                 this.detailForm.project.projectTypeSecond = item.detailName;
                 this.detailForm.project.projectTypeSecondCode = item.detailCode;
                 this.xqprojectTypeThree = item.children||[];
-                console.log(this.xqprojectTypeThree)
               }
             }
           )
@@ -1876,7 +1856,20 @@
           this.$refs.infoDw.init(type,list,ifChek,index,tableList);
         })
       },
-      
+      //获取父项目名称列表
+      getProjectFather(){
+        this.$http
+          .post('/api/statistics/StatisticsProject/detail/findProjectFather',
+              {projectTypeCode:this.detailForm.project.projectTypeCode,projectModuleId:this.detailForm.project.projectModuleId}
+          )
+          .then(res => {
+            if(res.data.code  === 200){
+              this.fatherList = res.data.data
+            }else{
+              this.fatherList = []
+            }
+        })
+      },
       //获取单位的值
       getDwInfo(data){
         this.$forceUpdate();
@@ -1888,7 +1881,6 @@
           })
         }
         if(data.type=="承建单位"){
-          console.info(data)
           this.detailForm.project.companyBuiltName=data.name;
           this.detailForm.project.companyBuiltId=data.id;
         }else if(data.type=="签约/使用资质单位"){
@@ -1899,7 +1891,6 @@
     },
       //获取拿过来的多选单位列表
       getComList(data){
-        console.log(data)
         this.$forceUpdate();
         if(data.type=='签约/使用资质单位'){
           this.detailForm.project.companyId=data.selIdList.join(",");
@@ -1919,6 +1910,7 @@
           .then((res) => {
             if (res.data.code === 200) {
               this.detailForm.project = res.data.data
+              this.getProjectFather()
               if (!res.data.data.infoProductList) {
                 this.detailForm.project.infoProductList = []
               }
@@ -1982,18 +1974,27 @@
           item.customerId=item.uuid;
         })
       });
-      //获取父项目名称列表
+      //获取项目类型
       this.$http
-        .post('/api/statistics/StatisticsProject/detail/findProjectFather',
-            {projectTypeCode:this.detailForm.project.projectTypeCode,projectModuleId:this.detailForm.project.projectModuleId}
+        .post(
+          ' /api/statistics/StatisticsProject/detail/findProjectType?projectId'+'c7a788994b32e48f272e5c0e5271338a',
+          {useJson: true}
         )
-        .then(res => {
-          if(res.data.code  === 200){
-            this.fatherList = res.data.data
+        .then((res) => {
+          if (res.data.code === 200) {
+            this.projectType = []
+            var list = res.data.data
+            list.forEach(item=>{
+              var type = {id:'',detailName:''}
+              type.id = item.DETAIL_CODE
+              type.detailCode = item.DETAIL_CODE
+              type.detailName = item.DETAIL_NAME
+              this.projectType.push(type)
+            })
           }else{
-              this.fatherList = []
+            this.projectType = []
           }
-      })
+        });
     }
   }
 </script>

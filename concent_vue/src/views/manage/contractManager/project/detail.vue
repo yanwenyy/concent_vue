@@ -1211,7 +1211,7 @@
             </el-form-item>
             <el-form-item
               label="承揽所属省市"
-              prop="contractInfo.contractProvinceId"
+              prop="contractInfo.contractProvinceName"
               :rules="{
               required: true,
               message: '此项不能为空',
@@ -8328,6 +8328,11 @@ export default {
       this.detailform.jzjglx=datas.contractInfo.otherBuildingStructureTypeId&&datas.contractInfo.otherBuildingStructureTypeId.split(",");
       if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
         this.detailform.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
+      }
+      if (this.detailform.contractInfo.contractOrgName) {
+        this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion",{orgCode:this.detailform.contractInfo.contractOrgId},).then((res) => {
+          this.ssList = res.data.data
+        }); 
       }
     });
     },

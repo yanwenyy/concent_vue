@@ -150,6 +150,7 @@
         </el-form-item>
         <el-form-item label="计量单位" prop="vjldw">
           <el-select
+            clearable
             filterable
             placeholder="请选择"
             class="bp_height"
@@ -527,6 +528,10 @@ export default {
       // this.itemform.vParentid=this.itemform.sumTarget;
       // this.itemform.uuid = this.node.data.uuid;
       this.itemform.qfType = "JH"
+      if (this.itemform.vjldw == null || this.itemform.vjldw == "") {
+        this.itemform.vjldw = ''
+        this.itemform.vjldwName = ''
+      }
       this.$http
         .post(
           "/api/statistics/bp/BpTjx/detail/save",

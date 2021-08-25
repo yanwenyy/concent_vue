@@ -298,7 +298,7 @@
                   filterable
                   clearable
                   placeholder="请选择"
-                  @change="resetFuDai(detailForm.project.projectTypeId, projectType, 'projectTypeName')"
+                  @change="resetFuDai(detailForm.project.projectTypeId, projectType, 'projectTypeName','projectTypeCode')"
                   v-model="detailForm.project.projectTypeId">
                   <el-option
                     :key="index"
@@ -307,6 +307,25 @@
                     v-for="(item, index) in projectType"/>
                 </el-select>
               </el-form-item>
+              <el-form-item
+                  label="父项目名称:"
+                  prop="project.fatherProjectId"
+                  style="width: 32.5%"
+                  >
+                  <el-select
+                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                    filterable
+                    clearable
+                    placeholder="请选择"
+                    @change="getFatherName(detailForm.project.fatherProjectId, fatherList, 'fatherProjectName')"
+                    v-model="detailForm.project.fatherProjectId">
+                    <el-option
+                      :key="index"
+                      :label="item.projectName"
+                      :value="item.uuid"
+                      v-for="(item, index) in fatherList"/>
+                  </el-select>
+                </el-form-item>
               <!--父项目暂无-->
               <el-form-item
                 v-if="detailForm.project.projectTypeId==='22038e576c2242d5acc93f6c3c8e48ad'"
@@ -1592,7 +1611,7 @@
                 <el-select
                   disabled
                   placeholder="请选择"
-                  @change="resetFuDai(showDetailForm.project.projectTypeId, projectType, 'projectTypeName')"
+                  @change="resetFuDai(showDetailForm.project.projectTypeId, projectType, 'projectTypeName','projectTypeCode')"
                   v-model="showDetailForm.project.projectTypeId">
                   <el-option
                     :key="index"
@@ -1601,6 +1620,25 @@
                     v-for="(item, index) in projectType"/>
                 </el-select>
               </el-form-item>
+              <el-form-item
+                  label="父项目名称:"
+                  prop="project.fatherProjectId"
+                  style="width: 32.5%"
+                  >
+                  <el-select
+                    disabled
+                    filterable
+                    clearable
+                    placeholder="请选择"
+                    @change="getFatherName(showDetailForm.project.fatherProjectId, fatherList, 'fatherProjectName')"
+                    v-model="showDetailForm.project.fatherProjectId">
+                    <el-option
+                      :key="index"
+                      :label="item.projectName"
+                      :value="item.uuid"
+                      v-for="(item, index) in fatherList"/>
+                  </el-select>
+                </el-form-item>
               <!--父项目暂无-->
               <el-form-item
                 v-if="showDetailForm.project.projectTypeId==='22038e576c2242d5acc93f6c3c8e48ad'"
@@ -2422,6 +2460,8 @@
         options1: [{ label: '测试所在地', value: 'testabcd' }],
         constructionOrgList: [], 
         sjdwList: [],
+        projectType:[], //项目类型下拉
+        fatherList:[],
         detailForm: {
           project: {
             projectSubContractList: [], // 分包字段
@@ -2641,9 +2681,6 @@
       railwayLine() {
         return this.$store.state.railwayLine
       },
-      projectType() {
-        return this.$store.state.projectType
-      },
       projectStatus() {
         return this.$store.state.projectStatus
       },
@@ -2700,6 +2737,27 @@
             item.customerName=item.companyName;
             item.customerId=item.uuid;
           })
+        });
+      //获取项目类型
+      this.$http
+        .post(
+          ' /api/statistics/StatisticsProject/detail/findProjectType?projectId'+'c7a788994b32e48f272e5c0e5271338a',
+          {useJson: true}
+        )
+        .then((res) => {
+          if (res.data.code === 200) {
+            this.projectType = []
+            var list = res.data.data
+            list.forEach(item=>{
+              var type = {id:'',detailName:''}
+              type.id = item.DETAIL_CODE
+              type.detailCode = item.DETAIL_CODE
+              type.detailName = item.DETAIL_NAME
+              this.projectType.push(type)
+            })
+          }else{
+            this.projectType = []
+          }
         });
     },
     methods: {
@@ -2960,10 +3018,35 @@
       //   this.detailForm.project.topInfoSiteList[0].path = data.fullDetailName
       //   this.detailForm.project.topInfoSiteList[0].ffid = data.fullDetailCode
       // },
-      resetFuDai(id, list, name) {
-        this.detailForm.project.fatherProjectName = ''
-        this.detailForm.project.isBureauIndex = ''
-        this.getName(id, list, name,code)
+      resetFuDai(id, list, name,code) {
+        this.fatherList = [];
+        this.detailForm.project.fatherProjectId = '';
+        this.detailForm.project.fatherProjectName = '';
+        this.detailForm.project.isBureauIndex = '';
+        this.getName(id, list, name,code);
+        this.getProjectFather();
+      },
+      //获取父项目名称列表
+      getProjectFather(){
+        this.$http
+          .post('/api/statistics/StatisticsProject/detail/findProjectFather',
+              {projectTypeCode:this.detailForm.project.projectTypeCode,projectModuleId:this.detailForm.project.projectModuleId}
+          )
+          .then(res => {
+            if(res.data.code  === 200){
+              this.fatherList = res.data.data
+            }else{
+              this.fatherList = []
+            }
+        })
+      },
+      getFatherName(id, list, name) {
+        if (id) {
+          this.$forceUpdate()
+          this.detailForm.project[name] = list.find(
+            (item) => item.uuid === id
+        ).projectName
+        }
       },
       getName(id, list, name,code) {
         if (id) {
@@ -3211,6 +3294,7 @@
                 }
               })
               this.getShowTwo()
+              this.getProjectFather()
             }
           })
       },
@@ -3223,6 +3307,7 @@
           .then((res) => {
             if (res.data.code === 200) {
               this.detailForm.project = res.data.data
+              this.getProjectFather()
               this.showDetailForm.project = JSON.parse(JSON.stringify(res.data.data))
               if (!res.data.data.infoProductList) {
                 this.detailForm.project.infoProductList = []

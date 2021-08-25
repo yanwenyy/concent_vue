@@ -599,7 +599,7 @@
           }
         });
         this.nextData.forEach((item,i)=>{
-          if(item.tjxId==list[index].sumTarget){
+          if(item.tjxId==list[index].sumTarget&&item.veditable=='0'){
             item.value=num;
           }
         });

@@ -1,5 +1,5 @@
 <template>
-  <div class="searchListClass">
+  <div class="searchListClass" style="margin-bottom: -50px;">
     <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
       <el-form-item label="项目名称:">
         <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
@@ -226,7 +226,7 @@
     </el-form>
     <div style="margin-top: 10px">
       <el-table
-        class="tableStyle"
+        class=""
         :data="page.records"
         :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
         @row-dblclick="rowshow"
@@ -235,6 +235,8 @@
         highlight-current-row
         ref="table"
         tooltip-effect="dark"
+        :max-height="$tableHeight - 50"
+        :height="$tableHeight - 50"
       >
         <el-table-column
           :width="50"

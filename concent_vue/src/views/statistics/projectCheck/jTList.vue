@@ -63,9 +63,9 @@
             </div>
           </template>-->
           <template slot-scope="scope">
-            <spam class="blue pointer" v-if="scope.row.reportType != null && scope.row.reportType != ''">
+            <span class="blue pointer" v-if="scope.row.reportType != null && scope.row.reportType != ''">
               {{scope.row.createOrgName+"("+(scope.row.reportType==1?'自揽':scope.row.reportType==2?'工区':'')+")"}}
-            </spam>
+            </span>
             <span class="blue pointer"v-if="scope.row.reportType== null || scope.row.reportType == ''">
               {{scope.row.createOrgName}}
             </span>
@@ -337,27 +337,46 @@
         if (this.multipleSelection[0].createOrgCode==this.userdata.managerOrgCode && (this.multipleSelection[0].flowStatus==''||this.multipleSelection[0].flowStatus==null)) {
           var url = '/api/statistics/Projectcheck/detail/jtReportEntityInfo';
         var params =  this.multipleSelection[0];
-        this.$http.post(
-            url,
-            JSON.stringify(params),
-            {useJson: true}
-        ).then((res) => {
-          if (res.data.code === 200) {
-            this.$message({
-              message: '创建成功'
+          //判断是否存在未上报的数据，如果存在就提示，不存在就创建
+          this.$http
+            .post(
+              "/api/statistics/Projectcheck/detail/checkJtChildData",
+              JSON.stringify( {
+                reportYear:this.multipleSelection[0].reportYear,
+                reportMonth:this.multipleSelection[0].reportMonth
+              }),
+              {useJson: true}
+            )
+            .then((res) => {
+              if(res.data.data==''||res.data.data==null){
+                this.$http.post(
+                  url,
+                  JSON.stringify(params),
+                  {useJson: true}
+                ).then((res) => {
+                  if (res.data.code === 200) {
+                    this.$message({
+                      message: '创建成功'
+                    });
+                    this.getData();
+                  }else if(res.data.code === 400){
+                    this.$message({
+                      message: '该单位已在本月创建过月报请尝试修改或于下月再进行尝试'
+                    });
+                    this.getData();
+                  }else{
+                    this.$message({
+                      message: '创建失败'
+                    });
+                  }
+                });
+              }else if(res.data.data=='1'){
+                this.$message.info('公司月报必须审核通过才能创建集团月报')
+              }else if(res.data.data=='2'){
+                this.$message.info('项目部上报时间大于公司月报，请重新汇总公司月报，然后再创建集团月报')
+              }
             });
-            this.getData();
-          }else if(res.data.code === 400){
-            this.$message({
-              message: '该单位已在本月创建过月报请尝试修改或于下月再进行尝试'
-            });
-            this.getData();
-          }else{
-            this.$message({
-              message: '创建失败'
-            });
-          }
-        });}
+        }
       },
       // 修改
       totop() {
@@ -368,6 +387,10 @@
          if(this.multipleSelection[0].createOrgCode!=this.userdata.managerOrgCode){
            this.$message.info("无权操作下级单位数据！");
            return false;
+        }
+        if(this.multipleSelection[0].flowStatus!='edit'&&this.multipleSelection[0].flowStatus!='reject'){
+          this.$message.info("只能修改草稿和审核驳回的数据！");
+          return false;
         }
         if (this.multipleSelection[0].createOrgCode==this.userdata.managerOrgCode && (this.multipleSelection[0].flowStatus!='' && this.multipleSelection[0].flowStatus!=null)){
           let p = {actpoint: "edit", params: this.multipleSelection[0]};

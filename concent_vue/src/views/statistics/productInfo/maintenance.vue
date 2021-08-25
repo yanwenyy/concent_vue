@@ -167,7 +167,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer" v-if="!look">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="sub('form')">确 定</el-button>
+        <el-button type="primary" @click="validation('form')">确 定</el-button>
       </div>
     </el-dialog>
       <el-pagination
@@ -259,7 +259,39 @@ export default {
         }
       }
     },
-    //保存
+    // 验证 保存
+    validation(formName){
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.$http
+            .post(
+              '/api/statistics/productbase/list/isCheck',
+              JSON.stringify(this.form),
+              {useJson: true}
+            )
+            .then((res) => {
+              if (res.data.code === 200) {
+                if (res.data.data.isCheck == "1") {
+                  this.$confirm('此产品已经存在, 是否继续添加?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                  }).then(() => {
+                    this.sub('form')
+                  }).catch(() => {
+                    this.$refs[formName].resetFields();
+                    this.dialogFormVisible=false;        
+                  });
+                } else {
+                  this.sub('form')
+                }
+              }
+            });
+        } else {
+          return false;
+        }
+      });
+    },
     sub(formName){
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -368,7 +400,9 @@ export default {
         isTb:  row.isTb,
         productTypeId: row.productTypeId,
         prodectTypeCode: row.prodectTypeCode,
-        prodectTypeName: row.prodectTypeName
+        prodectTypeName: row.prodectTypeName,
+        vmeasureunitid:row.vmeasureunitid,
+        ywtypeid:row.ywtypeid
       };
       this.getCplx(this.form.ywtypecode)
       this.dialogFormVisible=true;
