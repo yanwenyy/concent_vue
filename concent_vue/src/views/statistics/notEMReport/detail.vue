@@ -829,14 +829,12 @@
                     <template slot-scope="scope">
                       <!-- :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1" -->
                       <el-input
-                        @change="suppliesChange(detailform.gy_list, scope.$index, 'industry')"
                         @input="isFloor(scope.row.industry,scope.$index,detailform.gy_list,'industry'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'industry')"
                         v-if="scope.row.country=='01'"
                         :disabled="true"
                         clearable
                         v-model="scope.row.industry"/>
                       <el-input
-                        @change="suppliesChange(detailform.gy_list, scope.$index, 'overseasIndustry')"
                         @input="isFloor(scope.row.overseasIndustry,scope.$index,detailform.gy_list,'overseasIndustry'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'overseasIndustry')"
                         v-if="scope.row.country=='02'"
                         :disabled="true"
@@ -4513,13 +4511,15 @@
           .then((res) => {
           res.data.data.wz_list.forEach((element)=>{
             // 工业制造
-            res.data.data.gy_list.forEach((element)=>{
-              if (element.country == "01") {
-                element.htquantity_after = Number(element.htquantity) - Number(element.industry)- Number(element.equipmentManufacturin)- Number(element.componentManufacturin)- Number(element.otherIndustrayProduct)
-              } else {
-                element.htquantity_after = Number(element.htquantity) - Number(element.overseasIndustry)- Number(element.equipmentManufacturinHw)- Number(element.componentManufacturinHw)- Number(element.otherIndustrayProductHw)
-              }
-            })
+            if (res.data.data.gy_lis) {
+              res.data.data.gy_list.forEach((element)=>{
+                if (element.country == "01") {
+                  element.htquantity_after = Number(element.htquantity) - Number(element.equipmentManufacturin)- Number(element.componentManufacturin)- Number(element.otherIndustrayProduct)
+                } else {
+                  element.htquantity_after = Number(element.htquantity) - Number(element.equipmentManufacturinHw)- Number(element.componentManufacturinHw)- Number(element.otherIndustrayProductHw)
+                }
+              })            
+            }
             // 物资贸易
             if (element.country == "01") {
               element.htquantity_after = Number(element.htquantity) - Number(element.sale)
@@ -4578,13 +4578,15 @@
           .post("/api/statistics/unProjectReport/list/queryAllInfo",data )
           .then((res) => {
           // 工业制造
-          res.data.data.gy_list.forEach((element)=>{
-            if (element.country == "01") {
-              element.htquantity_after = Number(element.htquantity) - Number(element.industry)- Number(element.equipmentManufacturin)- Number(element.componentManufacturin)- Number(element.otherIndustrayProduct)
-            } else {
-              element.htquantity_after = Number(element.htquantity) - Number(element.overseasIndustry)- Number(element.equipmentManufacturinHw)- Number(element.componentManufacturinHw)- Number(element.otherIndustrayProductHw)
-            }
-          })
+          if (res.data.data.gy_lis) {
+            res.data.data.gy_list.forEach((element)=>{
+              if (element.country == "01") {
+                element.htquantity_after = Number(element.htquantity) - Number(element.equipmentManufacturin)- Number(element.componentManufacturin)- Number(element.otherIndustrayProduct)
+              } else {
+                element.htquantity_after = Number(element.htquantity) - Number(element.equipmentManufacturinHw)- Number(element.componentManufacturinHw)- Number(element.otherIndustrayProductHw)
+              }
+            })            
+          }
           // 物资贸易
           res.data.data.wz_list.forEach((element)=>{
             if (element.country == "01") {
