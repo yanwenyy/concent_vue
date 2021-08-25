@@ -1,221 +1,233 @@
 <template>
-  <div class="searchListClass" style="margin-bottom: -50px;">
+  <div class="searchListClass" style="margin-bottom: -150px;">
+    <el-menu default-active="2" class="el-menu-vertical-demo" >
+      <el-submenu index="1">
+        <template slot="title">
+          <span>查询条件</span>
+        </template>
+        <el-menu-item-group>
+          <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+            <el-form-item label="审核通过时间:">
+              <el-date-picker
+                clearable
+                v-model="searchform.createTime"
+                type="daterange"
+                value-format="timestamp"
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期">
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item label="合同类型:">
+              <el-select
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="searchform.moduleId"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectPlate"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="填报单位:">
+              <el-input v-model="searchform.createOrgName" placeholder="填报单位" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="合同名称:">
+              <el-input v-model="searchform.contractName" placeholder="合同名称" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="合同编号:">
+              <el-input v-model="searchform.contractCode" placeholder="合同编号" clearable></el-input>
+            </el-form-item>
+            <el-form-item
+              label="项目性质(一级):"
+            >
+              <el-select
+                clearable
+                filterable
+                placeholder="请选择"
+                @change="getTwoXZ"
+                size="mini"
+                v-model="searchform.projectNatureFirstId"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectNature"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="项目性质(二级):"
+            >
+              <el-select
+                clearable
+                filterable
+                placeholder="请选择工程类别(二级)"
+                size="mini"
+                v-model="searchform.projectNatureSecondId"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectNatureTwo"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="合同状态:"
+            >
+              <el-select
+                clearable
+                filterable
+                placeholder="请选择"
+                @change="getTwo"
+                size="mini"
+                v-model="searchform.flowStatus"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectStatus"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="工程类别(一级):"
+            >
+              <el-select
+                clearable
+                filterable
+                placeholder="请选择"
+                @change="getTwo"
+                size="mini"
+                v-model="searchform.enginTypeFirstId"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in projectDomainType"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="工程类别(二级):"
+            >
+              <el-select
+                clearable
+                filterable
+                placeholder="请选择工程类别(二级)"
+                size="mini"
+                v-model="searchform.enginTypeSecondId"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in xqprojectType"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="新兴市场(一级):"
+            >
+              <el-select
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="searchform.marketFirstNameId"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in emergingMarket"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="主推单位:"
+            >
+              <el-input v-model="searchform.path" placeholder="主推单位" clearable @clear="searchform.contractMianOrg=''">
+                <el-button slot="append" icon="el-icon-search"  @click="addDw('主推单位',searchform.contractMianOrg)"></el-button>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+              label="是否变更:"
+            >
+              <el-select
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="searchform.changeStatus"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in ifBg"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="是否导入清单:"
+            >
+              <el-select
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="searchform.isImport"
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in ifBg"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="是否公开招标:"
+            >
+              <el-select
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="searchform.isOpenBid"
+              >
+                <el-option
+                  label="是"
+                  value="1"
+                ></el-option>
+                <el-option
+                  label="否"
+                  value="0"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="地点:">
+              <el-input v-model="searchform.path" placeholder="地点" clearable @clear="clear('ffid','path')">
+                <el-button slot="append" icon="el-icon-search"  @click="selectPosition()"></el-button>
+              </el-input>
+            </el-form-item>
+          </el-form>
+
+        </el-menu-item-group>
+      </el-submenu>
+    </el-menu>  
     <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
-      <el-form-item label="审核通过时间:">
-        <el-date-picker
-          clearable
-          v-model="searchform.createTime"
-          type="daterange"
-          value-format="timestamp"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="合同类型:">
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          size="mini"
-          v-model="searchform.moduleId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in projectPlate"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="填报单位:">
-        <el-input v-model="searchform.createOrgName" placeholder="填报单位" clearable></el-input>
-      </el-form-item>
-      <el-form-item label="合同名称:">
-        <el-input v-model="searchform.contractName" placeholder="合同名称" clearable></el-input>
-      </el-form-item>
-      <el-form-item label="合同编号:">
-        <el-input v-model="searchform.contractCode" placeholder="合同编号" clearable></el-input>
-      </el-form-item>
-      <el-form-item
-        label="项目性质(一级):"
-      >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          @change="getTwoXZ"
-          size="mini"
-          v-model="searchform.projectNatureFirstId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in projectNature"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="项目性质(二级):"
-      >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择工程类别(二级)"
-          size="mini"
-          v-model="searchform.projectNatureSecondId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in projectNatureTwo"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="合同状态:"
-      >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          @change="getTwo"
-          size="mini"
-          v-model="searchform.flowStatus"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in projectStatus"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="工程类别(一级):"
-      >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          @change="getTwo"
-          size="mini"
-          v-model="searchform.enginTypeFirstId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in projectDomainType"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="工程类别(二级):"
-      >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择工程类别(二级)"
-          size="mini"
-          v-model="searchform.enginTypeSecondId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in xqprojectType"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="新兴市场(一级):"
-      >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          size="mini"
-          v-model="searchform.marketFirstNameId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in emergingMarket"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="主推单位:"
-      >
-        <el-input v-model="searchform.path" placeholder="主推单位" clearable @clear="searchform.contractMianOrg=''">
-          <el-button slot="append" icon="el-icon-search"  @click="addDw('主推单位',searchform.contractMianOrg)"></el-button>
-        </el-input>
-      </el-form-item>
-      <el-form-item
-        label="是否变更:"
-      >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          size="mini"
-          v-model="searchform.changeStatus"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in ifBg"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="是否导入清单:"
-      >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          size="mini"
-          v-model="searchform.isImport"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in ifBg"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="是否公开招标:"
-      >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          size="mini"
-          v-model="searchform.isOpenBid"
-        >
-          <el-option
-            label="是"
-            value="1"
-          ></el-option>
-          <el-option
-            label="否"
-            value="0"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="地点:">
-        <el-input v-model="searchform.path" placeholder="地点" clearable @clear="clear('ffid','path')">
-          <el-button slot="append" icon="el-icon-search"  @click="selectPosition()"></el-button>
-        </el-input>
-      </el-form-item>
       <el-form-item style="float:right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none;float:right; margin-right:20px;"><i class="el-icon-refresh-right"></i>重置</el-button>
         <el-button @click="getData" type="primary" style="float:right;margin-right:5px;" plain><i class="el-icon-search"></i>查询</el-button>
@@ -228,8 +240,8 @@
     </div>
     <div style="margin-top: 10px">
       <el-table
-        :max-height="$tableHeight-100"
-        :height="$tableHeight-100"
+        :max-height="$tableHeight-200"
+        :height="$tableHeight-200"
         class=""
         :data="page.records"
         :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
