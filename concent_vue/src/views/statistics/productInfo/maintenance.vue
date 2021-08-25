@@ -368,7 +368,9 @@ export default {
         isTb:  row.isTb,
         productTypeId: row.productTypeId,
         prodectTypeCode: row.prodectTypeCode,
-        prodectTypeName: row.prodectTypeName
+        prodectTypeName: row.prodectTypeName,
+        vmeasureunitid:row.vmeasureunitid,
+        ywtypeid:row.ywtypeid
       };
       this.getCplx(this.form.ywtypecode)
       this.dialogFormVisible=true;
