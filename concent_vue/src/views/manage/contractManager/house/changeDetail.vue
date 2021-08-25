@@ -1894,6 +1894,7 @@
                     placeholder="请输入"
                     size="mini"
                     v-model="detailform.contractInfo.estateBuildArea"
+                    @input="detailform.contractInfo.estateBuildArea=detailform.contractInfo.estateBuildArea.replace(/^\.+|[^\d.]/g,'')"
                   />
                 </el-form-item>
                 <el-form-item

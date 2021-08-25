@@ -255,9 +255,9 @@
               <el-input style=" width: 100%" v-model="searchform.htquantity" size="mini"/>
             </div>
           </template>
-          <template slot-scope="scope">{{
-            scope.row.htquantity
-            }}</template>
+          <template slot-scope="scope">
+            <span v-if="scope.row.contractAmountTotal">{{scope.row.contractAmountTotal-(scope.row.totalValue||0)}}</span>
+          </template>
         </el-table-column>
       </el-table>
       <el-pagination

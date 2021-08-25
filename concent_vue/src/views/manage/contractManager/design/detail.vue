@@ -423,7 +423,7 @@
                 :rules="{
                 required: true,
                 message: '此项不能为空',
-                trigger: 'blur',
+                trigger: 'change',
               }"
               >
                 <el-select
@@ -1007,7 +1007,7 @@
                 :rules="{
               required: true,
               message: '此项不能为空',
-              trigger: 'blur',
+              trigger: 'change',
             }"
               >
                 <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.contractOrgName" class="input-with-select">
@@ -1016,11 +1016,11 @@
               </el-form-item>
               <el-form-item
                 label="承揽所属省市:"
-                prop="contractInfo.contractProvinceName"
+                prop="contractInfo.contractProvinceId"
                 :rules="{
               required: true,
               message: '此项不能为空',
-              trigger: 'blur',
+              trigger: 'change',
             }"
               >
                 <el-select
@@ -2927,7 +2927,10 @@
             enginTypeSecondId:'',
             isYearContract:'1',
             isClientele:'0',
-            isOpenBid:'0'
+            isOpenBid:'0',
+            contractOrgName:'',
+            contractProvinceName:'',
+            constructionNatureId:''
           },
           contractInfoAttachBO: {
             innerContractInfoAttachList:[],
@@ -3117,7 +3120,7 @@
         //  if (data.type == "建设单位") {
         //   this.detailform.contractInfo.constructionOrgId=data.selIdList.join(",");
         //   this.detailform.contractInfo.constructionOrg=data.selList.join(",");
-        // }else 
+        // }else
         if (data.type == "设计单位") {
           this.detailform.contractInfo.designOrgId=data.selIdList.join(",");
           this.detailform.contractInfo.designOrg=data.selList.join(",");
@@ -3793,7 +3796,7 @@
           if (this.detailform.contractInfo.contractOrgName) {
            this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion",{orgCode:this.detailform.contractInfo.contractOrgId},).then((res) => {
               this.ssList = res.data.data
-            }); 
+            });
           }
         });
           this.$forceUpdate();
@@ -3932,7 +3935,7 @@
         }else{
           let k = 0;
           for(let i=0;i<this.detailform.topInfoSiteList.length;i++){
-            if(this.detailform.topInfoSiteList[i].country === null 
+            if(this.detailform.topInfoSiteList[i].country === null
             || this.detailform.topInfoSiteList[i].path === null
             || this.detailform.topInfoSiteList[i].path === ""
             || this.detailform.topInfoSiteList[i].country === ""){

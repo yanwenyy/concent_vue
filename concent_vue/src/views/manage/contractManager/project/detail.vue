@@ -445,7 +445,7 @@
                   multiple
                   filterable
                   collapse-tags
-                  :change="cs"
+
                   placeholder="请选择">
                   <el-option
                     v-for="item in pubCustomers"
@@ -1158,7 +1158,7 @@
                <el-input
                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                  clearable
-
+                 @input="detailform.contractInfo.actualInvest=detailform.contractInfo.actualInvest.replace(/^\.+|[^\d.]/g,'')"
                  v-model="detailform.contractInfo.actualInvest"/>
              </el-form-item>
              <el-form-item
@@ -6837,7 +6837,8 @@ export default {
           designOrgId: '',
           constructionOrg:'',//建设单位
           constructionOrgId:'',
-          contractOrgName:''
+          contractOrgName:'',
+          isOpenBid:'0'
         },
         contractInfoAttachBO: {
           innerContractInfoAttachList:[],
@@ -7941,7 +7942,7 @@ export default {
           if (this.detailform.contractInfo.contractOrgName) {
            this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion",{orgCode:this.detailform.contractInfo.contractOrgId},).then((res) => {
               this.ssList = res.data.data
-            }); 
+            });
           }
         });
         this.$forceUpdate();
@@ -8332,7 +8333,7 @@ export default {
       if (this.detailform.contractInfo.contractOrgName) {
         this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion",{orgCode:this.detailform.contractInfo.contractOrgId},).then((res) => {
           this.ssList = res.data.data
-        }); 
+        });
       }
     });
     },

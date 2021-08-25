@@ -4663,7 +4663,9 @@
         options: [],
         detailform: {
           commonFilesList: [],
-          contractInfo: {},
+          contractInfo: {
+            contractOrgName:''
+          },
           contractInfoAttachBO: {
             innerContractInfoAttachList:[],
             unionContractInfoAttachList:[]
