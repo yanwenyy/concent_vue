@@ -1,6 +1,7 @@
 <template>
   <el-dialog
     :visible.sync="visible"
+    @close="searchform.inforName='',searchform2.contractName=''"
     :append-to-body="true">
     <div v-if="contractType=='1'">
       <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="init()">
@@ -8,7 +9,7 @@
           <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button @click="init()">查询</el-button>
+          <el-button @click="init(searchform.moduleId,contractType)">查询</el-button>
         </el-form-item>
       </el-form>
       <el-table
@@ -79,7 +80,7 @@
           <el-input v-model="searchform2.contractName" placeholder="合同名称" clearable></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button @click="init()">查询</el-button>
+          <el-button @click="init(searchform2.moduleId,contractType)">查询</el-button>
         </el-form-item>
       </el-form>
       <el-table
@@ -154,8 +155,8 @@
       ></el-pagination>
     </div>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="visible = false">取消</el-button>
-      <el-button type="primary" @click="sub()">确定</el-button>
+      <el-button @click="visible = false,searchform.inforName='',searchform2.contractName=''">取消</el-button>
+      <el-button type="primary" @click="sub(),searchform.inforName='',searchform2.contractName=''">确定</el-button>
     </div>
   </el-dialog>
 </template>

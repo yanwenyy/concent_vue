@@ -719,6 +719,7 @@
                   clearable
                   placeholder="请输入"
                   size="mini"
+                  @input="detailform.contractInfo.estateBuildArea=detailform.contractInfo.estateBuildArea.replace(/^\.+|[^\d.]/g,'')"
                   v-model="detailform.contractInfo.estateBuildArea"
                 />
               </el-form-item>
@@ -2222,7 +2223,7 @@ export default {
           moduleCode:'realty',
           marketSecondId:'',
           signOrgName:'',
-          isOpenBid:'0'
+          isOpenBid:'0',
         },
         topInfoSiteList:[{
           country: '',
@@ -2541,7 +2542,7 @@ export default {
         if (this.detailform.contractInfo.contractOrgName) {
           this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion",{orgCode:this.detailform.contractInfo.contractOrgId},).then((res) => {
             this.ssList = res.data.data
-          }); 
+          });
         }
         this.detailform.topInfoSiteList=datas.topInfoSiteList;
       });

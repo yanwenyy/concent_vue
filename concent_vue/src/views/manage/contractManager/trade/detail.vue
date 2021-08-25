@@ -162,7 +162,7 @@
                       ></el-option>
                   </el-select>
                 </el-form-item>
-            <el-form-item
+              <el-form-item
               class="inline-formitem"
               label="是否客户:"
               prop="contractInfo.isClientele"
@@ -2787,7 +2787,7 @@ export default {
         if (this.detailform.contractInfo.contractOrgName) {
           this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion",{orgCode:this.detailform.contractInfo.contractOrgId},).then((res) => {
             this.ssList = res.data.data
-          }); 
+          });
         }
         this.detailform.topInfoSiteList=datas.topInfoSiteList;
       });
@@ -3368,7 +3368,7 @@ export default {
         }else{
           let k = 0;
           for(let i=0;i<this.detailform.topInfoSiteList.length;i++){
-            if(this.detailform.topInfoSiteList[i].country === null 
+            if(this.detailform.topInfoSiteList[i].country === null
             || this.detailform.topInfoSiteList[i].path === null
             || this.detailform.topInfoSiteList[i].path === ""
             || this.detailform.topInfoSiteList[i].country === ""){

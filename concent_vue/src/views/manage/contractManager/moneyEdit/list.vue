@@ -1,18 +1,23 @@
 <template>
   <div class="searchListClass">
     <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
-      <el-form-item label="审核通过时间:">
+      <el-form-item label="填报日期开始:">
         <el-date-picker
           clearable
-          v-model="searchform.createTime"
-          type="daterange"
-          value-format="timestamp"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期">
+          v-model="searchform.beginTime"
+          type="date"
+          value-format="timestamp">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="合同类型:">
+      <el-form-item label="填报日期结束:">
+        <el-date-picker
+          clearable
+          v-model="searchform.stopTime"
+          type="date"
+          value-format="timestamp">
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="合同板块:">
         <el-select
           clearable
           filterable
@@ -29,151 +34,154 @@
         </el-select>
       </el-form-item>
       <el-form-item label="填报单位:">
-        <el-input v-model="searchform.createOrgName" placeholder="填报单位" clearable></el-input>
+        <!--<el-input v-model="searchform.createOrgName" placeholder="填报单位" clearable></el-input>-->
+        <el-input v-model="searchform.createOrgName" placeholder="填报单位" clearable @clear="searchform.createOrgName=''">
+          <el-button slot="append" icon="el-icon-search"  @click="addDw('填报单位',searchform.createOrgName,false)"></el-button>
+        </el-input>
       </el-form-item>
       <el-form-item label="合同名称:">
         <el-input v-model="searchform.contractName" placeholder="合同名称" clearable></el-input>
       </el-form-item>
-      <el-form-item label="合同编号:">
-        <el-input v-model="searchform.contractCode" placeholder="合同编号" clearable></el-input>
-      </el-form-item>
-      <el-form-item
-        label="项目性质(一级):"
-      >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          @change="getTwo"
-          size="mini"
-          v-model="searchform.projectNatureFirstId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in projectNature"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="项目性质(二级):"
-      >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择工程类别(一级)"
-          size="mini"
-          v-model="searchform.projectNatureSecondId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id" v-if="item.isUse==1"
-            v-for="(item, index) in projectNatureTwo"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="合同状态:"
-      >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          @change="getTwo"
-          size="mini"
-          v-model="searchform.enginTypeFirstId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in projectStatus"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="工程类别(一级):"
-      >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          @change="getTwo"
-          size="mini"
-          v-model="searchform.enginTypeFirstId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in projectDomainType"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="工程类别(二级):"
-      >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择工程类别(一级)"
-          size="mini"
-          v-model="searchform.enginTypeSecondId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in xqprojectType"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item
-        label="新兴市场(一级):"
-      >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          size="mini"
-          v-model="searchform.marketFirstNameId"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in emergingMarket"
-          ></el-option>
-        </el-select>
-      </el-form-item>
+      <!--<el-form-item label="合同编号:">-->
+        <!--<el-input v-model="searchform.contractCode" placeholder="合同编号" clearable></el-input>-->
+      <!--</el-form-item>-->
+      <!--<el-form-item-->
+        <!--label="项目性质(一级):"-->
+      <!--&gt;-->
+        <!--<el-select-->
+          <!--clearable-->
+          <!--filterable-->
+          <!--placeholder="请选择"-->
+          <!--@change="getTwo"-->
+          <!--size="mini"-->
+          <!--v-model="searchform.projectNatureFirstId"-->
+        <!--&gt;-->
+          <!--<el-option-->
+            <!--:key="index"-->
+            <!--:label="item.detailName"-->
+            <!--:value="item.id"-->
+            <!--v-for="(item, index) in projectNature"-->
+          <!--&gt;</el-option>-->
+        <!--</el-select>-->
+      <!--</el-form-item>-->
+      <!--<el-form-item-->
+        <!--label="项目性质(二级):"-->
+      <!--&gt;-->
+        <!--<el-select-->
+          <!--clearable-->
+          <!--filterable-->
+          <!--placeholder="请选择项目性质(一级)"-->
+          <!--size="mini"-->
+          <!--v-model="searchform.projectNatureSecondId"-->
+        <!--&gt;-->
+          <!--<el-option-->
+            <!--:key="index"-->
+            <!--:label="item.detailName"-->
+            <!--:value="item.id" v-if="item.isUse==1"-->
+            <!--v-for="(item, index) in projectNatureTwo"-->
+          <!--&gt;</el-option>-->
+        <!--</el-select>-->
+      <!--</el-form-item>-->
+      <!--<el-form-item-->
+        <!--label="合同状态:"-->
+      <!--&gt;-->
+        <!--<el-select-->
+          <!--clearable-->
+          <!--filterable-->
+          <!--placeholder="请选择"-->
+          <!--@change="getTwo"-->
+          <!--size="mini"-->
+          <!--v-model="searchform.enginTypeFirstId"-->
+        <!--&gt;-->
+          <!--<el-option-->
+            <!--:key="index"-->
+            <!--:label="item.detailName"-->
+            <!--:value="item.id"-->
+            <!--v-for="(item, index) in projectStatus"-->
+          <!--&gt;</el-option>-->
+        <!--</el-select>-->
+      <!--</el-form-item>-->
+      <!--<el-form-item-->
+        <!--label="工程类别(一级):"-->
+      <!--&gt;-->
+        <!--<el-select-->
+          <!--clearable-->
+          <!--filterable-->
+          <!--placeholder="请选择"-->
+          <!--@change="getTwo"-->
+          <!--size="mini"-->
+          <!--v-model="searchform.enginTypeFirstId"-->
+        <!--&gt;-->
+          <!--<el-option-->
+            <!--:key="index"-->
+            <!--:label="item.detailName"-->
+            <!--:value="item.id"-->
+            <!--v-for="(item, index) in projectDomainType"-->
+          <!--&gt;</el-option>-->
+        <!--</el-select>-->
+      <!--</el-form-item>-->
+      <!--<el-form-item-->
+        <!--label="工程类别(二级):"-->
+      <!--&gt;-->
+        <!--<el-select-->
+          <!--clearable-->
+          <!--filterable-->
+          <!--placeholder="请选择工程类别(一级)"-->
+          <!--size="mini"-->
+          <!--v-model="searchform.enginTypeSecondId"-->
+        <!--&gt;-->
+          <!--<el-option-->
+            <!--:key="index"-->
+            <!--:label="item.detailName"-->
+            <!--:value="item.id"-->
+            <!--v-for="(item, index) in xqprojectType"-->
+          <!--&gt;</el-option>-->
+        <!--</el-select>-->
+      <!--</el-form-item>-->
+      <!--<el-form-item-->
+        <!--label="新兴市场(一级):"-->
+      <!--&gt;-->
+        <!--<el-select-->
+          <!--clearable-->
+          <!--filterable-->
+          <!--placeholder="请选择"-->
+          <!--size="mini"-->
+          <!--v-model="searchform.marketFirstNameId"-->
+        <!--&gt;-->
+          <!--<el-option-->
+            <!--:key="index"-->
+            <!--:label="item.detailName"-->
+            <!--:value="item.id"-->
+            <!--v-for="(item, index) in emergingMarket"-->
+          <!--&gt;</el-option>-->
+        <!--</el-select>-->
+      <!--</el-form-item>-->
       <el-form-item
         label="主推单位:"
       >
-        <el-input v-model="searchform.path" placeholder="主推单位" clearable @clear="searchform.contractMianOrg=''">
-          <el-button slot="append" icon="el-icon-search"  @click="addDw('主推单位',searchform.contractMianOrg)"></el-button>
+        <el-input v-model="searchform.contractMianOrg" placeholder="主推单位" clearable @clear="searchform.contractMianOrg=''">
+          <el-button slot="append" icon="el-icon-search"  @click="addDw('主推单位',searchform.contractMianOrg,false)"></el-button>
         </el-input>
       </el-form-item>
-      <el-form-item
-        label="是否变更:"
-      >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          size="mini"
-          v-model="searchform.flowStatus"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in ifBg"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="地点:">
+      <!--<el-form-item-->
+        <!--label="是否变更:"-->
+      <!--&gt;-->
+        <!--<el-select-->
+          <!--clearable-->
+          <!--filterable-->
+          <!--placeholder="请选择"-->
+          <!--size="mini"-->
+          <!--v-model="searchform.flowStatus"-->
+        <!--&gt;-->
+          <!--<el-option-->
+            <!--:key="index"-->
+            <!--:label="item.detailName"-->
+            <!--:value="item.id"-->
+            <!--v-for="(item, index) in ifBg"-->
+          <!--&gt;</el-option>-->
+        <!--</el-select>-->
+      <!--</el-form-item>-->
+      <el-form-item label="主地点:">
         <el-input v-model="searchform.path" placeholder="地点" clearable @clear="clear('ffid','path')">
           <el-button slot="append" icon="el-icon-search"  @click="selectPosition()"></el-button>
         </el-input>
@@ -214,8 +222,15 @@
         ></el-table-column>
         <el-table-column
           :width="200"
-          label="合同类型"
+          label="合同板块"
           prop="moduleName"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+        <el-table-column
+          :width="200"
+          label="主地点"
+          prop="placeName"
           show-overflow-tooltip
         >
         </el-table-column>
@@ -495,6 +510,11 @@
           current: 1,
           size: 20,
           changeStatus:'0',
+          flowStatus:'pass',
+          enginTypeSecondId:'',
+          createOrgName:'',
+          contractMianOrg:'',
+          path:''
         },
         moneyform:{
           contractInfoAdjustLogList:[],
@@ -505,21 +525,25 @@
         projectNatureTwo:[],//项目性质二级
         projectStatus:[
           {
-            id:'1',
+            id:'',
             detailName:'全部'
           },
           {
-            id:'1',
-            detailName:'未提交'
+            id:'edit',
+            detailName:'草稿'
           },
           {
-            id:'2',
+            id:'check',
             detailName:'审核中'
           },
           {
-            id:'3',
+            id:'pass',
             detailName:'审核通过'
-          }
+          },
+          {
+            id:'reject',
+            detailName:'审核退回'
+          },
         ],//项目状态列表
         ifBg:[
           {
@@ -558,7 +582,7 @@
         return this.$store.state.category.emergingMarket;
       },
       projectPlate(){
-        return this.$store.state.projectPlate;//合同类型
+        return this.$store.state.projectPlate;//合同板块
       },
       bulletinType() {
         return this.$store.state.bulletinType;
@@ -710,24 +734,20 @@
         return data;
       },
       //打开单位弹框
-      addDw(type,list){
+      addDw(type,list,ifChek){
         this.DwVisible = true;
         this.$nextTick(() => {
-          this.$refs.infoDw.init(type,list);
-      })
+          this.$refs.infoDw.init(type,list,ifChek);
+        })
       },
       //获取单位的值
       getDwInfo(data){
         console.log(data);
-        var id=[],name=[];
-        if(data){
-          data.forEach((item)=>{
-            id.push(item.id);
-          name.push(item.detailName);
-        })
+        if(data.type=="填报单位"){
+          this.searchform.createOrgName=data.name;
+        }else if(data.type=="主推单位"){
+          this.searchform.contractMianOrg=data.name;
         }
-        this.searchform.contractMianOrg=id.join(",");
-        this.searchform.path=name.join(",");
         this.DwVisible=false;
       },
       //获取项目地点的值
@@ -776,18 +796,18 @@
         }
       },
       exportdata() {
-        this.searchFrom.size=1000000000;
+        this.searchform.size=1000000000;
         this.$http
           .post(
             "/api/contract/contract/ContractInfo/list/loadPageDataForContractInfoAdjust",
-            this.searchFrom
+            this.searchform
           )
           .then((res) => {
-            this.searchFrom.size=20;
+            this.searchform.size=20;
             var datas = res.data.data.records;
             this.$exportXls.exportList({
               thead:' <tr>\n' +
-              '<th>合同类型</th>\n' +
+              '<th>合同板块</th>\n' +
               '<th>合同名称</th>\n' +
               '<th>是否包含调整</th>\n' +
               '<th>最后一次操作时间</th>\n' +
@@ -863,10 +883,10 @@
       },
       // 查询
       getData() {
-        if(this.searchform.createTime){
-          this.searchform.beginTime=this.searchform.createTime[0];
-          this.searchform.stopTime=this.searchform.createTime[1];
-        }
+        // if(this.searchform.createTime){
+        //   this.searchform.beginTime=this.searchform.createTime[0];
+        //   this.searchform.stopTime=this.searchform.createTime[1];
+        // }
         this.$http
           .post(
             "/api/contract/contract/ContractInfo/list/loadPageDataForContractInfoAdjust",

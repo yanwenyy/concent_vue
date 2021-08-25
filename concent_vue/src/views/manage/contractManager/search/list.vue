@@ -29,7 +29,10 @@
         </el-select>
       </el-form-item>
       <el-form-item label="填报单位:">
-        <el-input v-model="searchform.createOrgName" placeholder="填报单位" clearable></el-input>
+        <!--<el-input v-model="searchform.createOrgName" placeholder="填报单位" clearable></el-input>-->
+        <el-input v-model="searchform.createOrgName" placeholder="填报单位" clearable @clear="searchform.createOrgName=''">
+          <el-button slot="append" icon="el-icon-search"  @click="addDw('填报单位',searchform.createOrgName,false)"></el-button>
+        </el-input>
       </el-form-item>
       <el-form-item label="合同名称:">
         <el-input v-model="searchform.contractName" placeholder="合同名称" clearable></el-input>
@@ -47,6 +50,7 @@
           @change="getTwoXZ"
           size="mini"
           v-model="searchform.projectNatureFirstId"
+          @clear="searchform.projectNatureFirstId='',searchform.projectNatureFirstName=''"
         >
           <el-option
             :key="index"
@@ -155,24 +159,24 @@
           <el-button slot="append" icon="el-icon-search"  @click="addDw('主推单位',searchform.contractMianOrg)"></el-button>
         </el-input>
       </el-form-item>
-      <el-form-item
-        label="是否变更:"
-      >
-        <el-select
-          clearable
-          filterable
-          placeholder="请选择"
-          size="mini"
-          v-model="searchform.changeStatus"
-        >
-          <el-option
-            :key="index"
-            :label="item.detailName"
-            :value="item.id"
-            v-for="(item, index) in ifBg"
-          ></el-option>
-        </el-select>
-      </el-form-item>
+      <!--<el-form-item-->
+        <!--label="是否变更:"-->
+      <!--&gt;-->
+        <!--<el-select-->
+          <!--clearable-->
+          <!--filterable-->
+          <!--placeholder="请选择"-->
+          <!--size="mini"-->
+          <!--v-model="searchform.changeStatus"-->
+        <!--&gt;-->
+          <!--<el-option-->
+            <!--:key="index"-->
+            <!--:label="item.detailName"-->
+            <!--:value="item.id"-->
+            <!--v-for="(item, index) in ifBg"-->
+          <!--&gt;</el-option>-->
+        <!--</el-select>-->
+      <!--</el-form-item>-->
       <el-form-item
         label="是否导入清单:"
       >
@@ -224,8 +228,8 @@
     </el-form>
     <div style="margin-top: 10px">
       <el-table
-        :max-height="$tableHeight-100"
-        :height="$tableHeight-100"
+        :max-height="$tableHeight-130"
+        :height="$tableHeight-130"
         class=""
         :data="page.records"
         :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
@@ -285,7 +289,7 @@
         <el-table-column
           :width="150"
           align="center"
-          label="我方份额"
+          label="初始我方份额"
           prop="ourAmount"
           show-overflow-tooltip
         >
@@ -366,14 +370,14 @@
           show-overflow-tooltip
         >
         </el-table-column>
-        <el-table-column
-          :width="300"
-          align="center"
-          label="共同承揽单位已阅状态"
-          prop="createOrgName"
-          show-overflow-tooltip
-        >
-        </el-table-column>
+        <!--<el-table-column-->
+          <!--:width="300"-->
+          <!--align="center"-->
+          <!--label="共同承揽单位已阅状态"-->
+          <!--prop="createOrgName"-->
+          <!--show-overflow-tooltip-->
+        <!--&gt;-->
+        <!--</el-table-column>-->
         <el-table-column
           :width="300"
           align="center"
@@ -513,7 +517,8 @@
           size: 20,
           changeStatus:'0',
           projectNatureSecondId:'',
-          enginTypeSecondId:''
+          enginTypeSecondId:'',
+          flowStatus:'pass'
         },
         moneyform:{
           contractInfoAdjustLogList:[],
@@ -528,17 +533,21 @@
             detailName:'全部'
           },
           {
-            id:'1',
-            detailName:'未提交'
+            id:'edit',
+            detailName:'草稿'
           },
           {
-            id:'2',
+            id:'check',
             detailName:'审核中'
           },
           {
-            id:'3',
+            id:'pass',
             detailName:'审核通过'
-          }
+          },
+          {
+            id:'reject',
+            detailName:'审核退回'
+          },
         ],//项目状态列表
         ifBg:[
           {
@@ -614,24 +623,29 @@
         return url;
       },
       //打开单位弹框
-      addDw(type,list){
+      addDw(type,list,ifChek){
         this.DwVisible = true;
         this.$nextTick(() => {
-          this.$refs.infoDw.init(type,list);
+          this.$refs.infoDw.init(type,list,ifChek);
       })
       },
       //获取单位的值
       getDwInfo(data){
         console.log(data);
-        var id=[],name=[];
-        if(data){
-          data.forEach((item)=>{
-            id.push(item.id);
-          name.push(item.detailName);
-        })
+        if(data.type=="填报单位"){
+          this.searchform.createOrgName=data.name;
+        }else if(data.type=="主推单位"){
+          var id=[],name=[];
+          if(data){
+            data.forEach((item)=>{
+              id.push(item.id);
+              name.push(item.detailName);
+            })
+          }
+          this.searchform.contractMianOrg=id.join(",");
+          this.searchform.path=name.join(",");
         }
-        this.searchform.contractMianOrg=id.join(",");
-        this.searchform.path=name.join(",");
+
         this.DwVisible=false;
       },
       //获取项目地点的值
@@ -705,7 +719,7 @@
               '<th>新兴市场(二级)</th>\n' +
               '<th>合同签订日期</th>\n' +
               '<th>地点</th>\n' +
-              '<th>共同承揽单位已阅状态</th>\n' +
+
               '<th>签约单位(使用资质单位)</th>\n' +
               '<th>建设单位</th>\n' +
               '<th>填报单位</th>\n' +
@@ -721,7 +735,7 @@
                 'ourAmount','valueAddedTax','contractBuiltArea','lineLength',
                 'ourAmountSupply','enginTypeFirstName','marketFirstName','marketSecondName',
                 'contractSignTime','placeName','createOrgName','signOrgName',
-                'constructionOrg','createOrgName','createTime','createUserName',
+                'constructionOrg','createTime','createUserName',
                 'pushOrgName','bidTime','version','isOpenBid',
               ],
               tdstrFuc:{

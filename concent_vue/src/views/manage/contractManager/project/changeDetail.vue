@@ -2757,7 +2757,7 @@
                     <el-input
                       :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                       clearable
-
+                      @input="detailform.contractInfo.actualInvest=detailform.contractInfo.actualInvest.replace(/^\.+|[^\d.]/g,'')"
                       v-model="detailform.contractInfo.actualInvest"/>
                   </el-form-item>
                   <el-form-item
