@@ -210,7 +210,7 @@
           <!-- <el-input v-model="detailForm.bidInfoSection.tenderSecurity" placeholder="投标保证金(万元)" clearable></el-input> -->
         </el-form-item>
 
-        <el-form-item label="投标价(万元):"  v-if="isBidRates=='1'||isBidRates==''" class="list-item" :class="type!='eidtnew'?'not-error':''" prop="bidInfoSection.bidPrice"  :rules="rules.contractAmount">
+        <el-form-item label="投标价(万元):"  v-if="isBidRates=='1'||isBidRates==''" class="list-item" :class="type!='eidtnew'&&type!='add'?'not-error':''" prop="bidInfoSection.bidPrice"  :rules="rules.contractAmount">
                 <el-input
                     v-model="detailForm.bidInfoSection.bidPrice"
                     clearable
@@ -585,7 +585,7 @@ import { isMoney } from '@/utils/validate'
     data() {
         var validateMoney = (rule, value, callback) => {
         // console.log(this.type)
-        if(this.type=='eidtnew'&&value===''){
+        if((this.type=='add'||this.type=='eidtnew')&&value===''){
           callback(new Error('不能为空'))
         }else if (value!=''&&value!=null&&!isMoney(value)) {
           callback(new Error('请输入数字'))
@@ -765,7 +765,7 @@ import { isMoney } from '@/utils/validate'
 
          this.detailForm.type=this.type;
 
-         
+
         if(this.type=='edit'){
           this.detailForm.index=this.index;
 
