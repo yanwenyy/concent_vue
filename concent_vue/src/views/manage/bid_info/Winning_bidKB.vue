@@ -559,14 +559,16 @@
                 </el-switch>
               </el-form-item>
               <br>
-              <el-form-item label="内部联合体单位:"
-                            prop="bidInfo.innerOrgName"
-                            :rules="detailform.bidInfo.isCoalitionBid=='0'?{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'change',
-              }:{}"
-                            class="formItem1" >
+              <el-form-item 
+                label="内部联合体单位:"
+                prop="bidInfo.innerOrgId"
+                :rules="detailform.bidInfo.isCoalitionBid=='0'?{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: 'change',
+                }:{}"
+                class="formItem1" 
+              >
                 <el-input
                   :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"
                   placeholder="请输入内容"
@@ -1289,7 +1291,10 @@ export default {
         this.detailform.bidInfo.innerOrgId=id.join(",");
         this.detailform.bidInfo.innerOrgName=name.join(",");
       }
-
+      // console.info(this.detailform.bidInfoInnerOrgList)
+      // console.info(this.detailform.bidInfo.innerOrgId)
+      // console.info(this.detailform.bidInfo.innerOrgName)
+      // console.info(this.detailform.bidInfo.isCoalitionBid)
       this.DwVisible=false;
     },
     // 上传删除
