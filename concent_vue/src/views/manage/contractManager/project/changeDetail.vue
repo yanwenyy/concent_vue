@@ -260,18 +260,8 @@
                       v-model="detailFormBefore.contractInfo.contractType=='2'?'补充合同':'主合同'"
                     />
                   </el-form-item>
-                  <br>
-                  <el-form-item
-                    v-if="detailFormBefore.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
-                    label="建设单位"
-                  >
-                    <el-input disabled placeholder="请输入内容" v-model="detailFormBefore.contractInfo.constructionOrg" class="input-with-select">
-
-                    </el-input>
-                  </el-form-item>
 
                   <el-form-item
-                    v-if="detailFormBefore.contractInfo.enginTypeFirstId!='17ff5c08d36b41ea8f2dc2e9d3029cac'"
                     label="建设单位"
                   >
                     <el-input
@@ -1963,87 +1953,7 @@
                     v-model="detailform.contractInfo.contractType=='2'?'补充合同':'主合同'"
                   />
                 </el-form-item>
-                <br>
                 <el-form-item
-                  v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
-                  label="建设单位"
-                  prop="contractInfo.constructionOrg"
-                  :rules="{
-                    required: true,
-                    message: '此项不能为空',
-                  trigger: ['blur','change'],
-                  }"
-                >
-                  <el-autocomplete
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
-                    v-model="detailform.contractInfo.constructionOrg"
-                    :fetch-suggestions="detailform.contractInfo.isClientele=='1'?querySearchAsync:querySjdw"
-                    placeholder="请输入内容"
-                  ></el-autocomplete>
-                  <!--<el-select-->
-                  <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
-                  <!--clearable-->
-                  <!--filterable-->
-                  <!--placeholder="请选择"-->
-
-                  <!--@change="-->
-                  <!--getName(-->
-                  <!--detailform.contractInfo.constructionOrgId,-->
-                  <!--xqprojectType,-->
-                  <!--'constructionOrg'-->
-                  <!--)-->
-                  <!--"-->
-                  <!--v-model="detailform.contractInfo.constructionOrgId"-->
-                  <!--&gt;-->
-                  <!--<el-option-->
-                  <!--:key="index"-->
-                  <!--:label="item.detailName"-->
-                  <!--:value="item.id"-->
-                  <!--v-for="(item, index) in xqprojectType"-->
-                  <!--&gt;</el-option>-->
-                  <!--</el-select>-->
-                </el-form-item>
-                <!-- <el-form-item
-                  v-if="detailform.contractInfo.enginTypeFirstId!='17ff5c08d36b41ea8f2dc2e9d3029cac'"
-                  label="建设单位"
-                  prop="contractInfo.constructionOrg"
-                  :rules="{
-              required: true,
-              message: '此项不能为空',
-              trigger: ['blur','change'],
-            }"
-                >
-                  <el-autocomplete
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
-                    v-model="detailform.contractInfo.constructionOrg"
-                    :fetch-suggestions="detailform.contractInfo.isClientele=='1'?querySearchAsync:querySjdw"
-                    placeholder="请输入内容"
-                  ></el-autocomplete>
-                </el-form-item>
-                <el-form-item
-                  class="inline-formitem"
-                  label="是否客户:"
-                  prop="contractInfo.isClientele"
-                  :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-                >
-                  <el-switch
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
-                    class="inline-formitem-switch"
-                    v-model="detailform.contractInfo.isClientele"
-                    active-color="#409EFF"
-                    inactive-color="#ddd"
-                    active-value="1"
-                    inactive-value="0"
-                    @change="detailform.contractInfo.constructionOrg=''"
-                  >
-                  </el-switch>
-                </el-form-item> -->
-                <el-form-item
-                  v-if="detailform.contractInfo.enginTypeFirstId!='17ff5c08d36b41ea8f2dc2e9d3029cac'"
                   label="建设单位:"
                   prop="contractInfo.constructionOrgId"
                   :rules="{
@@ -2055,6 +1965,7 @@
                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     v-model="constructionOrgList"
                     v-if="detailform.contractInfo.isClientele=='1'"
+                    @change="companyBuildChange"
                     multiple
                     filterable
                     collapse-tags
@@ -2070,14 +1981,15 @@
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     v-model="constructionOrgList"
                     v-if="detailform.contractInfo.isClientele!='1'"
+                    @change="companyBuildChange"
                     multiple
                     filterable
                     collapse-tags
                     placeholder="请选择">
                       <el-option
                         :key="index"
-                        :label="item.detailName"
-                        :value="item.id"
+                        :label="item.customerName"
+                        :value="item.customerId"
                         v-for="(item, index) in sjdwList"
                       ></el-option>
                   </el-select>
@@ -2100,7 +2012,7 @@
                     inactive-color="#ddd"
                     active-value="1"
                     inactive-value="0"
-                    @change="constructionOrgList=''"
+                    @change="companyBuildClear"
                   >
                   </el-switch>
                 </el-form-item>
@@ -2137,19 +2049,46 @@
                     ></el-option>
                   </el-select>
                 </el-form-item>
+                
                 <el-form-item
-                  label="设计单位"
+                  v-if="detailform.contractInfo.constructionNatureId=='b5eeb5ab9ea0479ba08d0f7b420a8e77'"
+                  class="inline-formitem"
+                  label="所属央企:"
+                  prop="contractInfo.belongEnterPrisesId"
+                  :rules="{
+                    required: true, message: '此项不能为空', trigger: 'blur'
+                  }"
                 >
-                  <el-autocomplete
-                    @input="getautoCompleteName(
-                detailform.contractInfo.designOrg,
-                 'designOrgId'
-               )"
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    v-model="detailform.contractInfo.designOrg"
-                    :fetch-suggestions="querySjdw"
-                    placeholder="请输入内容"
-                  ></el-autocomplete>
+                  <el-select
+                    class="multiple-sel"
+                    :disabled="p.actpoint==='look'||p.actpoint=='task'||p.pushId"
+                    @change="getName(detailform.contractInfo.belongEnterPrisesId,yqList ,'belongEnterPrises')"
+                    clearable
+                    filterable
+                    placeholder="请选择"
+                    size="mini"
+                    v-model="detailform.contractInfo.belongEnterPrisesId"
+                  >
+                    <el-option
+                      :key="index"
+                      :label="item.detailName"
+                      :value="item.id"
+                      v-for="(item, index) in yqList"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item
+                  label="设计单位:"
+                  prop="contractInfo.designOrg"
+                  style="width: 32.5%">
+                  <el-input
+                    disabled
+                    clearable
+                    placeholder="请选择设计单位"
+                    v-model="detailform.contractInfo.designOrg">
+                    <el-button slot="append" icon="el-icon-circle-plus-outline" :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    @click="openComMul(detailform.contractInfo.designOrgId,detailform.contractInfo.designOrg,'/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
+                  </el-input>
                 </el-form-item>
                 <el-form-item
                   class="inline-formitem"
@@ -4604,6 +4543,8 @@
         <Audit-Process :task="p.task||{businessId:p.uuid,businessType:' contract_contract_change'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>
+    <!--多选的单位列表组件-->
+    <company-mul v-if="companyMulStatus" ref="comAdd" @getComList="getComList"></company-mul>
   </div>
 </template>
 
@@ -4639,6 +4580,7 @@
       }
       return {
         constructionOrgList: [],
+        yqList:[],
         companyMulStatus:false,//设计单位等多选列表状态
         sjdwList:[],
         extendList:[],//扩展字段list
@@ -4656,7 +4598,10 @@
         options: [],
         detailform: {
           commonFilesList: [],
-          contractInfo: {},
+          contractInfo: {
+            constructionOrg:'',//建设单位
+            constructionOrgId:'',
+          },
           contractInfoAttachBO: {
             innerContractInfoAttachList:[],
             unionContractInfoAttachList:[]
@@ -4674,7 +4619,10 @@
         },
         detailFormBefore:{
           commonFilesList: [],
-          contractInfo: {},
+          contractInfo: {
+            constructionOrg:'',//建设单位
+            constructionOrgId:'',
+          },
           contractInfoAttachBO: {
             innerContractInfoAttachList:[],
             unionContractInfoAttachList:[]
@@ -4801,6 +4749,8 @@
             item.value=item.companyName;
             item.detailName=item.companyName;
             item.id=item.uuid;
+            item.customerName=item.companyName;
+            item.customerId=item.uuid;
           })
         });
       //扩展字段列表
@@ -4810,6 +4760,21 @@
         )
         .then((res) => {
           this.extendList = res.data.data;
+        });
+      //获取所属央企列表
+      this.$http
+        .post(
+          '/api/contract/Companies/detail/findCompaniesById',
+          {typeId:'9f19652f27a911ebad4bc5ee92e1a03f'}
+        )
+        .then((res) => {
+          if (res.data.code === 200) {
+            this.yqList=res.data.data
+            this.yqList.forEach((item)=>{
+              item.detailName=item.companyName;
+              item.id=item.uuid;
+            })
+          }
         });
     },
     methods: {
@@ -4846,43 +4811,33 @@
           });
         console.log(this.detailform.fileList1)
       },
-      //建设单位搜索
-      querySearchAsync(queryString, cb) {
-        var restaurants = this.pubCustomers;
-        var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
+     //建设单位下拉赋值
+      companyBuildChange(){
+        this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
+        console.info(this.detailform.contractInfo.constructionOrgId)
+        this.getBuildName();
+      },
+      //建设单位通过ID查找NAME
+      getBuildName(){
+        var nameList = []
+        var customerList = this.pubCustomers
+        this.constructionOrgList.forEach(idCheck => {
+          let customer = customerList.find(item1=>item1.customerId===idCheck)
+          if(customer){
+            nameList.push(customer.customerName)
+          }
+          let outside = this.sjdwList.find(item2=>item2.customerId===idCheck)
+          if(outside){
+            nameList.push(outside.customerName)
+          }
 
-        clearTimeout(this.timeout);
-        this.timeout = setTimeout(() => {
-          this.$forceUpdate();
-        cb(results);
-      }, 500 * Math.random());
+        })
+        this.detailform.contractInfo.constructionOrg = nameList.join(",")
       },
-      createStateFilter(queryString) {
-        return (restaurants) => {
-          return (restaurants.value.toLowerCase().indexOf(queryString.toLowerCase()) != -1);
-        };
-      },
-      //设计单位搜索
-      querySjdw(queryString, cb) {
-        var restaurants = this.sjdwList;
-        var results = queryString ? restaurants.filter(this.createStateFilter2(queryString)) : restaurants;
-
-        clearTimeout(this.timeout);
-        this.timeout = setTimeout(() => {
-          this.$forceUpdate();
-          cb(results);
-        }, 500 * Math.random());
-      },
-      //获取远程搜索的id
-      getautoCompleteName(name,id){
-        if(name!=null&&name!=''&&name!=undefined&&this.sjdwList.find((item)=>item.value==name)){
-          this.detailform.contractInfo[id]=this.sjdwList.find((item)=>item.value==name).uuid;
-        }
-      },
-      createStateFilter2(queryString) {
-        return (restaurants) => {
-          return (restaurants.value.toLowerCase().indexOf(queryString.toLowerCase()) != -1);
-        };
+      //切换是否客户
+      companyBuildClear(){
+        this.detailform.contractInfo.constructionOrgId = '',
+        this.constructionOrgList = []
       },
       //隐藏标段信息某些行
       tableRowClassName: function (row, index) {
@@ -5673,7 +5628,6 @@
       saveInfo(formName,type) {
         this.detailform.srcId=this.id;
         var url='';
-        this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
         if(type=='save'){
           url=`/api/contract/contract/ContractInfo/detail/${this.p.actpoint === "add"?'saveChangeRecord':'updateChangeRecord'}`;
         }else{
@@ -5783,6 +5737,9 @@
           jzjglx:[],//建筑结构类型
           cdmc:[],//场地名称
         };
+        if(afterData.contractInfo.constructionOrgId != '' ||afterData.contractInfo.constructionOrgId != null){
+          this.constructionOrgList = afterData.contractInfo.constructionOrgId.split(",");
+        }
         this.detailform.cdmc=afterData.contractInfo.siteNameId&&afterData.contractInfo.siteNameId.split(",");
         this.detailform.zplx=afterData.contractInfo.otherAssemblyTypeId&&afterData.contractInfo.otherAssemblyTypeId.split(",");
         this.detailform.jzlx=afterData.contractInfo.otherBuildingTypeId&&afterData.contractInfo.otherBuildingTypeId.split(",");
@@ -5806,9 +5763,6 @@
         this.detailFormBefore.zplx=beforData.contractInfo.otherAssemblyTypeId&&beforData.contractInfo.otherAssemblyTypeId.split(",");
         this.detailFormBefore.jzlx=beforData.contractInfo.otherBuildingTypeId&&beforData.contractInfo.otherBuildingTypeId.split(",");
         this.detailFormBefore.jzjglx=beforData.contractInfo.otherBuildingStructureTypeId&&beforData.contractInfo.otherBuildingStructureTypeId.split(",");
-        if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
-          this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
-        }
         this.detailform.contractInfo.changeOurAmount = this.detailform.contractInfo.ourAmount;
       });
       },
