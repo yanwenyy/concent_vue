@@ -6565,6 +6565,7 @@
                 :show-file-list="false"
                 accept=".xls,.xlsx"
                 multiple
+                :before-upload="projectUpload"
               >
                 <el-button
                   type="primary"
@@ -6983,8 +6984,35 @@ export default {
       });
   },
   methods: {
+    // 上传模板
+    projectUpload(){
+      if(this.p.actpoint=='add'){
+        this.$message({
+          message: '请先保存！',
+          type: 'warning',
+          showClose: true,
+        });
+        return false
+      }
+      if (!this.detailform.contractInfo.enginTypeFirstId) {
+        this.$message({
+          message: '请选择工程类别（一级）！',
+          type: 'warning',
+          showClose: true,
+        });
+        return false
+      }
+    },
     // 下载模板
      getDownload(){
+       if (!this.detailform.contractInfo.enginTypeFirstId) {
+         this.$message({
+          message: '请选择工程类别（一级）！',
+          type: 'warning',
+          showClose: true,
+        });
+         return false
+       }
        let name = "实物工程量"
         this.$http
         .post(
