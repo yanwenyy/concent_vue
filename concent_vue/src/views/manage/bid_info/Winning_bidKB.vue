@@ -562,11 +562,6 @@
               <el-form-item 
                 label="内部联合体单位:"
                 prop="bidInfo.innerOrgId"
-                :rules="detailform.bidInfo.isCoalitionBid=='0'?{
-                  required: true,
-                  message: '此项不能为空',
-                  trigger: 'change',
-                }:{}"
                 class="formItem1" 
               >
                 <el-input

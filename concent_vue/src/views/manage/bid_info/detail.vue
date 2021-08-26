@@ -673,11 +673,6 @@
               label="内部联合体单位:"
               class="formItem1"
               prop="bidInfo.innerOrgName"
-              :rules="detailform.bidInfo.isCoalitionBid=='0'?{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'change',
-              }:{}"
             >
               <el-input
                 :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint==='edit' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"
