@@ -286,7 +286,7 @@
                   'purchaseNatureCode'
                 )
               "
-                v-model="detailform.topInfor.purchaseNatureId"
+                v-model="detailform.topInfor.purchaseNatureName"
               >
                 <el-option
                   :key="index"
