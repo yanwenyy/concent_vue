@@ -7042,6 +7042,7 @@ export default {
      //建设单位下拉赋值
       companyBuildChange(){
         this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
+        this.getBuildName();
       },
       //建设单位通过ID查找NAME
       getBuildName(){
@@ -7052,7 +7053,7 @@ export default {
           if(customer){
             nameList.push(customer.customerName)
           }
-          let outside = this.sjdwList.find(item2=>item2.customerId===idCheck)
+          let outside = this.jsdwList.find(item2=>item2.customerId===idCheck)
           if(outside){
             nameList.push(outside.customerName)
           }
@@ -8075,7 +8076,6 @@ export default {
       }
     },
     saveInfo(formName,type) {
-      this.getBuildName();
       this.detailform.commonFilesList=this.detailform.fileList1.concat(this.detailform.fileList2).concat(this.detailform.fileList3).concat(this.detailform.fileList4)
       var url='';
       this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
