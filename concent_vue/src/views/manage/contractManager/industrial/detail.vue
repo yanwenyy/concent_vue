@@ -79,32 +79,18 @@
                   v-model="detailform.contractInfo.contractCode"
                 />
               </el-form-item>
-              <!-- <el-form-item
-                label="客户名称:"
-                prop="contractInfo.constructionOrg"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-              >
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  clearable
-                  placeholder="请输入"
-                  v-model="detailform.contractInfo.constructionOrg"/>
-              </el-form-item> -->
               <el-form-item
                   label="客户名称:"
-                  prop="constructionOrgList"
+                  prop="contractInfo.constructionOrgId"
                   :rules="{
                   required: true,
                   message: '此项不能为空',
                   trigger: ['blur','change'],
                 }">
                   <el-select
-                    v-model="detailform.constructionOrgList"
+                    v-model="constructionOrgList"
                     v-if="detailform.contractInfo.isClientele=='1'"
+                    @change="companyBuildChange"
                     multiple
                     filterable
                     collapse-tags
@@ -117,17 +103,18 @@
                     </el-option>
                   </el-select>
                   <el-select
-                    v-model="detailform.constructionOrgList"
+                    v-model="constructionOrgList"
                     v-if="detailform.contractInfo.isClientele!='1'"
+                    @change="companyBuildChange"
                     multiple
                     filterable
                     collapse-tags
                     placeholder="请选择">
                       <el-option
                         :key="index"
-                        :label="item.detailName"
-                        :value="item.id"
-                        v-for="(item, index) in sjdwList"
+                        :label="item.customerName"
+                        :value="item.customerId"
+                        v-for="(item, index) in jsdwList"
                       ></el-option>
                   </el-select>
                 </el-form-item>
@@ -149,7 +136,7 @@
                   inactive-color="#ddd"
                   active-value="1"
                   inactive-value="0"
-                  @change="detailform.constructionOrgList=''"
+                  @change="companyBuildClear"
                 >
                 </el-switch>
               </el-form-item>
@@ -2430,14 +2417,15 @@ export default {
     return {
       companyMulStatus:false,//设计单位等多选列表状态
       sjdwList:[],
+      jsdwList:[],
       ifOAS:false,
       treeStatas: false,
       DwVisible:false,//选择单位弹框状态
       uploadVisible:false,//上传附件组件状态
       infoCSVisible:false,//项目名称查询的状态
       options1:[{label:"值",value:'111'}],
-      detailform: {
       constructionOrgList: [],
+      detailform: {
         contractInfo: {
           moduleId:'510ba0d79593418493eb1a11ed3e7df4',
           moduleName:'工业制造',
@@ -2579,6 +2567,33 @@ export default {
         }
       }
     },
+     //建设单位下拉赋值
+      companyBuildChange(){
+        this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
+        this.getBuildName();
+      },
+      //建设单位通过ID查找NAME
+      getBuildName(){
+        var nameList = []
+        var customerList = this.pubCustomers
+        this.constructionOrgList.forEach(idCheck => {
+          let customer = customerList.find(item1=>item1.customerId===idCheck)
+          if(customer){
+            nameList.push(customer.customerName)
+          }
+          let outside = this.jsdwList.find(item2=>item2.customerId===idCheck)
+          if(outside){
+            nameList.push(outside.customerName)
+          }
+
+        })
+        this.detailform.contractInfo.constructionOrg = nameList.join(",")
+      },
+      //切换是否客户
+      companyBuildClear(){
+        this.detailform.contractInfo.constructionOrgId = '',
+        this.constructionOrgList = []
+      },
     //新增标段和地点
     add(type) {
       var v = {};
@@ -2731,7 +2746,7 @@ export default {
           datas.topInfoSiteList[i].uuid='';
         }
         if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
-          this.detailform.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
+          this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
         }
         this.detailform.contractInfo.installDesignUnallocat=datas.contractInfo.installDesignUnallocat;
         if (this.detailform.contractInfo.contractOrgName) {
@@ -3310,7 +3325,6 @@ export default {
     saveInfo(formName,type) {
       var url='';
       this.detailform.commonFilesList=this.detailform.commonFilesList1.concat(this.detailform.commonFilesList2)
-      this.detailform.contractInfo.constructionOrgId = this.detailform.constructionOrgList.join(",")
       if(type=='save'){
         url='/api/contract/contract/ContractInfo/detail/saveOrUpdate';
       }else{
@@ -3422,7 +3436,7 @@ export default {
       this.detailform.jzlx=datas.contractInfo.otherBuildingTypeId&&datas.contractInfo.otherBuildingTypeId.split(",");
       this.detailform.jzjglx=datas.contractInfo.otherBuildingStructureTypeId&&datas.contractInfo.otherBuildingStructureTypeId.split(",");
       if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
-        this.detailform.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
+        this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
       }
     });
     },
@@ -3484,6 +3498,12 @@ export default {
           item.value=item.companyName;
           item.detailName=item.companyName;
           item.id=item.uuid;
+        })
+        this.jsdwList= res.data.data.records;
+        this.jsdwList.forEach((item1)=>{
+          item1.value=item1.companyName;
+          item1.customerName=item1.companyName;
+          item1.customerId=item1.uuid;
         })
       });
 

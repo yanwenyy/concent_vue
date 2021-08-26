@@ -6565,6 +6565,7 @@
                 :show-file-list="false"
                 accept=".xls,.xlsx"
                 multiple
+                :before-upload="projectUpload"
               >
                 <el-button
                   type="primary"
@@ -6983,8 +6984,35 @@ export default {
       });
   },
   methods: {
+    // 上传模板
+    projectUpload(){
+      if(this.p.actpoint=='add'){
+        this.$message({
+          message: '请先保存！',
+          type: 'warning',
+          showClose: true,
+        });
+        return false
+      }
+      if (!this.detailform.contractInfo.enginTypeFirstId) {
+        this.$message({
+          message: '请选择工程类别（一级）！',
+          type: 'warning',
+          showClose: true,
+        });
+        return false
+      }
+    },
     // 下载模板
      getDownload(){
+       if (!this.detailform.contractInfo.enginTypeFirstId) {
+         this.$message({
+          message: '请选择工程类别（一级）！',
+          type: 'warning',
+          showClose: true,
+        });
+         return false
+       }
        let name = "实物工程量"
         this.$http
         .post(
@@ -7063,6 +7091,7 @@ export default {
      //建设单位下拉赋值
       companyBuildChange(){
         this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
+        this.getBuildName();
       },
       //建设单位通过ID查找NAME
       getBuildName(){
@@ -7073,7 +7102,7 @@ export default {
           if(customer){
             nameList.push(customer.customerName)
           }
-          let outside = this.sjdwList.find(item2=>item2.customerId===idCheck)
+          let outside = this.jsdwList.find(item2=>item2.customerId===idCheck)
           if(outside){
             nameList.push(outside.customerName)
           }
@@ -8096,7 +8125,6 @@ export default {
       }
     },
     saveInfo(formName,type) {
-      this.getBuildName();
       this.detailform.commonFilesList=this.detailform.fileList1.concat(this.detailform.fileList2).concat(this.detailform.fileList3).concat(this.detailform.fileList4)
       var url='';
       this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")

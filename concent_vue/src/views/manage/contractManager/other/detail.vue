@@ -104,15 +104,16 @@
               </el-form-item> -->
               <el-form-item
                   label="客户名称:"
-                  prop="constructionOrgList"
+                  prop="contractInfo.constructionOrgId"
                   :rules="{
                   required: true,
                   message: '此项不能为空',
                   trigger: ['blur','change'],
                 }">
                   <el-select
-                    v-model="detailform.constructionOrgList"
+                    v-model="constructionOrgList"
                     v-if="detailform.contractInfo.isClientele=='1'"
+                    @change="companyBuildChange"
                     multiple
                     filterable
                     collapse-tags
@@ -125,17 +126,18 @@
                     </el-option>
                   </el-select>
                   <el-select
-                    v-model="detailform.constructionOrgList"
+                    v-model="constructionOrgList"
                     v-if="detailform.contractInfo.isClientele!='1'"
+                    @change="companyBuildChange"
                     multiple
                     filterable
                     collapse-tags
                     placeholder="请选择">
                       <el-option
                         :key="index"
-                        :label="item.detailName"
-                        :value="item.id"
-                        v-for="(item, index) in sjdwList"
+                        :label="item.customerName"
+                        :value="item.customerId"
+                        v-for="(item, index) in jsdwList"
                       ></el-option>
                   </el-select>
                 </el-form-item>
@@ -157,7 +159,7 @@
                 inactive-color="#ddd"
                 active-value="1"
                 inactive-value="0"
-                @change="detailform.constructionOrgList=''"
+                @change="companyBuildClear"
               >
               </el-switch>
             </el-form-item>
@@ -2251,6 +2253,7 @@
       return {
         companyMulStatus:false,//设计单位等多选列表状态
         sjdwList:[],
+        jsdwList:[],
         ifOAS:false,
         key:0,
         options1:[{label:"值",value:'111'}],
@@ -2258,8 +2261,8 @@
         uploadVisible:false,//上传附件组件状态
         infoCSVisible:false,//项目名称查询的状态
         treeStatas: false,
-        detailform: {
           constructionOrgList: [],
+        detailform: {
           contractInfo: {
             moduleId:'510ba0d79593419493eb1a11ed3e7df4',
             moduleName:'其它',
@@ -2415,6 +2418,33 @@
             }
           }
         }
+      },
+     //建设单位下拉赋值
+      companyBuildChange(){
+        this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
+        this.getBuildName();
+      },
+      //建设单位通过ID查找NAME
+      getBuildName(){
+        var nameList = []
+        var customerList = this.pubCustomers
+        this.constructionOrgList.forEach(idCheck => {
+          let customer = customerList.find(item1=>item1.customerId===idCheck)
+          if(customer){
+            nameList.push(customer.customerName)
+          }
+          let outside = this.jsdwList.find(item2=>item2.customerId===idCheck)
+          if(outside){
+            nameList.push(outside.customerName)
+          }
+
+        })
+        this.detailform.contractInfo.constructionOrg = nameList.join(",")
+      },
+      //切换是否客户
+      companyBuildClear(){
+        this.detailform.contractInfo.constructionOrgId = '',
+        this.constructionOrgList = []
       },
       //查询销售业绩是否有同年同月
       checkRepeat(mval,yval,list,index){
@@ -3270,6 +3300,12 @@
             item.value=item.companyName;
             item.detailName=item.companyName;
             item.id=item.uuid;
+          })
+          this.jsdwList= res.data.data.records;
+          this.jsdwList.forEach((item1)=>{
+            item1.value=item1.companyName;
+            item1.customerName=item1.companyName;
+            item1.customerId=item1.uuid;
           })
         });
     }

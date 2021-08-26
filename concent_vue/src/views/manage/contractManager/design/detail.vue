@@ -323,52 +323,18 @@
                 />
               </el-form-item>
               <br>
-              <!-- <el-form-item
-                v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
-                label="建设单位:"
-                prop="contractInfo.constructionOrg"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: ['blur','change'],
-              }"
-              >
-                <el-autocomplete
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
-                  v-model="detailform.contractInfo.constructionOrg"
-                  :fetch-suggestions="detailform.contractInfo.isClientele=='1'?querySearchAsync:querySjdw"
-                  placeholder="请输入内容"
-                ></el-autocomplete>
-              </el-form-item>
               <el-form-item
-                v-if="detailform.contractInfo.enginTypeFirstId!='17ff5c08d36b41ea8f2dc2e9d3029cac'"
                 label="建设单位:"
-                prop="contractInfo.constructionOrg"
-                :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: ['blur','change'],
-              }"
-              >
-                <el-autocomplete
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
-                  v-model="detailform.contractInfo.constructionOrg"
-                  :fetch-suggestions="detailform.contractInfo.isClientele=='1'?querySearchAsync:querySjdw"
-                  placeholder="请输入内容"
-                ></el-autocomplete>
-              </el-form-item> -->
-              <el-form-item
-                v-if="detailform.contractInfo.enginTypeFirstId!='17ff5c08d36b41ea8f2dc2e9d3029cac'"
-                label="建设单位:"
-                prop="constructionOrgList"
+                prop="contractInfo.constructionOrgId"
                 :rules="{
                 required: true,
                 message: '此项不能为空',
                 trigger: ['blur','change'],
               }">
                 <el-select
-                  v-model="detailform.constructionOrgList"
+                  v-model="constructionOrgList"
                   v-if="detailform.contractInfo.isClientele=='1'"
+                  @change="companyBuildChange"
                   multiple
                   filterable
                   collapse-tags
@@ -381,17 +347,18 @@
                   </el-option>
                 </el-select>
                 <el-select
-                  v-model="detailform.constructionOrgList"
+                  v-model="constructionOrgList"
                   v-if="detailform.contractInfo.isClientele!='1'"
+                  @change="companyBuildChange"
                   multiple
                   filterable
                   collapse-tags
                   placeholder="请选择">
                     <el-option
                       :key="index"
-                      :label="item.detailName"
-                      :value="item.id"
-                      v-for="(item, index) in sjdwList"
+                      :label="item.customerName"
+                      :value="item.customerId"
+                      v-for="(item, index) in jsdwList"
                     ></el-option>
                 </el-select>
               </el-form-item>
@@ -413,7 +380,7 @@
                   inactive-color="#ddd"
                   active-value="1"
                   inactive-value="0"
-                  @change="detailform.constructionOrgList=''"
+                  @change="companyBuildClear"
                 >
                 </el-switch>
               </el-form-item>
@@ -478,20 +445,6 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
-              <!-- <el-form-item
-                label="设计单位:"
-              >
-                <el-autocomplete
-                  @input="getautoCompleteName(
-                detailform.contractInfo.designOrg,
-                 'designOrgId'
-               )"
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  v-model="detailform.contractInfo.designOrg"
-                  :fetch-suggestions="querySjdw"
-                  placeholder="请输入内容"
-                ></el-autocomplete>
-              </el-form-item> -->
               <el-form-item
                 label="设计单位:"
                 prop="contractInfo.designOrg"
@@ -2902,6 +2855,7 @@
         companyMulStatus:false,//设计单位等多选列表状态
         yqList:[],
         sjdwList:[],
+        jsdwList:[],
         extendList:[],//扩展字段list
         ifOAS:false,
         key: 0,
@@ -2914,9 +2868,9 @@
         options2: [],
         options: [],
         options1:[{label:"值",value:'111'}],
+        constructionOrgList:[], //建设单位列表id
         detailform: {
           commonFilesList: [],
-        constructionOrgList:[], //建设单位列表id
           contractInfo: {
             moduleId:'f6823a41e9354b81a1512155a5565aeb',
             moduleName:'勘察设计咨询',
@@ -2929,6 +2883,8 @@
             isClientele:'0',
             isOpenBid:'0',
             contractOrgName:'',
+            constructionOrg:'',//建设单位
+            constructionOrgId:'',
             contractProvinceName:'',
             constructionNatureId:''
           },
@@ -3077,6 +3033,12 @@
             item.detailName=item.companyName;
             item.id=item.uuid;
           })
+          this.jsdwList= res.data.data.records;
+          this.jsdwList.forEach((item1)=>{
+            item1.value=item1.companyName;
+            item1.customerName=item1.companyName;
+            item1.customerId=item1.uuid;
+          })
         });
       //扩展字段列表
       this.$http
@@ -3205,50 +3167,40 @@
           }
         }
       },
+      
+     //建设单位下拉赋值
+      companyBuildChange(){
+        this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
+        this.getBuildName();
+      },
+      //建设单位通过ID查找NAME
+      getBuildName(){
+        var nameList = []
+        var customerList = this.pubCustomers
+        this.constructionOrgList.forEach(idCheck => {
+          let customer = customerList.find(item1=>item1.customerId===idCheck)
+          if(customer){
+            nameList.push(customer.customerName)
+          }
+          let outside = this.jsdwList.find(item2=>item2.customerId===idCheck)
+          if(outside){
+            nameList.push(outside.customerName)
+          }
+        })
+        console.info(nameList)
+        this.detailform.contractInfo.constructionOrg = nameList.join(",")
+      },
+      //切换是否客户
+      companyBuildClear(){
+        this.detailform.contractInfo.constructionOrgId = '',
+        this.constructionOrgList = []
+      },
       //设置我方份额含补充
       getOurAmountSupply(){
         if(this.detailform.contractInfo.ourAmountSupply==null||this.ifOAS){
           this.detailform.contractInfo.ourAmountSupply=this.detailform.contractInfo.ourAmount;
           this.ifOAS=true;
         }
-      },
-      //建设单位搜索
-      querySearchAsync(queryString, cb) {
-        var restaurants = this.pubCustomers;
-        var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
-
-        clearTimeout(this.timeout);
-        this.timeout = setTimeout(() => {
-          this.$forceUpdate();
-        cb(results);
-      }, 500 * Math.random());
-      },
-      createStateFilter(queryString) {
-        return (restaurants) => {
-          return (restaurants.value.toLowerCase().indexOf(queryString.toLowerCase()) != -1);
-        };
-      },
-      //设计单位搜索
-      querySjdw(queryString, cb) {
-        var restaurants = this.sjdwList;
-        var results = queryString ? restaurants.filter(this.createStateFilter2(queryString)) : restaurants;
-
-        clearTimeout(this.timeout);
-        this.timeout = setTimeout(() => {
-          this.$forceUpdate();
-          cb(results);
-        }, 500 * Math.random());
-      },
-      //获取远程搜索的id
-      getautoCompleteName(name,id){
-        if(name!=null&&name!=''&&name!=undefined&&this.sjdwList.find((item)=>item.value==name)){
-          this.detailform.contractInfo[id]=this.sjdwList.find((item)=>item.value==name).uuid;
-        }
-      },
-      createStateFilter2(queryString) {
-        return (restaurants) => {
-          return (restaurants.value.toLowerCase().indexOf(queryString.toLowerCase()) != -1);
-        };
       },
       //流程操作
       operation(type){
@@ -3790,7 +3742,7 @@
           }
           this.detailform.topInfoSiteList=datas.topInfoSiteList;
           if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
-            this.detailform.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
+            this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
           }
           this.detailform.contractInfo.installDesignUnallocat=datas.contractInfo.installDesignUnallocat;
           if (this.detailform.contractInfo.contractOrgName) {
@@ -3910,7 +3862,7 @@
       saveInfo(formName,type) {
         this.detailform.commonFilesList=this.detailform.fileList1.concat(this.detailform.fileList2).concat(this.detailform.fileList3)
         var url='';
-        this.detailform.contractInfo.constructionOrgId = this.detailform.constructionOrgList.join(",")
+        this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
 
         if(this.detailform.searchProject==true&&this.p.actpoint === "edit"){
           url='/api/contract/contract/ContractInfo/detail/update';
@@ -4147,7 +4099,7 @@
         this.detailform.jzlx=datas.contractInfo.otherBuildingTypeId&&datas.contractInfo.otherBuildingTypeId.split(",");
         this.detailform.jzjglx=datas.contractInfo.otherBuildingStructureTypeId&&datas.contractInfo.otherBuildingStructureTypeId.split(",");
         if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
-          this.detailform.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
+          this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
         }
       });
       },
