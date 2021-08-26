@@ -53,7 +53,7 @@
             </el-aside>
           </el-scrollbar>
           <el-main class="el-tlm-main"
-                   style="width: 80%; height: 100%;padding-top: 10px !important; padding-bottom: 10px !important;">
+                   style="width: 80%; height: 100%;padding-top: 10px !important; padding-bottom: 10px !important;font-size: 13px!important;">
             <router-view></router-view>
             <div class="block">
               <breadcrumb v-if="breadcrumb" style="flex:none;">
