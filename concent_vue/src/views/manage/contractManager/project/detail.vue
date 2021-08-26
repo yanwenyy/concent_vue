@@ -429,7 +429,7 @@
                       :key="index"
                       :label="item.customerName"
                       :value="item.customerId"
-                      v-for="(item, index) in sjdwList"
+                      v-for="(item, index) in jsdwList"
                     ></el-option>
                 </el-select>
               </el-form-item>
@@ -6845,6 +6845,7 @@ export default {
       ],
       ssList:[],//所属省市list
       sjdwList:[],
+      jsdwList:[],
       p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
       xqprojectType: [],//工程类别二级
       xqprojectTypeThree:[],//工程类别三级
@@ -6949,6 +6950,12 @@ export default {
           item.value=item.companyName;
           item.detailName=item.companyName;
           item.id=item.uuid;
+        })
+        this.jsdwList= res.data.data.records;
+        this.jsdwList.forEach((item1)=>{
+          item1.value=item1.companyName;
+          item1.customerName=item1.companyName;
+          item1.customerId=item1.uuid;
         })
       });
     //扩展字段列表
