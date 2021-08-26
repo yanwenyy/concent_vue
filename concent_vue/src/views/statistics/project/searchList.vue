@@ -207,7 +207,8 @@
       class="queryForm"
       :inline="true"
       :model="searchform"
-    >      
+      style="float:right"
+    >
       <el-button
         @click="searchformReset"
         type="info"

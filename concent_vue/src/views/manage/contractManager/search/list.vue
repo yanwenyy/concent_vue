@@ -248,8 +248,8 @@
     </div>
     <div style="margin-top: 10px">
       <el-table
-        :max-height="$tableHeight-130"
-        :height="$tableHeight-130"
+        :max-height="$tableHeight-200"
+        :height="$tableHeight-200"
         class=""
         :data="page.records"
         :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
