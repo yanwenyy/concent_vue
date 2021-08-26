@@ -1,21 +1,20 @@
 <!--资审结果操作列表-->
 <template>
   <div class="searchListClass" style="margin-bottom: -50px;">
-    <el-menu default-active="2" class="el-menu-vertical-demo" >
+    <!-- <el-menu default-active="2" class="el-menu-vertical-demo" >
       <el-submenu index="1">
         <template slot="title">
           <span>查询条件</span>
         </template>
-        <el-menu-item-group>
+        <el-menu-item-group> -->
           <el-form :inline="true" :model="searchform" @keyup.enter.native="getData()" class="queryForm">
             <el-form-item label="项目名称:">
               <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
             </el-form-item>
             <!-- <el-form-item label="建设单位:">
               <el-input v-model="searchform.constructionOrg" placeholder="建设单位" clearable></el-input>
-            </el-form-item> -->
-
-            <!-- <el-form-item label="资审截止日期:">
+            </el-form-item>
+            <el-form-item label="资审截止日期:">
               <el-date-picker
                 v-model="searchform.saleTime"
                 type="daterange"
@@ -26,22 +25,23 @@
                 end-placeholder="结束日期">
               </el-date-picker>
             </el-form-item> -->
-            <el-form-item
-                label="资审文件发售截止日期:"
-                prop="searchform.saleTime"
-              >
-                <el-date-picker
-                  clearable
-                  value-format="timestamp"
-                  v-model="searchform.saleTime"
-                  align="right"
-                  type="date"
-                  placeholder="选择日期">
-                </el-date-picker>
-              </el-form-item>
-            <el-form-item
-              label="工程类别(一级):"
-            >
+            <el-form-item label="资审文件发售截止日期:" prop="searchform.saleTime" >
+              <el-date-picker
+                clearable
+                value-format="timestamp"
+                v-model="searchform.saleTime"
+                align="right"
+                type="date"
+                placeholder="选择日期">
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item label="招标代理机构:" >
+              <el-input v-model="searchform.bidAgentCompany" placeholder="招标代理机构" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="标段名称:" >
+              <el-input v-model="searchform.sectionName" placeholder="标段名称" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="工程类别(一级):" >
               <el-select
                 clearable
                 filterable
@@ -58,9 +58,7 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item
-              label="工程类别(二级):"
-            >
+            <el-form-item label="工程类别(二级):" >
               <el-select
                 clearable
                 filterable
@@ -76,19 +74,7 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item
-              label="招标代理机构:"
-            >
-              <el-input v-model="searchform.bidAgentCompany" placeholder="招标代理机构" clearable></el-input>
-            </el-form-item>
-            <el-form-item
-              label="标段名称:"
-            >
-              <el-input v-model="searchform.sectionName" placeholder="标段名称" clearable></el-input>
-            </el-form-item>
-            <el-form-item
-              label="资审状态:"
-            >
+            <el-form-item label="资审状态:" >
               <el-select
                 clearable
                 filterable
@@ -104,7 +90,6 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-            <br>
             <el-form-item label="项目地点:">
               <el-input v-model="searchform.path" placeholder="项目地点">
                 <el-button slot="append" icon="el-icon-search"  @click="selectPosition()"></el-button>
@@ -120,30 +105,30 @@
                   start-placeholder="开始日期"
                   end-placeholder="结束日期">
                 </el-date-picker>
-              </el-form-item> -->
-      <!--        <el-form-item-->
-      <!--          label="录入单位:"-->
-      <!--        >-->
-      <!--          <el-select-->
-      <!--            clearable-->
-      <!--            filterable-->
-      <!--            placeholder="请选择"-->
-      <!--            size="mini"-->
-      <!--            v-model="searchform.flowStatus"-->
-      <!--          >-->
-      <!--            <el-option-->
-      <!--              :key="index"-->
-      <!--              :label="item.detailName"-->
-      <!--              :value="item.id"-->
-      <!--              v-for="(item, index) in projectStatus"-->
-      <!--            ></el-option>-->
-      <!--          </el-select>-->
-      <!--        </el-form-item>-->
-          </el-form>
+              </el-form-item> 
+              <el-form-item
+                label="录入单位:"
+              >
+                <el-select
+                  clearable
+                  filterable
+                  placeholder="请选择"
+                  size="mini"
+                  v-model="searchform.flowStatus"
+                >
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.id"
+                    v-for="(item, index) in projectStatus"
+                  ></el-option>
+                </el-select>
+              </el-form-item>-->
+          <!-- </el-form>
         </el-menu-item-group>
       </el-submenu>
     </el-menu> 
-    <el-form :inline="true" :model="searchform" @keyup.enter.native="getData()" class="queryForm">
+    <el-form :inline="true" :model="searchform" @keyup.enter.native="getData()" class="queryForm"> -->
       <el-form-item style="float:right">
         <el-button @click="searchformReset" style="color:black;background:none;float:right; margin-right:20px;" type="info" plain><i class="el-icon-refresh-right"></i>重置</el-button>
         <el-button @click="getData" style="float:right;margin-right:5px; margin-top:5px;" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
@@ -165,8 +150,8 @@
         ref="table"
         style="width: 100%"
         tooltip-effect="dark"
-        :max-height="$tableHeight - 150"
-        :height="$tableHeight - 150"
+        :max-height="$tableHeight"
+        :height="$tableHeight"
       >
         <el-table-column
           :width="50"
@@ -695,6 +680,13 @@
 };
 </script>
 <style scoped>
+  .queryForm .el-input-group {
+    margin-top: 5px;
+    width: 230px;
+  }
+  .queryForm .el-form-item {
+    margin-bottom: 3px !important;
+  }
 >>>.el-form-item__label{
   width: auto;
 }
