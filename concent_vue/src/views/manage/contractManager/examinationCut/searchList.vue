@@ -96,7 +96,7 @@
           :width="150"
           align="center"
           label="核减类型"
-          prop="createOrgType"
+          prop="reduceType"
           show-overflow-tooltip
         >
         </el-table-column>
