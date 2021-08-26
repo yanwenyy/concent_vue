@@ -8,29 +8,29 @@
         <el-button @click="batchSub" type="primary" plain><i class="el-icon-plus"></i>批量提交</el-button>
       </el-button-group>
       <div style="float: right;">
-        <el-form class="search-form" :inline="true" :model="searchFrom" @keyup.enter.native="init()">
-          <el-form-item label="合同名称:">
-            <el-input  class="list-search-picker" v-model="searchFrom.contractName" placeholder="合同名称" clearable></el-input>
-          </el-form-item>
-          <el-form-item
-            label="审核状态:"
-          >
-            <el-select
-              class="list-search-picker"
-              clearable
-              filterable
-              placeholder="请选择"
-              size="mini"
-              v-model="searchFrom.flowStatus"
-            >
-              <el-option label="待登记" value="edit"></el-option>
-              <el-option label="草稿" value="edit"></el-option>
-              <el-option label="审核中" value="check"></el-option>
-              <el-option label="审核通过" value="pass"></el-option>
-              <el-option label="审核退回" value="reject"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-form>
+        <!--<el-form class="search-form" :inline="true" :model="searchFrom" @keyup.enter.native="init()">-->
+          <!--<el-form-item label="合同名称:">-->
+            <!--<el-input  class="list-search-picker" v-model="searchFrom.contractName" placeholder="合同名称" clearable></el-input>-->
+          <!--</el-form-item>-->
+          <!--<el-form-item-->
+            <!--label="审核状态:"-->
+          <!--&gt;-->
+            <!--<el-select-->
+              <!--class="list-search-picker"-->
+              <!--clearable-->
+              <!--filterable-->
+              <!--placeholder="请选择"-->
+              <!--size="mini"-->
+              <!--v-model="searchFrom.flowStatus"-->
+            <!--&gt;-->
+              <!--<el-option label="待登记" value="edit"></el-option>-->
+              <!--<el-option label="草稿" value="edit"></el-option>-->
+              <!--<el-option label="审核中" value="check"></el-option>-->
+              <!--<el-option label="审核通过" value="pass"></el-option>-->
+              <!--<el-option label="审核退回" value="reject"></el-option>-->
+            <!--</el-select>-->
+          <!--</el-form-item>-->
+        <!--</el-form>-->
         <el-button @click="searchFromReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
         <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
         <!--<el-button type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>-->
@@ -71,6 +71,28 @@
           prop="moduleName"
           show-overflow-tooltip
         >
+          <template slot="header" slot-scope="scope">
+            <span>合同板块</span>
+            <div>
+              <el-select
+                class="list-search-picker"
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="searchFrom.flowStatus"
+              >
+                <el-option label="工程承包" value="7f4fcba4255b43a8babf15afd6c04a53"></el-option>
+                <el-option label="勘察设计" value="f6823a41e9354b81a1512155a5565aeb"></el-option>
+                <el-option label="物资贸易" value="510ba0d79593418493eb1a11ea4e7af4"></el-option>
+                <el-option label="工业制造" value="510ba0d79593418493eb1a11ed3e7df4"></el-option>
+                <el-option label="金融保险" value="510ba0d79593418493eb1a11ea4e7df4"></el-option>
+                <el-option label="其他合同" value="510ba0d79593419493eb1a11ed3e7df4"></el-option>
+                <el-option label="房地产" value="510ba0d79593418493eb1a11ea4e7af6"></el-option>
+                <el-option label="运营维护" value="510ba0d79593418493eb1a11ed4e7df4"></el-option>
+              </el-select>
+            </div>
+          </template>
           <template slot-scope="scope">
             <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.moduleName}}</span>
           </template>
@@ -81,6 +103,17 @@
           prop="contractName"
           show-overflow-tooltip
         >
+          <template slot="header" slot-scope="scope">
+            <span>合同名称</span>
+            <div>
+              <el-input
+                class="list-search-picker"
+                style=" width: 100%"
+                v-model="searchFrom.contractName"
+                size="mini"
+              />
+            </div>
+          </template>
         </el-table-column>
         <el-table-column
           :width="150"
@@ -102,7 +135,7 @@
           :width="150"
           align="center"
           label="核减类型"
-          prop="createOrgType"
+          prop="reduceType"
           show-overflow-tooltip
         >
         </el-table-column>
@@ -129,6 +162,25 @@
           prop="flowStatus"
           show-overflow-tooltip
         >
+          <template slot="header" slot-scope="scope">
+            <span>审核状态</span>
+            <div>
+              <el-select
+                  class="list-search-picker"
+                  clearable
+                  filterable
+                  placeholder="请选择"
+                  size="mini"
+                  v-model="searchFrom.flowStatus"
+                  >
+                <el-option label="待登记" value="edit"></el-option>
+                <el-option label="草稿" value="edit"></el-option>
+                <el-option label="审核中" value="check"></el-option>
+                <el-option label="审核通过" value="pass"></el-option>
+                <el-option label="审核退回" value="reject"></el-option>
+              </el-select>
+            </div>
+          </template>
           <template slot-scope="scope">
              {{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核退回':''}}
           </template>

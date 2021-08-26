@@ -1,11 +1,11 @@
 <template>
   <div class="searchListClass" style="margin-bottom: -50px;">
-    <el-menu default-active="2" class="el-menu-vertical-demo" >
+    <!-- <el-menu default-active="2" class="el-menu-vertical-demo" >
       <el-submenu index="1">
         <template slot="title">
           <span>查询条件</span>
         </template>
-        <el-menu-item-group>
+        <el-menu-item-group> -->
           <el-form
             class="queryForm"
             :inline="true"
@@ -16,6 +16,20 @@
               <el-input
                 v-model="searchform.projectName"
                 placeholder="项目名称"
+                clearable
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="所属单位:">
+              <el-input
+                v-model="searchform.companyBelongName"
+                placeholder="所属单位"
+                clearable
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="签约/使用资质单位:">
+              <el-input
+                v-model="searchform.companyName"
+                placeholder="签约/使用资质单位"
                 clearable
               ></el-input>
             </el-form-item>
@@ -80,20 +94,6 @@
                   v-for="(item, index) in projectTypeTwo"
                 />
               </el-select>
-            </el-form-item>
-            <el-form-item label="所属单位:">
-              <el-input
-                v-model="searchform.companyBelongName"
-                placeholder="所属单位"
-                clearable
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="签约/使用资质单位:">
-              <el-input
-                v-model="searchform.companyName"
-                placeholder="签约/使用资质单位"
-                clearable
-              ></el-input>
             </el-form-item>
             <!-- <el-form-item label="建设单位:">
               <el-input
@@ -199,7 +199,7 @@
             <el-button @click="exportData" type="primary" plain
               ><i class="el-icon-upload2"></i>导出</el-button
             > -->
-          </el-form>
+          <!-- </el-form>
         </el-menu-item-group>
       </el-submenu>
     </el-menu>
@@ -208,7 +208,7 @@
       :inline="true"
       :model="searchform"
       style="float:right"
-    >
+    > -->
       <el-button
         @click="searchformReset"
         type="info"
@@ -237,8 +237,8 @@
         highlight-current-row
         ref="table"
         tooltip-effect="dark"
-        :max-height="$tableHeight - 100"
-        :height="$tableHeight - 100"
+        :max-height="$tableHeight-30"
+        :height="$tableHeight-30"
       >
         <el-table-column
           :width="50"
@@ -997,6 +997,13 @@ export default {
 };
 </script>
 <style scoped>
+.queryForm .el-input-group {
+  margin-top: 5px;
+  width: 230px;
+}
+.queryForm .el-form-item {
+  margin-bottom: 3px !important;
+}
 .queryForm > .el-button {
   margin-top: 5px;
 }

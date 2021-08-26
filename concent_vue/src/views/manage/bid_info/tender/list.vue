@@ -1,11 +1,11 @@
 <template>
   <div class="searchListClass" style="margin-bottom: -50px;">
-    <el-menu default-active="2" class="el-menu-vertical-demo" >
+    <!-- <el-menu default-active="2" class="el-menu-vertical-demo" >
       <el-submenu index="1">
         <template slot="title">
           <span>查询条件</span>
         </template>
-        <el-menu-item-group>
+        <el-menu-item-group> -->
           <el-form :inline="true" :model="searchform" @keyup.enter.native="getData()" class="queryForm">
             <el-form-item label="项目名称:">
               <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
@@ -27,13 +27,17 @@
                 ></el-option>
               </el-select>
             </el-form-item>
+            <el-form-item label="录入单位:" >
+              <el-input
+                v-model="searchform.createOrgCode"
+                placeholder="录入单位"
+                clearable
+              ></el-input>
+            </el-form-item>
             <el-form-item label="标段名称:">
               <el-input v-model="searchform.sectionName" placeholder="标段名称" clearable></el-input>
             </el-form-item>
-            <el-form-item
-              label="建设单位:"
-              prop="contractInfo.constructionOrgId"
-            >
+            <el-form-item label="建设单位:" prop="contractInfo.constructionOrgId" >
               <el-select
                 v-model="constructionOrgList"
                 v-if="searchform.isClientele=='1'"
@@ -61,8 +65,7 @@
                   ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item
-              label="是否客户:"
+            <el-form-item label="是否客户:"
               prop="contractInfo.isClientele"
               :rules="{
                 required: true,
@@ -123,13 +126,7 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="录入单位:" >
-              <el-input
-                v-model="searchform.createOrgCode"
-                placeholder="录入单位"
-                clearable
-              ></el-input>
-            </el-form-item>
+
             <div class="el-form-item">
               <el-form-item label="资审截止日期:" prop="searchform.saleTime" >
                 <el-date-picker
@@ -176,11 +173,11 @@
                 <el-button slot="append" icon="el-icon-search"  @click="selectPosition()"></el-button>
               </el-input>
             </el-form-item>
-          </el-form>
+          <!-- </el-form>
         </el-menu-item-group>
       </el-submenu>
     </el-menu>
-    <el-form :inline="true" :model="searchform" @keyup.enter.native="getData()" class="queryForm">
+    <el-form :inline="true" :model="searchform" @keyup.enter.native="getData()" class="queryForm"> -->
       <el-form-item style="float:right">
         <el-button @click="searchformReset" style="color:black;background:none;float:right; margin-right:20px;" type="info" plain><i class="el-icon-refresh-right"></i>重置</el-button>
         <el-button @click="getData" style="float:right;margin-right:5px; margin-top:5px;" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
@@ -189,8 +186,8 @@
     </el-form>
     <div style="margin-top: 10px;">
       <el-table
-        :max-height="$tableHeight-150"
-        :height="$tableHeight-150"
+        :max-height="$tableHeight-20"
+        :height="$tableHeight-20"
         :data="page.records"
         :header-cell-style="{
           'text-align': 'center',
@@ -691,6 +688,13 @@
 };
 </script>
 <style scoped>
+  .queryForm .el-input-group {
+    margin-top: 5px;
+    width: 230px;
+  }
+  .queryForm .el-form-item {
+    margin-bottom: 3px !important;
+  }
 >>>.el-form-item__label{
   width: auto;
 }
