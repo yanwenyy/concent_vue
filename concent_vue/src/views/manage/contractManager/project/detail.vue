@@ -6625,7 +6625,7 @@
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  <el-input v-model="scope.row.vsum" @input="scope.row.vsum=parseInt(scope.row.vsum.replace(/[^\d]/g,''))"/>
+                  <el-input v-model="scope.row.vsum" @input="scope.row.vsum=scope.row.vsum.replace(/[^\d]/g,'')"/>
                 </template>
               </el-table-column>
             </el-table>
@@ -6710,7 +6710,7 @@
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  <el-input v-model="scope.row.vsum" @input="scope.row.vsum=parseInt(scope.row.vsum.replace(/[^\d]/g,''))"/>
+                  <el-input v-model="scope.row.vsum" @input="scope.row.vsum=scope.row.vsum.replace(/[^\d]/g,'')"/>
                 </template>
               </el-table-column>
             </el-table>
