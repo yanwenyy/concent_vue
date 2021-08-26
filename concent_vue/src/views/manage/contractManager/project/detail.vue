@@ -6557,7 +6557,7 @@
               <el-upload
                 v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                 class="inline-block"
-                :action="'/api/contract/ContractInfoQuantityMachine/list/importQuantity'"
+                :action="'/api/contract/ContractInfoQuantityMachine/list/importQuantityNew'"
                 :on-success="importData"
                 :headers="{'Authorization':Authorization}"
                 :data="{'contractInfoId':p.instid}"
@@ -6573,7 +6573,7 @@
                 ><i class="el-icon-download"></i>导入
                 </el-button>
               </el-upload>
-              <el-link  v-if="p.actpoint != 'look'&&p.actpoint != 'task'" class="downFile"  type="primary" href="/static/swgcl.xlsx" download="实物工程量导入模板.xlsx">实物工程量导入模板下载</el-link>
+              <el-link @click="getDownload()" v-if="p.actpoint != 'look'&&p.actpoint != 'task'" class="downFile"  type="primary" >实物工程量导入模板下载</el-link>
             </p>
             <el-table
               :data="detailform.contractInfoQuantityMachineList1"
@@ -6625,7 +6625,7 @@
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  <el-input v-model="scope.row.vsum" @input="scope.row.vsum=parseInt(scope.row.vsum.replace(/[^\d]/g,''))"/>
+                  <el-input v-model="scope.row.vsum" @input="scope.row.vsum=scope.row.vsum.replace(/[^\d]/g,'')"/>
                 </template>
               </el-table-column>
             </el-table>
@@ -6710,7 +6710,7 @@
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  <el-input v-model="scope.row.vsum" @input="scope.row.vsum=parseInt(scope.row.vsum.replace(/[^\d]/g,''))"/>
+                  <el-input v-model="scope.row.vsum" @input="scope.row.vsum=scope.row.vsum.replace(/[^\d]/g,'')"/>
                 </template>
               </el-table-column>
             </el-table>
@@ -6983,6 +6983,27 @@ export default {
       });
   },
   methods: {
+    // 下载模板
+     getDownload(){
+       let name = "实物工程量"
+        this.$http
+        .post(
+          '/api/contract/ContractInfoQuantityMachine/list/exportDataToExcel',
+          {enginTypeFirstId: this.detailform.contractInfo.enginTypeFirstId},
+          { responseType: 'blob' }
+        )
+        .then((res) => {
+          const content = res.data;
+          const blob = new Blob([content])
+          let url = window.URL.createObjectURL(blob);
+          let link = document.createElement('a');
+          link.style.display = 'none';
+          link.href = url;
+          link.setAttribute('download', name+'.xlsx');
+          document.body.appendChild(link);
+          link.click();
+        })
+      },
     // 附件下载
     attachmentDownload(file){
       this.$handleDownload(file)

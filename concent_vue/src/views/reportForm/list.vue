@@ -54,6 +54,7 @@
             // {useJson: true}
           )
           .then((res) => {
+            // this.url='http://121.36.79.169:8088'+res.data.data.url;
             this.url=res.data.data.url;
             console.log(this.url);
             this.paramMap = res.data.data;
