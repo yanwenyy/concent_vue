@@ -566,7 +566,7 @@
                 :rules="detailform.bidInfo.isCoalitionBid=='0'?{
                   required: true,
                   message: '此项不能为空',
-                  trigger: 'blur',
+                  trigger: 'change',
                 }:{}"
               >
                 <el-input
