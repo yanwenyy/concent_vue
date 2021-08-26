@@ -4,7 +4,7 @@
       <el-button-group style="float: left">
         <el-button type="primary" @click="addk" plain :disabled="bidFlowStatus==2||bidFlowStatus==3"><i class="el-icon-document-checked"></i>开标登记</el-button>
         <!--<el-button @click="add" :disabled="flowStatus!=null"  plain type="primary"><i class="el-icon-plus"></i>登记</el-button>-->
-        <el-button @click="totop" :disabled="flowStatus=='edit'&&flowStatus!='reject'" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
+        <el-button @click="totop" :disabled="bidFlowStatus==2||bidFlowStatus==3" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
 
 
         <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
@@ -470,8 +470,8 @@ export default {
         }
         let p = {from:'kblist',actpoint: "edit", instid: this.multipleSelection[0].uuid};
         this.$router.push({
-          path: "./detail/",
-          // path: "./Winning_bidKB/",
+          // path: "./detail/",
+          path: "./Winning_bidKB/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
 
@@ -530,10 +530,11 @@ export default {
 
       },
     rowshow(row) {
-      var id=row.flowStatus==null?row.topInfoOrgId:row.uuid;
-      let p = { from:'kblist',actpoint: "look", instid: id ,flowStatus:row.bidFlowStatus,uuid:row.uuid};
+      // var id=row.flowStatus==null?row.topInfoOrgId:row.uuid;
+      // let p = { from:'kblist',actpoint: "look", instid: id ,flowStatus:row.bidFlowStatus,uuid:row.uuid};
+      let p = { from:'kblist',actpoint: "look", instid: row.uuid,flowStatus:row.bidFlowStatus,uuid:row.uuid};
       this.$router.push({
-        path: "./detail/",
+        path: "./Winning_bidKB/",
         query: { p: this.$utils.encrypt(JSON.stringify(p)) },
       });
     },

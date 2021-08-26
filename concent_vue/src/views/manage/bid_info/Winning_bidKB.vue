@@ -559,10 +559,10 @@
                 </el-switch>
               </el-form-item>
               <br>
-              <el-form-item 
+              <el-form-item
                 label="内部联合体单位:"
                 prop="bidInfo.innerOrgId"
-                class="formItem1" 
+                class="formItem1"
               >
                 <el-input
                   :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"
@@ -1111,7 +1111,7 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
-        <Audit-Process :task="p.task||{businessId:p.instid,businessType:' contract_bid_register'}"></Audit-Process>
+        <Audit-Process :task="p.task||p.from=='kblist'?{businessId:p.instid+'-kb',businessType:' contract_bid_register'}:{businessId:p.instid,businessType:' contract_bid_register'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>
     <add-bd  v-if="BDCSVisible" ref="infoBD" @refreshBD="getBdInfo"></add-bd>
@@ -1610,7 +1610,7 @@ export default {
       if(this.p.actpoint=='task'){
         this.id=this.id.split("-")[0];
       }
-        var q=this.p.actpoint === "addk"||this.p.actpoint=='task'?{id:this.id}:{topInfoOrgId:this.id};
+        var q=this.p.actpoint === "addk"||this.p.actpoint=='task'||this.p.from=='kblist'?{id:this.id}:{topInfoOrgId:this.id};
         console.log(q)
         this.$http
           .post("/api/contract/topInfo/BidInfo/detail/entityInfo", q)
