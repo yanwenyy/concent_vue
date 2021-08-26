@@ -1339,10 +1339,19 @@ export default {
       }
     };
     var innerOrgName = (rule, value, callback) => {
-      if(this.detailform.bidInfoInnerOrgList.length < 1){
-        callback(new Error('不能为空'))
-      } else {
-        callback()
+      if(this.detailform.bidInfo.isCoalitionBid === null || this.detailform.bidInfo.isCoalitionBid=== ''){
+        if(this.detailform.bidInfoInnerOrgList.length < 1){
+          callback(new Error('不能为空'))
+        } else {
+          callback()
+        }        
+      }
+      else{
+        if(this.detailform.bidInfo.innerOrgName == ''){
+          callback(new Error('不能为空'))
+        } else {
+          callback()
+        } 
       }
     }
     return {
