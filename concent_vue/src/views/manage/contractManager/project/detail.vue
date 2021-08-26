@@ -6557,7 +6557,7 @@
               <el-upload
                 v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
                 class="inline-block"
-                :action="'/api/contract/ContractInfoQuantityMachine/list/importQuantity'"
+                :action="'/api/contract/ContractInfoQuantityMachine/list/importQuantityNew'"
                 :on-success="importData"
                 :headers="{'Authorization':Authorization}"
                 :data="{'contractInfoId':p.instid}"
@@ -6573,7 +6573,7 @@
                 ><i class="el-icon-download"></i>导入
                 </el-button>
               </el-upload>
-              <el-link  v-if="p.actpoint != 'look'&&p.actpoint != 'task'" class="downFile"  type="primary" href="/static/swgcl.xlsx" download="实物工程量导入模板.xlsx">实物工程量导入模板下载</el-link>
+              <el-link @click="getDownload()" v-if="p.actpoint != 'look'&&p.actpoint != 'task'" class="downFile"  type="primary" >实物工程量导入模板下载</el-link>
             </p>
             <el-table
               :data="detailform.contractInfoQuantityMachineList1"
@@ -6983,6 +6983,32 @@ export default {
       });
   },
   methods: {
+    // 下载模板
+     getDownload(){
+       let name = "实物工程量"
+        this.$http
+          .post(
+            '/api/contract/ContractInfoQuantityMachine/list/exportDataToExcel',
+            { responseType: 'blob' }
+          )
+          .then((res) => {
+          const content = res.data;
+          const blob = new Blob([content])
+          const fileName = name+new Date().toLocaleDateString()+'.xlsx'
+          if ('download' in document.createElement('a')) { // 非IE下载
+            const elink = document.createElement('a')
+            elink.download = fileName
+            elink.style.display = 'none'
+            elink.href = URL.createObjectURL(blob)
+            document.body.appendChild(elink)
+            elink.click()
+            URL.revokeObjectURL(elink.href) // 释放URL 对象
+            document.body.removeChild(elink)
+          } else { // IE10+下载
+            navigator.msSaveBlob(blob, fileName)
+          }
+        })
+      },
     // 附件下载
     attachmentDownload(file){
       this.$handleDownload(file)

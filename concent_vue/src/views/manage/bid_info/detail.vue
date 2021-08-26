@@ -673,6 +673,7 @@
               label="内部联合体单位:"
               class="formItem1"
               prop="bidInfo.innerOrgName"
+              :rules="detailform.bidInfo.isCoalitionBid=='0'?rules.innerOrgName:{}"
             >
               <el-input
                 :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint==='edit' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"
@@ -1337,6 +1338,13 @@ export default {
         callback();
       }
     };
+    var innerOrgName = (rule, value, callback) => {
+      if(this.detailform.bidInfo.innerOrgName == ''){
+        callback(new Error('不能为空'))
+      } else {
+        callback()
+      } 
+    }
     return {
       companyMulStatus:false,//设计单位等多选列表状态
       uploadVisible:false,//上传附件组件状态
@@ -1380,6 +1388,13 @@ export default {
         contractAmount: [
           { required: true, validator: validateMoney, trigger: "change" },
         ],
+        innerOrgName:[
+          {
+            required: true,
+            validator: innerOrgName,
+            trigger: 'change',
+          }
+        ]
       }, //表单验证规则
     };
   },

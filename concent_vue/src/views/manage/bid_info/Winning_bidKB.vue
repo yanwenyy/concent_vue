@@ -561,8 +561,9 @@
               <br>
               <el-form-item
                 label="内部联合体单位:"
-                prop="bidInfo.innerOrgId"
+                prop="bidInfo.innerOrgName"
                 class="formItem1"
+                :rules="detailform.bidInfo.isCoalitionBid=='0'?rules.innerOrgName:{}"
               >
                 <el-input
                   :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"
@@ -1132,11 +1133,18 @@ import AuditProcess from '@/components/auditProcess'
 import companyMul from '@/components/companiesMultiple'
 export default {
   data() {
-      var validateMoney = (rule, value, callback) => {
+    var validateMoney = (rule, value, callback) => {
       if(value===''){
         callback(new Error('不能为空'))
       }else if (!isMoney(value)) {
         callback(new Error('请输入正确的金额格式'))
+      } else {
+        callback()
+      }
+    }
+    var innerOrgName = (rule, value, callback) => {
+      if(this.detailform.bidInfoInnerOrgList.length < 1){
+        callback(new Error('不能为空'))
       } else {
         callback()
       }
@@ -1177,6 +1185,13 @@ export default {
           rules:{
           contractAmount: [
             { required: true,validator: validateMoney, trigger: 'change' }
+          ],
+          innerOrgName:[
+            {
+              required: true,
+              validator: innerOrgName,
+              trigger: 'change',
+            }
           ]
         },//表单验证规则
     };
