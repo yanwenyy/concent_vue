@@ -6987,26 +6987,21 @@ export default {
      getDownload(){
        let name = "实物工程量"
         this.$http
-          .post(
-            '/api/contract/ContractInfoQuantityMachine/list/exportDataToExcel',
-            { responseType: 'blob' }
-          )
-          .then((res) => {
+        .post(
+          '/api/contract/ContractInfoQuantityMachine/list/exportDataToExcel',
+          {enginTypeFirstId: this.detailform.contractInfo.enginTypeFirstId},
+          { responseType: 'blob' }
+        )
+        .then((res) => {
           const content = res.data;
           const blob = new Blob([content])
-          const fileName = name+new Date().toLocaleDateString()+'.xlsx'
-          if ('download' in document.createElement('a')) { // 非IE下载
-            const elink = document.createElement('a')
-            elink.download = fileName
-            elink.style.display = 'none'
-            elink.href = URL.createObjectURL(blob)
-            document.body.appendChild(elink)
-            elink.click()
-            URL.revokeObjectURL(elink.href) // 释放URL 对象
-            document.body.removeChild(elink)
-          } else { // IE10+下载
-            navigator.msSaveBlob(blob, fileName)
-          }
+          let url = window.URL.createObjectURL(blob);
+          let link = document.createElement('a');
+          link.style.display = 'none';
+          link.href = url;
+          link.setAttribute('download', name+'.xlsx');
+          document.body.appendChild(link);
+          link.click();
         })
       },
     // 附件下载
