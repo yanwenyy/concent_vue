@@ -888,26 +888,26 @@
                 </el-form-item>
               </div>
               <p><span >证明文件: </span>
-                <el-button
-                  v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
-                  size="small"
-                  type="primary"
-                  @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile','commonFilesList1')">
-                  点击上传
-                </el-button>
-
-                <!--<el-upload-->
-                  <!--:headers="{'Authorization':Authorization}"-->
+                <!--<el-button-->
                   <!--v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"-->
-                  <!--class="upload-demo detailUpload detatil-flie-btn"-->
-                  <!--:action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"-->
-                  <!--:on-change="( file, fileList)=>{uploadPorgress( file, fileList,detailform.commonFilesList1)}"-->
-                  <!--:show-file-list="false"-->
-                  <!--:before-upload="beforeAvatarUpload"-->
-                  <!--multiple-->
-                <!--&gt;-->
-                  <!--<el-button size="small" type="primary">点击上传</el-button>-->
-                <!--</el-upload>-->
+                  <!--size="small"-->
+                  <!--type="primary"-->
+                  <!--@click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile','commonFilesList1')">-->
+                  <!--点击上传-->
+                <!--</el-button>-->
+
+                <el-upload
+                  :headers="{'Authorization':Authorization}"
+                  v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
+                  class="upload-demo detailUpload detatil-flie-btn"
+                  :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                  :on-change="( file, fileList)=>{uploadPorgress( file, fileList,detailform.commonFilesList1)}"
+                  :show-file-list="false"
+                  :before-upload="beforeAvatarUpload"
+                  multiple
+                >
+                  <el-button size="small" type="primary">点击上传</el-button>
+                </el-upload>
               </p>
               <el-table
                 :data="detailform.commonFilesList1"
@@ -939,13 +939,13 @@
                 <el-table-column align="center" width="100" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
 
                 </el-table-column>
-                <!--<el-table-column align="center" width="200" :resizable="false" label="上传进度" show-overflow-tooltip>-->
-                  <!--<template slot-scope="scope">-->
-                    <!--<el-progress v-if="scope.row.progressFlag=='start'" :percentage="scope.row.loadProgress||0"></el-progress>-->
-                    <!--<el-progress  v-if="scope.row.progressFlag=='fail'" :percentage="100" status="warning"></el-progress>-->
-                    <!--<span v-if="scope.row.progressFlag=='stop'||scope.row.progressFlag==null">已上传</span>-->
-                  <!--</template>-->
-                <!--</el-table-column>-->
+                <el-table-column align="center" width="200" :resizable="false" label="上传进度" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-progress v-if="scope.row.progressFlag=='start'" :percentage="scope.row.loadProgress||0"></el-progress>
+                    <el-progress  v-if="scope.row.progressFlag=='fail'" :percentage="100" status="warning"></el-progress>
+                    <span v-if="scope.row.progressFlag=='stop'||scope.row.progressFlag==null">已上传</span>
+                  </template>
+                </el-table-column>
                 <el-table-column
                   align="center"
                   :resizable="false"
@@ -3184,6 +3184,11 @@
       },
       saveInfo(formName,type) {
         this.detailform.commonFilesList=this.detailform.commonFilesList1.concat(this.detailform.commonFilesList2)
+        this.detailform.commonFilesList.forEach((item)=>{
+          if(item.progressFlag=='fail'){
+            delete item;
+          }
+        });
         var url='';
         this.detailform.contractInfo.constructionOrgId = this.detailform.constructionOrgList.join(",")
         if(type=='save'){
