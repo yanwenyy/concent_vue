@@ -341,19 +341,19 @@
                       <template slot="append">(万元)</template>
                     </el-input>
                   </el-form-item>
-                  <el-form-item
-                    v-if="detailFormBefore.contractInfo.isInSystemUnion==='1'"
-                    label="暂定金(万元)"
+                  <!--<el-form-item-->
+                    <!--v-if="detailFormBefore.contractInfo.isInSystemUnion==='1'"-->
+                    <!--label="暂定金(万元)"-->
 
-                  >
-                    <el-input
-                      disabled
-                      v-model="detailFormBefore.contractInfo.designTempPrice"
-                    >
-                      <template slot="prepend">¥</template>
-                      <template slot="append">(万元)</template>
-                    </el-input>
-                  </el-form-item>
+                  <!--&gt;-->
+                    <!--<el-input-->
+                      <!--disabled-->
+                      <!--v-model="detailFormBefore.contractInfo.designTempPrice"-->
+                    <!--&gt;-->
+                      <!--<template slot="prepend">¥</template>-->
+                      <!--<template slot="append">(万元)</template>-->
+                    <!--</el-input>-->
+                  <!--</el-form-item>-->
                   <br>
                   <el-form-item
                     label="新兴市场类别(一级):"
@@ -1587,24 +1587,24 @@
                     <template slot="append">(万元)</template>
                   </el-input>
                 </el-form-item>
-                <el-form-item
-                  v-if="detailform.contractInfo.isInSystemUnion==='1'"
-                  label="暂定金(万元)"
-                  prop="contractInfo.designTempPrice"
-                  :rules="rules.contractAmount"
+                <!--<el-form-item-->
+                  <!--v-if="detailform.contractInfo.isInSystemUnion==='1'"-->
+                  <!--label="暂定金(万元)"-->
+                  <!--prop="contractInfo.designTempPrice"-->
+                  <!--:rules="rules.contractAmount"-->
 
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'"
-                    clearable
-                    placeholder=""
+                <!--&gt;-->
+                  <!--<el-input-->
+                    <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'"-->
+                    <!--clearable-->
+                    <!--placeholder=""-->
 
-                    v-model="detailform.contractInfo.designTempPrice"
-                  >
-                    <template slot="prepend">¥</template>
-                    <template slot="append">(万元)</template>
-                  </el-input>
-                </el-form-item>
+                    <!--v-model="detailform.contractInfo.designTempPrice"-->
+                  <!--&gt;-->
+                    <!--<template slot="prepend">¥</template>-->
+                    <!--<template slot="append">(万元)</template>-->
+                  <!--</el-input>-->
+                <!--</el-form-item>-->
                 <br>
                 <el-form-item
                   label="新兴市场类别(一级):"
@@ -4325,6 +4325,7 @@
 
             for(var i in datas.topInfoSiteList){
               datas.topInfoSiteList[i].uuid='';
+              datas.topInfoSiteList[i].contractAmount='';
             }
             this.detailform.topInfoSiteList=datas.topInfoSiteList;
           });
@@ -4549,6 +4550,10 @@
         }
         if(this.detailform.contractInfo.valueAddedTax<=0){
           this.$message.error("增值税需要大于0");
+          return false;
+        }
+        if(this.detailform.contractInfoHouseSalesList.length==0){
+          this.$message.error("销售业绩列表不能为空");
           return false;
         }
         this.$refs[formName].validate((valid) => {

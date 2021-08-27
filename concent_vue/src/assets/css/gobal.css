@@ -820,5 +820,9 @@ pre {
 .table-padding5{
   padding:5px 0
 }
+.el-dialog{
+  max-height: 80vh!important;
+  margin: 0 auto 30px;
+}
 /**/
 

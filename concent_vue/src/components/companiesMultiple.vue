@@ -13,6 +13,8 @@
         </el-form-item>
       </el-form>
       <el-table
+        :max-height="$dialogTableHeight"
+        :height="$dialogTableHeight"
         class="mulTabel"
         ref="listTabel"
         :data="dataList"
@@ -38,7 +40,7 @@
           label="公司名称">
         </el-table-column>
       </el-table>
-      <div class="tags-div">
+      <div class="tags-div" style="height:calc( 100vh - 370px );">
         <el-tag
           v-for="(tag,index) in selList"
           :key="index"

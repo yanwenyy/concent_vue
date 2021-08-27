@@ -4765,6 +4765,7 @@
 
             for(var i in datas.topInfoSiteList){
               datas.topInfoSiteList[i].uuid='';
+              datas.topInfoSiteList[i].contractAmount='';
             }
             this.detailform.topInfoSiteList=datas.topInfoSiteList;
           });

@@ -470,7 +470,7 @@
               :rules="rules.contractAmount"
             >
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                 @input="getOurAmount(),getTradeExpectedIncome(),getOurAmount('','','nfb')"
                 clearable
                 placeholder=""
@@ -2782,6 +2782,7 @@ export default {
         }
         for(var i in datas.topInfoSiteList){
           datas.topInfoSiteList[i].uuid='';
+          datas.topInfoSiteList[i].contractAmount='';
         }
         this.detailform.topInfoSiteList=datas.topInfoSiteList;
       });

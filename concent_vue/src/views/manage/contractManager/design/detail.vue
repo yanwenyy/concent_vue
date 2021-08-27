@@ -619,7 +619,7 @@
                 :rules="rules.contractAmount"
               >
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                   @input="getOurAmount(),getOurAmount('','','nfb')"
                   clearable
                   placeholder=""
@@ -3167,7 +3167,7 @@
           }
         }
       },
-      
+
      //建设单位下拉赋值
       companyBuildChange(){
         this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
@@ -3675,6 +3675,7 @@
           }
           for(var i in datas.topInfoSiteList){
             datas.topInfoSiteList[i].uuid='';
+            datas.topInfoSiteList[i].contractAmount='';
           }
           this.detailform.topInfoSiteList=datas.topInfoSiteList;
           this.topInfoSiteListDifferent=false;

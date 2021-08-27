@@ -14,6 +14,8 @@
       </el-form>
       <el-table
         :data="dataList"
+        :max-height="$dialogTableHeight"
+        :height="$dialogTableHeight"
         border
         v-loading="dataListLoading"
         highlight-current-row

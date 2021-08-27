@@ -28,6 +28,7 @@ Vue.prototype.$utils = utils
 Vue.prototype.$moment = moment
 Vue.prototype.$exportXls = exportXls
 Vue.prototype.$tableHeight = document.body.clientHeight - 213
+Vue.prototype.$dialogTableHeight = document.body.clientHeight - 370
 Vue.prototype.$getPermission = getPermission
 Vue.prototype.$getOrgPermission = getOrgPermission
 Vue.prototype.examineReviewMsg='通过';

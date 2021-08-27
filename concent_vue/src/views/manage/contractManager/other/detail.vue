@@ -314,7 +314,7 @@
                 :rules="rules.contractAmount"
               >
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                   @input="getOurAmount(),getOurAmount('','','nfb')"
                   clearable
                   placeholder=""
@@ -895,9 +895,9 @@
                   <!--@click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile','commonFilesList1')">-->
                   <!--点击上传-->
                 <!--</el-button>-->
-                <!--:headers="{'Authorization':Authorization}"-->
-                <el-upload
 
+                <el-upload
+                  :headers="{'Authorization':Authorization}"
                   v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                   class="upload-demo detailUpload detatil-flie-btn"
                   :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
@@ -2582,6 +2582,7 @@
           }
           for(var i in datas.topInfoSiteList){
             datas.topInfoSiteList[i].uuid='';
+            datas.topInfoSiteList[i].contractAmount='';
           }
           this.detailform.topInfoSiteList=datas.topInfoSiteList;
           this.topInfoSiteListDifferent=false;

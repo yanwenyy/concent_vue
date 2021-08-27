@@ -414,7 +414,7 @@
                 :rules="rules.contractAmount"
               >
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                   @input="getOurAmount(),getOurAmount('','','nfb')"
                   clearable
                   placeholder=""
@@ -2441,7 +2441,10 @@ export default {
           designOrg: '',//设计单位
           designOrgId: '',
           constructionOrg:'',//建设单位
-          constructionOrgId:''
+          constructionOrgId:'',
+          isSystemPurchaseIndustry:'1',
+          isOpenBid:'1'
+
         },
         commonFilesList1: [],
         commonFilesList2: [],
@@ -2713,6 +2716,7 @@ export default {
         }
         for(var i in datas.topInfoSiteList){
           datas.topInfoSiteList[i].uuid='';
+          datas.topInfoSiteList[i].contractAmount='';
         }
         this.detailform.topInfoSiteList=datas.topInfoSiteList;
       });
@@ -2752,7 +2756,7 @@ export default {
         if (this.detailform.contractInfo.contractOrgName) {
           this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion",{orgCode:this.detailform.contractInfo.contractOrgId},).then((res) => {
             this.ssList = res.data.data
-          }); 
+          });
         }
         this.detailform.topInfoSiteList=datas.topInfoSiteList;
       });
@@ -3356,7 +3360,7 @@ export default {
         }else{
           let k = 0;
           for(let i=0;i<this.detailform.topInfoSiteList.length;i++){
-            if(this.detailform.topInfoSiteList[i].country === null 
+            if(this.detailform.topInfoSiteList[i].country === null
             || this.detailform.topInfoSiteList[i].path === null
             || this.detailform.topInfoSiteList[i].path === ""
             || this.detailform.topInfoSiteList[i].country === ""){

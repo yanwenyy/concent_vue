@@ -3661,9 +3661,9 @@
       customerNature() {
         return this.$store.state.customerNature;
       },
-      
+
     contractCharacterCode(){
-      
+
       return this.$store.state.ContractCharacter;//合同性质
     },
       emergingMarket() {
@@ -4419,6 +4419,7 @@
 
             for(var i in datas.topInfoSiteList){
               datas.topInfoSiteList[i].uuid='';
+              datas.topInfoSiteList[i].contractAmount='';
             }
             this.detailform.topInfoSiteList=datas.topInfoSiteList;
           });

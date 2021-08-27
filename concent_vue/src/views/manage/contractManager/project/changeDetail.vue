@@ -2049,7 +2049,7 @@
                     ></el-option>
                   </el-select>
                 </el-form-item>
-                
+
                 <el-form-item
                   v-if="detailform.contractInfo.constructionNatureId=='b5eeb5ab9ea0479ba08d0f7b420a8e77'"
                   class="inline-formitem"
@@ -5348,6 +5348,7 @@
           }
           for(var i in datas.topInfoSiteList){
             datas.topInfoSiteList[i].uuid='';
+            datas.topInfoSiteList[i].contractAmount='';
           }
           this.detailform.topInfoSiteList=datas.topInfoSiteList;
         });
