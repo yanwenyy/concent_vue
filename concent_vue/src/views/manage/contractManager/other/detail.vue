@@ -895,14 +895,15 @@
                   @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile','commonFilesList1')">
                   点击上传
                 </el-button>
+
                 <!--<el-upload-->
-                  <!--v-show="p.actpoint != 'look'"-->
+                  <!--:headers="{'Authorization':Authorization}"-->
+                  <!--v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"-->
                   <!--class="upload-demo detailUpload detatil-flie-btn"-->
                   <!--:action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"-->
-                  <!--:on-success="handleChange1"-->
-                  <!--:on-error="handleChange1"-->
-                  <!--:on-remove="handleRemove1"-->
+                  <!--:on-change="( file, fileList)=>{uploadPorgress( file, fileList,detailform.commonFilesList1)}"-->
                   <!--:show-file-list="false"-->
+                  <!--:before-upload="beforeAvatarUpload"-->
                   <!--multiple-->
                 <!--&gt;-->
                   <!--<el-button size="small" type="primary">点击上传</el-button>-->
@@ -938,7 +939,13 @@
                 <el-table-column align="center" width="100" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
 
                 </el-table-column>
-
+                <!--<el-table-column align="center" width="200" :resizable="false" label="上传进度" show-overflow-tooltip>-->
+                  <!--<template slot-scope="scope">-->
+                    <!--<el-progress v-if="scope.row.progressFlag=='start'" :percentage="scope.row.loadProgress||0"></el-progress>-->
+                    <!--<el-progress  v-if="scope.row.progressFlag=='fail'" :percentage="100" status="warning"></el-progress>-->
+                    <!--<span v-if="scope.row.progressFlag=='stop'||scope.row.progressFlag==null">已上传</span>-->
+                  <!--</template>-->
+                <!--</el-table-column>-->
                 <el-table-column
                   align="center"
                   :resizable="false"
@@ -2251,6 +2258,7 @@
         }
       }
       return {
+        Authorization:sessionStorage.getItem("token"),//上传组件token
         companyMulStatus:false,//设计单位等多选列表状态
         sjdwList:[],
         jsdwList:[],
@@ -2615,7 +2623,7 @@
           if (this.detailform.contractInfo.contractOrgName) {
            this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion",{orgCode:this.detailform.contractInfo.contractOrgId},).then((res) => {
               this.ssList = res.data.data
-            }); 
+            });
           }
           this.detailform.topInfoSiteList=datas.topInfoSiteList;
         });
@@ -2996,19 +3004,85 @@
           });
       },
       //上传附件
-      handleChange1(response, file, fileList){
+      handleChange1(response, file, fileList,tableList){
         if (response && response.code === 200) {
           this.$message({
             message: '上传成功',
             type: 'success',
             duration: 1500,
             onClose: () => {
-            this.detailform.commonFilesList1.push(response.data);
-        }
-        })
+              tableList.push(response.data);
+              this.$forceUpdate();
+            }
+          })
         } else {
           this.$message.error(response.msg)
         }
+      },
+      //判断附件大小
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt100M = file.size / (1024 *100) < 100;
+
+        // if (!isJPG) {
+        //   this.$message.error('上传头像图片只能是 JPG 格式!');
+        // }
+        if (!isLt100M) {
+          this.$message.error('上传文件大小不能超过 100MB!');
+        }
+        // return isJPG && isLt2M;
+        return isLt100M;
+      },
+      //上传附件显示进度条
+      uploadPorgress(file, fileList,tableList){
+        // console.log(event, file, fileList,tableList);
+        console.log(file)
+        const len=tableList.length;
+        if (file.status === 'ready') {
+          file.fileName=file.name;
+          file.fileSize=file.size;
+          // file.fileType=file.type;
+          file.progressFlag = 'start'; // 显示进度条
+
+          file.loadProgress=0;
+
+          tableList.push(file);
+          var that=this;
+          const interval = setInterval(() => {
+            if (tableList[len]&&tableList[len].loadProgress >= 90) {
+              tableList[len].loadProgress = 90;
+              clearInterval(interval)
+              return
+            }
+            if(tableList[len].progressFlag == 'start'){
+              tableList[len].loadProgress += 20;//进度条进度
+              // that.$set(tableList[len],tableList[len])
+              that.$set(tableList,len,tableList[len])
+              // console.log(tableList[len].loadProgress)
+
+            }
+          }, 500);
+        }
+        if (file.response && file.response.code === 200) {
+          console.log(tableList.length)
+          this.$message({
+            message: '上传成功',
+            type: 'success',
+            duration: 1500,
+            onClose: () => {
+              // const len=tableList.length;
+              file.response.data.progressFlag='stop';
+              tableList[len-1]=file.response.data;
+              this.$set(tableList,tableList)
+            }
+          })
+        }else if(file.response && file.response.code !== 200){
+          tableList[len-1].progressFlag = 'fail';
+          this.$set(tableList,tableList)
+          this.$message.error(file.response.msg);
+        }
+
+        this.$forceUpdate();
       },
       //获取下拉框id和name的公共方法
       getName(id, list, name,code) {
@@ -3127,7 +3201,7 @@
         }else{
           let k = 0;
           for(let i=0;i<this.detailform.topInfoSiteList.length;i++){
-            if(this.detailform.topInfoSiteList[i].country === null 
+            if(this.detailform.topInfoSiteList[i].country === null
             || this.detailform.topInfoSiteList[i].path === null
             || this.detailform.topInfoSiteList[i].path === ""
             || this.detailform.topInfoSiteList[i].country === ""){
