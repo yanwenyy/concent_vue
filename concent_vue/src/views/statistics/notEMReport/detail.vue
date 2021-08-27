@@ -3951,7 +3951,8 @@
     },
     computed: {
       projectStatus() {
-        return this.$store.state.projectStatus.slice(8,12)
+        // return this.$store.state.projectStatus.slice(8,12)
+        return this.$store.state.projectStatus
       },
       bizTypeCode() {
         return this.$store.state.bizTypeCode;
