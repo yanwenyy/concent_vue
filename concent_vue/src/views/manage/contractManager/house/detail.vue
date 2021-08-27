@@ -2193,6 +2193,8 @@ export default {
       }
     }
     return {
+      key:0,
+      currentYear:'',//本年
       sjdwList:[],
       ifOAS:false,
       options1:[
@@ -2842,10 +2844,13 @@ export default {
     },
     //年销售额
     setYearSale(month,year){
-      var yearSale=0;
+      var yearSale=0,currentYearSum=0;
       this.detailform.contractInfoHouseSalesList.forEach((item)=>{
         if(item.salesPerforMonth==month&&item.salesPerforYear==year){
         yearSale+=Number(item.monthSales);
+        }
+        if(item.salesPerforYear==this.currentYear){
+          currentYearSum+=Number(item.monthSales);
         }
       });
       this.detailform.contractInfoHouseSalesList.forEach((item)=>{
@@ -2853,6 +2858,12 @@ export default {
           item.yearSales=yearSale;
         }
        });
+      if(this.detailform.contractInfo.isInSystemUnion=='1'&&this.detailform.contractInfo.isInSystemSub=='1'&&this.detailform.contractInfo.isOutSystemUnion=='1'&&this.detailform.contractInfo.isOutSystemSub=='1'&&this.detailform.contractInfo.isInGroupSub=='1'){
+        this.detailform.contractInfo.contractAmount=currentYearSum.toString();
+        this.$forceUpdate();
+        this.getOurAmount();
+        this.getOurAmount('','','nfb');
+      }
     },
     //年营业收入
     setYearTurnover(month,year){
@@ -3126,6 +3137,9 @@ export default {
 
   },
   mounted() {
+    var date = new Date();
+    var y = date.getFullYear();
+    this.currentYear=y;
     // eslint-disable-next-line no-unde
     this.id=this.p.instid;
     if (this.p.actpoint === "edit"||this.id) {
