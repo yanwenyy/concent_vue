@@ -99,7 +99,7 @@
           </el-tab-pane>
           <el-tab-pane label="主要项目管理">
             <div class="table-div">
-              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+              <el-form v-show="p.actpoint !== 'task'" class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
                 <el-form-item label="项目简称:">
                   <el-input v-model="searchform.design.projectOmit" placeholder="项目简称" clearable></el-input>
                 </el-form-item>
@@ -212,6 +212,7 @@
                   prop="companyBelongName"
                   align="center"
                   show-overflow-tooltip
+                  width="150"
                 >
                 </el-table-column>
                 <el-table-column
@@ -221,6 +222,7 @@
                   prop="projectOmit"
                   align="center"
                   show-overflow-tooltip
+                  width="150"
                 >
                 </el-table-column>
                 <el-table-column
@@ -230,6 +232,7 @@
                   prop="projectName"
                   align="center"
                   show-overflow-tooltip
+                  width="150"
                 >
                 </el-table-column>
                 <el-table-column
@@ -277,7 +280,6 @@
                   label="月末进度%"
                   prop="monthValue"
                   align="center"
-                  show-overflow-tooltip
                   width="150"
                 >
                   <template slot-scope="scope">
@@ -286,6 +288,7 @@
                       @input="scope.row.monthValue = scope.row.monthValue.replace(/[^\d.]/g,'','').replace( /([0-9]+\.[0-9]{2})[0-9]*/,'$1'),setCcsjYmjd(detailform.kc_list,detailform.sumByMon_0,'categorySecondName',scope.$index)"
                       :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                       clearable
+                      @change="monthChange(detailform.kc_list,scope.$index)"
                       v-model="scope.row.monthValue"/>
                   </template>
                 </el-table-column>
@@ -355,9 +358,15 @@
                   prop="remark"
                   align="center"
                   show-overflow-tooltip
+                  width="200"
                 >
+                  <template slot-scope="scope">
+                    <el-input
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                      clearable
+                      v-model="scope.row.remark"/>
+                  </template>
                 </el-table-column>
-
               </el-table>
             </div>
           </el-tab-pane>
@@ -556,7 +565,7 @@
           </el-tab-pane>
           <el-tab-pane v-if="p.gyType=='1'" label="主要项目管理">
             <div class="table-div">
-              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+              <el-form v-show="p.actpoint !== 'task'" class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
                 <el-form-item label="项目名称:">
                   <el-input v-model="searchform.industry.projectName" placeholder="项目名称" clearable></el-input>
                 </el-form-item>
@@ -707,7 +716,7 @@
                       <span @click="getWorkAmount(scope.row)" style="cursor:pointer;color:#409EFF;text-decoration:underline;">产品信息</span>
                     </template>
                   </el-table-column>
-                  <el-table-column
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="推送人"
@@ -715,8 +724,8 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
-                  <el-table-column
+                  </el-table-column> -->
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="联系方式"
@@ -724,7 +733,7 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
+                  </el-table-column> -->
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
@@ -738,7 +747,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="剩余合同额"
-                    prop="htquantity"
+                    prop="htquantity_after"
                     align="center"
                     show-overflow-tooltip
                     width="150"
@@ -753,8 +762,8 @@
                     width="200"
                   >
                     <template slot-scope="scope">
-                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
-                      <span v-else>否</span>
+                      <span v-if="scope.row.includEvat == 1">是</span>
+                      <span v-if="scope.row.includEvat == 0">否</span>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -776,7 +785,6 @@
                     label="工业总产值"
                     prop="industry"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -801,17 +809,18 @@
                     label="装备制造"
                     prop="equipmentManufacturin"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.gy_list, scope.$index, 'industry')"
                         @input="isFloor(scope.row.equipmentManufacturin,scope.$index,detailform.gy_list,'equipmentManufacturin'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'equipmentManufacturin')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.equipmentManufacturin"/>
                       <el-input
+                        @change="suppliesChange(detailform.gy_list, scope.$index, 'overseasIndustry')"
                         @input="isFloor(scope.row.equipmentManufacturinHw,scope.$index,detailform.gy_list,'equipmentManufacturinHw'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'equipmentManufacturinHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -825,17 +834,18 @@
                     label="预购件"
                     prop="tempPrice"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.gy_list, scope.$index, 'industry')"
                         @input="isFloor(scope.row.componentManufacturin,scope.$index,detailform.gy_list,'componentManufacturin'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'componentManufacturin')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.componentManufacturin"/>
                       <el-input
+                        @change="suppliesChange(detailform.gy_list, scope.$index, 'overseasIndustry')"
                         @input="isFloor(scope.row.componentManufacturinHw,scope.$index,detailform.gy_list,'componentManufacturinHw'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'componentManufacturinHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -849,17 +859,18 @@
                     label="其他工业产品"
                     prop="otherIndustrayProduct"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.gy_list, scope.$index, 'industry')"
                         @input="isFloor(scope.row.otherIndustrayProduct,scope.$index,detailform.gy_list,'otherIndustrayProduct'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'otherIndustrayProduct')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.otherIndustrayProduct"/>
                       <el-input
+                        @change="suppliesChange(detailform.gy_list, scope.$index, 'overseasIndustry')"
                         @input="isFloor(scope.row.otherIndustrayProductHw,scope.$index,detailform.gy_list,'otherIndustrayProductHw'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'otherIndustrayProductHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -1062,7 +1073,7 @@
           </el-tab-pane>
           <el-tab-pane v-if="p.gyType=='2'" label="主要产品管理">
             <div class="table-div">
-              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+              <el-form v-show="p.actpoint !== 'task'" class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
                 <el-button @click="exportdata('product','工业制造板块')" type="primary" plain>导出</el-button>
               </el-form>
               <el-table
@@ -1099,6 +1110,7 @@
                     prop="createOrgName"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -1108,6 +1120,7 @@
                     prop="vcode"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -1117,6 +1130,7 @@
                     prop="vname"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -1136,8 +1150,14 @@
                     label="产品数量"
                     align="center"
                     prop="ncount"
-                    show-overflow-tooltip
+                    width="150"
                   >
+                    <template slot-scope="scope">
+                      <el-input
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                      clearable
+                      v-model="scope.row.ncount"/>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     class="listTabel"
@@ -1145,7 +1165,6 @@
                     label="工业总产值"
                     prop="industry"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -1169,7 +1188,6 @@
                     label="装备制造"
                     prop="equipmentManufacturin"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -1193,7 +1211,6 @@
                     label="预购件"
                     prop="tempPrice"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -1217,7 +1234,6 @@
                     label="其他工业产品"
                     prop="otherIndustrayProduct"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -1265,8 +1281,14 @@
                     label="增值税"
                     prop="nvat"
                     align="center"
-                    show-overflow-tooltip
+                    width="150"
                   >
+                    <template v-if="scope.row.vincludevat == 0" slot-scope="scope">
+                      <el-input
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                      clearable
+                      v-model="scope.row.nvat"/>
+                    </template>
                   </el-table-column>
                 </el-table-column>
               </el-table>
@@ -1341,7 +1363,7 @@
           </el-tab-pane>
           <el-tab-pane label="主要项目管理">
             <div class="table-div">
-              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+              <el-form v-show="p.actpoint !== 'task'" class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
                 <el-form-item label="项目名称:">
                   <el-input v-model="searchform.material.projectName" placeholder="项目名称" clearable></el-input>
                 </el-form-item>
@@ -1352,7 +1374,7 @@
               <el-dialog 
                 :visible.sync="projectContentShow"
                 title="标的物信息"
-                width="70%"
+                width="83%"
               > 
                 <el-table
                   :max-height="$tableHeight-10"
@@ -1397,6 +1419,24 @@
                     width="150"
                     align="center"
                     prop="subjectMatterUnit"
+                    show-overflow-tooltip
+                  ></el-table-column>
+                  <el-table-column
+                    v-if="timeShow"
+                    :resizable="false"
+                    label="标的物年份"
+                    width="150"
+                    align="center"
+                    prop="subjectMatterYear"
+                    show-overflow-tooltip
+                  ></el-table-column>
+                  <el-table-column
+                    v-if="timeShow"
+                    :resizable="false"
+                    label="标的物月份"
+                    width="150"
+                    align="center"
+                    prop="subjectMatterMonth"
                     show-overflow-tooltip
                   ></el-table-column>
                   <el-table-column
@@ -1450,6 +1490,7 @@
                     prop="projectName"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
 
@@ -1460,6 +1501,7 @@
                     prop="companyBelongName"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -1485,7 +1527,7 @@
                       {{scope.row.country=='01'?'境内':'境外'}}
                     </template>
                   </el-table-column>
-                  <el-table-column
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="推送人"
@@ -1493,8 +1535,8 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
-                  <el-table-column
+                  </el-table-column> -->
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="联系方式"
@@ -1502,7 +1544,7 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
+                  </el-table-column> -->
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
@@ -1516,7 +1558,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="剩余合同额"
-                    prop="htquantity"
+                    prop="htquantity_after"
                     align="center"
                     show-overflow-tooltip
                     width="150"
@@ -1531,8 +1573,8 @@
                     width="200"
                   >
                     <template slot-scope="scope">
-                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
-                      <span v-else>否</span>
+                      <span v-if="scope.row.includEvat == 1">是</span>
+                      <span v-if="scope.row.includEvat == 0">否</span>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -1554,17 +1596,18 @@
                     label="物资贸易产值"
                     prop="materialTrade"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.wz_list, scope.$index, 'sale')"
                         @input="isFloor(scope.row.sale,scope.$index,detailform.wz_list,'sale'),getGyzzCz(detailform.wz_list,detailform.sumByMon_2,'sale')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.sale"/>
                       <el-input
+                        @change="suppliesChange(detailform.wz_list, scope.$index, 'overseasSale')"
                         @input="isFloor(scope.row.overseasSale,scope.$index,detailform.wz_list,'overseasSale'),getGyzzCz(detailform.wz_list,detailform.sumByMon_2,'overseasSale')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -1774,7 +1817,7 @@
           </el-tab-pane>
           <el-tab-pane label="主要项目管理">
             <div class="table-div">
-              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+              <el-form v-show="p.actpoint !== 'task'" class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
                 <el-form-item label="项目名称:">
                   <el-input v-model="searchform.realty.projectName" placeholder="项目名称" clearable></el-input>
                 </el-form-item>
@@ -1816,6 +1859,7 @@
                     prop="projectName"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -1825,6 +1869,7 @@
                     prop="contractNumber"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -1834,6 +1879,7 @@
                     prop="companyBelongName"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -1856,7 +1902,7 @@
                     show-overflow-tooltip
                   >
                   </el-table-column> -->
-                  <el-table-column
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="推送人"
@@ -1864,8 +1910,8 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
-                  <el-table-column
+                  </el-table-column> -->
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="联系方式"
@@ -1873,7 +1919,7 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
+                  </el-table-column> -->
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
@@ -1887,7 +1933,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="剩余合同额"
-                    prop="htquantity"
+                    prop="htquantity_after"
                     align="center"
                     show-overflow-tooltip
                     width="150"
@@ -1902,8 +1948,8 @@
                     width="200"
                   >
                     <template slot-scope="scope">
-                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
-                      <span v-else>否</span>
+                      <span v-if="scope.row.includEvat == 1">是</span>
+                      <span v-if="scope.row.includEvat == 0">否</span>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -1925,7 +1971,6 @@
                     label="房地产营业收入"
                     prop="realEstateIncome"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -1950,17 +1995,18 @@
                     label="表内营收"
                     prop="inRevenue"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.fdc_list, scope.$index, 'inRevenue')"
                         @input="isFloor(scope.row.inRevenue,scope.$index,detailform.fdc_list,'inRevenue'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'inRevenue')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.inRevenue"/>
                       <el-input
+                        @change="suppliesChange(detailform.fdc_list, scope.$index, 'inRevenueHw')"
                         @input="isFloor(scope.row.inRevenueHw,scope.$index,detailform.fdc_list,'inRevenueHw'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'inRevenueHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -1974,17 +2020,18 @@
                     label="表外权益"
                     prop="offRevenue"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.fdc_list, scope.$index, 'inRevenue')"
                         @input="isFloor(scope.row.offRevenue,scope.$index,detailform.fdc_list,'offRevenue'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenue')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.offRevenue"/>
                       <el-input
+                        @change="suppliesChange(detailform.fdc_list, scope.$index, 'inRevenueHw')"
                         @input="isFloor(scope.row.offRevenueHw,scope.$index,detailform.fdc_list,'offRevenueHw'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenueHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -1998,17 +2045,18 @@
                     label="表外非权益"
                     prop="offRevenueNon"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.fdc_list, scope.$index, 'inRevenue')"
                         @input="isFloor(scope.row.offRevenueNon,scope.$index,detailform.fdc_list,'offRevenueNon'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenueNon')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.offRevenueNon"/>
                       <el-input
+                        @change="suppliesChange(detailform.fdc_list, scope.$index, 'inRevenueHw')"
                         @input="isFloor(scope.row.offRevenueNonHw,scope.$index,detailform.fdc_list,'offRevenueNonHw'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'offRevenueNonHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -2218,7 +2266,7 @@
           </el-tab-pane>
           <el-tab-pane label="主要项目管理">
             <div class="table-div">
-              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+              <el-form v-show="p.actpoint !== 'task'" class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
                 <el-form-item label="项目名称:">
                   <el-input v-model="searchform.secure.projectName" placeholder="项目名称" clearable></el-input>
                 </el-form-item>
@@ -2260,6 +2308,7 @@
                     prop="projectName"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -2269,6 +2318,7 @@
                     prop="contractNumber"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -2278,6 +2328,7 @@
                     prop="companyBelongName"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -2291,7 +2342,7 @@
                       {{scope.row.country=='01'?'境内':'境外'}}
                     </template>
                   </el-table-column>
-                  <el-table-column
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="推送人"
@@ -2299,8 +2350,8 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
-                  <el-table-column
+                  </el-table-column> -->
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="联系方式"
@@ -2308,7 +2359,7 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
+                  </el-table-column> -->
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
@@ -2322,7 +2373,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="剩余合同额"
-                    prop="htquantity"
+                    prop="htquantity_after"
                     align="center"
                     show-overflow-tooltip
                     width="150"
@@ -2337,8 +2388,8 @@
                     width="200"
                   >
                     <template slot-scope="scope">
-                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
-                      <span v-else>否</span>
+                      <span v-if="scope.row.includEvat == 1">是</span>
+                      <span v-if="scope.row.includEvat == 0">否</span>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -2360,17 +2411,18 @@
                     label="金融收入"
                     prop="financialIncome"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.jrbx_list, scope.$index, 'finance')"
                         @input="isFloor(scope.row.finance,scope.$index,detailform.jrbx_list,'finance'),getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'finance')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.finance"/>
                       <el-input
+                        @change="suppliesChange(detailform.jrbx_list, scope.$index, 'overseasFinance')"
                         @input="isFloor(scope.row.overseasFinance,scope.$index,detailform.jrbx_list,'overseasFinance'),getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'overseasFinance')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -2384,17 +2436,18 @@
                     label="保险收入"
                     prop="insuranceIncome"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.jrbx_list, scope.$index, 'finance')"
                         @input="isFloor(scope.row.secure,scope.$index,detailform.jrbx_list,'secure'),getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'secure')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.secure"/>
                       <el-input
+                        @change="suppliesChange(detailform.jrbx_list, scope.$index, 'overseasFinance')"
                         @input="isFloor(scope.row.overseasSecure,scope.$index,detailform.jrbx_list,'overseasSecure'),getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'overseasSecure')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -2408,17 +2461,18 @@
                     label="其他金融收入"
                     prop="otherFinance"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.jrbx_list, scope.$index, 'finance')"
                         @input="isFloor(scope.row.otherFinance,scope.$index,detailform.jrbx_list,'otherFinance'),getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'otherFinance')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.otherFinance"/>
                       <el-input
+                        @change="suppliesChange(detailform.jrbx_list, scope.$index, 'overseasFinance')"
                         @input="isFloor(scope.row.otherFinanceHw,scope.$index,detailform.jrbx_list,'otherFinanceHw'),getGyzzCz(detailform.jrbx_list,detailform.sumByMon_4,'otherFinanceHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -2670,7 +2724,7 @@
           </el-tab-pane>
           <el-tab-pane label="主要项目管理">
             <div class="table-div">
-              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+              <el-form v-show="p.actpoint !== 'task'" class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
                 <el-form-item label="项目名称:">
                   <el-input v-model="searchform.service.projectName" placeholder="项目名称" clearable></el-input>
                 </el-form-item>
@@ -2712,6 +2766,7 @@
                     prop="projectName"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -2721,6 +2776,7 @@
                     prop="contractNumber"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -2730,6 +2786,7 @@
                     prop="companyBelongName"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -2743,7 +2800,7 @@
                       {{scope.row.country=='01'?'境内':'境外'}}
                     </template>
                   </el-table-column>
-                  <el-table-column
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="推送人"
@@ -2751,8 +2808,8 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
-                  <el-table-column
+                  </el-table-column> -->
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="联系方式"
@@ -2760,7 +2817,7 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
+                  </el-table-column> -->
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
@@ -2774,7 +2831,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="剩余合同额"
-                    prop="htquantity"
+                    prop="htquantity_after"
                     align="center"
                     show-overflow-tooltip
                     width="150"
@@ -2789,8 +2846,8 @@
                     width="200"
                   >
                     <template slot-scope="scope">
-                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
-                      <span v-else>否</span>
+                      <span v-if="scope.row.includEvat == 1">是</span>
+                      <span v-if="scope.row.includEvat == 0">否</span>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -2812,17 +2869,18 @@
                     label="工程运营维管"
                     prop="engineeringOperation"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.yy_list, scope.$index, 'engineeringOperation')"
                         @input="isFloor(scope.row.engineeringOperation,scope.$index,detailform.yy_list,'engineeringOperation'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'engineeringOperation')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.engineeringOperation"/>
                       <el-input
+                        @change="suppliesChange(detailform.yy_list, scope.$index, 'engineeringOperationHw')"
                         @input="isFloor(scope.row.engineeringOperationHw,scope.$index,detailform.yy_list,'engineeringOperationHw'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'engineeringOperationHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -2836,17 +2894,18 @@
                     label="信息化运营维管"
                     prop="informationOperation"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.yy_list, scope.$index, 'engineeringOperation')"
                         @input="isFloor(scope.row.informationOperation,scope.$index,detailform.yy_list,'informationOperation'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'informationOperation')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.informationOperation"/>
                       <el-input
+                        @change="suppliesChange(detailform.yy_list, scope.$index, 'engineeringOperationHw')"
                         @input="isFloor(scope.row.informationOperationHw,scope.$index,detailform.yy_list,'informationOperationHw'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'informationOperationHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -2860,17 +2919,18 @@
                     label="物业管理"
                     prop="estateManagement"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.yy_list, scope.$index, 'engineeringOperation')"
                         @input="isFloor(scope.row.estateManagement,scope.$index,detailform.yy_list,'estateManagement'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'estateManagement')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.estateManagement"/>
                       <el-input
+                        @change="suppliesChange(detailform.yy_list, scope.$index, 'engineeringOperationHw')"
                         @input="isFloor(scope.row.estateManagementHw,scope.$index,detailform.yy_list,'estateManagementHw'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'estateManagementHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -2884,17 +2944,18 @@
                     label="其他运营收入"
                     prop="otherOperation"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.yy_list, scope.$index, 'engineeringOperation')"
                         @input="isFloor(scope.row.otherOperation,scope.$index,detailform.yy_list,'otherOperation'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'otherOperation')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.otherOperation"/>
                       <el-input
+                        @change="suppliesChange(detailform.yy_list, scope.$index, 'engineeringOperationHw')"
                         @input="isFloor(scope.row.overseasOtherOperation,scope.$index,detailform.yy_list,'overseasOtherOperation'),getGyzzCz(detailform.yy_list,detailform.sumByMon_5,'overseasOtherOperation')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -3269,7 +3330,7 @@
           </el-tab-pane>
           <el-tab-pane label="主要项目管理">
             <div class="table-div">
-              <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+              <el-form v-show="p.actpoint !== 'task'" class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
                 <el-form-item label="项目名称:">
                   <el-input v-model="searchform.other.projectName" placeholder="项目名称" clearable></el-input>
                 </el-form-item>
@@ -3311,6 +3372,7 @@
                     prop="projectName"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -3320,6 +3382,7 @@
                     prop="contractNumber"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -3329,6 +3392,7 @@
                     prop="companyBelongName"
                     align="center"
                     show-overflow-tooltip
+                    width="150"
                   >
                   </el-table-column>
                   <el-table-column
@@ -3342,7 +3406,7 @@
                       {{scope.row.country=='01'?'境内':'境外'}}
                     </template>
                   </el-table-column>
-                  <el-table-column
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="推送人"
@@ -3350,8 +3414,8 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
-                  <el-table-column
+                  </el-table-column> -->
+                  <!-- <el-table-column
                     class="listTabel"
                     :resizable="false"
                     label="联系方式"
@@ -3359,7 +3423,7 @@
                     align="center"
                     show-overflow-tooltip
                   >
-                  </el-table-column>
+                  </el-table-column> -->
                   <el-table-column
                     class="listTabel"
                     :resizable="false"
@@ -3373,7 +3437,7 @@
                     class="listTabel"
                     :resizable="false"
                     label="剩余合同额"
-                    prop="htquantity"
+                    prop="htquantity_after"
                     align="center"
                     show-overflow-tooltip
                     width="150"
@@ -3388,8 +3452,8 @@
                     width="200"
                   >
                     <template slot-scope="scope">
-                      <span v-if="scope.row.ApiModelProperty == 1">是</span>
-                      <span v-else>否</span>
+                      <span v-if="scope.row.includEvat == 1">是</span>
+                      <span v-if="scope.row.includEvat == 0">否</span>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -3411,17 +3475,18 @@
                     label="设备租赁"
                     prop="equipmentLeasing"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.qt_list, scope.$index, 'equipmentLeasing')"
                         @input="isFloor(scope.row.equipmentLeasing,scope.$index,detailform.qt_list,'equipmentLeasing'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'equipmentLeasing')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.equipmentLeasing"/>
                       <el-input
+                        @change="suppliesChange(detailform.qt_list, scope.$index, 'equipmentLeasingHw')"
                         @input="isFloor(scope.row.equipmentLeasingHw,scope.$index,detailform.qt_list,'equipmentLeasingHw'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'equipmentLeasingHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -3435,17 +3500,18 @@
                     label="交通运输"
                     prop="transportation"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.qt_list, scope.$index, 'equipmentLeasing')"
                         @input="isFloor(scope.row.transportation,scope.$index,detailform.qt_list,'transportation'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'transportation')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.transportation"/>
                       <el-input
+                        @change="suppliesChange(detailform.qt_list, scope.$index, 'equipmentLeasingHw')"
                         @input="isFloor(scope.row.transportationHw,scope.$index,detailform.qt_list,'transportationHw'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'transportationHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -3459,17 +3525,18 @@
                     label="住宿餐饮"
                     prop="accommodationCatering"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.qt_list, scope.$index, 'equipmentLeasing')"
                         @input="isFloor(scope.row.accommodationCatering,scope.$index,detailform.qt_list,'accommodationCatering'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'accommodationCatering')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.accommodationCatering"/>
                       <el-input
+                        @change="suppliesChange(detailform.qt_list, scope.$index, 'equipmentLeasingHw')"
                         @input="isFloor(scope.row.accommodationCateringHw,scope.$index,detailform.qt_list,'accommodationCateringHw'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'accommodationCateringHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -3483,17 +3550,18 @@
                     label="教育培训"
                     prop="educationTraining"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.qt_list, scope.$index, 'equipmentLeasing')"
                         @input="isFloor(scope.row.educationTraining,scope.$index,detailform.qt_list,'educationTraining'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'educationTraining')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.educationTraining"/>
                       <el-input
+                        @change="suppliesChange(detailform.qt_list, scope.$index, 'equipmentLeasingHw')"
                         @input="isFloor(scope.row.educationTrainingHw,scope.$index,detailform.qt_list,'educationTrainingHw'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'educationTrainingHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -3507,17 +3575,18 @@
                     label="信息化建设"
                     prop="informationConstruction"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.qt_list, scope.$index, 'equipmentLeasing')"
                         @input="isFloor(scope.row.informationConstruction,scope.$index,detailform.qt_list,'informationConstruction'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'informationConstruction')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.informationConstruction"/>
                       <el-input
+                        @change="suppliesChange(detailform.qt_list, scope.$index, 'equipmentLeasingHw')"
                         @input="isFloor(scope.row.informationConstructionHw,scope.$index,detailform.qt_list,'informationConstructionHw'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'informationConstructionHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -3531,17 +3600,18 @@
                     label="房屋租赁"
                     prop="leaseHouses"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.qt_list, scope.$index, 'equipmentLeasing')"
                         @input="isFloor(scope.row.leaseHouses,scope.$index,detailform.qt_list,'leaseHouses'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'leaseHouses')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.leaseHouses"/>
                       <el-input
+                        @change="suppliesChange(detailform.qt_list, scope.$index, 'equipmentLeasingHw')"
                         @input="isFloor(scope.row.leaseHousesHw,scope.$index,detailform.qt_list,'leaseHousesHw'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'leaseHousesHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -3555,17 +3625,18 @@
                     label="其它项目"
                     prop="other"
                     align="center"
-                    show-overflow-tooltip
                     width="150"
                   >
                     <template slot-scope="scope">
                       <el-input
+                        @change="suppliesChange(detailform.qt_list, scope.$index, 'equipmentLeasing')"
                         @input="isFloor(scope.row.otherProject,scope.$index,detailform.qt_list,'otherProject'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'otherProject')"
                         v-if="scope.row.country=='01'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
                         clearable
                         v-model="scope.row.otherProject"/>
                       <el-input
+                        @change="suppliesChange(detailform.qt_list, scope.$index, 'equipmentLeasingHw')"
                         @input="isFloor(scope.row.otherProjectHw,scope.$index,detailform.qt_list,'otherProjectHw'),getGyzzCz(detailform.qt_list,detailform.sumByMon_6,'otherProjectHw')"
                         v-if="scope.row.country=='02'"
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
@@ -3578,6 +3649,9 @@
             </div>
           </el-tab-pane>
         </el-tabs>
+      </el-tab-pane>
+      <el-tab-pane label="审批流程" v-if="p.stauts!='1'&&(p.actpoint == 'task'||p.actpoint == 'look')">
+        <Audit-Process :task="p.task||{businessId:p.instid||p.statId,businessType:' engineering_monthly_report_not'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
@@ -3613,6 +3687,7 @@
         }
       }
       return {
+        timeShow:true,
         Authorization:sessionStorage.getItem("token"),
         // 查询产品信息
         workAmountShow: false,
@@ -3814,15 +3889,28 @@
         this.detailform.sumByMon_1.industry=Number(this.detailform.sumByMon_1.industry||0)+1;
         this.$forceUpdate();
       },
-      //勘察设计月末进度
-      setCcsjYmjd(list,obj,name,index){
-        // console.log(list,obj,name,index) detailform.kc_list
+      // 月末
+      monthChange(list,index){
         let num = Number(list[index].monthValue)-Number(list[index].monthStart)
         if (num < 0) {
           num = 0
+          list[index].monthValue = 0
+          this.$message({
+            showClose: true,
+            message: '月末进度应大于月初进度！'
+          });
         }
         list[index].monthFinish = num*list[index].contractMoney/100
         list[index].monthComplete = num*list[index].physicalQuantity/100
+      },
+      //勘察设计月末进度
+      setCcsjYmjd(list,obj,name,index){
+        // let num = Number(list[index].monthValue)-Number(list[index].monthStart)
+        // if (num < 0) {
+        //   num = 0
+        // }
+        // list[index].monthFinish = num*list[index].contractMoney/100
+        // list[index].monthComplete = num*list[index].physicalQuantity/100
         // 改了哪个，产值的哪个变动
         let kind = list[index].categorySecondName
         let money = 0
@@ -3839,6 +3927,39 @@
           this.detailform.sumByMon_0.jszxMonth = money
         } else if (kind === "其它") {
           this.detailform.sumByMon_0.qtMonth = money
+        }
+      },
+      // 计算剩余合同额
+      suppliesChange(list, index, name){
+        if (name == "industry") { // 工业制造
+          list[index].htquantity_after = list[index].htquantity - list[index].industry - list[index].equipmentManufacturin - list[index].componentManufacturin - list[index].otherIndustrayProduct
+        }else if ( name == "overseasIndustry") {
+          list[index].htquantity_after = list[index].htquantity - list[index].overseasIndustry - list[index].equipmentManufacturinHw - list[index].componentManufacturinHw - list[index].otherIndustrayProductHw
+        }       
+        if (name == "sale") { // 物资贸易
+          list[index].htquantity_after = list[index].htquantity - list[index].sale
+        }else if ( name == "overseasSale") {
+          list[index].htquantity_after = list[index].htquantity - list[index].overseasSale
+        }
+        if (name == "inRevenue") { // 房地产
+          list[index].htquantity_after = list[index].htquantity - list[index].inRevenue - list[index].offRevenue - list[index].offRevenueNon
+        } else if (name == "inRevenueHw") {
+          list[index].htquantity_after = list[index].htquantity - list[index].inRevenueHw - list[index].offRevenueHw - list[index].offRevenueNonHw
+        }
+        if (name == "finance") { // 金融保险
+          list[index].htquantity_after = list[index].htquantity - list[index].finance - list[index].secure - list[index].otherFinance
+        } else if (name == "overseasFinance") {
+          list[index].htquantity_after = list[index].htquantity - list[index].overseasFinance - list[index].overseasSecure - list[index].otherFinanceHw
+        }
+        if (name == "engineeringOperation") { // 运营维管
+          list[index].htquantity_after = list[index].htquantity - list[index].engineeringOperation - list[index].informationOperation - list[index].estateManagement - list[index].otherOperation
+        } else if (name == "engineeringOperationHw") {
+          list[index].htquantity_after = list[index].htquantity - list[index].engineeringOperationHw - list[index].informationOperationHw - list[index].estateManagementHw - list[index].overseasOtherOperation
+        }
+        if (name == "equipmentLeasing") { // 其他
+          list[index].htquantity_after = list[index].htquantity - list[index].equipmentLeasing - list[index].transportation - list[index].accommodationCatering - list[index].educationTraining - list[index].informationConstruction - list[index].leaseHouses - list[index].otherProject
+        } else if (name == "equipmentLeasingHw") { 
+          list[index].htquantity_after = list[index].htquantity - list[index].equipmentLeasingHw- list[index].transportationHw - list[index].accommodationCateringHw - list[index].educationTrainingHw - list[index].informationConstructionHw - list[index].leaseHousesHw - list[index].otherProjectHw
         }
       },
       //修改产值
@@ -3919,21 +4040,6 @@
         };
         this.getData();
       },
-      //查询
-      searchDate(type,name){
-        this.searchform[type].reportDate=this.p.reportDate;
-        this.$http
-          .post(
-            '/api/statistics/unProjectReport/list/detail/queryInfo',
-            this.searchform[type],
-          )
-          .then((res) => {
-          var datas=res.data.data;
-          // this.$forceUpdate();
-          this.detailform[name]=datas[name];
-
-        })
-      },
       //导出
       exportdata(type,name){
         this.searchform[type].reportDate=this.p.reportDate;
@@ -3965,20 +4071,20 @@
         })
       },
       //导入
-      // importData(response, file, fileList) {
-      //   if (response && response.code === 200) {
-      //     this.$message({
-      //       message: "导入成功",
-      //       type: "success",
-      //       duration: 1500,
-      //       onClose: () => {
-      //       this.getDetail();
-      //   },
-      //   });
-      //   } else {
-      //     this.$message.error(response.msg);
-      //   }
-      // },
+      importData(response, file, fileList) {
+        if (response && response.code === 200) {
+          this.$message({
+            message: "导入成功",
+            type: "success",
+            duration: 1500,
+            onClose: () => {
+            this.getDetail();
+        },
+        });
+        } else {
+          this.$message.error(response.msg);
+        }
+      },
       //复选下拉框框获取name
       getMultipleName(valueList,list,id,name){
         var _id=[],_name=[];
@@ -4100,6 +4206,7 @@
       },
       //工程类别二级
       getTwo(id) {
+        this.searchform.design.projectTypeSecondId = ''
         this.detailform.sumByMon_3.enginTypeSecondId='';
         this.detailform.sumByMon_3.enginTypeSecondName='';
         this.detailform.sumByMon_3.enginTypeFirstName='';
@@ -4170,6 +4277,12 @@
         }
       },
       saveInfo(formName,type) {
+        console.info(this.detailform.kc_list)
+        this.detailform.kc_list.forEach((element)=>{
+          if (element.monthValue < element.monthStart) {
+            element.monthValue = element.monthStart
+          }
+        })
         var url='';
         if(type=='save'){
           url="/api/statistics/unProjectReport/save/batch/addDetail"
@@ -4265,6 +4378,70 @@
           showinput: true,
         };
       },
+      //查询
+      searchDate(type,name){
+        this.searchform[type].reportDate=this.p.reportDate;
+        this.$http
+          .post(
+            '/api/statistics/unProjectReport/list/detail/queryInfo',
+            this.searchform[type],
+          )
+          .then((res) => {
+          res.data.data.wz_list.forEach((element)=>{
+            // 工业制造
+            if (res.data.data.gy_lis) {
+              res.data.data.gy_list.forEach((element)=>{
+                if (element.country == "01") {
+                  element.htquantity_after = Number(element.htquantity) - Number(element.equipmentManufacturin)- Number(element.componentManufacturin)- Number(element.otherIndustrayProduct)
+                } else {
+                  element.htquantity_after = Number(element.htquantity) - Number(element.equipmentManufacturinHw)- Number(element.componentManufacturinHw)- Number(element.otherIndustrayProductHw)
+                }
+              })            
+            }
+            // 物资贸易
+            if (element.country == "01") {
+              element.htquantity_after = Number(element.htquantity) - Number(element.sale)
+            } else {
+              element.htquantity_after = Number(element.htquantity) - Number(element.overseasSale)
+            }
+            // 房地产
+            res.data.data.fdc_list.forEach((element)=>{
+              if (element.country == "01") {
+                element.htquantity_after = Number(element.htquantity) - Number(element.inRevenue)- Number(element.offRevenue)- Number(element.offRevenueNon)
+              } else {
+                element.htquantity_after = Number(element.htquantity) - Number(element.inRevenueHw)- Number(element.offRevenueHw)- Number(element.offRevenueNonHw)
+              }
+            })
+            // 金融保险 
+            res.data.data.jrbx_list.forEach((element)=>{
+              if (element.country == "01") {
+                element.htquantity_after = Number(element.htquantity) - Number(element.finance)- Number(element.secure)- Number(element.otherFinance)
+              } else {
+                element.htquantity_after = Number(element.htquantity) - Number(element.overseasFinance)- Number(element.overseasSecure)- Number(element.otherFinanceHw)
+              }
+            })
+            // 运营维管
+            res.data.data.yy_list.forEach((element)=>{
+              if (element.country == "01") {
+                element.htquantity_after = Number(element.htquantity) - Number(element.engineeringOperation)- Number(element.informationOperation)- Number(element.estateManagement)- Number(element.otherOperation)
+              } else {
+                element.htquantity_after = Number(element.htquantity) - Number(element.engineeringOperationHw)- Number(element.informationOperationHw)- Number(element.estateManagementHw)- Number(element.overseasOtherOperation)
+              }
+            })
+            // 其他 
+            res.data.data.qt_list.forEach((element)=>{
+              if (element.country == "01") {
+                element.htquantity_after = Number(element.htquantity) - Number(element.equipmentLeasing)- Number(element.transportation)- Number(element.accommodationCatering)- Number(element.educationTraining)- Number(element.informationConstruction)- Number(element.leaseHouses)- Number(element.otherProject)
+              } else {
+                element.htquantity_after = Number(element.htquantity) - Number(element.equipmentLeasingHw)- Number(element.transportationHw)- Number(element.accommodationCateringHw)- Number(element.educationTrainingHw)- Number(element.informationConstructionHw)- Number(element.leaseHousesHw)- Number(element.otherProjectHw)
+              }
+            })
+          })
+          var datas=res.data.data;
+          this.detailform[name]=datas[name];
+
+        })
+      },
       // 加载列表
       getDetail() {
         var data={};
@@ -4278,6 +4455,56 @@
         this.$http
           .post("/api/statistics/unProjectReport/list/queryAllInfo",data )
           .then((res) => {
+          // 工业制造
+          if (res.data.data.gy_lis) {
+            res.data.data.gy_list.forEach((element)=>{
+              if (element.country == "01") {
+                element.htquantity_after = Number(element.htquantity) - Number(element.equipmentManufacturin)- Number(element.componentManufacturin)- Number(element.otherIndustrayProduct)
+              } else {
+                element.htquantity_after = Number(element.htquantity) - Number(element.equipmentManufacturinHw)- Number(element.componentManufacturinHw)- Number(element.otherIndustrayProductHw)
+              }
+            })            
+          }
+          // 物资贸易
+          res.data.data.wz_list.forEach((element)=>{
+            if (element.country == "01") {
+              element.htquantity_after = Number(element.htquantity) - Number(element.sale)
+            } else {
+              element.htquantity_after = Number(element.htquantity) - Number(element.overseasSale)
+            }
+          })
+          // 房地产
+          res.data.data.fdc_list.forEach((element)=>{
+            if (element.country == "01") {
+              element.htquantity_after = Number(element.htquantity) - Number(element.inRevenue)- Number(element.offRevenue)- Number(element.offRevenueNon)
+            } else {
+              element.htquantity_after = Number(element.htquantity) - Number(element.inRevenueHw)- Number(element.offRevenueHw)- Number(element.offRevenueNonHw)
+            }
+          })
+          // 金融保险 
+          res.data.data.jrbx_list.forEach((element)=>{
+            if (element.country == "01") {
+              element.htquantity_after = Number(element.htquantity) - Number(element.finance)- Number(element.secure)- Number(element.otherFinance)
+            } else {
+              element.htquantity_after = Number(element.htquantity) - Number(element.overseasFinance)- Number(element.overseasSecure)- Number(element.otherFinanceHw)
+            }
+          })
+          // 运营维管
+          res.data.data.yy_list.forEach((element)=>{
+            if (element.country == "01") {
+              element.htquantity_after = Number(element.htquantity) - Number(element.engineeringOperation)- Number(element.informationOperation)- Number(element.estateManagement)- Number(element.otherOperation)
+            } else {
+              element.htquantity_after = Number(element.htquantity) - Number(element.engineeringOperationHw)- Number(element.informationOperationHw)- Number(element.estateManagementHw)- Number(element.overseasOtherOperation)
+            }
+          })
+          // 其他 
+          res.data.data.qt_list.forEach((element)=>{
+            if (element.country == "01") {
+              element.htquantity_after = Number(element.htquantity) - Number(element.equipmentLeasing)- Number(element.transportation)- Number(element.accommodationCatering)- Number(element.educationTraining)- Number(element.informationConstruction)- Number(element.leaseHouses)- Number(element.otherProject)
+            } else {
+              element.htquantity_after = Number(element.htquantity) - Number(element.equipmentLeasingHw)- Number(element.transportationHw)- Number(element.accommodationCateringHw)- Number(element.educationTrainingHw)- Number(element.informationConstructionHw)- Number(element.leaseHousesHw)- Number(element.otherProjectHw)
+            }
+          })
           var datas=res.data.data;
           this.detailform=datas;
           this.detailform.sumByMon_0=datas.sumByMon_0||{};
@@ -4318,6 +4545,11 @@
         this.$http.post("/api/statistics/productbase/list/getBdwProduct",{projectId: [row.projectId]} )
           .then((res) => {
             this.projectContentList = res.data.data
+            if ((this.projectContentList[0].subjectMatterYear && this.projectContentList[0].subjectMatterMonth)!== null) {
+              this.timeShow = true
+            } else {
+              this.timeShow = false
+            }
           })
         this.projectContentShow = true
       }
