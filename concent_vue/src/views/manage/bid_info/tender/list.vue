@@ -16,7 +16,6 @@
                 filterable
                 placeholder="请选择"
                 @change="getEngineering"
-                size="mini"
                 v-model="searchform.enginTypeFirstId"
               >
                 <el-option
@@ -115,7 +114,6 @@
                 filterable
                 placeholder="请选择"
                 @change="getTwo"
-                size="mini"
                 v-model="searchform.noticeTypeId"
               >
                 <el-option
@@ -157,7 +155,6 @@
                 filterable
                 placeholder="请选择"
                 @change="getTwo"
-                size="mini"
                 v-model="searchform.isWinBid"
               >
                 <el-option
