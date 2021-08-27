@@ -18,7 +18,7 @@
             prop="orgName"
           >
             <el-input clearable disabled placeholder="请输入内容" v-model="detailform.orgName" class="input-with-select">
-              <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline" @click="addZhb" ></el-button>
+              <!--<el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline" @click="addZhb" ></el-button>-->
             </el-input>
             <!--<el-select-->
               <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
@@ -171,17 +171,18 @@
       // this.getDetail();
       if(this.p.actpoint=='addZhb'||this.p.actpoint=='eidt'||this.p.actpoint=='look'){
         var msg=this.p.msg;
-        // console.log(msg)
-        this.detailform.orgName=msg.orgName;
-        this.detailform.orgCode=msg.orgCode;
-        this.detailform.orgType=msg.orgType;
-        this.detailform.governingProvinceName=msg.governingProvinceName;
-        this.detailform.principalName=msg.principalName;
-        this.detailform.principalContactNumber=msg.principalContactNumber;
-        this.detailform.principalGrade=msg.principalGrade;
-        this.detailform.provinceName=msg.provinceName;
-        this.detailform.provinceContactNumber=msg.provinceContactNumber;
-        this.detailform.provinceGrade=msg.provinceGrade;
+        // console.logthis.detailform.orgName=msg.orgName;
+        // this.detailform.orgCode=msg.orgCode;
+        // this.detailform.orgType=msg.orgType;
+        // this.detailform.governingProvinceName=msg.governingProvinceName;
+        // this.detailform.principalName=msg.principalName;
+        // this.detailform.principalContactNumber=msg.principalContactNumber;
+        // this.detailform.principalGrade=msg.principalGrade;
+        // this.detailform.provinceName=msg.provinceName;
+        // this.detailform.provinceContactNumber=msg.provinceContactNumber;
+        // this.detailform.provinceGrade=msg.provinceGrade;(msg)
+        //
+        this.detailform=msg;
         this.$forceUpdate();
         // console.log(this.detailform)
       }

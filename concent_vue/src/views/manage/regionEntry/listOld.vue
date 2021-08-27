@@ -94,11 +94,28 @@
           this.$message.error("请选择一条数据");
           return false;
         }
-        let p = {actpoint: "addZhb", msg: this.multipleSelection[0]};
-        this.$router.push({
-          path: "../detail/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
+        // let p = {actpoint: "addZhb", msg: this.multipleSelection[0]};
+        // this.$router.push({
+        //   path: "../detail/",
+        //   query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        // });
+        this.$http
+          .post(
+            '/api/contract/regionalInfo/list/batchSave',
+            JSON.stringify(this.multipleSelection[0]),
+            {useJson: true}
+          )
+          .then((res) => {
+            if (res.data.code === 200) {
+              this.$message({
+                message:  `保存成功`,
+                type: "success",
+              });
+              this.back();
+            }else{
+              this.$message.error(res.data.msg)
+            }
+          });
       },
       back(){
         this.$router.back();

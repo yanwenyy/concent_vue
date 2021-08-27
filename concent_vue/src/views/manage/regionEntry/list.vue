@@ -214,7 +214,7 @@
       add(){
         let p = {actpoint: "add"};
         this.$router.push({
-          path: "./detail/",
+          path: "./listOld/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       },
