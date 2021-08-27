@@ -895,9 +895,9 @@
                   <!--@click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile','commonFilesList1')">-->
                   <!--点击上传-->
                 <!--</el-button>-->
-
+                <!--:headers="{'Authorization':Authorization}"-->
                 <el-upload
-                  :headers="{'Authorization':Authorization}"
+
                   v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                   class="upload-demo detailUpload detatil-flie-btn"
                   :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
@@ -3184,11 +3184,6 @@
       },
       saveInfo(formName,type) {
         this.detailform.commonFilesList=this.detailform.commonFilesList1.concat(this.detailform.commonFilesList2)
-        this.detailform.commonFilesList.forEach((item)=>{
-          if(item.progressFlag=='fail'){
-            delete item;
-          }
-        });
         var url='';
         this.detailform.contractInfo.constructionOrgId = this.detailform.constructionOrgList.join(",")
         if(type=='save'){
