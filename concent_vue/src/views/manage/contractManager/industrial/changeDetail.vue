@@ -67,6 +67,20 @@
                       v-model="detailFormBefore.contractInfo.constructionOrg"
                     />
                   </el-form-item>
+                  <el-form-item
+                    label="是否客户:"
+                  >
+                  <el-switch
+                    disabled
+                    class="inline-formitem-switch"
+                    v-model="detailFormBefore.contractInfo.isClientele"
+                    active-color="#409EFF"
+                    inactive-color="#ddd"
+                    active-value="1"
+                    inactive-value="0"
+                  >
+                  </el-switch>
+                  </el-form-item>
                   <br>
                   <el-form-item
                     label="合同所属板块:"
@@ -1344,27 +1358,6 @@
                     v-model="detailform.contractInfo.contractCode"
                   />
                 </el-form-item>
-                <!-- <el-form-item
-                  label="客户名称:"
-                  prop="contractInfo.constructionOrg"
-                  :rules="{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }"
-
-                >
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                    clearable
-
-                    placeholder="请输入"
-
-                    v-model="detailform.contractInfo.constructionOrg"
-
-                  />
-
-                </el-form-item> -->
                 <el-form-item
                   label="客户名称:"
                   prop="contractInfo.constructionOrgId"
@@ -1377,6 +1370,7 @@
                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     v-model="constructionOrgList"
                     v-if="detailform.contractInfo.isClientele=='1'"
+                    @change="companyBuildChange"
                     multiple
                     filterable
                     collapse-tags
@@ -1392,14 +1386,15 @@
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     v-model="constructionOrgList"
                     v-if="detailform.contractInfo.isClientele!='1'"
+                    @change="companyBuildChange"
                     multiple
                     filterable
                     collapse-tags
                     placeholder="请选择">
                       <el-option
                         :key="index"
-                        :label="item.detailName"
-                        :value="item.id"
+                        :label="item.customerName"
+                        :value="item.customerId"
                         v-for="(item, index) in sjdwList"
                       ></el-option>
                   </el-select>
@@ -1422,7 +1417,7 @@
                     inactive-color="#ddd"
                     active-value="1"
                     inactive-value="0"
-                    @change="constructionOrgList=''"
+                    @change="companyBuildClear"
                   >
                   </el-switch>
                 </el-form-item>
@@ -4028,6 +4023,8 @@
             item.value=item.companyName;
             item.detailName=item.companyName;
             item.id=item.uuid;
+            item.customerName=item.companyName;
+            item.customerId=item.uuid;
           })
         });
 
@@ -4096,6 +4093,34 @@
             (item) => item.id == id
           ).detailName;
         }
+      },
+     //建设单位下拉赋值
+      companyBuildChange(){
+        this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
+        console.info(this.detailform.contractInfo.constructionOrgId)
+        this.getBuildName();
+      },
+      //建设单位通过ID查找NAME
+      getBuildName(){
+        var nameList = []
+        var customerList = this.pubCustomers
+        this.constructionOrgList.forEach(idCheck => {
+          let customer = customerList.find(item1=>item1.customerId===idCheck)
+          if(customer){
+            nameList.push(customer.customerName)
+          }
+          let outside = this.sjdwList.find(item2=>item2.customerId===idCheck)
+          if(outside){
+            nameList.push(outside.customerName)
+          }
+
+        })
+        this.detailform.contractInfo.constructionOrg = nameList.join(",")
+      },
+      //切换是否客户
+      companyBuildClear(){
+        this.detailform.contractInfo.constructionOrgId = '',
+        this.constructionOrgList = []
       },
       tableRowClassName: function (row, index) {
         if (row.row.isDelete=='1') {
@@ -4911,7 +4936,6 @@
         this.detailform.srcId=this.id;
         this.detailform.commonFilesList=this.detailform.commonFilesList1.concat(this.detailform.commonFilesList2)
         var url='';
-        this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
         if(type=='save'){
           url=`/api/contract/contract/ContractInfo/detail/${this.p.actpoint === "add"?'saveChangeRecord':'updateChangeRecord'}`;
         }else{
@@ -5033,8 +5057,8 @@
           this.detailFormBefore.zplx=beforData.contractInfo.otherAssemblyTypeId&&beforData.contractInfo.otherAssemblyTypeId.split(",");
           this.detailFormBefore.jzlx=beforData.contractInfo.otherBuildingTypeId&&beforData.contractInfo.otherBuildingTypeId.split(",");
           this.detailFormBefore.jzjglx=beforData.contractInfo.otherBuildingStructureTypeId&&beforData.contractInfo.otherBuildingStructureTypeId.split(",");
-          if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
-            this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
+          if(afterData.contractInfo.constructionOrgId != '' ||afterData.contractInfo.constructionOrgId != null){
+            this.constructionOrgList = afterData.contractInfo.constructionOrgId.split(",");
           }
           this.detailform.contractInfo.changeOurAmount = this.detailform.contractInfo.ourAmount;
           });
