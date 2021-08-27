@@ -2849,9 +2849,10 @@ export default {
         if(item.salesPerforMonth==month&&item.salesPerforYear==year){
         yearSale+=Number(item.monthSales);
         }
-        if(item.salesPerforYear==this.currentYear){
-          currentYearSum+=Number(item.monthSales);
-        }
+        // if(item.salesPerforYear==this.currentYear){
+        //   currentYearSum+=Number(item.monthSales);
+        // }
+        currentYearSum+=Number(item.monthSales);
       });
       this.detailform.contractInfoHouseSalesList.forEach((item)=>{
         if(item.salesPerforMonth==month&&item.salesPerforYear==year){
