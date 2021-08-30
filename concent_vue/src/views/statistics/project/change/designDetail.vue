@@ -36,7 +36,7 @@
                 style="width: 32.5%">
                 <el-input
                   clearable
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  disabled
                   placeholder="请输入"
                   v-model="detailForm.project.projectName"/>
               </el-form-item>
@@ -45,7 +45,7 @@
                 prop="project.projectForeginName"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  disabled
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.projectForeginName"/>
@@ -63,7 +63,7 @@
             </el-row>
             <!--项目性质-->
             <el-row>
-              <el-form-item
+              <!-- <el-form-item
                 label="项目性质(一级):"
                 prop="project.projectNatureFirstId"
                 style="width: 32.5%">
@@ -99,7 +99,7 @@
                     :value="item.id"
                     v-for="(item, index) in projectNatureTwo"/>
                 </el-select>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item
                 v-if="detailForm.project.projectNatureSecondId === 'd4b6c373a60246a8a5166ddb0bf46c21' || detailForm.project.projectNatureSecondId === '7369abc48e264096a37783de01b0d4cc'"
                 label="是否为联合体:"
@@ -157,7 +157,7 @@
                 :label="detailForm.project.projectNatureFirstId === '7031076e7a5f4225b1a89f31ee017802'?'投资单位:':'承建单位:'"
                 prop="project.companyBuiltName"
                 style="width: 32.5%">
-                <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailForm.project.companyBuiltName" class="input-with-select">
+                <el-input clearable disabled placeholder="请输入内容" v-model="detailForm.project.companyBuiltName" class="input-with-select">
                   <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('承建单位',detailForm.project.companyBuiltId,false)" ></el-button>
                 </el-input>
               </el-form-item>
@@ -184,7 +184,7 @@
                 prop="project.isBureauIndex"
                 style="width: 32.5%">
                 <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  disabled
                   class="inline-formitem-switch"
                   v-model="detailForm.project.isBureauIndex"
                   active-color="#409EFF"
@@ -193,7 +193,8 @@
                   inactive-value="1"/>
               </el-form-item>
             </el-row>
-
+          <el-row>
+            <el-col :span="8">
               <el-form-item
                 label="建设单位:"
                 prop="project.companyBuildId"
@@ -201,9 +202,9 @@
                     required: true,
                     message: '此项不能为空',
                     trigger: 'blur',
-                  }"
-                style="width: 32.5%">
+                  }">
                   <el-select
+                    disabled
                     v-model="constructionOrgList"
                     v-if="detailForm.project.isClientele=='1'"
                     multiple
@@ -218,6 +219,7 @@
                     </el-option>
                   </el-select>
                   <el-select
+                    disabled
                     v-model="constructionOrgList"
                     v-if="detailForm.project.isClientele!='1'"
                     multiple
@@ -232,6 +234,7 @@
                       ></el-option>
                   </el-select>
               </el-form-item>
+              </el-col>
               <el-col :span="8">
                 <el-form-item
                   class="inline-formitem"
@@ -244,7 +247,7 @@
                     }"
                 >
                   <el-switch
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    disabled
                     class="inline-formitem-switch"
                     v-model="detailForm.project.isClientele"
                     active-color="#409EFF"
@@ -256,6 +259,7 @@
                   </el-switch>
                 </el-form-item>
               </el-col>
+          </el-row>
             <!--工程类别(一级)-->
             <el-row>
               <el-form-item
@@ -263,7 +267,7 @@
                 prop="project.projectTypeFirstId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  disabled
                   clearable
                   filterable
                   placeholder="请选择"
@@ -281,7 +285,7 @@
                 prop="project.projectTypeSecondId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  disabled
                   clearable
                   filterable
                   @change="getThree"
@@ -374,7 +378,7 @@
                 <el-select
                   filterable
                   clearable
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  disabled
                   placeholder="请选择"
                   @change="getName(detailForm.project.categorySecondId, bizTypeCodeTwo, 'categorySecondName','categorySecondCode')"
                   v-model="detailForm.project.categorySecondId">
@@ -385,12 +389,27 @@
                     v-for="(item, index) in bizTypeCodeTwo"/>
                 </el-select>
               </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                  label="设计单位:"
+                  prop="project.companyDesign"
+                  style="width: 32.5%">
+                  <el-input
+                    disabled
+                    clearable
+                    placeholder="请选择设计单位"
+                    v-model="detailForm.project.companyDesign">
+                    <el-button slot="append" icon="el-icon-circle-plus-outline"  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                    @click="openComMul(detailForm.project.companyDesignId,detailForm.project.companyDesign,'/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
+                  </el-input>
+                </el-form-item>
               <el-form-item
                 label="签约/使用资质单位:"
                 prop="project.companyName"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  disabled
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.companyName">
@@ -493,7 +512,7 @@
                 prop="project.marketFirstId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  disabled
                   clearable
                   filterable
                   placeholder="请选择"
@@ -516,7 +535,7 @@
                 }:{}"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'"
+                  disabled
                   filterable
                   clearable
                   @change="getName(detailForm.project.marketSecondId, emergingMarketTwo, 'marketSecondName','marketSecondCode')"
@@ -643,7 +662,7 @@
                   <template slot="append">(万元)</template>
                 </el-input>
               </el-form-item>
-              <el-form-item
+              <!-- <el-form-item
                 label="工程合同额(万元):"
                 prop="project.contractAmountEngine"
                 :rules="rules.project.isMustMoney"
@@ -657,11 +676,11 @@
                   <template slot="prepend">¥</template>
                   <template slot="append">(万元)</template>
                 </el-input>
-              </el-form-item>
+              </el-form-item> -->
             </el-row>
             <!--合同总额(万元)-->
             <el-row>
-              <el-form-item
+              <!-- <el-form-item
                 label="合同额增减(万元):"
                 prop="project.contractAmountChange"
                 style="width: 32.5%">
@@ -673,7 +692,7 @@
                   <template slot="prepend">¥</template>
                   <template slot="append">(万元)</template>
                 </el-input>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item
                 label="合同总额(万元):"
                 prop="project.contractAmountTotal"
@@ -741,7 +760,7 @@
                 prop="project.contractStartTime"
                 style="width: 32.5%">
                 <el-date-picker
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  disabled
                   v-model="detailForm.project.contractStartTime"
                   type="date"
                   value-format="timestamp"
@@ -752,7 +771,7 @@
                 prop="project.contractEndTime"
                 style="width: 32.5%">
                 <el-date-picker
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  disabled
                   v-model="detailForm.project.contractEndTime"
                   type="date"
                   value-format="timestamp"
@@ -779,7 +798,7 @@
                 prop="project.contractSignTime"
                 style="width: 32.5%">
                 <el-date-picker
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  disabled
                   v-model="detailForm.project.contractSignTime"
                   type="date"
                   value-format="timestamp"
@@ -1896,6 +1915,8 @@
     <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
     <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
     <related-contract  v-if="contractStatas" ref="infoCS" @getPosition="goAddDetail"></related-contract>
+    <!--多选的单位列表组件-->
+    <company-mul v-if="companyMulStatus" ref="comAdd" @getComList="getComList"></company-mul>
   </div>
 </template>
 
@@ -1905,11 +1926,12 @@
   import { isMoney, isMobile, isPhone } from '@/utils/validate'
   import CompanyTree from '../../companyTree'
   import RelatedContract from '../relatedContract'
+  import companyMul from '@/components/companiesMultiple'
 
   export default {
     name: 'change',
     components: {
-      Tree, FileUpload,CompanyTree,RelatedContract
+      Tree, FileUpload,CompanyTree,RelatedContract,companyMul
     },
     data() {
       const validateMoney = (rule, value, callback) => {
@@ -1958,6 +1980,7 @@
         }
       }
       return {
+        companyMulStatus:false,//设计单位等多选列表状态
         uuid: null,
         DwVisible: false,
         treeStatas: false,
@@ -2253,6 +2276,13 @@
         });
     },
     methods: {
+      //打开多选的单位列表
+      openComMul(ids,names,url,type){
+        this.companyMulStatus=true;
+        this.$nextTick(() => {
+          this.$refs.comAdd.init(ids,names,url,type);
+        })
+      },
       //设置主地点
       setMain(i,list){
         list.forEach((item,index)=>{
