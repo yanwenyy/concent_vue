@@ -1658,7 +1658,7 @@
                   </template>
                 </el-table-column>
               </el-table>
-              <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
+              <p  class="detail-title"  v-if="detailform.contractInfo.isYearContract=='0'" style="overflow: hidden；margin-right: 30px">
                 <span>销售业绩:</span>
                 <el-button
                   v-show="p.actpoint != 'look'&&p.actpoint!='task'"
@@ -1670,6 +1670,7 @@
                 >
               </p>
               <el-table
+                v-if="detailform.contractInfo.isYearContract=='0'"
                 :data="detailform.contractInfoHouseSalesList"
                 :header-cell-style="{
                 'text-align': 'center',
@@ -1740,9 +1741,10 @@
                   label="本月销售金额(万元)"
                   align="center"
                   prop="monthSales"
-                  width="400"
+
                   show-overflow-tooltip
                 >
+                  <!--width="400"-->
                   <template slot-scope="scope">
                     <el-form-item class="tabelForm" :prop="'contractInfoHouseSalesList.' + scope.$index + '.monthSales'" :rules='rules.contractAmount'>
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
@@ -1759,99 +1761,99 @@
                     <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
                   </template>
                 </el-table-column>
-                <el-table-column
-                  :resizable="false"
-                  label="本月营业收入(万元)"
-                  width="400"
-                  align="center"
-                  prop="monthIncome"
-                  show-overflow-tooltip
-                >
-                  <template slot-scope="scope">
-                    <el-form-item class="tabelForm" :prop="'contractInfoHouseSalesList.' + scope.$index + '.monthIncome'" :rules='rules.contractAmount'>
-                      <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                      <el-input
-                        @blur="setYearTurnover(scope.row.salesPerforMonth,scope.row.salesPerforYear)"
-                        v-model="scope.row.monthIncome"
-                        clearable
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                      >
-                        <template slot="prepend">¥</template>
-                        <template slot="append">(万元)</template>
-                      </el-input>
-                    </el-form-item>
-                    <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  :resizable="false"
-                  label="本年销售金额(万元)"
-                  align="center"
-                  width="200"
-                  prop="yearSales"
-                  show-overflow-tooltip
-                >
-                  <template slot-scope="scope">
-                    {{scope.row.yearSales}}
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  :resizable="false"
-                  label="本年营业收入(万元)"
-                  width="200"
-                  align="center"
-                  prop="yearIncome"
-                  show-overflow-tooltip
-                >
-                  <template slot-scope="scope">
-                    {{scope.row.yearIncome}}
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  :resizable="false"
-                  label="开发进度描述"
-                  width="150"
-                  align="center"
-                  prop="description"
-                  show-overflow-tooltip
-                >
-                  <template slot-scope="scope">
-                    <el-input
-                      clearable
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                      v-model="scope.row.description"
-                    ></el-input>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  :resizable="false"
-                  label="是否完工"
-                  width="150"
-                  align="center"
-                  prop="isFinish"
-                  show-overflow-tooltip
-                >
-                  <template slot-scope="scope">
-                    <el-radio :disabled="p.actpoint === 'look'||p.actpoint=='task'" v-model="scope.row.isFinish" label="0">是</el-radio>
-                    <el-radio :disabled="p.actpoint === 'look'||p.actpoint=='task'" v-model="scope.row.isFinish" label="1">否</el-radio>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  :resizable="false"
-                  fixed="right"
-                  label="操作"
-                  align="center"
-                  show-overflow-tooltip
-                  v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
-                  width="80">
-                  <template slot-scope="scope">
-                    <el-link
-                      :underline="false"
-                      @click="del(scope.$index,scope.row,detailform.contractInfoHouseSalesList,'yj')"
-                      type="warning">删除
-                    </el-link>
-                  </template>
-                </el-table-column>
+                <!--<el-table-column-->
+                  <!--:resizable="false"-->
+                  <!--label="本月营业收入(万元)"-->
+                  <!--width="400"-->
+                  <!--align="center"-->
+                  <!--prop="monthIncome"-->
+                  <!--show-overflow-tooltip-->
+                <!--&gt;-->
+                  <!--<template slot-scope="scope">-->
+                    <!--<el-form-item class="tabelForm" :prop="'contractInfoHouseSalesList.' + scope.$index + '.monthIncome'" :rules='rules.contractAmount'>-->
+                      <!--&lt;!&ndash;@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"&ndash;&gt;-->
+                      <!--<el-input-->
+                        <!--@blur="setYearTurnover(scope.row.salesPerforMonth,scope.row.salesPerforYear)"-->
+                        <!--v-model="scope.row.monthIncome"-->
+                        <!--clearable-->
+                        <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                      <!--&gt;-->
+                        <!--<template slot="prepend">¥</template>-->
+                        <!--<template slot="append">(万元)</template>-->
+                      <!--</el-input>-->
+                    <!--</el-form-item>-->
+                    <!--&lt;!&ndash; <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> &ndash;&gt;-->
+                  <!--</template>-->
+                <!--</el-table-column>-->
+                <!--<el-table-column-->
+                  <!--:resizable="false"-->
+                  <!--label="本年销售金额(万元)"-->
+                  <!--align="center"-->
+                  <!--width="200"-->
+                  <!--prop="yearSales"-->
+                  <!--show-overflow-tooltip-->
+                <!--&gt;-->
+                  <!--<template slot-scope="scope">-->
+                    <!--{{scope.row.yearSales}}-->
+                  <!--</template>-->
+                <!--</el-table-column>-->
+                <!--<el-table-column-->
+                  <!--:resizable="false"-->
+                  <!--label="本年营业收入(万元)"-->
+                  <!--width="200"-->
+                  <!--align="center"-->
+                  <!--prop="yearIncome"-->
+                  <!--show-overflow-tooltip-->
+                <!--&gt;-->
+                  <!--<template slot-scope="scope">-->
+                    <!--{{scope.row.yearIncome}}-->
+                  <!--</template>-->
+                <!--</el-table-column>-->
+                <!--<el-table-column-->
+                  <!--:resizable="false"-->
+                  <!--label="开发进度描述"-->
+                  <!--width="150"-->
+                  <!--align="center"-->
+                  <!--prop="description"-->
+                  <!--show-overflow-tooltip-->
+                <!--&gt;-->
+                  <!--<template slot-scope="scope">-->
+                    <!--<el-input-->
+                      <!--clearable-->
+                      <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                      <!--v-model="scope.row.description"-->
+                    <!--&gt;</el-input>-->
+                  <!--</template>-->
+                <!--</el-table-column>-->
+                <!--<el-table-column-->
+                  <!--:resizable="false"-->
+                  <!--label="是否完工"-->
+                  <!--width="150"-->
+                  <!--align="center"-->
+                  <!--prop="isFinish"-->
+                  <!--show-overflow-tooltip-->
+                <!--&gt;-->
+                  <!--<template slot-scope="scope">-->
+                    <!--<el-radio :disabled="p.actpoint === 'look'||p.actpoint=='task'" v-model="scope.row.isFinish" label="0">是</el-radio>-->
+                    <!--<el-radio :disabled="p.actpoint === 'look'||p.actpoint=='task'" v-model="scope.row.isFinish" label="1">否</el-radio>-->
+                  <!--</template>-->
+                <!--</el-table-column>-->
+                <!--<el-table-column-->
+                  <!--:resizable="false"-->
+                  <!--fixed="right"-->
+                  <!--label="操作"-->
+                  <!--align="center"-->
+                  <!--show-overflow-tooltip-->
+                  <!--v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"-->
+                  <!--width="80">-->
+                  <!--<template slot-scope="scope">-->
+                    <!--<el-link-->
+                      <!--:underline="false"-->
+                      <!--@click="del(scope.$index,scope.row,detailform.contractInfoHouseSalesList,'yj')"-->
+                      <!--type="warning">删除-->
+                    <!--</el-link>-->
+                  <!--</template>-->
+                <!--</el-table-column>-->
               </el-table>
             </div>
         </el-tab-pane>
