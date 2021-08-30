@@ -156,7 +156,7 @@
         <el-table-column
           :width="150"
           align="center"
-          label="是否发布"
+          label="是否共享"
           prop="isShare"
           show-overflow-tooltip
         >
@@ -260,6 +260,7 @@ export default {
     return {
       page: {current: 1, size: 20, total: 0, records: []},
       searchform: {
+        queryType:'1',
         current: 1,
         size: 20,
         uuid: '',
@@ -487,6 +488,10 @@ export default {
       {
         this.$message.info("请选择一条信息进行修改！");
         return;
+      }
+      if(this.multipleSelection[0].flowStatus=='check'||this.multipleSelection[0].flowStatus=='pass'){
+        this.$message.info("此条数据不可修改！");
+        return false;
       }
       this.dialogEdit  =true;
 

@@ -224,6 +224,7 @@ export default {
     return {
       page: {current: 1, size: 20, total: 0, records: []},
       searchform: {
+        queryType:'2',
         current: 1,
         size: 20,
         uuid: '',
