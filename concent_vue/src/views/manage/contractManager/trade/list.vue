@@ -443,10 +443,10 @@ export default {
       this.multipleSelection.forEach((item) => {
         if(item.flowStatus=='edit'||item.flowStatus=='reject'){
         uuids.push(item.uuid);
-      }else{
-        this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
-        return itemStatus=false;
-      }
+        }else{
+          this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
+          return itemStatus=false;
+        }
     })
       if(itemStatus){
         this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {

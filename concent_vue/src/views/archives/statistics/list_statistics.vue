@@ -311,10 +311,12 @@ export default {
       // }
       let uuids = []
       this.multipleSelection.forEach((item) => {
-        if (item.uuid != null) {
+        if(item.flowStatus=='edit'||item.flowStatus=='reject'){
           uuids.push(item.uuid);
+        }else{
+          this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
+          return itemStatus=false;
         }
-
       })
       this.$confirm('此操作将永久删除该资审信息, 是否继续?', '提示', {
         confirmButtonText: '确定',
