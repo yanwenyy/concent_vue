@@ -622,6 +622,11 @@ export default {
 .el-dialog{
   width: 60%;
 }
+>>>.el-dialog__body{
+  padding: 0 20px!important;
+  height:60vh;
+  overflow: auto;
+}
 .el-table__row {
   cursor: pointer;
 }
