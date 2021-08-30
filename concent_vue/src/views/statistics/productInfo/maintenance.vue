@@ -280,7 +280,7 @@ export default {
                     this.sub('form')
                   }).catch(() => {
                     this.$refs[formName].resetFields();
-                    this.dialogFormVisible=false;        
+                    this.dialogFormVisible=false;
                   });
                 } else {
                   this.sub('form')
@@ -473,6 +473,9 @@ export default {
 <style scoped>
 .el-dialog{
   width: 60%;
+}
+>>>.el-dialog__body{
+  padding: 0 20px!important;
 }
 .el-table__row {
   cursor: pointer;
