@@ -102,6 +102,15 @@ export default {
                   'defaultpage': false
                 },
                 {
+                  'name': '信息恢复跟踪',
+                  'path': '/manage/proposal/track_back',
+                  'component': '/manage/proposal/track_back',
+                  'iconCls': 'el-icon-aim',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
                   'name': '项目信息跟踪详情',
                   'path': '/manage/proposal/track_detail',
                   'component': '/manage/proposal/track_detail',
