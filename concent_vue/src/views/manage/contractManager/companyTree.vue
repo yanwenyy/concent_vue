@@ -207,4 +207,9 @@
     overflow: auto;
     margin-bottom: 20px;
   }
+  @media (min-width: 1300px) and (max-width: 1500px) {
+    .tree-div{
+      height: 250px!important;
+    }
+  }
 </style>
