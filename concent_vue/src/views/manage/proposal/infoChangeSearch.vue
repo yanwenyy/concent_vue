@@ -49,6 +49,8 @@
         </el-form-item>
       </el-form>
       <el-table
+        :max-height="$dialogTableHeight"
+        :height="$dialogTableHeight"
         :data="dataList"
         border
         v-loading="dataListLoading"
@@ -255,7 +257,7 @@
       },
       // 单选框
       getCurrentRow(row) { // 这个 row == 上面的val
-        this.currentRow = row;  
+        this.currentRow = row;
         this.radioRow = row.topOrgId
       },
       searchFromSubmit() {
@@ -266,8 +268,11 @@
   }
 </script>
 <style scoped>
+  >>>.el-dialog__header{
+    padding: 0 20px;
+  }
   .dialog-footer {
-    margin-top: 50px;
+    margin-top: 10px;
     text-align: center;
   }
 
