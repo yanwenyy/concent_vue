@@ -569,7 +569,6 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
-              <br>
               <el-form-item
                 label="新兴市场类别(一级):"
                 prop="contractInfo.marketFirstNameId"
