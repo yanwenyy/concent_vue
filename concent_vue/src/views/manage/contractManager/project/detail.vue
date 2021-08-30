@@ -6633,6 +6633,56 @@
           </div>
         </div>
       </el-tab-pane>
+      <el-tab-pane label="旧实物工程量">
+        <div class="detailBoxBG htfs">
+          <div>
+            <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
+              <span>旧实物工程量列表: </span>
+            </p>
+            <el-table
+              :data="oldEngineeringList"
+              :header-cell-style="{
+                'text-align': 'center',
+                'background-color': 'rgba(246,248,252,1)',
+                color: 'rgba(0,0,0,1)',
+              }"
+              @selection-change="handleSelectionChange"
+              align="center"
+              border
+              class="detailTable"
+              ref="table"
+              style="width: 100%; min-height: calc(100vh - 370px)"
+            >
+              <el-table-column
+                :width="80"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="统计项名称"
+                prop="vname"
+                align="center"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                class="listTabel"
+                :resizable="false"
+                label="计量单位"
+                prop="vjldwName"
+                align="center"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+            </el-table>
+          </div>
+        </div>
+      </el-tab-pane>
       <el-tab-pane label="劳材机统计">
         <div class="detailBoxBG htfs">
           <div>
@@ -6764,6 +6814,7 @@ export default {
       }
     }
     return {
+      oldEngineeringList:[],
       isImportChangeVal:false,
       companyMulStatus:false,//设计单位等多选列表状态
       yqList:[],//所属央企list
@@ -6982,6 +7033,12 @@ export default {
           })
         }
       });
+    // 获取旧实物工程量
+    this.$http.post('/api/contract/ContractInfoQuantityMachine/list/showOldTjx').then((res) => {
+      if (res.data.code === 200) {
+        this.oldEngineeringList = res.data.data
+      }
+    });
   },
   methods: {
     // 上传模板
