@@ -119,6 +119,21 @@
             </el-form-item>
           </el-row>
           <el-row>
+              <el-form-item
+                label="初始合同额(万元):"
+                prop="project.contractAmountInitial"
+                :rules="rules.project.isMustMoney"
+                style="width: 32.5%">
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                  @change="getCount"
+                  clearable
+                  placeholder="请输入"
+                  v-model="detailForm.project.contractAmountInitial">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
             <el-form-item
               label="签约总金额(万元):"
               prop="project.amountSignup"
@@ -134,49 +149,76 @@
               </el-input>
             </el-form-item>
             <el-form-item
-              label="初始我方份额(万元):"
+              v-show="detailForm.project.contractInfoList!=''"
+              label="合同总金额(万元):" 
+              prop="project.contractAmountTotal"
+              :rules="rules.project.isMoney"
+              style="width: 32.5%">
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                clearable
+                placeholder="请输入"
+                v-model="detailForm.project.contractAmountTotal">
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+              v-show="detailForm.project.contractInfoList == ''"
+              label="合同金额(万元):" 
+              prop="project.contractMoney"
+              :rules="rules.project.isMoney"
+              style="width: 32.5%">
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                clearable
+                placeholder="请输入"
+                v-model="detailForm.project.contractMoney">
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+                label="初始我方份额(万元)"
+                prop="project.ourAmount"
+                :rules="rules.project.isMustMoney"
+                style="width: 32.5%"
+              >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                v-model="detailForm.project.ourAmount"
+              >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+              label="我方份额(万元):"
               prop="project.amountWe"
               :rules="rules.project.isMoney"
               style="width:32.5%;">
               <el-input
                 clearable
                 placeholder="请输入"
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 v-model="detailForm.project.amountWe">
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
               </el-input>
             </el-form-item>
-            <el-form-item
-              label="是否为年度合同:"
-              prop="isAnnualContract"
-              class="inline-formitem"
-              style="width:32.5%;">
-              <el-switch
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                class="inline-formitem-switch"
-                v-model="detailForm.project.isAnnualContract"
-                active-color="#409EFF"
-                inactive-color="#ddd"
-                active-value="0"
-                inactive-value="1"/>
-            </el-form-item>
-          </el-row>
-           <el-row>
               <el-form-item
-                label="初始合同额(万元):"
-                prop="project.contractAmountInitial"
-                :rules="rules.project.isMustMoney"
-                style="width: 32.5%">
-                <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
-                  @change="getCount"
-                  clearable
-                  placeholder="请输入"
-                  v-model="detailForm.project.contractAmountInitial">
-                  <template slot="prepend">¥</template>
-                  <template slot="append">(万元)</template>
-                </el-input>
+                label="是否为年度合同:"
+                prop="isAnnualContract"
+                class="inline-formitem"
+                style="width:32.5%;">
+                <el-switch
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  class="inline-formitem-switch"
+                  v-model="detailForm.project.isAnnualContract"
+                  active-color="#409EFF"
+                  inactive-color="#ddd"
+                  active-value="0"
+                  inactive-value="1"/>
               </el-form-item>
             </el-row>
           <el-row>

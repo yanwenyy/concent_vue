@@ -148,29 +148,59 @@
             </el-form-item>
             <el-form-item
               label="初始我方份额(万元):"
-              prop="project.amountWe"
+              prop="project.ourAmount"
               :rules="rules.project.isMustMoney"
               style="width:32.5%;">
               <el-input
                 clearable
                 placeholder="请输入"
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
-                v-model="detailForm.project.amountWe">
+                v-model="detailForm.project.ourAmount">
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+                label="我方份额(万元)"
+                prop="project.amountWe"
+                :rules="rules.project.isMustMoney"
+                style="width: 32.5%"
+              >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                v-model="detailForm.project.amountWe"
+              >
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
               </el-input>
             </el-form-item>
           </el-row>
-            <el-row>
+          <el-row>
             <el-form-item
-              label="合同金额(万元):"
-              prop="project.contractMoney"
+              v-show="detailForm.project.contractInfoList!=''"
+              label="合同总金额(万元):" 
+              prop="project.contractAmountTotal"
               :rules="rules.project.isMoney"
-              style="width:32.5%;">
+              style="width: 32.5%">
               <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 placeholder="请输入"
+                v-model="detailForm.project.contractAmountTotal">
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+              v-show="detailForm.project.contractInfoList == ''"
+              label="合同金额(万元):" 
+              prop="project.contractMoney"
+              :rules="rules.project.isMoney"
+              style="width: 32.5%">
+              <el-input
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                clearable
+                placeholder="请输入"
                 v-model="detailForm.project.contractMoney">
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
@@ -261,7 +291,7 @@
           <el-row>
             <el-form-item
               label="签约单位(使用资质单位):"
-              prop="project.amountCompanyName"
+              prop="project.companyName"
               style="width: 32.5%"
               :rules="{
                 required: true, message: '此项不能为空', trigger: ['blur','change']
@@ -271,11 +301,11 @@
                 clearable 
                 disabled 
                 placeholder="请输入内容" 
-                v-model="detailForm.project.amountCompanyName" class="input-with-select">
+                v-model="detailForm.project.companyName" class="input-with-select">
                 <el-button 
                   v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" 
                   icon="el-icon-circle-plus-outline" 
-                  @click="addDw('签约单位(使用资质单位)',detailForm.project.amountCompanyId)" 
+                  @click="addDw('签约单位(使用资质单位)',detailForm.project.companyId)" 
                   >
                 </el-button>
               </el-input>
@@ -1305,8 +1335,8 @@
           })
         }
         if(data.type=="签约单位(使用资质单位)"){
-          this.detailForm.project.amountCompanyId=id.join(",");
-          this.detailForm.project.amountCompanyName=name.join(",");
+          this.detailForm.project.companyId=id.join(",");
+          this.detailForm.project.companyName=name.join(",");
         }
         this.DwVisible=false;
       },

@@ -690,7 +690,6 @@
               style="width: 32.5%">
               <el-input
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
-                @change="getCount"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.contractAmountInitial">
@@ -698,7 +697,7 @@
                 <template slot="append">(万元)</template>
               </el-input>
             </el-form-item>
-            <el-form-item
+            <!-- <el-form-item
               label="工程合同额(万元):"
               prop="project.contractAmountEngine"
               :rules="rules.project.isMustMoney"
@@ -712,15 +711,29 @@
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
               </el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item
                 label="初始我方份额(万元)"
-                prop="project.amountWe"
+                prop="project.ourAmount"
                 :rules="rules.project.isMustMoney"
                 style="width: 32.5%"
               >
               <el-input
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                v-model="detailForm.project.ourAmount"
+              >
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+                label="我方份额(万元)"
+                prop="project.amountWe"
+                :rules="rules.project.isMustMoney"
+                style="width: 32.5%"
+              >
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 v-model="detailForm.project.amountWe"
               >
                 <template slot="prepend">¥</template>
@@ -730,7 +743,7 @@
           </el-row>
           <!--合同总额(万元)-->
           <el-row>
-            <el-form-item
+            <!-- <el-form-item
               label="合同额增减(万元):"
               prop="project.contractAmountChange"
               style="width: 32.5%">
@@ -742,14 +755,15 @@
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
               </el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item
-              label="合同总额(万元):"
+              v-show="detailForm.project.contractInfoList!=''"
+              label="合同总金额(万元):" 
               prop="project.contractAmountTotal"
               :rules="rules.project.isMoney"
               style="width: 32.5%">
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.contractAmountTotal">
@@ -757,9 +771,23 @@
                 <template slot="append">(万元)</template>
               </el-input>
             </el-form-item>
-          </el-row>
-          <!--增值税-->
-          <el-row>
+            <el-form-item
+              v-show="detailForm.project.contractInfoList == ''"
+              label="合同金额(万元):" 
+              prop="project.contractMoney"
+              :rules="rules.project.isMoney"
+              style="width: 32.5%">
+              <el-input
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                clearable
+                placeholder="请输入"
+                v-model="detailForm.project.contractMoney">
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+          <!-- </el-row>
+          <el-row> -->
             <!--<el-form-item-->
               <!--label="实际投资额(万元):"-->
               <!--prop="project.realInvest"-->
@@ -1538,16 +1566,16 @@
 
       },
       // 工程合同额-初始合同额=合同额增减
-      getCount() {
-        var money=Number(this.detailForm.project.contractAmountEngine) - Number(this.detailForm.project.contractAmountInitial);
-        if(money<0){
-          this.$message.error("工程合同额减去初始合同额不能小于0");
-          this.detailForm.project.contractAmountEngine='';
-        }else{
-          this.detailForm.project.contractAmountChange = money
-        }
+      // getCount() {
+      //   var money=Number(this.detailForm.project.contractAmountEngine) - Number(this.detailForm.project.contractAmountInitial);
+      //   if(money<0){
+      //     this.$message.error("工程合同额减去初始合同额不能小于0");
+      //     this.detailForm.project.contractAmountEngine='';
+      //   }else{
+      //     this.detailForm.project.contractAmountChange = money
+      //   }
 
-      },
+      // },
       del(index, item, list) {
           list.splice(index, 1)
       },
@@ -1932,7 +1960,7 @@
                 this.detailForm.project.investmentContract=this.detailForm.project.contractAmountInitial;
                 this.detailForm.project.contractAmountTotal=this.detailForm.project.contractAmountInitial;
                 this.detailForm.project.projectOmit=this.detailForm.project.projectName;
-                this.getCount()
+                // this.getCount()
               }
               if(this.detailForm.project.companyBuildId != ''&& this.detailForm.project.companyBuildId != null){
                 this.constructionOrgList = this.detailForm.project.companyBuildId.split(",");

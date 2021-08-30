@@ -645,20 +645,36 @@
                     <template slot="append">(万元)</template>
                   </el-input>
                 </el-form-item>
-                <el-form-item
-                  label="合同总额(万元):"
-                  prop="project.contractAmountTotal"
-                  :rules="rules.project.isMoney"
-                  style="width: 32.5%">
-                  <el-input
-                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
-                    clearable
-                    placeholder="请输入"
-                    v-model="detailForm.project.contractAmountTotal">
-                    <template slot="prepend">¥</template>
-                    <template slot="append">(万元)</template>
-                  </el-input>
-                </el-form-item>
+              <el-form-item
+                v-show="detailForm.project.contractInfoList!=''"
+                label="合同总金额(万元):" 
+                prop="project.contractAmountTotal"
+                :rules="rules.project.isMoney"
+                style="width: 32.5%">
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                  clearable
+                  placeholder="请输入"
+                  v-model="detailForm.project.contractAmountTotal">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                v-show="detailForm.project.contractInfoList == ''"
+                label="合同金额(万元):" 
+                prop="project.contractMoney"
+                :rules="rules.project.isMoney"
+                style="width: 32.5%">
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  clearable
+                  placeholder="请输入"
+                  v-model="detailForm.project.contractMoney">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
               </el-row>
               <!--增值税-->
               <el-row>
@@ -834,7 +850,7 @@
                       v-model="constructionOrgList"
                       @change="companyBuildChange"
                       v-if="detailForm.project.isClientele=='1'"
-                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList != null"
+                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList != ''"
                       multiple
                       collapse-tags
                       placeholder="请选择">
@@ -849,7 +865,7 @@
                       v-model="constructionOrgList"
                       @change="companyBuildChange"
                       v-if="detailForm.project.isClientele!='1'"
-                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList != null"
+                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList != ''"
                       multiple
                       collapse-tags
                       placeholder="请选择">
@@ -874,7 +890,7 @@
                   }"
                   >
                     <el-switch
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList != null"
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList != ''"
                       class="inline-formitem-switch"
                       v-model="detailForm.project.isClientele"
                       active-color="#409EFF"
@@ -898,7 +914,7 @@
                     placeholder="请选择设计单位"
                     v-model="detailForm.project.companyDesign">
                     <el-button slot="append" icon="el-icon-circle-plus-outline" 
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList != null"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList != ''"
                     @click="openComMul(detailForm.project.companyDesignId,detailForm.project.companyDesign,'/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
                   </el-input>
                 </el-form-item>
