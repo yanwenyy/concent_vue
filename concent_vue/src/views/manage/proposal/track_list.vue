@@ -4,8 +4,8 @@
       <el-button-group style="float: left">
         <el-button @click="add('')" plain :disabled="trackStatus!=null" type="primary"><i class="el-icon-circle-check"></i>跟踪</el-button>
         <el-button @click="totop" :disabled="trackStatus!='1'||flowStatus=='check'||flowStatus=='pass'"  plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
-        <!--<el-button @click="add('fq')" :disabled="trackStatus!='1'" plain type="primary"><i class="el-icon-warning-outline"></i>放弃跟踪</el-button>-->
-        <el-button @click="add('end')" :disabled="trackStatus!='1'" plain type="primary"><i class="el-icon-circle-close"></i>结束跟踪</el-button>
+        <el-button @click="add('fq')" :disabled="trackStatus!='1'" plain type="primary"><i class="el-icon-warning-outline"></i>放弃跟踪</el-button>
+        <!-- <el-button @click="add('end')" :disabled="trackStatus!='1'" plain type="primary"><i class="el-icon-circle-close"></i>结束跟踪</el-button> -->
         <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
         <el-button @click="batchSub" type="primary" plain><i class="el-icon-plus"></i>批量提交</el-button>
       </el-button-group>
