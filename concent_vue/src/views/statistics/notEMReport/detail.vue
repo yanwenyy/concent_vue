@@ -4535,70 +4535,74 @@
       //查询
       searchDate(type,name){
         this.searchform[type].reportDate=this.p.reportDate;
-        this.$http
-          .post(
-            '/api/statistics/unProjectReport/list/detail/queryInfo',
-            this.searchform[type],
-          )
-          .then((res) => {
-            try {
-              res.data.data.wz_list.forEach((element)=>{
-              // 工业制造
-              if (res.data.data.gy_lis) {
-                res.data.data.gy_list.forEach((element)=>{
-                  if (element.country == "01") {
-                    element.htquantity_after = Number(element.htquantity) - Number(element.equipmentManufacturin)- Number(element.componentManufacturin)- Number(element.otherIndustrayProduct)
-                  } else {
-                    element.htquantity_after = Number(element.htquantity) - Number(element.equipmentManufacturinHw)- Number(element.componentManufacturinHw)- Number(element.otherIndustrayProductHw)
-                  }
-                })            
+        this.$http.post(
+          '/api/statistics/unProjectReport/list/detail/queryInfo',
+          this.searchform[type],
+        )
+        .then((res) => {
+          // 工业制造
+          if (name == "gy_list") {
+            res.data.data.gy_list.forEach((element)=>{
+              if (element.country == "01") {
+                element.htquantity_after = Number(element.htquantity) - Number(element.equipmentManufacturin)- Number(element.componentManufacturin)- Number(element.otherIndustrayProduct)
+              } else {
+                element.htquantity_after = Number(element.htquantity) - Number(element.equipmentManufacturinHw)- Number(element.componentManufacturinHw)- Number(element.otherIndustrayProductHw)
               }
-              // 物资贸易
+            })            
+          }
+          // 物资贸易
+          if (name == "wz_list") {
+            res.data.data.wz_list.forEach((element)=>{
               if (element.country == "01") {
                 element.htquantity_after = Number(element.htquantity) - Number(element.sale)
               } else {
                 element.htquantity_after = Number(element.htquantity) - Number(element.overseasSale)
               }
-              // 房地产
-              res.data.data.fdc_list.forEach((element)=>{
-                if (element.country == "01") {
-                  element.htquantity_after = Number(element.htquantity) - Number(element.inRevenue)- Number(element.offRevenue)- Number(element.offRevenueNon)
-                } else {
-                  element.htquantity_after = Number(element.htquantity) - Number(element.inRevenueHw)- Number(element.offRevenueHw)- Number(element.offRevenueNonHw)
-                }
-              })
-              // 金融保险 
-              res.data.data.jrbx_list.forEach((element)=>{
-                if (element.country == "01") {
-                  element.htquantity_after = Number(element.htquantity) - Number(element.finance)- Number(element.secure)- Number(element.otherFinance)
-                } else {
-                  element.htquantity_after = Number(element.htquantity) - Number(element.overseasFinance)- Number(element.overseasSecure)- Number(element.otherFinanceHw)
-                }
-              })
-              // 运营维管
-              res.data.data.yy_list.forEach((element)=>{
-                if (element.country == "01") {
-                  element.htquantity_after = Number(element.htquantity) - Number(element.engineeringOperation)- Number(element.informationOperation)- Number(element.estateManagement)- Number(element.otherOperation)
-                } else {
-                  element.htquantity_after = Number(element.htquantity) - Number(element.engineeringOperationHw)- Number(element.informationOperationHw)- Number(element.estateManagementHw)- Number(element.overseasOtherOperation)
-                }
-              })
-              // 其他 
-              res.data.data.qt_list.forEach((element)=>{
-                if (element.country == "01") {
-                  element.htquantity_after = Number(element.htquantity) - Number(element.equipmentLeasing)- Number(element.transportation)- Number(element.accommodationCatering)- Number(element.educationTraining)- Number(element.informationConstruction)- Number(element.leaseHouses)- Number(element.otherProject)
-                } else {
-                  element.htquantity_after = Number(element.htquantity) - Number(element.equipmentLeasingHw)- Number(element.transportationHw)- Number(element.accommodationCateringHw)- Number(element.educationTrainingHw)- Number(element.informationConstructionHw)- Number(element.leaseHousesHw)- Number(element.otherProjectHw)
-                }
-              })
             })
-          } catch(err){
-            console.info(err)
           }
-          var datas=res.data.data;
-          this.detailform[name]=datas[name];
-
+          // 房地产
+          if (name == "fdc_list") {
+            res.data.data.fdc_list.forEach((element)=>{
+              if (element.country == "01") {
+                element.htquantity_after = Number(element.htquantity) - Number(element.inRevenue)- Number(element.offRevenue)- Number(element.offRevenueNon)
+              } else {
+                element.htquantity_after = Number(element.htquantity) - Number(element.inRevenueHw)- Number(element.offRevenueHw)- Number(element.offRevenueNonHw)
+              }
+            })
+          }
+          // 金融保险 
+          if (name == "jrbx_list") {
+            res.data.data.jrbx_list.forEach((element)=>{
+              if (element.country == "01") {
+                element.htquantity_after = Number(element.htquantity) - Number(element.finance)- Number(element.secure)- Number(element.otherFinance)
+              } else {
+                element.htquantity_after = Number(element.htquantity) - Number(element.overseasFinance)- Number(element.overseasSecure)- Number(element.otherFinanceHw)
+              }
+            })
+          }
+          // 运营维管
+          if (name == "yy_list") {
+            res.data.data.yy_list.forEach((element)=>{
+              if (element.country == "01") {
+                element.htquantity_after = Number(element.htquantity) - Number(element.engineeringOperation)- Number(element.informationOperation)- Number(element.estateManagement)- Number(element.otherOperation)
+              } else {
+                element.htquantity_after = Number(element.htquantity) - Number(element.engineeringOperationHw)- Number(element.informationOperationHw)- Number(element.estateManagementHw)- Number(element.overseasOtherOperation)
+              }
+            })
+          }
+          // 其他 
+          if (name == "qt_list") {
+            res.data.data.qt_list.forEach((element)=>{
+              if (element.country == "01") {
+                element.htquantity_after = Number(element.htquantity) - Number(element.equipmentLeasing)- Number(element.transportation)- Number(element.accommodationCatering)- Number(element.educationTraining)- Number(element.informationConstruction)- Number(element.leaseHouses)- Number(element.otherProject)
+              } else {
+                element.htquantity_after = Number(element.htquantity) - Number(element.equipmentLeasingHw)- Number(element.transportationHw)- Number(element.accommodationCateringHw)- Number(element.educationTrainingHw)- Number(element.informationConstructionHw)- Number(element.leaseHousesHw)- Number(element.otherProjectHw)
+              }
+            })
+          }
         })
+        var datas=res.data.data;
+        this.detailform[name]=datas[name];
       },
       // 加载列表
       getDetail() {
