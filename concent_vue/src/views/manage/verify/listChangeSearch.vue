@@ -5,8 +5,10 @@
                :append-to-body="true">
 
 
-    <div style="margin-top: 10px">
+    <div>
       <el-table
+        :max-height="$dialogTableHeight"
+        :height="$dialogTableHeight"
         :data="page.records"
         :header-cell-style="{
           'text-align': 'center',
@@ -273,8 +275,9 @@ export default {
 }
 </script>
 <style scoped>
+
 .dialog-footer {
-  margin-top: 50px;
+  margin-top: 10px;
   text-align: center;
 }
 

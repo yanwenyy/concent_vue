@@ -163,10 +163,10 @@
                   prop="project.companyBuiltName"
                   style="width: 32.5%">
                   <el-input clearable disabled placeholder="请输入内容" v-model="detailForm.project.companyBuiltName" class="input-with-select">
-                    <el-button  
-                      v-if="p.actpoint !== 'look'&&p.actpoint!='task'" 
-                      slot="append" 
-                      icon="el-icon-circle-plus-outline" 
+                    <el-button
+                      v-if="p.actpoint !== 'look'&&p.actpoint!='task'"
+                      slot="append"
+                      icon="el-icon-circle-plus-outline"
                       @click="addDw('承建单位',detailForm.project.companyBuiltId,false)" >
                     </el-button>
                   </el-input>
@@ -1031,7 +1031,7 @@
                     <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.path'"  :rules="{required: true,message: '此项不能为空'}">
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                       <el-input disabled placeholder="请输入内容" v-model="scope.row.path" class="input-with-select group-no-padding">
-                        <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" 
+                        <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''"
                           slot="append" icon="el-icon-circle-plus" @click="selectPosition(),positionIndex=scope.$index"></el-button>
                       </el-input>
                     </el-form-item>
@@ -1464,9 +1464,9 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <el-input 
+                    <el-input
                     :disabled="scope.row.veditable != '1'"
-                    v-model="scope.row.planName" 
+                    v-model="scope.row.planName"
                     @input="scope.row.vsum=parseInt(scope.row.vsum.replace(/[^\d]/g,''))"/>
                   </template>
                 </el-table-column>
@@ -1918,8 +1918,8 @@
           cb(results);
         }, 500 * Math.random());
       },
-      
-      
+
+
       createStateFilter(queryString) {
         return (restaurants) => {
           return (restaurants.value.toLowerCase().indexOf(queryString.toLowerCase()) != -1);
@@ -2495,6 +2495,7 @@
     z-index: 999999999;
     background: #fff;
   }
+
   .gcform {
     margin-top: 10px;
     .group-no-padding{
@@ -2543,5 +2544,12 @@
         width: 95%;
       }
     }
+  }
+  .el-form-item__label:before {
+    left: 0!important;
+    margin-right: 10px;
+  }
+  .el-form-item__label{
+    padding-left: 10px;
   }
 </style>

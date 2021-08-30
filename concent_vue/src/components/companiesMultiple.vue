@@ -278,8 +278,11 @@
   }
 </script>
 <style scoped>
+  >>>.el-dialog__header{
+    padding: 0 20px;
+  }
   .dialog-footer {
-    margin-top: 50px;
+    margin-top: 10px;
     text-align: center;
   }
   .mulTabel{

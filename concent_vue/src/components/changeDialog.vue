@@ -50,8 +50,8 @@
         </el-form-item>
       </el-form>
       <el-table
-        :max-height="$tableHeight"
-        :height="$tableHeight"
+        :max-height="$dialogTableHeight"
+        :height="$dialogTableHeight"
         :data="dataList"
         border
         v-loading="dataListLoading"
@@ -233,8 +233,11 @@
   }
 </script>
 <style scoped>
+  >>>.el-dialog__header{
+    padding: 0 20px;
+  }
 .dialog-footer {
-  margin-top: 50px;
+  margin-top: 10px;
   text-align: center;
 }
 

@@ -111,7 +111,7 @@
         <el-table-column
           :width="150"
           align="center"
-          label="是否发布"
+          label="是否共享"
           prop="isShare"
           show-overflow-tooltip
         >
@@ -185,6 +185,7 @@ export default {
     return {
       page: {current: 1, size: 20, total: 0, records: []},
       searchform: {
+        queryType:'1',
         current: 1,
         size: 20,
         uuid: '',
@@ -282,6 +283,10 @@ export default {
       // }
       //是否在审核流程中判断
       //是否在变更流程中判断
+      if(this.multipleSelection[0].flowStatus=='check'||this.multipleSelection[0].flowStatus=='pass'){
+        this.$message.info("此条数据不可修改！");
+        return false;
+      }
       let p = {
         actpoint: 'editItem',
         instid: this.multipleSelection[0].uuid
@@ -300,10 +305,12 @@ export default {
       // }
       let uuids = []
       this.multipleSelection.forEach((item) => {
-        if (item.uuid != null) {
+        if(item.flowStatus=='edit'||item.flowStatus=='reject'){
           uuids.push(item.uuid);
+        }else{
+          this.$message.info("当前所选数据中包含不可删除的选项,请检查后进行操作");
+          return itemStatus=false;
         }
-
       })
       this.$confirm('此操作将永久删除该资审信息, 是否继续?', '提示', {
         confirmButtonText: '确定',
