@@ -37,7 +37,7 @@
               style="width: 32.5%">
               <el-input
                 clearable
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 placeholder="请输入"
                 v-model="detailForm.project.projectName"/>
             </el-form-item>
@@ -46,7 +46,7 @@
               prop="project.projectForeginName"
               style="width: 32.5%">
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.projectForeginName"/>
@@ -214,7 +214,7 @@
                   v-if="detailForm.project.isClientele=='1'"
                   multiple
                   collapse-tags
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   placeholder="请选择">
                   <el-option
                     v-for="item in pubCustomers"
@@ -229,7 +229,7 @@
                   v-if="detailForm.project.isClientele!='1'"
                   multiple
                   collapse-tags
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   placeholder="请选择">
                     <el-option
                         :key="index"
@@ -252,7 +252,7 @@
               }"
               >
                 <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
                   class="inline-formitem-switch"
                   v-model="detailForm.project.isClientele"
                   active-color="#409EFF"
@@ -544,7 +544,7 @@
               prop="project.marketFirstId"
               style="width: 32.5%">
               <el-select
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 filterable
                 placeholder="请选择"
@@ -567,7 +567,7 @@
                 }:{}"
               style="width: 32.5%">
               <el-select
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'||detailForm.project.contractInfoList!=''"
                 filterable
                 clearable
                 @change="getName(detailForm.project.marketSecondId, emergingMarketTwo, 'marketSecondName','marketSecondCode')"
@@ -810,7 +810,7 @@
               prop="project.contractStartTime"
               style="width: 32.5%">
               <el-date-picker
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 v-model="detailForm.project.contractStartTime"
                 type="date"
                 value-format="timestamp"
@@ -821,7 +821,7 @@
               prop="project.contractEndTime"
               style="width: 32.5%">
               <el-date-picker
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 v-model="detailForm.project.contractEndTime"
                 type="date"
                 value-format="timestamp"
@@ -848,7 +848,7 @@
               prop="project.contractSignTime"
               style="width: 32.5%">
               <el-date-picker
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 v-model="detailForm.project.contractSignTime"
                 type="date"
                 value-format="timestamp"
@@ -1064,16 +1064,9 @@
               </template>
             </el-table-column>
           </el-table>
-          <p  v-if="p.actpoint != 'add'" class="detail-title" style="overflow: hidden;margin-right:30px">
+          <div v-show="detailForm.project.contractInfoList!=''">
+            <p  v-if="p.actpoint != 'add'" class="detail-title" style="overflow: hidden;margin-right:30px">
                 <span>关联合同: </span>
-                <!--<el-button-->
-                <!--v-show="p.actpoint != 'look'&&p.actpoint != 'task'"-->
-                <!--@click="addContract()"-->
-                <!--class="detatil-flie-btn"-->
-                <!--type="primary"-->
-                <!--&gt;新增-->
-                <!--</el-button-->
-                <!--&gt;-->
               </p>
               <el-table
                 v-if="p.actpoint != 'add'"
@@ -1147,6 +1140,7 @@
                   </template>
                 </el-table-column>
               </el-table>
+          </div>
         </el-form>
       </div>
     <!-- </el-card> -->
@@ -1937,7 +1931,6 @@
               if(this.detailForm.project.contractInfoList!=''){
                 this.detailForm.project.investmentContract=this.detailForm.project.contractAmountInitial;
                 this.detailForm.project.contractAmountTotal=this.detailForm.project.contractAmountInitial;
-                this.detailForm.project.projectStatusId='6530437b0a6f49a59b047eb4eb4f9201';
                 this.detailForm.project.projectOmit=this.detailForm.project.projectName;
                 this.getCount()
               }

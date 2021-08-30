@@ -38,7 +38,7 @@
               }"
               style="width: 32.5%">
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.projectName"/>
@@ -47,7 +47,7 @@
               label="外文名称:"
               style="width: 32.5%">
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.projectForeginName"/>
@@ -61,7 +61,7 @@
               style="width:32.5%;">
               <el-input
                 clearable
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 placeholder="请输入"
                 v-model="detailForm.project.projectLandArea"/>
             </el-form-item>
@@ -97,7 +97,7 @@
               prop="contractSignTime"
               style="width: 32.5%">
               <el-date-picker
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 v-model="detailForm.project.contractSignTime"
                 type="date"
                 value-format="timestamp"
@@ -270,7 +270,7 @@
               <el-select
                 clearable
                 filterable
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 placeholder="请选择"
                 @change="getMarketTwo"
                 v-model="detailForm.project.marketFirstId">
@@ -288,7 +288,7 @@
               <el-select
                 filterable
                 clearable
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'||detailForm.project.contractInfoList!=''"
                 placeholder="请选择"
                 @change="getName(detailForm.project.marketSecondId, emergingMarketTwo, 'marketSecondName')"
                 v-model="detailForm.project.marketSecondId">
@@ -604,6 +604,78 @@
               </template>
             </el-table-column>
           </el-table>
+          <div v-show="detailForm.project.contractInfoList!=''">
+                <p  v-if="p.actpoint != 'add'" class="detail-title" style="overflow: hidden;margin-right:30px">
+                  <span>关联合同: </span>
+                </p>
+                <el-table
+                  v-if="p.actpoint != 'add'"
+                  :data="detailForm.project.contractInfoList"
+                  :header-cell-style="{
+                  'text-align': 'center',
+                  'background-color': 'rgba(246,248,252,1)',
+                  color: 'rgba(0,0,0,1)',
+                }"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%;"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合同名称"
+                    prop="contractName"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合同编号"
+                    prop="contractCode"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="合同金额"
+                    prop="contractAmount"
+                    align="center"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    v-show="!p.actpoint === 'add'"
+                    :resizable="false"
+                    fixed="right"
+                    label="操作"
+                    align="center"
+                    show-overflow-tooltip
+                    v-if="p.actpoint !== 'add'&&p.actpoint !== 'task'"
+                    width="80">
+                    <template slot-scope="scope">
+                      <el-link
+                        :underline="false"
+                        @click="look(scope.row)"
+                        type="warning">查看合同
+                      </el-link>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
         </el-form>
       </div>
     </el-tab-pane>

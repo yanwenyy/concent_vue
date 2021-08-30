@@ -35,7 +35,7 @@
               :rules="rules.project.must"
               style="width: 32.5%">
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.projectName"/>
@@ -44,7 +44,7 @@
               label="外文名称:"
               style="width: 32.5%">
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.projectForeginName"/>
@@ -64,7 +64,7 @@
                     v-model="constructionOrgList"
                     @change="companyBuildChange"
                     v-if="detailForm.project.isClientele=='1'"
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
                     multiple
                     filterable
                     collapse-tags
@@ -80,7 +80,7 @@
                     v-model="constructionOrgList"
                     @change="companyBuildChange"
                     v-if="detailForm.project.isClientele!='1'"
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
                     multiple
                     filterable
                     collapse-tags
@@ -106,7 +106,7 @@
                   }"
               >
                 <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
                   class="inline-formitem-switch"
                   v-model="detailForm.project.isClientele"
                   active-color="#409EFF"
@@ -290,7 +290,7 @@
               prop="project.contractSignTime"
               style="width: 32.5%">
               <el-date-picker
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                 v-model="detailForm.project.contractSignTime"
                 type="date"
                 value-format="timestamp"
@@ -300,22 +300,22 @@
           <el-row>
             <el-form-item
               label="合同开始时间:"
-              prop="project.ocontractStartTime"
+              prop="project.contractStartTime"
               style="width: 32.5%">
               <el-date-picker
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                v-model="detailForm.project.ocontractStartTime"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                v-model="detailForm.project.contractStartTime"
                 type="date"
                 value-format="timestamp"
                 placeholder="选择日期时间"/>
             </el-form-item>
             <el-form-item
               label="合同结束时间:"
-              prop="project.ocontractEndTime"
+              prop="project.contractEndTime"
               style="width: 32.5%">
               <el-date-picker
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                v-model="detailForm.project.ocontractEndTime"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                v-model="detailForm.project.contractEndTime"
                 type="date"
                 value-format="timestamp"
                 placeholder="选择日期时间"/>
@@ -1027,8 +1027,8 @@
             contractAmountSupplement: '',
             supplierAddress: '', // 供方地点
             contractSignTime: '',
-            ocontractStartTime: '',
-            ocontractEndTime: '',
+            contractStartTime: '',
+            contractEndTime: '',
             valueAddedTax: '', // 增值税
             isOutputTax: '',
             categoryFirstId: 'f01fc41388d14663ac8873113f55cdd5', // 业务类别（一级）
@@ -1376,7 +1376,7 @@
           this.detailForm.project[name] = list.find(
             (item) => item.id === id
           ).detailName
-          console.log(this.detailForm)
+          console.log(this.detailForm.project.categorySecondName)
         }
       },
       getShowTwo() {

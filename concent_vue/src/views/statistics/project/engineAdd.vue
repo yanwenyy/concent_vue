@@ -834,7 +834,7 @@
                       v-model="constructionOrgList"
                       @change="companyBuildChange"
                       v-if="detailForm.project.isClientele=='1'"
-                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList != null"
                       multiple
                       collapse-tags
                       placeholder="请选择">
@@ -849,7 +849,7 @@
                       v-model="constructionOrgList"
                       @change="companyBuildChange"
                       v-if="detailForm.project.isClientele!='1'"
-                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList != null"
                       multiple
                       collapse-tags
                       placeholder="请选择">
@@ -874,7 +874,7 @@
                   }"
                   >
                     <el-switch
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList != null"
                       class="inline-formitem-switch"
                       v-model="detailForm.project.isClientele"
                       active-color="#409EFF"
@@ -897,7 +897,8 @@
                     clearable
                     placeholder="请选择设计单位"
                     v-model="detailForm.project.companyDesign">
-                    <el-button slot="append" icon="el-icon-circle-plus-outline" :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    <el-button slot="append" icon="el-icon-circle-plus-outline" 
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList != null"
                     @click="openComMul(detailForm.project.companyDesignId,detailForm.project.companyDesign,'/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
                   </el-input>
                 </el-form-item>
@@ -2412,10 +2413,6 @@
               if(this.detailForm.project.contractInfoList!=''){
                 this.detailForm.project.investmentContract=this.detailForm.project.contractAmountInitial;
                 this.detailForm.project.contractAmountTotal=this.detailForm.project.contractAmountInitial;
-                this.detailForm.project.projectStatusId='6530437b0a6f49a59b047eb4eb4f9201';
-                this.detailForm.project.projectTypeCode='017003';
-                this.detailForm.project.projectTypeId='393a07bda2244b03a24590e076a421df';
-                this.detailForm.project.projectTypeName='自揽项目';
                 this.detailForm.project.projectOmit=this.detailForm.project.projectName;
                 this.getCount()
               }
