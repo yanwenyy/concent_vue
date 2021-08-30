@@ -36,7 +36,7 @@
                 style="width: 32.5%">
                 <el-input
                   clearable
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  :disabled="true"
                   placeholder="请输入"
                   v-model="detailForm.project.projectName"/>
               </el-form-item>
@@ -45,7 +45,7 @@
                 prop="project.projectForeginName"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  :disabled="true"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.projectForeginName"/>
@@ -68,7 +68,7 @@
                 prop="project.projectNatureFirstId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  :disabled="true"
                   clearable
                   filterable
                   placeholder="请选择"
@@ -86,7 +86,7 @@
                 prop="project.projectNatureSecondId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  :disabled="true"
                   clearable
                   filterable
                   @change="getName(detailForm.project.projectNatureSecondId, projectNatureTwo, 'projectNatureSecond','projectNatureSecondCode')"
@@ -142,7 +142,7 @@
                 :rules="rules.project.isMustMoney"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  :disabled="true"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.investmentContract">
@@ -156,7 +156,7 @@
                 :label="detailForm.project.projectNatureFirstId === '7031076e7a5f4225b1a89f31ee017802'?'投资单位:':'承建单位:'"
                 prop="project.companyBuiltName"
                 style="width: 32.5%">
-                <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailForm.project.companyBuiltName" class="input-with-select">
+                <el-input clearable :disabled="true" placeholder="请输入内容" v-model="detailForm.project.companyBuiltName" class="input-with-select">
                   <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('承建单位',detailForm.project.companyBuiltId,false)" ></el-button>
                 </el-input>
               </el-form-item>
@@ -185,7 +185,7 @@
                 prop="project.projectTypeFirstId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  :disabled="true"
                   clearable
                   filterable
                   placeholder="请选择"
@@ -203,7 +203,7 @@
                 prop="project.projectTypeSecondId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  :disabled="true"
                   clearable
                   filterable
                   @change="getThree"
@@ -435,11 +435,11 @@
                 prop="project.companyName"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  :disabled="true"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.companyName">
-                  <el-button v-if="p.actpoint!='task'&&p.actpoint!='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('签约/使用资质单位',detailForm.project.companyId)"></el-button>
+                  <el-button :disabled="true" v-if="p.actpoint!='task'&&p.actpoint!='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('签约/使用资质单位',detailForm.project.companyId)"></el-button>
                 </el-input>
               </el-form-item>
             </el-row>
@@ -450,7 +450,7 @@
                 prop="project.marketFirstId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  :disabled="true"
                   clearable
                   filterable
                   placeholder="请选择"
@@ -475,7 +475,7 @@
                 <!--multiple-->
                 <!--collapse-tags-->
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'"
+                  :disabled="true"
                   filterable
                   clearable
                   @change="getName(detailForm.project.marketSecondId, emergingMarketTwo, 'marketSecondName','marketSecondCode')"
@@ -594,7 +594,7 @@
                 :rules="rules.project.isMustMoney"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                  :disabled="true"
                   clearable
                   @change="getCount"
                   placeholder="请输入"
@@ -639,7 +639,7 @@
                 :rules="rules.project.isMoney"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  disabled
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.contractAmountTotal">
@@ -670,7 +670,7 @@
                 :rules="rules.project.isMustMoney"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  disabled
                   clearable
                   @change="getOutputTax"
                   placeholder="请输入"
@@ -701,7 +701,7 @@
                 prop="project.contractStartTime"
                 style="width: 32.5%">
                 <el-date-picker
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  disabled
                   v-model="detailForm.project.contractStartTime"
                   type="date"
                   value-format="timestamp"
@@ -712,7 +712,7 @@
                 prop="project.contractEndTime"
                 style="width: 32.5%">
                 <el-date-picker
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  disabled
                   v-model="detailForm.project.contractEndTime"
                   type="date"
                   value-format="timestamp"
@@ -739,7 +739,7 @@
                 prop="project.contractSignTime"
                 style="width: 32.5%">
                 <el-date-picker
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  disabled
                   v-model="detailForm.project.contractSignTime"
                   type="date"
                   value-format="timestamp"
@@ -818,6 +818,7 @@
                   }"
                 style="width: 32.5%">
                   <el-select
+                    disabled
                     v-model="constructionOrgList"
                     v-if="detailForm.project.isClientele=='1'"
                     multiple
@@ -832,6 +833,7 @@
                     </el-option>
                   </el-select>
                   <el-select
+                    disabled
                     v-model="constructionOrgList"
                     v-if="detailForm.project.isClientele!='1'"
                     multiple
@@ -858,7 +860,7 @@
                     }"
                 >
                   <el-switch
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    disabled
                     class="inline-formitem-switch"
                     v-model="detailForm.project.isClientele"
                     active-color="#409EFF"
@@ -877,11 +879,11 @@
                 prop="project.companyDesign"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                  disabled
                   clearable
                   placeholder="请选择设计单位"
                   v-model="detailForm.project.companyDesign">
-                  <el-button slot="append" icon="el-icon-circle-plus-outline" 
+                  <el-button slot="append" icon="el-icon-circle-plus-outline"  disabled
                   @click="openComMul(detailForm.project.companyDesignId,detailForm.project.companyDesign,'/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
                 </el-input>
               </el-form-item>
@@ -890,7 +892,7 @@
                 prop="project.companySupervisor"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                  disabled
                   clearable
                   placeholder="请选择监理单位"
                   v-model="detailForm.project.companySupervisor">
@@ -1008,7 +1010,7 @@
                   <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.path'"  :rules="{required: true,message: '此项不能为空'}">
                     <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                     <el-input disabled placeholder="请输入内容" v-model="scope.row.path" class="input-with-select group-no-padding">
-                      <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append" icon="el-icon-circle-plus" @click="selectPosition(),positionIndex=scope.$index"></el-button>
+                      <!-- <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append" icon="el-icon-circle-plus" @click="selectPosition(),positionIndex=scope.$index"></el-button> -->
                     </el-input>
                   </el-form-item>
                 </template>
@@ -1048,7 +1050,7 @@
               >
                 <template slot-scope="scope">
                   <el-switch
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
+                    disabled
                     class="inline-formitem-switch"
                     v-model="scope.row.isMain"
                     active-color="#409EFF"
