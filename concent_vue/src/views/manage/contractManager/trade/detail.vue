@@ -470,8 +470,8 @@
               :rules="rules.contractAmount"
             >
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
-                @input="getOurAmount(),getTradeExpectedIncome(),getOurAmount('','','nfb')"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'||p.pushId||(detailform.contractInfo.isInSystemUnion=='1'&&detailform.contractInfo.isInSystemSub=='1'&&detailform.contractInfo.isOutSystemUnion=='1'&&detailform.contractInfo.isOutSystemSub=='1'&&detailform.contractInfo.isInGroupSub=='1')||detailform.contractInfo.isYearContract=='0'"
+                @input="getOurAmount(),getOurAmount('','','nfb')"
                 clearable
                 placeholder=""
 
@@ -1139,204 +1139,403 @@
                 </template>
               </el-table-column>
             </el-table>
+              <div v-if="detailform.contractInfo.isYearContract!=='0'">
+                <p><span>标的物信息: </span>
+                  <el-button
+                    v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
+                    @click="addXs()"
+                    size="mini"
+                    class="detatil-flie-btn"
+                    type="primary"
+                  >新增</el-button>
+                </p>
 
-              <p><span>标的物信息: </span>
-                <el-button
-                  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
-                @click="addXs()"
-                size="mini"
-                class="detatil-flie-btn"
-                type="primary"
-              >新增</el-button>
-              </p>
-
-              <el-table
-                :data="detailform.contractInfoSubjectMatterList"
-                :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
-                @selection-change="handleSelectionChange"
-                align="center"
-                border
-                class="detailTable"
-                ref="table"
-                style="width: 100%;height: auto;"
-              >
-                <el-table-column
-                  :width="55"
+                <el-table
+                  :data="detailform.contractInfoSubjectMatterList"
+                  :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+                  @selection-change="handleSelectionChange"
                   align="center"
-                  label="序号"
-                  show-overflow-tooltip
-                  type="index"
-                ></el-table-column>
-                <el-table-column
-                  v-if="detailform.contractInfo.isYearContract==='0'"
-                  class="listTabel"
-                  :resizable="false"
-                  label="年份"
-                  prop="subjectMatterYear"
-                  align="center"
-                  show-overflow-tooltip
-                  width="150"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%;height: auto;"
                 >
-                  <template slot-scope="scope">
-                    <el-date-picker
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                      class="tabelForm-dete"
-                      v-model="scope.row.subjectMatterYear"
-                      type="year"
-                      format="yyyy"
-                      value-format="yyyy"
-                      placeholder="选择年">
-                    </el-date-picker>
-                    <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  v-if="detailform.contractInfo.isYearContract==='0'"
-                  class="listTabel"
-                  :resizable="false"
-                  label="月份"
-                  prop="subjectMatterMonth"
-                  align="center"
-                  show-overflow-tooltip
-                  width="150"
-                >
-                  <template slot-scope="scope">
-                    <el-date-picker
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                      class="tabelForm-dete"
-                      v-model="scope.row.subjectMatterMonth"
-                      type="month"
-                      format="MM"
-                      value-format="MM"
-                      placeholder="选择月">
-                    </el-date-picker>
-                    <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                  </template>
-                </el-table-column>
-                <el-table-column width="200"  class="listTabel"  align="center" :resizable="false" label="标的物名称" prop="subjectMatterName" show-overflow-tooltip>
-                  <template slot-scope="scope">
-                    <el-form-item
-                      class="tabelformItem tabelForm"
-                      :prop="'contractInfoSubjectMatterList.'+scope.$index+'.subjectMatterName'"
-                      :rules="{
+                  <el-table-column
+                    :width="55"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+                  <el-table-column
+                    v-if="detailform.contractInfo.isYearContract==='0'"
+                    class="listTabel"
+                    :resizable="false"
+                    label="年份"
+                    prop="subjectMatterYear"
+                    align="center"
+                    show-overflow-tooltip
+                    width="150"
+                  >
+                    <template slot-scope="scope">
+                      <el-date-picker
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        class="tabelForm-dete"
+                        v-model="scope.row.subjectMatterYear"
+                        type="year"
+                        format="yyyy"
+                        value-format="yyyy"
+                        placeholder="选择年">
+                      </el-date-picker>
+                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    v-if="detailform.contractInfo.isYearContract==='0'"
+                    class="listTabel"
+                    :resizable="false"
+                    label="月份"
+                    prop="subjectMatterMonth"
+                    align="center"
+                    show-overflow-tooltip
+                    width="150"
+                  >
+                    <template slot-scope="scope">
+                      <el-date-picker
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        class="tabelForm-dete"
+                        v-model="scope.row.subjectMatterMonth"
+                        type="month"
+                        format="MM"
+                        value-format="MM"
+                        placeholder="选择月">
+                      </el-date-picker>
+                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                    </template>
+                  </el-table-column>
+                  <el-table-column width="200"  class="listTabel"  align="center" :resizable="false" label="标的物名称" prop="subjectMatterName" show-overflow-tooltip>
+                    <template slot-scope="scope">
+                      <el-form-item
+                        class="tabelformItem tabelForm"
+                        :prop="'contractInfoSubjectMatterList.'+scope.$index+'.subjectMatterName'"
+                        :rules="{
                   required: true, message: '此项不能为空', trigger: 'blur'
                 }"
-                      label-width="0"
+                        label-width="0"
 
-                    >
-                      <el-select
-                        class="input-el-input-group"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                        clearable
-                        filterable
-                        placeholder="请选择"
-                        size="mini"
-                        v-model="scope.row.subjectMatterName"
-                        @change="
+                      >
+                        <el-select
+                          class="input-el-input-group"
+                          :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                          clearable
+                          filterable
+                          placeholder="请选择"
+                          size="mini"
+                          v-model="scope.row.subjectMatterName"
+                          @change="
                     getBdwdw(
                       scope.row.subjectMatterName,
                       detailform.contractInfoSubjectMatterList,
                       scope.$index
                     )
                   "
-                      >
-                        <el-option
-                          v-if="bdwSelList.indexOf(item.subjectMatterName)==-1"
-                          :key="index"
-                          :label="item.subjectMatterName"
-                          :value="item.subjectMatterName"
-                          v-for="(item, index) in bdwList"
-                        ></el-option>
-                      </el-select>
-                      <!--<el-input-->
+                        >
+                          <el-option
+                            v-if="bdwSelList.indexOf(item.subjectMatterName)==-1"
+                            :key="index"
+                            :label="item.subjectMatterName"
+                            :value="item.subjectMatterName"
+                            v-for="(item, index) in bdwList"
+                          ></el-option>
+                        </el-select>
+                        <!--<el-input-->
                         <!--clearable-->
                         <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
                         <!--v-model="scope.row.subjectMatterName"-->
-                      <!--&gt;</el-input>-->
-                    </el-form-item>
-                    <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                  </template>
-                </el-table-column>
+                        <!--&gt;</el-input>-->
+                      </el-form-item>
+                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                    </template>
+                  </el-table-column>
 
-                <el-table-column  width="150" :resizable="false" label="标的物数量" prop="subjectMatterNo" show-overflow-tooltip>
-                  <template slot-scope="scope">
-                    <el-form-item
-                      class="tabelformItem tabelForm"
-                      :prop="'contractInfoSubjectMatterList.'+scope.$index+'.subjectMatterNo'"
-                      :rules="{
+                  <el-table-column  width="150" :resizable="false" label="标的物数量" prop="subjectMatterNo" show-overflow-tooltip>
+                    <template slot-scope="scope">
+                      <el-form-item
+                        class="tabelformItem tabelForm"
+                        :prop="'contractInfoSubjectMatterList.'+scope.$index+'.subjectMatterNo'"
+                        :rules="{
                   required: true, message: '此项不能为空', trigger: 'blur'
                 }"
-                      label-width="0"
+                        label-width="0"
 
-                    >
-                      <el-input
-                        clearable
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                        v-model="scope.row.subjectMatterNo"
-                      ></el-input>
-                    </el-form-item>
-                    <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                  </template>
-                </el-table-column>
-
-                <el-table-column width="150" :resizable="false" label="标的物单位" prop="subjectMatterUnit" show-overflow-tooltip>
-                  <template slot-scope="scope">
-                    <el-form-item
-                      class="tabelformItem tabelForm"
-                      :prop="'contractInfoSubjectMatterList.'+scope.$index+'.subjectMatterUnit'"
-                      :rules="{
-                  required: true, message: '此项不能为空', trigger: 'blur'
-                }"
-                      label-width="0"
-
-                    >
-                      <el-input
-                        clearable
-                        disabled
-                        v-model="scope.row.subjectMatterUnit"
-                      ></el-input>
-                    </el-form-item>
-                    <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                  </template>
-                </el-table-column>
-
-                <el-table-column width="400" :resizable="false" label="总价(万元)" prop="totalPrice" show-overflow-tooltip>
-                  <template slot-scope="scope">
-                    <el-form-item
-                      class="tabelForm"
-                      :prop="'contractInfoSubjectMatterList.'+scope.$index+'.totalPrice'"
-                      :rules="rules.contractAmount"
-                      label-width="0"
-
-                    >
-                      <el-input
-                        clearable
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                        v-model="scope.row.totalPrice"
                       >
-                        <template slot="prepend">¥</template>
-                        <template slot="append">(万元)</template>
-                      </el-input>
-                    </el-form-item>
-                    <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                  </template>
-                </el-table-column>
+                        <el-input
+                          clearable
+                          :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                          v-model="scope.row.subjectMatterNo"
+                        ></el-input>
+                      </el-form-item>
+                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                    </template>
+                  </el-table-column>
 
-                <el-table-column
-                  :resizable="false"
-                  fixed="right"
-                  label="操作"
-                  show-overflow-tooltip
-                  v-if="p.actpoint!=='look'&&p.actpoint !== 'task'"
-                  width="80"
+                  <el-table-column width="150" :resizable="false" label="标的物单位" prop="subjectMatterUnit" show-overflow-tooltip>
+                    <template slot-scope="scope">
+                      <el-form-item
+                        class="tabelformItem tabelForm"
+                        :prop="'contractInfoSubjectMatterList.'+scope.$index+'.subjectMatterUnit'"
+                        :rules="{
+                  required: true, message: '此项不能为空', trigger: 'blur'
+                }"
+                        label-width="0"
+
+                      >
+                        <el-input
+                          clearable
+                          disabled
+                          v-model="scope.row.subjectMatterUnit"
+                        ></el-input>
+                      </el-form-item>
+                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column width="400" :resizable="false" label="总价(万元)" prop="totalPrice" show-overflow-tooltip>
+                    <template slot-scope="scope">
+                      <el-form-item
+                        class="tabelForm"
+                        :prop="'contractInfoSubjectMatterList.'+scope.$index+'.totalPrice'"
+                        :rules="rules.contractAmount"
+                        label-width="0"
+
+                      >
+                        <el-input
+                          clearable
+                          :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                          v-model="scope.row.totalPrice"
+                        >
+                          <template slot="prepend">¥</template>
+                          <template slot="append">(万元)</template>
+                        </el-input>
+                      </el-form-item>
+                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column
+                    :resizable="false"
+                    fixed="right"
+                    label="操作"
+                    show-overflow-tooltip
+                    v-if="p.actpoint!=='look'&&p.actpoint !== 'task'"
+                    width="80"
+                    align="center"
+                  >
+                    <template slot-scope="scope">
+                      <el-link :underline="false" @click="del(scope.$index,scope.row,detailform.contractInfoSubjectMatterList,'bdw')" type="warning">删除</el-link>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+              <div v-if="detailform.contractInfo.isYearContract=='0'">
+                <p><span>销售业绩: </span>
+                  <el-button
+                    v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
+                    @click="addXs2()"
+                    size="mini"
+                    class="detatil-flie-btn"
+                    type="primary"
+                  >新增</el-button>
+                </p>
+
+                <el-table
+                  :data="detailform.contractInfoHouseSalesList"
+                  :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
+                  @selection-change="handleSelectionChange"
                   align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%;height: auto;"
                 >
-                  <template slot-scope="scope">
-                    <el-link :underline="false" @click="del(scope.$index,scope.row,detailform.contractInfoSubjectMatterList,'bdw')" type="warning">删除</el-link>
-                  </template>
-                </el-table-column>
-              </el-table>
+                  <el-table-column
+                    :width="55"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="年份"
+                    prop="salesPerforYear"
+                    align="center"
+                    width="150"
+                    show-overflow-tooltip
+                    v-if="detailform.contractInfo.isYearContract=='0'"
+                  >
+                    <template slot-scope="scope">
+                      <el-date-picker
+                        class="tabelForm-dete"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        v-model="scope.row.salesPerforYear"
+                        type="year"
+                        value-format="yyyy"
+                        placeholder="选择年">
+                      </el-date-picker>
+                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    class="listTabel"
+                    :resizable="false"
+                    label="月份"
+                    width="150"
+                    prop="salesPerforMonth"
+                    align="center"
+                    show-overflow-tooltip
+                    v-if="detailform.contractInfo.isYearContract=='0'"
+                  >
+                    <template slot-scope="scope">
+                      <el-date-picker
+                        class="tabelForm-dete"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        v-model="scope.row.salesPerforMonth"
+                        @change="checkRepeat(scope.row.salesPerforMonth,scope.row.salesPerforYear,detailform.contractInfoHouseSalesList,scope.$index)"
+                        type="month"
+                        format="MM"
+                        value-format="MM"
+                        placeholder="选择月">
+                      </el-date-picker>
+                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                    </template>
+                  </el-table-column>
+                  <el-table-column width="200"  class="listTabel"  align="center" :resizable="false" label="标的物名称" prop="subjectMatterName" show-overflow-tooltip>
+                    <template slot-scope="scope">
+                      <el-form-item
+                        class="tabelformItem tabelForm"
+                        :prop="'contractInfoHouseSalesList.'+scope.$index+'.productName'"
+                        :rules="{
+                  required: true, message: '此项不能为空', trigger: 'blur'
+                }"
+                        label-width="0"
 
+                      >
+                        <el-select
+                          class="input-el-input-group"
+                          :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                          clearable
+                          filterable
+                          placeholder="请选择"
+                          size="mini"
+                          v-model="scope.row.productName"
+                          @change="
+                    getBdwdw(
+                      scope.row.productName,
+                      detailform.contractInfoHouseSalesList,
+                      scope.$index,
+                    )
+                  "
+                        >
+                          <el-option
+                            v-if="bdwSelList.indexOf(item.productName)==-1"
+                            :key="index"
+                            :label="item.subjectMatterName"
+                            :value="item.subjectMatterName"
+                            v-for="(item, index) in bdwList"
+                          ></el-option>
+                        </el-select>
+                        <!--<el-input-->
+                        <!--clearable-->
+                        <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
+                        <!--v-model="scope.row.subjectMatterName"-->
+                        <!--&gt;</el-input>-->
+                      </el-form-item>
+                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column  width="150" :resizable="false" label="标的物数量" prop="productQuantity" show-overflow-tooltip>
+                    <template slot-scope="scope">
+                      <el-form-item
+                        class="tabelformItem tabelForm"
+                        :prop="'contractInfoHouseSalesList.'+scope.$index+'.productQuantity'"
+                        :rules="{
+                  required: true, message: '此项不能为空', trigger: 'blur'
+                }"
+                        label-width="0"
+
+                      >
+                        <el-input
+                          clearable
+                          :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                          v-model="scope.row.productQuantity"
+                        ></el-input>
+                      </el-form-item>
+                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column width="150" :resizable="false" label="标的物单位" prop="subjectMatterUnit" show-overflow-tooltip>
+                    <template slot-scope="scope">
+                      <el-form-item
+                        class="tabelformItem tabelForm"
+                        :prop="'contractInfoHouseSalesList.'+scope.$index+'.productUnit'"
+                        :rules="{
+                  required: true, message: '此项不能为空', trigger: 'blur'
+                }"
+                        label-width="0"
+
+                      >
+                        <el-input
+                          clearable
+                          disabled
+                          v-model="scope.row.productUnit"
+                        ></el-input>
+                      </el-form-item>
+                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column width="400" :resizable="false" label="标的物金额(万元)" prop="totalPrice" show-overflow-tooltip>
+                    <template slot-scope="scope">
+                      <el-form-item
+                        class="tabelForm"
+                        :prop="'contractInfoHouseSalesList.'+scope.$index+'.monthSales'"
+                        :rules="rules.contractAmount"
+                        label-width="0"
+
+                      >
+                        <el-input
+                          @blur="setYearSale()"
+                          clearable
+                          :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                          v-model="scope.row.monthSales"
+                        >
+                          <template slot="prepend">¥</template>
+                          <template slot="append">(万元)</template>
+                        </el-input>
+                      </el-form-item>
+                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column
+                    :resizable="false"
+                    fixed="right"
+                    label="操作"
+                    show-overflow-tooltip
+                    v-if="p.actpoint!=='look'&&p.actpoint !== 'task'"
+                    width="80"
+                    align="center"
+                  >
+                    <template slot-scope="scope">
+                      <el-link :underline="false" @click="del(scope.$index,scope.row,detailform.contractInfoHouseSalesList,'yj')" type="warning">删除</el-link>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
 
               <!--  -->
 
@@ -2488,6 +2687,7 @@ export default {
           outContractInfoAttachList:[],
           innerGroupContractInfoAttachList:[]
         },
+        contractInfoHouseSalesList:[],
         topInfoSiteList:[{
           country: '',
           ffid: '',
@@ -2586,6 +2786,29 @@ export default {
     companyMul
   },
   methods: {
+    //年销售额
+    setYearSale(month,year){
+      var yearSale=0,currentYearSum=0;
+      this.detailform.contractInfoHouseSalesList.forEach((item)=>{
+        currentYearSum+=Number(item.monthSales);
+      });
+      if(this.detailform.contractInfo.isYearContract=='0'||(this.detailform.contractInfo.isInSystemUnion=='1'&&this.detailform.contractInfo.isInSystemSub=='1'&&this.detailform.contractInfo.isOutSystemUnion=='1'&&this.detailform.contractInfo.isOutSystemSub=='1'&&this.detailform.contractInfo.isInGroupSub=='1')){
+        this.detailform.contractInfo.contractAmount=currentYearSum.toString();
+        this.$forceUpdate();
+        this.getOurAmount();
+        this.getOurAmount('','','nfb');
+      }
+    },
+    //查询销售业绩是否有同年同月
+    checkRepeat(mval,yval,list,index){
+      list.forEach((item,i)=>{
+        if(index!=i&&item.salesPerforYear==yval&&item.salesPerforMonth==mval){
+          this.$message.error("不能添加同年同月的年度合同收益");
+          list[index].salesPerforMonth='';
+          return false;
+        }
+      })
+    },
     // 附件下载
     attachmentDownload(file){
       this.$handleDownload(file)
@@ -2678,17 +2901,30 @@ export default {
     //获取已选择的标的物单位
     getBdNameSel(){
       this.bdwSelList=[];
-      this.detailform.contractInfoSubjectMatterList.forEach((item)=>{
-        this.bdwSelList.push(item.subjectMatterName)
-      });
+      if(this.detailform.contractInfo.isYearContract=='0'){
+        this.detailform.contractInfoHouseSalesList.forEach((item)=>{
+          this.bdwSelList.push(item.subjectMatterName)
+        });
+      }else{
+        this.detailform.contractInfoSubjectMatterList.forEach((item)=>{
+          this.bdwSelList.push(item.subjectMatterName)
+        });
+      }
+
     },
     //获取标的物单位
     getBdwdw( name,list, index) {
       if(name){
         this.$forceUpdate();
-        list[index].subjectMatterUnit=this.bdwList.find(
-          (item) => item.subjectMatterName == name
-        ).subjectMatterUnitName;
+        if(this.detailform.contractInfo.isYearContract=='0'){
+          list[index].productUnit=this.bdwList.find(
+            (item) => item.subjectMatterName == name
+          ).subjectMatterUnitName;
+        }else{
+          list[index].subjectMatterUnit=this.bdwList.find(
+            (item) => item.subjectMatterName == name
+          ).subjectMatterUnitName;
+        }
         this.getBdNameSel();
       }
     },
@@ -3191,6 +3427,18 @@ export default {
       }
       this.DwVisible=false;
     },
+    //新增销售业绩
+    addXs2(){
+      var v={
+        salesPerforYear:'',
+        salesPerforMonth:'',
+        productName:'',
+        productQuantity:'',
+        productUnit:'',
+        monthSales	:'',
+      };
+      this.detailform.contractInfoHouseSalesList.push(v);
+    },
     //新增标的物
     addXs(){
       var v={
@@ -3319,6 +3567,26 @@ export default {
         }
       });
       }).catch(() => {})
+      }if(item.uuid&&type=='yj'){
+        this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$http
+            .post(
+              "/api/contract/contract/ContractInfo/list/deleteHouseSales",
+              {ids: [item.uuid]}
+            )
+            .then((res) => {
+              if (res.data && res.data.code === 200) {
+                list.splice(index, 1);
+                this.setYearSale(item.salesPerforMonth	,item.salesPerforYear);
+              } else {
+                this.$message.error(data.msg)
+              }
+            });
+        }).catch(() => {})
       }else if(item.uuid&&(type=='lht'||type=='fb')){
         this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
           confirmButtonText: '确定',
@@ -3464,6 +3732,7 @@ export default {
         contractInfo: datas.contractInfo,
         contractInfoAttachBO: datas.contractInfoAttachBO,
         contractInfoSubjectMatterList: datas.contractInfoSubjectMatterList,
+        contractInfoHouseSalesList:datas.contractInfoHouseSalesList,
         zplx:[],//装配类型
         jzlx:[],//建筑类型
         jzjglx:[],//建筑结构类型

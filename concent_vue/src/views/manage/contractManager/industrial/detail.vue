@@ -2730,6 +2730,16 @@ export default {
     },
   },
   methods: {
+    //查询销售业绩是否有同年同月
+    checkRepeat(mval,yval,list,index){
+      list.forEach((item,i)=>{
+        if(index!=i&&item.salesPerforYear==yval&&item.salesPerforMonth==mval){
+          this.$message.error("不能添加同年同月的年度合同收益");
+          list[index].salesPerforMonth='';
+          return false;
+        }
+      })
+    },
     //新增销售业绩
     addXs2(){
       var v={
