@@ -299,7 +299,7 @@
                 :rules="rules.contractAmount"
               >
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'||p.pushId||(detailform.contractInfo.isInSystemUnion=='1'&&detailform.contractInfo.isInSystemSub=='1'&&detailform.contractInfo.isOutSystemUnion=='1'&&detailform.contractInfo.isOutSystemSub=='1'&&detailform.contractInfo.isInGroupSub=='1')||detailform.contractInfo.isYearContract=='0'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId||detailform.contractInfo.isYearContract=='0'"
                   @input="getOurAmount(),getOurAmount('','','nfb')"
                   clearable
                   placeholder=""

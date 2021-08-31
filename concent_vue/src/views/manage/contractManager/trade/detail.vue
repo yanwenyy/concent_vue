@@ -338,7 +338,7 @@
               label="是否为系统内联合体"
             >
               <el-switch
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId||detailform.contractInfo.isYearContract=='0'"
                 class="inline-formitem-switch"
                 v-model="detailform.contractInfo.isInSystemUnion"
                 active-color="#409EFF"
@@ -364,7 +364,7 @@
               label="是否含系统内分包"
             >
               <el-switch
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailform.contractInfo.isYearContract=='0'"
                 class="inline-formitem-switch"
                 v-model="detailform.contractInfo.isInSystemSub"
                 active-color="#409EFF"
@@ -390,7 +390,7 @@
               label="是否为系统外联合体"
             >
               <el-switch
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId||detailform.contractInfo.isYearContract=='0'"
                 class="inline-formitem-switch"
                 v-model="detailform.contractInfo.isOutSystemUnion"
                 active-color="#409EFF"
@@ -416,7 +416,7 @@
               label="是否含系统外分包:"
             >
               <el-switch
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailform.contractInfo.isYearContract=='0'"
                 class="inline-formitem-switch"
                 v-model="detailform.contractInfo.isOutSystemSub"
                 active-color="#409EFF"
@@ -442,7 +442,7 @@
               label="是否集团内分包:"
             >
               <el-switch
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailform.contractInfo.isYearContract=='0'"
                 class="inline-formitem-switch"
                 v-model="detailform.contractInfo.isInGroupSub"
                 active-color="#409EFF"
@@ -470,7 +470,7 @@
               :rules="rules.contractAmount"
             >
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'||p.pushId||(detailform.contractInfo.isInSystemUnion=='1'&&detailform.contractInfo.isInSystemSub=='1'&&detailform.contractInfo.isOutSystemUnion=='1'&&detailform.contractInfo.isOutSystemSub=='1'&&detailform.contractInfo.isInGroupSub=='1')||detailform.contractInfo.isYearContract=='0'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId||detailform.contractInfo.isYearContract=='0'"
                 @input="getOurAmount(),getOurAmount('','','nfb')"
                 clearable
                 placeholder=""
@@ -916,26 +916,25 @@
                   <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in roadOrIn"></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item
-                class="inline-formitem"
-                label="是否年度合同:"
-                prop="contractInfo.isYearContract"
-                :rules="{
-           required: true, message: '此项不能为空', trigger: 'blur'
-        }"
-
+            <el-form-item
+              class="inline-formitem"
+              label="是否年度合同:"
+              prop="contractInfo.isYearContract"
+              :rules="{
+      required: true, message: '此项不能为空', trigger: 'blur'
+    }"
+            >
+              <el-switch
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'||(detailform.contractInfo.isInSystemUnion=='0'||detailform.contractInfo.isInSystemSub=='0'||detailform.contractInfo.isOutSystemUnion=='0'||detailform.contractInfo.isOutSystemSub=='0'||detailform.contractInfo.isInGroupSub=='0')"
+                class="inline-formitem-switch"
+                v-model="detailform.contractInfo.isYearContract"
+                active-color="#409EFF"
+                inactive-color="#ddd"
+                active-value="0"
+                inactive-value="1"
               >
-                <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                  class="inline-formitem-switch"
-                  v-model="detailform.contractInfo.isYearContract"
-                  active-color="#409EFF"
-                  inactive-color="#ddd"
-                  active-value="0"
-                  inactive-value="1"
-                >
-                </el-switch>
-              </el-form-item>
+              </el-switch>
+            </el-form-item>
               <div>
               <el-form-item
                 class="neirong not-error"

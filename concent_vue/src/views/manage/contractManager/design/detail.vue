@@ -486,7 +486,7 @@
                 label="是否为系统内联合体"
               >
                 <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId||detailform.contractInfo.isYearContract=='0'"
                   class="inline-formitem-switch"
                   v-model="detailform.contractInfo.isInSystemUnion"
                   active-color="#409EFF"
@@ -512,7 +512,7 @@
                 label="是否含系统内分包"
               >
                 <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailform.contractInfo.isYearContract=='0'"
                   class="inline-formitem-switch"
                   v-model="detailform.contractInfo.isInSystemSub"
                   active-color="#409EFF"
@@ -538,7 +538,7 @@
                 label="是否为系统外联合体"
               >
                 <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId||detailform.contractInfo.isYearContract=='0'"
                   class="inline-formitem-switch"
                   v-model="detailform.contractInfo.isOutSystemUnion"
                   active-color="#409EFF"
@@ -564,7 +564,7 @@
                 label="是否含系统外分包:"
               >
                 <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailform.contractInfo.isYearContract=='0'"
                   class="inline-formitem-switch"
                   v-model="detailform.contractInfo.isOutSystemSub"
                   active-color="#409EFF"
@@ -590,7 +590,7 @@
                 label="是否集团内分包:"
               >
                 <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailform.contractInfo.isYearContract=='0'"
                   class="inline-formitem-switch"
                   v-model="detailform.contractInfo.isInGroupSub"
                   active-color="#409EFF"
@@ -618,8 +618,9 @@
                 prop="contractInfo.contractAmount"
                 :rules="rules.contractAmount"
               >
+                <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId||(detailform.contractInfo.isInSystemUnion=='1'&&detailform.contractInfo.isInSystemSub=='1'&&detailform.contractInfo.isOutSystemUnion=='1'&&detailform.contractInfo.isOutSystemSub=='1'&&detailform.contractInfo.isInGroupSub=='1')||detailform.contractInfo.isYearContract=='0'"-->
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId||(detailform.contractInfo.isInSystemUnion=='1'&&detailform.contractInfo.isInSystemSub=='1'&&detailform.contractInfo.isOutSystemUnion=='1'&&detailform.contractInfo.isOutSystemSub=='1'&&detailform.contractInfo.isInGroupSub=='1')||detailform.contractInfo.isYearContract=='0'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId||detailform.contractInfo.isYearContract=='0'"
                   @input="getOurAmount(),getOurAmount('','','nfb')"
                   clearable
                   placeholder=""
@@ -1069,7 +1070,7 @@
     }"
               >
                 <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||(detailform.contractInfo.isInSystemUnion=='0'||detailform.contractInfo.isInSystemSub=='0'||detailform.contractInfo.isOutSystemUnion=='0'||detailform.contractInfo.isOutSystemSub=='0'||detailform.contractInfo.isInGroupSub=='0')"
                   class="inline-formitem-switch"
                   v-model="detailform.contractInfo.isYearContract"
                   active-color="#409EFF"
