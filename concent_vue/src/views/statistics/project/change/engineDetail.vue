@@ -2764,8 +2764,8 @@
       //获取项目类型
       this.$http
         .post(
-          ' /api/statistics/StatisticsProject/detail/findProjectType?projectId'+'c7a788994b32e48f272e5c0e5271338a',
-          {useJson: true}
+          ' /api/statistics/StatisticsProject/detail/findProjectType',
+          {projectId: this.p.uuid}
         )
         .then((res) => {
           if (res.data.code === 200) {

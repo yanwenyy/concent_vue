@@ -1165,7 +1165,7 @@
                 </el-table-column>
               </el-table>
               <!--分包承建单位-->
-              <div v-if="detailForm.project.projectNatureSecondId === 'd4b6c373a60246a8a5166ddb0bf46c21' || detailForm.project.projectNatureSecondId === '7369abc48e264096a37783de01b0d4cc'">
+              <div v-if="detailForm.project.projectTypeId == '017004'">
                 <p class="detail-title" style="overflow:hidden;margin-right:30px">
                   <span>分包承建单位信息:</span>
                   <el-button
@@ -2463,8 +2463,8 @@
       //获取项目类型
       this.$http
         .post(
-          ' /api/statistics/StatisticsProject/detail/findProjectType?projectId'+'c7a788994b32e48f272e5c0e5271338a',
-          {useJson: true}
+          ' /api/statistics/StatisticsProject/detail/findProjectType',
+          {projectId: this.p.uuid}
         )
         .then((res) => {
           if (res.data.code === 200) {
