@@ -38,7 +38,7 @@
               }"
                 style="width: 32.5%">
                 <el-input
-                  disabled
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.projectName"/>
@@ -47,7 +47,7 @@
                 label="外文名称:"
                 style="width: 32.5%">
                 <el-input
-                  disabled
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.projectForeginName"/>
@@ -61,7 +61,7 @@
                 style="width:32.5%;">
                 <el-input
                   clearable
-                  disabled
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   placeholder="请输入"
                   v-model="detailForm.project.projectLandArea"/>
               </el-form-item>
@@ -96,7 +96,7 @@
                 prop="contractSignTime"
                 style="width: 32.5%">
                 <el-date-picker
-                  disabled
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   v-model="detailForm.project.contractSignTime"
                   type="date"
                   value-format="timestamp"
@@ -141,7 +141,7 @@
                 <el-input
                   clearable
                   placeholder="请输入"
-                  disabled
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   v-model="detailForm.project.amountSignup">
                   <template slot="prepend">¥</template>
                   <template slot="append">(万元)</template>
@@ -199,7 +199,7 @@
                 <el-input
                   clearable
                   placeholder="请输入"
-                  disabled
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   v-model="detailForm.project.amountWe">
                   <template slot="prepend">¥</template>
                   <template slot="append">(万元)</template>
@@ -322,7 +322,7 @@
                 <el-select
                   clearable
                   filterable
-                  disabled
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   placeholder="请选择"
                   @change="getMarketTwo"
                   v-model="detailForm.project.marketFirstId">
@@ -340,7 +340,7 @@
                 <el-select
                   filterable
                   clearable
-                  disabled
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   placeholder="请选择"
                   @change="getName(detailForm.project.marketSecondId, emergingMarketTwo, 'marketSecondName')"
                   v-model="detailForm.project.marketSecondId">
