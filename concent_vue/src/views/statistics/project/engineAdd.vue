@@ -647,7 +647,7 @@
                 </el-form-item>
               <el-form-item
                 v-show="detailForm.project.contractInfoList!=''"
-                label="合同总金额(万元):" 
+                label="合同总金额(万元):"
                 prop="project.contractAmountTotal"
                 :rules="rules.project.isMoney"
                 style="width: 32.5%">
@@ -662,7 +662,7 @@
               </el-form-item>
               <el-form-item
                 v-show="detailForm.project.contractInfoList == ''"
-                label="合同金额(万元):" 
+                label="合同金额(万元):"
                 prop="project.contractMoney"
                 :rules="rules.project.isMoney"
                 style="width: 32.5%">
@@ -913,7 +913,7 @@
                     clearable
                     placeholder="请选择设计单位"
                     v-model="detailForm.project.companyDesign">
-                    <el-button slot="append" icon="el-icon-circle-plus-outline" 
+                    <el-button slot="append" icon="el-icon-circle-plus-outline"
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList != ''"
                     @click="openComMul(detailForm.project.companyDesignId,detailForm.project.companyDesign,'/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
                   </el-input>
@@ -2545,11 +2545,9 @@
       }
     }
   }
-  .el-form-item__label:before {
+  >>>.el-form-item__label:before {
     left: 0!important;
     margin-right: 10px;
-  }
-  .el-form-item__label{
-    padding-left: 10px;
+    position: static;
   }
 </style>
