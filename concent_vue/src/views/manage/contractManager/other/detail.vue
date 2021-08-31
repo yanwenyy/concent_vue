@@ -3184,7 +3184,6 @@
       saveInfo(formName,type) {
         this.detailform.commonFilesList=this.detailform.commonFilesList1.concat(this.detailform.commonFilesList2)
         var url='';
-        this.detailform.contractInfo.constructionOrgId = this.detailform.constructionOrgList.join(",")
         if(type=='save'){
           url='/api/contract/contract/ContractInfo/detail/saveOrUpdate';
         }else{
