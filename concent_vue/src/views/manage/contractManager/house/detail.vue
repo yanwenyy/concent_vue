@@ -299,7 +299,7 @@
                 :rules="rules.contractAmount"
               >
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'||p.pushId||(detailform.contractInfo.isInSystemUnion=='1'&&detailform.contractInfo.isInSystemSub=='1'&&detailform.contractInfo.isOutSystemUnion=='1'&&detailform.contractInfo.isOutSystemSub=='1'&&detailform.contractInfo.isInGroupSub=='1')"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'||p.pushId||(detailform.contractInfo.isInSystemUnion=='1'&&detailform.contractInfo.isInSystemSub=='1'&&detailform.contractInfo.isOutSystemUnion=='1'&&detailform.contractInfo.isOutSystemSub=='1'&&detailform.contractInfo.isInGroupSub=='1')||detailform.contractInfo.isYearContract=='0'"
                   @input="getOurAmount(),getOurAmount('','','nfb')"
                   clearable
                   placeholder=""
@@ -2847,7 +2847,7 @@ export default {
       var yearSale=0,currentYearSum=0;
       this.detailform.contractInfoHouseSalesList.forEach((item)=>{
         if(item.salesPerforMonth==month&&item.salesPerforYear==year){
-        yearSale+=Number(item.monthSales);
+          yearSale+=Number(item.monthSales);
         }
         // if(item.salesPerforYear==this.currentYear){
         //   currentYearSum+=Number(item.monthSales);
@@ -2858,8 +2858,8 @@ export default {
         if(item.salesPerforMonth==month&&item.salesPerforYear==year){
           item.yearSales=yearSale;
         }
-       });
-      if(this.detailform.contractInfo.isInSystemUnion=='1'&&this.detailform.contractInfo.isInSystemSub=='1'&&this.detailform.contractInfo.isOutSystemUnion=='1'&&this.detailform.contractInfo.isOutSystemSub=='1'&&this.detailform.contractInfo.isInGroupSub=='1'){
+      });
+      if(this.detailform.contractInfo.isYearContract=='0'||(this.detailform.contractInfo.isInSystemUnion=='1'&&this.detailform.contractInfo.isInSystemSub=='1'&&this.detailform.contractInfo.isOutSystemUnion=='1'&&this.detailform.contractInfo.isOutSystemSub=='1'&&this.detailform.contractInfo.isInGroupSub=='1')){
         this.detailform.contractInfo.contractAmount=currentYearSum.toString();
         this.$forceUpdate();
         this.getOurAmount();

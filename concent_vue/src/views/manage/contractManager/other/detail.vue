@@ -314,7 +314,7 @@
                 :rules="rules.contractAmount"
               >
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'||p.pushId||(detailform.contractInfo.isInSystemUnion=='1'&&detailform.contractInfo.isInSystemSub=='1'&&detailform.contractInfo.isOutSystemUnion=='1'&&detailform.contractInfo.isOutSystemSub=='1'&&detailform.contractInfo.isInGroupSub=='1')||detailform.contractInfo.isYearContract=='0'"
                   @input="getOurAmount(),getOurAmount('','','nfb')"
                   clearable
                   placeholder=""
@@ -1212,7 +1212,7 @@
                   </el-table-column>
                   <el-table-column
                     :resizable="false"
-                    label="本月收益(万元)"
+                    label="合同额(万元)"
                     align="center"
                     prop="monthSales"
                     width="400"
@@ -1223,7 +1223,7 @@
                         <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                         <el-input
                           @blur="setYearSale(scope.row.salesPerforYear,scope.$index)"
-                          v-model="scope.row.contractAmount"
+                          v-model="scope.row.monthSales"
                           clearable
                           :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         >
@@ -1242,7 +1242,7 @@
                     show-overflow-tooltip
                   >
                     <template slot-scope="scope">
-                      {{scope.row.totalAmount}}
+                      {{scope.row.yearSales}}
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -2641,29 +2641,36 @@
       },
       //年销售额
       setYearSale(year,index){
-        var yearSale=0,yearSaleNext=0;
+        var yearSale=0,yearSaleNext=0,currentYearSum=0;
         this.detailform.contractInfoHouseSalesList.forEach((item,i)=>{
           if(item.salesPerforYear==year&&(i<index||i==index)){
-            yearSale+=Number(item.contractAmount);
+            yearSale+=Number(item.monthSales);
           }else if(i>index){
-            yearSaleNext+=Number(item.contractAmount);
+            yearSaleNext+=Number(item.monthSales);
           }
+          currentYearSum+=Number(item.monthSales);
         });
         this.detailform.contractInfoHouseSalesList.forEach((item,i)=>{
           if(item.salesPerforYear==year&&index==i){
-            item.totalAmount=yearSale;
+            item.yearSales=yearSale;
           }else if(i>index){
-            item.totalAmount=yearSale+yearSaleNext;
+            item.yearSales=yearSale+yearSaleNext;
           }
         });
+        if(this.detailform.contractInfo.isYearContract=='0'||(this.detailform.contractInfo.isInSystemUnion=='1'&&this.detailform.contractInfo.isInSystemSub=='1'&&this.detailform.contractInfo.isOutSystemUnion=='1'&&this.detailform.contractInfo.isOutSystemSub=='1'&&this.detailform.contractInfo.isInGroupSub=='1')){
+          this.detailform.contractInfo.contractAmount=currentYearSum.toString();
+          this.$forceUpdate();
+          this.getOurAmount();
+          this.getOurAmount('','','nfb');
+        }
       },
       //新增销售业绩
       addXs(){
         var v={
           salesPerforYear:'',
           salesPerforMonth:'',
-          contractAmount:'',
-          totalAmount:'',
+          monthSales:'',
+          yearSales:'',
         };
         this.detailform.contractInfoHouseSalesList.push(v);
       },

@@ -686,23 +686,21 @@
                     <span>年度合同收益:</span>
                   </p>
                   <el-table
+                    v-if="detailFormBefore.contractInfo.isYearContract=='0'"
                     :data="detailFormBefore.contractInfoHouseSalesList"
-                    :header-cell-style="{
-                'text-align': 'center',
-                'background-color': 'rgba(246,248,252,1)',
-                color: 'rgba(0,0,0,1)',
-              }"
+                    :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
                     @selection-change="handleSelectionChange"
                     align="center"
                     border
                     class="detailTable"
                     ref="table"
-                    style="width: 100%; min-height: calc(100vh - 370px)"
+                    style="width: 100%;height: auto;"
                   >
                     <el-table-column
                       :width="80"
                       align="center"
                       label="序号"
+                      show-overflow-tooltip
                       type="index"
                     ></el-table-column>
 
@@ -715,6 +713,7 @@
                       width="150"
                       show-overflow-tooltip
                     >
+
                     </el-table-column>
                     <el-table-column
                       class="listTabel"
@@ -728,21 +727,61 @@
                     </el-table-column>
                     <el-table-column
                       :resizable="false"
-                      label="本月收益(万元)"
+                      label="合同额(万元)"
                       align="center"
-                      prop="contractAmount"
-                      width="400"
+                      prop="monthSales"
                       show-overflow-tooltip
                     >
                     </el-table-column>
+                    <!--<el-table-column-->
+                    <!--:resizable="false"-->
+                    <!--label="本月营业收入(万元)"-->
+                    <!--width="150"-->
+                    <!--align="center"-->
+                    <!--prop="monthIncome"-->
+                    <!--show-overflow-tooltip-->
+                    <!--&gt;-->
+                    <!--</el-table-column>-->
+                    <!--<el-table-column-->
+                    <!--:resizable="false"-->
+                    <!--label="本年销售金额(万元)"-->
+                    <!--align="center"-->
+                    <!--width="150"-->
+                    <!--prop="yearSales"-->
+                    <!--show-overflow-tooltip-->
+                    <!--&gt;-->
+                    <!--</el-table-column>-->
                     <el-table-column
                       :resizable="false"
                       label="年累(万元)"
+                      width="150"
                       align="center"
-                      prop="totalAmount"
+                      prop="yearIncome"
                       show-overflow-tooltip
                     >
                     </el-table-column>
+                    <!--<el-table-column-->
+                    <!--:resizable="false"-->
+                    <!--label="开发进度描述"-->
+                    <!--width="150"-->
+                    <!--align="center"-->
+                    <!--prop="description"-->
+                    <!--show-overflow-tooltip-->
+                    <!--&gt;-->
+                    <!--</el-table-column>-->
+                    <!--<el-table-column-->
+                    <!--:resizable="false"-->
+                    <!--label="是否完工"-->
+                    <!--width="150"-->
+                    <!--align="center"-->
+                    <!--prop="isFinish"-->
+                    <!--show-overflow-tooltip-->
+                    <!--&gt;-->
+                    <!--<template slot-scope="scope">-->
+                    <!--<el-radio disabled v-model="scope.row.isFinish" label="0">是</el-radio>-->
+                    <!--<el-radio disabled v-model="scope.row.isFinish" label="1">否</el-radio>-->
+                    <!--</template>-->
+                    <!--</el-table-column>-->
                   </el-table>
                 </div>
               </div>
@@ -2254,14 +2293,14 @@
                 <div v-if="detailform.contractInfo.isYearContract=='0'">
                   <p  class="detail-title" style="overflow: hidden；margin-right: 30px">
                     <span>年度合同收益:</span>
-                    <el-button
-                      v-show="p.actpoint != 'look'&&p.actpoint !== 'task'&&p.isYearContract!='0'"
-                      @click="addXs()"
-                      class="upload-demo detailUpload detatil-flie-btn"
-                      type="primary"
-                    >新增
-                    </el-button
-                    >
+                    <!--<el-button-->
+                      <!--v-show="p.actpoint != 'look'&&p.actpoint !== 'task'&&p.isYearContract!='0'"-->
+                      <!--@click="addXs()"-->
+                      <!--class="upload-demo detailUpload detatil-flie-btn"-->
+                      <!--type="primary"-->
+                    <!--&gt;新增-->
+                    <!--</el-button-->
+                    <!--&gt;-->
                   </p>
                   <el-table
                     :data="detailform.contractInfoHouseSalesList"
@@ -2296,7 +2335,7 @@
                       <template slot-scope="scope">
                         <el-date-picker
                           class="tabelForm-dete"
-                          :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.isYearContract=='0'"
+                          disabled
                           v-model="scope.row.salesPerforYear"
                           type="year"
                           value-format="yyyy"
@@ -2318,7 +2357,7 @@
                         <el-date-picker
                           @change="checkRepeat(scope.row.salesPerforMonth,scope.row.salesPerforYear,detailform.contractInfoHouseSalesList,scope.$index)"
                           class="tabelForm-dete"
-                          :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.isYearContract=='0'"
+                          disabled
                           v-model="scope.row.salesPerforMonth"
                           type="month"
                           format="MM"
@@ -2330,27 +2369,27 @@
                     </el-table-column>
                     <el-table-column
                       :resizable="false"
-                      label="本月收益(万元)"
+                      label="合同额(万元)"
                       align="center"
                       prop="monthSales"
                       width="400"
                       show-overflow-tooltip
                     >
-                      <template slot-scope="scope">
-                        <el-form-item class="tabelForm" :prop="'contractInfoHouseSalesList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
-                          <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                          <el-input
-                            @blur="setYearSale(scope.row.salesPerforYear,scope.$index)"
-                            v-model="scope.row.contractAmount"
-                            clearable
-                            :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.isYearContract=='0'"
-                          >
-                            <template slot="prepend">¥</template>
-                            <template slot="append">(万元)</template>
-                          </el-input>
-                        </el-form-item>
-                        <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                      </template>
+                      <!--<template slot-scope="scope">-->
+                      <!--<el-form-item class="tabelForm" :prop="'contractInfoHouseSalesList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>-->
+                      <!--&lt;!&ndash;@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"&ndash;&gt;-->
+                      <!--<el-input-->
+                      <!--@blur="setYearSale(scope.row.salesPerforYear,scope.$index)"-->
+                      <!--v-model="scope.row.contractAmount"-->
+                      <!--clearable-->
+                      <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'||p.isYearContract=='0'"-->
+                      <!--&gt;-->
+                      <!--<template slot="prepend">¥</template>-->
+                      <!--<template slot="append">(万元)</template>-->
+                      <!--</el-input>-->
+                      <!--</el-form-item>-->
+                      <!--&lt;!&ndash; <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> &ndash;&gt;-->
+                      <!--</template>-->
                     </el-table-column>
                     <el-table-column
                       :resizable="false"
@@ -2359,9 +2398,9 @@
                       prop="yearSales"
                       show-overflow-tooltip
                     >
-                      <template slot-scope="scope">
-                        {{scope.row.totalAmount}}
-                      </template>
+                      <!--<template slot-scope="scope">-->
+                      <!--{{scope.row.totalAmount}}-->
+                      <!--</template>-->
                     </el-table-column>
                     <el-table-column
                       :resizable="false"

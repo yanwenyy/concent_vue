@@ -1225,7 +1225,7 @@
                         <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                         <el-input
                           @blur="setYearSale(scope.row.salesPerforYear,scope.$index)"
-                          v-model="scope.row.contractAmount"
+                          v-model="scope.row.monthSales"
                           clearable
                           :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         >
@@ -1244,7 +1244,7 @@
                     show-overflow-tooltip
                   >
                     <template slot-scope="scope">
-                      {{scope.row.totalAmount}}
+                      {{scope.row.yearSales}}
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -2663,29 +2663,34 @@ export default {
     },
     //年销售额
     setYearSale(year,index){
-      var yearSale=0,yearSaleNext=0;
+      var yearSale=0,yearSaleNext=0,totalMoney=0;
       this.detailform.contractInfoHouseSalesList.forEach((item,i)=>{
         if(item.salesPerforYear==year&&(i<index||i==index)){
-          yearSale+=Number(item.contractAmount);
+          yearSale+=Number(item.monthSales);
        }else if(i>index){
-          yearSaleNext+=Number(item.contractAmount);
+          yearSaleNext+=Number(item.monthSales);
         }
+        totalMoney+=Number(item.monthSales);
     });
       this.detailform.contractInfoHouseSalesList.forEach((item,i)=>{
         if(item.salesPerforYear==year&&index==i){
-           item.totalAmount=yearSale;
+           item.yearSales=yearSale;
          }else if(i>index){
-          item.totalAmount=yearSale+yearSaleNext;
+          item.yearSales=yearSale+yearSaleNext;
         }
-    });
+     });
+      if(totalMoney>Number(this.detailform.contractInfo.contractAmount)){
+        this.$message.error("本月收益总和不能大于合同规模");
+        this.detailform.contractInfoHouseSalesList[index].monthSales='';
+      }
     },
     //新增销售业绩
     addXs(){
       var v={
         salesPerforYear:'',
         salesPerforMonth:'',
-        contractAmount:'',
-        totalAmount:'',
+        monthSales:'',
+        yearSales:'',
       };
       this.detailform.contractInfoHouseSalesList.push(v);
     },
