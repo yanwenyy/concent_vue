@@ -86,6 +86,8 @@
         </el-form-item>
       </el-form>
       <el-table
+        :max-height="$dialogTableHeight"
+        :height="$dialogTableHeight"
         :data="dataList"
         border
         v-loading="dataListLoading"
