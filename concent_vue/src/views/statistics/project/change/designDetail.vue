@@ -165,7 +165,7 @@
                 label="所属铁路局:"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  disabled
                   clearable
                   filterable
                   @change="getName(detailForm.project.railwayId, railwayBureau, 'railwayName','railwayCode')"
@@ -254,7 +254,7 @@
                     inactive-color="#ddd"
                     active-value="1"
                     inactive-value="0"
-                    @change="constructionOrgList=''"
+                    @change="companyBuildClear"
                   >
                   </el-switch>
                 </el-form-item>
@@ -267,7 +267,7 @@
                 prop="project.projectTypeFirstId"
                 style="width: 32.5%">
                 <el-select
-                  disabled
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
                   filterable
                   placeholder="请选择"
@@ -285,7 +285,7 @@
                 prop="project.projectTypeSecondId"
                 style="width: 32.5%">
                 <el-select
-                  disabled
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
                   filterable
                   @change="getThree"
@@ -378,7 +378,7 @@
                 <el-select
                   filterable
                   clearable
-                  disabled
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   placeholder="请选择"
                   @change="getName(detailForm.project.categorySecondId, bizTypeCodeTwo, 'categorySecondName','categorySecondCode')"
                   v-model="detailForm.project.categorySecondId">
@@ -512,7 +512,7 @@
                 prop="project.marketFirstId"
                 style="width: 32.5%">
                 <el-select
-                  disabled
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
                   filterable
                   placeholder="请选择"
@@ -535,7 +535,7 @@
                 }:{}"
                 style="width: 32.5%">
                 <el-select
-                  disabled
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   filterable
                   clearable
                   @change="getName(detailForm.project.marketSecondId, emergingMarketTwo, 'marketSecondName','marketSecondCode')"
@@ -677,6 +677,34 @@
                   <template slot="append">(万元)</template>
                 </el-input>
               </el-form-item> -->
+              <el-form-item
+                  label="初始我方份额(万元)"
+                  prop="project.ourAmount"
+                  :rules="rules.project.isMustMoney"
+                  style="width: 32.5%"
+                >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                  v-model="detailForm.project.ourAmount"
+                >
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                  label="我方份额(万元)"
+                  prop="project.amountWe"
+                  :rules="rules.project.isMustMoney"
+                  style="width: 32.5%"
+                >
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  v-model="detailForm.project.amountWe"
+                >
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
             </el-row>
             <!--合同总额(万元)-->
             <el-row>
@@ -694,15 +722,31 @@
                 </el-input>
               </el-form-item> -->
               <el-form-item
-                label="合同总额(万元):"
+                v-show="detailForm.project.contractInfoList!=''"
+                label="合同总金额(万元):" 
                 prop="project.contractAmountTotal"
+                :rules="rules.project.isMoney"
+                style="width: 32.5%">
+                <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                  clearable
+                  placeholder="请输入"
+                  v-model="detailForm.project.contractAmountTotal">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                v-show="detailForm.project.contractInfoList == ''"
+                label="合同金额(万元):" 
+                prop="project.contractMoney"
                 :rules="rules.project.isMoney"
                 style="width: 32.5%">
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   placeholder="请输入"
-                  v-model="detailForm.project.contractAmountTotal">
+                  v-model="detailForm.project.contractMoney">
                   <template slot="prepend">¥</template>
                   <template slot="append">(万元)</template>
                 </el-input>
@@ -777,7 +821,7 @@
                   value-format="timestamp"
                   placeholder="选择日期时间"/>
               </el-form-item>
-              <el-form-item
+              <!-- <el-form-item
                 label="是否托管:"
                 class="inline-formitem"
                 prop="project.isTrusteeship"
@@ -790,7 +834,7 @@
                   inactive-color="#ddd"
                   active-value="0"
                   inactive-value="1"/>
-              </el-form-item>
+              </el-form-item> -->
             </el-row>
             <el-row>
               <el-form-item
@@ -815,7 +859,7 @@
                   value-format="timestamp"
                   placeholder="选择日期时间"/>
               </el-form-item>
-              <el-form-item
+              <!-- <el-form-item
                 label="是否代管:"
                 class="inline-formitem"
                 prop="project.isEscrow"
@@ -828,7 +872,7 @@
                   inactive-color="#ddd"
                   active-value="0"
                   inactive-value="1"/>
-              </el-form-item>
+              </el-form-item> -->
             </el-row>
             <!--备注(最多2000字)-->
             <el-row>
@@ -2276,6 +2320,11 @@
         });
     },
     methods: {
+      //切换是否客户
+      companyBuildClear(){
+        this.detailForm.project.companyBuildId = '',
+        this.constructionOrgList = []
+      },
       //打开多选的单位列表
       openComMul(ids,names,url,type){
         this.companyMulStatus=true;
