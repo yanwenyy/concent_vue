@@ -1909,7 +1909,7 @@
                   <template slot="append">(万元)</template>
                 </el-input>
               </el-form-item>
-              <el-form-item
+              <!-- <el-form-item
                 label="合同总额(万元):"
                 style="width: 32.5%">
                 <el-input
@@ -1919,21 +1919,40 @@
                   <template slot="prepend">¥</template>
                   <template slot="append">(万元)</template>
                 </el-input>
-              </el-form-item>
-            </el-row>
-            <!--增值税-->
-            <el-row>
+              </el-form-item> -->
               <el-form-item
-                label="增值税(万元):"
+                v-show="detailForm.project.contractInfoList!=''"
+                label="合同总金额(万元):"
+                prop="project.contractAmountTotal"
+                :rules="rules.project.isMoney"
                 style="width: 32.5%">
                 <el-input
                   disabled
+                  clearable
                   placeholder="请输入"
-                  v-model="showDetailForm.project.valueAddedTax">
+                  v-model="showDetailForm.project.contractAmountTotal">
                   <template slot="prepend">¥</template>
                   <template slot="append">(万元)</template>
                 </el-input>
               </el-form-item>
+              <el-form-item
+                v-show="detailForm.project.contractInfoList == ''"
+                label="合同金额(万元):"
+                prop="project.contractMoney"
+                :rules="rules.project.isMoney"
+                style="width: 32.5%">
+                <el-input
+                  disabled
+                  clearable
+                  placeholder="请输入"
+                  v-model="showDetailForm.project.contractMoney">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+            </el-row>
+            <!--增值税-->
+            <el-row>
               <el-form-item
                 label="实际投资额(万元):"
                 style="width: 32.5%">
@@ -1941,6 +1960,17 @@
                   disabled
                   placeholder="请输入"
                   v-model="showDetailForm.project.realInvest">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                label="增值税(万元):"
+                style="width: 32.5%">
+                <el-input
+                  disabled
+                  placeholder="请输入"
+                  v-model="showDetailForm.project.valueAddedTax">
                   <template slot="prepend">¥</template>
                   <template slot="append">(万元)</template>
                 </el-input>
