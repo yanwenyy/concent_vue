@@ -36,7 +36,7 @@
                 style="width: 32.5%">
                 <el-input
                   clearable
-                  disabled
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   placeholder="请输入"
                   v-model="detailForm.project.projectName"/>
               </el-form-item>
@@ -45,7 +45,7 @@
                 prop="project.projectForeginName"
                 style="width: 32.5%">
                 <el-input
-                  disabled
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.projectForeginName"/>
@@ -165,7 +165,7 @@
                 label="所属铁路局:"
                 style="width: 32.5%">
                 <el-select
-                  disabled
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   filterable
                   @change="getName(detailForm.project.railwayId, railwayBureau, 'railwayName','railwayCode')"
@@ -184,7 +184,7 @@
                 prop="project.isBureauIndex"
                 style="width: 32.5%">
                 <el-switch
-                  disabled
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   class="inline-formitem-switch"
                   v-model="detailForm.project.isBureauIndex"
                   active-color="#409EFF"
@@ -204,7 +204,7 @@
                     trigger: 'blur',
                   }">
                   <el-select
-                    disabled
+                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                     v-model="constructionOrgList"
                     v-if="detailForm.project.isClientele=='1'"
                     multiple
@@ -219,7 +219,7 @@
                     </el-option>
                   </el-select>
                   <el-select
-                    disabled
+                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                     v-model="constructionOrgList"
                     v-if="detailForm.project.isClientele!='1'"
                     multiple
@@ -247,7 +247,7 @@
                     }"
                 >
                   <el-switch
-                    disabled
+                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                     class="inline-formitem-switch"
                     v-model="detailForm.project.isClientele"
                     active-color="#409EFF"
@@ -267,7 +267,7 @@
                 prop="project.projectTypeFirstId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   clearable
                   filterable
                   placeholder="请选择"
@@ -285,7 +285,7 @@
                 prop="project.projectTypeSecondId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   clearable
                   filterable
                   @change="getThree"
@@ -310,7 +310,7 @@
             }"
               >
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   clearable
                   filterable
                   placeholder="请选择"
@@ -378,7 +378,7 @@
                 <el-select
                   filterable
                   clearable
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   placeholder="请选择"
                   @change="getName(detailForm.project.categorySecondId, bizTypeCodeTwo, 'categorySecondName','categorySecondCode')"
                   v-model="detailForm.project.categorySecondId">
@@ -512,7 +512,7 @@
                 prop="project.marketFirstId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   clearable
                   filterable
                   placeholder="请选择"
@@ -535,7 +535,7 @@
                 }:{}"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'||detailForm.project.contractInfoList!=''"
                   filterable
                   clearable
                   @change="getName(detailForm.project.marketSecondId, emergingMarketTwo, 'marketSecondName','marketSecondCode')"
@@ -632,7 +632,7 @@
                 prop="project.fieldId"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  :disabled="p.actpoint==='look'||p.actpoint==='task'||detailForm.project.contractInfoList!=''"
                   filterable
                   clearable
                   @change="getName(detailForm.project.fieldId, siteName, 'fieldName','fieldCode')"
@@ -804,7 +804,7 @@
                 prop="project.contractStartTime"
                 style="width: 32.5%">
                 <el-date-picker
-                  disabled
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   v-model="detailForm.project.contractStartTime"
                   type="date"
                   value-format="timestamp"
@@ -815,7 +815,7 @@
                 prop="project.contractEndTime"
                 style="width: 32.5%">
                 <el-date-picker
-                  disabled
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   v-model="detailForm.project.contractEndTime"
                   type="date"
                   value-format="timestamp"
@@ -842,7 +842,7 @@
                 prop="project.contractSignTime"
                 style="width: 32.5%">
                 <el-date-picker
-                  disabled
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   v-model="detailForm.project.contractSignTime"
                   type="date"
                   value-format="timestamp"
