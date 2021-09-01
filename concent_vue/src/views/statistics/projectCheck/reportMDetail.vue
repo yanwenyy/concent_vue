@@ -419,7 +419,7 @@
             treeSum+=Number(item[scopeName]);
             canCalc=true;
           }
-          if(item.tjxId==code&&item.tjxCode.length==9){
+          if(item.tjxCode==code&&item.tjxCode.length==9){
             parentNum=Number(item[scopeName]);
             parentCanCalc=true;
             // console.log(item.tjxName)
@@ -454,7 +454,7 @@
           }
         });
         this.data.forEach((item,i)=>{
-          if(item.tjxId==code&&item.veditable=='0'){
+          if(item.tjxCode==code&&item.veditable=='0'){
             item.valuationFee=num;
             item.yearValuationFee=num1;
             item.totalValuationFee=num2;
@@ -492,7 +492,7 @@
           }
         });
         this.data.forEach((item,i)=>{
-          if(item.tjxId==list[index].sumTarget&&item.veditable=='0'){
+          if(item.tjxCode==list[index].sumTarget&&item.veditable=='0'){
             item.taxFee=num;
             item.yearTaxFee=num1;
             item.totalTaxFee=num2;
@@ -557,7 +557,7 @@
               }),
               {useJson: true})
             .then(res => {
-              if (res.data.data.length>0) {
+              if (res.data.data=='0') {
                 this.$http
                   .post(url, JSON.stringify(tableData), {useJson: true})
                   .then(res => {
@@ -586,7 +586,7 @@
           }
         });
         this.data.forEach((item,i)=>{
-          if(item.tjxId==list[index].sumTarget){
+          if(item.tjxCode==list[index].sumTarget){
             item.value=num;
           }
         });
@@ -599,7 +599,7 @@
           }
         });
         this.nextData.forEach((item,i)=>{
-          if(item.tjxId==list[index].sumTarget&&item.veditable=='0'){
+          if(item.tjxCode==list[index].sumTarget&&item.veditable=='0'){
             item.value=num;
           }
         });

@@ -503,7 +503,7 @@
               treeSum+=Number(item.monthValue);
               canCalc=true;
             }
-            if(item.tjxId==code&&item.tjxCode.length==9){
+            if(item.tjxCode==code&&item.tjxCode.length==9){
               parentNum=Number(item.monthValue);
               parentCanCalc=true;
               // console.log(item.tjxName)
@@ -535,7 +535,7 @@
             }
           });
           this.data.forEach((item,i)=>{
-            if(item.tjxId==list[index].sumTarget&&item.veditable=='0'){
+            if(item.tjxCode==list[index].sumTarget&&item.veditable=='0'){
               item.monthValue=num;
               item.yearValue=num1;
               item.totalValue=num2;
@@ -598,7 +598,7 @@
                 }),
                 {useJson: true})
               .then(res => {
-                if (res.data.data.length>0) {
+                if (res.data.data=='0') {
                   this.$http
                     .post(url, JSON.stringify(tableData), {useJson: true})
                     .then(res => {
@@ -627,7 +627,7 @@
           }
         });
         this.data.forEach((item,i)=>{
-          if(item.tjxId==list[index].sumTarget){
+          if(item.tjxCode==list[index].sumTarget){
             item.value=num;
           }
         });
@@ -640,7 +640,7 @@
           }
         });
         this.nextData.forEach((item,i)=>{
-          if(item.tjxId==list[index].sumTarget&&item.veditable=='0'){
+          if(item.tjxCode==list[index].sumTarget&&item.veditable=='0'){
             item.value=num;
           }
         });

@@ -419,7 +419,7 @@
           }
         });
         this.data.forEach((item,i)=>{
-          if(item.tjxId==list[index].sumTarget){
+          if(item.tjxCode==list[index].sumTarget){
             item.monthValue=num;
             item.yearValue=num1;
             item.totalValue=num2;
@@ -463,7 +463,7 @@
               }),
               {useJson: true})
             .then(res => {
-              if (res.data.data.length>0) {
+              if (res.data.data=='0') {
                 this.$http
                   .post(url, JSON.stringify(tableData), {useJson: true})
                   .then(res => {
@@ -492,7 +492,7 @@
           }
         });
         this.data.forEach((item,i)=>{
-          if(item.tjxId==list[index].sumTarget){
+          if(item.tjxCode==list[index].sumTarget){
             item.value=num;
           }
         });
@@ -505,7 +505,7 @@
           }
         });
         this.nextData.forEach((item,i)=>{
-          if(item.tjxId==list[index].sumTarget){
+          if(item.tjxCode==list[index].sumTarget){
             item.value=num;
           }
         });

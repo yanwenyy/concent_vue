@@ -601,7 +601,7 @@
           url="/api/statistics/projectMonthlyReport/Projectreport/process/start"
           var sj=new Date().toLocaleDateString().split('/');
           // sj[1]=sj[1]<10?'0'+sj[1]:sj[1];
-            debugger;
+          //   debugger;
             var kk=this.userdata.managerOrgType
           this.$http
             .post('/api/statistics/projectMonthlyReport/ReportEndtime/detail/checkReportTime',
@@ -612,7 +612,7 @@
               }),
               {useJson: true})
             .then(res => {
-              if (res.data.data.length>0) {
+              if (res.data.data=='0') {
                 this.$http
                   .post(url, JSON.stringify(tableData), {useJson: true})
                   .then(res => {

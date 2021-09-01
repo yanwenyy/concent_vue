@@ -148,7 +148,7 @@
         return (rowData,index,list,name) => {
           var bb = [];
           for (var i in this.data.map(row => row.value)) {
-            if (this.data.map(row => row.veditable=='1')[i]&&this.data.map(row => row.venabled=='1')[i]&&this.data.map(row => row.value)[i] && this.data.map(row => row.sumTarget)[i] === rowData.uuid) {
+            if (this.data.map(row => row.veditable=='1')[i]&&this.data.map(row => row.venabled=='1')[i]&&this.data.map(row => row.value)[i] && this.data.map(row => row.sumTarget)[i] === rowData.tjxCode) {
               bb.push(this.data.map(row => row.value)[i])
             }
           }
