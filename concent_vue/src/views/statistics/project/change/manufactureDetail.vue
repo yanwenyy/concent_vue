@@ -120,7 +120,7 @@
                     inactive-color="#ddd"
                     active-value="1"
                     inactive-value="0"
-                    @change="constructionOrgList=''"
+                    @change="companyBuildClear"
                   >
                   </el-switch>
                 </el-form-item>
@@ -914,7 +914,7 @@
               </el-form-item>
             </el-row>
             <el-row>
-              <el-form-item
+              <!-- <el-form-item
                 label="产品名称:"
                 style="width: 32.5%">
                 <el-input
@@ -922,7 +922,7 @@
                   clearable
                   placeholder="请输入"
                   v-model="showDetailForm.project.productName"/>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item
                 label="客户名称:"
                 style="width: 32.5%">
@@ -966,21 +966,40 @@
                   disabled
                   v-model="showDetailForm.project.contractNumber"/>
               </el-form-item>
-              <el-form-item
-                label="合同金额(万元):"
-                style="width:32.5%;">
-                <el-input
-                  clearable
-                  placeholder="请输入"
-                  disabled
-                  v-model="showDetailForm.project.contractMoney">
-                  <template slot="prepend">¥</template>
-                  <template slot="append">(万元)</template>
-                </el-input>
-              </el-form-item>
+            <el-form-item
+              v-show="detailForm.project.contractInfoList!=''"
+              label="合同总金额(万元):" 
+              prop="project.contractAmountTotal"
+              :rules="rules.project.isMoney"
+              style="width: 32.5%">
+              <el-input
+                disabled
+                clearable
+                placeholder="请输入"
+                v-model="showDetailForm.project.contractAmountTotal">
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+            <el-form-item
+              v-show="detailForm.project.contractInfoList == ''"
+              label="合同金额(万元):" 
+              prop="project.contractMoney"
+              :rules="rules.project.isMoney"
+              style="width: 32.5%">
+              <el-input
+                disabled
+                clearable
+                placeholder="请输入"
+                v-model="showDetailForm.project.contractMoney">
+                <template slot="prepend">¥</template>
+                <template slot="append">(万元)</template>
+              </el-input>
+            </el-form-item>
+
             </el-row>
             <el-row>
-              <el-form-item
+              <!-- <el-form-item
                 label="合同所属板块:"
                 prop="project.ocontractModel"
                 style="width: 32.5%">
@@ -1008,7 +1027,7 @@
                   <template slot="prepend">¥</template>
                   <template slot="append">(万元)</template>
                 </el-input>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item
                 label="是否系统内采购:"
                 class="inline-formitem"
@@ -1023,6 +1042,50 @@
                   inactive-value="1"/>
               </el-form-item>
             </el-row>
+            <el-row>
+              <el-form-item
+                label="初始合同额(万元):"
+                prop="project.contractAmountInitial"
+                :rules="rules.project.isMustMoney"
+                style="width: 32.5%">
+                <el-input
+                  disabled
+                  clearable
+                  placeholder="请输入"
+                  v-model="showDetailForm.project.contractAmountInitial">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                  label="初始我方份额(万元)"
+                  prop="project.ourAmount"
+                  :rules="rules.project.isMustMoney"
+                  style="width: 32.5%"
+                >
+                <el-input
+                  disabled
+                  v-model="showDetailForm.project.ourAmount"
+                >
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                  label="我方份额(万元)"
+                  prop="project.amountWe"
+                  :rules="rules.project.isMustMoney"
+                  style="width: 32.5%"
+                >
+                <el-input
+                  disabled
+                  v-model="showDetailForm.project.amountWe"
+                >
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+            </el-row>           
             <el-row>
               <el-form-item
                 label="项目状态:"
@@ -1068,7 +1131,7 @@
                 </el-form-item>
             </el-row>
             <el-row>
-              <el-form-item
+              <!-- <el-form-item
                 label="供方地点"
                 style="width: 32.5%"
               >
@@ -1077,7 +1140,7 @@
                   <el-button slot="append" disabled icon="el-icon-search"
                              @click="selectPosition()"></el-button>
                 </el-input>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item
                 label="合同签订时间:"
                 prop="project.contractSignTime"
@@ -1733,6 +1796,11 @@
         });
     },
     methods: {
+      //切换是否客户
+      companyBuildClear(){
+        this.detailForm.project.companyBuildId = '',
+        this.constructionOrgList = []
+      },
         //流程操作
       operation(type){
         var msg='',that=this;

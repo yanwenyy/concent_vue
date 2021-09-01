@@ -462,29 +462,6 @@
                 </el-select>
               </el-form-item>
             </el-row>
-            <!--<el-row>-->
-              <!--<el-form-item-->
-                <!--label="推送人:"-->
-                <!--prop="project.projectPusher"-->
-                <!--style="width:32.5%;">-->
-                <!--<el-input-->
-                  <!--clearable-->
-                  <!--placeholder="请输入"-->
-                  <!--:disabled="p.actpoint === 'look'||p.actpoint === 'task'"-->
-                  <!--v-model="detailForm.project.projectPusher"/>-->
-              <!--</el-form-item>-->
-              <!--<el-form-item-->
-                <!--label="联系方式:"-->
-                <!--prop="project.projectPusherPhone"-->
-                <!--:rules="rules.project.isMobile"-->
-                <!--style="width:32.5%;">-->
-                <!--<el-input-->
-                  <!--clearable-->
-                  <!--placeholder="请输入"-->
-                  <!--:disabled="p.actpoint === 'look'||p.actpoint === 'task'"-->
-                  <!--v-model="detailForm.project.projectPusherPhone"/>-->
-              <!--</el-form-item>-->
-            <!--</el-row>-->
             <el-row>
               <el-form-item
                 label="推送人:"
@@ -856,13 +833,73 @@
             </el-row>
             <el-row>
               <el-form-item
+                label="初始合同额(万元):"
+                prop="project.contractAmountInitial"
+                :rules="rules.project.isMoney"
+                style="width: 32.5%">
+                <el-input
+                  disabled
+                  @change="getCount"
+                  clearable
+                  placeholder="请输入"
+                  v-model="showDetailForm.project.contractAmountInitial">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
                 label="签约总金额(万元):"
+                prop="project.amountSignup"
+                :rules="rules.project.isMoney"
                 style="width:32.5%;">
                 <el-input
                   clearable
                   placeholder="请输入"
                   disabled
                   v-model="showDetailForm.project.amountSignup">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                v-show="detailForm.project.contractInfoList!=''"
+                label="合同总金额(万元):" 
+                prop="project.contractAmountTotal"
+                :rules="rules.project.isMoney"
+                style="width: 32.5%">
+                <el-input
+                  disabled
+                  placeholder="请输入"
+                  v-model="showDetailForm.project.contractAmountTotal">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                v-show="detailForm.project.contractInfoList == ''"
+                label="合同金额(万元):" 
+                prop="project.contractMoney"
+                :rules="rules.project.isMoney"
+                style="width: 32.5%">
+                <el-input
+                  disabled
+                  clearable
+                  placeholder="请输入"
+                  v-model="showDetailForm.project.contractMoney">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                label="初始我方份额(万元)"
+                prop="project.ourAmount"
+                :rules="rules.project.isMustMoney"
+                style="width: 32.5%"
+              >
+                <el-input
+                  disabled
+                  v-model="showDetailForm.project.ourAmount"
+                >
                   <template slot="prepend">¥</template>
                   <template slot="append">(万元)</template>
                 </el-input>
@@ -940,7 +977,7 @@
             </el-row>
             <el-row>
               <el-form-item
-                label="签约单位:"
+                label="签约单位(使用资质单位):"
                 prop="amountCompanyName"
                 style="width:32.5%;">
                 <el-input
