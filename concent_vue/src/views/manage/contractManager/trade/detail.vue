@@ -1227,6 +1227,9 @@
                           class="input-el-input-group"
                           :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                           clearable
+                          @clear="clearBdw( scope.row.subjectMatterName,
+                      detailform.contractInfoSubjectMatterList,
+                      scope.$index)"
                           filterable
                           placeholder="请选择"
                           size="mini"
@@ -1425,6 +1428,9 @@
                           class="input-el-input-group"
                           :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                           clearable
+                          @clear="clearBdw( scope.row.productName,
+                      detailform.contractInfoHouseSalesList,
+                      scope.$index)"
                           filterable
                           placeholder="请选择"
                           size="mini"
@@ -1438,7 +1444,7 @@
                   "
                         >
                           <el-option
-                            v-if="bdwSelList.indexOf(item.productName)==-1"
+                            v-if="bdwSelList.indexOf(item.subjectMatterName)==-1"
                             :key="index"
                             :label="item.subjectMatterName"
                             :value="item.subjectMatterName"
@@ -2897,12 +2903,24 @@ export default {
     getTradeExpectedIncome(){
       this.detailform.contractInfo.tradeExpectedIncome=this.detailform.contractInfo.ourAmount&&this.detailform.contractInfo.tradeExpectedProfit?(this.detailform.contractInfo.tradeExpectedProfit/100)*this.detailform.contractInfo.ourAmount:'';
     },
+  //删除已选择的标的物名称
+    clearBdw(name,list,index){
+      list.forEach((item,i)=>{
+        if(this.detailform.contractInfo.isYearContract=='0'&&item.productName==name){
+          this.bdwSelList.splice(i,1)
+        }else if(this.detailform.contractInfo.isYearContract!='0'&&item.subjectMatterName==name){
+          this.bdwSelList.splice(i,1)
+        }
+
+      });
+      this.$forceUpdate();
+    },
     //获取已选择的标的物单位
     getBdNameSel(){
       this.bdwSelList=[];
       if(this.detailform.contractInfo.isYearContract=='0'){
         this.detailform.contractInfoHouseSalesList.forEach((item)=>{
-          this.bdwSelList.push(item.subjectMatterName)
+          this.bdwSelList.push(item.productName)
         });
       }else{
         this.detailform.contractInfoSubjectMatterList.forEach((item)=>{
