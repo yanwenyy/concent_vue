@@ -1741,6 +1741,9 @@
         this.detailForm.project.fatherProjectName = '';
         this.detailForm.project.isBureauIndex = '';
         this.detailForm.project.projectTypeCode = id;
+        this.detailForm.project.projectTypeName = this.projectType.find(
+            (item) => item.detailCode === id
+        ).detailName
         this.getProjectFather();
       },
       getFatherName(id, list, name) {

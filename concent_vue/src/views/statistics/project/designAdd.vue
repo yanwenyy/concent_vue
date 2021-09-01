@@ -1681,7 +1681,7 @@
         if (id) {
           this.$forceUpdate()
           this.detailForm.project[name] = list.find(
-            (item) => item.detailCode === id
+            (item) => item.id === id
           ).detailName
             this.detailForm.project[code] = list.find(
                 (item) => item.id === id
