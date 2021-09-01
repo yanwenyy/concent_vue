@@ -72,6 +72,7 @@
                 style="width: 32.5%">
                   <el-select
                     v-model="constructionOrgList"
+                    @change="companyBuildChange"
                     v-if="detailForm.project.isClientele=='1'"
                     :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                     multiple
@@ -87,6 +88,7 @@
                   </el-select>
                   <el-select
                     v-model="constructionOrgList"
+                    @change="companyBuildChange"
                     v-if="detailForm.project.isClientele!='1'"
                     :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                     multiple
@@ -1798,6 +1800,27 @@
         });
     },
     methods: {
+      //建设单位下拉赋值
+      companyBuildChange(){
+        this.detailForm.project.companyBuildId = this.constructionOrgList.join(",")
+      },
+      //建设单位通过ID查找NAME
+      getBuildName(){
+        var nameList = []
+        var customerList = this.pubCustomers
+        this.constructionOrgList.forEach(idCheck => {
+          let customer = customerList.find(item1=>item1.customerId===idCheck)
+          if(customer){
+            nameList.push(customer.customerName)
+          }
+          let outside = this.sjdwList.find(item2=>item2.customerId===idCheck)
+          if(outside){
+            nameList.push(outside.customerName)
+          }
+
+        })
+        this.detailForm.project.companyBuild = nameList.join(",")
+      },
       //切换是否客户
       companyBuildClear(){
         this.detailForm.project.companyBuildId = '',
@@ -1974,6 +1997,9 @@
             this.emergingMarketTwo = item.children
           }
         })
+        if(this.detailForm.project.companyBuildId != ''&& this.detailForm.project.companyBuildId != null ){
+          this.constructionOrgList = this.detailForm.project.companyBuildId.split(",");
+        }
       },
       getMarketTwo(id) {
         this.detailForm.project.marketSecondId = ''
@@ -2003,7 +2029,7 @@
         this.$router.back()
       },
       saveInfo(formName, type) {
-
+        this.getBuildName();
         var url='';
         if(type=='save'){
           url=`/api/statistics/StatisticsProject/detail/${this.p.actpoint === "add"?'saveChangeRecord':'updateChangeRecord'}`;
