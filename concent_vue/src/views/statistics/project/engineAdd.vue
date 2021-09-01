@@ -172,6 +172,24 @@
                   </el-input>
                 </el-form-item>
                 <el-form-item
+                  label="所属项目部:"
+                  prop="project.belongOrgCode"
+                  style="width: 32.5%">
+                  <el-select
+                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                    clearable
+                    filterable
+                    placeholder="请选择"
+                    @change="belongOrgChange"
+                    v-model="detailForm.project.belongOrgCode">
+                    <el-option
+                      :key="index"
+                      :label="item.detailName"
+                      :value="item.detailCode"
+                      v-for="(item, index) in belongOrgList"/>
+                  </el-select>
+                </el-form-item>
+                <el-form-item
                   label="所属铁路局:"
                   style="width: 32.5%">
                   <el-select
@@ -931,6 +949,17 @@
                     @click="openComMul(detailForm.project.companySupervisorId,detailForm.project.companySupervisor,'/api/contract/Companies/detail/findCompanies','监理单位')"></el-button>
                   </el-input>
                 </el-form-item>
+                <el-form-item
+                  label="推送人:"
+                  v-if="detailForm.project.projectPusher!=null&&detailForm.project.projectPusher!=''"
+                  prop="project.projectPusher"
+                  style="width:32.5%;">
+                  <el-input
+                    clearable
+                    placeholder="请输入"
+                    disabled
+                    v-model="detailForm.project.projectPusher"/>
+                </el-form-item>
               </el-row>
               <!--项目经理-->
               <el-row>
@@ -1571,6 +1600,7 @@
         isOutputTax: [{ label: '是' }, { label: '否' }], // 上报产值是否含税
         options1: [{ label: '测试所在地', value: 'testabcd' }],
         projectType:[], //项目类型下拉
+        belongOrgList:[], //所属项目部下拉
         detailForm: {
           cdmc:[],
           project: {
@@ -1590,6 +1620,9 @@
             companyId: '', // 签约/使用资质单位
             companyName: '', // 签约/使用资质名称
             companyBuiltName: '', // 承建单位
+            belongOrgId: '',
+            belongOrgCode: '',
+            belongOrgName: '',
             railwayId: '', // 所属铁路局
             projectTypeFirstId: '', // 工程类别（一级）
             projectTypeSecondId: '', // 工程类别（二级）
@@ -1684,6 +1717,7 @@
             contractAmountChange: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
             valueAddedTax: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
             companyBuiltName: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
+            belongOrgCode: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
             marketFirstId: [{ required: true, message: '此项不能为空', trigger: 'blur' }],
             engineSurvey: [{ min: 0, max: 700, message: '最多输入700字', trigger: 'blur' }],
             projectRemark: [{ min: 0, max: 2000, message: '最多输入2000字', trigger: 'blur' }],
@@ -2393,11 +2427,34 @@
         if(data.type=="承建单位"){
           this.detailForm.project.companyBuiltName=data.name;
           this.detailForm.project.companyBuiltId=data.id;
+          this.getProjectUnit();
         }else if(data.type=="签约/使用资质单位"){
           this.detailForm.project.companyId=id.join(",");
           this.detailForm.project.companyName=name.join(",");
         }
       this.DwVisible=false;
+    },
+    //承建单位触发项目部下拉
+    getProjectUnit(){
+      this.$http
+      .post(
+        "/api/statistics/StatisticsProject/list/getUndertakenProject",
+         { parentId: this.detailForm.project.companyBuiltId }
+      )
+      .then((res) => {
+        this.belongOrgList = res.data.data;
+        this.belongOrgList.forEach((item)=>{
+          item.detailCode = item.ORG_CODE;
+          item.detailName = item.ORG_NAME;
+        })
+      });
+    },
+    //所属项目部ID，Name
+    belongOrgChange(){
+      var belongOrgCode = this.detailForm.project.belongOrgCode;
+      var belongOrg = this.belongOrgList.find(item=>item.detailCode===belongOrgCode);
+      this.detailForm.project.belongOrgId = belongOrg.ID
+      this.detailForm.project.belongOrgName = belongOrg.detailName
     },
       getShow() {
         let params = { topInfoId: this.p.uuid ||this.p.instid ,contractNumber: this.p.contractNumber}
@@ -2502,12 +2559,12 @@
       vertical-align: middle;
     }
     .neirong {
-      .el-form-item__error {
+      >>>.el-form-item__error {
         top: 4% !important;
       }
     }
 
-    .el-form-item__error {
+    >>>.el-form-item__error {
       padding-top: 0px;
       width: 95%;
       margin-left: 0;
@@ -2515,20 +2572,20 @@
       top: 0%;
     }
 
-    .el-main {
+    >>>.el-main {
       overflow: hidden;
     }
 
-    .el-form-item__label:before {
+    >>>.el-form-item__label:before {
       position: initial;
       left: -10px;
     }
 
-    .inline-formitem {
+    >>>.inline-formitem {
       margin-top: 30px;
     }
 
-    .el-autocomplete{
+    >>>.el-autocomplete{
       width: 95%!important;
     }
     .el-form-item {

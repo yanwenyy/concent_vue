@@ -477,6 +477,11 @@
             <el-form-item
               label="项目类型:"
               prop="project.projectTypeId"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: ['blur','change'],
+              }"
               style="width: 32.5%">
               <el-select
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
@@ -488,7 +493,7 @@
                 <el-option
                   :key="index"
                   :label="item.detailName"
-                  :value="item.id"
+                  :value="item.detailCode"
                   v-for="(item, index) in projectType"/>
               </el-select>
             </el-form-item>
@@ -893,6 +898,17 @@
                 value-format="timestamp"
                 placeholder="选择日期时间"/>
             </el-form-item>
+            <el-form-item
+              label="推送人:"
+              v-if="detailForm.project.projectPusher!=null&&detailForm.project.projectPusher!=''"
+              prop="project.projectPusher"
+              style="width:32.5%;">
+              <el-input
+                clearable
+                placeholder="请输入"
+                disabled
+                v-model="detailForm.project.projectPusher"/>
+            </el-form-item>
             <!-- <el-form-item
               label="是否代管:"
               class="inline-formitem"
@@ -1258,7 +1274,7 @@
         constructionOrgList:[], //建设单位选中ID列表
         sjdwList: [],
         companyMulStatus:false,//设计单位等多选列表状态
-        projectType:[], //项目类型下拉
+        // projectType:[], //项目类型下拉
         fatherList:[],
         detailForm: {
           cdmc:[],
@@ -1376,6 +1392,15 @@
     computed: {
       pubCustomers() {//客户名称
         return this.$store.state.pubCustomers;
+      },
+      projectType() {//项目类型
+        var projectTypeList = [];
+        this.$store.state.projectType.forEach((item) => {
+          if(item.detailCode == '017003' || item.detailCode == '017004'){
+            projectTypeList.push(item);
+          }
+        });
+        return projectTypeList
       },
       emergingMarket() {
         return this.$store.state.category.emergingMarket
@@ -1619,12 +1644,12 @@
           this.$refs.addOrUpdate.init()
         })
       },
-      resetFuDai(id, list, name,code) {
+      resetFuDai(id) {
         this.fatherList = [];
         this.detailForm.project.fatherProjectId = '';
         this.detailForm.project.fatherProjectName = '';
         this.detailForm.project.isBureauIndex = '';
-        this.getName(id, list, name,code);
+        this.detailForm.project.projectTypeCode = id
         this.getProjectFather();
       },
       //获取父项目名称列表
@@ -1997,26 +2022,26 @@
         })
       });
       //获取项目类型
-      this.$http
-        .post(
-          ' /api/statistics/StatisticsProject/detail/findProjectType',
-          {projectId: this.p.uuid}
-        )
-        .then((res) => {
-          if (res.data.code === 200) {
-            this.projectType = []
-            var list = res.data.data
-            list.forEach(item=>{
-              var type = {id:'',detailName:''}
-              type.id = item.DETAIL_CODE
-              type.detailCode = item.DETAIL_CODE
-              type.detailName = item.DETAIL_NAME
-              this.projectType.push(type)
-            })
-          }else{
-            this.projectType = []
-          }
-        });
+      // this.$http
+      //   .post(
+      //     ' /api/statistics/StatisticsProject/detail/findProjectType',
+      //     {projectId: this.p.uuid}
+      //   )
+      //   .then((res) => {
+      //     if (res.data.code === 200) {
+      //       this.projectType = []
+      //       var list = res.data.data
+      //       list.forEach(item=>{
+      //         var type = {id:'',detailName:''}
+      //         type.id = item.DETAIL_CODE
+      //         type.detailCode = item.DETAIL_CODE
+      //         type.detailName = item.DETAIL_NAME
+      //         this.projectType.push(type)
+      //       })
+      //     }else{
+      //       this.projectType = []
+      //     }
+      //   });
     }
   }
 </script>

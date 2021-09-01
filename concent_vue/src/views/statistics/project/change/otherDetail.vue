@@ -1723,6 +1723,9 @@
             this.emergingMarketTwo = item.children
           }
         })
+        if(this.detailForm.project.companyBuildId != ''&& this.detailForm.project.companyBuildId != null ){
+          this.constructionOrgList = this.detailForm.project.companyBuildId.split(",");
+        }      
       },
       getMarketTwo(id) {
         this.detailForm.project.marketSecondId = ''
@@ -1752,7 +1755,7 @@
         this.$router.back()
       },
       saveInfo(formName, type) {
-
+        this.getBuildName();
         var url='';
         if(type=='save'){
           url=`/api/statistics/StatisticsProject/detail/${this.p.actpoint === "add"?'saveChangeRecord':'updateChangeRecord'}`;

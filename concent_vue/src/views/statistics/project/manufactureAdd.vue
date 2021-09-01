@@ -122,6 +122,7 @@
           <el-row>
             <el-form-item
               label="合同号:"
+              v-show="detailForm.project.contractInfoList!=''&&detailForm.project.contractInfoList!=null"
               prop="project.contractNumber"
               style="width:32.5%;">
               <el-input
@@ -302,18 +303,54 @@
             </el-form-item>
           </el-row>
           <el-row>
-            <!--<el-form-item-->
-              <!--label="供方地点"-->
-              <!--style="width: 32.5%"-->
-              <!--prop="project.topInfoSiteList[0].path"-->
-              <!--:rules="rules.project.must"-->
-            <!--&gt;-->
-              <!--<el-input v-model="detailForm.project.topInfoSiteList[0].path" placeholder="供方地点"-->
-                        <!--:disabled="p.actpoint === 'look'||p.actpoint === 'task'" clearable>-->
-                <!--<el-button slot="append" :disabled="p.actpoint === 'look'||p.actpoint === 'task'" icon="el-icon-search"-->
-                           <!--@click="selectPosition()"></el-button>-->
-              <!--</el-input>-->
-            <!--</el-form-item>-->
+            <el-form-item
+              label="项目类型:"
+              prop="project.projectTypeId"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: ['blur','change'],
+              }"
+              style="width: 32.5%">
+              <el-select
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                filterable
+                clearable
+                placeholder="请选择"
+                @change="resetFuDai(detailForm.project.projectTypeId, projectType, 'projectTypeName','projectTypeCode')"
+                v-model="detailForm.project.projectTypeId">
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.detailCode"
+                  v-for="(item, index) in projectType"/>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="父项目名称:"
+              prop="project.fatherProjectId"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: ['blur','change'],
+              }"
+              style="width: 32.5%">
+              <el-select
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                filterable
+                clearable
+                placeholder="请选择"
+                @change="getFatherName(detailForm.project.fatherProjectId, fatherList, 'fatherProjectName')"
+                v-model="detailForm.project.fatherProjectId">
+                <el-option
+                  :key="index"
+                  :label="item.projectName"
+                  :value="item.uuid"
+                  v-for="(item, index) in fatherList"/>
+              </el-select>
+            </el-form-item>
+          </el-row>
+          <el-row>
             <el-form-item
               label="合同签订时间:"
               prop="project.contractSignTime"
@@ -325,8 +362,6 @@
                 value-format="timestamp"
                 placeholder="选择日期时间"/>
             </el-form-item>
-          </el-row>
-          <el-row>
             <el-form-item
               label="合同开始时间:"
               prop="project.contractStartTime"
@@ -562,6 +597,7 @@
           <el-row>
             <el-form-item
               label="推送人:"
+              v-if="detailForm.project.projectPusher!=null&&detailForm.project.projectPusher!=''"
               prop="project.projectPusher"
               style="width:32.5%;">
               <el-input
@@ -570,7 +606,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 v-model="detailForm.project.projectPusher"/>
             </el-form-item>
-            <el-form-item
+            <!-- <el-form-item
               label="联系方式:"
               prop="project.projectPusherPhone"
               :rules="rules.project.isMobile"
@@ -580,7 +616,7 @@
                 placeholder="请输入"
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 v-model="detailForm.project.projectPusherPhone"/>
-            </el-form-item>
+            </el-form-item> -->
           </el-row>
           <!--备注(最多2000字)-->
           <el-row>
@@ -1021,6 +1057,7 @@
         constructionOrgList:[],
         DwVisible:false,//选择单位弹框状态
         uploadVisible: false,
+        fatherList:[],
         userInfo: JSON.parse(sessionStorage.getItem('userdata')),
         inOut: [
           { label: '系统内', value: 0 },
@@ -1109,6 +1146,15 @@
     computed: {
       wumoveType() {
         return this.$store.state.wumoveType
+      },
+      projectType() {//项目类型
+        var projectTypeList = [];
+        this.$store.state.projectType.forEach((item) => {
+          if(item.detailCode == '017003' || item.detailCode == '017004'){
+            projectTypeList.push(item);
+          }
+        });
+        return projectTypeList
       },
       projectStatus() {
         var projectStatusCheck = [];
@@ -1263,6 +1309,39 @@
         this.treeStatas = true
         this.$nextTick(() => {
           this.$refs.addOrUpdate.init()
+        })
+      },
+      resetFuDai(id) {
+        this.fatherList = [];
+        this.detailForm.project.fatherProjectId = '';
+        this.detailForm.project.fatherProjectName = '';
+        this.detailForm.project.isBureauIndex = '';
+        this.detailForm.project.projectTypeCode = id;
+        this.getProjectFather();
+      },
+      getFatherName(id, list, name) {
+        if (id) {
+          this.$forceUpdate()
+          this.detailForm.project[name] = list.find(
+            (item) => item.uuid === id
+        ).projectName
+        }
+      },
+      //获取父项目名称列表
+      getProjectFather(){
+        this.$http
+          .post('/api/statistics/StatisticsProject/detail/findProjectFather',
+            {
+              projectTypeCode:this.detailForm.project.projectTypeCode,
+              projectModuleId:this.detailForm.project.projectModuleId
+            }
+          )
+          .then(res => {
+            if(res.data.code  === 200){
+              this.fatherList = res.data.data
+            }else{
+              this.fatherList = []
+            }
         })
       },
       //设置主地点
@@ -1594,6 +1673,7 @@
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
       if (this.p.actpoint === 'look' || this.p.actpoint === 'edit' || this.p.actpoint === 'task') {
         this.getShow()
+        this.getProjectFather()
       }
       //获取产品下拉数据
       this.getProductData();
@@ -1641,7 +1721,7 @@
       }
     }
 
-    .el-form-item__error {
+    >>>.el-form-item__error {
       padding-top: 0px;
       width: 95%;
       margin-left: 0;
@@ -1649,12 +1729,12 @@
       top: 0%;
     }
 
-    .el-form-item__label:before {
+    >>>.el-form-item__label:before {
       position: initial;
       left: -10px;
     }
 
-    .inline-formitem {
+    >>>.inline-formitem {
       margin-top: 30px;
     }
 
