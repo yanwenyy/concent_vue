@@ -68,11 +68,11 @@
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  <div v-if="scope.row.veditable === '1' && scope.row.venabled === '1' && p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '3'&&p.actpoint!='task'&&p.actpoint!='look' ">
+                  <div v-if="scope.row.veditable === '1' && scope.row.venabled === '1' && p.planInfo&&p.planInfo.projectStatus !== 'check'&& p.planInfo.projectStatus !== 'pass'&&p.actpoint!='task'&&p.actpoint!='look' ">
                     <!--<el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')"/>-->
                     <el-input v-model="scope.row.value" @input="formatValue(scope.row.value,scope.$index,data,'value'),checkParnt(data,scope.$index,scope.row.sumTarget)"/>
                   </div>
-                  <div v-else-if="p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '3' " style="text-align: right">
+                  <div v-else-if="p.planInfo&&p.planInfo.projectStatus !== 'check'&& p.planInfo.projectStatus !== 'pass'&& p.actpoint !== 'task'&& p.actpoint !== 'look' " style="text-align: right">
                     <!--<el-input style="visibility: hidden;width: 0" :value="sonCount(scope.row)"/>-->
                     {{sonCount(scope.row,scope.$index,data,'value')}}
                   </div>
