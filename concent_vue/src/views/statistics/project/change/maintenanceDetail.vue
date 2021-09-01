@@ -487,6 +487,7 @@
             </el-row>
             <el-row>
               <el-form-item
+                v-if="detailForm.project.projectPusher"
                 label="推送人:"
                 prop="project.projectPusher"
                 style="width:32.5%;">
@@ -496,7 +497,7 @@
                   disabled
                   v-model="detailForm.project.projectPusher"/>
               </el-form-item>
-              <el-form-item
+              <!-- <el-form-item
                 label="联系方式:"
                 prop="project.projectPusherPhone"
                 :rules="rules.project.isMobile"
@@ -506,7 +507,7 @@
                   placeholder="请输入"
                   disabled
                   v-model="detailForm.project.projectPusherPhone"/>
-              </el-form-item>
+              </el-form-item> -->
             </el-row>
             <!-- 备注(最多2000字) -->
             <el-row>
@@ -1181,6 +1182,7 @@
             </el-row>
             <el-row>
               <el-form-item
+                v-if="showDetailForm.project.projectPusher"
                 label="推送人:"
                 prop="project.projectPusher"
                 style="width:32.5%;">
@@ -1190,7 +1192,7 @@
                   disabled
                   v-model="showDetailForm.project.projectPusher"/>
               </el-form-item>
-              <el-form-item
+              <!-- <el-form-item
                 label="联系方式:"
                 style="width:32.5%;">
                 <el-input
@@ -1198,7 +1200,7 @@
                   disabled
                   placeholder="请输入"
                   v-model="showDetailForm.project.projectPusherPhone"/>
-              </el-form-item>
+              </el-form-item> -->
             </el-row>
             <!--备注(最多2000字)-->
             <el-row>
