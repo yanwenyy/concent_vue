@@ -1839,22 +1839,22 @@
                     <!--<el-radio :disabled="p.actpoint === 'look'||p.actpoint=='task'" v-model="scope.row.isFinish" label="1">否</el-radio>-->
                   <!--</template>-->
                 <!--</el-table-column>-->
-                <!--<el-table-column-->
-                  <!--:resizable="false"-->
-                  <!--fixed="right"-->
-                  <!--label="操作"-->
-                  <!--align="center"-->
-                  <!--show-overflow-tooltip-->
-                  <!--v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"-->
-                  <!--width="80">-->
-                  <!--<template slot-scope="scope">-->
-                    <!--<el-link-->
-                      <!--:underline="false"-->
-                      <!--@click="del(scope.$index,scope.row,detailform.contractInfoHouseSalesList,'yj')"-->
-                      <!--type="warning">删除-->
-                    <!--</el-link>-->
-                  <!--</template>-->
-                <!--</el-table-column>-->
+                <el-table-column
+                  :resizable="false"
+                  fixed="right"
+                  label="操作"
+                  align="center"
+                  show-overflow-tooltip
+                  v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
+                  width="80">
+                  <template slot-scope="scope">
+                    <el-link
+                      :underline="false"
+                      @click="del(scope.$index,scope.row,detailform.contractInfoHouseSalesList,'yj')"
+                      type="warning">删除
+                    </el-link>
+                  </template>
+                </el-table-column>
               </el-table>
             </div>
         </el-tab-pane>
@@ -2889,7 +2889,8 @@
             constructionOrg:'',//建设单位
             constructionOrgId:'',
             contractProvinceName:'',
-            constructionNatureId:''
+            constructionNatureId:'',
+            contractAmount:''
           },
           contractInfoAttachBO: {
             innerContractInfoAttachList:[],
@@ -3113,6 +3114,12 @@
           this.$forceUpdate();
           this.getOurAmount();
           this.getOurAmount('','','nfb');
+          if(currentYearSum==0){
+            this.detailform.contractInfo.crccCash=0;
+            this.detailform.contractInfo.outSystemAmount=0;
+            this.detailform.contractInfo.ourAmountSupply=0;
+            this.detailform.contractInfo.ourAmount=0;
+          }
         }
       },
       //年营业收入
@@ -4020,7 +4027,10 @@
         }).catch(() => {})
         }else{
           list.splice(index, 1);
-          this.getOurAmount()
+          this.getOurAmount();
+          if(type=='yj'){
+            this.setYearSale(item.salesPerforMonth	,item.salesPerforYear);
+          }
         }
         // var _self = this;
         // _self.detailform.topInfoSectionList.splice(index, 1);

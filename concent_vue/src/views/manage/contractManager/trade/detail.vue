@@ -2680,7 +2680,8 @@ export default {
           designOrg: '',//设计单位
           designOrgId: '',
           constructionOrg:'',//建设单位
-          constructionOrgId:''
+          constructionOrgId:'',
+          contractAmount:''
         },
         commonFilesList1: [],
         commonFilesList2: [],
@@ -2802,6 +2803,12 @@ export default {
         this.$forceUpdate();
         this.getOurAmount();
         this.getOurAmount('','','nfb');
+        if(currentYearSum==0){
+          this.detailform.contractInfo.crccCash=0;
+          this.detailform.contractInfo.outSystemAmount=0;
+          this.detailform.contractInfo.ourAmountSupply=0;
+          this.detailform.contractInfo.ourAmount=0;
+        }
       }
     },
     //查询销售业绩是否有同年同月
@@ -3628,6 +3635,9 @@ export default {
         list.splice(index, 1);
         if(type=='bdw'){
           this.bdwSelList.remove(item.subjectMatterName)
+        }
+        if(type=='yj'){
+          this.setYearSale(item.salesPerforMonth	,item.salesPerforYear);
         }
         this.getOurAmount()
       }

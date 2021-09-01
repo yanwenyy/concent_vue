@@ -2271,7 +2271,8 @@
             designOrg: '',//设计单位
             designOrgId: '',
             constructionOrg:'',//建设单位
-            constructionOrgId:''
+            constructionOrgId:'',
+            contractAmount:''
           },
           commonFilesList1: [],
           commonFilesList2: [],
@@ -2653,6 +2654,12 @@
           this.$forceUpdate();
           this.getOurAmount();
           this.getOurAmount('','','nfb');
+          if(currentYearSum==0){
+            this.detailform.contractInfo.crccCash=0;
+            this.detailform.contractInfo.outSystemAmount=0;
+            this.detailform.contractInfo.ourAmountSupply=0;
+            this.detailform.contractInfo.ourAmount=0;
+          }
         }
       },
       //新增销售业绩
@@ -3111,7 +3118,10 @@
         }).catch(() => {})
         }else{
           list.splice(index, 1);
-          this.getOurAmount()
+          this.getOurAmount();
+          if(type=='yj'){
+            this.setYearSale(item.salesPerforMonth	,item.salesPerforYear);
+          }
         }
         // var _self = this;
         // _self.detailform.topInfoSectionList.splice(index, 1);

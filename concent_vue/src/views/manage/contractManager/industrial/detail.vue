@@ -1599,22 +1599,22 @@
                 <!--<el-radio :disabled="p.actpoint === 'look'||p.actpoint=='task'" v-model="scope.row.isFinish" label="1">否</el-radio>-->
                 <!--</template>-->
                 <!--</el-table-column>-->
-                <!--<el-table-column-->
-                <!--:resizable="false"-->
-                <!--fixed="right"-->
-                <!--label="操作"-->
-                <!--align="center"-->
-                <!--show-overflow-tooltip-->
-                <!--v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"-->
-                <!--width="80">-->
-                <!--<template slot-scope="scope">-->
-                <!--<el-link-->
-                <!--:underline="false"-->
-                <!--@click="del(scope.$index,scope.row,detailform.contractInfoHouseSalesList,'yj')"-->
-                <!--type="warning">删除-->
-                <!--</el-link>-->
-                <!--</template>-->
-                <!--</el-table-column>-->
+                <el-table-column
+                :resizable="false"
+                fixed="right"
+                label="操作"
+                align="center"
+                show-overflow-tooltip
+                v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
+                width="80">
+                <template slot-scope="scope">
+                <el-link
+                :underline="false"
+                @click="del(scope.$index,scope.row,detailform.contractInfoHouseSalesList,'yj')"
+                type="warning">删除
+                </el-link>
+                </template>
+                </el-table-column>
               </el-table>
             </div>
         </el-tab-pane>
@@ -2638,7 +2638,8 @@ export default {
           constructionOrg:'',//建设单位
           constructionOrgId:'',
           isSystemPurchaseIndustry:'1',
-          isOpenBid:'1'
+          isOpenBid:'1',
+          contractAmount:''
 
         },
         commonFilesList1: [],
@@ -2775,6 +2776,12 @@ export default {
         this.$forceUpdate();
         this.getOurAmount();
         this.getOurAmount('','','nfb');
+        if(currentYearSum==0){
+          this.detailform.contractInfo.crccCash=0;
+          this.detailform.contractInfo.outSystemAmount=0;
+          this.detailform.contractInfo.ourAmountSupply=0;
+          this.detailform.contractInfo.ourAmount=0;
+        }
       }
     },
     // 附件下载
@@ -3470,6 +3477,26 @@ export default {
         }
       });
       }).catch(() => {})
+      }else if(item.uuid&&type=='yj'){
+        this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$http
+            .post(
+              "/api/contract/contract/ContractInfo/list/deleteHouseSales",
+              {ids: [item.uuid]}
+            )
+            .then((res) => {
+              if (res.data && res.data.code === 200) {
+                list.splice(index, 1);
+                this.setYearSale(item.salesPerforMonth	,item.salesPerforYear);
+              } else {
+                this.$message.error(data.msg)
+              }
+            });
+        }).catch(() => {})
       }else if(item.uuid&&(type=='lht'||type=='fb')){
         this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
           confirmButtonText: '确定',
@@ -3492,7 +3519,10 @@ export default {
       }).catch(() => {})
       }else{
         list.splice(index, 1);
-        this.getOurAmount()
+        this.getOurAmount();
+        if(type=='yj'){
+          this.setYearSale(item.salesPerforMonth	,item.salesPerforYear);
+        }
       }
     },
 

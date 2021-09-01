@@ -2864,6 +2864,12 @@ export default {
         this.$forceUpdate();
         this.getOurAmount();
         this.getOurAmount('','','nfb');
+        if(currentYearSum==0){
+          this.detailform.contractInfo.crccCash=0;
+          this.detailform.contractInfo.outSystemAmount=0;
+          this.detailform.contractInfo.ourAmountSupply=0;
+          this.detailform.contractInfo.ourAmount=0;
+        }
       }
     },
     //年营业收入
@@ -3007,7 +3013,10 @@ export default {
       }).catch(() => {})
       }else{
         list.splice(index, 1);
-        this.getOurAmount()
+        this.getOurAmount();
+        if(type=='yj'){
+          this.setYearSale(item.salesPerforMonth	,item.salesPerforYear);
+        }
       }
     },
     saveInfo(formName,type) {
