@@ -90,6 +90,54 @@
             </el-row>
             <el-row>
               <el-form-item
+                label="项目类型:"
+                prop="project.projectTypeId"
+                :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: ['blur','change'],
+                }"
+                style="width: 32.5%">
+                <el-select
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  filterable
+                  clearable
+                  placeholder="请选择"
+                  @change="resetFuDai(detailForm.project.projectTypeId, projectType, 'projectTypeName','projectTypeCode')"
+                  v-model="detailForm.project.projectTypeId">
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.detailCode"
+                    v-for="(item, index) in projectType"/>
+                </el-select>
+              </el-form-item>
+              <el-form-item
+                label="父项目名称:"
+                prop="project.fatherProjectId"
+                :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: ['blur','change'],
+                }"
+                style="width: 32.5%">
+                <el-select
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  filterable
+                  clearable
+                  placeholder="请选择"
+                  @change="getFatherName(detailForm.project.fatherProjectId, fatherList, 'fatherProjectName')"
+                  v-model="detailForm.project.fatherProjectId">
+                  <el-option
+                    :key="index"
+                    :label="item.projectName"
+                    :value="item.uuid"
+                    v-for="(item, index) in fatherList"/>
+                </el-select>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
                 label="客户名称:"
                 prop="project.companyBuildId"
                 :rules="{
@@ -850,6 +898,52 @@
               </el-form-item>
             </el-row>
             <el-row>
+              <el-form-item
+                label="项目类型:"
+                prop="project.projectTypeId"
+                :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: ['blur','change'],
+                }"
+                style="width: 32.5%">
+                <el-select
+                  disabled
+                  filterable
+                  clearable
+                  placeholder="请选择"
+                  v-model="showDetailForm.project.projectTypeId">
+                  <el-option
+                    :key="index"
+                    :label="item.detailName"
+                    :value="item.detailCode"
+                    v-for="(item, index) in projectType"/>
+                </el-select>
+              </el-form-item>
+              <el-form-item
+                label="父项目名称:"
+                prop="project.fatherProjectId"
+                :rules="{
+                  required: true,
+                  message: '此项不能为空',
+                  trigger: ['blur','change'],
+                }"
+                style="width: 32.5%">
+                <el-select
+                  disabled
+                  filterable
+                  clearable
+                  placeholder="请选择"
+                  v-model="showDetailForm.project.fatherProjectId">
+                  <el-option
+                    :key="index"
+                    :label="item.projectName"
+                    :value="item.uuid"
+                    v-for="(item, index) in fatherList"/>
+                </el-select>
+              </el-form-item>
+            </el-row>            
+            <el-row>
              <el-form-item
                 label="客户名称:"
                 style="width: 32.5%">
@@ -1380,6 +1474,7 @@
         }
       }
       return {
+        fatherList:[],
         uuid: null,
         switchvalue: true,
         treeStatas: false,
@@ -1494,6 +1589,15 @@
       }
     },
     computed: {
+      projectType() {//项目类型
+        var projectTypeList = [];
+        this.$store.state.projectType.forEach((item) => {
+          if(item.detailCode == '017003' || item.detailCode == '017004'){
+            projectTypeList.push(item);
+          }
+        });
+        return projectTypeList
+      },
       pubCustomers() {//客户名称
         return this.$store.state.pubCustomers;
       },
@@ -1527,6 +1631,7 @@
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
       if (this.p.actpoint === 'edit' || this.p.actpoint === 'look' || this.p.actpoint === 'task') {
         this.getDetail()
+        this.getProjectFather()
       }
       if (this.p.actpoint === 'add') {
         this.getAddDetail()
@@ -1545,6 +1650,39 @@
       });
     },
     methods: {
+      resetFuDai(id) {
+        this.fatherList = [];
+        this.detailForm.project.fatherProjectId = '';
+        this.detailForm.project.fatherProjectName = '';
+        this.detailForm.project.isBureauIndex = '';
+        this.detailForm.project.projectTypeCode = id;
+        this.getProjectFather();
+      },
+      getFatherName(id, list, name) {
+        if (id) {
+          this.$forceUpdate()
+          this.detailForm.project[name] = list.find(
+            (item) => item.uuid === id
+        ).projectName
+        }
+      },
+      //获取父项目名称列表
+      getProjectFather(){
+        this.$http
+          .post('/api/statistics/StatisticsProject/detail/findProjectFather',
+            {
+              projectTypeCode:this.detailForm.project.projectTypeCode,
+              projectModuleId:this.detailForm.project.projectModuleId
+            }
+          )
+          .then(res => {
+            if(res.data.code  === 200){
+              this.fatherList = res.data.data
+            }else{
+              this.fatherList = []
+            }
+        })
+      },
       //流程操作
       operation(type){
         var msg='',that=this;
