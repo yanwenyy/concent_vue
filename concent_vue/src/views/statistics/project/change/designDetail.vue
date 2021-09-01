@@ -874,6 +874,19 @@
                   inactive-value="1"/>
               </el-form-item> -->
             </el-row>
+            <el-row>
+              <el-form-item
+                v-if="detailForm.project.projectPusher"
+                label="推送人:"
+                prop="project.projectPusher"
+                style="width:32.5%;">
+                <el-input
+                  clearable
+                  placeholder="请输入"
+                  disabled
+                  v-model="detailForm.project.projectPusher"/>
+              </el-form-item>
+            </el-row>
             <!--备注(最多2000字)-->
             <el-row>
               <el-form-item
@@ -1890,6 +1903,19 @@
                   active-value="0"
                   inactive-value="1"/>
               </el-form-item> -->
+            </el-row>
+            <el-row>
+              <el-form-item
+                v-if="showDetailForm.project.projectPusher"
+                label="推送人:"
+                prop="project.projectPusher"
+                style="width:32.5%;">
+                <el-input
+                  clearable
+                  placeholder="请输入"
+                  disabled
+                  v-model="showDetailForm.project.projectPusher"/>
+              </el-form-item>
             </el-row>
             <!--备注(最多2000字)-->
             <el-row>

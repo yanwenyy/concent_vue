@@ -950,6 +950,19 @@
                   v-model="detailForm.project.beginAddress"/>
               </el-form-item>
             </el-row>
+            <el-row>
+              <el-form-item
+                v-if="detailForm.project.projectPusher"
+                label="推送人:"
+                prop="project.projectPusher"
+                style="width:32.5%;">
+                <el-input
+                  clearable
+                  placeholder="请输入"
+                  disabled
+                  v-model="detailForm.project.projectPusher"/>
+              </el-form-item>
+            </el-row>
             <!--工程概况(最多700字)-->
             <el-row>
               <el-form-item
@@ -2168,6 +2181,19 @@
                   disabled
                   placeholder="请输入"
                   v-model="showDetailForm.project.beginAddress"/>
+              </el-form-item>
+            </el-row>
+            <el-row>
+              <el-form-item
+                v-if="showDetailForm.project.projectPusher"
+                label="推送人:"
+                prop="project.projectPusher"
+                style="width:32.5%;">
+                <el-input
+                  clearable
+                  placeholder="请输入"
+                  disabled
+                  v-model="showDetailForm.project.projectPusher"/>
               </el-form-item>
             </el-row>
             <!--工程概况(最多700字)-->
