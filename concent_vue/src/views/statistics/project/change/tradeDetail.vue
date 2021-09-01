@@ -122,7 +122,7 @@
                     inactive-color="#ddd"
                     active-value="1"
                     inactive-value="0"
-                    @change="constructionOrgList=''"
+                    @change="companyBuildClear"
                   >
                   </el-switch>
                 </el-form-item>
@@ -1109,6 +1109,50 @@
             </el-row>
             <el-row>
               <el-form-item
+                label="初始合同额(万元):"
+                prop="project.contractAmountInitial"
+                :rules="rules.project.isMustMoney"
+                style="width: 32.5%">
+                <el-input
+                  disabled
+                  clearable
+                  placeholder="请输入"
+                  v-model="showDetailForm.project.contractAmountInitial">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                label="初始我方份额(万元):"
+                prop="project.ourAmount"
+                :rules="rules.project.isMustMoney"
+                style="width:32.5%;">
+                <el-input
+                  clearable
+                  placeholder="请输入"
+                  disabled
+                  v-model="showDetailForm.project.ourAmount">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                  label="我方份额(万元)"
+                  prop="project.amountWe"
+                  :rules="rules.project.isMustMoney"
+                  style="width: 32.5%"
+                >
+                <el-input
+                  disabled
+                  v-model="showDetailForm.project.amountWe"
+                >
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+            </el-row> 
+            <el-row>
+              <!-- <el-form-item
                 label="合同所属板块:"
                 style="width: 32.5%">
                 <el-select
@@ -1123,14 +1167,32 @@
                     :value="item.detailName"
                     v-for="(item, index) in wumoveType"/>
                 </el-select>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item
-                label="合同金额(万元):"
-                style="width:32.5%;">
+                v-show="detailForm.project.contractInfoList!=''"
+                label="合同总金额(万元):" 
+                prop="project.contractAmountTotal"
+                :rules="rules.project.isMoney"
+                style="width: 32.5%">
                 <el-input
+                  disabled
                   clearable
                   placeholder="请输入"
+                  v-model="showDetailForm.project.contractAmountTotal">
+                  <template slot="prepend">¥</template>
+                  <template slot="append">(万元)</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                v-show="detailForm.project.contractInfoList == ''"
+                label="合同金额(万元):" 
+                prop="project.contractMoney"
+                :rules="rules.project.isMoney"
+                style="width: 32.5%">
+                <el-input
                   disabled
+                  clearable
+                  placeholder="请输入"
                   v-model="showDetailForm.project.contractMoney">
                   <template slot="prepend">¥</template>
                   <template slot="append">(万元)</template>
@@ -1307,9 +1369,23 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
+              <el-form-item
+                label="是否框架协议:"
+                prop="isFrameIn"
+                class="inline-formitem"
+                style="width:32.5%;">
+                <el-switch
+                  disabled
+                  class="inline-formitem-switch"
+                  v-model="showDetailForm.project.isFrameIn"
+                  active-color="#409EFF"
+                  inactive-color="#ddd"
+                  active-value="0"
+                  inactive-value="1"/>
+              </el-form-item>
             </el-row>
             <el-row>
-              <el-form-item
+              <!-- <el-form-item
                 label="业务类别:"
                 prop="categorySecondId"
                 style="width: 32.5%">
@@ -1325,21 +1401,7 @@
                     :value="item.id"
                     v-for="(item, index) in material"/>
                 </el-select>
-              </el-form-item>
-              <el-form-item
-                label="是否框架协议:"
-                prop="isFrameIn"
-                class="inline-formitem"
-                style="width:32.5%;">
-                <el-switch
-                  disabled
-                  class="inline-formitem-switch"
-                  v-model="showDetailForm.project.isFrameIn"
-                  active-color="#409EFF"
-                  inactive-color="#ddd"
-                  active-value="0"
-                  inactive-value="1"/>
-              </el-form-item>
+              </el-form-item> -->
             </el-row>
             <el-row>
               <el-form-item
@@ -1376,6 +1438,26 @@
                     v-for="(item, index) in emergingMarketTwo"/>
                 </el-select>
               </el-form-item>
+              <el-form-item
+                class="inline-formitem"
+                label="是否年度合同:"
+                prop="project.isAnnualContract"
+                style="width: 32.5%"
+                :rules="{
+                  required: true, message: '此项不能为空', trigger: 'blur'
+                }"
+              >
+                <el-switch
+                  disabled
+                  class="inline-formitem-switch"
+                  v-model="showDetailForm.project.isAnnualContract"
+                  active-color="#409EFF"
+                  inactive-color="#ddd"
+                  active-value="0"
+                  inactive-value="1"
+                >
+                </el-switch>
+              </el-form-item>            
             </el-row>
             <el-row>
               <el-form-item
@@ -1955,6 +2037,11 @@
         });
     },
     methods: {
+      //切换是否客户
+      companyBuildClear(){
+        this.detailForm.project.companyBuildId = '',
+        this.constructionOrgList = []
+      },
       //查看关联合同
       look(row){
         let p = {actpoint: "look", instid : row.uuid};
