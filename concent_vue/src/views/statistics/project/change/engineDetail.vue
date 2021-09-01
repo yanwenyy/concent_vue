@@ -883,7 +883,7 @@
                     inactive-color="#ddd"
                     active-value="1"
                     inactive-value="0"
-                    @change="constructionOrgList=''"
+                    @change="companyBuildClear"
                   >
                   </el-switch>
                 </el-form-item>
@@ -2814,6 +2814,11 @@
         });
     },
     methods: {
+      //切换是否客户
+      companyBuildClear(){
+        this.detailForm.project.companyBuildId = '',
+        this.constructionOrgList = []
+      },
       //打开多选的单位列表
       openComMul(ids,names,url,type){
         this.companyMulStatus=true;
