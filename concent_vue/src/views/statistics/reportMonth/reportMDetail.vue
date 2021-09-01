@@ -528,7 +528,7 @@
           // console.log(list[index])
           //code3位 一级  code6位  二级  code9位  三级  code12位 四级
           list.forEach((item,i)=>{
-            if(item.sumTarget==code&&item.tjxId!='192'&&item.tjxId!='126') {
+            if(item.sumTarget==code&&item.tjxId!='192'&&item.tjxId!='126'&&item.veditable=='1') {
               num= Number(item.monthValue)+num;
               num1=Number(item.yearValue)+num1;
               num2=Number(item.totalValue)+num2;
