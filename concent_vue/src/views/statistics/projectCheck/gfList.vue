@@ -57,9 +57,9 @@
             </div>
           </template>-->
           <template slot-scope="scope">
-            <spam class="blue pointer" v-if="scope.row.reportType != null && scope.row.reportType != ''">
+            <span class="blue pointer" v-if="scope.row.reportType != null && scope.row.reportType != ''">
               {{scope.row.createOrgName+"("+(scope.row.reportType==1?'自揽':scope.row.reportType==2?'工区':'')+")"}}
-            </spam>
+            </span>
             <span class="blue pointer"v-if="scope.row.reportType== null || scope.row.reportType == ''">
               {{scope.row.createOrgName}}
             </span>

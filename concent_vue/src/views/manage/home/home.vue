@@ -161,7 +161,61 @@
         <el-tabs>
           <el-tab-pane label="提示信息">
             <div class="dbTabel">
+              <el-table
+                class="tabel-list"
+                :data="page3"
+                :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
+                border
+                @row-click="rowshow"
+                highlight-current-row
+                ref="table"
+                tooltip-effect="dark"
+              >
+                <el-table-column
+                  :width="70"
+                  align="center"
+                  label="序号"
+                  show-overflow-tooltip
+                  type="index"
+                ></el-table-column>
+                <el-table-column
+                  :width="200"
+                  label="消息类型"
+                  prop="typeName"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  :width="150"
+                  align="center"
+                  label="消息内容"
+                  prop="msg"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  :width="150"
+                  align="center"
+                  label="日期"
+                  prop="createTime"
+                  show-overflow-tooltip
 
+                >
+                  <template slot-scope="scope">{{
+                    scope.row.createTime | dateformat
+                    }}</template>
+                </el-table-column>
+                <el-table-column
+                  :width="150"
+                  align="center"
+                  label="操作"
+                  show-overflow-tooltip
+                >
+                  <template slot-scope="scope">
+                    <el-button type="text" @click="readMsg(scope.row)">已读</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
             </div>
           </el-tab-pane>
         </el-tabs>
@@ -177,6 +231,7 @@
         activeName:'first',
         page: {current: 1, size: 20, total: 0, records: []},
         page2: {current: 1, size: 20, total: 0, records: []},
+        page3: {current: 1, size: 20, total: 0, records: []},
         searchform: {
           current: 1,
           size: 10,
@@ -188,6 +243,17 @@
       }
     },
   methods: {
+      //已读
+    readMsg(row){
+      this.$http
+        .post(
+          "/api/contract/warningInfo/detail/readMsg",
+          {uuid:row.uuid}
+        )
+        .then((res) => {
+          this.getData();
+        });
+    },
     //撤回
     withdraw(val){
       var url='';
@@ -252,6 +318,16 @@
         .then((res) => {
         this.page2 = res.data.data;
     });
+      //提示信息
+      this.$http
+        .post(
+          "/api/contract/warningInfo/list/loadPageData",
+
+          {useJson: true}
+        )
+        .then((res) => {
+          this.page3 = res.data.data;
+        });
     },
     // 查看
     rowshow(row) {
