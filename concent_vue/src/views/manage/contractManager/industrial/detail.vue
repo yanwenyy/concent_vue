@@ -3147,8 +3147,8 @@ export default {
           list[index].productName='';
           list[index].productId='';
         }
-        list[index].productTypeName=this.cplxList.find((item)=>item.productTypeId==id).productTypeName;
-       list[index].cpxxList=this.cplxList.find((item)=>item.productTypeId==id).childredList;
+        list[index].productTypeName=this.cplxList.find((item)=>item.productTypeId==id)&&this.cplxList.find((item)=>item.productTypeId==id).productTypeName;
+       list[index].cpxxList=this.cplxList.find((item)=>item.productTypeId==id)&&this.cplxList.find((item)=>item.productTypeId==id).childredList;
       }
     },
     //table获取name

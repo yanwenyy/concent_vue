@@ -103,6 +103,7 @@
                 </el-input>
               </el-form-item> -->
               <el-form-item
+
                   label="客户名称:"
                   prop="contractInfo.constructionOrgId"
                   :rules="{
@@ -111,6 +112,7 @@
                   trigger: ['blur','change'],
                 }">
                   <el-select
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                     v-model="constructionOrgList"
                     v-if="detailform.contractInfo.isClientele=='1'"
                     @change="companyBuildChange"
@@ -126,6 +128,7 @@
                     </el-option>
                   </el-select>
                   <el-select
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                     v-model="constructionOrgList"
                     v-if="detailform.contractInfo.isClientele!='1'"
                     @change="companyBuildChange"

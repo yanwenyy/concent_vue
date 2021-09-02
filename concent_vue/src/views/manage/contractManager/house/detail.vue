@@ -167,7 +167,7 @@
                 label="是否为系统内联合体"
               >
                 <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId||p.actpoint=='Yjedit'"
                   class="inline-formitem-switch"
                   v-model="detailform.contractInfo.isInSystemUnion"
                   active-color="#409EFF"
@@ -193,7 +193,7 @@
                 label="是否含系统内分包"
               >
                 <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'"
                   class="inline-formitem-switch"
                   v-model="detailform.contractInfo.isInSystemSub"
                   active-color="#409EFF"
@@ -219,7 +219,7 @@
                 label="是否为系统外联合体"
               >
                 <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId||p.actpoint=='Yjedit'"
                   class="inline-formitem-switch"
                   v-model="detailform.contractInfo.isOutSystemUnion"
                   active-color="#409EFF"
@@ -245,7 +245,7 @@
                 label="是否含系统外分包:"
               >
                 <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'"
                   class="inline-formitem-switch"
                   v-model="detailform.contractInfo.isOutSystemSub"
                   active-color="#409EFF"
@@ -271,7 +271,7 @@
                 label="是否集团内分包:"
               >
                 <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'"
                   class="inline-formitem-switch"
                   v-model="detailform.contractInfo.isInGroupSub"
                   active-color="#409EFF"
@@ -299,7 +299,7 @@
                 :rules="rules.contractAmount"
               >
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId||detailform.contractInfo.isYearContract=='0'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId||detailform.contractInfo.isYearContract=='0'||p.actpoint=='Yjedit'"
                   @input="getOurAmount(),getOurAmount('','','nfb')"
                   clearable
                   placeholder=""
@@ -384,13 +384,13 @@
               </el-form-item>
               <br>
               <el-form-item
-                v-if="detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'||detailform.contractInfo.isOutSystemSub==='0'"
+                v-if="detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'||detailform.contractInfo.isOutSystemSub==='0'||p.actpoint=='Yjedit'"
                 label="未分配(万元)"
                 prop="contractInfo.unAllocatedFee"
                 :rules="rules.contractAmount"
               >
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'"
                   clearable
                   @input="getOurAmount('','','nfb','unAllocatedFee')"
                   v-model="detailform.contractInfo.unAllocatedFee">
@@ -399,7 +399,7 @@
                 </el-input>
               </el-form-item>
               <el-form-item
-                v-if="detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'||detailform.contractInfo.isOutSystemSub==='0'"
+                v-if="detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'||detailform.contractInfo.isOutSystemSub==='0'||p.actpoint=='Yjedit'"
                 label="自留份额(万元)"
                 prop="contractInfo.selfCash"
                 :rules="rules.contractAmount"
@@ -672,7 +672,7 @@
               }"
               >
                 <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'"
                   class="inline-formitem-switch"
                   v-model="detailform.contractInfo.isOpenBid"
                   active-color="#409EFF"
@@ -687,7 +687,7 @@
 
               >
                 <el-select
-                  :disabled="p.actpoint==='look'||p.actpoint=='task'"
+                  :disabled="p.actpoint==='look'||p.actpoint=='task'||p.actpoint=='Yjedit'"
                   filterable
                   clearable
                   placeholder="请选择"
@@ -732,7 +732,7 @@
               >
                 <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'"-->
                 <el-input clearable  placeholder="请输入内容" disabled v-model="detailform.contractInfo.signOrgName" class="input-with-select">
-                  <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&!p.pushId" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('签约单位',detailform.contractInfo.signOrgId)" ></el-button>
+                  <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&!p.pushId&&p.actpoint!='Yjedit'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('签约单位',detailform.contractInfo.signOrgId)" ></el-button>
                 </el-input>
               </el-form-item>
               <div>
@@ -756,7 +756,7 @@
               <p>
                 <span >项目地点: </span>
                 <el-button
-                  v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'&&p.actpoint!='Yjedit'&&!p.pushId"
+                  v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'&&!p.pushId"
                   class="detatil-flie-btn"
                   @click="add('dd'),checkTopInfoSiteList()"
                   type="primary"
@@ -795,7 +795,7 @@
                     <el-form-item class="tabelForm" :prop="'topInfoSiteList.' + scope.$index + '.path'"  :rules="{required: true,message: '此项不能为空'}">
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                       <el-input disabled placeholder="请输入内容" v-model="scope.row.path" class="input-with-select group-no-padding">
-                        <el-button v-if="p.actpoint != 'look'&&p.actpoint!='task'&&p.actpoint!='Yjedit'" slot="append" icon="el-icon-circle-plus" @click="selectPosition(),positionIndex=scope.$index"></el-button>
+                        <el-button v-if="p.actpoint != 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus" @click="selectPosition(),positionIndex=scope.$index"></el-button>
                       </el-input>
                     </el-form-item>
 
@@ -817,7 +817,7 @@
                       <el-input
                         class="group-no-padding"
                         clearable
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.$index==0||p.actpoint=='Yjedit'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.$index==0"
                         v-model="scope.row.contractAmount"
                         @input="getPositionMoney(scope.$index,detailform.topInfoSiteList),checkTopInfoSiteList()"
                       >
@@ -838,7 +838,7 @@
                 >
                   <template slot-scope="scope">
                     <el-switch
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'||p.pushId"
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                       class="inline-formitem-switch"
                       v-model="scope.row.isMain"
                       active-color="#409EFF"
@@ -861,7 +861,7 @@
                   align="center"
                   width="80"
                   show-overflow-tooltip
-                  v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'&&p.actpoint!='Yjedit'&&!p.pushId"
+                  v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'&&!p.pushId"
                 >
                   <template slot-scope="scope">
                     <el-link
@@ -876,7 +876,7 @@
               </el-table>
               <p><span >证明文件: </span>
                 <el-button
-                  v-show="p.actpoint !== 'look'&&p.actpoint!='task'&&p.actpoint!='Yjedit'"
+                  v-show="p.actpoint !== 'look'&&p.actpoint!='task'"
                   size="small"
                   type="primary"
                   @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile','commonFilesList1')">
@@ -935,13 +935,13 @@
                 >
                   <template slot-scope="scope">
                     <el-link :underline="false" @click="attachmentDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;margin-right: 3px;':'color: #409EFF;'">下载</el-link>
-                    <el-link v-if="p.actpoint!=='look'&&p.actpoint!='Yjedit'&&p.actpoint!='task'" :underline="false" @click="handleRemove1(scope.row,scope.$index)" type="warning">删除</el-link>
+                    <el-link v-if="p.actpoint!=='look'&&p.actpoint!='task'" :underline="false" @click="handleRemove1(scope.row,scope.$index)" type="warning">删除</el-link>
                   </template>
                 </el-table-column>
               </el-table>
               <p><span >招标公告文件: </span>
                 <el-button
-                  v-show="p.actpoint !== 'look'&&p.actpoint!='task'&&p.actpoint!='Yjedit'"
+                  v-show="p.actpoint !== 'look'&&p.actpoint!='task'"
                   size="small"
                   type="primary"
                   @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','commonFilesList2')">
@@ -2412,7 +2412,7 @@ export default {
           }
         }
         this.p.task.remark=value;
-        var url=this.p.actpoint!='Yjedit'?'/api/contract/contract/ContractInfo/process/':'/api/contract/ContractInfoDetail/process/';
+        var url=this.p.actpoint!='Yjedit'?'/api/contract/contract/ContractInfo/process/':'/api/contract/contract/ContractInfo/saleChangeProcess/';
         this.$http
           .post(
             url+type,
@@ -3023,9 +3023,9 @@ export default {
       this.detailform.commonFilesList=this.detailform.commonFilesList1.concat(this.detailform.commonFilesList2)
       var url='';
       if(type=='save'){
-        url='/api/contract/contract/ContractInfo/detail/saveOrUpdate';
+        url=this.p.actpoint!='Yjedit'?'/api/contract/contract/ContractInfo/detail/saveOrUpdate':'/api/contract/contract/ContractInfo/detail/updateChangeRecord_sale';
       }else{
-        url=this.p.actpoint!='Yjedit'?'/api/contract/contract/ContractInfo/process/start':'/api/contract/ContractInfoDetail/process/start';
+        url=this.p.actpoint!='Yjedit'?'/api/contract/contract/ContractInfo/process/start':'/api/contract/contract/ContractInfo/saleChangeProcess/start';
       }
       if(this.detailform.contractInfo.isOpenBid=='1'&&this.detailform.commonFilesList2.length==0){
         this.$message.error("请上传招标公告文件");
@@ -3106,8 +3106,14 @@ export default {
     },
     // 加载列表
     getDetail() {
+      var url='';
+      if(this.p.actpoint=='Yjedit'){
+        url='/api/contract/contract/ContractInfo/detail/saleEntityInfoById'
+      }else{
+        url='/api/contract/contract/ContractInfo/detail/entityInfo'
+      }
       this.$http
-        .post("/api/contract/contract/ContractInfo/detail/entityInfo", {id:this.id})
+        .post(url, {id:this.id})
         .then((res) => {
         var datas=res.data.data;
       this.getTwoSC(datas.contractInfo.marketFirstNameId);
@@ -3130,6 +3136,7 @@ export default {
         jzlx:[],//建筑类型
         jzjglx:[],//建筑结构类型
         cdmc:[],//场地名称
+        changeRecordUuid:datas.changeRecordUuid
       }
       this.detailform.cdmc=datas.contractInfo.siteNameId&&datas.contractInfo.siteNameId.split(",");
       this.detailform.zplx=datas.contractInfo.otherAssemblyTypeId&&datas.contractInfo.otherAssemblyTypeId.split(",");

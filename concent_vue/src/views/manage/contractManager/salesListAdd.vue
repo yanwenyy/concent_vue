@@ -10,24 +10,24 @@
         <el-form-item label="合同编号:">
           <el-input v-model="searchform.contractCode" placeholder="项目名称" clearable></el-input>
         </el-form-item>
-        <el-form-item
-          label="合同类型:"
-        >
-          <el-select
-            clearable
-            filterable
-            placeholder="请选择"
-            size="mini"
-            v-model="searchform.moduleId"
-          >
-            <el-option
-              :key="index"
-              :label="item.detailName"
-              :value="item.id"
-              v-for="(item, index) in projectPlate"
-            ></el-option>
-          </el-select>
-        </el-form-item>
+        <!--<el-form-item-->
+          <!--label="合同类型:"-->
+        <!--&gt;-->
+          <!--<el-select-->
+            <!--clearable-->
+            <!--filterable-->
+            <!--placeholder="请选择"-->
+            <!--size="mini"-->
+            <!--v-model="searchform.moduleId"-->
+          <!--&gt;-->
+            <!--<el-option-->
+              <!--:key="index"-->
+              <!--:label="item.detailName"-->
+              <!--:value="item.id"-->
+              <!--v-for="(item, index) in projectPlate"-->
+            <!--&gt;</el-option>-->
+          <!--</el-select>-->
+        <!--</el-form-item>-->
         <el-form-item>
           <el-button @click="init()">查询</el-button>
         </el-form-item>
@@ -204,9 +204,10 @@
       // 初始化
       init(moduleId) {
         this.visible = true;
+        this.searchform.moduleId=moduleId;
         this.$http
           .post(
-            "/api/contract/contract/ContractInfo/list/loadPageDataChangeRecord",
+           "/api/contract/contract/ContractInfo/list/loadPageDataChangeRecord_Sale",
             this.searchform,
             {isLoading: false}
           )

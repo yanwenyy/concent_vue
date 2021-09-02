@@ -310,7 +310,7 @@
           </el-table>
         </div>
       </el-tab-pane>
-      <el-tab-pane v-if="" label="填报销售业绩" name="second">
+      <el-tab-pane v-if="false" label="填报销售业绩" name="second">
         <div style="width: 100%; overflow: hidden">
           <el-button-group style="float: left">
             <el-button @click="addSale"  type="primary" plain ><i class="el-icon-plus"></i>新增</el-button>
@@ -589,11 +589,26 @@ export default {
     //新增销售业绩跳详情
     getSaleAdd(row){
       console.log(row);
-      let p = {actpoint:this.activeName=='first'? "edit":'Yjedit', instid: row.uuid,pushId:row.pushId};
-      this.$router.push({
-        path: "./detail/",
-        query: {p: this.$utils.encrypt(JSON.stringify(p))},
-      });
+      this.$http
+        .post(
+          "/api/contract/contract/ContractInfo/detail/saveChangeRecord_Sale",
+          {uuid:row.uuid},
+          {isLoading: false}
+        )
+        .then((res) => {
+          var datas = res.data.data;
+          if (res.data && res.data.code === 200) {
+            let p = {actpoint:this.activeName=='first'? "edit":'Yjedit', instid: datas.changeRecordUuid};
+            this.$router.push({
+              path: "./detail/",
+              query: {p: this.$utils.encrypt(JSON.stringify(p))},
+            });
+          } else {
+            this.$message.error(res.data.msg)
+          }
+          this.dataListLoading = false
+        });
+
     },
     //批量提交
     batchSub(){
@@ -850,7 +865,7 @@ export default {
       this.multipleSelection = val;
     },
     getData() {
-      var url=this.activeName=='first'?"/api/contract/contract/ContractInfo/list/loadPageData":"/api/contract/ContractInfoDetail/list/loadPageData";
+      var url=this.activeName=='first'?"/api/contract/contract/ContractInfo/list/loadPageData":"/api/contract/contract/ContractInfo/list/loadPageDataForChangeRecord_Sale";
       this.$http
         .post(
           url,

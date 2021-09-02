@@ -510,7 +510,7 @@
             this.$message.info("只能汇总审核通过的数据！");
             return false;
         }
-          if (this.multipleSelection[0].createOrgType!='12' || this.multipleSelection[0].createOrgType!='13' ) {
+          if (this.multipleSelection[0].createOrgType!='12' && this.multipleSelection[0].createOrgType!='13' ) {
               this.$message.info("只能汇总集团跟工程公司数据！");
               return false;
           }
