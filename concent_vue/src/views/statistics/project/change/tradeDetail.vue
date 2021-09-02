@@ -700,6 +700,7 @@
                 class="neirong"
                 label="变更原因:">
                 <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   type="textarea"
                   placeholder="请输入"
                   v-model="detailForm.project.changeReason"/>

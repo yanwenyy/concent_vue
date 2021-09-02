@@ -898,11 +898,11 @@
                 prop="project.companyDesign"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList != ''"
+                  disabled
                   clearable
                   placeholder="请选择设计单位"
                   v-model="detailForm.project.companyDesign">
-                  <el-button slot="append" icon="el-icon-circle-plus-outline"  disabled
+                  <el-button slot="append" icon="el-icon-circle-plus-outline"  :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList != ''"
                   @click="openComMul(detailForm.project.companyDesignId,detailForm.project.companyDesign,'/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
                 </el-input>
               </el-form-item>
@@ -915,7 +915,7 @@
                   clearable
                   placeholder="请选择监理单位"
                   v-model="detailForm.project.companySupervisor">
-                  <el-button slot="append" icon="el-icon-circle-plus-outline" 
+                  <el-button slot="append" icon="el-icon-circle-plus-outline" :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList != ''"
                   @click="openComMul(detailForm.project.companySupervisorId,detailForm.project.companySupervisor,'/api/contract/Companies/detail/findCompanies','监理单位')"></el-button>
                 </el-input>
               </el-form-item>
@@ -998,6 +998,7 @@
                 class="neirong"
                 label="变更原因:">
                 <el-input
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   type="textarea"
                   placeholder="请输入"
                   v-model="detailForm.project.changeReason"/>
@@ -1180,7 +1181,7 @@
             </el-table>
             
             <!--分包承建单位-->
-            <div v-if="detailForm.project.projectNatureSecondId === 'd4b6c373a60246a8a5166ddb0bf46c21' || detailForm.project.projectNatureSecondId === '7369abc48e264096a37783de01b0d4cc'">
+            <div v-if="detailForm.project.projectTypeId == '017004'">
               <p class="detail-title" style="overflow:hidden;margin-right:30px">
                 <span>分包承建单位信息:</span>
                 <el-button
