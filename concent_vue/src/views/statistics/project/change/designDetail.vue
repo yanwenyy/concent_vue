@@ -2365,6 +2365,7 @@
       if (this.p.actpoint === 'add') {
         this.getAddDetail()
       }
+      this.getProjectFather()
       this.$store.dispatch('getConfig', {})
       this.$store.dispatch("getPubCustomers", {});
       this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
@@ -2908,7 +2909,6 @@
                   }
                 }
               })
-              this.getProjectFather()
               this.getShowTwo()
             }
           })
