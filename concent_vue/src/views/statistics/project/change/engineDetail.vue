@@ -161,10 +161,11 @@
                 </el-input>
               </el-form-item>
               <el-form-item
+                v-if="detailForm.project.projectTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
                 label="所属铁路局:"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   clearable
                   filterable
                   @change="getName(detailForm.project.railwayId, railwayBureau, 'railwayName','railwayCode')"
@@ -1549,6 +1550,7 @@
                   v-model="showDetailForm.project.companyBuiltName"/>
               </el-form-item>
               <el-form-item
+                v-if="detailForm.project.projectTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
                 label="所属铁路局:"
                 style="width: 32.5%">
                 <el-select
