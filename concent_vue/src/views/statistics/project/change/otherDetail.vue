@@ -1636,11 +1636,11 @@
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
       if (this.p.actpoint === 'edit' || this.p.actpoint === 'look' || this.p.actpoint === 'task') {
         this.getDetail()
-        this.getProjectFather()
       }
       if (this.p.actpoint === 'add') {
         this.getAddDetail()
       }
+      this.getProjectFather()
       this.$http
       .post(
         "/api/contract/Companies/detail/findCompanies",
@@ -1795,6 +1795,9 @@
         this.detailForm.project.companyBuildId = '',
         this.constructionOrgList = []
       },
+      del(index, item, list) {
+        list.splice(index, 1)
+      }, 
       //新增关联合同
       addContract(){
         this.contractStatas = true;

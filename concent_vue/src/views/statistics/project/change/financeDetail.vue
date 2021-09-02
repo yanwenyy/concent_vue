@@ -1714,11 +1714,11 @@
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
       if (this.p.actpoint === 'edit' || this.p.actpoint === 'look' || this.p.actpoint === 'task') {
         this.getDetail()
-        this.getProjectFather()
       }
       if (this.p.actpoint === 'add') {
         this.getAddDetail()
       }
+      this.getProjectFather()
       // 业务类别数据格式不对，已处理
       this.bizTypeCode.find((item) => {
         if (item.parentDetailId === this.detailForm.project.categoryFirstId) {
@@ -1776,6 +1776,9 @@
             }
         })
       },
+      del(index, item, list) {
+        list.splice(index, 1)
+      }, 
       //新增关联合同
       addContract(){
         this.contractStatas = true;

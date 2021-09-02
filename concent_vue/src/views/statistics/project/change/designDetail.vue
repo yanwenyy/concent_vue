@@ -1352,7 +1352,7 @@
                     }"
                 >
                   <el-switch
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    disabled
                     class="inline-formitem-switch"
                     v-model="showDetailForm.project.isClientele"
                     active-color="#409EFF"
@@ -2365,6 +2365,7 @@
       if (this.p.actpoint === 'add') {
         this.getAddDetail()
       }
+      this.getProjectFather()
       this.$store.dispatch('getConfig', {})
       this.$store.dispatch("getPubCustomers", {});
       this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
@@ -2606,6 +2607,9 @@
         }
       },
       
+      del(index, item, list) {
+        list.splice(index, 1)
+      }, 
       handleRemove(file, index) {
         this.$http
           .post(
@@ -2908,7 +2912,6 @@
                   }
                 }
               })
-              this.getProjectFather()
               this.getShowTwo()
             }
           })
