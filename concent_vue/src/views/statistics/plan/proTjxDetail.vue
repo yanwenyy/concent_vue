@@ -152,6 +152,7 @@
               bb.push(this.data.map(row => row.value)[i])
             }
           }
+          console.log(bb)
           // console.info(bb, index)
           // veditable，venabled 都为 "1"，则不会参与增加
           // a的sumTarget == b的uuid， a的值会加到b上

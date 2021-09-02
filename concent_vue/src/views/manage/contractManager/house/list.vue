@@ -310,16 +310,17 @@
           </el-table>
         </div>
       </el-tab-pane>
-      <el-tab-pane v-if="false" label="填报销售业绩" name="second">
+      <el-tab-pane v-if="" label="填报销售业绩" name="second">
         <div style="width: 100%; overflow: hidden">
           <el-button-group style="float: left">
+            <el-button @click="addSale"  type="primary" plain ><i class="el-icon-plus"></i>新增</el-button>
             <el-button @click="totop" type="primary" plain><i class="el-icon-edit"></i>修改</el-button>
             <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
           </el-button-group>
           <div style="float: right;">
             <el-button @click="searchFromReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
             <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
-            <el-button type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>
+            <!--<el-button type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>-->
           </div>
         </div>
         <div style="margin-top: 10px">
@@ -552,14 +553,18 @@
       style="margin-top: 5px"
       v-if="page.total !== 0"
     ></el-pagination>
+    <sales-list-add v-if="salesStatus" ref="salesList" @getSale="getSaleAdd"></sales-list-add>
   </div>
 </template>
 
 <script>
+  import SalesListAdd from '../salesListAdd'
 export default {
   name: "proposal-list-look",
+  components:{SalesListAdd},
   data() {
     return {
+      salesStatus:false,
       activeName:"first",
       page: { current: 1, size: 20, total: 0, records: [] },
       searchFrom: {
@@ -574,6 +579,22 @@ export default {
     };
   },
   methods: {
+    //新增销售业绩
+    addSale(){
+      this.salesStatus = true;
+      this.$nextTick(() => {
+        this.$refs.salesList.init(this.searchFrom.moduleId);
+      })
+    },
+    //新增销售业绩跳详情
+    getSaleAdd(row){
+      console.log(row);
+      let p = {actpoint:this.activeName=='first'? "edit":'Yjedit', instid: row.uuid,pushId:row.pushId};
+      this.$router.push({
+        path: "./detail/",
+        query: {p: this.$utils.encrypt(JSON.stringify(p))},
+      });
+    },
     //批量提交
     batchSub(){
       if (this.multipleSelection.length <1) {

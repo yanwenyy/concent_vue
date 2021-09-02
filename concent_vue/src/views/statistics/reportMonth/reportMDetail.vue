@@ -501,6 +501,7 @@
           list.forEach((item)=>{
             if(item.tjxCode.length>=12&&item.sumTarget==code){
               treeSum+=Number(item.monthValue);
+              console.log(item.tjxName)
               canCalc=true;
             }
             if(item.tjxCode==code&&item.tjxCode.length==9){
@@ -509,7 +510,7 @@
               // console.log(item.tjxName)
             }
           });
-          // console.log(list[index].tjxCode.length,treeSum,parentNum)
+          // console.log(list[index].tjxCode.length,treeSum,parentNum,list[index].sumTarget,canCalc,parentCanCalc)
           if(treeSum!=0&&parentNum!=0&&list[index].sumTarget&&canCalc&&parentCanCalc&&list[index].tjxCode.length>=12&&(treeSum>parentNum)){
             this.$message.error("该级本月完成之和不能大于上级本月完成");
             list[index].monthValue='';

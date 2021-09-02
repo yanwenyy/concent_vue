@@ -165,18 +165,18 @@
         <el-table-column
           :width="150"
           align="center"
-          label="合同总额(万元)"
+          label="工程合同额(万元)"
           prop="contractAmountTotal"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
-            <span>合同总额(万元)</span>
+            <span>工程合同额(万元)</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.contractAmountTotal" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.contractAmountEngine" size="mini"/>
             </div>
           </template>
           <template slot-scope="scope">{{
-            scope.row.contractAmountTotal
+            scope.row.contractAmountEngine
             }}</template>
         </el-table-column>
         <template v-for="(item,s) in headerList">

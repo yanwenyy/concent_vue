@@ -133,15 +133,15 @@
         </el-table-column>
         <el-table-column :width="150"
                          align="center"
-                         label="合同总额(万元)"
-                         prop="contractAmountTotal" show-overflow-tooltip
+                         label="工程合同额(万元)"
+                         prop="contractAmountEngine" show-overflow-tooltip
         >
           <template slot="header"
                     slot-scope="scope">
-            <span>合同总额(万元)</span>
+            <span>工程合同额(万元)</span>
             <div>
               <el-input style=" width: 100%"
-                        v-model="searchform.contractAmountTotal"
+                        v-model="searchform.contractAmountEngine"
                         size="mini"/>
             </div>
           </template>
