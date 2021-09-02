@@ -21,17 +21,23 @@
             </el-form-item>
             <el-form-item label="所属单位:">
               <el-input
-                v-model="searchform.companyBelongName"
-                placeholder="所属单位"
+                disabled
                 clearable
-              ></el-input>
+                placeholder="请输入"
+                v-model="searchform.createOrgName">
+                <el-button  slot="append" icon="el-icon-circle-plus-outline"
+                @click="addDw('所属单位',searchform.createOrgCode,false)"></el-button>
+              </el-input>
             </el-form-item>
             <el-form-item label="签约/使用资质单位:">
               <el-input
-                v-model="searchform.companyName"
-                placeholder="签约/使用资质单位"
+                disabled
                 clearable
-              ></el-input>
+                placeholder="请输入"
+                v-model="searchform.companyName">
+                <el-button slot="append" icon="el-icon-circle-plus-outline" 
+                @click="addDw('签约/使用资质单位',searchform.companyId)"></el-button>
+              </el-input>
             </el-form-item>
             <el-form-item label="项目板块:">
               <el-select
@@ -119,7 +125,7 @@
                 <el-option
                   :key="index"
                   :label="item.detailName"
-                  :value="item.id"
+                  :value="item.detailCode"
                   v-for="(item, index) in projectType"
                 />
               </el-select>
@@ -686,13 +692,19 @@
       @size-change="handleSizeChange"
       layout="total, sizes, prev, pager, next, jumper"
     ></el-pagination>
+    <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
   </div>
 </template>
 
 <script>
+import CompanyTree from '../companyTree'
 export default {
+  components: {
+    CompanyTree
+  },
   data() {
     return {
+      DwVisible: false,
       projectTypeTwo: [], // 工程类别(二级)
       emergingMarketTwo: [], // 新兴市场(二级)
       yesOrNo: [
@@ -709,7 +721,11 @@ export default {
         projectTypeFirstId: "", // 工程类别(一级)
         projectTypeSecondId: "", // 工程类别(二级)
         companyBelongName: "", // 所属单位
+        companyBelongId: "", // 所属单位
         companyName: "", // 签约/使用资质单位
+        companyId: "", // 签约/使用资质单位
+        createOrgCode:'', //所属单位 ->取创建单位
+        createOrgName:'', //所属单位 ->取创建单位
         companyBuild: "", // 建设单位
         companyDesign: "", // 设计单位
         projectTypeId: "", // 项目类型
@@ -964,11 +980,16 @@ export default {
         projectTypeFirstId: "", // 工程类别(一级)
         projectTypeSecondId: "", // 工程类别(二级)
         companyBelongName: "", // 所属单位
+        companyBelongId: "", // 所属单位
         companyName: "", // 签约/使用资质单位
+        companyId: "", // 签约/使用资质单位
+        createOrgCode:'', //所属单位 ->取创建单位
+        createOrgName:'', //所属单位 ->取创建单位
         companyBuild: "", // 建设单位
         companyDesign: "", // 设计单位
         projectTypeId: "", // 项目类型
         marketFirstId: "", // 新兴市场类别(一级)
+        marketSecondId: "", // 新兴市场类别(二级)
         isTrusteeship: "", // 是否托管
         isEscrow: "", // 是否代管
         monthReport:""
@@ -989,7 +1010,35 @@ export default {
         .then(res => {
           this.page = res.data.data;
         });
-    }
+    },
+    //打开单位弹框
+    addDw(type,list,ifChek,index,tableList){
+      this.DwVisible = true;
+      this.$nextTick(() => {
+        this.$refs.infoDw.init(type,list,ifChek,index,tableList);
+      })
+    },
+    
+      //获取单位的值
+    getDwInfo(data){
+        this.$forceUpdate();
+        var id=[],name=[];
+        if(data&&data.type!='所属单位'){
+          data.forEach((item)=>{
+            id.push(item.id);
+            name.push(item.detailName);
+          })
+        }
+        
+        if(data.type=="所属单位"){
+          this.searchform.createOrgName=data.name;
+          this.searchform.createOrgCode=data.code;
+        }else if(data.type=="签约/使用资质单位"){
+          this.searchform.companyId=id.join(",");
+          this.searchform.companyName=name.join(",");
+        }
+      this.DwVisible=false;
+    },
   },
   created() {
     this.getData();
