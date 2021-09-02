@@ -209,6 +209,11 @@
             <el-form-item
               label="项目状态:"
               prop="project.projectStatusId"
+              :rules="{
+                required: true,
+                message: '此项不能为空',
+                trigger: ['blur','change'],
+              }"
               style="width:32.5%;">
               <el-select
                 filterable
