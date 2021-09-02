@@ -1764,7 +1764,9 @@
             isClientele:'1',
             companyBuild:'',
             companyBuildId:'',
-            isOutputTax:'1'
+            isOutputTax:'1',
+            projectTypeId:'',
+            fatherProjectId:''
           }
         },
         showDetailForm: {
@@ -1817,7 +1819,9 @@
             isClientele:'1',
             companyBuild:'',
             companyBuildId:'',
-            isOutputTax:'1'
+            isOutputTax:'1',
+            projectTypeId:'',
+            fatherProjectId:''
           }
         },
         rules: {

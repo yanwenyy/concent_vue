@@ -1204,7 +1204,9 @@
               }
             ],
             companyBuild: '', // 客户名称
-            companyBuildId: ''
+            companyBuildId: '',
+            projectTypeId:'',
+            fatherProjectId:''
           }
         },
         rules: {

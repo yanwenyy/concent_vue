@@ -2621,7 +2621,9 @@
             ],
             isClientele:'1',
             companyBuild:'',
-            companyBuildId:''
+            companyBuildId:'',
+            projectTypeId:'',
+            fatherProjectId:''
           }
         },
         showDetailForm: {
@@ -2703,7 +2705,9 @@
             ],
             isClientele:'1',
             companyBuild:'',
-            companyBuildId:''
+            companyBuildId:'',
+            projectTypeId:'',
+            fatherProjectId:''
           }
         },
         rules: {

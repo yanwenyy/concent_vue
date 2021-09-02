@@ -955,7 +955,9 @@
             projectRemark: '',
             projectPusherPhone: '',
             isClientele:'1',
-            companyBuildId:''
+            companyBuildId:'',
+            projectTypeId:'',
+            fatherProjectId:''
           }
         },
         rules: {

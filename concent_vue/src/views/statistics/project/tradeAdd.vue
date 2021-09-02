@@ -252,11 +252,7 @@
               <el-form-item
                 label="父项目名称:"
                 prop="project.fatherProjectId"
-                :rules="{
-                  required: true,
-                  message: '此项不能为空',
-                  trigger: ['blur','change'],
-                }"
+                :rules="rules.project.must"
                 style="width: 32.5%">
                 <el-select
                   :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
@@ -1260,7 +1256,9 @@
             projectRemark: '',
             projectPusherPhone: '',
             isClientele:'1',
-            companyBuildId:''
+            companyBuildId:'',
+            projectTypeId:'',
+            fatherProjectId:''
           }
         },
         rules: {

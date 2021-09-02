@@ -889,7 +889,9 @@
             fieldId: '',
             companyBelongName: '股份公司',
             projectPusher: '',
-            projectPusherPhone: ''
+            projectPusherPhone: '',
+            projectTypeId:'',
+            fatherProjectId:''
           }
         },
         rules: {

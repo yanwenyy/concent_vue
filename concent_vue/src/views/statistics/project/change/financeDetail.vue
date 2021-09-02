@@ -1602,7 +1602,9 @@
             projectPusherPhone: '',
             isClientele:'1',
             companyBuild:'',
-            companyBuildId:''
+            companyBuildId:'',
+            projectTypeId:'',
+            fatherProjectId:''
           }
         },
         showDetailForm: {
@@ -1649,7 +1651,9 @@
             projectPusherPhone: '',
             isClientele:'1',
             companyBuild:'',
-            companyBuildId:''
+            companyBuildId:'',
+            projectTypeId:'',
+            fatherProjectId:''
           }
         },
         rules: {

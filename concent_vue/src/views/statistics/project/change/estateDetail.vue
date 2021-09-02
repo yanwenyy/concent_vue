@@ -1454,7 +1454,9 @@
             companyBelongName: '股份公司',
             projectPusher: '',
             projectPusherPhone: '',
-            isOutputTax:'1'
+            isOutputTax:'1',
+            projectTypeId:'',
+            fatherProjectId:''
           }
         },
         showDetailForm: {
@@ -1496,7 +1498,9 @@
             companyBelongName: '股份公司',
             projectPusher: '',
             projectPusherPhone: '',
-            isOutputTax:'1'
+            isOutputTax:'1',
+            projectTypeId:'',
+            fatherProjectId:''
           }
         },
         rules: {

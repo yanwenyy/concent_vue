@@ -1348,7 +1348,9 @@
                 isMain: '1',
                 country: '',
               }
-            ]
+            ],
+            projectTypeId:'',
+            fatherProjectId:''
           }
         },
         rules: {
