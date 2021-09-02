@@ -191,9 +191,10 @@
                 </el-form-item>
                 <el-form-item
                   label="所属铁路局:"
+                  v-if="detailForm.project.projectTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
                   style="width: 32.5%">
                   <el-select
-                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                     clearable
                     filterable
                     @change="getName(detailForm.project.railwayId, railwayBureau, 'railwayName','railwayCode')"
@@ -1240,11 +1241,19 @@
                     show-overflow-tooltip
                   >
                     <template slot-scope="scope">
-                      <el-form-item class="tabelForm">
+                      <el-form-item class="tabelForm"
+                        :prop="'project.projectSubContractList[' + scope.$index + '].subContractName'"
+                      >
                         <el-input
                           clearable
-                          :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                          v-model="scope.row.subContractName"/>
+                          disabled
+                          v-model="scope.row.subContractName" class="input-with-select group-no-padding">
+                          <el-button
+                            slot="append"
+                            icon="el-icon-circle-plus-outline"
+                            @click="addDw('分包承建单位',scope.row.subContractId,false,scope.$index)" >
+                          </el-button>
+                        </el-input>
                       </el-form-item>
                     </template>
                   </el-table-column>
@@ -2007,6 +2016,7 @@
         let v = {
           uuid: data.uuid, // ID新增为空，但必须传
           subContractName: data.companyBuiltName, // 承建单位名称
+          subContractId: data.companyBuiltId, // 承建单位名称
           projectName: data.projectName, // 项目名称
           projectTypeId: data.projectTypeId, // 项目类型ID
           projectTypeName: data.projectTypeName, // 项目类型名称
@@ -2025,6 +2035,7 @@
         let v = {
           uuid: '', // ID新增为空，但必须传
           subContractName: '', // 承包单位名称
+          subContractId: '', // 承包单位id
           projectName: '', // 项目名称
           projectTypeId: '', // 项目类型ID
           projectTypeName: '', // 项目类型名称
@@ -2397,6 +2408,7 @@
       },
       //打开单位弹框
       addDw(type,list,ifChek,index,tableList){
+        console.info(index)
         this.DwVisible = true;
         this.$nextTick(() => {
           this.$refs.infoDw.init(type,list,ifChek,index,tableList);
@@ -2420,7 +2432,7 @@
       getDwInfo(data){
         this.$forceUpdate();
         var id=[],name=[];
-        if(data&&data.type!='承建单位'){
+        if(data&&data.type!='承建单位'&&data.type!='分包承建单位'){
           data.forEach((item)=>{
             id.push(item.id);
             name.push(item.detailName);
@@ -2433,6 +2445,10 @@
         }else if(data.type=="签约/使用资质单位"){
           this.detailForm.project.companyId=id.join(",");
           this.detailForm.project.companyName=name.join(",");
+        }else if(data.type=='分包承建单位'){
+          console.info(this.detailForm.project.projectSubContractList)
+          this.detailForm.project.projectSubContractList[data.index].subContractName=data.name;
+          this.detailForm.project.projectSubContractList[data.index].subContractid=data.code;
         }
       this.DwVisible=false;
     },
