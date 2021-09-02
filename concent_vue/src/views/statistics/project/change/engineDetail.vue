@@ -1227,11 +1227,19 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <el-form-item class="tabelForm">
+                    <el-form-item class="tabelForm"
+                      :prop="'project.projectSubContractList[' + scope.$index + '].subContractName'"
+                    >
                       <el-input
                         clearable
-                        :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                        v-model="scope.row.subContractName"/>
+                        disabled
+                        v-model="scope.row.subContractName" class="input-with-select group-no-padding">
+                        <el-button
+                          slot="append"
+                          icon="el-icon-circle-plus-outline"
+                          @click="addDw('分包承建单位',scope.row.subContractId,false,scope.$index)" >
+                        </el-button>
+                      </el-input>
                     </el-form-item>
                   </template>
                 </el-table-column>
@@ -2808,6 +2816,7 @@
       if (this.p.actpoint === 'add') {
         this.getAddDetail()
       }
+      this.getProjectFather()
       this.$store.dispatch('getConfig', {})
       this.$store.dispatch("getPubCustomers", {});
       this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
@@ -3349,7 +3358,7 @@
       getDwInfo(data){
         this.$forceUpdate();
         var id=[],name=[];
-        if(data&&data.type!='承建单位'){
+        if(data&&data.type!='承建单位'&&data.type!='分包承建单位'){
           data.forEach((item)=>{
             id.push(item.id);
             name.push(item.detailName);
@@ -3361,6 +3370,9 @@
         }else if(data.type=="签约/使用资质单位"){
           this.detailForm.project.companyId=id.join(",");
           this.detailForm.project.companyName=name.join(",");
+        }else if(data.type=='分包承建单位'){
+          this.detailForm.project.projectSubContractList[data.index].subContractName=data.name;
+          this.detailForm.project.projectSubContractList[data.index].subContractid=data.code;
         }
         this.DwVisible=false;
       },
@@ -3411,7 +3423,6 @@
                 }
               })
               this.getShowTwo()
-              this.getProjectFather()
             }
           })
       },
@@ -3424,7 +3435,6 @@
           .then((res) => {
             if (res.data.code === 200) {
               this.detailForm.project = res.data.data
-              this.getProjectFather()
               this.showDetailForm.project = JSON.parse(JSON.stringify(res.data.data))
               if (!res.data.data.infoProductList) {
                 this.detailForm.project.infoProductList = []

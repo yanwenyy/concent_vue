@@ -320,7 +320,7 @@
           <el-row>
             <el-form-item
               label="签约单位(使用资质单位):"
-              prop="project.amountCompanyName"
+              prop="project.companyName"
               style="width: 32.5%"
               :rules="{
                 required: true, message: '此项不能为空', trigger: ['blur','change']
@@ -330,11 +330,11 @@
                 clearable 
                 disabled 
                 placeholder="请输入内容" 
-                v-model="detailForm.project.amountCompanyName" class="input-with-select">
+                v-model="detailForm.project.companyName" class="input-with-select">
                 <el-button 
                   v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" 
                   icon="el-icon-circle-plus-outline" 
-                  @click="addDw('签约单位(使用资质单位)',detailForm.project.amountCompanyId)" 
+                  @click="addDw('签约单位(使用资质单位)',detailForm.project.companyId)" 
                   >
                 </el-button>
               </el-input>
@@ -880,6 +880,8 @@
             isAnnualContract: '',
             amountCompanyName: '',
             amountCompanyId: '',
+            companyName: '',
+            companyId: '',
             marketFirstId: '',
             marketSecondId: '',
             assemblyRate: '',
@@ -999,8 +1001,8 @@
           })
         }
         if(data.type=="签约单位(使用资质单位)"){
-          this.detailForm.project.amountCompanyId=id.join(",");
-          this.detailForm.project.amountCompanyName=name.join(",");
+          this.detailForm.project.companyId=id.join(",");
+          this.detailForm.project.companyName=name.join(",");
         }
         this.DwVisible=false;
       },

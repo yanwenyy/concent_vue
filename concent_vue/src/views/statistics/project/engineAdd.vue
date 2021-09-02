@@ -2450,8 +2450,8 @@
           this.detailForm.project.projectSubContractList[data.index].subContractName=data.name;
           this.detailForm.project.projectSubContractList[data.index].subContractid=data.code;
         }
-      this.DwVisible=false;
-    },
+        this.DwVisible=false;
+      },
     //承建单位触发项目部下拉
     getProjectUnit(){
       this.$http

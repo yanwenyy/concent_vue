@@ -369,7 +369,7 @@
             <el-row>
               <el-form-item
                 label="签约单位(使用资质单位):"
-                prop="project.amountCompanyName"
+                prop="project.companyName"
                 style="width: 32.5%"
                 :rules="{
                   required: true, message: '此项不能为空', trigger: ['blur','change']
@@ -379,11 +379,11 @@
                   clearable 
                   disabled
                   placeholder="请输入内容" 
-                  v-model="detailForm.project.amountCompanyName" class="input-with-select">
+                  v-model="detailForm.project.companyName" class="input-with-select">
                   <el-button 
                     v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" 
                     icon="el-icon-circle-plus-outline" 
-                    @click="addDw('签约单位(使用资质单位)',detailForm.project.amountCompanyId)" 
+                    @click="addDw('签约单位(使用资质单位)',detailForm.project.companyId)" 
                     >
                   </el-button>
                 </el-input>
@@ -394,7 +394,7 @@
                 style="width:32.5%;">
                 <el-input
                   clearable
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  disabled
                   placeholder="请输入"
                   v-model="detailForm.project.companyBelongName"/>
               </el-form-item>
@@ -1388,13 +1388,13 @@
             <el-row>
               <el-form-item
                 label="签约单位(使用资质单位):"
-                prop="amountCompanyName"
+                prop="companyName"
                 style="width:32.5%;">
                 <el-input
                   clearable
                   disabled
                   placeholder="请输入"
-                  v-model="showDetailForm.project.amountCompanyName"/>
+                  v-model="showDetailForm.project.companyName"/>
               </el-form-item>
               <el-form-item
                 label="所属单位:"
@@ -2000,7 +2000,8 @@
             isFrameIn: '', // 5
             companyBelongName: '', // 6
             projectStatusId: '',
-            amountCompanyName: '',
+            companyName: '',
+            companyId: '',
             marketFirstId: '',
             marketSecondId: '',
             assemblyRate: '',
@@ -2054,7 +2055,8 @@
             isFrameIn: '', // 5
             companyBelongName: '', // 6
             projectStatusId: '',
-            amountCompanyName: '',
+            companyName: '',
+            companyId: '',
             marketFirstId: '',
             marketSecondId: '',
             assemblyRate: '',
@@ -2131,11 +2133,11 @@
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
       if (this.p.actpoint === 'edit' || this.p.actpoint === 'look' || this.p.actpoint === 'task') {
         this.getDetail()
-        this.getProjectFather()
       }
       if (this.p.actpoint === 'add') {
         this.getAddDetail()
       }
+      this.getProjectFather()
        //设计单位列表
       this.$http
         .post(
@@ -2314,8 +2316,8 @@
           })
         }
         if(data.type=="签约单位(使用资质单位)"){
-          this.detailForm.project.amountCompanyId=id.join(",");
-          this.detailForm.project.amountCompanyName=name.join(",");
+          this.detailForm.project.companyId=id.join(",");
+          this.detailForm.project.companyName=name.join(",");
         }
         this.DwVisible=false;
       },
