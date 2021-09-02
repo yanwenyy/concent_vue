@@ -1193,7 +1193,7 @@
                     }"
                 >
                   <el-switch
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                    disabled
                     class="inline-formitem-switch"
                     v-model="showDetailForm.project.isClientele"
                     active-color="#409EFF"
