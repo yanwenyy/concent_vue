@@ -1717,6 +1717,9 @@
         });
         this.key = this.key + 1;
       },
+      del(index, item, list) {
+        list.splice(index, 1)
+      }, 
       //新增标段和地点
       add(type) {
         var v = {};

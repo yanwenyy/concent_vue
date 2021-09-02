@@ -1795,6 +1795,9 @@
         this.detailForm.project.companyBuildId = '',
         this.constructionOrgList = []
       },
+      del(index, item, list) {
+        list.splice(index, 1)
+      }, 
       //新增关联合同
       addContract(){
         this.contractStatas = true;

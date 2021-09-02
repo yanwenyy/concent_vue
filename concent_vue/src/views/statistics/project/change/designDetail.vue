@@ -2607,6 +2607,9 @@
         }
       },
       
+      del(index, item, list) {
+        list.splice(index, 1)
+      }, 
       handleRemove(file, index) {
         this.$http
           .post(
