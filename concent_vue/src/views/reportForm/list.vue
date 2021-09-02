@@ -49,9 +49,9 @@
         this.$http
           .post(
             "/api/contract/ReportManage/loadReportPage",
-            v_params
-            // JSON.stringify(v_params),
-            // {useJson: true}
+            // v_params
+            JSON.stringify(v_params),
+            {useJson: true}
           )
           .then((res) => {
             // this.url='http://121.36.79.169:8088'+res.data.data.url;

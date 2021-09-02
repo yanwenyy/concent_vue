@@ -2298,7 +2298,7 @@ export default {
       return this.$store.state.assemblyType;//装配类型
     },
     holdingSituation(){
-        console.log(this.$store.state.holdingSituation)
+        // console.log(this.$store.state.holdingSituation)
         return this.$store.state.holdingSituation;//控股情况
     },
     architecturalType(){
@@ -2412,7 +2412,13 @@ export default {
           }
         }
         this.p.task.remark=value;
-        var url=this.p.actpoint!='Yjedit'?'/api/contract/contract/ContractInfo/process/':'/api/contract/contract/ContractInfo/saleChangeProcess/';
+        var url='';
+        if(this.p.actpoint=='Yjedit'||(this.p.actpoint=='task'&&this.p.instid.indexOf("-sale")!=-1)){
+          url='/api/contract/contract/ContractInfo/saleChangeProcess/'
+        }else{
+          url='/api/contract/contract/ContractInfo/process/'
+        }
+        // var url=this.p.actpoint!='Yjedit'?'/api/contract/contract/ContractInfo/process/':'/api/contract/contract/ContractInfo/saleChangeProcess/';
         this.$http
           .post(
             url+type,
@@ -2613,7 +2619,7 @@ export default {
     },
     //获取项目地点的值
     getPositionTree(data) {
-      console.log(data)
+      // console.log(data)
       this.treeStatas = false;
       var country = '', _data = data;
       if (_data.fullDetailName.indexOf("境内") != -1) {
@@ -2642,7 +2648,7 @@ export default {
     //选择项目地点
     selectPosition() {
       this.treeStatas = true;
-      console.log(this.positionIndex);
+      // console.log(this.positionIndex);
       this.$nextTick(() => {
         this.$refs.addOrUpdate.init()
       })
@@ -2656,7 +2662,7 @@ export default {
     },
     //获取单位的值
     getDwInfo(data){
-      console.log(data);
+      // console.log(data);
       var id=[],name=[];
       if(data&&data.type!='单位名称'){
         data.forEach((item)=>{
@@ -2686,7 +2692,7 @@ export default {
       });
       this.detailform.contractInfo[id]=_id.join(",");
       this.detailform.contractInfo[name]=_name.join(",");
-      console.log(this.detailform.contractInfo[id])
+      // console.log(this.detailform.contractInfo[id])
     },
     //内联合体,内分包,外联合体,外分包,集团内分包改变计算金额
     changeMoney(list,name){
@@ -2832,7 +2838,7 @@ export default {
             money+=Number(item.contractAmount);
           }
         });
-        console.log(this.detailform.contractInfo.ourAmount,money)
+        // console.log(this.detailform.contractInfo.ourAmount,money)
         if(this.detailform.contractInfo.ourAmount-money>0){
           list[0].contractAmount=this.detailform.contractInfo.ourAmount-money;
         }else{
@@ -2951,7 +2957,7 @@ export default {
           this.detailform.contractInfo[code] = list.find(
               (item) => item.id == id
           ).detailCode;
-        console.log(this.detailform.contractInfo[name]);
+        // console.log(this.detailform.contractInfo[name]);
       }
     },
     //新兴市场二级
@@ -3107,7 +3113,10 @@ export default {
     // 加载列表
     getDetail() {
       var url='';
-      if(this.p.actpoint=='Yjedit'){
+      if(this.p.actpoint=='task'&&this.p.instid.indexOf("-sale")!=-1){
+        this.id=this.id.split("-sale")[0];
+      }
+      if(this.p.actpoint=='Yjedit'||(this.p.actpoint=='task'&&this.p.instid.indexOf("-sale")!=-1)){
         url='/api/contract/contract/ContractInfo/detail/saleEntityInfoById'
       }else{
         url='/api/contract/contract/ContractInfo/detail/entityInfo'

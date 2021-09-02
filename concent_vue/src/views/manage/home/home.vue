@@ -272,7 +272,11 @@
       }else  if(val.businessType=='contract_bid_change'){
         url='/api/contract/topInfo/BidInfo/changeProcess/recall'
       }else  if(val.businessType=='contract_contract_change'){
-        url='/api/contract/contract/ContractInfo/changeProcess/recall'
+        if(val.businessId.indexOf("-sale")!=-1){
+          url='/api/contract/contract/ContractInfo/saleChangeProcess/recall'
+        }else{
+          url='/api/contract/contract/ContractInfo/changeProcess/recall'
+        }
       }else  if(val.businessType=='contract_bid_register'){
         url='/api/contract/topInfo/BidInfo/bidProcess/recall'
       }else  if(val.businessType=='contract_file_manager'||val.businessType=='contract_file_message'||val.businessType=='contract_file_statistical'){
@@ -337,18 +341,37 @@
         this.$http
           .post("/api/contract/contract/ContractInfo/detail/entityInfo", {id:row.businessId})
           .then((res) => {
-          var datas=res.data.data;
-          url=this.$utils.getUrl[row.businessType+"@"+datas.contractInfo.moduleId];
-          this.urlGO(p,url)
-      });
+            var datas=res.data.data;
+            url=this.$utils.getUrl[row.businessType+"@"+datas.contractInfo.moduleId];
+            this.urlGO(p,url)
+          });
       }else if(row.businessType=='contract_contract_change'){
+        var id='',url='',datas={};
+        if(row.businessId.indexOf("-sale")!=-1){
+          id=row.businessId.split("-sale")[0];
+          url='/api/contract/contract/ContractInfo/detail/saleEntityInfoById';
+          datas={
+            id:id
+          }
+        }else{
+          id=row.businessId;
+          url='/api/contract/contract/ContractInfo/detail/entityInfoByBeforeAndAfterId';
+          datas={
+            uuid:id
+          }
+        }
         this.$http
-          .post("/api/contract/contract/ContractInfo/detail/entityInfoByBeforeAndAfterId", {uuid:row.businessId})
+          .post(url, datas)
           .then((res) => {
-          var datas=res.data.data;
-          url=this.$utils.getUrl[row.businessType+"@"+datas[0].contractInfo.moduleId];
-          this.urlGO(p,url)
-      });
+            var datas=res.data.data;
+            if(row.businessId.indexOf("-sale")!=-1){
+              url=this.$utils.getUrl["contract_contract_new@"+datas.contractInfo.moduleId];
+            }else{
+              url=this.$utils.getUrl[row.businessType+"@"+datas[0].contractInfo.moduleId];
+            }
+
+            this.urlGO(p,url)
+          });
       }else{
         url=this.$utils.getUrl[row.businessType];
         this.urlGO(p,url)

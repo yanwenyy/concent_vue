@@ -310,7 +310,7 @@
           </el-table>
         </div>
       </el-tab-pane>
-      <el-tab-pane v-if="false" label="填报销售业绩" name="second">
+      <el-tab-pane v-if="" label="填报销售业绩" name="second">
         <div style="width: 100%; overflow: hidden">
           <el-button-group style="float: left">
             <el-button @click="addSale"  type="primary" plain ><i class="el-icon-plus"></i>新增</el-button>
@@ -379,6 +379,7 @@
               label="合同名称"
               prop="contractName"
               show-overflow-tooltip
+              width="300"
             >
               <template slot="header" slot-scope="scope">
                 <span>合同名称</span>
@@ -750,7 +751,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          var url=this.activeName=='first'?"/api/contract/contract/ContractInfo/list/delete":"/api/contract/ContractInfoDetail/list/delete";
+          var url=this.activeName=='first'?"/api/contract/contract/ContractInfo/list/delete":"/api/contract/contract/ContractInfo/list/deleteHouseSales";
           this.$http
           .post(
             url,
