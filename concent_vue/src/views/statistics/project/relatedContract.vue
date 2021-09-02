@@ -1,7 +1,9 @@
 <template>
   <el-dialog
     :visible.sync="visible"
-    :append-to-body="true">
+    :append-to-body="true"
+    style="margin-top: -7vh;"
+    >
     <div>
       <!--<el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="init()">-->
         <!--<el-form-item label="项目名称:">-->
@@ -49,6 +51,8 @@
         <!--</el-form-item>-->
       <!--</el-form>-->
       <el-table
+        :max-height="$tableHeight-180"
+        :height="$tableHeight-180"
         :data="dataList"
         border
         v-loading="dataListLoading"
