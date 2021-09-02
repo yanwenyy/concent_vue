@@ -3262,6 +3262,10 @@
             return false;
           }
         }
+        if(this.detailform.contractInfo.isClientele!='1'&&this.constructionOrgList==[]){
+          this.$message.error("客户名称不能为空");
+          return false;
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
