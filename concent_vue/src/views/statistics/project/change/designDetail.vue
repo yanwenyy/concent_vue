@@ -2061,6 +2061,9 @@
           </el-form>
         </div>
       </el-tab-pane>
+      <!-- <el-tab-pane label="审批流程" >
+         <Audit-Process :task="p.task||{businessId:p.uuid,businessType:'project_project_change'}"></Audit-Process>
+      </el-tab-pane> -->
     </el-tabs>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
     <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
@@ -2078,11 +2081,11 @@
   import CompanyTree from '../../companyTree'
   import RelatedContract from '../relatedContract'
   import companyMul from '@/components/companiesMultiple'
-
+  import AuditProcess from '@/components/auditProcess'
   export default {
     name: 'change',
     components: {
-      Tree, FileUpload,CompanyTree,RelatedContract,companyMul
+      Tree, FileUpload,CompanyTree,RelatedContract,companyMul,AuditProcess
     },
     data() {
       const validateMoney = (rule, value, callback) => {
