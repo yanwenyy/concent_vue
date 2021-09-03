@@ -3421,7 +3421,7 @@
           this.detailForm.project.companyName=name.join(",");
         }else if(data.type=='分包承建单位'){
           this.detailForm.project.projectSubContractList[data.index].subContractName=data.name;
-          this.detailForm.project.projectSubContractList[data.index].subContractid=data.code;
+          this.detailForm.project.projectSubContractList[data.index].subContractId=data.code;
         }
         this.DwVisible=false;
       },

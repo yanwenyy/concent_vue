@@ -2489,7 +2489,7 @@
         }else if(data.type=='分包承建单位'){
           console.info(this.detailForm.project.projectSubContractList)
           this.detailForm.project.projectSubContractList[data.index].subContractName=data.name;
-          this.detailForm.project.projectSubContractList[data.index].subContractid=data.code;
+          this.detailForm.project.projectSubContractList[data.index].subContractId=data.code;
         }
         this.DwVisible=false;
       },

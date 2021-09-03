@@ -853,7 +853,7 @@ export default {
       this.searchform.size=1000000000;
         this.$http
           .post(
-            "/api/statistics/StatisticsProject/list/loadPageData",
+            "/api/statistics/StatisticsProject/list/projectInfoPageData",
             this.searchform
           )
           .then((res) => {
@@ -1004,7 +1004,7 @@ export default {
     getData() {
       this.$http
         .post(
-          "/api/statistics/StatisticsProject/list/loadPageData",
+          "/api/statistics/StatisticsProject/list/projectInfoPageData",
           this.searchform
         )
         .then(res => {
