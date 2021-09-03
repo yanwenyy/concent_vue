@@ -155,6 +155,17 @@
         <el-table-column
           :width="150"
           align="center"
+          label="是否本月"
+          prop="isThisMonth"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+            {{scope.row.isThisMonth=='0'?'是':scope.row.isThisMonth=='1'?'否':''}}
+          </template>
+        </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
           label="截止上报时间"
           prop="endreporttime"
           show-overflow-tooltip
@@ -217,7 +228,7 @@
 
       <el-dialog :title="addTitle1" :visible.sync="showCfclAddDialog1" append-to-body @close="closeAdd">
         <div>
-          <div>
+          <div style="height:50vh;overflow: auto">
             <table>
               <tr>
                 <td><span style="color: red;font-weight:bold">*</span>填报单位:</td>
@@ -268,7 +279,17 @@
                 </td>
               </tr>
               <tr>
-                <td><span style="color: red;font-weight:bold">*</span>下月标准截止时间:</td>
+                <td><span style="color: red;font-weight:bold">*</span>是否本月:</td>
+                <td style="width:80%;text-align:left;padding:10px">
+                  <el-radio-group v-model="form1.isThisMonth">
+                    <el-radio label="0" ><span>是</span></el-radio>
+                    <el-radio label="1" ><span>否</span></el-radio>
+                  </el-radio-group>
+                  <span style="color:red;font-size:12px" v-if="this.show && this.form1.isThisMonth == ''">此项不能为空</span>
+                </td>
+              </tr>
+              <tr>
+                <td><span style="color: red;font-weight:bold">*</span>标准截止时间:</td>
                 <td style="width:80%;text-align:left;padding:10px">
                   <el-select v-model="form1.endreporttime" placeholder="请选择" style="width: 70%">
                     <el-option
@@ -351,7 +372,8 @@
           restrictedobjects:'',
           standardreporttime:'',
           startStatus:'2',
-          uuid:''
+          uuid:'',
+          isThisMonth:"0"
         },
         treeStatas: false,
         page: { current: 1, size: 20, total: 0, records: [] },
@@ -432,6 +454,10 @@
           this.show = true;
           return false;
         }
+        if(this.form1.isThisMonth=='1'&&this.form1.endreporttime>this.form1.standardreporttime){
+          this.$message.error("不是本月的时候,标准截止时间要小于标准上报时间")
+          return false;
+        }
         var url = '/api/statistics/projectMonthlyReport/ReportEndtime/detail/save';
         var params = {};
         params.createOrgName = this.form1.createOrgName;
@@ -439,6 +465,7 @@
         params.startStatus = this.form1.startStatus;
         params.standardreporttime = this.form1.standardreporttime;
         params.endreporttime = this.form1.endreporttime;
+        params.isThisMonth = this.form1.isThisMonth;
         params.createOrgId = this.userdata.managerOrgId;
         params.createOrgType = this.userdata.managerOrgType;
         params.createUserId =this.userdata.id;

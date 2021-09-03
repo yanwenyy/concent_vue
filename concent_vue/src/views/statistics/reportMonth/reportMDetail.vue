@@ -556,7 +556,8 @@
         // this.dataReport.status="1"
         // this.dataReport.flowStatus="1"
         var fjjgmj=0,//房建竣工面积
-            fjjgcz=0;//房建竣工产值
+            fjjgcz=0,//房建竣工产值
+            sgcz=0;//施工产值
         this.data.forEach((item,index)=>{
           if(item.tjxCode=='002009003'){
             this.dataReport.fjJe=Number(item.monthValue);
@@ -567,7 +568,14 @@
           if(item.tjxCode=='002009003001'){
             fjjgmj=Number(item.monthValue);
           }
+          if(item.tjxCode=='001001'){
+            sgcz=Number(item.monthValue);
+          }
         });
+        if(sgcz>this.projectList.contractAmountEngine){
+          this.$message.error("施工产值不能大于合同额");
+          return false;
+        }
           let tableData = {
             projectReportDetaiList:this.data,
             projectreport:this.dataReport,

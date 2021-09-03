@@ -512,7 +512,28 @@
       save(type) {
         // this.dataReport.status="1"
         // this.dataReport.flowStatus="1"
-        this.commonFilesList.businessId=this.dataReport.uuid
+        this.commonFilesList.businessId=this.dataReport.uuid;
+        var fjjgmj=0,//房建竣工面积
+          fjjgcz=0,//房建竣工产值
+          sgcz=0;//施工产值
+        this.data.forEach((item,index)=>{
+          // if(item.tjxCode=='002009003'){
+          //   this.dataReport.fjJe=Number(item.monthValue);
+          // }
+          // if(item.tjxCode=='002009003001'){
+          //   this.dataReport.qzmjJe=Number(item.monthValue);
+          // }
+          // if(item.tjxCode=='002009003001'){
+          //   fjjgmj=Number(item.monthValue);
+          // }
+          if(item.tjxCode=='001001'){
+            sgcz=Number(item.monthValue);
+          }
+        });
+        if(sgcz>this.projectList.contractAmountEngine){
+          this.$message.error("施工产值不能大于合同额");
+          return false;
+        }
         let tableData = {
           tjxDetailList:this.data,
           projectcheck:this.dataReport,
