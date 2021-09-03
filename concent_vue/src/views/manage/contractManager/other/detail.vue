@@ -2241,7 +2241,7 @@
   export default {
     data() {
       var validateMoney = (rule, value, callback) => {
-        console.log(value)
+        // console.log(value)
         if(value===''){
           callback(new Error('不能为空'))
         }else if (value!=null&&!isMoney(value)) {
@@ -3357,9 +3357,10 @@
         this.detailform.zplx=datas.contractInfo.otherAssemblyTypeId&&datas.contractInfo.otherAssemblyTypeId.split(",");
         this.detailform.jzlx=datas.contractInfo.otherBuildingTypeId&&datas.contractInfo.otherBuildingTypeId.split(",");
         this.detailform.jzjglx=datas.contractInfo.otherBuildingStructureTypeId&&datas.contractInfo.otherBuildingStructureTypeId.split(",");
-        if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
-          this.detailform.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
+        if(datas.contractInfo.constructionOrgId != ''&&datas.contractInfo.constructionOrgId != null){
+          this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
         }
+
       });
       },
 

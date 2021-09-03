@@ -3788,9 +3788,10 @@ export default {
       this.detailform.zplx=datas.contractInfo.otherAssemblyTypeId&&datas.contractInfo.otherAssemblyTypeId.split(",");
       this.detailform.jzlx=datas.contractInfo.otherBuildingTypeId&&datas.contractInfo.otherBuildingTypeId.split(",");
       this.detailform.jzjglx=datas.contractInfo.otherBuildingStructureTypeId&&datas.contractInfo.otherBuildingStructureTypeId.split(",");
-      if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
+      if(datas.contractInfo.constructionOrgId != ''&&datas.contractInfo.constructionOrgId != null){
         this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
       }
+
     });
     },
 
