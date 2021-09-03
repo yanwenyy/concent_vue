@@ -403,7 +403,7 @@
                     clearable
                     placeholder="请选择设计单位"
                     v-model="detailForm.project.companyDesign">
-                    <el-button slot="append" icon="el-icon-circle-plus-outline"  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                    <el-button slot="append" icon="el-icon-circle-plus-outline"  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                     @click="openComMul(detailForm.project.companyDesignId,detailForm.project.companyDesign,'/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
                   </el-input>
                 </el-form-item>
@@ -416,7 +416,7 @@
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.companyName">
-                  <el-button v-if="p.actpoint!='task'&&p.actpoint!='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('签约/使用资质单位',detailForm.project.companyId)"></el-button>
+                  <el-button v-if="p.actpoint!='task'&&p.actpoint!='look'||detailForm.project.contractInfoList!=''" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('签约/使用资质单位',detailForm.project.companyId)"></el-button>
                 </el-input>
               </el-form-item>
             </el-row>
