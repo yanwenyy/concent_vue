@@ -2809,7 +2809,7 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
-          <Audit-Process :task="p.task||{businessId:p.instid,businessType:' contract_contract_new'}"></Audit-Process>
+          <Audit-Process :task="p.task||{businessId:p.from=='YjLook'?p.instid+'-sale':p.instid,businessType:' contract_contract_new'}"></Audit-Process>
         </el-tab-pane>
       </el-tabs>
 
