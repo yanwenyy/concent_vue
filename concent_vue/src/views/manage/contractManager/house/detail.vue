@@ -3116,7 +3116,7 @@ export default {
       if(this.p.actpoint=='task'&&this.p.instid.indexOf("-sale")!=-1){
         this.id=this.id.split("-sale")[0];
       }
-      if(this.p.actpoint=='Yjedit'||(this.p.actpoint=='task'&&this.p.instid.indexOf("-sale")!=-1)){
+      if(this.p.actpoint=='Yjedit'||this.p.from=='YjLook'||(this.p.actpoint=='task'&&this.p.instid.indexOf("-sale")!=-1)){
         url='/api/contract/contract/ContractInfo/detail/saleEntityInfoById'
       }else{
         url='/api/contract/contract/ContractInfo/detail/entityInfo'
