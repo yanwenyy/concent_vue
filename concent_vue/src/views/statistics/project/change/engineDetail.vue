@@ -2536,7 +2536,6 @@
         }
       }
       return {
-        dialogVisible:false,
         key:0,
         infoCSVisible: false,
         uuid: null,
