@@ -61,7 +61,7 @@
               </div>
            </el-tab-pane>
        <el-tab-pane label="产物及实物工程量" name="cwjswgcl">
-            <div class="detailBoxBG" style="position: relative">
+            <div class="table-div" style="position: relative">
              <el-table
                     class="tableStyle"
                     :height="tableHeight"
@@ -113,6 +113,7 @@
                       align="center"
                       label="本月完成"
                       show-overflow-tooltip
+
                     >
                       <template slot-scope="scope">
                        <!-- <div>{{scope.row.monthValue}}</div>-->
@@ -121,7 +122,7 @@
                         </div>
 
                        <!-- <div v-else-if="projectStatus != '2' " style="text-align: right">{{sumCount(scope.row)}}</div>-->
-                        <div  v-else v-show="scope.row.monthValue!=0">{{scope.row.monthValue}}</div>
+                        <div class="textRight" v-else v-show="scope.row.monthValue!=0">{{scope.row.monthValue}}</div>
                       </template>
                     </el-table-column>
                    <el-table-column
@@ -131,7 +132,7 @@
                      show-overflow-tooltip
                    >
                      <template slot-scope="scope">
-                       <div v-show="scope.row.monthPlan!=0">{{scope.row.monthPlan}}</div>
+                       <div  class="textRight" v-show="scope.row.monthPlan!=0">{{scope.row.monthPlan}}</div>
                      </template>
                    </el-table-column>
                    <el-table-column
@@ -143,7 +144,7 @@
                      <template slot-scope="scope">
                        <!--<div v-if="scope.row.monthPlan && scope.row.monthValue">{{Math.round(scope.row.monthPlan /scope.row.monthValue) / 100+"%"}}-->
                        <!--</div>-->
-                       <div v-if="scope.row.monthRate!=null&&scope.row.monthRate!=''">{{scope.row.monthRate+"%"}}
+                       <div  class="textRight" v-if="scope.row.monthRate!=null&&scope.row.monthRate!=''">{{scope.row.monthRate+"%"}}
                        </div>
                      </template>
                    </el-table-column>
@@ -154,7 +155,7 @@
                      show-overflow-tooltip
                    >
                      <template slot-scope="scope">
-                      <div v-show="scope.row.yearValue!=0">{{scope.row.yearValue}}</div>
+                      <div  class="textRight" v-show="scope.row.yearValue!=0">{{scope.row.yearValue}}</div>
                       <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
                      </template>
                    </el-table-column>
@@ -165,7 +166,7 @@
                      show-overflow-tooltip
                    >
                      <template slot-scope="scope">
-                       <div v-show="scope.row.yearPlan!=0">{{scope.row.yearPlan}}</div>
+                       <div  class="textRight" v-show="scope.row.yearPlan!=0">{{scope.row.yearPlan}}</div>
                      </template>
                    </el-table-column>
                    <el-table-column
@@ -177,7 +178,7 @@
                      <template slot-scope="scope">
  <!--                    <div v-if="scope.row.yearPlan&&scope.row.yearValue">{{Math.round(scope.row.yearPlan /scope.row.yearValue) / 100+"%"}}
                        </div>-->
-                       <div v-if="scope.row.yearRate!=null&&scope.row.yearRate!=''">{{scope.row.yearRate+"%"}}
+                       <div  class="textRight" v-if="scope.row.yearRate!=null&&scope.row.yearRate!=''">{{scope.row.yearRate+"%"}}
                        </div>
                      </template>
                    </el-table-column>
@@ -188,7 +189,7 @@
                  show-overflow-tooltip
                >
                  <template slot-scope="scope">
-                   <div v-show="scope.row.totalValue!=0">{{scope.row.totalValue}}</div>
+                   <div  class="textRight" v-show="scope.row.totalValue!=0">{{scope.row.totalValue}}</div>
                  </template>
                </el-table-column>
                <el-table-column
@@ -198,7 +199,7 @@
                  show-overflow-tooltip
                >
                  <template slot-scope="scope">
-                   <div v-show="scope.row.totalPlan!=0">{{scope.row.totalPlan}}</div>
+                   <div  class="textRight" v-show="scope.row.totalPlan!=0">{{scope.row.totalPlan}}</div>
                  </template>
                </el-table-column>
                <el-table-column
@@ -210,7 +211,7 @@
                  <template slot-scope="scope">
                   <!-- <div v-if="scope.row.totalPlan&&scope.row.totalValue">{{Math.round(scope.row.totalPlan /scope.row.totalValue) / 100+"%"}}
                    </div>-->
-                   <div v-if="scope.row.totalRate!=null">{{scope.row.totalRate+"%"}}
+                   <div  class="textRight" v-if="scope.row.totalRate!=null">{{scope.row.totalRate+"%"}}
                    </div>
                  </template>
                </el-table-column>
@@ -218,13 +219,13 @@
               <div class="cwjswgcl-bottom">
                 <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009003'"><span>{{item.tjxName+"("+item.jldw+")"}}:<el-input v-model="item.monthValue" :disabled="p.actpoint == 'look'||p.actpoint == 'task'" /></span></div>
                 <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009003001'"><span>{{item.tjxName}}:<el-input   v-model="item.monthValue"  :disabled="p.actpoint == 'look'||p.actpoint == 'task'" /></span></div>
-                <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009005'"><span>{{item.tjxName+"("+item.jldw+")"}}:<el-input  disabled :value="item.monthValue"/></span></div>
-                <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009005001'"><span>{{item.tjxName}}:<el-input  disabled  :value="item.monthValue"/></span></div>
+                <div title="房建新开工面积（开累产值) - 房建竣工面积（开累产值） + 房建竣工面积（本年产值）" class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009005'"><span>{{item.tjxName+"("+item.jldw+")"}}:<el-input  disabled :value="item.monthValue"/></span></div>
+                <div title="其中：新开工面积（开累产值 - 其中：投标承包面积（开累产值） + 其中：投标承包面积（本年产值）" class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009005001'"><span>{{item.tjxName}}:<el-input  disabled  :value="item.monthValue"/></span></div>
               </div>
            </div>
         </el-tab-pane>
        <el-tab-pane label="下月计划"  name="xyjh">
-            <div class="detailBoxBG">
+            <div class="table-div">
               <el-table
                 class="tableStyle"
                 :height="tableHeight"
@@ -249,7 +250,7 @@
                   type="index"
                 ></el-table-column>
                 <el-table-column
-                  :width="250"
+
                   align="left"
                   label="统计项名称"
                   show-overflow-tooltip
@@ -274,11 +275,11 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <div v-if="scope.row.veditable === '1'&& isCk!='1' && p.actpoint!='look'&& p.actpoint!='task'">
+                    <div  class="textRight" v-if="scope.row.veditable === '1'&& isCk!='1' && p.actpoint!='look'&& p.actpoint!='task'">
                       <el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')" @blur="getNextPlanYear(nextData,scope.$index,scope.row.sumTarget)"/>
                     </div>
 <!--                    <div v-else-if="projectStatus !== '2' " style="text-align: right">{{sumCount(scope.row)}}</div>-->
-                    <div v-else>{{scope.row.value}}</div>
+                    <div   class="textRight" v-else>{{scope.row.value}}</div>
                   </template>
                 </el-table-column>
                 <el-table-column
@@ -935,7 +936,7 @@
   }
   /deep/ .el-input__inner{
     height: 25px;
-    //text-align: right;
+    text-align: right;
     padding-right:2px;
   }
   /*按钮样式*/
@@ -961,8 +962,8 @@
     right: 175px;
   }
   .tableStyle{
-    max-height: calc(100vh - 110px)!important;
-    min-height: calc(100vh - 110px)!important;
+    max-height: calc(100vh - 130px)!important;
+    min-height: calc(100vh - 130px)!important;
     overflow: auto;
   }
   /**/

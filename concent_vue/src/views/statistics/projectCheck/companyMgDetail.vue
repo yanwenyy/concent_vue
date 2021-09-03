@@ -100,7 +100,7 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="产值(验工计价)" name="cwjswgcl">
-        <div class="detailBoxBG">
+        <div class="table-div">
           <el-table
             class="tableStyle"
             :max-height="$tableHeight"
@@ -153,7 +153,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div>{{scope.row.monthPlan}}</div>
+                <div class="textRight">{{scope.row.monthPlan}}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -163,7 +163,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                {{scope.row.monthValue}}
+                <div class="textRight">{{scope.row.monthValue}}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -173,10 +173,10 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div v-if="scope.row.veditable == '1' && actpoint!='look' ">
+                <div class="textRight" v-if="scope.row.veditable == '1' && actpoint!='look' ">
                   <el-input v-model="scope.row.valuationFee" @input="scope.row.value = scope.row.valuationFee.replace(/[^\-?\d.]/g,'','')" @blur="getYear(data,scope.$index,scope.row.sumTarget)"/>
                 </div>
-                <div  v-if="scope.row.veditable != '1'">{{scope.row.valuationFee}}</div>
+                <div class="textRight"  v-if="scope.row.veditable != '1'">{{scope.row.valuationFee}}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -186,10 +186,10 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div v-if="scope.row.veditable == '1' && actpoint!='look' ">
+                <div class="textRight" v-if="scope.row.veditable == '1' && actpoint!='look' ">
                   <el-input v-model="scope.row.taxFee"  @input="scope.row.value = scope.row.taxFee.replace(/[^\-?\d.]/g,'','')" @blur="getYearSe(data,scope.$index,scope.row.sumTarget)"/>
                 </div>
-                <div  v-if="scope.row.veditable != '1'">{{scope.row.taxFee}}</div>
+                <div class="textRight"  v-if="scope.row.veditable != '1'">{{scope.row.taxFee}}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -199,7 +199,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div>{{scope.row.yearPlan}}</div>
+                <div class="textRight">{{scope.row.yearPlan}}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -209,7 +209,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div>{{scope.row.yearValue}}</div>
+                <div class="textRight">{{scope.row.yearValue}}</div>
                 <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
               </template>
             </el-table-column>
@@ -220,7 +220,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div>{{scope.row.yearValuationFee}}</div>
+                <div class="textRight">{{scope.row.yearValuationFee}}</div>
                 <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
               </template>
             </el-table-column>
@@ -231,7 +231,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div>{{scope.row.yearTaxFee}}</div>
+                <div class="textRight">{{scope.row.yearTaxFee}}</div>
                 <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
               </template>
             </el-table-column>
@@ -242,9 +242,9 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div v-if="scope.row.yearPlan&&scope.row.yearValue">{{Math.round(scope.row.yearPlan /scope.row.yearValue) / 100+"%"}}
+                <div class="textRight" v-if="scope.row.yearPlan&&scope.row.yearValue">{{Math.round(scope.row.yearPlan /scope.row.yearValue) / 100+"%"}}
                 </div>
-                <div v-if="scope.row.yearRate!=null">{{scope.row.yearRate+"%"}}
+                <div class="textRight" v-if="scope.row.yearRate!=null">{{scope.row.yearRate+"%"}}
                 </div>
               </template>
             </el-table-column>
@@ -255,7 +255,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div>{{scope.row.totalPlan}}</div>
+                <div class="textRight">{{scope.row.totalPlan}}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -265,7 +265,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div>{{scope.row.totalValue}}</div>
+                <div class="textRight">{{scope.row.totalValue}}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -275,7 +275,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div>{{scope.row.totalValuationFee}}</div>
+                <div class="textRight">{{scope.row.totalValuationFee}}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -285,7 +285,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div>{{scope.row.totalTaxFee}}</div>
+                <div class="textRight">{{scope.row.totalTaxFee}}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -295,9 +295,9 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div v-if="scope.row.totalPlan && scope.row.totalValue">{{Math.round(scope.row.totalPlan /scope.row.totalValue) / 100+"%"}}
+                <div class="textRight" v-if="scope.row.totalPlan && scope.row.totalValue">{{Math.round(scope.row.totalPlan /scope.row.totalValue) / 100+"%"}}
                 </div>
-                <div v-if="scope.row.totalRate!=null">{{scope.row.totalRate+"%"}}
+                <div class="textRight" v-if="scope.row.totalRate!=null">{{scope.row.totalRate+"%"}}
                 </div>
               </template>
             </el-table-column>

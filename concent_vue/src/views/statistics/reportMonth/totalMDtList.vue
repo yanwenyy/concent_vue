@@ -123,12 +123,12 @@
           prop="contractAmountTotal"
           show-overflow-tooltip
         >
-        <template slot="header" slot-scope="scope">
-            <span>工程合同额(万元)</span>
-            <div>
-              <el-input style=" width: 100%" v-model="searchform.statisticsProject.contractAmountEngine" size="mini"/>
-            </div>
-          </template>
+        <!--<template slot="header" slot-scope="scope">-->
+            <!--<span>工程合同额(万元)</span>-->
+            <!--<div>-->
+              <!--<el-input style=" width: 100%" v-model="searchform.statisticsProject.contractAmountEngine" size="mini"/>-->
+            <!--</div>-->
+          <!--</template>-->
         </el-table-column>
 
         <el-table-column

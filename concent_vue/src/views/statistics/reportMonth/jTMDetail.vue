@@ -84,7 +84,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div :class="vnameMarginLeft(scope.row.tjxCode,scope.row.veditable)">{{scope.row.tjxName}}</div>
+                <div :title="scope.row.tjxCode=='002009004'?'房建折合面积 = 本月完成产值/工程合同额*建筑面积':scope.row.tjxCode=='002009001'?'房建新开工面积 = 房建施工面积':scope.row.tjxCode=='002009001001'?'其中:新开工面积 = 房建施工面积投标承包面积中的当年新开工面积':''" :class="vnameMarginLeft(scope.row.tjxCode,scope.row.veditable)">{{scope.row.tjxName}}</div>
                 <!--                        <div :class="scope.row.tjxCode.length>3&&scope.row.tjxCode.length<6?'':''">{{scope.row.tjxName}}</div>-->
               </template>
             </el-table-column>
@@ -106,7 +106,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div>{{scope.row.monthValue}}</div>
+                <div class="textRight">{{scope.row.monthValue}}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -116,7 +116,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div>{{scope.row.monthPlan}}</div>
+                <div class="textRight">{{scope.row.monthPlan}}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -126,9 +126,9 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div v-if="scope.row.monthPlan&&scope.row.monthValue">{{Math.round(scope.row.monthPlan /scope.row.monthValue) / 100+"%"}}
+                <div class="textRight" v-if="scope.row.monthPlan&&scope.row.monthValue">{{Math.round(scope.row.monthPlan /scope.row.monthValue) / 100+"%"}}
                 </div>
-                <div v-if="scope.row.monthRate!=null">{{scope.row.monthRate+"%"}}
+                <div class="textRight" v-if="scope.row.monthRate!=null">{{scope.row.monthRate+"%"}}
                 </div>
               </template>
             </el-table-column>
@@ -139,7 +139,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div>{{scope.row.yearValue}}</div>
+                <div class="textRight">{{scope.row.yearValue}}</div>
                 <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
               </template>
             </el-table-column>
@@ -150,7 +150,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div>{{scope.row.yearPlan}}</div>
+                <div class="textRight">{{scope.row.yearPlan}}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -160,9 +160,9 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div v-if="scope.row.yearPlan&&scope.row.yearValue">{{Math.round(scope.row.yearPlan /scope.row.yearValue) / 100+"%"}}
+                <div class="textRight" v-if="scope.row.yearPlan&&scope.row.yearValue">{{Math.round(scope.row.yearPlan /scope.row.yearValue) / 100+"%"}}
                 </div>
-                <div v-if="scope.row.yearRate!=null">{{scope.row.yearRate+"%"}}
+                <div class="textRight" v-if="scope.row.yearRate!=null">{{scope.row.yearRate+"%"}}
                 </div>
               </template>
             </el-table-column>
@@ -174,7 +174,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div>{{scope.row.totalValue}}</div>
+                <div class="textRight">{{scope.row.totalValue}}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -185,7 +185,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div>{{scope.row.totalPlan}}</div>
+                <div class="textRight">{{scope.row.totalPlan}}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -196,9 +196,9 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div v-if="scope.row.totalPlan&&scope.row.totalValue">{{Math.round(scope.row.totalPlan /scope.row.totalValue) / 100+"%"}}
+                <div class="textRight" v-if="scope.row.totalPlan&&scope.row.totalValue">{{Math.round(scope.row.totalPlan /scope.row.totalValue) / 100+"%"}}
                 </div>
-                <div v-if="scope.row.totalRate!=null">{{scope.row.totalRate+"%"}}
+                <div class="textRight" v-if="scope.row.totalRate!=null">{{scope.row.totalRate+"%"}}
                 </div>
               </template>
             </el-table-column>
@@ -207,8 +207,8 @@
           <div class="cwjswgcl-bottom">
             <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009003'"><span>{{item.tjxName+"("+item.jldw+")"}}:<el-input disabled v-model="item.monthValue"  :disabled="p.actpoint == 'look'||p.actpoint == 'task'"/></span></div>
             <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009003001'"><span>{{item.tjxName}}:<el-input disabled  v-model="item.monthValue"  :disabled="p.actpoint == 'look'||p.actpoint == 'task'"/></span></div>
-            <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009005'"><span>{{item.tjxName+"("+item.jldw+")"}}:<el-input  disabled :value="item.monthValue"/></span></div>
-            <div class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009005001'"><span>{{item.tjxName}}:<el-input  disabled  :value="item.monthValue"/></span></div>
+            <div title="房建新开工面积（开累产值) - 房建竣工面积（开累产值） + 房建竣工面积（本年产值）" class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009005'"><span>{{item.tjxName+"("+item.jldw+")"}}:<el-input  disabled :value="item.monthValue"/></span></div>
+            <div title="其中：新开工面积（开累产值 - 其中：投标承包面积（开累产值） + 其中：投标承包面积（本年产值）" class="inline-block" v-for="(item,index) in data" v-if="item.tjxCode=='002009005001'"><span>{{item.tjxName}}:<el-input  disabled  :value="item.monthValue"/></span></div>
           </div>
         </div>
       </el-tab-pane>
@@ -263,7 +263,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div >{{scope.row.value}}</div>
+                <div class="textRight">{{scope.row.value}}</div>
               </template>
             </el-table-column>
             <el-table-column

@@ -824,5 +824,17 @@ pre {
   max-height: 85vh!important;
   margin: 0 auto 30px;
 }
+.textRight,.textRight input{
+  text-align: right!important;
+}
+.table-div{
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  max-height: calc(100vh - 80px)!important;
+  min-height: calc(100vh - 80px)!important;
+  padding-bottom: 50px;
+  /*overflow: scroll;*/
+}
 /**/
 

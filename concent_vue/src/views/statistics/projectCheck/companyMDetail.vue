@@ -165,7 +165,8 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                {{scope.row.monthValue}}
+                <div class="textRight">{{scope.row.monthValue}}</div>
+
               </template>
             </el-table-column>
             <el-table-column
@@ -179,7 +180,10 @@
                   <el-input v-model="scope.row.valuationFee" @input="scope.row.value = scope.row.valuationFee.replace(/[^\-?\d.]/g,'','')" @blur="getYear(data,scope.$index,scope.row.sumTarget)"/>
                 </div>
                 <div  v-if="scope.row.veditable != '1'">{{scope.row.valuationFee}}</div>-->
-                {{scope.row.valuationFee}}
+                <div class="textRight">
+                  {{scope.row.valuationFee}}
+                </div>
+
               </template>
             </el-table-column>
             <el-table-column
@@ -193,7 +197,10 @@
                   <el-input v-model="scope.row.taxFee"  @input="scope.row.value = scope.row.taxFee.replace(/[^\-?\d.]/g,'','')" @blur="getYearSe(data,scope.$index,scope.row.sumTarget)"/>
                 </div>
                 <div  v-if="scope.row.veditable != '1'">{{scope.row.taxFee}}</div>-->
-                {{scope.row.taxFee}}
+                <div class="textRight">
+                  {{scope.row.taxFee}}
+                </div>
+
               </template>
             </el-table-column>
            <!-- <el-table-column
@@ -213,7 +220,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div>{{scope.row.yearValue}}</div>
+                <div class="textRight">{{scope.row.yearValue}}</div>
                 <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
               </template>
             </el-table-column>
@@ -224,7 +231,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div>{{scope.row.yearValuationFee}}</div>
+                <div class="textRight">{{scope.row.yearValuationFee}}</div>
                 <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
               </template>
             </el-table-column>
@@ -235,7 +242,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div>{{scope.row.yearTaxFee}}</div>
+                <div class="textRight">{{scope.row.yearTaxFee}}</div>
                 <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
               </template>
             </el-table-column>
@@ -270,7 +277,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div>{{scope.row.totalValue}}</div>
+                <div class="textRight">{{scope.row.totalValue}}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -281,7 +288,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div>{{scope.row.totalValuationFee}}</div>
+                <div class="textRight">{{scope.row.totalValuationFee}}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -292,7 +299,7 @@
               show-overflow-tooltip
             >
               <template slot-scope="scope">
-                <div>{{scope.row.totalTaxFee}}</div>
+                <div class="textRight">{{scope.row.totalTaxFee}}</div>
               </template>
             </el-table-column>
            <!-- <el-table-column
@@ -424,7 +431,9 @@
                   message: `${type=='save'?'保存':'提交'}成功`,
                   duration: 1000,
                   type: 'success',
-                  onClose: () => { this.$router.back() }
+                  onClose: () => {
+                    this.$router.back()
+                  }
                 })
               }
             })
@@ -829,6 +838,7 @@
     box-sizing: border-box;
     max-height: calc(100vh - 80px)!important;
     min-height: calc(100vh - 80px)!important;
+    padding-bottom: 50px;
     /*overflow: scroll;*/
   }
   /**/
