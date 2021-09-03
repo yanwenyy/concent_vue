@@ -2153,7 +2153,7 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
-          <Audit-Process :task="p.task||{businessId:p.instid,businessType:' contract_contract_new'}"></Audit-Process>
+          <Audit-Process :task="p.task||{businessId:p.from=='YjLook'?p.instid+'-sale':p.instid,businessType:' contract_contract_new'}"></Audit-Process>
         </el-tab-pane>
       </el-tabs>
 
@@ -3116,7 +3116,7 @@ export default {
       if(this.p.actpoint=='task'&&this.p.instid.indexOf("-sale")!=-1){
         this.id=this.id.split("-sale")[0];
       }
-      if(this.p.actpoint=='Yjedit'||(this.p.actpoint=='task'&&this.p.instid.indexOf("-sale")!=-1)){
+      if(this.p.actpoint=='Yjedit'||this.p.from=='YjLook'||(this.p.actpoint=='task'&&this.p.instid.indexOf("-sale")!=-1)){
         url='/api/contract/contract/ContractInfo/detail/saleEntityInfoById'
       }else{
         url='/api/contract/contract/ContractInfo/detail/entityInfo'

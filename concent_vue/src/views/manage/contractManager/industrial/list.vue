@@ -761,7 +761,7 @@ export default {
     },
     // 查看
     rowshow(row) {
-      let p = { actpoint: "look", instid: row.uuid };
+      let p = { actpoint: "look",from:this.activeName=='first'? "":'YjLook', instid: row.uuid };
       this.$router.push({
         path: "./detail/",
         query: { p: this.$utils.encrypt(JSON.stringify(p)) },
