@@ -310,7 +310,9 @@
                   message: '保存成功',
                   duration: 1000,
                   type: 'success',
-                  onClose: () => { this.$router.back() }
+                  onClose: () => {
+                    this.$router.back()
+                  }
                 })
               }
             })

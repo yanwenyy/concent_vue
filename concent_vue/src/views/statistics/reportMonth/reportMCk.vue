@@ -169,12 +169,12 @@
           prop="contractAmountTotal"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>工程合同额(万元)</span>
-            <div>
-              <el-input style=" width: 100%" v-model="searchform.contractAmountEngine" size="mini"/>
-            </div>
-          </template>
+          <!--<template slot="header" slot-scope="scope">-->
+            <!--<span>工程合同额(万元)</span>-->
+            <!--<div>-->
+              <!--<el-input style=" width: 100%" v-model="searchform.contractAmountEngine" size="mini"/>-->
+            <!--</div>-->
+          <!--</template>-->
           <template slot-scope="scope">{{
             scope.row.contractAmountEngine
             }}</template>
@@ -249,12 +249,12 @@
           prop="htquantity"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>剩余工程合同额</span>
-            <div>
-              <el-input style=" width: 100%" v-model="searchform.htquantity" size="mini"/>
-            </div>
-          </template>
+          <!--<template slot="header" slot-scope="scope">-->
+            <!--<span>剩余工程合同额</span>-->
+            <!--<div>-->
+              <!--<el-input style=" width: 100%" v-model="searchform.htquantity" size="mini"/>-->
+            <!--</div>-->
+          <!--</template>-->
           <template slot-scope="scope">
             <span v-if="scope.row.contractAmountTotal">{{scope.row.contractAmountTotal-(scope.row.totalValue||0)}}</span>
           </template>

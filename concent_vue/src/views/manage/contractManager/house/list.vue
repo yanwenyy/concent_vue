@@ -751,7 +751,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          var url=this.activeName=='first'?"/api/contract/contract/ContractInfo/list/delete":"/api/contract/contract/ContractInfo/list/deleteHouseSales";
+          var url=this.activeName=='first'?"/api/contract/contract/ContractInfo/list/delete":"/api/contract/contract/ContractInfo/list/deleteChange";
           this.$http
           .post(
             url,
@@ -822,7 +822,7 @@ export default {
     },
     // 查看
     rowshow(row) {
-      let p = { actpoint: "look", instid: row.uuid };
+      let p = { actpoint: "look",from:this.activeName=='first'? "":'YjLook', instid: row.uuid };
       this.$router.push({
         path: "./detail/",
         query: { p: this.$utils.encrypt(JSON.stringify(p)) },
