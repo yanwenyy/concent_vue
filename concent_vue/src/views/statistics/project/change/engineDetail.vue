@@ -3316,7 +3316,8 @@
             message: '必须有主项目地点',
             type: 'warning',
             showClose: true
-          });      
+          });
+          return false
         }
         this.getBuildName();
         var url='';
