@@ -751,7 +751,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          var url=this.activeName=='first'?"/api/contract/contract/ContractInfo/list/delete":"/api/contract/contract/ContractInfo/list/deleteHouseSales";
+          var url=this.activeName=='first'?"/api/contract/contract/ContractInfo/list/delete":"/api/contract/contract/ContractInfo/list/deleteChange";
           this.$http
           .post(
             url,
