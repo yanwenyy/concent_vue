@@ -925,7 +925,7 @@
                   clearable
                   placeholder="请选择监理单位"
                   v-model="detailForm.project.companySupervisor">
-                  <el-button slot="append" icon="el-icon-circle-plus-outline" :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList != ''"
+                  <el-button slot="append" icon="el-icon-circle-plus-outline" :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   @click="openComMul(detailForm.project.companySupervisorId,detailForm.project.companySupervisor,'/api/contract/Companies/detail/findCompanies','监理单位')"></el-button>
                 </el-input>
               </el-form-item>
