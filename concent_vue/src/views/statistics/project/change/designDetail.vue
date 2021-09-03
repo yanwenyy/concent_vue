@@ -511,6 +511,16 @@
             <!--新兴市场(一级)-->
             <el-row>
               <el-form-item
+                label="合同号:"
+                prop="project.contractNumber"
+                style="width:32.5%;">
+                <el-input
+                  clearable
+                  placeholder="请输入"
+                  disabled
+                  v-model="detailForm.project.contractNumber"/>
+              </el-form-item>
+              <el-form-item
                 label="新兴市场类别(一级):"
                 prop="project.marketFirstId"
                 style="width: 32.5%">
@@ -1568,6 +1578,15 @@
             </el-row>
             <!--新兴市场(一级)-->
             <el-row>
+              <el-form-item
+                label="合同号:"
+                style="width:32.5%;">
+                <el-input
+                  clearable
+                  disabled
+                  placeholder="请输入"
+                  v-model="showDetailForm.project.contractNumber"/>
+              </el-form-item>              
               <el-form-item
                 label="新兴市场类别(一级):"
                 style="width: 32.5%">

@@ -362,6 +362,17 @@
                   </el-select>
                 </el-form-item>
                 <el-form-item
+                  label="合同号:"
+                  v-show="detailForm.project.contractInfoList!=''&&detailForm.project.contractInfoList!=null"
+                  prop="project.contractNumber"
+                  style="width:32.5%;">
+                  <el-input
+                    clearable
+                    disabled
+                    placeholder="请输入"
+                    v-model="detailForm.project.contractNumber"/>
+                </el-form-item>                
+                <el-form-item
                   v-if="detailForm.project.projectTypeId===''||detailForm.project.projectTypeId==='625a3ee0728a4f45b792d022b8bb36d9'"
                   label="是否代局指:"
                   class="inline-formitem"

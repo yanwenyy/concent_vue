@@ -328,7 +328,7 @@
                   </el-select>
                 </el-form-item>
               <!--父项目暂无-->
-              <el-form-item
+              <!-- <el-form-item
                 v-if="detailForm.project.projectTypeId==='22038e576c2242d5acc93f6c3c8e48ad'"
                 label="父项目名称:"
                 prop="project.fatherProjectName"
@@ -338,7 +338,7 @@
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.fatherProjectName"/>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item
                 v-if="detailForm.project.projectTypeId===''||detailForm.project.projectTypeId==='625a3ee0728a4f45b792d022b8bb36d9'"
                 label="是否代局指:"
@@ -356,6 +356,16 @@
               </el-form-item>
             </el-row>
             <el-row>
+              <el-form-item
+                label="合同号:"
+                prop="project.contractNumber"
+                style="width:32.5%;">
+                <el-input
+                  clearable
+                  placeholder="请输入"
+                  disabled
+                  v-model="detailForm.project.contractNumber"/>
+              </el-form-item>
               <el-form-item
                 label="计量单位:"
                 prop="project.unitId"
@@ -1688,8 +1698,17 @@
                       v-for="(item, index) in fatherList"/>
                   </el-select>
                 </el-form-item>
+                <el-form-item
+                  label="合同号:"
+                  style="width:32.5%;">
+                  <el-input
+                    clearable
+                    disabled
+                    placeholder="请输入"
+                    v-model="showDetailForm.project.contractNumber"/>
+                </el-form-item>
               <!--父项目暂无-->
-              <el-form-item
+              <!-- <el-form-item
                 v-if="showDetailForm.project.projectTypeId==='22038e576c2242d5acc93f6c3c8e48ad'"
                 label="父项目名称:"
                 style="width: 32.5%">
@@ -1698,7 +1717,7 @@
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.fatherProjectName"/>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item
                 v-if="showDetailForm.project.projectTypeId===''||showDetailForm.project.projectTypeId==='625a3ee0728a4f45b792d022b8bb36d9'"
                 label="是否代局指:"
