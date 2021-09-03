@@ -714,7 +714,7 @@
               </el-table-column>
             </el-table>
             <div >
-                <p  v-if="p.actpoint != 'add'" class="detail-title" style="overflow: hidden;margin-right:30px">
+                <p class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>关联合同: </span>
                   <el-button
                     v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
@@ -724,7 +724,6 @@
                   </el-button>
                 </p>
                 <el-table
-                  v-if="p.actpoint != 'add'"
                   :data="detailForm.project.contractInfoList"
                   :header-cell-style="{
                   'text-align': 'center',
