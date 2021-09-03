@@ -2080,6 +2080,16 @@
         }
       },
       handleRemove(file, index) {
+
+
+        this.$confirm('此操作将删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          // 删除
+
+
         this.$http
           .post(
             '/api/contract/topInfo/CommonFiles/list/delete',
@@ -2088,8 +2098,25 @@
           .then((res) => {
             if (res.data.code === 200) {
               this.detailForm.project.commonFilesList.splice(index, 1)
+              
+              
+              this.$message({
+                  type: 'success',
+                  message: '删除成功!'
+                });
             }
+
+
           })
+      }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          }); 
+        });       
+        // console.log(this.detailForm.project.commonFilesList)
+
+        
       },
       // 打开附件上传的组件
       openFileUp(url, list) {
@@ -2175,6 +2202,24 @@
         this.$router.back()
       },
       saveInfo(formName, type) {
+
+
+         let isMain = true
+        this.detailForm.project.topInfoSiteList.forEach((element)=> {
+          if (element.isMain == 1) {
+            isMain = false
+          }
+        })
+        if (isMain || this.detailForm.project.topInfoSiteList.length < 1) {
+          this.$message({
+            message: '必须有主项目地点',
+            type: 'warning',
+            showClose: true
+          });
+          return false
+        }
+
+
         this.getBuildName();
         var url='';
         if(type=='save'){
