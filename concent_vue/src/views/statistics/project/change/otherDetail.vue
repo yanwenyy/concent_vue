@@ -817,6 +817,7 @@
                     width="150">
                     <template slot-scope="scope">
                       <el-link
+                        v-if="p.actpoint !== 'look'"
                         :underline="false"
                         @click="removeContract(scope.$index,scope.row)"
                         type="warning">删除
@@ -1746,7 +1747,21 @@
         this.detailForm.project.topInfoSiteList[0].path = data.fullDetailName
         this.detailForm.project.topInfoSiteList[0].ffid = data.fullDetailCode
       },
-      
+      //新增标段和地点
+      add(type) {
+        var v = {};
+        if (type == 'dd') {
+          v = {
+            country: '',
+            ffid: '',
+            path: '',
+            contractAmount: '',
+            isMain: '',
+            placeId:''
+          }
+          this.detailForm.project.topInfoSiteList.push(v);
+        }
+      },
       //打开单位弹框
       addDw(type,list,ifChek,index,tableList){
         this.DwVisible = true;

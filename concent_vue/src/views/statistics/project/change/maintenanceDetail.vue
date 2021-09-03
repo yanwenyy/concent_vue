@@ -822,6 +822,7 @@
                     width="150">
                     <template slot-scope="scope">
                       <el-link
+                        v-if="p.actpoint !== 'look'"
                         :underline="false"
                         @click="removeContract(scope.$index,scope.row)"
                         type="warning">删除
