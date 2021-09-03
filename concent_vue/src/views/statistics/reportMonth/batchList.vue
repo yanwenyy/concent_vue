@@ -168,7 +168,7 @@
               uuid:item.projectreportuuid,
               reportYear:item.reportYear,
               reportMonth:item.reportMonth,
-              reportProjectName:item.createOrgName,
+              reportProjectName:item.projectName,
               projectId:item.projectId,
             };
             uuids.push(v);
