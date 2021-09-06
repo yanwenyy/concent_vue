@@ -391,7 +391,7 @@
           }
           this.type = 'edit'
           this.form1 = JSON.parse(JSON.stringify(this.multipleSelection[0]))
-          let p = {projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,uuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).uuid,
+          let p = {fromPath:'./listAll',selfPath:'../reportMList',fromDate:this.searchform.yearDateS,projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,uuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).uuid,
             orgCode:JSON.parse(JSON.stringify(this.multipleSelection[0])).createOrgCode,
             projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).flowStatus,projectName:this.multipleSelection[0].reportProjectName
           }
@@ -434,7 +434,7 @@
       },
       // 查看
       rowShow(row) {
-        let p = { actpoint: 'look', projectId: row.projectId,uuid:row.uuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.flowStatus }
+        let p = { fromPath:'./listAll',selfPath:'../reportMList',fromDate:this.searchform.yearDateS,actpoint: 'look', projectId: row.projectId,uuid:row.uuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.flowStatus }
         this.$router.push({
           path: '../reportMDetail/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
@@ -507,11 +507,28 @@
       },
       // 返回上一页
       back() {
-        this.$router.back()
+        if(this.p.fromDate){
+          console.log(this.p.fromPath)
+          this.$router.push({
+            path: this.p.fromPath,
+          })
+        }else{
+          this.$router.back()
+        }
       },
     },
 
     created() {
+      if(this.p&&this.p.fromDate){
+        this.searchform.yearDateS=this.p.fromDate;
+        var shijian=this.searchform.yearDateS;
+        if(shijian!=''&& shijian!=null) {
+          var y = shijian.split("-")[0];
+          var m = shijian.split("-")[1];
+          this.searchform.reportYear = y;
+          this.searchform.reportMonth = m;
+        }
+      }
       this.getData()
        this.userdata=JSON.parse(sessionStorage.getItem('userdata'))
     },

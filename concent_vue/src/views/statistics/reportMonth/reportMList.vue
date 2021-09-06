@@ -353,7 +353,7 @@
             this.showYMDialog = false
               let p = {projectId:res.data.data.projectreport.projectId,uuid:res.data.data.projectreport.uuid,
                 yearDates:res.data.data.projectreport.yearDates,orgCode:res.data.data.projectreport.createOrgCode,
-                projectName:res.data.data.projectreport.reportProjectName,projectStatus:res.data.data.projectreport.flowStatus
+                projectName:res.data.data.projectreport.reportProjectName,projectStatus:res.data.data.projectreport.flowStatus,
               }
                 this.$router.push({
                       path: '../reportMDetail/',
@@ -400,8 +400,9 @@
           this.form1 = JSON.parse(JSON.stringify(this.multipleSelection[0]))
           let p = {projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,uuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).uuid,
             yearDates:JSON.parse(JSON.stringify(this.multipleSelection[0])).yearDates,orgCode:JSON.parse(JSON.stringify(this.multipleSelection[0])).createOrgCode,
-            projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).status,projectName:this.multipleSelection[0].reportProjectName
-          }
+            projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).status,projectName:this.multipleSelection[0].reportProjectName,
+            fromPath:'./listAll',selfPath:'../reportMList',fromDate:this.searchform.yearDateS
+          };
           this.$router.push({
             path: '../reportMDetail/',
             query: {p: this.$utils.encrypt(JSON.stringify(p))}
@@ -441,7 +442,7 @@
       },
       // 查看
       rowShow(row) {
-        let p = { actpoint: 'look', projectId: row.projectId,uuid:row.uuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.status }
+        let p = {fromPath:'./listAll',selfPath:'../reportMList',fromDate:this.searchform.yearDateS, actpoint: 'look', projectId: row.projectId,uuid:row.uuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.status }
         this.$router.push({
           path: '../reportMDetail/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
@@ -514,11 +515,28 @@
       },
       // 返回上一页
       back() {
-        this.$router.back()
+          if(this.p.fromDate){
+            console.log(this.p.fromPath)
+            this.$router.push({
+              path: this.p.fromPath,
+            })
+          }else{
+            this.$router.back()
+          }
       }
     },
 
     created() {
+      if(this.p&&this.p.fromDate){
+        this.searchform.yearDateS=this.p.fromDate;
+        var shijian=this.searchform.yearDateS;
+        if(shijian!=''&& shijian!=null) {
+          var y = shijian.split("-")[0];
+          var m = shijian.split("-")[1];
+          this.searchform.reportYear = y;
+          this.searchform.reportMonth = m;
+        }
+      }
       this.getData()
        console.log(this.p)
        this.userdata=JSON.parse(sessionStorage.getItem('userdata'))

@@ -573,7 +573,17 @@
       },*/
       // 返回上一页
       back() {
-        this.$router.back()
+        if(this.p.selfPath){
+          let _p={fromDate:this.p.fromDate,fromPath:this.p.fromPath};
+          // console.log(this.p)
+          this.$router.push({
+            path: this.p.selfPath,
+            query: {p: this.$utils.encrypt(JSON.stringify(_p))},
+
+          })
+        }else{
+          this.$router.back()
+        }
       },
       // 获取数据
       getData() {

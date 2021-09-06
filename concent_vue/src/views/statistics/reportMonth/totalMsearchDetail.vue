@@ -407,9 +407,9 @@
         var num2=0;
         list[index].yearValue=list[index].oldYearValue?Number(list[index].oldYearValue)+Number(list[index].monthValue):list[index].monthValue;
         list[index].totalValue=list[index].oldTotalValue?Number(list[index].oldTotalValue)+Number(list[index].monthValue):list[index].monthValue;
-        list[index].yearRate=list[index].yearValue&&list[index].yearPlan?(Number(list[index].yearValue)/Number(list[index].yearPlan)/ 100).toFixed(4):0;
-        list[index].monthRate=list[index].monthPlan>0?(Number(list[index].monthValue)/Number(list[index].monthPlan) / 100).toFixed(4):Number(list[index].monthValue)*100;
-        list[index].totalRate=list[index].totalValue&&list[index].totalPlan?(Number(list[index].totalValue)/Number(list[index].totalPlan) / 100).toFixed(4):0;
+        list[index].yearRate=list[index].yearValue&&list[index].yearPlan?(Number(list[index].yearValue)/Number(list[index].yearPlan)/ 100).toFixed(2):0;
+        list[index].monthRate=list[index].monthPlan>0?(Number(list[index].monthValue)/Number(list[index].monthPlan) / 100).toFixed(2):Number(list[index].monthValue)*100;
+        list[index].totalRate=list[index].totalValue&&list[index].totalPlan?(Number(list[index].totalValue)/Number(list[index].totalPlan) / 100).toFixed(2):0;
         console.log(list[index])
         list.forEach((item,i)=>{
           if(item.sumTarget==code) {

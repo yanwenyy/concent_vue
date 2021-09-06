@@ -217,6 +217,7 @@
     //name: "proposal-list-look",
     data() {
       return {
+        p:{},
         Authorization:sessionStorage.getItem("token"),
         page: {current: 1, size: 20, total: 0, records: []},
         tableData: [],
@@ -393,7 +394,7 @@
           return false;
         }
         if (this.multipleSelection[0].createOrgCode==this.userdata.managerOrgCode && (this.multipleSelection[0].flowStatus!='' && this.multipleSelection[0].flowStatus!=null)){
-          let p = {actpoint: "edit", params: this.multipleSelection[0]};
+          let p = {selfPath:'../jTList',fromDate:this.searchform.yearDateS,actpoint: "edit", params: this.multipleSelection[0]};
           this.$router.push({
             path: "./jTMDetail/",
             query: {p: this.$utils.encrypt(JSON.stringify(p))},
@@ -407,7 +408,7 @@
       },
       // 查看
       rowshow(row) {
-        let p = {actpoint: "look", params: row};
+        let p = {selfPath:'../jTList',fromDate:this.searchform.yearDateS,actpoint: "look", params: row};
         if(row.flowStatus==''||row.flowStatus==null){
           this.$message.info("该项目月报还未完成上报,无法查看");
           return false;
@@ -543,8 +544,15 @@
       },
     },
     created() {
-      let that = this;
-      that.getdatatime();
+      this.p=this.$route.query.p?JSON.parse(this.$utils.decrypt(this.$route.query.p)):{};
+      if(this.p&&this.p.fromDate){
+        this.searchform.current = 1;
+        this.searchform.yearDateS=this.p.fromDate;
+        this.mrTime=this.searchform.yearDateS;
+      }else{
+        let that = this;
+        that.getdatatime();
+      }
       this.getData();
       this.userdata=JSON.parse(sessionStorage.getItem('userdata'))
     },

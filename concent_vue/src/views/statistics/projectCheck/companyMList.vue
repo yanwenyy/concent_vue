@@ -306,6 +306,7 @@
     },
     data() {
       return {
+        p:{},
         data:{},
         mrTime:'',
         userdata:{},
@@ -575,7 +576,7 @@
           }else{
             this.type = 'edit'
             this.form1 = JSON.parse(JSON.stringify(this.multipleSelection[0]));
-            let p = {actpoint:'edit',projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,uuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectCheckUuid,
+            let p = {selfPath:'../companyMList',fromDate:this.searchform.yearDateS,actpoint:'edit',projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,uuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectCheckUuid,
               reportYear:JSON.parse(JSON.stringify(this.multipleSelection[0])).reportYear,reportMonth:JSON.parse(JSON.stringify(this.multipleSelection[0])).reportMonth,orgCode:JSON.parse(JSON.stringify(this.multipleSelection[0])).createOrgCode,
               projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).flowStatus,projectName:this.multipleSelection[0].projectName,uuid:this.multipleSelection[0].projectCheckUuid
             }
@@ -650,7 +651,7 @@
             });
       },
       rowShow(row){
-        let p = {actpoint: 'look', projectId: row.projectId, orgCode: row.createOrgCode,projectName:row.projectName,createOrgId:row.createOrgId,createOrgName:row.createOrgName,
+        let p = {selfPath:'../companyMList',fromDate:this.searchform.yearDateS,actpoint: 'look', projectId: row.projectId, orgCode: row.createOrgCode,projectName:row.projectName,createOrgId:row.createOrgId,createOrgName:row.createOrgName,
           reportYear:row.reportYear,reportMonth:row.reportMonth,uuid:row.projectCheckUuid,reportType:row.reportType,createOrgType:row.createOrgType
         };
         if((row.flowStatus==''||row.flowStatus==null) && (row.projectId!=''||row.projectId!=null)){
@@ -665,8 +666,16 @@
       }}
     },
     created() {
-      let that = this;
-      that.getdatatime();
+      this.p=this.$route.query.p?JSON.parse(this.$utils.decrypt(this.$route.query.p)):{};
+      console.log(this.p)
+      if(this.p&&this.p.fromDate){
+        this.searchform.current = 1;
+        this.searchform.yearDateS=this.p.fromDate;
+        this.mrTime=this.searchform.yearDateS;
+      }else{
+        let that = this;
+        that.getdatatime();
+      }
       this.getData();
       console.log(JSON.parse(sessionStorage.getItem('userdata')));
       this.userdata=JSON.parse(sessionStorage.getItem('userdata'));

@@ -128,6 +128,7 @@
     },
     data() {
       return {
+        p:{},
         userdata:{},
         page: { current: 1, size: 20, total: 0, records: [] },
         searchform: {
@@ -242,7 +243,7 @@
       },
       rowShow(row){
         this.type = 'edit'
-        let p = {projectId:JSON.parse(JSON.stringify(row)).projectId,uuid:JSON.parse(JSON.stringify(row)).uuid,
+        let p = {selfPath:'../batchList',fromDate:this.searchform.fullDate,projectId:JSON.parse(JSON.stringify(row)).projectId,uuid:JSON.parse(JSON.stringify(row)).uuid,
           yearDates:JSON.parse(JSON.stringify(row)).yearDates||(row.reportYear+"-"+row.reportMonth),orgCode:JSON.parse(JSON.stringify(row)).createOrgCode,
           projectStatus:JSON.parse(JSON.stringify(row)).status,projectName:row.reportProjectName
         }
@@ -260,13 +261,19 @@
       // sj[1]=sj[1]<10?'0'+sj[1]:sj[1];
       // this.searchform.fullDate=sj[0]+"-"+sj[1];
 
-      var date = new Date();
-      var y = date.getFullYear();
-      var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
-      var time=y + '-' + m;
-      // var time="2004-06";
-      //this.searchform.reportYear= y;
-      this.searchform.fullDate=time;
+      this.p=this.$route.query.p?JSON.parse(this.$utils.decrypt(this.$route.query.p)):{};
+      if(this.p&&this.p.fromDate){
+        this.searchform.fullDate=this.p.fromDate;
+      }else{
+        var date = new Date();
+        var y = date.getFullYear();
+        var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+        var time=y + '-' + m;
+        // var time="2004-06";
+        //this.searchform.reportYear= y;
+        this.searchform.fullDate=time;
+      }
+
       this.getData()
        this.userdata=JSON.parse(sessionStorage.getItem('userdata'))
     },

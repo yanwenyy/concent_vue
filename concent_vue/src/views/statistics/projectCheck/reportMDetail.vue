@@ -562,7 +562,9 @@
                   message:  `${type=='save'?'保存':'提交'}成功`,
                   duration: 1000,
                   type: 'success',
-                  onClose: () => { this.$router.back() }
+                  onClose: () => {
+                    // this.$router.back()
+                  }
                 })
               }
             })
@@ -678,7 +680,17 @@
       },
       // 返回上一页
       back() {
-        this.$router.back()
+        if(this.p.selfPath){
+          let _p={fromDate:this.p.fromDate,fromPath:this.p.fromPath,projectId:this.p.projectId,fromDateStart:this.p.fromDateStart};
+          console.log(this.p)
+          this.$router.push({
+            path: this.p.selfPath,
+            query: {p: this.$utils.encrypt(JSON.stringify(_p))},
+
+          })
+        }else{
+          this.$router.back()
+        }
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;

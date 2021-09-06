@@ -143,21 +143,21 @@
           prop="yearDateS"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>上报年月</span>
-            <div class="block">
-              <el-date-picker
-                v-model="setTimes"
-                class="list-search-picker"
-                type="monthrange"
-                format="yyyy-MM"
-                value-format="yyyy-MM"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期">
-              </el-date-picker>
-            </div>
-          </template>
+          <!--<template slot="header" slot-scope="scope">-->
+            <!--<span>上报年月</span>-->
+            <!--<div class="block">-->
+              <!--<el-date-picker-->
+                <!--v-model="setTimes"-->
+                <!--class="list-search-picker"-->
+                <!--type="monthrange"-->
+                <!--format="yyyy-MM"-->
+                <!--value-format="yyyy-MM"-->
+                <!--range-separator="至"-->
+                <!--start-placeholder="开始日期"-->
+                <!--end-placeholder="结束日期">-->
+              <!--</el-date-picker>-->
+            <!--</div>-->
+          <!--</template>-->
           <template slot-scope="scope">{{
             scope.row.reportYear+"-"+scope.row.reportMonth
             }}</template>
@@ -256,7 +256,7 @@
             <!--</div>-->
           <!--</template>-->
           <template slot-scope="scope">
-            <span v-if="scope.row.contractAmountTotal">{{scope.row.contractAmountTotal-(scope.row.totalValue||0)}}</span>
+            <span v-if="scope.row.contractAmountEngine">{{scope.row.contractAmountEngine-(scope.row.totalValue||0)}}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -292,6 +292,7 @@
     },
     data() {
       return {
+        p:{},
         DwVisible:false,//选择单位弹框状态
         statistStatus:false,//选择统计项状态
         userdata:{},
@@ -537,7 +538,7 @@
             })
       },
       rowShow(row){
-        let p = { actpoint: 'look', projectId: row.projectId,uuid:row.projectreportuuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.projectName,projectStatus:row.status,isCk:'1' }
+        let p = { selfPath:'../reportMCk',fromDate:this.searchform.fullDate,fromDateStart:this.searchform.beginDate,actpoint: 'look', projectId: row.projectId,uuid:row.projectreportuuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.projectName,projectStatus:row.status,isCk:'1' }
         this.$router.push({
           path: './reportMDetail/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
@@ -547,8 +548,17 @@
     },
 
     created() {
-      let that = this;
-      that.getdatatime();
+      this.p=this.$route.query.p?JSON.parse(this.$utils.decrypt(this.$route.query.p)):{};
+      console.log(this.p)
+      if(this.p&&this.p.fromDate){
+        var time=this.p.fromDate.split("-");
+        this.searchform.current = 1;
+        this.searchform.fullDate=this.p.fromDate;
+        this.searchform.beginDate=this.p.fromDateStart;
+      }else{
+        let that = this;
+        that.getdatatime();
+      }
       this.getData();
       this.userdata=JSON.parse(sessionStorage.getItem('userdata'))
     },

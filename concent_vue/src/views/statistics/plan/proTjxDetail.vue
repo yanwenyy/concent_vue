@@ -311,7 +311,7 @@
                   duration: 1000,
                   type: 'success',
                   onClose: () => {
-                    this.$router.back()
+                    // this.$router.back()
                   }
                 })
               }

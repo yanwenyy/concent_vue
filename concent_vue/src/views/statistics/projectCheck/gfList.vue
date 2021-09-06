@@ -211,6 +211,7 @@
     //name: "proposal-list-look",
     data() {
       return {
+        p:{},
         Authorization:sessionStorage.getItem("token"),
         mrTime:'',
         page: {current: 1, size: 20, total: 0, records: []},
@@ -308,7 +309,7 @@
       // 查看
       rowshow(row) {
       // debugger
-        let p = {actpoint: "look", params: row};
+        let p = {selfPath:'../gfList',fromDate:this.searchform.yearDateS,actpoint: "look", params: row};
         if(row.flowStatus==''||row.flowStatus==null){
           this.$message.info("该项目月报还未完成上报,无法查看");
           return false;
@@ -360,8 +361,15 @@
       },
     },
     created() {
-      let that = this;
-      that.getdatatime();
+      this.p=this.$route.query.p?JSON.parse(this.$utils.decrypt(this.$route.query.p)):{};
+      if(this.p&&this.p.fromDate){
+        this.searchform.current = 1;
+        this.searchform.yearDateS=this.p.fromDate;
+        this.mrTime=this.searchform.yearDateS;
+      }else{
+        let that = this;
+        that.getdatatime();
+      }
       this.getData();
       this.userdata=JSON.parse(sessionStorage.getItem('userdata'))
     },

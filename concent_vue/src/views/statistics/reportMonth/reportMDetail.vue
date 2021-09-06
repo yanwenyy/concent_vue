@@ -523,10 +523,10 @@
           list[index].yearValue=list[index].oldYearValue?Number(list[index].oldYearValue)+Number(list[index].monthValue):list[index].monthValue;
           list[index].totalValue=list[index].oldTotalValue?Number(list[index].oldTotalValue)+Number(list[index].monthValue):list[index].monthValue;
           // list[index].yearRate=list[index].yearValue&&list[index].yearPlan?(Number(list[index].yearValue)/Number(list[index].yearPlan)/ 100).toFixed(4):0;
-          list[index].yearRate=list[index].yearValue&&list[index].yearPlan?(Number(list[index].yearValue)/Number(list[index].yearPlan)*100).toFixed(4):'';
+          list[index].yearRate=list[index].yearValue&&list[index].yearPlan?(Number(list[index].yearValue)/Number(list[index].yearPlan)*100).toFixed(2):'';
           // list[index].monthRate=list[index].monthPlan>0?(Number(list[index].monthValue)/Number(list[index].monthPlan) / 100).toFixed(4):Number(list[index].monthValue)*100;
-          list[index].monthRate=list[index].monthValue&&list[index].monthPlan>0?(Number(list[index].monthValue)/Number(list[index].monthPlan) *100).toFixed(4):'';
-          list[index].totalRate=list[index].totalValue&&list[index].totalPlan?(Number(list[index].totalValue)/Number(list[index].totalPlan) / 100).toFixed(4):0;
+          list[index].monthRate=list[index].monthValue&&list[index].monthPlan>0?(Number(list[index].monthValue)/Number(list[index].monthPlan) *100).toFixed(2):'';
+          list[index].totalRate=list[index].totalValue&&list[index].totalPlan?(Number(list[index].totalValue)/Number(list[index].totalPlan) / 100).toFixed(2):0;
           // console.log(list[index])
           //code3位 一级  code6位  二级  code9位  三级  code12位 四级
           list.forEach((item,i)=>{
@@ -592,7 +592,9 @@
                     message:  `${type=='save'?'保存':'提交'}成功`,
                     duration: 1000,
                     type: 'success',
-                    onClose: () => { this.$router.back() }
+                    onClose: () => {
+                      // this.$router.back()
+                    }
                   })
                 }
               })
@@ -691,7 +693,17 @@
       },*/
       // 返回上一页
       back() {
-        this.$router.back()
+        if(this.p.selfPath){
+          let _p={fromDate:this.p.fromDate,fromPath:this.p.fromPath,projectId:this.p.projectId,fromDateStart:this.p.fromDateStart};
+          console.log(this.p)
+          this.$router.push({
+            path: this.p.selfPath,
+            query: {p: this.$utils.encrypt(JSON.stringify(_p))},
+
+          })
+        }else{
+          this.$router.back()
+        }
       },
       // 获取数据
       getData() {
@@ -716,9 +728,10 @@
               this.projectName=this.p.projectName;
             }
            this.data.forEach((item)=>{
-             item.yearRate=item.yearValue&&item.yearPlan?(Number(item.yearValue)/Number(item.yearPlan)*100).toFixed(4):'';
-             item.monthRate=item.monthValue&&item.monthPlan>0?(Number(item.monthValue)/Number(item.monthPlan)*100).toFixed(4):'';
-           })
+             item.yearRate=item.yearValue&&item.yearPlan?(Number(item.yearValue)/Number(item.yearPlan)*100).toFixed(2):'';
+             item.monthRate=item.monthValue&&item.monthPlan>0?(Number(item.monthValue)/Number(item.monthPlan)*100).toFixed(2):'';
+             item.totalRate=item.totalValue&&item.totalPlan?(Number(item.totalValue)/Number(item.totalPlan) / 100).toFixed(2):0;
+           });
             this.clacFjsg(this.data);
             // this.reportVo=this.data;
           })
