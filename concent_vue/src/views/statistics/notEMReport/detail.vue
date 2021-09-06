@@ -4052,12 +4052,20 @@
       monthChange(list,index){
         let num = Number(list[index].monthValue)-Number(list[index].monthStart)
         if (num < 0) {
-          num = 0
           list[index].monthValue = 0
           this.$message({
             showClose: true,
-            message: '月末进度应大于月初进度！'
+            message: '月末进度不可以小于上月进度！'
           });
+          return false
+        }
+        if (Number(list[index].monthValue) > 100) {
+          list[index].monthValue = 0
+          this.$message({
+            showClose: true,
+            message: '月末进度不能大于100！'
+          });
+          return false
         }
         list[index].monthFinish = num*list[index].contractMoney/100
         list[index].monthComplete = num*list[index].physicalQuantity/100
@@ -4066,12 +4074,6 @@
       },
       //勘察设计月末进度
       setCcsjYmjd(list,obj,name,index){
-        // let num = Number(list[index].monthValue)-Number(list[index].monthStart)
-        // if (num < 0) {
-        //   num = 0
-        // }
-        // list[index].monthFinish = num*list[index].contractMoney/100
-        // list[index].monthComplete = num*list[index].physicalQuantity/100
         // 改了哪个，产值的哪个变动
         let kind = list[index].categorySecondName
         let money = 0
