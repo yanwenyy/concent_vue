@@ -608,6 +608,7 @@
             <el-row>
               <el-form-item
                 class="neirong"
+                prop="project.changeReason"
                 label="变更原因:">
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
@@ -1665,7 +1666,8 @@
             isMustMoney: [{ required: true, validator: validateMustMoney, trigger: ['blur', 'change'] }],
             isMobile: [{ validator: validateMobile, trigger: ['blur', 'change'] }],
             isPercent: [{ required: true, validator: validatePercent, trigger: ['blur', 'change'] }],
-            isNumber: [{ validator: validateNumber, trigger: ['blur', 'change'] }]
+            isNumber: [{ validator: validateNumber, trigger: ['blur', 'change'] }],
+            changeReason: [{ required: true, message: '此项不能为空', trigger: 'blur' }]
           }
         },
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
@@ -1718,7 +1720,6 @@
       if (this.p.actpoint === 'add') {
         this.getAddDetail()
       }
-      this.getProjectFather()
       // 业务类别数据格式不对，已处理
       this.bizTypeCode.find((item) => {
         if (item.parentDetailId === this.detailForm.project.categoryFirstId) {
@@ -2184,6 +2185,7 @@
                 } else if (item.project.changeStatus == '2') {
                   this.changeRecordUuid=item.changeRecordUuid;
                   this.detailForm.project = item.project
+                  this.getProjectFather()
                   this.detailForm.project.beforeId = this.p.beforeId
                   this.detailForm.project.afterId = this.p.afterId
                   if (!this.detailForm.project.projectSubContractList) {
