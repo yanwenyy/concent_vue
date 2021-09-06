@@ -4456,12 +4456,58 @@
         }
       },
       saveInfo(formName,type) {
-        console.info(this.detailform.kc_list)
-        this.detailform.kc_list.forEach((element)=>{
-          if (element.monthValue < element.monthStart) {
-            element.monthValue = element.monthStart
+        // 如果工业总产值大于0，那么产品数量、增值税(上报产值是否含增值税为‘否’时)必须大于0
+        this.detailform.gycp_list.forEach((element)=> {
+          if (element.vjnw=='境内') {
+            if (element.ngyvalueJn > 0 || element.ngyvalueJn == null) {
+              if (element.ncount == 0 || element.ncount == null) {
+                this.$message({
+                  message: "工业制造板块的工业总产值大于0,则产品数量必须大于0！",
+                  type: "error",
+                  showClose: true,
+                });
+                return false
+              }
+              if (element.vincludevat == 0 || element.vincludevat == null) {
+                if (element.nvat == 0 || element.nvat == null) {
+                this.$message({
+                  message: "工业制造板块的工业总产值大于0,则增值税必须大于0！",
+                  type: "error",
+                  showClose: true,
+                });
+                return false
+              }
+              }
+            }
+          } else if (element.vjnw=='境外') {
+            if (element.ngyvalueJw > 0 || element.ngyvalueJw == null) {
+              if (element.ncount == 0 || element.ncount == null) {
+                this.$message({
+                  message: "工业制造板块的工业总产值大于0,则产品数量必须大于0！",
+                  type: "error",
+                  showClose: true,
+                });
+                return false
+              }
+              if (element.vincludevat == 0 || element.vincludevat == null) {
+                if (element.nvat == 0 || element.nvat == null) {
+                this.$message({
+                  message: "工业制造板块的工业总产值大于0,则增值税必须大于0！",
+                  type: "error",
+                  showClose: true,
+                });
+                return false
+              }
+              }
+            }
           }
         })
+        // 判断月初月末进度
+        // this.detailform.kc_list.forEach((element)=>{
+        //   if (element.monthValue < element.monthStart) {
+        //     element.monthValue = element.monthStart
+        //   }
+        // })
         var url='';
         if(type=='save'){
           url="/api/statistics/unProjectReport/save/batch/addDetail"
