@@ -917,6 +917,7 @@
             <el-row>
               <el-form-item
                 class="neirong"
+                prop="project.changeReason"
                 label="变更原因:">
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
@@ -2319,7 +2320,8 @@
             isMustMoney: [{ required: true, validator: validateMustMoney, trigger: ['blur', 'change'] }],
             isMobile: [{ validator: validateMobile, trigger: ['blur', 'change'] }],
             isPercent: [{ required: true, validator: validatePercent, trigger: ['blur', 'change'] }],
-            isNumber: [{ validator: validateNumber, trigger: ['blur', 'change'] }]
+            isNumber: [{ validator: validateNumber, trigger: ['blur', 'change'] }],
+            changeReason: [{ required: true, message: '此项不能为空', trigger: 'blur' }]
           }
         },
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
@@ -2386,7 +2388,6 @@
       if (this.p.actpoint === 'add') {
         this.getAddDetail()
       }
-      this.getProjectFather()
       this.$store.dispatch('getConfig', {})
       this.$store.dispatch("getPubCustomers", {});
       this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
@@ -2685,6 +2686,7 @@
         this.detailForm.project.fatherProjectId = '';
         this.detailForm.project.fatherProjectName = '';
         this.detailForm.project.isBureauIndex = '';
+        this.detailForm.project.projectTypeCode = id;
         this.getName(id, list, name,code);
         this.getProjectFather();
       },
@@ -2945,6 +2947,7 @@
                 } else if (item.project.changeStatus == '2') {
                   this.changeRecordUuid=item.changeRecordUuid;
                   this.detailForm.project = item.project
+                  this.getProjectFather()
                   this.detailForm.project.beforeId = this.p.beforeId
                   this.detailForm.project.afterId = this.p.afterId
                   if (!this.detailForm.project.projectSubContractList) {
@@ -2975,7 +2978,6 @@
           .post('/api/statistics/StatisticsProject/detail/entityInfo', params)
           .then((res) => {
             if (res.data.code === 200) {
-              this.getProjectFather()
               this.detailForm.project = res.data.data
               this.showDetailForm.project = JSON.parse(JSON.stringify(res.data.data))
               if (!res.data.data.infoProductList) {

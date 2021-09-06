@@ -333,7 +333,7 @@
               </el-form-item> -->
               <el-form-item
                 label="签约单位(使用资质单位):"
-                prop="project.amountCompanyName"
+                prop="project.companyName"
                 style="width: 32.5%"
                 :rules="{
                   required: true, message: '此项不能为空', trigger: ['blur','change']
@@ -343,11 +343,11 @@
                   clearable 
                   disabled
                   placeholder="请输入内容" 
-                  v-model="detailForm.project.amountCompanyName" class="input-with-select">
+                  v-model="detailForm.project.companyName" class="input-with-select">
                   <el-button 
                     v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" 
                     icon="el-icon-circle-plus-outline" 
-                    @click="addDw('签约单位(使用资质单位)',detailForm.project.amountCompanyId)" 
+                    @click="addDw('签约单位(使用资质单位)',detailForm.project.companyId)" 
                     >
                   </el-button>
                 </el-input>
@@ -537,6 +537,7 @@
             <el-row>
               <el-form-item
                 class="neirong"
+                prop="project.changeReason"
                 label="变更原因:">
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
@@ -1073,13 +1074,13 @@
             <el-row>
               <el-form-item
                 label="签约单位(使用资质单位):"
-                prop="amountCompanyName"
+                prop="companyName"
                 style="width:32.5%;">
                 <el-input
                   clearable
                   disabled
                   placeholder="请输入"
-                  v-model="showDetailForm.project.amountCompanyName"/>
+                  v-model="showDetailForm.project.companyName"/>
               </el-form-item>
               <el-form-item
                 label="所属单位:"
@@ -1443,7 +1444,8 @@
             isOverseasContract: '',
             projectStatusId: '',
             isAnnualContract: '',
-            amountCompanyName: '',
+            companyName: '',
+            companyId: '',
             marketFirstId: '',
             marketSecondId: '',
             assemblyRate: '',
@@ -1487,7 +1489,8 @@
             isOverseasContract: '',
             projectStatusId: '',
             isAnnualContract: '',
-            amountCompanyName: '',
+            companyName: '',
+            companyId: '',
             marketFirstId: '',
             marketSecondId: '',
             assemblyRate: '',
@@ -1511,7 +1514,8 @@
             isMustMoney: [{ required: true, validator: validateMustMoney, trigger: ['blur', 'change'] }],
             isMobile: [{ validator: validateMobile, trigger: ['blur', 'change'] }],
             isPercent: [{ required: true, validator: validatePercent, trigger: ['blur', 'change'] }],
-            isNumber: [{ validator: validateNumber, trigger: ['blur', 'change'] }]
+            isNumber: [{ validator: validateNumber, trigger: ['blur', 'change'] }],
+            changeReason: [{ required: true, message: '此项不能为空', trigger: 'blur' }]
           }
         },
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
@@ -1557,7 +1561,6 @@
       if (this.p.actpoint === 'add') {
         this.getAddDetail()
       }
-      this.getProjectFather()
     },
     methods: {
       resetFuDai(id) {
@@ -1765,8 +1768,8 @@
           })
         }
         if(data.type=="签约单位(使用资质单位)"){
-          this.detailForm.project.amountCompanyId=id.join(",");
-          this.detailForm.project.amountCompanyName=name.join(",");
+          this.detailForm.project.companyId=id.join(",");
+          this.detailForm.project.companyName=name.join(",");
         }
         this.DwVisible=false;
       },
@@ -1982,6 +1985,7 @@
                 } else if (item.project.changeStatus == '2') {
                   this.changeRecordUuid=item.changeRecordUuid;
                   this.detailForm.project = item.project
+                  this.getProjectFather()
                   this.detailForm.cdmc=this.detailForm.project.fieldId&&this.detailForm.project.fieldId.split(",");
                   this.detailForm.project.beforeId = this.p.beforeId
                   this.detailForm.project.afterId = this.p.afterId

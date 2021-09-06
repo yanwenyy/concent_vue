@@ -108,7 +108,7 @@
                 <el-input
                   clearable
                   placeholder="请输入"
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'look'"
+                  disabled
                   v-model="detailForm.project.contractNumber"/>
               </el-form-item>
               <el-form-item
@@ -228,7 +228,7 @@
                 prop="project.ocontractModel"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   filterable
                   clearable
                   placeholder="请选择"
@@ -279,7 +279,7 @@
                   filterable
                   clearable
                   placeholder="请选择"
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   @change="getName(detailForm.project.projectStatusId, projectStatus, 'projectStatusName')"
                   v-model="detailForm.project.projectStatusId">
                   <el-option
@@ -297,7 +297,7 @@
                 :rules="rules.project.isMoney"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'look'||detailForm.project.contractInfoList!=''"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   clearable
                   placeholder="请输入" 
                   @change="getOutputTax"
@@ -328,8 +328,8 @@
                 <!--:rules="rules.project.must"-->
               <!--&gt;-->
                 <!--<el-input v-model="detailForm.project.topInfoSiteList[0].path" placeholder="供方地点"-->
-                          <!--:disabled="p.actpoint === 'look'||p.actpoint === 'look'" clearable>-->
-                  <!--<el-button slot="append" :disabled="p.actpoint === 'look'||p.actpoint === 'look'" icon="el-icon-search"-->
+                          <!--:disabled="p.actpoint === 'look'||p.actpoint === 'task'" clearable>-->
+                  <!--<el-button slot="append" :disabled="p.actpoint === 'look'||p.actpoint === 'task'" icon="el-icon-search"-->
                              <!--@click="selectPosition()"></el-button>-->
                 <!--</el-input>-->
               <!--</el-form-item>-->
@@ -486,7 +486,7 @@
                 <el-select
                   filterable
                   clearable
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   placeholder="请选择"
                   @change="getName(detailForm.project.categoryFirstId, material, 'categoryFirstName')"
                   v-model="detailForm.project.categoryFirstId">
@@ -564,7 +564,7 @@
                 :rules="rules.project.isPercent"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.assemblyRate">
@@ -578,7 +578,7 @@
                 :rules="rules.project.must"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   filterable
                   clearable
                   @change="getName(detailForm.project.assemblyTypeId, assemblyType, 'assemblyTypeName')"
@@ -600,7 +600,7 @@
                 :rules="rules.project.must"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   filterable
                   clearable
                   @change="getName(detailForm.project.architectureTypeId, architecturalType, 'architectureTypeName')"
@@ -620,7 +620,7 @@
                 :rules="rules.project.must"
                 style="width: 32.5%">
                 <el-select
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   filterable
                   clearable
                   @change="getName(detailForm.project.houseTypeId, buildingStructure, 'houseTypeName')"
@@ -689,7 +689,7 @@
                 :rules="{ min: 0, max: 2000, message: '最多输入2000字', trigger: 'blur' }"
                 prop="project.projectRemark">
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'look'"
+                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   type="textarea"
                   placeholder="请输入"
                   v-model="detailForm.project.projectRemark"/>
@@ -698,6 +698,7 @@
             <el-row>
               <el-form-item
                 class="neirong"
+                prop="project.changeReason"
                 label="变更原因:">
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
@@ -2105,7 +2106,8 @@
             isMustMoney: [{ required: true, validator: validateMustMoney, trigger: ['blur', 'change'] }],
             isMobile: [{ validator: validateMobile, trigger: ['blur', 'change'] }],
             isPercent: [{ required: true, validator: validatePercent, trigger: ['blur', 'change'] }],
-            isNumber: [{ validator: validateNumber, trigger: ['blur', 'change'] }]
+            isNumber: [{ validator: validateNumber, trigger: ['blur', 'change'] }],
+            changeReason: [{ required: true, message: '此项不能为空', trigger: 'blur' }]
           }
         },
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
@@ -2161,7 +2163,7 @@
       if (this.p.actpoint === 'add') {
         this.getAddDetail()
       }
-      this.getProjectFather()
+      
        //设计单位列表
       this.$http
         .post(
@@ -2707,6 +2709,7 @@
                 } else if (item.project.changeStatus == '2') {
                   this.changeRecordUuid=item.changeRecordUuid;
                   this.detailForm.project = item.project
+                  this.getProjectFather()
                   this.detailForm.project.beforeId = this.p.beforeId
                   this.detailForm.project.afterId = this.p.afterId
                   if (!this.detailForm.project.projectSubContractList) {
