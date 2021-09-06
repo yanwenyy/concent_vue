@@ -913,13 +913,35 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <!--:prop="'project.productInfoList[' + scope.$index + '].productName'"-->
-                    <!--:rules="{required: true, message: '此项不能为空', trigger: 'blur'}"-->
-                    <el-form-item class="tabelForm">
-                      <el-input
+                    <el-form-item
+                      class="tabelformItem tabelForm"
+                      :prop="'project.infoSubjectMatterList[' + scope.$index + '].subjectMatterName'"
+                      :rules="{
+                        required: true, message: '此项不能为空', trigger: 'blur'
+                      }"
+                      label-width="0"
+                    >
+                      <el-select
+                        class="input-el-input-group"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        filterable
+                        placeholder="请选择"
+                        size="mini"
                         v-model="scope.row.subjectMatterName"
-                        clearable
-                        :disabled="p.actpoint === 'look'||p.actpoint === 'task'"/>
+                        @change="
+                        getBdwdw(
+                          scope.row.subjectMatterName,
+                          scope.$index
+                        )"
+                    >
+                        <el-option
+                          v-if="bdwSelList.indexOf(item.subjectMatterName)==-1"
+                          :key="index"
+                          :label="item.subjectMatterName"
+                          :value="item.subjectMatterName"
+                          v-for="(item, index) in bdwList"
+                        ></el-option>
+                      </el-select>
                     </el-form-item>
                   </template>
                 </el-table-column>
@@ -954,7 +976,7 @@
                     <el-form-item class="tabelForm">
                       <el-input
                         clearable
-                        :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                        disabled
                         v-model="scope.row.subjectMatterUnit"/>
                     </el-form-item>
                   </template>
@@ -1060,17 +1082,16 @@
                   >
                   </el-table-column>
                   <el-table-column
-                    v-show="!p.actpoint === 'add'"
                     :resizable="false"
                     fixed="right"
                     label="操作"
                     align="center"
                     show-overflow-tooltip
-                    v-if="p.actpoint !== 'add'&&p.actpoint !== 'task'"
+                    v-if="p.actpoint !== 'task'"
                     width="150">
                     <template slot-scope="scope">
                       <el-link
-                        v-if="p.actpoint !== 'look'"2
+                        v-if="p.actpoint !== 'look'"
                         :underline="false"
                         @click="removeContract(scope.$index,scope.row)"
                         type="warning">删除
@@ -1951,6 +1972,7 @@
         }
       }
       return {
+        userInfo: JSON.parse(sessionStorage.getItem('userdata')),
         fatherList:[],
         uuid: null,
         switchvalue: true,
@@ -1962,6 +1984,8 @@
         DwVisible:false,//选择单位弹框状态
         uploadVisible: false,
         contractStatas:false,//关联合同状态
+        bdwList:[],//标的物名称list
+        bdwSelList:[],//标的物选择list
         inOut: [
           { label: '系统内', value: '0' },
           { label: '系统外', value: '1' }
@@ -2151,6 +2175,14 @@
             item.customerId=item.uuid;
           })
         });
+      //获取标的物名称列表
+      this.$http.post(
+        "/api/contract/SubjectMatter/list/loadPageData",
+        {createOrgId:this.userInfo.managerOrgId,isEnable:'1'}
+      )
+      .then((res) => {
+        this.bdwList = res.data.data.records;
+      });
     },
     methods: {
       resetFuDai(id) {
@@ -2299,6 +2331,24 @@
           this.detailForm.project.topInfoSiteList.push(v);
         }
       },
+      //获取标的物单位
+      getBdwdw( name,index) {
+        var list = this.detailForm.project.infoSubjectMatterList
+        if(name){
+          this.$forceUpdate();
+          list[index].subjectMatterUnit=this.bdwList.find(
+            (item) => item.subjectMatterName == name
+          ).subjectMatterUnitName;
+          this.getBdNameSel();
+        }
+      },
+      //获取已选择的标的物单位
+      getBdNameSel(){
+        this.bdwSelList=[];
+        this.detailForm.project.infoSubjectMatterList.forEach((item)=>{
+          this.bdwSelList.push(item.subjectMatterName)
+        });
+      },
       //打开单位弹框
       addDw(type,list,ifChek,index,tableList){
         this.DwVisible = true;
@@ -2384,6 +2434,8 @@
       },
       //获取新增的关联合同
       goAddDetail(data){
+        console.info('1111')
+        console.info(data)
         this.$forceUpdate();
         this.detailForm.project.contractInfoList.push(data);
         console.info(this.detailForm.project.contractInfoList)
@@ -2401,7 +2453,7 @@
         }
         this.detailForm.project.infoSubjectMatterList.push(v)
       },
-      del(index, item, list) {
+      del(index, item, list,type) {
         if (item.uuid && item.uuid !== '') {
           this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
             confirmButtonText: '确定',
@@ -2425,6 +2477,14 @@
           })
         } else {
           list.splice(index, 1)
+          if(type=='bdw'){
+            var num = this.bdwSelList.findIndex(subject =>{
+              if(subject.subjectMatterName==item.subjectMatterName){
+                return true
+              }
+            })
+            this.bdwSelList.splice(num,1)
+          }
         }
       },
       handleRemove(file, index) {
