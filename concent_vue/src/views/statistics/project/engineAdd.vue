@@ -1818,7 +1818,6 @@
       },
       //获取拿过来的多选单位列表
       getComList(data){
-        console.log(data)
         this.$forceUpdate();
         if(data.type=='签约/使用资质单位'){
           this.detailForm.project.companyId=data.selIdList.join(",");

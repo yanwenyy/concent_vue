@@ -2910,6 +2910,20 @@
           this.$refs.comAdd.init(ids,names,url,type);
         })
       },
+      //获取拿过来的多选单位列表
+      getComList(data){
+        this.$forceUpdate();
+        if(data.type=='签约/使用资质单位'){
+          this.detailForm.project.companyId=data.selIdList.join(",");
+          this.detailForm.project.companyName=data.selList.join(",");
+        }else if (data.type == "监理单位") {
+          this.detailForm.project.companySupervisorId=data.selIdList.join(",");
+          this.detailForm.project.companySupervisor=data.selList.join(",");
+        }else if (data.type == "设计单位") {
+          this.detailForm.project.companyDesignId=data.selIdList.join(",");
+          this.detailForm.project.companyDesign=data.selList.join(",");
+        }
+      },
       //设置主地点
       setMain(i,list){
         list.forEach((item,index)=>{

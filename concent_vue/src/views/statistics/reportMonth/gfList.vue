@@ -348,7 +348,7 @@
         }
         this.$http
             .post(
-                "/api/statistics/projectMonthlyReport/Projectreport/list/jtQueryEntInfo",
+                "/api/statistics/projectMonthlyReport/Projectreport/list/gfQueryEntInfo",
                 this.searchform
             )
             .then((res) => {
