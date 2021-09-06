@@ -852,11 +852,10 @@
                     label="操作"
                     align="center"
                     show-overflow-tooltip
-                    v-if="p.actpoint !== 'add'&&p.actpoint !== 'task'"
+                    v-if="p.actpoint !== 'task'"
                     width="150">
                     <template slot-scope="scope">
                       <el-link 
-                        v-if="p.actpoint !== 'look'"
                         :underline="false"
                         @click="removeContract(scope.$index,scope.row)"
                         type="warning">删除

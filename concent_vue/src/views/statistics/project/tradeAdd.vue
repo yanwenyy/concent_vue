@@ -1190,10 +1190,7 @@
         DwVisible:false,//选择单位弹框状态
         uploadVisible: false,
         fatherList:[],
-        bdwList:[
-          { subjectMatterName: '标的物1',subjectMatterUnitName:'元'},
-          { subjectMatterName: '标的物2',subjectMatterUnitName:'吨'}
-        ],//标的物名称list
+        bdwList:[],//标的物名称list
         bdwSelList:[],//标的物选择list
         inOut: [
           { label: '系统内', value: '0' },
