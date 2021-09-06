@@ -1212,9 +1212,9 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
-                      clearable
-                      v-model="scope.row.ncount"/>
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                        clearable
+                        v-model="scope.row.ncount"/>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -3939,14 +3939,15 @@
             detailName:'否'
           }
         ],
-        rules:{
+        rules:{ 
+          //表单验证规则
           contractAmount: [
             { required: true,validator: validateMoney, trigger: 'change' }
           ],
           phone: [
             { required: true,validator: validatePhone, trigger: 'blur' }
           ]
-        },//表单验证规则
+        },
       };
     },
     components: {
