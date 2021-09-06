@@ -43,7 +43,7 @@
                     v-model="detailform.sumByMon_0.gcjlMonth"/>
                 </el-form-item>
                 <el-form-item
-                  label="技术咨询与转让:"
+                  label="工程咨询:"
                 >
                   <el-input
                     disabled
@@ -81,7 +81,7 @@
                     v-model="detailform.sumByYear_0.gcjlYear+detailform.sumByMon_0.gcjlMonth"/>
                 </el-form-item>
                 <el-form-item
-                  label="技术咨询与转让:"
+                  label="工程咨询:"
                 >
                   <el-input
                     disabled
