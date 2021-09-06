@@ -1950,35 +1950,6 @@
         }
         this.contractStatas = false;
       },
-      //建设单位搜索
-      querySearchAsync(queryString, cb) {
-        var restaurants = this.pubCustomers;
-        var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
-
-        clearTimeout(this.timeout);
-        this.timeout = setTimeout(() => {
-            this.$forceUpdate();
-          cb(results);
-        }, 500 * Math.random());
-      },
-
-      querySjdw(queryString, cb) {
-        var restaurants = this.sjdwList;
-        var results = queryString ? restaurants.filter(this.createStateFilter2(queryString)) : restaurants;
-
-        clearTimeout(this.timeout);
-        this.timeout = setTimeout(() => {
-          this.$forceUpdate();
-          cb(results);
-        }, 500 * Math.random());
-      },
-
-
-      createStateFilter(queryString) {
-        return (restaurants) => {
-          return (restaurants.value.toLowerCase().indexOf(queryString.toLowerCase()) != -1);
-        };
-      },
           //流程操作
       operation(type){
         var msg='',that=this;

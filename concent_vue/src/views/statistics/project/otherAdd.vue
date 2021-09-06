@@ -1414,6 +1414,7 @@
           .then((res) => {
             if (res.data.code === 200) {
               this.detailForm.project = res.data.data
+              this.getProjectFather()
               if (!res.data.data.infoProductList) {
                 this.detailForm.project.infoProductList = []
               }
@@ -1449,7 +1450,6 @@
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
       if (this.p.actpoint === 'look' || this.p.actpoint === 'edit'|| this.p.actpoint === 'task') {
         this.getShow()
-        this.getProjectFather()
       }
       
       this.$http
