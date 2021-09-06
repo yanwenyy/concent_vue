@@ -404,7 +404,7 @@
             fromPath:'./listAll',selfPath:'../reportMList',fromDate:this.searchform.yearDateS
           };
           this.$router.push({
-            path: '../reportMDetail/',
+            path: this.p.fromPath?'./reportMDetail/':'../reportMDetail/',
             query: {p: this.$utils.encrypt(JSON.stringify(p))}
           })
         },
@@ -444,7 +444,7 @@
       rowShow(row) {
         let p = {fromPath:'./listAll',selfPath:'../reportMList',fromDate:this.searchform.yearDateS, actpoint: 'look', projectId: row.projectId,uuid:row.uuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.status }
         this.$router.push({
-          path: '../reportMDetail/',
+          path: this.p.fromPath?'./reportMDetail/':'../reportMDetail/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
         })
       },
@@ -515,7 +515,7 @@
       },
       // 返回上一页
       back() {
-          if(this.p.fromDate){
+          if(this.p.fromPath){
             console.log(this.p.fromPath)
             this.$router.push({
               path: this.p.fromPath,

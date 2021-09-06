@@ -396,7 +396,7 @@
             projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).flowStatus,projectName:this.multipleSelection[0].reportProjectName
           }
           this.$router.push({
-            path: '../reportMDetail/',
+            path: this.p.fromPath?'./reportMDetail/':'../reportMDetail/',
             query: {p: this.$utils.encrypt(JSON.stringify(p))}
           })
         },
@@ -434,9 +434,10 @@
       },
       // 查看
       rowShow(row) {
+          console.log(this.p)
         let p = { fromPath:'./listAll',selfPath:'../reportMList',fromDate:this.searchform.yearDateS,actpoint: 'look', projectId: row.projectId,uuid:row.uuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.flowStatus }
         this.$router.push({
-          path: '../reportMDetail/',
+          path: this.p.fromPath?'./reportMDetail/':'../reportMDetail/',
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
         })
       },
@@ -507,7 +508,7 @@
       },
       // 返回上一页
       back() {
-        if(this.p.fromDate){
+        if(this.p.fromPath){
           console.log(this.p.fromPath)
           this.$router.push({
             path: this.p.fromPath,

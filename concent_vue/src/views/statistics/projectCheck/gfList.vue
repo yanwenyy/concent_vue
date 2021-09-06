@@ -187,19 +187,19 @@
             scope.row.auditDate | dateformat
             }}</template>
         </el-table-column>
-        <el-table-column
-          :width="180"
-          align="center"
-          label="查看详细"
-          prop="createTime"
-          show-overflow-tooltip
-        >
-          <template slot-scope="scope">
-            <span @click="queryGsXq(scope.row)"   class="blue pointer" v-if="scope.row.createOrgType=='13'">
-            查看详细
-           </span>
-          </template>
-        </el-table-column>
+        <!--<el-table-column-->
+          <!--:width="180"-->
+          <!--align="center"-->
+          <!--label="查看详细"-->
+          <!--prop="createTime"-->
+          <!--show-overflow-tooltip-->
+        <!--&gt;-->
+          <!--<template slot-scope="scope">-->
+            <!--<span @click="queryGsXq(scope.row)"   class="blue pointer" v-if="scope.row.createOrgType=='13'">-->
+            <!--查看详细-->
+           <!--</span>-->
+          <!--</template>-->
+        <!--</el-table-column>-->
       </el-table>
     </div>
   </div>
