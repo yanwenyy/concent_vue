@@ -3232,10 +3232,10 @@
               k=1;
             }
           }
-          // if(k===1){
-          //   this.$message.error("请正确选择项目地点");
-          //   return false;
-          // }
+          if(k===1){
+            this.$message.error("请正确选择项目地点");
+            return false;
+          }
         }
         var hasMain=false;
         this.detailform.topInfoSiteList.forEach((item)=>{
