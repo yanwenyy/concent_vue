@@ -393,8 +393,9 @@
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="工业制造板块">
+        <!-- <div v-if="p.gyType=='2'" class="formula" >上报产值含增值税：剩余合同额=合同额-年累计工业总产值-本月工业总产值；上报产值不含增值税：剩余合同额=合同额-年累计工业总产值-本月工业总产值-税额</div> -->
         <el-tabs type="border-card">
-          <el-tab-pane v-if="p.gyType=='2'" label="产值">
+          <el-tab-pane v-if="p.gyType=='1'" label="产值">
             <div class="detailBox">
               <el-form
                 :inline="false"
@@ -583,7 +584,7 @@
               </el-form>
             </div>
           </el-tab-pane>
-          <el-tab-pane v-if="p.gyType=='2'" label="主要项目管理">
+          <el-tab-pane v-if="p.gyType=='1'" label="主要项目管理">
             <div class="table-div">
               <el-form v-show="p.actpoint !== 'task'" class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
                 <el-form-item label="项目名称:">
@@ -1136,6 +1137,7 @@
                 </el-upload>
               </el-form>
               <el-table
+                :row-class-name="tableRowClassName"
                 :max-height="$tableHeight-10"
                 :height="$tableHeight-10"
                 :data="detailform.gycp_list"
@@ -1358,6 +1360,7 @@
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="物资贸易板块">
+        <div class="formula" >上报产值含增值税：剩余合同额=合同额-年累计物资贸易产值-本月物资贸易产值；上报产值不含增值税：剩余合同额=合同额-年累计物资贸易产值-本月物资贸易产值-税额</div>
         <el-tabs type="border-card">
           <el-tab-pane label="产值">
             <div class="detailBox">
@@ -1450,9 +1453,6 @@
                   ><i class="el-icon-download"></i>导入
                   </el-button>
                 </el-upload>
-                <el-form-item>
-                  <div style="color:red;">剩余合同额=合同额-年累计物资贸易产值-本月物资贸易产值；上报产值不含增值税：剩余合同额=合同额-年累计物资贸易产值-本月物资贸易产值-税额；</div>
-                </el-form-item>
               </el-form>
               <el-dialog 
                 :visible.sync="projectContentShow"
@@ -1707,6 +1707,7 @@
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="房地产板块">
+        <div class="formula" >上报产值含增值税：剩余合同额=合同额-年累计房地产营业收入-本月房地产营业收入；上报产值不含增值税：剩余合同额=合同额-年累计房地产营业收入-本月房地产营业收入-税额</div>
         <el-tabs type="border-card">
           <el-tab-pane label="产值">
             <div class="detailBox">
@@ -1930,6 +1931,7 @@
                 </el-upload>
               </el-form>
               <el-table
+                :row-class-name="tableRowClassName"
                 :max-height="$tableHeight-10"
                 :height="$tableHeight-10"
                 :data="detailform.fdc_list"
@@ -2176,6 +2178,7 @@
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="金融保险">
+        <div class="formula" >上报产值含增值税：剩余合同额=合同额-年累计合计-本月合计；上报产值不含增值税：剩余合同额=合同额-年累计合计-本月合计-税额</div>
         <el-tabs type="border-card">
           <el-tab-pane label="产值">
             <div class="detailBox">
@@ -2399,6 +2402,7 @@
                 </el-upload>
               </el-form>
               <el-table
+                :row-class-name="tableRowClassName"
                 :max-height="$tableHeight-10"
                 :height="$tableHeight-10"
                 :data="detailform.jrbx_list"
@@ -2611,6 +2615,7 @@
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="运营维管">
+        <div class="formula" >上报产值含增值税：剩余合同额=合同额-年累计合计-本月合计；上报产值不含增值税：剩余合同额=合同额-年累计合计-本月合计-税额</div>
         <el-tabs type="border-card">
           <el-tab-pane label="产值">
             <div class="detailBox">
@@ -2876,6 +2881,7 @@
                 </el-upload>
               </el-form>
               <el-table
+                :row-class-name="tableRowClassName"
                 :max-height="$tableHeight-10"
                 :height="$tableHeight-10"
                 :data="detailform.yy_list"
@@ -3113,6 +3119,7 @@
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="其他产值板块">
+        <div class="formula" >上报产值含增值税：剩余合同额=合同额-年累计合计-本月合计；上报产值不含增值税：剩余合同额=合同额-年累计合计-本月合计-税额</div>
         <el-tabs type="border-card">
           <el-tab-pane label="产值">
             <div class="detailBox">
@@ -3501,6 +3508,7 @@
                 </el-upload>
               </el-form>
               <el-table
+                :row-class-name="tableRowClassName"
                 :max-height="$tableHeight-10"
                 :height="$tableHeight-10"
                 :data="detailform.qt_list"
@@ -4461,6 +4469,7 @@
       },
       saveInfo(formName,type) {
         // 如果工业总产值大于0，那么产品数量、增值税(上报产值是否含增值税为‘否’时)必须大于0
+        let isSave = true
         this.detailform.gycp_list.forEach((element)=> {
           if (element.vjnw=='境内') {
             if (element.ngyvalueJn > 0 || element.ngyvalueJn == null) {
@@ -4470,7 +4479,7 @@
                   type: "error",
                   showClose: true,
                 });
-                return false
+                isSave = false
               }
               if (element.vincludevat == 0 || element.vincludevat == null) {
                 if (element.nvat == 0 || element.nvat == null) {
@@ -4479,7 +4488,7 @@
                   type: "error",
                   showClose: true,
                 });
-                return false
+                isSave = false
               }
               }
             }
@@ -4491,7 +4500,7 @@
                   type: "error",
                   showClose: true,
                 });
-                return false
+                isSave = false
               }
               if (element.vincludevat == 0 || element.vincludevat == null) {
                 if (element.nvat == 0 || element.nvat == null) {
@@ -4500,7 +4509,7 @@
                   type: "error",
                   showClose: true,
                 });
-                return false
+                isSave = false
               }
               }
             }
@@ -4512,6 +4521,9 @@
         //     element.monthValue = element.monthStart
         //   }
         // })
+        if (!isSave) {
+          return false
+        }
         var url='';
         if(type=='save'){
           url="/api/statistics/unProjectReport/save/batch/addDetail"
@@ -4820,14 +4832,22 @@
   };
 </script>
 <style lang="scss" scoped>
-  /deep/ .warning_row>.warning_row_column {
-    color: red !important;
-  }
-  // /deep/ .warning_row {
+  // /deep/ .warning_row>.warning_row_column {
   //   color: red !important;
   // }
+  /deep/ .warning_row {
+    color: red !important;
+  }
   /deep/ .success_row {
     color: #606266;
+  }
+  .formula{
+    color: red;
+    position: absolute;
+    z-index: 99;
+    left: 210px;
+    height: 45px;
+    line-height: 40px;
   }
   .detail-back-tab{
     padding: 10px 20px ;
