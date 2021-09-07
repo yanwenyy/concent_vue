@@ -2,7 +2,7 @@
   <div style="position: relative">
     <el-button @click="back" class="detailbutton detail-back-tab" >返回</el-button>
     <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="saveInfo('detailform','save')" class="detailbutton detail-back-tab save-btn">保存</el-button>
-    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||p.stauts==1||p.stauts==4)" @click="saveInfo('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||p.stauts=='edit'||p.stauts=='reject')" @click="saveInfo('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
     <!--<el-button v-show="p.actpoint == 'task'&&p.task.edit==true" @click="operation('recall')" class="detailbutton" type="danger">撤销</el-button>-->
@@ -43,7 +43,7 @@
                     v-model="detailform.sumByMon_0.gcjlMonth"/>
                 </el-form-item>
                 <el-form-item
-                  label="技术咨询与转让:"
+                  label="工程咨询:"
                 >
                   <el-input
                     disabled
@@ -81,7 +81,7 @@
                     v-model="detailform.sumByYear_0.gcjlYear+detailform.sumByMon_0.gcjlMonth"/>
                 </el-form-item>
                 <el-form-item
-                  label="技术咨询与转让:"
+                  label="工程咨询:"
                 >
                   <el-input
                     disabled
@@ -182,6 +182,7 @@
                 <el-button @click="exportdata('design','勘察设计板块')" type="primary" plain>导出</el-button>
               </el-form>
               <el-table
+                :row-class-name="tableRowClassName"
                 :max-height="$tableHeight-10"
                 :height="$tableHeight-10"
                 :data="detailform.kc_list"
@@ -238,7 +239,7 @@
                 <el-table-column
                   :resizable="false"
                   label="工程合同额"
-                  align="center"
+                  align="right"
                   prop="contractMoney"
                   show-overflow-tooltip
                   width="150"
@@ -297,7 +298,7 @@
                   :resizable="false"
                   label="本月产值(万元)"
                   prop="monthFinish"
-                  align="center"
+                  align="right"
                   show-overflow-tooltip
                   width="150"
                 >
@@ -306,8 +307,8 @@
                   class="listTabel"
                   :resizable="false"
                   label="本年产值(万元)"
-                  prop="yearValue"
-                  align="center"
+                  prop="yearValue_after"
+                  align="right"
                   show-overflow-tooltip
                   width="150"
                 >
@@ -317,7 +318,7 @@
                   :resizable="false"
                   label="实物工程量"
                   prop="physicalQuantity"
-                  align="center"
+                  align="right"
                   show-overflow-tooltip
                   width="150"
                 >
@@ -336,7 +337,7 @@
                   :resizable="false"
                   label="本月完成"
                   prop="monthComplete"
-                  align="center"
+                  align="right"
                   show-overflow-tooltip
                   width="150"
                 >
@@ -345,8 +346,8 @@
                   class="listTabel"
                   :resizable="false"
                   label="本年完成"
-                  prop="yearComplete"
-                  align="center"
+                  prop="yearComplete_after"
+                  align="right"
                   show-overflow-tooltip
                   width="150"
                 >
@@ -373,6 +374,7 @@
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="工业制造板块">
+        <div v-if="p.gyType=='1'" class="formula" >上报产值含增值税：剩余合同额=合同额-年累计工业总产值-本月工业总产值；上报产值不含增值税：剩余合同额=合同额-年累计工业总产值-本月工业总产值-税额</div>
         <el-tabs type="border-card">
           <el-tab-pane v-if="p.gyType=='1'" label="产值">
             <div class="detailBox">
@@ -739,7 +741,7 @@
                     :resizable="false"
                     label="合同额"
                     prop="contractMoney"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -748,7 +750,7 @@
                     :resizable="false"
                     label="剩余合同额"
                     prop="htquantity_after"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                     width="150"
                   >
@@ -771,7 +773,7 @@
                     :resizable="false"
                     label="税额"
                     prop="vat"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -787,9 +789,10 @@
                     align="center"
                     width="150"
                   >
-                    <template slot-scope="scope">
-                      <!-- :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1" -->
-                      <el-input
+                      <template slot-scope="scope" style="text-align: right;">
+                        <p v-if="scope.row.country=='01'" >{{scope.row.industry}}</p>
+                        <p v-if="scope.row.country=='02'" >{{scope.row.overseasIndustry}}</p> 
+                      <!-- <el-input
                         @input="isFloor(scope.row.industry,scope.$index,detailform.gy_list,'industry'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'industry')"
                         v-if="scope.row.country=='01'"
                         :disabled="true"
@@ -800,7 +803,7 @@
                         v-if="scope.row.country=='02'"
                         :disabled="true"
                         clearable
-                        v-model="scope.row.overseasIndustry"/>
+                        v-model="scope.row.overseasIndustry"/> -->
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -1077,6 +1080,7 @@
                 <el-button @click="exportdata('product','工业制造板块')" type="primary" plain>导出</el-button>
               </el-form>
               <el-table
+                :row-class-name="tableRowClassName"
                 :max-height="$tableHeight-10"
                 :height="$tableHeight-10"
                 :data="detailform.gycp_list"
@@ -1154,9 +1158,9 @@
                   >
                     <template slot-scope="scope">
                       <el-input
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
-                      clearable
-                      v-model="scope.row.ncount"/>
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1"
+                        clearable
+                        v-model="scope.row.ncount"/>
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -1164,11 +1168,13 @@
                     :resizable="false"
                     label="工业总产值"
                     prop="industry"
-                    align="center"
+                    align="right"
                     width="150"
                   >
-                    <template slot-scope="scope">
-                      <el-input
+                    <template slot-scope="scope" style="text-align: right;">
+                      <p v-if="scope.row.vjnw=='境内'" >{{scope.row.ngyvalueJn}}</p>
+                      <p v-if="scope.row.vjnw=='境外'" >{{scope.row.ngyvalueJw}}</p>                      
+                      <!-- <el-input
                         @input="isFloor(scope.row.ngyvalueJn,scope.$index,detailform.gycp_list,'ngyvalueJn'),getGyzzCz(detailform.gycp_list,detailform.sumByMon_cp,'ngyvalueJn')"
                         v-if="scope.row.vjnw=='境内'"
                         :disabled="true"
@@ -1179,7 +1185,7 @@
                         v-if="scope.row.vjnw=='境外'"
                         :disabled="true"
                         clearable
-                        v-model="scope.row.ngyvalueJw"/>
+                        v-model="scope.row.ngyvalueJw"/> -->
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -1297,6 +1303,7 @@
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="物资贸易板块">
+        <div class="formula" >上报产值含增值税：剩余合同额=合同额-年累计物资贸易产值-本月物资贸易产值；上报产值不含增值税：剩余合同额=合同额-年累计物资贸易产值-本月物资贸易产值-税额</div>
         <el-tabs type="border-card">
           <el-tab-pane label="产值">
             <div class="detailBox">
@@ -1462,6 +1469,7 @@
                 class="detailTable"
                 ref="table"
                 style="width: 100%; min-height: calc(100vh - 370px)"
+                :row-class-name="tableRowClassName"
               >
                 <el-table-column
                   label="项目信息"
@@ -1550,7 +1558,7 @@
                     :resizable="false"
                     label="合同额"
                     prop="contractMoney"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -1559,9 +1567,10 @@
                     :resizable="false"
                     label="剩余合同额"
                     prop="htquantity_after"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                     width="150"
+                    class-name="warning_row_column"
                   >
                   </el-table-column>
                   <el-table-column
@@ -1582,7 +1591,7 @@
                     :resizable="false"
                     label="税额"
                     prop="vat"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -1622,6 +1631,7 @@
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="房地产板块">
+        <div class="formula" >上报产值含增值税：剩余合同额=合同额-年累计房地产营业收入-本月房地产营业收入；上报产值不含增值税：剩余合同额=合同额-年累计房地产营业收入-本月房地产营业收入-税额</div>
         <el-tabs type="border-card">
           <el-tab-pane label="产值">
             <div class="detailBox">
@@ -1826,6 +1836,7 @@
                 <el-button @click="exportdata('realty','房地产板块')" type="primary" plain>导出</el-button>
               </el-form>
               <el-table
+                :row-class-name="tableRowClassName"
                 :max-height="$tableHeight-10"
                 :height="$tableHeight-10"
                 :data="detailform.fdc_list"
@@ -1925,7 +1936,7 @@
                     :resizable="false"
                     label="合同额"
                     prop="amountSignup"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -1934,7 +1945,7 @@
                     :resizable="false"
                     label="剩余合同额"
                     prop="htquantity_after"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                     width="150"
                   >
@@ -1957,7 +1968,7 @@
                     :resizable="false"
                     label="税额"
                     prop="vat"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -1970,12 +1981,13 @@
                     :resizable="false"
                     label="房地产营业收入"
                     prop="realEstateIncome"
-                    align="center"
+                    align="right"
                     width="150"
                   >
-                    <template slot-scope="scope">
-                      <!-- :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1" -->
-                      <el-input
+                    <template slot-scope="scope" style="text-align: right;">
+                      <p v-if="scope.row.country=='01'">{{scope.row.income}}</p>
+                      <p v-if="scope.row.country=='02'">{{scope.row.overseasIncome}}</p>
+                      <!-- <el-input
                         @input="isFloor(scope.row.income,scope.$index,detailform.fdc_list,'income'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'income')"
                         v-if="scope.row.country=='01'"
                         :disabled="true"
@@ -1986,7 +1998,7 @@
                         v-if="scope.row.country=='02'"
                         :disabled="true"
                         clearable
-                        v-model="scope.row.overseasIncome"/>
+                        v-model="scope.row.overseasIncome"/> -->
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -2071,6 +2083,7 @@
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="金融保险">
+        <div class="formula" >上报产值含增值税：剩余合同额=合同额-年累计合计-本月合计；上报产值不含增值税：剩余合同额=合同额-年累计合计-本月合计-税额</div>
         <el-tabs type="border-card">
           <el-tab-pane label="产值">
             <div class="detailBox">
@@ -2275,6 +2288,7 @@
                 <el-button @click="exportdata('secure','金融保险')" type="primary" plain>导出</el-button>
               </el-form>
               <el-table
+                :row-class-name="tableRowClassName"
                 :max-height="$tableHeight-10"
                 :height="$tableHeight-10"
                 :data="detailform.jrbx_list"
@@ -2365,7 +2379,7 @@
                     :resizable="false"
                     label="合同额"
                     prop="amountSignup"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -2374,7 +2388,7 @@
                     :resizable="false"
                     label="剩余合同额"
                     prop="htquantity_after"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                     width="150"
                   >
@@ -2397,7 +2411,7 @@
                     :resizable="false"
                     label="税额"
                     prop="vat"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -2487,6 +2501,7 @@
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="运营维管">
+        <div class="formula" >上报产值含增值税：剩余合同额=合同额-年累计合计-本月合计；上报产值不含增值税：剩余合同额=合同额-年累计合计-本月合计-税额</div>
         <el-tabs type="border-card">
           <el-tab-pane label="产值">
             <div class="detailBox">
@@ -2733,6 +2748,7 @@
                 <el-button @click="exportdata('service','运营维管')" type="primary" plain>导出</el-button>
               </el-form>
               <el-table
+                :row-class-name="tableRowClassName"
                 :max-height="$tableHeight-10"
                 :height="$tableHeight-10"
                 :data="detailform.yy_list"
@@ -2823,7 +2839,7 @@
                     :resizable="false"
                     label="合同额"
                     prop="contractMoney"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -2832,7 +2848,7 @@
                     :resizable="false"
                     label="剩余合同额"
                     prop="htquantity_after"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                     width="150"
                   >
@@ -2855,7 +2871,7 @@
                     :resizable="false"
                     label="税额"
                     prop="vat"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -2970,6 +2986,7 @@
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="其他产值板块">
+        <div class="formula" >上报产值含增值税：剩余合同额=合同额-年累计合计-本月合计；上报产值不含增值税：剩余合同额=合同额-年累计合计-本月合计-税额</div>
         <el-tabs type="border-card">
           <el-tab-pane label="产值">
             <div class="detailBox">
@@ -3339,6 +3356,7 @@
                 <el-button @click="exportdata('other','其他产值板块')" type="primary" plain>导出</el-button>
               </el-form>
               <el-table
+                :row-class-name="tableRowClassName"
                 :max-height="$tableHeight-10"
                 :height="$tableHeight-10"
                 :data="detailform.qt_list"
@@ -3429,7 +3447,7 @@
                     :resizable="false"
                     label="合同额"
                     prop="contractMoney"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -3438,7 +3456,7 @@
                     :resizable="false"
                     label="剩余合同额"
                     prop="htquantity_after"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                     width="150"
                   >
@@ -3461,7 +3479,7 @@
                     :resizable="false"
                     label="税额"
                     prop="vat"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -3781,14 +3799,15 @@
             detailName:'否'
           }
         ],
-        rules:{
+        rules:{ 
+          //表单验证规则
           contractAmount: [
             { required: true,validator: validateMoney, trigger: 'change' }
           ],
           phone: [
             { required: true,validator: validatePhone, trigger: 'blur' }
           ]
-        },//表单验证规则
+        },
       };
     },
     components: {
@@ -3798,7 +3817,8 @@
     },
     computed: {
       projectStatus() {
-        return this.$store.state.projectStatus.slice(8,12)
+        // return this.$store.state.projectStatus.slice(8,12)
+        return this.$store.state.projectStatus
       },
       bizTypeCode() {
         return this.$store.state.bizTypeCode;
@@ -3893,24 +3913,29 @@
       monthChange(list,index){
         let num = Number(list[index].monthValue)-Number(list[index].monthStart)
         if (num < 0) {
-          num = 0
           list[index].monthValue = 0
           this.$message({
             showClose: true,
-            message: '月末进度应大于月初进度！'
+            message: '月末进度不可以小于上月进度！'
           });
+          return false
         }
+        if (Number(list[index].monthValue) > 100) {
+          list[index].monthValue = 0
+          this.$message({
+            showClose: true,
+            message: '月末进度不能大于100！'
+          });
+          return false
+        }
+        list[index].isRed = false
         list[index].monthFinish = num*list[index].contractMoney/100
         list[index].monthComplete = num*list[index].physicalQuantity/100
+        list[index].yearComplete_after = list[index].yearComplete + list[index].monthComplete
+        list[index].yearValue_after = list[index].yearValue + list[index].monthFinish
       },
       //勘察设计月末进度
       setCcsjYmjd(list,obj,name,index){
-        // let num = Number(list[index].monthValue)-Number(list[index].monthStart)
-        // if (num < 0) {
-        //   num = 0
-        // }
-        // list[index].monthFinish = num*list[index].contractMoney/100
-        // list[index].monthComplete = num*list[index].physicalQuantity/100
         // 改了哪个，产值的哪个变动
         let kind = list[index].categorySecondName
         let money = 0
@@ -3942,9 +3967,9 @@
           list[index].htquantity_after = list[index].htquantity - list[index].overseasSale
         }
         if (name == "inRevenue") { // 房地产
-          list[index].htquantity_after = list[index].htquantity - list[index].inRevenue - list[index].offRevenue - list[index].offRevenueNon
+          list[index].htquantity_after = list[index].htquantity - list[index].inRevenue - list[index].offRevenue
         } else if (name == "inRevenueHw") {
-          list[index].htquantity_after = list[index].htquantity - list[index].inRevenueHw - list[index].offRevenueHw - list[index].offRevenueNonHw
+          list[index].htquantity_after = list[index].htquantity - list[index].inRevenueHw - list[index].offRevenueHw
         }
         if (name == "finance") { // 金融保险
           list[index].htquantity_after = list[index].htquantity - list[index].finance - list[index].secure - list[index].otherFinance
@@ -3961,7 +3986,22 @@
         } else if (name == "equipmentLeasingHw") { 
           list[index].htquantity_after = list[index].htquantity - list[index].equipmentLeasingHw- list[index].transportationHw - list[index].accommodationCateringHw - list[index].educationTrainingHw - list[index].informationConstructionHw - list[index].leaseHousesHw - list[index].otherProjectHw
         }
+        // 判断是不是小于0
+        if (list[index].htquantity_after < 0) {
+          list[index].isRed = true
+        } else {
+          list[index].isRed = false
+        }
       },
+      // 样式
+      tableRowClassName({row, rowIndex}) {
+        if (row.isRed) {
+          return 'warning_row';
+        } else {
+          return 'success_row';
+        }
+        return '';
+      },   
       //修改产值
       getGyzzCz(list,obj,name){
       //  list 列表数据 obj 修改哪个对象 name 修改对象里的哪个值
@@ -4055,7 +4095,7 @@
           // window.location.href = objectUrl;
           const content = res.data;
           const blob = new Blob([content])
-          const fileName = name+new Date().toLocaleDateString()+'.xlsx'
+          const fileName = name+this.searchform[type].reportDate+'.xlsx'
           if ('download' in document.createElement('a')) { // 非IE下载
             const elink = document.createElement('a')
             elink.download = fileName
@@ -4277,9 +4317,134 @@
         }
       },
       saveInfo(formName,type) {
-        console.info(this.detailform.kc_list)
+        // 如果工业总产值大于0，那么产品数量、增值税(上报产值是否含增值税为‘否’时)必须大于0
+        let isSave = true
+        this.detailform.gycp_list.forEach((element)=> {
+          if (element.vjnw=='境内') {
+            if (element.ngyvalueJn > 0 || element.ngyvalueJn == null) {
+              if (element.ncount == 0 || element.ncount == null) {
+                this.$message({
+                  message: "工业制造板块的工业总产值大于0,则产品数量必须大于0！",
+                  type: "error",
+                  showClose: true,
+                });
+                isSave = false
+              }
+              if (element.vincludevat == 0 || element.vincludevat == null) {
+                if (element.nvat == 0 || element.nvat == null) {
+                this.$message({
+                  message: "工业制造板块的工业总产值大于0,则增值税必须大于0！",
+                  type: "error",
+                  showClose: true,
+                });
+                isSave = false
+              }
+              }
+            }
+          } else if (element.vjnw=='境外') {
+            if (element.ngyvalueJw > 0 || element.ngyvalueJw == null) {
+              if (element.ncount == 0 || element.ncount == null) {
+                this.$message({
+                  message: "工业制造板块的工业总产值大于0,则产品数量必须大于0！",
+                  type: "error",
+                  showClose: true,
+                });
+                isSave = false
+              }
+              if (element.vincludevat == 0 || element.vincludevat == null) {
+                if (element.nvat == 0 || element.nvat == null) {
+                this.$message({
+                  message: "工业制造板块的工业总产值大于0,则增值税必须大于0！",
+                  type: "error",
+                  showClose: true,
+                });
+                isSave = false
+              }
+              }
+            }
+          }
+        })
+        // 所有剩余合同额必须大于0
+        if ( this.p.gyType=='1') {
+          this.detailform.gy_list.forEach((element) => {
+            if (element.htquantity_after < 0) {
+              this.$message({
+                message: "工业制造板块的剩余合同额必须大于0！",
+                type: "error",
+                showClose: true,
+              });
+              isSave = false
+            }
+          })
+        }
+        this.detailform.wz_list.forEach((element) => {
+          if (element.htquantity_after < 0) {
+            this.$message({
+              message: "物资贸易板块的剩余合同额必须大于0！",
+              type: "error",
+              showClose: true,
+            });
+            isSave = false
+          }
+        })
+        this.detailform.fdc_list.forEach((element) => {
+          if (element.htquantity_after < 0) {
+            this.$message({
+              message: "房地产板块的剩余合同额必须大于0！",
+              type: "error",
+              showClose: true,
+            });
+            isSave = false
+          }
+        })
+        this.detailform.jrbx_list.forEach((element) => {
+          if (element.htquantity_after < 0) {
+            this.$message({
+              message: "金融保险的剩余合同额必须大于0！",
+              type: "error",
+              showClose: true,
+            });
+            isSave = false
+          }
+        })
+        this.detailform.yy_list.forEach((element) => {
+          if (element.htquantity_after < 0) {
+            this.$message({
+              message: "运营维管的剩余合同额必须大于0！",
+              type: "error",
+              showClose: true,
+            });
+            isSave = false
+          }
+        })        
+        this.detailform.qt_list.forEach((element) => {
+          if (element.htquantity_after < 0) {
+            this.$message({
+              message: "其他产值板块的剩余合同额必须大于0！",
+              type: "error",
+              showClose: true,
+            });
+            isSave = false
+          }
+        })
+        // 判断勘察设计的月摸进度
+        this.detailform.kc_list.forEach((element) => {
+          if ((element.monthValue - element.monthStart) < 0) {
+            this.$message({
+              message: "勘察设计板块的月末进度必须大于月初进度！",
+              type: "error",
+              showClose: true,
+            });
+            isSave = false
+          }
+        })        
+        // 上面判断都通过才可以保存
+        if (!isSave) {
+          return false
+        }
+        // 判断月初月末进度
         this.detailform.kc_list.forEach((element)=>{
-          if (element.monthValue < element.monthStart) {
+          if (element.monthValue == 0 || element.monthValue == null) {
             element.monthValue = element.monthStart
           }
         })
@@ -4304,7 +4469,7 @@
                   message:  `${type=='save'?'保存':'提交'}成功`,
                   type: "success",
                 });
-                this.back();
+                // this.back();
             }
           });
           } else {
@@ -4386,6 +4551,13 @@
           this.searchform[type],
         )
         .then((res) => {
+          // 勘察设计
+          if (name == "kc_list") {
+            res.data.data.kc_list.forEach((element)=>{
+              element.yearComplete_after = element.yearComplete
+              element.yearValue_after = element.yearValue
+            })
+          }
           // 工业制造
           if (name == "gy_list") {
             res.data.data.gy_list.forEach((element)=>{
@@ -4393,6 +4565,11 @@
                 element.htquantity_after = Number(element.htquantity) - Number(element.equipmentManufacturin)- Number(element.componentManufacturin)- Number(element.otherIndustrayProduct)
               } else {
                 element.htquantity_after = Number(element.htquantity) - Number(element.equipmentManufacturinHw)- Number(element.componentManufacturinHw)- Number(element.otherIndustrayProductHw)
+              }
+              if (element.htquantity_after < 0) {
+                element.isRed = true
+              } else {
+                element.isRed = false
               }
             })            
           }
@@ -4404,6 +4581,11 @@
               } else {
                 element.htquantity_after = Number(element.htquantity) - Number(element.overseasSale)
               }
+              if (element.htquantity_after < 0) {
+                element.isRed = true
+              } else {
+                element.isRed = false
+              }
             })
           }
           // 房地产
@@ -4413,6 +4595,11 @@
                 element.htquantity_after = Number(element.htquantity) - Number(element.inRevenue)- Number(element.offRevenue)- Number(element.offRevenueNon)
               } else {
                 element.htquantity_after = Number(element.htquantity) - Number(element.inRevenueHw)- Number(element.offRevenueHw)- Number(element.offRevenueNonHw)
+              }
+              if (element.htquantity_after < 0) {
+                element.isRed = true
+              } else {
+                element.isRed = false
               }
             })
           }
@@ -4424,6 +4611,11 @@
               } else {
                 element.htquantity_after = Number(element.htquantity) - Number(element.overseasFinance)- Number(element.overseasSecure)- Number(element.otherFinanceHw)
               }
+              if (element.htquantity_after < 0) {
+                element.isRed = true
+              } else {
+                element.isRed = false
+              }
             })
           }
           // 运营维管
@@ -4433,6 +4625,11 @@
                 element.htquantity_after = Number(element.htquantity) - Number(element.engineeringOperation)- Number(element.informationOperation)- Number(element.estateManagement)- Number(element.otherOperation)
               } else {
                 element.htquantity_after = Number(element.htquantity) - Number(element.engineeringOperationHw)- Number(element.informationOperationHw)- Number(element.estateManagementHw)- Number(element.overseasOtherOperation)
+              }
+              if (element.htquantity_after < 0) {
+                element.isRed = true
+              } else {
+                element.isRed = false
               }
             })
           }
@@ -4444,11 +4641,16 @@
               } else {
                 element.htquantity_after = Number(element.htquantity) - Number(element.equipmentLeasingHw)- Number(element.transportationHw)- Number(element.accommodationCateringHw)- Number(element.educationTrainingHw)- Number(element.informationConstructionHw)- Number(element.leaseHousesHw)- Number(element.otherProjectHw)
               }
+              if (element.htquantity_after < 0) {
+                element.isRed = true
+              } else {
+                element.isRed = false
+              }
             })
           }
-        })
-        var datas=res.data.data;
-        this.detailform[name]=datas[name];
+          var datas=res.data.data;
+          this.detailform[name]=datas[name];
+        })        
       },
       // 加载列表
       getDetail() {
@@ -4463,13 +4665,30 @@
         this.$http
           .post("/api/statistics/unProjectReport/list/queryAllInfo",data )
           .then((res) => {
+          // 勘察设计
+          if (res.data.data.kc_list) {
+            res.data.data.kc_list.forEach((element)=>{
+              element.yearComplete_after = element.yearComplete
+              element.yearValue_after = element.yearValue
+              if ((element.monthValue - element.monthStart) < 0) {
+                element.isRed = true
+              } else {
+                element.isRed = false
+              }
+            })
+          }
           // 工业制造
-          if (res.data.data.gy_lis) {
+          if (res.data.data.gy_list) {
             res.data.data.gy_list.forEach((element)=>{
               if (element.country == "01") {
                 element.htquantity_after = Number(element.htquantity) - Number(element.equipmentManufacturin)- Number(element.componentManufacturin)- Number(element.otherIndustrayProduct)
               } else {
                 element.htquantity_after = Number(element.htquantity) - Number(element.equipmentManufacturinHw)- Number(element.componentManufacturinHw)- Number(element.otherIndustrayProductHw)
+              }
+              if (element.htquantity_after < 0) {
+                element.isRed = true
+              } else {
+                element.isRed = false
               }
             })            
           }
@@ -4480,6 +4699,11 @@
             } else {
               element.htquantity_after = Number(element.htquantity) - Number(element.overseasSale)
             }
+            if (element.htquantity_after < 0) {
+              element.isRed = true
+            } else {
+              element.isRed = false
+            }
           })
           // 房地产
           res.data.data.fdc_list.forEach((element)=>{
@@ -4487,6 +4711,11 @@
               element.htquantity_after = Number(element.htquantity) - Number(element.inRevenue)- Number(element.offRevenue)- Number(element.offRevenueNon)
             } else {
               element.htquantity_after = Number(element.htquantity) - Number(element.inRevenueHw)- Number(element.offRevenueHw)- Number(element.offRevenueNonHw)
+            }
+            if (element.htquantity_after < 0) {
+              element.isRed = true
+            } else {
+              element.isRed = false
             }
           })
           // 金融保险 
@@ -4496,6 +4725,11 @@
             } else {
               element.htquantity_after = Number(element.htquantity) - Number(element.overseasFinance)- Number(element.overseasSecure)- Number(element.otherFinanceHw)
             }
+            if (element.htquantity_after < 0) {
+              element.isRed = true
+            } else {
+              element.isRed = false
+            }
           })
           // 运营维管
           res.data.data.yy_list.forEach((element)=>{
@@ -4504,6 +4738,11 @@
             } else {
               element.htquantity_after = Number(element.htquantity) - Number(element.engineeringOperationHw)- Number(element.informationOperationHw)- Number(element.estateManagementHw)- Number(element.overseasOtherOperation)
             }
+            if (element.htquantity_after < 0) {
+              element.isRed = true
+            } else {
+              element.isRed = false
+            }
           })
           // 其他 
           res.data.data.qt_list.forEach((element)=>{
@@ -4511,6 +4750,11 @@
               element.htquantity_after = Number(element.htquantity) - Number(element.equipmentLeasing)- Number(element.transportation)- Number(element.accommodationCatering)- Number(element.educationTraining)- Number(element.informationConstruction)- Number(element.leaseHouses)- Number(element.otherProject)
             } else {
               element.htquantity_after = Number(element.htquantity) - Number(element.equipmentLeasingHw)- Number(element.transportationHw)- Number(element.accommodationCateringHw)- Number(element.educationTrainingHw)- Number(element.informationConstructionHw)- Number(element.leaseHousesHw)- Number(element.otherProjectHw)
+            }
+            if (element.htquantity_after < 0) {
+              element.isRed = true
+            } else {
+              element.isRed = false
             }
           })
           var datas=res.data.data;
@@ -4565,6 +4809,23 @@
   };
 </script>
 <style lang="scss" scoped>
+  // /deep/ .warning_row>.warning_row_column {
+  //   color: red !important;
+  // }
+  /deep/ .warning_row {
+    color: red !important;
+  }
+  /deep/ .success_row {
+    color: #606266;
+  }
+  .formula{
+    color: red;
+    position: absolute;
+    z-index: 99;
+    left: 210px;
+    height: 45px;
+    line-height: 40px;
+  }
   .detail-back-tab{
     padding: 10px 20px ;
     border:1px solid #ddd;
