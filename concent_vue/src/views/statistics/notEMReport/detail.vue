@@ -258,7 +258,7 @@
                 <el-table-column
                   :resizable="false"
                   label="工程合同额"
-                  align="center"
+                  align="right"
                   prop="contractMoney"
                   show-overflow-tooltip
                   width="150"
@@ -317,7 +317,7 @@
                   :resizable="false"
                   label="本月产值(万元)"
                   prop="monthFinish"
-                  align="center"
+                  align="right"
                   show-overflow-tooltip
                   width="150"
                 >
@@ -327,7 +327,7 @@
                   :resizable="false"
                   label="本年产值(万元)"
                   prop="yearValue_after"
-                  align="center"
+                  align="right"
                   show-overflow-tooltip
                   width="150"
                 >
@@ -337,7 +337,7 @@
                   :resizable="false"
                   label="实物工程量"
                   prop="physicalQuantity"
-                  align="center"
+                  align="right"
                   show-overflow-tooltip
                   width="150"
                 >
@@ -356,7 +356,7 @@
                   :resizable="false"
                   label="本月完成"
                   prop="monthComplete"
-                  align="center"
+                  align="right"
                   show-overflow-tooltip
                   width="150"
                 >
@@ -366,7 +366,7 @@
                   :resizable="false"
                   label="本年完成"
                   prop="yearComplete_after"
-                  align="center"
+                  align="right"
                   show-overflow-tooltip
                   width="150"
                 >
@@ -394,7 +394,7 @@
       </el-tab-pane>
       <el-tab-pane label="工业制造板块">
         <el-tabs type="border-card">
-          <el-tab-pane v-if="p.gyType=='1'" label="产值">
+          <el-tab-pane v-if="p.gyType=='2'" label="产值">
             <div class="detailBox">
               <el-form
                 :inline="false"
@@ -583,7 +583,7 @@
               </el-form>
             </div>
           </el-tab-pane>
-          <el-tab-pane v-if="p.gyType=='1'" label="主要项目管理">
+          <el-tab-pane v-if="p.gyType=='2'" label="主要项目管理">
             <div class="table-div">
               <el-form v-show="p.actpoint !== 'task'" class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
                 <el-form-item label="项目名称:">
@@ -778,7 +778,7 @@
                     :resizable="false"
                     label="合同额"
                     prop="contractMoney"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -787,7 +787,7 @@
                     :resizable="false"
                     label="剩余合同额"
                     prop="htquantity_after"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                     width="150"
                   >
@@ -810,7 +810,7 @@
                     :resizable="false"
                     label="税额"
                     prop="vat"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -826,9 +826,10 @@
                     align="center"
                     width="150"
                   >
-                    <template slot-scope="scope">
-                      <!-- :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1" -->
-                      <el-input
+                      <template slot-scope="scope" style="text-align: right;">
+                        <p v-if="scope.row.country=='01'" >{{scope.row.industry}}</p>
+                        <p v-if="scope.row.country=='02'" >{{scope.row.overseasIndustry}}</p> 
+                      <!-- <el-input
                         @input="isFloor(scope.row.industry,scope.$index,detailform.gy_list,'industry'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'industry')"
                         v-if="scope.row.country=='01'"
                         :disabled="true"
@@ -839,7 +840,7 @@
                         v-if="scope.row.country=='02'"
                         :disabled="true"
                         clearable
-                        v-model="scope.row.overseasIndustry"/>
+                        v-model="scope.row.overseasIndustry"/> -->
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -1222,11 +1223,13 @@
                     :resizable="false"
                     label="工业总产值"
                     prop="industry"
-                    align="center"
+                    align="right"
                     width="150"
                   >
-                    <template slot-scope="scope">
-                      <el-input
+                    <template slot-scope="scope" style="text-align: right;">
+                      <p v-if="scope.row.vjnw=='境内'" >{{scope.row.ngyvalueJn}}</p>
+                      <p v-if="scope.row.vjnw=='境外'" >{{scope.row.ngyvalueJw}}</p>                      
+                      <!-- <el-input
                         @input="isFloor(scope.row.ngyvalueJn,scope.$index,detailform.gycp_list,'ngyvalueJn'),getGyzzCz(detailform.gycp_list,detailform.sumByMon_cp,'ngyvalueJn')"
                         v-if="scope.row.vjnw=='境内'"
                         :disabled="true"
@@ -1237,7 +1240,7 @@
                         v-if="scope.row.vjnw=='境外'"
                         :disabled="true"
                         clearable
-                        v-model="scope.row.ngyvalueJw"/>
+                        v-model="scope.row.ngyvalueJw"/> -->
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -1631,7 +1634,7 @@
                     :resizable="false"
                     label="合同额"
                     prop="contractMoney"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -1640,7 +1643,7 @@
                     :resizable="false"
                     label="剩余合同额"
                     prop="htquantity_after"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                     width="150"
                     class-name="warning_row_column"
@@ -1664,7 +1667,7 @@
                     :resizable="false"
                     label="税额"
                     prop="vat"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -2026,7 +2029,7 @@
                     :resizable="false"
                     label="合同额"
                     prop="amountSignup"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -2035,7 +2038,7 @@
                     :resizable="false"
                     label="剩余合同额"
                     prop="htquantity_after"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                     width="150"
                   >
@@ -2058,7 +2061,7 @@
                     :resizable="false"
                     label="税额"
                     prop="vat"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -2071,12 +2074,13 @@
                     :resizable="false"
                     label="房地产营业收入"
                     prop="realEstateIncome"
-                    align="center"
+                    align="right"
                     width="150"
                   >
-                    <template slot-scope="scope">
-                      <!-- :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.row.isEdit==-1" -->
-                      <el-input
+                    <template slot-scope="scope" style="text-align: right;">
+                      <p v-if="scope.row.country=='01'">{{scope.row.income}}</p>
+                      <p v-if="scope.row.country=='02'">{{scope.row.overseasIncome}}</p>
+                      <!-- <el-input
                         @input="isFloor(scope.row.income,scope.$index,detailform.fdc_list,'income'),getGyzzCz(detailform.fdc_list,detailform.sumByMon_3,'income')"
                         v-if="scope.row.country=='01'"
                         :disabled="true"
@@ -2087,7 +2091,7 @@
                         v-if="scope.row.country=='02'"
                         :disabled="true"
                         clearable
-                        v-model="scope.row.overseasIncome"/>
+                        v-model="scope.row.overseasIncome"/> -->
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -2485,7 +2489,7 @@
                     :resizable="false"
                     label="合同额"
                     prop="amountSignup"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -2494,7 +2498,7 @@
                     :resizable="false"
                     label="剩余合同额"
                     prop="htquantity_after"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                     width="150"
                   >
@@ -2517,7 +2521,7 @@
                     :resizable="false"
                     label="税额"
                     prop="vat"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -2962,7 +2966,7 @@
                     :resizable="false"
                     label="合同额"
                     prop="contractMoney"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -2971,7 +2975,7 @@
                     :resizable="false"
                     label="剩余合同额"
                     prop="htquantity_after"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                     width="150"
                   >
@@ -2994,7 +2998,7 @@
                     :resizable="false"
                     label="税额"
                     prop="vat"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -3587,7 +3591,7 @@
                     :resizable="false"
                     label="合同额"
                     prop="contractMoney"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
@@ -3596,7 +3600,7 @@
                     :resizable="false"
                     label="剩余合同额"
                     prop="htquantity_after"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                     width="150"
                   >
@@ -3619,7 +3623,7 @@
                     :resizable="false"
                     label="税额"
                     prop="vat"
-                    align="center"
+                    align="right"
                     show-overflow-tooltip
                   >
                   </el-table-column>
