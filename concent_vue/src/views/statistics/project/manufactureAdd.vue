@@ -400,7 +400,7 @@
                 placeholder="请输入内容" 
                 v-model="detailForm.project.companyName" class="input-with-select">
                 <el-button 
-                  v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" 
+                  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append" 
                   icon="el-icon-circle-plus-outline" 
                   @click="addDw('签约单位(使用资质单位)',detailForm.project.companyId)" 
                   >

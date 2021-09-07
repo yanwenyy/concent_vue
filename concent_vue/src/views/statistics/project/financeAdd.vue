@@ -1288,6 +1288,9 @@
           }
         })
       },
+      del(index, item, list) {
+          list.splice(index, 1)
+      },
       getMarketTwo(id) {
         this.detailForm.project.marketSecondId = ''
         this.detailForm.project.marketSecondName = ''
