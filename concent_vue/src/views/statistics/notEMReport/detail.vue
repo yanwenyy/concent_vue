@@ -4515,11 +4515,79 @@
             }
           }
         })
+        // 所有剩余合同额必须大于0
+        if ( this.p.gyType=='1') {
+          this.detailform.gy_list.forEach((element) => {
+            if (element.htquantity_after < 0) {
+              this.$message({
+                message: "工业制造板块的剩余合同额必须大于0！",
+                type: "error",
+                showClose: true,
+              });
+              isSave = false
+            }
+          })
+        }
+        this.detailform.wz_list.forEach((element) => {
+          if (element.htquantity_after < 0) {
+            this.$message({
+              message: "物资贸易板块的剩余合同额必须大于0！",
+              type: "error",
+              showClose: true,
+            });
+            isSave = false
+          }
+        })
+        this.detailform.fdc_list.forEach((element) => {
+          if (element.htquantity_after < 0) {
+            this.$message({
+              message: "房地产板块的剩余合同额必须大于0！",
+              type: "error",
+              showClose: true,
+            });
+            isSave = false
+          }
+        })
+        this.detailform.jrbx_list.forEach((element) => {
+          if (element.htquantity_after < 0) {
+            this.$message({
+              message: "金融保险的剩余合同额必须大于0！",
+              type: "error",
+              showClose: true,
+            });
+            isSave = false
+          }
+        })
+        this.detailform.yy_list.forEach((element) => {
+          if (element.htquantity_after < 0) {
+            this.$message({
+              message: "运营维管的剩余合同额必须大于0！",
+              type: "error",
+              showClose: true,
+            });
+            isSave = false
+          }
+        })        
+        this.detailform.qt_list.forEach((element) => {
+          if (element.htquantity_after < 0) {
+            this.$message({
+              message: "其他产值板块的剩余合同额必须大于0！",
+              type: "error",
+              showClose: true,
+            });
+            isSave = false
+          }
+        })
+        // 上面判断都通过才可以保存
         if (!isSave) {
           return false
         }
-        // 所有剩余合同额必须大于0
-        
+        // 判断月初月末进度
+        this.detailform.kc_list.forEach((element)=>{
+          if (element.monthValue < element.monthStart) {
+            element.monthValue = element.monthStart
+          }
+        })
         var url='';
         if(type=='save'){
           url="/api/statistics/unProjectReport/save/batch/addDetail"
@@ -4541,7 +4609,7 @@
                   message:  `${type=='save'?'保存':'提交'}成功`,
                   type: "success",
                 });
-                this.back();
+                // this.back();
             }
           });
           } else {
