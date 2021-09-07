@@ -202,6 +202,7 @@
                 </el-upload>
               </el-form>
               <el-table
+                :row-class-name="tableRowClassName"
                 :max-height="$tableHeight-10"
                 :height="$tableHeight-10"
                 :data="detailform.kc_list"
@@ -4080,6 +4081,7 @@
           });
           return false
         }
+        list[index].isRed = false
         list[index].monthFinish = num*list[index].contractMoney/100
         list[index].monthComplete = num*list[index].physicalQuantity/100
         list[index].yearComplete_after = list[index].yearComplete + list[index].monthComplete
@@ -4578,13 +4580,24 @@
             isSave = false
           }
         })
+        // 判断勘察设计的月摸进度
+        this.detailform.kc_list.forEach((element) => {
+          if ((element.monthValue - element.monthStart) < 0) {
+            this.$message({
+              message: "勘察设计板块的月末进度必须大于月初进度！",
+              type: "error",
+              showClose: true,
+            });
+            isSave = false
+          }
+        })        
         // 上面判断都通过才可以保存
         if (!isSave) {
           return false
         }
         // 判断月初月末进度
         this.detailform.kc_list.forEach((element)=>{
-          if (element.monthValue < element.monthStart) {
+          if (element.monthValue == 0 || element.monthValue == null) {
             element.monthValue = element.monthStart
           }
         })
@@ -4810,6 +4823,11 @@
             res.data.data.kc_list.forEach((element)=>{
               element.yearComplete_after = element.yearComplete
               element.yearValue_after = element.yearValue
+              if ((element.monthValue - element.monthStart) < 0) {
+                element.isRed = true
+              } else {
+                element.isRed = false
+              }
             })
           }
           // 工业制造
