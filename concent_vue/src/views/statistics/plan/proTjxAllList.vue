@@ -13,6 +13,7 @@
       <el-button-group style="float: left">
         <el-button icon="el-icon-delete" @click="del" type="primary" plain>删除</el-button>
         <!--<el-button @click="batchSub" type="primary" plain><i class="el-icon-plus"></i>批量提交</el-button>-->
+        <el-button @click="batchBack" type="primary" plain>批量退回</el-button>
       </el-button-group>
 
       <div style="float: right;">
@@ -270,6 +271,49 @@
       }
     },
     methods: {
+      //批量退回
+      batchBack(){
+          if (this.multipleSelection.length <1) {
+            this.$message.info("请选择一条记录进行提交操作！");
+            return false;
+          }
+          var list=[],itemStatus=true;
+          this.multipleSelection.forEach((item) => {
+            if(item.flowStatus=='pass'){
+              list.push(item);
+            }else{
+              this.$message.info("当前所选数据中包含不可退回的选项,请检查后进行操作");
+              return itemStatus=false;
+            }
+          })
+          if(itemStatus){
+            this.$confirm(`确认退回这些数据吗`, '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              this.$http
+                .post(
+                  "/api/statistics/planPrjTjxDetail/process/return",
+                  JSON.stringify(list),
+                  {useJson: true}
+
+                )
+                .then((res) => {
+                  if(res.data.code==200){
+                    this.$message({
+                      message: "操作成功",
+                      type: "success",
+                    });
+                    this.getData()
+                  }else{
+                    this.$message.error(res.data.msg);
+                  }
+
+                });
+            }).catch(() => {})
+          }
+      },
       // //批量提交
       // batchSub(){
       //   if (this.multipleSelection.length <1) {
