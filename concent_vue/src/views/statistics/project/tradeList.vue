@@ -445,7 +445,7 @@
         if (this.multipleSelection.length !== 1) {
           this.$message.info('请选择一条记录进行查看操作！')
           return false
-        }else if(this.multipleSelection[0].flowStatus=='pass'){
+        }else if(this.multipleSelection[0].flowStatus=='pass'||this.multipleSelection[0].flowStatus=='check'){
           this.$message.info('当前数据不能进行修改！')
         }else{
           let p = { actpoint: 'edit', uuid: this.multipleSelection[0].uuid,pushId:this.multipleSelection[0].pushId }
