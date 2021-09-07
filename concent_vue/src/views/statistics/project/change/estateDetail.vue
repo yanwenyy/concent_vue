@@ -173,7 +173,6 @@
                 style="width: 32.5%">
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
-                  @change="getCount"
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.contractAmountInitial">
@@ -345,7 +344,7 @@
                   placeholder="请输入内容" 
                   v-model="detailForm.project.companyName" class="input-with-select">
                   <el-button 
-                    v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" 
+                    v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append" 
                     icon="el-icon-circle-plus-outline" 
                     @click="addDw('签约单位(使用资质单位)',detailForm.project.companyId)" 
                     >
@@ -538,6 +537,7 @@
               <el-form-item
                 class="neirong"
                 prop="project.changeReason"
+                :rules="rules.project.must"
                 label="变更原因:">
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
@@ -582,7 +582,7 @@
                 prop="path"
               >
                 <template slot-scope="scope">
-                  <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.path'"  :rules="{required: true,message: '此项不能为空'}">
+                  <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.path'" >
                     <el-input disabled placeholder="请输入内容" v-model="scope.row.path" class="input-with-select group-no-padding">
                       <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" 
                        slot="append" icon="el-icon-circle-plus" 
@@ -935,7 +935,6 @@
                 style="width: 32.5%">
                 <el-input
                   disabled
-                  @change="getCount"
                   clearable
                   placeholder="请输入"
                   v-model="showDetailForm.project.contractAmountInitial">
@@ -1515,7 +1514,7 @@
             isMobile: [{ validator: validateMobile, trigger: ['blur', 'change'] }],
             isPercent: [{ required: true, validator: validatePercent, trigger: ['blur', 'change'] }],
             isNumber: [{ validator: validateNumber, trigger: ['blur', 'change'] }],
-            changeReason: [{ required: true, message: '此项不能为空', trigger: 'blur' }]
+            must: [{ required: true, message: '此项不能为空', trigger: ['blur', 'change'] }]
           }
         },
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
@@ -2014,13 +2013,13 @@
       },
       // 新增的时候详情
       getAddDetail() {
-        console.log('新增')
         let params = { topInfoId: this.p.uuid }
         this.$http
           .post('/api/statistics/StatisticsProject/detail/entityInfo', params)
           .then((res) => {
             if (res.data.code === 200) {
               this.detailForm.project = res.data.data
+              this.getProjectFather();
               this.showDetailForm.project = JSON.parse(JSON.stringify(res.data.data))
               if (!res.data.data.infoProductList) {
                 this.detailForm.project.infoProductList = []
