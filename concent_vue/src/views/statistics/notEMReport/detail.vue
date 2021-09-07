@@ -4246,7 +4246,7 @@
           // window.location.href = objectUrl;
           const content = res.data;
           const blob = new Blob([content])
-          const fileName = name+new Date().toLocaleDateString()+'.xlsx'
+          const fileName = name+this.searchform[type].reportDate+'.xlsx'
           if ('download' in document.createElement('a')) { // 非IE下载
             const elink = document.createElement('a')
             elink.download = fileName
