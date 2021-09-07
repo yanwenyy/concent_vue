@@ -4106,9 +4106,9 @@
           list[index].htquantity_after = list[index].htquantity - list[index].overseasSale
         }
         if (name == "inRevenue") { // 房地产
-          list[index].htquantity_after = list[index].htquantity - list[index].inRevenue - list[index].offRevenue - list[index].offRevenueNon
+          list[index].htquantity_after = list[index].htquantity - list[index].inRevenue - list[index].offRevenue
         } else if (name == "inRevenueHw") {
-          list[index].htquantity_after = list[index].htquantity - list[index].inRevenueHw - list[index].offRevenueHw - list[index].offRevenueNonHw
+          list[index].htquantity_after = list[index].htquantity - list[index].inRevenueHw - list[index].offRevenueHw
         }
         if (name == "finance") { // 金融保险
           list[index].htquantity_after = list[index].htquantity - list[index].finance - list[index].secure - list[index].otherFinance
