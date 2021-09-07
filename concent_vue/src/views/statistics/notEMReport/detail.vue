@@ -2,7 +2,7 @@
   <div style="position: relative">
     <el-button @click="back" class="detailbutton detail-back-tab" >返回</el-button>
     <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="saveInfo('detailform','save')" class="detailbutton detail-back-tab save-btn">保存</el-button>
-    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||p.stauts==1||p.stauts==4)" @click="saveInfo('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||p.stauts=='edit'||p.stauts=='reject')" @click="saveInfo('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
     <!--<el-button v-show="p.actpoint == 'task'&&p.task.edit==true" @click="operation('recall')" class="detailbutton" type="danger">撤销</el-button>-->
@@ -4246,7 +4246,7 @@
           // window.location.href = objectUrl;
           const content = res.data;
           const blob = new Blob([content])
-          const fileName = name+new Date().toLocaleDateString()+'.xlsx'
+          const fileName = name+this.searchform[type].reportDate+'.xlsx'
           if ('download' in document.createElement('a')) { // 非IE下载
             const elink = document.createElement('a')
             elink.download = fileName
@@ -4515,11 +4515,79 @@
             }
           }
         })
+        // 所有剩余合同额必须大于0
+        if ( this.p.gyType=='1') {
+          this.detailform.gy_list.forEach((element) => {
+            if (element.htquantity_after < 0) {
+              this.$message({
+                message: "工业制造板块的剩余合同额必须大于0！",
+                type: "error",
+                showClose: true,
+              });
+              isSave = false
+            }
+          })
+        }
+        this.detailform.wz_list.forEach((element) => {
+          if (element.htquantity_after < 0) {
+            this.$message({
+              message: "物资贸易板块的剩余合同额必须大于0！",
+              type: "error",
+              showClose: true,
+            });
+            isSave = false
+          }
+        })
+        this.detailform.fdc_list.forEach((element) => {
+          if (element.htquantity_after < 0) {
+            this.$message({
+              message: "房地产板块的剩余合同额必须大于0！",
+              type: "error",
+              showClose: true,
+            });
+            isSave = false
+          }
+        })
+        this.detailform.jrbx_list.forEach((element) => {
+          if (element.htquantity_after < 0) {
+            this.$message({
+              message: "金融保险的剩余合同额必须大于0！",
+              type: "error",
+              showClose: true,
+            });
+            isSave = false
+          }
+        })
+        this.detailform.yy_list.forEach((element) => {
+          if (element.htquantity_after < 0) {
+            this.$message({
+              message: "运营维管的剩余合同额必须大于0！",
+              type: "error",
+              showClose: true,
+            });
+            isSave = false
+          }
+        })        
+        this.detailform.qt_list.forEach((element) => {
+          if (element.htquantity_after < 0) {
+            this.$message({
+              message: "其他产值板块的剩余合同额必须大于0！",
+              type: "error",
+              showClose: true,
+            });
+            isSave = false
+          }
+        })
+        // 上面判断都通过才可以保存
         if (!isSave) {
           return false
         }
-        // 所有剩余合同额必须大于0
-        
+        // 判断月初月末进度
+        this.detailform.kc_list.forEach((element)=>{
+          if (element.monthValue < element.monthStart) {
+            element.monthValue = element.monthStart
+          }
+        })
         var url='';
         if(type=='save'){
           url="/api/statistics/unProjectReport/save/batch/addDetail"
@@ -4541,7 +4609,7 @@
                   message:  `${type=='save'?'保存':'提交'}成功`,
                   type: "success",
                 });
-                this.back();
+                // this.back();
             }
           });
           } else {

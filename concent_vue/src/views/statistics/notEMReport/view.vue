@@ -337,7 +337,7 @@
       },
       // 判断审核时间是否标红
       rowClick(row,boolean) {
-        if (boolean && row.chirldList) { // 如果是展开 并且有子集
+        if (boolean && row.chirldList && row.stauts !== "0") { // 如果是展开 并且有子集 并且不是未创建
           row.chirldList.forEach((element)=>{
             console.info(element.state, row.createTime)
             if (element.auditDate > row.createTime) {

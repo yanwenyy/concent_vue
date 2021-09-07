@@ -15,7 +15,7 @@
         <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>新增</el-button>
         <el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
         <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
-        <el-button @click="batchSub" type="primary" plain><i class="el-icon-plus"></i>批量提交</el-button>
+        <!-- <el-button @click="batchSub" type="primary" plain><i class="el-icon-plus"></i>批量提交</el-button> -->
       </el-button-group>
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
@@ -492,9 +492,9 @@
       },
       // 判断审核时间是否标红
       rowClick(row,boolean) {
-        if (boolean && row.chirldList) { // 如果是展开 并且有子集
+        if (boolean && row.chirldList && row.stauts !== "0") { // 如果是展开 并且有子集 并且不是未创建
           row.chirldList.forEach((element)=>{
-            console.info(element.state, row.createTime)
+            // console.info(element.state, row.createTime)
             if (element.auditDate > row.createTime) {
               element.timeout = true
             } else {
