@@ -31,7 +31,7 @@
       data() {
         return {
           filterText: '',
-          // datas: [],
+          datas: [],
           dialogVisible:true,
           defaultProps: {
             children: 'children',
@@ -42,22 +42,22 @@
       },
       computed: {
 
-        datas () {
-          return this.$store.state.category.position
-        },
+        // datas () {
+        //   return this.$store.state.category.position
+        // },
       },
       mounted(){
         //json方法引入数据
-        // this.$http.get('/static/jsonData/position.json', { isLoading: false }).then(res =>{
-        //   // console.log(res.data.data);
-        //   this.datas=res.data.data
-        // });
+        this.$http.get('/static/jsonData/position.json', { isLoading: false }).then(res =>{
+          // console.log(res.data.data);
+          this.datas=res.data.data
+        });
 
         //js方法引入数据
         // this.datas=datas;
         // console.log(datas)
 
-        this.$store.dispatch('getCategory', {name: 'position', id: '321a917eb2b111e9a1746778b5c1176e'});
+        // this.$store.dispatch('getCategory', {name: 'position', id: '321a917eb2b111e9a1746778b5c1176e'});
       },
       methods: {
         filterNode(value, data) {

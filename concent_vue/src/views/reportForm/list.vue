@@ -49,8 +49,8 @@
         this.$http
           .post(
             "/api/contract/ReportManage/loadReportPage",
-            // v_params
-            JSON.stringify(v_params),
+            v_params,
+            // JSON.stringify(v_params),
             {useJson: true}
           )
           .then((res) => {
