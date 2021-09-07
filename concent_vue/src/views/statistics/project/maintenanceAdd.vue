@@ -1169,6 +1169,9 @@
         });       
         // console.log(this.detailForm.project.commonFilesList)
       },
+      del(index, item, list) {
+          list.splice(index, 1)
+      },
       // 打开附件上传的组件
       openFileUp(url, list) {
         this.uploadVisible = true

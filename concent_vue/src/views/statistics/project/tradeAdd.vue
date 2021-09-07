@@ -352,7 +352,7 @@
                 placeholder="请输入内容" 
                 v-model="detailForm.project.companyName" class="input-with-select">
                 <el-button 
-                  v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" 
+                  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append" 
                   icon="el-icon-circle-plus-outline" 
                   @click="addDw('签约单位(使用资质单位)',detailForm.project.companyId)" 
                   >
@@ -858,7 +858,6 @@
                 'background-color': 'rgba(246,248,252,1)',
                 color: 'rgba(0,0,0,1)',
               }"
-              align="center"
               border
               class="detailTable"
               ref="table"
@@ -926,7 +925,7 @@
                   >
                     <el-select
                       class="input-el-input-group"
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
                       filterable
                       placeholder="请选择"
                       size="mini"
@@ -1244,8 +1243,8 @@
             isFrameIn: '', // 5
             companyBelongName: '', // 6
             projectStatusId: '',
-            amountCompanyName: '',
-            amountCompanyId: '',
+            companyName: '',
+            companyId: '',
             marketFirstId: '',
             marketSecondId: '',
             assemblyRate: '',

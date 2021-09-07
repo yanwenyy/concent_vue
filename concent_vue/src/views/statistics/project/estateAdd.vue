@@ -983,6 +983,9 @@
         });
         this.key = this.key + 1;
       },
+      del(index, item, list) {
+          list.splice(index, 1)
+      },
       //打开单位弹框
       addDw(type,list,ifChek,index,tableList){
         this.DwVisible = true;
