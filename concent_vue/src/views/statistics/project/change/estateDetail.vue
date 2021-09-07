@@ -582,7 +582,7 @@
                 prop="path"
               >
                 <template slot-scope="scope">
-                  <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.path'"  :rules="{required: true,message: '此项不能为空'}">
+                  <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.path'" >
                     <el-input disabled placeholder="请输入内容" v-model="scope.row.path" class="input-with-select group-no-padding">
                       <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" 
                        slot="append" icon="el-icon-circle-plus" 
