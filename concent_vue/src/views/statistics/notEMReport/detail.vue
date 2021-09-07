@@ -393,7 +393,7 @@
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="工业制造板块">
-        <!-- <div v-if="p.gyType=='2'" class="formula" >上报产值含增值税：剩余合同额=合同额-年累计工业总产值-本月工业总产值；上报产值不含增值税：剩余合同额=合同额-年累计工业总产值-本月工业总产值-税额</div> -->
+        <div v-if="p.gyType=='1'" class="formula" >上报产值含增值税：剩余合同额=合同额-年累计工业总产值-本月工业总产值；上报产值不含增值税：剩余合同额=合同额-年累计工业总产值-本月工业总产值-税额</div>
         <el-tabs type="border-card">
           <el-tab-pane v-if="p.gyType=='1'" label="产值">
             <div class="detailBox">
@@ -4515,15 +4515,11 @@
             }
           }
         })
-        // 判断月初月末进度
-        // this.detailform.kc_list.forEach((element)=>{
-        //   if (element.monthValue < element.monthStart) {
-        //     element.monthValue = element.monthStart
-        //   }
-        // })
         if (!isSave) {
           return false
         }
+        // 所有剩余合同额必须大于0
+        
         var url='';
         if(type=='save'){
           url="/api/statistics/unProjectReport/save/batch/addDetail"
@@ -4642,7 +4638,11 @@
               } else {
                 element.htquantity_after = Number(element.htquantity) - Number(element.equipmentManufacturinHw)- Number(element.componentManufacturinHw)- Number(element.otherIndustrayProductHw)
               }
-              element.isRed = false
+              if (element.htquantity_after < 0) {
+                element.isRed = true
+              } else {
+                element.isRed = false
+              }
             })            
           }
           // 物资贸易
@@ -4653,7 +4653,11 @@
               } else {
                 element.htquantity_after = Number(element.htquantity) - Number(element.overseasSale)
               }
-              element.isRed = false
+              if (element.htquantity_after < 0) {
+                element.isRed = true
+              } else {
+                element.isRed = false
+              }
             })
           }
           // 房地产
@@ -4664,7 +4668,11 @@
               } else {
                 element.htquantity_after = Number(element.htquantity) - Number(element.inRevenueHw)- Number(element.offRevenueHw)- Number(element.offRevenueNonHw)
               }
-              element.isRed = false
+              if (element.htquantity_after < 0) {
+                element.isRed = true
+              } else {
+                element.isRed = false
+              }
             })
           }
           // 金融保险 
@@ -4675,7 +4683,11 @@
               } else {
                 element.htquantity_after = Number(element.htquantity) - Number(element.overseasFinance)- Number(element.overseasSecure)- Number(element.otherFinanceHw)
               }
-              element.isRed = false
+              if (element.htquantity_after < 0) {
+                element.isRed = true
+              } else {
+                element.isRed = false
+              }
             })
           }
           // 运营维管
@@ -4686,7 +4698,11 @@
               } else {
                 element.htquantity_after = Number(element.htquantity) - Number(element.engineeringOperationHw)- Number(element.informationOperationHw)- Number(element.estateManagementHw)- Number(element.overseasOtherOperation)
               }
-              element.isRed = false
+              if (element.htquantity_after < 0) {
+                element.isRed = true
+              } else {
+                element.isRed = false
+              }
             })
           }
           // 其他 
@@ -4697,7 +4713,11 @@
               } else {
                 element.htquantity_after = Number(element.htquantity) - Number(element.equipmentLeasingHw)- Number(element.transportationHw)- Number(element.accommodationCateringHw)- Number(element.educationTrainingHw)- Number(element.informationConstructionHw)- Number(element.leaseHousesHw)- Number(element.otherProjectHw)
               }
-              element.isRed = false
+              if (element.htquantity_after < 0) {
+                element.isRed = true
+              } else {
+                element.isRed = false
+              }
             })
           }
           var datas=res.data.data;
@@ -4732,7 +4752,11 @@
               } else {
                 element.htquantity_after = Number(element.htquantity) - Number(element.equipmentManufacturinHw)- Number(element.componentManufacturinHw)- Number(element.otherIndustrayProductHw)
               }
-              element.isRed = false
+              if (element.htquantity_after < 0) {
+                element.isRed = true
+              } else {
+                element.isRed = false
+              }
             })            
           }
           // 物资贸易
@@ -4742,7 +4766,11 @@
             } else {
               element.htquantity_after = Number(element.htquantity) - Number(element.overseasSale)
             }
-            element.isRed = false
+            if (element.htquantity_after < 0) {
+              element.isRed = true
+            } else {
+              element.isRed = false
+            }
           })
           // 房地产
           res.data.data.fdc_list.forEach((element)=>{
@@ -4751,7 +4779,11 @@
             } else {
               element.htquantity_after = Number(element.htquantity) - Number(element.inRevenueHw)- Number(element.offRevenueHw)- Number(element.offRevenueNonHw)
             }
-            element.isRed = false
+            if (element.htquantity_after < 0) {
+              element.isRed = true
+            } else {
+              element.isRed = false
+            }
           })
           // 金融保险 
           res.data.data.jrbx_list.forEach((element)=>{
@@ -4760,7 +4792,11 @@
             } else {
               element.htquantity_after = Number(element.htquantity) - Number(element.overseasFinance)- Number(element.overseasSecure)- Number(element.otherFinanceHw)
             }
-            element.isRed = false
+            if (element.htquantity_after < 0) {
+              element.isRed = true
+            } else {
+              element.isRed = false
+            }
           })
           // 运营维管
           res.data.data.yy_list.forEach((element)=>{
@@ -4769,7 +4805,11 @@
             } else {
               element.htquantity_after = Number(element.htquantity) - Number(element.engineeringOperationHw)- Number(element.informationOperationHw)- Number(element.estateManagementHw)- Number(element.overseasOtherOperation)
             }
-            element.isRed = false
+            if (element.htquantity_after < 0) {
+              element.isRed = true
+            } else {
+              element.isRed = false
+            }
           })
           // 其他 
           res.data.data.qt_list.forEach((element)=>{
@@ -4778,7 +4818,11 @@
             } else {
               element.htquantity_after = Number(element.htquantity) - Number(element.equipmentLeasingHw)- Number(element.transportationHw)- Number(element.accommodationCateringHw)- Number(element.educationTrainingHw)- Number(element.informationConstructionHw)- Number(element.leaseHousesHw)- Number(element.otherProjectHw)
             }
-            element.isRed = false
+            if (element.htquantity_after < 0) {
+              element.isRed = true
+            } else {
+              element.isRed = false
+            }
           })
           var datas=res.data.data;
           this.detailform=datas;
