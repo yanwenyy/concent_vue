@@ -105,7 +105,7 @@ const mutations = {
       // 添加标签按钮，如果当前路由已经打开，则不再重复添加
       Vue.prototype.$http.get('/jsonapi/System/system/category/v1.0/wholetreeNew').then(res => {
         this.state.optiondata = res.data.data;
-      sessionStorage.setItem('optiondata',JSON.stringify(state.optiondata));
+        addSessionStorage('optiondata',JSON.stringify(state.optiondata));
       this.state.optiondata=JSON.parse(sessionStorage.getItem('optiondata'));
       this.state.optiondata.forEach((item) => {
         switch (item.categoryCode){
@@ -498,7 +498,7 @@ const mutations = {
     if(state.category[data.name]== undefined){
       Vue.prototype.$http.get('/jsonapi/System/system/category/detail//v1.0/tree/' + data.id).then(res => {
         state.category[data.name] = res.data.data;
-      sessionStorage.setItem('category',JSON.stringify(state.category));
+        addSessionStorage('category',JSON.stringify(state.category));
       state.category=JSON.parse(sessionStorage.getItem('category'));
     })
     }else{
@@ -525,7 +525,7 @@ const mutations = {
 
           });
           state.pubCustomers = pubCustomers;
-          sessionStorage.setItem('pubCustomers',JSON.stringify(state.pubCustomers));
+          addSessionStorage('pubCustomers',JSON.stringify(state.pubCustomers));
           state.pubCustomers=JSON.parse(sessionStorage.getItem('pubCustomers'));
       })
     }else{
@@ -552,6 +552,42 @@ const actions = {
     commit('setPubCustomers', data)
   }
 }
+const addSessionStorage = (key, storeObj) => {
+  //定义一个前缀，表示只删除自己定义的缓存
+  const cachePrefix = 'SERVICE_QR_';
+  // sessionStorage对大小是有限制的，所以要进行try catch
+  // 500KB左右的东西保存起来就会令到Resources变卡
+  // 2M左右就可以令到Resources卡死，操作不了
+  // 5M就到了Chrome的极限
+  // 超过之后会抛出如下异常：
+  // DOMException: Failed to execute 'setItem' on 'Storage': Setting the value of 'basket-http://file.com/ykq/wap/v3Templates/timeout/timeout/large.js' exceeded the quota
+  try {
+    sessionStorage.setItem(key, storeObj);
+  } catch (e) {
+    // sessionStorage容量不够，根据保存的时间删除已缓存到 sessionStorage
+    if (e.name.toUpperCase().indexOf('QUOTA') >= 0) {
+      let item1;
+      const tempArr1 = [];
+      // 先把所有的缓存对象来出来，放到 tempArr 里
+
+      for (item1 in sessionStorage) {
+        // if (item.indexOf(cachePrefix) === 0) {
+        //   tempArr.push(JSON.parse(sessionStorage[item]));
+        // }
+        tempArr1.push(JSON.parse(sessionStorage[item1]));
+      }
+      // 如果有缓存对象
+      if (tempArr1.length) {
+        // 按缓存时间升序排列数组
+        tempArr1.sort((a, b) => a.stamp - b.stamp);
+        // 删除缓存时间最早的
+        sessionStorage.removeItem(tempArr1[0].key);
+        // 删除后在再添加，利用递归完成
+        addSessionStorage(key, storeObj);
+      }
+    }
+  }
+};
 export default new Vuex.Store({
   state,
   getters,
