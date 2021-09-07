@@ -270,7 +270,7 @@
         infoCSVisible: true,
         projectTypeTwo: [], // 工程类别(二级)
         projectNatureTwo: [], // 项目性质(二级)
-        projectStatusType:[{ id: 1, detailName: '草稿' }, { id: 2, detailName: '审核中' }, { id: 3, detailName: '审核通过' }, { id: 4, detailName: '审核退回' }],
+        projectStatusType: [{ id: 'edit', detailName: '草稿' }, { id: 'check', detailName: '审核中' }, { id: 'pass', detailName: '审核通过' }, { id: 'reject', detailName: '审核退回' }],
         page: { current: 1, size: 20, total: 0, records: [] },
         searchform: {
           current: 1,

@@ -906,14 +906,6 @@
                 prop="specificationAndModel"
                 show-overflow-tooltip
               >
-                <!-- <template slot-scope="scope">
-                  <el-form-item class="tabelForm">
-                    <el-input
-                      clearable
-                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
-                      v-model="scope.row.specificationAndModel"/>
-                  </el-form-item>
-                </template> -->
               </el-table-column>
               <el-table-column
                 :resizable="false"
@@ -1523,7 +1515,6 @@
           )
           .then((res) => {
             this.cpxxList = res.data.data.records;
-            console.info(this.cpxxList)
           });
       },
       //table获取name

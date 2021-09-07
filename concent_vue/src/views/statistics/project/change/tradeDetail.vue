@@ -381,7 +381,7 @@
                   placeholder="请输入内容" 
                   v-model="detailForm.project.companyName" class="input-with-select">
                   <el-button 
-                    v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" 
+                    v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append" 
                     icon="el-icon-circle-plus-outline" 
                     @click="addDw('签约单位(使用资质单位)',detailForm.project.companyId)" 
                     >
@@ -699,6 +699,7 @@
               <el-form-item
                 class="neirong"
                 prop="project.changeReason"
+                :rules="rules.project.must"
                 label="变更原因:">
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
@@ -924,7 +925,7 @@
                     >
                       <el-select
                         class="input-el-input-group"
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
                         filterable
                         placeholder="请选择"
                         size="mini"
@@ -960,7 +961,7 @@
                                   :rules="rules.project.isNumber">
                       <el-input
                         clearable
-                        :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                         v-model="scope.row.subjectMatterNo"/>
                     </el-form-item>
                   </template>
@@ -998,7 +999,7 @@
                         class="group-no-padding"
                         v-model="scope.row.totalPrice"
                         clearable
-                        :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                        :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                       >
                         <template slot="prepend">¥</template>
                         <template slot="append">(万元)</template>
@@ -2106,8 +2107,7 @@
             isMustMoney: [{ required: true, validator: validateMustMoney, trigger: ['blur', 'change'] }],
             isMobile: [{ validator: validateMobile, trigger: ['blur', 'change'] }],
             isPercent: [{ required: true, validator: validatePercent, trigger: ['blur', 'change'] }],
-            isNumber: [{ validator: validateNumber, trigger: ['blur', 'change'] }],
-            changeReason: [{ required: true, message: '此项不能为空', trigger: 'blur' }]
+            isNumber: [{ validator: validateNumber, trigger: ['blur', 'change'] }]
           }
         },
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
@@ -2750,6 +2750,7 @@
           .then((res) => {
             if (res.data.code === 200) {
               this.detailForm.project = res.data.data
+              this.getProjectFather();
               this.showDetailForm.project = JSON.parse(JSON.stringify(res.data.data))
               if (!res.data.data.infoProductList) {
                 this.detailForm.project.infoProductList = []

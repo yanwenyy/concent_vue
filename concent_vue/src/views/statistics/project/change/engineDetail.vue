@@ -161,6 +161,24 @@
                 </el-input>
               </el-form-item>
               <el-form-item
+                  label="所属项目部:"
+                  prop="project.belongOrgCode"
+                  style="width: 32.5%">
+                  <el-select
+                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                    clearable
+                    filterable
+                    placeholder="请选择"
+                    @change="belongOrgChange"
+                    v-model="detailForm.project.belongOrgCode">
+                    <el-option
+                      :key="index"
+                      :label="item.detailName"
+                      :value="item.detailCode"
+                      v-for="(item, index) in belongOrgList"/>
+                  </el-select>
+                </el-form-item>
+              <el-form-item
                 v-if="detailForm.project.projectTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'"
                 label="所属铁路局:"
                 style="width: 32.5%">
@@ -450,7 +468,7 @@
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.companyName">
-                  <el-button :disabled="true" v-if="p.actpoint!='task'&&p.actpoint!='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('签约/使用资质单位',detailForm.project.companyId)"></el-button>
+                  <el-button :disabled="true" v-if="p.actpoint!='task'&&p.actpoint!='look'&&detailForm.project.contractInfoList==''" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('签约/使用资质单位',detailForm.project.companyId)"></el-button>
                 </el-input>
               </el-form-item>
             </el-row>
@@ -1007,6 +1025,7 @@
               <el-form-item
                 class="neirong"
                 prop="project.changeReason"
+                :rules="rules.project.must"
                 label="变更原因:">
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
@@ -2573,6 +2592,7 @@
         sjdwList: [],
         projectType:[], //项目类型下拉
         fatherList:[],
+        belongOrgList:[], //所属项目部下拉
         detailForm: {
           project: {
             projectSubContractList: [], // 分包字段
@@ -2587,9 +2607,12 @@
             projectNatureId: '', // 项目性质
             projectNatureFirstId: '', // 项目性质(一级)
             projectNatureSecondId: '', // 项目性质(二级)
-            // companyId: '', // 签约/使用资质单位
+            companyId: '', // 签约/使用资质单位
             companyName: '', // 签约/使用资质名称
             companyBuiltName: '', // 承建单位
+            belongOrgId: '',
+            belongOrgCode: '',
+            belongOrgName: '',
             railwayId: '', // 所属铁路局
             projectTypeFirstId: '', // 工程类别（一级）
             projectTypeSecondId: '', // 工程类别（二级）
@@ -2772,7 +2795,7 @@
             isMobile: [{ validator: validateMobile, trigger: ['blur', 'change'] }],
             isPercent: [{ required: true, validator: validatePercent, trigger: ['blur', 'change'] }],
             isNumber: [{ validator: validateNumber, trigger: ['blur', 'change'] }],
-            changeReason: [{ required: true, message: '此项不能为空', trigger: 'blur' }]
+            must: [{ required: true, message: '此项不能为空', trigger: ['blur', 'change'] }]
           }
         },
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
@@ -2836,6 +2859,7 @@
       if (this.p.actpoint === 'add') {
         this.getAddDetail()
       }
+      this.getProjectUnit();
       this.$store.dispatch('getConfig', {})
       this.$store.dispatch("getPubCustomers", {});
       this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
@@ -3434,6 +3458,7 @@
         if(data.type=="承建单位"){
           this.detailForm.project.companyBuiltName=data.name;
           this.detailForm.project.companyBuiltId=data.id;
+          this.getProjectUnit();
         }else if(data.type=="签约/使用资质单位"){
           this.detailForm.project.companyId=id.join(",");
           this.detailForm.project.companyName=name.join(",");
@@ -3443,6 +3468,28 @@
         }
         this.DwVisible=false;
       },
+    //承建单位触发项目部下拉
+    getProjectUnit(){
+      this.$http
+      .post(
+        "/api/statistics/StatisticsProject/list/getUndertakenProject",
+         { parentId: this.detailForm.project.companyBuiltId }
+      )
+      .then((res) => {
+        this.belongOrgList = res.data.data;
+        this.belongOrgList.forEach((item)=>{
+          item.detailCode = item.ORG_CODE;
+          item.detailName = item.ORG_NAME;
+        })
+      });
+    },
+    //所属项目部ID，Name
+    belongOrgChange(){
+      var belongOrgCode = this.detailForm.project.belongOrgCode;
+      var belongOrg = this.belongOrgList.find(item=>item.detailCode===belongOrgCode);
+      this.detailForm.project.belongOrgId = belongOrg.ID
+      this.detailForm.project.belongOrgName = belongOrg.detailName
+    },
       // 修改和查看时的时候详情
       getDetail() {
         this.$http
@@ -3503,6 +3550,7 @@
           .then((res) => {
             if (res.data.code === 200) {
               this.detailForm.project = res.data.data
+              this.getProjectFather();
               this.showDetailForm.project = JSON.parse(JSON.stringify(res.data.data))
               if (!res.data.data.infoProductList) {
                 this.detailForm.project.infoProductList = []

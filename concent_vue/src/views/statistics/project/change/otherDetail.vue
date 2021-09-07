@@ -348,7 +348,7 @@
             <el-row>
               <el-form-item
                 label="签约单位(使用资质单位):"
-                prop="project.amountCompanyName"
+                prop="project.companyName"
                 style="width: 32.5%"
                 :rules="{
                   required: true, message: '此项不能为空', trigger: ['blur','change']
@@ -358,11 +358,11 @@
                   clearable 
                   disabled
                   placeholder="请输入内容" 
-                  v-model="detailForm.project.amountCompanyName" class="input-with-select">
+                  v-model="detailForm.project.companyName" class="input-with-select">
                   <el-button 
-                    v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" 
+                    v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append" 
                     icon="el-icon-circle-plus-outline" 
-                    @click="addDw('签约单位(使用资质单位)',detailForm.project.amountCompanyId)" 
+                    @click="addDw('签约单位(使用资质单位)',detailForm.project.companyId)" 
                     >
                   </el-button>
                 </el-input>
@@ -573,6 +573,7 @@
               <el-form-item
                 class="neirong"
                 prop="project.changeReason"
+                :rules="rules.project.must"
                 label="变更原因:">
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
@@ -1111,13 +1112,13 @@
             <el-row>
               <el-form-item
                 label="签约单位(使用资质单位):"
-                prop="amountCompanyName"
+                prop="companyName"
                 style="width:32.5%;">
                 <el-input
                   clearable
                   disabled
                   placeholder="请输入"
-                  v-model="showDetailForm.project.amountCompanyName"/>
+                  v-model="showDetailForm.project.companyName"/>
               </el-form-item>
               <el-form-item
                 label="所属单位:"
@@ -1588,8 +1589,7 @@
             isMustMoney: [{ required: true, validator: validateMustMoney, trigger: ['blur', 'change'] }],
             isMobile: [{ validator: validateMobile, trigger: ['blur', 'change'] }],
             isPercent: [{ required: true, validator: validatePercent, trigger: ['blur', 'change'] }],
-            isNumber: [{ validator: validateNumber, trigger: ['blur', 'change'] }],
-            changeReason: [{ required: true, message: '此项不能为空', trigger: 'blur' }]
+            isNumber: [{ validator: validateNumber, trigger: ['blur', 'change'] }]
           }
         },
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
@@ -1743,10 +1743,31 @@
       },
       // 获取项目地点的值
       getPositionTree(data) {
-        this.treeStatas = false
-        this.detailForm.project.topInfoSiteList[0].placeId = data.id
-        this.detailForm.project.topInfoSiteList[0].path = data.fullDetailName
-        this.detailForm.project.topInfoSiteList[0].ffid = data.fullDetailCode
+        console.log(data)
+        this.treeStatas = false;
+        var country = '', _data = data;
+        if (_data.fullDetailName.indexOf("境内") != -1) {
+          country = '01';
+        } else if (_data.fullDetailName.indexOf("境外") != -1) {
+          country = '02';
+        }
+        var ifRepeat=false;
+        this.detailForm.project.topInfoSiteList.forEach((item, index) => {
+          if(item.ffid!=_data.fullDetailCode&&!ifRepeat){
+            if (index == this.positionIndex) {
+              // item.detailName = _data.detailName;
+              item.country = country;
+              item.ffid = _data.fullDetailCode;
+              item.path = _data.fullDetailName;
+              item.placeId=_data.id;
+            }
+          }else{
+            this.$message.error("项目地点不能重复");
+            ifRepeat=true;
+          }
+
+        });
+        this.key = this.key + 1;
       },
       //新增标段和地点
       add(type) {
@@ -1780,8 +1801,8 @@
           })
         }
         if(data.type=="签约单位(使用资质单位)"){
-          this.detailForm.project.amountCompanyId=id.join(",");
-          this.detailForm.project.amountCompanyName=name.join(",");
+          this.detailForm.project.companyId=id.join(",");
+          this.detailForm.project.companyName=name.join(",");
         }
         this.DwVisible=false;
       },
@@ -2096,6 +2117,7 @@
           .then((res) => {
             if (res.data.code === 200) {
               this.detailForm.project = res.data.data
+              this.getProjectFather();
               this.showDetailForm.project = JSON.parse(JSON.stringify(res.data.data))
               if (!res.data.data.infoProductList) {
                 this.detailForm.project.infoProductList = []
