@@ -3921,10 +3921,10 @@
               k=1;
             }
           }
-          // if(k===1){
-          //   this.$message.error("请正确选择项目地点");
-          //   return false;
-          // }
+          if(k===1){
+            this.$message.error("请正确选择项目地点");
+            return false;
+          }
         }
         if(this.detailform.contractInfo.valueAddedTax<=0){
           this.$message.error("增值税需要大于0");
