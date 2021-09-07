@@ -1348,6 +1348,7 @@
             projectRemark: '', // 备注(最多2000字)
             companyBuild: '', // 建设单位
             companyBuildId: '', // 建设单位id
+            isClientele: '1',   //是否客户
             companyDesign: '', // 设计单位
             companyDesignId: '', // 设计单位id
             topInfoSiteList: [
