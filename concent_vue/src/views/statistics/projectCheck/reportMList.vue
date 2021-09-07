@@ -385,20 +385,57 @@
              this.$message.info("请选择一条数据，进行编辑", "提示")
              return false
             }
-          if ((this.multipleSelection[0].flowStatus!=null||this.multipleSelection[0].flowStatus!='')&& this.multipleSelection[0].flowStatus!='edit'&& this.multipleSelection[0].flowStatus!='reject'){
-            this.$message.info("只允许修改草稿和审核驳回数据", "提示")
+          if ((this.multipleSelection[0].flowStatus!=null||this.multipleSelection[0].flowStatus!='')&& this.multipleSelection[0].flowStatus=='check'){
+            this.$message.info("审核中的数据不能修改", "提示")
             return false
           }
+
           this.type = 'edit'
           this.form1 = JSON.parse(JSON.stringify(this.multipleSelection[0]))
           let p = {fromPath:'./listAll',selfPath:'../reportMList',fromDate:this.searchform.yearDateS,projectId:JSON.parse(JSON.stringify(this.multipleSelection[0])).projectId,uuid:JSON.parse(JSON.stringify(this.multipleSelection[0])).uuid,
             orgCode:JSON.parse(JSON.stringify(this.multipleSelection[0])).createOrgCode,
             projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).flowStatus,projectName:this.multipleSelection[0].reportProjectName
           }
-          this.$router.push({
-            path: this.p.fromPath?'./reportMDetail/':'../reportMDetail/',
-            query: {p: this.$utils.encrypt(JSON.stringify(p))}
-          })
+          if(this.multipleSelection[0].flowStatus=='pass'){
+            this.$http
+              .post(
+                '/api/statistics/Projectcheck/detail/checkGrant',
+                JSON.stringify(this.multipleSelection[0]),
+                {useJson: true}
+              )
+              .then((res) => {
+                if(res.data.code==200){
+                  this.$confirm(`此条数据已经审核通过,确认补录吗`, '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                  }).then(() => {
+                    this.$http
+                      .post(
+                        '/api/statistics/Projectcheck/detail/supplyCheck',
+                        { uuid: this.multipleSelection[0].uuid }
+                      )
+                      .then((res) => {
+                        p.uuid=res.data.data.uuid;
+                        this.$router.push({
+                          path: this.p.fromPath?'./reportMDetail/':'../reportMDetail/',
+                          query: {p: this.$utils.encrypt(JSON.stringify(p))}
+                            })
+                          })
+                      }).catch(() => {
+                      })
+
+                }else{
+                  this.$message.error(res.data.msg)
+                }
+              })
+          }else{
+            this.$router.push({
+              path: this.p.fromPath?'./reportMDetail/':'../reportMDetail/',
+              query: {p: this.$utils.encrypt(JSON.stringify(p))}
+            })
+          }
+
         },
       // 删除
       del() {

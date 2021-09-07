@@ -530,6 +530,7 @@
             sgcz=Number(item.monthValue);
           }
         });
+        console.log(sgcz,this.projectList.contractAmountEngine)
         if(sgcz>this.projectList.contractAmountEngine){
           this.$message.error("施工产值不能大于合同额");
           return false;
@@ -681,7 +682,7 @@
       // 返回上一页
       back() {
         if(this.p.selfPath){
-          let _p={fromDate:this.p.fromDate,fromPath:this.p.fromPath,projectId:this.p.projectId,fromDateStart:this.p.fromDateStart};
+          let _p={projectName:this.p.projectName,fromDate:this.p.fromDate,fromPath:this.p.fromPath,projectId:this.p.projectId,fromDateStart:this.p.fromDateStart};
           console.log(this.p)
           this.$router.push({
             path: this.p.selfPath,
