@@ -18,82 +18,86 @@
                 class="gcform"
                 ref="detailform"
               >
-                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
-                  <span>当月: </span>
-                </p>
-                <el-form-item
-                  label="合计:"
-                >
-                  <el-input
-                    disabled
-                    :value="(detailform.sumByMon_0.kcsjMonth||0)+(detailform.sumByMon_0.gcjlMonth||0)+(detailform.sumByMon_0.jszxMonth||0)+(detailform.sumByMon_0.qtMonth||0)"/>
-                </el-form-item>
-                <el-form-item
-                  label="其中勘察设计:"
-                >
-                  <el-input
-                    disabled
-                    v-model="detailform.sumByMon_0.kcsjMonth"/>
-                </el-form-item>
-                <el-form-item
-                  label="工程监理:"
-                >
-                  <el-input
-                    disabled
-                    v-model="detailform.sumByMon_0.gcjlMonth"/>
-                </el-form-item>
-                <el-form-item
-                  label="工程咨询:"
-                >
-                  <el-input
-                    disabled
-                    v-model="detailform.sumByMon_0.jszxMonth"/>
-                </el-form-item>
-                <el-form-item
-                  label="其他:"
-                >
-                  <el-input
-                    disabled
-                    v-model="detailform.sumByMon_0.qtMonth"/>
-                </el-form-item>
-                <p  class="detail-title" style="overflow: hidden;margin-right:30px">
-                  <span>当年: </span>
-                </p>
-                <el-form-item
-                  label="合计:"
-                >
-                  <el-input
-                    disabled
-                    :value="(detailform.sumByMon_0.kcsjMonth||0)+(detailform.sumByMon_0.gcjlMonth||0)+(detailform.sumByMon_0.jszxMonth||0)+(detailform.sumByMon_0.qtMonth||0)+(detailform.sumByYear_0.kcsjYear||0)+(detailform.sumByYear_0.gcjlYear||0)+(detailform.sumByYear_0.jszxYear||0)+(detailform.sumByYear_0.qtYear||0)"/>
-                </el-form-item>
-                <el-form-item
-                  label="其中勘察设计:"
-                >
-                  <el-input
-                    disabled
-                    v-model="detailform.sumByYear_0.kcsjYear+detailform.sumByMon_0.kcsjMonth"/>
-                </el-form-item>
-                <el-form-item
-                  label="工程监理:"
-                >
-                  <el-input
-                    disabled
-                    v-model="detailform.sumByYear_0.gcjlYear+detailform.sumByMon_0.gcjlMonth"/>
-                </el-form-item>
-                <el-form-item
-                  label="工程咨询:"
-                >
-                  <el-input
-                    disabled
-                    v-model="detailform.sumByYear_0.jszxYear+detailform.sumByMon_0.jszxMonth"/>
-                </el-form-item>
-                <el-form-item
-                  label="其他:"
-                >
-                  <el-input
-                    disabled
-                    v-model="detailform.sumByYear_0.qtYear+detailform.sumByMon_0.qtMonth"/>
-                </el-form-item>
+                <div style="width:50%;float:left;">
+                  <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                    <span>当月: </span>
+                  </p>
+                  <el-form-item
+                    label="合计:"
+                  >
+                    <el-input
+                      disabled
+                      :value="(detailform.sumByMon_0.kcsjMonth||0)+(detailform.sumByMon_0.gcjlMonth||0)+(detailform.sumByMon_0.jszxMonth||0)+(detailform.sumByMon_0.qtMonth||0)"/>
+                  </el-form-item>
+                  <el-form-item
+                    label="其中勘察设计:"
+                  >
+                    <el-input
+                      disabled
+                      v-model="detailform.sumByMon_0.kcsjMonth"/>
+                  </el-form-item>
+                  <el-form-item
+                    label="工程监理:"
+                  >
+                    <el-input
+                      disabled
+                      v-model="detailform.sumByMon_0.gcjlMonth"/>
+                  </el-form-item>
+                  <el-form-item
+                    label="工程咨询:"
+                  >
+                    <el-input
+                      disabled
+                      v-model="detailform.sumByMon_0.jszxMonth"/>
+                  </el-form-item>
+                  <el-form-item
+                    label="其他:"
+                  >
+                    <el-input
+                      disabled
+                      v-model="detailform.sumByMon_0.qtMonth"/>
+                  </el-form-item>
+                </div>
+                <div style="width:50%;float:left;">
+                  <p  class="detail-title" style="overflow: hidden;margin-right:30px">
+                    <span>当年: </span>
+                  </p>
+                  <el-form-item
+                    label="合计:"
+                  >
+                    <el-input
+                      disabled
+                      :value="(detailform.sumByMon_0.kcsjMonth||0)+(detailform.sumByMon_0.gcjlMonth||0)+(detailform.sumByMon_0.jszxMonth||0)+(detailform.sumByMon_0.qtMonth||0)+(detailform.sumByYear_0.kcsjYear||0)+(detailform.sumByYear_0.gcjlYear||0)+(detailform.sumByYear_0.jszxYear||0)+(detailform.sumByYear_0.qtYear||0)"/>
+                  </el-form-item>
+                  <el-form-item
+                    label="其中勘察设计:"
+                  >
+                    <el-input
+                      disabled
+                      v-model="detailform.sumByYear_0.kcsjYear+detailform.sumByMon_0.kcsjMonth"/>
+                  </el-form-item>
+                  <el-form-item
+                    label="工程监理:"
+                  >
+                    <el-input
+                      disabled
+                      v-model="detailform.sumByYear_0.gcjlYear+detailform.sumByMon_0.gcjlMonth"/>
+                  </el-form-item>
+                  <el-form-item
+                    label="工程咨询:"
+                  >
+                    <el-input
+                      disabled
+                      v-model="detailform.sumByYear_0.jszxYear+detailform.sumByMon_0.jszxMonth"/>
+                  </el-form-item>
+                  <el-form-item
+                    label="其他:"
+                  >
+                    <el-input
+                      disabled
+                      v-model="detailform.sumByYear_0.qtYear+detailform.sumByMon_0.qtMonth"/>
+                  </el-form-item>
+                </div>
               </el-form>
             </div>
           </el-tab-pane>
@@ -402,6 +406,7 @@
                     disabled
                     :value="(detailform.sumByMon_1.industry||0)+(detailform.sumByMon_1.overseasIndustry||0)+(detailform.sumByYear_1.industry||0)+(detailform.sumByYear_1.overseasIndustry||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="装备制造(万元):"
                 >
@@ -416,6 +421,7 @@
                     disabled
                     :value="(detailform.sumByMon_1.equipmentManufacturin||0)+(detailform.sumByMon_1.equipmentManufacturinHw||0)+(detailform.sumByYear_1.equipmentManufacturin||0)+(detailform.sumByYear_1.equipmentManufacturinHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="预构件(万元):"
                 >
@@ -430,6 +436,7 @@
                     disabled
                     :value="(detailform.sumByMon_1.componentManufacturin||0)+(detailform.sumByMon_1.componentManufacturinHw||0)+(detailform.sumByYear_1.componentManufacturin||0)+(detailform.sumByYear_1.componentManufacturinHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="其他工业产品(万元):"
                 >
@@ -444,6 +451,7 @@
                     disabled
                     :value="(detailform.sumByMon_1.otherIndustrayProduct||0)+(detailform.sumByMon_1.otherIndustrayProductHw||0)+(detailform.sumByYear_1.otherIndustrayProduct||0)+(detailform.sumByYear_1.otherIndustrayProductHw||0)"/>
                 </el-form-item>
+                <br>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境内数据: </span>
                 </p>
@@ -461,6 +469,7 @@
                     disabled
                     :value="(detailform.sumByMon_1.industry||0)+(detailform.sumByYear_1.industry||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="装备制造(万元):"
                 >
@@ -475,6 +484,7 @@
                     disabled
                     :value="(detailform.sumByMon_1.equipmentManufacturin||0)+(detailform.sumByYear_1.equipmentManufacturin||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="预构件(万元):"
                 >
@@ -489,6 +499,7 @@
                     disabled
                     :value="(detailform.sumByMon_1.componentManufacturin||0)+(detailform.sumByYear_1.componentManufacturin||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="其他工业产品(万元):"
                 >
@@ -503,6 +514,7 @@
                     disabled
                     :value="(detailform.sumByMon_1.otherIndustrayProduct||0)+(detailform.sumByYear_1.otherIndustrayProduct||0)"/>
                 </el-form-item>
+                <br>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境外数据: </span>
                 </p>
@@ -520,6 +532,7 @@
                     disabled
                     :value="(detailform.sumByMon_1.overseasIndustry||0)+(detailform.sumByYear_1.overseasIndustry||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="装备制造(万元):"
                 >
@@ -534,6 +547,7 @@
                     disabled
                     :value="(detailform.sumByMon_1.equipmentManufacturinHw||0)+(detailform.sumByYear_1.equipmentManufacturinHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="预构件(万元):"
                 >
@@ -548,6 +562,7 @@
                     disabled
                     :value="(detailform.sumByMon_1.componentManufacturinHw||0)+(detailform.sumByYear_1.componentManufacturinHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="其他工业产品(万元):"
                 >
@@ -562,6 +577,7 @@
                     disabled
                     :value="(detailform.sumByMon_1.otherIndustrayProductHw||0)+(detailform.sumByYear_1.otherIndustrayProductHw||0)"/>
                 </el-form-item>
+                <br>
               </el-form>
             </div>
           </el-tab-pane>
@@ -911,6 +927,7 @@
                     disabled
                     :value="(detailform.sumByMon_cp.ngyvalueJn||0)+(detailform.sumByMon_cp.ngyvalueJw||0)+(detailform.sumByYear_cp.ngyvalueJn||0)+(detailform.sumByYear_cp.ngyvalueJw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="装备制造(万元):"
                 >
@@ -925,6 +942,7 @@
                     disabled
                     :value="(detailform.sumByMon_cp.nzbsbvalueJn||0)+(detailform.sumByMon_cp.nzbsbvalueJw||0)+(detailform.sumByYear_cp.nzbsbvalueJn||0)+(detailform.sumByYear_cp.nzbsbvalueJw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="预构件(万元):"
                 >
@@ -939,6 +957,7 @@
                     disabled
                     :value="(detailform.sumByMon_cp.nygjvalueJn||0)+(detailform.sumByMon_cp.nygjvalueJw||0)+(detailform.sumByYear_cp.nygjvalueJn||0)+(detailform.sumByYear_cp.nygjvalueJw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="其他工业产品(万元):"
                 >
@@ -953,6 +972,7 @@
                     disabled
                     :value="(detailform.sumByMon_cp.nqigyvalueJn||0)+(detailform.sumByMon_cp.nqigyvalueJw||0)+(detailform.sumByYear_cp.nqigyvalueJn||0)+(detailform.sumByYear_cp.nqigyvalueJw||0)"/>
                 </el-form-item>
+                <br>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境内数据: </span>
                 </p>
@@ -970,6 +990,7 @@
                     disabled
                     :value="(detailform.sumByMon_cp.ngyvalueJn||0)+(detailform.sumByYear_cp.ngyvalueJn||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="装备制造(万元):"
                 >
@@ -984,6 +1005,7 @@
                     disabled
                     :value="(detailform.sumByMon_cp.nzbsbvalueJn||0)+(detailform.sumByYear_cp.nzbsbvalueJn||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="预构件(万元):"
                 >
@@ -998,6 +1020,7 @@
                     disabled
                     :value="(detailform.sumByMon_cp.nygjvalueJn||0)+(detailform.sumByYear_cp.nygjvalueJn||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="其他工业产品(万元):"
                 >
@@ -1012,6 +1035,7 @@
                     disabled
                     :value="(detailform.sumByMon_cp.nqigyvalueJn||0)+(detailform.sumByYear_cp.nqigyvalueJn||0)"/>
                 </el-form-item>
+                <br>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境外数据: </span>
                 </p>
@@ -1029,6 +1053,7 @@
                     disabled
                     :value="(detailform.sumByMon_cp.ngyvalueJw||0)+(detailform.sumByYear_cp.ngyvalueJw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="装备制造(万元):"
                 >
@@ -1043,6 +1068,7 @@
                     disabled
                     :value="(detailform.sumByMon_cp.nzbsbvalueJw||0)+(detailform.sumByYear_cp.nzbsbvalueJw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="预构件(万元):"
                 >
@@ -1057,6 +1083,7 @@
                     disabled
                     :value="(detailform.sumByMon_cp.nygjvalueJw||0)+(detailform.sumByYear_cp.nygjvalueJw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="其他工业产品(万元):"
                 >
@@ -1071,6 +1098,7 @@
                     disabled
                     :value="(detailform.sumByMon_cp.nqigyvalueJw||0)+(detailform.sumByYear_cp.nqigyvalueJw||0)"/>
                 </el-form-item>
+                <br>
               </el-form>
             </div>
           </el-tab-pane>
@@ -1660,6 +1688,7 @@
                     disabled
                     :value="(detailform.sumByMon_3.income||0)+(detailform.sumByMon_3.overseasIncome||0)+(detailform.sumByYear_3.income||0)+(detailform.sumByYear_3.overseasIncome||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="表内营收(万元)::"
                 >
@@ -1674,6 +1703,7 @@
                     disabled
                     :value="(detailform.sumByMon_3.inRevenue||0)+(detailform.sumByMon_3.inRevenueHw||0)+(detailform.sumByYear_3.inRevenue||0)+(detailform.sumByYear_3.inRevenueHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="表外权益(万元):"
                 >
@@ -1688,6 +1718,7 @@
                     disabled
                     :value="(detailform.sumByMon_3.offRevenue||0)+(detailform.sumByMon_3.offRevenueHw||0)+(detailform.sumByYear_3.offRevenue||0)+(detailform.sumByYear_3.offRevenueHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="表外非权益(万元):"
                 >
@@ -1702,6 +1733,7 @@
                     disabled
                     :value="(detailform.sumByMon_3.offRevenueNon||0)+(detailform.sumByMon_3.offRevenueNonHw||0)+(detailform.sumByYear_3.offRevenueNon||0)+(detailform.sumByYear_3.offRevenueNonHw||0)"/>
                 </el-form-item>
+                <br>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境内数据: </span>
                 </p>
@@ -1720,6 +1752,7 @@
                     disabled
                     :value="(detailform.sumByMon_3.income||0)+(detailform.sumByYear_3.income||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="表内营收(万元)::"
                 >
@@ -1734,6 +1767,7 @@
                     disabled
                     :value="(detailform.sumByMon_3.inRevenue||0)+(detailform.sumByYear_3.inRevenue||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="表外权益(万元):"
                 >
@@ -1748,6 +1782,7 @@
                     disabled
                     :value="(detailform.sumByMon_3.offRevenue||0)+(detailform.sumByYear_3.offRevenue||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="表外非权益(万元):"
                 >
@@ -1762,6 +1797,7 @@
                     disabled
                     :value="(detailform.sumByMon_3.offRevenueNon||0)+(detailform.sumByYear_3.offRevenueNon||0)"/>
                 </el-form-item>
+                <br>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境外数据: </span>
                 </p>
@@ -1780,6 +1816,7 @@
                     disabled
                     :value="(detailform.sumByMon_3.overseasIncome||0)+(detailform.sumByYear_3.overseasIncome||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="表内营收(万元)::"
                 >
@@ -1794,6 +1831,7 @@
                     disabled
                     :value="(detailform.sumByMon_3.inRevenueHw||0)+(detailform.sumByYear_3.inRevenueHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="表外权益(万元):"
                 >
@@ -1808,6 +1846,7 @@
                     disabled
                     :value="(detailform.sumByMon_3.offRevenueHw||0)+(detailform.sumByYear_3.offRevenueHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="表外非权益(万元):"
                 >
@@ -1822,6 +1861,7 @@
                     disabled
                     :value="(detailform.sumByMon_3.offRevenueNonHw||0)+(detailform.sumByYear_3.offRevenueNonHw||0)"/>
                 </el-form-item>
+                <br>
               </el-form>
             </div>
           </el-tab-pane>
@@ -2112,6 +2152,7 @@
                     disabled
                     :value="(detailform.sumByMon_4.finance||0)+(detailform.sumByMon_4.secure||0)+(detailform.sumByMon_4.otherFinance||0)+(detailform.sumByMon_4.overseasFinance||0)+(detailform.sumByMon_4.overseasSecure||0)+(detailform.sumByMon_4.otherFinanceHw||0)+(detailform.sumByYear_4.sum||0)+(detailform.sumByYear_4.overseasSum||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="金融收入(万元):"
                 >
@@ -2126,6 +2167,7 @@
                     disabled
                     :value="(detailform.sumByMon_4.finance||0)+(detailform.sumByMon_4.overseasFinance||0)+(detailform.sumByYear_4.finance||0)+(detailform.sumByYear_4.overseasFinance||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="保险收入(万元):"
                 >
@@ -2140,6 +2182,7 @@
                     disabled
                     :value="(detailform.sumByMon_4.secure||0)+(detailform.sumByMon_4.overseasSecure||0)+(detailform.sumByYear_4.secure||0)+(detailform.sumByYear_4.overseasSecure||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="其他金融收入(万元):"
                 >
@@ -2154,6 +2197,7 @@
                     disabled
                     :value="(detailform.sumByMon_4.otherFinance||0)+(detailform.sumByMon_4.otherFinanceHw||0)+(detailform.sumByYear_4.otherFinance||0)+(detailform.sumByYear_4.otherFinanceHw||0)"/>
                 </el-form-item>
+                <br>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境内数据: </span>
                 </p>
@@ -2172,6 +2216,7 @@
                     disabled
                     :value="(detailform.sumByMon_4.finance||0)+(detailform.sumByMon_4.secure||0)+(detailform.sumByMon_4.otherFinance||0)+(detailform.sumByYear_4.sum||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="金融收入(万元):"
                 >
@@ -2186,6 +2231,7 @@
                     disabled
                     :value="(detailform.sumByMon_4.finance||0)+(detailform.sumByYear_4.finance||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="保险收入(万元):"
                 >
@@ -2200,6 +2246,7 @@
                     disabled
                     :value="(detailform.sumByMon_4.secure||0)+(detailform.sumByYear_4.secure||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="其他金融收入(万元):"
                 >
@@ -2214,6 +2261,7 @@
                     disabled
                     :value="(detailform.sumByMon_4.otherFinance||0)+(detailform.sumByYear_4.otherFinance||0)"/>
                 </el-form-item>
+                <br>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境外数据: </span>
                 </p>
@@ -2232,6 +2280,7 @@
                     disabled
                     :value="(detailform.sumByMon_4.overseasFinance||0)+(detailform.sumByMon_4.overseasSecure||0)+(detailform.sumByMon_4.otherFinanceHw||0)+(detailform.sumByYear_4.overseasSum||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="金融收入(万元):"
                 >
@@ -2246,6 +2295,7 @@
                     disabled
                     :value="(detailform.sumByMon_4.overseasFinance||0)+(detailform.sumByYear_4.overseasFinance||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="保险收入(万元):"
                 >
@@ -2260,6 +2310,7 @@
                     disabled
                     :value="(detailform.sumByMon_4.overseasSecure||0)+(detailform.sumByYear_4.overseasSecure||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="其他金融收入(万元):"
                 >
@@ -2530,6 +2581,7 @@
                     disabled
                     :value="(detailform.sumByMon_5.engineeringOperation||0)+(detailform.sumByMon_5.informationOperation||0)+(detailform.sumByMon_5.estateManagement||0)+(detailform.sumByMon_5.otherOperation||0)+(detailform.sumByMon_5.engineeringOperationHw||0)+(detailform.sumByMon_5.informationOperationHw||0)+(detailform.sumByMon_5.estateManagementHw||0)+(detailform.sumByMon_5.overseasOtherOperation||0)+(detailform.sumByYear_5.sum||0)+(detailform.sumByYear_5.overseasSum||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="工程运营维管(万元):"
                 >
@@ -2544,6 +2596,7 @@
                     disabled
                     :value="(detailform.sumByMon_5.engineeringOperation||0)+(detailform.sumByMon_5.engineeringOperationHw||0)+(detailform.sumByYear_5.engineeringOperation||0)+(detailform.sumByYear_5.engineeringOperationHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="信息化运营维管(万元):"
                 >
@@ -2558,6 +2611,7 @@
                     disabled
                     :value="(detailform.sumByMon_5.informationOperation||0)+(detailform.sumByMon_5.informationOperationHw||0)+(detailform.sumByYear_5.informationOperation||0)+(detailform.sumByYear_5.informationOperationHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="物业管理(万元):"
                 >
@@ -2572,6 +2626,7 @@
                     disabled
                     :value="(detailform.sumByMon_5.estateManagement||0)+(detailform.sumByMon_5.estateManagementHw||0)+(detailform.sumByYear_5.estateManagement||0)+(detailform.sumByYear_5.estateManagementHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="其他运营维管(万元):"
                 >
@@ -2586,6 +2641,7 @@
                     disabled
                     :value="(detailform.sumByMon_5.otherOperation||0)+(detailform.sumByMon_5.overseasOtherOperation||0)+(detailform.sumByYear_5.otherOperation||0)+(detailform.sumByYear_5.overseasOtherOperation||0)"/>
                 </el-form-item>
+                <br>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境内数据: </span>
                 </p>
@@ -2604,6 +2660,7 @@
                     disabled
                     :value="(detailform.sumByMon_5.engineeringOperation||0)+(detailform.sumByMon_5.informationOperation||0)+(detailform.sumByMon_5.estateManagement||0)+(detailform.sumByMon_5.otherOperation||0)+(detailform.sumByYear_5.sum||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="工程运营维管(万元):"
                 >
@@ -2618,6 +2675,7 @@
                     disabled
                     :value="(detailform.sumByMon_5.engineeringOperation||0)+(detailform.sumByYear_5.engineeringOperation||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="信息化运营维管(万元):"
                 >
@@ -2632,6 +2690,7 @@
                     disabled
                     :value="(detailform.sumByMon_5.informationOperation||0)+(detailform.sumByYear_5.informationOperation||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="物业管理(万元):"
                 >
@@ -2646,6 +2705,7 @@
                     disabled
                     :value="(detailform.sumByMon_5.estateManagement||0)+(detailform.sumByYear_5.estateManagement||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="其他运营维管(万元):"
                 >
@@ -2660,6 +2720,7 @@
                     disabled
                     :value="(detailform.sumByMon_5.otherOperation||0)+(detailform.sumByYear_5.otherOperation||0)"/>
                 </el-form-item>
+                <br>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境外数据: </span>
                 </p>
@@ -2678,6 +2739,7 @@
                     disabled
                     :value="(detailform.sumByMon_5.engineeringOperationHw||0)+(detailform.sumByMon_5.informationOperationHw||0)+(detailform.sumByMon_5.estateManagementHw||0)+(detailform.sumByMon_5.overseasOtherOperation||0)+(detailform.sumByYear_5.overseasSum||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="工程运营维管(万元):"
                 >
@@ -2692,6 +2754,7 @@
                     disabled
                     :value="(detailform.sumByMon_5.engineeringOperationHw||0)+(detailform.sumByYear_5.engineeringOperationHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="信息化运营维管(万元):"
                 >
@@ -2706,6 +2769,7 @@
                     disabled
                     :value="(detailform.sumByMon_5.informationOperationHw||0)+(detailform.sumByYear_5.informationOperationHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="物业管理(万元):"
                 >
@@ -2720,6 +2784,7 @@
                     disabled
                     :value="(detailform.sumByMon_5.estateManagementHw||0)+(detailform.sumByYear_5.estateManagementHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="其他运营维管(万元):"
                 >
@@ -2734,6 +2799,7 @@
                     disabled
                     :value="(detailform.sumByMon_5.overseasOtherOperation||0)+(detailform.sumByYear_5.overseasOtherOperation||0)"/>
                 </el-form-item>
+                <br>
               </el-form>
             </div>
           </el-tab-pane>
@@ -3014,6 +3080,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.equipmentLeasing||0)+(detailform.sumByMon_6.leaseHouses||0)+(detailform.sumByMon_6.transportation||0)+(detailform.sumByMon_6.accommodationCatering||0)+(detailform.sumByMon_6.educationTraining||0)+(detailform.sumByMon_6.informationConstruction||0)+(detailform.sumByMon_6.otherProject||0)+(detailform.sumByMon_6.equipmentLeasingHw||0)+(detailform.sumByMon_6.leaseHousesHw||0)+(detailform.sumByMon_6.transportationHw||0)+(detailform.sumByMon_6.accommodationCateringHw||0)+(detailform.sumByMon_6.educationTrainingHw||0)+(detailform.sumByMon_6.informationConstructionHw||0)+(detailform.sumByMon_6.otherProjectHw||0)+(detailform.sumByYear_6.sum||0)+(detailform.sumByYear_6.overseasSum||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="设备租赁(万元):"
                 >
@@ -3028,6 +3095,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.equipmentLeasing||0)+(detailform.sumByMon_6.equipmentLeasingHw||0)+(detailform.sumByYear_6.equipmentLeasing||0)+(detailform.sumByYear_6.equipmentLeasingHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="房屋租赁(万元):"
                 >
@@ -3042,6 +3110,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.leaseHouses||0)+(detailform.sumByMon_6.leaseHousesHw||0)+(detailform.sumByYear_6.leaseHouses||0)+(detailform.sumByYear_6.leaseHousesHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="交通运输(万元):"
                 >
@@ -3056,6 +3125,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.transportation||0)+(detailform.sumByMon_6.transportationHw||0)+(detailform.sumByYear_6.transportation||0)+(detailform.sumByYear_6.transportationHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="住宿餐饮(万元):"
                 >
@@ -3070,6 +3140,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.accommodationCatering||0)+(detailform.sumByMon_6.accommodationCateringHw||0)+(detailform.sumByYear_6.accommodationCatering||0)+(detailform.sumByYear_6.accommodationCateringHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="教育培训(万元):"
                 >
@@ -3084,6 +3155,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.educationTraining||0)+(detailform.sumByMon_6.educationTrainingHw||0)+(detailform.sumByYear_6.educationTraining||0)+(detailform.sumByYear_6.educationTrainingHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="信息化建设(万元):"
                 >
@@ -3098,6 +3170,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.informationConstruction||0)+(detailform.sumByMon_6.informationConstructionHw||0)+(detailform.sumByYear_6.informationConstruction||0)+(detailform.sumByYear_6.informationConstructionHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="其它项目(万元):"
                 >
@@ -3112,6 +3185,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.otherProject||0)+(detailform.sumByMon_6.otherProjectHw||0)+(detailform.sumByYear_6.otherProject||0)+(detailform.sumByYear_6.otherProjectHw||0)"/>
                 </el-form-item>
+                <br>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境内数据: </span>
                 </p>
@@ -3129,6 +3203,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.equipmentLeasing||0)+(detailform.sumByMon_6.leaseHouses||0)+(detailform.sumByMon_6.transportation||0)+(detailform.sumByMon_6.accommodationCatering||0)+(detailform.sumByMon_6.educationTraining||0)+(detailform.sumByMon_6.informationConstruction||0)+(detailform.sumByMon_6.otherProject||0)+(detailform.sumByYear_6.sum||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="设备租赁(万元):"
                 >
@@ -3143,6 +3218,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.equipmentLeasing||0)+(detailform.sumByYear_6.equipmentLeasing||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="房屋租赁(万元):"
                 >
@@ -3157,6 +3233,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.leaseHouses||0)+(detailform.sumByYear_6.leaseHouses||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="交通运输(万元):"
                 >
@@ -3171,6 +3248,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.transportation||0)+(detailform.sumByYear_6.transportation||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="住宿餐饮(万元):"
                 >
@@ -3185,6 +3263,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.accommodationCatering||0)+(detailform.sumByYear_6.accommodationCatering||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="教育培训(万元):"
                 >
@@ -3199,6 +3278,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.educationTraining||0)+(detailform.sumByYear_6.educationTraining||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="信息化建设(万元):"
                 >
@@ -3213,6 +3293,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.informationConstruction||0)+(detailform.sumByYear_6.informationConstruction||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="其它项目(万元):"
                 >
@@ -3227,6 +3308,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.otherProject||0)+(detailform.sumByYear_6.otherProject||0)"/>
                 </el-form-item>
+                <br>
                 <p  class="detail-title" style="overflow: hidden;margin-right:30px">
                   <span>境外数据: </span>
                 </p>
@@ -3244,6 +3326,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.equipmentLeasingHw||0)+(detailform.sumByMon_6.leaseHousesHw||0)+(detailform.sumByMon_6.transportationHw||0)+(detailform.sumByMon_6.accommodationCateringHw||0)+(detailform.sumByMon_6.educationTrainingHw||0)+(detailform.sumByMon_6.informationConstructionHw||0)+(detailform.sumByMon_6.otherProjectHw||0)+(detailform.sumByYear_6.overseasSum||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="设备租赁(万元):"
                 >
@@ -3258,6 +3341,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.equipmentLeasingHw||0)+(detailform.sumByYear_6.equipmentLeasingHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="房屋租赁(万元):"
                 >
@@ -3272,6 +3356,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.leaseHousesHw||0)+(detailform.sumByYear_6.leaseHousesHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="交通运输(万元):"
                 >
@@ -3286,6 +3371,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.transportationHw||0)+(detailform.sumByYear_6.transportationHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="住宿餐饮(万元):"
                 >
@@ -3300,6 +3386,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.accommodationCateringHw||0)+(detailform.sumByYear_6.accommodationCateringHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="教育培训(万元):"
                 >
@@ -3314,6 +3401,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.educationTrainingHw||0)+(detailform.sumByYear_6.educationTrainingHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="信息化建设(万元):"
                 >
@@ -3328,6 +3416,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.informationConstructionHw||0)+(detailform.sumByYear_6.informationConstructionHw||0)"/>
                 </el-form-item>
+                <br>
                 <el-form-item
                   label="其它项目(万元):"
                 >
@@ -3342,6 +3431,7 @@
                     disabled
                     :value="(detailform.sumByMon_6.otherProjectHw||0)+(detailform.sumByYear_6.otherProjectHw||0)"/>
                 </el-form-item>
+                <br>
               </el-form>
             </div>
           </el-tab-pane>
