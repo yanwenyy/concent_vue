@@ -104,7 +104,6 @@
               default-expand-all
               row-key="uuid"
               :tree-props="{children: 'chirldList', hasChildren: 'hasChildren'}"
-              class="tableStyle"
               :max-height="$tableHeight"
               :height="$tableHeight"
               :data="tableData.gy_list"
@@ -222,7 +221,6 @@
               default-expand-all
               row-key="uuid"
               :tree-props="{children: 'chirldList', hasChildren: 'hasChildren'}"
-              class="tableStyle"
               :max-height="$tableHeight"
               :height="$tableHeight"
               :data="tableData.gycp_list"
@@ -315,7 +313,6 @@
               default-expand-all
               row-key="uuid"
               :tree-props="{children: 'chirldList', hasChildren: 'hasChildren'}"
-              class="tableStyle"
               :max-height="$tableHeight"
               :height="$tableHeight"
               :data="tableData.wz_list"
@@ -435,7 +432,6 @@
               default-expand-all
               row-key="uuid"
               :tree-props="{children: 'chirldList', hasChildren: 'hasChildren'}"
-              class="tableStyle"
               :max-height="$tableHeight"
               :height="$tableHeight"
               :data="tableData.fdc_list"
@@ -555,7 +551,6 @@
               default-expand-all
               row-key="uuid"
               :tree-props="{children: 'chirldList', hasChildren: 'hasChildren'}"
-              class="tableStyle"
               :max-height="$tableHeight"
               :height="$tableHeight"
               :data="tableData.jrbx_list"
@@ -675,7 +670,6 @@
               default-expand-all
               row-key="uuid"
               :tree-props="{children: 'chirldList', hasChildren: 'hasChildren'}"
-              class="tableStyle"
               :max-height="$tableHeight"
               :height="$tableHeight"
               :data="tableData.yy_list"
@@ -795,7 +789,6 @@
               default-expand-all
               row-key="uuid"
               :tree-props="{children: 'chirldList', hasChildren: 'hasChildren'}"
-              class="tableStyle"
               :max-height="$tableHeight"
               :height="$tableHeight"
               :data="tableData.qt_list"

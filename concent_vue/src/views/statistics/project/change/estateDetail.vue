@@ -1892,29 +1892,12 @@
           });
           return false
         }
-        this.getBuildName();
        var url='';
        if(type=='save'){
          url=`/api/statistics/StatisticsProject/detail/${this.p.actpoint === "add"?'saveChangeRecord':'updateChangeRecord'}`;
        }else{
          url="/api/statistics/StatisticsProject/changeProcess/start"
        }
-       this.detailForm.project.companyBuildId = this.constructionOrgList.join(",")
-        var nameList = []
-        var customerList = this.pubCustomers
-        this.constructionOrgList.forEach(idCheck => {
-          let customer = customerList.find(item1=>item1.customerId===idCheck)
-          if(customer){
-            nameList.push(customer.customerName)
-          }
-          let outside = this.sjdwList.find(item2=>item2.customerId===idCheck)
-          if(outside){
-            nameList.push(outside.customerName)
-          }
-
-        })
-        this.detailForm.project.companyBuild = nameList.join(",")
-
        this.$refs[formName].validate((valid) => {
          if (valid) {
            let params = {afterProjectBo: {project: this.detailForm.project}, beforeProjectBo: {project: this.showDetailForm.project},changeRecordUuid: this.changeRecordUuid}
