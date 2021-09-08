@@ -6,7 +6,7 @@
         <el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
         <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
         <el-button @click="summary" type="primary" plain><i class="el-icon-coin"></i>重新汇总</el-button>
-        <el-button @click="batchBack" type="primary" plain>批量退回</el-button>
+        <el-button @click="batchBack" type="primary" plain>退回</el-button>
       </el-button-group>
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>

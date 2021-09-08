@@ -16,7 +16,7 @@
         <el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
         <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
         <el-button @click="summary" type="primary" plain><i class="el-icon-coin"></i>重新汇总</el-button>
-        <el-button @click="batchBack" type="primary" plain>批量退回</el-button>
+        <el-button @click="batchBack" type="primary" plain>退回</el-button>
       </el-button-group>
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
@@ -540,12 +540,55 @@
       },
       //新增
       add() {
-        if (this.multipleSelection.length > 0) {
-          this.$message.info("请取消选中的数据后进行新增操作", "提示")
-          return false
-        }
-        this.type = 'add'
-        this.showYMDialog=true
+        // if (this.multipleSelection.length > 0) {
+        //   this.$message.info("请取消选中的数据后进行新增操作", "提示")
+        //   return false
+        // }
+        // this.type = 'add'
+        // this.showYMDialog=true
+        var sj=new Date().toLocaleDateString().split('/');
+        var time=this.searchform.yearDateS.split("-")
+        this.$http
+          .post('/api/statistics/projectMonthlyReport/ReportEndtime/detail/checkReportTime',
+            JSON.stringify({
+              'restrictedobjectsType':this.userdata.managerOrgType,
+              'reportType':'1',
+              'endreporttime':sj[2],
+            }),
+            {useJson: true})
+          .then(res => {
+            if (res.data.data=='0') {
+              var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/jtReportEntityInfo';
+              this.$http.post(
+                url,
+                JSON.stringify( {
+                  reportYear:time[0],
+                  reportMonth:time[1]
+                }),
+                {useJson: true}
+              ).then((res) => {
+                if (res.data.code === 200) {
+                  this.$message({
+                    message: '创建成功'
+                  });
+                  this.showYMDialog=false;
+                  this.getData();
+                }else if(res.data.code === 400){
+                  this.$message({
+                    message: '该单位已在本月创建过月报请尝试修改或于下月再进行尝试'
+                  });
+                  this.showYMDialog=false;
+                  this.getData();
+                }else{
+                  this.$message({
+                    message: '创建失败'
+                  });
+                }
+              });
+            }else{
+              this.$message.error('当前月报已经过了上报截止日期,不能提交!')
+            }
+          })
       },
       //提交
       submit() {
@@ -557,15 +600,6 @@
         var years =this.form1.year.split("-");
         //console.log("shijian"+new Date(this.form1.year).getTime());
         // var sj=new Date(this.form1.year).getTime();
-        //判断当前年月是否创建
-        if(this.page.records.length>0){
-          for (var i=0; i < this.page.records.length; i++) {
-            if((this.page.records[i].reportYear+"-"+this.page.records[i].reportMonth)==this.form1.year){
-              this.$message.info('当前年月已创建,请重新选择时间！')
-              return false;
-            }
-          };
-        }
 
         var sj=new Date().toLocaleDateString().split('/');
         this.$http
@@ -578,48 +612,33 @@
             {useJson: true})
           .then(res => {
             if (res.data.data=='0') {
-
-                  var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/jtReportEntityInfo';
-
-                  //判断是否存在未上报的数据，如果存在就提示，不存在就创建
-                  this.$http
-                    .post(
-                      "/api/statistics/projectMonthlyReport/Projectreport/detail/checkJtChildData",
-                      JSON.stringify( {
-                        reportYear:time[0],
-                        reportMonth:time[1]
-                      }),
-                      {useJson: true}
-                    )
-                    .then((res) => {
-                      if(res.data.data==''||res.data.data==null){
-                        this.$http.post(
-                          url,
-                          JSON.stringify(params),
-                          {useJson: true}
-                        ).then((res) => {
-                          if (res.data.code === 200) {
-                            this.$message({
-                              message: '创建成功'
-                            });
-                            this.getData();
-                          }else if(res.data.code === 400){
-                            this.$message({
-                              message: '该单位已在本月创建过月报请尝试修改或于下月再进行尝试'
-                            });
-                            this.getData();
-                          }else{
-                            this.$message({
-                              message: '创建失败'
-                            });
-                          }
-                        });
-                      }else if(res.data.data=='1'){
-                        this.$message.info('公司月报必须审核通过才能创建集团月报')
-                      }else if(res.data.data=='2'){
-                        this.$message.info('项目部上报时间大于公司月报，请重新汇总公司月报，然后再创建集团月报')
-                      }
-                    });
+              var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/jtReportEntityInfo';
+              this.$http.post(
+                url,
+                JSON.stringify( {
+                  reportYear:time[0],
+                  reportMonth:time[1]
+                }),
+                {useJson: true}
+              ).then((res) => {
+                if (res.data.code === 200) {
+                  this.$message({
+                    message: '创建成功'
+                  });
+                  this.showYMDialog=false;
+                  this.getData();
+                }else if(res.data.code === 400){
+                  this.$message({
+                    message: '该单位已在本月创建过月报请尝试修改或于下月再进行尝试'
+                  });
+                  this.showYMDialog=false;
+                  this.getData();
+                }else{
+                  this.$message({
+                    message: '创建失败'
+                  });
+                }
+              });
             }else{
               this.$message.error('当前月报已经过了上报截止日期,不能提交!')
             }

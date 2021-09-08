@@ -3,7 +3,7 @@
     <div style="width: 100%; overflow: hidden">
       <div style="float: right">
         <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
-        <el-button @click="batchBack" type="primary" plain>批量退回</el-button>
+        <el-button @click="batchBack" type="primary" plain>退回</el-button>
         <!-- <el-button @click="Importdata" type="primary" plain>导入</el-button> -->
       </div>
     </div>
