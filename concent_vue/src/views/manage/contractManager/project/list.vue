@@ -163,7 +163,7 @@
         </el-table-column>
         <el-table-column
           :width="150"
-          align="center"
+          align="right"
           label="合同金额(万元)"
           prop="contractAmount"
           show-overflow-tooltip

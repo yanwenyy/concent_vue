@@ -279,7 +279,7 @@
         </el-table-column>
         <el-table-column
           :width="300"
-          align="center"
+          align="right"
           label="合同总金额"
           prop="contractAmount"
           show-overflow-tooltip
@@ -287,7 +287,7 @@
         </el-table-column>
         <el-table-column
           :width="150"
-          align="center"
+          align="right"
           label="我方份额"
           prop="ourAmount"
           show-overflow-tooltip
@@ -296,7 +296,7 @@
 
         <el-table-column
           :width="150"
-          align="center"
+          align="right"
           label="增值税"
           prop="valueAddedTax"
           show-overflow-tooltip
