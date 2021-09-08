@@ -412,35 +412,52 @@
             };
           };
         }
-        var url = '/api/statistics/Projectcheck/detail/companyCheckEntityInfo';
-        var params = {};
-        //params.fillDate = this.searchform.fillDate;
-        params.reportYear=this.searchform.yearDateS.split("-")[0];
-        params.reportMonth=this.searchform.yearDateS.split("-")[1];
-        params.reportType='2';
-        params.status='2'//公司创建
-        params.flowStatus='edit'
-        this.$http.post(
-            url,
-            JSON.stringify(params),
-            {useJson: true}
-        ).then((res) => {
-          if (res.data.code === 200) {
-            this.$message({
-              message: '新增成功'
-            });
-            this.getData();
-          }else if(res.data.code === 400){
-            this.$message({
-              message: '该单位已在本月创建过月报请尝试修改或于下月再进行尝试'
-            });
-            this.getData();
-          }else{
-            this.$message({
-              message: '创建失败'
-            });
-          }
-        });
+        var sj=new Date().toLocaleDateString().split('/');
+        // sj[1]=sj[1]<10?'0'+sj[1]:sj[1];
+        this.$http
+          .post('/api/statistics/projectMonthlyReport/ReportEndtime/detail/checkReportTime',
+            JSON.stringify({
+              'restrictedobjectsType':this.userdata.managerOrgType,
+              'reportType':'2',
+              'endreporttime':sj[2],
+            }),
+            {useJson: true})
+          .then(res => {
+            if (res.data.data=='0') {
+              var url = '/api/statistics/Projectcheck/detail/companyCheckEntityInfo';
+              var params = {};
+              //params.fillDate = this.searchform.fillDate;
+              params.reportYear=this.searchform.yearDateS.split("-")[0];
+              params.reportMonth=this.searchform.yearDateS.split("-")[1];
+              params.reportType='2';
+              params.status='2'//公司创建
+              params.flowStatus='edit'
+              this.$http.post(
+                url,
+                JSON.stringify(params),
+                {useJson: true}
+              ).then((res) => {
+                if (res.data.code === 200) {
+                  this.$message({
+                    message: '新增成功'
+                  });
+                  this.getData();
+                }else if(res.data.code === 400){
+                  this.$message({
+                    message: '该单位已在本月创建过月报请尝试修改或于下月再进行尝试'
+                  });
+                  this.getData();
+                }else{
+                  this.$message({
+                    message: '创建失败'
+                  });
+                }
+              });
+            }else{
+              this.$message.error('当前月报已经过了上报截止日期,不能提交!')
+            }
+          })
+
       },
       // 查看
   /*    rowShow(row) {

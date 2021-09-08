@@ -327,43 +327,60 @@
             }
           };
         }
-        var url = '/api/statistics/Projectcheck/detail/entityInfoByPrjCheck'
-        var params = {}
-        params.projectId = JSON.parse(this.$utils.decrypt(this.$route.query.p)).projectId
-        params.createOrgCode =JSON.parse(this.$utils.decrypt(this.$route.query.p)).orgCode
-        params.reportProjectName =JSON.parse(this.$utils.decrypt(this.$route.query.p)).projectName
-        params.reportYear = years[0]
-        params.reportMonth = years[1]
-        params.status='1'
-        params.flowStatus='edit'
-        params.yearDateS=this.form1.year
-       this.$http.post(
-        url,
-        JSON.stringify(params),
-        {useJson: true}
-       ).then((res) => {
-            if (res.data.code === 200) {
-            this.showYMDialog = false
-              let p = {projectId:res.data.data.projectcheck.projectId,uuid:res.data.data.projectcheck.uuid,
-                yearDateS:res.data.data.projectcheck.yearDateS,orgCode:res.data.data.projectcheck.createOrgCode,
-                projectName:res.data.data.projectcheck.reportProjectName,projectStatus:res.data.data.projectcheck.flowStatus
-              }
-                this.$router.push({
-                      path: '../reportMDetail/',
-                      query: {p: this.$utils.encrypt(JSON.stringify(p))}
-                    })
-           }else if(res.data.code === 400){
-                this.$message({
-                message: "该单位已在本月创建过月报请尝试修改或于下月再进行尝试"
-                })
-                 this.showYMDialog= false
-                 this.getData()
-           }else{
-               this.$message({
-                   message: "创建失败"
+        var sj=new Date().toLocaleDateString().split('/');
+        // sj[1]=sj[1]<10?'0'+sj[1]:sj[1];
+        this.$http
+          .post('/api/statistics/projectMonthlyReport/ReportEndtime/detail/checkReportTime',
+            JSON.stringify({
+              'restrictedobjectsType':this.userdata.managerOrgType,
+              'reportType':'2',
+              'endreporttime':sj[2],
+            }),
+            {useJson: true})
+          .then(res => {
+            if (res.data.data=='0') {
+              var url = '/api/statistics/Projectcheck/detail/entityInfoByPrjCheck'
+              var params = {}
+              params.projectId = JSON.parse(this.$utils.decrypt(this.$route.query.p)).projectId
+              params.createOrgCode =JSON.parse(this.$utils.decrypt(this.$route.query.p)).orgCode
+              params.reportProjectName =JSON.parse(this.$utils.decrypt(this.$route.query.p)).projectName
+              params.reportYear = years[0]
+              params.reportMonth = years[1]
+              params.status='1'
+              params.flowStatus='edit'
+              params.yearDateS=this.form1.year
+              this.$http.post(
+                url,
+                JSON.stringify(params),
+                {useJson: true}
+              ).then((res) => {
+                if (res.data.code === 200) {
+                  this.showYMDialog = false
+                  let p = {projectId:res.data.data.projectcheck.projectId,uuid:res.data.data.projectcheck.uuid,
+                    yearDateS:res.data.data.projectcheck.yearDateS,orgCode:res.data.data.projectcheck.createOrgCode,
+                    projectName:res.data.data.projectcheck.reportProjectName,projectStatus:res.data.data.projectcheck.flowStatus
+                  }
+                  this.$router.push({
+                    path: '../reportMDetail/',
+                    query: {p: this.$utils.encrypt(JSON.stringify(p))}
                   })
-           }
-      })
+                }else if(res.data.code === 400){
+                  this.$message({
+                    message: "该单位已在本月创建过月报请尝试修改或于下月再进行尝试"
+                  })
+                  this.showYMDialog= false
+                  this.getData()
+                }else{
+                  this.$message({
+                    message: "创建失败"
+                  })
+                }
+              })
+            }else{
+              this.$message.error('当前月报已经过了上报截止日期,不能提交!')
+            }
+          })
+
       },
       closeAdd() {
             for(let item in this.form1) {
