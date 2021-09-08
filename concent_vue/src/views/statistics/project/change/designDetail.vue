@@ -736,7 +736,7 @@
               </el-form-item> -->
               <el-form-item
                 v-show="detailForm.project.contractInfoList!=''"
-                label="合同总金额(万元):" 
+                label="合同总金额(万元):"
                 prop="project.contractAmountTotal"
                 :rules="rules.project.isMoney"
                 style="width: 32.5%">
@@ -751,7 +751,7 @@
               </el-form-item>
               <el-form-item
                 v-show="detailForm.project.contractInfoList == ''"
-                label="合同金额(万元):" 
+                label="合同金额(万元):"
                 prop="project.contractMoney"
                 :rules="rules.project.isMoney"
                 style="width: 32.5%">
@@ -913,7 +913,7 @@
                   v-model="detailForm.project.projectRemark"/>
               </el-form-item>
             </el-row>
-            
+
             <el-row>
               <el-form-item
                 class="neirong"
@@ -1556,7 +1556,7 @@
                     v-for="(item, index) in projectType"/>
                 </el-select>
               </el-form-item>
-              
+
               <el-form-item
                   label="父项目名称:"
                   prop="project.fatherProjectId"
@@ -1587,7 +1587,7 @@
                   disabled
                   placeholder="请输入"
                   v-model="showDetailForm.project.contractNumber"/>
-              </el-form-item>              
+              </el-form-item>
               <el-form-item
                 label="新兴市场类别(一级):"
                 style="width: 32.5%">
@@ -1783,7 +1783,7 @@
               </el-form-item> -->
               <el-form-item
                 v-show="detailForm.project.contractInfoList!=''"
-                label="合同总金额(万元):" 
+                label="合同总金额(万元):"
                 prop="project.contractAmountTotal"
                 :rules="rules.project.isMoney"
                 style="width: 32.5%">
@@ -1798,7 +1798,7 @@
               </el-form-item>
               <el-form-item
                 v-show="detailForm.project.contractInfoList == ''"
-                label="合同金额(万元):" 
+                label="合同金额(万元):"
                 prop="project.contractMoney"
                 :rules="rules.project.isMoney"
                 style="width: 32.5%">
@@ -2135,6 +2135,7 @@
         }
       }
       return {
+        key:0,
         companyMulStatus:false,//设计单位等多选列表状态
         uuid: null,
         DwVisible: false,
@@ -2146,7 +2147,7 @@
         projectNatureTwo: [], // 项目性质二级
         xqprojectTypeThree:[],//工程类别三级
         bizTypeCodeTwo: [], // 业务类别二级
-        constructionOrgList: [], 
+        constructionOrgList: [],
         sjdwList: [],
         projectType:[], //项目类型下拉
         fatherList:[],
@@ -2600,7 +2601,7 @@
         }
 
       },
-      
+
       //项目地点份额变动的时候
       getPositionMoney(index,list){
         if(list.length==1){
@@ -2629,10 +2630,10 @@
           this.detailForm.project.isOutputTax = '1'
         }
       },
-      
+
       del(index, item, list) {
         list.splice(index, 1)
-      }, 
+      },
       handleRemove(file, index) {
         this.$confirm('此操作将删除该文件, 是否继续?', '提示', {
           confirmButtonText: '确定',
@@ -2658,8 +2659,8 @@
           this.$message({
             type: 'info',
             message: '已取消删除'
-          }); 
-        });       
+          });
+        });
         //console.log(this.detailForm.project.commonFilesList)
       },
       // 打开附件上传的组件
@@ -2843,7 +2844,7 @@
             message: '必须有主项目地点',
             type: 'warning',
             showClose: true
-          });      
+          });
           return false;
         }
         this.getBuildName();
