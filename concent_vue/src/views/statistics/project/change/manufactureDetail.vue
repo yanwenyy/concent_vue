@@ -1838,6 +1838,7 @@
         }
       }
       return {
+        key:0,
         cpxxList:[],//产品信息列表
         userInfo: JSON.parse(sessionStorage.getItem('userdata')),
         fatherList:[],

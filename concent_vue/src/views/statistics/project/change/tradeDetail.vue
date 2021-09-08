@@ -1974,6 +1974,7 @@
         }
       }
       return {
+        key:0,
         userInfo: JSON.parse(sessionStorage.getItem('userdata')),
         fatherList:[],
         uuid: null,

@@ -1477,6 +1477,7 @@
         }
       }
       return {
+        key:0,
         fatherList:[],
         uuid: null,
         switchvalue: true,

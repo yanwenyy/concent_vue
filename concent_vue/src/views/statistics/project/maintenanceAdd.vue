@@ -896,6 +896,7 @@
         }
       }
       return {
+        key:0,
         uuid: null,
         switchvalue: true,
         treeStatas: false,
