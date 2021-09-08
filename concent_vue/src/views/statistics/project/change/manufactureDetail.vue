@@ -2026,8 +2026,6 @@
       if (this.p.actpoint === 'add') {
         this.getAddDetail()
       }
-      //获取产品下拉数据
-      this.getProductData();
       // 业务类别数据格式不对，已处理
       this.bizTypeCode.find((item) => {
         if (item.parentDetailId === this.detailForm.project.categoryFirstId) {
@@ -2154,9 +2152,12 @@
           venabled: '1',
           createOrgCode: this.userInfo.managerOrgCode
         }
+        if(this.p.actpoint === 'task'){
+          params.createOrgCode = this.detailForm.project.createOrgCode
+        }
         this.$http
           .post(
-          "/api/statistics/product/list/loadPageData",
+          "/api/statistics/product/list/productListData",
             params
           )
           .then((res) => {
@@ -2165,8 +2166,6 @@
       },
       //table获取name
       getNameTable(id,list,index){
-        console.info(list[0].id)
-        console.info(id)
         this.$forceUpdate()
         this.detailForm.project.infoProductList[index].productName= list.find(
           (item) => item.id === id 
@@ -2183,7 +2182,6 @@
         this.detailForm.project.infoProductList[index].specificationAndModel= list.find(
           (item) => item.id === id
         ).specificationAndModel;
-        console.info(this.detailForm.project.infoProductList)
       },
       //建设单位下拉赋值
       companyBuildChange(){
@@ -2568,6 +2566,10 @@
                   this.changeRecordUuid=item.changeRecordUuid;
                   this.detailForm.project = item.project
                   this.getProjectFather()
+                  //获取产品下拉数据
+                  this.getProductData();
+                  console.info(this.detailForm.project.infoProductList)
+                  console.info(this.cpxxList)
                   this.detailForm.project.beforeId = this.p.beforeId
                   this.detailForm.project.afterId = this.p.afterId
                   if (!this.detailForm.project.projectSubContractList) {
@@ -2606,6 +2608,8 @@
             if (res.data.code === 200) {
               this.detailForm.project = res.data.data
               this.getProjectFather();
+              //获取产品下拉数据
+              this.getProductData();
               this.showDetailForm.project = JSON.parse(JSON.stringify(res.data.data))
               if (!res.data.data.infoProductList) {
                 this.detailForm.project.infoProductList = []

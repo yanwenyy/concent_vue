@@ -1174,6 +1174,8 @@
             projectStatusId: '',
             amountCompanyName: '',
             amountCompanyId:'',
+            companyName: '',
+            companyId: '',
             ocontractAmountTotal: '',
             marketFirstId: '',
             marketSecondId: '',
@@ -1509,9 +1511,12 @@
           venabled: '1',
           createOrgCode: this.userInfo.managerOrgCode
         }
+        if(this.p.actpoint === 'task'){
+          params.createOrgCode = this.detailForm.project.createOrgCode
+        }
         this.$http
           .post(
-          "/api/statistics/product/list/loadPageData",
+          "/api/statistics/product/list/productListData",
             params
           )
           .then((res) => {
@@ -1520,8 +1525,6 @@
       },
       //table获取name
       getNameTable(id,list,index){
-        console.info(list[0].id)
-        console.info(id)
         this.$forceUpdate()
         this.detailForm.project.infoProductList[index].productName= list.find(
           (item) => item.id === id 
@@ -1538,7 +1541,6 @@
         this.detailForm.project.infoProductList[index].specificationAndModel= list.find(
           (item) => item.id === id
         ).specificationAndModel;
-        console.info(this.detailForm.project.infoProductList)
       },
       //新增标段和地点
       add(type) {

@@ -973,6 +973,8 @@
             isAnnualContract: '',
             amountCompanyName: '',
             amountCompanyId: '',
+            companyName: '',
+            companyId: '',
             marketFirstId: '',
             marketSecondId: '',
             assemblyRate: '',
