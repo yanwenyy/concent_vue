@@ -11,10 +11,12 @@
         </el-form-item>
       </el-form>-->
       <el-button-group style="float: left">
-        <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>创建</el-button>
+        <el-button  @click="add" type="primary" plain><i class="el-icon-plus"></i>新增</el-button>
+        <!--<el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>创建</el-button>-->
         <el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
         <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
         <el-button @click="summary" type="primary" plain><i class="el-icon-coin"></i>重新汇总</el-button>
+        <el-button @click="batchBack" type="primary" plain>批量退回</el-button>
       </el-button-group>
       <div style="float: right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
@@ -26,7 +28,7 @@
     <div style="margin-top: 10px">
       <el-table
         row-key="uuid"
-        :tree-props="{children: 'chirldList', hasChildren: 'hasChildren'}"
+
         class="tableStyle"
         :max-height="$tableHeight"
         :height="$tableHeight"
@@ -38,11 +40,14 @@
         highlight-current-row
         ref="table"
         tooltip-effect="dark"
-        lazy
-        :load="load"
+
+
         default-expand-all
         :row-class-name="tableRowClassName"
       >
+        <!--:tree-props="{children: 'chirldList', hasChildren: 'hasChildren'}"-->
+        <!--lazy-->
+        <!--:load="load"-->
         <el-table-column
           :width="50"
           align="center"
@@ -73,21 +78,21 @@
               />
             </div>
           </template>-->
-          <template slot-scope="scope">
-            <span class="blue pointer" v-if="scope.row.reportType != null && scope.row.reportType != ''">
-              {{scope.row.createOrgName+"("+(scope.row.reportType==1?'自揽':scope.row.reportType==2?'工区':'')+")"}}
-            </span>
-            <span class="blue pointer"v-if="scope.row.reportType== null || scope.row.reportType == ''">
-              {{scope.row.createOrgName}}
-            </span>
-          </template>
+          <!--<template slot-scope="scope">-->
+            <!--<span class="blue pointer" v-if="scope.row.reportType != null && scope.row.reportType != ''">-->
+              <!--{{scope.row.createOrgName+"("+(scope.row.reportType==1?'自揽':scope.row.reportType==2?'工区':'')+")"}}-->
+            <!--</span>-->
+            <!--<span class="blue pointer"v-if="scope.row.reportType== null || scope.row.reportType == ''">-->
+              <!--{{scope.row.createOrgName}}-->
+            <!--</span>-->
+          <!--</template>-->
 
         </el-table-column>
         <el-table-column
           :width="200"
           align="center"
           label="年月"
-          prop="enginTypeFirstName"
+          prop="yearDateS"
           show-overflow-tooltip
         >
           <template slot="header"
@@ -116,7 +121,7 @@
         <el-table-column
           :width="200"
           align="center"
-          label="审核状态"
+          label="状态"
           prop="flowStatus"
           show-overflow-tooltip
 
@@ -147,16 +152,20 @@
               &lt;!&ndash;/>&ndash;&gt;
             </div>
           </template>-->
+          <!--<template slot-scope="scope">-->
+            <!--<div>{{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核驳回':'未创建'}}-->
+            <!--</div>-->
+          <!--</template>-->
           <template slot-scope="scope">
-            <div>{{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核驳回':'未创建'}}
+            <div>{{scope.row.flowStatus=='0'?'未上报':scope.row.flowStatus=='1'?'部分上报':scope.row.flowStatus=='2'?'已上报':''}}
             </div>
           </template>
         </el-table-column>
         <el-table-column
           :width="180"
           align="center"
-          label="创建时间"
-          prop="createTime"
+          label="公司月报上报时间"
+          prop="checkfinishTime"
           show-overflow-tooltip
         >
 <!--          <template slot="header" slot-scope="scope">
@@ -175,35 +184,113 @@
             </div>
           </template-->>
           <template slot-scope="scope">{{
-            scope.row.createTime | dateformat
+            scope.row.checkfinishTime | dateformat
             }}</template>
         </el-table-column>
         <el-table-column
           :width="180"
           align="center"
-          label="审核通过时间"
-          prop="state"
+          label="项目月报上报时间"
+          prop="beginTime"
           show-overflow-tooltip
         >
-    <!--      <template slot="header" slot-scope="scope">
-            <span>审核通过时间</span>
-            <div>
-              <el-date-picker
-                class="list-search-picker"
-                filterable
-                clearable
-                type="date"
-                value-format="timestamp"
-                v-model="searchform.planBidTime"
+          <!--          <template slot="header" slot-scope="scope">
+                      <span>创建时间</span>
+                      <div>
+                        <el-date-picker
+                          class="list-search-picker"
+                          filterable
+                          clearable
+                          type="date"
+                          value-format="timestamp"
+                          v-model="searchform.createTime"
 
-              >
-              </el-date-picker>
-            </div>
-          </template>-->
+                        >
+                        </el-date-picker>
+                      </div>
+                    </template-->>
           <template slot-scope="scope">{{
-            scope.row.auditDate | dateformat
+            scope.row.beginTime | dateformat
             }}</template>
         </el-table-column>
+        <el-table-column
+          :width="180"
+          align="center"
+          label="项目月报退回时间"
+          prop="sendbackTime"
+          show-overflow-tooltip
+        >
+          <!--          <template slot="header" slot-scope="scope">
+                      <span>创建时间</span>
+                      <div>
+                        <el-date-picker
+                          class="list-search-picker"
+                          filterable
+                          clearable
+                          type="date"
+                          value-format="timestamp"
+                          v-model="searchform.createTime"
+
+                        >
+                        </el-date-picker>
+                      </div>
+                    </template-->>
+          <template slot-scope="scope">{{
+            scope.row.sendbackTime | dateformat
+            }}</template>
+        </el-table-column>
+        <el-table-column
+          :width="180"
+          align="center"
+          label="创建时间"
+          prop="createTime"
+          show-overflow-tooltip
+        >
+          <!--          <template slot="header" slot-scope="scope">
+                      <span>创建时间</span>
+                      <div>
+                        <el-date-picker
+                          class="list-search-picker"
+                          filterable
+                          clearable
+                          type="date"
+                          value-format="timestamp"
+                          v-model="searchform.createTime"
+
+                        >
+                        </el-date-picker>
+                      </div>
+                    </template-->>
+          <template slot-scope="scope">{{
+            scope.row.createTime | dateformat
+            }}</template>
+        </el-table-column>
+        <!--<el-table-column-->
+          <!--:width="180"-->
+          <!--align="center"-->
+          <!--label="审核通过时间"-->
+          <!--prop="state"-->
+          <!--show-overflow-tooltip-->
+        <!--&gt;-->
+    <!--&lt;!&ndash;      <template slot="header" slot-scope="scope">-->
+            <!--<span>审核通过时间</span>-->
+            <!--<div>-->
+              <!--<el-date-picker-->
+                <!--class="list-search-picker"-->
+                <!--filterable-->
+                <!--clearable-->
+                <!--type="date"-->
+                <!--value-format="timestamp"-->
+                <!--v-model="searchform.planBidTime"-->
+
+              <!--&gt;-->
+              <!--</el-date-picker>-->
+            <!--</div>-->
+          <!--</template>&ndash;&gt;-->
+          <!--<template slot-scope="scope">{{-->
+            <!--scope.row.auditDate | dateformat-->
+            <!--}}</template>-->
+        <!--</el-table-column>-->
         <el-table-column
           :width="180"
           align="center"
@@ -218,6 +305,53 @@
           </template>
         </el-table-column>
       </el-table>
+      <el-pagination
+        :current-page="page.current"
+        :page-size="page.size"
+        :page-sizes="[20, 50, 100]"
+        :total="page.total"
+        @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"
+        layout="total, sizes, prev, pager, next, jumper"
+        style="margin-top: 5px"
+        v-if="page.total !== 0"
+      ></el-pagination>
+      <el-dialog :title="addTitle" :visible.sync="showYMDialog" append-to-body @close="closeAdd">
+        <div>
+          <div>
+            <table>
+              <tr>
+                <td><span style="color: red;font-weight:bold">*</span>填报时间:</td>
+                <td style="width:70%;text-align:left;padding:10px">
+                  <el-date-picker
+                    v-model="form1.year"
+                    type="month"
+                    format="yyyy-MM"
+                    value-format="yyyy-MM"
+                    placeholder="填报时间">
+                  </el-date-picker>
+                </td>
+              </tr>
+              <!--    <tr>
+                       <td><span style="color: red;font-weight:bold">*</span>填报月:</td>
+                       <td style="width:70%;text-align:left;padding:10px">
+                          <el-date-picker
+                               v-model="form1.month"
+                                type="month"
+                                format="MM"
+                                 value-format="MM"
+                               placeholder="填报月">
+                             </el-date-picker>
+                       </td>
+                 </tr>-->
+            </table>
+          </div>
+          <div style="text-align:right;margin-top:10px">
+            <el-button @click="submit" type="primary">确认</el-button>
+            <el-button @click="closeAdd" type="primary">取消</el-button>
+          </div>
+        </div>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -228,6 +362,11 @@
     //name: "proposal-list-look",
     data() {
       return {
+        showYMDialog:false,
+        addTitle:'选择填报年月',
+        form1:{
+          year:''
+        },
         p:{},
         Authorization:sessionStorage.getItem("token"),
         page: {current: 1, size: 20, total: 0, records: []},
@@ -274,7 +413,50 @@
 
     },
     methods: {
+      //批量退回
+      batchBack(){
+        if (this.multipleSelection.length !=1) {
+          this.$message.info("请选择一条记录进行提交操作！");
+          return false;
+        }
+        var list=[],itemStatus=true;
+        this.multipleSelection.forEach((item) => {
+          if(item.flowStatus=='pass'){
+            item.jtOrGf='2';
+            list.push(item);
+          }else{
+            this.$message.info("当前所选数据中包含不可退回的选项,请检查后进行操作");
+            return itemStatus=false;
+          }
+        })
+        if(itemStatus){
+          this.$confirm(`确认退回这些数据吗`, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$http
+              .post(
+                "/api/statistics/projectMonthlyReport/Projectreport/process/gfjt/complete/back",
+                JSON.stringify(list),
+                {useJson: true}
 
+              )
+              .then((res) => {
+                if(res.data.code==200){
+                  this.$message({
+                    message: "操作成功",
+                    type: "success",
+                  });
+                  this.getData()
+                }else{
+                  this.$message.error(res.data.msg);
+                }
+
+              });
+          }).catch(() => {})
+        }
+      },
       //如果项目上报月报，公司没有上报，那这一条数据就要显示成红色
       checkRed(row,childreList){
         var allReport=false,showRed=false;
@@ -356,80 +538,182 @@
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       },
-      // 增加
+      //新增
       add() {
-        console.log(this.tableData)
-        if (this.multipleSelection.length !== 1) {
-          this.$message.info("请选择一条记录进行创建操作！");
-          return false;
+        if (this.multipleSelection.length > 0) {
+          this.$message.info("请取消选中的数据后进行新增操作", "提示")
+          return false
         }
-        if (this.multipleSelection[0].createOrgCode==this.userdata.managerOrgCode && (this.multipleSelection[0].flowStatus!='' && this.multipleSelection[0].flowStatus!=null)) {
-          this.$message.info("本单位月报已经创建！");
-          return false;
-        }
-        if(this.multipleSelection[0].createOrgCode!=this.userdata.managerOrgCode){
-          this.$message.info("无权操作下级单位月报！");
-          return false;
-        }
-
-        //判断是否存在未上报的数据，如果存在就提示，不存在就创建
-        // if(this.tableData.length>0){
-        //   for (var i=0; i < this.tableData.length; i++) {
-        //     if((this.tableData[i].flowStatus ==''||this.tableData[i].flowStatus ==null||this.tableData[i].flowStatus !='pass')&&this.multipleSelection[0].uuid!=this.tableData[i].uuid){
-        //       this.$message.info('该单位下存在未提交的月报,请提交该单位下所有项目月报后再进行尝试！')
-        //       return false;
-        //     }
-        //   };
-        // }
-        if (this.multipleSelection[0].createOrgCode==this.userdata.managerOrgCode && (this.multipleSelection[0].flowStatus==''||this.multipleSelection[0].flowStatus==null)) {
-          var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/jtReportEntityInfo';
-          var params =  this.multipleSelection[0];
-          //判断是否存在未上报的数据，如果存在就提示，不存在就创建
-          this.$http
-            .post(
-              "/api/statistics/projectMonthlyReport/Projectreport/detail/checkJtChildData",
-              JSON.stringify( {
-                reportYear:this.multipleSelection[0].reportYear,
-                reportMonth:this.multipleSelection[0].reportMonth
-              }),
-              {useJson: true}
-            )
-            .then((res) => {
-              if(res.data.data==''||res.data.data==null){
-                this.$http.post(
-                  url,
-                  JSON.stringify(params),
-                  {useJson: true}
-                ).then((res) => {
-                  if (res.data.code === 200) {
-                    this.$message({
-                      message: '创建成功'
-                    });
-                    this.getData();
-                  }else if(res.data.code === 400){
-                    this.$message({
-                      message: '该单位已在本月创建过月报请尝试修改或于下月再进行尝试'
-                    });
-                    this.getData();
-                  }else{
-                    this.$message({
-                      message: '创建失败'
-                    });
-                  }
-                });
-              }else if(res.data.data=='1'){
-                this.$message.info('公司月报必须审核通过才能创建集团月报')
-              }else if(res.data.data=='2'){
-                this.$message.info('项目部上报时间大于公司月报，请重新汇总公司月报，然后再创建集团月报')
-              }
-            });
-
-        }
+        this.type = 'add'
+        this.showYMDialog=true
       },
+      //提交
+      submit() {
+        if(!this.form1.year) {
+          this.show = true
+          return false
+        }
+        var time=this.form1.year.split("-")
+        var years =this.form1.year.split("-");
+        //console.log("shijian"+new Date(this.form1.year).getTime());
+        // var sj=new Date(this.form1.year).getTime();
+        //判断当前年月是否创建
+        if(this.page.records.length>0){
+          for (var i=0; i < this.page.records.length; i++) {
+            if((this.page.records[i].reportYear+"-"+this.page.records[i].reportMonth)==this.form1.year){
+              this.$message.info('当前年月已创建,请重新选择时间！')
+              return false;
+            }
+          };
+        }
+
+        var sj=new Date().toLocaleDateString().split('/');
+        this.$http
+          .post('/api/statistics/projectMonthlyReport/ReportEndtime/detail/checkReportTime',
+            JSON.stringify({
+              'restrictedobjectsType':this.userdata.managerOrgType,
+              'reportType':'1',
+              'endreporttime':sj[2],
+            }),
+            {useJson: true})
+          .then(res => {
+            if (res.data.data=='0') {
+
+                  var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/jtReportEntityInfo';
+
+                  //判断是否存在未上报的数据，如果存在就提示，不存在就创建
+                  this.$http
+                    .post(
+                      "/api/statistics/projectMonthlyReport/Projectreport/detail/checkJtChildData",
+                      JSON.stringify( {
+                        reportYear:time[0],
+                        reportMonth:time[1]
+                      }),
+                      {useJson: true}
+                    )
+                    .then((res) => {
+                      if(res.data.data==''||res.data.data==null){
+                        this.$http.post(
+                          url,
+                          JSON.stringify(params),
+                          {useJson: true}
+                        ).then((res) => {
+                          if (res.data.code === 200) {
+                            this.$message({
+                              message: '创建成功'
+                            });
+                            this.getData();
+                          }else if(res.data.code === 400){
+                            this.$message({
+                              message: '该单位已在本月创建过月报请尝试修改或于下月再进行尝试'
+                            });
+                            this.getData();
+                          }else{
+                            this.$message({
+                              message: '创建失败'
+                            });
+                          }
+                        });
+                      }else if(res.data.data=='1'){
+                        this.$message.info('公司月报必须审核通过才能创建集团月报')
+                      }else if(res.data.data=='2'){
+                        this.$message.info('项目部上报时间大于公司月报，请重新汇总公司月报，然后再创建集团月报')
+                      }
+                    });
+            }else{
+              this.$message.error('当前月报已经过了上报截止日期,不能提交!')
+            }
+          })
+
+      },
+      closeAdd() {
+        for(let item in this.form1) {
+          if(this.form1.hasOwnProperty(item)) {
+            this.form1[item] = ''
+          }
+        }
+        this.show = false
+        this.showYMDialog = false
+        //this.query()
+      },
+      // // 增加旧
+      // add() {
+      //   console.log(this.tableData)
+      //   if (this.multipleSelection.length !== 1) {
+      //     this.$message.info("请选择一条记录进行创建操作！");
+      //     return false;
+      //   }
+      //   if (this.multipleSelection[0].createOrgCode==this.userdata.managerOrgCode && (this.multipleSelection[0].flowStatus!='' && this.multipleSelection[0].flowStatus!=null)) {
+      //     this.$message.info("本单位月报已经创建！");
+      //     return false;
+      //   }
+      //   if(this.multipleSelection[0].createOrgCode!=this.userdata.managerOrgCode){
+      //     this.$message.info("无权操作下级单位月报！");
+      //     return false;
+      //   }
+      //
+      //   //判断是否存在未上报的数据，如果存在就提示，不存在就创建
+      //   // if(this.tableData.length>0){
+      //   //   for (var i=0; i < this.tableData.length; i++) {
+      //   //     if((this.tableData[i].flowStatus ==''||this.tableData[i].flowStatus ==null||this.tableData[i].flowStatus !='pass')&&this.multipleSelection[0].uuid!=this.tableData[i].uuid){
+      //   //       this.$message.info('该单位下存在未提交的月报,请提交该单位下所有项目月报后再进行尝试！')
+      //   //       return false;
+      //   //     }
+      //   //   };
+      //   // }
+      //   if (this.multipleSelection[0].createOrgCode==this.userdata.managerOrgCode && (this.multipleSelection[0].flowStatus==''||this.multipleSelection[0].flowStatus==null)) {
+      //     var url = '/api/statistics/projectMonthlyReport/Projectreport/detail/jtReportEntityInfo';
+      //     var params =  this.multipleSelection[0];
+      //     //判断是否存在未上报的数据，如果存在就提示，不存在就创建
+      //     this.$http
+      //       .post(
+      //         "/api/statistics/projectMonthlyReport/Projectreport/detail/checkJtChildData",
+      //         JSON.stringify( {
+      //           reportYear:this.multipleSelection[0].reportYear,
+      //           reportMonth:this.multipleSelection[0].reportMonth
+      //         }),
+      //         {useJson: true}
+      //       )
+      //       .then((res) => {
+      //         if(res.data.data==''||res.data.data==null){
+      //           this.$http.post(
+      //             url,
+      //             JSON.stringify(params),
+      //             {useJson: true}
+      //           ).then((res) => {
+      //             if (res.data.code === 200) {
+      //               this.$message({
+      //                 message: '创建成功'
+      //               });
+      //               this.getData();
+      //             }else if(res.data.code === 400){
+      //               this.$message({
+      //                 message: '该单位已在本月创建过月报请尝试修改或于下月再进行尝试'
+      //               });
+      //               this.getData();
+      //             }else{
+      //               this.$message({
+      //                 message: '创建失败'
+      //               });
+      //             }
+      //           });
+      //         }else if(res.data.data=='1'){
+      //           this.$message.info('公司月报必须审核通过才能创建集团月报')
+      //         }else if(res.data.data=='2'){
+      //           this.$message.info('项目部上报时间大于公司月报，请重新汇总公司月报，然后再创建集团月报')
+      //         }
+      //       });
+      //
+      //   }
+      // },
       // 修改
       totop() {
         if (this.multipleSelection.length !== 1) {
           this.$message.info("请选择一条记录进行修改操作！");
+          return false;
+        }
+        if(this.multipleSelection[0].resultType!="2"){
+          this.$message.info("只能修改集团的数据！");
           return false;
         }
          if(this.multipleSelection[0].createOrgCode!=this.userdata.managerOrgCode){
@@ -452,16 +736,38 @@
       },
       // 查看
       rowshow(row) {
-        let p = {selfPath:'../jTList',fromDate:this.searchform.yearDateS,actpoint: "look", params: row};
         if(row.flowStatus==''||row.flowStatus==null){
           this.$message.info("该项目月报还未完成上报,无法查看");
           return false;
         }else{
-          this.$router.push({
-            path: "./jTMDetail/",
-            query: {p: this.$utils.encrypt(JSON.stringify(p))},
-          });
+          if(row.resultType=='1'){
+            let p = {selfPath:'../jTList',fromDate:this.searchform.yearDateS,actpoint: "look", params: row};
+            this.$router.push({
+              path: "./jTMDetail/",
+              query: {p: this.$utils.encrypt(JSON.stringify(p))},
+            });
+          }else if(row.resultType=='2'&&row.reportType==1){
+            let p = {ifjtList:true,actpoint: "look", params: row};
+            this.$router.push({
+              path: "./companyMList/",
+              query: {p: this.$utils.encrypt(JSON.stringify(p))},
+            });
+          }else if(row.resultType=='2'&&row.reportType==2){
+            let p = {ifjtList:true,actpoint: "look", params: row};
+            this.$router.push({
+              path: "./companyMgqList/",
+              query: {p: this.$utils.encrypt(JSON.stringify(p))},
+            });
+          }else if(row.resultType=='3'){
+            let p = {ifjtList:true,actpoint: "look", params: row,projectId:row.uuid};
+            this.$router.push({
+              path: "./reportJZList/",
+              query: {p: this.$utils.encrypt(JSON.stringify(p))},
+            });
+          }
         }
+
+
       },
       // 删除
       remove() {
@@ -511,10 +817,14 @@
             this.$message.info("只能汇总审核通过的数据！");
             return false;
         }
-          if (this.multipleSelection[0].createOrgType!='12' && this.multipleSelection[0].createOrgType!='13' ) {
-              this.$message.info("只能汇总集团跟工程公司数据！");
-              return false;
-          }
+        if(this.multipleSelection[0].resultType!="2"){
+          this.$message.info("只能汇总集团的数据！");
+          return false;
+        }
+          // if (this.multipleSelection[0].createOrgType!='12' && this.multipleSelection[0].createOrgType!='13' ) {
+          //     this.$message.info("只能汇总集团跟工程公司数据！");
+          //     return false;
+          // }
         // this.multipleSelection[0].status='3'//集团创建
         // this.multipleSelection[0].flowStatus='3'
         //this.multipleSelection[0].projectId=this.multipleSelection[0].createOrgId
@@ -603,12 +913,14 @@
             this.searchform
           )
           .then((res) => {
-            var datas=res.data.data;
+            this.page = res.data.data
+            var datas=res.data.data.records;
             datas.forEach((item)=>{
               var showRed=item.chirldList?this.checkRed(item,item.chirldList):false;
               item.red=showRed?true:false;
             });
             this.tableData = datas;
+
       });
       },
     },

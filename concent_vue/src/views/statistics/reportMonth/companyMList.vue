@@ -3,7 +3,7 @@
 <template>
   <div>
     <div style="width: 100%; overflow: hidden">
-      <el-button-group style="float: left">
+      <el-button-group v-if="!p.ifjtList" style="float: left">
      <!--   <el-button @click="searchformSubmit"
                    type="primary" plain>查询</el-button>-->
         <el-button @click="add"
@@ -684,7 +684,7 @@
           return false;
         }else{
         this.$router.push({
-          path: './companyMDetail/',
+          path:this.p.ifjtList?'../companyMDetail/': './companyMDetail/',
           query: {p: this.$utils.encrypt(JSON.stringify(p))}
         });
 
