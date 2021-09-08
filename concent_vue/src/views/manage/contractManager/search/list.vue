@@ -256,14 +256,14 @@
           type="index"
         ></el-table-column>
         <el-table-column
-          :width="200"
+          :width="100"
           label="合同类型"
           prop="moduleName"
           show-overflow-tooltip
         >
         </el-table-column>
         <el-table-column
-          :width="500"
+          :width="400"
           label="合同名称"
           prop="contractName"
           show-overflow-tooltip
@@ -273,7 +273,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          :width="300"
+          :width="250"
           align="center"
           label="合同编号"
           prop="contractCode"
@@ -281,8 +281,8 @@
         >
         </el-table-column>
         <el-table-column
-          :width="300"
-          align="center"
+          :width="150"
+          align="right"
           label="合同总金额"
           prop="contractAmount"
           show-overflow-tooltip
@@ -290,7 +290,7 @@
         </el-table-column>
         <el-table-column
           :width="150"
-          align="center"
+          align="right"
           label="初始我方份额"
           prop="ourAmount"
           show-overflow-tooltip
@@ -299,7 +299,7 @@
 
         <el-table-column
           :width="150"
-          align="center"
+          align="right"
           label="增值税"
           prop="valueAddedTax"
           show-overflow-tooltip
@@ -322,15 +322,15 @@
         >
         </el-table-column>
         <el-table-column
-          :width="300"
-          align="center"
+          :width="150"
+          align="right"
           label="我方份额(含补充)"
           prop="ourAmountSupply"
           show-overflow-tooltip
         >
         </el-table-column>
         <el-table-column
-          :width="300"
+          :width="250"
           align="center"
           label="工程行业类别一级"
           prop="enginTypeFirstName"
@@ -338,7 +338,7 @@
         >
         </el-table-column>
         <el-table-column
-          :width="300"
+          :width="250"
           align="center"
           label="新兴市场(一级)"
           prop="marketFirstName"
@@ -346,7 +346,7 @@
         >
         </el-table-column>
         <el-table-column
-          :width="300"
+          :width="250"
           align="center"
           label="新兴市场(二级)"
           prop="marketSecondName"

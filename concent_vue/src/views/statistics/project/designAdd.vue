@@ -1272,6 +1272,7 @@
         }
       }
       return {
+        key:0,
         uuid: null,
         DwVisible: false,
         treeStatas: false,

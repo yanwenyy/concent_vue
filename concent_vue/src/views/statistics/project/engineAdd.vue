@@ -1601,6 +1601,7 @@
         }
       }
       return {
+        key:0,
         userInfo: JSON.parse(sessionStorage.getItem('userdata')),
         companyMulStatus:false,//设计单位等多选列表状态
         constructionOrgList:[], //建设单位选中ID列表

@@ -921,6 +921,7 @@
         }
       }
       return {
+        key:0,
         uuid: null,
         switchvalue: true,
         treeStatas: false,
@@ -972,6 +973,8 @@
             isAnnualContract: '',
             amountCompanyName: '',
             amountCompanyId: '',
+            companyName: '',
+            companyId: '',
             marketFirstId: '',
             marketSecondId: '',
             assemblyRate: '',

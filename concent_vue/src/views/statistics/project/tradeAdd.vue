@@ -1178,6 +1178,7 @@
         }
       }
       return {
+        key:0,
         userInfo: JSON.parse(sessionStorage.getItem('userdata')),
         uuid: null,
         switchvalue: true,
