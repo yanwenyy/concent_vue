@@ -483,7 +483,7 @@
         }else if(data.type=='台账明细'){
           this.$router.push({
             path: "../../reportForm/list",
-            query: {resid: 'Iff808081017b151a151ad6a4017b28c9544e281d','项目ID':this.multipleSelection[0].projectId,'台账报表用统计项参数':code.join("','"),'台账报表用月报年月':this.searchform.fullDate},
+            query: {resid: 'Iff808081017b151a151ad6a4017b28c9544e281d','项目ID':this.multipleSelection[0].projectId,'台账报表用统计项参数':"'"+code.join("','")+"'",'台账报表用月报年月':this.searchform.fullDate},
           });
         }
 
