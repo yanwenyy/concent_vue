@@ -568,14 +568,13 @@
           if(item.tjxCode=='002009003001'){
             fjjgmj=Number(item.monthValue);
           }
-          if(item.tjxCode=='001001'){
-            sgcz=Number(item.monthValue);
-          }
+
         });
         if(sgcz>this.projectList.contractAmountEngine){
           this.$message.error("施工产值不能大于合同额");
           return false;
         }
+
           let tableData = {
             projectReportDetaiList:this.data,
             projectreport:this.dataReport,

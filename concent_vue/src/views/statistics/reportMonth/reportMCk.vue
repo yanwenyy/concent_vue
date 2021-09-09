@@ -67,13 +67,16 @@
           <el-button @click="batchBack" type="primary" plain>批量退回</el-button>
         </el-form>
     </div>
-
+    <div>
+      <span>{{page.title[0].beginDate+"至"+page.title[0].fullDate+"月报:"}}</span>
+      <span class="title-span" v-for="item in page.title">{{item.tjxName+":"+item.monthValue}}</span>
+    </div>
     <div style="margin-top: 10px">
       <el-table
         class="tableStyle"
         :max-height="$tableHeight"
         :height="$tableHeight"
-        :data="page.records"
+        :data="page.page.records"
         :header-cell-style="{
           'text-align': 'center',
           'background-color': 'whitesmoke'
@@ -463,6 +466,10 @@
         // console.log(data)
         var name=[],code=[];
         this.headerList=[];
+        if(data.length>3){
+          this.$message.error("最多选择三条统计项");
+          return false;
+        }
         data.forEach((item)=>{
           name.push(item.vname);
           code.push(item.vcode);
@@ -573,7 +580,7 @@
             .post('/api/statistics/projectMonthlyReport/Projectreport/list/reportMQuery', this.searchform)
             .then(res => {
               var datas=res.data.data;
-              datas.records.forEach((item)=>{
+              datas.page.records.forEach((item)=>{
                 item.monthStrList=this.setTjxList(item.monthStr);
                 item.yearStrList=this.setTjxList(item.yearStr);
                 item.totalStrList=this.setTjxList(item.totalStr)
@@ -658,7 +665,10 @@
     cursor: pointer;
   }
   .tableStyle{
-    min-height: calc(100vh - 165px)!important;
-    max-height: calc(100vh - 165px)!important;
+    min-height: calc(100vh - 185px)!important;
+    max-height: calc(100vh - 185px)!important;
+  }
+  .title-span{
+    margin-left: 20px;
   }
 </style>

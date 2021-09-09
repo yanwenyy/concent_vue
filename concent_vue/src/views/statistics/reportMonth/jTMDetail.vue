@@ -676,8 +676,14 @@
       },
       // 获取数据
       getData() {
+        var url='';
+        if(this.p.ifjtList){
+          url='/api/statistics/projectMonthlyReport/Projectreport/detail/getJtReportDetail'
+        }else{
+          url='/api/statistics/projectMonthlyReport/Projectreport/detail/queryMonthReportEntityInfo'
+        }
         this.$http
-            .post('/api/statistics/projectMonthlyReport/Projectreport/detail/queryMonthReportEntityInfo', this.p.params, {useJson: true})
+            .post(url, this.p.params, {useJson: true})
             .then(res => {
               this.data = res.data.data.projectReportDetaiList
               this.dataReport=res.data.data.projectreport

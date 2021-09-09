@@ -184,7 +184,7 @@
             </div>
           </template-->>
           <template slot-scope="scope">{{
-            scope.row.checkfinishTime | dateformat
+            scope.row.checkfinishTime | datetimeformat
             }}</template>
         </el-table-column>
         <el-table-column
@@ -210,7 +210,7 @@
                       </div>
                     </template-->>
           <template slot-scope="scope">{{
-            scope.row.beginTime | dateformat
+            scope.row.beginTime | datetimeformat
             }}</template>
         </el-table-column>
         <el-table-column
@@ -236,35 +236,35 @@
                       </div>
                     </template-->>
           <template slot-scope="scope">{{
-            scope.row.sendbackTime | dateformat
+            scope.row.sendbackTime | datetimeformat
             }}</template>
         </el-table-column>
-        <el-table-column
-          :width="180"
-          align="center"
-          label="创建时间"
-          prop="createTime"
-          show-overflow-tooltip
-        >
-          <!--          <template slot="header" slot-scope="scope">
-                      <span>创建时间</span>
-                      <div>
-                        <el-date-picker
-                          class="list-search-picker"
-                          filterable
-                          clearable
-                          type="date"
-                          value-format="timestamp"
-                          v-model="searchform.createTime"
+        <!--<el-table-column-->
+          <!--:width="180"-->
+          <!--align="center"-->
+          <!--label="创建时间"-->
+          <!--prop="createTime"-->
+          <!--show-overflow-tooltip-->
+        <!--&gt;-->
+          <!--&lt;!&ndash;          <template slot="header" slot-scope="scope">-->
+                      <!--<span>创建时间</span>-->
+                      <!--<div>-->
+                        <!--<el-date-picker-->
+                          <!--class="list-search-picker"-->
+                          <!--filterable-->
+                          <!--clearable-->
+                          <!--type="date"-->
+                          <!--value-format="timestamp"-->
+                          <!--v-model="searchform.createTime"-->
 
-                        >
-                        </el-date-picker>
-                      </div>
-                    </template-->>
-          <template slot-scope="scope">{{
-            scope.row.createTime | dateformat
-            }}</template>
-        </el-table-column>
+                        <!--&gt;-->
+                        <!--</el-date-picker>-->
+                      <!--</div>-->
+                    <!--</template&ndash;&gt;>-->
+          <!--<template slot-scope="scope">{{-->
+            <!--scope.row.createTime | dateformat-->
+            <!--}}</template>-->
+        <!--</el-table-column>-->
         <!--<el-table-column-->
           <!--:width="180"-->
           <!--align="center"-->
@@ -760,7 +760,7 @@
           return false;
         }else{
           if(row.resultType=='1'){
-            let p = {selfPath:'../jTList',fromDate:this.searchform.yearDateS,actpoint: "look", params: row};
+            let p = {ifjtList:true,selfPath:'../jTList',fromDate:this.searchform.yearDateS,actpoint: "look", params: row};
             this.$router.push({
               path: "./jTMDetail/",
               query: {p: this.$utils.encrypt(JSON.stringify(p))},

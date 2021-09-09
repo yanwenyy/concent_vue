@@ -179,7 +179,8 @@
                >
                  <template slot-scope="scope">
                    <div class="textRight" v-if="scope.row.veditable == '1' && isCk!='1'&&p.actpoint!='task' ">
-                     <el-input v-model="scope.row.valuationFee" @input="scope.row.value = scope.row.valuationFee.replace(/[^\-?\d.]/g,'','')" @blur="getYear(data,scope.$index,scope.row.sumTarget,'valuationFee','计价额')"/>
+                     <el-input v-if="isCk!='1'&&p.actpoint!='task'&&p.actpoint!='look'" v-model="scope.row.valuationFee" @input="scope.row.value = scope.row.valuationFee.replace(/[^\-?\d.]/g,'','')" @blur="getYear(data,scope.$index,scope.row.sumTarget,'valuationFee','计价额')"/>
+                    <span v-if="isCk=='1'||p.actpoint=='task'||p.actpoint=='look'">{{scope.row.valuationFee}}</span>
                    </div>
                    <div class="textRight"  v-if="scope.row.veditable != '1'">{{scope.row.valuationFee}}</div>
                  </template>
@@ -192,7 +193,8 @@
                >
              <template slot-scope="scope">
                <div class="textRight" v-if="scope.row.veditable == '1' && isCk!='1' &&p.actpoint!='task'">
-                 <el-input v-model="scope.row.taxFee"  @input="scope.row.value = scope.row.taxFee.replace(/[^\-?\d.]/g,'','')" @blur="getYearSe(data,scope.$index,scope.row.sumTarget,'taxFee','税额')"/>
+                 <el-input v-if="isCk!='1'&&p.actpoint!='task'&&p.actpoint!='look'" v-model="scope.row.taxFee"  @input="scope.row.value = scope.row.taxFee.replace(/[^\-?\d.]/g,'','')" @blur="getYearSe(data,scope.$index,scope.row.sumTarget,'taxFee','税额')"/>
+                 <span v-if="isCk=='1'||p.actpoint=='task'||p.actpoint=='look'">{{scope.row.taxFee}}</span>
                </div>
                <div class="textRight"  v-if="scope.row.veditable != '1'">{{scope.row.taxFee}}</div>
              </template>
@@ -515,7 +517,8 @@
         this.commonFilesList.businessId=this.dataReport.uuid;
         var fjjgmj=0,//房建竣工面积
           fjjgcz=0,//房建竣工产值
-          sgcz=0;//施工产值
+          sgcz=0,//施工产值
+          czzb=0;//产值指标
         this.data.forEach((item,index)=>{
           // if(item.tjxCode=='002009003'){
           //   this.dataReport.fjJe=Number(item.monthValue);
@@ -529,8 +532,14 @@
           if(item.tjxCode=='001001'){
             sgcz=Number(item.monthValue);
           }
+          if(item.tjxCode=='001'){
+            czzb=Number(item.monthValue);
+          }
         });
-        console.log(sgcz,this.projectList.contractAmountEngine)
+        if(this.projectList.projectTypeCode=='017003'&&sgcz>0&&this.commonFilesList.length==0){
+          this.$message.error("请上传附件!");
+          return false;
+        }
         if(sgcz>this.projectList.contractAmountEngine){
           this.$message.error("施工产值不能大于合同额");
           return false;
@@ -541,18 +550,6 @@
           commonFilesList:this.commonFilesList,
         }
         var url='';
-        if(this.projectList.projectTypeCode=='017002'||this.projectList.projectTypeCode=='017003'){
-          var money=0;
-          this.data.forEach((item)=>{
-            if(item.tjxCode=='001001'){
-              money=Number(item.monthValue);
-            }
-          });
-          if(money==0&&this.commonFilesList.length==0){
-            this.$message.error("请上传附件!");
-            return false;
-          }
-        }
         if(type=='save'){
           url="/api/statistics/Projectcheck/detail/saveOrUpdate";
           this.$http
