@@ -40,7 +40,7 @@
             '台账报表用统计项参数':this.$route.query['台账报表用统计项参数'],
             '台账报表用月报年月':this.$route.query['台账报表用月报年月'],
           }
-          console.log(v_params)
+          // console.log(v_params)
         }else{
           v_params={
             "resid":this.$route.query.resid
@@ -56,9 +56,9 @@
           .then((res) => {
             // this.url='http://121.36.79.169:8088'+res.data.data.url;
             this.url=res.data.data.url;
-            console.log(this.url);
+            // console.log(this.url);
             this.paramMap = res.data.data;
-            console.log(this.paramMap)
+            // console.log(this.paramMap)
             return new Promise((resolve, reject) => {
               /* 设置报表参数 */
               var params = new Array();
@@ -78,6 +78,7 @@
                 obj.stanbyValue = this.parseObj(val);
                 params.push(obj);
               }
+              console.log(params)
               this.$refs.paramsInfo.value = JSON.stringify(params);
                 resolve("1111")
             }).then((data)=>{
