@@ -269,6 +269,17 @@
           :width="200"
         ></el-table-column>
         <el-table-column
+          prop="sign"
+          header-align="center"
+          align="center"
+          label="项目类型"
+          :width="100"
+        >
+          <template slot-scope="scope">
+            <span> {{scope.row.sign==0?'辅项目':scope.row.sign==2?'主项目':scope.row.sign==3?'合并项目':''}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="projectTypeFirst"
           header-align="center"
           align="center"
