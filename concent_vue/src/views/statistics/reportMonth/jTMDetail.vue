@@ -679,6 +679,8 @@
         var url='';
         if(this.p.ifjtList){
           url='/api/statistics/projectMonthlyReport/Projectreport/detail/getJtReportDetail'
+        }else if(this.p.selfPath=='../gfList'){
+          url='/api/statistics/projectMonthlyReport/Projectreport/detail/getGfReportDetail'
         }else{
           url='/api/statistics/projectMonthlyReport/Projectreport/detail/queryMonthReportEntityInfo'
         }

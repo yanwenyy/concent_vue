@@ -458,7 +458,7 @@
       openStatisticalTree(type,list){
         this.statistStatus = true;
         this.$nextTick(() => {
-          this.$refs.statistUpdate.init(type,list)
+          this.$refs.statistUpdate.init(type,list,'/api/statistics/Projectcheck/list/getBjxTree')
         })
       },
       //获取选中的统计项

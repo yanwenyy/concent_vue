@@ -480,6 +480,8 @@
         var url='';
         if(this.p.ifjtList){
           url='/api/statistics/Projectcheck/detail/getJtReportDetail'
+        }else if(this.p.selfPath=='../gfList'){
+          url='/api/statistics/Projectcheck/detail/getGfReportDetail'
         }else{
           url='/api/statistics/Projectcheck/detail/queryEntityInfoDetail'
         }

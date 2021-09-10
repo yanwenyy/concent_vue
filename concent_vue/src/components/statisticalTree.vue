@@ -50,10 +50,7 @@
     },
     mounted(){
       //json方法引入数据
-      this.$http.post('/api/statistics/projectMonthlyReport/Projectreport/list/getBjxTree', { isLoading: false }).then(res =>{
-        // console.log(res.data.data);
-        this.datas=res.data.data
-      });
+
 
       //js方法引入数据
       // this.datas=datas;
@@ -66,7 +63,12 @@
         if (!value) return true;
         return data.detailName.indexOf(value) !== -1;
       },
-      init(type,list){
+      init(type,list,url){
+        var _url=url||'/api/statistics/projectMonthlyReport/Projectreport/list/getBjxTree'
+        this.$http.post(_url, { isLoading: false }).then(res =>{
+          // console.log(res.data.data);
+          this.datas=res.data.data
+        });
         if(list&&list!=''){
           this.list=list.split(",")
         }

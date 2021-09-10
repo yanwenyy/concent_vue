@@ -352,15 +352,19 @@
       // 查看
       rowshow(row) {
         let p = {selfPath:'../gfList',fromDate:this.searchform.yearDateS,actpoint: "look", params: row};
-        if(row.flowStatus==''||row.flowStatus==null){
-          this.$message.info("该项目月报还未完成上报,无法查看");
-          return false;
-        }else{
-          this.$router.push({
-            path: "./jTMDetail/",
-            query: {p: this.$utils.encrypt(JSON.stringify(p))},
-          });
-        }
+        this.$router.push({
+          path: "./jTMDetail/",
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        });
+        // if(row.flowStatus==''||row.flowStatus==null){
+        //   this.$message.info("该项目月报还未完成上报,无法查看");
+        //   return false;
+        // }else{
+        //   this.$router.push({
+        //     path: "./jTMDetail/",
+        //     query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        //   });
+        // }
       },
       // list通用方法开始
       handleSizeChange(val) {
