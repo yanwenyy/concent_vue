@@ -1087,7 +1087,7 @@
                   align="center"
                 >
                   <template slot-scope="scope">
-                    <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
+                    <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.contractAmount'" :rules="{required: true,message: '此项不能为空'}">
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                       <el-input
                         class="group-no-padding"
@@ -1290,6 +1290,32 @@
                             :label="item.detailName"
                             :value="item.id"
                             v-for="(item, index) in projectType"/>
+                        </el-select>
+                      </el-form-item>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    :resizable="false"
+                    label="项目板块"
+                    width="200"
+                    align="center"
+                    prop="projectModuleId"
+                    show-overflow-tooltip
+                  >
+                    <template slot-scope="scope">
+                      <el-form-item class="tabelForm">
+                        <el-select
+                          :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                          filterable
+                          clearable
+                          placeholder="请选择"
+                          @change="getName2(scope.row.projectModuleId, projectPlate, 'projectModuleName', scope.$index,'projectModuleCode')"
+                          v-model="scope.row.projectModuleId">
+                          <el-option
+                            :key="index"
+                            :label="item.detailName"
+                            :value="item.id"
+                            v-for="(item, index) in projectPlate"/>
                         </el-select>
                       </el-form-item>
                     </template>
@@ -1993,7 +2019,6 @@
 
       },
       goSeparate(data) {
-        console.log(data)
         let v = {
           uuid: data.uuid, // ID新增为空，但必须传
           subContractName: data.companyBuiltName, // 承建单位名称
@@ -2001,6 +2026,8 @@
           projectName: data.projectName, // 项目名称
           projectTypeId: data.projectTypeId, // 项目类型ID
           projectTypeName: data.projectTypeName, // 项目类型名称
+          projectModuleId: data.projectModuleId, // 项目板块ID
+          projectModuleName: data.projectModuleName, // 项目板块名称
           contractAmountInitial: data.contractAmountInitial, // 初始合同额
           contractAmountEngine: data.contractAmountEngine // 工程合同额
         }
@@ -2020,13 +2047,14 @@
           projectName: '', // 项目名称
           projectTypeId: '', // 项目类型ID
           projectTypeName: '', // 项目类型名称
+          projectModuleId: '', // 项目板块ID
+          projectModuleName: '', // 项目板块名称
           contractAmountInitial: '', // 初始合同额
           contractAmountEngine: '' // 工程合同额
         }
         this.detailForm.project.projectSubContractList.push(v)
       },
       del(index, item, list,name) {
-        console.log(index, item, list)
         if (item.uuid && item.uuid !== ''&& !name) {
           this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
             confirmButtonText: '确定',
@@ -2041,7 +2069,6 @@
               .then((res) => {
                 if (res.data && res.data.code === 200) {
                   list.splice(index, 1)
-                  console.log(list)
                 } else {
                   this.$message.error('删除失败')
                 }
@@ -2098,7 +2125,6 @@
             message: '已取消删除'
           }); 
         });       
-        // console.log(this.detailForm.project.commonFilesList)
       },
       // 打开附件上传的组件
       openFileUp(url, list) {
@@ -2169,7 +2195,6 @@
       });
         this.detailForm.project[id]=_id.join(",");
         this.detailForm.project[name]=_name.join(",");
-        console.log(this.detailForm.project[id])
       },
       getShowTwo() {
         this.emergingMarket.find((item) => {
@@ -2247,7 +2272,6 @@
                 this.detailForm.project.projectTypeSecond = item.detailName;
                 this.detailForm.project.projectTypeSecondCode = item.detailCode;
                 this.xqprojectTypeThree = item.children||[];
-                console.log(this.xqprojectTypeThree)
               }
             }
           )
@@ -2420,7 +2444,6 @@
       },
       //打开单位弹框
       addDw(type,list,ifChek,index,tableList){
-        console.info(index)
         this.DwVisible = true;
         this.$nextTick(() => {
           this.$refs.infoDw.init(type,list,ifChek,index,tableList);
@@ -2458,7 +2481,6 @@
           this.detailForm.project.companyId=id.join(",");
           this.detailForm.project.companyName=name.join(",");
         }else if(data.type=='分包承建单位'){
-          console.info(this.detailForm.project.projectSubContractList)
           this.detailForm.project.projectSubContractList[data.index].subContractName=data.name;
           this.detailForm.project.projectSubContractList[data.index].subContractId=data.code;
         }

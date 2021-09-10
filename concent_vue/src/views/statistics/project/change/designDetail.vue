@@ -980,7 +980,7 @@
                 align="center"
               >
                 <template slot-scope="scope">
-                  <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
+                  <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.contractAmount'" :rules="{required: true,message: '此项不能为空'}">
                     <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                     <el-input
                       class="group-no-padding"
