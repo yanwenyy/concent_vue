@@ -1142,6 +1142,15 @@ export default {
                   'defaultpage': false
                 },
                 {
+                  'name': '项目信息合并',
+                  'path': '/statistics/project/tradeMerge/index',
+                  'component': '/statistics/project/tradeMerge/index',
+                  'iconCls': 'el-icon-search',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
                   'name': '项目信息变更',
                   'path': '/statistics/project/change/engineDetail',
                   'component': '/statistics/project/change/engineDetail',
