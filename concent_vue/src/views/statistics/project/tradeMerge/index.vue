@@ -5,7 +5,7 @@
       <el-button-group style="float: left">
         <el-button @click="addMain" type="primary" plain><i class="el-icon-plus"></i>选择主项目</el-button>
         <el-button @click="addSecond" type="primary" plain><i class="el-icon-plus"></i>选择辅项目</el-button>
-        <el-button @click="edit" type="primary" plain><i class="el-icon-edit"></i>合并</el-button>
+        <el-button @click="merge" type="primary" plain><i class="el-icon-edit"></i>合并</el-button>
       </el-button-group>
       <div style="float: right;">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none">
@@ -357,6 +357,8 @@ export default {
       },
       page: { current: 1, size: 20, total: 0, records: [] }, // 列表数据
       multipleSelection:[], // 列表多选的数据
+      mainProject:{},  // 主项目
+      draftProject:[],  // 辅项目
     };
   },
   computed: {},
@@ -384,7 +386,7 @@ export default {
       }
       let isAdd = true
       this.page.records.forEach((element, index) => {
-        if (element.sign == 0) {
+        if (element.sign == 2) {
           this.page.records[index] = this.mainSelection[0] // 替换主项目
           this.page.records.splice(index,this.page.records.length-1) // 删除所有辅项目
           isAdd = false
@@ -417,7 +419,7 @@ export default {
     addSecond() { // 显示辅项目列表
       let isAdd = true
       this.page.records.forEach((element, index) => {
-        if (element.sign == 0) {
+        if (element.sign == 2) {
           isAdd = false
           this.findSecond = element
         }
@@ -466,6 +468,46 @@ export default {
       this.getSecondData()
     },
     // 合并项目 ************************************************
+    merge(){ // 合并
+      let isMain = false
+      let isSecond = false
+      let mainNum = 0
+      this.mainProject = {}
+      this.draftProject = []
+      this.multipleSelection.forEach((element) => {
+        if (element.sign == 2) {
+          isMain = true
+          mainNum += 1
+          this.mainProject = element
+        }
+        if (element.sign == 0) {
+          isSecond = true
+          this.draftProject.push(element)
+        }
+      })
+      if (isMain || mainNum > 1) {
+        this.$message({
+          showClose: true,
+          message: '请选择一个主项目！',
+          type: 'warning'
+        });         
+        return false
+      }
+      if (isSecond) {
+        this.$message({
+          showClose: true,
+          message: '请选择辅项目！',
+          type: 'warning'
+        });
+        return false
+      }
+      this.$http
+        .post('/api/statistics/StatisticsProject/list/getProjectMerge', { 
+          mainProject: this.mainProject, draftProject:this.draftProject
+        }).then(res => {
+          console.info(res.data.data)
+        })      
+    },
     getData() { // 获取分页数据
       this.$http
         .post('/api/statistics/StatisticsProject/list/getProjectNoPass', this.searchform)
