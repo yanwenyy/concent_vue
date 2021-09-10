@@ -586,7 +586,6 @@
                 item.totalStrList=this.setTjxList(item.totalStr)
               });
               this.page =datas;
-              // console.log(this.page.records)
             })
       },
       rowShow(row){

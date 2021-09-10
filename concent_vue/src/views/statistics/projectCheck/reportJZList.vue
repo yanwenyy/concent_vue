@@ -66,18 +66,19 @@
                          prop="yearDateS" show-overflow-tooltip
         >
           <!--<template slot="header"-->
-                    <!--slot-scope="scope">-->
-            <!--<span>月报日期</span>-->
-            <!--<div>-->
-              <!--<el-date-picker class="list-search-picker" filterable clearable-->
-                              <!--type="month"-->
-                              <!--value-format="yyyy-MM"-->
-                              <!--@change="queryList"-->
-                              <!--v-model="searchform.yearDateS"-->
-              <!--&gt;-->
-              <!--</el-date-picker>-->
-            <!--</div>-->
+          <!--slot-scope="scope">-->
+          <!--<span>月报日期</span>-->
+          <!--<div>-->
+          <!--<el-date-picker class="list-search-picker" filterable clearable-->
+          <!--type="month"-->
+          <!--value-format="yyyy-MM"-->
+          <!--@change="queryList"-->
+          <!--v-model="searchform.yearDateS"-->
+          <!--&gt;-->
+          <!--</el-date-picker>-->
+          <!--</div>-->
           <!--</template>-->
+
           <template slot-scope="scope">
             <!-- <div>{{scope.row.monthValue}}</div>-->
             <div v-if="scope.row.reportYear != null && scope.row.reportMonth != null">
@@ -90,108 +91,160 @@
         </el-table-column>
         <el-table-column :min-width="200"
                          align="center"
-                         label="填报单位"
-                         prop="unitId" show-overflow-tooltip
+                         label="项目名称"
+                         prop="projectName" show-overflow-tooltip
         >
-          <!--<template slot="header"-->
-                    <!--slot-scope="scope">-->
-            <!--<span>填报单位</span>-->
-            <!--<div>-->
-              <!--<el-input style=" width: 100%"-->
-                        <!--v-model="searchform.projectName"-->
-                        <!--size="mini"/>-->
-            <!--</div>-->
-          <!--</template>-->
         </el-table-column>
-        <el-table-column :width="150"
+        <el-table-column :min-width="200"
                          align="center"
                          label="所属单位"
-                         prop="createOrgName" show-overflow-tooltip
+                         prop="companyBelongName" show-overflow-tooltip
         >
           <!--<template slot="header"-->
-                    <!--slot-scope="scope">-->
-            <!--<span>所属单位</span>-->
-            <!--<div>-->
-              <!--<el-input style=" width: 100%"-->
-                        <!--v-model="searchform.createOrgName"-->
-                        <!--size="mini"/>-->
-            <!--</div>-->
+          <!--slot-scope="scope">-->
+          <!--<span>填报单位</span>-->
+          <!--<div>-->
+          <!--<el-input style=" width: 100%"-->
+          <!--v-model="searchform.projectName"-->
+          <!--size="mini"/>-->
+          <!--</div>-->
           <!--</template>-->
         </el-table-column>
-
         <el-table-column
-          :width="150"
+          width="150"
           align="center"
-          label="状态"
-          prop="flowStatus"
+          label="工程行业类别"
+          prop="projectTypeFirst" show-overflow-tooltip
+        >
+          <!--<template slot="header"-->
+          <!--slot-scope="scope">-->
+          <!--<span>所属单位</span>-->
+          <!--<div>-->
+          <!--<el-input style=" width: 100%"-->
+          <!--v-model="searchform.createOrgName"-->
+          <!--size="mini"/>-->
+          <!--</div>-->
+          <!--</template>-->
+        </el-table-column>
+        <el-table-column
+          width="150"
+          align="center"
+          label="工程合同额"
+          prop="contractAmountEngine" show-overflow-tooltip
+        >
+          <!--<template slot="header"-->
+          <!--slot-scope="scope">-->
+          <!--<span>所属单位</span>-->
+          <!--<div>-->
+          <!--<el-input style=" width: 100%"-->
+          <!--v-model="searchform.createOrgName"-->
+          <!--size="mini"/>-->
+          <!--</div>-->
+          <!--</template>-->
+        </el-table-column>
+        <el-table-column
+          align="center"
+          label="本月完成"
+          prop="monthValue" show-overflow-tooltip
+        >
+          <!--<template slot="header"-->
+          <!--slot-scope="scope">-->
+          <!--<span>所属单位</span>-->
+          <!--<div>-->
+          <!--<el-input style=" width: 100%"-->
+          <!--v-model="searchform.createOrgName"-->
+          <!--size="mini"/>-->
+          <!--</div>-->
+          <!--</template>-->
+        </el-table-column>
+        <el-table-column
+          align="center"
+          label="本年完成"
+          prop="yearValue" show-overflow-tooltip
+        >
+          <!--<template slot="header"-->
+          <!--slot-scope="scope">-->
+          <!--<span>所属单位</span>-->
+          <!--<div>-->
+          <!--<el-input style=" width: 100%"-->
+          <!--v-model="searchform.createOrgName"-->
+          <!--size="mini"/>-->
+          <!--</div>-->
+          <!--</template>-->
+        </el-table-column>
+        <!--<el-table-column-->
+        <!--:width="150"-->
+        <!--align="center"-->
+        <!--label="状态"-->
+        <!--prop="flowStatus"-->
+        <!--show-overflow-tooltip-->
+        <!--&gt;-->
+        <!--<template slot-scope="scope">-->
+        <!--<span class=" pointer" :class="scope.row.resultType=='1'?'blue':''" @click="rowShow(scope.row)">{{scope.row.resultType=='1'?'汇总查询':scope.row.resultType=='2'?'已上报':''}}</span>-->
+        <!-- -->
+        <!--</template>-->
+        <!--&lt;!&ndash;<template slot="header" slot-scope="scope">&ndash;&gt;-->
+        <!--&lt;!&ndash;<span>状态</span>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div>&ndash;&gt;-->
+        <!--&lt;!&ndash;<el-select&ndash;&gt;-->
+        <!--&lt;!&ndash;class="list-search-picker"&ndash;&gt;-->
+        <!--&lt;!&ndash;clearable&ndash;&gt;-->
+        <!--&lt;!&ndash;filterable&ndash;&gt;-->
+        <!--&lt;!&ndash;placeholder="请选择"&ndash;&gt;-->
+        <!--&lt;!&ndash;size="mini"&ndash;&gt;-->
+        <!--&lt;!&ndash;v-model="searchform.flowStatus"&ndash;&gt;-->
+        <!--&lt;!&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;<el-option&ndash;&gt;-->
+        <!--&lt;!&ndash;:key="index"&ndash;&gt;-->
+        <!--&lt;!&ndash;:label="item.detailName"&ndash;&gt;-->
+        <!--&lt;!&ndash;:value="item.id"&ndash;&gt;-->
+        <!--&lt;!&ndash;v-for="(item, index) in flowStatusList"&ndash;&gt;-->
+        <!--&lt;!&ndash;&gt;</el-option>&ndash;&gt;-->
+        <!--&lt;!&ndash;</el-select>&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<el-input&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;class="list-search-picker"&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;style=" width: 100%"&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;v-model="searchform.flowStatus"&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;size="mini"&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;/>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</template>&ndash;&gt;-->
+        <!--</el-table-column>-->
+        <!--<el-table-column :width="150"-->
+        <!--align="center"-->
+        <!--label="批复状态"-->
+        <!--prop="pfStatus" show-overflow-tooltip-->
+        <!--&gt;-->
+        <!--<template slot-scope="scope">-->
+        <!-- {{scope.row.flowStatus=='pass'?'已批复':'未批复'}}-->
+        <!--</template>-->
+        <!--&lt;!&ndash;<template slot="header"&ndash;&gt;-->
+        <!--&lt;!&ndash;slot-scope="scope">&ndash;&gt;-->
+        <!--&lt;!&ndash;<span>批复状态</span>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div>&ndash;&gt;-->
+        <!--&lt;!&ndash;<el-input style=" width: 100%"&ndash;&gt;-->
+        <!--&lt;!&ndash;v-model="searchform.pfStatus"&ndash;&gt;-->
+        <!--&lt;!&ndash;size="mini"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</template>&ndash;&gt;-->
+        <!--</el-table-column>-->
+        <!--<el-table-column :width="150"-->
+        <!--align="center"-->
+        <!--label="批复金额(万元)"-->
+        <!--prop="pfMoney" show-overflow-tooltip-->
+        <!--&gt;-->
+        <!--</el-table-column>-->
+        <el-table-column
+          :width="120"
+          align="center"
+          label="审核通过时间"
+          prop="checkfinishTime"
           show-overflow-tooltip
         >
-          <template slot-scope="scope">
-              <span class=" pointer" :class="scope.row.resultType=='1'?'blue':''" @click="rowShow(scope.row)">{{scope.row.resultType=='1'?'汇总查询':scope.row.resultType=='2'?'已上报':''}}</span>
-             
-          </template>
-          <!--<template slot="header" slot-scope="scope">-->
-            <!--<span>状态</span>-->
-            <!--<div>-->
-              <!--<el-select-->
-                <!--class="list-search-picker"-->
-                <!--clearable-->
-                <!--filterable-->
-                <!--placeholder="请选择"-->
-                <!--size="mini"-->
-                <!--v-model="searchform.flowStatus"-->
-              <!--&gt;-->
-                <!--<el-option-->
-                  <!--:key="index"-->
-                  <!--:label="item.detailName"-->
-                  <!--:value="item.id"-->
-                  <!--v-for="(item, index) in flowStatusList"-->
-                <!--&gt;</el-option>-->
-              <!--</el-select>-->
-              <!--&lt;!&ndash;<el-input&ndash;&gt;-->
-              <!--&lt;!&ndash;class="list-search-picker"&ndash;&gt;-->
-              <!--&lt;!&ndash;style=" width: 100%"&ndash;&gt;-->
-              <!--&lt;!&ndash;v-model="searchform.flowStatus"&ndash;&gt;-->
-              <!--&lt;!&ndash;size="mini"&ndash;&gt;-->
-              <!--&lt;!&ndash;/>&ndash;&gt;-->
-            <!--</div>-->
-          <!--</template>-->
+          <template slot-scope="scope">{{
+            scope.row.checkfinishTime | dateformat
+            }}</template>
         </el-table-column>
-        <el-table-column :width="150"
-                         align="center"
-                         label="批复状态"
-                         prop="pfStatus" show-overflow-tooltip
-        >
-          <template slot-scope="scope">
-             {{scope.row.flowStatus=='pass'?'已批复':'未批复'}}
-          </template>
-          <!--<template slot="header"-->
-                    <!--slot-scope="scope">-->
-            <!--<span>批复状态</span>-->
-            <!--<div>-->
-              <!--<el-input style=" width: 100%"-->
-                        <!--v-model="searchform.pfStatus"-->
-                        <!--size="mini"/>-->
-            <!--</div>-->
-          <!--</template>-->
-        </el-table-column>
-        <el-table-column :width="150"
-           align="center"
-           label="批复金额(万元)"
-           prop="pfMoney" show-overflow-tooltip
-      >
-      </el-table-column>
-        <el-table-column
-         :width="120"
-         align="center"
-         label="审核通过时间"
-         prop="checkfinishTime"
-         show-overflow-tooltip
-       >
-         <template slot-scope="scope">{{
-           scope.row.checkfinishTime | dateformat
-         }}</template>
-       </el-table-column>
       </el-table>
       <el-dialog :title="addTitle"
                  :visible.sync="showTqDialog" append-to-body
@@ -512,20 +565,31 @@
       },
       // 获取分页数据
       getData() {
-        this.searchform.uuid=this.p.projectId;
+        var url='';
+        if(this.p.ifjtList){
+          this.searchform.yearDateS=this.p.params.yearDateS;
+          this.searchform.projectId=this.p.params.uuid;
+          url="/api/statistics/projectMonthlyReport/Projectreport/list/jtClickJzAndJzz";
+        }else{
+          url="/api/statistics/projectMonthlyReport/Projectreport/list/childProjectCheckReport";
+          this.searchform.uuid=this.p.projectId;
+        }
+
         this.$http
-            .post('/api/statistics/Projectcheck/list/childProjectCheckReport', this.searchform)
+            .post(url, this.searchform)
             .then(res => {
               this.data = res.data.data.records;
             });
       },
       // 查看
       rowShow(row) {
-        let p = { actpoint: 'eidt', projectId: row.projectId,uuid:row.uuid,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.flowStatus }
-        this.$router.push({
-          path: '../reportMDetail/',
-          query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-        })
+        if(!this.p.ifjtList){
+          let p = { actpoint: 'eidt', projectId: row.projectId,reportYear:row.reportYear,reportMonth:row.reportMonth,orgCode:row.createOrgCode,projectName:row.reportProjectName,projectStatus:row.flowStatus }
+          this.$router.push({
+            path: '../reportMDetail/',
+            query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+          })
+        }
       },
     },
     created() {

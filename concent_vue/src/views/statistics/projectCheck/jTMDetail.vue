@@ -477,9 +477,14 @@
       },
       // 获取数据
       getData() {
-        console.log(JSON.parse(this.$utils.decrypt(this.$route.query.p)))
+        var url='';
+        if(this.p.ifjtList){
+          url='/api/statistics/Projectcheck/detail/getJtReportDetail'
+        }else{
+          url='/api/statistics/Projectcheck/detail/queryEntityInfoDetail'
+        }
         this.$http
-            .post('/api/statistics/Projectcheck/detail/queryEntityInfoDetail', JSON.stringify({
+            .post(url, JSON.stringify({
               projectId: this.p.params.projectId,
               uuid: this.p.params.uuid,
               reportYear: this.p.params.reportYear,

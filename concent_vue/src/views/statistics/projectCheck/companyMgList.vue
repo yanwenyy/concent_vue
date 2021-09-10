@@ -657,6 +657,11 @@
       },
       // 获取分页数据
       getData() {
+        if(this.p.ifjtList){
+          this.searchform.createOrgCode=this.p.params.createOrgCode;
+          this.searchform.reportType=this.p.params.reportType;
+          this.searchform.yearDateS=this.p.params.yearDateS
+        }
         if(this.searchform.yearDateS!='' && this.searchform.yearDateS!=null && this.searchform.yearDateS!=undefined){
         this.searchform.reportYear= this.searchform.yearDateS.split("-")[0];
         this.searchform.reportMonth= this.searchform.yearDateS.split("-")[1];

@@ -67,13 +67,16 @@
           <el-button @click="batchBack" type="primary" plain>批量退回</el-button>
         </el-form>
     </div>
-
+    <div>
+      <span>{{page.title[0].beginDate+"至"+page.title[0].fullDate+"月报:"}}</span>
+      <span class="title-span" v-for="item in page.title">{{item.tjxName+":"+item.monthValue}}</span>
+    </div>
     <div style="margin-top: 10px">
       <el-table
         class="tableStyle"
         :max-height="$tableHeight"
         :height="$tableHeight"
-        :data="page.records"
+        :data="page.page.records"
         :header-cell-style="{
           'text-align': 'center',
           'background-color': 'whitesmoke'
@@ -463,6 +466,10 @@
         // console.log(data)
         var name=[],code=[];
         this.headerList=[];
+        if(data.length>3){
+          this.$message.error("最多选择三条统计项");
+          return false;
+        }
         data.forEach((item)=>{
           name.push(item.vname);
           code.push(item.vcode);
@@ -476,7 +483,7 @@
         }else if(data.type=='台账明细'){
           this.$router.push({
             path: "../../reportForm/list",
-            query: {resid: 'Iff808081017b151a151ad6a4017b28c9544e281d','项目ID':this.multipleSelection[0].projectId,'台账报表用统计项参数':"'"+code.join("','")+"'",'台账报表用月报年月':this.searchform.fullDate},
+            query: {resid: 'Iff808081017b151a151ad6a4017b28c9544e281d','项目ID':this.multipleSelection[0].projectId,'台账报表用统计项参数':"'"+code.join("','")+"''",'台账报表用月报年月':this.searchform.fullDate},
           });
         }
 
@@ -572,13 +579,12 @@
             .post('/api/statistics/Projectcheck/list/reportMCheckQuery', this.searchform)
             .then(res => {
               var datas=res.data.data;
-              datas.records.forEach((item)=>{
+              datas.page.records.forEach((item)=>{
                 item.monthStrList=this.setTjxList(item.monthStr);
                 item.yearStrList=this.setTjxList(item.yearStr);
                 item.totalStrList=this.setTjxList(item.totalStr)
               });
               this.page =datas;
-              // console.log(this.page.records)
             })
       },
       rowShow(row){
@@ -660,5 +666,8 @@
   .tableStyle{
     min-height: calc(100vh - 165px)!important;
     max-height: calc(100vh - 165px)!important;
+  }
+  .title-span{
+    margin-left: 20px;
   }
 </style>

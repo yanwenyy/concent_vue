@@ -93,7 +93,7 @@
                       show-overflow-tooltip
                     >
                       <template slot-scope="scope">
-                        <div :title="scope.row.tjxCode=='002009004'?'房建折合面积 = 本月完成产值/工程合同额*建筑面积':scope.row.tjxCode=='002009001'?'房建新开工面积 = 房建施工面积':scope.row.tjxCode=='002009001001'?'其中:新开工面积 = 房建施工面积投标承包面积中的当年新开工面积':''" :class="vnameMarginLeft(scope.row.tjxCode,scope.row.veditable)">{{scope.row.tjxName}}</div>
+                        <div :title="scope.row.tjxCode=='002009004'?'房建折合面积 = 本月完成产值/工程合同额*建筑面积':scope.row.tjxCode=='002009001'?'房建新开工面积 = 房建施工面积':scope.row.tjxCode=='002009001001'?'其中:新开工面积 = 房建施工面积投标承包面积中的当年新开工面积':''" :class="vnameMarginLeft(scope.row.vxh,scope.row.veditable)">{{scope.row.tjxName}}</div>
 <!--                        <div :class="scope.row.tjxCode.length>3&&scope.row.tjxCode.length<6?'':''">{{scope.row.tjxName}}</div>-->
                       </template>
                     </el-table-column>
@@ -256,7 +256,7 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <div :class="vnameMarginLeft(scope.row.tjxCode,scope.row.veditable)">{{scope.row.tjxName}}</div>
+                    <div :class="vnameMarginLeft(scope.row.vxh,scope.row.veditable)">{{scope.row.tjxName}}</div>
                   </template>
                 </el-table-column>
                 <el-table-column

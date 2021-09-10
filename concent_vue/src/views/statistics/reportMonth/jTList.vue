@@ -376,6 +376,8 @@
         showinput: false,
         sousuo: "",
         searchform: {
+          current: 1,
+          size: 20,
           createOrgName: "",
           flowStatus: "",
           createTime: "",
@@ -755,7 +757,8 @@
       },
       // 查看
       rowshow(row) {
-        if(row.flowStatus==''||row.flowStatus==null){
+        // if(row.flowStatus==''||row.flowStatus=='0'){
+        if(row.flowStatus==''){
           this.$message.info("该项目月报还未完成上报,无法查看");
           return false;
         }else{
