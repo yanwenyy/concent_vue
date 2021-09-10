@@ -269,14 +269,14 @@
           :width="200"
         ></el-table-column>
         <el-table-column
-          prop="sign"
+          prop="mergeSign"
           header-align="center"
           align="center"
           label="项目类型"
           :width="100"
         >
           <template slot-scope="scope">
-            <span> {{scope.row.sign==0?'辅项目':scope.row.sign==2?'主项目':scope.row.sign==3?'合并项目':''}}</span>
+            <span> {{scope.row.mergeSign==0?'辅项目':scope.row.mergeSign==2?'主项目':scope.row.mergeSign==3?'合并项目':''}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -397,7 +397,7 @@ export default {
       }
       let isAdd = true
       this.page.records.forEach((element, index) => {
-        if (element.sign == 2) {
+        if (element.mergeSign == 2) {
           this.page.records[index] = this.mainSelection[0] // 替换主项目
           this.page.records.splice(index,this.page.records.length-1) // 删除所有辅项目
           isAdd = false
@@ -430,7 +430,7 @@ export default {
     addSecond() { // 显示辅项目列表
       let isAdd = true
       this.page.records.forEach((element, index) => {
-        if (element.sign == 2) {
+        if (element.mergeSign == 2) {
           isAdd = false
           this.findSecond = element
         }
@@ -480,19 +480,19 @@ export default {
     },
     // 合并项目 ************************************************
     merge(){ // 合并
-      let isMain = false
-      let isSecond = false
+      let isMain = true
+      let isSecond = true
       let mainNum = 0
       this.mainProject = {}
       this.draftProject = []
       this.multipleSelection.forEach((element) => {
-        if (element.sign == 2) {
-          isMain = true
+        if (element.mergeSign == 2) {
+          isMain = false
           mainNum += 1
           this.mainProject = element
         }
-        if (element.sign == 0) {
-          isSecond = true
+        if (element.mergeSign == 0) {
+          isSecond = false
           this.draftProject.push(element)
         }
       })
@@ -513,10 +513,17 @@ export default {
         return false
       }
       this.$http
-        .post('/api/statistics/StatisticsProject/list/getProjectMerge', { 
-          mainProject: this.mainProject, draftProject:this.draftProject
-        }).then(res => {
+        .post('/api/statistics/StatisticsProject/list/getProjectMerge', 
+          { mainProject: this.mainProject },
+          { draftProject: this.draftProject }
+        ).then(res => {
           console.info(res.data.data)
+          // 工程承包
+          // let p = { actpoint: 'edit', uuid: this.multipleSelection[0].uuid  ,contractNumber: this.multipleSelection[0].contractNumber }
+          // this.$router.push({
+          //   path: './engineAdd/',
+          //   query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+          // })
         })      
     },
     getData() { // 获取分页数据
