@@ -1002,15 +1002,15 @@
               align="center"
             >
               <template slot-scope="scope">
-                <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.contractAmount'" :rules="{required: true,message: '此项不能为空'}">
+                <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
                   <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                   <el-input
                     class="group-no-padding"
                     clearable
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
                     v-model="scope.row.contractAmount"
-                    @input="getPositionMoney(scope.$index,detailForm.project.topInfoSiteList)"
                   >
+                    <!--@input="getPositionMoney(scope.$index,detailForm.project.topInfoSiteList)"-->
                     <template slot="prepend">¥</template>
                     <template slot="append">(万元)</template>
                   </el-input>
@@ -1216,7 +1216,7 @@
   import Tree from '@/components/tree'
   import FileUpload from '@/components/fileUpload'
   import { isMoney, isMobile, isPhone } from '@/utils/validate'
-  import CompanyTree from '../companyTree'
+  import CompanyTree from '../../companyTree'
   import AuditProcess from '@/components/auditProcess'
   import companyMul from '@/components/companiesMultiple'
 
@@ -1333,8 +1333,7 @@
             houseTypeId: '', // 房屋结构类型
             contractAmountInitial: '', // 初始合同额(万元)
             contractAmountEngine: '', // 工程合同额(万元)
-            amountWe: '', //我方份额
-            ourAmount: '',
+            amountWe: '', //初始我方份额
             contractAmountTotal: '', // 合总同额(万元)
             contractAmountChange: '', // 合总额增减(万元)
             valueAddedTax: '', // 增值税(万元)
@@ -1398,8 +1397,7 @@
             isMustMoney: [{ required: true, validator: validateMustMoney, trigger: ['blur', 'change'] }],
             isMobile: [{ validator: validateMobile, trigger: ['blur', 'change'] }],
             isPercent: [{ required: true, validator: validatePercent, trigger: ['blur', 'change'] }],
-            isNumber: [{ validator: validateNumber, trigger: ['blur', 'change'] }],
-            isMust:[{ required: true, message: '此项不能为空', trigger: 'change' }]
+            isNumber: [{ validator: validateNumber, trigger: ['blur', 'change'] }]
           }
         },
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
@@ -1549,25 +1547,6 @@
 
         });
         this.key = this.key + 1;
-      },
-      //项目地点份额变动的时候
-      getPositionMoney(index,list){
-        if(list.length==1){
-          list[0].contractAmount=this.detailForm.project.ourAmount
-        }else{
-          var money=0;
-          list.forEach((item,i)=>{
-            if(i>0){
-              money+=Number(item.contractAmount);
-            }
-          });
-          if(this.detailForm.project.ourAmount-money>0){
-            list[0].contractAmount=this.detailForm.project.ourAmount-money;
-          }else{
-            list[index].contractAmount='';
-            this.$message.error('项目地点份额之和不能大于初始我方份额');
-          }
-        }
       },
       //新增标段和地点
       add(type) {
@@ -2130,15 +2109,12 @@
     margin-top: 10px;
 
     .neirong {
-     >>>.el-form-item__error {
+      > > > .el-form-item__error {
         top: 4%!important;
       }
     }
-    >>>.detailTable td{
-      padding: 5px 0!important;
-    }
 
-    >>>.el-form-item__error {
+    > > > .el-form-item__error {
       padding-top: 0px;
       width: 95%;
       margin-left: 0;
@@ -2146,16 +2122,16 @@
       top: 0%;
     }
 
-    >>>.el-main {
+    > > > .el-main {
       overflow: hidden;
     }
 
-    >>>.el-form-item__label:before {
+    > > > .el-form-item__label:before {
       position: initial;
       left: -10px;
     }
 
-    >>>.inline-formitem {
+    > > > .inline-formitem {
       margin-top: 30px;
     }
 

@@ -671,7 +671,7 @@
                 align="center"
               >
                 <template slot-scope="scope">
-                  <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
+                  <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.contractAmount'"  :rules="{required: true,message: '此项不能为空'}">
                     <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                     <el-input
                       class="group-no-padding"
@@ -1848,7 +1848,7 @@
       //项目地点份额变动的时候
       getPositionMoney(index,list){
         if(list.length==1){
-          list[0].contractAmount=this.detailForm.project.amountWe
+          list[0].contractAmount=this.detailForm.project.ourAmount
         }else{
           var money=0;
           list.forEach((item,i)=>{
@@ -1856,8 +1856,8 @@
               money+=Number(item.contractAmount);
             }
           });
-          if(this.detailForm.project.amountWe-money>0){
-            list[0].contractAmount=this.detailForm.project.amountWe-money;
+          if(this.detailForm.project.ourAmount-money>0){
+            list[0].contractAmount=this.detailForm.project.ourAmount-money;
           }else{
             list[index].contractAmount='';
             this.$message.error('项目地点份额之和不能大于初始我方份额');

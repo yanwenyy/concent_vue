@@ -574,15 +574,15 @@
               align="center"
             >
               <template slot-scope="scope">
-                <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.contractAmount'" :rules="{required: true,message: '此项不能为空'}">
+                <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
                   <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                   <el-input
                     class="group-no-padding"
                     clearable
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
                     v-model="scope.row.contractAmount"
-                    @input="getPositionMoney(scope.$index,detailForm.project.topInfoSiteList)"
                   >
+                    <!--@input="getPositionMoney(scope.$index,detailForm.project.topInfoSiteList)"-->
                     <template slot="prepend">¥</template>
                     <template slot="append">(万元)</template>
                   </el-input>
@@ -780,7 +780,7 @@
   import Tree from '@/components/tree'
   import { isMoney, isMobile, isPhone } from '@/utils/validate'
   import AuditProcess from '@/components/auditProcess'
-  import CompanyTree from '../companyTree'
+  import CompanyTree from '../../companyTree'
   import FileUpload from '@/components/fileUpload'
 
   export default {
@@ -983,25 +983,6 @@
 
         });
         this.key = this.key + 1;
-      },
-      //项目地点份额变动的时候
-      getPositionMoney(index,list){
-        if(list.length==1){
-          list[0].contractAmount=this.detailForm.project.ourAmount
-        }else{
-          var money=0;
-          list.forEach((item,i)=>{
-            if(i>0){
-              money+=Number(item.contractAmount);
-            }
-          });
-          if(this.detailForm.project.ourAmount-money>0){
-            list[0].contractAmount=this.detailForm.project.ourAmount-money;
-          }else{
-            list[index].contractAmount='';
-            this.$message.error('项目地点份额之和不能大于初始我方份额');
-          }
-        }
       },
       del(index, item, list) {
           list.splice(index, 1)

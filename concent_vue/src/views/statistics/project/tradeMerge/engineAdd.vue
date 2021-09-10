@@ -20,12 +20,6 @@
       @click="operation('back')"
       type="warning"
     >驳回</el-button>
-      <!--<div class="clearfix el-card__header">-->
-        <!--<span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'add'"><b>工程承包项目新增</b></span>-->
-        <!--<span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'edit'"><b>工程承包项目修改</b></span>-->
-        <!--<span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'look'"><b>工程承包项目查看</b></span>-->
-        <!--<span style="color: #2a2a7d;line-height: 32px" v-if="p.actpoint === 'task'"><b>工程承包项目审核</b></span>-->
-      <!--</div>-->
       <el-form
         :model="detailForm"
         :rules="rules"
@@ -122,25 +116,6 @@
                 </el-form-item>
               </el-row>
               <el-row>
-                <!-- <el-form-item
-                  v-if="detailForm.project.projectNatureFirstId === '7031076e7a5f4225b1a89f31ee017802'"
-                  label="投资模式:"
-                  prop="project.investmentModelId"
-                  style="width: 32.5%">
-                  <el-select
-                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                    clearable
-                    filterable
-                    @change="getName(detailForm.project.investmentModelId, projectNatureTwo, 'investmentModel','investmentModelCode')"
-                    placeholder="请选择"
-                    v-model="detailForm.project.investmentModelId">
-                    <el-option
-                      :key="index"
-                      :label="item.detailName"
-                      :value="item.id"  v-if="item.isUse==1"
-                      v-for="(item, index) in projectNatureTwo"/>
-                  </el-select>
-                </el-form-item> -->
                 <el-form-item
                   v-if="detailForm.project.projectNatureFirstId === '7031076e7a5f4225b1a89f31ee017802'"
                   label="投资合同总额(万元):"
@@ -449,21 +424,6 @@
                       v-for="(item, index) in projectStatus"/>
                   </el-select>
                 </el-form-item>
-                <!--所在地-->
-                <!--<el-form-item-->
-                <!--label="项目所在地"-->
-                <!--prop="project.topInfoSiteList[0].path"-->
-                <!--:rules="{-->
-                <!--required: true, message: '此项不能为空', trigger: 'change'-->
-                <!--}"-->
-                <!--style="width: 32.5%"-->
-                <!--&gt;-->
-                <!--<el-input v-model="detailForm.project.topInfoSiteList[0].path" placeholder="项目所在地"-->
-                <!--:disabled="p.actpoint === 'look'||p.actpoint === 'task'" clearable>-->
-                <!--<el-button slot="append" :disabled="p.actpoint === 'look'||p.actpoint === 'task'" icon="el-icon-search"-->
-                <!--@click="selectPosition()"></el-button>-->
-                <!--</el-input>-->
-                <!--</el-form-item>-->
                 <el-form-item
                   label="签约/使用资质单位:"
                   prop="project.companyName"
@@ -473,7 +433,6 @@
                     clearable
                     placeholder="请输入"
                     v-model="detailForm.project.companyName">
-                    <!--<el-button v-if="p.actpoint!='task'&&p.actpoint!='look'&&detailForm.project.contractInfoList==''" slot="append" icon="el-icon-circle-plus-outline" @click="openComMul(detailForm.project.companyId,detailForm.project.companyName,'/api/contract/Companies/detail/findCompanies','签约/使用资质单位')"></el-button>-->
                     <el-button v-if="p.actpoint!='task'&&p.actpoint!='look'&&detailForm.project.contractInfoList==''" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('签约/使用资质单位',detailForm.project.companyId)"></el-button>
                   </el-input>
                 </el-form-item>
@@ -1087,7 +1046,7 @@
                   align="center"
                 >
                   <template slot-scope="scope">
-                    <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.contractAmount'" :rules="{required: true,message: '此项不能为空'}">
+                    <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
                       <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                       <el-input
                         class="group-no-padding"
@@ -1296,32 +1255,6 @@
                   </el-table-column>
                   <el-table-column
                     :resizable="false"
-                    label="项目板块"
-                    width="200"
-                    align="center"
-                    prop="projectModuleId"
-                    show-overflow-tooltip
-                  >
-                    <template slot-scope="scope">
-                      <el-form-item class="tabelForm">
-                        <el-select
-                          :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                          filterable
-                          clearable
-                          placeholder="请选择"
-                          @change="getName2(scope.row.projectModuleId, projectPlate, 'projectModuleName', scope.$index,'projectModuleCode')"
-                          v-model="scope.row.projectModuleId">
-                          <el-option
-                            :key="index"
-                            :label="item.detailName"
-                            :value="item.id"
-                            v-for="(item, index) in projectPlate"/>
-                        </el-select>
-                      </el-form-item>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    :resizable="false"
                     label="项目名称"
                     align="center"
                     prop="projectName"
@@ -1467,11 +1400,6 @@
                     v-if="p.actpoint !== 'add'&&p.actpoint !== 'task'"
                     width="80">
                     <template slot-scope="scope">
-                      <!--<el-link-->
-                      <!--:underline="false"-->
-                      <!--@click="del(scope.$index,scope.row,detailForm.project.contractInfoList,'glht')"-->
-                      <!--type="warning">删除-->
-                      <!--</el-link>-->
                       <el-link
                         :underline="false"
                         @click="look(scope.row)"
@@ -1565,11 +1493,11 @@
 
 <script>
   import Tree from '@/components/tree'
-  import CompanyTree from '../companyTree'
+  import CompanyTree from '../../companyTree'
   import FileUpload from '@/components/fileUpload'
   import { isMoney, isMobile, isPhone } from '@/utils/validate'
   import SeparateDialog from '@/components/separateDialog'
-  import RelatedContract from './relatedContract'
+  import RelatedContract from '../relatedContract.vue'
   import companyMul from '@/components/companiesMultiple'
   import AuditProcess from '@/components/auditProcess'
   // import datas from '@/utils/position'
@@ -2019,6 +1947,7 @@
 
       },
       goSeparate(data) {
+        console.log(data)
         let v = {
           uuid: data.uuid, // ID新增为空，但必须传
           subContractName: data.companyBuiltName, // 承建单位名称
@@ -2026,8 +1955,6 @@
           projectName: data.projectName, // 项目名称
           projectTypeId: data.projectTypeId, // 项目类型ID
           projectTypeName: data.projectTypeName, // 项目类型名称
-          projectModuleId: data.projectModuleId, // 项目板块ID
-          projectModuleName: data.projectModuleName, // 项目板块名称
           contractAmountInitial: data.contractAmountInitial, // 初始合同额
           contractAmountEngine: data.contractAmountEngine // 工程合同额
         }
@@ -2047,14 +1974,13 @@
           projectName: '', // 项目名称
           projectTypeId: '', // 项目类型ID
           projectTypeName: '', // 项目类型名称
-          projectModuleId: '', // 项目板块ID
-          projectModuleName: '', // 项目板块名称
           contractAmountInitial: '', // 初始合同额
           contractAmountEngine: '' // 工程合同额
         }
         this.detailForm.project.projectSubContractList.push(v)
       },
       del(index, item, list,name) {
+        console.log(index, item, list)
         if (item.uuid && item.uuid !== ''&& !name) {
           this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
             confirmButtonText: '确定',
@@ -2069,6 +1995,7 @@
               .then((res) => {
                 if (res.data && res.data.code === 200) {
                   list.splice(index, 1)
+                  console.log(list)
                 } else {
                   this.$message.error('删除失败')
                 }
@@ -2125,6 +2052,7 @@
             message: '已取消删除'
           }); 
         });       
+        // console.log(this.detailForm.project.commonFilesList)
       },
       // 打开附件上传的组件
       openFileUp(url, list) {
@@ -2195,6 +2123,7 @@
       });
         this.detailForm.project[id]=_id.join(",");
         this.detailForm.project[name]=_name.join(",");
+        console.log(this.detailForm.project[id])
       },
       getShowTwo() {
         this.emergingMarket.find((item) => {
@@ -2272,6 +2201,7 @@
                 this.detailForm.project.projectTypeSecond = item.detailName;
                 this.detailForm.project.projectTypeSecondCode = item.detailCode;
                 this.xqprojectTypeThree = item.children||[];
+                console.log(this.xqprojectTypeThree)
               }
             }
           )
@@ -2444,6 +2374,7 @@
       },
       //打开单位弹框
       addDw(type,list,ifChek,index,tableList){
+        console.info(index)
         this.DwVisible = true;
         this.$nextTick(() => {
           this.$refs.infoDw.init(type,list,ifChek,index,tableList);
@@ -2481,6 +2412,7 @@
           this.detailForm.project.companyId=id.join(",");
           this.detailForm.project.companyName=name.join(",");
         }else if(data.type=='分包承建单位'){
+          console.info(this.detailForm.project.projectSubContractList)
           this.detailForm.project.projectSubContractList[data.index].subContractName=data.name;
           this.detailForm.project.projectSubContractList[data.index].subContractId=data.code;
         }

@@ -476,7 +476,7 @@
                     >
                     </el-switch>
                   </el-form-item>
-                  <el-form-item
+                  <!-- <el-form-item
                     label="业务类别:"
                   >
                     <el-input
@@ -484,7 +484,7 @@
                       clearable
                       size="mini"
                       v-model="detailFormBefore.contractInfo.businessType"/>
-                  </el-form-item>
+                  </el-form-item> -->
                   <br>
                   <el-form-item
                     label="建设用地面积（万平方米）:"
@@ -1856,7 +1856,7 @@
                   >
                   </el-switch>
                 </el-form-item>
-                <el-form-item
+                <!-- <el-form-item
                   label="业务类别:"
 
                 >
@@ -1878,7 +1878,7 @@
                   >
                     <el-option :key="index" :label="item.detailName" v-if="item.parentDetailId=='0f333a962655480c8ef668a8ce129d41'" :value="item.id" v-for="(item,index) in bizTypeCode"></el-option>
                   </el-select>
-                </el-form-item>
+                </el-form-item> -->
                 <br>
                 <el-form-item
                   label="建设用地面积（万平方米）:"
