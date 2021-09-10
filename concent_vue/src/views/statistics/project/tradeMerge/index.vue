@@ -512,10 +512,10 @@ export default {
         });
         return false
       }
+      console.info({ mainProject: this.mainProject ,draftProject: this.draftProject })
       this.$http
         .post('/api/statistics/StatisticsProject/list/getProjectMerge', 
-          { mainProject: this.mainProject },
-          { draftProject: this.draftProject }
+          { mainProject: this.mainProject, draftProject: this.draftProject }
         ).then(res => {
           console.info(res.data.data)
           // 工程承包
