@@ -361,7 +361,7 @@
                     projectName:res.data.data.projectcheck.reportProjectName,projectStatus:res.data.data.projectcheck.flowStatus
                   }
                   this.$router.push({
-                    path: '../reportMDetail/',
+                    path: this.p.fromPath?'./reportMDetail/':'../reportMDetail/',
                     query: {p: this.$utils.encrypt(JSON.stringify(p))}
                   })
                 }else if(res.data.code === 400){
