@@ -290,6 +290,7 @@
           align="center"
           show-overflow-tooltip
           type="selection"
+          :selectable="isSelect"
         ></el-table-column>
         <el-table-column
           :width="70"
@@ -313,7 +314,7 @@
           :width="100"
         >
           <template slot-scope="scope">
-            <span> {{scope.row.mergeSign==0?'辅项目':scope.row.mergeSign==2?'主项目':scope.row.mergeSign==3?'合并项目':''}}</span>
+            <span> {{scope.row.mergeSign==5?'辅项目':scope.row.mergeSign==4?'主项目':scope.row.mergeSign==3?'合并项目':''}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -543,18 +544,19 @@ export default {
     },
     // 合并项目 ************************************************************************************************
     merge(){ // 合并
+      // 判断 是否含有主项目和辅项目 以及 主项目只有一个
       let isMain = true
       let isSecond = true
       let mainNum = 0
       this.mainProject = {}
       this.draftProject = []
-      this.multipleSelection.forEach((element) => {
-        if (element.mergeSign == 2) {
+      this.multipleSelection.forEach((element) => { 
+        if (element.mergeSign == 4) {
           isMain = false
           mainNum += 1
           this.mainProject = element
         }
-        if (element.mergeSign == 0) {
+        if (element.mergeSign == 5) {
           isSecond = false
           this.draftProject.push(element)
         }
@@ -575,6 +577,8 @@ export default {
         });
         return false
       }
+      // 判断 主项目 辅项目 是否类型一样
+
       this.$http
         .post('/api/statistics/StatisticsProject/list/getProjectMerge', 
           { 'mainProject': this.mainProject ,'draftProject': this.draftProject },
@@ -609,12 +613,11 @@ export default {
             default:
               break;
           } 
-          let p = { actpoint: 'add', uuid: res.data.data.uuid  ,contractNumber: res.data.data.contractNumber }
-          console.info(p, res.data.data.projectModuleName, mergePath)
-          // this.$router.push({
-          //   path: mergePath,
-          //   query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-          // })
+          let p = { actpoint: 'edit', ismerge: true, dataInfor: res.data.data}
+          this.$router.push({
+            path: mergePath,
+            query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+          })
         })      
     },
     getData() { // 获取分页数据
@@ -649,6 +652,14 @@ export default {
     searchformSubmit(){  // 查询
       this.getData()
     },
+    isSelect(row,index) { // 是否可以选择
+      console.info(row.mergeSign)
+      if (row.mergeSign != 4 && row.mergeSign != 5) {
+        return false
+      } else {
+        return true
+      }
+    }
   },
   mounted() {
     this.getData()
