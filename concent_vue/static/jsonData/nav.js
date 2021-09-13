@@ -1142,15 +1142,6 @@ export default {
                   'defaultpage': false
                 },
                 {
-                  'name': '项目信息合并',
-                  'path': '/statistics/project/tradeMerge/index',
-                  'component': '/statistics/project/tradeMerge/index',
-                  'iconCls': 'el-icon-search',
-                  'menushow': true,
-                  'leaf': true,
-                  'defaultpage': false
-                },
-                {
                   'name': '项目信息变更',
                   'path': '/statistics/project/change/engineDetail',
                   'component': '/statistics/project/change/engineDetail',
@@ -1221,7 +1212,88 @@ export default {
                   'menushow': false,
                   'leaf': true,
                   'defaultpage': false
-                }
+                },
+                {
+                  'name': '项目信息合并',
+                  'path': '/statistics/project/tradeMerge/index',
+                  'component': '/statistics/project/tradeMerge/index',
+                  'iconCls': 'el-icon-search',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '项目信息合并',
+                  'path': '/statistics/project/tradeMerge/engineAdd',
+                  'component': '/statistics/project/tradeMerge/engineAdd',
+                  'iconCls': 'el-icon-search',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '项目信息合并',
+                  'path': '/statistics/project/tradeMerge/designAdd',
+                  'component': '/statistics/project/tradeMerge/designAdd',
+                  'iconCls': 'el-icon-search',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '项目信息合并',
+                  'path': '/statistics/project/tradeMerge/estateAdd',
+                  'component': '/statistics/project/tradeMerge/estateAdd',
+                  'iconCls': 'el-icon-search',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '项目信息合并',
+                  'path': '/statistics/project/tradeMerge/financeAdd',
+                  'component': '/statistics/project/tradeMerge/financeAdd',
+                  'iconCls': 'el-icon-search',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '项目信息合并',
+                  'path': '/statistics/project/tradeMerge/maintenanceAdd',
+                  'component': '/statistics/project/tradeMerge/maintenanceAdd',
+                  'iconCls': 'el-icon-search',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '项目信息合并',
+                  'path': '/statistics/project/tradeMerge/manufactureAdd',
+                  'component': '/statistics/project/tradeMerge/manufactureAdd',
+                  'iconCls': 'el-icon-search',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '项目信息合并',
+                  'path': '/statistics/project/tradeMerge/otherAdd',
+                  'component': '/statistics/project/tradeMerge/otherAdd',
+                  'iconCls': 'el-icon-search',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '项目信息合并',
+                  'path': '/statistics/project/tradeMerge/tradeAdd',
+                  'component': '/statistics/project/tradeMerge/tradeAdd',
+                  'iconCls': 'el-icon-search',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },                
               ]
             },
             {

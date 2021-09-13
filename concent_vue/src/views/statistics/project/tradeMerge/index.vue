@@ -53,6 +53,13 @@
             :width="200"
           ></el-table-column>
           <el-table-column
+            prop="projectModuleName"
+            header-align="center"
+            align="center"
+            label="项目板块"
+            :width="120"
+          ></el-table-column>          
+          <el-table-column
             prop="projectTypeFirst"
             header-align="center"
             align="center"
@@ -77,7 +84,7 @@
             label="公告类型"
           ></el-table-column> -->
           <el-table-column
-            prop="companyBuild"
+            prop="flow_status"
             header-align="center"
             align="center"
             label="截止日期"
@@ -109,6 +116,29 @@
     <!-- 辅项目列表 -->
     <el-dialog :visible.sync="showSecond" :append-to-body="true">
       <div>
+        <el-form
+          class="queryForm"
+          style="margin-top: -40px;"
+          :inline="true"
+          :model="secondList"
+          @keyup.enter.native="getSecondData()"
+        >
+          <el-form-item label="项目名称:">
+            <el-select v-model="secondList.projectModuleName" placeholder="请选择">
+              <el-option
+                v-for="item in secondName"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button @click="getSecondData()" type="primary" plain>
+              <i class="el-icon-search"></i>查询
+            </el-button>
+          </el-form-item>          
+        </el-form>
         <el-table
           :max-height="$dialogTableHeight"
           :height="$dialogTableHeight"
@@ -143,6 +173,13 @@
             :width="200"
           ></el-table-column>
           <el-table-column
+            prop="projectModuleName"
+            header-align="center"
+            align="center"
+            label="项目板块"
+            :width="120"
+          ></el-table-column>
+          <el-table-column
             prop="projectTypeFirst"
             header-align="center"
             align="center"
@@ -167,7 +204,7 @@
             label="公告类型"
           ></el-table-column> -->
           <el-table-column
-            prop="companyBuild"
+            prop="flow_status"
             header-align="center"
             align="center"
             label="截止日期"
@@ -280,6 +317,13 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="projectModuleName"
+          header-align="center"
+          align="center"
+          label="项目板块"
+          :width="120"
+        ></el-table-column>
+        <el-table-column
           prop="projectTypeFirst"
           header-align="center"
           align="center"
@@ -289,13 +333,13 @@
           prop="companyBelongName"
           header-align="center"
           align="center"
-          label="录入单位"
+          label="录入单位
         ></el-table-column>
         <el-table-column
           prop="companyBuild"
           header-align="center"
           align="center"
-          label="建设单位"
+          label="建设单位
         ></el-table-column>
         <!-- <el-table-column
           prop="companyBuild"
@@ -304,7 +348,7 @@
           label="公告类型"
         ></el-table-column> -->
         <el-table-column
-          prop="companyBuild"
+          prop="flowStatus"
           header-align="center"
           align="center"
           label="截止日期"
@@ -353,12 +397,38 @@ export default {
       secondList: { // 请求参数
         current: 1,
         size: 20,
-        uuid: null,
-        projectModuleName:""
+        projectModuleName:"工程承包"
       },
       pageSecond: { current: 1, size: 20, total: 0, records: [] }, // 列表数据
       secondSelection:[], // 列表多选的数据
       findSecond:[], // 根据这个主项目查询辅项目
+      secondName:[  // 项目名称筛选的值
+        {
+          value: '工程承包',
+          label: '工程承包'
+        },{
+          value: '勘察设计咨询',
+          label: '勘察设计咨询'
+        },{
+          value: '房地产开发',
+          label: '房地产开发'
+        },{
+          value: '物资贸易',
+          label: '物资贸易'
+        },{
+          value: '工业制造',
+          label: '工业制造'
+        },{
+          value: '金融保险',
+          label: '金融保险'
+        },{
+          value: '运营维管',
+          label: '运营维管'
+        },{
+          value: '其他',
+          label: '其他'
+        }
+      ],
       // 合并项目列表 ************************************************
       searchform: { // 请求参数
         // current: 1,
@@ -396,13 +466,6 @@ export default {
         return false
       }
       let isAdd = true
-      this.page.records.forEach((element, index) => {
-        if (element.mergeSign == 2) {
-          this.page.records[index] = this.mainSelection[0] // 替换主项目
-          this.page.records.splice(index,this.page.records.length-1) // 删除所有辅项目
-          isAdd = false
-        }
-      })
       if (isAdd) {
         this.page.records.push(this.mainSelection[0])
       }
@@ -428,21 +491,6 @@ export default {
     },
     // 辅项目 ************************************************
     addSecond() { // 显示辅项目列表
-      let isAdd = true
-      this.page.records.forEach((element, index) => {
-        if (element.mergeSign == 2) {
-          isAdd = false
-          this.findSecond = element
-        }
-      })
-      if (isAdd) {
-        this.$message({
-          showClose: true,
-          message: '请选择一个主项目！',
-          type: 'warning'
-        });        
-        return false
-      }
       this.getSecondData()
       this.showSecond = true
     },
@@ -464,8 +512,6 @@ export default {
       this.showSecond = false
     },
     getSecondData() { // 获取辅项目数据
-      this.secondList.uuid = this.findSecond.uuid
-      this.secondList.projectModuleName = this.findSecond.projectModuleName
       this.$http.post('/api/statistics/StatisticsProject/list/getProjectEdit',this.secondList).then(res => {
         this.pageSecond = res.data.data
       })
@@ -512,16 +558,44 @@ export default {
         });
         return false
       }
-      console.info({ mainProject: this.mainProject ,draftProject: this.draftProject })
       this.$http
         .post('/api/statistics/StatisticsProject/list/getProjectMerge', 
-          { mainProject: this.mainProject, draftProject: this.draftProject }
+          { 'mainProject': this.mainProject ,'draftProject': this.draftProject },
+          { useJson: true }
         ).then(res => {
-          console.info(res.data.data)
-          // 工程承包
-          // let p = { actpoint: 'edit', uuid: this.multipleSelection[0].uuid  ,contractNumber: this.multipleSelection[0].contractNumber }
+          let mergePath = ""
+          switch (res.data.data.projectModuleName) {
+            case "工程承包":
+              mergePath = "./engineAdd"
+              break;
+            case "勘察设计咨询":
+              mergePath = "./designAdd"                                                                                                                                                                                                                                                                                                   
+              break;            
+            case "房地产开发":
+              mergePath = "./estateAdd"                                                                                                                                                                                                                                                                                                   
+              break;            
+            case "物资贸易":
+              mergePath = "./tradeAdd"                                                                                                                                                                                                                                                                                                   
+              break;            
+            case "工业制造":
+              mergePath = "./manufactureAdd"                                                                                                                                                                                                                                                                                                   
+              break;            
+            case "金融保险":
+              mergePath = "./financeAdd"                                                                                                                                                                                                                                                                                                   
+              break;            
+            case "运营维管":
+              mergePath = "./maintenanceAdd"                                                                                                                                                                                                                                                                                                   
+              break;            
+            case "其他":
+              mergePath = "./otherAdd"                                                                                                                                                                                                                                                                                                   
+              break;            
+            default:
+              break;
+          } 
+          let p = { actpoint: 'add', uuid: res.data.data.uuid  ,contractNumber: res.data.data.contractNumber }
+          console.info(p, res.data.data.projectModuleName, mergePath)
           // this.$router.push({
-          //   path: './engineAdd/',
+          //   path: mergePath,
           //   query: { p: this.$utils.encrypt(JSON.stringify(p)) }
           // })
         })      
@@ -534,20 +608,12 @@ export default {
         })
     },
     rowShow(row) { // 查看
-      let p = { actpoint: "look", uuid: row.uuid };
-      let url = this.getRoute(row.projectModuleId);
-      if (!url) {
-        this.$message({
-          message: "该项目存在问题",
-          type: "error"
-        });
-        return;
-      }
-      console.info(row)
+      let p = { actpoint: 'look', uuid: row.uuid }
       // this.$router.push({
-      //   path: url,
+      //   path: './engineAdd/',
       //   query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-      // });
+      // })
+      console.info(row)
     },   
     // handleSizeChange(val) { // 改变页数尺寸
     //   this.searchform.size = val
