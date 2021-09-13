@@ -298,7 +298,11 @@
                     message:  `${type=='save'?'保存':'提交'}成功`,
                     type: "success",
                   });
-                //  this.back();
+                  if (type=='save') {
+                    this.detailform.contractInfo.uuid = res.data.data.contractInfo.uuid
+                  } else {
+                    this.$router.back()
+                  }
                 }
               });
           } else {

@@ -1447,6 +1447,15 @@
           }
         });
       },
+     //查看关联合同
+      look(row){
+        let p = {actpoint: "look", instid : row.uuid};
+        var url=this.getUrl(row.moduleId);
+        this.$router.push({
+          path: url,
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        });
+      },
       // 获取项目地点的值
       getPositionTree(data) {
         this.treeStatas = false;
