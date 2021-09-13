@@ -84,7 +84,7 @@
             label="公告类型"
           ></el-table-column> -->
           <el-table-column
-            prop="flow_status"
+            prop="contractEndTime"
             header-align="center"
             align="center"
             label="截止日期"
@@ -204,7 +204,7 @@
             label="公告类型"
           ></el-table-column> -->
           <el-table-column
-            prop="flow_status"
+            prop="contractEndTime"
             header-align="center"
             align="center"
             label="截止日期"
@@ -333,13 +333,13 @@
           prop="companyBelongName"
           header-align="center"
           align="center"
-          label="录入单位
+          label="录入单位"
         ></el-table-column>
         <el-table-column
           prop="companyBuild"
           header-align="center"
           align="center"
-          label="建设单位
+          label="建设单位"
         ></el-table-column>
         <!-- <el-table-column
           prop="companyBuild"
@@ -348,7 +348,7 @@
           label="公告类型"
         ></el-table-column> -->
         <el-table-column
-          prop="flowStatus"
+          prop="contractEndTime"
           header-align="center"
           align="center"
           label="截止日期"
@@ -445,8 +445,9 @@ export default {
   computed: {},
   watch: {},
   methods: {
-    // 主项目 ************************************************
+    // 主项目 ************************************************************************************************
     addMain() { // 显示主项目列表
+      this.pageMain = []
       this.getMainData()
       this.showMain = true
     },
@@ -455,6 +456,7 @@ export default {
     },
     subMain() { // 确定添加
       if (this.mainSelection.length == 0 ) {
+        this.showMain = false
         return false
       }
       if (this.mainSelection.length > 1 ) {
@@ -467,14 +469,18 @@ export default {
       }
       let isAdd = true
       if (isAdd) {
-        this.page.records.push(this.mainSelection[0])
+        this.$http.post('/api/statistics/StatisticsProject/list/projectUpdateMian',{uuid:this.mainSelection[0].uuid}).then(res => {
+          if (res.data.code == 200) {
+            this.$message({
+              showClose: true,
+              message: '主项目添加成功！',
+              type: 'success'
+            });
+            this.getData()
+            this.showMain = false
+          }
+        })
       }
-      this.$message({
-        showClose: true,
-        message: '主项目添加成功！',
-        type: 'success'
-      });
-      this.showMain = false
     },
     getMainData() { // 获取主项目数据
       this.$http.post('/api/statistics/StatisticsProject/list/getProjectList',this.mainList).then(res => {
@@ -489,8 +495,9 @@ export default {
       this.mainList.current = val
       this.getMainData()
     },
-    // 辅项目 ************************************************
+    // 辅项目 ************************************************************************************************
     addSecond() { // 显示辅项目列表
+      this.pageSecond = []
       this.getSecondData()
       this.showSecond = true
     },
@@ -499,17 +506,27 @@ export default {
     },
     subSecond() { // 确定添加
       if (this.secondSelection.length == 0 ) {
+        this.showSecond = false
         return false
       }
+      let uuid = []
       this.secondSelection.forEach((element) => {
-        this.page.records.push(element)
+        uuid.push(element.uuid)
       })
-      this.$message({
-        showClose: true,
-        message: '辅项目添加成功！',
-        type: 'success'
-      });
-      this.showSecond = false
+      this.$http.post('/api/statistics/StatisticsProject/list/projectUpdateDraft',
+        uuid,
+        { useJson: true }
+      ).then(res => {
+        if (res.data.code == 200) {
+          this.$message({
+            showClose: true,
+            message: '辅项目添加成功！',
+            type: 'success'
+          });
+          this.getData()
+          this.showSecond = false
+        }
+      })
     },
     getSecondData() { // 获取辅项目数据
       this.$http.post('/api/statistics/StatisticsProject/list/getProjectEdit',this.secondList).then(res => {
@@ -524,7 +541,7 @@ export default {
       this.secondList.current = val
       this.getSecondData()
     },
-    // 合并项目 ************************************************
+    // 合并项目 ************************************************************************************************
     merge(){ // 合并
       let isMain = true
       let isSecond = true
@@ -604,7 +621,7 @@ export default {
       this.$http
         .post('/api/statistics/StatisticsProject/list/getProjectNoPass', this.searchform)
         .then(res => {
-          this.page.records = res.data.data
+          this.page.records = res.data.data.merge.concat(res.data.data.merged)
         })
     },
     rowShow(row) { // 查看
