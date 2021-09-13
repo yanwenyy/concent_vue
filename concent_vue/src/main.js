@@ -32,6 +32,7 @@ Vue.prototype.$dialogTableHeight = document.body.clientHeight - 320
 Vue.prototype.$getPermission = getPermission
 Vue.prototype.$getOrgPermission = getOrgPermission
 Vue.prototype.examineReviewMsg='通过';
+Vue.prototype.fileLimit=100;
 Vue.prototype.$handleDownload = handleDownload;
 if (process.env.NODE_ENV === "development") {
   Vue.prototype.downLoadUrl='/static';

@@ -3043,14 +3043,15 @@
       },
       //判断附件大小
       beforeAvatarUpload(file) {
+        var fileLimit=Number(this.fileLimit);
         const isJPG = file.type === 'image/jpeg';
-        const isLt100M = file.size / (1024 *100) < 100;
+        const isLt100M = file.size / (1024 * fileLimit) < fileLimit;
 
         // if (!isJPG) {
         //   this.$message.error('上传头像图片只能是 JPG 格式!');
         // }
         if (!isLt100M) {
-          this.$message.error('上传文件大小不能超过 100MB!');
+          this.$message.error('上传文件大小不能超过 '+fileLimit+'MB!');
         }
         // return isJPG && isLt2M;
         return isLt100M;
@@ -3058,7 +3059,7 @@
       //上传附件显示进度条
       uploadPorgress(file, fileList,tableList){
         // console.log(event, file, fileList,tableList);
-        console.log(file)
+        // console.log(fileList)
         const len=tableList.length;
         if (file.status === 'ready') {
           file.fileName=file.name;
@@ -3070,36 +3071,52 @@
 
           tableList.push(file);
           var that=this;
-          const interval = setInterval(() => {
-            if (tableList[len]&&tableList[len].loadProgress >= 90) {
-              tableList[len].loadProgress = 90;
-              clearInterval(interval)
-              return
-            }
-            if(tableList[len].progressFlag == 'start'){
-              tableList[len].loadProgress += 20;//进度条进度
-              // that.$set(tableList[len],tableList[len])
-              that.$set(tableList,len,tableList[len])
-              // console.log(tableList[len].loadProgress)
+          tableList.forEach((item,index)=>{
 
-            }
-          }, 500);
+            const interval = setInterval(() => {
+              if (item&&item.loadProgress >= 90) {
+                item.loadProgress = 90;
+                if(file.response&&item.fileName==file.response.data.fileName&&file.response.data.progressFlag=='stop'){
+                  tableList[index]=file.response.data;
+                  // console.log(index,'==>',tableList[index])
+                  that.$set(tableList,index,tableList[index])
+                }
+
+                clearInterval(interval);
+                return
+              }
+              if(item.progressFlag == 'start'){
+                item.loadProgress += 20;//进度条进度
+                // that.$set(tableList[len],tableList[len])
+                that.$set(tableList,index,tableList[index])
+                // console.log(tableList[len].loadProgress)
+
+              }
+              if(file.response&&file.response.data.progressFlag=='fail'){
+                tableList[index].progressFlag='fail';
+                this.$set(tableList,tableList)
+              }
+            }, 500);
+          });
+
         }
         if (file.response && file.response.code === 200) {
-          console.log(tableList.length)
+          // console.log(tableList.length)
           this.$message({
             message: '上传成功',
             type: 'success',
-            duration: 1500,
+            duration: 1000,
             onClose: () => {
               // const len=tableList.length;
+
               file.response.data.progressFlag='stop';
-              tableList[len-1]=file.response.data;
-              this.$set(tableList,tableList)
+              // tableList[len-1]=file.response.data;
+
             }
           })
         }else if(file.response && file.response.code !== 200){
-          tableList[len-1].progressFlag = 'fail';
+          // tableList[len-1].progressFlag = 'fail';
+          file.response.data.progressFlag='fail';
           this.$set(tableList,tableList)
           this.$message.error(file.response.msg);
         }

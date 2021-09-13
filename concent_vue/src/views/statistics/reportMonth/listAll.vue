@@ -138,12 +138,12 @@
           prop="monthValue"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>本月(万元)</span>
-            <div>
-              <el-input style=" width: 100%" v-model="searchform.monthValue" size="mini"/>
-            </div>
-          </template>
+          <!--<template slot="header" slot-scope="scope">-->
+            <!--<span>本月(万元)</span>-->
+            <!--<div>-->
+              <!--<el-input style=" width: 100%" v-model="searchform.monthValue" size="mini"/>-->
+            <!--</div>-->
+          <!--</template>-->
         </el-table-column>
          <el-table-column
           :width="150"
@@ -152,12 +152,12 @@
           prop="yearValue"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>本年(万元)</span>
-            <div>
-              <el-input style=" width: 100%" v-model="searchform.yearValue" size="mini"/>
-            </div>
-          </template>
+          <!--<template slot="header" slot-scope="scope">-->
+            <!--<span>本年(万元)</span>-->
+            <!--<div>-->
+              <!--<el-input style=" width: 100%" v-model="searchform.yearValue" size="mini"/>-->
+            <!--</div>-->
+          <!--</template>-->
         </el-table-column>
          <el-table-column
           :width="150"
@@ -166,12 +166,12 @@
           prop="totalValue"
           show-overflow-tooltip
         >
-          <template slot="header" slot-scope="scope">
-            <span>开累(万元)</span>
-            <div>
-              <el-input style=" width: 100%" v-model="searchform.totalValue" size="mini"/>
-            </div>
-          </template>
+          <!--<template slot="header" slot-scope="scope">-->
+            <!--<span>开累(万元)</span>-->
+            <!--<div>-->
+              <!--<el-input style=" width: 100%" v-model="searchform.totalValue" size="mini"/>-->
+            <!--</div>-->
+          <!--</template>-->
         </el-table-column>
        <el-table-column
            :width="150"
