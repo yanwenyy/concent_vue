@@ -961,13 +961,26 @@
                 </el-table-column>
               </el-table>
               <p><span >招标公告文件: </span>
-                <el-button
-                  v-show="p.actpoint !== 'look'&&p.actpoint!='task'&&p.actpoint!='Yjedit'"
-                  size="small"
-                  type="primary"
-                  @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','commonFilesList2')">
-                  点击上传
-                </el-button>
+                <!--<el-button-->
+                  <!--v-show="p.actpoint !== 'look'&&p.actpoint!='task'&&p.actpoint!='Yjedit'"-->
+                  <!--size="small"-->
+                  <!--type="primary"-->
+                  <!--@click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','commonFilesList2')">-->
+                  <!--点击上传-->
+                <!--</el-button>-->
+
+                <el-upload
+                  :headers="{'Authorization':Authorization}"
+                  v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
+                  class="upload-demo detailUpload detatil-flie-btn"
+                  :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                  :on-change="( file, fileList)=>{uploadPorgress( file, fileList,detailform.commonFilesList2)}"
+                  :show-file-list="false"
+                  :before-upload="beforeAvatarUpload"
+                  multiple
+                >
+                  <el-button size="small" type="primary">点击上传</el-button>
+                </el-upload>
                 <!--<el-upload-->
                 <!--v-show="p.actpoint != 'look'"-->
                 <!--class="upload-demo detailUpload detatil-flie-btn"-->
@@ -1011,7 +1024,13 @@
                 <el-table-column align="center" width="100" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
 
                 </el-table-column>
-
+                <el-table-column align="center" width="200" :resizable="false" label="上传进度" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-progress v-if="scope.row.progressFlag=='start'" :percentage="scope.row.loadProgress||0"></el-progress>
+                    <el-progress  v-if="scope.row.progressFlag=='fail'" :percentage="100" status="warning"></el-progress>
+                    <span v-if="scope.row.progressFlag=='stop'||scope.row.progressFlag==null">已上传</span>
+                  </template>
+                </el-table-column>
                 <el-table-column
                   align="center"
                   :resizable="false"
@@ -3080,6 +3099,7 @@
                   tableList[index]=file.response.data;
                   // console.log(index,'==>',tableList[index])
                   that.$set(tableList,index,tableList[index])
+                  // console.log(tableList[index])
                 }
 
                 clearInterval(interval);
@@ -3096,7 +3116,7 @@
                 tableList[index].progressFlag='fail';
                 this.$set(tableList,tableList)
               }
-            }, 500);
+            }, 600);
           });
 
         }
@@ -3110,6 +3130,14 @@
               // const len=tableList.length;
 
               file.response.data.progressFlag='stop';
+              tableList.forEach((item,index)=>{
+                if(item.fileName==file.response.data.fileName&&item.progressFlag!='stop'){
+                  tableList[index]=file.response.data;
+                  // console.log(index,'==>',tableList[index])
+                  this.$set(tableList,index,tableList[index])
+                  // console.log(tableList[index])
+                }
+              })
               // tableList[len-1]=file.response.data;
 
             }
