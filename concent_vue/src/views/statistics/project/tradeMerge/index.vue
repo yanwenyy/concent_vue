@@ -6,6 +6,8 @@
         <el-button @click="addMain" type="primary" plain><i class="el-icon-plus"></i>选择主项目</el-button>
         <el-button @click="addSecond" type="primary" plain><i class="el-icon-plus"></i>选择辅项目</el-button>
         <el-button @click="merge" type="primary" plain><i class="el-icon-edit"></i>合并</el-button>
+        <el-button @click="change" type="primary" plain><i class="el-icon-edit"></i>修改</el-button>
+        <el-button @click="dele" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
       </el-button-group>
       <div style="float: right;">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none">
@@ -123,7 +125,7 @@
           :model="secondList"
           @keyup.enter.native="getSecondData()"
         >
-          <el-form-item label="项目名称:">
+          <el-form-item label="项目板块:">
             <el-select v-model="secondList.projectModuleName" placeholder="请选择">
               <el-option
                 v-for="item in secondName"
@@ -243,30 +245,70 @@
       <el-form-item label="项目名称:">
         <el-input
           v-model="searchform.projectName"
-          placeholder="项目名称"
+          placeholder="请输入"
           clearable
         ></el-input>
       </el-form-item>
-      <el-form-item label="项目名称:">
+      <el-form-item label="项目板块:">
+        <el-select 
+          clearable 
+          v-model="searchform.projectModuleName" 
+          placeholder="请选择">
+          <el-option
+            v-for="item in secondName"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="工程类别:">
+        <el-select
+          clearable
+          filterable
+          placeholder="请选择"
+          v-model="searchform.projectTypeFirst">
+          <el-option
+            :key="index"
+            :label="item.detailName"
+            :value="item.detailName"
+            v-for="(item, index) in projectDomainType"/>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="录入单位:">
         <el-input
-          v-model="searchform.projectName"
-          placeholder="项目名称"
+          v-model="searchform.companyBelongName"
+          placeholder="请输入"
           clearable
         ></el-input>
       </el-form-item>
-      <el-form-item label="项目名称:">
+      <el-form-item label="建设单位:">
         <el-input
-          v-model="searchform.projectName"
-          placeholder="项目名称"
+          v-model="searchform.companyBuild"
+          placeholder="请输入"
           clearable
         ></el-input>
       </el-form-item>
-      <el-form-item label="项目名称:">
-        <el-input
-          v-model="searchform.projectName"
-          placeholder="项目名称"
+      <el-form-item label="截止日期:">
+        <el-date-picker
+          v-model="searchform.contractEndTime"
+          type="date"
+          style=" width: 100%"
+          value-format="timestamp"
+          placeholder="选择日期时间"/>
+      </el-form-item>
+      <el-form-item label="状态:">
+        <el-select
+          filterable
           clearable
-        ></el-input>
+          placeholder="请选择"
+          v-model="searchform.flowStatus">
+          <el-option
+            :key="index"
+            :label="item.detailName"
+            :value="item.id"
+            v-for="(item, index) in flowStatus"/>
+        </el-select>
       </el-form-item>
     </el-form>
     <div style="margin-top: 10px">
@@ -290,7 +332,6 @@
           align="center"
           show-overflow-tooltip
           type="selection"
-          :selectable="isSelect"
         ></el-table-column>
         <el-table-column
           :width="70"
@@ -431,11 +472,22 @@ export default {
         }
       ],
       // 合并项目列表 ************************************************
+      flowStatus: [
+        { id: 'edit', detailName: '草稿' }, 
+        { id: 'check', detailName: '审核中' }, 
+        { id: 'pass', detailName: '审核通过' }, 
+        { id: 'reject', detailName: '审核退回' }
+      ],
       searchform: { // 请求参数
         // current: 1,
         // size: 20,
         projectName:"",
-
+        projectModuleName:"",
+        projectTypeFirst:"",
+        companyBelongName:"",
+        companyBuild:"",
+        contractEndTime:"",
+        flowStatus:""
       },
       page: { current: 1, size: 20, total: 0, records: [] }, // 列表数据
       multipleSelection:[], // 列表多选的数据
@@ -443,7 +495,11 @@ export default {
       draftProject:[],  // 辅项目
     };
   },
-  computed: {},
+  computed: {
+    projectDomainType() {
+      return this.$store.state.category.projectDomainType
+    },
+  },
   watch: {},
   methods: {
     // 主项目 ************************************************************************************************
@@ -592,89 +648,155 @@ export default {
         });
         return false
       }
+      // 是否有合并项目
+      let haveMerge = false
+      this.multipleSelection.forEach((element) => { 
+        if (element.mergeSign !== 4 && element.mergeSign !== 5) {
+          haveMerge = true
+        }
+      })
+      if (haveMerge) {
+        this.$message({
+          showClose: true,
+          message: '合并项目不可操作！',
+          type: 'warning'
+        });
+        return false
+      }
       this.$http
         .post('/api/statistics/StatisticsProject/list/getProjectMerge', 
           { 'mainProject': this.mainProject ,'draftProject': this.draftProject },
           { useJson: true }
         ).then(res => {
-          let mergePath = ""
-          switch (res.data.data.mainProject.projectModuleName) {
-            case "工程承包":
-              mergePath = "./engineAdd"
-              break;
-            case "勘察设计咨询":
-              mergePath = "./designAdd"                                                                                                                                                                                                                                                                                                   
-              break;            
-            case "房地产开发":
-              mergePath = "./estateAdd"                                                                                                                                                                                                                                                                                                   
-              break;            
-            case "物资贸易":
-              mergePath = "./tradeAdd"                                                                                                                                                                                                                                                                                                   
-              break;            
-            case "工业制造":
-              mergePath = "./manufactureAdd"                                                                                                                                                                                                                                                                                                   
-              break;            
-            case "金融保险":
-              mergePath = "./financeAdd"                                                                                                                                                                                                                                                                                                   
-              break;            
-            case "运营维管":
-              mergePath = "./maintenanceAdd"                                                                                                                                                                                                                                                                                                   
-              break;            
-            case "其他":
-              mergePath = "./otherAdd"                                                                                                                                                                                                                                                                                                   
-              break;            
-            default:
-              break;
-          } 
           let p = { actpoint: 'edit', ismerge: true, dataInfor: res.data.data.mainProject, mergeUuid:res.data.data.uuid}
           this.$router.push({
-            path: mergePath,
+            path: this.mergePath(res.data.data.mainProject.projectModuleName),
             query: { p: this.$utils.encrypt(JSON.stringify(p)) }
           })
         })      
     },
-    getData() { // 获取分页数据
+    getData() { // 获取项目数据
       this.$http
-        .post('/api/statistics/StatisticsProject/list/getProjectNoPass', this.searchform)
-        .then(res => {
-          this.page.records = res.data.data.merge.concat(res.data.data.merged)
+      .post('/api/statistics/StatisticsProject/list/getProjectNoPass', this.searchform)
+      .then(res => {
+        this.page.records = res.data.data.merge.concat(res.data.data.merged)
+        this.page.records.forEach((element) => {
+          element.contractEndTime = this.dateTrans(element.contractEndTime)
         })
+      })
+    },
+    mergePath(val) { // 选择路由
+      switch (val) {
+        case "工程承包":
+          return "./engineAdd"
+        case "勘察设计咨询":
+          return "./designAdd"                                                                                                                                                                                                                                                                                                  
+        case "房地产开发":
+          return "./estateAdd"        
+        case "物资贸易":
+          return "./tradeAdd"
+        case "工业制造":
+          return "./manufactureAdd"
+        case "金融保险":
+          return "./financeAdd"
+        case "运营维管":
+          return "./maintenanceAdd"
+        case "其他":
+          return "./otherAdd"
+        default:
+          break;
+      } 
+    },
+    dateTrans(date) { // 转换时间戳
+      let _date = new Date(parseInt(date));
+      let y = _date.getFullYear(); 
+      let m = _date.getMonth() + 1; 
+      m = m < 10 ? ('0' + m) : m;
+      let d = _date.getDate(); 
+      d = d < 10 ? ('0' + d) : d;
+      let dates = y + '-' + m + '-' + d;
+      if (date == '' || date == null) {
+        return ''
+      } else {
+        return dates;
+      }
     },
     rowShow(row) { // 查看
-      let p = { actpoint: 'look', uuid: row.uuid }
-      // this.$router.push({
-      //   path: './engineAdd/',
-      //   query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-      // })
+      let p = { actpoint: 'look', uuid: row.uuid } 
+      this.$router.push({
+        path: this.mergePath(row.projectModuleName),
+        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+      })
       console.info(row)
     },   
-    // handleSizeChange(val) { // 改变页数尺寸
-    //   this.searchform.size = val
-    //   this.getData()
-    // },
-    // handleCurrentChange(val) { // 改变页数
-    //   this.searchform.current = val
-    //   this.getData()
-    // },
     handleSelectionChange(val) { // 列表选项数据
       this.multipleSelection = val;
     },
     searchformReset(){  // 重置
+      this.searchform = { // 请求参数
+        projectName:"",
+        projectModuleName:"",
+        projectTypeFirst:"",
+        companyBelongName:"",
+        companyBuild:"",
+        contractEndTime:"",
+        flowStatus:""
+      },
       this.getData()
     },
     searchformSubmit(){  // 查询
       this.getData()
     },
-    isSelect(row,index) { // 是否可以选择
-      console.info(row.mergeSign)
-      if (row.mergeSign != 4 && row.mergeSign != 5) {
+    change() { // 修改
+      if (this.multipleSelection.length !== 1) {
+        this.$message.info('请选择一条记录进行查看操作！')
         return false
-      } else {
-        return true
       }
+      if(this.multipleSelection[0].flowStatus=='check'||this.multipleSelection[0].flowStatus=='pass'){
+        this.$message.info("不能修改正在审核中或审核通过的数据！");
+        return false;
+      }
+      if(this.multipleSelection[0].mergeSign == 4 || this.multipleSelection[0].mergeSign == 5){
+        this.$message.info("只可以修改合并项目数据！");
+        return false;
+      }
+      let p = { actpoint: 'edit', uuid: this.multipleSelection[0].uuid  ,contractNumber: this.multipleSelection[0].contractNumber }
+      this.$router.push({
+        path: this.mergePath(this.multipleSelection[0].projectModuleName),
+        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+      })
+    },
+    dele() { // 删除
+      if (this.multipleSelection.length !== 1) {
+        this.$message({
+          message: '请选择一个项目！',
+          type: 'warning',
+          showClose: true
+        });
+        return false
+      }
+      this.$http.post('/api/statistics/StatisticsProject/list/deleteProjectMerge', {uuid:this.multipleSelection[0].uuid}).then(res => {
+        if (res.data.code == 200) {
+            this.$message({
+              showClose: true,
+              message: '删除成功！',
+              type: 'success'
+            });
+            this.getData()
+          }
+      })
     }
+    // handleSizeChange(val) { // 改变页数尺寸
+    //   this.searchform.size = va
+    //   this.getData()
+    // },
+    // handleCurrentChange(val) { // 改变页数
+    //   this.searchform.current = val
+    //   this.getData()
+    // },  
   },
   mounted() {
+    this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
     this.getData()
   },
   created() {},

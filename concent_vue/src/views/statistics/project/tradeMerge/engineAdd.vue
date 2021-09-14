@@ -2315,8 +2315,9 @@
             this.$http
               .post(
                 url,
-                JSON.stringify(this.detailForm.project),
-                { useJson: true }
+                { 'mainProject': this.detailForm.project ,
+                  'uuid': this.p.mergeUuid.join(",")
+                },{ useJson: true }
               )
               .then((res) => {
                 if (res.data.code === 200) {

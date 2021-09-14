@@ -1388,7 +1388,7 @@
               .post(
                 url,
                 { 'mainProject': this.detailForm.project ,
-                  'uuid': this.p.mergeUuid.join(",") 
+                  'uuid': this.p.mergeUuid.join(",")
                 },{ useJson: true }
               )
               .then((res) => {
