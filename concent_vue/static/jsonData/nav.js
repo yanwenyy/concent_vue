@@ -1223,6 +1223,15 @@ export default {
                   'defaultpage': false
                 },
                 {
+                  'name': '已合并项目查询',
+                  'path': '/statistics/project/tradeMerge/list',
+                  'component': '/statistics/project/tradeMerge/list',
+                  'iconCls': 'el-icon-search',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
                   'name': '项目信息合并',
                   'path': '/statistics/project/tradeMerge/engineAdd',
                   'component': '/statistics/project/tradeMerge/engineAdd',
