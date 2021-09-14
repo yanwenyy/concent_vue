@@ -21,6 +21,29 @@
     <!-- 主项目列表 -->
     <el-dialog :visible.sync="showMain" :append-to-body="true">
       <div>
+        <el-form
+          class="queryForm"
+          style="margin-top: -40px;"
+          :inline="true"
+          :model="secondList"
+          @keyup.enter.native="getMainData()"
+        >
+          <el-form-item label="项目板块:">
+            <el-select v-model="mainList.projectModuleName" placeholder="请选择">
+              <el-option
+                v-for="item in secondName"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button @click="getMainData()" type="primary" plain>
+              <i class="el-icon-search"></i>查询
+            </el-button>
+          </el-form-item>          
+        </el-form>
         <el-table
           :max-height="$dialogTableHeight"
           :height="$dialogTableHeight"
@@ -431,6 +454,7 @@ export default {
       mainList: { // 请求参数
         current: 1,
         size: 20,
+        projectModuleName:"工程承包"
       },
       pageMain: { current: 1, size: 20, total: 0, records: [] }, // 列表数据
       mainSelection:[], // 列表多选的数据
