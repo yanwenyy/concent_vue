@@ -1339,9 +1339,9 @@
         }        
         var url='';
         if(type=='save'){
-          url="/api/statistics/StatisticsProject/detail/save"
+          url="/api/statistics/StatisticsProject/list/saveProject"
         }else{
-          url="/api/statistics/StatisticsProject/process/start"
+          url="/api/statistics/StatisticsProject/list/submitProject"
         }
         this.getBuildName();
         //上报产值是否含税

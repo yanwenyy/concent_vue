@@ -2268,9 +2268,9 @@
         }
          var url='';
         if(type=='save'){
-          url="/api/statistics/StatisticsProject/detail/save"
+          url="/api/statistics/StatisticsProject/list/saveProject"
         }else{
-          url="/api/statistics/StatisticsProject/process/start"
+          url="/api/statistics/StatisticsProject/list/submitProject"
         }
         // if(this.detailForm.project.projectName!=this.detailForm.project.projectOmit){
         //   this.$message.error("项目简称和项目名称（中文）保持一致。");

@@ -1334,9 +1334,9 @@
         }        
         var url='';
         if(type=='save'){
-          url="/api/statistics/StatisticsProject/detail/save"
+          url="/api/statistics/StatisticsProject/list/saveProject"
         }else{
-          url="/api/statistics/StatisticsProject/process/start"
+          url="/api/statistics/StatisticsProject/list/submitProject"
         }
         if(this.detailForm.project.topInfoSiteList.length==0){
           this.$message.error("请至少选择一个项目地点");
