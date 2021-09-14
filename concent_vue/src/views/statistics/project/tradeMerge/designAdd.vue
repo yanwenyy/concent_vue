@@ -2051,6 +2051,7 @@
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
       if (this.p.ismerge) {
         let res = {data:{data:{}}}
+        res.data.data = this.p.dataInfor
         this.detailForm.project = res.data.data
         this.getProjectFather()
         if (res.data.data.contractInfoList == null) {
