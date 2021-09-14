@@ -530,7 +530,7 @@
           //   fjjgmj=Number(item.monthValue);
           // }
           if(item.tjxCode=='001001'){
-            sgcz=Number(item.monthValue);
+            sgcz=Number(item.totalValue);
           }
           if(item.tjxCode=='001'){
             czzb=Number(item.monthValue);

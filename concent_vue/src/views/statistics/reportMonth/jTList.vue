@@ -733,7 +733,7 @@
           this.$message.info("请选择一条记录进行修改操作！");
           return false;
         }
-        if(this.multipleSelection[0].resultType!="2"){
+        if(this.multipleSelection[0].resultType!="1"){
           this.$message.info("只能修改集团的数据！");
           return false;
         }
