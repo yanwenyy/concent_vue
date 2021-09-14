@@ -1273,7 +1273,7 @@
                       type: 'success'
                     })
                     this.$router.push({
-                      path: '/statistics/project/estateList'
+                      path: '/statistics/project/tradeMerge/index'
                     })
                 } else {
                   this.$message({
@@ -1290,31 +1290,6 @@
             return false
           }
         })
-      },
-      // 提交
-      submit() {
-        //上报产值是否含税
-        this.getOutputTax();
-        const id = this.p.uuid || this.uuid
-        this.$http
-          .post('/api/statistics/StatisticsProject/process/start',
-          JSON.stringify(this.detailForm.project),{ useJson: true })
-          .then((res) => {
-            if (res.data.code === 200) {
-              this.$message({
-                message: '提交成功',
-                type: 'success'
-              })
-              this.$router.push({
-                path: '/statistics/project/tradeMerge/index'
-              })
-            } else {
-              this.$message({
-                message: '提交失败',
-                type: 'error'
-              })
-            }
-          })
       },
       back() {
         this.$router.back()
