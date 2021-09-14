@@ -607,12 +607,12 @@ export default {
       this.mainProject = {}
       this.draftProject = []
       this.multipleSelection.forEach((element) => { 
-        if (element.mergeSign == 4) {
+        if (element.mergeSign == '4') {
           isMain = false
           mainNum += 1
           this.mainProject = element
         }
-        if (element.mergeSign == 5) {
+        if (element.mergeSign == '5') {
           isSecond = false
           this.draftProject.push(element)
         }
@@ -651,7 +651,7 @@ export default {
       // 是否有合并项目
       let haveMerge = false
       this.multipleSelection.forEach((element) => { 
-        if (element.mergeSign !== 4 && element.mergeSign !== 5) {
+        if (element.mergeSign !== '4' && element.mergeSign !== '5') {
           haveMerge = true
         }
       })
