@@ -1396,7 +1396,7 @@
                 type: 'success'
               })
               this.$router.push({
-                path: '/statistics/project/otherList'
+                path: '/statistics/project/tradeMerge/index'
               })
             } else {
               this.$message({
@@ -1456,7 +1456,7 @@
         this.detailForm.project = res.data.data
         this.getProjectFather()
         if (res.data.data.contractInfoList == null) {
-          this.detailForm.project.contractInfoList = ''
+          this.detailForm.project.contractInfoList = []
         }
         if (!res.data.data.infoProductList) {
           this.detailForm.project.infoProductList = []
