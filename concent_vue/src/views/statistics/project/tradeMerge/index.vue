@@ -663,6 +663,10 @@ export default {
         });
         return false
       }
+      this.mainProject.contractEndTime = Date.parse(this.mainProject.contractEndTime)
+      this.draftProject.forEach((element) => {
+        element.contractEndTime = Date.parse(element.contractEndTime)
+      })
       this.$http
         .post('/api/statistics/StatisticsProject/list/getProjectMerge', 
           { 'mainProject': this.mainProject ,'draftProject': this.draftProject },
@@ -727,7 +731,6 @@ export default {
         path: this.mergePath(row.projectModuleName),
         query: { p: this.$utils.encrypt(JSON.stringify(p)) }
       })
-      console.info(row)
     },   
     handleSelectionChange(val) { // 列表选项数据
       this.multipleSelection = val;
