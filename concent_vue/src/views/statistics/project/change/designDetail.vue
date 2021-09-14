@@ -646,11 +646,12 @@
                 style="width: 32.5%">
                 <el-select
                   :disabled="p.actpoint==='look'||p.actpoint==='task'||detailForm.project.contractInfoList!=''"
+                  multiple
                   filterable
                   clearable
-                  @change="getName(detailForm.project.fieldId, siteName, 'fieldName','fieldCode')"
+                  @change="getMultipleName(detailForm.cdmc,siteName,'fieldId','fieldName')"
                   placeholder="请选择"
-                  v-model="detailForm.project.fieldId">
+                  v-model="detailForm.cdmc">
                   <el-option
                     :key="index"
                     :label="item.detailName"
@@ -1696,20 +1697,11 @@
               <el-form-item
                 v-if="showDetailForm.project.marketFirstId === '50cd5e9992ac4653920fac8c1f2eb2e3'"
                 label="场地名称:"
-                prop="project.fieldId"
+                prop="project.fieldName"
                 style="width: 32.5%">
-                <el-select
+                <el-input
                   disabled
-                  filterable
-                  clearable
-                  placeholder="请选择"
-                  v-model="showDetailForm.project.fieldId">
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in siteName"/>
-                </el-select>
+                  v-model="detailForm.project.fieldName"/>
               </el-form-item>
             </el-row>
             <el-row>
@@ -2152,6 +2144,7 @@
         projectType:[], //项目类型下拉
         fatherList:[],
         detailForm: {
+          cdmc:[],
           project: {
             projectSubContractList: [], // 分包承建
             infoProductList: [], // 产品列表
@@ -2727,6 +2720,18 @@
           console.log(this.detailForm)
         }
       },
+        //复选下拉框框获取name
+      getMultipleName(valueList,list,id,name){
+        var _id=[],_name=[];
+        list.forEach((item)=>{
+          if(valueList.indexOf(item.id)!=-1){
+            _id.push(item.id);
+            _name.push(item.detailName)
+          }
+        });
+        this.detailForm.project[id]=_id.join(",");
+        this.detailForm.project[name]=_name.join(",");
+      },
       getShowTwo() {
         this.emergingMarket.find((item) => {
           if (item.id === this.detailForm.project.marketFirstId) {
@@ -2949,6 +2954,7 @@
                 } else if (item.project.changeStatus == '2') {
                   this.changeRecordUuid=item.changeRecordUuid;
                   this.detailForm.project = item.project
+                  this.detailForm.cdmc=this.detailForm.project.fieldId&&this.detailForm.project.fieldId.split(",");
                   this.getProjectFather()
                   this.detailForm.project.beforeId = this.p.beforeId
                   this.detailForm.project.afterId = this.p.afterId
