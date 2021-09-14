@@ -2486,9 +2486,43 @@
       this.$store.dispatch('getCategory', { name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3' })
       this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
-      if (this.p.actpoint === 'look' || this.p.actpoint === 'edit'||this.p.actpoint=='task') {
-        this.getShow();
-        this.getProjectUnit();
+      if (this.p.ismerge) {
+        let res = {data:{data:{}}}
+        res.data.data = this.p.dataInfor
+        this.detailForm.project = res.data.data
+        this.getProjectFather()
+        if (!res.data.data.infoProductList) {
+          this.detailForm.project.infoProductList = []
+        }
+        if (!res.data.data.infoSubjectMatterList) {
+          this.detailForm.project.infoSubjectMatterList = []
+        }
+        if (!res.data.data.projectSubContractList) {
+          this.detailForm.project.projectSubContractList = []
+        }
+        if (!res.data.data.contractInfoList) {
+          this.detailForm.project.contractInfoList = []
+        }
+        if (res.data.data.topInfoSiteList.length < 1) {
+          this.detailForm.project.topInfoSiteList = [{ path: '', placeId: '', uuid: '' }]
+        }
+        this.detailForm.cdmc=res.data.data.fieldId&&res.data.data.fieldId.split(",");
+        this.getShowTwo();
+        //上报产值是否含税
+        this.getOutputTax();
+        if(this.detailForm.project.contractInfoList!=''){
+          this.detailForm.project.investmentContract=this.detailForm.project.contractAmountInitial;
+          this.detailForm.project.contractAmountTotal=this.detailForm.project.contractAmountInitial;
+          this.detailForm.project.projectOmit=this.detailForm.project.projectName;
+          this.getCount()
+        }
+        if(this.detailForm.project.companyBuildId != ''&& this.detailForm.project.companyBuildId != null ){
+          this.constructionOrgList = this.detailForm.project.companyBuildId.split(",");
+        }
+        this.getProjectUnit()
+      } else if (this.p.actpoint === 'look' || this.p.actpoint === 'edit'||this.p.actpoint=='task') {
+        this.getShow()
+        this.getProjectUnit()
       }
       this.$http
       .post(

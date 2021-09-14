@@ -1486,7 +1486,35 @@
       this.$store.dispatch('getCategory', { name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3' })
       this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
-      if (this.p.actpoint === 'look' || this.p.actpoint === 'edit'||this.p.actpoint=='task') {
+      if (this.p.ismerge) {
+        let res = {data:{data:{}}}
+        res.data.data = this.p.dataInfor
+        this.detailForm.project = res.data.data
+        if (!res.data.data.infoProductList) {
+          this.detailForm.project.infoProductList = []
+        }
+        if (!res.data.data.infoSubjectMatterList) {
+          this.detailForm.project.infoSubjectMatterList = []
+        }
+        if (!res.data.data.projectSubContractList) {
+          this.detailForm.project.projectSubContractList = []
+        }
+        this.detailForm.cdmc=res.data.data.fieldId&&res.data.data.fieldId.split(",");
+        if (!res.data.data.topInfoSiteList|| res.data.data.topInfoSiteList=='') {
+          this.detailForm.project.topInfoSiteList = [{
+            path: '',
+            placeId: '',
+            ffid:'',
+            uuid: ''
+          }]
+        }
+        this.getShowTwo()
+        this.getOutputTax()
+        if(this.detailForm.project.companyBuildId != ''&& this.detailForm.project.companyBuildId != null ){
+          this.constructionOrgList = this.detailForm.project.companyBuildId.split(",");
+        }
+        this.getProjectFather()
+      } else if (this.p.actpoint === 'look' || this.p.actpoint === 'edit'||this.p.actpoint=='task') {
         this.getShow()
         this.getProjectFather()
       }
