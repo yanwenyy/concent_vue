@@ -229,7 +229,6 @@
               style="width: 32.5%">
               <el-input
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
-                @change="getCount"
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.contractAmountInitial">
@@ -1362,9 +1361,9 @@
         }          
         var url='';
         if(type=='save'){
-          url="/api/statistics/StatisticsProject/detail/save"
+          url="/api/statistics/StatisticsProject/list/saveProject"
         }else{
-          url="/api/statistics/StatisticsProject/process/start"
+          url="/api/statistics/StatisticsProject/list/submitProject"
         }
         if(this.detailForm.project.topInfoSiteList.length==0){
           this.$message.error("请至少选择一个项目地点");
@@ -1380,7 +1379,6 @@
           this.$message.error("请选择一个主地点");
           return false;
         }
-        
         this.getBuildName();
         //上报产值是否含税
         this.getOutputTax();
@@ -1389,18 +1387,21 @@
             this.$http
               .post(
                 url,
-                JSON.stringify(this.detailForm.project),
-                { useJson: true }
+                { 'mainProject': this.detailForm.project ,
+                  'uuid': this.p.mergeUuid.join(",") 
+                },{ useJson: true }
               )
               .then((res) => {
                 if (res.data.code === 200) {
                   this.$message({
                     message:  `${type=='save'?'保存':'提交'}成功`,
-                      type: 'success'
-                    })
+                    type: 'success'
+                  })
+                  if (type!=='save') {
                     this.$router.push({
-                      path: '/statistics/project/financeList'
+                      path: '/statistics/project/tradeMerge/index'
                     })
+                  }
                 } else {
                   this.$message({
                     message:  `${type=='save'?'保存':'提交'}失败`,
@@ -1416,32 +1417,6 @@
             return false
           }
         })
-      },
-      // 提交
-      submit() {
-        this.getBuildName();
-        //上报产值是否含税
-        this.getOutputTax();
-        const id = this.p.uuid || this.uuid
-        this.$http
-          .post('/api/statistics/StatisticsProject/process/start',
-          JSON.stringify(this.detailForm.project),{ useJson: true })
-          .then((res) => {
-            if (res.data.code === 200) {
-              this.$message({
-                message: '提交成功',
-                type: 'success'
-              })
-              this.$router.push({
-                path: '/statistics/project/financeList'
-              })
-            } else {
-              this.$message({
-                message: '提交失败',
-                type: 'error'
-              })
-            }
-          })
       },
       back() {
         this.$router.back()
@@ -1490,6 +1465,9 @@
         let res = {data:{data:{}}}
         res.data.data = this.p.dataInfor
         this.detailForm.project = res.data.data
+        if (res.data.data.contractInfoList == null) {
+          this.detailForm.project.contractInfoList = ''
+        }
         if (!res.data.data.infoProductList) {
           this.detailForm.project.infoProductList = []
         }

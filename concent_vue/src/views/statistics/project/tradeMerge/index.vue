@@ -578,14 +578,27 @@ export default {
         return false
       }
       // 判断 主项目 辅项目 是否类型一样
-
+      let isSame = false
+      for (var i = 0; i < this.multipleSelection.length-1; i++) {
+        if (this.multipleSelection[i].projectModuleName !== this.multipleSelection[i+1].projectModuleName) {
+          isSame = true
+        }
+      }
+      if (isSame) {
+        this.$message({
+          showClose: true,
+          message: '项目板块不同！',
+          type: 'warning'
+        });
+        return false
+      }
       this.$http
         .post('/api/statistics/StatisticsProject/list/getProjectMerge', 
           { 'mainProject': this.mainProject ,'draftProject': this.draftProject },
           { useJson: true }
         ).then(res => {
           let mergePath = ""
-          switch (res.data.data.projectModuleName) {
+          switch (res.data.data.mainProject.projectModuleName) {
             case "工程承包":
               mergePath = "./engineAdd"
               break;
@@ -613,7 +626,7 @@ export default {
             default:
               break;
           } 
-          let p = { actpoint: 'edit', ismerge: true, dataInfor: res.data.data}
+          let p = { actpoint: 'edit', ismerge: true, dataInfor: res.data.data.mainProject, mergeUuid:res.data.data.uuid}
           this.$router.push({
             path: mergePath,
             query: { p: this.$utils.encrypt(JSON.stringify(p)) }

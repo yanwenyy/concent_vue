@@ -1823,6 +1823,9 @@
         res.data.data = this.p.dataInfor
         this.detailForm.project = res.data.data
         this.getProjectFather()
+        if (res.data.data.contractInfoList == null) {
+          this.detailForm.project.contractInfoList = ''
+        }
         if (!res.data.data.infoProductList) {
           this.detailForm.project.infoProductList = []
         }
