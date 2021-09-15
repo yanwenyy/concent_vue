@@ -254,21 +254,21 @@ export default {
     mergePath(val) { // 选择路由
       switch (val) {
         case "工程承包":
-          return "./engineAdd"
+          return "./engineDetail"
         case "勘察设计咨询":
-          return "./designAdd"                                                                                                                                                                                                                                                                                                  
+          return "./designDetail"                                                                                                                                                                                                                                                                                                  
         case "房地产开发":
-          return "./estateAdd"        
+          return "./estateDetail"        
         case "物资贸易":
-          return "./tradeAdd"
+          return "./tradeDetail"
         case "工业制造":
-          return "./manufactureAdd"
+          return "./manufactureDetail"
         case "金融保险":
-          return "./financeAdd"
+          return "./financeDetail"
         case "运营维管":
-          return "./maintenanceAdd"
+          return "./maintenanceDetail"
         case "其他":
-          return "./otherAdd"
+          return "./otherDetail"
         default:
           break;
       } 
@@ -293,7 +293,7 @@ export default {
         path: this.mergePath(row.projectModuleName),
         query: { p: this.$utils.encrypt(JSON.stringify(p)) }
       })
-    },   
+    },
     searchformReset(){  // 重置
       this.searchform = { // 请求参数
         projectName:"",
