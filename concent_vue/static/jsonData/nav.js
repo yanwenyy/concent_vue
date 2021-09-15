@@ -1303,6 +1303,78 @@ export default {
                   'leaf': true,
                   'defaultpage': false
                 },
+                {
+                  'name': '已合并项目查询',
+                  'path': '/statistics/project/tradeMerge/engineDetail',
+                  'component': '/statistics/project/tradeMerge/engineDetail',
+                  'iconCls': 'el-icon-search',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '已合并项目查询',
+                  'path': '/statistics/project/tradeMerge/designDetail',
+                  'component': '/statistics/project/tradeMerge/designDetail',
+                  'iconCls': 'el-icon-search',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '已合并项目查询',
+                  'path': '/statistics/project/tradeMerge/estateDetail',
+                  'component': '/statistics/project/tradeMerge/estateDetail',
+                  'iconCls': 'el-icon-search',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '已合并项目查询',
+                  'path': '/statistics/project/tradeMerge/financeDetail',
+                  'component': '/statistics/project/tradeMerge/financeDetail',
+                  'iconCls': 'el-icon-search',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '已合并项目查询',
+                  'path': '/statistics/project/tradeMerge/maintenanceDetail',
+                  'component': '/statistics/project/tradeMerge/maintenanceDetail',
+                  'iconCls': 'el-icon-search',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '已合并项目查询',
+                  'path': '/statistics/project/tradeMerge/manufactureDetail',
+                  'component': '/statistics/project/tradeMerge/manufactureDetail',
+                  'iconCls': 'el-icon-search',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '已合并项目查询',
+                  'path': '/statistics/project/tradeMerge/otherDetail',
+                  'component': '/statistics/project/tradeMerge/otherDetail',
+                  'iconCls': 'el-icon-search',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '已合并项目查询',
+                  'path': '/statistics/project/tradeMerge/tradeDetail',
+                  'component': '/statistics/project/tradeMerge/tradeDetail',
+                  'iconCls': 'el-icon-search',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
               ]
             },
             {

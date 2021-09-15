@@ -288,15 +288,17 @@ export default {
       }
     },
     rowShow(row) { // 查看
-      let p = { actpoint: 'look', uuid: row.uuid }
-      console.info(row.projectMergeId)
+      let p = { actpoint: 'look', dataInfor: {}}
       this.$http
-      .post('/api/statistics/StatisticsProject/list/MergedSubProjec', {propjectMergeId: row.projectMergeId})
+      .post('/api/statistics/StatisticsProject/list/MergedSubProject', {propjectMergeId: row.projectMergeId})
       .then(res => {
-        // this.$router.push({
-        //   path: this.mergePath(row.projectModuleName),
-        //   query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-        // })        
+        p.dataInfor = res.data.data.main.concat(res.data.data.draft)
+        p.dataInfor = p.dataInfor.concat(row)
+        console.info(p.dataInfor)
+        this.$router.push({
+          path: this.mergePath(row.projectModuleName),
+          query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+        })        
       })
     },
     searchformReset(){  // 重置
