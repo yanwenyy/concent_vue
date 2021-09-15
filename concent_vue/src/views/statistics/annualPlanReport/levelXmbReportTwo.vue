@@ -3,24 +3,26 @@
 <template>
   <div>
     <div style="width: 100%; overflow: hidden">
-      <el-form class="search-form" :inline="true" :model="searchform" @keyup.enter.native="init()">
-        <el-form-item label="填报年月:">
-          <el-date-picker
-            v-model="searchform.fillDate"
-            type="month"
-            placeholder="选择月">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="查看合计:">
-          <el-radio v-model="searchform.fillDate" label="1">是</el-radio>
-          <el-radio v-model="searchform.fillDate" label="2">否</el-radio>
-        </el-form-item>
-      </el-form>
-      <div style="float: right">
-        <el-button @click="searchformReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
-        <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
-        <!-- <el-button @click="Importdata" type="primary" plain>导入</el-button> -->
-      </div>
+      <el-button-group v-if="!p.ifjtList" style="float: left">
+     <!--   <el-button @click="searchformSubmit"
+                   type="primary" plain>查询</el-button>-->
+        <el-button @click="add"
+                   type="primary" plain><i class="el-icon-plus"></i>新增</el-button>
+        <el-button @click="edit"
+                   type="primary" plain><i class="el-icon-edit"></i>修改</el-button>
+        <el-button @click="del"
+                   type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
+      <!--  <el-button @click="searchformReset"
+                   type="info" plain
+                   style="color:black;background:none">
+          重置
+        </el-button>-->
+
+      </el-button-group>
+      <!--<div style="float: right;">-->
+        <!--<el-button @click="searchformSubmit"-->
+                   <!--type="primary" plain><i class="el-icon-search"></i>查询</el-button>-->
+      <!--</div>-->
     </div>
 
     <div style="margin-top: 10px">
@@ -57,7 +59,7 @@
         ></el-table-column>
         <el-table-column :min-width="200"
                          align="center"
-                         label="计划时间"
+                         label="计划年份"
                          prop="yearDateS" show-overflow-tooltip
         >
           <template slot-scope="scope">
@@ -72,22 +74,14 @@
         </el-table-column>
         <el-table-column :min-width="200"
                          align="center"
-                         label="填报单位"
+                         label="项目简称"
                          prop="projectName" show-overflow-tooltip
         >
         </el-table-column>
         <el-table-column
           :width="150"
           align="center"
-          label="填报人"
-          prop="createOrgName"
-          show-overflow-tooltip
-        >
-        </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="分解方式"
+          label="项目名称"
           prop="createOrgName"
           show-overflow-tooltip
         >
@@ -95,18 +89,18 @@
         <el-table-column
           :width="120"
           align="center"
-          label="填报时间"
+          label="所属单位"
           prop="checkfinishTime"
           show-overflow-tooltip
         >
-          <template slot-scope="scope">{{
-            scope.row.checkfinishTime | dateformat
-            }}</template>
+          <!--<template slot-scope="scope">{{-->
+            <!--scope.row.checkfinishTime | dateformat-->
+            <!--}}</template>-->
         </el-table-column>
         <el-table-column
           :width="150"
           align="center"
-          label="填报类型"
+          label="工程行业类别"
           prop="monthReportType"
           show-overflow-tooltip
         >
@@ -120,6 +114,41 @@
              {{scope.row.monthReportType=='1'?'工程公司':scope.row.monthReportType=='2'?'局指挥部':'全部'}}
           </template>
         </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="本年计划完成产值"
+          prop="createOrgName"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="填报类型"
+          prop="createOrgName"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="填报人"
+          prop="createOrgName"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+        <el-table-column
+          :width="150"
+          align="center"
+          label="填报时间"
+          prop="createOrgName"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">{{
+          scope.row.checkfinishTime | dateformat
+          }}</template>
+        </el-table-column>
         <el-table-column :width="150"
                          align="center"
                          label="审核状态"
@@ -130,6 +159,17 @@
           </div>
           </template>
         </el-table-column>
+        <el-table-column
+         :width="120"
+         align="center"
+         label="审核通过时间"
+         prop="checkfinishTime"
+         show-overflow-tooltip
+       >
+         <template slot-scope="scope">{{
+           scope.row.checkfinishTime | dateformat
+         }}</template>
+       </el-table-column>
       </el-table>
     </div>
     <Tree v-if="treeStatas"
@@ -300,14 +340,6 @@
           })
 
       },
-      // 查看
-      rowShow(row) {
-        let p = { actpoint: 'look', uuid: row.uuid };
-        this.$router.push({
-          path: './reportDetail',
-          query: { p: this.$utils.encrypt(JSON.stringify(p)) }
-        });
-      },
       //未上报批量填0
       batchT(){
         this.showTqDialog=true;
@@ -443,7 +475,7 @@
               projectStatus:JSON.parse(JSON.stringify(this.multipleSelection[0])).flowStatus,projectName:this.multipleSelection[0].projectName
             };
             this.$router.push({
-              path: './companyMDetail/',
+              path: './reportDetail/',
               query: {p: this.$utils.encrypt(JSON.stringify(p))}
             });
           }
@@ -529,7 +561,7 @@
           return false;
         }else{
         this.$router.push({
-          path:this.p.ifjtList?'../companyMDetail/': './companyMDetail/',
+          path:this.p.ifjtList?'../projectDetail/': './projectDetail/',
           query: {p: this.$utils.encrypt(JSON.stringify(p))}
         });
 

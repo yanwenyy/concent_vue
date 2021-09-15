@@ -3,7 +3,7 @@
 <template>
   <div>
     <div style="width: 100%; overflow: hidden">
-      <el-button-group style="float: left">
+      <el-button-group v-if="!p.ifjtList" style="float: left">
         <el-button @click="add"
                    type="primary" plain><i class="el-icon-plus"></i>新增</el-button>
         <el-button @click="edit"

@@ -3,7 +3,7 @@
 <template>
   <div>
     <div style="width: 100%; overflow: hidden">
-      <el-button-group style="float: left">
+      <el-button-group v-if="!p.ifjtList" style="float: left">
      <!--   <el-button @click="searchformSubmit"
                    type="primary" plain>查询</el-button>-->
         <!--<el-button @click="add"-->
@@ -569,7 +569,7 @@
         if(this.p.ifjtList){
           this.searchform.yearDateS=this.p.params.yearDateS;
           this.searchform.projectId=this.p.params.uuid;
-          url="/api/statistics/projectMonthlyReport/Projectreport/list/jtClickJzAndJzz";
+          url="/api/statistics/Projectcheck/list/jtClickJzAndJzz";
         }else{
           url="/api/statistics/projectMonthlyReport/Projectreport/list/childProjectCheckReport";
           this.searchform.uuid=this.p.projectId;

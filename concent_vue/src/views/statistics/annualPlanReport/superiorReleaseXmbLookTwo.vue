@@ -85,14 +85,6 @@
         >
         </el-table-column>
         <el-table-column
-          :width="150"
-          align="center"
-          label="分解方式"
-          prop="createOrgName"
-          show-overflow-tooltip
-        >
-        </el-table-column>
-        <el-table-column
           :width="120"
           align="center"
           label="填报时间"
