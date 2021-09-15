@@ -256,9 +256,9 @@ export default {
         case "工程承包":
           return "./engineDetail"
         case "勘察设计咨询":
-          return "./designDetail"                                                                                                                                                                                                                                                                                                  
+          return "./designDetail"
         case "房地产开发":
-          return "./estateDetail"        
+          return "./estateDetail"
         case "物资贸易":
           return "./tradeDetail"
         case "工业制造":

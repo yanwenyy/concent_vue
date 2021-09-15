@@ -718,9 +718,9 @@ export default {
         case "工程承包":
           return "./engineAdd"
         case "勘察设计咨询":
-          return "./designAdd"                                                                                                                                                                                                                                                                                                  
+          return "./designAdd"
         case "房地产开发":
-          return "./estateAdd"        
+          return "./estateAdd"
         case "物资贸易":
           return "./tradeAdd"
         case "工业制造":
