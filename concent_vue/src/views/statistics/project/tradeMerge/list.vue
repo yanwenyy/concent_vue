@@ -228,7 +228,7 @@ export default {
         projectTypeFirst:"",
         companyBelongName:"",
         companyBuild:"",
-        contractEndTime:"",
+        contractEndTime:null,
         flowStatus:""
       },
       page: { current: 1, size: 20, total: 0, records: [] }, // 列表数据
@@ -243,9 +243,9 @@ export default {
   methods: {
     getData() { // 获取项目数据
       this.$http
-      .post('/api/statistics/StatisticsProject/list/getProjectNoPass', this.searchform)
+      .post('/api/statistics/StatisticsProject/list/getProjectSuccess', this.searchform)
       .then(res => {
-        this.page.records = res.data.data.merge.concat(res.data.data.merged)
+        this.page.records = res.data.data
         this.page.records.forEach((element) => {
           element.contractEndTime = this.dateTrans(element.contractEndTime)
         })
@@ -288,10 +288,15 @@ export default {
       }
     },
     rowShow(row) { // 查看
-      let p = { actpoint: 'look', uuid: row.uuid } 
-      this.$router.push({
-        path: this.mergePath(row.projectModuleName),
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+      let p = { actpoint: 'look', uuid: row.uuid }
+      console.info(row.projectMergeId)
+      this.$http
+      .post('/api/statistics/StatisticsProject/list/MergedSubProjec', {propjectMergeId: row.projectMergeId})
+      .then(res => {
+        // this.$router.push({
+        //   path: this.mergePath(row.projectModuleName),
+        //   query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+        // })        
       })
     },
     searchformReset(){  // 重置
@@ -301,7 +306,7 @@ export default {
         projectTypeFirst:"",
         companyBelongName:"",
         companyBuild:"",
-        contractEndTime:"",
+        contractEndTime:null,
         flowStatus:""
       },
       this.getData()
