@@ -1197,19 +1197,11 @@
               <el-form-item
                 v-if="showDetailForm.project.marketFirstId === '50cd5e9992ac4653920fac8c1f2eb2e3'"
                 label="场地名称:"
+                prop="project.fieldName"
                 style="width: 32.5%">
-                <el-select
+                <el-input
                   disabled
-                  filterable
-                  clearable
-                  placeholder="请选择"
-                  v-model="showDetailForm.project.fieldName">
-                  <el-option
-                    :key="index"
-                    :label="item.detailName"
-                    :value="item.id"
-                    v-for="(item, index) in siteName"/>
-                </el-select>
+                  v-model="detailForm.project.fieldName"/>
               </el-form-item>
             </el-row>
             <el-row>
