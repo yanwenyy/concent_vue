@@ -1293,7 +1293,7 @@ export default {
                   'menushow': false,
                   'leaf': true,
                   'defaultpage': false
-                },                
+                },
               ]
             },
             {
@@ -1932,6 +1932,116 @@ export default {
                   'path': '/statistics/projectCheck/totalMsearchDetail',
                   'component': '/statistics/projectCheck/totalMsearchDetail',
                   'iconCls': 'el-icon-office-building',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+              ]
+            },
+            {
+              'name': '年计划填报',
+              'path': '/statistics/annualPlanReport',
+              'component': '/router',
+              'iconCls': 'el-icon-c-scale-to-original',
+              'menushow': true,
+              'leaf': false,
+              'defaultpage': false,
+              'children': [
+                {
+                  'name': '年计划填报详情',
+                  'path': '/statistics/annualPlanReport/reportDetail',
+                  'component': '/statistics/annualPlanReport/reportDetail',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '下级上报(公司或局指上报原始计划)',
+                  'path': '/statistics/annualPlanReport/subordinateReport',
+                  'component': '/statistics/annualPlanReport/subordinateReport',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '本级上报(集团上报股份)',
+                  'path': '/statistics/annualPlanReport/levelReport',
+                  'component': '/statistics/annualPlanReport/levelReport',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '下级上报(公司或局指上报原始计划)二级页面',
+                  'path': '/statistics/annualPlanReport/subordinateReportTwo',
+                  'component': '/statistics/annualPlanReport/subordinateReportTwo',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '本级调整(集团调整)',
+                  'path': '/statistics/annualPlanReport/levelAdjustment',
+                  'component': '/statistics/annualPlanReport/levelAdjustment',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '上级下达查看(股份下达集团)',
+                  'path': '/statistics/annualPlanReport/superiorReleaseLook',
+                  'component': '/statistics/annualPlanReport/superiorReleaseLook',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '本级下达(集团下达)',
+                  'path': '/statistics/annualPlanReport/levelRelease',
+                  'component': '/statistics/annualPlanReport/levelRelease',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '下级下达(集团汇总下级下达)',
+                  'path': '/statistics/annualPlanReport/subordinateRelease',
+                  'component': '/statistics/annualPlanReport/subordinateRelease',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '年计划上报(总部项目汇总查看)',
+                  'path': '/statistics/annualPlanReport/yearPlanReport',
+                  'component': '/statistics/annualPlanReport/yearPlanReport',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '年计划上报(总部项目汇总查看)二级页面',
+                  'path': '/statistics/annualPlanReport/yearPlanReportTwo',
+                  'component': '/statistics/annualPlanReport/yearPlanReportTwo',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': false,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '年计划下达(总部项目汇总查看)',
+                  'path': '/statistics/annualPlanReport/yearPlanRelease',
+                  'component': '/statistics/annualPlanReport/yearPlanRelease',
+                  'iconCls': 'el-icon-reading',
                   'menushow': true,
                   'leaf': true,
                   'defaultpage': false
