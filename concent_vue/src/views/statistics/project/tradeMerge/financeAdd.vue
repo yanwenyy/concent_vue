@@ -1382,13 +1382,20 @@
         this.getBuildName();
         //上报产值是否含税
         this.getOutputTax();
+        // 处理 uuid
+        let mergeUuid
+        if (this.p.mergeUuid) {
+          mergeUuid = this.p.mergeUuid.join(",")
+        } else {
+          mergeUuid = ''
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
               .post(
                 url,
                 { 'mainProject': this.detailForm.project ,
-                  'uuid': this.p.mergeUuid.join(",") 
+                  'uuid': mergeUuid
                 },{ useJson: true }
               )
               .then((res) => {
@@ -1466,7 +1473,7 @@
         res.data.data = this.p.dataInfor
         this.detailForm.project = res.data.data
         if (res.data.data.contractInfoList == null) {
-          this.detailForm.project.contractInfoList = ''
+          this.detailForm.project.contractInfoList = []
         }
         if (!res.data.data.infoProductList) {
           this.detailForm.project.infoProductList = []

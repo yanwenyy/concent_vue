@@ -1339,20 +1339,28 @@
         }        
         var url='';
         if(type=='save'){
-          url="/api/statistics/StatisticsProject/detail/save"
+          url="/api/statistics/StatisticsProject/list/saveProject"
         }else{
-          url="/api/statistics/StatisticsProject/process/start"
+          url="/api/statistics/StatisticsProject/list/submitProject"
         }
         this.getBuildName();
         //上报产值是否含税
         this.getOutputTax();
+        // 处理 uuid
+        let mergeUuid
+        if (this.p.mergeUuid) {
+          mergeUuid = this.p.mergeUuid.join(",")
+        } else {
+          mergeUuid = ''
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
               .post(
                 url,
-                JSON.stringify(this.detailForm.project),
-                { useJson: true }
+                { 'mainProject': this.detailForm.project ,
+                  'uuid': mergeUuid
+                },{ useJson: true }
               )
               .then((res) => {
                 if (res.data.code === 200) {
@@ -1361,7 +1369,7 @@
                       type: 'success'
                     })
                     this.$router.push({
-                      path: '/statistics/project/otherList'
+                      path: '/statistics/project/tradeMerge/index'
                     })
                 } else {
                   this.$message({
@@ -1378,32 +1386,6 @@
             return false
           }
         })
-      },
-      // 提交
-      submit() {
-        this.getBuildName();
-        //上报产值是否含税
-        this.getOutputTax();
-        const id = this.p.uuid || this.uuid
-        this.$http
-          .post('/api/statistics/StatisticsProject/process/start',
-          JSON.stringify(this.detailForm.project),{ useJson: true })
-          .then((res) => {
-            if (res.data.code === 200) {
-              this.$message({
-                message: '提交成功',
-                type: 'success'
-              })
-              this.$router.push({
-                path: '/statistics/project/otherList'
-              })
-            } else {
-              this.$message({
-                message: '提交失败',
-                type: 'error'
-              })
-            }
-          })
       },
       back() {
         this.$router.back()
@@ -1455,7 +1437,7 @@
         this.detailForm.project = res.data.data
         this.getProjectFather()
         if (res.data.data.contractInfoList == null) {
-          this.detailForm.project.contractInfoList = ''
+          this.detailForm.project.contractInfoList = []
         }
         if (!res.data.data.infoProductList) {
           this.detailForm.project.infoProductList = []
