@@ -510,7 +510,7 @@ export default {
         projectTypeFirst:"",
         companyBelongName:"",
         companyBuild:"",
-        contractEndTime:"",
+        contractEndTime:null,
         flowStatus:""
       },
       page: { current: 1, size: 20, total: 0, records: [] }, // 列表数据
@@ -766,7 +766,7 @@ export default {
         projectTypeFirst:"",
         companyBelongName:"",
         companyBuild:"",
-        contractEndTime:"",
+        contractEndTime:null,
         flowStatus:""
       },
       this.getData()
@@ -802,7 +802,7 @@ export default {
         });
         return false
       }
-      this.$http.post('/api/statistics/StatisticsProject/list/deleteProjectMerge', {uuid:this.multipleSelection[0].uuid}).then(res => {
+      this.$http.post('/api/statistics/StatisticsProject/list/deleteProjectMerge', {uuid:this.multipleSelection[0].uuid, mergeSign:this.multipleSelection[0].mergeSign}).then(res => {
         if (res.data.code == 200) {
             this.$message({
               showClose: true,
