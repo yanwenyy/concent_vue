@@ -228,7 +228,7 @@ export default {
         projectTypeFirst:"",
         companyBelongName:"",
         companyBuild:"",
-        contractEndTime:"",
+        contractEndTime:null,
         flowStatus:""
       },
       page: { current: 1, size: 20, total: 0, records: [] }, // 列表数据
@@ -243,9 +243,9 @@ export default {
   methods: {
     getData() { // 获取项目数据
       this.$http
-      .post('/api/statistics/StatisticsProject/list/getProjectNoPass', this.searchform)
+      .post('/api/statistics/StatisticsProject/list/getProjectSuccess', this.searchform)
       .then(res => {
-        this.page.records = res.data.data.merge.concat(res.data.data.merged)
+        this.page.records = res.data.data
         this.page.records.forEach((element) => {
           element.contractEndTime = this.dateTrans(element.contractEndTime)
         })
@@ -254,21 +254,21 @@ export default {
     mergePath(val) { // 选择路由
       switch (val) {
         case "工程承包":
-          return "./engineAdd"
+          return "./engineDetail"
         case "勘察设计咨询":
-          return "./designAdd"                                                                                                                                                                                                                                                                                                  
+          return "./designDetail"
         case "房地产开发":
-          return "./estateAdd"        
+          return "./estateDetail"
         case "物资贸易":
-          return "./tradeAdd"
+          return "./tradeDetail"
         case "工业制造":
-          return "./manufactureAdd"
+          return "./manufactureDetail"
         case "金融保险":
-          return "./financeAdd"
+          return "./financeDetail"
         case "运营维管":
-          return "./maintenanceAdd"
+          return "./maintenanceDetail"
         case "其他":
-          return "./otherAdd"
+          return "./otherDetail"
         default:
           break;
       } 
@@ -288,12 +288,17 @@ export default {
       }
     },
     rowShow(row) { // 查看
-      let p = { actpoint: 'look', uuid: row.uuid } 
-      this.$router.push({
-        path: this.mergePath(row.projectModuleName),
-        query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+      let p = { actpoint: 'look', uuid: row.uuid }
+      console.info(row.projectMergeId)
+      this.$http
+      .post('/api/statistics/StatisticsProject/list/MergedSubProjec', {propjectMergeId: row.projectMergeId})
+      .then(res => {
+        // this.$router.push({
+        //   path: this.mergePath(row.projectModuleName),
+        //   query: { p: this.$utils.encrypt(JSON.stringify(p)) }
+        // })        
       })
-    },   
+    },
     searchformReset(){  // 重置
       this.searchform = { // 请求参数
         projectName:"",
@@ -301,7 +306,7 @@ export default {
         projectTypeFirst:"",
         companyBelongName:"",
         companyBuild:"",
-        contractEndTime:"",
+        contractEndTime:null,
         flowStatus:""
       },
       this.getData()

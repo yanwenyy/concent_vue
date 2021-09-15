@@ -2488,7 +2488,7 @@
         if (!res.data.data.contractInfoList) {
           this.detailForm.project.contractInfoList = []
         }
-        if (res.data.data.topInfoSiteList == null || res.data.data.topInfoSiteList.length < 1) {
+        if (res.data.data.topInfoSiteList.length < 1) {
           this.detailForm.project.topInfoSiteList = [{ path: '', placeId: '', uuid: '' }]
         }
         this.detailForm.cdmc=res.data.data.fieldId&&res.data.data.fieldId.split(",");

@@ -36,7 +36,10 @@
             <el-form-item label="标段名称:">
               <el-input v-model="searchform.sectionName" placeholder="标段名称" clearable></el-input>
             </el-form-item>
-            <el-form-item label="建设单位:" prop="contractInfo.constructionOrgId" >
+            <el-form-item label="建设单位:">
+              <el-input v-model="searchform.constructionOrgId" placeholder="建设单位" clearable></el-input>
+            </el-form-item>
+            <!-- <el-form-item label="建设单位:" prop="contractInfo.constructionOrgId" >
               <el-select
                 v-model="constructionOrgList"
                 v-if="searchform.isClientele=='1'"
@@ -63,8 +66,8 @@
                     v-for="(item, index) in sjdwList"
                   ></el-option>
               </el-select>
-            </el-form-item>
-            <el-form-item label="是否客户:"
+            </el-form-item> -->
+            <!-- <el-form-item label="是否客户:"
               prop="contractInfo.isClientele"
               :rules="{
                 required: true,
@@ -83,7 +86,7 @@
                     v-for="(item, index) in isClientele"
                   ></el-option>
               </el-select>
-            </el-form-item>
+            </el-form-item> -->
             <div class="el-form-item">
               <el-form-item label="开标日期:" prop="searchform.saleTime" >
                 <el-date-picker
