@@ -2055,6 +2055,51 @@ export default {
                   'leaf': true,
                   'defaultpage': false
                 },
+                {
+                  'name': '本级上报(项目部上报公司或局指)',
+                  'path': '/statistics/annualPlanReport/levelXmbReport',
+                  'component': '/statistics/annualPlanReport/levelXmbReport',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '本级上报(项目部上报公司或局指)二级页面',
+                  'path': '/statistics/annualPlanReport/levelXmbReportTwo',
+                  'component': '/statistics/annualPlanReport/levelXmbReportTwo',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '项目部填报详情',
+                  'path': '/statistics/annualPlanReport/projectDetail',
+                  'component': '/statistics/annualPlanReport/projectDetail',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '上级下达查看(公司或局指下达)',
+                  'path': '/statistics/annualPlanReport/superiorReleaseXmbLook',
+                  'component': '/statistics/annualPlanReport/superiorReleaseXmbLook',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '上级下达查看(公司或局指下达)二级页面',
+                  'path': '/statistics/annualPlanReport/superiorReleaseXmbLookTwo',
+                  'component': '/statistics/annualPlanReport/superiorReleaseXmbLookTwo',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
               ]
             },
             {

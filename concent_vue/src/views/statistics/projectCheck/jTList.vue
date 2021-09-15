@@ -637,7 +637,7 @@
           }else if(row.resultType=='2'&&row.reportType==2){
             let p = {ifjtList:true,actpoint: "look", params: row};
             this.$router.push({
-              path: "./companyMgqList/",
+              path: "./companyMgList/",
               query: {p: this.$utils.encrypt(JSON.stringify(p))},
             });
           }else if(row.resultType=='3'){
