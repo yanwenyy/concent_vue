@@ -566,6 +566,9 @@ export default {
     getMainData() { // 获取主项目数据
       this.$http.post('/api/statistics/StatisticsProject/list/getProjectList',this.mainList).then(res => {
         this.pageMain = res.data.data
+        this.pageMain.records.forEach((element) => {
+          element.contractEndTime = this.dateTrans(element.contractEndTime)
+        })
       })
     },
     mainSizeChange(val) { // 改变页数尺寸
@@ -612,6 +615,9 @@ export default {
     getSecondData() { // 获取辅项目数据
       this.$http.post('/api/statistics/StatisticsProject/list/getProjectEdit',this.secondList).then(res => {
         this.pageSecond = res.data.data
+        this.pageSecond.records.forEach((element) => {
+          element.contractEndTime = this.dateTrans(element.contractEndTime)
+        })
       })
     },
     secondSizeChange(val) { // 改变页数尺寸
