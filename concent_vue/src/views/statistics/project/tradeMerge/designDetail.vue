@@ -276,7 +276,11 @@
               label="工程类别(二级):"
               prop="project.projectTypeSecondId"
               style="width: 32.5%">
-              <el-select
+              <el-input
+                disabled
+                placeholder="请输入"
+                v-model="item.projectTypeSecond"/>
+              <!-- <el-select
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'||item.contractInfoList!=''"
                 clearable
                 filterable
@@ -288,7 +292,7 @@
                   :label="item.detailName"
                   :value="item.id"
                   v-for="(item, index) in projectTypeTwo"/>
-              </el-select>
+              </el-select> -->
             </el-form-item>
             <el-form-item
               v-if="item.projectTypeFirstId=='193b4d4003d04899a1d09c8d5f7877fe'&&xqprojectTypeThree.length>0"
