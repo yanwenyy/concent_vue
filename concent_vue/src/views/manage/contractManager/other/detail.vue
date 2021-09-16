@@ -3306,8 +3306,9 @@
             ddMoney+=Number(item.contractAmount)
           });
           this.detailform.contractInfoHouseSalesList.forEach((item)=>{
-            syMoney+=Number(item.contractAmount)
+            syMoney+=Number(item.monthSales)
           });
+          console.log(ddMoney,syMoney)
           if(ddMoney!=0&&syMoney!=0&&ddMoney!=syMoney){
             this.$message.error("项目地点金额之和应等于年度合同收益列表中本月收益之和");
             return false;
@@ -3332,7 +3333,8 @@
                 type: "success",
               });
               if (type=='save') {
-                this.detailform.contractInfo.uuid = res.data.data.contractInfo.uuid
+                this.id=res.data.data.contractInfo.uuid;
+                this.getDetail();
               } else {
                 this.$router.back()
               }

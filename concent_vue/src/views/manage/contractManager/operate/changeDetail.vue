@@ -4852,7 +4852,7 @@
                 type: "success",
               });
               if (type=='save') {
-                this.detailform.contractInfo.uuid = res.data.data.contractInfo.uuid
+                this.getDetail();
               } else {
                 this.$router.back()
               }
