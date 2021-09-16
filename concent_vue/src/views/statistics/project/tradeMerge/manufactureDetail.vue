@@ -2,25 +2,12 @@
 <template>
   <div style="position: relative">
     <el-button @click="back" class="detail-back-tab">返回</el-button>
-    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" type="primary" @click="submitForm('detailForm','save')"  class="detailbutton detail-back-tab save-btn">
-      保存
-    </el-button>
-    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailForm.project.flowStatus=='edit'||detailForm.project.flowStatus=='reject')" @click="submitForm('detailForm','sub')"  class="detailbutton detail-back-tab sub-btn">提交
-    </el-button>
-    <el-button
-      v-show="p.actpoint == 'task'&&p.task.edit==false"
-      class="detailbutton detail-back-tab tg"
-      @click="operation('complete')"
-      type="success"
-    >通过</el-button>
-    <el-button
-      v-show="p.actpoint == 'task'&&p.task.edit==false"
-      class="detailbutton detail-back-tab bh"
-      @click="operation('back')"
-      type="warning"
-    >驳回</el-button>
       <el-tabs type="border-card">
-      <el-tab-pane label="工业制造项目">
+      <el-tab-pane 
+          v-for="(item, index) in detailForm.project" 
+          :label="index == 0?'工业制造项目(主)':index == detailForm.project.length-1?'工业制造项目(合并后)':'工业制造项目(辅)'"
+          :key="index"
+        >
       <div class="detailBox">
         <el-form
           :inline="false"
@@ -35,19 +22,19 @@
               :rules="rules.project.must"
               style="width: 32.5%">
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||item.contractInfoList!=''"
                 clearable
                 placeholder="请输入"
-                v-model="detailForm.project.projectName"/>
+                v-model="item.projectName"/>
             </el-form-item>
             <el-form-item
               label="外文名称:"
               style="width: 32.5%">
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||item.contractInfoList!=''"
                 clearable
                 placeholder="请输入"
-                v-model="detailForm.project.projectForeginName"/>
+                v-model="item.projectForeginName"/>
             </el-form-item>
           </el-row>
           <el-row>
@@ -63,8 +50,8 @@
                   <el-select
                     v-model="constructionOrgList"
                     @change="companyBuildChange"
-                    v-if="detailForm.project.isClientele=='1'"
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
+                    v-if="item.isClientele=='1'"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||item.contractInfoList!=''"
                     multiple
                     filterable
                     collapse-tags
@@ -79,8 +66,8 @@
                   <el-select
                     v-model="constructionOrgList"
                     @change="companyBuildChange"
-                    v-if="detailForm.project.isClientele!='1'"
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
+                    v-if="item.isClientele!='1'"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||item.contractInfoList!=''"
                     multiple
                     filterable
                     collapse-tags
@@ -106,9 +93,9 @@
                   }"
               >
                 <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||item.contractInfoList!=''"
                   class="inline-formitem-switch"
-                  v-model="detailForm.project.isClientele"
+                  v-model="item.isClientele"
                   active-color="#409EFF"
                   inactive-color="#ddd"
                   active-value="1"
@@ -122,32 +109,32 @@
           <el-row>
             <el-form-item
               label="合同号:"
-              v-show="detailForm.project.contractInfoList!=''&&detailForm.project.contractInfoList!=null"
+              v-show="item.contractInfoList!=''&&item.contractInfoList!=null"
               prop="project.contractNumber"
               style="width:32.5%;">
               <el-input
                 clearable
                 placeholder="请输入"
                 disabled
-                v-model="detailForm.project.contractNumber"/>
+                v-model="item.contractNumber"/>
             </el-form-item>
             <el-form-item
-              v-show="detailForm.project.contractInfoList!=''"
+              v-show="item.contractInfoList!=''"
               label="合同总金额(万元):" 
               prop="project.contractAmountTotal"
               :rules="rules.project.isMoney"
               style="width: 32.5%">
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||item.contractInfoList!=''"
                 clearable
                 placeholder="请输入"
-                v-model="detailForm.project.contractAmountTotal">
+                v-model="item.contractAmountTotal">
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
               </el-input>
             </el-form-item>
             <el-form-item
-              v-show="detailForm.project.contractInfoList == ''"
+              v-show="item.contractInfoList == ''"
               label="合同金额(万元):" 
               prop="project.contractMoney"
               :rules="rules.project.isMoney"
@@ -156,7 +143,7 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 clearable
                 placeholder="请输入"
-                v-model="detailForm.project.contractMoney">
+                v-model="item.contractMoney">
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
               </el-input>
@@ -169,7 +156,7 @@
               <el-switch
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 class="inline-formitem-switch"
-                v-model="detailForm.project.isSystemPurchase"
+                v-model="item.isSystemPurchase"
                 active-color="#409EFF"
                 inactive-color="#ddd"
                 active-value="0"
@@ -183,10 +170,10 @@
               :rules="rules.project.isMustMoney"
               style="width: 32.5%">
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||item.contractInfoList!=''"
                 clearable
                 placeholder="请输入"
-                v-model="detailForm.project.contractAmountInitial">
+                v-model="item.contractAmountInitial">
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
               </el-input>
@@ -198,8 +185,8 @@
                 style="width: 32.5%"
               >
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
-                v-model="detailForm.project.ourAmount"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||item.contractInfoList!=''"
+                v-model="item.ourAmount"
               >
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
@@ -213,7 +200,7 @@
               >
               <el-input
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                v-model="detailForm.project.amountWe"
+                v-model="item.amountWe"
               >
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
@@ -230,7 +217,7 @@
                 filterable
                 clearable
                 placeholder="请选择"
-                v-model="detailForm.project.ocontractModel">
+                v-model="item.ocontractModel">
                 <el-option
                   :key="index"
                   :label="item.detailName"
@@ -247,7 +234,7 @@
                 clearable
                 placeholder="请输入"
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                v-model="detailForm.project.contractAmountSupplement">
+                v-model="item.contractAmountSupplement">
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
               </el-input>
@@ -264,8 +251,8 @@
                 clearable
                 placeholder="请选择"
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                @change="getName(detailForm.project.projectStatusId, projectStatus, 'projectStatusName')"
-                v-model="detailForm.project.projectStatusId">
+                @change="getName(item.projectStatusId, projectStatus, 'projectStatusName')"
+                v-model="item.projectStatusId">
                 <el-option
                   :key="index"
                   :label="item.detailName"
@@ -279,11 +266,11 @@
               :rules="rules.project.isMoney"
               style="width: 32.5%">
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||item.contractInfoList!=''"
                 clearable
                 placeholder="请输入"
                   @change="getOutputTax"
-                v-model="detailForm.project.valueAddedTax">
+                v-model="item.valueAddedTax">
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
               </el-input>
@@ -295,7 +282,7 @@
               style="width: 32.5%">
               <el-switch
                 disabled
-                v-model="detailForm.project.isOutputTax"
+                v-model="item.isOutputTax"
                 active-color="#409EFF"
                 inactive-color="#ddd"
                 active-value="1"
@@ -317,8 +304,8 @@
                 filterable
                 clearable
                 placeholder="请选择"
-                @change="resetFuDai(detailForm.project.projectTypeId, projectType, 'projectTypeName','projectTypeCode')"
-                v-model="detailForm.project.projectTypeId">
+                @change="resetFuDai(item.projectTypeId, projectType, 'projectTypeName','projectTypeCode')"
+                v-model="item.projectTypeId">
                 <el-option
                   :key="index"
                   :label="item.detailName"
@@ -340,8 +327,8 @@
                 filterable
                 clearable
                 placeholder="请选择"
-                @change="getFatherName(detailForm.project.fatherProjectId, fatherList, 'fatherProjectName')"
-                v-model="detailForm.project.fatherProjectId">
+                @change="getFatherName(item.fatherProjectId, fatherList, 'fatherProjectName')"
+                v-model="item.fatherProjectId">
                 <el-option
                   :key="index"
                   :label="item.projectName"
@@ -356,8 +343,8 @@
               prop="project.contractSignTime"
               style="width: 32.5%">
               <el-date-picker
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
-                v-model="detailForm.project.contractSignTime"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||item.contractInfoList!=''"
+                v-model="item.contractSignTime"
                 type="date"
                 value-format="timestamp"
                 placeholder="选择日期时间"/>
@@ -367,8 +354,8 @@
               prop="project.contractStartTime"
               style="width: 32.5%">
               <el-date-picker
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
-                v-model="detailForm.project.contractStartTime"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||item.contractInfoList!=''"
+                v-model="item.contractStartTime"
                 type="date"
                 value-format="timestamp"
                 placeholder="选择日期时间"/>
@@ -378,8 +365,8 @@
               prop="project.contractEndTime"
               style="width: 32.5%">
               <el-date-picker
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
-                v-model="detailForm.project.contractEndTime"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||item.contractInfoList!=''"
+                v-model="item.contractEndTime"
                 type="date"
                 value-format="timestamp"
                 placeholder="选择日期时间"/>
@@ -398,11 +385,11 @@
                 clearable 
                 disabled
                 placeholder="请输入内容" 
-                v-model="detailForm.project.companyName" class="input-with-select">
+                v-model="item.companyName" class="input-with-select">
                 <el-button 
-                  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append" 
+                  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&item.contractInfoList==''" slot="append" 
                   icon="el-icon-circle-plus-outline" 
-                  @click="addDw('签约单位(使用资质单位)',detailForm.project.companyId)" 
+                  @click="addDw('签约单位(使用资质单位)',item.companyId)" 
                   >
                 </el-button>
               </el-input>
@@ -415,7 +402,7 @@
                 clearable
                 disabled
                 placeholder="请输入"
-                v-model="detailForm.project.companyBelongName"/>
+                v-model="item.companyBelongName"/>
             </el-form-item>
           </el-row>
           <el-row>
@@ -428,8 +415,8 @@
                 clearable
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 placeholder="请选择"
-                @change="getName(detailForm.project.categorySecondId, bizTypeCodeTwo, 'categorySecondName')"
-                v-model="detailForm.project.categorySecondId">
+                @change="getName(item.categorySecondId, bizTypeCodeTwo, 'categorySecondName')"
+                v-model="item.categorySecondId">
                 <el-option
                   :key="index"
                   :label="item.detailName"
@@ -446,7 +433,7 @@
                 clearable
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 placeholder="请输入"
-                v-model="detailForm.project.ocontractAmountTotal">
+                v-model="item.ocontractAmountTotal">
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
               </el-input>
@@ -460,10 +447,10 @@
               <el-select
                 clearable
                 filterable
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||item.contractInfoList!=''"
                 placeholder="请选择"
                 @change="getMarketTwo"
-                v-model="detailForm.project.marketFirstId">
+                v-model="item.marketFirstId">
                 <el-option
                   :key="index"
                   :label="item.detailName"
@@ -475,24 +462,28 @@
               label="新兴市场类别(二级):"
               prop="marketSecondId"
               style="width: 32.5%">
-              <el-select
+              <el-input
+                disabled
+                placeholder="请输入"
+                v-model="item.marketSecondName"/>
+              <!-- <el-select
                 filterable
                 clearable
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.marketFirstId==='00b87acd71784c3ba860b9513789724e'||detailForm.project.contractInfoList!=''"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||item.marketFirstId==='00b87acd71784c3ba860b9513789724e'||item.contractInfoList!=''"
                 placeholder="请选择"
-                @change="getName(detailForm.project.marketSecondId, emergingMarketTwo, 'marketSecondName')"
-                v-model="detailForm.project.marketSecondId">
+                @change="getName(item.marketSecondId, emergingMarketTwo, 'marketSecondName')"
+                v-model="item.marketSecondId">
                 <el-option
                   :key="index"
                   :label="item.detailName"
                   :value="item.id"
                   v-for="(item, index) in emergingMarketTwo"/>
-              </el-select>
+              </el-select> -->
             </el-form-item>
           </el-row>
           <el-row>
             <el-form-item
-              v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
+              v-if="item.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
               label="装配率(%):"
               prop="project.assemblyRate"
               :rules="rules.project.isMustMoney"
@@ -501,12 +492,12 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 clearable
                 placeholder="请输入"
-                v-model="detailForm.project.assemblyRate">
+                v-model="item.assemblyRate">
                 <template slot="append">%</template>
               </el-input>
             </el-form-item>
             <el-form-item
-              v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
+              v-if="item.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
               label="装配类型:"
               prop="project.assemblyTypeId"
               :rules="rules.project.must"
@@ -515,9 +506,9 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 filterable
                 clearable
-                @change="getName(detailForm.project.assemblyTypeId, assemblyType, 'assemblyTypeName')"
+                @change="getName(item.assemblyTypeId, assemblyType, 'assemblyTypeName')"
                 placeholder="请选择"
-                v-model="detailForm.project.assemblyTypeId">
+                v-model="item.assemblyTypeId">
                 <el-option
                   :key="index"
                   :label="item.detailName"
@@ -528,7 +519,7 @@
           </el-row>
           <el-row>
             <el-form-item
-              v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
+              v-if="item.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
               label="建筑类型:"
               prop="project.architectureTypeId"
               :rules="rules.project.must"
@@ -537,9 +528,9 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 filterable
                 clearable
-                @change="getName(detailForm.project.architectureTypeId, architecturalType, 'architectureTypeName')"
+                @change="getName(item.architectureTypeId, architecturalType, 'architectureTypeName')"
                 placeholder="请选择"
-                v-model="detailForm.project.architectureTypeId">
+                v-model="item.architectureTypeId">
                 <el-option
                   :key="index"
                   :label="item.detailName"
@@ -548,7 +539,7 @@
               </el-select>
             </el-form-item>
             <el-form-item
-              v-if="detailForm.project.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
+              v-if="item.marketFirstId === '00b87acd71784c3ba860b9513789724e'"
               label="房屋结构类型:"
               prop="project.houseTypeId"
               :rules="rules.project.must"
@@ -557,9 +548,9 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 filterable
                 clearable
-                @change="getName(detailForm.project.houseTypeId, buildingStructure, 'houseTypeName')"
+                @change="getName(item.houseTypeId, buildingStructure, 'houseTypeName')"
                 placeholder="请选择"
-                v-model="detailForm.project.houseTypeId">
+                v-model="item.houseTypeId">
                 <el-option
                   :key="index"
                   :label="item.detailName"
@@ -570,7 +561,7 @@
           </el-row>
           <el-row>
             <el-form-item
-              v-if="detailForm.project.marketFirstId === '50cd5e9992ac4653920fac8c1f2eb2e3'"
+              v-if="item.marketFirstId === '50cd5e9992ac4653920fac8c1f2eb2e3'"
               label="场地名称:"
               prop="cdmc"
               :rules="{
@@ -579,7 +570,7 @@
               style="width: 32.5%">
               <el-select
                 class="multiple-sel"
-                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                :disabled="p.actpoint === 'look'||p.actpoint === 'task'||item.contractInfoList!=''"
                 multiple
                 filterable
                 clearable
@@ -597,14 +588,14 @@
           <el-row>
             <el-form-item
               label="推送人:"
-              v-if="detailForm.project.projectPusher!=null&&detailForm.project.projectPusher!=''"
+              v-if="item.projectPusher!=null&&item.projectPusher!=''"
               prop="project.projectPusher"
               style="width:32.5%;">
               <el-input
                 clearable
                 placeholder="请输入"
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                v-model="detailForm.project.projectPusher"/>
+                v-model="item.projectPusher"/>
             </el-form-item>
             <!-- <el-form-item
               label="联系方式:"
@@ -615,7 +606,7 @@
                 clearable
                 placeholder="请输入"
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
-                v-model="detailForm.project.projectPusherPhone"/>
+                v-model="item.projectPusherPhone"/>
             </el-form-item> -->
           </el-row>
           <!--备注(最多2000字)-->
@@ -629,20 +620,20 @@
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                 type="textarea"
                 placeholder="请输入"
-                v-model="detailForm.project.projectRemark"/>
+                v-model="item.projectRemark"/>
             </el-form-item>
           </el-row>
           <p>
             <span >项目地点: </span>
             <el-button
-              v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'&&detailForm.project.contractInfoList==''"
+              v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'&&item.contractInfoList==''"
               class="detatil-flie-btn"
               @click="add('dd')"
               type="primary"
             >新增</el-button >
           </p>
           <el-table
-            :data="detailForm.project.topInfoSiteList"
+            :data="item.topInfoSiteList"
             :header-cell-style="{
               'text-align': 'center',
               'background-color': 'rgba(246,248,252,1)',
@@ -671,7 +662,7 @@
                 <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.path'"  :rules="{required: true,message: '此项不能为空'}">
                   <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                   <el-input disabled placeholder="请输入内容" v-model="scope.row.path" class="input-with-select group-no-padding">
-                    <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append" icon="el-icon-circle-plus" @click="selectPosition(),positionIndex=scope.$index"></el-button>
+                    <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&item.contractInfoList==''" slot="append" icon="el-icon-circle-plus" @click="selectPosition(),positionIndex=scope.$index"></el-button>
                   </el-input>
                 </el-form-item>
               </template>
@@ -690,10 +681,10 @@
                   <el-input
                     class="group-no-padding"
                     clearable
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||item.contractInfoList!=''"
                     v-model="scope.row.contractAmount"
                   >
-                    <!--@input="getPositionMoney(scope.$index,detailForm.project.topInfoSiteList)"-->
+                    <!--@input="getPositionMoney(scope.$index,item.topInfoSiteList)"-->
                     <template slot="prepend">¥</template>
                     <template slot="append">(万元)</template>
                   </el-input>
@@ -711,14 +702,14 @@
             >
               <template slot-scope="scope">
                 <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||item.contractInfoList!=''"
                   class="inline-formitem-switch"
                   v-model="scope.row.isMain"
                   active-color="#409EFF"
                   inactive-color="#ddd"
                   active-value="1"
                   inactive-value="0"
-                  @change="setMain(scope.$index,detailForm.project.topInfoSiteList)"
+                  @change="setMain(scope.$index,item.topInfoSiteList)"
                 >
                 </el-switch>
                 <!--<el-radio v-model="scope.row.isMain" label="1">是</el-radio>-->
@@ -734,12 +725,12 @@
               align="center"
               width="80"
               show-overflow-tooltip
-              v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'&&detailForm.project.contractInfoList==''"
+              v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'&&item.contractInfoList==''"
             >
               <template slot-scope="scope">
                 <el-link
                   :underline="false"
-                  @click="del(scope.$index,scope.row,detailForm.project.topInfoSiteList)"
+                  @click="del(scope.$index,scope.row,item.topInfoSiteList)"
                   type="warning"
                 >删除
                 </el-link
@@ -759,7 +750,7 @@
             </el-button>
           </p>
           <el-table
-            :data="detailForm.project.commonFilesList"
+            :data="item.commonFilesList"
             :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
             align="center"
             border
@@ -815,7 +806,7 @@
               </el-button>
             </p>
             <el-table
-              :data="detailForm.project.infoProductList"
+              :data="item.infoProductList"
               :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -921,7 +912,7 @@
                                 :rules="rules.project.isNumber">
                     <el-input
                       clearable
-                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'||item.contractInfoList!=''"
                       v-model="scope.row.productQuantity"/>
                   </el-form-item>
                 </template>
@@ -942,7 +933,7 @@
                       class="group-no-padding"
                       v-model="scope.row.productTotalPrice"
                       clearable
-                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
+                      :disabled="p.actpoint === 'look'||p.actpoint === 'task'||item.contractInfoList!=''"
                     >
                       <template slot="prepend">¥</template>
                       <template slot="append">(万元)</template>
@@ -951,7 +942,7 @@
                 </template>
               </el-table-column>
               <el-table-column
-                v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'&&detailForm.project.contractInfoList==''"
+                v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'&&item.contractInfoList==''"
                 :resizable="false"
                 fixed="right"
                 label="操作"
@@ -961,19 +952,19 @@
                 <template slot-scope="scope">
                   <el-link
                     :underline="false"
-                    @click="del(scope.$index,scope.row,detailForm.project.infoProductList)"
+                    @click="del(scope.$index,scope.row,item.infoProductList)"
                     type="warning">删除
                   </el-link>
                 </template>
               </el-table-column>
             </el-table>
           </div>
-          <div v-show="detailForm.project.contractInfoList!=''">
+          <div v-show="item.contractInfoList!=''">
             <p class="detail-title" style="overflow: hidden;margin-right:30px">
                 <span>关联合同: </span>
               </p>
               <el-table
-                :data="detailForm.project.contractInfoList"
+                :data="item.contractInfoList"
                 :header-cell-style="{
                 'text-align': 'center',
                 'background-color': 'rgba(246,248,252,1)',
@@ -1032,7 +1023,7 @@
                   <template slot-scope="scope">
                     <!--<el-link-->
                     <!--:underline="false"-->
-                    <!--@click="del(scope.$index,scope.row,detailForm.project.contractInfoList,'glht')"-->
+                    <!--@click="del(scope.$index,scope.row,item.contractInfoList,'glht')"-->
                     <!--type="warning">删除-->
                     <!--</el-link>-->
                     <el-link
@@ -1046,9 +1037,6 @@
             </div>
         </el-form>
       </div>
-      </el-tab-pane>
-      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&(detailForm.project.flowStatus!='edit')">
-        <Audit-Process :task="p.task||{businessId:p.uuid,businessType:' project_project_new'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
@@ -1140,68 +1128,7 @@
         cpSelList:[],
         detailForm: {
           cdmc:[],
-          project: {
-            isClientele: '1',
-            contractInfoList:[],//关联合同列表
-            projectSubContractList: [], // 分包字段
-            infoProductList: [], // 产品列表
-            infoSubjectMatterList: [], // 标的信息
-            commonFilesList: [], // 文件列表
-            projectModuleId: '510ba0d79593418493eb1a11ed3e7df4', // 项目板块
-            projectModuleCode:"industry",//项目板块code
-            projectModuleName: '工业制造', // 项目板块
-            businessId: '', // 业务板块
-            projectName: '',
-            projectForeginName: '',
-            productName: '', // 产品名称
-            customerName: '',
-            contractNumber: '',
-            contractMoney: '',
-            amountWe: '',
-            contractAmountInitial: '', // 初始合同额(万元)
-            contractAmountSupplement: '',
-            supplierAddress: '', // 供方地点
-            contractSignTime: '',
-            contractStartTime: '',
-            contractEndTime: '',
-            valueAddedTax: '', // 增值税
-            isOutputTax: '',
-            categoryFirstId: 'f01fc41388d14663ac8873113f55cdd5', // 业务类别（一级）
-            categorySecondId: '', // 业务类别（二级）
-            ocontractModel: '', // 合同所属板块
-            isSystemPurchase: '', // 5
-            companyBelongName: '股份公司', // 6
-            projectStatusId: '',
-            amountCompanyName: '',
-            amountCompanyId:'',
-            companyName: '',
-            companyId: '',
-            ocontractAmountTotal: '',
-            marketFirstId: '',
-            marketSecondId: '',
-            assemblyRate: '',
-            assemblyTypeId: '',
-            architectureTypeId: '',
-            houseTypeId: '',
-            fieldId: '',
-            projectPusher: '',
-            projectRemark: '',
-            projectPusherPhone: '',
-            topInfoSiteList: [
-              {
-                path: '',
-                placeId: '',
-                ffid:'',
-                uuid: '',
-                isMain: '1',
-                country: '',
-              }
-            ],
-            companyBuild: '', // 客户名称
-            companyBuildId: '',
-            projectTypeId:'',
-            fatherProjectId:''
-          }
+          project: []
         },
         rules: {
           project: {
@@ -1759,25 +1686,90 @@
       this.$store.dispatch('getCategory', { name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3' })
       this.$store.dispatch('getCategory', { name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e' })
       this.$store.dispatch('getCategory', { name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72' })
-      if (this.p.ismerge) {
-        let res = {data:{data:{}}}
-        res.data.data = this.p.dataInfor
-        this.detailForm.project = res.data.data
-        if (res.data.data.contractInfoList == null) {
-        this.detailForm.project.contractInfoList = []
+      let item = {
+        isClientele: '1',
+        contractInfoList:[],//关联合同列表
+        projectSubContractList: [], // 分包字段
+        infoProductList: [], // 产品列表
+        infoSubjectMatterList: [], // 标的信息
+        commonFilesList: [], // 文件列表
+        projectModuleId: '510ba0d79593418493eb1a11ed3e7df4', // 项目板块
+        projectModuleCode:"industry",//项目板块code
+        projectModuleName: '工业制造', // 项目板块
+        businessId: '', // 业务板块
+        projectName: '',
+        projectForeginName: '',
+        productName: '', // 产品名称
+        customerName: '',
+        contractNumber: '',
+        contractMoney: '',
+        amountWe: '',
+        contractAmountInitial: '', // 初始合同额(万元)
+        contractAmountSupplement: '',
+        supplierAddress: '', // 供方地点
+        contractSignTime: '',
+        contractStartTime: '',
+        contractEndTime: '',
+        valueAddedTax: '', // 增值税
+        isOutputTax: '',
+        categoryFirstId: 'f01fc41388d14663ac8873113f55cdd5', // 业务类别（一级）
+        categorySecondId: '', // 业务类别（二级）
+        ocontractModel: '', // 合同所属板块
+        isSystemPurchase: '', // 5
+        companyBelongName: '股份公司', // 6
+        projectStatusId: '',
+        amountCompanyName: '',
+        amountCompanyId:'',
+        companyName: '',
+        companyId: '',
+        ocontractAmountTotal: '',
+        marketFirstId: '',
+        marketSecondId: '',
+        assemblyRate: '',
+        assemblyTypeId: '',
+        architectureTypeId: '',
+        houseTypeId: '',
+        fieldId: '',
+        projectPusher: '',
+        projectRemark: '',
+        projectPusherPhone: '',
+        topInfoSiteList: [
+          {
+            path: '',
+            placeId: '',
+            ffid:'',
+            uuid: '',
+            isMain: '1',
+            country: '',
+          }
+        ],
+        companyBuild: '', // 客户名称
+        companyBuildId: '',
+        projectTypeId:'',
+        fatherProjectId:''
+      }
+      for (let i = 0; i< this.p.dataInfor.length; i++) {
+        this.detailForm.project.push(item)
+      }
+      let res = {data:{data:{}}}
+      res.data.data = this.p.dataInfor
+      this.detailForm.project = res.data.data
+      for (let i = 0; i< this.p.dataInfor.length; i++) { 
+        if (res.data.data[i].contractInfoList == null) {
+        this.detailForm.project[i].contractInfoList = []
         }
-        if (!res.data.data.infoProductList) {
-          this.detailForm.project.infoProductList = []
+        if (!res.data.data[i].infoProductList) {
+          this.detailForm.project[i].infoProductList = []
         }
-        if (!res.data.data.infoSubjectMatterList) {
-          this.detailForm.project.infoSubjectMatterList = []
+        if (!res.data.data[i].infoSubjectMatterList) {
+          this.detailForm.project[i].infoSubjectMatterList = []
         }
-        if (!res.data.data.projectSubContractList) {
-          this.detailForm.project.projectSubContractList = []
+        if (!res.data.data[i].projectSubContractList) {
+          this.detailForm.project[i].projectSubContractList = []
         }
-        this.detailForm.cdmc=res.data.data.fieldId&&res.data.data.fieldId.split(",");
-        if (!res.data.data.topInfoSiteList|| res.data.data.topInfoSiteList=='') {
-          this.detailForm.project.topInfoSiteList = [{
+        this.detailForm.cdmc=res.data.data[i].fieldId&&res.data.data[i].fieldId.split(",");
+        if (!res.data.data[i].topInfoSiteList|| res.data.data[i].topInfoSiteList=='') {
+          this.detailForm.project[i].topInfoSiteList = [{
             path: '',
             placeId: '',
             ffid:'',
@@ -1786,35 +1778,32 @@
         }
         this.getShowTwo()
         this.getOutputTax()
-        if(this.detailForm.project.companyBuildId != ''&& this.detailForm.project.companyBuildId != null ){
-          this.constructionOrgList = this.detailForm.project.companyBuildId.split(",");
+        if(this.detailForm.project[i].companyBuildId != ''&& this.detailForm.project[i].companyBuildId != null ){
+          this.constructionOrgList = this.detailForm.project[i].companyBuildId.split(",");
         }
         this.getProjectFather()
-      } else if (this.p.actpoint === 'look' || this.p.actpoint === 'edit'||this.p.actpoint=='task') {
-        this.getShow()
-        this.getProjectFather()
+        //获取产品下拉数据
+        this.getProductData();
+        // 业务类别数据格式不对，已处理
+        this.bizTypeCode.find((item) => {
+          if (item.parentDetailId === this.detailForm.project[i].categoryFirstId) {
+            this.bizTypeCodeTwo.push(item)
+          }
+        })
+        //设计单位列表
+        this.$http
+          .post(
+            "/api/contract/Companies/detail/findCompanies",
+          )
+          .then((res) => {
+            this.sjdwList = res.data.data[i].records;
+            this.sjdwList.forEach((item)=>{
+              item.value=item.companyName;
+              item.customerName=item.companyName;
+              item.customerId=item.uuid;
+            })
+          });
       }
-      //获取产品下拉数据
-      this.getProductData();
-      // 业务类别数据格式不对，已处理
-      this.bizTypeCode.find((item) => {
-        if (item.parentDetailId === this.detailForm.project.categoryFirstId) {
-          this.bizTypeCodeTwo.push(item)
-        }
-      })
-       //设计单位列表
-      this.$http
-        .post(
-          "/api/contract/Companies/detail/findCompanies",
-        )
-        .then((res) => {
-          this.sjdwList = res.data.data.records;
-          this.sjdwList.forEach((item)=>{
-            item.value=item.companyName;
-            item.customerName=item.companyName;
-            item.customerId=item.uuid;
-          })
-        });
     }
   }
 </script>

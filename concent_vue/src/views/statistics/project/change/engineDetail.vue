@@ -165,7 +165,7 @@
                   prop="project.belongOrgCode"
                   style="width: 32.5%">
                   <el-select
-                    :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                    disabled
                     clearable
                     filterable
                     placeholder="请选择"
@@ -847,7 +847,7 @@
                 :rules="rules.project.isNumber"
                 style="width: 32.5%">
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                  disabled
                   clearable
                   placeholder="请输入"
                   v-model="detailForm.project.completedOutputValue"/>
@@ -1361,7 +1361,7 @@
                         class="group-no-padding"
                         v-model="scope.row.contractAmountInitial"
                         clearable
-                        :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                        :disabled="scope.row.subContractProjectId === ''"
                       >
                         <template slot="prepend">¥</template>
                         <template slot="append">(万元)</template>
@@ -1385,7 +1385,7 @@
                         class="group-no-padding"
                         v-model="scope.row.contractAmountEngine"
                         clearable
-                        :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
+                        :disabled="scope.row.subContractProjectId === ''" vb
                       >
                         <template slot="prepend">¥</template>
                         <template slot="append">(万元)</template>
