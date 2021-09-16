@@ -8429,14 +8429,21 @@ export default {
             )
             .then((res) => {
               if (res.data.code === 200) {
-                this.$message({
-                  message:  `${type=='save'?'保存':'提交'}成功`,
-                  type: "success",
-                });
-                if (type=='save') {
-                  this.detailform.contractInfo.uuid = res.data.data.contractInfo.uuid
+                if (res.data.data == null) {
+                  this.$message({
+                    message:  `${type=='save'?'保存':'提交'}信息重复`,
+                    type: 'error'
+                  })
                 } else {
-                  this.$router.back()
+                  this.$message({
+                    message:  `${type=='save'?'保存':'提交'}成功`,
+                    type: "success",
+                  });
+                  if (type=='save') {
+                    this.detailform.contractInfo.uuid = res.data.data.contractInfo.uuid
+                  } else {
+                    this.$router.back()
+                  }
                 }
               }
             });
