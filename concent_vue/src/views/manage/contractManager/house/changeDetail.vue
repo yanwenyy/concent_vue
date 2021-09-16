@@ -2142,7 +2142,7 @@
                     :headers="{'Authorization':Authorization}"
                     v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                     class="upload-demo detailUpload detatil-flie-btn"
-                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/01/uploadFile'"
+                    :action="'/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile'"
                     :on-change="( file, fileList)=>{uploadPorgress( file, fileList,detailform.commonFilesList2)}"
                     :show-file-list="false"
                     :before-upload="beforeAvatarUpload"
