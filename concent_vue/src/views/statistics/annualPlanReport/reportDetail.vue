@@ -11,161 +11,358 @@
         </el-collapse>
 
     -->
-    <div style="margin-top: 9px;color: red;position: absolute;top: 1px;right: 279px;z-index: 999;font-size: 15px;">项目名称：<span
-      style="color: red !important;margin-right: 50px;">{{projectName.length>20?projectName.slice(0,20)+'...':projectName}}</span>
-    </div>
-    <el-button
-      v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus=='edit'||dataReport.flowStatus=='reject')&&(dataReport.flowStatus!='check'&&dataReport.flowStatus!='pass'&&dataReport.uuid!=''&&dataReport.isEdit=='1')"
-      @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交
-    </el-button>
-    <el-button
-      v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(dataReport.flowStatus!='check'&&dataReport.flowStatus!='pass'&&dataReport.uuid!=''&&dataReport.isEdit=='1')"
-      type="primary" @click="save('save')" class="detailbutton detail-back-tab save-btn">保存
-    </el-button>
-    <!--<el-button v-if="isCk!='1'" @click="save" type="primary"  class="detailbutton detail-back-tab" style="float: left; margin-right: 185px;" plain>保存</el-button>-->
-    <!--<el-button v-if="isCk!='1'" @click="submit" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>-->
-    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh"
-               @click="operation('back')" type="warning">驳回
-    </el-button>
-    <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg"
-               @click="operation('complete')" type="success">通过
-    </el-button>
-    <el-button @click="back" type="primary" class="detailbutton detail-back-tab " plain>返回</el-button>
-    <el-tabs type="border-card" v-model="activeName" @tab-click="tabChange">
-      <el-tab-pane label="生产经营计划(计1)" name="tab1">
-        <div class="table-div" style="position: relative">
-          <el-table
-            class="tableStyle"
-            :height="tableHeight"
-            :max-height="tableHeight"
-            :data="data"
-            :key="key"
-            :header-cell-style="{
+    <!--<div style="margin-top: 9px;color: red;position: absolute;top: 1px;right: 279px;z-index: 999;font-size: 15px;">项目名称：-->
+      <!--&lt;!&ndash;<span style="color: red !important;margin-right: 50px;">{{projectName.length>20?projectName.slice(0,20)+'...':projectName}}</span>&ndash;&gt;-->
+    <!--</div>-->
+    <el-card class="box-card" style="padding: 10px">
+      <div class="btn-top">
+        <el-button
+          v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||dataReport.flowStatus=='edit'||dataReport.flowStatus=='reject')&&(dataReport.flowStatus!='check'&&dataReport.flowStatus!='pass'&&dataReport.uuid!=''&&dataReport.isEdit=='1')"
+          @click="save('sub')" class="detailbutton detail-back-tab sub-btn">提交
+        </el-button>
+        <el-button
+          v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(dataReport.flowStatus!='check'&&dataReport.flowStatus!='pass'&&dataReport.uuid!=''&&dataReport.isEdit=='1')"
+          type="primary" @click="save('save')" class="detailbutton detail-back-tab save-btn">保存
+        </el-button>
+        <!--<el-button v-if="isCk!='1'" @click="save" type="primary"  class="detailbutton detail-back-tab" style="float: left; margin-right: 185px;" plain>保存</el-button>-->
+        <!--<el-button v-if="isCk!='1'" @click="submit" type="primary"  class="detailbutton detail-back-tab " style="float: left;margin-right: 93px;" plain>提交</el-button>-->
+        <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh"
+                   @click="operation('back')" type="warning">驳回
+        </el-button>
+        <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg"
+                   @click="operation('complete')" type="success">通过
+        </el-button>
+        <el-button @click="back" type="primary" class="detailbutton detail-back-tab " plain>返回</el-button>
+      </div>
+      <el-tabs type="border-card" v-model="activeName" @tab-click="tabChange">
+        <el-tab-pane label="生产经营计划(计1)" name="tab1">
+          <div class="table-div" style="position: relative">
+            <el-table
+              class="tableStyle"
+              :height="tableHeight"
+              :max-height="tableHeight"
+              :data="data"
+              :key="key"
+              :header-cell-style="{
                       'text-align': 'center',
                       'background-color': 'whitesmoke'
                     }"
-            border
-            highlight-current-row
-            ref="table"
-            style="width: 100%"
-            :row-class-name="tableRowClassName"
-            tooltip-effect="dark"
-          >
-            <el-table-column
-              :width="50"
-              align="center"
-              label="序号"
-              show-overflow-tooltip
-              type="index"
-            ></el-table-column>
-            <el-table-column
-              :width="250"
-              align="left"
-              label="单位指标"
-              prop="jldw"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="center"
-              label="自揽新签合同额(万元)"
+              border
+              highlight-current-row
+              ref="table"
+              style="width: 100%"
+              :row-class-name="tableRowClassName"
+              tooltip-effect="dark"
             >
               <el-table-column
+                :width="50"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+              <el-table-column
+                :width="250"
+                align="left"
+                label="单位指标"
+                prop="jldw"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                align="center"
+                label="自揽新签合同额(万元)"
+              >
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="合计"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  label="其中"
+                  show-overflow-tooltip
+                >
+                  <el-table-column
+                    align="right"
+                    prop="jldw"
+                    label="工程承包"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    width="130"
+                    align="right"
+                    prop="jldw"
+                    label="勘察设计咨询"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    align="right"
+                    prop="jldw"
+                    label="工业制造"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    width="100"
+                    align="right"
+                    prop="jldw"
+                    label="房地产开发"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    align="right"
+                    prop="jldw"
+                    label="物资物流"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    align="right"
+                    prop="jldw"
+                    label="其他"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    align="right"
+                    prop="jldw"
+                    label="金融保险"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table-column>
+              </el-table-column>
+              <el-table-column
+                width="150"
                 align="right"
                 prop="jldw"
-                label="合计"
+                label="新签合同总额(含内分包)(万元)"
                 show-overflow-tooltip
               >
               </el-table-column>
               <el-table-column
-                label="其中"
-                show-overflow-tooltip
-              >
-                <el-table-column
-                  align="right"
-                  prop="jldw"
-                  label="工程承包"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                  align="right"
-                  prop="jldw"
-                  label="勘察设计咨询"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                  align="right"
-                  prop="jldw"
-                  label="工业制造"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                  align="right"
-                  prop="jldw"
-                  label="房地产开发"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                  align="right"
-                  prop="jldw"
-                  label="物资物流"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                  align="right"
-                  prop="jldw"
-                  label="其他"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                  align="right"
-                  prop="jldw"
-                  label="金融保险"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-              </el-table-column>
-            </el-table-column>
-            <el-table-column
-              align="right"
-              prop="jldw"
-              label="新签合同总额(含内分包)(万元)"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="center"
-              label="企业总产值计划"
+                align="center"
+                label="企业总产值计划"
 
-            >
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="合计"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-              <el-table-column
-                label="其中"
-                show-overflow-tooltip
               >
                 <el-table-column
                   align="right"
                   prop="jldw"
-                  label="工程承包"
+                  label="合计"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  label="其中"
+                  show-overflow-tooltip
+                >
+                  <el-table-column
+                    align="right"
+                    prop="jldw"
+                    label="工程承包"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    width="130"
+                    align="right"
+                    prop="jldw"
+                    label="勘察设计咨询"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    align="right"
+                    prop="jldw"
+                    label="工业制造"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    width="100"
+                    align="right"
+                    prop="jldw"
+                    label="房地产开发"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    align="right"
+                    prop="jldw"
+                    label="物资物流"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    align="right"
+                    prop="jldw"
+                    label="其他"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    align="right"
+                    prop="jldw"
+                    label="金融保险"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table-column>
+              </el-table-column>
+              <el-table-column
+                width="150"
+                align="right"
+                label="预计2019年底剩余合同额(万元)"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="新签合同总额(含内分包)" name="tab2">
+          <div class="table-div" style="position: relative">
+            <el-table
+              class="tableStyle"
+              :height="tableHeight"
+              :max-height="tableHeight"
+              :data="data"
+              :key="key"
+              :header-cell-style="{
+                      'text-align': 'center',
+                      'background-color': 'whitesmoke'
+                    }"
+              border
+              highlight-current-row
+              ref="table"
+              style="width: 100%"
+              :row-class-name="tableRowClassName"
+              tooltip-effect="dark"
+            >
+              <el-table-column
+                :width="50"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+              <el-table-column
+                :width="250"
+                align="left"
+                label="单位指标"
+                prop="jldw"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                align="right"
+                prop="jldw"
+                label="新签合同总额计划(万元)"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                label="工程承包(不含资本经营和二次经营)"
+                show-overflow-tooltip
+              >
+                <el-table-column
+                  width="150"
+                  align="right"
+                  prop="jldw"
+                  label="工程承包合计"
                   show-overflow-tooltip
                 >
                 </el-table-column>
                 <el-table-column
                   align="right"
                   prop="jldw"
-                  label="勘察设计咨询"
+                  label="铁路"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="公路"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="城市轨道"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="市政"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="房建"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="水利"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="电力"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="机场"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="港口航道"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="矿山"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="其他工程"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+              </el-table-column>
+              <el-table-column
+                label="非工程板块"
+                show-overflow-tooltip
+              >
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="勘察设计"
                   show-overflow-tooltip
                 >
                 </el-table-column>
@@ -177,6 +374,7 @@
                 >
                 </el-table-column>
                 <el-table-column
+                  width="150"
                   align="right"
                   prop="jldw"
                   label="房地产开发"
@@ -197,1253 +395,1095 @@
                   show-overflow-tooltip
                 >
                 </el-table-column>
-                <el-table-column
-                  align="right"
-                  prop="jldw"
-                  label="金融保险"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
               </el-table-column>
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="预计2019年底剩余合同额(万元)"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-          </el-table>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane label="新签合同总额(含内分包)" name="tab2">
-        <div class="table-div" style="position: relative">
-          <el-table
-            class="tableStyle"
-            :height="tableHeight"
-            :max-height="tableHeight"
-            :data="data"
-            :key="key"
-            :header-cell-style="{
+              <el-table-column
+                align="right"
+                prop="jldw"
+                label="资本经营"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                align="right"
+                label="二次经营"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="工程承包计划" name="tab3">
+          <el-tabs type="border-card">
+            <el-tab-pane label="自揽新签合同额(计1-1)">
+              <div class="table-div" style="position: relative">
+                <el-table
+                  class="tableStyle2"
+                  :height="tableHeight"
+                  :max-height="tableHeight"
+                  :data="data"
+                  :key="key"
+                  :header-cell-style="{
                       'text-align': 'center',
                       'background-color': 'whitesmoke'
                     }"
-            border
-            highlight-current-row
-            ref="table"
-            style="width: 100%"
-            :row-class-name="tableRowClassName"
-            tooltip-effect="dark"
-          >
-            <el-table-column
-              :width="50"
-              align="center"
-              label="序号"
-              show-overflow-tooltip
-              type="index"
-            ></el-table-column>
-            <el-table-column
-              :width="250"
-              align="left"
-              label="单位指标"
-              prop="jldw"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              prop="jldw"
-              label="新签合同总额计划(万元)"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              label="工程承包(不含资本经营和二次经营)"
-              show-overflow-tooltip
-            >
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="工程承包合计"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="铁路"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="公路"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="城市轨道"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="市政"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="房建"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="水利"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="电力"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="机场"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="港口航道"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="矿山"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="其他工程"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-            </el-table-column>
-            <el-table-column
-              label="非工程板块"
-              show-overflow-tooltip
-            >
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="勘察设计"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="工业制造"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="房地产开发"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="物资物流"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="其他"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-            </el-table-column>
-            <el-table-column
-              align="right"
-              prop="jldw"
-              label="资本经营"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="二次经营"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-          </el-table>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane label="工程承包计划" name="tab3">
-        <el-tabs type="border-card">
-          <el-tab-pane label="自揽新签合同额(计1-1)">
-            <div class="table-div" style="position: relative">
-              <el-table
-                class="tableStyle2"
-                :height="tableHeight"
-                :max-height="tableHeight"
-                :data="data"
-                :key="key"
-                :header-cell-style="{
+                  border
+                  highlight-current-row
+                  ref="table"
+                  style="width: 100%"
+                  :row-class-name="tableRowClassName"
+                  tooltip-effect="dark"
+                >
+                  <el-table-column
+                    :width="50"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+                  <el-table-column
+                    :width="250"
+                    align="left"
+                    label="单位指标"
+                    prop="jldw"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    align="right"
+                    prop="jldw"
+                    label="新签合同总额计划(万元)"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    label="其中"
+                    show-overflow-tooltip
+                  >
+                    <el-table-column
+                      align="right"
+                      prop="jldw"
+                      label="铁路"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      align="right"
+                      prop="jldw"
+                      label="公路"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      align="right"
+                      prop="jldw"
+                      label="城市轨道"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      align="right"
+                      prop="jldw"
+                      label="市政"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      align="right"
+                      prop="jldw"
+                      label="房建"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      align="right"
+                      prop="jldw"
+                      label="水利"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      align="right"
+                      prop="jldw"
+                      label="电力"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      align="right"
+                      prop="jldw"
+                      label="机场"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      align="right"
+                      prop="jldw"
+                      label="港口航道"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      align="right"
+                      prop="jldw"
+                      label="矿山"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      align="right"
+                      prop="jldw"
+                      label="其他工程"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                  </el-table-column>
+                  <el-table-column
+                    align="right"
+                    prop="jldw"
+                    label="新兴产业"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="剩余合同额分类情况一览表(计1-2)">
+              <div class="table-div" style="position: relative">
+                <el-table
+                  class="tableStyle2"
+                  :height="tableHeight"
+                  :max-height="tableHeight"
+                  :data="data"
+                  :key="key"
+                  :header-cell-style="{
                       'text-align': 'center',
                       'background-color': 'whitesmoke'
                     }"
-                border
-                highlight-current-row
-                ref="table"
-                style="width: 100%"
-                :row-class-name="tableRowClassName"
-                tooltip-effect="dark"
-              >
-                <el-table-column
-                  :width="50"
-                  align="center"
-                  label="序号"
-                  show-overflow-tooltip
-                  type="index"
-                ></el-table-column>
-                <el-table-column
-                  :width="250"
-                  align="left"
-                  label="单位指标"
-                  prop="jldw"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                  align="right"
-                  prop="jldw"
-                  label="新签合同总额计划(万元)"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                  label="其中"
-                  show-overflow-tooltip
+                  border
+                  highlight-current-row
+                  ref="table"
+                  style="width: 100%"
+                  :row-class-name="tableRowClassName"
+                  tooltip-effect="dark"
                 >
                   <el-table-column
-                    align="right"
+                    :width="50"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+                  <el-table-column
+                    :width="250"
+                    align="left"
+                    label="单位名称/工程类别"
                     prop="jldw"
-                    label="铁路"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                   <el-table-column
+                    width="150"
                     align="right"
                     prop="jldw"
-                    label="公路"
+                    label="预计2021年底剩余合同额(万元)"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                   <el-table-column
-                    align="right"
-                    prop="jldw"
-                    label="城市轨道"
+                    label="其中"
                     show-overflow-tooltip
                   >
+                    <el-table-column
+                      align="right"
+                      prop="jldw"
+                      label="铁路"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      align="right"
+                      prop="jldw"
+                      label="公路"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      align="right"
+                      prop="jldw"
+                      label="城市轨道"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      align="right"
+                      prop="jldw"
+                      label="市政"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      align="right"
+                      prop="jldw"
+                      label="房建"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      align="right"
+                      prop="jldw"
+                      label="水利"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      align="right"
+                      prop="jldw"
+                      label="电力"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      align="right"
+                      prop="jldw"
+                      label="机场"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      align="right"
+                      prop="jldw"
+                      label="港口航道"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      align="right"
+                      prop="jldw"
+                      label="矿山"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      align="right"
+                      prop="jldw"
+                      label="其他工程"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
                   </el-table-column>
-                  <el-table-column
-                    align="right"
-                    prop="jldw"
-                    label="市政"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    align="right"
-                    prop="jldw"
-                    label="房建"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    align="right"
-                    prop="jldw"
-                    label="水利"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    align="right"
-                    prop="jldw"
-                    label="电力"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    align="right"
-                    prop="jldw"
-                    label="机场"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    align="right"
-                    prop="jldw"
-                    label="港口航道"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    align="right"
-                    prop="jldw"
-                    label="矿山"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    align="right"
-                    prop="jldw"
-                    label="其他工程"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                </el-table-column>
-                <el-table-column
-                  align="right"
-                  prop="jldw"
-                  label="新兴产业"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-              </el-table>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="剩余合同额分类情况一览表(计1-2)">
-            <div class="table-div" style="position: relative">
-              <el-table
-                class="tableStyle2"
-                :height="tableHeight"
-                :max-height="tableHeight"
-                :data="data"
-                :key="key"
-                :header-cell-style="{
+                </el-table>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="主要在建项目施工计划(计2)">
+              <div class="table-div" style="position: relative">
+                <el-table
+                  class="tableStyle2"
+                  :height="tableHeight"
+                  :max-height="tableHeight"
+                  :data="data"
+                  :key="key"
+                  :header-cell-style="{
                       'text-align': 'center',
                       'background-color': 'whitesmoke'
                     }"
-                border
-                highlight-current-row
-                ref="table"
-                style="width: 100%"
-                :row-class-name="tableRowClassName"
-                tooltip-effect="dark"
-              >
-                <el-table-column
-                  :width="50"
-                  align="center"
-                  label="序号"
-                  show-overflow-tooltip
-                  type="index"
-                ></el-table-column>
-                <el-table-column
-                  :width="250"
-                  align="left"
-                  label="单位名称/工程类别"
-                  prop="jldw"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                  align="right"
-                  prop="jldw"
-                  label="预计2021年底剩余合同额(万元)"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                  label="其中"
-                  show-overflow-tooltip
+                  border
+                  highlight-current-row
+                  ref="table"
+                  style="width: 100%"
+                  :row-class-name="tableRowClassName"
+                  tooltip-effect="dark"
                 >
                   <el-table-column
-                    align="right"
+                    :width="50"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+                  <el-table-column
+                    :width="250"
+                    align="left"
+                    label="项目名称"
                     prop="jldw"
-                    label="铁路"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                   <el-table-column
                     align="right"
                     prop="jldw"
-                    label="公路"
+                    label="工期"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                   <el-table-column
                     align="right"
                     prop="jldw"
-                    label="城市轨道"
+                    label="所在地"
+                    show-overflow-tooltip
+                  >
+                  </el-table-column>
+                  <el-table-column
+                    width="150"
+                    align="right"
+                    prop="jldw"
+                    label="起讫地点(标段)"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                   <el-table-column
                     align="right"
                     prop="jldw"
-                    label="市政"
+                    label="计量单位"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                   <el-table-column
+                    label="施工总规模"
+                    show-overflow-tooltip
+                  >
+                    <el-table-column
+                      width="150"
+                      align="right"
+                      prop="jldw"
+                      label="初始合同(万元)"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                    <el-table-column
+                      width="150"
+                      align="right"
+                      prop="jldw"
+                      label="工程合同(万元)"
+                      show-overflow-tooltip
+                    >
+                    </el-table-column>
+                  </el-table-column>
+                  <el-table-column
+                    width="150"
                     align="right"
                     prop="jldw"
-                    label="房建"
+                    label="2021年12月底累计完成(万元)"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                   <el-table-column
+                    width="150"
                     align="right"
                     prop="jldw"
-                    label="水利"
+                    label="预计2021年底累计完成(万元)"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                   <el-table-column
+                    width="150"
                     align="right"
                     prop="jldw"
-                    label="电力"
+                    label="2021年12月底剩余(万元)"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                   <el-table-column
+                    width="150"
                     align="right"
                     prop="jldw"
-                    label="机场"
+                    label="预计2021年底剩余(万元)"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                   <el-table-column
+                    width="150"
                     align="right"
                     prop="jldw"
-                    label="港口航道"
+                    label="2022计划安排(万元)"
                     show-overflow-tooltip
                   >
                   </el-table-column>
                   <el-table-column
+                    width="150"
                     align="right"
                     prop="jldw"
-                    label="矿山"
+                    label="到2022底主要建设内容"
                     show-overflow-tooltip
                   >
                   </el-table-column>
-                  <el-table-column
-                    align="right"
-                    prop="jldw"
-                    label="其他工程"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                </el-table-column>
-              </el-table>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="主要在建项目施工计划(计2)">
-            <div class="table-div" style="position: relative">
-              <el-table
-                class="tableStyle2"
-                :height="tableHeight"
-                :max-height="tableHeight"
-                :data="data"
-                :key="key"
-                :header-cell-style="{
+                </el-table>
+              </div>
+            </el-tab-pane>
+          </el-tabs>
+        </el-tab-pane>
+        <el-tab-pane label="勘察设计计划(计3)" name="tab4">
+          <div class="table-div" style="position: relative">
+            <el-table
+              class="tableStyle"
+              :height="tableHeight"
+              :max-height="tableHeight"
+              :data="data"
+              :key="key"
+              :header-cell-style="{
                       'text-align': 'center',
                       'background-color': 'whitesmoke'
                     }"
-                border
-                highlight-current-row
-                ref="table"
-                style="width: 100%"
-                :row-class-name="tableRowClassName"
-                tooltip-effect="dark"
+              border
+              highlight-current-row
+              ref="table"
+              style="width: 100%"
+              :row-class-name="tableRowClassName"
+              tooltip-effect="dark"
+            >
+              <el-table-column
+                :width="50"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+              <el-table-column
+                :width="250"
+                align="left"
+                label="项目名称"
+                prop="jldw"
+                show-overflow-tooltip
               >
-                <el-table-column
-                  :width="50"
-                  align="center"
-                  label="序号"
-                  show-overflow-tooltip
-                  type="index"
-                ></el-table-column>
-                <el-table-column
-                  :width="250"
-                  align="left"
-                  label="项目名称"
-                  prop="jldw"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                  align="right"
-                  prop="jldw"
-                  label="工期"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                  align="right"
-                  prop="jldw"
-                  label="所在地"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                  align="right"
-                  prop="jldw"
-                  label="起讫地点(标段)"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                  align="right"
-                  prop="jldw"
-                  label="计量单位"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                  label="施工总规模"
-                  show-overflow-tooltip
-                >
-                  <el-table-column
-                    align="right"
-                    prop="jldw"
-                    label="初始合同(万元)"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    align="right"
-                    prop="jldw"
-                    label="工程合同(万元)"
-                    show-overflow-tooltip
-                  >
-                  </el-table-column>
-                </el-table-column>
-                <el-table-column
-                  align="right"
-                  prop="jldw"
-                  label="2021年12月底累计完成(万元)"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                  align="right"
-                  prop="jldw"
-                  label="预计2021年底累计完成(万元)"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                  align="right"
-                  prop="jldw"
-                  label="2021年12月底剩余(万元)"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                  align="right"
-                  prop="jldw"
-                  label="预计2021年底剩余(万元)"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                  align="right"
-                  prop="jldw"
-                  label="2022计划安排(万元)"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-                <el-table-column
-                  align="right"
-                  prop="jldw"
-                  label="到2022底主要建设内容"
-                  show-overflow-tooltip
-                >
-                </el-table-column>
-              </el-table>
-            </div>
-          </el-tab-pane>
-        </el-tabs>
-      </el-tab-pane>
-      <el-tab-pane label="勘察设计计划(计3)" name="tab4">
-        <div class="table-div" style="position: relative">
-          <el-table
-            class="tableStyle"
-            :height="tableHeight"
-            :max-height="tableHeight"
-            :data="data"
-            :key="key"
-            :header-cell-style="{
+              </el-table-column>
+              <el-table-column
+                align="right"
+                prop="jldw"
+                label="工作类别"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                width="150"
+                align="right"
+                label="规模(公里)"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                width="150"
+                align="right"
+                label="产值计划(万元)"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                width="150"
+                align="right"
+                label="工程合同额(万元)"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                width="150"
+                align="right"
+                label="开累(万元)"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                width="150"
+                align="right"
+                label="剩余合同额(万元)"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                align="right"
+                label="工作时间"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                align="right"
+                label="形象进度"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="房地产开发计划(计4)" name="tab5">
+          <div class="table-div" style="position: relative">
+            <el-table
+              class="tableStyle"
+              :height="tableHeight"
+              :max-height="tableHeight"
+              :data="data"
+              :key="key"
+              :header-cell-style="{
                       'text-align': 'center',
                       'background-color': 'whitesmoke'
                     }"
-            border
-            highlight-current-row
-            ref="table"
-            style="width: 100%"
-            :row-class-name="tableRowClassName"
-            tooltip-effect="dark"
-          >
-            <el-table-column
-              :width="50"
-              align="center"
-              label="序号"
-              show-overflow-tooltip
-              type="index"
-            ></el-table-column>
-            <el-table-column
-              :width="250"
-              align="left"
-              label="项目名称"
-              prop="jldw"
-              show-overflow-tooltip
+              border
+              highlight-current-row
+              ref="table"
+              style="width: 100%"
+              :row-class-name="tableRowClassName"
+              tooltip-effect="dark"
             >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              prop="jldw"
-              label="工作类别"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="规模(公里)"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="产值计划(万元)"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="工程合同额(万元)"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="开累(万元)"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="剩余合同额(万元)"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="工作时间"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="形象进度"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-          </el-table>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane label="房地产开发计划(计4)" name="tab5">
-        <div class="table-div" style="position: relative">
-          <el-table
-            class="tableStyle"
-            :height="tableHeight"
-            :max-height="tableHeight"
-            :data="data"
-            :key="key"
-            :header-cell-style="{
+              <el-table-column
+                :width="50"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+              <el-table-column
+                :width="250"
+                align="left"
+                label="项目名称"
+                prop="jldw"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                align="right"
+                prop="jldw"
+                label="运作单位"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                align="right"
+                label="地域"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                align="right"
+                label="建设地点"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                align="right"
+                label="建设性质"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                width="250"
+                align="right"
+                label="本年计划销售金额(万元)"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                width="250"
+                align="right"
+                label="本年计划营业收入(万元)"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                align="right"
+                label="备注"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="工业制造计划(计5)" name="tab6">
+          <div class="table-div" style="position: relative">
+            <el-table
+              class="tableStyle"
+              :height="tableHeight"
+              :max-height="tableHeight"
+              :data="data"
+              :key="key"
+              :header-cell-style="{
                       'text-align': 'center',
                       'background-color': 'whitesmoke'
                     }"
-            border
-            highlight-current-row
-            ref="table"
-            style="width: 100%"
-            :row-class-name="tableRowClassName"
-            tooltip-effect="dark"
-          >
-            <el-table-column
-              :width="50"
-              align="center"
-              label="序号"
-              show-overflow-tooltip
-              type="index"
-            ></el-table-column>
-            <el-table-column
-              :width="250"
-              align="left"
-              label="项目名称"
-              prop="jldw"
-              show-overflow-tooltip
+              border
+              highlight-current-row
+              ref="table"
+              style="width: 100%"
+              :row-class-name="tableRowClassName"
+              tooltip-effect="dark"
             >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              prop="jldw"
-              label="运作单位"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="地域"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="建设地点"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="建设性质"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="本年计划销售金额(万元)"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="本年计划营业收入(万元)"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="备注"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-          </el-table>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane label="工业制造计划(计5)" name="tab6">
-        <div class="table-div" style="position: relative">
-          <el-table
-            class="tableStyle"
-            :height="tableHeight"
-            :max-height="tableHeight"
-            :data="data"
-            :key="key"
-            :header-cell-style="{
+              <el-table-column
+                :width="50"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+              <el-table-column
+                :width="250"
+                align="left"
+                label="单位(产品)名称"
+                prop="jldw"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                align="right"
+                prop="jldw"
+                label="规格型号"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                align="right"
+                label="计量单位"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                align="right"
+                label="地域"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                align="right"
+                label="数量"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                align="right"
+                label="产值计划(万元)"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                align="right"
+                label="备注"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="物资贸易计划(计6)" name="tab7">
+          <div class="table-div" style="position: relative">
+            <el-table
+              class="tableStyle"
+              :height="tableHeight"
+              :max-height="tableHeight"
+              :data="data"
+              :key="key"
+              :header-cell-style="{
                       'text-align': 'center',
                       'background-color': 'whitesmoke'
                     }"
-            border
-            highlight-current-row
-            ref="table"
-            style="width: 100%"
-            :row-class-name="tableRowClassName"
-            tooltip-effect="dark"
-          >
-            <el-table-column
-              :width="50"
-              align="center"
-              label="序号"
-              show-overflow-tooltip
-              type="index"
-            ></el-table-column>
-            <el-table-column
-              :width="250"
-              align="left"
-              label="单位(产品)名称"
-              prop="jldw"
-              show-overflow-tooltip
+              border
+              highlight-current-row
+              ref="table"
+              style="width: 100%"
+              :row-class-name="tableRowClassName"
+              tooltip-effect="dark"
             >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              prop="jldw"
-              label="规格型号"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="计量单位"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="地域"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="数量"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="产值计划(万元)"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="备注"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-          </el-table>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane label="物资贸易计划(计6)" name="tab7">
-        <div class="table-div" style="position: relative">
-          <el-table
-            class="tableStyle"
-            :height="tableHeight"
-            :max-height="tableHeight"
-            :data="data"
-            :key="key"
-            :header-cell-style="{
+              <el-table-column
+                :width="50"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+              <el-table-column
+                :width="250"
+                align="left"
+                label="单位(产品)名称"
+                prop="jldw"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                align="right"
+                label="计量单位"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                align="right"
+                label="地域"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                align="right"
+                label="数量"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                align="right"
+                label="产值计划(万元)"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                align="right"
+                label="备注"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="各版块剩余合同额(计7)" name="tab8">
+          <div class="table-div" style="position: relative">
+            <el-table
+              class="tableStyle"
+              :height="tableHeight"
+              :max-height="tableHeight"
+              :data="data"
+              :key="key"
+              :header-cell-style="{
                       'text-align': 'center',
                       'background-color': 'whitesmoke'
                     }"
-            border
-            highlight-current-row
-            ref="table"
-            style="width: 100%"
-            :row-class-name="tableRowClassName"
-            tooltip-effect="dark"
-          >
-            <el-table-column
-              :width="50"
-              align="center"
-              label="序号"
-              show-overflow-tooltip
-              type="index"
-            ></el-table-column>
-            <el-table-column
-              :width="250"
-              align="left"
-              label="单位(产品)名称"
-              prop="jldw"
-              show-overflow-tooltip
+              border
+              highlight-current-row
+              ref="table"
+              style="width: 100%"
+              :row-class-name="tableRowClassName"
+              tooltip-effect="dark"
             >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="计量单位"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="地域"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="数量"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="产值计划(万元)"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="备注"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-          </el-table>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane label="各版块剩余合同额(计7)" name="tab8">
-        <div class="table-div" style="position: relative">
-          <el-table
-            class="tableStyle"
-            :height="tableHeight"
-            :max-height="tableHeight"
-            :data="data"
-            :key="key"
-            :header-cell-style="{
+              <el-table-column
+                :width="50"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+              <el-table-column
+                :width="250"
+                align="left"
+                label="单位名称\业务板块"
+                prop="jldw"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                width="150"
+                align="right"
+                label="预计2021年底剩余合同额(万元)"
+                prop="jldw"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                label="其中"
+                show-overflow-tooltip
+              >
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="工程承包"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="勘察设计"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="房地产"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="工业制造"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="物资贸易"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="其他"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="剩余合同额分类情况一览表(计1-2)"  name="tab9">
+          <div class="table-div" style="position: relative">
+            <el-table
+              class="tableStyle2"
+              :height="tableHeight"
+              :max-height="tableHeight"
+              :data="data"
+              :key="key"
+              :header-cell-style="{
                       'text-align': 'center',
                       'background-color': 'whitesmoke'
                     }"
-            border
-            highlight-current-row
-            ref="table"
-            style="width: 100%"
-            :row-class-name="tableRowClassName"
-            tooltip-effect="dark"
-          >
-            <el-table-column
-              :width="50"
-              align="center"
-              label="序号"
-              show-overflow-tooltip
-              type="index"
-            ></el-table-column>
-            <el-table-column
-              :width="250"
-              align="left"
-              label="单位名称\业务板块"
-              prop="jldw"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              label="预计2021年底剩余合同额(万元)"
-              prop="jldw"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              label="其中"
-              show-overflow-tooltip
+              border
+              highlight-current-row
+              ref="table"
+              style="width: 100%"
+              :row-class-name="tableRowClassName"
+              tooltip-effect="dark"
             >
               <el-table-column
-                align="right"
+                :width="50"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+              <el-table-column
+                :width="250"
+                align="left"
+                label="单位名称/工程类别"
                 prop="jldw"
-                label="工程承包"
                 show-overflow-tooltip
               >
               </el-table-column>
               <el-table-column
+                width="150"
                 align="right"
                 prop="jldw"
-                label="勘察设计"
+                label="预计2021年底剩余合同额(万元)"
                 show-overflow-tooltip
               >
               </el-table-column>
               <el-table-column
-                align="right"
-                prop="jldw"
-                label="房地产"
+                label="其中"
                 show-overflow-tooltip
               >
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="铁路"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="公路"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="城市轨道"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="市政"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="房建"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="水利"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="电力"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="机场"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="港口航道"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="矿山"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  align="right"
+                  prop="jldw"
+                  label="其他工程"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
               </el-table-column>
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="工业制造"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="物资贸易"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="其他"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-            </el-table-column>
-          </el-table>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane label="剩余合同额分类情况一览表(计1-2)"  name="tab9">
-        <div class="table-div" style="position: relative">
-          <el-table
-            class="tableStyle2"
-            :height="tableHeight"
-            :max-height="tableHeight"
-            :data="data"
-            :key="key"
-            :header-cell-style="{
+            </el-table>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="主要在建项目施工计划(计2)"  name="tab10">
+          <div class="table-div" style="position: relative">
+            <el-table
+              class="tableStyle2"
+              :height="tableHeight"
+              :max-height="tableHeight"
+              :data="data"
+              :key="key"
+              :header-cell-style="{
                       'text-align': 'center',
                       'background-color': 'whitesmoke'
                     }"
-            border
-            highlight-current-row
-            ref="table"
-            style="width: 100%"
-            :row-class-name="tableRowClassName"
-            tooltip-effect="dark"
-          >
-            <el-table-column
-              :width="50"
-              align="center"
-              label="序号"
-              show-overflow-tooltip
-              type="index"
-            ></el-table-column>
-            <el-table-column
-              :width="250"
-              align="left"
-              label="单位名称/工程类别"
-              prop="jldw"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              prop="jldw"
-              label="预计2021年底剩余合同额(万元)"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              label="其中"
-              show-overflow-tooltip
+              border
+              highlight-current-row
+              ref="table"
+              style="width: 100%"
+              :row-class-name="tableRowClassName"
+              tooltip-effect="dark"
             >
               <el-table-column
-                align="right"
+                :width="50"
+                align="center"
+                label="序号"
+                show-overflow-tooltip
+                type="index"
+              ></el-table-column>
+              <el-table-column
+                :width="250"
+                align="left"
+                label="项目名称"
                 prop="jldw"
-                label="铁路"
                 show-overflow-tooltip
               >
               </el-table-column>
               <el-table-column
                 align="right"
                 prop="jldw"
-                label="公路"
+                label="工期"
                 show-overflow-tooltip
               >
               </el-table-column>
               <el-table-column
                 align="right"
                 prop="jldw"
-                label="城市轨道"
+                label="所在地"
+                show-overflow-tooltip
+              >
+              </el-table-column>
+              <el-table-column
+                width="150"
+                align="right"
+                prop="jldw"
+                label="起讫地点(标段)"
                 show-overflow-tooltip
               >
               </el-table-column>
               <el-table-column
                 align="right"
                 prop="jldw"
-                label="市政"
+                label="计量单位"
                 show-overflow-tooltip
               >
               </el-table-column>
               <el-table-column
+                label="施工总规模"
+                show-overflow-tooltip
+              >
+                <el-table-column
+                  width="150"
+                  align="right"
+                  prop="jldw"
+                  label="初始合同(万元)"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+                <el-table-column
+                  width="150"
+                  align="right"
+                  prop="jldw"
+                  label="工程合同(万元)"
+                  show-overflow-tooltip
+                >
+                </el-table-column>
+              </el-table-column>
+              <el-table-column
+                width="150"
                 align="right"
                 prop="jldw"
-                label="房建"
+                label="2021年12月底累计完成(万元)"
                 show-overflow-tooltip
               >
               </el-table-column>
               <el-table-column
+                width="150"
                 align="right"
                 prop="jldw"
-                label="水利"
+                label="预计2021年底累计完成(万元)"
                 show-overflow-tooltip
               >
               </el-table-column>
               <el-table-column
+                width="150"
                 align="right"
                 prop="jldw"
-                label="电力"
+                label="2021年12月底剩余(万元)"
                 show-overflow-tooltip
               >
               </el-table-column>
               <el-table-column
+                width="150"
                 align="right"
                 prop="jldw"
-                label="机场"
+                label="预计2021年底剩余(万元)"
                 show-overflow-tooltip
               >
               </el-table-column>
               <el-table-column
+                width="150"
                 align="right"
                 prop="jldw"
-                label="港口航道"
+                label="2022计划安排(万元)"
                 show-overflow-tooltip
               >
               </el-table-column>
               <el-table-column
+                width="150"
                 align="right"
                 prop="jldw"
-                label="矿山"
+                label="到2022底主要建设内容"
                 show-overflow-tooltip
               >
               </el-table-column>
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="其他工程"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-            </el-table-column>
-          </el-table>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane label="主要在建项目施工计划(计2)"  name="tab10">
-        <div class="table-div" style="position: relative">
-          <el-table
-            class="tableStyle2"
-            :height="tableHeight"
-            :max-height="tableHeight"
-            :data="data"
-            :key="key"
-            :header-cell-style="{
-                      'text-align': 'center',
-                      'background-color': 'whitesmoke'
-                    }"
-            border
-            highlight-current-row
-            ref="table"
-            style="width: 100%"
-            :row-class-name="tableRowClassName"
-            tooltip-effect="dark"
-          >
-            <el-table-column
-              :width="50"
-              align="center"
-              label="序号"
-              show-overflow-tooltip
-              type="index"
-            ></el-table-column>
-            <el-table-column
-              :width="250"
-              align="left"
-              label="项目名称"
-              prop="jldw"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              prop="jldw"
-              label="工期"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              prop="jldw"
-              label="所在地"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              prop="jldw"
-              label="起讫地点(标段)"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              prop="jldw"
-              label="计量单位"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              label="施工总规模"
-              show-overflow-tooltip
-            >
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="初始合同(万元)"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-              <el-table-column
-                align="right"
-                prop="jldw"
-                label="工程合同(万元)"
-                show-overflow-tooltip
-              >
-              </el-table-column>
-            </el-table-column>
-            <el-table-column
-              align="right"
-              prop="jldw"
-              label="2021年12月底累计完成(万元)"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              prop="jldw"
-              label="预计2021年底累计完成(万元)"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              prop="jldw"
-              label="2021年12月底剩余(万元)"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              prop="jldw"
-              label="预计2021年底剩余(万元)"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              prop="jldw"
-              label="2022计划安排(万元)"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-            <el-table-column
-              align="right"
-              prop="jldw"
-              label="到2022底主要建设内容"
-              show-overflow-tooltip
-            >
-            </el-table-column>
-          </el-table>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane label="审批流程" v-if="dataReport.flowStatus!='edit'&&(p.actpoint == 'task'||p.actpoint == 'look')">
-        <Audit-Process :task="p.task||{businessId:p.uuid,businessType:' engineering_monthly_report'}"></Audit-Process>
-      </el-tab-pane>
-    </el-tabs>
+            </el-table>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="审批流程" v-if="dataReport.flowStatus!='edit'&&(p.actpoint == 'task'||p.actpoint == 'look')">
+          <Audit-Process :task="p.task||{businessId:p.uuid,businessType:' engineering_monthly_report'}"></Audit-Process>
+        </el-tab-pane>
+      </el-tabs>
+    </el-card>
   </div>
 </template>
 
@@ -1460,13 +1500,12 @@
         userdata: JSON.parse(sessionStorage.getItem('userdata')),
         projectList: {},
         tableHeight: "100vh - 110px",
-        p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         key: 0,
         data: [],
         dataReport: {},
         nextData: [],
         yearDateS: '',
-        activeName: "ztjd",
+        activeName: "tab1",
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         proNameHover: false,
         projectName: '',
@@ -1902,16 +1941,13 @@
           })
       }
     },
-    created() {
-
-    },
     mounted() {
-      this.getData();
-      if (this.p.actpoint == 'task') {
-        this.activeName = 'cwjswgcl'
-      } else {
-        this.activeName = 'ztjd'
-      }
+      // this.getData();
+      // if (this.p.actpoint == 'task') {
+      //   this.activeName = 'cwjswgcl'
+      // } else {
+      //   this.activeName = 'ztjd'
+      // }
     }
   }
 </script>
@@ -2151,11 +2187,16 @@
     color: black;
     position: absolute;
     top: 1px;
-    right: 15px;
+    /*right: 15px;*/
+    right: 0;
     z-index: 999999999;
     background: #fff;
   }
-
+  .btn-top{
+    position: relative;
+    width: 100%;
+    height: 40px;
+  }
   .save-btn {
     right: 95px;
     background: #409EFF;
@@ -2176,8 +2217,8 @@
     overflow: auto;
   }
   .tableStyle2 {
-    max-height: calc(100vh - 150px) !important;
-    min-height: calc(100vh - 150px) !important;
+    max-height: calc(100vh - 170px) !important;
+    min-height: calc(100vh - 170px) !important;
     overflow: auto;
   }
   /**/

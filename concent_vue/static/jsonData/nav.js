@@ -2172,6 +2172,42 @@ export default {
                   'leaf': true,
                   'defaultpage': false
                 },
+                {
+                  'name': '下级上报(项目部上报原始计划)',
+                  'path': '/statistics/annualPlanReport/subordinateGcgsReport',
+                  'component': '/statistics/annualPlanReport/subordinateGcgsReport',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '本级上报(公司上报集团)',
+                  'path': '/statistics/annualPlanReport/levelGcgsReport',
+                  'component': '/statistics/annualPlanReport/levelGcgsReport',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '上级下达查看(集团下达公司)',
+                  'path': '/statistics/annualPlanReport/superiorReleaseGcgsLook',
+                  'component': '/statistics/annualPlanReport/superiorReleaseGcgsLook',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
+                {
+                  'name': '本级下达(公司下达)',
+                  'path': '/statistics/annualPlanReport/levelGcgsRelease',
+                  'component': '/statistics/annualPlanReport/levelGcgsRelease',
+                  'iconCls': 'el-icon-reading',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': false
+                },
               ]
             },
             {
