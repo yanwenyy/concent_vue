@@ -1,8 +1,8 @@
 <!--详情-->
 <template>
   <div style="position: relative">
-    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&p.planInfo.projectStatus !== '2'" type="primary" @click="save" class="detailbutton detail-back-tab save-btn">保存</el-button>
-    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||p.planInfo.projectStatus !== '2')" @click="submit" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&yearPlan.flowStatus !== '2'" type="primary" @click="save" class="detailbutton detail-back-tab save-btn">保存</el-button>
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||yearPlan.flowStatus !== '2')" @click="submit" class="detailbutton detail-back-tab sub-btn">提交</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
     <el-button class="detail-back-tab" @click="back" type="text">返回</el-button>
@@ -11,93 +11,95 @@
         <div class="detailBox">
           <el-form
             :inline="false"
-            :model="dataReport"
+            :model="yearPlan"
             class="gcform"
           >
-            <span>基础信息</span>
+            <div class="title-name">基础信息</div>
             <el-divider></el-divider>
             <el-form-item
               label="项目名称:"
-            ><el-input v-model="dataReport.reportProjectName" disabled></el-input>
+            ><el-input v-model="project.projectName" disabled></el-input>
             </el-form-item>
             <el-form-item
               label="所属单位:"
-            ><el-input v-model="dataReport.reportProjectName" disabled></el-input>
+            ><el-input v-model="project.companyBuiltName" disabled></el-input>
             </el-form-item>
             <el-form-item
               label="工程行业类别:"
-            ><el-input v-model="dataReport.reportProjectName" disabled></el-input>
+            ><el-input v-model="project.projectTypeSecond" disabled></el-input>
             </el-form-item>
             <el-form-item
               label="计量单位:"
-            ><el-input v-model="dataReport.reportProjectName" disabled></el-input>
+            ><el-input v-model="project.unitName" disabled></el-input>
             </el-form-item>
             <el-form-item
               label="数量:"
-            ><el-input v-model="dataReport.reportProjectName" disabled></el-input>
+            ><el-input v-model="project.contractCount" disabled></el-input>
             </el-form-item>
             <el-form-item
               label="初始合同额(万元):"
-            ><el-input v-model="dataReport.reportProjectName" disabled></el-input>
+            ><el-input v-model="project.contractAmountInitial" disabled></el-input>
             </el-form-item>
             <el-form-item
               label="工程合同额(万元):"
-            ><el-input v-model="dataReport.reportProjectName" disabled></el-input>
+            ><el-input v-model="project.contractAmountEngine" disabled></el-input>
             </el-form-item>
             <el-form-item
               label="本年计划产值(万元):"
-            ><el-input v-model="dataReport.reportProjectName" disabled></el-input>
+            ><el-input v-model="yearPlan.localPlanVal" disabled></el-input>
             </el-form-item>
             <el-form-item
               label="合同开工日期:"
-            ><el-input v-model="dataReport.reportProjectName" disabled></el-input>
+            ><el-input v-model="project.contractStartTime" disabled></el-input>
             </el-form-item>
             <el-form-item
               label="合同竣工日期:"
-            ><el-input v-model="dataReport.reportProjectName" disabled></el-input>
+            ><el-input v-model="project.contractEndTime" disabled></el-input>
             </el-form-item>
             <el-form-item
               label="本年完成金额(万元):"
-            ><el-input v-model="dataReport.reportProjectName" disabled></el-input>
+            ><el-input v-model="yearPlan.localPlanTotal" disabled></el-input>
             </el-form-item>
-            <span>2020年12月底开累</span>
+            <div class="title-name">{{p.reportYear-1}}年11月底开累</div>
             <el-divider></el-divider>
             <el-form-item
               label="完成金额(万元):"
-            ><el-input v-model="dataReport.reportProjectName" disabled></el-input>
+            ><el-input :disabled="p.actpoint == 'task'||p.actpoint=='look'" @blur="xmbPlanValCheck('preActVal')" v-model="yearPlan.preActVal"></el-input>
             </el-form-item>
             <el-form-item
               label="剩余金额(万元):"
-            ><el-input v-model="dataReport.reportProjectName" disabled></el-input>
+            ><el-input :disabled="p.actpoint == 'task'||p.actpoint=='look'" v-model="yearPlan.preRemVal"></el-input>
             </el-form-item>
-            <span>预计2020年底开累</span>
+            <div class="title-name">预计{{p.reportYear-1}}年底开累</div>
             <el-divider></el-divider>
             <el-form-item
               label="完成金额(万元):"
-            ><el-input v-model="dataReport.reportProjectName" disabled></el-input>
+            ><el-input :disabled="p.actpoint == 'task'||p.actpoint=='look'" @blur="xmbPlanValCheck('preActValEst')" v-model="yearPlan.preActValEst"></el-input>
             </el-form-item>
             <el-form-item
               label="剩余金额(万元):"
-            ><el-input v-model="dataReport.reportProjectName" disabled></el-input>
+            ><el-input :disabled="p.actpoint == 'task'||p.actpoint=='look'" v-model="yearPlan.preRemValEst"></el-input>
             </el-form-item>
-            <span>2021年本年计划完成</span>
+            <div class="title-name">{{p.reportYear}}年本年计划完成</div>
             <el-divider></el-divider>
             <div>
               <el-form-item
                 label="产值(万元):"
-              ><el-input v-model="dataReport.reportProjectName" disabled></el-input>
+              ><el-input :disabled="p.actpoint == 'task'||p.actpoint=='look'"  @blur="xmbPlanValCheck('yearValue')" v-model="yearPlan.yearValue"></el-input>
               </el-form-item>
             </div>
             <div>
               <el-form-item
+                class="textarea-block"
                 label="主要建设内容:"
-              ><el-input :disabled="isCk=='1'||p.actpoint == 'task'||p.actpoint=='look'" v-model="dataReport.finishedPlan" type="textarea" ></el-input>
+              ><el-input :disabled="p.actpoint == 'task'||p.actpoint=='look'" v-model="yearPlan.contents" type="textarea" ></el-input>
               </el-form-item>
             </div>
             <div>
               <el-form-item
+                class="textarea-block"
                 label="备注说明:"
-              ><el-input :disabled="isCk=='1'||p.actpoint == 'task'||p.actpoint=='look'" v-model="dataReport.nextPlan" type="textarea" ></el-input>
+              ><el-input :disabled="p.actpoint == 'task'||p.actpoint=='look'" v-model="yearPlan.remark" type="textarea" ></el-input>
               </el-form-item>
             </div>
           </el-form>
@@ -105,17 +107,6 @@
       </el-tab-pane>
       <el-tab-pane label="产物及实物工程量">
         <div class="table-div">
-          <el-card class="box-card" v-if="p.actpoint != 'task'">
-            <div class="clearfix el-card__header">
-              <span style="color: #2a2a7d;line-height: 32px">
-                <b style="color:red">计划类型:</b>
-                <span style="color:red !important;font-size:14px;margin-right: 20px;">{{p.planInfo.planTypeName}}</span>
-                <span style="color:red !important;margin-left: 20px;margin-right: 20px;"><b style="color:red">项目名称:</b><span style="font-size:14px;">{{p.planInfo.projectName}}</span></span>
-                <span v-show="p.planInfo.planProjectTjx.planType === 2" style="color:red !important;font-size:14px;"><b style="color:red">年份:</b>{{p.planInfo.planProjectTjx.planYear}}年</span>
-                <span v-show="p.planInfo.planProjectTjx.planType === 1" style="color:red !important;font-size:14px;">{{p.planInfo.planProjectTjx.planYear}}年{{p.planInfo.planProjectTjx.planMonth}}月</span>
-              </span>
-            </div>
-          </el-card>
           <div class="table-div">
             <el-table
               class="tableStyle"
@@ -164,27 +155,14 @@
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  <div v-if="scope.row.veditable === '1' && scope.row.venabled === '1' && p.planInfo&&p.planInfo.projectStatus !== 'check'&& p.planInfo.projectStatus !== 'pass'&&p.actpoint!='task'&&p.actpoint!='look' ">
+                  <div v-if="scope.row.veditable === '1' && scope.row.venabled === '1' &&yearPlan.flowStatus !== 'check'&& yearPlan.flowStatus !== 'pass'&&p.actpoint!='task'&&p.actpoint!='look' ">
                     <!--<el-input v-model="scope.row.value" @input="scope.row.value = scope.row.value.replace(/[^\-?\d.]/g,'','')"/>-->
                     <el-input v-model="scope.row.value" @input="formatValue(scope.row.value,scope.$index,data,'value'),checkParnt(data,scope.$index,scope.row.sumTarget)"/>
                   </div>
-                  <div v-else-if="p.planInfo&&p.planInfo.projectStatus !== 'check'&& p.planInfo.projectStatus !== 'pass'&& p.actpoint !== 'task'&& p.actpoint !== 'look' " style="text-align: right">
+                  <div v-else-if="yearPlan.flowStatus !== 'check'&& yearPlan.flowStatus !== 'pass'&& p.actpoint !== 'task'&& p.actpoint !== 'look' " style="text-align: right">
                     <!--<el-input style="visibility: hidden;width: 0" :value="sonCount(scope.row)"/>-->
                     {{sonCount(scope.row,scope.$index,data,'value')}}
                   </div>
-                  <!--<div v-else-if="scope.row.uuid != '154'&&scope.row.uuid != '150'&&p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '3' " style="text-align: right">-->
-                    <!--&lt;!&ndash;<el-input style="visibility: hidden;width: 0" :value="sonCount(scope.row)"/>&ndash;&gt;-->
-                    <!--{{sonCount(scope.row,scope.$index,data,'value')}}-->
-                  <!--</div>  -->
-
-                  <!--<div v-else-if="scope.row.uuid == '154'&&p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '3' " style="text-align: right">-->
-                    <!--&lt;!&ndash;<el-input style="visibility: hidden;width: 0" :value="sonCount(scope.row)"/>&ndash;&gt;-->
-                    <!--{{sonCountSD(scope.row,scope.$index,data,'value','149')}}-->
-                  <!--</div>-->
-                  <!--<div v-else-if="scope.row.uuid == '150'&&p.planInfo&&p.planInfo.projectStatus !== '2'&& p.planInfo.projectStatus !== '3' " style="text-align: right">-->
-                    <!--&lt;!&ndash;<el-input style="visibility: hidden;width: 0" :value="sonCount(scope.row)"/>&ndash;&gt;-->
-                    <!--{{sonCountSD(scope.row,scope.$index,data,'value','150')}}-->
-                  <!--</div>-->
                   <div v-else>{{scope.row.value}}</div>
                 </template>
               </el-table-column>
@@ -197,8 +175,8 @@
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&p.planInfo.projectStatus!='edit'&&p.planInfo.projectStatus!=null">
-        <Audit-Process :task="p.task||{businessId:p.planInfo.planId||p.instid,businessType:'project_plan'}"></Audit-Process>
+      <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&yearPlan.flowStatus!='edit'&&yearPlan.flowStatus!=null">
+        <Audit-Process :task="p.task||{businessId:p.yearPlan.planId||p.instid,businessType:'project_plan'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>
 
@@ -214,7 +192,8 @@
     },
     data() {
       return {
-        dataReport:{},
+        project:{},
+        yearPlan:{},
         data: [],
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         proNameHover: false,
@@ -249,7 +228,6 @@
               bb.push(this.data.map(row => row.value)[i])
             }
           }
-          console.log(bb)
           // console.info(bb, index)
           // veditable，venabled 都为 "1"，则不会参与增加
           // a的sumTarget == b的uuid， a的值会加到b上
@@ -274,6 +252,41 @@
       },
     },
     methods: {
+      //项目部计划值检查
+      xmbPlanValCheck(name){
+        if(name=='preActVal'){
+          if(this.yearPlan.preActVal>this.project.contractAmountEngine){
+            this.$message.error("完成金额不能大于合同额,请重新填写！");
+            this.yearPlan.preActVal='';
+            this.yearPlan.preRemVal='';
+            return false;
+          }else{
+            this.yearPlan.preRemVal=Number(this.project.contractAmountEngine)-Number(this.yearPlan.preActVal);
+          }
+        }
+        if(name=='preActValEst'){
+          if(this.yearPlan.preActValEst>this.project.contractAmountEngine){
+            this.$message.error("完成金额不能大于合同额,请重新填写！");
+            this.yearPlan.preActValEst='';
+            this.yearPlan.preRemValEst='';
+            return false;
+          }else if(this.yearPlan.preActValEst<this.yearPlan.preActVal){
+            this.$message.error("年底完成金额不能小于"+this.p.reportYear+"年11月底完成金额,请重新填写！");
+            this.yearPlan.preActValEst='';
+            this.yearPlan.preRemValEst='';
+            return false;
+          }else{
+            this.yearPlan.preRemValEst=Number(this.project.contractAmountEngine)-Number(this.yearPlan.preActValEst);
+          }
+        }
+        if(name=='yearValue'){
+          if(this.yearPlan.yearValue>this.yearPlan.preRemVal){
+            this.$message.error("计划产值不能大于剩余金额,请重新填写！");
+            this.yearPlan.yearValue='';
+            return false;
+          }
+        }
+      },
       //判断是否大于父级值
       checkParnt(list,index,code){
         var treeSum=0,parentNum=0,canCalc=false,parentCanCalc=false;
@@ -287,7 +300,7 @@
             parentCanCalc=true;
           }
         });
-        console.log(canCalc,list[index].sumTarget,list[index].tjxCode.length,treeSum,parentNum)
+        // console.log(canCalc,list[index].sumTarget,list[index].tjxCode.length,treeSum,parentNum)
         if(treeSum!=0&&parentNum!=0&&list[index].sumTarget&&canCalc&&parentCanCalc&&list[index].tjxCode.length>=12&&(treeSum>parentNum)){
           this.$message.error("该级计划之和不能大于上级计划");
           list[index].value='';
@@ -323,8 +336,8 @@
           this.$message.error("竣工产值应该和施工产值相等");
           cansub=false;
         }
-        if(sgcz!=0&&sgcz>this.p.contractAmountEngine){
-          this.$message.error("施工产值不能超过工程合同额");
+        if(sgcz!=0&&sgcz!=this.yearPlan.yearValue){
+          this.$message.error("施工产值要等于"+this.p.reportYear+"年本年产值");
           cansub=false;
         }
         return cansub;
@@ -391,29 +404,26 @@
         if(!cansub){
           return false;
         }
-        let planId = ''
-        if (this.data.length > 0) {
-          planId = this.data[0].planId
-          let tableData = {
-            planId: planId,
-            planProjectTjx: {uuid: planId, flowStatus:'edit'},
-            planPrjTjxDetailList: this.data
-          }
-          this.$http
-            .post('/api/statistics/planPrjTjxDetail/detail/save', JSON.stringify(tableData), {useJson: true})
-            .then(res => {
-              if (res.data.code === 200) {
-                this.$message({
-                  message: '保存成功',
-                  duration: 1000,
-                  type: 'success',
-                  onClose: () => {
-                    // this.$router.back()
-                  }
-                })
-              }
-            })
-        }
+        this.$http
+          .post('/api/statistics/yearPlan/detail/saveProjectYearPlan', JSON.stringify({
+            details:this.data,
+            project:this.project,
+            yearPlan:this.yearPlan
+          }), {useJson: true})
+          .then(res => {
+            if (res.data.code === 200) {
+              this.$message({
+                message: '保存成功',
+                duration: 1000,
+                type: 'success',
+                onClose: () => {
+                  this.p.uuid=res.data.data.yearPlan.uuid;
+                  this.getData();
+                  // this.$router.back()
+                }
+              })
+            }
+          })
       },
       submit() {
         let planId = ''
@@ -421,7 +431,7 @@
           planId = this.data[0].planId
           let tableData = {
             planId: planId,
-            planProjectTjx: {uuid: planId, flowStatus: 'check',planProjectName:this.p.planInfo.projectName},
+            planProjectTjx: {uuid: planId, flowStatus: 'check',planProjectName:this.p.yearPlan.projectName},
             planPrjTjxDetailList: this.data
           }
           this.$http
@@ -440,7 +450,7 @@
       },
       rollback() {
         this.$http
-          .post('/api/statistics/PlanProjectTjx/detail/save', JSON.stringify({uuid: this.p.planInfo.planId, flowStatus: 0}), {useJson: true})
+          .post('/api/statistics/PlanProjectTjx/detail/save', JSON.stringify({uuid: this.p.yearPlan.planId, flowStatus: 0}), {useJson: true})
           .then(res => {
             if (res.data.code === 200) {
               this.$message({
@@ -458,21 +468,15 @@
       // 获取数据
       getData() {
         this.$http
-          .post('/api/statistics/planPrjTjxDetail/list/loadPageData', JSON.stringify({
-            planId: this.p.planInfo?this.p.planInfo.planId:this.p.instid,
-            planType: this.p.planInfo?this.p.planInfo.planProjectTjx.planType:"",
-            planProjectTjx: this.p.planInfo&&this.p.planInfo.planProjectTjx
+          .post('/api/statistics/yearPlan/detail/entityInfo', JSON.stringify({
+            projectId: this.p.projectId,
+            years: this.p.reportYear,
+            uuid:this.p.uuid
           }), {useJson: true})
           .then(res => {
-            this.data = res.data.data
-            console.log(JSON.parse(this.$utils.decrypt(this.$route.query.p)));
-            if (this.data) {
-              this.data.forEach((obj) => {
-                if (obj.value === 0) {
-                  obj.value = ''
-                }
-              })
-            }
+            this.data = res.data.data.details;
+            this.project = res.data.data.project;
+            this.yearPlan = res.data.data.yearPlan;
           })
       }
     },
@@ -535,5 +539,22 @@
 
   /deep/ .el-collapse-item__content{
     padding-bottom: 5px !important;
+  }
+  .gcform{
+    margin: 10px 0;
+  }
+  >>>.el-form-item,>>>.formItem{
+    display: inline-block;
+    width: 32%!important;
+    margin-right: 1%;
+  }
+  >>>.el-form-item input{
+    text-align: left;
+  }
+  .textarea-block{
+    width: 100%!important;
+  }
+  .title-name{
+    font-weight: bold;
   }
 </style>

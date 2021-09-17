@@ -2,8 +2,23 @@
   <div>
     <div style="width: 100%; overflow: hidden">
       <el-form class="search-form" :inline="true" :model="searchform" @keyup.enter.native="init()">
+        <el-form-item label="项目简称:">
+          <el-input clearable style=" width: 100%" v-model="searchform.projectOmit" size="mini"/>
+        </el-form-item>
         <el-form-item label="项目状态:">
-          <el-input style=" width: 100%" v-model="searchform.createOrgName" size="mini"/>
+          <el-select
+            clearable
+            v-model="searchform.projectStatusName"
+            filterable
+            collapse-tags
+            placeholder="请选择">
+            <el-option
+              :key="index"
+              :label="item.detailPrjStaName"
+              :value="item.id"
+              v-for="(item, index) in flowStatusNameList"
+            ></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <div style="float: right">
@@ -55,9 +70,9 @@
           type="index"
         ></el-table-column>
         <el-table-column
-          :width="500"
+          :width="200"
           label="项目简称"
-          prop="createOrgName"
+          prop="projectOmit"
           show-overflow-tooltip
         >
        <!--   <template slot="header" slot-scope="scope">
@@ -82,9 +97,8 @@
 
         </el-table-column>
         <el-table-column
-          :width="500"
           label="项目名称"
-          prop="createOrgName"
+          prop="inforName"
           show-overflow-tooltip
         >
           <!--   <template slot="header" slot-scope="scope">
@@ -109,155 +123,17 @@
 
         </el-table-column>
         <el-table-column
-          :width="200"
+          :width="150"
           align="center"
           label="项目状态"
-          prop="flowStatus"
+          prop="projectStatusName"
           show-overflow-tooltip
 
         >
-<!--          <template slot="header" slot-scope="scope">
-            <span>审核状态</span>
-            <div>
-              <el-select
-                class="list-search-picker"
-                clearable
-                filterable
-                placeholder="请选择"
-                size="mini"
-                v-model="searchform.status"
-              >
-                <el-option
-                  :key="index"
-                  :label="item.detailName"
-                  :value="item.id"
-                  v-for="(item, index) in flowStatusList"
-                ></el-option>
-              </el-select>
-              &lt;!&ndash;<el-input&ndash;&gt;
-              &lt;!&ndash;class="list-search-picker"&ndash;&gt;
-              &lt;!&ndash;style=" width: 100%"&ndash;&gt;
-              &lt;!&ndash;v-model="searchform.flowStatus"&ndash;&gt;
-              &lt;!&ndash;size="mini"&ndash;&gt;
-              &lt;!&ndash;/>&ndash;&gt;
-            </div>
-          </template>-->
-          <!--<template slot-scope="scope">-->
-            <!--<div>{{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核驳回':'未创建'}}-->
-            <!--</div>-->
-          <!--</template>-->
-          <template slot-scope="scope">
-            <div>{{scope.row.flowStatus=='0'?'未上报':scope.row.flowStatus=='1'?'部分上报':scope.row.flowStatus=='2'?'已上报':''}}
-            </div>
-          </template>
         </el-table-column>
         <el-table-column
-          label="合同额(万元)"
-          prop="createOrgName"
-          show-overflow-tooltip
-        >
-          <!--   <template slot="header" slot-scope="scope">
-               <span>填报单位</span>
-               <div>
-                 <el-input
-                   class="list-search-picker"
-                   style=" width: 100%"
-                   v-model="searchform.createOrgName"
-                   size="mini"
-                 />
-               </div>
-             </template>-->
-          <!--<template slot-scope="scope">-->
-          <!--<span class="blue pointer" v-if="scope.row.reportType != null && scope.row.reportType != ''">-->
-          <!--{{scope.row.createOrgName+"("+(scope.row.reportType==1?'自揽':scope.row.reportType==2?'工区':'')+")"}}-->
-          <!--</span>-->
-          <!--<span class="blue pointer"v-if="scope.row.reportType== null || scope.row.reportType == ''">-->
-          <!--{{scope.row.createOrgName}}-->
-          <!--</span>-->
-          <!--</template>-->
-
-        </el-table-column>
-        <el-table-column
-          label="行业类别"
-          prop="createOrgName"
-          show-overflow-tooltip
-        >
-          <!--   <template slot="header" slot-scope="scope">
-               <span>填报单位</span>
-               <div>
-                 <el-input
-                   class="list-search-picker"
-                   style=" width: 100%"
-                   v-model="searchform.createOrgName"
-                   size="mini"
-                 />
-               </div>
-             </template>-->
-          <!--<template slot-scope="scope">-->
-          <!--<span class="blue pointer" v-if="scope.row.reportType != null && scope.row.reportType != ''">-->
-          <!--{{scope.row.createOrgName+"("+(scope.row.reportType==1?'自揽':scope.row.reportType==2?'工区':'')+")"}}-->
-          <!--</span>-->
-          <!--<span class="blue pointer"v-if="scope.row.reportType== null || scope.row.reportType == ''">-->
-          <!--{{scope.row.createOrgName}}-->
-          <!--</span>-->
-          <!--</template>-->
-
-        </el-table-column>
-        <el-table-column
-          label="填报单位"
-          prop="createOrgName"
-          show-overflow-tooltip
-        >
-          <!--   <template slot="header" slot-scope="scope">
-               <span>填报单位</span>
-               <div>
-                 <el-input
-                   class="list-search-picker"
-                   style=" width: 100%"
-                   v-model="searchform.createOrgName"
-                   size="mini"
-                 />
-               </div>
-             </template>-->
-          <!--<template slot-scope="scope">-->
-          <!--<span class="blue pointer" v-if="scope.row.reportType != null && scope.row.reportType != ''">-->
-          <!--{{scope.row.createOrgName+"("+(scope.row.reportType==1?'自揽':scope.row.reportType==2?'工区':'')+")"}}-->
-          <!--</span>-->
-          <!--<span class="blue pointer"v-if="scope.row.reportType== null || scope.row.reportType == ''">-->
-          <!--{{scope.row.createOrgName}}-->
-          <!--</span>-->
-          <!--</template>-->
-
-        </el-table-column>
-        <el-table-column
-          label="所属单位"
-          prop="createOrgName"
-          show-overflow-tooltip
-        >
-          <!--   <template slot="header" slot-scope="scope">
-               <span>填报单位</span>
-               <div>
-                 <el-input
-                   class="list-search-picker"
-                   style=" width: 100%"
-                   v-model="searchform.createOrgName"
-                   size="mini"
-                 />
-               </div>
-             </template>-->
-          <!--<template slot-scope="scope">-->
-          <!--<span class="blue pointer" v-if="scope.row.reportType != null && scope.row.reportType != ''">-->
-          <!--{{scope.row.createOrgName+"("+(scope.row.reportType==1?'自揽':scope.row.reportType==2?'工区':'')+")"}}-->
-          <!--</span>-->
-          <!--<span class="blue pointer"v-if="scope.row.reportType== null || scope.row.reportType == ''">-->
-          <!--{{scope.row.createOrgName}}-->
-          <!--</span>-->
-          <!--</template>-->
-
-        </el-table-column>
-        <el-table-column
-          label="项目类型"
-          prop="createOrgName"
+          label="填报类型"
+          prop="monthReportType"
           show-overflow-tooltip
         >
           <!--   <template slot="header" slot-scope="scope">
@@ -368,10 +244,8 @@
         searchform: {
           current: 1,
           size: 20,
-          createOrgName: "",
-          flowStatus: "",
-          createTime: "",
-          yearDateS: "",
+          projectOmit: "",
+          projectStatusName: "",
         },
         menus: [],
         multipleSelection: [],
@@ -398,11 +272,30 @@
             detailName:"未创建",
             id:'0'
           }
-        ]
+        ],
+        flowStatusNameList:[
+          {
+            detailPrjStaName:'在建',
+            id:'在建'
+          },
+          {
+            detailPrjStaName:'竣工未结算',
+            id:'竣工未结算'
+          },
+          {
+            detailPrjStaName:'正在开展',
+            id:'正在开展'
+          }, {
+            detailPrjStaName:'未开工',
+            id:'未开工'
+          }
+        ],
       };
     },
     computed: {
-
+      projectStatus() {//项目状态
+        return this.$store.state.projectStatus;
+      },
     },
     methods: {
       //编辑
@@ -841,7 +734,7 @@
       },
       // 查看
       rowshow(row) {
-        let p = {ifjtList:true,selfPath:'../jTList',fromDate:this.searchform.yearDateS,actpoint: "look", params: row};
+        let p = {params: row};
         this.$router.push({
           path: "./levelXmbReportTwo/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
@@ -972,7 +865,9 @@
       searchformReset() {
         this.searchform={
           current: 1,
-          size: 20
+          size: 20,
+          projectOmit: "",
+          projectStatusName: "",
         };
         this.getData();
       },
@@ -982,37 +877,21 @@
       },
       // 查询
       getData() {
-        if(this.searchform.yearDateS!='' && this.searchform.yearDateS!=null && this.searchform.yearDateS!=undefined) {
-          this.searchform.reportYear = this.searchform.yearDateS.split("-")[0];
-          this.searchform.reportMonth = this.searchform.yearDateS.split("-")[1];
-        }
         this.$http
           .post(
-            "/api/statistics/projectMonthlyReport/Projectreport/list/jtQueryEntInfo",
+            "/api/statistics/yearPlan/list/loadProjectPageData",
             this.searchform
           )
           .then((res) => {
             this.page = res.data.data
             var datas=res.data.data.records;
-            datas.forEach((item)=>{
-              var showRed=item.chirldList?this.checkRed(item,item.chirldList):false;
-              item.red=showRed?true:false;
-            });
             this.tableData = datas;
 
       });
       },
     },
     created() {
-      this.p=this.$route.query.p?JSON.parse(this.$utils.decrypt(this.$route.query.p)):{};
-      if(this.p&&this.p.fromDate){
-        this.searchform.current = 1;
-        this.searchform.yearDateS=this.p.fromDate;
-        this.mrTime=this.searchform.yearDateS;
-      }else{
-        let that = this;
-        that.getdatatime();
-      }
+      this.$store.dispatch("getConfig", {});
       this.getData();
       this.userdata=JSON.parse(sessionStorage.getItem('userdata'))
     },
