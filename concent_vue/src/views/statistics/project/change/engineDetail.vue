@@ -1421,6 +1421,12 @@
                     class="detatil-flie-btn"
                     type="primary">新增
                   </el-button>
+                  <el-button
+                    v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    @click="chooseContract()"
+                    class="detatil-flie-btn"
+                    type="primary">关联字段
+                  </el-button>
                 </p>
                 <el-table
                   :data="detailForm.project.contractInfoList"
@@ -2540,6 +2546,40 @@
         </div>
       </el-tab-pane>
     </el-tabs>
+    <el-dialog class="showContract" :visible.sync="showContract" :append-to-body="true">
+      <el-tabs type="border-card">
+        <el-tab-pane 
+          v-for="(item, index) in type" 
+          :key="index"
+          label="关联字段">
+          <el-form ref="form" label-width="80px">
+            <el-form-item>
+              <el-checkbox-group v-model="type[index].checkGroup">
+                <el-checkbox label="projectNature" name="type">项目性质（一级）、项目性质（二级）</el-checkbox>
+                <el-checkbox label="projectCategory" name="type">工程类别（一级）、工程类别（二级）</el-checkbox>
+                <el-checkbox label="emergingMarket" name="type">新兴市场（一级）、新兴市场（二级）</el-checkbox>
+                <el-checkbox label="companyDesign" name="type">设计单位</el-checkbox>
+                <el-checkbox label="companyName" name="type">签约/使用资质单位</el-checkbox>
+                <el-checkbox label="topInfoSiteList" name="type">项目地点</el-checkbox>
+                <el-checkbox label="companyBuild" name="type">建设单位</el-checkbox>
+                <el-checkbox label="contractSignTime" name="type">合同签订日期</el-checkbox>
+                <el-checkbox label="contractEndTime" name="type">合同竣工日期</el-checkbox>
+                <el-checkbox label="contractStartTime" name="type">合同开工日期</el-checkbox>
+                <el-checkbox label="valueAddedTax" name="type">增值税</el-checkbox>
+                <el-checkbox label="investmentContract" name="type">投资合同总额</el-checkbox>
+                <el-checkbox label="contractAmount" name="type">初始合同额、工程合同额、合同额增减</el-checkbox>
+                <el-checkbox label="contractAmountTotal" name="type">合同总金额</el-checkbox>
+                <el-checkbox label="ourAmount" name="type">初始我方份额</el-checkbox>
+              </el-checkbox-group>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+      </el-tabs>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="showContract = false">取消</el-button>
+        <el-button type="primary" @click="subContract()">确定</el-button>
+      </div>
+    </el-dialog>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
     <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
     <Separate-Dialog v-if="infoCSVisible" ref="infoCS" @refreshDataList="goSeparate"></Separate-Dialog>
@@ -2610,6 +2650,8 @@
         }
       }
       return {
+        showContract:false,
+        type:[],
         key:0,
         infoCSVisible: false,
         uuid: null,
@@ -2938,6 +2980,66 @@
         });
     },
     methods: {
+      // 显示关联合同
+      chooseContract() {
+        if (this.detailForm.project.contractInfoList.length == 0) {
+          this.$message({
+            showClose: true,
+            message: '请先添加关联合同！',
+            type: 'warning'
+          });
+          return false
+        }
+        this.$http
+        .post('/api/statistics/StatisticsProject/list/associatedField', {projectId:this.p.actpoint==='task'?this.p.instid:this.p.uuid})
+        .then(res => {
+          if (res.data.code == 200) {
+            if (res.data.data == null || res.data.data == '') {
+              this.type = []
+              this.detailForm.project.contractInfoList.forEach((element, index) => {
+                this.type.push({
+                  uuid:'',
+                  projectUuid:this.p.actpoint==='task'?this.p.instid:this.p.uuid,
+                  listSort:index,
+                  checkField:'',
+                  checkGroup:[],
+                  contract:element
+                })                
+              })  
+            } else {
+              res.data.data.forEach((element) => {
+                element.checkGroup = element.checkField.split(",")
+              })
+              this.type = res.data.data
+            }
+          }
+        })
+        this.showContract = true
+      },
+      // 关联合同的确定
+      subContract() {
+        this.type.forEach((element, index) => {
+          element.checkField = element.checkGroup.toString()
+          element.contract = this.detailForm.project.contractInfoList[index]
+        })
+        this.$http
+        .post('/api/statistics/StatisticsProject/list/RelatedContract', this.type,{ useJson: true })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.$message({
+              showClose: true,
+              message: '关联成功！',
+              type: 'success'
+            });
+          } else {
+            this.$message({
+              showClose: true,
+              message: '关联失败！',
+              type: 'warning'
+            });
+          }
+        })
+      },
       //建设单位下拉赋值
       companyBuildChange(){
         this.detailForm.project.companyBuildId = this.constructionOrgList.join(",")
@@ -3647,8 +3749,15 @@
     }
   }
 </script>
+<style>
+.showContract >.el-dialog  {
+  max-height: 85vh !important;
+  margin: 0 auto 30px;
+  width: 60% !important;
+  margin-top: 30vh !important;
+}
+</style>
 <style lang="scss" scoped>
-
   .detail-back-tab{
     padding: 10px 20px ;
     border:1px solid #ddd;
