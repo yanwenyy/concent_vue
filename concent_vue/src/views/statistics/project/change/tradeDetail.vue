@@ -1036,6 +1036,12 @@
                     class="detatil-flie-btn"
                     type="primary">新增
                   </el-button>
+                  <el-button
+                    v-show="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    @click="chooseContract()"
+                    class="detatil-flie-btn"
+                    type="primary">关联字段
+                  </el-button>
                 </p>
                 <el-table
                   :data="detailForm.project.contractInfoList"
@@ -1902,6 +1908,36 @@
         </div>
       </el-tab-pane>
     </el-tabs>
+    <el-dialog class="showContract" :visible.sync="showContract" :append-to-body="true">
+      <el-tabs type="border-card">
+        <el-tab-pane 
+          v-for="(item, index) in type" 
+          :key="index"
+          label="关联字段">
+          <el-form ref="form" label-width="80px">
+            <el-form-item>
+              <el-checkbox-group v-model="type[index].checkGroup">
+                <el-checkbox label="emergingMarket" name="type">新兴市场（一级）、新兴市场（二级）</el-checkbox>
+                <el-checkbox label="customerName" name="type">客户名称</el-checkbox>
+                <el-checkbox label="valueAddedTax" name="type">增值税</el-checkbox>
+                <el-checkbox label="contractSignTime" name="type">合同签订日期</el-checkbox>
+                <el-checkbox label="companyName" name="type">签约/使用资质单位</el-checkbox>
+                <el-checkbox label="isSystemIn" name="type">系统内外</el-checkbox>
+                <el-checkbox label="isRoadIn" name="type">路内路外</el-checkbox>
+                <el-checkbox label="topInfoSiteList" name="type">项目地点</el-checkbox>
+                <el-checkbox label="infoSubjectMatterList" name="type">物标的信息</el-checkbox>
+                <el-checkbox label="ocontractStartTime" name="type">合同开始时间</el-checkbox>
+                <el-checkbox label="ocontractEndTime" name="type">合同结束时间</el-checkbox>
+              </el-checkbox-group>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+      </el-tabs>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="showContract = false">取消</el-button>
+        <el-button type="primary" @click="subContract()">确定</el-button>
+      </div>
+    </el-dialog>
     <Tree v-if="treeStatas" ref="addOrUpdate" @getPosition="getPositionTree"></Tree>
     <file-upload v-if="uploadVisible" ref="infoUp" @refreshBD="getUpInfo"></file-upload>
     <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
@@ -1968,6 +2004,8 @@
         }
       }
       return {
+        showContract:false,
+        type:[],
         key:0,
         userInfo: JSON.parse(sessionStorage.getItem('userdata')),
         fatherList:[],
@@ -2183,6 +2221,66 @@
       });
     },
     methods: {
+      // 显示关联合同
+      chooseContract() {
+        if (this.detailForm.project.contractInfoList.length == 0) {
+          this.$message({
+            showClose: true,
+            message: '请先添加关联合同！',
+            type: 'warning'
+          });
+          return false
+        }
+        this.$http
+        .post('/api/statistics/StatisticsProject/list/associatedField', {projectId:this.p.actpoint==='task'?this.p.instid:this.p.uuid})
+        .then(res => {
+          if (res.data.code == 200) {
+            if (res.data.data == null || res.data.data == '') {
+              this.type = []
+              this.detailForm.project.contractInfoList.forEach((element, index) => {
+                this.type.push({
+                  uuid:'',
+                  projectUuid:this.p.actpoint==='task'?this.p.instid:this.p.uuid,
+                  listSort:index,
+                  checkField:'',
+                  checkGroup:[],
+                  contract:element
+                })                
+              })  
+            } else {
+              res.data.data.forEach((element) => {
+                element.checkGroup = element.checkField.split(",")
+              })
+              this.type = res.data.data
+            }
+          }
+        })
+        this.showContract = true
+      },
+      // 关联合同的确定
+      subContract() {
+        this.type.forEach((element, index) => {
+          element.checkField = element.checkGroup.toString()
+          element.contract = this.detailForm.project.contractInfoList[index]
+        })
+        this.$http
+        .post('/api/statistics/StatisticsProject/list/RelatedContract', this.type,{ useJson: true })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.$message({
+              showClose: true,
+              message: '关联成功！',
+              type: 'success'
+            });
+          } else {
+            this.$message({
+              showClose: true,
+              message: '关联失败！',
+              type: 'warning'
+            });
+          }
+        })
+      },
       resetFuDai(id) {
         this.fatherList = [];
         this.detailForm.project.fatherProjectId = '';
