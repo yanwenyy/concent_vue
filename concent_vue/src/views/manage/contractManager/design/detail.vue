@@ -695,7 +695,7 @@
 
               >
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   clearable
                   placeholder=""
 
