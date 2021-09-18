@@ -1,7 +1,7 @@
 <!--资审结果操作列表-->
 <template>
   <!--<div class="searchListClass" style="margin-bottom: -50px;">-->
-  <div class="searchListClass" style="margin-bottom: -50px;">
+  <div class="searchListClass">
     <!-- <el-menu default-active="2" class="el-menu-vertical-demo" >
       <el-submenu index="1">
         <template slot="title">

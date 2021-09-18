@@ -46,7 +46,7 @@
       methods: {
         beforeAvatarUpload(file) {
           const isJPG = file.type === 'image/jpeg';
-          const isLt100M = file.size / (1024 *100) < 100;
+          const isLt100M = file.size / 1024 / 1024 < 100;
 
           // if (!isJPG) {
           //   this.$message.error('上传头像图片只能是 JPG 格式!');
