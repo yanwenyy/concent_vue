@@ -1,5 +1,6 @@
 <!--资审结果操作列表-->
 <template>
+  <!--<div class="searchListClass" style="margin-bottom: -50px;">-->
   <div class="searchListClass" style="margin-bottom: -50px;">
     <!-- <el-menu default-active="2" class="el-menu-vertical-demo" >
       <el-submenu index="1">
@@ -105,7 +106,7 @@
                   start-placeholder="开始日期"
                   end-placeholder="结束日期">
                 </el-date-picker>
-              </el-form-item> 
+              </el-form-item>
               <el-form-item
                 label="录入单位:"
               >
@@ -127,7 +128,7 @@
           <!-- </el-form>
         </el-menu-item-group>
       </el-submenu>
-    </el-menu> 
+    </el-menu>
     <el-form :inline="true" :model="searchform" @keyup.enter.native="getData()" class="queryForm"> -->
       <el-form-item style="float:right">
         <el-button @click="searchformReset" style="color:black;background:none;float:right; margin-right:20px;" type="info" plain><i class="el-icon-refresh-right"></i>重置</el-button>
@@ -138,6 +139,8 @@
     </el-form>
     <div style="margin-top: 10px">
       <el-table
+        :max-height="$tableHeight+70"
+        :height="$tableHeight+70"
         :data="page.records"
         :header-cell-style="{
           'text-align': 'center',
@@ -150,8 +153,6 @@
         ref="table"
         style="width: 100%"
         tooltip-effect="dark"
-        :max-height="$tableHeight"
-        :height="$tableHeight"
       >
         <el-table-column
           :width="50"
@@ -754,9 +755,9 @@
   position: initial;
   left: -10px;
 }
->>>.el-table--scrollable-x .el-table__body-wrapper{
-  min-height: 600px!important;
-}
+/*>>>.el-table--scrollable-x .el-table__body-wrapper{*/
+  /*min-height: 600px!important;*/
+/*}*/
 >>>.el-button--info.is-plain{
   margin-top:5px
 }

@@ -11,8 +11,11 @@
       <el-button @click="getData" type="primary" plain style="float:right;margin-right:5px;"><i class="el-icon-search"></i>查询</el-button>
       <!--<el-button @click="exportdata" type="primary" plain><i class="el-icon-top"></i>导出</el-button>-->
     </el-form>
-    <div style="margin-top: 10px">
+    <div>
       <el-table
+        class="tableStyle"
+        :max-height="$tableHeight"
+        :height="$tableHeight"
         :data="page.records"
         :header-cell-style="{
                 'text-align': 'center',
@@ -21,7 +24,6 @@
               }"
         align="center"
         border
-        class="detailTable"
         ref="table"
         @row-dblclick="rowshow"
         @selection-change="handleSelectionChange"

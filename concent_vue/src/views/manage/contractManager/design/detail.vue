@@ -26,7 +26,7 @@
               }"
               >
                 <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId||p.actpoint=='Yjedit'" placeholder="请输入内容" v-model="detailform.contractInfo.inforName" class="input-with-select">
-                  <el-button v-if="detailform.contractInfo.contractType!='2'&&p.actpoint!='task'&&p.actpoint!='look'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
+                  <el-button v-if="detailform.contractInfo.contractType!='2'&&p.actpoint!='task'&&p.actpoint!='look'&&p.actpoint!='Yjedit'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
                 </el-input>
               </el-form-item>
               <el-form-item
@@ -301,14 +301,14 @@
               }"
               >
                 <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId||p.actpoint=='Yjedit'" placeholder="请输入内容" v-model="detailform.contractInfo.qualityOrgNames" class="input-with-select">
-                  <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&!p.pushId" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('使用资质单位',detailform.contractInfo.qualityOrgIds)" ></el-button>
+                  <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&!p.pushId&&p.actpoint!='Yjedit'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('使用资质单位',detailform.contractInfo.qualityOrgIds)" ></el-button>
                 </el-input>
               </el-form-item>
               <el-form-item
                 label="参建单位:"
               >
                 <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'" placeholder="请输入内容" v-model="detailform.contractInfo.buildOrgNames" class="input-with-select">
-                  <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('施工单位',detailform.contractInfo.buildOrgIds)" ></el-button>
+                  <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&p.actpoint!='Yjedit'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('施工单位',detailform.contractInfo.buildOrgIds)" ></el-button>
                 </el-input>
               </el-form-item>
               <el-form-item
@@ -332,6 +332,7 @@
                 trigger: ['blur','change'],
               }">
                 <el-select
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'"
                   v-model="constructionOrgList"
                   v-if="detailform.contractInfo.isClientele=='1'"
                   @change="companyBuildChange"
@@ -347,6 +348,7 @@
                   </el-option>
                 </el-select>
                 <el-select
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'"
                   v-model="constructionOrgList"
                   v-if="detailform.contractInfo.isClientele!='1'"
                   @change="companyBuildChange"
@@ -454,7 +456,7 @@
                   clearable
                   placeholder="请选择设计单位"
                   v-model="detailform.contractInfo.designOrg">
-                  <el-button slot="append" icon="el-icon-circle-plus-outline" :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'"
+                  <el-button slot="append" icon="el-icon-circle-plus-outline"  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&p.actpoint!='Yjedit'"
                   @click="openComMul(detailform.contractInfo.designOrgId,detailform.contractInfo.designOrg,'/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
                 </el-input>
               </el-form-item>
@@ -965,7 +967,7 @@
             }"
               >
                 <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'" placeholder="请输入内容" v-model="detailform.contractInfo.contractOrgName" class="input-with-select">
-                  <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('承揽所属机构',detailform.contractInfo.contractOrgId,false)" ></el-button>
+                  <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&p.actpoint!='Yjedit'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('承揽所属机构',detailform.contractInfo.contractOrgId,false)" ></el-button>
                 </el-input>
               </el-form-item>
               <el-form-item
@@ -2865,7 +2867,7 @@
             </div>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
+        <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&detailform.contractInfo.flowStatus!='edit'&&detailform.contractInfo.flowStatus!=null">
           <Audit-Process :task="p.task||{businessId:p.from=='YjLook'?p.instid+'-sale':p.instid,businessType:' contract_contract_new'}"></Audit-Process>
         </el-tab-pane>
       </el-tabs>
@@ -4089,6 +4091,19 @@
           this.$message.error("请选择一个主地点");
           return false;
         }
+        if(this.detailform.contractInfo.isYearContract=='0'){
+          var ddMoney=0,syMoney=0;
+          this.detailform.topInfoSiteList.forEach((item)=>{
+            ddMoney+=Number(item.contractAmount)
+          });
+          this.detailform.contractInfoHouseSalesList.forEach((item)=>{
+            syMoney+=Number(item.monthSales)
+          });
+          if(ddMoney!=0&&syMoney!=0&&ddMoney!=syMoney){
+            this.$message.error("项目地点金额之和应等于销售业绩列表中本月销售金额之和");
+            return false;
+          }
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$http
@@ -4258,7 +4273,7 @@
         if(this.p.actpoint=='task'&&this.p.instid.indexOf("-sale")!=-1){
           this.id=this.id.split("-sale")[0];
         }
-        if(this.p.actpoint=='Yjedit'||(this.p.actpoint=='task'&&this.p.instid.indexOf("-sale")!=-1)){
+        if(this.p.actpoint=='Yjedit'||this.p.from=='YjLook'||(this.p.actpoint=='task'&&this.p.instid.indexOf("-sale")!=-1)){
           url='/api/contract/contract/ContractInfo/detail/saleEntityInfoById'
         }else{
           url='/api/contract/contract/ContractInfo/detail/entityInfo'
@@ -4301,6 +4316,11 @@
         this.detailform.jzjglx=datas.contractInfo.otherBuildingStructureTypeId&&datas.contractInfo.otherBuildingStructureTypeId.split(",");
         if(datas.contractInfo.constructionOrgId != ''&&datas.contractInfo.constructionOrgId != null){
           this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
+        }
+        if (this.detailform.contractInfo.contractOrgName) {
+          this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion",{orgCode:this.detailform.contractInfo.contractOrgId},).then((res) => {
+            this.ssList = res.data.data
+          });
         }
       });
       },

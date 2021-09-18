@@ -25,7 +25,7 @@
                 }"
               >
                 <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId||p.actpoint=='Yjedit'" placeholder="请输入内容" v-model="detailform.contractInfo.inforName" class="input-with-select">
-                  <el-button v-if="detailform.contractInfo.contractType!='2'&&p.actpoint!='task'&&p.actpoint!='look'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
+                  <el-button v-if="detailform.contractInfo.contractType!='2'&&p.actpoint!='task'&&p.actpoint!='look'&&p.actpoint!='Yjedit'" slot="append" icon="el-icon-search" @click="searchName"></el-button>
                 </el-input>
               </el-form-item>
               <el-form-item
@@ -310,7 +310,7 @@
 
               >
                 <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId||p.actpoint=='Yjedit'" placeholder="请输入内容" v-model="detailform.contractInfo.qualityOrgNames" class="input-with-select">
-                  <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&!p.pushId" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('使用资质单位',detailform.contractInfo.qualityOrgIds)" ></el-button>
+                  <el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&!p.pushId&&p.actpoint!='Yjedit'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('使用资质单位',detailform.contractInfo.qualityOrgIds)" ></el-button>
                 </el-input>
               </el-form-item>
             <el-form-item
@@ -2941,6 +2941,7 @@ export default {
           this.detailform.contractInfo.ourAmountSupply=0;
           this.detailform.contractInfo.ourAmount=0;
         }
+        this.getTradeExpectedIncome();
       }
     },
     //查询销售业绩是否有同年同月
@@ -3852,6 +3853,19 @@ export default {
       if(!hasMain){
         this.$message.error("请选择一个主地点");
         return false;
+      }
+      if(this.detailform.contractInfo.isYearContract=='0'){
+        var ddMoney=0,syMoney=0;
+        this.detailform.topInfoSiteList.forEach((item)=>{
+          ddMoney+=Number(item.contractAmount)
+        });
+        this.detailform.contractInfoHouseSalesList.forEach((item)=>{
+          syMoney+=Number(item.monthSales)
+        });
+        if(ddMoney!=0&&syMoney!=0&&ddMoney!=syMoney){
+          this.$message.error("供货地点金额之和应等于销售业绩列表中标的物金额之和");
+          return false;
+        }
       }
       this.$refs[formName].validate((valid) => {
         if (valid) {
