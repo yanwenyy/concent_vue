@@ -1780,29 +1780,36 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <el-select
-                      class="input-el-input-group"
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                      clearable
-                      filterable
-                      placeholder="请选择"
-                      size="mini"
-                      v-model="scope.row.moduleId"
-                      @change="
+                    <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.unionContractInfoAttachList.' + scope.$index + '.moduleId'"  :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'change',
+            }">
+                      <el-select
+                        class="input-el-input-group"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        filterable
+                        placeholder="请选择"
+                        size="mini"
+                        v-model="scope.row.moduleId"
+                        @change="
                     getBdName(
                       scope.row.moduleId,
                       detailform.contractInfoAttachBO.unionContractInfoAttachList,
                       scope.$index
                     )
                   "
-                    >
-                      <el-option
-                        :key="index"
-                        :label="item.detailName"
-                        :value="item.id"
-                        v-for="(item, index) in projectPlate"
-                      ></el-option>
-                    </el-select>
+                      >
+                        <el-option
+                          :key="index"
+                          :label="item.detailName"
+                          :value="item.id"
+                          v-for="(item, index) in projectPlate"
+                        ></el-option>
+                      </el-select>
+                    </el-form-item>
+
                   </template>
                 </el-table-column>
                 <el-table-column
@@ -1960,29 +1967,36 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <el-select
-                      class="input-el-input-group"
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                      clearable
-                      filterable
-                      placeholder="请选择"
-                      size="mini"
-                      v-model="scope.row.moduleId"
-                      @change="
+                    <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.innerContractInfoAttachList.' + scope.$index + '.moduleId'"  :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'change',
+            }">
+                      <el-select
+                        class="input-el-input-group"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        filterable
+                        placeholder="请选择"
+                        size="mini"
+                        v-model="scope.row.moduleId"
+                        @change="
                     getBdName(
                       scope.row.moduleId,
                       detailform.contractInfoAttachBO.innerContractInfoAttachList,
                       scope.$index
                     )
                   "
-                    >
-                      <el-option
-                        :key="index"
-                        :label="item.detailName"
-                        :value="item.id"
-                        v-for="(item, index) in projectPlate"
-                      ></el-option>
-                    </el-select>
+                      >
+                        <el-option
+                          :key="index"
+                          :label="item.detailName"
+                          :value="item.id"
+                          v-for="(item, index) in projectPlate"
+                        ></el-option>
+                      </el-select>
+                    </el-form-item>
+
                   </template>
                 </el-table-column>
                 <el-table-column
@@ -2164,29 +2178,36 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <el-select
-                      class="input-el-input-group"
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                      clearable
-                      filterable
-                      placeholder="请选择"
-                      size="mini"
-                      v-model="scope.row.moduleId"
-                      @change="
+                    <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.outUnionContractInfoAttachList.' + scope.$index + '.moduleId'"  :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'change',
+            }">
+                      <el-select
+                        class="input-el-input-group"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        filterable
+                        placeholder="请选择"
+                        size="mini"
+                        v-model="scope.row.moduleId"
+                        @change="
                     getBdName(
                       scope.row.moduleId,
                       detailform.contractInfoAttachBO.outUnionContractInfoAttachList,
                       scope.$index
                     )
                   "
-                    >
-                      <el-option
-                        :key="index"
-                        :label="item.detailName"
-                        :value="item.id"
-                        v-for="(item, index) in projectPlate"
-                      ></el-option>
-                    </el-select>
+                      >
+                        <el-option
+                          :key="index"
+                          :label="item.detailName"
+                          :value="item.id"
+                          v-for="(item, index) in projectPlate"
+                        ></el-option>
+                      </el-select>
+                    </el-form-item>
+
                   </template>
                 </el-table-column>
                 <el-table-column
@@ -2368,29 +2389,35 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <el-select
-                      class="input-el-input-group"
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                      clearable
-                      filterable
-                      placeholder="请选择"
-                      size="mini"
-                      v-model="scope.row.moduleId"
-                      @change="
+                    <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.outContractInfoAttachList.' + scope.$index + '.moduleId'"  :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'change',
+            }">
+                      <el-select
+                        class="input-el-input-group"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        filterable
+                        placeholder="请选择"
+                        size="mini"
+                        v-model="scope.row.moduleId"
+                        @change="
                     getBdName(
                       scope.row.moduleId,
                       detailform.contractInfoAttachBO.outContractInfoAttachList,
                       scope.$index
                     )
                   "
-                    >
-                      <el-option
-                        :key="index"
-                        :label="item.detailName"
-                        :value="item.id"
-                        v-for="(item, index) in projectPlate"
-                      ></el-option>
-                    </el-select>
+                      >
+                        <el-option
+                          :key="index"
+                          :label="item.detailName"
+                          :value="item.id"
+                          v-for="(item, index) in projectPlate"
+                        ></el-option>
+                      </el-select>
+                    </el-form-item>
                   </template>
                 </el-table-column>
                 <el-table-column
@@ -2547,29 +2574,36 @@
                   show-overflow-tooltip
                 >
                   <template slot-scope="scope">
-                    <el-select
-                      class="input-el-input-group"
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                      clearable
-                      filterable
-                      placeholder="请选择"
-                      size="mini"
-                      v-model="scope.row.moduleId"
-                      @change="
+                    <el-form-item class="tabelForm" :prop="'contractInfoAttachBO.innerGroupContractInfoAttachList.' + scope.$index + '.moduleId'"  :rules="{
+              required: true,
+              message: '此项不能为空',
+              trigger: 'change',
+            }">
+                      <el-select
+                        class="input-el-input-group"
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        filterable
+                        placeholder="请选择"
+                        size="mini"
+                        v-model="scope.row.moduleId"
+                        @change="
                     getBdName(
                       scope.row.moduleId,
                       detailform.contractInfoAttachBO.innerGroupContractInfoAttachList,
                       scope.$index
                     )
                   "
-                    >
-                      <el-option
-                        :key="index"
-                        :label="item.detailName"
-                        :value="item.id"
-                        v-for="(item, index) in projectPlate"
-                      ></el-option>
-                    </el-select>
+                      >
+                        <el-option
+                          :key="index"
+                          :label="item.detailName"
+                          :value="item.id"
+                          v-for="(item, index) in projectPlate"
+                        ></el-option>
+                      </el-select>
+                    </el-form-item>
+
                   </template>
                 </el-table-column>
                 <el-table-column
@@ -3807,6 +3841,10 @@ export default {
       this.$refs[formName].resetFields()
     },
     saveInfo(formName,type) {
+      if(this.detailform.contractInfo.outSystemAmount==undefined||this.detailform.contractInfo.outSystemAmount==''||this.detailform.contractInfo.outSystemAmount==null){
+        this.detailform.contractInfo.outSystemAmount=0;
+        this.$forceUpdate();
+      }
       this.detailform.commonFilesList=this.detailform.commonFilesList1.concat(this.detailform.commonFilesList2)
       var url='';
       if(type=='save'){
