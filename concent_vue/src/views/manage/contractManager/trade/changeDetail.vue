@@ -4287,7 +4287,7 @@
       beforeAvatarUpload(file) {
         var fileLimit=Number(this.fileLimit);
         const isJPG = file.type === 'image/jpeg';
-        const isLt100M = file.size / (1024 * fileLimit) < fileLimit;
+        const isLt100M = file.size / 1024 / 1024 < fileLimit;
 
         // if (!isJPG) {
         //   this.$message.error('上传头像图片只能是 JPG 格式!');

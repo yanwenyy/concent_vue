@@ -7337,8 +7337,7 @@ export default {
     beforeAvatarUpload(file) {
       var fileLimit=Number(this.fileLimit);
       const isJPG = file.type === 'image/jpeg';
-      const isLt100M = file.size / (1024 * fileLimit) < fileLimit;
-
+      const isLt100M = file.size / 1024 / 1024 < fileLimit;
       // if (!isJPG) {
       //   this.$message.error('上传头像图片只能是 JPG 格式!');
       // }
@@ -7351,7 +7350,6 @@ export default {
     //上传附件显示进度条
     uploadPorgress(file, fileList,tableList){
       // console.log(event, file, fileList,tableList);
-      // console.log(fileList)
       const len=tableList.length;
       if (file.status === 'ready') {
         file.fileName=file.name;
@@ -7561,7 +7559,7 @@ export default {
             element.constructionOrgName = customer.customerName
           } else {
             let outside = this.jsdwList.find(item2=>item2.customerId===element.constructionOrgId)
-            element.constructionOrgName = outside.customerName         
+            element.constructionOrgName = outside.customerName
           }
           idList.push(element.constructionOrgId)
           nameList.push(element.constructionOrgName)
