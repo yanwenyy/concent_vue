@@ -1506,6 +1506,7 @@
                   <el-select
                     v-model="scope.row.constructionOrgId"
                     v-if="scope.row.isClientele=='1'"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                     @change="getTableName"
                     filterable
                     collapse-tags
@@ -7566,7 +7567,6 @@ export default {
           idList.push(element.constructionOrgId)
           nameList.push(element.constructionOrgName)
         })
-        console.info(this.detailform.constructionOrgList)
         this.detailform.contractInfo.constructionOrg = nameList.join(",")
         this.detailform.contractInfo.constructionOrgId = idList.join(",")
       },
@@ -8442,9 +8442,9 @@ export default {
             datas.topInfoSiteList[i].uuid='';
           }
           this.detailform.topInfoSiteList=datas.topInfoSiteList;
-          if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
-            this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
-          }
+          // if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
+          //   this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
+          // }
           this.detailform.contractInfo.installDesignUnallocat=datas.contractInfo.installDesignUnallocat;
           if (this.detailform.contractInfo.contractOrgName) {
            this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion",{orgCode:this.detailform.contractInfo.contractOrgId},).then((res) => {
