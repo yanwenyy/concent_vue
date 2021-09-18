@@ -1489,7 +1489,6 @@
                     inactive-color="#ddd"
                     active-value="1"
                     inactive-value="0"
-                    @change="companyBuildClear"
                   >
                   </el-switch>
                 </el-form-item>
@@ -1552,12 +1551,12 @@
                     filterable
                     placeholder="请选择"
                     v-model="scope.row.constructionNatureId"
-                    @change="getName(
+                    @change="getContructionName(
                       scope.row.constructionNatureId,
                       constructionUnitNature,
                       'constructionNature',
-                      'constructionNatureCode',
-                      scope.$index
+                      scope.$index,
+                      'constructionNatureId'
                     )"
                   >
                     <el-option
@@ -1583,10 +1582,12 @@
                     v-show="scope.row.isBelongEnterPrises"
                     class="group-no-padding"
                     :disabled="p.actpoint==='look'||p.actpoint=='task'||p.pushId"
-                    @change="getName(
+                    @change="getContructionName(
                       scope.row.belongEnterPrisesId,
                       yqList ,
-                      'belongEnterPrises'
+                      'belongEnterPrises',
+                      scope.$index,
+                      'belongEnterPrisesId'
                     )"
                     clearable
                     filterable
@@ -7097,7 +7098,7 @@ export default {
       options2: [],
       options: [],
       options1:[{label:"值",value:'111'}],
-      constructionOrgList: [],
+      // constructionOrgList: [],
       detailform: {
         commonFilesList: [],
         contractInfo: {
@@ -7126,8 +7127,10 @@ export default {
           {
             isClientele: "0",  // 是否客户
             constructionOrgId:'',  // 建设单位
-            constructionOrg:'',
+            constructionOrgName:'',
+            constructionNature:'',  // 单位性质
             constructionNatureId:'',  // 单位性质
+            belongEnterPrises:"",   // 所属央企
             belongEnterPrisesId:"",   // 所属央企
             isBelongEnterPrises:false, // 是否央企
           }
@@ -7321,8 +7324,10 @@ export default {
       v = {
         isClientele: "0",  // 是否客户
         constructionOrgId:'',  // 建设单位
-        constructionOrg:'',
+        constructionOrgName:'',
+        constructionNature:'',  // 单位性质
         constructionNatureId:'',  // 单位性质
+        belongEnterPrises:"" ,  // 所属央企
         belongEnterPrisesId:""   // 所属央企
       }
       this.detailform.constructionOrgList.push(v);
@@ -7547,16 +7552,23 @@ export default {
         this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
       },
       getTableName(){
+        //给合同建设单位赋值
+        var idList = []
+        var nameList = []
         this.detailform.constructionOrgList.forEach((element) => {
           if (element.isClientele == 1) {
             let customer = this.pubCustomers.find(item1=>item1.customerId===element.constructionOrgId)
-            element.constructionOrg = customer.customerName
+            element.constructionOrgName = customer.customerName
           } else {
             let outside = this.jsdwList.find(item2=>item2.customerId===element.constructionOrgId)
-            element.constructionOrg = outside.customerName         
+            element.constructionOrgName = outside.customerName         
           }
+          idList.push(element.constructionOrgId)
+          nameList.push(element.constructionOrgName)
         })
         console.info(this.detailform.constructionOrgList)
+        this.detailform.contractInfo.constructionOrg = nameList.join(",")
+        this.detailform.contractInfo.constructionOrgId = idList.join(",")
       },
       //切换是否客户
       companyBuildClear(){
@@ -8350,9 +8362,9 @@ export default {
         this.detailform.jzlx=datas.topInfor.otherBuildingTypeId&&datas.topInfor.otherBuildingTypeId.split(",");
         this.detailform.jzjglx=datas.topInfor.otherBuildingStructureTypeId&&datas.topInfor.otherBuildingStructureTypeId.split(",");
         this.detailform.contractInfoSectionList=[];
-        for(var i in datas.bidInfoSectionBOList){
+        for(var i=0;i<datas.bidInfoSectionBOList.length;i++){
           var bidInfoSection=datas.bidInfoSectionBOList[i].bidInfoSection,
-            bidInfoSectionOrgList=datas.bidInfoSectionBOList[i].bidInfoSectionOrgList;
+          bidInfoSectionOrgList=datas.bidInfoSectionBOList[i].bidInfoSectionOrgList;
           this.detailform.contractInfo.bidTime=bidInfoSection.bidTime;
           this.detailform.contractInfo.bidNoticeWebsite=bidInfoSection.bidNoticeWebsite;
           bidInfoSection.uuid='';
@@ -8570,8 +8582,17 @@ export default {
           this.detailform.contractInfo[code] = list.find(
               (item) => item.id == id
           ).detailCode;
-        console.log(this.detailform.contractInfo[name]);
       }
+    },
+    //获取下拉框id和name的公共方法
+    getContructionName(id, list, name,index) {
+      if(id){
+        this.$forceUpdate()
+        this.detailform.constructionOrgList[index][name] = list.find(
+          (item) => item.id == id
+        ).detailName;
+      }
+      console.info(this.detailform.constructionOrgList)
       if (name == 'constructionNature') {
         if (id == "b5eeb5ab9ea0479ba08d0f7b420a8e77") {
           this.detailform.constructionOrgList[index].isBelongEnterPrises = true
@@ -8584,7 +8605,6 @@ export default {
     saveInfo(formName,type) {
       this.detailform.commonFilesList=this.detailform.fileList1.concat(this.detailform.fileList2).concat(this.detailform.fileList3).concat(this.detailform.fileList4)
       var url='';
-      this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
       if(this.detailform.searchProject==true&&(this.p.actpoint === "edit")){
         url='/api/contract/contract/ContractInfo/detail/update';
       }else{
@@ -8836,22 +8856,22 @@ export default {
             jzlx:[],//建筑类型
             jzjglx:[],//建筑结构类型
             cdmc:[],//场地名称
-            constructionOrgList:[{
-              isClientele: "0",  // 是否客户
-              constructionOrgId:'',  // 建设单位
-               constructionOrg:'',
-              constructionNatureId:'',  // 单位性质
-              belongEnterPrisesId:"",   // 所属央企
-              isBelongEnterPrises:false, // 是否央企
-            }]
+            constructionOrgList:datas.constructionOrgList
           };
+          this.detailform.constructionOrgList.forEach((item)=>{
+            if (item.constructionNatureId == "b5eeb5ab9ea0479ba08d0f7b420a8e77") {
+              item.isBelongEnterPrises = true
+            }else{
+              item.isBelongEnterPrises = false
+            }
+          })
       this.detailform.cdmc=datas.contractInfo.siteNameId&&datas.contractInfo.siteNameId.split(",");
       this.detailform.zplx=datas.contractInfo.otherAssemblyTypeId&&datas.contractInfo.otherAssemblyTypeId.split(",");
       this.detailform.jzlx=datas.contractInfo.otherBuildingTypeId&&datas.contractInfo.otherBuildingTypeId.split(",");
       this.detailform.jzjglx=datas.contractInfo.otherBuildingStructureTypeId&&datas.contractInfo.otherBuildingStructureTypeId.split(",");
-      if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
-        this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
-      }
+      // if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
+      //   this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
+      // }
       if (this.detailform.contractInfo.contractOrgName) {
         this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion",{orgCode:this.detailform.contractInfo.contractOrgId},).then((res) => {
           this.ssList = res.data.data
