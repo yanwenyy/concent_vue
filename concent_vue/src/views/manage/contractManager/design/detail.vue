@@ -3316,6 +3316,21 @@
       this.$store.dispatch("getPubCustomers", {});
       this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
       this.$store.dispatch('getCategory', {name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3'});
+      //获取所属央企列表
+      this.$http
+        .post(
+          '/api/contract/Companies/detail/findCompaniesById',
+          {typeId:'9f19652f27a911ebad4bc5ee92e1a03f'}
+        )
+        .then((res) => {
+          if (res.data.code === 200) {
+            this.yqList=res.data.data
+            this.yqList.forEach((item)=>{
+              item.detailName=item.companyName;
+              item.id=item.uuid;
+            })
+          }
+        });
       // eslint-disable-next-line no-unde
       //设计单位列表
       this.$http
@@ -3343,21 +3358,6 @@
         )
         .then((res) => {
           this.extendList = res.data.data;
-        });
-      //获取所属央企列表
-      this.$http
-        .post(
-          '/api/contract/Companies/detail/findCompaniesById',
-          {typeId:'9f19652f27a911ebad4bc5ee92e1a03f'}
-        )
-        .then((res) => {
-          if (res.data.code === 200) {
-            this.yqList=res.data.data
-            this.yqList.forEach((item)=>{
-              item.detailName=item.companyName;
-              item.id=item.uuid;
-            })
-          }
         });
     },
     methods: {
