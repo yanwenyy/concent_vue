@@ -28,6 +28,13 @@
           :model="secondList"
           @keyup.enter.native="getMainData()"
         >
+          <el-form-item label="项目名称:">
+            <el-input
+              v-model="mainList.projectName"
+              placeholder="请输入"
+              clearable
+            ></el-input>
+          </el-form-item>
           <el-form-item label="项目板块:">
             <el-select v-model="mainList.projectModuleName" placeholder="请选择">
               <el-option
@@ -37,6 +44,26 @@
                 :value="item.value">
               </el-option>
             </el-select>
+          </el-form-item>
+          <el-form-item label="工程类别:">
+            <el-select
+              clearable
+              filterable
+              placeholder="请选择"
+              v-model="mainList.projectTypeFirst">
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.detailName"
+                v-for="(item, index) in projectDomainType"/>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="建设单位:">
+            <el-input
+              v-model="mainList.companyBuild"
+              placeholder="请输入"
+              clearable
+            ></el-input>
           </el-form-item>
           <el-form-item>
             <el-button @click="getMainData()" type="primary" plain>
@@ -115,11 +142,25 @@
             label="截止日期"
           ></el-table-column>
           <el-table-column
-            prop="flow_status"
+            prop="flowStatus"
+            header-align="center"
+            align="center"
+            label="项目类型"
+          >
+            <template slot-scope="scope">
+              <span> {{(scope.row.projectMergeId==null || scope.row.projectMergeId== '')?'主项目':'合并项目'}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="flowStatus"
             header-align="center"
             align="center"
             label="状态"
-          ></el-table-column>
+          >
+            <template slot-scope="scope">
+              <span> {{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核退回':''}}</span>
+            </template>
+          </el-table-column>
         </el-table>
         <el-pagination
           @size-change="mainSizeChange"
@@ -148,6 +189,14 @@
           :model="secondList"
           @keyup.enter.native="getSecondData()"
         >
+          
+          <el-form-item label="项目名称:">
+            <el-input
+              v-model="secondList.projectName"
+              placeholder="请输入"
+              clearable
+            ></el-input>
+          </el-form-item>
           <el-form-item label="项目板块:">
             <el-select v-model="secondList.projectModuleName" placeholder="请选择">
               <el-option
@@ -157,6 +206,26 @@
                 :value="item.value">
               </el-option>
             </el-select>
+          </el-form-item>
+          <el-form-item label="工程类别:">
+            <el-select
+              clearable
+              filterable
+              placeholder="请选择"
+              v-model="secondList.projectTypeFirst">
+              <el-option
+                :key="index"
+                :label="item.detailName"
+                :value="item.detailName"
+                v-for="(item, index) in projectDomainType"/>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="建设单位:">
+            <el-input
+              v-model="secondList.companyBuild"
+              placeholder="请输入"
+              clearable
+            ></el-input>
           </el-form-item>
           <el-form-item>
             <el-button @click="getSecondData()" type="primary" plain>
@@ -235,11 +304,15 @@
             label="截止日期"
           ></el-table-column>
           <el-table-column
-            prop="flow_status"
+            prop="flowStatus"
             header-align="center"
             align="center"
             label="状态"
-          ></el-table-column>
+          >
+            <template slot-scope="scope">
+              <span> {{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核退回':''}}</span>
+            </template>
+          </el-table-column>
         </el-table>
         <el-pagination
           @size-change="secondSizeChange"
@@ -454,7 +527,10 @@ export default {
       mainList: { // 请求参数
         current: 1,
         size: 20,
-        projectModuleName:"工程承包"
+        projectModuleName:"工程承包",
+        projectName:"", // 项目名称
+        projectTypeFirst:"", // 工程类别
+        companyBuild:"", // 建设单位
       },
       pageMain: { current: 1, size: 20, total: 0, records: [] }, // 列表数据
       mainSelection:[], // 列表多选的数据
@@ -463,7 +539,10 @@ export default {
       secondList: { // 请求参数
         current: 1,
         size: 20,
-        projectModuleName:"工程承包"
+        projectModuleName:"工程承包",
+        projectName:"", // 项目名称
+        projectTypeFirst:"", // 工程类别
+        companyBuild:"", // 建设单位
       },
       pageSecond: { current: 1, size: 20, total: 0, records: [] }, // 列表数据
       secondSelection:[], // 列表多选的数据
@@ -491,8 +570,8 @@ export default {
           value: '运营维管',
           label: '运营维管'
         },{
-          value: '其他',
-          label: '其他'
+          value: '其它',
+          label: '其它'
         }
       ],
       // 合并项目列表 ************************************************

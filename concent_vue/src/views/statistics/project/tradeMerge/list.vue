@@ -62,7 +62,7 @@
           value-format="timestamp"
           placeholder="选择日期时间"/>
       </el-form-item>
-      <el-form-item label="状态:">
+      <!-- <el-form-item label="状态:">
         <el-select
           filterable
           clearable
@@ -74,7 +74,7 @@
             :value="item.id"
             v-for="(item, index) in flowStatus"/>
         </el-select>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item>
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none">
           <i class="el-icon-refresh-right"></i>重置
@@ -156,7 +156,7 @@
           align="center"
           label="截止日期"
         ></el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           prop="flowStatus"
           header-align="center"
           align="center"
@@ -165,7 +165,7 @@
           <template slot-scope="scope">
             <span> {{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核退回':''}}</span>
           </template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
       <el-pagination
         :current-page="page.current"
@@ -229,7 +229,7 @@ export default {
         companyBelongName:"",
         companyBuild:"",
         contractEndTime:null,
-        flowStatus:""
+        // flowStatus:""
       },
       page: { current: 1, size: 20, total: 0, records: [] }, // 列表数据
     };
@@ -309,7 +309,7 @@ export default {
         companyBelongName:"",
         companyBuild:"",
         contractEndTime:null,
-        flowStatus:""
+        // flowStatus:""
       },
       this.getData()
     },
