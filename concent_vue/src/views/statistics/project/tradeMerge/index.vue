@@ -7,7 +7,7 @@
         <el-button @click="addSecond" type="primary" plain><i class="el-icon-plus"></i>选择辅项目</el-button>
         <el-button @click="merge" type="primary" plain><i class="el-icon-edit"></i>合并</el-button>
         <el-button @click="change" type="primary" plain><i class="el-icon-edit"></i>修改</el-button>
-        <el-button @click="dele" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
+        <!-- <el-button @click="dele" type="primary" plain><i class="el-icon-delete"></i>删除</el-button> -->
       </el-button-group>
       <div style="float: right;">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none">
