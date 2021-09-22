@@ -1419,7 +1419,7 @@
           label="关联字段">
           <el-form ref="form" label-width="80px">
             <el-form-item>
-              <el-checkbox-group v-model="type[index].checkGroup">
+              <el-checkbox-group v-model="type[index].projectContractField.checkGroup">
                 <el-checkbox label="emergingMarket" name="type">新兴市场（一级）、新兴市场（二级）</el-checkbox>
                 <el-checkbox label="customerName" name="type">客户名称</el-checkbox>
                 <el-checkbox label="valueAddedTax" name="type">增值税</el-checkbox>
@@ -1699,23 +1699,25 @@
         .post('/api/statistics/StatisticsProject/list/associatedField', {projectId:this.p.actpoint==='task'?this.p.instid:this.p.uuid})
         .then(res => {
           if (res.data.code == 200) {
+            this.type = []
             if (res.data.data == null || res.data.data == '') {
-              this.type = []
               this.detailForm.project.contractInfoList.forEach((element, index) => {
                 this.type.push({
-                  uuid:'',
-                  projectUuid:this.p.actpoint==='task'?this.p.instid:this.p.uuid,
-                  listSort:index,
-                  checkField:'',
-                  checkGroup:[],
+                  projectContractField:{
+                    uuid:'',
+                    projectUuid:this.p.actpoint==='task'?this.p.instid:this.p.uuid,
+                    listSort:index,
+                    checkField:'',
+                    checkGroup:[],
+                  },
                   contract:element
                 })                
               })  
             } else {
               res.data.data.forEach((element) => {
                 element.checkGroup = element.checkField.split(",")
+                this.type.push({projectContractField:element})
               })
-              this.type = res.data.data
             }
           }
         })
@@ -1724,7 +1726,7 @@
       // 关联合同的确定
       subContract() {
         this.type.forEach((element, index) => {
-          element.checkField = element.checkGroup.toString()
+          element.projectContractField.checkField = element.projectContractField.checkGroup.toString()
           element.contract = this.detailForm.project.contractInfoList[index]
         })
         this.$http
