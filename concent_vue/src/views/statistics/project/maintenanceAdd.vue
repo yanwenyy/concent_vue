@@ -1393,6 +1393,12 @@
               )
               .then((res) => {
                 if (res.data.code === 200) {
+                  if (res.data.data == "1") {
+                    this.$message({
+                      message:  `${type=='save'?'保存':'提交'}信息重复`,
+                      type: 'error'
+                    })
+                  } else {
                    this.$message({
                      message:  `${type=='save'?'保存':'提交'}成功`,
                       type: 'success'
@@ -1400,6 +1406,7 @@
                     this.$router.push({
                       path: '/statistics/project/maintenanceList'
                     })
+                  }
                 } else {
                   this.$message({
                     message:  `${type=='save'?'保存':'提交'}失败`,
