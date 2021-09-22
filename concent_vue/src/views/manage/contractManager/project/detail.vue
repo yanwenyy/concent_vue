@@ -8624,7 +8624,6 @@ export default {
           (item) => item.id == id
         ).detailName;
       }
-      console.info(this.detailform.constructionOrgList)
       if (name == 'constructionNature') {
         if (id == "b5eeb5ab9ea0479ba08d0f7b420a8e77") {
           this.detailform.constructionOrgList[index].isBelongEnterPrises = true
