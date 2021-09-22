@@ -6996,6 +6996,7 @@
                 :show-file-list="false"
                 accept=".xls,.xlsx"
                 multiple
+                :before-upload="importProjectUpload"
               >
                 <el-button
                   type="primary"
@@ -7471,6 +7472,16 @@ export default {
       if (!this.detailform.contractInfo.enginTypeFirstId) {
         this.$message({
           message: '请选择工程类别（一级）！',
+          type: 'warning',
+          showClose: true,
+        });
+        return false
+      }
+    },
+    importProjectUpload(){
+      if(this.p.actpoint=='add'){
+        this.$message({
+          message: '请先保存！',
           type: 'warning',
           showClose: true,
         });
@@ -8431,10 +8442,10 @@ export default {
           })
         }
         //系统外联合体列表
-        if(datas.bidInfoBO.bidInfo.outOrg!=''&&datas.bidInfoBO.bidInfo.outOrg!=null){
+        if(datas.bidInfoBO.bidInfoOutOrgList!=''&&datas.bidInfoBO.bidInfoOutOrgList!=null){
           this.detailform.contractInfo.isOutSystemUnion='0';
           var v={
-            orgName:datas.bidInfoBO.bidInfo.outOrg,
+            orgName:datas.bidInfoBO.bidInfoOutOrgList,
             orgId:datas.bidInfoBO.bidInfo.outOrgId,
             contractInfoId:'',
             projectNature:'3',
