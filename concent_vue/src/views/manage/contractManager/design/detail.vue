@@ -323,7 +323,7 @@
                 />
               </el-form-item>
               <br>
-              <el-form-item
+              <!-- <el-form-item
                 label="建设单位:"
                 prop="contractInfo.constructionOrgId"
                 :rules="{
@@ -446,7 +446,7 @@
                     v-for="(item, index) in yqList"
                   ></el-option>
                 </el-select>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item
                 label="设计单位:"
                 prop="contractInfo.designOrg"
@@ -1388,6 +1388,7 @@
                       <el-select
                         v-model="scope.row.constructionOrgId"
                         v-if="scope.row.isClientele!='1'"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                         @change="getTableName"
                         filterable
                         collapse-tags

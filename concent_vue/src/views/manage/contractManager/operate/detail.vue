@@ -953,6 +953,7 @@
                     <el-select
                       v-model="scope.row.constructionOrgId"
                       v-if="scope.row.isClientele!='1'"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                       @change="getTableName"
                       filterable
                       collapse-tags
