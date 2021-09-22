@@ -1404,7 +1404,7 @@
                     message:  `${type=='save'?'保存':'提交'}成功`,
                     type: 'success'
                   })
-                  if (type!=='save') {
+                  if (type !='save') {
                     this.$router.push({
                       path: '/statistics/project/tradeMerge/index'
                     })

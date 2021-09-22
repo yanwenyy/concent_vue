@@ -1914,13 +1914,15 @@
               )
               .then((res) => {
                 if (res.data.code === 200) {
-                    this.$message({
-                      message:  `${type=='save'?'保存':'提交'}成功`,
-                      type: 'success'
-                    })
+                  this.$message({
+                    message:  `${type=='save'?'保存':'提交'}成功`,
+                    type: 'success'
+                  })
+                  if (type !='save') {
                     this.$router.push({
                       path: '/statistics/project/tradeMerge/index'
                     })
+                  }
                 } else {
                   this.$message({
                     message:  `${type=='save'?'保存':'提交'}失败`,
