@@ -484,10 +484,10 @@
                 </el-input>
               </el-form-item>
               <el-form-item label="中标单位:" class="list-item" v-if="zbForm.bidInfoSection.isWinBid=='1'"
-                            prop="bidInfoSection.inBinOrgName"
+                            prop="bidInfoSection.inBidOrgName"
                             :rules="rules.bidName">
-                <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.inBinOrgName" class="input-with-select" :disabled="zbType=='look'">
-                  <el-button :disabled="zbType=='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('中标单位',zbForm.bidInfoSection.inBinOrgId)" ></el-button>
+                <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.inBidOrgName" class="input-with-select" :disabled="zbType=='look'">
+                  <el-button :disabled="zbType=='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('中标单位',zbForm.bidInfoSection.inBidOrgId)" ></el-button>
                 </el-input>
               </el-form-item>
               <el-form-item
@@ -717,7 +717,7 @@ export default {
       }
     }
     var validateName= (rule, value, callback) => {
-      if (this.zbForm.bidInfoSection.inBinOrgName == '') {
+      if (this.zbForm.bidInfoSection.inBidOrgName == '') {
         callback(new Error('不能为空'))
       } else {
         callback()
@@ -747,7 +747,7 @@ export default {
       zbType: "add", //中标弹框打开的方式
       zbForm: {
         bidInfoSection: {
-          inBinOrgName:'',
+          inBidOrgName:'',
           constructionUnitName:''
         },
         bidInfo_03: [],
@@ -858,8 +858,8 @@ export default {
             this.zbForm.bidInfoSection.constructionUnitId=id.join(",");
             this.zbForm.bidInfoSection.constructionUnitName=name.join(",");
           }else if(data.type=="中标单位"){
-            this.zbForm.bidInfoSection.inBinOrgId=id.join(",");
-            this.zbForm.bidInfoSection.inBinOrgName=name.join(",");
+            this.zbForm.bidInfoSection.inBidOrgId=id.join(",");
+            this.zbForm.bidInfoSection.inBidOrgName=name.join(",");
           }
           this.DwVisible=false;
       },
@@ -886,8 +886,8 @@ export default {
           this.isBidRates = isBidRates;
           this.dialogFormVisible = true;
           this.zbForm.bidInfoSection = datas.bidInfoSection;
-          this.zbForm.bidInfoSection.inBinOrgName=datas.bidInfoSection.inBinOrgName||'';
-          this.zbForm.bidInfoSection.inBinOrgId=datas.bidInfoSection.inBinOrgId||'';
+          this.zbForm.bidInfoSection.inBidOrgName=datas.bidInfoSection.inBidOrgName||'';
+          this.zbForm.bidInfoSection.inBidOrgId=datas.bidInfoSection.inBidOrgId||'';
           // this.zbForm.bidInfoSectionOrgList = datas.bidInfoSectionOrgList;
           datas.bidInfoSectionOrgList.forEach((item)=>{
             if(item.orgType=='1'){
@@ -998,7 +998,7 @@ export default {
     },
     // 保存
     saveInfo(formName) {
-      if (this.zbForm.bidInfoSection.inBinOrgName == '') {
+      if (this.zbForm.bidInfoSection.inBidOrgName == '') {
         this.$message({
           showClose: true,
           message: '中标单位不能为空！',
