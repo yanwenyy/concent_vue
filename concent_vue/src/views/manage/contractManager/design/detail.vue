@@ -1903,7 +1903,7 @@
                   </template>
                 </el-table-column>
               </el-table>
-              
+
               <p  class="detail-title"  v-if="detailform.contractInfo.isYearContract=='0'" style="overflow: hidden；margin-right: 30px">
                 <span>销售业绩:</span>
                 <el-button
@@ -3626,7 +3626,7 @@
             element.constructionOrgName = customer.customerName
           } else {
             let outside = this.jsdwList.find(item2=>item2.customerId===element.constructionOrgId)
-            element.constructionOrgName = outside.customerName         
+            element.constructionOrgName = outside.customerName
           }
           idList.push(element.constructionOrgId)
           nameList.push(element.constructionOrgName)
@@ -4159,19 +4159,21 @@
               this.detailform.contractInfoAttachBO.unionContractInfoAttachList.push(v)
             })
           }
-          //系统外联合体列表
-          if(datas.bidInfoBO.bidInfo.outOrg!=''&&datas.bidInfoBO.bidInfo.outOrg!=null){
-            this.detailform.contractInfo.isOutSystemUnion='0';
-            var v={
-              orgName:datas.bidInfoBO.bidInfo.outOrg,
-              orgId:datas.bidInfoBO.bidInfo.outOrgId,
-              contractInfoId:'',
-              projectNature:'3',
-              contractAmount:'',
-              isAdd:'1'
-            }
-            this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.push(v)
-          }
+              //系统外联合体列表
+              if(datas.bidInfoBO.bidInfoOutOrgList!=''&&datas.bidInfoBO.bidInfoOutOrgList!=null){
+                this.detailform.contractInfo.isOutSystemUnion='0';
+                datas.bidInfoBO.bidInfoOutOrgList.forEach((item)=>{
+                  var v={
+                    orgName:item.innerOrgName,
+                    orgId:item.innerOrgId,
+                    contractInfoId:'',
+                    projectNature:'3',
+                    contractAmount:'',
+                    isAdd:'1'
+                  }
+                  this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.push(v)
+                })
+              }
         });
           this.$forceUpdate();
           this.infoCSVisible=false;

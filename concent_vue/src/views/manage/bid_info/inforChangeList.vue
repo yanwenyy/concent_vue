@@ -6,7 +6,7 @@
         <el-button :disabled="btnStatus" @click="add" plain type="primary"><i class="el-icon-plus"></i>新增</el-button>
         <el-button @click="totop" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
         <el-button @click="remove" type="primary" plain><i class="el-icon-delete"></i>删除</el-button>
-        
+
         <el-button @click="batchSub" type="primary" plain><i class="el-icon-plus"></i>批量提交</el-button>
       </el-button-group>
       <div style="float: right">
@@ -88,7 +88,7 @@
               <el-option
                 :key="index"
                 :label="item.detailName"
-                :value="item.id"
+                :value="item.detailName"
                 v-for="(item, index) in projectDomainType"
               ></el-option>
             </el-select>
@@ -108,14 +108,13 @@
               clearable
               filterable
               placeholder="请选择"
-              @change="getTwo"
               size="mini"
               v-model="searchform.enginTypeSecondName"
             >
               <el-option
                 :key="index"
                 :label="item.detailName"
-                :value="item.id"
+                :value="item.detailName"
                 v-for="(item, index) in xqprojectType"
               ></el-option>
             </el-select>
@@ -291,7 +290,8 @@
           orgid: "",
           orgname: "",
           inforName: "",
-          enginTypeFirstId: "",
+          enginTypeFirstName: "",
+          enginTypeSecondName:'',
           constructionOrg: "",
           noticeTypeId: "",
         },
@@ -554,12 +554,12 @@
       },
       //工程类别二级
       getTwo(id) {
-        this.searchform.enginTypeSecondId='';
+        this.searchform.enginTypeSecondName='';
         this.xqprojectType =[];
         if(id!=''){
           this.projectDomainType.find(
             (item) => {
-            if (item.id == id) {
+            if (item.detailName == id) {
             this.xqprojectType = item.children;
           }
         }
