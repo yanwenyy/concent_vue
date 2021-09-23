@@ -1155,7 +1155,7 @@
               :rules="{
               required: true,
               message: '此项不能为空',
-              trigger: 'blur',
+              trigger: 'change',
             }"
             >
               <el-input clearable :disabled="p.actpoint === 'look'||p.actpoint=='task'" placeholder="请输入内容" v-model="detailform.contractInfo.contractOrgName" class="input-with-select">
@@ -8444,15 +8444,17 @@ export default {
         //系统外联合体列表
         if(datas.bidInfoBO.bidInfoOutOrgList!=''&&datas.bidInfoBO.bidInfoOutOrgList!=null){
           this.detailform.contractInfo.isOutSystemUnion='0';
-          var v={
-            orgName:datas.bidInfoBO.bidInfoOutOrgList,
-            orgId:datas.bidInfoBO.bidInfo.outOrgId,
-            contractInfoId:'',
-            projectNature:'3',
-            contractAmount:'',
-            isAdd:'1'
-          }
-          this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.push(v)
+          datas.bidInfoBO.bidInfoOutOrgList.forEach((item)=>{
+            var v={
+              orgName:item.innerOrgName,
+              orgId:item.innerOrgId,
+              contractInfoId:'',
+              projectNature:'3',
+              contractAmount:'',
+              isAdd:'1'
+            }
+            this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.push(v)
+          })
         }
       });
         this.$forceUpdate();
