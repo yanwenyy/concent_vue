@@ -63,7 +63,7 @@
           'background-color': 'whitesmoke',
         }"
         style="width: 100%;">
-        <el-table-column label="" width="40">
+        <el-table-column label="" width="33">
         <template slot-scope="scope">
           <el-radio
             :label="scope.row.topInfoOrgId"
