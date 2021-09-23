@@ -5208,21 +5208,6 @@
         this.ssList.push(_v)
     })
     })
-      // this.$store.commit("setCategory", 'projectDomainType');
-      this.id=this.p.instid,this.afterId=this.p.afterId;
-      if (this.p.actpoint === "edit"||this.p.actpoint === "look"||this.p.actpoint === "task") {
-        this.getDetail();
-      }
-      if(this.p.actpoint === "add"){
-        this.getAddDetail()
-      }
-      this.$store.dispatch("getConfig", {});
-      this.$store.dispatch("getPubCustomers", {});
-      this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
-      this.$store.dispatch('getCategory', {name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3'});
-      this.$store.dispatch('getCategory', {name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72'});
-      
-      // eslint-disable-next-line no-unde
       //设计单位列表
       this.$http
         .post(
@@ -5242,14 +5227,6 @@
             item1.customerId=item1.uuid;
           })
         });
-      //扩展字段列表
-      this.$http
-        .post(
-          "/api/contract/ContractInfoExpand/detail/findExpandByType",
-        )
-        .then((res) => {
-          this.extendList = res.data.data;
-        });
       //获取所属央企列表
       this.$http
         .post(
@@ -5265,26 +5242,50 @@
             })
           }
         });
+      // this.$store.commit("setCategory", 'projectDomainType');
+      this.id=this.p.instid,this.afterId=this.p.afterId;
+      if (this.p.actpoint === "edit"||this.p.actpoint === "look"||this.p.actpoint === "task") {
+        this.getDetail();
+      }
+      if(this.p.actpoint === "add"){
+        this.getAddDetail()
+      }
+      this.getTableName()
+      this.$store.dispatch("getConfig", {});
+      this.$store.dispatch("getPubCustomers", {});
+      this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
+      this.$store.dispatch('getCategory', {name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3'});
+      this.$store.dispatch('getCategory', {name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72'});
+      
+      // eslint-disable-next-line no-unde
+      //扩展字段列表
+      this.$http
+        .post(
+          "/api/contract/ContractInfoExpand/detail/findExpandByType",
+        )
+        .then((res) => {
+          this.extendList = res.data.data;
+        });
     },
     methods: {
-    // 建设单位删除
-    constructionDel(index,item,list,type) {
-      list.splice(index, 1);
-    },
-    // 建设单位新增
-    constructioAdd() {
-      var v = {};
-      v = {
-        isClientele: "0",  // 是否客户
-        constructionOrgId:'',  // 建设单位
-        constructionOrgName:'',
-        constructionNature:'',  // 单位性质
-        constructionNatureId:'',  // 单位性质
-        belongEnterPrises:"" ,  // 所属央企
-        belongEnterPrisesId:""   // 所属央企
-      }
-      this.detailform.constructionOrgList.push(v);
-    },
+      // 建设单位删除
+      constructionDel(index,item,list,type) {
+        list.splice(index, 1);
+      },
+      // 建设单位新增
+      constructioAdd() {
+        var v = {};
+        v = {
+          isClientele: "0",  // 是否客户
+          constructionOrgId:'',  // 建设单位
+          constructionOrgName:'',
+          constructionNature:'',  // 单位性质
+          constructionNatureId:'',  // 单位性质
+          belongEnterPrises:"" ,  // 所属央企
+          belongEnterPrisesId:""   // 所属央企
+        }
+        this.detailform.constructionOrgList.push(v);
+      },
       //判断附件大小
       beforeAvatarUpload(file) {
         var fileLimit=Number(this.fileLimit);
@@ -6385,9 +6386,6 @@
             item.isBelongEnterPrises = false
           }
         })
-        if(afterData.contractInfo.constructionOrgId != '' ||afterData.contractInfo.constructionOrgId != null){
-          this.constructionOrgList = afterData.contractInfo.constructionOrgId.split(",");
-        }
         this.detailform.cdmc=afterData.contractInfo.siteNameId&&afterData.contractInfo.siteNameId.split(",");
         this.detailform.zplx=afterData.contractInfo.otherAssemblyTypeId&&afterData.contractInfo.otherAssemblyTypeId.split(",");
         this.detailform.jzlx=afterData.contractInfo.otherBuildingTypeId&&afterData.contractInfo.otherBuildingTypeId.split(",");
@@ -6472,9 +6470,6 @@
         this.detailform.jzjglx=datas.contractInfo.otherBuildingStructureTypeId&&datas.contractInfo.otherBuildingStructureTypeId.split(",");
         for(var i in this.detailform){
           this.detailFormBefore[i]=JSON.parse(JSON.stringify(this.detailform[i]));
-        }
-        if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
-          this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
         }
         this.detailform.contractInfo.changeOurAmount = this.detailform.contractInfo.ourAmount;
        // console.log(this.detailform)

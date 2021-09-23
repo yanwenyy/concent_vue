@@ -230,7 +230,7 @@
                     />
                   </el-form-item>
                   <br>
-                  <el-form-item
+                  <!-- <el-form-item
                     v-if="detailFormBefore.contractInfo.enginTypeFirstId!='17ff5c08d36b41ea8f2dc2e9d3029cac'"
                     label="建设单位:"
                   >
@@ -269,7 +269,7 @@
                     <el-input disabled placeholder="请输入内容" v-model="detailFormBefore.contractInfo.belongEnterPrises" class="input-with-select">
 
                     </el-input>
-                  </el-form-item>
+                  </el-form-item> -->
                   <el-form-item
                     label="设计单位:"
                   >
@@ -758,6 +758,166 @@
                       />
                     </el-form-item>
                   </div>
+                  <!-- 建设单位 -->
+                  <p>
+                    <span >建设单位: </span>
+                  </p>
+                  <el-table
+                    :data="detailFormBefore.constructionOrgList"
+                    :header-cell-style="{
+                      'text-align': 'center',
+                      'background-color': 'rgba(246,248,252,1)',
+                      color: 'rgba(0,0,0,1)',
+                    }"
+                    @selection-change="handleSelectionChange"
+                    align="center"
+                    border
+                    class="detailTable"
+                    ref="table"
+                    style="width: 100%;height: auto;"
+                  >
+                    <el-table-column
+                      :width="80"
+                      align="center"
+                      label="序号"
+                      show-overflow-tooltip
+                      type="index"
+                    ></el-table-column>
+                    <el-table-column
+                      :width="110"
+                      :resizable="false"
+                      label="是否客户"
+                      prop="contractAmount"
+                      align="center"
+                    >
+                      <template slot-scope="scope">
+                        <el-form-item class="tabelForm" style="padding-top: 0px !important;">
+                          <el-switch
+                            disabled
+                            class="group-no-padding"
+                            v-model="scope.row.isClientele"
+                            active-color="#409EFF"
+                            inactive-color="#ddd"
+                            active-value="1"
+                            inactive-value="0"
+                          >
+                          </el-switch>
+                        </el-form-item>
+                      </template>
+                    </el-table-column>
+
+                    <el-table-column
+                      :resizable="false"
+                      label="建设单位"
+                      align="center"
+                      prop="path"
+                    >
+                      <template slot-scope="scope">
+                        <el-form-item class="tabelForm" style="padding-top: 0px !important;">
+                          <el-select
+                            v-model="scope.row.constructionOrgId"
+                            v-if="scope.row.isClientele=='1'"
+                            disabled
+                            @change="getTableName"
+                            filterable
+                            collapse-tags
+                            placeholder="请选择">
+                            <el-option
+                              v-for="item in pubCustomers"
+                              :key="item.customerId"
+                              :label="item.customerName"
+                              :value="item.customerId">
+                            </el-option>
+                          </el-select>
+                          <el-select
+                            v-model="scope.row.constructionOrgId"
+                            v-if="scope.row.isClientele!='1'"
+                            disabled
+                            @change="getTableName"
+                            filterable
+                            collapse-tags
+                            placeholder="请选择">
+                            <el-option
+                              :key="index"
+                              :label="item.customerName"
+                              :value="item.customerId"
+                              v-for="(item, index) in jsdwList"
+                            ></el-option>
+                          </el-select>
+                        </el-form-item>
+                      </template>
+                    </el-table-column>
+
+                    <el-table-column
+                      :width="180"
+                      :resizable="false"
+                      label="建设单位性质"
+                      prop="contractAmount"
+                      align="center"
+                    >
+                      <template slot-scope="scope">
+                        <el-form-item class="tabelForm" style="padding-top: 0px !important;">
+                          <el-select
+                            class="group-no-padding"
+                            disabled
+                            clearable
+                            filterable
+                            placeholder="请选择"
+                            v-model="scope.row.constructionNatureId"
+                            @change="getContructionName(
+                              scope.row.constructionNatureId,
+                              constructionUnitNature,
+                              'constructionNature',
+                              scope.$index,
+                              'constructionNatureId'
+                            )"
+                          >
+                            <el-option
+                              :key="index"
+                              :label="item.detailName"
+                              :value="item.id"
+                              v-for="(item, index) in constructionUnitNature"
+                            ></el-option>
+                          </el-select>
+                        </el-form-item>
+                      </template>
+                    </el-table-column>
+
+                    <el-table-column
+                      :resizable="false"
+                      label="所属央企"
+                      prop="contractAmount"
+                      align="center"
+                    >
+                      <template slot-scope="scope">
+                        <el-form-item class="tabelForm" style="padding-top: 0px !important;">
+                          <el-select
+                            v-show="scope.row.isBelongEnterPrises"
+                            class="group-no-padding"
+                            disabled
+                            @change="getContructionName(
+                              scope.row.belongEnterPrisesId,
+                              yqList ,
+                              'belongEnterPrises',
+                              scope.$index,
+                              'belongEnterPrisesId'
+                            )"
+                            clearable
+                            filterable
+                            placeholder="请选择"
+                            v-model="scope.row.belongEnterPrisesId"
+                          >
+                            <el-option
+                              :key="index"
+                              :label="item.detailName"
+                              :value="item.id"
+                              v-for="(item, index) in yqList"
+                            ></el-option>
+                          </el-select>
+                        </el-form-item>
+                      </template>
+                    </el-table-column>
+                  </el-table>
                   <p class="detail-p">
                     <span>中标通知书: </span>
                   </p>
@@ -1911,7 +2071,7 @@
                     v-model="detailform.contractInfo.contractType=='2'?'补充合同':'主合同'"
                   />
                 </el-form-item>
-                <el-form-item
+                <!-- <el-form-item
                   label="建设单位:"
                   prop="contractInfo.constructionOrgId"
                   :rules="{
@@ -2034,7 +2194,7 @@
                       v-for="(item, index) in yqList"
                     ></el-option>
                   </el-select>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item
                   label="设计单位:"
                   prop="contractInfo.designOrg"
@@ -2774,6 +2934,191 @@
                     />
                   </el-form-item>
                 </div>
+                <!-- 建设单位 -->
+                <p>
+                  <span >建设单位: </span>
+                  <el-button
+                    v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'&&!p.pushId"
+                    class="detatil-flie-btn"
+                    @click="constructioAdd()"
+                    type="primary"
+                  >新增</el-button >
+                </p>
+                <el-table
+                  :data="detailform.constructionOrgList"
+                  :header-cell-style="{
+                    'text-align': 'center',
+                    'background-color': 'rgba(246,248,252,1)',
+                    color: 'rgba(0,0,0,1)',
+                  }"
+                  @selection-change="handleSelectionChange"
+                  align="center"
+                  border
+                  class="detailTable"
+                  ref="table"
+                  style="width: 100%;height: auto;"
+                >
+                  <el-table-column
+                    :width="80"
+                    align="center"
+                    label="序号"
+                    show-overflow-tooltip
+                    type="index"
+                  ></el-table-column>
+                  <el-table-column
+                    :width="110"
+                    :resizable="false"
+                    label="是否客户"
+                    prop="contractAmount"
+                    align="center"
+                  >
+                    <template slot-scope="scope">
+                      <el-form-item class="tabelForm" style="padding-top: 0px !important;">
+                        <el-switch
+                          :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
+                          class="group-no-padding"
+                          v-model="scope.row.isClientele"
+                          active-color="#409EFF"
+                          inactive-color="#ddd"
+                          active-value="1"
+                          inactive-value="0"
+                        >
+                        </el-switch>
+                      </el-form-item>
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column
+                    :resizable="false"
+                    label="建设单位"
+                    align="center"
+                    prop="path"
+                  >
+                    <template slot-scope="scope">
+                      <el-form-item class="tabelForm" style="padding-top: 0px !important;">
+                        <el-select
+                          v-model="scope.row.constructionOrgId"
+                          v-if="scope.row.isClientele=='1'"
+                          :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
+                          @change="getTableName"
+                          filterable
+                          collapse-tags
+                          placeholder="请选择">
+                          <el-option
+                            v-for="item in pubCustomers"
+                            :key="item.customerId"
+                            :label="item.customerName"
+                            :value="item.customerId">
+                          </el-option>
+                        </el-select>
+                        <el-select
+                          v-model="scope.row.constructionOrgId"
+                          v-if="scope.row.isClientele!='1'"
+                          :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
+                          @change="getTableName"
+                          filterable
+                          collapse-tags
+                          placeholder="请选择">
+                          <el-option
+                            :key="index"
+                            :label="item.customerName"
+                            :value="item.customerId"
+                            v-for="(item, index) in jsdwList"
+                          ></el-option>
+                        </el-select>
+                      </el-form-item>
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column
+                    :width="180"
+                    :resizable="false"
+                    label="建设单位性质"
+                    prop="contractAmount"
+                    align="center"
+                  >
+                    <template slot-scope="scope">
+                      <el-form-item class="tabelForm" style="padding-top: 0px !important;">
+                        <el-select
+                          class="group-no-padding"
+                          :disabled="p.actpoint==='look'||p.actpoint=='task'||p.pushId"
+                          clearable
+                          filterable
+                          placeholder="请选择"
+                          v-model="scope.row.constructionNatureId"
+                          @change="getContructionName(
+                            scope.row.constructionNatureId,
+                            constructionUnitNature,
+                            'constructionNature',
+                            scope.$index,
+                            'constructionNatureId'
+                          )"
+                        >
+                          <el-option
+                            :key="index"
+                            :label="item.detailName"
+                            :value="item.id"
+                            v-for="(item, index) in constructionUnitNature"
+                          ></el-option>
+                        </el-select>
+                      </el-form-item>
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column
+                    :resizable="false"
+                    label="所属央企"
+                    prop="contractAmount"
+                    align="center"
+                  >
+                    <template slot-scope="scope">
+                      <el-form-item class="tabelForm" style="padding-top: 0px !important;">
+                        <el-select
+                          v-show="scope.row.isBelongEnterPrises"
+                          class="group-no-padding"
+                          :disabled="p.actpoint==='look'||p.actpoint=='task'||p.pushId"
+                          @change="getContructionName(
+                            scope.row.belongEnterPrisesId,
+                            yqList ,
+                            'belongEnterPrises',
+                            scope.$index,
+                            'belongEnterPrisesId'
+                          )"
+                          clearable
+                          filterable
+                          placeholder="请选择"
+                          v-model="scope.row.belongEnterPrisesId"
+                        >
+                          <el-option
+                            :key="index"
+                            :label="item.detailName"
+                            :value="item.id"
+                            v-for="(item, index) in yqList"
+                          ></el-option>
+                        </el-select>
+                      </el-form-item>
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column
+                    :resizable="false"
+                    fixed="right"
+                    label="操作"
+                    align="center"
+                    width="80"
+                    v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'&&!p.pushId"
+                  >
+                    <template slot-scope="scope">
+                      <el-link
+                        :underline="false"
+                        @click="constructionDel(scope.$index,scope.row,detailform.constructionOrgList)"
+                        type="warning"
+                      >删除
+                      </el-link
+                      >
+                    </template>
+                  </el-table-column>
+                </el-table>
                 <p>
                   <span>中标通知书: </span>
                   <!--<el-button-->
@@ -4651,7 +4996,6 @@
         }
       };
       var validateUrl = (rule, value, callback) => {
-        // console.log(value)
         if (value!=''&&value&&!isURL(value)) {
           callback(new Error('请输入正确的网址格式'))
         } else {
@@ -4664,6 +5008,7 @@
         companyMulStatus:false,//设计单位等多选列表状态
         yqList:[],
         sjdwList:[],
+        jsdwList:[],
         extendList:[],//扩展字段list
         activeName:"after",
         id:'',
@@ -4696,6 +5041,18 @@
           jzlx:[],//建筑类型
           jzjglx:[],//建筑结构类型
           cdmc:[],//场地名称
+          constructionOrgList: [
+            {
+              isClientele: "0",  // 是否客户
+              constructionOrgId:'',  // 建设单位
+              constructionOrgName:'',
+              constructionNature:'',  // 单位性质
+              constructionNatureId:'',  // 单位性质
+              belongEnterPrises:"",   // 所属央企
+              belongEnterPrisesId:"",   // 所属央企
+              isBelongEnterPrises:false, // 是否央企
+            }
+          ]
         },
         detailFormBefore:{
           commonFilesList: [],
@@ -4714,6 +5071,18 @@
           jzlx:[],//建筑类型
           jzjglx:[],//建筑结构类型
           cdmc:[],//场地名称
+          constructionOrgList: [
+            {
+              isClientele: "0",  // 是否客户
+              constructionOrgId:'',  // 建设单位
+              constructionOrgName:'',
+              constructionNature:'',  // 单位性质
+              constructionNatureId:'',  // 单位性质
+              belongEnterPrises:"",   // 所属央企
+              belongEnterPrisesId:"",   // 所属央企
+              isBelongEnterPrises:false, // 是否央企
+            }
+          ]
         },
         yesOrNo:[
           {
@@ -4758,11 +5127,9 @@
         return this.$store.state.pubCustomers;
       },
       projectDomainType() {
-        // console.log(this.$store.state.category.projectDomainType)
         return this.$store.state.category.projectDomainType;
       },
       emergingMarket() {
-        // console.log(this.$store.state.category.emergingMarket)
         return this.$store.state.category.emergingMarket;
       },
       projectNature(){
@@ -4801,20 +5168,6 @@
           this.ssList.push(_v)
         })
       })
-      // this.$store.commit("setCategory", 'projectDomainType');
-      this.id=this.p.instid,this.afterId=this.p.afterId;
-      if (this.p.actpoint === "edit"||this.p.actpoint === "look"||this.p.actpoint === "task") {
-        this.getDetail();
-      }
-      if(this.p.actpoint === "add"){
-        this.getAddDetail()
-      }
-      this.$store.dispatch("getConfig", {});
-      this.$store.dispatch("getPubCustomers", {});
-      this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
-      this.$store.dispatch('getCategory', {name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3'});
-      this.$store.dispatch('getCategory', {name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72'});
-      // eslint-disable-next-line no-unde
       //设计单位列表
       this.$http
         .post(
@@ -4826,17 +5179,13 @@
             item.value=item.companyName;
             item.detailName=item.companyName;
             item.id=item.uuid;
-            item.customerName=item.companyName;
-            item.customerId=item.uuid;
           })
-        });
-      //扩展字段列表
-      this.$http
-        .post(
-          "/api/contract/ContractInfoExpand/detail/findExpandByType",
-        )
-        .then((res) => {
-          this.extendList = res.data.data;
+          this.jsdwList= res.data.data.records;
+          this.jsdwList.forEach((item1)=>{
+            item1.value=item1.companyName;
+            item1.customerName=item1.companyName;
+            item1.customerId=item1.uuid;
+          })
         });
       //获取所属央企列表
       this.$http
@@ -4853,8 +5202,49 @@
             })
           }
         });
+      // this.$store.commit("setCategory", 'projectDomainType');
+      this.id=this.p.instid,this.afterId=this.p.afterId;
+      if (this.p.actpoint === "edit"||this.p.actpoint === "look"||this.p.actpoint === "task") {
+        this.getDetail();
+      }
+      if(this.p.actpoint === "add"){
+        this.getAddDetail()
+      }
+      this.getTableName()
+      this.$store.dispatch("getConfig", {});
+      this.$store.dispatch("getPubCustomers", {});
+      this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
+      this.$store.dispatch('getCategory', {name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3'});
+      this.$store.dispatch('getCategory', {name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72'});
+      // eslint-disable-next-line no-unde
+      //扩展字段列表
+      this.$http
+        .post(
+          "/api/contract/ContractInfoExpand/detail/findExpandByType",
+        )
+        .then((res) => {
+          this.extendList = res.data.data;
+        });
     },
     methods: {
+      // 建设单位删除
+      constructionDel(index,item,list,type) {
+        list.splice(index, 1);
+      },
+      // 建设单位新增
+      constructioAdd() {
+        var v = {};
+        v = {
+          isClientele: "0",  // 是否客户
+          constructionOrgId:'',  // 建设单位
+          constructionOrgName:'',
+          constructionNature:'',  // 单位性质
+          constructionNatureId:'',  // 单位性质
+          belongEnterPrises:"" ,  // 所属央企
+          belongEnterPrisesId:""   // 所属央企
+        }
+        this.detailform.constructionOrgList.push(v);
+      },
       //判断附件大小
       beforeAvatarUpload(file) {
         var fileLimit=Number(this.fileLimit);
@@ -4872,8 +5262,6 @@
       },
       //上传附件显示进度条
       uploadPorgress(file, fileList,tableList){
-        // console.log(event, file, fileList,tableList);
-        // console.log(fileList)
         const len=tableList.length;
         if (file.status === 'ready') {
           file.fileName=file.name;
@@ -4892,9 +5280,7 @@
                 item.loadProgress = 90;
                 if(file.response&&item.fileName==file.response.data.fileName&&file.response.data.progressFlag=='stop'){
                   tableList[index]=file.response.data;
-                  // console.log(index,'==>',tableList[index])
                   that.$set(tableList,index,tableList[index])
-                  // console.log(tableList[index])
                 }
 
                 clearInterval(interval);
@@ -4902,9 +5288,7 @@
               }
               if(item.progressFlag == 'start'){
                 item.loadProgress += 20;//进度条进度
-                // that.$set(tableList[len],tableList[len])
                 that.$set(tableList,index,tableList[index])
-                // console.log(tableList[len].loadProgress)
 
               }
               if(file.response&&file.response.data.progressFlag=='fail'){
@@ -4916,24 +5300,18 @@
 
         }
         if (file.response && file.response.code === 200) {
-          // console.log(tableList.length)
           this.$message({
             message: '上传成功',
             type: 'success',
             duration: 1000,
             onClose: () => {
-              // const len=tableList.length;
-
               file.response.data.progressFlag='stop';
               tableList.forEach((item,index)=>{
                 if(item.fileName==file.response.data.fileName&&item.progressFlag!='stop'){
                   tableList[index]=file.response.data;
-                  // console.log(index,'==>',tableList[index])
                   this.$set(tableList,index,tableList[index])
-                  // console.log(tableList[index])
                 }
               })
-              // tableList[len-1]=file.response.data;
 
             }
           })
@@ -5045,7 +5423,6 @@
      //建设单位下拉赋值
       companyBuildChange(){
         this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
-        console.info(this.detailform.contractInfo.constructionOrgId)
         this.getBuildName();
       },
       //建设单位通过ID查找NAME
@@ -5057,13 +5434,33 @@
           if(customer){
             nameList.push(customer.customerName)
           }
-          let outside = this.sjdwList.find(item2=>item2.customerId===idCheck)
+          let outside = this.jsdwList.find(item2=>item2.customerId===idCheck)
           if(outside){
             nameList.push(outside.customerName)
           }
 
         })
         this.detailform.contractInfo.constructionOrg = nameList.join(",")
+        this.detailform.contractInfo.constructionOrgId = this.constructionOrgList.join(",")
+      },
+      getTableName(){
+        //给合同建设单位赋值
+        var idList = []
+        var nameList = []
+        this.detailform.constructionOrgList.forEach((element) => {
+          if (element.isClientele == 1) {
+            let customer = this.pubCustomers.find(item1=>item1.customerId===element.constructionOrgId)
+            element.constructionOrgName = customer.customerName
+          } else {
+            let outside = this.jsdwList.find(item2=>item2.customerId===element.constructionOrgId)
+            element.constructionOrgName = outside.customerName
+          }
+          idList.push(element.constructionOrgId)
+          nameList.push(element.constructionOrgName)
+        })
+        this.detailform.contractInfo.constructionOrg = nameList.join(",")
+        this.detailform.contractInfo.constructionOrgId = idList.join(",")
+        console.info(this.detailform.contractInfo.constructionOrg)
       },
       //切换是否客户
       companyBuildClear(){
@@ -5148,7 +5545,6 @@
       });
         this.detailform.contractInfo[id]=_id.join(",");
         this.detailform.contractInfo[name]=_name.join(",");
-        console.log(this.detailform.contractInfo[id])
       },
       //合同总金额获取我方份额和铁建
       getOurAmount(index,list,type){
@@ -5463,7 +5859,6 @@
         }
 
       });
-        console.log(this.detailform.fileList1)
       },
       //上传附件
       handleChange1(response, file, fileList){
@@ -5492,7 +5887,6 @@
         }
 
       });
-        console.log(this.detailform.fileList1)
       },
       //上传附件
       handleChange2(response, file, fileList){
@@ -5521,7 +5915,6 @@
         }
 
       });
-        console.log(this.detailform.fileList1)
       },
       //上传附件
       handleChange3(response, file, fileList){
@@ -5547,7 +5940,6 @@
       },
       //获取单位的值
       getDwInfo(data){
-        console.log(data);
         var id=[],name=[];
         if(data&&data.type!='单位名称'&&data.type!='承揽所属机构'){
           data.forEach((item)=>{
@@ -5657,6 +6049,7 @@
           datas.topInfoSiteList[i].contractAmount='';
         }
         this.detailform.topInfoSiteList=datas.topInfoSiteList;
+          this.detailform.constructionOrgList=datas.constructionOrgList;
       });
         this.$forceUpdate();
         this.infoCSVisible=false;
@@ -5667,7 +6060,6 @@
       },
       //获取项目地点的值
       getPositionTree(data) {
-        console.log(data)
         this.treeStatas = false;
         var country = '', _data = data;
         if (_data.fullDetailName.indexOf("境内") != -1) {
@@ -5695,7 +6087,6 @@
       //选择项目地点
       selectPosition() {
         this.treeStatas = true;
-        console.log(this.positionIndex);
         this.$nextTick(() => {
           this.$refs.addOrUpdate.init()
       })
@@ -5776,9 +6167,25 @@
             this.detailform.contractInfo[code] = list.find(
                 (item) => item.id == id
             ).detailCode;
-          console.log(this.detailform.contractInfo[name]);
         }
       },
+    //获取下拉框id和name的公共方法
+    getContructionName(id, list, name,index) {
+      if(id){
+        this.$forceUpdate()
+        this.detailform.constructionOrgList[index][name] = list.find(
+          (item) => item.id == id
+        ).detailName;
+      }
+      if (name == 'constructionNature') {
+        if (id == "b5eeb5ab9ea0479ba08d0f7b420a8e77") {
+          this.detailform.constructionOrgList[index].isBelongEnterPrises = true
+        } else {
+          this.detailform.constructionOrgList[index].isBelongEnterPrises = false
+          this.detailform.constructionOrgList[index].belongEnterPrisesId = ''
+        }
+      }
+    },
       pageGo() {
         this.searchParam.current = this.current;
         this.getuserlist();
@@ -5790,7 +6197,6 @@
         // });
       },
       del(index,item,list,type) {
-        console.log(index);
         // if(item.uuid&&type=='bd'){
         if(type=='bd'){
           this.$confirm(`确认删除该条数据吗?删除后数据不可恢复`, '提示', {
@@ -5807,7 +6213,6 @@
         //     .then((res) => {
         //     if (res.data && res.data.code === 200) {
         //     list.splice(index, 1);
-        //     console.log(list)
         //   } else {
         //     this.$message.error(data.msg)
         //   }
@@ -5991,10 +6396,15 @@
           jzlx:[],//建筑类型
           jzjglx:[],//建筑结构类型
           cdmc:[],//场地名称
+          constructionOrgList:afterData.constructionOrgList
         };
-        if(afterData.contractInfo.constructionOrgId != '' ||afterData.contractInfo.constructionOrgId != null){
-          this.constructionOrgList = afterData.contractInfo.constructionOrgId.split(",");
-        }
+        this.detailform.constructionOrgList.forEach((item)=>{
+          if (item.constructionNatureId == "b5eeb5ab9ea0479ba08d0f7b420a8e77") {
+            item.isBelongEnterPrises = true
+          }else{
+            item.isBelongEnterPrises = false
+          }
+        })
         this.detailform.cdmc=afterData.contractInfo.siteNameId&&afterData.contractInfo.siteNameId.split(",");
         this.detailform.zplx=afterData.contractInfo.otherAssemblyTypeId&&afterData.contractInfo.otherAssemblyTypeId.split(",");
         this.detailform.jzlx=afterData.contractInfo.otherBuildingTypeId&&afterData.contractInfo.otherBuildingTypeId.split(",");
@@ -6013,7 +6423,15 @@
           jzlx:[],//建筑类型
           jzjglx:[],//建筑结构类型
           cdmc:[],//场地名称
-        }
+          constructionOrgList:beforData.constructionOrgList
+        };
+        this.detailFormBefore.constructionOrgList.forEach((item)=>{
+          if (item.constructionNatureId == "b5eeb5ab9ea0479ba08d0f7b420a8e77") {
+            item.isBelongEnterPrises = true
+          }else{
+            item.isBelongEnterPrises = false
+          }
+        })
         this.detailFormBefore.cdmc=beforData.contractInfo.siteNameId&&beforData.contractInfo.siteNameId.split(",");
         this.detailFormBefore.zplx=beforData.contractInfo.otherAssemblyTypeId&&beforData.contractInfo.otherAssemblyTypeId.split(",");
         this.detailFormBefore.jzlx=beforData.contractInfo.otherBuildingTypeId&&beforData.contractInfo.otherBuildingTypeId.split(",");
@@ -6027,19 +6445,19 @@
         this.$http
           .post("/api/contract/contract/ContractInfo/detail/entityInfo", {id:this.id})
           .then((res) => {
-          var datas=res.data.data;
-        this.getTwo(datas.contractInfo.enginTypeFirstId);
-        this.getThree(datas.contractInfo.enginTypeSecondId);
-        this.getTwoSC(datas.contractInfo.marketFirstNameId);
-        datas.commonFilesList.forEach((item) => {
-          if(item.businessCode=='01'||item.businessCode=='zb'){
-          fileList1.push(item)
-          }else if(item.businessCode=='02'||item.businessCode=='htfj'){
-          fileList2.push(item)
-        }else if(item.businessCode=='03'){
-            fileList3.push(item)
-          }
-      });
+            var datas=res.data.data;
+            this.getTwo(datas.contractInfo.enginTypeFirstId);
+            this.getThree(datas.contractInfo.enginTypeSecondId);
+            this.getTwoSC(datas.contractInfo.marketFirstNameId);
+            datas.commonFilesList.forEach((item) => {
+              if(item.businessCode=='01'||item.businessCode=='zb'){
+              fileList1.push(item)
+              }else if(item.businessCode=='02'||item.businessCode=='htfj'){
+                fileList2.push(item)
+              }else if(item.businessCode=='03'){
+                fileList3.push(item)
+              }
+            });
         this.detailform={
           commonFilesList: datas.commonFilesList,
           contractInfo: datas.contractInfo,
@@ -6054,7 +6472,15 @@
           jzlx:[],//建筑类型
           jzjglx:[],//建筑结构类型
           cdmc:[],//场地名称
+          constructionOrgList:datas.constructionOrgList
         }
+        this.detailform.constructionOrgList.forEach((item)=>{
+          if (item.constructionNatureId == "b5eeb5ab9ea0479ba08d0f7b420a8e77") {
+            item.isBelongEnterPrises = true
+          }else{
+            item.isBelongEnterPrises = false
+          }
+        })
         this.detailform.cdmc=datas.contractInfo.siteNameId&&datas.contractInfo.siteNameId.split(",");
         this.detailform.zplx=datas.contractInfo.otherAssemblyTypeId&&datas.contractInfo.otherAssemblyTypeId.split(",");
         this.detailform.jzlx=datas.contractInfo.otherBuildingTypeId&&datas.contractInfo.otherBuildingTypeId.split(",");
@@ -6063,9 +6489,6 @@
           this.detailFormBefore[i]=JSON.parse(JSON.stringify(this.detailform[i]));
         }
         this.detailFormBefore.capitalName=datas.capitalName;
-        if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
-          this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
-        }
         this.detailform.contractInfo.changeOurAmount = this.detailform.contractInfo.ourAmount;
       });
       },
