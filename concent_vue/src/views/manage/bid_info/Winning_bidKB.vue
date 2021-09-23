@@ -669,7 +669,7 @@
               </el-form-item>
             </div>
             <el-row>
-              <p class="detail-title"><span >开标记录（最大10MB）: </span>
+              <p class="detail-title"><span style="font-size: 14px;color: #606266;" >开标记录（最大10MB）: </span>
                 <el-button
                   v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                   size="small"
@@ -738,7 +738,7 @@
             </el-row>
 
             <p   v-if="detailform.topInforBO.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailform.topInforBO.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'" style="overflow: hidden" class="detail-title">
-              <span>标段信息: </span>
+              <span style="font-size: 14px;color: #606266;" >标段信息: </span>
             </p>
 
             <el-table
