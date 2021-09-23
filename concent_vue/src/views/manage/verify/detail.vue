@@ -590,13 +590,12 @@
         </el-form-item>
         <el-form-item  label="内部联合体单位:"
                        prop="verify.orgName"
-                       :rules="detailform.verify.isCoalitionBid=='是'&&(detailform.verify.outOrg==''||detailform.verify.outOrg==null)?{
+                       :rules="detailform.verify.isCoalitionBid=='是'&&(detailform.verify.orgId==''||detailform.verify.orgName==null)?{
                         required: true,
                         message: '此项不能为空',
                         trigger: 'change',
                       }:{}">
-          <el-input v-model="detailform.verify.orgName"
-          :disabled="p.actpoint === 'look'||p.actpoint === 'task' || detailform.verify.isCoalitionBid=='否' || detailform.verify.isCoalitionBid==null">
+          <el-input v-model="detailform.verify.orgName" disabled>
             <!--<el-button slot="append" icon="el-icon-search"  @click="selectOrg()"-->
             <!--v-if="p.actpoint != 'look' && detailform.verify.isCoalitionBid != '否' && detailform.verify.isCoalitionBid != null"-->
             <!--&gt;</el-button>-->
@@ -609,7 +608,7 @@
 
         <el-form-item label="外部联合体单位:"
                       prop="verify.outOrg"
-                      :rules="detailform.verify.isCoalitionBid=='是'&&(detailform.verify.orgName==''||detailform.verify.orgName==null)?{
+                      :rules="detailform.verify.isCoalitionBid=='是'&&(detailform.verify.outOrg==''||detailform.verify.outOrg==null)?{
                         required: true,
                         message: '此项不能为空',
                         trigger: 'change',
@@ -617,7 +616,7 @@
           <el-input
             placeholder=""
             size="mini"
-            :disabled="p.actpoint === 'look' || detailform.verify.isCoalitionBid=='否' || detailform.verify.isCoalitionBid==null||p.actpoint=='task'"
+            disabled
             v-model="detailform.verify.outOrg"
           >
             <el-button v-if="p.actpoint != 'look' &&p.actpoint != 'task'&& detailform.verify.isCoalitionBid != '否' && detailform.verify.isCoalitionBid != null" slot="append" icon="el-icon-circle-plus-outline" @click="openComMul(detailform.verify.outOrgId,detailform.verify.outOrg,'/api/contract/Companies/detail/findCompanies','外部联合体单位')"></el-button>
@@ -1299,7 +1298,9 @@ export default {
                     message:  `${type=='save'?'保存':'提交'}成功`,
                     type: "success",
                   });
-                  this.$router.back();
+                  if(type!='save'){
+                    this.$router.back();
+                  }
                 }else{
                   this.$message.error(res.data.msg)
                 }
@@ -1710,6 +1711,11 @@ export default {
         // datas.topInforCapitalList.forEach((item)=>{
         //   this.value1.push(item.capitalId)
         // });
+        datas.topInfoSectionList.forEach((item)=>{
+          if(item.isTrack == '1'){
+            this.detailform1.topInfoSectionList.push(item)
+          }
+        })
         this.detailform1={
           topInfor: datas.topInfor,
           topInfoOrg: datas.topInfoOrg,
@@ -1853,6 +1859,7 @@ export default {
   height: 40px;
   width: 100%;
   box-sizing: border-box;
+  font-size: 1px;
   // margin: 10px 0 0 10px;
 }
 
