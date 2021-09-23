@@ -660,10 +660,10 @@
                   :resizable="false"
                   label="操作"
                   width="100"
-                  v-if="zbType=='add'"
                 >
                   <template slot-scope="scope">
-                    <el-link :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
+                    <el-link :underline="false" @click="attachmentDownload(scope.row)" type="success">下载</el-link>
+                    <el-link v-if="zbType=='add'" :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
                   </template>
                 </el-table-column>
               </el-table>
@@ -793,6 +793,10 @@ export default {
     },
   },
   methods: {
+    // 附件下载
+    attachmentDownload(file){
+      this.$handleDownload(file)
+    },
     //打开多选的单位列表
     openComMul(ids,names,url,type){
       this.companyMulStatus=true;
