@@ -556,7 +556,7 @@ export default {
 
     rowshow(row) {
       var id=row.flowStatus==null?row.topInfoOrgId:row.uuid;
-      let p = { actpoint: "look", instid: id ,flowStatus:row.flowStatus,uuid:row.uuid};
+      let p = { actpoint: "look", instid: id , topInfoOrgId:row.topInfoOrgId,flowStatus:row.flowStatus,uuid:row.uuid};
       this.$router.push({
         path: "./detail/",
         query: { p: this.$utils.encrypt(JSON.stringify(p)) },

@@ -1846,8 +1846,8 @@ export default {
         var q =
           this.p.actpoint === "edit" ||
           (this.p.actpoint === "look")||this.p.actpoint === "task"
-            ? { id: this.id }
-            : { topInfoOrgId: this.id ,verifyId: this.p.verifyId};
+            ? { id: this.id ,topInfoOrgId:this.p.topInfoOrgId}
+            : { topInfoOrgId: this.p.instid ,verifyId: this.p.verifyId};
         url = "/api/contract/topInfo/BidInfo/detail/entityInfo";
       }
 
