@@ -1,11 +1,73 @@
 <template>
   <div>
-    <div style="width: 100%;overflow: hidden;">
-      <el-button-group style="float: left">
+    <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
+      <el-form-item label="标段名称:">
+        <el-input v-model="searchform.sectionName" placeholder="标段名称" clearable></el-input>
+      </el-form-item>
+      <el-form-item label="项目名称:">
+        <el-input v-model="searchform.inforName" placeholder="项目名称" clearable></el-input>
+      </el-form-item>
+      <el-form-item label="建设单位:">
+        <el-input v-model="searchform.constructionOrg" placeholder="建设单位" clearable></el-input>
+      </el-form-item>
+      <el-form-item label="公告类型:" >
+        <el-select
+          clearable
+          filterable
+          placeholder="请选择"
+          v-model="searchform.noticeTypeName"
+        >
+          <el-option
+            :key="index"
+            :label="item.detailName"
+            :value="item.detailName"
+            v-for="(item, index) in bulletinType"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="工程类别(一级):" >
+        <el-select
+          clearable
+          filterable
+          placeholder="请选择"
+          @change="getTwo"
+          v-model="searchform.enginTypeFirstId"
+        >
+          <el-option
+            :key="index"
+            :label="item.detailName"
+            :value="item.id"
+            v-for="(item, index) in projectDomainType"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="工程类别(二级):" >
+        <el-select
+          clearable
+          filterable
+          placeholder="请选择工程类别(一级)"
+          v-model="searchform.enginTypeSecondId"
+          @change="uptwo"
+        >
+          <el-option
+            :key="index"
+            :label="item.detailName"
+            :value="item.id"
+            v-for="(item, index) in xqprojectType"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="项目地点:">
+        <el-input v-model="searchform.path" placeholder="项目地点" clearable @clear="searchform.ffid=''">
+          <el-button slot="append" icon="el-icon-search"  @click="selectPositionFind()"></el-button>
+        </el-input>
+      </el-form-item>
+      <el-form-item style="float:right">
         <el-button @click="setZB" plain type="primary"><i class="el-icon-plus"></i>中标结果登记</el-button>
-      </el-button-group>
-    </div>
-
+        <el-button @click="getData" plain type="primary"><i class="el-icon-search"></i>查询</el-button>
+        <el-button @click="reset" plain type="primary"><i class="el-icon-search"></i>重置</el-button>
+      </el-form-item>
+    </el-form>
     <div style="margin-top: 10px">
       <el-table
         class="tableStyle"
@@ -677,6 +739,7 @@
       </el-dialog>
     </div>
     <Tree v-if="treeStatas" ref="addOrUpdate"  @getPosition="getPositionTree" ></Tree>
+    <Tree v-if="treeStatasFind" ref="addOrUpdate"  @getPosition="getPositionTreeFind" ></Tree>
     <company-tree  v-if="DwVisible" ref="infoDw" @refreshBD="getDwInfo"></company-tree>
     <!--多选的单位列表组件-->
     <company-mul v-if="companyMulStatus" ref="comAdd" @getComList="getComList"></company-mul>
@@ -724,11 +787,14 @@ export default {
       }
     }
     return {
+      xqprojectType:[],//工程二级列表
       companyMulStatus:false,//设计单位等多选列表状态
       treeStatas:false,
+      treeStatasFind:false,
       DwVisible:false,//选择单位弹框状态
       Authorization:sessionStorage.getItem("token"),
       key: 0,
+      keyFind: 0,
       isWinBid: "",
       dialogFormVisible: false,
       infoCSVisible: false,
@@ -765,6 +831,16 @@ export default {
         ptype: "",
         orgid: "",
         orgname: "",
+        sectionName:"", //标段名称
+        inforName:"", //项目名称
+        enginTypeFirstName:"", //工程类别
+        enginTypeFirstId:"",
+        constructionOrg:"", //建设单位
+        noticeTypeName:"", //公告类型
+        path:"", //项目地点（不确定）
+        ffid:"", //项目地点id（不确定）
+        enginTypeSecondName:"", //工程类别2级
+        enginTypeSecondId:""
       },
       menus: [],
       multipleSelection: [],
@@ -791,8 +867,59 @@ export default {
       // console.log(this.$store.state.bidMethod)
       return this.$store.state.bidMethod;
     },
+    projectDomainType() {
+      return this.$store.state.category.projectDomainType;
+    },
+    bulletinType() {
+      return this.$store.state.bulletinType;
+    },
+  },
+  mounted() {
+    this.$store.dispatch("getConfig", {});
+    this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
   },
   methods: {
+    //获取项目地点的值
+      getPositionTreeFind(data) {
+        this.treeStatasFind = false;
+        this.searchform.ffid=data.fullDetailCode;
+        this.searchform.path=data.fullDetailName;
+        this.keyFind = this.keyFind + 1;
+      },
+    //选择项目地点
+    selectPositionFind() {
+      this.treeStatasFind = true;
+      this.$nextTick(() => {
+        this.$refs.addOrUpdate.init()
+      })
+    },
+    //工程类别二级
+    getTwo(id) {
+      this.searchform.enginTypeSecondId='';
+      this.xqprojectType =[];
+      if(id!=''){
+        this.projectDomainType.find((item) => {
+          if (item.id == id) {
+            this.xqprojectType = item.children;
+            this.searchform.enginTypeFirstName = item.detailName
+          }
+        })
+      } else {
+        this.searchform.enginTypeFirstName = ''
+      }
+    },
+    uptwo(id){
+      this.$forceUpdate()
+      if(id!=''){
+        this.xqprojectType.find((item) => {
+          if (item.id == id) {
+            this.searchform.enginTypeSecondName = item.detailName
+          }
+        })
+      } else {
+        this.searchform.enginTypeSecondName = ''
+      }
+    },
     // 附件下载
     attachmentDownload(file){
       this.$handleDownload(file)
@@ -1083,6 +1210,28 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
+    reset() {
+      this.searchform = {
+        current: 1,
+        size: 20,
+        year: "",
+        name: "",
+        ptype: "",
+        orgid: "",
+        orgname: "",
+        sectionName:"", //标段名称
+        inforName:"", //项目名称
+        enginTypeFirstName:"", //工程类别
+        enginTypeFirstId:"",
+        constructionOrg:"", //建设单位
+        noticeTypeName:"", //公告类型
+        path:"", //项目地点（不确定）
+        ffid:"", //项目地点id（不确定）
+        enginTypeSecondName:"", //工程类别2级
+        enginTypeSecondId:""
+      },
+      this.getData();
+    },
     getData() {
       this.$http
         .post(
@@ -1131,7 +1280,23 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
+.queryForm .el-input-group {
+  margin-top: 5px;
+  width: 230px;
+}
+.queryForm .el-form-item {
+  margin-bottom: 3px !important;
+}
+.queryForm>.el-button{
+  margin-top: 5px;
+}
+/deep/ .queryForm  .el-form-item__label{
+  width: auto !important;
+}
+/deep/ .queryForm .el-form-item__content{
+  width: auto !important;
+}
 .el-date-editor{
   width: 100%!important;
 }
