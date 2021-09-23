@@ -1522,6 +1522,7 @@
               <el-form-item label="招标方式:"
               class="formItem">
                 <el-select
+                  :class="detailform.bidInfo.bidModeId!=detailFormBefore.bidInfo.bidModeId?'changeRed':''"
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   filterable
                   clearable
@@ -1555,6 +1556,7 @@
               }"
             >
               <el-date-picker
+                :class="detailform.bidInfo.publishTime!=detailFormBefore.bidInfo.publishTime?'changeRed':''"
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 filterable
                 clearable
@@ -1570,6 +1572,7 @@
               prop="saleTime"
               >
                 <el-date-picker
+                  :class="detailform.bidInfo.saleTime!=detailFormBefore.bidInfo.saleTime?'changeRed':''"
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   value-format="timestamp"
                   filterable
@@ -1584,6 +1587,7 @@
                 prop="bidInfo.endTime"
               >
                 <el-date-picker
+                  :class="detailform.bidInfo.endTime!=detailFormBefore.bidInfo.endTime?'changeRed':''"
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   value-format="timestamp"
                   clearable
@@ -1599,6 +1603,7 @@
                 label="是否为费率招标:"
                 prop="bidInfo.isBidRates">
               <el-switch
+              :class="detailform.bidInfo.isBidRates!=detailFormBefore.bidInfo.isBidRates?'changeRed':''"
               class="inline-formitem-switch"
               v-model="detailform.bidInfo.isBidRates"
               active-color="#409EFF"
@@ -1638,6 +1643,7 @@
               >
 
               <el-input v-model="detailform.bidInfo.innerOrgName" class="input-with-select"
+              :class="detailform.bidInfo.innerOrgName!=detailFormBefore.bidInfo.innerOrgName?'changeRed':''"
               :disabled="p.actpoint === 'look'|| detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'">
                 <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('内部联合体单位',detailform.bidInfo.innerOrgId)"
                  v-if="p.actpoint != 'look'&& detailform.bidInfo.isCoalitionBid != '1' && detailform.bidInfo.isCoalitionBid != ''"
@@ -1649,6 +1655,7 @@
                 label="外部联合体单位:"
               >
                 <el-input
+                  :class="detailform.bidInfo.outOrg!=detailFormBefore.bidInfo.outOrg?'changeRed':''"
                   :disabled="p.actpoint === 'look'|| detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"
                   clearable
                   placeholder=""
@@ -1680,6 +1687,7 @@
                   clearable
                   placeholder="请输入"
                   v-model="detailform.bidInfo.bidExplain"
+                  :class="detailform.bidInfo.bidExplain!=detailFormBefore.bidInfo.bidExplain?'changeRed':''"
                 />
               </el-form-item>
             </el-row>
@@ -3021,6 +3029,9 @@ export default {
 // }
 .el-main{
   overflow: hidden;
+}
+.changeRed >>>input,.changeRed >>>textarea,.changeRed >>>select,.changeRed{
+  color:red!important;
 }
 </style>
 
