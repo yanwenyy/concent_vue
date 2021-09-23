@@ -19,7 +19,7 @@
     <!-- </div> -->
 
     <!--<el-button v-show="p.actpoint != 'look'" @click="submit" class="detailbutton">提交</el-button>-->
-    <el-button v-show="p.type != 'end'&&p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.topInfoOrg.flowStatus=='edit'||detailform.topInfoOrg.flowStatus=='reject')" @click="submit('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+    <el-button v-show="p.type != 'fq'&&p.type != 'end'&&p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.topInfoOrg.flowStatus=='edit'||detailform.topInfoOrg.flowStatus=='reject')" @click="submit('detailform','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
     <el-button v-show="p.type == 'end'&&p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||detailform.topInfoOrg.flowStatus=='edit'||detailform.topInfoOrg.flowStatus=='reject')" @click="saveInfoend('detailform')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
