@@ -485,11 +485,7 @@
               </el-form-item>
               <el-form-item label="中标单位:" class="list-item" v-if="zbForm.bidInfoSection.isWinBid=='1'"
                             prop="bidInfoSection.inBinOrgName"
-                            :rules="{
-                                required: true,
-                                message: '此项不能为空',
-                                trigger: 'change',
-                              }">
+                            :rules="rules.bidName">
                 <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.inBinOrgName" class="input-with-select" :disabled="zbType=='look'">
                   <el-button :disabled="zbType=='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('中标单位',zbForm.bidInfoSection.inBinOrgId)" ></el-button>
                 </el-input>
@@ -720,6 +716,13 @@ export default {
         callback()
       }
     }
+    var validateName= (rule, value, callback) => {
+      if (this.zbForm.bidInfoSection.inBinOrgName == '') {
+        callback(new Error('不能为空'))
+      } else {
+        callback()
+      }
+    }
     return {
       companyMulStatus:false,//设计单位等多选列表状态
       treeStatas:false,
@@ -776,6 +779,9 @@ export default {
         ],
         bidNoticeWebsite:[
           { required: true,validator: validateUrl, trigger: 'change' }
+        ],
+        bidName:[
+          { required: true,validator: validateName, trigger: 'change' }
         ]
       }, //表单验证规则
     };
@@ -992,6 +998,14 @@ export default {
     },
     // 保存
     saveInfo(formName) {
+      if (this.zbForm.bidInfoSection.inBinOrgName == '') {
+        this.$message({
+          showClose: true,
+          message: '中标单位不能为空！',
+          type: 'warning'
+        });
+        return false
+      }
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$http
