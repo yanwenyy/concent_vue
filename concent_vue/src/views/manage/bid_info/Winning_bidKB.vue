@@ -574,7 +574,7 @@
                   <!-- :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''" -->
 
                   <el-button
-                    v-if="p.actpoint != 'look' && p.actpoint != 'searchLook' && detailform.bidInfo.isCoalitionBid != '1' &&detailform.bidInfo.isCoalitionBid != ''||p.actpoint=='task'"
+                    v-if="p.actpoint != 'look' && p.actpoint != 'searchLook' && detailform.bidInfo.isCoalitionBid != '1' &&detailform.bidInfo.isCoalitionBid != ''&&p.actpoint!='task'"
                     slot="append"
                     icon="el-icon-circle-plus-outline"
                     @click="
