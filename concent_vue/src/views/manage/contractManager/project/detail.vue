@@ -1405,7 +1405,7 @@
             >
               <template slot-scope="scope">
                 <el-switch
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                   class="inline-formitem-switch"
                   v-model="scope.row.isMain"
                   active-color="#409EFF"
@@ -1428,7 +1428,7 @@
               align="center"
               width="80"
               show-overflow-tooltip
-              v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'&&!p.pushId"
+              v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
             >
               <template slot-scope="scope">
                 <el-link
@@ -1482,7 +1482,7 @@
               <template slot-scope="scope">
                 <el-form-item class="tabelForm" style="padding-top: 0px !important;">
                   <el-switch
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     class="group-no-padding"
                     v-model="scope.row.isClientele"
                     active-color="#409EFF"
@@ -1506,7 +1506,7 @@
                   <el-select
                     v-model="scope.row.constructionOrgId"
                     v-if="scope.row.isClientele=='1'"
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     @change="getTableName"
                     filterable
                     collapse-tags
@@ -1521,7 +1521,7 @@
                   <el-select
                     v-model="scope.row.constructionOrgId"
                     v-if="scope.row.isClientele!='1'"
-                    :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
+                    :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     @change="getTableName"
                     filterable
                     collapse-tags
@@ -1548,7 +1548,7 @@
                 <el-form-item class="tabelForm" style="padding-top: 0px !important;">
                   <el-select
                     class="group-no-padding"
-                    :disabled="p.actpoint==='look'||p.actpoint=='task'||p.pushId"
+                    :disabled="p.actpoint==='look'||p.actpoint=='task'"
                     clearable
                     filterable
                     placeholder="请选择"
@@ -1583,7 +1583,7 @@
                   <el-select
                     v-show="scope.row.isBelongEnterPrises"
                     class="group-no-padding"
-                    :disabled="p.actpoint==='look'||p.actpoint=='task'||p.pushId"
+                    :disabled="p.actpoint==='look'||p.actpoint=='task'"
                     @change="getContructionName(
                       scope.row.belongEnterPrisesId,
                       yqList ,
@@ -1613,7 +1613,7 @@
               label="操作"
               align="center"
               width="80"
-              v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'&&!p.pushId"
+              v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
             >
               <template slot-scope="scope">
                 <el-link
@@ -3134,6 +3134,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -3252,6 +3253,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -3370,6 +3372,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -3488,6 +3491,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -3606,6 +3610,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -3724,6 +3729,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -3842,6 +3848,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -3960,6 +3967,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -4078,6 +4086,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -4196,6 +4205,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -4314,6 +4324,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -4434,6 +4445,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -4534,6 +4546,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -4634,6 +4647,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -4734,6 +4748,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -4834,6 +4849,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -4934,6 +4950,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -5034,6 +5051,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -5136,6 +5154,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -5301,6 +5320,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -5441,6 +5461,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -5570,6 +5591,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -5699,6 +5721,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -5828,6 +5851,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -5957,6 +5981,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -6086,6 +6111,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -6215,6 +6241,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -6344,6 +6371,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -6473,6 +6501,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -6602,6 +6631,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -6731,6 +6761,7 @@
                     :show-file-list="false"
                     accept=".xls,.xlsx"
                     multiple
+                    :before-upload="projectUpload"
                   >
                     <el-button size="small" type="primary">导入</el-button>
                   </el-upload>
@@ -7463,7 +7494,8 @@ export default {
     },
     // 上传模板
     projectUpload(){
-      if(this.p.actpoint=='add'){
+      console.log(this.id)
+      if(this.p.actpoint=='add'&&(this.id==''||this.id==null)){
         this.$message({
           message: '请先保存！',
           type: 'warning',
@@ -7481,7 +7513,7 @@ export default {
       }
     },
     importProjectUpload(){
-      if(this.p.actpoint=='add'){
+      if(this.p.actpoint=='add'&&this.id==''){
         this.$message({
           message: '请先保存！',
           type: 'warning',
@@ -8568,6 +8600,7 @@ export default {
           id=='24ebba9f2f3447579d0086209aff6ecd'||
           id=='193b4d4003d04899a1d09c8d5f7877fe'){
           this.detailform.contractInfo.isImport='0';
+          this.isImportChangeVal = true;
         }
         this.projectDomainType.find(
           (item) => {
@@ -8758,6 +8791,11 @@ export default {
                     this.$router.back()
                   }
                 }
+              }else {
+                this.$message({
+                  message: res.data.msg,
+                  type: "error",
+                });
               }
             });
 
