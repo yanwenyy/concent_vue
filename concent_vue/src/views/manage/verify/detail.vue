@@ -820,7 +820,7 @@
           width="500">
 
           <template slot-scope="scope" v-show="p.actpoint != 'look'&&p.actpoint != 'task'">
-            <el-input  readonly placeholder="请输入内容" v-model="scope.row.verifySectionOrgNameType01" class="input-with-select"/>
+            <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" readonly placeholder="请输入内容" v-model="scope.row.verifySectionOrgNameType01" class="input-with-select"/>
           </template>
         </el-table-column>
         <el-table-column
@@ -834,7 +834,7 @@
           width="500">
 
           <template slot-scope="scope" v-show="p.actpoint != 'look'">
-            <el-input  readonly placeholder="请输入内容" v-model="scope.row.verifySectionOrgNameType02" class="input-with-select"/>
+            <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" readonly placeholder="请输入内容" v-model="scope.row.verifySectionOrgNameType02" class="input-with-select"/>
           </template>
         </el-table-column>
         <el-table-column
