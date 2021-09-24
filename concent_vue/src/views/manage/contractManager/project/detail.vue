@@ -1386,7 +1386,7 @@
                     clearable
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.$index==0"
                     v-model="scope.row.contractAmount"
-                    @input="getPositionMoney(scope.$index,detailform.topInfoSiteList),checkTopInfoSiteList()"
+                    @input="getPositionMoney(scope.$index,detailform.topInfoSiteList)"
                   >
                     <template slot="prepend">¥</template>
                     <template slot="append">(万元)</template>
@@ -3129,6 +3129,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'1','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'1','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -3136,7 +3151,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('铁路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -3248,6 +3263,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'2','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'2','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -3255,7 +3285,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('铁路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -3367,6 +3397,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'3','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'3','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -3374,7 +3419,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('铁路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -3486,6 +3531,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'4','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'4','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -3493,7 +3553,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('铁路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -3605,6 +3665,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'5','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'5','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -3612,7 +3687,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('铁路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -3724,6 +3799,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'6','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'6','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -3731,7 +3821,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('铁路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -3843,6 +3933,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'7','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'7','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -3850,7 +3955,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('铁路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -3962,6 +4067,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'8','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'8','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -3969,7 +4089,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('铁路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -4081,6 +4201,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'9','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'9','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -4088,7 +4223,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('铁路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -4200,6 +4335,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'10','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'10','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -4207,7 +4357,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('铁路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -4319,6 +4469,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'11','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'11','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -4326,7 +4491,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('铁路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -4440,6 +4605,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'100','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'100','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -4447,7 +4627,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('公路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -4541,6 +4721,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'200','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'200','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -4548,7 +4743,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('公路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -4642,6 +4837,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'300','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'300','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -4649,7 +4859,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('公路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -4743,6 +4953,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'400','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'400','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -4750,7 +4975,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('公路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -4844,6 +5069,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'500','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'500','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -4851,7 +5091,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('公路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -4945,6 +5185,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'600','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'600','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -4952,7 +5207,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('公路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -5046,6 +5301,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'700','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'700','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -5053,7 +5323,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('公路工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -5149,6 +5419,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -5156,7 +5441,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('城市轨道工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -5315,6 +5600,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -5322,7 +5622,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('市政工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -5456,6 +5756,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'ELEC','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'ELEC','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -5463,7 +5778,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('房建工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -5586,6 +5901,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'RUNWATER','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'RUNWATER','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -5593,7 +5923,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('房建工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -5716,6 +6046,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'PITSUP','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'PITSUP','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -5723,7 +6068,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('房建工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -5846,6 +6191,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'BUILD','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'BUILD','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -5853,7 +6213,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('房建工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -5976,6 +6336,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'AIRWATER','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'AIRWATER','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -5983,7 +6358,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('房建工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -6106,6 +6481,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'WEAKELEC','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'WEAKELEC','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -6113,7 +6503,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('房建工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -6236,6 +6626,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'VENT','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'VENT','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -6243,7 +6648,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('房建工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -6366,6 +6771,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'EARTH','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'EARTH','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -6373,7 +6793,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('房建工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -6496,6 +6916,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'FIREELEC','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'FIREELEC','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -6503,7 +6938,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('房建工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -6626,6 +7061,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'FIRE','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'FIRE','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -6633,7 +7083,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('房建工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>
@@ -6756,6 +7206,21 @@
                     :action="'/api/contract/BoqWorkAmountList/import'"
                     :on-success="importDataGCL"
                     :headers="{'Authorization':Authorization}"
+                    :data="{'isDelete':'1','sectionCode':'DECORATE','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
+                    :on-error="importDataGCL"
+                    :show-file-list="false"
+                    accept=".xls,.xlsx"
+                    multiple
+                    :before-upload="projectUpload"
+                  >
+                    <el-button size="small" type="primary">全部导入</el-button>
+                  </el-upload>
+                  <el-upload
+                    v-if="p.actpoint != 'look'&&p.actpoint != 'task'"
+                    class="inline-block"
+                    :action="'/api/contract/BoqWorkAmountList/import'"
+                    :on-success="importDataGCL"
+                    :headers="{'Authorization':Authorization}"
                     :data="{'sectionCode':'DECORATE','typeCode':detailform.contractInfo.enginTypeFirstId,'contractInfoId':id}"
                     :on-error="importDataGCL"
                     :show-file-list="false"
@@ -6763,7 +7228,7 @@
                     multiple
                     :before-upload="projectUpload"
                   >
-                    <el-button size="small" type="primary">导入</el-button>
+                    <el-button size="small" type="primary">追加导入</el-button>
                   </el-upload>
                   <el-button @click="exportGcl('房建工程')" type="primary" plain v-if="p.actpoint != 'look'&&p.actpoint != 'task'">下载模板</el-button>
                 </p>

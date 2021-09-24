@@ -1062,7 +1062,6 @@
                         clearable
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         v-model="scope.row.contractAmount"
-                        @input="checkTopInfoSiteList()"
                       >
                         <template slot="prepend">¥</template>
                         <template slot="append">(万元)</template>
@@ -2868,6 +2867,7 @@ export default {
       }
     }
     return {
+      yqList:[],
       Authorization:sessionStorage.getItem("token"),
       companyMulStatus:false,//设计单位等多选列表状态
       sjdwList:[],
@@ -3536,6 +3536,7 @@ export default {
     //新增产品信息
     addXs(){
       var v={
+        sortNo:this.detailform.contractInfoProductInformtList.length+1,
         productName:'',
         productId:'',
         specificationAndModel:'',

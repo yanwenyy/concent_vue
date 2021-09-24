@@ -819,7 +819,7 @@
                         clearable
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||scope.$index==0"
                         v-model="scope.row.contractAmount"
-                        @input="getPositionMoney(scope.$index,detailform.topInfoSiteList),checkTopInfoSiteList()"
+                        @input="getPositionMoney(scope.$index,detailform.topInfoSiteList)"
                       >
                         <template slot="prepend">¥</template>
                         <template slot="append">(万元)</template>

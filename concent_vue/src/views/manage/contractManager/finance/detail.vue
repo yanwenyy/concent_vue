@@ -222,7 +222,7 @@
               >
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId||p.actpoint=='Yjedit'"
-                  @input="getOurAmount(),getOurAmount('','','nfb')"
+
                   clearable
                   placeholder=""
                   size="mini"
@@ -240,7 +240,8 @@
     }"
               >
                 <el-input
-                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'"
+                  :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId||detailform.contractInfo.isYearContract=='0'||p.actpoint=='Yjedit'"
+                  @input="getOurAmount(),getOurAmount('','','nfb')"
                   clearable
                   placeholder="请输入"
                   size="mini"
@@ -794,6 +795,7 @@
     }"
               >
                 <el-switch
+                  @change="ndhtChange"
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'||(detailform.contractInfo.isInSystemUnion=='0'||detailform.contractInfo.isInSystemSub=='0'||detailform.contractInfo.isOutSystemUnion=='0'||detailform.contractInfo.isOutSystemSub=='0'||detailform.contractInfo.isInGroupSub=='0')"
                   class="inline-formitem-switch"
                   v-model="detailform.contractInfo.isYearContract"
@@ -955,7 +957,6 @@
                         clearable
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         v-model="scope.row.contractAmount"
-                        @input="checkTopInfoSiteList()"
                       >
                         <template slot="prepend">¥</template>
                         <template slot="append">(万元)</template>
@@ -2519,6 +2520,7 @@ export default {
       }
     }
     return {
+      yqList:[],
       Authorization:sessionStorage.getItem("token"),
       companyMulStatus:false,//设计单位等多选列表状态
       sjdwList:[],
@@ -2650,6 +2652,17 @@ export default {
     },
   },
   methods: {
+    //年度合同按钮变动
+    ndhtChange(){
+      this.detailform.contractInfo.insureIncome=0;
+      this.detailform.contractInfo.crccCash=0;
+      this.detailform.contractInfo.outSystemAmount=0;
+      this.detailform.contractInfo.ourAmountSupply=0;
+      this.detailform.contractInfo.ourAmount=0;
+      this.$forceUpdate();
+      this.getOurAmount();
+      this.getOurAmount('','','nfb');
+    },
     // 建设单位删除
     constructionDel(index,item,list,type) {
       list.splice(index, 1);
@@ -3090,9 +3103,21 @@ export default {
           item.yearSales=yearSale+yearSaleNext;
         }
      });
-      if(totalMoney>Number(this.detailform.contractInfo.contractAmount)){
-        this.$message.error("本月收益总和不能大于合同规模");
-        this.detailform.contractInfoHouseSalesList[index].monthSales='';
+      // if(totalMoney>Number(this.detailform.contractInfo.insureIncome)){
+      //   this.$message.error("本月收益总和不能大于合同规模");
+      //   this.detailform.contractInfoHouseSalesList[index].monthSales='';
+      // }
+      if(this.detailform.contractInfo.isYearContract=='0'||(this.detailform.contractInfo.isInSystemUnion=='1'&&this.detailform.contractInfo.isInSystemSub=='1'&&this.detailform.contractInfo.isOutSystemUnion=='1'&&this.detailform.contractInfo.isOutSystemSub=='1'&&this.detailform.contractInfo.isInGroupSub=='1')){
+        this.detailform.contractInfo.insureIncome=totalMoney.toString();
+        this.$forceUpdate();
+        this.getOurAmount();
+        this.getOurAmount('','','nfb');
+        if(totalMoney==0){
+          this.detailform.contractInfo.crccCash=0;
+          this.detailform.contractInfo.outSystemAmount=0;
+          this.detailform.contractInfo.ourAmountSupply=0;
+          this.detailform.contractInfo.ourAmount=0;
+        }
       }
     },
     //新增销售业绩
@@ -3245,14 +3270,14 @@ export default {
     //合同总金额获取我方份额和铁建
     getOurAmount(index,list,type,name,ifswitch){
       var tj_money=0,our_money=0;
-      if(this.detailform.contractInfo.contractAmount>0){
+      if(this.detailform.contractInfo.insureIncome>0){
         if(type=='wlht'||type=='nlht' ){
           //铁建金额计算
           this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
-            tj_money+=Number(item.contractAmount);
+            tj_money+=Number(item.insureIncome);
           });
           this.detailform.contractInfo.outSystemAmount=tj_money;
-          var ourAmount=this.detailform.contractInfo.contractAmount-tj_money;
+          var ourAmount=this.detailform.contractInfo.insureIncome-tj_money;
 
           if(ourAmount>0){
             // this.$set( this.detailform, "contractInfo.crccCash", ourAmount);
@@ -3261,11 +3286,11 @@ export default {
 
           }else{
             this.$message.error('铁建份额需要大于0');
-            list[index].contractAmount=''
+            list[index].insureIncome=''
           }
           //我方份额计算
           this.detailform.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
-            our_money+=Number(item.contractAmount);
+            our_money+=Number(item.insureIncome);
           });
           var ourAmount2=this.detailform.contractInfo.crccCash-our_money;
           if(ourAmount2>0){
@@ -3276,27 +3301,27 @@ export default {
             // this.$set( this.detailform, "contractInfo.ourAmount", ourAmount2);
           }else{
             this.$message.error('我方份额需要大于0');
-            list[index].contractAmount=''
+            list[index].insureIncome=''
           }
         }else if(type=='nfb'||type=='jtnfb'|| type=='wfb'){
           var jtnfbTotal=0;
           //计算系统内分包和集团内分包的和
           this.detailform.contractInfoAttachBO.innerContractInfoAttachList.forEach((item)=>{
-            our_money+=Number(item.contractAmount);
+            our_money+=Number(item.insureIncome);
           });
           //计算系统外分包的和
           this.detailform.contractInfoAttachBO.outContractInfoAttachList.forEach((item)=>{
-            our_money+=Number(item.contractAmount);
+            our_money+=Number(item.insureIncome);
           });
           //计算集团内分包的和
           this.detailform.contractInfoAttachBO.innerGroupContractInfoAttachList.forEach((item)=>{
-            our_money+=Number(item.contractAmount);
-            jtnfbTotal+=Number(item.contractAmount);
+            our_money+=Number(item.insureIncome);
+            jtnfbTotal+=Number(item.insureIncome);
           });
-          if(this.detailform.contractInfo.unAllocatedFee&&jtnfbTotal>this.detailform.contractInfo.contractAmount-(this.detailform.contractInfo.unAllocatedFee)){
+          if(this.detailform.contractInfo.unAllocatedFee&&jtnfbTotal>this.detailform.contractInfo.insureIncome-(this.detailform.contractInfo.unAllocatedFee)){
             this.$message.error('集团内分包之和需要大于总金额-未分配金额');
             if(list){
-              list[index].contractAmount='';
+              list[index].insureIncome='';
               this.$forceUpdate();
             }else{
               this.detailform.contractInfo[name]='';
@@ -3313,7 +3338,7 @@ export default {
                 this.$message.error('自留份额+未分配+系统内分包份额之和+系统外分包份额之和+集团内分包份额之和不能大于初始我方份额');
               }
               if(list){
-                list[index].contractAmount='';
+                list[index].insureIncome='';
                 this.$forceUpdate();
               }else{
                 this.detailform.contractInfo[name]='';
@@ -3348,25 +3373,25 @@ export default {
           //     list[index].contractAmount=''
           //   }
         }else{
-          this.detailform.contractInfo.contractAmount=this.detailform.contractInfo.contractAmount.replace(/[^\-?\d.]/g,'','');
+          this.detailform.contractInfo.insureIncome=this.detailform.contractInfo.insureIncome.replace(/[^\-?\d.]/g,'','');
           //合同总金额输入计算我方份额和铁建金额
           this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
-            tj_money+=Number(item.contractAmount);
+            tj_money+=Number(item.insureIncome);
           });
           this.$forceUpdate();
-          this.detailform.contractInfo.crccCash=this.detailform.contractInfo.contractAmount!=''?this.detailform.contractInfo.contractAmount-tj_money:'';
+          this.detailform.contractInfo.crccCash=this.detailform.contractInfo.insureIncome!=''?this.detailform.contractInfo.insureIncome-tj_money:'';
           this.detailform.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
-            our_money+=Number(item.contractAmount);
+            our_money+=Number(item.insureIncome);
           });
           this.$forceUpdate();
-          this.detailform.contractInfo.ourAmount=this.detailform.contractInfo.contractAmount!=''?this.detailform.contractInfo.crccCash-our_money:'';
+          this.detailform.contractInfo.ourAmount=this.detailform.contractInfo.insureIncome!=''?this.detailform.contractInfo.crccCash-our_money:'';
           //项目地点的第一条数据金额默认是我方份额
           this.getPositionMoney(0,this.detailform.topInfoSiteList);
 
         }
         this.getOurAmountSupply();
       }else if(ifswitch!='switch'){
-        this.$message.error('合同总金额需要大于0');
+        this.$message.error('合同收益需要大于0');
       }
     },
     //项目地点份额变动的时候

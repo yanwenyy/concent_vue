@@ -1285,7 +1285,6 @@
                         clearable
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                         v-model="scope.row.contractAmount"
-                        @input="checkTopInfoSiteList()"
                       >
                         <template slot="prepend">¥</template>
                         <template slot="append">(万元)</template>
